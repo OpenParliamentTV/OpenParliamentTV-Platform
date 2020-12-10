@@ -1,0 +1,37 @@
+# Mac OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+.directory
+
+# Logs
+logs
+_logs/
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+.idea/
+
+# Media files
+*.m4v
+*.mp4
+*.webm
+*.mov
+*.mpg
+*.mp3
+
+# Composer
+composer.phar
+/vendor/
+
+# Language Cache
+langcache/*.php
+
+# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock

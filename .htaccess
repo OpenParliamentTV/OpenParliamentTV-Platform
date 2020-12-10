@@ -1,0 +1,20 @@
+########################################################
+# ROUTING -> PLAYER
+########################################################
+<IfModule mod_rewrite.c>
+	Options +FollowSymLinks
+	# Try to fix conflicting rewrite rules set by Wordpress etc:
+	RewriteEngine Off
+	RewriteEngine On
+	RewriteCond %{SCRIPT_FILENAME} !-d
+	RewriteCond %{SCRIPT_FILENAME} !-f
+	RewriteRule ^([a-zA-Z0-9_-]+)? index.php?a=$1 [QSA]
+	#RewriteCond %{REQUEST_URI} ^/play/([a-zA-Z0-9_-]+)$ [NC]
+	#RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1&id=$2 [NE,QSA]
+</IfModule>
+########################################################
+# Add Mime Types
+########################################################
+AddType video/mp4 .mp4
+AddType video/x-m4v .m4v
+AddType text/vtt .vtt
