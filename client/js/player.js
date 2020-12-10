@@ -410,9 +410,9 @@ function updateQuery(resultID) {
 
 	if (resultID) {
         locationString = locationString.replace(/(id=[A-Z]+[0-9]+)/, 'id='+ resultID);
-        console.log(locationString);
+        //console.log(locationString);
         history.pushState(null, "", locationString);
-        updateContents(nextResultURL);
+        updateContents('?'+ locationString.split('?')[1]);
     } else {
         history.replaceState(null, "", locationString);
         updateAutoplayState();
