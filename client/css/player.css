@@ -33,14 +33,14 @@ main#content {
 	display: none !important;
 }
 
-.titlebar {
+.playerTitle {
 	background: transparent;
 	min-height: 124px;
 	margin-bottom: 10px;
 	position: relative;
 }
 
-.titlebar .partyIndicator, .customhtmlContainer .partyIndicator {
+.playerTitle .partyIndicator, .customhtmlContainer .partyIndicator {
 	margin: 2px 2px 2px 6px;
 	padding: 0px 6px;
 	border-width: 1px;
@@ -54,38 +54,38 @@ main#content {
 	margin-left: 2px;
 }
 
-.titlebar .titlebarTitle {
+.playerTitle {
 	text-align: left;
 	padding: 10px 14px;
     line-height: 20px;
 }
 
 @media (max-width:768px) {
-    .titlebar .titlebarTitle {
+    .playerTitle {
 		width: 100%;
 	}
 }
 @media (min-width: 768) and (max-width:992px) {
-	.titlebar .titlebarTitle {
+	.playerTitle {
 		width: 50%;
 	}
 }
 @media (min-width:992px) {
-    .titlebar .titlebarTitle {
+	.playerTitle {
 		width: 500px;
 	}
 }
 @media (min-width:1200px) {
-    .titlebar .titlebarTitle {
+	.playerTitle {
 		width: 600px;
 	}
 }
 
-.titlebar .titlebarTitle .speechMeta {
+.playerTitle .speechMeta {
 	margin-bottom: 4px;
 }
 
-.titlebar .titlebarTitle .speechTOPs {
+.playerTitle .speechTOPs {
 	border-top: 1px solid rgba(0,0,0,.1);
 	width: auto;
 	height: 58px;
@@ -97,7 +97,7 @@ main#content {
 	line-height: 23px;
 }
 
-.titlebar .titlebarTitle .speechTOPs div {
+.playerTitle .speechTOPs div {
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -105,12 +105,12 @@ main#content {
 	color: #888;
 }
 
-.titlebar .titlebarTitle h3 {
+.playerTitle h3 {
 	margin-top: 8px;
 	font-size: 1.3em;
 }
 
-.titlebar .titlebarActionButtonContainer, .titlebar .sharingWidget {
+.titlebar {
 	display: none !important;
 }
 

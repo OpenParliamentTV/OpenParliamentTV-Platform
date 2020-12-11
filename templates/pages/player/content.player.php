@@ -9,7 +9,7 @@ require_once(__DIR__."/../../../server/include.play.php");
 ?>
 <script type="text/javascript">
     playerData = {
-    	'title': '<?= $speechTitle; ?>',
+    	'title': '',
     	'documents': ['<?= implode("', '", $documentURLs); ?>'],
         'mediaSource': '<?= $mediaSource ?>',
     	'transcriptHTML': '<?= $escapedHtmlContents; ?>',
@@ -57,4 +57,9 @@ require_once(__DIR__."/../../../server/include.play.php");
     
     //console.log(nextResultURL);
 </script>
+<div class="playerTitle">
+    <div class="speechMeta"><?= $formattedDate ?> | Wahlperiode <?= $speech["_source"]["meta"]['electoralPeriod'] ?> | Sitzung <?= $speech["_source"]["meta"]['sessionNumber'] ?> | <?= $speech["_source"]["meta"]['agendaItemTitle'] ?></div>
+    <div><?= $speech["_source"]["meta"]['speakerDegree'] ?> <?= $speech["_source"]["meta"]['speakerFirstName'] ?> <?= $speech["_source"]["meta"]['speakerLastName'] ?><span class="partyIndicator" data-party="<?= $speech["_source"]["meta"]['speakerParty'] ?>"><?= $speech["_source"]["meta"]['speakerParty'] ?></span></div>
+    <div class="speechTOPs"><?= $speechTOPTitle ?></div>
+</div>
 <div id="awplayer"></div>
