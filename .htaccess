@@ -6,8 +6,9 @@
 	# Try to fix conflicting rewrite rules set by Wordpress etc:
 	RewriteEngine Off
 	RewriteEngine On
-	RewriteCond %{SCRIPT_FILENAME} !-d
-	RewriteCond %{SCRIPT_FILENAME} !-f
+	RewriteBase /
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^([a-zA-Z0-9_-]+)? index.php?a=$1 [QSA]
 	#RewriteCond %{REQUEST_URI} ^/play/([a-zA-Z0-9_-]+)$ [NC]
 	#RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1&id=$2 [NE,QSA]
