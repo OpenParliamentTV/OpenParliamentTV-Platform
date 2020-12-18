@@ -1,4 +1,4 @@
-<?php include_once(__DIR__.'/../_generic/header.php'); ?>
+<?php include_once(__DIR__ . '/../../structure/header.php'); ?>
 <main class="container-fluid">
 	<?php include_once('content.filter.php'); ?>
 	<div class="row m-0" style="position: relative; z-index: 1">
@@ -12,5 +12,5 @@
 		</div>
 	</div>
 </main>
-<?php include_once(__DIR__.'/../_generic/footer.php'); ?>
+<?php include_once(__DIR__ . '/../../structure/footer.php'); ?>
 <script type="text/javascript" src="modules/search/client/search.js"></script>

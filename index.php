@@ -63,7 +63,18 @@ switch ($_REQUEST["a"]) {
 		$content = ob_get_clean();
 	break;
 }
-ob_start();
-include_once("./modules/_generic/structure.php");
-echo ob_get_clean();
 ?>
+<?php
+$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+$acceptLang = ['de', 'en'];
+$lang = in_array($lang, $acceptLang) ? $lang : 'de';
+?>
+<!DOCTYPE html>
+<html lang="<?php echo $lang; ?>" dir="ltr">
+<head>
+	<?php require_once('structure/head.php'); ?>
+</head>
+<body>
+<?= $content ?>
+</body>
+</html>

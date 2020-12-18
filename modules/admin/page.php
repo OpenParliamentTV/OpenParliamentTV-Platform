@@ -1,4 +1,4 @@
-<?php include_once(__DIR__.'/../_generic/header.php'); ?>
+<?php include_once(__DIR__ . '/../../structure/header.php'); ?>
 <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
@@ -9,4 +9,4 @@
 		</div>
 	</div>
 </main>
-<?php include_once(__DIR__.'/../_generic/footer.php'); ?>
+<?php include_once(__DIR__ . '/../../structure/footer.php'); ?>

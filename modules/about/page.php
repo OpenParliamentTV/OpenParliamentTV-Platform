@@ -1,4 +1,4 @@
-<?php include_once(__DIR__.'/../_generic/header.php'); ?>
+<?php include_once(__DIR__ . '/../../structure/header.php'); ?>
 <main class="container subpage">
 	<?php
 	/*
@@ -52,4 +52,4 @@
 	?>
 
 </main>
-<?php include_once(__DIR__.'/../_generic/footer.php'); ?>
+<?php include_once(__DIR__ . '/../../structure/footer.php'); ?>

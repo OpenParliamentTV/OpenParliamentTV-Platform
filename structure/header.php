@@ -1,7 +1,7 @@
 <header>
 	<nav class="navbar justify-content-between navbar-light">
 		<div>
-			<a href="./" class="navbar-text large brand"><img src="client/images/optv-logo_klein.png"><span class="<?=($_REQUEST["a"] != "play") ? "d-none d-sm-inline" : "d-none d-lg-inline"?>"><?php echo L::brand; ?></span></a><a href="./" class="navbar-text large"><span class="<?=($_REQUEST["a"] != "play") ? "" : "d-none d-md-inline"?>"><span class="mr-2">/</span><span>Deutscher Bundestag</span></span></a>
+			<a href="" class="navbar-text large brand"><img src="client/images/optv-logo_klein.png"><span class="<?=($_REQUEST["a"] != "play") ? "d-none d-sm-inline" : "d-none d-lg-inline"?>"><?php echo L::brand; ?></span></a><a href="" class="navbar-text large"><span class="<?=($_REQUEST["a"] != "play") ? "" : "d-none d-md-inline"?>"><span class="mr-2">/</span><span>Deutscher Bundestag</span></span></a>
 		</div>
 		<div class="navbarCenterOptions">
 			<?php

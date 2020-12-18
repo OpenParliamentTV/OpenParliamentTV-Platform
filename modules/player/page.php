@@ -1,8 +1,8 @@
-<?php include_once(__DIR__.'/../_generic/header.php'); ?>
+<?php include_once(__DIR__ . '/../../structure/header.php'); ?>
 <main id="content">
 	<?php include_once('content.player.php'); ?>
 </main>
-<?php include_once(__DIR__.'/../_generic/footer.php'); ?>
+<?php include_once(__DIR__ . '/../../structure/footer.php'); ?>
 <script type="text/javascript" src="modules/player/client/player.js"></script>
 <script type="text/javascript" src="client/FrameTrail.min.js"></script>
 <script type="text/javascript">
