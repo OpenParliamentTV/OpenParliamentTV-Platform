@@ -1,9 +1,11 @@
-
-<?php include_once(__DIR__.'/../../header.php'); ?>
+<?php include_once(__DIR__.'/../_generic/header.php'); ?>
 <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 			<h2><?php echo L::imprint; ?></h2>
+			<?php
+
+			/*
 			<!--
 			<p>Open Knowledge Foundation Deutschland e.V.<br>
 				Singerstr. 109, 10179 Berlin<br>
@@ -24,12 +26,9 @@
 			<h3>Urheberrecht</h3>
 			<p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Sie sind mit einer Creative Commons Lizenz urheberrechtlich geschützt. Sofern nicht anders angegeben, stehen die Inhalte dieser Seite unter der Creative Commons Namensnennung 3.0 DE Lizenz. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.</p>
 			-->
+			*/
+			?>
 		</div>
 	</div>
 </main>
-<?php include_once(__DIR__.'/../../footer.php'); ?>
-<script type="text/javascript" src="client/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="client/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="client/js/Chart.min.js"></script>
-<script type="text/javascript" src="client/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="client/js/generic.js"></script>
+<?php include_once(__DIR__.'/../_generic/footer.php'); ?>

@@ -1,5 +1,7 @@
-<?php include_once(__DIR__.'/../../header.php'); ?>
+<?php include_once(__DIR__.'/../_generic/header.php'); ?>
 <main class="container subpage">
+	<?php
+	/*
 	<!--
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
@@ -45,10 +47,9 @@
 		</div>
 	</div>
 	-->
+
+	*/
+	?>
+
 </main>
-<?php include_once(__DIR__.'/../../footer.php'); ?>
-<script type="text/javascript" src="client/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="client/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="client/js/Chart.min.js"></script>
-<script type="text/javascript" src="client/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="client/js/generic.js"></script>
+<?php include_once(__DIR__.'/../_generic/footer.php'); ?>

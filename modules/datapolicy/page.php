@@ -1,8 +1,11 @@
-<?php include_once(__DIR__.'/../../header.php'); ?>
+<?php include_once(__DIR__.'/../_generic/header.php'); ?>
 <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 		    <h2><?php echo L::dataPolicy; ?></h2>
+			<?php
+
+			/*
 			<!--
 			<p>
 			Die für die Datenerhebung, -verarbeitung und -nutzung verantwortliche Stelle ist der&nbsp;<a href="https://okfn.de">Open Knowledge Foundation Deutschland e.V.</a>, Singerstraße 109, 10179 Berlin. Anfragen an unsere Datenschutzbeauftragte Beata Hubrig können gesendet werden an datenschutz@okfn.de. Zuständige Aufsichtsbehörde ist die <a href="https://www.datenschutz-berlin.de/ueber-uns/kontakt/">Berliner Beauftragte für Datenschutz und Informationsfreiheit</a>.</p>
@@ -51,12 +54,10 @@
 			<hr>
 			<p>Stand 4. Februar 2020</p>
 			-->
+
+			*/
+			?>
 		</div>
 	</div>
 </main>
-<?php include_once(__DIR__.'/../../footer.php'); ?>
-<script type="text/javascript" src="client/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="client/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="client/js/Chart.min.js"></script>
-<script type="text/javascript" src="client/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="client/js/generic.js"></script>
+<?php include_once(__DIR__.'/../_generic/footer.php'); ?>

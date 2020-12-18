@@ -12,7 +12,7 @@ switch ($_REQUEST["a"]) {
 
 
 	case "search":
-		require_once("functions.php");
+		require_once(__DIR__."/../modules/search/functions.php");
 		
 		$allowedParams = array_intersect_key($_REQUEST,array_flip(array("a","q","name","party","electoralPeriod","timefrom","timeto","gender","degree","aw_uuid","speakerID","sessionNumber", "page", "sort")));
 
@@ -22,7 +22,7 @@ switch ($_REQUEST["a"]) {
 
 	break;
 	case "stats":
-		require_once("functions.php");
+		require_once(__DIR__."/../modules/search/functions.php");
 		
 		$allowedParams = array_intersect_key($_REQUEST,array_flip(array("a","q","name","party","electoralPeriod","timefrom","timeto","gender","degree","aw_uuid","speakerID","sessionNumber", "page", "sort")));
 

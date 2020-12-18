@@ -290,7 +290,7 @@ function updateResultList() {
     }
 	updateAjax = $.ajax({
 		method: "POST",
-		url: "./templates/pages/search/content.result.php?a=search&"+ getSerializedForm()
+		url: "./modules/search/content.result.php?a=search&"+ getSerializedForm()
 	}).done(function(data) {
 		$('#speechListContainer .resultWrapper').html($(data));
 		$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');

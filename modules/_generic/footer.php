@@ -38,3 +38,9 @@
 		<div class="col-12" style="font-size: 11px; text-align: center;"><?php echo L::dataPolicyHintPart1; ?> <a href="https://matomo.org" target="_blank">Matomo</a><?php echo L::dataPolicyHintPart2; ?> <br><?php echo L::dataPolicyHintPart3; ?><a href="https://stats.openparliament.tv/index.php?module=CoreAdminHome&amp;action=optOut&amp;language=de"><?php echo L::dataPolicyHintPart4; ?></a>. <?php echo L::dataPolicyHintPart5; ?> <a href="./datapolicy"><?php echo L::dataPolicyHintPart6; ?></a>.</div>
 	</div>
 </footer>
+<script type="text/javascript" src="client/js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="client/js/jquery-ui.min.js"></script>
+<!--<script type="text/javascript" src="client/js/jquery.form.min.js"></script>-->
+<script type="text/javascript" src="client/js/Chart.min.js"></script>
+<script type="text/javascript" src="client/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="client/js/generic.js"></script>

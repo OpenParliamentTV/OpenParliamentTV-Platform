@@ -37,7 +37,7 @@ function updateContents(resultURL) {
     }
 	updateAjax = $.ajax({
 		method: "POST",
-		url: "./templates/pages/player/content.player.php"+ resultURL + "&a=play"
+		url: "./modules/player/content.player.php"+ resultURL + "&a=play"
 	}).done(function(data) {
 		$('#content').html($(data));
 		updatePlayer();

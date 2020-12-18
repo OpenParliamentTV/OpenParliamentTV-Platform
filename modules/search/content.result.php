@@ -1,18 +1,18 @@
 <?php	
 	error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 	if (!function_exists("L")) {
-		require_once(__DIR__."/../../../i18n.class.php");
-		$i18n = new i18n(__DIR__.'/../../../lang/lang_{LANGUAGE}.json', __DIR__.'/../../../langcache/', 'de');
+		require_once(__DIR__."/../../i18n.class.php");
+		$i18n = new i18n(__DIR__.'/../../lang/lang_{LANGUAGE}.json', __DIR__.'/../../langcache/', 'de');
 		$i18n->init();
 	}
-	require_once(__DIR__."/../../../server/functions.php");
-	require_once(__DIR__."/../../../server/include.search.php");
-	
-	/*
-	echo '<pre>';
-	print_r($_REQUEST);
-	echo '</pre>';
-	*/
+require_once(__DIR__."/functions.php");
+require_once(__DIR__."/include.search.php");
+/*
+
+echo '<pre>';
+print_r($_REQUEST);
+echo '</pre>';
+*/
 
 	if (!$_REQUEST["a"] || count($_REQUEST) < 2) {
 	?>
