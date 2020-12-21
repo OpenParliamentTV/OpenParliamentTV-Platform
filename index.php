@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+session_start();
 require_once 'i18n.class.php';
 $i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'de');
 //$i18n->setForcedLang('en');
@@ -74,7 +75,7 @@ $lang = in_array($lang, $acceptLang) ? $lang : 'de';
 <head>
 	<?php require_once('structure/head.php'); ?>
 </head>
-<body>
+<body<?= (($_SESSION["login"]) ? " class='login'" : "") ?>>
 <?= $content ?>
 </body>
 </html>

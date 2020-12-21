@@ -40,7 +40,7 @@
 </footer>
 <script type="text/javascript" src="client/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="client/js/jquery-ui.min.js"></script>
-<!--<script type="text/javascript" src="client/js/jquery.form.min.js"></script>-->
+<script type="text/javascript" src="client/js/jquery.form.min.js"></script>
 <script type="text/javascript" src="client/js/Chart.min.js"></script>
 <script type="text/javascript" src="client/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="client/js/generic.js"></script>

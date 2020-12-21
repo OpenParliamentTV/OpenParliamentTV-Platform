@@ -1,6 +1,7 @@
 <?php
 
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+session_start();
 
 header('Content-Type: application/json');
 
@@ -8,7 +9,47 @@ $return["success"] = "false";
 $return["text"] = "Nope!";
 $return["return"] = "";
 
+require_once(__DIR__."/../config.php");
+
 switch ($_REQUEST["a"]) {
+
+	case "registerUser":
+
+		if ($config["allow"]["register"]) {
+
+			require_once(__DIR__."/../modules/login/register.backend.json.php");
+
+			$return = registerUser($_REQUEST["mail"],$_REQUEST["password"],$_REQUEST["name"]);
+
+		} //TODO: Response if registration is not allowed
+
+	break;
+
+
+
+	case "login":
+
+		if ($config["allow"]["login"]) {
+
+			require_once(__DIR__."/../modules/login/login.backend.json.php");
+
+			$return = loginCheck($_REQUEST["mail"],$_REQUEST["password"]);
+
+		} //TODO: Response if login is not allowed
+
+	break;
+
+
+
+	case "logout":
+
+		require_once(__DIR__."/../modules/login/logout.backend.php");
+
+		$return = logout();
+
+
+	break;
+
 
 
 	case "search":
@@ -21,6 +62,9 @@ switch ($_REQUEST["a"]) {
 		$return["return"] = searchSpeeches($allowedParams);
 
 	break;
+
+
+
 	case "stats":
 		require_once(__DIR__."/../modules/search/functions.php");
 		

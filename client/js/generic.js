@@ -43,3 +43,4 @@ function getQueryVariable(variable) {
 
 	return returnValues;
 }
+
