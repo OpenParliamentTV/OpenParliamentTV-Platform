@@ -17,7 +17,8 @@ switch ($_REQUEST["a"]) {
 
 		if ($config["allow"]["register"]) {
 
-			require_once(__DIR__."/../modules/login/register.backend.json.php");
+			//require_once(__DIR__."/../modules/login/register.backend.json.php");
+			require_once(__DIR__."/../modules/login/register.backend.sql.php");
 
 			$return = registerUser($_REQUEST["mail"],$_REQUEST["password"],$_REQUEST["name"]);
 
@@ -31,7 +32,8 @@ switch ($_REQUEST["a"]) {
 
 		if ($config["allow"]["login"]) {
 
-			require_once(__DIR__."/../modules/login/login.backend.json.php");
+			//require_once(__DIR__."/../modules/login/login.backend.json.php");
+			require_once(__DIR__."/../modules/login/login.backend.sql.php");
 
 			$return = loginCheck($_REQUEST["mail"],$_REQUEST["password"]);
 

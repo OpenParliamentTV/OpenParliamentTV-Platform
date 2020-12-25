@@ -53,7 +53,7 @@ $(function() {
 
 				if (ret["success"] == "true") {
 
-					$("#register-response").text("Login successful. You will be redirected");
+					$("#register-response").text("Registration successful. You will be redirected");
 					setTimeout(function() {
 						location.reload();
 					},2000);
@@ -61,20 +61,20 @@ $(function() {
 
 				} else {
 
-					$("#register-response").text("Your login credentials are not correct.");
+					$("#register-response").text("Your registration failed.: "+ret["txt"]);
 					console.log(ret["txt"]);
 
 				}
 
 			} else {
 
-				$("#register-response").text("There was an error (code #02) while logging in. Please try again");
+				$("#register-response").text("There was an error (code #02) while registration. Please try again");
 
 			}
 		},
 		error: function() {
 
-			$("#register-response").text("There was an error (code #01) while logging in. Please try again");
+			$("#register-response").text("There was an error (code #01) while registration. Please try again");
 
 		}
 	});

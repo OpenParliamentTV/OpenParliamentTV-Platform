@@ -7,6 +7,11 @@ require_once(__DIR__."/../utilities/uniqueFreeString.php");
 
 
 $inputDir = __DIR__."/input/";
+$doneDir = __DIR__."/done/";
+
+if (!is_dir(__DIR__."/done/")) {
+	mkdir(__DIR__."/done/");
+}
 
 $inputFiles = scandir($inputDir);
 
@@ -176,7 +181,7 @@ foreach ($inputFiles as $file) {
 	}
 
 
-
+	rename($inputDir.$file, $doneDir.$file);
 
 
 	/*

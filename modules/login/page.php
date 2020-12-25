@@ -12,7 +12,7 @@
 
 			?>
 
-				Logged in as:<br> <?=$_SESSION["name"]?> (<?=$_SESSION["mail"]?>, <?=$_SESSION["level"]?>)<br><br>
+				Logged in as:<br> <?=$_SESSION["userdata"]["name"]?> (<?=$_SESSION["userdata"]["mail"]?>, <?=$_SESSION["userdata"]["role"]?>)<br><br>
 				<button type="button" class="button-logout btn btn-primary">Logout</button>
 
 			<?php
