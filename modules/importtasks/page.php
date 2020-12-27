@@ -142,7 +142,7 @@ foreach ($inputFiles as $file) {
 			"SpeechOriginalSpeakerParty"=>$speech["speakerParty"],
 			"SpeechOriginalSpeakerRole"=>$speech["speakerRole"],
 			"SpeechOriginalSpeakerLastName"=>$speech["speakerLastName"],
-			"SpeechHash"=>getUniqueFreeString($config["sql"]["tbl"]["Speech"],"SpeechHash")
+			"SpeechHash"=>getUniqueCRC($config["sql"]["tbl"]["Speech"],"SpeechHash", $originalMediaURL)
 		);
 		$db->query("INSERT INTO ".$config["sql"]["tbl"]["Speech"]." SET ?u",$dbData);
 
