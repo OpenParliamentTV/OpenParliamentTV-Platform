@@ -15,19 +15,32 @@ $config["allow"]["login"] = true;
 $config["salt"] = "gMu2bs)v7ZN!677hH";
 
 
-$config["sql"]["access"]["host"] = "localhost";
-$config["sql"]["access"]["user"] = "root";
-$config["sql"]["access"]["passwd"] = "";
-$config["sql"]["db"] = "openparliamenttv";
 
-$config["sql"]["tbl"]["AgendaItem"] = "agendaitem";
-$config["sql"]["tbl"]["ElectoralPeriod"] = "electoralperiod";
-$config["sql"]["tbl"]["Party"] = "party";
-$config["sql"]["tbl"]["Session"] = "session";
-$config["sql"]["tbl"]["Speaker"] = "speaker";
-$config["sql"]["tbl"]["Speech"] = "speech";
-$config["sql"]["tbl"]["SpeechAnnotation"] = "speechannotation";
-$config["sql"]["tbl"]["SpeechContent"] = "speechcontent";
-$config["sql"]["tbl"]["User"] = "user";
+//DB - Platform config
+$config["platform"]["sql"]["access"]["host"] = "localhost";
+$config["platform"]["sql"]["access"]["user"] = "root";
+$config["platform"]["sql"]["access"]["passwd"] = "";
+$config["platform"]["sql"]["db"] = "openparliamenttv";
+
+$config["platform"]["sql"]["tbl"]["Party"] = "party";
+$config["platform"]["sql"]["tbl"]["Speaker"] = "speaker";
+$config["platform"]["sql"]["tbl"]["User"] = "user";
+
+
+//DB - Parliament config
+
+$config["parliament"]["bt"]["label"] = "Deutscher Bundestag";
+$config["parliament"]["bt"]["sql"]["access"]["host"] = "localhost";
+$config["parliament"]["bt"]["sql"]["access"]["user"] = "root";
+$config["parliament"]["bt"]["sql"]["access"]["passwd"] = "";
+$config["parliament"]["bt"]["sql"]["db"] = "openparliamenttv_bt";
+
+$config["parliament"]["bt"]["sql"]["tbl"]["AgendaItem"] = "agendaitem";
+$config["parliament"]["bt"]["sql"]["tbl"]["ElectoralPeriod"] = "electoralperiod";
+$config["parliament"]["bt"]["sql"]["tbl"]["Session"] = "session";
+$config["parliament"]["bt"]["sql"]["tbl"]["Speech"] = "speech";
+$config["parliament"]["bt"]["sql"]["tbl"]["SpeechAnnotation"] = "speechannotation";
+$config["parliament"]["bt"]["sql"]["tbl"]["SpeechContent"] = "speechcontent";
+
 
 ?>

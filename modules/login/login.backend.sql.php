@@ -18,10 +18,10 @@ function loginCheck($mail = "", $passwd = "") {
 
 		if (!$db) {
 			$opts = array(
-				'host'	=> $config["sql"]["access"]["host"],
-				'user'	=> $config["sql"]["access"]["user"],
-				'pass'	=> $config["sql"]["access"]["passwd"],
-				'db'	=> $config["sql"]["db"]
+				'host'	=> $config["platform"]["sql"]["access"]["host"],
+				'user'	=> $config["platform"]["sql"]["access"]["user"],
+				'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+				'db'	=> $config["platform"]["sql"]["db"]
 			);
 			$db = new SafeMySQL($opts);
 		}
@@ -29,7 +29,7 @@ function loginCheck($mail = "", $passwd = "") {
 
 		$mail = strtolower($mail);
 
-		$userdata = $db->getRow("SELECT * FROM ".$config["sql"]["tbl"]["User"]." WHERE UserMail =?s LIMIT 1", $mail);
+		$userdata = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserMail =?s LIMIT 1", $mail);
 
 		if ($userdata) {
 

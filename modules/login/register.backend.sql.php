@@ -24,10 +24,10 @@ function registerUser($mail = "", $passwd = "", $name="") {
 
 		if (!$db) {
 			$opts = array(
-				'host'	=> $config["sql"]["access"]["host"],
-				'user'	=> $config["sql"]["access"]["user"],
-				'pass'	=> $config["sql"]["access"]["passwd"],
-				'db'	=> $config["sql"]["db"]
+				'host'	=> $config["platform"]["sql"]["access"]["host"],
+				'user'	=> $config["platform"]["sql"]["access"]["user"],
+				'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+				'db'	=> $config["platform"]["sql"]["db"]
 			);
 			$db = new SafeMySQL($opts);
 		}
@@ -35,7 +35,7 @@ function registerUser($mail = "", $passwd = "", $name="") {
 
 		$mail = strtolower($mail);
 
-		$userdata = $db->getRow("SELECT * FROM ".$config["sql"]["tbl"]["User"]." WHERE UserMail = ?s LIMIT 1",$mail);
+		$userdata = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserMail = ?s LIMIT 1",$mail);
 
 		if ($userdata) {
 
@@ -51,8 +51,14 @@ function registerUser($mail = "", $passwd = "", $name="") {
 
 			//TODO: User ConfirmationLink
 
-			$db->query("INSERT INTO ".$config["sql"]["tbl"]["User"]." SET
-				UserName=?s, UserMail=?s, UserPasswordHash=?s, UserPasswordPepper=?s, UserRole=?s, UserRegisterDate=?s, UserActive=?i",
+			$db->query("INSERT INTO ".$config["platform"]["sql"]["tbl"]["User"]." SET
+				UserName=?s,
+				UserMail=?s,
+				UserPasswordHash=?s,
+				UserPasswordPepper=?s,
+				UserRole=?s,
+				UserRegisterDate=?s,
+				UserActive=?i",
 				$name, $mail, hash("sha512", $pepper.$passwd.$config["salt"]),  $pepper, "user", time(), 0);
 
 			$return["success"] = "true";

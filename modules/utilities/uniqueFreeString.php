@@ -32,7 +32,7 @@ function getUniqueFreeString($tbl = false, $column = false, $length = 7, $db = f
 
 	$randString = bin2hex(random_bytes($length));
 
-	$count = $db->getOne("SELECT COUNT(*) as cnt FROM ".$tbl." WHERE ".$column." = ?s",$randString);
+	$count = $db->getOne("SELECT COUNT(*) as cnt FROM ?n WHERE ?n = ?s",$tbl,$column,$randString);
 	if ($count > 0) {
 		$randString = getUniqueFreeString($tbl, $column, $length, $db);
 	}
@@ -51,33 +51,23 @@ function getUniqueFreeString($tbl = false, $column = false, $length = 7, $db = f
  * @param SafeMySQLObject $db
  * @return string - unique hash for the given string
  */
-function getUniqueCRC($tbl = false, $column = false, $string = false, $db = false) {
+function getUniqueCRC($tbl = false, $column = false, $string = false, $prefix = "", $db = false) {
 	global $config;
 
-	if (!$tbl || !$column || !$string) {
+	if (!$tbl || !$column || !$string || !$db) {
 
 		return false;
 
 	}
 
-	if (!$db) {
-		$opts = array(
-				'host'	=> $config["sql"]["access"]["host"],
-				'user'	=> $config["sql"]["access"]["user"],
-				'pass'	=> $config["sql"]["access"]["passwd"],
-				'db'	=> $config["sql"]["db"]
-		);
-		$db = new SafeMySQL($opts);
-	}
-
 	$hash = hash("crc32b", $string);
 
-	$count = $db->getOne("SELECT COUNT(*) as cnt FROM ".$tbl." WHERE ".$column." = ?s",$hash);
+	$count = $db->getOne("SELECT COUNT(*) as cnt FROM ".$tbl." WHERE ".$column." = ?s",$prefix.$hash);
 	if ($count > 0) {
 		$string = $string.$string;
-		$hash = getUniqueCRC($tbl, $column, $string, $db);
+		$hash = getUniqueCRC($tbl, $column, $string, $prefix, $db);
 	}
-	return $hash;
+	return $prefix.$hash;
 
 }
 

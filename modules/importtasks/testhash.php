@@ -8,6 +8,10 @@ require_once(__DIR__."/../utilities/safemysql.class.php");
 require_once(__DIR__."/../utilities/uniqueFreeString.php");
 
 
+echo "Needs to get changed for parliament schema.";
+exit;
+
+
 if (!$db) {
 	$opts = array(
 		'host'	=> $config["sql"]["access"]["host"],

@@ -56,6 +56,12 @@ switch ($_REQUEST["a"]) {
 		$content = ob_get_clean();
 		$pageTitle = 'Administration | '.L::brand.' - Deutscher Bundestag';
 	break;
+	case "import":
+		ob_start();
+		include_once("./modules/importtasks/page.php");
+		$content = ob_get_clean();
+		$pageTitle = 'Administration | '.L::brand.' - Import json';
+	break;
 	case "search":
 	default:
 		require_once("./modules/search/include.search.php");
