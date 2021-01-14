@@ -70,6 +70,7 @@ function importParliamentMedia($type, $parliament, $meta, $data="", $dbPlatform 
 					$media["mediaOriginalURL"] = 'https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/' . $media['mediaID'] . '/' . $media['mediaID'] . '_h264_720_400_2000kb_baseline_de_2192.mp4';
 					$media["mediaURL"] = $media["mediaOriginalURL"];
 					$media["MediaPersonRole"] = "speaker";
+					$media["aligned"] = ($media["aligned"]) ? 1 : 0;
 
 					echo mediaAdd($media,$parliament,$dbParliament,$dbPlatform)."<br><br>";
 
