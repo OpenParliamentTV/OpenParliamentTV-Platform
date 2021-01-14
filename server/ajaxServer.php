@@ -67,6 +67,36 @@ switch ($_REQUEST["a"]) {
 
 
 
+	case "getMedia":
+		require_once(__DIR__."/../modules/player/functions.media.php");
+
+		$return["success"] = "true";
+		$return["text"] = "searchresults";
+
+		//TODO AUTH for Conflicts
+		$return["return"] = getMedia($_REQUEST["v"],$_REQUEST["p"],$_REQUEST["conflicts"]);
+
+	break;
+
+	case "getMediaDiffs":
+		require_once(__DIR__."/../modules/player/functions.media.php");
+		require_once(__DIR__."/../modules/utilities/functions.php");
+
+		$return["success"] = "true";
+		$return["text"] = "searchresults";
+
+		//TODO AUTH
+		$media1 = getMedia($_REQUEST["v1"],$_REQUEST["p1"]);
+		$media2 = getMedia($_REQUEST["v2"],$_REQUEST["p2"]);
+		$return["return1diff2"] = arrayRecursiveDiff($media1, $media2);
+		$return["return2diff1"] = arrayRecursiveDiff($media2, $media1);
+		$return["returnV2_1diff2"] = array_diff_assoc_recursive($media1, $media2);
+		$return["returnV2_2diff1"] = array_diff_assoc_recursive($media2, $media1);
+
+	break;
+
+
+
 	case "stats":
 		require_once(__DIR__."/../modules/search/functions.php");
 		

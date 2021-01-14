@@ -37,10 +37,19 @@
 				print_r($_REQUEST);
 				echo "</pre>";
 
-				require_once(__DIR__."/functions.json2sql.php");
+				/*require_once(__DIR__."/functions.json2sql.php");
 				ob_implicit_flush(true);
 				ob_end_flush();
 				$status = importParliamentSpeechJSONtoSQL($_REQUEST["inputDir"],$_REQUEST["doneDir"],$_REQUEST["parliament"]);
+				*/
+				require_once(__DIR__."/functions.import.php");
+				ob_implicit_flush(true);
+				ob_end_flush();
+				$meta["preserveFiles"] = true;
+				$meta["inputDir"] = $_REQUEST["inputDir"];
+				$meta["doneDir"] = $_REQUEST["doneDir"];
+				$status = importParliamentMedia("jsonfiles",$_REQUEST["parliament"],$meta);
+				//$status = importParliamentMedia($_REQUEST["inputDir"],$_REQUEST["doneDir"],$_REQUEST["parliament"]);
 
 				if (is_array($status)) {
 					echo "<pre>";

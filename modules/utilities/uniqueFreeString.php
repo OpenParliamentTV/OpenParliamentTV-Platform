@@ -62,7 +62,7 @@ function getUniqueCRC($tbl = false, $column = false, $string = false, $prefix = 
 
 	$hash = hash("crc32b", $string);
 
-	$count = $db->getOne("SELECT COUNT(*) as cnt FROM ".$tbl." WHERE ".$column." = ?s",$prefix.$hash);
+	$count = $db->getOne("SELECT COUNT(*) as cnt FROM ?n WHERE ".$column." = ?s",$tbl,$prefix.$hash);
 	if ($count > 0) {
 		$string = $string.$string;
 		$hash = getUniqueCRC($tbl, $column, $string, $prefix, $db);

@@ -23,7 +23,9 @@ $config["platform"]["sql"]["access"]["passwd"] = "";
 $config["platform"]["sql"]["db"] = "openparliamenttv";
 
 $config["platform"]["sql"]["tbl"]["Party"] = "party";
-$config["platform"]["sql"]["tbl"]["Speaker"] = "speaker";
+$config["platform"]["sql"]["tbl"]["Person"] = "person";
+$config["platform"]["sql"]["tbl"]["Auth"] = "auth";
+$config["platform"]["sql"]["tbl"]["Conflict"] = "conflict";
 $config["platform"]["sql"]["tbl"]["User"] = "user";
 
 
@@ -38,9 +40,10 @@ $config["parliament"]["bt"]["sql"]["db"] = "openparliamenttv_bt";
 $config["parliament"]["bt"]["sql"]["tbl"]["AgendaItem"] = "agendaitem";
 $config["parliament"]["bt"]["sql"]["tbl"]["ElectoralPeriod"] = "electoralperiod";
 $config["parliament"]["bt"]["sql"]["tbl"]["Session"] = "session";
-$config["parliament"]["bt"]["sql"]["tbl"]["Speech"] = "speech";
-$config["parliament"]["bt"]["sql"]["tbl"]["SpeechAnnotation"] = "speechannotation";
-$config["parliament"]["bt"]["sql"]["tbl"]["SpeechContent"] = "speechcontent";
+$config["parliament"]["bt"]["sql"]["tbl"]["Media"] = "media";
+$config["parliament"]["bt"]["sql"]["tbl"]["MediaAnnotation"] = "mediaannotation";
+$config["parliament"]["bt"]["sql"]["tbl"]["MediaContent"] = "mediacontent";
+$config["parliament"]["bt"]["sql"]["tbl"]["MediaPerson"] = "mediaperson";
 
 
 ?>
