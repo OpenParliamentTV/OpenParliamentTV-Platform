@@ -182,6 +182,7 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 		if (!$party) {
 			$dbPlatform->query("INSERT INTO " . $config["platform"]["sql"]["tbl"]["Party"] . " SET PartyLabel = ?s", $media["speakerParty"]);
 			$party = $dbPlatform->getRow("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Party"] . " WHERE PartyLabel = ?s LIMIT 1", $media["speakerParty"]);
+			reportConflict("Party","New Party added: ".$party["PartyLabel"],$party["PartyID"],"", "New Party has been added: ".json_encode($party),$dbPlatform);
 		}
 	} else {
 		$party = false;
