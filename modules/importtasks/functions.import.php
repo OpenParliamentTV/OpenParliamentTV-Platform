@@ -104,8 +104,21 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 
 	$duplicatesHashes = $dbParliament->getAll("SELECT MediaHash FROM " . $config["parliament"][$parliament]["sql"]["tbl"]["Media"] . " WHERE MediaURL = ?s", $media["mediaURL"]);
 	foreach ($duplicatesHashes as $dhash) {
-
+		echo "forHash:".$dhash["MediaHash"]."<br>";
 		$foreignMedia = getMedia($dhash["MediaHash"],$parliament,false,$dbPlatform,$dbParliament);
+
+		/*
+		echo "id :".($media["id"] == $foreignMedia["MediaOriginalID"])."<br>";
+		echo "aligned :".($media["aligned"] == $foreignMedia["MediaAligned"])."<br>";
+		echo "MediaDateStart :".($media["MediaDateStart"] == $foreignMedia["MediaDateStart"])."<br>";
+		echo "MediaDateEnd :".($media["MediaDateEnd"] == $foreignMedia["MediaDateEnd"])."<br>";
+		echo "duration :".(((string)$media["duration"] == (string)$foreignMedia["MediaDuration"]) ? "1" : "<span style='color:#ff0000'>".(string)$media["duration"]." ".(string)$foreignMedia["MediaDuration"]."</span>")."<br>";
+		echo "mediaID :".($media["mediaID"] == $foreignMedia["MediaOriginalMediaID"])."<br>";
+		echo "mediaURL :".($media["mediaURL"] == $foreignMedia["MediaURL"])."<br>";
+		echo "agendaItemTitle :".($media["agendaItemTitle"] == $foreignMedia["AgendaItemTitle"])."<br>";
+		echo "agendaItemSecondTitle :".($media["agendaItemSecondTitle"] == $foreignMedia["AgendaItemSubTitle"])."<br>";
+		echo "electoralPeriod :".($media["electoralPeriod"] == $foreignMedia["ElectoralPeriodNumber"])."<br>";
+		*/
 
 		if (($media["id"] == $foreignMedia["MediaOriginalID"])
 			&& ($media["aligned"] == $foreignMedia["MediaAligned"])
@@ -118,6 +131,9 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 			&& ($media["agendaItemSecondTitle"] == $foreignMedia["AgendaItemSubTitle"])
 			&& ($media["electoralPeriod"] == $foreignMedia["ElectoralPeriodNumber"])) {
 
+			//echo "sameFields:Yes<br>";
+
+
 			$different = 0;
 
 			foreach ($media["documents"] as $doc) {
@@ -129,9 +145,13 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 			}
 
 			//TODO Have >1 content?
-			if (array_search($media["content"], array_column($foreignMedia["mediacontent"], 'MediaContentBody')) === false) {
+			$mediaContentHash = hash("sha256",$media["content"]);
+			if (array_search($mediaContentHash, array_column($foreignMedia["mediacontent"], 'MediaContentHash')) === false) {
 				$different++;
+
 			}
+
+
 
 			$personFindings = 0;
 			//TODO have >1 person as input
@@ -143,9 +163,12 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 				}
 			}
 
+			//return "Different:".$different."<br>"."personFindings:".$personFindings."<br>mediaContentHash:".$mediaContentHash."<br><br>";
+
 			if (($different === 0) && ($personFindings > 0)) {
 
-				reportConflict("Media", "mediaAdd duplicated entry","","", "Media ".$media["id"]." (".$media["mediaID"].") was not added because the same dataset already exists with MediaHash ".$foreignMedia["MediaHash"]." ",$dbPlatform);
+				//reportConflict("Media", "mediaAdd duplicated entry","","", "Media ".$media["id"]." (".$media["mediaID"].") was not added because the same dataset already exists with MediaHash ".$foreignMedia["MediaHash"]." ",$dbPlatform);
+				//TODO: Put info into logger
 				return "Media ".$media["id"]." (".$media["mediaID"].") was not added because the same dataset already exists with MediaHash ".$foreignMedia["MediaHash"]." ";
 
 			}
@@ -228,6 +251,7 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 		foreach ($duplicates as $tmp_duplicate) {
 			reportConflict("Media","mediaAdd duplicate MediaURL",$dbMedia["MediaHash"],$tmp_duplicate["MediaHash"], "MediaURL of the added Item (".$dbMedia["MediaHash"].", ".$dbMedia["MediaID"].") is the same as for the rival item (".$tmp_duplicate["MediaHash"].", ".$tmp_duplicate["MediaID"].")",$dbPlatform);
 			$returnConflicts .= "MediaURL of the added Item (".$dbMedia["MediaHash"].", ".$dbMedia["MediaID"].") is the same as for the rival item (".$tmp_duplicate["MediaHash"].")<br>";
+			$returnConflicts .= "ContentHash = (".hash("sha256",$media["content"]).")";
 		}
 	}
 
@@ -273,7 +297,7 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 	//TODO Have >1 content?
 	$content = $dbParliament->getRow("SELECT * FROM " . $config["parliament"][$parliament]["sql"]["tbl"]["MediaContent"] . " WHERE MediaContentMediaID = ?i AND MediaContentType = ?s LIMIT 1", $dbMedia["MediaID"], "transcript");
 	if (!$content) {
-		$dbParliament->query("INSERT INTO " . $config["parliament"][$parliament]["sql"]["tbl"]["MediaContent"] . " SET MediaContentMediaID = ?i, MediaContentType = ?s, MediaContentBody = ?s", $dbMedia["MediaID"], "transcript", $media["content"]);
+		$dbParliament->query("INSERT INTO " . $config["parliament"][$parliament]["sql"]["tbl"]["MediaContent"] . " SET MediaContentMediaID = ?i, MediaContentType = ?s, MediaContentBody = ?s, MediaContentHash=?s", $dbMedia["MediaID"], "transcript", $media["content"],hash("sha256",$media["content"]));
 	}
 
 	return $dbMedia["MediaID"] . " (MediaOriginalID: " . $dbMedia["MediaOriginalID"] . "; MediaHash: " . $dbMedia["MediaHash"] . ") added.".$returnConflicts;
