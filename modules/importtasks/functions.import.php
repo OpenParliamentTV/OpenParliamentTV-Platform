@@ -71,6 +71,8 @@ function importParliamentMedia($type, $parliament, $meta, $data="", $dbPlatform 
 					$media["mediaURL"] = $media["mediaOriginalURL"];
 					$media["MediaPersonRole"] = "speaker";
 					$media["aligned"] = ($media["aligned"]) ? 1 : 0;
+					$media["agendaItemSecondTitle"] = ($media["agendaItemSecondTitle"] === null) ? "" : $media["agendaItemSecondTitle"];
+					$media["content"] = ($media["content"] === null) ? "" : $media["content"];
 
 					echo mediaAdd($media,$parliament,$dbParliament,$dbPlatform)."<br><br>";
 
@@ -120,6 +122,7 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 	//TODO: if agendaItemSecondTitle is available, check if a row for agendaItemTitle exist (if not, add it) and add agendaItemSecondTitle to its children
 
 	$agendaItem = $dbParliament->getRow("SELECT * FROM " . $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"] . " WHERE AgendaItemSessionID = ?i AND AgendaItemTitle = ?s AND AgendaItemSubTitle = ?s LIMIT 1", $sess["SessionID"], $media["agendaItemTitle"], $media["agendaItemSecondTitle"]);
+	//echo $dbParliament->parse("SELECT * FROM " . $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"] . " WHERE AgendaItemSessionID = ?i AND AgendaItemTitle = ?s AND AgendaItemSubTitle = ?s LIMIT 1", $sess["SessionID"], $media["agendaItemTitle"], $media["agendaItemSecondTitle"]);
 	if (!$agendaItem) {
 		$dbParliament->query("INSERT INTO " . $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"] . " SET AgendaItemSessionID = ?i, AgendaItemTitle = ?s, AgendaItemSubTitle = ?s", $sess["SessionID"], $media["agendaItemTitle"], $media["agendaItemSecondTitle"]);
 		$agendaItem = $dbParliament->getRow("SELECT * FROM " . $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"] . " WHERE AgendaItemSessionID = ?i AND AgendaItemTitle = ?s AND AgendaItemSubTitle = ?s LIMIT 1", $sess["SessionID"], $media["agendaItemTitle"], $media["agendaItemSecondTitle"]);
