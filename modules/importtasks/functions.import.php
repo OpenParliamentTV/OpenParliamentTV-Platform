@@ -74,6 +74,7 @@ function importParliamentMedia($type, $parliament, $meta, $data="", $dbPlatform 
 					$media["MediaDateStart"] = $media["date"];
 					$media["MediaDateEnd"] = $media["date"];
 					$media["aligned"] = ($media["aligned"]) ? 1 : 0;
+					$media["duration"] = ($media["duration"] === NULL) ? "" : $media["duration"];
 					$media["agendaItemSecondTitle"] = ($media["agendaItemSecondTitle"] === null) ? "" : $media["agendaItemSecondTitle"];
 					$media["content"] = ($media["content"] === null) ? "" : $media["content"];
 
