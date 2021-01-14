@@ -3,6 +3,7 @@ require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/../utilities/safemysql.class.php");
 //require_once(__DIR__."/../utilities/uniqueFreeString.php");
 require_once(__DIR__."/../utilities/conflict.php");
+require_once(__DIR__."/../player/functions.media.php");
 
 function importParliamentMedia($type, $parliament, $meta, $data="", $dbPlatform = false) {
 
@@ -70,6 +71,8 @@ function importParliamentMedia($type, $parliament, $meta, $data="", $dbPlatform 
 					$media["mediaOriginalURL"] = 'https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/' . $media['mediaID'] . '/' . $media['mediaID'] . '_h264_720_400_2000kb_baseline_de_2192.mp4';
 					$media["mediaURL"] = $media["mediaOriginalURL"];
 					$media["MediaPersonRole"] = "speaker";
+					$media["MediaDateStart"] = $media["date"];
+					$media["MediaDateEnd"] = $media["date"];
 					$media["aligned"] = ($media["aligned"]) ? 1 : 0;
 					$media["agendaItemSecondTitle"] = ($media["agendaItemSecondTitle"] === null) ? "" : $media["agendaItemSecondTitle"];
 					$media["content"] = ($media["content"] === null) ? "" : $media["content"];
@@ -97,6 +100,59 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 	global $config;
 
 	$returnConflicts = "<br>";
+
+
+	$duplicatesHashes = $dbParliament->getAll("SELECT MediaHash FROM " . $config["parliament"][$parliament]["sql"]["tbl"]["Media"] . " WHERE MediaURL = ?s", $media["mediaURL"]);
+	foreach ($duplicatesHashes as $dhash) {
+
+		$foreignMedia = getMedia($dhash["MediaHash"],$parliament,false,$dbPlatform,$dbParliament);
+
+		if (($media["id"] == $foreignMedia["MediaOriginalID"])
+			&& ($media["aligned"] == $foreignMedia["MediaAligned"])
+			&& ($media["MediaDateStart"] == $foreignMedia["MediaDateStart"])
+			&& ($media["MediaDateEnd"] == $foreignMedia["MediaDateEnd"])
+			&& ($media["duration"] == $foreignMedia["MediaDuration"])
+			&& ($media["mediaID"] == $foreignMedia["MediaOriginalMediaID"])
+			&& ($media["mediaURL"] == $foreignMedia["MediaURL"])
+			&& ($media["agendaItemTitle"] == $foreignMedia["AgendaItemTitle"])
+			&& ($media["agendaItemSecondTitle"] == $foreignMedia["AgendaItemSubTitle"])
+			&& ($media["electoralPeriod"] == $foreignMedia["ElectoralPeriodNumber"])) {
+
+			$different = 0;
+
+			foreach ($media["documents"] as $doc) {
+
+				if (array_search($doc, array_column($foreignMedia["mediaannotation"], 'MediaAnnotationBody')) === false) {
+					$different++;
+				}
+
+			}
+
+			//TODO Have >1 content?
+			if (array_search($media["content"], array_column($foreignMedia["mediacontent"], 'MediaContentBody')) === false) {
+				$different++;
+			}
+
+			$personFindings = 0;
+			//TODO have >1 person as input
+			foreach ($foreignMedia["mediaperson"] as $mp) {
+				if (($mp["MediaPersonOriginalPersonLastName"] == $media["speakerLastName"])
+					&& ($mp["MediaPersonOriginalPersonID"] == $media["speakerID"])
+					&& ($mp["MediaPersonOriginalPersonPartyLabel"] == $media["speakerParty"])) {
+					$personFindings++;
+				}
+			}
+
+			if (($different === 0) && ($personFindings > 0)) {
+
+				reportConflict("Media", "mediaAdd duplicated entry","","", "Media ".$media["id"]." (".$media["mediaID"].") was not added because the same dataset already exists with MediaHash ".$foreignMedia["MediaHash"]." ",$dbPlatform);
+				return "Media ".$media["id"]." (".$media["mediaID"].") was not added because the same dataset already exists with MediaHash ".$foreignMedia["MediaHash"]." ";
+
+			}
+
+		}
+	}
+
 
 	//TODO: Maybe check if $dbPlatform and $dbParliament exists
 
@@ -140,8 +196,8 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 	$dbData = array(
 		"MediaOriginalID" => $media["id"],
 		"MediaAligned" => $media["aligned"],
-		"MediaDateStart" => $media["date"],
-		"MediaDateEnd" => $media["date"],
+		"MediaDateStart" => $media["MediaDateStart"],
+		"MediaDateEnd" => $media["MediaDateEnd"],
 		"MediaDuration" => $media["duration"],
 		"MediaOriginalMediaID" => $media["mediaID"],
 		"MediaURL" => $media["mediaURL"],
@@ -164,6 +220,8 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 		$returnConflicts .= "MediaID was not given in the raw data. This item can be found by its Hash (".$dbMedia["MediaHash"].") or its ID (".$dbMedia["MediaID"].")<br>";
 	}
 
+
+	//TODO Check if its still needed after duplicate check at beginning
 	$duplicates = $dbParliament->getAll("SELECT * FROM " . $config["parliament"][$parliament]["sql"]["tbl"]["Media"] . " WHERE MediaURL = ?s AND MediaHash != ?s", $dbMedia["MediaURL"], $dbMedia["MediaHash"]);
 
 	if ($duplicates) {
@@ -197,7 +255,7 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 	}
 
 	//Person for Media
-	$dbParliament->query("INSERT INTO " . $config["parliament"][$parliament]["sql"]["tbl"]["MediaPerson"] . " SET MediaPersonMediaID = ?i, MediaPersonPersonID = ?i, MediaPersonRole = ?s, MediaPersonOriginalPersonID = ?s, MediaPersonOriginalPersonParty = ?s, MediaPersonOriginalPersonRole=?s, MediaPersonOriginalPersonLastName=?s", $dbMedia["MediaID"], $person["PersonID"], $media["MediaPersonRole"], $media["speakerID"], ((is_array($party)) ? $party["PartyID"] : NULL), $media["speakerRole"], $media["speakerLastName"]);
+	$dbParliament->query("INSERT INTO " . $config["parliament"][$parliament]["sql"]["tbl"]["MediaPerson"] . " SET MediaPersonMediaID = ?i, MediaPersonPersonID = ?i, MediaPersonRole = ?s, MediaPersonOriginalPersonID = ?s, MediaPersonOriginalPersonParty = ?s, MediaPersonOriginalPersonPartyLabel = ?s, MediaPersonOriginalPersonRole=?s, MediaPersonOriginalPersonLastName=?s", $dbMedia["MediaID"], $person["PersonID"], $media["MediaPersonRole"], $media["speakerID"], ((is_array($party)) ? $party["PartyID"] : NULL), $media["speakerParty"], $media["speakerRole"], $media["speakerLastName"]);
 
 
 	//Documents
@@ -212,6 +270,7 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 
 
 	//Content
+	//TODO Have >1 content?
 	$content = $dbParliament->getRow("SELECT * FROM " . $config["parliament"][$parliament]["sql"]["tbl"]["MediaContent"] . " WHERE MediaContentMediaID = ?i AND MediaContentType = ?s LIMIT 1", $dbMedia["MediaID"], "transcript");
 	if (!$content) {
 		$dbParliament->query("INSERT INTO " . $config["parliament"][$parliament]["sql"]["tbl"]["MediaContent"] . " SET MediaContentMediaID = ?i, MediaContentType = ?s, MediaContentBody = ?s", $dbMedia["MediaID"], "transcript", $media["content"]);
