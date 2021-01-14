@@ -105,10 +105,11 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 
 	$duplicatesHashes = $dbParliament->getAll("SELECT MediaHash FROM " . $config["parliament"][$parliament]["sql"]["tbl"]["Media"] . " WHERE MediaURL = ?s", $media["mediaURL"]);
 	foreach ($duplicatesHashes as $dhash) {
-		echo "forHash:".$dhash["MediaHash"]."<br>";
+
 		$foreignMedia = getMedia($dhash["MediaHash"],$parliament,false,$dbPlatform,$dbParliament);
 
 		/*
+		echo "forHash:".$dhash["MediaHash"]."<br>";
 		echo "id :".($media["id"] == $foreignMedia["MediaOriginalID"])."<br>";
 		echo "aligned :".($media["aligned"] == $foreignMedia["MediaAligned"])."<br>";
 		echo "MediaDateStart :".($media["MediaDateStart"] == $foreignMedia["MediaDateStart"])."<br>";
@@ -252,7 +253,7 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 		foreach ($duplicates as $tmp_duplicate) {
 			reportConflict("Media","mediaAdd duplicate MediaURL",$dbMedia["MediaHash"],$tmp_duplicate["MediaHash"], "MediaURL of the added Item (".$dbMedia["MediaHash"].", ".$dbMedia["MediaID"].") is the same as for the rival item (".$tmp_duplicate["MediaHash"].", ".$tmp_duplicate["MediaID"].")",$dbPlatform);
 			$returnConflicts .= "MediaURL of the added Item (".$dbMedia["MediaHash"].", ".$dbMedia["MediaID"].") is the same as for the rival item (".$tmp_duplicate["MediaHash"].")<br>";
-			$returnConflicts .= "ContentHash = (".hash("sha256",$media["content"]).")";
+			//$returnConflicts .= "ContentHash = (".hash("sha256",$media["content"]).")";
 		}
 	}
 
