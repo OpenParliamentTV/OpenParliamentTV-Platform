@@ -276,7 +276,7 @@ function mediaAdd($media, $parliament, $dbParliament, $dbPlatform) {
 	//Person for Platform
 	$person = $dbPlatform->getRow("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Person"] . " WHERE PersonOriginalID = ?s LIMIT 1", $media["speakerID"]);
 	if (!$person) {
-		$dbPlatform->query("INSERT INTO " . $config["platform"]["sql"]["tbl"]["Person"] . " SET PersonSurname = ?s, PersonLastname = ?s, PersonDegree = ?s, PersonOriginalID = ?s, PersonPartyID = ?i", $media["speakerFirstName"], $media["speakerLastName"], $media["speakerDegree"], $media["speakerID"], ((is_array($party)) ? $party["PartyID"] : NULL));
+		$dbPlatform->query("INSERT INTO " . $config["platform"]["sql"]["tbl"]["Person"] . " SET PersonFirstname = ?s, PersonLastname = ?s, PersonDegree = ?s, PersonOriginalID = ?s, PersonPartyID = ?i", $media["speakerFirstName"], $media["speakerLastName"], $media["speakerDegree"], $media["speakerID"], ((is_array($party)) ? $party["PartyID"] : NULL));
 		$person = $dbPlatform->getRow("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Person"] . " WHERE PersonOriginalID = ?s LIMIT 1", $media["speakerID"]);
 	}
 
