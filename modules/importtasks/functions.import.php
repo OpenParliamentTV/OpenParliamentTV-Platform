@@ -18,6 +18,12 @@ function importParliamentMedia($type, $parliament, $meta, $data="", $dbPlatform 
 		));
 	}
 
+	if (!$dbPlatform) {
+		$return["success"] = "false";
+		$return["txt"] = "Not connectable to Platform Database";
+		return $return;
+	}
+
 
 	$dbParliament = new SafeMySQL(array(
 		'host'	=> $config["parliament"][$parliament]["sql"]["access"]["host"],
@@ -33,6 +39,12 @@ function importParliamentMedia($type, $parliament, $meta, $data="", $dbPlatform 
 	}
 
 	switch ($type) {
+		case "forminput":
+			//TODO Auth
+
+			return $data;
+
+		break;
 		case "jsonfiles":
 
 			if ((!is_dir($meta["inputDir"])) || (!array_key_exists($parliament,$config["parliament"]))) {

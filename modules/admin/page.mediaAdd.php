@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__."/../../config.php");
 ?>
-<form action="" method="post">
+<form action="" method="post" id="mediaAddForm">
 	<input type="hidden" name="a" value="mediaAdd">
 	<div class="row">
 		<div class="col-6 mb-4">
@@ -101,6 +101,13 @@ require_once(__DIR__."/../../config.php");
 						<input type="number" class="form-control" id="duration"  name="duration" value="">
 					</div>
 					<div class="form-group">
+						<label for="aligned">Aligned</label>
+						<select class="form-control mb-3" id="aligned" name="aligned">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</select>
+					</div>
+					<div class="form-group">
 						<label for="content">Media Content</label>
 						<textarea class="form-control" id="content"  name="content"></textarea>
 					</div>
@@ -117,5 +124,19 @@ require_once(__DIR__."/../../config.php");
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-12 mb-4">
+			<button type="submit" class="btn btn-outline-primary">Add Media</button>
+		</div>
+	</div>
 
 </form>
+
+
+<script type="text/javascript">
+
+	$("#mediaAddForm").ajaxForm({
+		url:"server/ajaxServer.php"
+	})
+
+</script>

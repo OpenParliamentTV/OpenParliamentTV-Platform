@@ -61,4 +61,11 @@ echo "
 
 	</tbody>
 </table>
+<script type="application/javascript">
+	$("tbody tr.clickable").on("click", function() {
+		$($(this).data("target")+" .first pre").load("./server/ajaxServer.php?a=getMedia&v="+$(this).data("conflictidentifier"));
+		$($(this).data("target")+" .second pre").load("./server/ajaxServer.php?a=getMedia&v="+$(this).data("conflictrival"));
+		$($(this).data("target")+" .third pre").load("./server/ajaxServer.php?a=getMediaDiffs&v1="+$(this).data("conflictidentifier")+"&v2="+$(this).data("conflictrival"));
+	})
+</script>
 
