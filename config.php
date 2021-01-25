@@ -1,6 +1,6 @@
 <?php
 
-$config["dir"]["root"] = "http://localhost/OpenParliamentTV/OpenParliamentTV-Platform";
+$config["dir"]["root"] = $_SERVER["HTTP_REFERER"]."";
 
 $config["allow"]["register"] = true;
 $config["allow"]["login"] = true;
