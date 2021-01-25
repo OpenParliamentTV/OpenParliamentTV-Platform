@@ -1,21 +1,59 @@
-########################################################
-# ROUTING -> PLAYER
-########################################################
+########################################
+# URL Rewrite Rules
+########################################
 <IfModule mod_rewrite.c>
 	Options +FollowSymLinks
-	# Try to fix conflicting rewrite rules set by Wordpress etc:
+	########################################
+	# Try to fix conflicting rewrite rules 
+	# set by Wordpress etc:
+	########################################
 	RewriteEngine Off
 	RewriteEngine On
-	RewriteBase /
+	########################################
+	# Set Rewrite Base
+	########################################
+	#RewriteBase /
+	########################################
+	# Always remove trailing slash
+	########################################
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_URI} (.+)/$
+	RewriteRule ^ %1 [L,R]
+	########################################
+	# Rewrite non-existing urls
+	########################################
+	#TODO
+	########################################
+	# Rewrite /manage/ urls
+	########################################
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(manage)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(manage)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2&id=$3 [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(manage)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
+	########################################
+	# Generic URL Rewrites
+	########################################
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2&id=$3 [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1&id=$2 [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^([a-zA-Z0-9_-]+)? index.php?a=$1 [QSA]
-	#RewriteCond %{REQUEST_URI} ^/play/([a-zA-Z0-9_-]+)$ [NC]
-	#RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1&id=$2 [NE,QSA]
 </IfModule>
-########################################################
+########################################
 # Add Mime Types
-########################################################
+########################################
 AddType video/mp4 .mp4
 AddType video/x-m4v .m4v
 AddType text/vtt .vtt

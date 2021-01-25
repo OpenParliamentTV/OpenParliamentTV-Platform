@@ -1,14 +1,6 @@
 <?php
 
-$config["dir"]["input"] = "../input";
-$config["dir"]["output"] = "../output";
-$config["dir"]["opendata"] = "../cache";
-$config["dir"]["tmp"] = "../cache";
-$config["dir"]["cacheaudio"] = "../cache";
-
-$config["sleep"] = 0;
-
-
+$config["dir"]["root"] = "http://localhost/OpenParliamentTV/OpenParliamentTV-Platform";
 
 $config["allow"]["register"] = true;
 $config["allow"]["login"] = true;

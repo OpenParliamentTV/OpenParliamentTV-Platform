@@ -3,6 +3,7 @@
 	"tagline": "Making parliamentary debates more transparent, accessible and understandable",
 	"share": "Teilen",
 	"settings": "Einstellungen",
+	"personalSettings": "Persönliche Einstellungen",
 	"about": "Über das Projekt",
 	"dataPolicy": "Datenschutz",
 	"imprint": "Impressum",
@@ -51,6 +52,18 @@
 	"backToResults": "Zurück zum Suchergebnis",
 	"login": "Anmelden",
 	"logout": "Abmelden",
-	"registerNewAccount": "Registieren",
-	"requestInvite": "Einladung anfordern"
+	"registerNewAccount": "Registrieren",
+	"requestInvite": "Einladung anfordern",
+	"dashboard": "Dashboard",
+	"conflicts": "Konflikte",
+	"conflict": "Konflikt",
+	"manageConflicts": "Konflikte verwalten",
+	"data": "Daten",
+	"manageData": "Daten verwalten",
+	"user": "Nutzer:in",
+	"users": "Nutzer:innen",
+	"manageUsers": "Nutzer:innen verwalten",
+	"notifications": "Benachrichtigungen",
+	"manageNotifications": "Benachrichtigungen verwalten",
+	"platformSettings": "Plattform-Einstellungen"
 }

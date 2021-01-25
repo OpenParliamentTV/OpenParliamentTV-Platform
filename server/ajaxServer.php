@@ -17,8 +17,8 @@ switch ($_REQUEST["a"]) {
 
 		if ($config["allow"]["register"]) {
 
-			//require_once(__DIR__."/../modules/login/register.backend.json.php");
-			require_once(__DIR__."/../modules/login/register.backend.sql.php");
+			//require_once(__DIR__."/../modules/user-management/register.backend.json.php");
+			require_once(__DIR__."/../modules/user-management/register.backend.sql.php");
 
 			$return = registerUser($_REQUEST["mail"],$_REQUEST["password"],$_REQUEST["name"]);
 
@@ -32,8 +32,8 @@ switch ($_REQUEST["a"]) {
 
 		if ($config["allow"]["login"]) {
 
-			//require_once(__DIR__."/../modules/login/login.backend.json.php");
-			require_once(__DIR__."/../modules/login/login.backend.sql.php");
+			//require_once(__DIR__."/../modules/user-management/login.backend.json.php");
+			require_once(__DIR__."/../modules/user-management/login.backend.sql.php");
 
 			$return = loginCheck($_REQUEST["mail"],$_REQUEST["password"]);
 
@@ -45,7 +45,7 @@ switch ($_REQUEST["a"]) {
 
 	case "logout":
 
-		require_once(__DIR__."/../modules/login/logout.backend.php");
+		require_once(__DIR__."/../modules/user-management/logout.backend.php");
 
 		$return = logout();
 
@@ -68,7 +68,7 @@ switch ($_REQUEST["a"]) {
 
 
 	case "getMedia":
-		require_once(__DIR__."/../modules/player/functions.media.php");
+		require_once(__DIR__."/../modules/media/functions.media.php");
 
 		$return["success"] = "true";
 		$return["text"] = "searchresults";
@@ -79,7 +79,7 @@ switch ($_REQUEST["a"]) {
 	break;
 
 	case "getMediaDiffs":
-		require_once(__DIR__."/../modules/player/functions.media.php");
+		require_once(__DIR__."/../modules/media/functions.media.php");
 		require_once(__DIR__."/../modules/utilities/functions.php");
 
 		$return["success"] = "true";
