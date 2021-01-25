@@ -20,8 +20,8 @@ if ($page != 'media') {
 } else {
 ?>
 	<link rel="stylesheet" type="text/css" href="<?= $config["dir"]["root"] ?>/content/client/FrameTrail.min.css">
-  <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css" media="all" />
-  <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/Chart.min.css" media="all" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css" media="all" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/Chart.min.css" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/player.css" media="all" />
 <?php
@@ -31,7 +31,7 @@ if ($page != 'media') {
 <?php
 if ($pageType == 'admin') {
 ?>
-  <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap-table.min.css" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap-table.min.css" />
 <?php
 }
 ?>
