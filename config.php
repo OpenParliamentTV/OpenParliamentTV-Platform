@@ -1,6 +1,6 @@
 <?php
 
-$config["dir"]["root"] = $_SERVER["HTTP_REFERER"]."";
+$config["dir"]["root"] = "";
 
 $config["allow"]["register"] = true;
 $config["allow"]["login"] = true;
