@@ -3,7 +3,7 @@ require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/../utilities/safemysql.class.php");
 //require_once(__DIR__."/../utilities/uniqueFreeString.php");
 require_once(__DIR__."/../utilities/conflict.php");
-require_once(__DIR__."/../player/functions.media.php");
+require_once(__DIR__."/../media/functions.media.php");
 
 function importParliamentMedia($type, $parliament, $meta, $data="", $dbPlatform = false) {
 
