@@ -20,10 +20,18 @@ if ($page != 'media') {
 } else {
 ?>
 	<link rel="stylesheet" type="text/css" href="<?= $config["dir"]["root"] ?>/content/client/FrameTrail.min.css">
-    <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css" media="all" />
-    <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/Chart.min.css" media="all" />
+  <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css" media="all" />
+  <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/Chart.min.css" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/player.css" media="all" />
+<?php
+}
+?>
+
+<?php
+if ($pageType == 'admin') {
+?>
+  <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap-table.min.css" />
 <?php
 }
 ?>
@@ -33,6 +41,20 @@ if ($page != 'media') {
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.form.min.js"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/Chart.min.js"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap.bundle.min.js"></script>
+
+<?php
+if ($pageType == 'admin') {
+?>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table.min.js"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-de-DE.js"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-export.min.js"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/tableExport.js"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-multi-toggle.min.js"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/shim.min.js"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/xlsx.full.min.js"></script>
+<?php
+}
+?>
 
 <!-- Matomo -->
 <!--
