@@ -80,6 +80,9 @@ function importParliamentMedia($type, $parliament, $meta, $data="", $dbPlatform 
 				foreach ($json as $spKey=>$media) {
 
 					//TODO: Prepare for more then one contributing person by having an anonymous array
+					if (!$media['mediaID']) {
+						continue;
+					}
 					$media["mediaOriginalURL"] = 'https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/' . $media['mediaID'] . '/' . $media['mediaID'] . '_h264_720_400_2000kb_baseline_de_2192.mp4';
 					$media["mediaURL"] = $media["mediaOriginalURL"];
 					$media["MediaPersonRole"] = "speaker";
