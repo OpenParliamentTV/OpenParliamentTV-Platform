@@ -97,7 +97,7 @@ switch ($_REQUEST["a"]) {
 	break;
 
 	case "mediaAdd":
-		require_once(__DIR__."/../modules/importtasks/functions.import.php");
+		require_once(__DIR__."/../modules/import/functions.import.php");
 
 
 		$return["error"] = 0;
