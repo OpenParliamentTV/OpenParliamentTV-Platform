@@ -1,7 +1,7 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
-require_once 'i18n.class.php';
+require_once('i18n.class.php');
 $i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'de');
 $i18n->setForcedLang('de');
 $i18n->init();
@@ -10,7 +10,7 @@ $i18n->init();
 $pageTitle = L::brand;
 $page = (isset($_REQUEST["a"]) && strlen($_REQUEST["a"]) > 2) ? $_REQUEST["a"] : "main";
 
-require_once 'config.php';
+require_once('config.php');
 
 switch ($page) {
 	/*********************************
