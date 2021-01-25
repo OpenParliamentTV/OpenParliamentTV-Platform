@@ -13,7 +13,7 @@
 
 				echo '
 					<form action="" method="post">
-						<input type="hidden" name="a" value="import">
+						<!--<input type="hidden" name="a" value="import">-->
 						<select class="form-control mb-4" name="parliament">';
 						  foreach($config["parliament"] as $k=>$v) {
 							  echo '<option value="'.$k.'">'.$v["label"].'</option>';
