@@ -6,6 +6,8 @@ $config["allow"]["register"] = true;
 $config["allow"]["login"] = true;
 $config["salt"] = "gMu2bs)v7ZN!677hH";
 
+$config["mode"] = "dev";
+
 
 
 //DB - Platform config

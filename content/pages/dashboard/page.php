@@ -29,6 +29,13 @@
 				<li>
 					<a href="./manage/config"><?php echo L::platformSettings; ?></a>
 				</li>
+				<?php
+				if ($config["mode"] == "dev") {
+					echo '<li>
+						<a href="../server/ajaxServer.php?a=devAddTestuser" target="_blank">Add Testuser (admin@admin.com:admin test@test.com:test</a>
+					</li>';
+				}
+				?>
 			</ul>
 		</div>
 	</div>

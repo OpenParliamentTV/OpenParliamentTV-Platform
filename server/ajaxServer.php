@@ -26,6 +26,21 @@ switch ($_REQUEST["a"]) {
 
 	break;
 
+	case "devAddTestuser":
+
+		if ($config["mode"] == "dev") {
+
+			//require_once(__DIR__."/../modules/user-management/register.backend.json.php");
+			require_once(__DIR__."/../modules/user-management/register.backend.sql.php");
+
+			$return[] = registerUser("admin@admin.com","admin","DEV-Admin");
+			$return[] = registerUser("test@test.com","test","DEV-Test User");
+
+		}
+		//TODO: Response if registration is not allowed
+
+	break;
+
 
 
 	case "login":

@@ -28,6 +28,8 @@ require_once(__DIR__."/../utilities/uniqueFreeString.php");
  */
 function reportConflict($entity, $subject, $identifier="", $rival="", $description="", $dbPlatform = false) {
 
+	//TODO Auth
+
 	global $config;
 
 	if (!$dbPlatform) {
@@ -41,6 +43,41 @@ function reportConflict($entity, $subject, $identifier="", $rival="", $descripti
 
 	$dbPlatform->query("INSERT INTO " . $config["platform"]["sql"]["tbl"]["Conflict"] . " SET ConflictEntity = ?s, ConflictIdentifier=?s, ConflictRival=?s, ConflictSubject=?s, ConflictDescription=?s, ConflictDate=?s, ConflictTimestamp=?i", $entity, $identifier, $rival, $subject, $description, date("Ymd H:i:s"), time());
 	return $dbPlatform->insertId();
+
+}
+
+function getConflicts($id = "all", $includeResolved = false, $dbPlatform = false) {
+
+	//TODO Auth
+
+	global $config;
+
+	if (!$dbPlatform) {
+		$dbPlatform = new SafeMySQL(array(
+			'host'	=> $config["platform"]["sql"]["access"]["host"],
+			'user'	=> $config["platform"]["sql"]["access"]["user"],
+			'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+			'db'	=> $config["platform"]["sql"]["db"]
+		));
+	}
+
+	$queryPart = "";
+
+	if ($id == "all") {
+		$queryPart .= "1";
+	} else {
+		$queryPart .= $dbPlatform->parse("ConflictID=?i",$id);
+	}
+
+
+	if ($includeResolved === true) {
+		$queryPart .= " AND 1";
+	} else {
+		$queryPart .= " AND ConflictResolved=0";
+	}
+
+
+	return $dbPlatform->getAll("SELECT * FROM  " . $config["platform"]["sql"]["tbl"]["Conflict"]." WHERE ?p", $queryPart);
 
 }
 
