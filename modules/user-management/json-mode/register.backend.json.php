@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/../../config.php");
+require_once(__DIR__ . "/../../config.php");
 require_once(__DIR__."/functions.json.php");
 
 function registerUser($mail = "", $passwd = "", $name="") {
