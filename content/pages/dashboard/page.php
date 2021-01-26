@@ -32,7 +32,7 @@
 				<?php
 				if ($config["mode"] == "dev") {
 					echo '<li>
-						<a href="../server/ajaxServer.php?a=devAddTestuser" target="_blank">Add Testuser (admin@admin.com:admin test@test.com:test</a>
+						<a href="'.$config["dir"]["root"].'/server/ajaxServer.php?a=devAddTestuser" target="_blank">Add Testuser (admin@admin.com:admin test@test.com:test</a>
 					</li>';
 				}
 				?>
