@@ -5,14 +5,14 @@
 			<h2><?php echo L::manageData; ?></h2>
 			<div class="card mb-3">
 				<div class="card-body">
-					<a href="" class="btn btn-outline-success btn-sm mr-1">New Media Item</a>
-					<a href="" class="btn btn-outline-success btn-sm mr-1">New Person</a>
+					<a href="#" class="btn btn-outline-success btn-sm mr-1">New Media Item</a>
+					<a href="#" class="btn btn-outline-success btn-sm mr-1">New Person</a>
 				</div>
 			</div>
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true">Media</a>
-					</li>
+				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="false">People</a>
 				</li>
