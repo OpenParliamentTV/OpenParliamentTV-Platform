@@ -253,12 +253,17 @@ h1, h2 {
 
 .btn, input, select {
     font-weight: 300 !important;
+}
+
+.btn:not([class^='btn-outline-'], [class*='btn-outline-']) {
     color: var(--primary-fg-color);
     border-color: #CFCFCF;
     background: #fff;
 }
 
-.btn:hover, .btn:focus, .btn:not(.disabled).active {
+.btn:not([class^='btn-outline-'], [class*='btn-outline-']):hover, 
+.btn:not([class^='btn-outline-'], [class*='btn-outline-']):focus, 
+.btn:not([class^='btn-outline-'], [class*='btn-outline-']):not(.disabled).active {
     background: #73747C !important;
     border-color: #73747C !important;
     color: #fff;
@@ -290,6 +295,14 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 
 .btn[data-toggle="collapse"].collapsed .labelShow {
     display: inline;
+}
+
+.tab-content {
+    background: #fff;
+    border-right: 1px solid rgba(0,0,0,.125);
+    border-left: 1px solid rgba(0,0,0,.125);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    padding: 6px 10px;
 }
 
 .switch {
