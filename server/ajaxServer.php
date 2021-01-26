@@ -32,11 +32,14 @@ switch ($_REQUEST["a"]) {
 
 			//require_once(__DIR__."/../modules/user-management/register.backend.json.php");
 			require_once(__DIR__."/../modules/user-management/register.backend.sql.php");
-			$return["success"] = "true";
-			$return["text"] = "User Added";
 
 			$return[] = registerUser("admin@admin.com","admin","DEV-Admin");
 			$return[] = registerUser("test@test.com","test","DEV-Test User");
+
+			if (($return[0]["success"] == "true" ) && ($return[1]["success"] == "true")) {
+				$return["success"] = "true";
+				$return["text"] = "User Added";
+			}
 
 		}
 		//TODO: Response if registration is not allowed

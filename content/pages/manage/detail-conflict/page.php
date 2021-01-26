@@ -1,7 +1,7 @@
 <?php
 include_once(__DIR__ . '/../../../header.php');
 
-include_once(__DIR__."/../../../../modules/import/functions.conflicts.php");
+require_once(__DIR__."/../../../../modules/import/functions.conflicts.php");
 
 
 /*
@@ -23,11 +23,32 @@ $("tbody tr.clickable").on("click", function() {
 		<div class="col-12">
 			<?php
 
-			echo json_encode(getConflicts($_REQUEST["id"]));
+			$conflict = getConflicts($_REQUEST["id"]);
+			//print_r($conflict);
+
+			if (!$conflict) {
+				echo "Conflict not found";
+			} else {
+				$conflict = $conflict[0];
+				switch($conflict["ConflictEntity"]) {
+
+					case "Media":
+						include_once(__DIR__."/content.media.php");
+					break;
+
+					case "Party":
+					break;
+					default:
+					break;
+
+				}
+			}
 
 			?>
 
 		</div>
 	</div>
 </main>
+
 <?php include_once(__DIR__ . '/../../../footer.php'); ?>
+<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/detail-conflict/client/style.css" media="all" />
