@@ -15,6 +15,7 @@ body {
     --border-color: #DFDFDF;
     --shadow-color: #CFCFCF;
     --custom-select-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e");
+    --custom-checkbox-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%23fff' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26l2.974 2.99L8 2.193z'/%3e%3c/svg%3e");
     --transparent-loading-bg: rgba(243, 244, 245, .8);
 }
 
@@ -32,9 +33,10 @@ body.darkmode {
     --highlight-color: var(--primary-fg-color);
     --tooltip-bg-color: #D8D3AD; /* Tooltips */
     --video-background-color: #000;
-    --border-color: #55565E;
+    --border-color: #676970;
     --shadow-color: #1E1E1E;
     --custom-select-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23ffffff' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e");
+    --custom-checkbox-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%23404149' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26l2.974 2.99L8 2.193z'/%3e%3c/svg%3e");
     --transparent-loading-bg: rgba(47, 49, 57, .8);
 }
 
@@ -205,6 +207,10 @@ footer {
     float: left;
 }
 
+body.darkmode .partnerLogos img {
+    filter: grayscale(1) invert(1);
+}
+
 main {
     z-index: 1;
 }
@@ -279,12 +285,26 @@ h1, h2 {
 .form-control, 
 .custom-select, 
 .page-link, 
-.table, 
+.table,
 .form-control:focus, 
 .custom-select:focus {
     border-color: var(--border-color);
     background-color: var(--primary-bg-color);
     color: var(--primary-fg-color);
+}
+
+.custom-control-input ~ .custom-control-label::before {
+    border-color: var(--border-color);
+    background-color: var(--primary-bg-color);
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    border-color: var(--primary-bg-color);
+    background-color: var(--primary-fg-color);
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+    background-image: var(--custom-checkbox-bg-image);
 }
 
 .form-control::placeholder {
