@@ -1,9 +1,25 @@
 body {
-    --primary-bg-color: rgba(47, 50, 58, 1); /* Backgrounds */
-    --secondary-bg-color: rgba(73, 76, 81, .6); /* Secondary Backgrounds, Timelines, Tile-BG, Panels etc. NEEDS TO BE SEMI-TRANSPARENT */
+    --primary-bg-color: #fff;
+    --secondary-bg-color: #f3f4f5;
     --semi-transparent-bg-color: rgba(47, 50, 58, .8); 
     --primary-fg-color: #73747C; /* Texts Borders etc. */
     --secondary-fg-color: rgba(220, 220, 220, 1); /* Secondary Texts, Borders, Editable Panels etc. */
+    --semi-transparent-fg-color: rgba(255, 255, 255, .3);
+    --semi-transparent-fg-highlight-color: rgba(255, 255, 255, .4);
+    --semi-transparent-fg-active-color: var(--secondary-fg-color);
+    --annotation-preview-bg-color: rgba(100 ,100, 100, .2);
+    /*--highlight-color: rgba(246, 138, 102, 1);*/
+    --highlight-color: var(--primary-fg-color);
+    --tooltip-bg-color: #D8D3AD; /* Tooltips */
+    --video-background-color: #000;
+}
+
+body.darkmode {
+    --primary-bg-color: #2C2D35;
+    --secondary-bg-color: #3F4048;
+    --semi-transparent-bg-color: rgba(47, 50, 58, .8); 
+    --primary-fg-color: #fff; /* Texts Borders etc. */
+    --secondary-fg-color: #f3f4f5; /* Secondary Texts, Borders, Editable Panels etc. */
     --semi-transparent-fg-color: rgba(255, 255, 255, .3);
     --semi-transparent-fg-highlight-color: rgba(255, 255, 255, .4);
     --semi-transparent-fg-active-color: var(--secondary-fg-color);
@@ -40,7 +56,7 @@ html, body {
 
 body {
     color: var(--primary-fg-color);
-    background: #f3f4f5;
+    background: var(--secondary-bg-color);
     font-family: "Open Sans","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
     font-size: 14px;
     font-weight: 300;
@@ -54,7 +70,7 @@ header {
 }
 
 header .navbar {
-    background: #fff;
+    background: var(--primary-bg-color);
     box-shadow: 0px 0px 4px #cfcfcf;
     padding: 8px 15px;
     line-height: 100%;
@@ -149,16 +165,16 @@ header #navbarNavSettings .nav-item {
 }
 
 .navbar button[aria-expanded="true"] {
-    background: #73747C !important;
-    border-color: #73747C !important;
-    color: #fff;
+    background: var(--primary-fg-color) !important;
+    border-color: var(--primary-fg-color) !important;
+    color: var(--primary-bg-color);
 }
 
 footer {
     margin-top: 0px;
     padding: 10px 15px;
     min-height: 100px;
-    background: #fff;
+    background: var(--primary-bg-color);
     box-shadow: 0px 0px 4px #cfcfcf;
 }
 
@@ -255,18 +271,22 @@ h1, h2 {
     font-weight: 300 !important;
 }
 
-.btn:not([class^='btn-outline-'], [class*='btn-outline-']) {
+.btn:not([class^='btn-outline-'], [class*='btn-outline-']),
+.btn.btn-outline-primary {
     color: var(--primary-fg-color);
     border-color: #CFCFCF;
-    background: #fff;
+    background: var(--primary-bg-color);
 }
 
 .btn:not([class^='btn-outline-'], [class*='btn-outline-']):hover, 
 .btn:not([class^='btn-outline-'], [class*='btn-outline-']):focus, 
-.btn:not([class^='btn-outline-'], [class*='btn-outline-']):not(.disabled).active {
-    background: #73747C !important;
-    border-color: #73747C !important;
-    color: #fff;
+.btn:not([class^='btn-outline-'], [class*='btn-outline-']):not(.disabled).active,
+.btn.btn-outline-primary:hover, 
+.btn.btn-outline-primary:focus, 
+.btn.btn-outline-primary:not(.disabled).active {
+    background: var(--primary-fg-color) !important;
+    border-color: var(--primary-fg-color) !important;
+    color: var(--primary-bg-color);
 }
 
 .btn[disabled] {
@@ -298,7 +318,7 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 }
 
 .tab-content {
-    background: #fff;
+    background: var(--primary-bg-color);
     border-right: 1px solid rgba(0,0,0,.125);
     border-left: 1px solid rgba(0,0,0,.125);
     border-bottom: 1px solid rgba(0,0,0,.125);
@@ -502,7 +522,7 @@ input:checked + .slider:before, .switch-container.active .slider:before {
         top: 0px;
         left: 0px;
         z-index: 11;
-        background: #f3f4f5;
+        background: var(--secondary-bg-color);
         box-shadow: 0px 6px 4px -3px #d3d4d5;
         margin-left: auto;
         margin-right: auto;
@@ -554,7 +574,7 @@ input#edit-query {
 
 .filterContainer {
     padding: 10px;
-    background: #fff;
+    background: var(--primary-bg-color);
     border: 1px solid #DFDFDF;
     margin-top: -1px;
     overflow: hidden;
@@ -604,7 +624,7 @@ input#edit-query {
     padding: 2px 6px 2px 30px;
     border-width: 1px;
     border-style: solid;
-    background: #fff;
+    background: var(--primary-bg-color);
     border-radius: 4px;
 }
 
@@ -723,7 +743,7 @@ input#edit-query {
 
 .resultItem .resultContent {
     position: relative;
-    background: #fff;
+    background: var(--primary-bg-color);
     height: 100%;
     padding: 10px 10px 30px 10px;
     border-width: 1px;
@@ -762,7 +782,7 @@ input#edit-query {
 
 .resultItem em {
     background: var(--highlight-color);
-    color: #fff;
+    color: var(--primary-bg-color);
     padding: 0 2px;
     border-radius: 3px;
     font-style: normal;
@@ -823,7 +843,7 @@ input#edit-query {
     bottom: 10px;
     width: calc(100% - 20px);
     height: 6px;
-    background: #f3f4f5;
+    background: var(--secondary-bg-color);
     left: 8px;
 }
 
