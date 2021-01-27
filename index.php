@@ -112,11 +112,11 @@ switch ($page) {
 	/*********************************
 	* USER-SPECIFIC / ADMINISTRATION
 	**********************************/
-	case "dashboard":
+	case "manage":
 		$pageTitle = L::dashboard;
 		$pageType = 'admin';
 		ob_start();
-		include_once("./content/pages/dashboard/page.php");
+		include_once("./content/pages/manage/page.php");
 		$content = ob_get_clean();
 	break;
 	case "manage-config":
@@ -151,21 +151,33 @@ switch ($page) {
 		$pageTitle = 'Manage Document';
 		$pageType = 'admin';
 		ob_start();
-		include_once("./content/pages/manage/detail-document/page.php");
+		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
+			include_once("./content/pages/manage/data/document/new.php");
+		} else {
+			include_once("./content/pages/manage/data/document/page.php");
+		}
 		$content = ob_get_clean();
 	break;
 	case "manage-data-media":
 		$pageTitle = 'Manage Media';
 		$pageType = 'admin';
 		ob_start();
-		include_once("./content/pages/manage/detail-media/page.php");
+		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
+			include_once("./content/pages/manage/data/media/new.php");
+		} else {
+			include_once("./content/pages/manage/data/media/page.php");
+		}
 		$content = ob_get_clean();
 	break;
 	case "manage-data-person":
 		$pageTitle = 'Manage Person';
 		$pageType = 'admin';
 		ob_start();
-		include_once("./content/pages/manage/detail-person/page.php");
+		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
+			include_once("./content/pages/manage/data/person/new.php");
+		} else {
+			include_once("./content/pages/manage/data/person/page.php");
+		}
 		$content = ob_get_clean();
 	break;
 	case "manage-import":
@@ -187,7 +199,7 @@ switch ($page) {
 		if (isset($_REQUEST["id"])) {
 			$pageTitle = 'Manage Detail User';
 			$pageType = 'admin';
-			include_once("./content/pages/manage/detail-user/page.php");
+			include_once("./content/pages/manage/users/user/page.php");
 			$content = ob_get_clean();
 		} else {
 			$pageTitle = L::users;
@@ -240,7 +252,7 @@ $lang = in_array($lang, $acceptLang) ? $lang : 'de';
 <head>
 	<?php require_once('content/head.php'); ?>
 </head>
-<body class=' <?= (($_SESSION["login"]) ? "login" : "") ?>'>
+<body class='darkmode <?= (($_SESSION["login"]) ? "login" : "") ?>'>
 <?= $content ?>
 </body>
 </html>

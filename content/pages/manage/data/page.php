@@ -5,8 +5,8 @@
 			<h2><?php echo L::manageData; ?></h2>
 			<div class="card mb-3">
 				<div class="card-body">
-					<a href="#" class="btn btn-outline-success btn-sm mr-1">New Media Item</a>
-					<a href="#" class="btn btn-outline-success btn-sm mr-1">New Person</a>
+					<a href="<?= $config["dir"]["root"] ?>/manage/data/media/new" class="btn btn-outline-success btn-sm mr-1">New Media Item</a>
+					<a href="<?= $config["dir"]["root"] ?>/manage/data/person/new" class="btn btn-outline-success btn-sm mr-1">New Person</a>
 				</div>
 			</div>
 			<ul class="nav nav-tabs" role="tablist">

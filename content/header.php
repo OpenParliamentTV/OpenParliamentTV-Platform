@@ -4,9 +4,9 @@
 			<a href="<?= $config["dir"]["root"] ?>/" class="breadcrumb-page navbar-text large brand">
 				<img src="<?= $config["dir"]["root"] ?>/content/client/images/optv-logo_klein.png"><span class="<?=($page != "media") ? "d-none d-sm-inline" : "d-none d-lg-inline"?>"><?php echo L::brand; ?></span>
 			</a>
-			<?php if ($pageType == "admin" && $page != "dashboard") { ?>
+			<?php if ($pageType == "admin" && $page != "manage") { ?>
 				<div class="breadcrumb-page">
-					<span class="navbar-text breadcrumb-separator">/</span><a href="<?= $config["dir"]["root"] ?>/dashboard" class="navbar-text pl-0 pr-0"><?php echo L::dashboard; ?></a>
+					<span class="navbar-text breadcrumb-separator">/</span><a href="<?= $config["dir"]["root"] ?>/manage" class="navbar-text pl-0 pr-0"><?php echo L::dashboard; ?></a>
 				</div>
 			<?php } ?>
 			<div class="breadcrumb-page <?=($page != "media" && $page != "main") ? "" : "d-none"?>">
@@ -41,7 +41,7 @@
 			<div class="dropdown d-inline">
 				<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-torso"></span></button>
 				<div class="dropdown-menu dropdown-menu-right">
-					<a class="dropdown-item <?= ($page == "dashboard") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/dashboard">Dashboard</a>
+					<a class="dropdown-item <?= ($page == "manage") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/manage">Dashboard</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item <?= ($page == "login") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/login"><?php echo L::login; ?></a>
 					<a class="dropdown-item <?= ($page == "register") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/register"><?php echo L::registerNewAccount; ?></a>
