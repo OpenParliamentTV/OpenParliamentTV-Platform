@@ -143,7 +143,8 @@ function updatePartyChart(speechesPerParty) {
 	var partyData = {
 	    datasets: [{
 	        data: [],
-	        backgroundColor: []
+	        backgroundColor: [],
+	        borderWidth: [],
 	    }],
 	    labels: []
 	};
@@ -155,6 +156,7 @@ function updatePartyChart(speechesPerParty) {
 			partyData.datasets[0].data.push(speechesPerParty[party]);
 			partyData.labels.push(party);
 			partyData.datasets[0].backgroundColor.push(partyColor);
+			partyData.datasets[0].borderWidth.push(1);
 		}
 	}
 
