@@ -240,7 +240,7 @@ $lang = in_array($lang, $acceptLang) ? $lang : 'de';
 <head>
 	<?php require_once('content/head.php'); ?>
 </head>
-<body<?= (($_SESSION["login"]) ? " class='login'" : "") ?>>
+<body class=' <?= (($_SESSION["login"]) ? "login" : "") ?>'>
 <?= $content ?>
 </body>
 </html>
