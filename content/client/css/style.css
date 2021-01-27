@@ -219,7 +219,7 @@ main.container.subpage {
     z-index: 1
 }
 
-.subpage a:not(.btn):not(.nav-link), footer a:not(.btn) {
+.subpage a:not(.btn, .nav-link, .page-link), footer a:not(.btn) {
     text-decoration: underline;
 }
 
