@@ -234,6 +234,10 @@ main.container.subpage {
     z-index: 1
 }
 
+a, a:hover {
+    color: var(--primary-fg-color);
+}
+
 .subpage a:not(.btn, .nav-link, .page-link), footer a:not(.btn) {
     text-decoration: underline;
 }
@@ -287,10 +291,27 @@ h1, h2 {
 .page-link, 
 .table,
 .form-control:focus, 
-.custom-select:focus {
+.custom-select:focus, 
+.card, 
+.nav-tabs .nav-item.show .nav-link, 
+.nav-tabs .nav-link.active,
+.dropdown-menu,
+.dropdown-item {
     border-color: var(--border-color);
     background-color: var(--primary-bg-color);
     color: var(--primary-fg-color);
+}
+
+.dropdown-item:focus, 
+.dropdown-item:hover,
+.dropdown-item.active {
+    background-color: var(--primary-fg-color);
+    color: var(--primary-bg-color);
+}
+
+.nav-tabs .nav-item.show .nav-link, 
+.nav-tabs .nav-link.active {
+    border-bottom-color: transparent;
 }
 
 .custom-control-input ~ .custom-control-label::before {
@@ -380,11 +401,15 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     display: inline;
 }
 
+.nav-tabs {
+    border-bottom-color: var(--border-color);
+}
+
 .tab-content {
     background: var(--primary-bg-color);
-    border-right: 1px solid rgba(0,0,0,.125);
-    border-left: 1px solid rgba(0,0,0,.125);
-    border-bottom: 1px solid rgba(0,0,0,.125);
+    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
     padding: 6px 10px;
 }
 
