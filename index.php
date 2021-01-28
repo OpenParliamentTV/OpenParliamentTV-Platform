@@ -175,7 +175,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "manage-config":
-		$pageTitle = 'Configuration';
+		$pageTitle = L::platformSettings;
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
