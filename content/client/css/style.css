@@ -132,6 +132,10 @@ header .navbar .navbar-text.brand img {
     height: auto;
 }
 
+body.darkmode header .navbar .navbar-text.brand img {
+    filter: brightness(2);
+}
+
 header .navbar .navbar-text:hover, header .navbar .navbar-text:focus {
     text-decoration: none;
 }
@@ -208,7 +212,7 @@ footer {
 }
 
 body.darkmode .partnerLogos img {
-    filter: grayscale(1) invert(1);
+    filter: grayscale(1) brightness(10) opacity(0.7);
 }
 
 main {

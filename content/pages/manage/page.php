@@ -29,13 +29,12 @@
 				<li>
 					<a href="./manage/config"><?php echo L::platformSettings; ?></a>
 				</li>
-				<?php
-				if ($config["mode"] == "dev") {
-					echo '<li>
-						<a href="'.$config["dir"]["root"].'/server/ajaxServer.php?a=devAddTestuser" target="_blank">Add Testuser (admin@admin.com:admin test@test.com:test</a>
-					</li>';
-				}
-				?>
+			</ul>
+			<h2>DEBUG</h2>
+			<ul>
+				<li>
+					<a href="<?= $config["dir"]["root"] ?>/server/ajaxServer.php?a=getMedia&v=1&p=bt&conflicts=true" target="_self">Show Media Data (v can be hash or id, p is just required if v is an ID)</a>
+				</li>
 			</ul>
 		</div>
 	</div>

@@ -1,7 +1,7 @@
 <?php
-include_once(__DIR__ . '/../../../header.php');
+include_once(__DIR__ . '/../../../../header.php');
 
-require_once(__DIR__."/../../../../modules/import/functions.conflicts.php");
+require_once(__DIR__."/../../../../../modules/import/functions.conflicts.php");
 
 
 /*
@@ -51,4 +51,4 @@ $("tbody tr.clickable").on("click", function() {
 </main>
 
 <?php include_once(__DIR__ . '/../../../footer.php'); ?>
-<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/detail-conflict/client/style.css" media="all" />
+<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/conflicts/conflict/client/style.css" media="all" />

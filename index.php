@@ -20,7 +20,7 @@ switch ($page) {
 		$pageTitle = 'Detail Document';
 		$pageType = 'default';
 		ob_start();
-		include_once("./content/pages/detail-document/page.php");
+		include_once("./content/pages/document/page.php");
 		$content = ob_get_clean();
 	break;
 	case "embed":
@@ -30,7 +30,7 @@ switch ($page) {
 		require_once(__DIR__."/modules/media/functions.php");
 		require_once(__DIR__."/modules/media/include.media.php");
 		ob_start();
-		include_once("./content/pages/detail-embed/page.php");
+		include_once("./content/pages/embed/page.php");
 		$content = ob_get_clean();
 	break;
 	case "media":
@@ -40,21 +40,21 @@ switch ($page) {
 		require_once(__DIR__."/modules/media/functions.php");
 		require_once(__DIR__."/modules/media/include.media.php");
 		ob_start();
-		include_once("./content/pages/detail-media/page.php");
+		include_once("./content/pages/media/page.php");
 		$content = ob_get_clean();
 	break;
 	case "person":
 		$pageTitle = 'Detail Person';
 		$pageType = 'default';
 		ob_start();
-		include_once("./content/pages/detail-person/page.php");
+		include_once("./content/pages/person/page.php");
 		$content = ob_get_clean();
 	break;
 	case "user":
 		$pageTitle = 'Detail User';
 		$pageType = 'default';
 		ob_start();
-		include_once("./content/pages/detail-user/page.php");
+		include_once("./content/pages/user/page.php");
 		$content = ob_get_clean();
 	break;
 	/*********************************
@@ -131,7 +131,7 @@ switch ($page) {
 		if (isset($_REQUEST["id"])) {
 			$pageTitle = 'Manage Conflict';
 			$pageType = 'admin';
-			include_once("./content/pages/manage/detail-conflict/page.php");
+			include_once("./content/pages/manage/conflicts/conflict/page.php");
 			$content = ob_get_clean();
 		} else {
 			$pageTitle = L::conflicts;

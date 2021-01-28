@@ -7,7 +7,11 @@
 				<div class="card-body">
 					<a href="<?= $config["dir"]["root"] ?>/register" class="btn btn-outline-success btn-sm mr-1">Register New User</a>
 					<a href="#" class="btn btn-primary btn-sm mr-1">Send Invite</a>
-					<a href="#" class="btn btn-primary btn-sm mr-1">Auto-Add Admin User</a>
+					<?php
+					if ($config["mode"] == "dev") {
+						echo '<a class="btn btn-primary btn-sm mr-1" href="'.$config["dir"]["root"].'/server/ajaxServer.php?a=devAddTestuser" target="_blank">Auto-Add Test Users (admin@admin.com:admin test@test.com:test)</a>';
+					}
+					?>
 				</div>
 			</div>
 			<ul class="nav nav-tabs" role="tablist">
