@@ -19,6 +19,11 @@ switch ($page) {
 	case "document":
 		$pageTitle = 'Detail Document';
 		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/document/page.php");
 		$content = ob_get_clean();
@@ -46,6 +51,11 @@ switch ($page) {
 	case "person":
 		$pageTitle = 'Detail Person';
 		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/person/page.php");
 		$content = ob_get_clean();
@@ -53,6 +63,11 @@ switch ($page) {
 	case "user":
 		$pageTitle = 'Detail User';
 		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/user/page.php");
 		$content = ob_get_clean();
@@ -63,6 +78,11 @@ switch ($page) {
 	case "about":
 		$pageTitle = L::about;
 		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/about/page.php");
 		$content = ob_get_clean();
@@ -70,6 +90,11 @@ switch ($page) {
 	case "api":
 		$pageTitle = 'API';
 		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/api/page.php");
 		$content = ob_get_clean();
@@ -77,6 +102,11 @@ switch ($page) {
 	case "datapolicy":
 		$pageTitle = L::dataPolicy;
 		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/datapolicy/page.php");
 		$content = ob_get_clean();
@@ -84,6 +114,11 @@ switch ($page) {
 	case "imprint":
 		$pageTitle = L::imprint;
 		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/imprint/page.php");
 		$content = ob_get_clean();
@@ -91,6 +126,11 @@ switch ($page) {
 	case "login":
 		$pageTitle = L::login;
 		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/login/page.php");
 		$content = ob_get_clean();
@@ -98,6 +138,11 @@ switch ($page) {
 	case "logout":
 		$pageTitle = L::logout;
 		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/logout/page.php");
 		$content = ob_get_clean();
@@ -105,6 +150,11 @@ switch ($page) {
 	case "register":
 		$pageTitle = L::registerNewAccount;
 		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/register/page.php");
 		$content = ob_get_clean();
@@ -115,6 +165,11 @@ switch ($page) {
 	case "manage":
 		$pageTitle = L::dashboard;
 		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/manage/page.php");
 		$content = ob_get_clean();
@@ -122,6 +177,15 @@ switch ($page) {
 	case "manage-config":
 		$pageTitle = 'Configuration';
 		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/manage/config/page.php");
 		$content = ob_get_clean();
@@ -131,11 +195,33 @@ switch ($page) {
 		if (isset($_REQUEST["id"])) {
 			$pageTitle = 'Manage Conflict';
 			$pageType = 'admin';
+			$pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => L::conflicts,
+					'path' => '/manage/conflicts'
+				],
+				[
+					'label' => '<span class="icon-pencil"></span>'
+				]
+			];
 			include_once("./content/pages/manage/conflicts/conflict/page.php");
 			$content = ob_get_clean();
 		} else {
 			$pageTitle = L::conflicts;
 			$pageType = 'admin';
+			$pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => $pageTitle
+				]
+			];
 			include_once("./content/pages/manage/conflicts/page.php");
 			$content = ob_get_clean();
 		}
@@ -143,6 +229,15 @@ switch ($page) {
 	case "manage-data":
 		$pageTitle = L::data;
 		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
 		include_once("./content/pages/manage/data/page.php");
 		$content = ob_get_clean();
@@ -150,8 +245,22 @@ switch ($page) {
 	case "manage-data-document":
 		$pageTitle = 'Manage Document';
 		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => L::data,
+				'path' => '/manage/data'
+			],
+			[
+				'label' => '<span class="icon-pencil"></span>'
+			]
+		];
 		ob_start();
 		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
+			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
 			include_once("./content/pages/manage/data/document/new.php");
 		} else {
 			include_once("./content/pages/manage/data/document/page.php");
@@ -161,8 +270,22 @@ switch ($page) {
 	case "manage-data-media":
 		$pageTitle = 'Manage Media';
 		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => L::data,
+				'path' => '/manage/data'
+			],
+			[
+				'label' => '<span class="icon-pencil"></span>'
+			]
+		];
 		ob_start();
 		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
+			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
 			include_once("./content/pages/manage/data/media/new.php");
 		} else {
 			include_once("./content/pages/manage/data/media/page.php");
@@ -172,8 +295,22 @@ switch ($page) {
 	case "manage-data-person":
 		$pageTitle = 'Manage Person';
 		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => L::data,
+				'path' => '/manage/data'
+			],
+			[
+				'label' => '<span class="icon-pencil"></span>'
+			]
+		];
 		ob_start();
 		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
+			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
 			include_once("./content/pages/manage/data/person/new.php");
 		} else {
 			include_once("./content/pages/manage/data/person/page.php");
@@ -181,8 +318,17 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "manage-import":
-		$pageTitle = 'Data Import';
+		$pageTitle = L::data.'-Import';
 		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => $pageTitle,
+			]
+		];
 		ob_start();
 		include_once("./content/pages/manage/import/page.php");
 		$content = ob_get_clean();
@@ -190,6 +336,15 @@ switch ($page) {
 	case "manage-notifications":
 		$pageTitle = L::notifications;
 		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => $pageTitle,
+			]
+		];
 		ob_start();
 		include_once("./content/pages/manage/notifications/page.php");
 		$content = ob_get_clean();
@@ -199,11 +354,33 @@ switch ($page) {
 		if (isset($_REQUEST["id"])) {
 			$pageTitle = 'Manage Detail User';
 			$pageType = 'admin';
+			$pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => L::users,
+					'path' => '/manage'
+				],
+				[
+					'label' => '<span class="icon-pencil"></span>',
+				]
+			];
 			include_once("./content/pages/manage/users/user/page.php");
 			$content = ob_get_clean();
 		} else {
 			$pageTitle = L::users;
 			$pageType = 'admin';
+			$pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => $pageTitle,
+				]
+			];
 			include_once("./content/pages/manage/users/page.php");
 			$content = ob_get_clean();
 		}

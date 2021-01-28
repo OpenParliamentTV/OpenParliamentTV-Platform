@@ -4,14 +4,21 @@
 			<a href="<?= $config["dir"]["root"] ?>/" class="breadcrumb-page navbar-text large brand">
 				<img src="<?= $config["dir"]["root"] ?>/content/client/images/optv-logo_klein.png"><span class="<?=($page != "media") ? "d-none d-sm-inline" : "d-none d-lg-inline"?>"><?php echo L::brand; ?></span>
 			</a>
-			<?php if ($pageType == "admin" && $page != "manage") { ?>
-				<div class="breadcrumb-page">
-					<span class="navbar-text breadcrumb-separator">/</span><a href="<?= $config["dir"]["root"] ?>/manage" class="navbar-text pl-0 pr-0"><?php echo L::dashboard; ?></a>
-				</div>
-			<?php } ?>
-			<div class="breadcrumb-page <?=($page != "media" && $page != "main") ? "" : "d-none"?>">
-				<span class="navbar-text breadcrumb-separator">/</span><span href="" class="navbar-text pl-0 pr-0"><?= $pageTitle ?></span>
-			</div>
+			<?php 
+				if (isset($pageBreadcrumbs)) {
+					foreach ($pageBreadcrumbs as $breadcrumb) {
+						if (isset($breadcrumb["path"])) {
+							echo '<div class="breadcrumb-page">
+								<span class="navbar-text breadcrumb-separator">/</span><a href="'.$config["dir"]["root"].$breadcrumb["path"].'" class="navbar-text pl-0 pr-0">'.$breadcrumb["label"].'</a>
+							</div>';
+						} else {
+							echo '<div class="breadcrumb-page">
+								<span class="navbar-text breadcrumb-separator">/</span><span class="navbar-text pl-0 pr-0">'.$breadcrumb["label"].'</span>
+							</div>';
+						}
+					}
+				}
+			?>
 		</div>
 		<div class="navbarCenterOptions">
 			<?php
