@@ -48,6 +48,18 @@ switch ($page) {
 		include_once("./content/pages/media/page.php");
 		$content = ob_get_clean();
 	break;
+	case "organisation":
+		$pageTitle = 'Detail Organisation';
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/organisation/page.php");
+		$content = ob_get_clean();
+	break;
 	case "person":
 		$pageTitle = 'Detail Person';
 		$pageType = 'default';
@@ -58,6 +70,18 @@ switch ($page) {
 		];
 		ob_start();
 		include_once("./content/pages/person/page.php");
+		$content = ob_get_clean();
+	break;
+	case "term":
+		$pageTitle = 'Detail Term';
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/term/page.php");
 		$content = ob_get_clean();
 	break;
 	case "user":
@@ -292,6 +316,31 @@ switch ($page) {
 		}
 		$content = ob_get_clean();
 	break;
+	case "manage-data-organisation":
+		$pageTitle = 'Manage Organisation';
+		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => L::data,
+				'path' => '/manage/data'
+			],
+			[
+				'label' => '<span class="icon-pencil"></span>'
+			]
+		];
+		ob_start();
+		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
+			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
+			include_once("./content/pages/manage/data/organisation/new.php");
+		} else {
+			include_once("./content/pages/manage/data/organisation/page.php");
+		}
+		$content = ob_get_clean();
+	break;
 	case "manage-data-person":
 		$pageTitle = 'Manage Person';
 		$pageType = 'admin';
@@ -314,6 +363,31 @@ switch ($page) {
 			include_once("./content/pages/manage/data/person/new.php");
 		} else {
 			include_once("./content/pages/manage/data/person/page.php");
+		}
+		$content = ob_get_clean();
+	break;
+	case "manage-data-term":
+		$pageTitle = 'Manage Term';
+		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => L::data,
+				'path' => '/manage/data'
+			],
+			[
+				'label' => '<span class="icon-pencil"></span>'
+			]
+		];
+		ob_start();
+		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
+			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
+			include_once("./content/pages/manage/data/term/new.php");
+		} else {
+			include_once("./content/pages/manage/data/term/page.php");
 		}
 		$content = ob_get_clean();
 	break;
