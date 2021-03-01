@@ -45,7 +45,7 @@ function updateContents(resultURL) {
     }
     updateAjax = $.ajax({
 		method: "POST",
-		url: "../content/pages/detail-media/content.player.php?"+ ajaxURLParams
+		url: "../content/pages/media/content.player.php?"+ ajaxURLParams
 	}).done(function(data) {
 		$('#content').html($(data));
 		updatePlayer();
@@ -62,7 +62,7 @@ function updatePlayer() {
 
 	if (window.OPTV_Player) {
 		window.OPTV_Player.destroy();
-        $('#content').append('<div id="awplayer" class="frametrail-body" data-frametrail-theme="abgeordnetenwatch"></div>');
+        $('#content').prepend('<div id="awplayer" class="frametrail-body" data-frametrail-theme="abgeordnetenwatch"></div>');
 	}
 
     if (prevResultURL) {
@@ -333,10 +333,6 @@ function updatePlayer() {
     });
 
     OPTV_Player.on('ready', function() {
-
-        $('.frametrail-body .overlayContainer').click(function() {
-            OPTV_Player.pause();
-        });
 
         /*
         var downloadOptions = $('<div class="downloadOptions">'

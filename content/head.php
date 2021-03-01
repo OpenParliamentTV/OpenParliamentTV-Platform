@@ -23,7 +23,7 @@ if ($page != 'media') {
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/Chart.min.css" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css" media="all" />
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/player.css" media="all" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.css" media="all" />
 <?php
 }
 ?>

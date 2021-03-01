@@ -9,10 +9,14 @@ main#content {
 	font-family: "Open Sans","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
 	font-weight: 300;
 	font-size: 14px;
-	background: #f3f4f5;
+	background: var(--primary-bg-color);
 }
 
-.frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .mainContainer:not([data-edit-mode="layout"]):not([data-edit-mode="overlays"]):not([data-edit-mode="codesnippets"]):not([data-edit-mode="annotations"]), .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .loadingScreen, .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .userLoginOverlay, .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .titlebar:not(.editActive), .themeItem[data-theme="abgeordnetenwatch"] {
+.frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .mainContainer:not([data-edit-mode="layout"]):not([data-edit-mode="overlays"]):not([data-edit-mode="codesnippets"]):not([data-edit-mode="annotations"]), 
+.frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .loadingScreen, 
+.frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .userLoginOverlay, 
+.frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .titlebar:not(.editActive), 
+.themeItem[data-theme="abgeordnetenwatch"] {
 	--primary-bg-color: rgba(255, 255, 255, 1);
 	--secondary-bg-color: rgba(255, 255, 255, .6);
 	--semi-transparent-bg-color: rgba(255, 255, 255, .8);
@@ -22,10 +26,27 @@ main#content {
 	--semi-transparent-fg-highlight-color: rgba(80, 80, 80, .4);
 	--semi-transparent-fg-active-color: var(--secondary-fg-color);
 	--annotation-preview-bg-color: rgba(255 ,255, 255, .2);
-	/*--highlight-color: rgba(246, 138, 102, 1);*/
 	--highlight-color: var(--primary-fg-color);
 	--tooltip-bg-color: #D8D3AD;
 	--video-background-color: #fff;
+}
+
+body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .mainContainer:not([data-edit-mode="layout"]):not([data-edit-mode="overlays"]):not([data-edit-mode="codesnippets"]):not([data-edit-mode="annotations"]), 
+body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .loadingScreen, 
+body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .userLoginOverlay, 
+body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .titlebar:not(.editActive) {
+	--primary-bg-color: #303139;
+    --secondary-bg-color: #404149;
+    --semi-transparent-bg-color: rgba(47, 50, 58, .8); 
+    --primary-fg-color: #fff; /* Texts Borders etc. */
+    --secondary-fg-color: #f3f4f5; /* Secondary Texts, Borders, Editable Panels etc. */
+    --semi-transparent-fg-color: rgba(255, 255, 255, .3);
+    --semi-transparent-fg-highlight-color: rgba(255, 255, 255, .4);
+    --semi-transparent-fg-active-color: var(--secondary-fg-color);
+    --annotation-preview-bg-color: rgba(100 ,100, 100, .2);
+    --highlight-color: var(--primary-fg-color);
+    --tooltip-bg-color: #D8D3AD; /* Tooltips */
+    --video-background-color: #000;
 }
 
 .loadingScreen {
@@ -214,11 +235,11 @@ main#content {
 }
 
 .mainContainer {
-	background-color: #f3f4f5;
+	background-color: var(--secondary-bg-color);
 }
 
 .layoutArea, .hypervideoContainer {
-	background: #f3f4f5 !important;
+	background: var(--secondary-bg-color) !important;
 }
 
 .layoutArea {
@@ -230,7 +251,7 @@ main#content {
 }
 
 .areaLeftContainer {
-	border-right: 10px solid #f3f4f5;
+	border-right: 10px solid var(--secondary-bg-color);
 }
 
 .areaLeftContainer .layoutAreaToggleCloseButton {
@@ -238,7 +259,7 @@ main#content {
 }
 
 .areaRightContainer {
-	border-left: 10px solid #f3f4f5;
+	border-left: 10px solid var(--secondary-bg-color);
 }
 
 .areaLeftContainer[data-size="large"] {

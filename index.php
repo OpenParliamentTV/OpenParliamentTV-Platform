@@ -429,7 +429,7 @@ $lang = in_array($lang, $acceptLang) ? $lang : 'de';
 <head>
 	<?php require_once('content/head.php'); ?>
 </head>
-<body class='darkmode <?= (($_SESSION["login"]) ? "login" : "") ?>'>
+<body class='<?= (($_SESSION["login"]) ? "login" : "") ?>'>
 <?= $content ?>
 </body>
 </html>

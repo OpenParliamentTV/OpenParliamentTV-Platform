@@ -17114,9 +17114,7 @@ var wysihtml5ParserRules = {
 		"dfn": {
 			"unwrap": 1
 		},
-		"iframe": {
-			"remove": 1
-		},
+		"iframe": {},
 		"figcaption": {
 			"unwrap": 1
 		},
@@ -37865,7 +37863,7 @@ FrameTrail.defineType(
                         editGroupFontStyle:  '<a class="btn" data-wysihtml5-command="bold" title="'+ this.labels['SettingsFontBold'] +'"><i class="icon-bold"></i></a><a class="btn" data-wysihtml5-command="italic" title="'+ this.labels['SettingsFontItalic'] +'"><i class="icon-italic"></i></a><a class="btn" data-wysihtml5-command="underline" title="'+ this.labels['SettingsFontUnderline'] +'"><i class="icon-underline"></i></a>',
                         editGroupFontColor:  '<a class="btn dropdown-toggle right" title="'+ this.labels['SettingsFontColor'] +'"><i class="icon-dot-circled">&nbsp;<b class="caret"></b></a><div class="colorpicker-container-text"><div class="colorpicker-container"></div></div>',
                         editGroupLists:      '<a class="btn" data-wysihtml5-command="insertUnorderedList" title="'+ this.labels['SettingsFontUL'] +'"><i class="icon-list-bullet"></i></a><a class="btn" data-wysihtml5-command="insertOrderedList" title="'+ this.labels['SettingsFontOL'] +'"><i class="icon-list-numbered"></i></a>',
-                        editGroupIndention:  '<a class="btn" data-wysihtml5-command="outdent" title="'+ this.labels['SettingsFontIndentMinus'] +'"><i class="icon-indent-right"></i></a><a class="btn" data-wysihtml5-command="indent" title="'+ this.labels['SettingsFontIndentPlus'] +'"><i class="icon-indent-left"></i></a>',
+                        editGroupIndention:  '<a class="btn" data-wysihtml5-command="outdent" title="'+ this.labels['SettingsFontIndentMinus'] +'"><i class="icon-indent-left"></i></a><a class="btn" data-wysihtml5-command="indent" title="'+ this.labels['SettingsFontIndentPlus'] +'"><i class="icon-indent-right"></i></a>',
                         editGroupAlignment:  '<a class="btn" data-wysihtml5-command="alignLeftStyle" title="'+ this.labels['SettingsFontAlignLeft'] +'"><i class="icon-align-left"></i></a><a class="btn" data-wysihtml5-command="alignCenterStyle" title="'+ this.labels['SettingsFontAlignCenter'] +'"><i class="icon-align-center"></i></a><a class="btn" data-wysihtml5-command="alignRightStyle" title="'+ this.labels['SettingsFontAlignRight'] +'"><i class="icon-align-right"></i></a><a class="btn" data-wysihtml5-command="alignJustifyStyle" title="'+ this.labels['SettingsFontAlignJustify'] +'"><i class="icon-align-justify"></i></a>'
                         //editGroupHyperlink:  '<a class="btn hyperlink" title="Hyperlink" data-wysihtml5-command="createLink"><i class="icon-link"></i></a><div class="hyperlink-dropdown input-append" data-wysihtml5-dialog="createLink" style="display: none;"><input data-wysihtml5-dialog-field="href" value="http://" class="text"><a data-wysihtml5-dialog-action="save"></a><a data-wysihtml5-command="removeLink"></a><a data-wysihtml5-dialog-action="cancel"></a></div>'
                     }
@@ -38703,7 +38701,7 @@ FrameTrail.defineType(
                     quizEditorContainer.append('<label>'+ this.labels['SettingsQuizQuestionLabel'] +'</label>');
                     var questionText = $('<input type="text" value="' +currentAttributes.question+ '"/>');
                     
-                    questionText.on('keydown', function(evt) {
+                    questionText.on('keyup', function(evt) {
                         if (!evt.originalEvent.metaKey && evt.originalEvent.key != 'Meta') {
                             var newValue = $(this).val();
                             overlayOrAnnotation.data.attributes.question = newValue;
@@ -38761,7 +38759,7 @@ FrameTrail.defineType(
                         return answerWrapper;
                     }
 
-                    answersContainer.on('keydown', 'input[type="text"]', function(evt) {
+                    answersContainer.on('keyup', 'input[type="text"]', function(evt) {
                         if (!evt.originalEvent.metaKey && evt.originalEvent.key != 'Meta') {
                             var newValue = $(this).val(),
                                 thisIndex = $(this).parents('.answerWrapper').index();
@@ -38924,7 +38922,7 @@ FrameTrail.defineType(
                     rightColumn.find('.settingsActionsTabs').tabs();
 
                     var settingsCorrectShowTextInput = rightColumn.find('input.settingsCorrectShowTextInput');
-                    settingsCorrectShowTextInput.on('keydown', function(evt) {
+                    settingsCorrectShowTextInput.on('keyup', function(evt) {
                         if (!evt.originalEvent.metaKey && evt.originalEvent.key != 'Meta') {
                             var thisValue = $(this).val();
                             
@@ -38951,7 +38949,7 @@ FrameTrail.defineType(
                     });
 
                     var settingsWrongShowTextInput = rightColumn.find('input.settingsWrongShowTextInput');
-                    settingsWrongShowTextInput.on('keydown', function(evt) {
+                    settingsWrongShowTextInput.on('keyup', function(evt) {
                         if (!evt.originalEvent.metaKey && evt.originalEvent.key != 'Meta') {
                             var thisValue = $(this).val();
                             
@@ -38996,7 +38994,7 @@ FrameTrail.defineType(
                     });
 
                     var settingsJumpForwardInput = rightColumn.find('input.settingsJumpForwardInput');
-                    settingsJumpForwardInput.on('keydown', function(evt) {
+                    settingsJumpForwardInput.on('keyup', function(evt) {
                         if (!evt.originalEvent.metaKey && evt.originalEvent.key != 'Meta') {
                             var thisValue = parseFloat($(this).val());
                             
@@ -39023,7 +39021,7 @@ FrameTrail.defineType(
                     });
 
                     var settingsJumpBackwardInput = rightColumn.find('input.settingsJumpBackwardInput');
-                    settingsJumpBackwardInput.on('keydown', function(evt) {
+                    settingsJumpBackwardInput.on('keyup', function(evt) {
                         if (!evt.originalEvent.metaKey && evt.originalEvent.key != 'Meta') {
                             var thisValue = parseFloat($(this).val());
                             
@@ -39113,9 +39111,8 @@ FrameTrail.defineType(
                     var self = this;
 
                     var resourceDetail = $('<div class="resourceDetail" data-type="'+ this.resourceData.type +'"></div>'),
-                        iFrameSource = (this.resourceData.src.indexOf('//') != -1) ? this.resourceData.src/*.replace('http:', '')*/ : FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.src),
+                        iFrameSource = (this.resourceData.src.indexOf('//') != -1) ? this.resourceData.uri/*.replace('http:', '')*/ : FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.uri),
                         downloadButton = '<a class="button" href="'+ iFrameSource +'" target="_blank">'+ this.labels['ResourceOpenInNewTab'] +'</a>';
-
                     if (this.resourceData.attributes.embed && this.resourceData.attributes.embed == 'forbidden') {
 
                         var thumbSource = (this.resourceData.thumb) ? this.resourceData.thumb : '';
@@ -44447,7 +44444,7 @@ FrameTrail.defineModule('ResourceManager', function(FrameTrail){
 
                                     // Upload Successful
 
-                                    if (respText['response']['resource']['type'] == 'video') {
+                                    if (respText['response']['resource']['type'] == 'video' && FrameTrail.module('RouteNavigation').getResourceURL(respText.response.resource.src).indexOf('.m3u8') == -1) {
 
                                         uploadDialog.find('.uploadStatus').html(labels['MessageGeneratingThumbnail']);
 
@@ -44806,7 +44803,7 @@ FrameTrail.defineModule('ResourceManager', function(FrameTrail){
                 },
                 function (src, name) {
                     // Video
-                    if (/\.(mp4)$/i.exec(src)) {
+                    if (/\.(mp4|m3u8)$/i.exec(src)) {
                         return createResource(src, "video", name);
                     } else {
                         // We should do a HEAD request and check the
@@ -48227,6 +48224,9 @@ FrameTrail.defineModule('UserTraces', function(FrameTrail){
             
             var movieTitle = FrameTrail.module('HypervideoModel').hypervideoName.replace(/<\/?[^>]+(>|$)/g, "");
             var exportFileName = movieTitle +'_' + aspectLabel;
+            if (filterAspect == 'creatorId') {
+                exportFileName += '_' + collectedAnnotationsPerAspectData[i].userID;
+            }
             exportFileName = exportFileName.replace(/[\s:]/g, '-').replace(/[|&;:$%@<>()+,]/g, '').replace(/__/g, '_').replace(/--/g, '-');
             var exportData = getAnnotationDataAsCSV(collectedAnnotationsPerAspectData[i].annotations);
             var exportButtonString = '<a class="exportTimelineDataButton" title="'+ labels['MessageAnnotationExportAsCSV'] +'" download="'+ exportFileName +'.csv" href="'+ exportData +'">'+ labels['GenericExportData'] +'</a>';
@@ -48357,12 +48357,16 @@ FrameTrail.defineModule('UserTraces', function(FrameTrail){
         var csvString = 'StartTime\tEndTime\tValue\n';
 
         for (var i = 0; i < annotationData.length; i++) {
+            var annotationContent = annotationData[i].data.name;
+            if (annotationData[i].data.type == 'text') {
+                annotationContent = (annotationData[i].data.attributes.text.length != 0) ? $.parseHTML(annotationData[i].data.attributes.text)[0].data : '';
+            }
             if (annotationData[i].data.source.url.target && annotationData[i].data.source.url.target.selector["advene:end"]) {
                 var startTime = annotationData[i].data.source.url.target.selector["advene:begin"],
                     endTime = annotationData[i].data.source.url.target.selector["advene:end"];
-                csvString += startTime +'\t' + endTime +'\t'+ annotationData[i].data.name +'\n';
+                csvString += startTime +'\t' + endTime +'\t'+ annotationContent +'\n';
             } else {
-                csvString += annotationData[i].data.start +'\t' + annotationData[i].data.end +'\t'+ annotationData[i].data.name +'\n';
+                csvString += annotationData[i].data.start +'\t' + annotationData[i].data.end +'\t'+ annotationContent +'\n';
             }
         }
 
@@ -48711,6 +48715,7 @@ FrameTrail.defineModule('UserTraces', function(FrameTrail){
  	var labels = FrameTrail.module('Localization').labels;
 
 	var videoType           	= 'native',
+		livestream 				= false,
 		duration                = 0,
 		durationFull			= 0,
 		sourcePath              = '',
@@ -48789,6 +48794,13 @@ FrameTrail.defineModule('UserTraces', function(FrameTrail){
 
 			FrameTrail.changeState('hv_config_' + key, hypervideo.config[key]);
 		}
+
+		/**
+		* This state (as well as the "livestream" boolean) should 
+		* only be changed to true by the HypervideoController 
+		* (in case a HLS stream is loaded), and not here!
+		**/
+		FrameTrail.changeState('livestream', false);
 
 		offsetIn  = (videoData.in) ? parseFloat(videoData.in) : 0;
 		offsetOut = (videoData.out) ? parseFloat(videoData.out) : null;
@@ -49685,7 +49697,7 @@ FrameTrail.defineModule('UserTraces', function(FrameTrail){
 
 				var result = callbackReturns[i];
 				if (result.failed) {
-					FrameTrail.module('InterfaceModal').showErrorMessage(labels['ErrorSavingData'] +' ('+ result.error +')');
+					FrameTrail.module('InterfaceModal').showErrorMessage(labels['ErrorSavingData'] +' ('+ result.error +': '+ result.code +')');
 					return;
 				}
 
@@ -50164,6 +50176,15 @@ FrameTrail.defineModule('UserTraces', function(FrameTrail){
 		get offsetOut()         { return offsetOut           },
 		set offsetOut(aNumber)  { return offsetOut = aNumber },
 
+		/**
+		 * Is the video a livestream?
+		 *
+		 * @attribute livestream
+		 * @param {} aBoolean
+		 */
+		set livestream(aBoolean)   { return livestream = aBoolean },
+		get livestream()          { return livestream             },
+
 
 
 		initModel:              initModel,
@@ -50295,11 +50316,15 @@ FrameTrail.defineModule('HypervideoController', function(FrameTrail){
 					var hls = new Hls();
 					hls.loadSource(FrameTrail.module('RouteNavigation').getResourceURL(HypervideoModel.sourcePath));
 					hls.attachMedia(videoElement);
-					/*
-					hls.on(Hls.Events.MANIFEST_PARSED,function() {
-						//videoElement.play();
+
+					hls.on(Hls.Events.LEVEL_LOADED,function(evt, data) {
+						if (data.details.live && !FrameTrail.module('HypervideoModel').livestream) {
+							FrameTrail.module('HypervideoModel').livestream = true;
+							FrameTrail.changeState('livestream', true);
+						}
 					});
-					*/
+					
+
 				}
 				// hls.js is not supported on platforms that do not have Media Source Extensions (MSE) enabled.
 				// When the browser has built-in HLS support (check using `canPlayType`), we can provide an HLS manifest (i.e. .m3u8 URL) directly to the video element throught the `src` property.
@@ -50890,15 +50915,22 @@ FrameTrail.defineModule('HypervideoController', function(FrameTrail){
 			} else {
 				play();
 			}
+		});
 
+		ViewVideo.OverlayContainer.off('click').on('click', function(evt){
+			if ($(evt.target).hasClass('overlayContainer')) {
+				if ( isPlaying ) {
+					pause();
+				} else {
+					play();
+				}
+			}
 		});
 
 		ViewVideo.VideoStartOverlay.off('click').on('click', function(){
-
 			if ( !isPlaying ) {
 				play();
 			}
-
 		});
 
 	};
@@ -55198,11 +55230,13 @@ FrameTrail.defineModule('ViewOverview', function(FrameTrail){
         toggleViewMode(FrameTrail.getState('viewMode'));
         toggleEditMode(FrameTrail.getState('editMode'));
 
-        OverviewList.perfectScrollbar({
-            wheelSpeed: 4,
-            suppressScrollX: true,
-            wheelPropagation: true
-        });
+        if (OverviewList.perfectScrollbar) {
+            OverviewList.perfectScrollbar({
+                wheelSpeed: 4,
+                suppressScrollX: true,
+                wheelPropagation: true
+            });
+        }
 
     };
 
@@ -55484,7 +55518,9 @@ FrameTrail.defineModule('ViewOverview', function(FrameTrail){
 
         }
 
-        OverviewList.perfectScrollbar('update');
+        if (OverviewList.perfectScrollbar) {
+            OverviewList.perfectScrollbar('update');
+        }
 
     };
 
@@ -55680,25 +55716,6 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
                         + '                        <div class="annotationSearchContainer contextButtonContainer">'
                         + '                        </div>'
                         + '                    </div>'
-                        + '                    <div class="settingsButton playerControl contextButton">'
-                        + '                        <span class="icon-cog"></span>'
-                        + '                        <div class="settingsContainer contextButtonContainer">'
-                        + '                            <div class="layoutSettingsWrapper">'
-                        + '                                <div data-config="hv_config_areaTopVisible">LayoutArea Top</div>'
-                        + '                                <div class="playerWrapper">'
-                        + '                                    <div data-config="hv_config_overlaysVisible">Overlays</div>'
-                        + '                                    <div data-config="hv_config_areaRightVisible">LayoutArea Right</div>'
-                        + '                                </div>'
-                        + '                                <div data-config="hv_config_areaBottomVisible">Layout Area Bottom</div>'
-                        + '                            </div>'
-                        + '                            <div class="genericSettingsWrapper">Layout Mode'
-                        + '                                <div data-config="hv_config_slidingMode">'
-                        + '                                    <div class="slidingMode" data-value="adjust">Adjust</div>'
-                        + '                                    <div class="slidingMode" data-value="overlay">Overlay</div>'
-                        + '                                </div>'
-                        + '                            </div>'
-                        + '                        </div>'
-                        + '                    </div>'
                         + '                    <div class="captionsButton playerControl">'
                         + '                        <span class="icon-captions-off"></span>'
                         + '                        <div class="captionSelectContainer">'
@@ -55807,14 +55824,14 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
 
     Controls.find('.contextButton').click(function(evt) {
 
-        var settingsButton = $(this);
+        var contextButton = $(this);
 
-        if ( !settingsButton.hasClass('active') ) {
+        if ( !contextButton.hasClass('active') ) {
 
             $('body').on('mouseup', function(evt) {
 
                 if ( !$(evt.target).attr('data-config') && !$(evt.target).hasClass('contextButton') ) {
-                    settingsButton.removeClass('active');
+                    contextButton.removeClass('active');
                     VideoContainer.css('opacity', 1);
                     domElement.find('.areaLeftContainer, .areaRightContainer').css('opacity', 1);
                     $('body').off('mouseup');
@@ -55824,51 +55841,20 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
 
             });
 
-            Controls.find('.rightControlPanel .active').not('[data-config], .captionsButton, .annotationSetButton').removeClass('active');
+            Controls.find('.rightControlPanel .active').not('[data-config], .captionsButton').removeClass('active');
 
-            settingsButton.addClass('active');
+            contextButton.addClass('active');
             VideoContainer.css('opacity', 0.3);
             domElement.find('.areaLeftContainer, .areaRightContainer').css('opacity', 0.3);
 
         } else {
 
-            settingsButton.removeClass('active');
+            contextButton.removeClass('active');
             VideoContainer.css('opacity', 1);
             domElement.find('.areaLeftContainer, .areaRightContainer').css('opacity', 1);
 
         }
 
-
-
-    });
-
-    Controls.find('.settingsContainer').click(function(evt) {
-
-        if ( $(evt.target).attr('data-config') ) {
-
-            var config      = $(evt.target).attr('data-config');
-            var configState = $(evt.target).hasClass('active');
-
-            if ( config != 'hv_config_slidingMode' ) {
-
-                FrameTrail.changeState(config, !configState);
-
-            } else if ( config == 'hv_config_slidingMode' ) {
-
-                if ( FrameTrail.getState('hv_config_slidingMode') == 'adjust' ) {
-                    FrameTrail.changeState('hv_config_slidingMode', 'overlay');
-                } else {
-                    FrameTrail.changeState('hv_config_slidingMode', 'adjust');
-                }
-
-            }
-
-            FrameTrail.changeState('viewSize', FrameTrail.getState('viewSize'));
-
-        }
-
-        evt.preventDefault();
-        evt.stopPropagation();
     });
 
     VolumeButton.click(function() {
@@ -55900,7 +55886,7 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
 
     domElement.find('.layoutAreaToggleCloseButton').click(function() {
         $(this).parent('.layoutArea').toggleClass('closed');
-        changeSlidePosition('middle');
+        showDetails(false);
         window.setTimeout(function() {
             adjustHypervideo();
         }, 250);
@@ -56627,10 +56613,8 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
     function toggleConfig_areaTopVisible(newState, oldState) {
         if (newState == true) {
             domElement.find('.areaTopContainer, .areaTopDetails').show();
-            Controls.find('[data-config="hv_config_areaTopVisible"]').addClass('active');
         } else {
             domElement.find('.areaTopContainer, .areaTopDetails').hide();
-            Controls.find('[data-config="hv_config_areaTopVisible"]').removeClass('active');
         }
         if ( FrameTrail.getState('slidePosition') != 'middle' ) {
             FrameTrail.changeState('slidePosition', 'middle');
@@ -56649,10 +56633,8 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
     function toggleConfig_areaBottomVisible(newState, oldState) {
         if (newState == true) {
             domElement.find('.areaBottomContainer, .areaBottomDetails').show();
-            Controls.find('[data-config="hv_config_areaBottomVisible"]').addClass('active');
         } else {
             domElement.find('.areaBottomContainer, .areaBottomDetails').hide();
-            Controls.find('[data-config="hv_config_areaBottomVisible"]').removeClass('active');
         }
         if ( FrameTrail.getState('slidePosition') != 'middle' ) {
             FrameTrail.changeState('slidePosition', 'middle');
@@ -56671,11 +56653,8 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
     function toggleConfig_areaLeftVisible(newState, oldState) {
         if (newState == true) {
             AreaLeftContainer.show();
-            Controls.find('[data-config="hv_config_areaLeftVisible"]').addClass('active');
-
         } else {
             AreaLeftContainer.hide();
-            Controls.find('[data-config="hv_config_areaLeftVisible"]').removeClass('active');
         }
     };
 
@@ -56691,11 +56670,8 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
     function toggleConfig_areaRightVisible(newState, oldState) {
         if (newState == true) {
             AreaRightContainer.show();
-            Controls.find('[data-config="hv_config_areaRightVisible"]').addClass('active');
-
         } else {
             AreaRightContainer.hide();
-            Controls.find('[data-config="hv_config_areaRightVisible"]').removeClass('active');
         }
     };
 
@@ -56711,10 +56687,8 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
     function toggleConfig_overlaysVisible(newState, oldState) {
         if (newState == true) {
             OverlayContainer.show();
-            Controls.find('[data-config="hv_config_overlaysVisible"]').addClass('active');
         } else {
             OverlayContainer.hide();
-            Controls.find('[data-config="hv_config_overlaysVisible"]').removeClass('active');
         }
     };
 
@@ -56749,16 +56723,6 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
 
         adjustLayout();
         adjustHypervideo();
-
-        if (newState == 'overlay') {
-
-            Controls.find('[data-config="hv_config_slidingMode"]').addClass('active');
-
-        } else {
-
-            Controls.find('[data-config="hv_config_slidingMode"]').removeClass('active');
-
-        }
 
     };
 
@@ -57146,6 +57110,20 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
 
     }
 
+    /**
+     * Toggles the livestream controls.
+     *
+     * @method toggleLivestream
+     * @param {Boolean} activeState
+     */
+    function toggleLivestream(activeState) {
+        if (activeState) {
+            PlayerContainer.addClass('livestream');
+        } else {
+            PlayerContainer.removeClass('livestream');
+        }
+    }
+
 
     return {
 
@@ -57160,6 +57138,7 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
             xKey:            toggleGrid,
             videoWorking:    toggleVideoWorking,
             userActive:      toggleUserActive,
+            livestream:      toggleLivestream,
 
             hv_config_areaTopVisible:               toggleConfig_areaTopVisible,
             hv_config_areaBottomVisible:            toggleConfig_areaBottomVisible,

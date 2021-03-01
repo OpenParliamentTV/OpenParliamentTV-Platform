@@ -60,6 +60,17 @@ require_once(__DIR__."/../../../modules/media/include.media.php");
             echo 'null';
         } ?>;
     
+    /*
+    if (nextResultURL) {
+        const linkTag = document.createElement('link'); 
+        linkTag.rel = 'prefetch'; 
+        linkTag.href = nextResultURL; 
+        linkTag.as = 'document'; 
+
+        //inject tag in the head of the document 
+        document.head.appendChild(linkTag); 
+    }
+    */
     //console.log(nextResultURL);
 </script>
 <div id="awplayer"></div>
