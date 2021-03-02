@@ -16,7 +16,9 @@ $config["platform"]["sql"]["access"]["user"] = "root";
 $config["platform"]["sql"]["access"]["passwd"] = "";
 $config["platform"]["sql"]["db"] = "openparliamenttv";
 
-$config["platform"]["sql"]["tbl"]["Party"] = "party";
+$config["platform"]["sql"]["tbl"]["Organisation"] = "organisation";
+$config["platform"]["sql"]["tbl"]["Term"] = "term";
+$config["platform"]["sql"]["tbl"]["Document"] = "document";
 $config["platform"]["sql"]["tbl"]["Person"] = "person";
 $config["platform"]["sql"]["tbl"]["Auth"] = "auth";
 $config["platform"]["sql"]["tbl"]["Conflict"] = "conflict";

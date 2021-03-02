@@ -28,6 +28,8 @@ switch ($_REQUEST["a"]) {
 
 	case "devAddTestuser":
 
+		//TODO: Remove this function before deploy
+
 		if ($config["mode"] == "dev") {
 
 			//require_once(__DIR__."/../modules/user-management/register.backend.json.php");
@@ -113,6 +115,218 @@ switch ($_REQUEST["a"]) {
 		$return["return2diff1"] = arrayRecursiveDiff($media2, $media1);
 		$return["returnV2_1diff2"] = array_diff_assoc_recursive($media1, $media2);
 		$return["returnV2_2diff1"] = array_diff_assoc_recursive($media2, $media1);
+
+	break;
+
+	case "importOrganisation":
+
+		require_once(__DIR__."/../modules/import/functions.import.organisation.php");
+
+		if (!$_REQUEST["wikidataID"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "wikidataID";
+			$tmpArray["identifier"] = "#wikidataID";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if (!$_REQUEST["label"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "label";
+			$tmpArray["identifier"] = "#label";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if (!$_REQUEST["websiteURI"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "websiteURI";
+			$tmpArray["identifier"] = "#websiteURI";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if ($return["error"] == 0) {
+
+			//TODO AUTH for importOrganisation
+			$return = importOrganisation(
+				$_REQUEST["type"],
+				$_REQUEST["wikidataID"],
+				$_REQUEST["label"],
+				$_REQUEST["labelAlternative"],
+				$_REQUEST["abstract"],
+				$_REQUEST["thumbnailURI"],
+				$_REQUEST["embedURI"],
+				$_REQUEST["websiteURI"],
+				$_REQUEST["socialMediaURIs"],
+				$_REQUEST["color"],
+				$_REQUEST["updateIfExisting"]
+				);
+		} else {
+			$return["text"] = "Missing required information";
+		}
+
+
+	break;
+
+	case "importTerm":
+
+		require_once(__DIR__."/../modules/import/functions.import.term.php");
+
+		if (!$_REQUEST["wikidataID"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "wikidataID";
+			$tmpArray["identifier"] = "#wikidataID";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if (!$_REQUEST["label"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "label";
+			$tmpArray["identifier"] = "#label";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if (!$_REQUEST["abstract"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "abstract";
+			$tmpArray["identifier"] = "#abstract";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if (!$_REQUEST["sourceURI"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "sourceURI";
+			$tmpArray["identifier"] = "#sourceURI";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if ($return["error"] == 0) {
+
+			//TODO AUTH for importOrganisation
+
+			$return = importOrganisation(
+				$_REQUEST["type"],
+				$_REQUEST["wikidataID"],
+				$_REQUEST["label"],
+				$_REQUEST["labelAlternative"],
+				$_REQUEST["abstract"],
+				$_REQUEST["thumbnailURI"],
+				$_REQUEST["embedURI"],
+				$_REQUEST["sourceURI"],
+				$_REQUEST["updateIfExisting"]
+				);
+		} else {
+			$return["text"] = "Missing required information";
+		}
+
+
+	break;
+	case "importDocument":
+
+		require_once(__DIR__."/../modules/import/functions.import.document.php");
+
+		if (!$_REQUEST["type"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "type";
+			$tmpArray["identifier"] = "#type";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if (!$_REQUEST["label"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "label";
+			$tmpArray["identifier"] = "#label";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if (!$_REQUEST["abstract"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "abstract";
+			$tmpArray["identifier"] = "#abstract";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if (!$_REQUEST["sourceURI"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "sourceURI";
+			$tmpArray["identifier"] = "#sourceURI";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if (!$_REQUEST["parliament"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "parliament";
+			$tmpArray["identifier"] = "#parliament";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if ($return["error"] == 0) {
+
+			//TODO AUTH for importOrganisation
+
+			$return = importDocument(
+				$_REQUEST["type"],
+				$_REQUEST["wikidataID"],
+				$_REQUEST["label"],
+				$_REQUEST["labelAlternative"],
+				$_REQUEST["abstract"],
+				$_REQUEST["thumbnailURI"],
+				$_REQUEST["sourceURI"],
+				$_REQUEST["embedURI"],
+				$_REQUEST["parliament"],
+				$_REQUEST["documentIssue"],
+				$_REQUEST["updateIfExisting"]
+				);
+		} else {
+			$return["text"] = "Missing required information";
+		}
+
+
+	break;
+	case "importPerson":
+
+		require_once(__DIR__."/../modules/import/functions.import.person.php");
+
+		if (!$_REQUEST["wikidataID"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "wikidataID";
+			$tmpArray["identifier"] = "#wikidataID";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if (!$_REQUEST["label"]) {
+			$return["error"] = 1;
+			$tmpArray["parameter"] = "label";
+			$tmpArray["identifier"] = "#label";
+			$tmpArray["msg"] = "Field required";
+			$return["reasons"][] = $tmpArray;
+		}
+		if ($return["error"] == 0) {
+
+			//TODO AUTH for importPerson
+
+			$return = importPerson(
+				$_REQUEST["type"],
+				$_REQUEST["wikidataID"],
+				$_REQUEST["label"],
+				$_REQUEST["firstName"],
+				$_REQUEST["lastName"],
+				$_REQUEST["degree"],
+				$_REQUEST["birthDate"],
+				$_REQUEST["gender"],
+				$_REQUEST["abstract"],
+				$_REQUEST["thumbnailURI"],
+				$_REQUEST["embedURI"],
+				$_REQUEST["websiteURI"],
+				$_REQUEST["originID"],
+				$_REQUEST["partyOrganisationID"],
+				$_REQUEST["factionOrganisationID"],
+				$_REQUEST["socialMediaURIs"],
+				$_REQUEST["additionalInformation"],
+				$_REQUEST["updateIfExisting"]
+				);
+		} else {
+			$return["text"] = "Missing required information";
+		}
+
 
 	break;
 

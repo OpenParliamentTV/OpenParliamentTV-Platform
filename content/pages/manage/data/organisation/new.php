@@ -3,6 +3,75 @@
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 			<h2>Add New Organisation</h2>
+			<form action="" method="post" id="importOrganisationForm">
+				<input type="hidden" name="a" value="importOrganisation">
+				<div class="row">
+					<div class="col-12">
+						<div class="card h-100">
+							<div class="card-header">Organisation</div>
+							<div class="card-body">
+								<div class="form-group">
+									<label for="type">Type</label>
+									<input type="text" class="form-control" id="type"  name="type" value="">
+								</div>
+								<div class="form-group">
+									<label for="wikidataID">WikidataID *</label>
+									<input type="text" class="form-control" id="wikidataID"  name="wikidataID" value="">
+								</div>
+								<div class="form-group">
+									<label for="label">Label *</label>
+									<input type="text" class="form-control" id="label"  name="label" value="">
+								</div>
+								<div class="form-group">
+									<label for="labelAlternative">Alternative Label</label>
+									<input type="text" class="form-control" id="labelAlternative"  name="labelAlternative" value="">
+								</div>
+								<div class="form-group">
+									<label for="abstract">Abstract</label>
+									<textarea class="form-control" id="abstract"  name="abstract"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="thumbnailURI">Thumbnail URI</label>
+									<input type="text" class="form-control" id="thumbnailURI"  name="thumbnailURI" value="">
+								</div>
+								<div class="form-group">
+									<label for="embedURI">Embed URI</label>
+									<input type="text" class="form-control" id="embedURI"  name="embedURI" value="">
+								</div>
+								<div class="form-group">
+									<label for="websiteURI">Website URI *</label>
+									<input type="text" class="form-control" id="websiteURI"  name="websiteURI" value="">
+								</div>
+								<div class="form-group">
+									<label for="socialMediaURIs">Social Media URIs (JSON)</label>
+									<textarea class="form-control" id="socialMediaURIs"  name="socialMediaURIs"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="color">Color</label>
+									<input type="color" class="form-control" id="color"  name="color" value="#2e498e">
+								</div>
+								<label for="updateIfExisting">Update if Item already exists</label>
+								<select class="form-control mb-3" name="updateIfExisting">
+									<option value="false" selected>No</option>
+									<option value="true">Yes</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 mb-4">
+						<button type="submit" class="btn btn-outline-primary">Add Organisation</button>
+					</div>
+				</div>
+
+			</form>
+
+			<script type="text/javascript">
+				$("#importOrganisationForm").ajaxForm({
+					url:"../../../server/ajaxServer.php"
+				});
+			</script>
 		</div>
 	</div>
 </main>
