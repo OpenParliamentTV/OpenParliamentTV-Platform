@@ -31,32 +31,33 @@ function getOrganisation($type = false, $label = false, $wikidataID = false, $db
 		return $return;
 	}
 
+
 	if ($type == "ALL") {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"]);
+		$sqlpart = "1";
+	} else {
+
+		if ($type == "NULL") {
+			$sqlpart = "OrganisationType IS NULL";
+		} elseif ($type) {
+			$sqlpart = $dbPlatform->parse("OrganisationType = ?s", $type);
+		} else {
+			$sqlpart = "1";
+		}
+
+		if ($label == "NULL") {
+			$sqlpart .= " AND OrganisationLabel IS NULL";
+		} elseif ($label) {
+			$sqlpart .= $dbPlatform->parse(" AND OrganisationLabel = ?s",$label);
+		}
+
+		if ($wikidataID) {
+			$sqlpart .= $dbPlatform->parse(" AND OrganisationWikidataID = ?s",$wikidataID);
+		}
 	}
-	elseif (($type === NULL) && (!$label) && (!$wikidataID)) {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationType IS NULL");
-	} elseif (($type == NULL) && ($label) && (!$wikidataID)) {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationType IS NULL AND OrganisationLabel=?s", $label);
-	} elseif (($type == NULL) && (!$label) && ($wikidataID)) {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationType IS NULL AND OrganisationWikidataID=?s", $wikidataID);
-	} elseif (($type == NULL) && ($label) && ($wikidataID)) {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationType IS NULL AND OrganisationWikidataID=?s AND OrganisationLabel=?s", $wikidataID, $label);
-	} elseif (($type) && (!$label) && (!$wikidataID)) {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationType=?s", $type);
-	} elseif (($type) && ($label) && (!$wikidataID)) {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationType=?s AND OrganisationLabel=?s", $type, $label);
-	} elseif (($type) && (!$label) && ($wikidataID)) {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationType=?s AND OrganisationWikidataID=?s", $type, $wikidataID);
-	} elseif (($type) && ($label) && ($wikidataID)) {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationType=?s AND OrganisationWikidataID=?s AND OrganisationLabel=?s", $type, $wikidataID, $label);
-	} elseif ((!$type) && ($label) && (!$wikidataID)) {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationLabel=?s", $label);
-	} elseif ((!$type) && (!$label) && ($wikidataID)) {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationWikidataID=?s", $wikidataID);
-	} elseif ((!$type) && ($label) && ($wikidataID)) {
-		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationWikidataID=?s AND OrganisationLabel=?s", $wikidataID, $label);
-	}
+
+	$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE ?p",$sqlpart);
+
+
 	$return["success"] = "true";
 	$return["text"] = "";
 	$return["data"] = $data;

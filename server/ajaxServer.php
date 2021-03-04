@@ -202,7 +202,7 @@ switch ($_REQUEST["a"]) {
 
 			//TODO AUTH for importOrganisation
 
-			$return = importOrganisation(
+			$return = importTerm(
 				$_REQUEST["type"],
 				$_REQUEST["wikidataID"],
 				$_REQUEST["label"],

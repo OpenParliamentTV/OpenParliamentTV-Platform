@@ -61,6 +61,12 @@
 							}, {
 								field: 'OrganisationAbstract',
 								title: 'Abstract'
+							}, {
+								field: 'OrganisationID',
+								title: 'Action',
+								formatter: function(v,r) {
+									return '<a href="./data/organisation/'+r.OrganisationWikidataID+'" target="_self"><i class="icon-edit"></i></a>';
+								}
 							}],
 							data: <?=$parties?>
 						});

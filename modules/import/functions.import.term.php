@@ -6,7 +6,7 @@ require_once(__DIR__."/../utilities/safemysql.class.php");
 //require_once(__DIR__."/../utilities/uniqueFreeString.php");
 require_once(__DIR__."/functions.conflicts.php");
 
-function importOrganisation($type = NULL,
+function importTerm($type = NULL,
 							$wikidataID = false,
 							$label = false,
 							$labelAlternative = NULL,
