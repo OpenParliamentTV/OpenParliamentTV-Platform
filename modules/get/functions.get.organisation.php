@@ -31,7 +31,10 @@ function getOrganisation($type = false, $label = false, $wikidataID = false, $db
 		return $return;
 	}
 
-	if (($type === NULL) && (!$label) && (!$wikidataID)) {
+	if ($type == "ALL") {
+		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"]);
+	}
+	elseif (($type === NULL) && (!$label) && (!$wikidataID)) {
 		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationType IS NULL");
 	} elseif (($type == NULL) && ($label) && (!$wikidataID)) {
 		$data = $dbPlatform->getAll("SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"] . " WHERE OrganisationType IS NULL AND OrganisationLabel=?s", $label);

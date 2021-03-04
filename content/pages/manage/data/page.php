@@ -33,7 +33,40 @@
 				<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">Tabelle Media, <a href="../media/8757">Beispiel Link</a>, <a href="./data/media/8757">Manage / Edit Link</a></div>
 				<div class="tab-pane fade" id="people" role="tabpanel" aria-labelledby="people-tab">Tabelle Person, <a href="../person/8757">Beispiel Link</a>, <a href="./data/person/8757">Manage / Edit Link</a></div>
 				<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">Tabelle Document, <a href="../document/8757">Beispiel Link</a>, <a href="./data/document/8757">Manage / Edit Link</a></div>
-				<div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">Tabelle Organisation, <a href="../organisation/8757">Beispiel Link</a>, <a href="./data/organisation/8757">Manage / Edit Link</a></div>
+				<div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
+
+					Tabelle Organisation, <a href="../organisation/8757">Beispiel Link</a>, <a href="./data/organisation/8757">Manage / Edit Link</a>
+					<table id="tableOrganisation"></table>
+					<?php
+					include_once(__DIR__ . '/../../../../modules/get/functions.get.organisation.php');
+					$parties = json_encode(getOrganisation("ALL")["data"],JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+					/*foreach($parties["data"] as $k=>$v) {
+						echo '<option value="'.$v["OrganisationID"].'">'.$v["OrganisationLabel"].'</option>';
+					}*/
+					?>
+					<script type="text/javascript">
+						$("#tableOrganisation").bootstrapTable({
+							columns: [{
+								field: 'OrganisationType',
+								title: 'Type'
+							}, {
+								field: 'OrganisationWikidataID',
+								title: 'WikidataID'
+							}, {
+								field: 'OrganisationLabel',
+								title: 'Label'
+							}, {
+								field: 'OrganisationLabelAlternative',
+								title: 'Alternative Label'
+							}, {
+								field: 'OrganisationAbstract',
+								title: 'Abstract'
+							}],
+							data: <?=$parties?>
+						});
+					</script>
+
+				</div>
 				<div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">Tabelle Term, <a href="../term/8757">Beispiel Link</a>, <a href="./data/term/8757">Manage / Edit Link</a></div>
 			</div>
 		</div>
