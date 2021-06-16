@@ -50,4 +50,29 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
 	return $aReturn;
 }
 
+
+/**
+ * @param string $password
+ * @return bool
+ * Checks if the given password is weak (returns false) or strong (Uppercase, lowercase, number, specialChar and >8 character)
+ */
+function passwordStrength($password = "") {
+
+	$uppercase = preg_match('@[A-Z]@', $password);
+	$lowercase = preg_match('@[a-z]@', $password);
+	$number    = preg_match('@[0-9]@', $password);
+	$specialChars = preg_match('@[^\w]@', $password);
+
+	if(!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+
+		return false; // Password is weak.
+
+	} else {
+
+		return true; // Password is strong
+
+	}
+
+}
+
 ?>

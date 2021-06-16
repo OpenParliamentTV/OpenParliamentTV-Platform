@@ -20,7 +20,7 @@ $(function() {
 				} else {
 
 					$("#login-response").text("Your login credentials are not correct.");
-					console.log(ret["txt"]);
+					console.log(ret["txt"]); //TODO Login not active as text output (// TODO i18n)
 
 				}
 

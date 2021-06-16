@@ -25,4 +25,4 @@
 	</div>
 </main>
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
-<script type="text/javascript" src="modules/login/client/register.functions.js"></script>
+<script type="text/javascript" src="content/pages/register/client/register.functions.js"></script>

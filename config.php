@@ -8,6 +8,9 @@ $config["salt"] = "gMu2bs)v7ZN!677hH";
 
 $config["mode"] = "dev";
 
+$config["mail"]["from"] = "temp@norealmailaddressyet121212.com";
+$config["mail"]["replyto"] = "temp@norealmailaddressyet121212.com";
+
 
 
 //DB - Platform config

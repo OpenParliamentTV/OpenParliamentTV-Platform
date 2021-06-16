@@ -35,10 +35,26 @@ switch ($_REQUEST["a"]) {
 			//require_once(__DIR__."/../modules/user-management/register.backend.json.php");
 			require_once(__DIR__."/../modules/user-management/register.backend.sql.php");
 
-			$return[] = registerUser("admin@admin.com","admin","DEV-Admin");
-			$return[] = registerUser("test@test.com","test","DEV-Test User");
+			$return[] = registerUser("admin@admin.com","Admin!!11","DEV-Admin");
+			$return[] = registerUser("test@test.com","User!!11","DEV-Test User");
+
+
+
+
 
 			if (($return[0]["success"] == "true" ) && ($return[1]["success"] == "true")) {
+
+				$opts = array(
+					'host'	=> $config["platform"]["sql"]["access"]["host"],
+					'user'	=> $config["platform"]["sql"]["access"]["user"],
+					'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+					'db'	=> $config["platform"]["sql"]["db"]
+				);
+				$db = new SafeMySQL($opts);
+
+				$db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserActive=?i, UserRole=?s WHERE UserID=?i",1,"admin",$return[0]["UserID"]);
+				$db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserActive=?i WHERE UserID=?i",1,$return[1]["UserID"]);
+
 				$return["success"] = "true";
 				$return["text"] = "User Added";
 			}
@@ -410,6 +426,27 @@ switch ($_REQUEST["a"]) {
 
 
 
+
+	break;
+
+
+	case "manageUsersGet":
+
+		require_once(__DIR__."/../modules/user-management/users.backend.php");
+
+		$users = getUsers($_REQUEST["id"]);
+
+		if (($users) && ($users["success"] == "true")) {
+
+			$return["success"] = "true";
+			$return["text"] = "users overview";
+			$return["data"] = $users["return"];
+
+		} else {
+
+			$return = $users;
+
+		}
 
 	break;
 

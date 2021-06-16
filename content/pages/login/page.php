@@ -30,6 +30,7 @@
 					<button type="submit" class="btn btn-primary btn-sm">Login</button>
 					<div id="login-response"></div>
 				</form>
+				<a href="passwordReset" target="_self">Forgot password?</a>
 			<?php
 			}
 			?>

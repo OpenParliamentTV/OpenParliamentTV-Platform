@@ -37,7 +37,7 @@ function loginCheck($mail = "", $passwd = "") {
 			if ($userdata["UserPasswordHash"] == hash("sha512", $userdata["UserPasswordPepper"].$passwd.$config["salt"])) {
 
 
-				if ($userdata["UserActive"]) {
+				if ($userdata["UserActive"] && ($userdata["UserBlocked"] != 1)) {
 
 					$_SESSION["login"] = 1;
 					$_SESSION["userdata"]["mail"]	= $userdata["UserMail"];
@@ -45,12 +45,19 @@ function loginCheck($mail = "", $passwd = "") {
 					$_SESSION["userdata"]["id"]		= $userdata["UserID"];
 					$_SESSION["userdata"]["role"] 	= $userdata["UserRole"];
 					$return["success"] = "true";
-					$return["txt"] = "Login success";
+					$return["txt"] = "Login success"; // TODO i18n
+
+					$db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserLastLogin=?s WHERE UserID=?i LIMIT 1", time(), $userdata["UserID"]);
+
+				} elseif ($userdata["UserBlocked"] == 1) {
+
+					$return["success"] = "false";
+					$return["txt"] = "Account has been blocked. Please get in touch"; // TODO i18n
 
 				} else {
 
 					$return["success"] = "false";
-					$return["txt"] = "Login not active";
+					$return["txt"] = "Login not active"; // TODO i18n
 
 				}
 
@@ -60,7 +67,7 @@ function loginCheck($mail = "", $passwd = "") {
 			} else {
 
 				$return["success"] = "false";
-				$return["txt"] = "Password not correct";
+				$return["txt"] = "Password not correct"; // TODO i18n
 				return $return;
 
 			}
@@ -69,7 +76,7 @@ function loginCheck($mail = "", $passwd = "") {
 		} else {
 
 			$return["success"] = "false";
-			$return["txt"] = "Userdata not found";
+			$return["txt"] = "Userdata not found"; // TODO i18n
 			return $return;
 
 		}

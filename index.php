@@ -183,6 +183,30 @@ switch ($page) {
 		include_once("./content/pages/register/page.php");
 		$content = ob_get_clean();
 	break;
+	case "registerConfirm":
+		$pageTitle = L::registerNewAccount; //TODO i18n
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/registerconfirm/page.php");
+		$content = ob_get_clean();
+	break;
+	case "passwordReset":
+		$pageTitle = L::registerNewAccount; //TODO i18n
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/passwordreset/page.php");
+		$content = ob_get_clean();
+	break;
 	/*********************************
 	* USER-SPECIFIC / ADMINISTRATION
 	**********************************/
