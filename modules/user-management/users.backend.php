@@ -9,6 +9,15 @@ function getUsers($id = false, $db = false) {
 
 	//TODO: AUTH
 
+    if ($_SESSION["userdata"]["role"] != "admin") {
+
+        $return["success"] = "false";
+        $return["txt"] = "Not allowed";
+
+        return $return;
+
+    }
+
 	if (!$db) {
 
 		$opts = array(

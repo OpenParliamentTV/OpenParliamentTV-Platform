@@ -9,7 +9,7 @@ $return["success"] = "false";
 $return["text"] = "Nope!";
 $return["return"] = "";
 
-require_once(__DIR__."/../config.php");
+require_once (__DIR__."/../config.php");
 
 switch ($_REQUEST["a"]) {
 

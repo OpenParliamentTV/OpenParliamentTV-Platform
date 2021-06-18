@@ -40,9 +40,8 @@ $config["parliament"]["bt"]["sql"]["tbl"]["AgendaItem"] = "agendaitem";
 $config["parliament"]["bt"]["sql"]["tbl"]["ElectoralPeriod"] = "electoralperiod";
 $config["parliament"]["bt"]["sql"]["tbl"]["Session"] = "session";
 $config["parliament"]["bt"]["sql"]["tbl"]["Media"] = "media";
-$config["parliament"]["bt"]["sql"]["tbl"]["MediaAnnotation"] = "mediaannotation";
-$config["parliament"]["bt"]["sql"]["tbl"]["MediaContent"] = "mediacontent";
-$config["parliament"]["bt"]["sql"]["tbl"]["MediaPerson"] = "mediaperson";
+$config["parliament"]["bt"]["sql"]["tbl"]["Annotation"] = "annotation";
+$config["parliament"]["bt"]["sql"]["tbl"]["Text"] = "text";
 
 
 ?>

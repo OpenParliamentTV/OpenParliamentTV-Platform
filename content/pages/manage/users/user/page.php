@@ -13,7 +13,7 @@
 
 						echo "No UserID was given.";  // TODO i18n
 
-					} elseif (($_SESSION["userdata"]["id"] != $_REQUEST["id"]) && ($_SESSION["role"] != "admin")) {
+					} elseif (($_SESSION["userdata"]["id"] != $_REQUEST["id"]) && ($_SESSION["userdata"]["role"] != "admin")) {
 
 						echo "You are not allowed to edit this User.";  // TODO i18n
 
@@ -51,7 +51,7 @@
 									<label for="useredit-password-check">Retype new Password</label>
 									<input type="password" class="form-control" id="useredit-password" name="password">
 								</div>';
-							if ($_SESSION["role"] == "admin") {
+							if ($_SESSION["userdata"]["role"] == "admin") {
 								echo '<div class="form-group">
 									<label for="useredit-role">Role</label>
 									<select class="form-control" id="useredit-role" name="active">
