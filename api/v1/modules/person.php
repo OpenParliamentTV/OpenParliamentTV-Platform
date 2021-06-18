@@ -59,7 +59,6 @@ function personGetByID($id = false) {
             $return["data"]["type"] = "person";
             $return["data"]["id"] = $item["PersonID"];
             $return["data"]["attributes"]["type"] = $item["PersonType"];
-            $return["data"]["attributes"]["wikidataID"] = $item["PersonID"];
             $return["data"]["attributes"]["label"] = $item["PersonLabel"];
             $return["data"]["attributes"]["firstName"] = $item["PersonFirstName"];
             $return["data"]["attributes"]["lastName"] = $item["PersonLastName"];

@@ -58,7 +58,6 @@ function organisationGetByID($id = false) {
             $return["data"]["type"] = "organisation";
             $return["data"]["id"] = $item["OrganisationID"];
             $return["data"]["attributes"]["type"] = $item["OrganisationType"];
-            $return["data"]["attributes"]["wikidataID"] = $item["OrganisationID"];
             $return["data"]["attributes"]["label"] = $item["OrganisationLabel"];
             $return["data"]["attributes"]["labelAlternative"] = $item["OrganisationLabelAlternative"];
             $return["data"]["attributes"]["abstract"] = $item["OrganisationAbstract"];
