@@ -30,18 +30,18 @@ $config["platform"]["sql"]["tbl"]["User"] = "user";
 
 //DB - Parliament config
 
-$config["parliament"]["bt"]["label"] = "Deutscher Bundestag";
-$config["parliament"]["bt"]["sql"]["access"]["host"] = "localhost";
-$config["parliament"]["bt"]["sql"]["access"]["user"] = "root";
-$config["parliament"]["bt"]["sql"]["access"]["passwd"] = "";
-$config["parliament"]["bt"]["sql"]["db"] = "openparliamenttv_bt";
+$config["parliament"]["DE"]["label"] = "Deutscher Bundestag";
+$config["parliament"]["DE"]["sql"]["access"]["host"] = "localhost";
+$config["parliament"]["DE"]["sql"]["access"]["user"] = "root";
+$config["parliament"]["DE"]["sql"]["access"]["passwd"] = "";
+$config["parliament"]["DE"]["sql"]["db"] = "openparliamenttv_de";
 
-$config["parliament"]["bt"]["sql"]["tbl"]["AgendaItem"] = "agendaitem";
-$config["parliament"]["bt"]["sql"]["tbl"]["ElectoralPeriod"] = "electoralperiod";
-$config["parliament"]["bt"]["sql"]["tbl"]["Session"] = "session";
-$config["parliament"]["bt"]["sql"]["tbl"]["Media"] = "media";
-$config["parliament"]["bt"]["sql"]["tbl"]["Annotation"] = "annotation";
-$config["parliament"]["bt"]["sql"]["tbl"]["Text"] = "text";
+$config["parliament"]["DE"]["sql"]["tbl"]["AgendaItem"] = "agendaitem";
+$config["parliament"]["DE"]["sql"]["tbl"]["ElectoralPeriod"] = "electoralperiod";
+$config["parliament"]["DE"]["sql"]["tbl"]["Session"] = "session";
+$config["parliament"]["DE"]["sql"]["tbl"]["Media"] = "media";
+$config["parliament"]["DE"]["sql"]["tbl"]["Annotation"] = "annotation";
+$config["parliament"]["DE"]["sql"]["tbl"]["Text"] = "text";
 
 
 ?>

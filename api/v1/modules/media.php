@@ -222,7 +222,7 @@ function mediaGetByID($id = false) {
 
                     case "organisation":
 
-                        $ditem = $db->getRow("SELECT * FROM ?n WHERE OrganisationID=?i LIMIT 1", $config["platform"]["sql"]["tbl"]["Organisation"], $annotation["AnnotationResourceID"]);
+                        $ditem = $db->getRow("SELECT * FROM ?n WHERE OrganisationID=?s LIMIT 1", $config["platform"]["sql"]["tbl"]["Organisation"], $annotation["AnnotationResourceID"]);
                         $tmpAnnotationItem["type"] = "organisation";
                         $tmpAnnotationItem["id"] = $annotation["AnnotationID"];
                         $tmpAnnotationItem["attributes"]["context"] = $annotation["AnnotationContext"];
@@ -264,18 +264,18 @@ function mediaGetByID($id = false) {
                         //TODO: What if no party or no fraction?
                         $pitem = $db->getRow("SELECT
                                 p.*,
-                                op.id,
+                                op.OrganisationID,
                                 op.OrganisationLabel,
                                 op.OrganisationID as PartyID,
                                 op.OrganisationLabel as PartyLabel,
                                 ofr.OrganisationLabel as FractionLabel,
                                 ofr.OrganisationID as FractionID
-                            FROM ?n
+                            FROM ?n AS p
                             LEFT JOIN ?n as op 
                                 ON op.OrganisationID = p.PersonPartyOrganisationID
                             LEFT JOIN ?n as ofr 
                                 ON ofr.OrganisationID = p.PersonFactionOrganisationID
-                            WHERE PersonID=?i LIMIT 1",
+                            WHERE PersonID=?s LIMIT 1",
                             $config["platform"]["sql"]["tbl"]["Person"],
                             $config["platform"]["sql"]["tbl"]["Organisation"],
                             $config["platform"]["sql"]["tbl"]["Organisation"], $annotation["AnnotationResourceID"]);
