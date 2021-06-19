@@ -141,8 +141,8 @@ function mediaGetByID($id = false) {
             $return["data"]["attributes"]["dateStart"] = $item["MediaDateStart"];
             $return["data"]["attributes"]["dateEnd"] = $item["MediaDateEnd"];
             $return["data"]["attributes"]["duration"] = $item["MediaDuration"];
-            $return["data"]["attributes"]["videoFileURI"] = $item["MediaFileURI"];
-            $return["data"]["attributes"]["audioFileURI"] = $item["AudioFileURI"];
+            $return["data"]["attributes"]["videoFileURI"] = $item["MediaVideoFileURI"];
+            $return["data"]["attributes"]["audioFileURI"] = $item["MediaAudioFileURI"];
             $return["data"]["attributes"]["sourcePage"] = $item["MediaSourcePage"];
             $return["data"]["attributes"]["thumbnailURI"] = $item["MediaThumbnailURI"];
             $return["data"]["attributes"]["thumbnailCreator"] = $item["MediaThumbnailCreator"];
@@ -156,15 +156,15 @@ function mediaGetByID($id = false) {
             foreach ($itemTexts as $itemText) {
 
                 $tmpTextItem = array();
-                $tmpTextItem["id"] = $itemTexts["TextID"];
-                $tmpTextItem["type"] = $itemTexts["TextType"];
-                $tmpTextItem["textBody"] = $itemTexts["TextBody"];
-                $tmpTextItem["sourceURI"] = $itemTexts["TextSourceURI"];
-                $tmpTextItem["creator"] = $itemTexts["TextCreator"];
-                $tmpTextItem["license"] = $itemTexts["TextLicense"];
-                $tmpTextItem["language"] = $itemTexts["TextLanguage"];
-                $tmpTextItem["originTextID"] = $itemTexts["TextOriginTextID"];
-                $tmpTextItem["lastChanged"] = $itemTexts["TextLastChanged"];
+                $tmpTextItem["id"] = $itemText["TextID"];
+                $tmpTextItem["type"] = $itemText["TextType"];
+                $tmpTextItem["textBody"] = $itemText["TextBody"];
+                $tmpTextItem["sourceURI"] = $itemText["TextSourceURI"];
+                $tmpTextItem["creator"] = $itemText["TextCreator"];
+                $tmpTextItem["license"] = $itemText["TextLicense"];
+                $tmpTextItem["language"] = $itemText["TextLanguage"];
+                $tmpTextItem["originTextID"] = $itemText["TextOriginTextID"];
+                $tmpTextItem["lastChanged"] = $itemText["TextLastChanged"];
 
                 array_push($return["data"]["attributes"]["textContents"], $tmpTextItem);
 
