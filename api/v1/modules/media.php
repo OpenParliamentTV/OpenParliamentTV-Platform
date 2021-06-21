@@ -1,6 +1,7 @@
 <?php
 
 require_once (__DIR__."./../../../config.php");
+require_once ("config.php");
 require_once (__DIR__."./../../../modules/utilities/functions.php");
 require_once (__DIR__."./../../../modules/utilities/safemysql.class.php");
 
@@ -170,7 +171,7 @@ function mediaGetByID($id = false) {
 
             }
 
-            $return["data"]["links"]["self"] = ""; //TODO: Link
+            $return["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["type"]."/".$return["data"]["id"];
 
             $return["data"]["relationships"]["electoralPeriod"]["data"]["type"] = "electoralPeriod";
             $return["data"]["relationships"]["electoralPeriod"]["data"]["id"] = $item["ElectoralPeriodID"];
@@ -214,7 +215,7 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["DocumentThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["DocumentThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["DocumentThumbnailLicense"];
-                        $tmpAnnotationItem["links"]["self"] = ""; //TODO Link
+                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"].$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["documents"]["data"], $tmpAnnotationItem);
 
                     break;
@@ -233,7 +234,7 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["OrganisationThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["OrganisationThumbnailLicense"];
                         $tmpAnnotationItem["attributes"]["color"] = $ditem["OrganisationColor"];
-                        $tmpAnnotationItem["links"]["self"] = ""; //TODO Link
+                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"].$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["organisation"]["data"], $tmpAnnotationItem);
 
                     break;
@@ -252,7 +253,7 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["TermThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["TermThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["TermThumbnailLicense"];
-                        $tmpAnnotationItem["links"]["self"] = ""; //TODO Link
+                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"].$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["term"]["data"], $tmpAnnotationItem);
 
                     break;
@@ -292,7 +293,7 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["party"]["label"] = $pitem["PartyLabel"];
                         $tmpAnnotationItem["attributes"]["fraction"]["id"] = $pitem["FractionID"];
                         $tmpAnnotationItem["attributes"]["fraction"]["label"] = $pitem["FractionLabel"];
-                        $tmpAnnotationItem["links"]["self"] = ""; //TODO Link
+                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"].$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["people"]["data"], $tmpAnnotationItem);
 
                     break;
@@ -300,12 +301,12 @@ function mediaGetByID($id = false) {
 
             }
 
-            $return["data"]["relationships"]["documents"]["links"]["self"] = ""; //TODO LINK
-            $return["data"]["relationships"]["organisations"]["links"]["self"] = ""; //TODO LINK
-            $return["data"]["relationships"]["terms"]["links"]["self"] = ""; //TODO LINK
-            $return["data"]["relationships"]["people"]["links"]["self"] = ""; //TODO LINK
+            $return["data"]["relationships"]["documents"]["links"]["self"] = $config["dir"]["api"]."searchAnnotations?mediaID=".$return["data"]["id"]."&type=document";
+            $return["data"]["relationships"]["organisations"]["links"]["self"] = $config["dir"]["api"]."searchAnnotations?mediaID=".$return["data"]["id"]."&type=organisation";
+            $return["data"]["relationships"]["terms"]["links"]["self"] = $config["dir"]["api"]."searchAnnotations?mediaID=".$return["data"]["id"]."&type=term";
+            $return["data"]["relationships"]["people"]["links"]["self"] = $config["dir"]["api"]."searchAnnotations?mediaID=".$return["data"]["id"]."&type=person";
 
-            $return["data"]["relationships"]["annotations"]["links"]["self"] = ""; //TODO LINK
+            $return["data"]["relationships"]["annotations"]["links"]["self"] = $config["dir"]["api"]."searchAnnotations?mediaID=".$return["data"]["id"];
 
         } else {
 

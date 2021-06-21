@@ -36,6 +36,15 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^(manage)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
 	########################################
+	# Rewrite /documentation/ urls
+	########################################
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(documentation)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2&id=$3 [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(documentation)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
+	########################################
 	# Generic URL Rewrites
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-d

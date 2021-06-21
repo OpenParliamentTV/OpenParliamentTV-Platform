@@ -3,6 +3,7 @@
 error_reporting(0);
 
 require_once (__DIR__."./../../config.php");
+require_once ("config.php");
 require_once (__DIR__."./../../modules/utilities/functions.php");
 require_once (__DIR__."./../../modules/utilities/safemysql.class.php");
 
@@ -11,7 +12,7 @@ function apiV1($action = false, $param = false) {
     global $config;
 
     $return["meta"]["api"]["version"] = 1;
-    $return["meta"]["api"]["documentation"] = "https://de.openparliament.tv/api";
+    $return["meta"]["api"]["documentation"] = $config["dir"]["root"]."documentation/api";
     $return["meta"]["requestStatus"] = "error";
     $return["errors"] = array();
 

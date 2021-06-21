@@ -1,6 +1,7 @@
 <?php
 
 require_once (__DIR__."./../../../config.php");
+require_once ("config.php");
 require_once (__DIR__."./../../../modules/utilities/functions.php");
 require_once (__DIR__."./../../../modules/utilities/safemysql.class.php");
 
@@ -75,7 +76,7 @@ function personGetByID($id = false) {
             $return["data"]["attributes"]["socialMediaIDs"] = json_decode($item["PersonSocialMediaIDs"],true);
             $return["data"]["attributes"]["additionalInformation"] = json_decode($item["PersonAdditionalInformation"],true);
             $return["data"]["attributes"]["lastChanged"] = $item["PersonLastChanged"];
-            $return["data"]["links"]["self"] = ""; //TODO: Link
+            $return["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["type"]."/".$return["data"]["id"];
 
             if ($item["PersonPartyOrganisationID"]) {
 
@@ -91,7 +92,7 @@ function personGetByID($id = false) {
                     $return["data"]["relationships"]["party"]["data"]["attributes"]["thumbnailCreator"] = $itemParty["OrganisationThumbnailCreator"];
                     $return["data"]["relationships"]["party"]["data"]["attributes"]["thumbnailLicense"] = $itemParty["OrganisationThumbnailLicense"];
                     $return["data"]["relationships"]["party"]["data"]["attributes"]["websiteURI"] = $itemParty["OrganisationWebsiteURI"];
-                    $return["data"]["relationships"]["party"]["links"]["self"] = ""; //TODO: Link
+                    $return["data"]["relationships"]["party"]["links"]["self"] = $config["dir"]["api"]."organisation/".$return["data"]["relationships"]["party"]["data"]["id"];
 
                 } else {
 
@@ -119,7 +120,7 @@ function personGetByID($id = false) {
                     $return["data"]["relationships"]["faction"]["data"]["attributes"]["thumbnailCreator"] = $itemFaction["OrganisationThumbnailCreator"];
                     $return["data"]["relationships"]["faction"]["data"]["attributes"]["thumbnailLicense"] = $itemFaction["OrganisationThumbnailLicense"];
                     $return["data"]["relationships"]["faction"]["data"]["attributes"]["websiteURI"] = $itemFaction["OrganisationWebsiteURI"];
-                    $return["data"]["relationships"]["faction"]["links"]["self"] = ""; //TODO: Link
+                    $return["data"]["relationships"]["faction"]["links"]["self"] = $config["dir"]["api"]."organisation/".$return["data"]["relationships"]["faction"]["data"]["id"];
 
                 } else {
 
@@ -133,7 +134,7 @@ function personGetByID($id = false) {
 
             }
 
-            $return["data"]["relationships"]["media"]["links"]["self"] = ""; //TODO: Link - "self"?
+            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."searchMedia?personID=".$return["data"]["id"];
 
         } else {
 

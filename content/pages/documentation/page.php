@@ -2,7 +2,7 @@
 <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
-			<h2>API</h2>
+			<h2>Documentation</h2>
 		</div>
 	</div>
 </main>

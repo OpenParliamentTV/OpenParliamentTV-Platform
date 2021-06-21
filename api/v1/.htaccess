@@ -1,0 +1,31 @@
+########################################
+# API Rewrite Rules
+########################################
+<IfModule mod_rewrite.c>
+	Options +FollowSymLinks
+	########################################
+	# Try to fix conflicting rewrite rules 
+	# set by Wordpress etc:
+	########################################
+	RewriteEngine Off
+	RewriteEngine On
+	########################################
+	# Set Rewrite Base
+	########################################
+	#RewriteBase /
+	########################################
+	# Always remove trailing slash
+	########################################
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_URI} (.+)/$
+	RewriteRule ^ %1 [L,R]
+	########################################
+	# URL Rewrites
+	########################################
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1&param=$2 [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^([a-zA-Z0-9_-]+)? index.php?a=$1 [QSA]
+</IfModule>

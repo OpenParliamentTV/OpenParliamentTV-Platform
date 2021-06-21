@@ -1,6 +1,7 @@
 <?php
 
 require_once (__DIR__."./../../../config.php");
+require_once ("config.php");
 require_once (__DIR__."./../../../modules/utilities/functions.php");
 require_once (__DIR__."./../../../modules/utilities/safemysql.class.php");
 
@@ -70,9 +71,9 @@ function organisationGetByID($id = false) {
             $return["data"]["attributes"]["color"] = $item["OrganisationColor"];
             $return["data"]["attributes"]["additionalInformation"] = json_decode($item["OrganisationAdditionalInformation"],true);
             $return["data"]["attributes"]["lastChanged"] = $item["OrganisationLastChanged"];
-            $return["data"]["links"]["self"] = ""; //TODO: Link
-            $return["data"]["relationships"]["media"]["links"]["self"] = ""; //TODO: Link - "self"?
-            $return["data"]["relationships"]["people"]["links"]["self"] = ""; //TODO: Link - "self"?
+            $return["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["type"]."/".$return["data"]["id"];
+            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."searchMedia?organisationID=".$return["data"]["id"];
+            $return["data"]["relationships"]["people"]["links"]["self"] = $config["dir"]["api"]."searchPeople?organisationID=".$return["data"]["id"];
 
         } else {
 
