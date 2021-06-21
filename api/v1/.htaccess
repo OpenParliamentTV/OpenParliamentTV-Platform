@@ -12,7 +12,7 @@
 	########################################
 	# Set Rewrite Base
 	########################################
-	#RewriteBase /
+	#RewriteBase /api/v1
 	########################################
 	# Always remove trailing slash
 	########################################
@@ -24,7 +24,7 @@
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1&param=$2 [QSA,L]
+	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=getItem&type=$1&id=$2 [QSA,L]
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^([a-zA-Z0-9_-]+)? index.php?a=$1 [QSA]
