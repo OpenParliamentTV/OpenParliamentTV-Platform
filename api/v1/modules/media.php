@@ -203,7 +203,7 @@ function mediaGetByID($id = false) {
             $return["data"]["relationships"]["agendaItem"]["data"]["id"] = $item["AgendaItemID"];
             $return["data"]["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"] = $item["AgendaItemOfficialTitle"];
             $return["data"]["relationships"]["agendaItem"]["data"]["attributes"]["title"] = $item["AgendaItemTitle"];
-            $return["data"]["relationships"]["agendaItem"]["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["relationships"]["agendaItem"]["data"]["type"]."/".$return["data"]["relationships"]["agendaItem"]["data"]["id"];
+            $return["data"]["relationships"]["agendaItem"]["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["relationships"]["agendaItem"]["data"]["type"]."/".$parliament."-".$return["data"]["relationships"]["agendaItem"]["data"]["id"];
 
             $return["data"]["relationships"]["documents"]["data"] = array();
             $return["data"]["relationships"]["organisations"]["data"] = array();

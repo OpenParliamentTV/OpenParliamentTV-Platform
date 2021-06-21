@@ -96,8 +96,8 @@ function agendaItemGetByID($id = false) {
             $return["data"]["attributes"]["officialTitle"] = $item["AgendaItemOfficialTitle"];
             $return["data"]["attributes"]["title"] = $item["AgendaItemTitle"];
             $return["data"]["attributes"]["order"] = $item["AgendaItemOrder"];
-            $return["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["type"]."/".$return["data"]["id"];
-            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."search?type=media&agendaItemID=".$return["data"]["id"]; //TODO: Check Link and Parameter
+            $return["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["type"]."/".$parliament."-".$return["data"]["id"];
+            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."search?type=media&agendaItemID=".$parliament."-".$return["data"]["id"]; //TODO: Check Link and Parameter
 
             //TODO: Session Relation?
 
