@@ -23,7 +23,7 @@ function apiV1($action = false, $param = false) {
         $errorarray["title"] = "Missing request parameter";
         $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
         array_push($return["errors"], $errorarray);
-        $return["links"]["self"] = ""; //TODO: Prevent XSS.
+        $return["links"]["self"] = htmlspecialchars($config["dir"]["root"].$_SERVER["REQUEST_URI"]);
 
     } else {
 
