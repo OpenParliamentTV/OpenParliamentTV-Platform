@@ -7,7 +7,7 @@ require_once ("config.php");
 require_once (__DIR__."./../../modules/utilities/functions.php");
 require_once (__DIR__."./../../modules/utilities/safemysql.class.php");
 
-function apiV1($action = false, $param = false) {
+function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE-0190002123
 
     global $config;
 
@@ -16,7 +16,7 @@ function apiV1($action = false, $param = false) {
     $return["meta"]["requestStatus"] = "error";
     $return["errors"] = array();
 
-    if ((!$action) || (!$param)) {
+    if ((!$request["action"]) || (!$request["type"])) {
 
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
@@ -27,130 +27,218 @@ function apiV1($action = false, $param = false) {
 
     } else {
 
-        switch ($action) {
+        switch ($request["action"]) {
 
-            case "organisation":
+            case "getItem":
 
-                require_once (__DIR__."/modules/organisation.php");
 
-                $item = organisationGetByID($param);
 
-                if ($item["meta"]["requestStatus"] == "success") {
+                switch ($request["type"]) {
 
-                    unset($return["errors"]);
+                    case "organisation":
 
-                } else {
+                        require_once (__DIR__."/modules/organisation.php");
 
-                    unset($return["data"]);
+                        $item = organisationGetByID($request["id"]);
 
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                        $return = array_replace_recursive($return, $item);
+
+                        break;
+
+
+
+                    case "document":
+
+                        require_once (__DIR__."/modules/document.php");
+
+                        $item = documentGetByID($request["id"]);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                        $return = array_replace_recursive($return, $item);
+
+                        break;
+
+
+
+                    case "term":
+
+                        require_once (__DIR__."/modules/term.php");
+
+                        $item = termGetByID($request["id"]);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                        $return = array_replace_recursive($return, $item);
+
+                        break;
+
+
+
+                    case "person":
+
+                        require_once (__DIR__."/modules/person.php");
+
+                        $item = personGetByID($request["id"]);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                        $return = array_replace_recursive($return, $item);
+
+                        break;
+
+
+
+                    case "media":
+
+                        require_once (__DIR__."/modules/media.php");
+
+                        $item = mediaGetByID($request["id"]);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                        $return = array_replace_recursive($return, $item);
+
+                    break;
+
+
+
+                    case "session":
+
+                        require_once (__DIR__."/modules/session.php");
+
+                        $item = sessionGetByID($request["id"]);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                        $return = array_replace_recursive($return, $item);
+
+                    break;
+
+
+
+                    case "agendaItem":
+
+                        require_once (__DIR__."/modules/agenda.php");
+
+                        $item = agendaItemGetByID($request["id"]);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                        $return = array_replace_recursive($return, $item);
+
+                    break;
+
+
+
+                    case "electoralPeriod":
+
+                        require_once (__DIR__."/modules/electoralperiod.php");
+
+                        $item = electoralPeriodGetByID($request["id"]);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                        $return = array_replace_recursive($return, $item);
+
+                break;
+
+
+
+                    default:
+
+                        $errorarray["status"] = "422";
+                        $errorarray["code"] = "1";
+                        $errorarray["title"] = "Missing request parameter";
+                        $errorarray["detail"] = "Required parameter (type) of the request is missing"; //TODO: Description
+                        array_push($return["errors"], $errorarray);
+
+                    break;
                 }
-
-                $return = array_replace_recursive($return, $item);
-
             break;
-
-
-
-            case "document":
-
-                require_once (__DIR__."/modules/document.php");
-
-                $item = documentGetByID($param);
-
-                if ($item["meta"]["requestStatus"] == "success") {
-
-                    unset($return["errors"]);
-
-                } else {
-
-                    unset($return["data"]);
-
-                }
-
-                $return = array_replace_recursive($return, $item);
-
-            break;
-
-
-
-            case "term":
-
-                require_once (__DIR__."/modules/term.php");
-
-                $item = termGetByID($param);
-
-                if ($item["meta"]["requestStatus"] == "success") {
-
-                    unset($return["errors"]);
-
-                } else {
-
-                    unset($return["data"]);
-
-                }
-
-                $return = array_replace_recursive($return, $item);
-
-            break;
-
-
-
-            case "person":
-
-                require_once (__DIR__."/modules/person.php");
-
-                $item = personGetByID($param);
-
-                if ($item["meta"]["requestStatus"] == "success") {
-
-                    unset($return["errors"]);
-
-                } else {
-
-                    unset($return["data"]);
-
-                }
-
-                $return = array_replace_recursive($return, $item);
-
-            break;
-
-
-
-            case "media":
-
-                require_once (__DIR__."/modules/media.php");
-
-                $item = mediaGetByID($param);
-
-                if ($item["meta"]["requestStatus"] == "success") {
-
-                    unset($return["errors"]);
-
-                } else {
-
-                    unset($return["data"]);
-
-                }
-
-                $return = array_replace_recursive($return, $item);
-
-            break;
-
             default:
 
                 $errorarray["status"] = "422";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "Missing request parameter";
-                $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
+                $errorarray["detail"] = "Required parameter (action) of the request is missing"; //TODO: Description
                 array_push($return["errors"], $errorarray);
 
-            break;
+                break;
+
+        }
+
+
 
 
 
         }
-    }
 
     return $return;
 

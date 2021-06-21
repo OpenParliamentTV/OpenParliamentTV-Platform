@@ -129,7 +129,7 @@ function getInfosFromStringID($stringID = "") {
             $return["sessionNumber"] = substr($id,3, 4);
             $return["mediaNumber"] = substr($id,7);
 
-        } elseif ($length == 5) {
+        } elseif ($length == 7) {
 
             $return["type"] = "session";
             $return["id_part"] = $id;
@@ -139,10 +139,16 @@ function getInfosFromStringID($stringID = "") {
 
         } elseif ($length == 3) {
 
-            $return["type"] = "session";
+            $return["type"] = "electoralPeriod";
             $return["id_part"] = $id;
             $return["id_full"] = $stringID;
             $return["electoralPeriodNumber"] = substr($id,0, 3);
+
+        } else {
+
+            $return["type"] = "unknown"; // Maybe AgendaItem
+            $return["id_part"] = $id;
+            $return["id_full"] = $stringID;
 
         }
 
