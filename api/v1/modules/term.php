@@ -1,6 +1,7 @@
 <?php
 
 require_once (__DIR__."./../../../config.php");
+require_once ("config.php");
 require_once (__DIR__."./../../../modules/utilities/functions.php");
 require_once (__DIR__."./../../../modules/utilities/safemysql.class.php");
 
@@ -70,7 +71,7 @@ function termGetByID($id = false) {
             $return["data"]["attributes"]["embedURI"] = $item["TermEmbedURI"];
             $return["data"]["attributes"]["additionalInformation"] = json_decode($item["TermAdditionalInformation"],true);
             $return["data"]["attributes"]["lastChanged"] = $item["TermLastChanged"];
-            $return["data"]["links"]["self"] = ""; //TODO: Link
+            $return["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["type"]."/".$return["data"]["id"];
             $return["data"]["relationships"]["media"]["links"]["self"] = ""; //TODO: Link - "self"?
 
         } else {

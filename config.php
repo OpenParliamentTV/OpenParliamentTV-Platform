@@ -1,6 +1,6 @@
 <?php
 
-$config["dir"]["root"] = "";
+$config["dir"]["root"] = "http://localhost/OpenParliamentTV/OpenParliamentTV-Platform/";
 
 $config["allow"]["register"] = true;
 $config["allow"]["login"] = true;

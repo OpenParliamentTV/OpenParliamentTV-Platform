@@ -1,6 +1,7 @@
 <?php
 
 require_once (__DIR__."./../../../config.php");
+require_once ("config.php");
 require_once (__DIR__."./../../../modules/utilities/functions.php");
 require_once (__DIR__."./../../../modules/utilities/safemysql.class.php");
 
@@ -69,8 +70,8 @@ function documentGetByID($id = false) {
             $return["data"]["attributes"]["embedURI"] = $item["DocumentEmbedURI"];
             $return["data"]["attributes"]["additionalInformation"] = json_decode($item["DocumentAdditionalInformation"],true);
             $return["data"]["attributes"]["lastChanged"] = $item["DocumentLastChanged"];
-            $return["data"]["links"]["self"] = ""; //TODO: Link
-            $return["data"]["relationships"]["media"]["links"]["self"] = ""; //TODO: Link - "self"?
+            $return["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["type"]."/".$return["data"]["id"];
+            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."searchMedia?documentID=".$return["data"]["id"];
 
         } else {
 
