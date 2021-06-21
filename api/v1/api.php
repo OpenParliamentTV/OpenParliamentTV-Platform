@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(0);
+
 require_once (__DIR__."./../../config.php");
 require_once (__DIR__."./../../modules/utilities/functions.php");
 require_once (__DIR__."./../../modules/utilities/safemysql.class.php");
@@ -44,7 +46,7 @@ function apiV1($action = false, $param = false) {
 
                 $return = array_replace_recursive($return, $item);
 
-                break;
+            break;
 
 
 
@@ -66,7 +68,7 @@ function apiV1($action = false, $param = false) {
 
                 $return = array_replace_recursive($return, $item);
 
-                break;
+            break;
 
 
 
@@ -88,7 +90,7 @@ function apiV1($action = false, $param = false) {
 
                 $return = array_replace_recursive($return, $item);
 
-                break;
+            break;
 
 
 
@@ -110,7 +112,7 @@ function apiV1($action = false, $param = false) {
 
                 $return = array_replace_recursive($return, $item);
 
-                break;
+            break;
 
 
 
@@ -132,7 +134,7 @@ function apiV1($action = false, $param = false) {
 
                 $return = array_replace_recursive($return, $item);
 
-                break;
+            break;
 
             default:
 
