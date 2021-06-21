@@ -78,22 +78,83 @@ function passwordStrength($password = "") {
 /**
  *
  * eg.:
- * returns "DE-BY" by the given String "DE-BY-1234"
- * returns "DE" by the given String "DE-1234"
+ *      DE-BY-0190023123
+ *          returns
+ *      array(
+ *          "parliament" => "DE-BY",
+ *          "type" => "media"
+ *          "id_full" => "DE-BY-0190023123"
+ *          "id_part" => "0190023123",
+ *          "electoralPeriodNumber" => "019",
+ *          "sessionNumber" => "0023",
+ *          "mediaNumber" => "123"
+ *      );
  *
- * @param string $string
+ * -----
+ *
+ *      DE-BY-0190023
+ *          returns
+ *      array(
+ *          "parliament" => "DE-BY",
+ *          "type" => "session"
+ *          "id_full" => "DE-BY-0190023"
+ *          "id_part" => "0190023",
+ *          "electoralPeriodNumber" => "019",
+ *          "sessionNumber" => "0023"
+ *      );
+ * @param string $stringID
  * @return string
  */
-function getParliamentFromStringID($string = "") {
-    if ($string == "") {
+function getInfosFromStringID($stringID = "") {
+
+
+    if ($stringID == "") {
+
         return false;
+
     } else {
-        $parliament = explode("-",$string);
-        array_pop($parliament);
-        if (is_array($parliament)) {
-            $parliament = implode("-",$parliament);
+
+        $stringsplit = explode("-",$stringID);
+
+        $id = array_pop($stringsplit);
+
+        $length = strlen($id);
+
+        if (strlen($length) >= 8) {
+
+            $return["type"] = "media";
+            $return["id_part"] = $id;
+            $return["id_full"] = $stringID;
+            $return["electoralPeriodNumber"] = substr($id,0, 3);
+            $return["sessionNumber"] = substr($id,3, 4);
+            $return["mediaNumber"] = substr($id,7);
+
+        } elseif ($length == 5) {
+
+            $return["type"] = "session";
+            $return["id_part"] = $id;
+            $return["id_full"] = $stringID;
+            $return["electoralPeriodNumber"] = substr($id,0, 3);
+            $return["sessionNumber"] = substr($id,3, 4);
+
+        } elseif ($length == 3) {
+
+            $return["type"] = "session";
+            $return["id_part"] = $id;
+            $return["id_full"] = $stringID;
+            $return["electoralPeriodNumber"] = substr($id,0, 3);
+
         }
-        return $parliament;
+
+        if (is_array($stringsplit)) {
+
+            $parliament = implode("-",$stringsplit);
+
+        }
+
+        $return["parliament"] = $parliament;
+
+        return $return;
     }
 
 }

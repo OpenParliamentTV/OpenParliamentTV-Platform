@@ -13,7 +13,27 @@ function mediaGetByID($id = false) {
 
     global $config;
 
-    $parliament = getParliamentFromStringID($id);
+    $IDInfos = getInfosFromStringID($id);
+
+
+    if (is_array($IDInfos)) {
+
+        $parliament = $IDInfos["parliament"];
+
+    } else {
+
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "500";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "ID Error";
+        $errorarray["detail"] = "Could not parse ID"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+        return $return;
+
+    }
+
+
 
     if (!$id) {
 
@@ -172,18 +192,18 @@ function mediaGetByID($id = false) {
             $return["data"]["relationships"]["electoralPeriod"]["data"]["type"] = "electoralPeriod";
             $return["data"]["relationships"]["electoralPeriod"]["data"]["id"] = $item["ElectoralPeriodID"];
             $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] = $item["ElectoralPeriodNumber"];
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["links"]["self"] = ""; //TODO: Link/Uri
+            $return["data"]["relationships"]["electoralPeriod"]["data"]["links"]["self"] = $config["dir"]["root"]."/".$config["dir"]["api"]."/".$item["ElectoralPeriodID"]; //TODO: check Link/Uri
 
             $return["data"]["relationships"]["session"]["data"]["type"] = "session";
             $return["data"]["relationships"]["session"]["data"]["id"] = $item["SessionID"];
             $return["data"]["relationships"]["session"]["data"]["attributes"]["number"] = $item["SessionNumber"];
-            $return["data"]["relationships"]["session"]["data"]["links"]["self"] = ""; //TODO: Link/Uri
+            $return["data"]["relationships"]["session"]["data"]["links"]["self"] = $config["dir"]["root"]."/".$config["dir"]["api"]."/".$item["SessionID"]; //TODO: Link/Uri
 
             $return["data"]["relationships"]["agendaItem"]["data"]["type"] = "agendaItem";
             $return["data"]["relationships"]["agendaItem"]["data"]["id"] = $item["AgendaItemID"];
             $return["data"]["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"] = $item["AgendaItemOfficialTitle"];
             $return["data"]["relationships"]["agendaItem"]["data"]["attributes"]["title"] = $item["AgendaItemTitle"];
-            $return["data"]["relationships"]["agendaItem"]["data"]["links"]["self"] = ""; //TODO: Link/Uri
+            $return["data"]["relationships"]["agendaItem"]["data"]["links"]["self"] = $config["dir"]["root"]."/".$config["dir"]["api"]."/".$item["AgendaItemID"]; //TODO: check Link/Uri
 
             $return["data"]["relationships"]["documents"]["data"] = array();
             $return["data"]["relationships"]["organisations"]["data"] = array();
