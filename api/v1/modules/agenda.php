@@ -92,7 +92,7 @@ function agendaItemGetByID($id = false) {
 
             $return["meta"]["requestStatus"] = "success";
             $return["data"]["type"] = "agendaItem";
-            $return["data"]["id"] = $item["AgendaItemID"];
+            $return["data"]["id"] = $parliament."-".$item["AgendaItemID"];
             $return["data"]["attributes"]["officialTitle"] = $item["AgendaItemOfficialTitle"];
             $return["data"]["attributes"]["title"] = $item["AgendaItemTitle"];
             $return["data"]["attributes"]["order"] = $item["AgendaItemOrder"];
