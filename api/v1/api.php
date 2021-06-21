@@ -222,6 +222,26 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
                     break;
                 }
             break;
+
+            case "searchPeople":
+
+                require_once (__DIR__."/modules/person.php");
+
+                $item = personSearch($_REQUEST);
+
+                if ($item["meta"]["requestStatus"] == "success") {
+
+                    unset($return["errors"]);
+
+                } else {
+
+                    unset($return["data"]);
+
+                }
+
+                $return = array_replace_recursive($return, $item);
+
+            break;
             default:
 
                 $errorarray["status"] = "422";
