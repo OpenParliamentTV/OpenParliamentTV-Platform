@@ -13,11 +13,7 @@ function mediaGetByID($id = false) {
 
     global $config;
 
-    $parliament = explode("-",$id);
-    array_pop($parliament);
-    if (is_array($parliament)) {
-        $parliament = implode("-",$parliament);
-    }
+    $parliament = getParliamentFromStringID($id);
 
     if (!$id) {
 

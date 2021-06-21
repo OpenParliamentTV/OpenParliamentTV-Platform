@@ -75,4 +75,28 @@ function passwordStrength($password = "") {
 
 }
 
+/**
+ *
+ * eg.:
+ * returns "DE-BY" by the given String "DE-BY-1234"
+ * returns "DE" by the given String "DE-1234"
+ *
+ * @param string $string
+ * @return string
+ */
+function getParliamentFromStringID($string = "") {
+    if ($string == "") {
+        return false;
+    } else {
+        $parliament = explode("-",$string);
+        array_pop($parliament);
+        if (is_array($parliament)) {
+            $parliament = implode("-",$parliament);
+        }
+        return $parliament;
+    }
+
+}
+
+
 ?>
