@@ -248,13 +248,19 @@ function personSearch($parameter, $db = false) {
 
     foreach ($filteredParameters as $k=>$para) {
 
+
+
         if ($k == "name") {
             $conditions[] = $db->parse("MATCH(p.PersonLabel, p.PersonFirstName, p.PersonLastName) AGAINST (?s IN BOOLEAN MODE)", "*".$para."*");
         }
 
 
         if ($k == "party") {
-           // $conditions[] = $db->parse("PartyLabel LIKE ?s", $para);
+           $conditions[] = $db->parse("(op.OrganisationLabel LIKE ?s OR op.OrganisationLabelAlternative LIKE ?s)", "%".$para."%", "%".$para."%");
+        }
+
+        if ($k == "fraction") {
+            $conditions[] = $db->parse("(ofr.OrganisationLabel LIKE ?s OR ofr.OrganisationLabelAlternative LIKE ?s)", "%".$para."%", "%".$para."%");
         }
 
     }
