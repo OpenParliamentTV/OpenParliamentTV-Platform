@@ -208,7 +208,7 @@ function personSearch($parameter, $db = false) {
 
     }
 
-    $allowedFields = ["name", "party", "faction"];
+    $allowedFields = ["name", "party", "faction", "type"];
 
     $filteredParameters = array_filter(
         $parameter,
@@ -222,15 +222,53 @@ function personSearch($parameter, $db = false) {
     if (array_key_exists("name", $filteredParameters) && (strlen($filteredParameters["name"])) < 3) {
 
         $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Name too short";
         $errorarray["detail"] = "Searching for name needs at least 3 characters."; //  due to database limitations TODO: Description
         array_push($return["errors"], $errorarray);
+
+    }
+
+    if (array_key_exists("party", $filteredParameters)) {
+
+        if (is_array($filteredParameters["party"])) {
+
+            foreach ($filteredParameters["party"] as $tmpParty) {
+                if (strlen($tmpParty) < 1) {
+                    $return["meta"]["requestStatus"] = "error";
+                    $errorarray["status"] = "400";
+                    $errorarray["code"] = "1";
+                    $errorarray["title"] = "Party too short";
+                    $errorarray["detail"] = "Searching for party needs at least 3 characters."; //  TODO: Description
+                    array_push($return["errors"], $errorarray);
+                }
+            }
+
+        } else {
+
+            if (strlen($filteredParameters["party"]) < 1) {
+
+                $return["meta"]["requestStatus"] = "error";
+                $errorarray["status"] = "400";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Party too short";
+                $errorarray["detail"] = "Searching for party needs at least 3 characters."; //  TODO: Description
+                array_push($return["errors"], $errorarray);
+
+            }
+
+        }
+
+    }
+
+    if ($return["meta"]["requestStatus"] == "error") {
+
         return $return;
 
     }
+
+
 
 
     $query = "SELECT            p.*,
@@ -253,6 +291,24 @@ function personSearch($parameter, $db = false) {
         if ($k == "name") {
 
             $conditions[] = $db->parse("MATCH(p.PersonLabel, p.PersonFirstName, p.PersonLastName) AGAINST (?s IN BOOLEAN MODE)", "*".$para."*");
+
+        }
+
+        if ($k == "type") {
+
+            $conditions[] = $db->parse("PersonType = ?s", $para);
+
+        }
+
+        if ($k == "degree") {
+
+            $conditions[] = $db->parse("PersonDegree LIKE ?s", "%".$para."%");
+
+        }
+
+        if ($k == "degree") {
+
+            $conditions[] = $db->parse("PersonGender LIKE ?s", "%".$para."%");
 
         }
 

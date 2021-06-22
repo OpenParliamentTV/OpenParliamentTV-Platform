@@ -16,7 +16,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
     $return["meta"]["requestStatus"] = "error";
     $return["errors"] = array();
 
-    if ((!$request["action"]) || (!$request["type"])) {
+    if ((!$request["action"]) || (!$request["itemType"])) {
 
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
@@ -33,7 +33,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
 
 
-                switch ($request["type"]) {
+                switch ($request["itemType"]) {
 
                     case "organisation":
 
@@ -207,7 +207,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                         $return = array_replace_recursive($return, $item);
 
-                break;
+                    break;
 
 
 
@@ -225,7 +225,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
             case "search":
 
-                switch ($request["type"]) {
+                switch ($request["itemType"]) {
 
                     case "people":
 
