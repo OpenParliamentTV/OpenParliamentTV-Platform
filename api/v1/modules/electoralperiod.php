@@ -43,6 +43,7 @@ function electoralPeriodGetByID($id = false) {
         array_push($return["errors"], $errorarray);
 
         return $return;
+        
 
     } else {
 
