@@ -169,7 +169,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                     case "agendaItem":
 
-                        require_once (__DIR__."/modules/agenda.php");
+                        require_once (__DIR__."/modules/agendaItem.php");
 
                         $item = agendaItemGetByID($request["id"]);
 
@@ -191,7 +191,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                     case "electoralPeriod":
 
-                        require_once (__DIR__."/modules/electoralperiod.php");
+                        require_once (__DIR__."/modules/electoralPeriod.php");
 
                         $item = electoralPeriodGetByID($request["id"]);
 
