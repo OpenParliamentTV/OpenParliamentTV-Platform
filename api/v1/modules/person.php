@@ -251,16 +251,56 @@ function personSearch($parameter, $db = false) {
 
 
         if ($k == "name") {
+
             $conditions[] = $db->parse("MATCH(p.PersonLabel, p.PersonFirstName, p.PersonLastName) AGAINST (?s IN BOOLEAN MODE)", "*".$para."*");
+
         }
 
 
         if ($k == "party") {
-           $conditions[] = $db->parse("(op.OrganisationLabel LIKE ?s OR op.OrganisationLabelAlternative LIKE ?s)", "%".$para."%", "%".$para."%");
+            if (is_array($para)) {
+
+                $tmpStringArray = array();
+
+                foreach ($para as $tmppara) {
+
+                    $tmpStringArray[] = $db->parse("(op.OrganisationLabel LIKE ?s OR op.OrganisationLabelAlternative LIKE ?s)", "%".$tmppara."%", "%".$tmppara."%");
+
+                }
+
+                $tmpStringArray  = " (".implode(" OR ",$tmpStringArray).")";
+                $conditions[] = $tmpStringArray;
+
+            } else {
+
+                $conditions[] = $db->parse("(op.OrganisationLabel LIKE ?s OR op.OrganisationLabelAlternative LIKE ?s)", "%".$para."%", "%".$para."%");
+
+            }
+
         }
 
-        if ($k == "fraction") {
-            $conditions[] = $db->parse("(ofr.OrganisationLabel LIKE ?s OR ofr.OrganisationLabelAlternative LIKE ?s)", "%".$para."%", "%".$para."%");
+
+        if ($k == "faction") {
+
+            if (is_array($para)) {
+
+                $tmpStringArray = array();
+
+                foreach ($para as $tmppara) {
+
+                    $tmpStringArray[] = $db->parse("(ofr.OrganisationLabel LIKE ?s OR ofr.OrganisationLabelAlternative LIKE ?s)", "%".$tmppara."%", "%".$tmppara."%");
+
+                }
+
+                $tmpStringArray  = " (".implode(" OR ",$tmpStringArray).")";
+                $conditions[] = $tmpStringArray;
+
+            } else {
+
+                $conditions[] = $db->parse("(ofr.OrganisationLabel LIKE ?s OR ofr.OrganisationLabelAlternative LIKE ?s)", "%".$para."%", "%".$para."%");
+
+            }
+
         }
 
     }
