@@ -330,6 +330,13 @@ function personSearch($parameter, $db = false) {
 
     }
 
+    if (!array_key_exists("data", $return)) {
+        $return["data"] = array();
+    }
+
+
+    $return["data"]["links"]["self"] = $config["dir"]["api"]."search/?type=people&".getURLParameterFromArray($filteredParameters);
+
     return $return;
 
 }

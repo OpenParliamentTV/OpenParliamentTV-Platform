@@ -223,21 +223,34 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
                 }
             break;
 
-            case "searchPeople":
+            case "search":
 
-                require_once (__DIR__."/modules/person.php");
+                switch ($request["type"]) {
 
-                $item = personSearch($_REQUEST);
+                    case "people":
 
-                if ($item["meta"]["requestStatus"] == "success") {
+                        require_once (__DIR__."/modules/person.php");
 
-                    unset($return["errors"]);
+                        $item = personSearch($_REQUEST);
 
-                } else {
+                        if ($item["meta"]["requestStatus"] == "success") {
 
-                    unset($return["data"]);
+                            unset($return["errors"]);
 
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                    break;
+
+                    default:
+                        //This will never happen because $request["type"] is required. Just here for readability
+                    break;
                 }
+
+
 
                 $return = array_replace_recursive($return, $item);
 

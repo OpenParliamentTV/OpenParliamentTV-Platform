@@ -166,4 +166,23 @@ function getInfosFromStringID($stringID = "") {
 }
 
 
+function getURLParameterFromArray($array = array()) {
+
+    $return = array();
+
+    foreach ($array as $k=>$tmpparam) {
+        if (is_array($tmpparam)) {
+            foreach ($tmpparam as $tmpitem) {
+                $return[] = urlencode($k)."[]=".urlencode($tmpitem);
+            }
+        } else {
+            $return[] = urlencode($k)."=".urlencode($tmpparam);
+        }
+    }
+
+    return implode("&",$return);
+
+}
+
+
 ?>
