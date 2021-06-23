@@ -19,7 +19,7 @@ $ESClient = Elasticsearch\ClientBuilder::create()
 require_once (__DIR__."/../config.php");
 
 /*
-$response = $ESClient->indices()->delete(array("index"=>"openparliamenttv_DE"));
+$response = $ESClient->indices()->delete(array("index"=>"openparliamenttv_de"));
 echo '<pre>';
 print_r($response);
 echo '</pre>';
@@ -82,7 +82,7 @@ function setOptions() {
 		)
 	);
 
-	$indexParams = array("index" => "openparliamenttv_DE", "body" => $data);
+	$indexParams = array("index" => "openparliamenttv_de", "body" => $data);
 
 	try {
 		$result = $ESClient->indices()->create($indexParams);
@@ -111,7 +111,7 @@ function setMapping() {
 			"search_analyzer"=>"standard"
 	)));
 
-	$url = "http://localhost:9200/openparliamenttv_DE/_mapping?pretty";
+	$url = "http://localhost:9200/openparliamenttv_de/_mapping?pretty";
 	$ch = curl_init( $url );
 
 	$payload = json_encode($data);
@@ -153,7 +153,7 @@ function updateIndex() {
 
 	//$data = '';
 
-	$docParams = array("index" => "openparliamenttv_DE", "id" => "DE-0190003001", "body" => json_encode($data["data"]));
+	$docParams = array("index" => "openparliamenttv_de", "id" => "DE-0190003001", "body" => json_encode($data["data"]));
 
 	try {
 		$result = $ESClient->index($docParams);

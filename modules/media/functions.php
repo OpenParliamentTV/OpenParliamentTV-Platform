@@ -2,15 +2,18 @@
 
 require_once(__DIR__.'/../../vendor/autoload.php');
 
-$ESClient = Elasticsearch\ClientBuilder::create()->build();
-
-
+$hosts = ["https://@localhost:9200"];
+$ESClient = Elasticsearch\ClientBuilder::create()
+    ->setHosts($hosts)
+    ->setBasicAuthentication("admin","admin")
+    ->setSSLVerification(realpath(__DIR__."/../../opensearch-root-ssl.pem"))
+    ->build();
 
 function getPrevDocument($currentDocumentTimestamp) {
 	
 	global $ESClient;
 	
-	$searchParams = array("index" => "openparliamenttv_DE", 
+	$searchParams = array("index" => "openparliamenttv_de", 
 		"body" => array(
 			"size" => 1,
 			"query" => array(
@@ -45,7 +48,7 @@ function getNextDocument($currentDocumentTimestamp) {
 	
 	global $ESClient;
 	
-	$searchParams = array("index" => "openparliamenttv_DE", 
+	$searchParams = array("index" => "openparliamenttv_de", 
 		"body" => array(
 			"size" => 1,
 			"query" => array(
@@ -79,7 +82,7 @@ function getNextDocument($currentDocumentTimestamp) {
 function getDocument($documentID) {
 	global $ESClient;
 	
-	$docParams = array("index" => "openparliamenttv_DE", 
+	$docParams = array("index" => "openparliamenttv_de", 
 		"id" => $documentID, 
 		"_source" => true);
 	

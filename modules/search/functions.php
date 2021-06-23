@@ -2,14 +2,18 @@
 
 require_once(__DIR__.'/../../vendor/autoload.php');
 
-$ESClient = Elasticsearch\ClientBuilder::create()->build();
-
+$hosts = ["https://@localhost:9200"];
+$ESClient = Elasticsearch\ClientBuilder::create()
+    ->setHosts($hosts)
+    ->setBasicAuthentication("admin","admin")
+    ->setSSLVerification(realpath(__DIR__."/../../opensearch-root-ssl.pem"))
+    ->build();
 function getIndexCount() {
 	
 	global $ESClient;
 
 	try {
-		$return = $ESClient->count(['index' => 'openparliamenttv_DE']);
+		$return = $ESClient->count(['index' => 'openparliamenttv_de']);
 		$result = $return["count"];
 	} catch(Exception $e) {
 		print_r($e->getMessage());
@@ -45,7 +49,7 @@ function searchSpeeches($request) {
 
 	$data = getSearchBody($request, false);
 	
-	$searchParams = array("index" => "openparliamenttv_DE", "body" => $data);
+	$searchParams = array("index" => "openparliamenttv_de", "body" => $data);
 	
 	try {
 		$results = $ESClient->search($searchParams);
@@ -135,7 +139,7 @@ function searchStats($request) {
 
 	$data = getSearchBody($request, true);
 	
-	$searchParams = array("index" => "openparliamenttv_DE", "body" => $data);
+	$searchParams = array("index" => "openparliamenttv_de", "body" => $data);
 	
 	try {
 		$results = $ESClient->search($searchParams);
