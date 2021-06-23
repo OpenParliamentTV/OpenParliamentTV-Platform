@@ -198,7 +198,7 @@ function getSearchBody($request, $getAllResults) {
 	$filter = array("must"=>array(), "should"=>array());
 
 	//ONLY INCLUDE ALIGNED SPEECHES
-	$filter["must"][] = array("match"=>array("meta.aligned" => true));
+	$filter["must"][] = array("match"=>array("attributes.aligned" => true));
 
 	$shouldCount = 0;
 
