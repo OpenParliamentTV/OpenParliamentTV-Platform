@@ -356,6 +356,17 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
     require_once (__DIR__."/../../../modules/utilities/functions.php");
 
 
+    require_once (__DIR__."/../../../modules/search/functions.php");
+
+    //print_r($parameter);
+
+    return searchSpeeches($parameter);
+
+
+
+    return;
+
+
     //Find out what Parliament Database is meant
 
     if ($parameter["parliament"]) {

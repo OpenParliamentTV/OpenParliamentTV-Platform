@@ -32,8 +32,16 @@ function getIndexCount() {
  * @return array
  */
 function searchSpeeches($request) {
+    require_once(__DIR__.'/../../vendor/autoload.php');
 
-	global $ESClient;
+    $hosts = ["https://@localhost:9200"];
+    $ESClient = Elasticsearch\ClientBuilder::create()
+        ->setHosts($hosts)
+        ->setBasicAuthentication("admin","admin")
+        ->setSSLVerification(realpath(__DIR__."/../../opensearch-root-ssl.pem"))
+        ->build();
+
+	//global $ESClient;
 
 	$data = getSearchBody($request, false);
 	
