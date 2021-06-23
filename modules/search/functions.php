@@ -198,7 +198,7 @@ function getSearchBody($request, $getAllResults) {
 	$filter = array("must"=>array(), "should"=>array());
 
 	//ONLY INCLUDE ALIGNED SPEECHES
-	$filter["must"][] = array("match"=>array("attributes.aligned" => true));
+	//$filter["must"][] = array("match"=>array("attributes.aligned" => true));
 
 	$shouldCount = 0;
 
@@ -246,7 +246,7 @@ function getSearchBody($request, $getAllResults) {
 					
 					//TODO: Get mainSpeaker from people Array 
 					//TODO: people.data[0].attributes.party needs alternativeLabel as well!
-					$filter["should"][] = array("match_phrase"=>array("relationships.people.data[0].attributes.".$requestKey.".labelAlternative" => $partyOrFaction));
+					$filter["should"][] = array("match_phrase"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $partyOrFaction));
 
 				}
 				$shouldCount++;
@@ -254,7 +254,7 @@ function getSearchBody($request, $getAllResults) {
 				
 				//TODO: Get mainSpeaker from people Array 
 				//TODO: people.data[0].attributes.party needs alternativeLabel as well!
-				$filter["must"][] = array("match"=>array("relationships.people.data[0].attributes.".$requestKey.".label" => $requestValue));
+				$filter["must"][] = array("match"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $requestValue));
 
 			}
 		} else if ($requestKey == "partyID") {
@@ -262,14 +262,14 @@ function getSearchBody($request, $getAllResults) {
 				foreach ($requestValue as $partyID) {
 					
 					//TODO: Get mainSpeaker from people Array 
-					$filter["should"][] = array("match_phrase"=>array("relationships.people.data[0].attributes.party.id" => $partyID));
+					$filter["should"][] = array("match_phrase"=>array("relationships.people.data.attributes.party.id" => $partyID));
 
 				}
 				$shouldCount++;
 			} else {
 				
 				//TODO: Get mainSpeaker from people Array 
-				$filter["must"][] = array("match"=>array("relationships.people.data[0].attributes.party.id" => $requestValue));
+				$filter["must"][] = array("match"=>array("relationships.people.data.attributes.party.id" => $requestValue));
 
 			}
 		} else if ($requestKey == "factionID") {
@@ -277,14 +277,14 @@ function getSearchBody($request, $getAllResults) {
 				foreach ($requestValue as $factionID) {
 					
 					//TODO: Get mainSpeaker from people Array 
-					$filter["should"][] = array("match_phrase"=>array("relationships.people.data[0].attributes.faction.id" => $factionID));
+					$filter["should"][] = array("match_phrase"=>array("relationships.people.data.attributes.faction.id" => $factionID));
 
 				}
 				$shouldCount++;
 			} else {
 				
 				//TODO: Get mainSpeaker from people Array 
-				$filter["must"][] = array("match"=>array("relationships.people.data[0].attributes.faction.id" => $requestValue));
+				$filter["must"][] = array("match"=>array("relationships.people.data.attributes.faction.id" => $requestValue));
 
 			}
 		} else if ($requestKey == "person" && strlen($requestValue) > 1) {
@@ -299,7 +299,7 @@ function getSearchBody($request, $getAllResults) {
 			$shouldCount++;
 			*/
 			//TODO: Check if "must" or "should"
-			$filter["must"][] = array("match_phrase"=>array("relationships.people.data[0].attributes.label" => $requestValue));
+			$filter["must"][] = array("match_phrase"=>array("relationships.people.data.attributes.label" => $requestValue));
 			
 		} else if ($requestKey == "personID") {
 			
@@ -329,7 +329,7 @@ function getSearchBody($request, $getAllResults) {
 		if (strlen($fuzzy_match) > 0) {
 			
 			//TODO: Check which item is textContents is the right one
-			$query["bool"]["must"][] = array("match"=>array("attributes.textContents[0].textBody" => array(
+			$query["bool"]["must"][] = array("match"=>array("attributes.textContents.textBody" => array(
 				"query"=>$fuzzy_match,
 				"operator"=>"and",
 				//"fuzziness"=>0,
@@ -338,13 +338,12 @@ function getSearchBody($request, $getAllResults) {
 
 		foreach ($exact_query_matches[0] as $exact_match) {
 			$exact_match = preg_replace('/(["\'])/m', '', $exact_match);
-			$query["bool"]["must"][] = array("match_phrase"=>array("attributes.textContents[0].textBody"=>$exact_match));
+			$query["bool"]["must"][] = array("match_phrase"=>array("attributes.textContents.textBody"=>$exact_match));
 		}
 		
 
 		//$query["bool"]["must"] = array("regexp"=>array("attributes.textContents[0].textBody"=>array("value"=>"(".$request["q"].")")));
 	}
-
 	if ($shouldCount >= 1) {
 		$query["bool"]["filter"]["bool"]["minimum_should_match"] = $shouldCount;
 	}
@@ -378,7 +377,7 @@ function getSearchBody($request, $getAllResults) {
 	if ($getAllResults === false) {
 		$data["highlight"] = array(
 			"number_of_fragments"=>0,
-			"fields"=>array("content"=>new \stdClass())
+			"fields"=>array("attributes.textContents.textBody"=>new \stdClass())
 		);
 	} else {
 		$data["_source"] = ["meta"];
