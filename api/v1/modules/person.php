@@ -1,9 +1,11 @@
 <?php
 
-require_once (__DIR__."./../../../config.php");
-require_once ("config.php");
-require_once (__DIR__."./../../../modules/utilities/functions.php");
-require_once (__DIR__."./../../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../../config.php");
+require_once (__DIR__."/../config.php");
+require_once (__DIR__."/../../../modules/utilities/functions.php");
+require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
+
+
 
 /**
  * @param string $id PersonID (= WikidataID)
@@ -85,26 +87,26 @@ function personGetDataObject($item = false, $db = false) {
 
     if ((is_array($item)) && $db) {
 
-        $return["data"]["type"] = "person";
-        $return["data"]["id"] = $item["PersonID"];
-        $return["data"]["attributes"]["type"] = $item["PersonType"];
-        $return["data"]["attributes"]["label"] = $item["PersonLabel"];
-        $return["data"]["attributes"]["firstName"] = $item["PersonFirstName"];
-        $return["data"]["attributes"]["lastName"] = $item["PersonLastName"];
-        $return["data"]["attributes"]["degree"] = $item["PersonDegree"];
-        $return["data"]["attributes"]["birthDate"] = $item["PersonBirthDate"];
-        $return["data"]["attributes"]["gender"] = $item["PersonGender"];
-        $return["data"]["attributes"]["abstract"] = $item["PersonAbstract"];
-        $return["data"]["attributes"]["thumbnailURI"] = $item["PersonThumbnailURI"];
-        $return["data"]["attributes"]["thumbnailCreator"] = $item["PersonThumbnailCreator"];
-        $return["data"]["attributes"]["thumbnailLicense"] = $item["PersonThumbnailLicense"];
-        $return["data"]["attributes"]["embedURI"] = $item["PersonEmbedURI"];
-        $return["data"]["attributes"]["websiteURI"] = $item["PersonWebsiteURI"];
-        $return["data"]["attributes"]["originID"] = $item["PersonOriginID"];
-        $return["data"]["attributes"]["socialMediaIDs"] = json_decode($item["PersonSocialMediaIDs"],true);
-        $return["data"]["attributes"]["additionalInformation"] = json_decode($item["PersonAdditionalInformation"],true);
-        $return["data"]["attributes"]["lastChanged"] = $item["PersonLastChanged"];
-        $return["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["type"]."/".$return["data"]["id"];
+        $return["type"] = "person";
+        $return["id"] = $item["PersonID"];
+        $return["attributes"]["type"] = $item["PersonType"];
+        $return["attributes"]["label"] = $item["PersonLabel"];
+        $return["attributes"]["firstName"] = $item["PersonFirstName"];
+        $return["attributes"]["lastName"] = $item["PersonLastName"];
+        $return["attributes"]["degree"] = $item["PersonDegree"];
+        $return["attributes"]["birthDate"] = $item["PersonBirthDate"];
+        $return["attributes"]["gender"] = $item["PersonGender"];
+        $return["attributes"]["abstract"] = $item["PersonAbstract"];
+        $return["attributes"]["thumbnailURI"] = $item["PersonThumbnailURI"];
+        $return["attributes"]["thumbnailCreator"] = $item["PersonThumbnailCreator"];
+        $return["attributes"]["thumbnailLicense"] = $item["PersonThumbnailLicense"];
+        $return["attributes"]["embedURI"] = $item["PersonEmbedURI"];
+        $return["attributes"]["websiteURI"] = $item["PersonWebsiteURI"];
+        $return["attributes"]["originID"] = $item["PersonOriginID"];
+        $return["attributes"]["socialMediaIDs"] = json_decode($item["PersonSocialMediaIDs"],true);
+        $return["attributes"]["additionalInformation"] = json_decode($item["PersonAdditionalInformation"],true);
+        $return["attributes"]["lastChanged"] = $item["PersonLastChanged"];
+        $return["links"]["self"] = $config["dir"]["api"].$return["type"]."/".$return["id"];
 
         if ($item["PersonPartyOrganisationID"]) {
 
@@ -112,25 +114,25 @@ function personGetDataObject($item = false, $db = false) {
 
             if ($itemParty) {
 
-                $return["data"]["relationships"]["party"]["data"]["type"] = "organisation";
-                $return["data"]["relationships"]["party"]["data"]["id"] = $itemParty["OrganisationID"];
-                $return["data"]["relationships"]["party"]["data"]["attributes"]["label"] = $itemParty["OrganisationLabel"];
-                $return["data"]["relationships"]["party"]["data"]["attributes"]["labelAlternative"] = $itemParty["OrganisationLabelAlternative"];
-                $return["data"]["relationships"]["party"]["data"]["attributes"]["thumbnailURI"] = $itemParty["OrganisationThumbnailURI"];
-                $return["data"]["relationships"]["party"]["data"]["attributes"]["thumbnailCreator"] = $itemParty["OrganisationThumbnailCreator"];
-                $return["data"]["relationships"]["party"]["data"]["attributes"]["thumbnailLicense"] = $itemParty["OrganisationThumbnailLicense"];
-                $return["data"]["relationships"]["party"]["data"]["attributes"]["websiteURI"] = $itemParty["OrganisationWebsiteURI"];
-                $return["data"]["relationships"]["party"]["links"]["self"] = $config["dir"]["api"]."organisation/".$return["data"]["relationships"]["party"]["data"]["id"];
+                $return["relationships"]["party"]["data"]["type"] = "organisation";
+                $return["relationships"]["party"]["data"]["id"] = $itemParty["OrganisationID"];
+                $return["relationships"]["party"]["data"]["attributes"]["label"] = $itemParty["OrganisationLabel"];
+                $return["relationships"]["party"]["data"]["attributes"]["labelAlternative"] = $itemParty["OrganisationLabelAlternative"];
+                $return["relationships"]["party"]["data"]["attributes"]["thumbnailURI"] = $itemParty["OrganisationThumbnailURI"];
+                $return["relationships"]["party"]["data"]["attributes"]["thumbnailCreator"] = $itemParty["OrganisationThumbnailCreator"];
+                $return["relationships"]["party"]["data"]["attributes"]["thumbnailLicense"] = $itemParty["OrganisationThumbnailLicense"];
+                $return["relationships"]["party"]["data"]["attributes"]["websiteURI"] = $itemParty["OrganisationWebsiteURI"];
+                $return["relationships"]["party"]["links"]["self"] = $config["dir"]["api"]."organisation/".$return["relationships"]["party"]["data"]["id"];
 
             } else {
 
-                $return["data"]["relationships"]["party"] = array();
+                $return["relationships"]["party"] = array();
 
             }
 
         } else {
 
-            $return["data"]["relationships"]["party"] = array();
+            $return["relationships"]["party"] = array();
 
         }
 
@@ -140,29 +142,29 @@ function personGetDataObject($item = false, $db = false) {
 
             if ($itemFaction) {
 
-                $return["data"]["relationships"]["faction"]["data"]["type"] = "organisation";
-                $return["data"]["relationships"]["faction"]["data"]["id"] = $itemFaction["OrganisationID"];
-                $return["data"]["relationships"]["faction"]["data"]["attributes"]["label"] = $itemFaction["OrganisationLabel"];
-                $return["data"]["relationships"]["faction"]["data"]["attributes"]["labelAlternative"] = $itemFaction["OrganisationLabelAlternative"];
-                $return["data"]["relationships"]["faction"]["data"]["attributes"]["thumbnailURI"] = $itemFaction["OrganisationThumbnailURI"];
-                $return["data"]["relationships"]["faction"]["data"]["attributes"]["thumbnailCreator"] = $itemFaction["OrganisationThumbnailCreator"];
-                $return["data"]["relationships"]["faction"]["data"]["attributes"]["thumbnailLicense"] = $itemFaction["OrganisationThumbnailLicense"];
-                $return["data"]["relationships"]["faction"]["data"]["attributes"]["websiteURI"] = $itemFaction["OrganisationWebsiteURI"];
-                $return["data"]["relationships"]["faction"]["links"]["self"] = $config["dir"]["api"]."organisation/".$return["data"]["relationships"]["faction"]["data"]["id"];
+                $return["relationships"]["faction"]["data"]["type"] = "organisation";
+                $return["relationships"]["faction"]["data"]["id"] = $itemFaction["OrganisationID"];
+                $return["relationships"]["faction"]["data"]["attributes"]["label"] = $itemFaction["OrganisationLabel"];
+                $return["relationships"]["faction"]["data"]["attributes"]["labelAlternative"] = $itemFaction["OrganisationLabelAlternative"];
+                $return["relationships"]["faction"]["data"]["attributes"]["thumbnailURI"] = $itemFaction["OrganisationThumbnailURI"];
+                $return["relationships"]["faction"]["data"]["attributes"]["thumbnailCreator"] = $itemFaction["OrganisationThumbnailCreator"];
+                $return["relationships"]["faction"]["data"]["attributes"]["thumbnailLicense"] = $itemFaction["OrganisationThumbnailLicense"];
+                $return["relationships"]["faction"]["data"]["attributes"]["websiteURI"] = $itemFaction["OrganisationWebsiteURI"];
+                $return["relationships"]["faction"]["links"]["self"] = $config["dir"]["api"]."organisation/".$return["relationships"]["faction"]["data"]["id"];
 
             } else {
 
-                $return["data"]["relationships"]["faction"] = array();
+                $return["relationships"]["faction"] = array();
 
             }
 
         } else {
 
-            $return["data"]["relationships"]["faction"] = array();
+            $return["relationships"]["faction"] = array();
 
         }
 
-        $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."searchMedia?personID=".$return["data"]["id"];
+        $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."search/media?personID=".$return["id"];
 
     } else {
 
@@ -208,7 +210,7 @@ function personSearch($parameter, $db = false) {
 
     }
 
-    $allowedFields = ["name", "party", "faction", "type"];
+    $allowedFields = ["name", "type", "party", "partyID", "faction", "factionID", "organisationID", "degree", "gender", "originID", "abgeordnetenwatchID"];
 
     $filteredParameters = array_filter(
         $parameter,
@@ -219,48 +221,249 @@ function personSearch($parameter, $db = false) {
     );
 
 
-    if (array_key_exists("name", $filteredParameters) && (strlen($filteredParameters["name"])) < 3) {
+
+
+    /************ VALIDATION START ************/
+
+    if (array_key_exists("name", $filteredParameters) && (mb_strlen($filteredParameters["name"], "UTF-8")< 3)) {
 
         $return["meta"]["requestStatus"] = "error";
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Name too short";
         $errorarray["detail"] = "Searching for name needs at least 3 characters."; //  due to database limitations TODO: Description
-        array_push($return["errors"], $errorarray);
+        $return["errors"][] = $errorarray;
 
     }
+
+
+    if (array_key_exists("type", $filteredParameters) && (!in_array($filteredParameters["type"], array("memberOfParliament", "unknown")))) { //TODO: Docs & import
+
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "type invalid";
+        $errorarray["detail"] = "type needs to be 'memberOfParliament' or 'unknown'"; // TODO: Description
+        $return["errors"][] = $errorarray;
+
+    }
+
+
 
     if (array_key_exists("party", $filteredParameters)) {
 
         if (is_array($filteredParameters["party"])) {
 
             foreach ($filteredParameters["party"] as $tmpParty) {
-                if (strlen($tmpParty) < 1) {
+                if (mb_strlen($tmpParty, "UTF-8") < 1) {
                     $return["meta"]["requestStatus"] = "error";
                     $errorarray["status"] = "400";
                     $errorarray["code"] = "1";
                     $errorarray["title"] = "Party too short";
-                    $errorarray["detail"] = "Searching for party needs at least 3 characters."; //  TODO: Description
-                    array_push($return["errors"], $errorarray);
+                    $errorarray["detail"] = "Searching for party needs at least 1 characters."; //  TODO: Description
+                    $return["errors"][] = $errorarray;
                 }
             }
 
         } else {
 
-            if (strlen($filteredParameters["party"]) < 1) {
+            if (mb_strlen($filteredParameters["party"], "UTF-8") < 1) {
 
                 $return["meta"]["requestStatus"] = "error";
                 $errorarray["status"] = "400";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "Party too short";
-                $errorarray["detail"] = "Searching for party needs at least 3 characters."; //  TODO: Description
-                array_push($return["errors"], $errorarray);
+                $errorarray["detail"] = "Searching for party needs at least 1 characters."; //  TODO: Description
+                $return["errors"][] = $errorarray;
 
             }
 
         }
 
     }
+
+
+
+    if (array_key_exists("partyID", $filteredParameters)) {
+
+        if (is_array($filteredParameters["party"])) {
+
+            foreach ($filteredParameters["party"] as $tmpPartyID) {
+
+                if (!preg_match("/(Q|P)\d+/i", $tmpPartyID)) {
+
+                    $return["meta"]["requestStatus"] = "error";
+                    $errorarray["status"] = "400";
+                    $errorarray["code"] = "1";
+                    $errorarray["title"] = "Wrong partyID";
+                    $errorarray["detail"] = "partyID doesn't match the pattern."; //  TODO: Description
+                    $return["errors"][] = $errorarray;
+
+                }
+
+            }
+
+        } else {
+
+            if (!preg_match("/(Q|P)\d+/i", $filteredParameters["partyID"])) {
+
+                $return["meta"]["requestStatus"] = "error";
+                $errorarray["status"] = "400";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Wrong partyID";
+                $errorarray["detail"] = "partyID doesn't match the pattern."; //  TODO: Description
+                $return["errors"][] = $errorarray;
+
+            }
+
+        }
+
+    }
+
+
+
+    if (array_key_exists("faction", $filteredParameters)) {
+
+        if (is_array($filteredParameters["faction"])) {
+
+            foreach ($filteredParameters["faction"] as $tmpParty) {
+                if (mb_strlen($tmpParty, "UTF-8") < 1) {
+                    $return["meta"]["requestStatus"] = "error";
+                    $errorarray["status"] = "400";
+                    $errorarray["code"] = "1";
+                    $errorarray["title"] = "Faction too short";
+                    $errorarray["detail"] = "Searching for faction needs at least 1 characters."; //  TODO: Description
+                    $return["errors"][] = $errorarray;
+                }
+            }
+
+        } else {
+
+            if (mb_strlen($filteredParameters["faction"], "UTF-8") < 1) {
+
+                $return["meta"]["requestStatus"] = "error";
+                $errorarray["status"] = "400";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "faction too short";
+                $errorarray["detail"] = "Searching for faction needs at least 1 characters."; //  TODO: Description
+                $return["errors"][] = $errorarray;
+
+            }
+
+        }
+
+    }
+
+    if (array_key_exists("factionID", $filteredParameters)) {
+
+        if (is_array($filteredParameters["factionID"])) {
+
+            foreach ($filteredParameters["factionID"] as $tmpFactionID) {
+
+                if (!preg_match("/(Q|P)\d+/i", $tmpFactionID)) {
+
+                    $return["meta"]["requestStatus"] = "error";
+                    $errorarray["status"] = "400";
+                    $errorarray["code"] = "1";
+                    $errorarray["title"] = "Wrong factionID";
+                    $errorarray["detail"] = "factionID doesn't match the pattern."; //  TODO: Description
+                    $return["errors"][] = $errorarray;
+
+                }
+
+            }
+
+        } else {
+
+            if (!preg_match("/(Q|P)\d+/i", $filteredParameters["factionID"])) {
+
+                $return["meta"]["requestStatus"] = "error";
+                $errorarray["status"] = "400";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Wrong factionID";
+                $errorarray["detail"] = "factionID doesn't match the pattern."; //  TODO: Description
+                $return["errors"][] = $errorarray;
+
+            }
+
+        }
+
+    }
+
+
+
+
+    if (array_key_exists("organisationID", $filteredParameters)) {
+
+        if (!preg_match("/(Q|P)\d+/i", $filteredParameters["organisationID"])) {
+            $return["meta"]["requestStatus"] = "error";
+            $errorarray["status"] = "400";
+            $errorarray["code"] = "1";
+            $errorarray["title"] = "Wrong organisationID";
+            $errorarray["detail"] = "organisationID doesn't match the pattern."; //  TODO: Description
+            $return["errors"][] = $errorarray;
+        }
+
+    }
+
+
+
+    if (array_key_exists("degree", $filteredParameters) && (mb_strlen($filteredParameters["degree"], "UTF-8") < 1))  {
+
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "degree too short";
+        $errorarray["detail"] = "Searching for degree needs at least 1 characters."; //  TODO: Description
+        $return["errors"][] = $errorarray;
+
+    }
+
+
+
+    //TODO: Gender to $config?
+    if (array_key_exists("gender", $filteredParameters) && (!in_array($filteredParameters["gender"], array("male", "female", "nonbinary", "bi", "queer")))) {
+
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "gender not valid.";
+        $errorarray["detail"] = "Searching for gender had invalid value."; //
+        $return["errors"][] = $errorarray;
+
+    }
+
+
+
+    if (array_key_exists("originID", $filteredParameters) && (mb_strlen($filteredParameters["originID"], "UTF-8") < 1)) {
+
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "originID not valid.";
+        $errorarray["detail"] = "originID too short."; //
+        $return["errors"][] = $errorarray;
+
+    }
+
+
+
+    if (array_key_exists("abgeordnetenwatchID", $filteredParameters) && (mb_strlen($filteredParameters["abgeordnetenwatchID"], "UTF-8") < 1)) {
+
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "abgeordnetenwatchID not valid.";
+        $errorarray["detail"] = "abgeordnetenwatchID too short."; //
+        $return["errors"][] = $errorarray;
+
+    }
+
+
+    /************ VALIDATION END ************/
+
+
+
 
     if ($return["meta"]["requestStatus"] == "error") {
 
@@ -269,17 +472,17 @@ function personSearch($parameter, $db = false) {
     }
 
 
-
+    //JSON_UNQUOTE(JSON_EXTRACT(p.PersonAdditionalInformation,'$.abgeordnetenwatchID')) AS PersonAbgeordnetenwatchID,
 
     $query = "SELECT            p.*,
                                 op.OrganisationID as PartyID,
                                 op.OrganisationLabel as PartyLabel,
-                                ofr.OrganisationLabel as FractionLabel,
-                                ofr.OrganisationID as FractionID
-                            FROM person AS p
-                            LEFT JOIN organisation as op 
+                                ofr.OrganisationID as FactionID,
+                                ofr.OrganisationLabel as FactionLabel
+                            FROM ".$config["platform"]["sql"]["tbl"]["Person"]." AS p
+                            LEFT JOIN ".$config["platform"]["sql"]["tbl"]["Organisation"]." as op 
                                 ON op.OrganisationID = p.PersonPartyOrganisationID
-                            LEFT JOIN organisation as ofr 
+                            LEFT JOIN ".$config["platform"]["sql"]["tbl"]["Organisation"]." as ofr 
                                 ON ofr.OrganisationID = p.PersonFactionOrganisationID";
 
     $conditions = array();
@@ -297,18 +500,6 @@ function personSearch($parameter, $db = false) {
         if ($k == "type") {
 
             $conditions[] = $db->parse("PersonType = ?s", $para);
-
-        }
-
-        if ($k == "degree") {
-
-            $conditions[] = $db->parse("PersonDegree LIKE ?s", "%".$para."%");
-
-        }
-
-        if ($k == "degree") {
-
-            $conditions[] = $db->parse("PersonGender LIKE ?s", "%".$para."%");
 
         }
 
@@ -330,6 +521,30 @@ function personSearch($parameter, $db = false) {
             } else {
 
                 $conditions[] = $db->parse("(op.OrganisationLabel LIKE ?s OR op.OrganisationLabelAlternative LIKE ?s)", "%".$para."%", "%".$para."%");
+
+            }
+
+        }
+
+
+        if ($k == "partyID") {
+
+            if (is_array($para)) {
+
+                $tmpStringArray = array();
+
+                foreach ($para as $tmppara) {
+
+                    $tmpStringArray[] = $db->parse("op.OrganisationID = ?s", $tmppara);
+
+                }
+
+                $tmpStringArray  = " (".implode(" OR ",$tmpStringArray).")";
+                $conditions[] = $tmpStringArray;
+
+            } else {
+
+                $conditions[] = $db->parse("op.OrganisationID = ?s", $para);
 
             }
 
@@ -359,6 +574,68 @@ function personSearch($parameter, $db = false) {
 
         }
 
+
+
+        if ($k == "factionID") {
+
+            if (is_array($para)) {
+
+                $tmpStringArray = array();
+
+                foreach ($para as $tmppara) {
+
+                    $tmpStringArray[] = $db->parse("p.PersonFactionOrganisationID = ?s", $tmppara);
+
+                }
+
+                $tmpStringArray  = " (".implode(" OR ",$tmpStringArray).")";
+                $conditions[] = $tmpStringArray;
+
+            } else {
+
+                $conditions[] = $db->parse("p.PersonFactionOrganisationID = ?s", $para);
+
+            }
+
+        }
+
+
+
+        if ($k == "organisationID") {
+
+            $conditions[] = $db->parse("(p.PersonFactionOrganisationID = ?s OR p.PersonPartyOrganisationID=?s)", $para, $para);
+
+        }
+
+
+        if ($k == "degree") {
+
+            $conditions[] = $db->parse("PersonDegree LIKE ?s", "%".$para."%");
+
+        }
+
+
+        if ($k == "gender") {
+
+            $conditions[] = $db->parse("PersonGender LIKE ?s", $para);
+
+        }
+
+
+        if ($k == "originID") {
+
+            $conditions[] = $db->parse("PersonOriginID = ?s", $para);
+
+        }
+
+
+        if ($k == "abgeordnetenwatchID") {
+
+            //$conditions[] = $db->parse("p.PersonAdditionalInformation LIKE ?s", $para);
+            $conditions[] = $db->parse("JSON_EXTRACT(p.PersonAdditionalInformation, '$.abgeordnetenwatchID') = ?s", $para);
+
+        }
+
     }
 
     if (count($conditions) > 0) {
@@ -369,9 +646,13 @@ function personSearch($parameter, $db = false) {
 
         $return["meta"]["requestStatus"] = "success";
 
+        if (!$return["data"]) {
+            $return["data"] = array();
+        }
+
         foreach ($findings as $finding) {
             //print_r($finding);
-            $return["data"][] = personGetDataObject($finding,$db);
+            array_push($return["data"],personGetDataObject($finding,$db));
         }
 
     } else {
@@ -391,7 +672,7 @@ function personSearch($parameter, $db = false) {
     }
 
 
-    $return["data"]["links"]["self"] = $config["dir"]["api"]."search/?type=people&".getURLParameterFromArray($filteredParameters);
+    $return["links"]["self"] = $config["dir"]["api"]."search/people?".getURLParameterFromArray($filteredParameters);
 
     return $return;
 

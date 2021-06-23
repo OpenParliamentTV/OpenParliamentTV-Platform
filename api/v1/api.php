@@ -2,10 +2,10 @@
 
 //error_reporting(0);
 
-require_once (__DIR__."./../../config.php");
+require_once (__DIR__."/../../config.php");
 require_once ("config.php");
-require_once (__DIR__."./../../modules/utilities/functions.php");
-require_once (__DIR__."./../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../modules/utilities/functions.php");
+require_once (__DIR__."/../../modules/utilities/safemysql.class.php");
 
 function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE-0190002123
 
@@ -245,14 +245,95 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                     break;
 
+                    case "organisation":
+
+                        require_once (__DIR__."/modules/organisation.php");
+
+                        $item = organisationSearch($_REQUEST);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                    break;
+
+                    case "document":
+
+                        require_once (__DIR__."/modules/document.php");
+
+                        $item = documentSearch($_REQUEST);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                    break;
+
+                    case "term":
+
+                        require_once (__DIR__."/modules/term.php");
+
+                        $item = termSearch($_REQUEST);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                    break;
+
+                    case "media":
+
+                        require_once (__DIR__."/modules/media.php");
+
+                        $item = mediaSearch($_REQUEST);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                    break;
+
                     default:
-                        //This will never happen because $request["type"] is required. Just here for readability
+
+                        //Wrong $itemType
+                        $errorarray["status"] = "422";
+                        $errorarray["code"] = "2";
+                        $errorarray["title"] = "Missing request parameter";
+                        $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
+                        array_push($return["errors"], $errorarray);
+                        $return["links"]["self"] = htmlspecialchars($config["dir"]["root"].$_SERVER["REQUEST_URI"]);
                     break;
                 }
 
 
+                if ($item) {
+                    $return = array_replace_recursive($return, $item);
+                }
 
-                $return = array_replace_recursive($return, $item);
 
             break;
             default:
