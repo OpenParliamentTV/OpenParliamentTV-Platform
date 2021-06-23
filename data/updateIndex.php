@@ -10,6 +10,8 @@ require __DIR__.'/../vendor/autoload.php';
 
 $ESClient = Elasticsearch\ClientBuilder::create()->build();
 
+require_once (__DIR__."/../config.php");
+
 /*
 $response = $ESClient->indices()->delete(array("index"=>"openparliamenttv_DE"));
 echo '<pre>';
@@ -126,16 +128,26 @@ function setMapping() {
 
 }
 
+
+
 /**
  * @return mixed
  */
 function updateIndex() {
 
 	global $ESClient;
-	
-	$data = '';
+	global $config;
 
-	$docParams = array("index" => "openparliamenttv_DE", "id" => "DE-0190003001", "body" => $data);
+    require_once("../api/v1/api.php");
+
+	$data = apiV1(["action"=>"getItem", "itemType"=>"media", "id"=>"DE-0190003001"]);
+
+	//print_r($data["data"]);
+	//return;
+
+	//$data = '';
+
+	$docParams = array("index" => "openparliamenttv_DE", "id" => "DE-0190003001", "body" => json_encode($data["data"]));
 
 	try {
 		$result = $ESClient->index($docParams);

@@ -1,9 +1,9 @@
 <?php
 
-require_once (__DIR__."./../../../config.php");
-require_once ("config.php");
-require_once (__DIR__."./../../../modules/utilities/functions.php");
-require_once (__DIR__."./../../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../../config.php");
+require_once (__DIR__."/../config.php");
+require_once (__DIR__."/../../../modules/utilities/functions.php");
+require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 
 /**
  * @param string $id SessionID
