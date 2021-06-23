@@ -43,7 +43,7 @@ $(document).ready( function() {
 		updateQuery();
 	});
 
-	$('[name="name"]').val(getQueryVariable('name'));
+	$('[name="person"]').val(getQueryVariable('person'));
 	$('[name="q"]').val(getQueryVariable('q'));
 	$('[name="sessionNumber"]').val(getQueryVariable('sessionNumber'));
 	$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
@@ -63,8 +63,8 @@ $(document).ready( function() {
 
 	var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
 
-	var queryFrom = getQueryVariable('timefrom');
-	var queryTo = getQueryVariable('timeto');
+	var queryFrom = getQueryVariable('dateFrom');
+	var queryTo = getQueryVariable('dateTo');
 
 	var queryFromDate = new Date(queryFrom);
 	var queryToDate = new Date(queryTo);
@@ -82,8 +82,8 @@ $(document).ready( function() {
 
 			$("#timeRange").val( date1.toLocaleDateString('de-DE', options) + " - " + date2String );
 
-			$('#timefrom').val(date1.toISOString().slice(0,10));
-			$('#timeto').val(date2.toISOString().slice(0,10));
+			$('#dateFrom').val(date1.toISOString().slice(0,10));
+			$('#dateTo').val(date2.toISOString().slice(0,10));
 
 		},
 		stop: function (event, ui) {
@@ -99,8 +99,8 @@ $(document).ready( function() {
 
 	$( "#timeRange" ).val( startDate + " - " + endDateString );
 	
-	$('#timefrom').val((queryFrom) ? queryFrom : minDate.toISOString().slice(0,10));
-	$('#timeto').val((queryTo) ? queryTo : maxDate.toISOString().slice(0,10));
+	$('#dateFrom').val((queryFrom) ? queryFrom : minDate.toISOString().slice(0,10));
+	$('#dateTo').val((queryTo) ? queryTo : maxDate.toISOString().slice(0,10));
 
 	updateStatsViz();
 
@@ -319,9 +319,9 @@ function getResultStats(statsCallback) {
 
 function getSerializedForm() {
 	var formData = $('#filterForm :input, select[name="sort"]').filter(function(index, element) {
-		if ($(element).attr('name') == 'timefrom' && $(element).val() == minDate.toISOString().slice(0,10)) {
+		if ($(element).attr('name') == 'dateFrom' && $(element).val() == minDate.toISOString().slice(0,10)) {
 			return false;
-		} else if ($(element).attr('name') == 'timeto' && $(element).val() == maxDate.toISOString().slice(0,10)) {
+		} else if ($(element).attr('name') == 'dateTo' && $(element).val() == maxDate.toISOString().slice(0,10)) {
 			return false;
 		} else if ($(element).attr('name') == 'sort' && $(element).val() == 'relevance') {
 			return false;

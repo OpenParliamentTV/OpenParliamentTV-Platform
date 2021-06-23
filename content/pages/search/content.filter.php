@@ -48,7 +48,7 @@
 				<div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
 					<div class="form-group">
 						<label for="edit-keys"><b><?php echo L::name; ?></b></label>
-						<input class="form-control form-control-sm" placeholder="<?php echo L::enterName; ?>" id="edit-keys" name="name" value="" type="text">
+						<input class="form-control form-control-sm" placeholder="<?php echo L::enterName; ?>" id="edit-keys" name="person" value="" type="text">
 					</div>
 				</div>
 				<div class="col col-12 col-sm-6 col-md-5 col-lg-4 col-xl-2">
@@ -80,8 +80,8 @@
 				<input type="text" id="timeRange" readonly style="border:0; background: transparent;"/>
 				<div id="timelineVizWrapper"></div>
 				<div id="sliderRange"></div>
-				<input type="hidden" id="timefrom" name="timefrom"/>
-				<input type="hidden" id="timeto" name="timeto"/>
+				<input type="hidden" id="dateFrom" name="dateFrom"/>
+				<input type="hidden" id="dateTo" name="dateTo"/>
 			</div>
 		</div>
 	</form>
