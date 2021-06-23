@@ -28,18 +28,6 @@ function getIndexCount() {
  * Translates $_REQUEST to searchable parameter for function searchSpeeches()
  * if $find is set (as string or array) it looks fot the content of the speeches for matches
  *
- * Right now there are following parameter:
- * $request["name"] - expects a string of a persons first or last name (or both). Case insensitive
- * $request["party"] - expects an array of partys. Case insensitive. like ["foo"] or ["foo","bar"]
- * $request["wahlperiode"] - expects an array of election periods. like ["foo"] or ["foo","bar"]
- * $request["timefrom"] - expects an unix timestamp and looks for newer speeches (>=)
- * $request["timeto"] - expects an unix timestamp and looks for older speeches (<=)
- * $request["gender"] - expects a string "male" or "female"
- * $request["degree"] - expects a string like "Dr." or "Prof. Dr."
- * $request["aw_uuid"] - expects a string of an Abgeordnetenwatch unique ID
- * $request["rednerID"] - expects a string of a Bundestag-PersonID
- * $request["sitzungsnummer"] - expects a string of a session number. Makes sense to combine it with wahlperiode or e.g. to get every first session of every period
- *
  * @param array $request
  * @return array
  */
