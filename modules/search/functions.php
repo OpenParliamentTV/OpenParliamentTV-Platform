@@ -246,7 +246,7 @@ function getSearchBody($request, $getAllResults) {
 					
 					//TODO: Get mainSpeaker from people Array 
 					//TODO: people.data[0].attributes.party needs alternativeLabel as well!
-					$filter["should"][] = array("match_phrase"=>array("relationships.people.data[0].attributes.".$requestKey.".label" => $partyOrFaction));
+					$filter["should"][] = array("match_phrase"=>array("relationships.people.data[0].attributes.".$requestKey.".labelAlternative" => $partyOrFaction));
 
 				}
 				$shouldCount++;
