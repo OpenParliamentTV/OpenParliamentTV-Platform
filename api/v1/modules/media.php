@@ -360,11 +360,34 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
     //print_r($parameter);
 
-    return searchSpeeches($parameter);
+    //print_r(searchSpeeches($parameter));
 
 
 
-    return;
+    //return searchSpeeches($parameter);
+
+    try {
+        $search = searchSpeeches($parameter);
+
+        foreach ($search["hits"]["hits"] as $hit) {
+
+            $return["data"][] = $hit["_source"];
+
+        }
+        $return["meta"]["requestStatus"] = "success";
+
+        //TODO: $return["data"]["links"]["self"] = $config["dir"]["api"]."search/organisation?".getURLParameterFromArray($filteredParameters);
+
+    } catch (Exception $e) {
+
+    }
+
+
+
+    //$return["data"] = $search["hits"]["hits"]["_source"];
+
+
+    return $return;
 
 
     //Find out what Parliament Database is meant
