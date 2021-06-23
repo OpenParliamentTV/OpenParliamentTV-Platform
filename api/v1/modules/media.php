@@ -285,8 +285,10 @@ function mediaGetByID($id = false) {
                                 op.OrganisationLabel,
                                 op.OrganisationID as PartyID,
                                 op.OrganisationLabel as PartyLabel,
+                                op.OrganisationLabelAlternative as PartyLabelAlternative,
+                                ofr.OrganisationID as FractionID,
                                 ofr.OrganisationLabel as FractionLabel,
-                                ofr.OrganisationID as FractionID
+                                ofr.OrganisationLabelAlternative as FractionLabelAlternative
                             FROM ?n AS p
                             LEFT JOIN ?n as op 
                                 ON op.OrganisationID = p.PersonPartyOrganisationID
@@ -307,8 +309,10 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $pitem["PersonThumbnailLicense"];
                         $tmpAnnotationItem["attributes"]["party"]["id"] = $pitem["PartyID"];
                         $tmpAnnotationItem["attributes"]["party"]["label"] = $pitem["PartyLabel"];
+                        $tmpAnnotationItem["attributes"]["party"]["labelAlternative"] = $pitem["PartyLabelAlternative"];
                         $tmpAnnotationItem["attributes"]["fraction"]["id"] = $pitem["FractionID"];
                         $tmpAnnotationItem["attributes"]["fraction"]["label"] = $pitem["FractionLabel"];
+                        $tmpAnnotationItem["attributes"]["fraction"]["labelAlternative"] = $pitem["FractionLabelAlternative"];
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"].$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["people"]["data"], $tmpAnnotationItem);
 
@@ -339,6 +343,254 @@ function mediaGetByID($id = false) {
         return $return;
 
     }
+}
+
+
+function mediaSearch($parameter, $db = false, $dbp = false) {
+
+
+    global $config;
+
+    require_once (__DIR__."/../../../modules/utilities/functions.php");
+
+
+    //Find out what Parliament Database is meant
+
+    if ($parameter["parliament"]) {
+
+        $parliament = $parameter["parliament"];
+
+
+    } else {
+
+        if ((array_key_exists("electoralPeriod", $parameter)) && (gettype($parameter["electoralPeriod"]) == "string")) {
+
+            $parliament = getInfosFromStringID($parameter["electoralPeriod"]);
+            $parliament = $parliament["parliament"];
+
+        } elseif ((array_key_exists("session", $parameter)) && (gettype($parameter["session"]) == "string")) {
+
+            $parliament = getInfosFromStringID($parameter["session"]);
+            $parliament = $parliament["parliament"];
+
+        }
+    }
+
+    if (!array_key_exists($parliament,$config["parliament"])) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Invalid MediaID";
+        $errorarray["detail"] = "MediaID could not be associated with a parliament"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+
+        return $return;
+    }
+
+    if (!$db) {
+
+        $opts = array(
+            'host'	=> $config["platform"]["sql"]["access"]["host"],
+            'user'	=> $config["platform"]["sql"]["access"]["user"],
+            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+            'db'	=> $config["platform"]["sql"]["db"]
+        );
+
+        try {
+
+            $db = new SafeMySQL($opts);
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "1";
+            $errorarray["title"] = "Database connection error";
+            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+
+    }
+
+    if (!$dbp) {
+
+        $opts = array(
+            'host'	=> $config["parliament"][$parliament]["sql"]["access"]["host"],
+            'user'	=> $config["parliament"][$parliament]["sql"]["access"]["user"],
+            'pass'	=> $config["parliament"][$parliament]["sql"]["access"]["passwd"],
+            'db'	=> $config["parliament"][$parliament]["sql"]["db"]
+        );
+
+        try {
+
+            $dbp = new SafeMySQL($opts);
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "2";
+            $errorarray["title"] = "Database connection error";
+            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+
+    }
+
+    $allowedFields = ["parliament", "electoralPeriod", "session", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "personAbgeordnetenwatchID", "organisation", "organisationID"];
+
+    $filteredParameters = array_filter(
+        $parameter,
+        function ($key) use ($allowedFields) {
+            return in_array($key, $allowedFields);
+        },
+        ARRAY_FILTER_USE_KEY
+    );
+
+
+
+
+    /************ VALIDATION START ************/
+
+    /************ External VALIDATION START ************/
+
+    if ($filteredParameters["party"]) {
+        $tmpParty["name"] = $filteredParameters["party"];
+        $tmpParty["type"] = "party";
+        require_once (__DIR__."/organisation.php");
+
+        try {
+
+            $partyResponse = organisationSearch($tmpParty, $db);
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "2";
+            $errorarray["title"] = "Error by getting data from platform";
+            $errorarray["detail"] = "Party query failed"; //TODO: Description
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+
+
+        if (is_array($partyResponse)) {
+            if ($partyResponse["meta"]["requestStatus"] == "error") {
+
+                $partyResponse["errors"][0]["detail"] = "Party: ".$partyResponse["errors"][0]["detail"];
+                $return["meta"]["requestStatus"] = "error";
+                $return["errors"][] = $partyResponse["errors"][0];
+
+            } else {
+                foreach ($partyResponse["data"] as $tmpParty) {
+                    $conditionsAnnotations[] = $db->parse("((AnnotationType = organisation) AND (AnnotationResourceID LIKE ?s))", $tmpParty["id"]);
+                }
+            }
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+    if ($return["meta"]["requestStatus"] == "error") {
+
+        return $return;
+
+    }
+
+    $query = "SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Organisation"];
+
+    $conditions = array();
+
+    foreach ($filteredParameters as $k=>$para) {
+        if ($k == "name") {
+            if (is_array($para)) {
+
+                $tmpStringArray = array();
+
+                foreach ($para as $tmppara) {
+
+                    $tmpStringArray[] = $db->parse("(MATCH(OrganisationLabel, OrganisationLabelAlternative, OrganisationAbstract) AGAINST (?s IN BOOLEAN MODE))", "*" . $tmppara . "*");
+                    //TODO: check if OR (Label LIKE ?s) is needed when more data is present
+                }
+
+                $tmpStringArray = " (" . implode(" OR ", $tmpStringArray) . ")";
+                $conditions[] = $tmpStringArray;
+
+            } else {
+
+                $conditions[] = $db->parse("MATCH(OrganisationLabel, OrganisationLabelAlternative, OrganisationAbstract) AGAINST (?s IN BOOLEAN MODE)", "*" . $para . "*");
+                //TODO: check if OR (Label LIKE ?s) is needed when more data is present
+
+            }
+        }
+
+        if ($k == "type") {
+
+            $conditions[] = $db->parse("OrganisationType = ?s", $para);
+
+        }
+
+    }
+
+
+    if (count($conditions) > 0) {
+
+        $query .= " WHERE ".implode(" AND ",$conditions);
+        //echo $db->parse($query);
+        $findings = $db->getAll($query);
+
+        $return["meta"]["requestStatus"] = "success";
+
+        if (!$return["data"]) {
+            $return["data"] = array();
+        }
+
+        foreach ($findings as $finding) {
+            //print_r($finding);
+            array_push($return["data"], organisationGetDataObject($finding,$db));
+        }
+
+    } else {
+
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "404";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Too less parameter";
+        $errorarray["detail"] = "Too less Parameter"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+
+    }
+
+    if (!array_key_exists("data", $return)) {
+        $return["data"] = array();
+    }
+
+
+    $return["data"]["links"]["self"] = $config["dir"]["api"]."search/organisation?".getURLParameterFromArray($filteredParameters);
+
+    return $return;
+
+
+
 }
 
 ?>
