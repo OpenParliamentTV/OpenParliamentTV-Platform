@@ -10,7 +10,7 @@ function getPrevDocument($currentDocumentTimestamp) {
 	
 	global $ESClient;
 	
-	$searchParams = array("index" => "bundestag_speeches", 
+	$searchParams = array("index" => "openparliamenttv_DE", 
 		"body" => array(
 			"size" => 1,
 			"query" => array(
@@ -45,7 +45,7 @@ function getNextDocument($currentDocumentTimestamp) {
 	
 	global $ESClient;
 	
-	$searchParams = array("index" => "bundestag_speeches", 
+	$searchParams = array("index" => "openparliamenttv_DE", 
 		"body" => array(
 			"size" => 1,
 			"query" => array(
@@ -79,7 +79,7 @@ function getNextDocument($currentDocumentTimestamp) {
 function getDocument($documentID) {
 	global $ESClient;
 	
-	$docParams = array("index" => "bundestag_speeches", 
+	$docParams = array("index" => "openparliamenttv_DE", 
 		"id" => $documentID, 
 		"_source" => true);
 	

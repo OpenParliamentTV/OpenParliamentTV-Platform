@@ -9,7 +9,7 @@ function getIndexCount() {
 	global $ESClient;
 
 	try {
-		$return = $ESClient->count(['index' => 'bundestag_speeches']);
+		$return = $ESClient->count(['index' => 'openparliamenttv_DE']);
 		$result = $return["count"];
 	} catch(Exception $e) {
 		print_r($e->getMessage());
@@ -45,7 +45,7 @@ function searchSpeeches($request) {
 
 	$data = getSearchBody($request, false);
 	
-	$searchParams = array("index" => "bundestag_speeches", "body" => $data);
+	$searchParams = array("index" => "openparliamenttv_DE", "body" => $data);
 	
 	try {
 		$results = $ESClient->search($searchParams);
@@ -135,7 +135,7 @@ function searchStats($request) {
 
 	$data = getSearchBody($request, true);
 	
-	$searchParams = array("index" => "bundestag_speeches", "body" => $data);
+	$searchParams = array("index" => "openparliamenttv_DE", "body" => $data);
 	
 	try {
 		$results = $ESClient->search($searchParams);
