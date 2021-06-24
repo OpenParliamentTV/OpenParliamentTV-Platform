@@ -192,23 +192,23 @@ function mediaGetByID($id = false) {
 
             }
 
-            $return["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["type"]."/".$return["data"]["id"];
+            $return["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
 
             $return["data"]["relationships"]["electoralPeriod"]["data"]["type"] = "electoralPeriod";
             $return["data"]["relationships"]["electoralPeriod"]["data"]["id"] = $item["ElectoralPeriodID"];
             $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] = $item["ElectoralPeriodNumber"];
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["relationships"]["electoralPeriod"]["data"]["type"]."/".$return["data"]["relationships"]["electoralPeriod"]["data"]["id"];
+            $return["data"]["relationships"]["electoralPeriod"]["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["relationships"]["electoralPeriod"]["data"]["type"]."/".$return["data"]["relationships"]["electoralPeriod"]["data"]["id"];
 
             $return["data"]["relationships"]["session"]["data"]["type"] = "session";
             $return["data"]["relationships"]["session"]["data"]["id"] = $item["SessionID"];
             $return["data"]["relationships"]["session"]["data"]["attributes"]["number"] = $item["SessionNumber"];
-            $return["data"]["relationships"]["session"]["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["relationships"]["session"]["data"]["type"]."/".$return["data"]["relationships"]["session"]["data"]["id"];
+            $return["data"]["relationships"]["session"]["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["relationships"]["session"]["data"]["type"]."/".$return["data"]["relationships"]["session"]["data"]["id"];
 
             $return["data"]["relationships"]["agendaItem"]["data"]["type"] = "agendaItem";
             $return["data"]["relationships"]["agendaItem"]["data"]["id"] = $item["AgendaItemID"];
             $return["data"]["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"] = $item["AgendaItemOfficialTitle"];
             $return["data"]["relationships"]["agendaItem"]["data"]["attributes"]["title"] = $item["AgendaItemTitle"];
-            $return["data"]["relationships"]["agendaItem"]["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["relationships"]["agendaItem"]["data"]["type"]."/".$parliament."-".$return["data"]["relationships"]["agendaItem"]["data"]["id"];
+            $return["data"]["relationships"]["agendaItem"]["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["relationships"]["agendaItem"]["data"]["type"]."/".$parliament."-".$return["data"]["relationships"]["agendaItem"]["data"]["id"];
 
             $return["data"]["relationships"]["documents"]["data"] = array();
             $return["data"]["relationships"]["organisations"]["data"] = array();
@@ -236,7 +236,7 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["DocumentThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["DocumentThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["DocumentThumbnailLicense"];
-                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"].$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
+                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["documents"]["data"], $tmpAnnotationItem);
 
                     break;
@@ -255,7 +255,7 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["OrganisationThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["OrganisationThumbnailLicense"];
                         $tmpAnnotationItem["attributes"]["color"] = $ditem["OrganisationColor"];
-                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"].$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
+                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["organisation"]["data"], $tmpAnnotationItem);
 
                     break;
@@ -274,7 +274,7 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["TermThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["TermThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["TermThumbnailLicense"];
-                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"].$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
+                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["term"]["data"], $tmpAnnotationItem);
 
                     break;
@@ -318,7 +318,7 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["fraction"]["id"] = $pitem["FractionID"];
                         $tmpAnnotationItem["attributes"]["fraction"]["label"] = $pitem["FractionLabel"];
                         $tmpAnnotationItem["attributes"]["fraction"]["labelAlternative"] = $pitem["FractionLabelAlternative"];
-                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"].$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
+                        $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["people"]["data"], $tmpAnnotationItem);
 
                     break;
@@ -326,12 +326,12 @@ function mediaGetByID($id = false) {
 
             }
 
-            $return["data"]["relationships"]["documents"]["links"]["self"] = $config["dir"]["api"]."searchAnnotations?mediaID=".$return["data"]["id"]."&type=document";
-            $return["data"]["relationships"]["organisations"]["links"]["self"] = $config["dir"]["api"]."searchAnnotations?mediaID=".$return["data"]["id"]."&type=organisation";
-            $return["data"]["relationships"]["terms"]["links"]["self"] = $config["dir"]["api"]."searchAnnotations?mediaID=".$return["data"]["id"]."&type=term";
-            $return["data"]["relationships"]["people"]["links"]["self"] = $config["dir"]["api"]."searchAnnotations?mediaID=".$return["data"]["id"]."&type=person";
+            $return["data"]["relationships"]["documents"]["links"]["self"] = $config["dir"]["api"]."/"."searchAnnotations?mediaID=".$return["data"]["id"]."&type=document";
+            $return["data"]["relationships"]["organisations"]["links"]["self"] = $config["dir"]["api"]."/"."searchAnnotations?mediaID=".$return["data"]["id"]."&type=organisation";
+            $return["data"]["relationships"]["terms"]["links"]["self"] = $config["dir"]["api"]."/"."searchAnnotations?mediaID=".$return["data"]["id"]."&type=term";
+            $return["data"]["relationships"]["people"]["links"]["self"] = $config["dir"]["api"]."/"."searchAnnotations?mediaID=".$return["data"]["id"]."&type=person";
 
-            $return["data"]["relationships"]["annotations"]["links"]["self"] = $config["dir"]["api"]."searchAnnotations?mediaID=".$return["data"]["id"];
+            $return["data"]["relationships"]["annotations"]["links"]["self"] = $config["dir"]["api"]."/"."searchAnnotations?mediaID=".$return["data"]["id"];
 
         } else {
 
@@ -379,7 +379,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         }
         $return["meta"]["requestStatus"] = "success";
 
-        //TODO: $return["data"]["links"]["self"] = $config["dir"]["api"]."search/organisation?".getURLParameterFromArray($filteredParameters);
+        //TODO: $return["data"]["links"]["self"] = $config["dir"]["api"]."/"."search/organisation?".getURLParameterFromArray($filteredParameters);
 
     } catch (Exception $e) {
 
@@ -624,7 +624,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
     }
 
 
-    $return["data"]["links"]["self"] = $config["dir"]["api"]."search/organisation?".getURLParameterFromArray($filteredParameters);
+    $return["data"]["links"]["self"] = $config["dir"]["api"]."/"."search/organisation?".getURLParameterFromArray($filteredParameters);
 
     return $return;
 
