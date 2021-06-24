@@ -106,7 +106,7 @@ function personGetDataObject($item = false, $db = false) {
         $return["attributes"]["socialMediaIDs"] = json_decode($item["PersonSocialMediaIDs"],true);
         $return["attributes"]["additionalInformation"] = json_decode($item["PersonAdditionalInformation"],true);
         $return["attributes"]["lastChanged"] = $item["PersonLastChanged"];
-        $return["links"]["self"] = $config["dir"]["api"].$return["type"]."/".$return["id"];
+        $return["links"]["self"] = $config["dir"]["api"]."/".$return["type"]."/".$return["id"];
 
         if ($item["PersonPartyOrganisationID"]) {
 
@@ -122,7 +122,7 @@ function personGetDataObject($item = false, $db = false) {
                 $return["relationships"]["party"]["data"]["attributes"]["thumbnailCreator"] = $itemParty["OrganisationThumbnailCreator"];
                 $return["relationships"]["party"]["data"]["attributes"]["thumbnailLicense"] = $itemParty["OrganisationThumbnailLicense"];
                 $return["relationships"]["party"]["data"]["attributes"]["websiteURI"] = $itemParty["OrganisationWebsiteURI"];
-                $return["relationships"]["party"]["links"]["self"] = $config["dir"]["api"]."organisation/".$return["relationships"]["party"]["data"]["id"];
+                $return["relationships"]["party"]["links"]["self"] = $config["dir"]["api"]."/"."organisation/".$return["relationships"]["party"]["data"]["id"];
 
             } else {
 
@@ -150,7 +150,7 @@ function personGetDataObject($item = false, $db = false) {
                 $return["relationships"]["faction"]["data"]["attributes"]["thumbnailCreator"] = $itemFaction["OrganisationThumbnailCreator"];
                 $return["relationships"]["faction"]["data"]["attributes"]["thumbnailLicense"] = $itemFaction["OrganisationThumbnailLicense"];
                 $return["relationships"]["faction"]["data"]["attributes"]["websiteURI"] = $itemFaction["OrganisationWebsiteURI"];
-                $return["relationships"]["faction"]["links"]["self"] = $config["dir"]["api"]."organisation/".$return["relationships"]["faction"]["data"]["id"];
+                $return["relationships"]["faction"]["links"]["self"] = $config["dir"]["api"]."/"."organisation/".$return["relationships"]["faction"]["data"]["id"];
 
             } else {
 
@@ -164,7 +164,7 @@ function personGetDataObject($item = false, $db = false) {
 
         }
 
-        $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."search/media?personID=".$return["id"];
+        $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/"."search/media?personID=".$return["id"];
 
     } else {
 
@@ -672,7 +672,7 @@ function personSearch($parameter, $db = false) {
     }
 
 
-    $return["links"]["self"] = $config["dir"]["api"]."search/people?".getURLParameterFromArray($filteredParameters);
+    $return["links"]["self"] = $config["dir"]["api"]."/"."search/people?".getURLParameterFromArray($filteredParameters);
 
     return $return;
 

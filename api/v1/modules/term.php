@@ -102,7 +102,7 @@ function termGetDataObject($item = false, $db = false) {
         $return["attributes"]["embedURI"] = $item["TermEmbedURI"];
         $return["attributes"]["additionalInformation"] = json_decode($item["TermAdditionalInformation"],true);
         $return["attributes"]["lastChanged"] = $item["TermLastChanged"];
-        $return["links"]["self"] = $config["dir"]["api"].$return["type"]."/".$return["id"];
+        $return["links"]["self"] = $config["dir"]["api"]."/".$return["type"]."/".$return["id"];
         $return["relationships"]["media"]["links"]["self"] = ""; //TODO: Link - "self"?
 
     } else {
@@ -310,7 +310,7 @@ function termSearch($parameter, $db = false) {
     }
 
 
-    $return["links"]["self"] = $config["dir"]["api"]."search/term?".getURLParameterFromArray($filteredParameters);
+    $return["links"]["self"] = $config["dir"]["api"]."/search/term?".getURLParameterFromArray($filteredParameters);
 
     return $return;
 

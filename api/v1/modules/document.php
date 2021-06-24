@@ -101,8 +101,8 @@ function documentGetDataObject($item = false, $db = false) {
         $return["attributes"]["embedURI"] = $item["DocumentEmbedURI"];
         $return["attributes"]["additionalInformation"] = json_decode($item["DocumentAdditionalInformation"],true);
         $return["attributes"]["lastChanged"] = $item["DocumentLastChanged"];
-        $return["links"]["self"] = $config["dir"]["api"].$return["type"]."/".$return["id"];
-        $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."searchMedia?documentID=".$return["id"]; //TODO: Link
+        $return["links"]["self"] = $config["dir"]["api"]."/".$return["type"]."/".$return["id"];
+        $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/"."search/media?documentID=".$return["id"]; //TODO: Link
 
     } else {
 
@@ -309,7 +309,7 @@ function documentSearch($parameter, $db = false) {
     }
 
 
-    $return["links"]["self"] = $config["dir"]["api"]."search/document?".getURLParameterFromArray($filteredParameters);
+    $return["links"]["self"] = $config["dir"]["api"]."/"."search/document?".getURLParameterFromArray($filteredParameters);
 
     return $return;
 
