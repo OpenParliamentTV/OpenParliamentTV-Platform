@@ -158,11 +158,11 @@ function mediaGetByID($id = false) {
             $return["data"]["attributes"]["license"] = $item["MediaLicense"];
             $return["data"]["attributes"]["parliament"] = $parliament;
             $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
-            //$return["data"]["attributes"]["order"] = $item["MediaOrder"];
+            $return["data"]["attributes"]["order"] = (int)$item["MediaOrder"];
             $return["data"]["attributes"]["aligned"] = (($item["MediaAligned"] === 1) ? true : false);
             $return["data"]["attributes"]["dateStart"] = $item["MediaDateStart"];
             $return["data"]["attributes"]["dateEnd"] = $item["MediaDateEnd"];
-            $return["data"]["attributes"]["duration"] = $item["MediaDuration"];
+            $return["data"]["attributes"]["duration"] = (float)$item["MediaDuration"];
             $return["data"]["attributes"]["videoFileURI"] = $item["MediaVideoFileURI"];
             $return["data"]["attributes"]["audioFileURI"] = $item["MediaAudioFileURI"];
             $return["data"]["attributes"]["sourcePage"] = $item["MediaSourcePage"];
@@ -196,12 +196,12 @@ function mediaGetByID($id = false) {
 
             $return["data"]["relationships"]["electoralPeriod"]["data"]["type"] = "electoralPeriod";
             $return["data"]["relationships"]["electoralPeriod"]["data"]["id"] = $item["ElectoralPeriodID"];
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] = $item["ElectoralPeriodNumber"];
+            $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] = (int)$item["ElectoralPeriodNumber"];
             $return["data"]["relationships"]["electoralPeriod"]["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["relationships"]["electoralPeriod"]["data"]["type"]."/".$return["data"]["relationships"]["electoralPeriod"]["data"]["id"];
 
             $return["data"]["relationships"]["session"]["data"]["type"] = "session";
             $return["data"]["relationships"]["session"]["data"]["id"] = $item["SessionID"];
-            $return["data"]["relationships"]["session"]["data"]["attributes"]["number"] = $item["SessionNumber"];
+            $return["data"]["relationships"]["session"]["data"]["attributes"]["number"] = (int)$item["SessionNumber"];
             $return["data"]["relationships"]["session"]["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["relationships"]["session"]["data"]["type"]."/".$return["data"]["relationships"]["session"]["data"]["id"];
 
             $return["data"]["relationships"]["agendaItem"]["data"]["type"] = "agendaItem";
