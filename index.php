@@ -16,6 +16,18 @@ switch ($page) {
 	/*********************************
 	* RESOURCES / DETAIL PAGES 
 	*********************************/
+	case "agendaItem":
+		$pageTitle = 'Detail Agenda Item';
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/agendaItem/page.php");
+		$content = ob_get_clean();
+	break;
 	case "document":
 		$pageTitle = 'Detail Document';
 		$pageType = 'default';
@@ -26,6 +38,18 @@ switch ($page) {
 		];
 		ob_start();
 		include_once("./content/pages/document/page.php");
+		$content = ob_get_clean();
+	break;
+	case "electoralPeriod":
+		$pageTitle = 'Detail Electoral Period';
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/electoralPeriod/page.php");
 		$content = ob_get_clean();
 	break;
 	case "embed":
@@ -70,6 +94,18 @@ switch ($page) {
 		];
 		ob_start();
 		include_once("./content/pages/person/page.php");
+		$content = ob_get_clean();
+	break;
+	case "session":
+		$pageTitle = 'Detail Session';
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/session/page.php");
 		$content = ob_get_clean();
 	break;
 	case "term":
