@@ -101,7 +101,7 @@ function electoralPeriodGetByID($id = false) {
             $return["data"]["attributes"]["parliament"] = $parliament;
             $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
-            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/"."search?type=media&electoralPeriodID=".$return["data"]["id"]; //TODO: Check Link and Parameter
+            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/"."search/media?electoralPeriodID=".$return["data"]["id"]; //TODO: Check Link and Parameter
 
             //TODO: Agenda and Session relationships too?
 
