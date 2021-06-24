@@ -12,7 +12,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
     global $config;
 
     $return["meta"]["api"]["version"] = 1;
-    $return["meta"]["api"]["documentation"] = $config["dir"]["root"]."documentation/api";
+    $return["meta"]["api"]["documentation"] = $config["dir"]["root"]."/documentation/api";
     $return["meta"]["requestStatus"] = "error";
     $return["errors"] = array();
 
@@ -23,7 +23,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
         $errorarray["title"] = "Missing request parameter";
         $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
         array_push($return["errors"], $errorarray);
-        $return["links"]["self"] = htmlspecialchars($config["dir"]["root"].$_SERVER["REQUEST_URI"]);
+        $return["links"]["self"] = htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"]);
 
     } else {
 
@@ -325,7 +325,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
                         $errorarray["title"] = "Missing request parameter";
                         $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
                         array_push($return["errors"], $errorarray);
-                        $return["links"]["self"] = htmlspecialchars($config["dir"]["root"].$_SERVER["REQUEST_URI"]);
+                        $return["links"]["self"] = htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"]);
                     break;
                 }
 
