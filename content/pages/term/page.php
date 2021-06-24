@@ -7,7 +7,11 @@
             <?php
 
             include_once (__DIR__."/../../../api/v1/api.php");
-            $item = apiV1("term",$_REQUEST["id"]);
+            $item = apiV1([
+            	"action"=>"getItem", 
+            	"itemType"=>"term", 
+            	"id"=>$_REQUEST["id"]]
+            );
             print_r($item);
 
             ?>
