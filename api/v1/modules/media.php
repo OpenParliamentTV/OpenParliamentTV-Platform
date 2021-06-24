@@ -21,6 +21,7 @@ function mediaGetByID($id = false) {
     if (is_array($IDInfos)) {
 
         $parliament = $IDInfos["parliament"];
+        $parliamentLabel = $config["parliament"][$parliament]["label"];
 
     } else {
 
@@ -155,6 +156,8 @@ function mediaGetByID($id = false) {
             $return["data"]["attributes"]["originMediaID"] = $item["MediaOriginMediaID"];
             $return["data"]["attributes"]["creator"] = $item["MediaCreator"];
             $return["data"]["attributes"]["license"] = $item["MediaLicense"];
+            $return["data"]["attributes"]["parliament"] = $parliament;
+            $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             //$return["data"]["attributes"]["order"] = $item["MediaOrder"];
             $return["data"]["attributes"]["aligned"] = (($item["MediaAligned"] === 1) ? true : false);
             $return["data"]["attributes"]["dateStart"] = $item["MediaDateStart"];

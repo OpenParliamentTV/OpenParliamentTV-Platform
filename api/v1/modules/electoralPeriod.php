@@ -18,6 +18,7 @@ function electoralPeriodGetByID($id = false) {
     if (is_array($IDInfos) && ($IDInfos["type"] == "electoralPeriod")) {
 
         $parliament = $IDInfos["parliament"];
+        $parliamentLabel = $config["parliament"][$parliament]["label"];
 
     } else {
 
@@ -97,6 +98,8 @@ function electoralPeriodGetByID($id = false) {
             $return["data"]["attributes"]["number"] = $item["ElectoralPeriodNumber"];
             $return["data"]["attributes"]["dateStart"] = $item["ElectoralPeriodDateStart"];
             $return["data"]["attributes"]["dateEnd"] = $item["ElectoralPeriodDateEnd"];
+            $return["data"]["attributes"]["parliament"] = $parliament;
+            $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["type"]."/".$return["data"]["id"];
             $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."search?type=media&electoralPeriodID=".$return["data"]["id"]; //TODO: Check Link and Parameter
 

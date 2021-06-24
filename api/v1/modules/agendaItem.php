@@ -18,6 +18,7 @@ function agendaItemGetByID($id = false) {
     if (is_array($IDInfos)) {
 
         $parliament = $IDInfos["parliament"];
+        $parliamentLabel = $config["parliament"][$parliament]["label"];
 
     } else {
 
@@ -95,6 +96,9 @@ function agendaItemGetByID($id = false) {
             $return["data"]["id"] = $parliament."-".$item["AgendaItemID"];
             $return["data"]["attributes"]["officialTitle"] = $item["AgendaItemOfficialTitle"];
             $return["data"]["attributes"]["title"] = $item["AgendaItemTitle"];
+            $return["data"]["attributes"]["order"] = $item["AgendaItemOrder"];
+            $return["data"]["attributes"]["parliament"] = $parliament;
+            $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["attributes"]["order"] = $item["AgendaItemOrder"];
             $return["data"]["links"]["self"] = $config["dir"]["api"].$return["data"]["type"]."/".$return["data"]["id"];
             $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."search?type=media&agendaItemID=".$return["data"]["id"]; //TODO: Check Link and Parameter
