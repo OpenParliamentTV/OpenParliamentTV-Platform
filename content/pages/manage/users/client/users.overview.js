@@ -3,7 +3,7 @@ $(function() {
 
 	var tableData = [];
 	$.ajax({
-		url: '../../server/ajaxServer.php',
+		url: '../server/ajaxServer.php',
 		method: "post",
 		data: {
 			a: "manageUsersGet"

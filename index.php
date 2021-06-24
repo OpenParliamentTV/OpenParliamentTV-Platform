@@ -165,7 +165,7 @@ switch ($page) {
 		$pageBreadcrumbs = [
 			[
 				'label' => 'Documentation',
-				'path' => 'documentation'
+				'path' => '/documentation'
 			],
 			[
 				'label' => $pageTitle
@@ -280,7 +280,7 @@ switch ($page) {
 		$pageBreadcrumbs = [
 			[
 				'label' => L::dashboard,
-				'path' => 'manage'
+				'path' => '/manage'
 			],
 			[
 				'label' => $pageTitle
@@ -298,11 +298,11 @@ switch ($page) {
 			$pageBreadcrumbs = [
 				[
 					'label' => L::dashboard,
-					'path' => 'manage'
+					'path' => '/manage'
 				],
 				[
 					'label' => L::conflicts,
-					'path' => 'manage/conflicts'
+					'path' => '/manage/conflicts'
 				],
 				[
 					'label' => '<span class="icon-pencil"></span>'
@@ -316,7 +316,7 @@ switch ($page) {
 			$pageBreadcrumbs = [
 				[
 					'label' => L::dashboard,
-					'path' => 'manage'
+					'path' => '/manage'
 				],
 				[
 					'label' => $pageTitle
@@ -332,7 +332,7 @@ switch ($page) {
 		$pageBreadcrumbs = [
 			[
 				'label' => L::dashboard,
-				'path' => 'manage'
+				'path' => '/manage'
 			],
 			[
 				'label' => $pageTitle
@@ -348,11 +348,11 @@ switch ($page) {
 		$pageBreadcrumbs = [
 			[
 				'label' => L::dashboard,
-				'path' => 'manage'
+				'path' => '/manage'
 			],
 			[
 				'label' => L::data,
-				'path' => 'manage/data'
+				'path' => '/manage/data'
 			],
 			[
 				'label' => '<span class="icon-pencil"></span>'
@@ -373,11 +373,11 @@ switch ($page) {
 		$pageBreadcrumbs = [
 			[
 				'label' => L::dashboard,
-				'path' => 'manage'
+				'path' => '/manage'
 			],
 			[
 				'label' => L::data,
-				'path' => 'manage/data'
+				'path' => '/manage/data'
 			],
 			[
 				'label' => '<span class="icon-pencil"></span>'
@@ -398,11 +398,11 @@ switch ($page) {
 		$pageBreadcrumbs = [
 			[
 				'label' => L::dashboard,
-				'path' => 'manage'
+				'path' => '/manage'
 			],
 			[
 				'label' => L::data,
-				'path' => 'manage/data'
+				'path' => '/manage/data'
 			],
 			[
 				'label' => '<span class="icon-pencil"></span>'
@@ -423,11 +423,11 @@ switch ($page) {
 		$pageBreadcrumbs = [
 			[
 				'label' => L::dashboard,
-				'path' => 'manage'
+				'path' => '/manage'
 			],
 			[
 				'label' => L::data,
-				'path' => 'manage/data'
+				'path' => '/manage/data'
 			],
 			[
 				'label' => '<span class="icon-pencil"></span>'
@@ -448,11 +448,11 @@ switch ($page) {
 		$pageBreadcrumbs = [
 			[
 				'label' => L::dashboard,
-				'path' => 'manage'
+				'path' => '/manage'
 			],
 			[
 				'label' => L::data,
-				'path' => 'manage/data'
+				'path' => '/manage/data'
 			],
 			[
 				'label' => '<span class="icon-pencil"></span>'
@@ -473,7 +473,7 @@ switch ($page) {
 		$pageBreadcrumbs = [
 			[
 				'label' => L::dashboard,
-				'path' => 'manage'
+				'path' => '/manage'
 			],
 			[
 				'label' => $pageTitle,
@@ -489,7 +489,7 @@ switch ($page) {
 		$pageBreadcrumbs = [
 			[
 				'label' => L::dashboard,
-				'path' => 'manage'
+				'path' => '/manage'
 			],
 			[
 				'label' => $pageTitle,
@@ -507,11 +507,11 @@ switch ($page) {
 			$pageBreadcrumbs = [
 				[
 					'label' => L::dashboard,
-					'path' => 'manage'
+					'path' => '/manage'
 				],
 				[
 					'label' => L::users,
-					'path' => 'manage'
+					'path' => '/manage'
 				],
 				[
 					'label' => '<span class="icon-pencil"></span>',
@@ -525,7 +525,7 @@ switch ($page) {
 			$pageBreadcrumbs = [
 				[
 					'label' => L::dashboard,
-					'path' => 'manage'
+					'path' => '/manage'
 				],
 				[
 					'label' => $pageTitle,
