@@ -1,17 +1,17 @@
-<article class="resultItem col" data-speech-id="<?= $result_item["_source"]["meta"]["id"] ?>" data-party="<?= $result_item["_source"]["meta"]["speakerParty"] ?>">
+<article class="resultItem col" data-speech-id="<?= $result_item["id"] ?>" data-party="<?= $result_item["relationships"]["people"]["data"][0]["attributes"]["party"]["labelAlternative"] ?>">
 	<div class="resultContent partyIndicator" data-party="<?=$result_item["_source"]["meta"]["speakerParty"]?>">
-		<a style="display: block;" href='media/<?= $result_item["_source"]["meta"]["id"].$paramStr ?>'>
+		<a style="display: block;" href='media/<?= $result_item["id"].$paramStr ?>'>
 			<div class="icon-play-1"></div>
 			<div class="resultDuration"><?= $formattedDuration ?></div>
 			<div class="resultDate"><?= $formattedDate ?></div>
 			<div class="resultMeta">
-				<?= $highlightedName .' ('.$result_item["_source"]["meta"]["speakerParty"].')' ?>
+				<?= $highlightedName .' ('.$result_item["relationships"]["people"]["data"][0]["attributes"]["party"]["labelAlternative"].')' ?>
 			</div>
 			<hr>
 			<?php
 			if ($sortFactor == null || $sortFactor != 'topic') {
 			?>
-				<div class="resultTitle"><?=$result_item["_source"]["meta"]["agendaItemSecondTitle"]?>
+				<div class="resultTitle"><?=$result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"]?>
 				</div>
 			<?php
 			}
@@ -24,7 +24,7 @@
 		if (isset($result_item['finds'])) {
 			foreach($result_item['finds'] as $result) {
 				?>
-				<a class="resultSnippet" href='media/<?= $result_item["_source"]["meta"]["id"].$paramStr.'#t='.$result['data-start'] ?>' title="▶ Ausschnitt direkt abspielen"><?= $result['context'] ?></a>
+				<a class="resultSnippet" href='media/<?= $result_item["id"].$paramStr.'#t='.$result['data-start'] ?>' title="▶ Ausschnitt direkt abspielen"><?= $result['context'] ?></a>
 				<?php
 			}
 		}

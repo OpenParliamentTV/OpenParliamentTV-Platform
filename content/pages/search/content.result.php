@@ -5,14 +5,16 @@
 		$i18n = new i18n(__DIR__.'/../../../lang/lang_{LANGUAGE}.json', __DIR__.'/../../../langcache/', 'de');
 		$i18n->init();
 	}
-require_once(__DIR__."/../../../modules/search/functions.php");
-require_once(__DIR__."/../../../modules/search/include.search.php");
-/*
+	//require_once(__DIR__."/../../../modules/search/functions.php");
+	//require_once(__DIR__."/../../../modules/search/include.search.php");
+	/*
 
-echo '<pre>';
-print_r($_REQUEST);
-echo '</pre>';
-*/
+	echo '<pre>';
+	print_r($_REQUEST);
+	echo '</pre>';
+	*/
+	require_once(__DIR__."/../../../api/v1/api.php");
+
 
 	if (!$_REQUEST["a"] || count($_REQUEST) < 2) {
 	?>
@@ -34,22 +36,38 @@ echo '</pre>';
 	<?php
 	} else {
 
-		$result = searchSpeeches($_REQUEST);
+		$parameter = $_REQUEST;
+		$parameter["action"] = "search";
+		$parameter["itemType"] = "media";
+		$result = apiV1($parameter);
 
-		$result_items = $result["hits"]["hits"];
+		/*
+		echo '<pre>';
+		print_r($result);
+		echo '</pre>';
+		*/
 
-		$totalResults = $result["hits"]["total"]["value"];
+		$result_items = $result["data"];
+
+		//TODO: TotalResults in meta info
+		//$totalResults = $result["meta"]["results"]["total"];
+		$totalResults = 1;
+
 		$totalResultString = $totalResults;
 
 		if ($totalResults >= 10000 ) {
 			$totalResultString = "> ".$totalResults;
 		}
 
+		//TODO: Check where to get totalFinds
+		/*
 		if ($result["totalFinds"] > 0) {
 			$findsString = '<strong>'.$result["totalFinds"].'</strong> Treffer in ';
 		} else {
 			$findsString = '';
 		}
+		*/
+		$findsString = '';
 	
 	// ELSE FINISHES AT END OF FILE
 
@@ -105,25 +123,21 @@ echo '</pre>';
 	
 	foreach($result_items as $result_item) {
 		
-		if (strlen($result_item["_source"]["meta"]["mediaID"]) == 0) {
-			continue;
-		}
+		$formattedDuration = gmdate("i:s", $result_item["attributes"]['duration']);
 
-		$formattedDuration = gmdate("i:s", $result_item["_source"]["meta"]['duration']);
-
-		$formattedDate = date("d.m.Y", strtotime($result_item["_source"]["meta"]["date"]));
+		$formattedDate = date("d.m.Y", strtotime($result_item["attributes"]["dateStart"]));
 
 		if ($sortFactor == 'date' && $formattedDate != $currentDate) {
 			echo '<div class="sortDivider"><b>'.$formattedDate.'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
 			$currentDate = $formattedDate;
-		} elseif ($sortFactor == 'topic' && $result_item["_source"]["meta"]["agendaItemSecondTitle"] != $currentAgendaItem) {
+		} elseif ($sortFactor == 'topic' && $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"] != $currentAgendaItem) {
 			echo '<div class="sortDivider"><b>'.$formattedDate.' - '.$result_item["_source"]["meta"]["agendaItemSecondTitle"].'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
-			$currentAgendaItem = $result_item["_source"]["meta"]["agendaItemSecondTitle"];
+			$currentAgendaItem = $result_item["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"];
 		}
 
-		$highlightedName = $result_item["_source"]["meta"]["speakerFirstName"].' '.$result_item["_source"]["meta"]['speakerLastName'];
-		if (strlen($_REQUEST['name']) > 1) {
-			$highlightedName = str_replace($_REQUEST['name'], '<em>'.$_REQUEST['name'].'</em>', $highlightedName);
+		$highlightedName = $result_item["relationships"]["people"]["data"][0]["attributes"]["label"];
+		if (strlen($_REQUEST['person']) > 1) {
+			$highlightedName = str_replace($_REQUEST['person'], '<em>'.$_REQUEST['person'].'</em>', $highlightedName);
 		}
 
 		include 'content.result.item.php';
