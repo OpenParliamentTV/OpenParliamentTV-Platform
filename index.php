@@ -359,12 +359,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
-			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
-			include_once("./content/pages/manage/data/document/new.php");
-		} else {
-			include_once("./content/pages/manage/data/document/page.php");
-		}
+		include_once("./content/pages/manage/data/document/page.php");
 		$content = ob_get_clean();
 	break;
 	case "manage-data-media":
@@ -409,12 +404,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
-			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
-			include_once("./content/pages/manage/data/organisation/new.php");
-		} else {
-			include_once("./content/pages/manage/data/organisation/page.php");
-		}
+		include_once("./content/pages/manage/data/organisation/page.php");
 		$content = ob_get_clean();
 	break;
 	case "manage-data-person":
@@ -434,12 +424,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
-			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
-			include_once("./content/pages/manage/data/person/new.php");
-		} else {
-			include_once("./content/pages/manage/data/person/page.php");
-		}
+		include_once("./content/pages/manage/data/person/page.php");
 		$content = ob_get_clean();
 	break;
 	case "manage-data-term":
@@ -459,12 +444,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
-			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
-			include_once("./content/pages/manage/data/term/new.php");
-		} else {
-			include_once("./content/pages/manage/data/term/page.php");
-		}
+		include_once("./content/pages/manage/data/term/page.php");
 		$content = ob_get_clean();
 	break;
 	case "manage-import":
