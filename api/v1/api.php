@@ -334,8 +334,125 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
                     $return = array_replace_recursive($return, $item);
                 }
 
+            break;
+            case "wikidataService":
+                switch ($request["itemType"]) {
+
+                    case "person":
+
+                        if ($request["str"]) {
+
+                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-mdbs-final.txt"),true);
+
+                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
+
+                                $request["str"] = preg_replace("/\s/",".*", $request["str"]);
+
+                                $tmpType = "label";
+
+                            } else {
+
+                                $tmpType = "id";
+
+                            }
+
+                            foreach ($dump as $k=>$v) {
+
+                                if (preg_match("/".$request["str"]."/i",$v[$tmpType])) {
+
+                                    $return["meta"]["requestStatus"] = "success";
+                                    $return["meta"]["data"] = $v;
+                                    return $return;
+
+                                }
+
+                            }
+
+                            // No Result found.
+
+                            $return["meta"]["requestStatus"] = "error";
+                            $return["errors"] = array();
+                            $errorarray["status"] = "404";
+                            $errorarray["code"] = "1";
+                            $errorarray["title"] = "No results";
+                            $errorarray["detail"] = "Person not found in dump"; //TODO: Description
+                            array_push($return["errors"], $errorarray);
+
+                        } else {
+
+                            $return["meta"]["requestStatus"] = "error";
+                            $return["errors"] = array();
+                            $errorarray["status"] = "503";
+                            $errorarray["code"] = "1";
+                            $errorarray["title"] = "Missing Parameter str";
+                            $errorarray["detail"] = "missing parameter str"; //TODO: Description
+                            array_push($return["errors"], $errorarray);
+
+                        }
+
+                    break;
+                    case "party":
+
+                        if ($request["str"]) {
+
+                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-parties-final.txt"),true);
+
+                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
+
+                                $request["str"] = preg_replace("/\s/",".*", $request["str"]);
+
+                                $tmpType = "label";
+
+                            } else {
+
+                                $tmpType = "id";
+
+                            }
+
+                            foreach ($dump as $k=>$v) {
+
+                                //echo gettype($v["labelAlternative"])."\n";
+
+                                if ((preg_match("/".$request["str"]."/i",$v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/".$request["str"]."/i",$v["labelAlternative"])))) {
+
+                                    $return["meta"]["requestStatus"] = "success";
+                                    $return["meta"]["data"] = $v;
+                                    return $return;
+
+                                }
+
+                            }
+
+                            // No Result found.
+
+                            $return["meta"]["requestStatus"] = "error";
+                            $return["errors"] = array();
+                            $errorarray["status"] = "404";
+                            $errorarray["code"] = "1";
+                            $errorarray["title"] = "No results";
+                            $errorarray["detail"] = "Person not found in dump"; //TODO: Description
+                            array_push($return["errors"], $errorarray);
+
+                        } else {
+
+                            $return["meta"]["requestStatus"] = "error";
+                            $return["errors"] = array();
+                            $errorarray["status"] = "503";
+                            $errorarray["code"] = "1";
+                            $errorarray["title"] = "Missing Parameter str";
+                            $errorarray["detail"] = "missing parameter str"; //TODO: Description
+                            array_push($return["errors"], $errorarray);
+
+                        }
+
+                    break;
+
+                }
 
             break;
+
+
+
             default:
 
                 $errorarray["status"] = "422";
@@ -352,7 +469,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
 
 
-        }
+    }
 
     return $return;
 
