@@ -6,10 +6,6 @@
 			<div class="card mb-3">
 				<div class="card-body">
 					<a href="<?= $config["dir"]["root"] ?>/manage/data/media/new" class="btn btn-outline-success btn-sm mr-1">New Media Item</a>
-					<a href="<?= $config["dir"]["root"] ?>/manage/data/person/new" class="btn btn-outline-success btn-sm mr-1">New Person</a>
-					<a href="<?= $config["dir"]["root"] ?>/manage/data/document/new" class="btn btn-outline-success btn-sm mr-1">New Document</a>
-					<a href="<?= $config["dir"]["root"] ?>/manage/data/organisation/new" class="btn btn-outline-success btn-sm mr-1">New Organisation</a>
-					<a href="<?= $config["dir"]["root"] ?>/manage/data/term/new" class="btn btn-outline-success btn-sm mr-1">New Term</a>
 				</div>
 			</div>
 			<ul class="nav nav-tabs" role="tablist">
