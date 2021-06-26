@@ -358,25 +358,63 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                             foreach ($dump as $k=>$v) {
 
+
                                 if (preg_match("/".$request["str"]."/i",$v[$tmpType])) {
 
                                     $return["meta"]["requestStatus"] = "success";
-                                    $return["meta"]["data"] = $v;
-                                    return $return;
+
+                                    //FIX URL and Arrays in Party and Faction
+                                    if (gettype($v["party"]) == "array") {
+
+                                        $v["party-original-array"] = $v["party"];
+                                        $v["party"] = $v["party"][0];
+
+                                    }
+
+                                    if (preg_match("/www\.wiki/",$v["party"])) {
+                                        $v["party-original-URL"] = $v["party"];
+                                        $tmpArray = explode("/",$v["party"]);
+                                        $v["party"] = array_pop($tmpArray);
+
+                                        $v["partyLabelAlternative"] = apiV1(["action"=>"wikidataService","itemType"=>"party","str"=>$v["party"]])["data"][0]["labelAlternative"];
+                                    }
+
+                                    if (gettype($v["faction"]) == "array") {
+                                        $v["faction-original-array"] = $v["faction"];
+                                        $v["faction"] = $v["faction"][0];
+                                    }
+
+                                    if (preg_match("/www\.wiki/",$v["faction"])) {
+                                        $v["faction-original-URL"] = $v["faction"];
+                                        $tmpArray = explode("/",$v["faction"]);
+                                        $v["faction"] = array_pop($tmpArray);
+                                    }
+
+
+
+                                    $return["data"][] = $v;
+
 
                                 }
 
                             }
 
-                            // No Result found.
+                            if (count($return["data"]) > 0) {
+                                return $return;
+                            } else {
+                                // No Result found.
+                                $return["meta"]["requestStatus"] = "error";
+                                $return["errors"] = array();
+                                $errorarray["status"] = "404";
+                                $errorarray["code"] = "1";
+                                $errorarray["title"] = "No results";
+                                $errorarray["detail"] = "Person not found in dump"; //TODO: Description
+                                array_push($return["errors"], $errorarray);
+                            }
 
-                            $return["meta"]["requestStatus"] = "error";
-                            $return["errors"] = array();
-                            $errorarray["status"] = "404";
-                            $errorarray["code"] = "1";
-                            $errorarray["title"] = "No results";
-                            $errorarray["detail"] = "Person not found in dump"; //TODO: Description
-                            array_push($return["errors"], $errorarray);
+
+
+
 
                         } else {
 
@@ -409,29 +447,43 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                             }
 
-                            foreach ($dump as $k=>$v) {
+                            $return["data"] = [];
 
+                            foreach ($dump as $k=>$v) {
+                                /*
+                                 *
+                                 * //TODO Remove this debug
+                                if (gettype($v["labelAlternative"]) == "array") {
+                                    print_r($v);
+                                }
                                 //echo gettype($v["labelAlternative"])."\n";
+                                */
+
 
                                 if ((preg_match("/".$request["str"]."/i",$v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/".$request["str"]."/i",$v["labelAlternative"])))) {
 
                                     $return["meta"]["requestStatus"] = "success";
-                                    $return["meta"]["data"] = $v;
-                                    return $return;
+                                    $return["data"][] = $v;
+
 
                                 }
 
                             }
 
-                            // No Result found.
+                            if (count($return["data"]) > 0) {
+                                return $return;
+                            } else {
+                                // No Result found.
 
-                            $return["meta"]["requestStatus"] = "error";
-                            $return["errors"] = array();
-                            $errorarray["status"] = "404";
-                            $errorarray["code"] = "1";
-                            $errorarray["title"] = "No results";
-                            $errorarray["detail"] = "Person not found in dump"; //TODO: Description
-                            array_push($return["errors"], $errorarray);
+                                $return["meta"]["requestStatus"] = "error";
+                                $return["errors"] = array();
+                                $errorarray["status"] = "404";
+                                $errorarray["code"] = "1";
+                                $errorarray["title"] = "No results";
+                                $errorarray["detail"] = "Person not found in dump"; //TODO: Description
+                                array_push($return["errors"], $errorarray);
+                            }
+
 
                         } else {
 

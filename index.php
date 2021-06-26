@@ -558,6 +558,15 @@ $lang = in_array($lang, $acceptLang) ? $lang : 'de';
 <html lang="<?php echo $lang; ?>" dir="ltr">
 <head>
 	<?php require_once('content/head.php'); ?>
+    <script type="text/javascript">
+        const config = {
+            "dir": {
+                "root": "<?=$config["dir"]["root"]?>"
+            }
+        }
+
+        //TODO: Move API to root $config and add it to JS Object
+    </script>
 </head>
 <body class='<?= (($_SESSION["login"]) ? "login" : "") ?>'>
 <?= $content ?>

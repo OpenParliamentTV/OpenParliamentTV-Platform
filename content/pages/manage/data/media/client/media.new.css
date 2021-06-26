@@ -1,0 +1,38 @@
+.fayt-container {
+    display: inline-block;
+}
+.fayt-results {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    z-index: 1;
+    display: none;
+}
+.fayt-results ul {
+    list-style: none;
+    padding: 0px;
+}
+
+.fayt-results ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.fayt-results ul li:last-child {
+    border-bottom: none;
+}
+
+.fayt-results ul li:hover, .fayt-results ul li:focus {
+    cursor:pointer;
+    background-color: #ccc;
+}
+
+.media-person-item, .media-documents-item, .media-text-item {
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 30px;
+}
+.media-person-item:last-child, .media-documents-item:last-child, .media-text-item:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}

@@ -289,7 +289,9 @@ function documentSearch($parameter, $db = false) {
 
         foreach ($findings as $finding) {
             //print_r($finding);
-            array_push($return["data"], documentGetDataObject($finding,$db));
+            $itemObj = documentGetDataObject($finding,$db);
+            unset($itemObj["meta"]);
+            array_push($return["data"], $itemObj);
         }
 
     } else {

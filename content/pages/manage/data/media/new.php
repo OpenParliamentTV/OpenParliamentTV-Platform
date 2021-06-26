@@ -1,17 +1,26 @@
-<?php include_once(__DIR__ . '/../../../../header.php'); ?>
+<?php
+require_once(__DIR__ . '/../../../../../config.php');
+include_once(__DIR__ . '/../../../../header.php');
+
+if ($_REQUEST["aTEST"]) {
+    echo "<pre>";
+    print_r($_REQUEST);
+    echo "</pre>";
+}
+?>
 <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 			<h2>Add New Media</h2>
 			<form action="" method="post" id="mediaAddForm">
-				<input type="hidden" name="a" value="mediaAdd">
+				<input type="hidden" name="aTEST" value="mediaAddTEST">
 				<div class="row">
 					<div class="col-6 mb-4">
 						<div class="card h-100">
 							<div class="card-header">Affiliation</div>
 							<div class="card-body">
 								<label for="parliament">Parliament</label>
-								<select class="form-control mb-3" name="parliament">
+								<select class="form-control mb-3" id="parliament" name="parliament">
 									<?php
 									foreach($config["parliament"] as $k=>$v) {
 										echo '<option value="'.$k.'">'.$v["label"].'</option>';
@@ -19,110 +28,116 @@
 									?>
 								</select>
 								<div class="form-group">
-									<label for="electoralPeriod">Electoral Period</label>
-									<input type="number" class="form-control" id="electoralPeriod"  name="electoralPeriod" value="">
+									<label for="electoralPeriodNumber">Electoral Period Number</label>
+									<input type="number" class="form-control" id="electoralPeriodNumber" name="electoralPeriod[number]" value="">
 								</div>
 								<div class="form-group">
 									<label for="sessionNumber">Session Number</label>
-									<input type="number" class="form-control" id="sessionNumber"  name="sessionNumber" value="">
+									<input type="number" class="form-control" id="sessionNumber" name="session[number]" value="">
 								</div>
 								<div class="form-group">
-									<label for="dateStart">Date Start</label>
-									<input type="date" class="form-control" id="dateStart"  name="dateStart" value="">
+									<label for="sessionDateStart">Session Date Start</label>
+									<input type="date" class="form-control" id="sessionDateStart" name="session[dateStart]" value="">
 								</div>
 								<div class="form-group">
-									<label for="dateEnd">Date End</label>
-									<input type="date" class="form-control" id="dateEnd"  name="dateEnd" value="">
+									<label for="sessionDateEnd">Session Date End</label>
+									<input type="date" class="form-control" id="sessionDateEnd" name="session[dateEnd]" value="">
 								</div>
 								<div class="form-group">
-									<label for="agendaItemTitle">Agenda Title</label>
-									<input type="text" class="form-control" id="agendaItemTitle"  name="agendaItemTitle" value="">
+									<label for="agendaItemOfficialTitle">AgendaItem Official Title</label>
+									<input type="text" class="form-control" id="agendaItemOfficialTitle" name="agendaItem[officialTitle]" value="">
 								</div>
 								<div class="form-group">
-									<label for="agendaItemSecondTitle">Agenda Second Title</label>
-									<input type="text" class="form-control" id="agendaItemSecondTitle"  name="agendaItemSecondTitle" value="">
+									<label for="agendaItemTitle">AgendaItem Title</label>
+									<input type="text" class="form-control" id="agendaItemTitle" name="agendaItem[title]" value="">
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-6 mb-4">
-						<div class="card mb-4 h-100">
-							<div class="card-header">Speaker</div>
-							<div class="card-body">
-								<div class="form-group">
-									<label for="speakerID">Speaker ID</label>
-									<input type="text" class="form-control" id="speakerID"  name="speakerID" value="">
-								</div>
-								<div class="form-group">
-									<label for="speakerFirstName">Speaker First Name</label>
-									<input type="text" class="form-control" id="speakerFirstName" name="speakerFirstName" value="">
-								</div>
-								<div class="form-group">
-									<label for="speakerLastName">Speaker Last Name</label>
-									<input type="text" class="form-control" id="speakerLastName" name="speakerLastName" value="">
-								</div>
-								<div class="form-group">
-									<label for="speakerDegree">Speaker Degree</label>
-									<input type="text" class="form-control" id="speakerDegree" name="speakerDegree" value="">
-								</div>
-								<div class="form-group">
-									<label for="speakerParty">Speaker Party</label>
-									<input type="text" class="form-control" id="speakerParty" name="speakerParty" value="">
-								</div>
-								<div class="form-group">
-									<label for="speakerRole">Speaker Role</label>
-									<input type="text" class="form-control" id="speakerRole" name="speakerRole" value="">
-								</div>
-							</div>
-						</div>
-					</div>
+                    <div class="col-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">Media</div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="mediaAudioFileURI">mediaAudioFileURI</label>
+                                    <input type="text" class="form-control" id="mediaAudioFileURI" name="media[audioFileURI]" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediaVideoFileURI">mediaVideoFileURI</label>
+                                    <input type="text" class="form-control" id="mediaVideoFileURI" name="media[videoFileURI]" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediaThumbnailURI">mediaThumbnailURI</label>
+                                    <input type="text" class="form-control" id="mediaThumbnailURI" name="media[thumbnailURI]" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediaThumbnailCreator">mediaThumbnailCreator</label>
+                                    <input type="text" class="form-control" id="mediaThumbnailCreator" name="media[thumbnailCreator]" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediaThumbnailLicense">mediaThumbnailLicense</label>
+                                    <input type="text" class="form-control" id="mediaThumbnailLicense" name="media[thumbnailLicense]" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediaDuration">mediaDuration</label>
+                                    <input type="text" class="form-control" id="mediaDuration" name="media[duration]" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediaCreator">mediaCreator</label>
+                                    <input type="text" class="form-control" id="mediaCreator" name="media[creator]" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediaLicense">mediaLicense</label>
+                                    <input type="text" class="form-control" id="mediaLicense" name="media[license]" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediaOriginID">mediaOriginID</label>
+                                    <input type="text" class="form-control" id="mediaOriginID" name="media[originID]" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediaSourcePage">mediaSourcePage</label>
+                                    <input type="text" class="form-control" id="mediaSourcePage" name="media[sourcePage]" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dateStart">dateStart (MediaDateStart)</label>
+                                    <input type="text" class="form-control" id="dateStart" name="dateStart" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="dateEnd">dateEnd (MediaDateEnd)</label>
+                                    <input type="text" class="form-control" id="dateEnd" name="dateEnd" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 				</div>
+				<div class="row">
+					<div class="col-12 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">Text</div>
+                            <div class="card-body" id="media-text-body">
+                                WIP // TODO
+                            </div>
+                            <button id="media-text-body-button-add" class="btn button" type="button">add</button>
+                        </div>
+                    </div>
+                </div>
 				<div class="row">
 					<div class="col-6 mb-4">
 						<div class="card h-100">
-							<div class="card-header">Media</div>
-							<div class="card-body">
-								<div class="form-group">
-									<label for="id">OriginalID</label>
-									<input type="text" class="form-control" id="id"  name="id" value="">
-								</div>
-								<div class="form-group">
-									<label for="mediaID">mediaID</label>
-									<input type="text" class="form-control" id="mediaID"  name="mediaID" value="">
-								</div>
-								<div class="form-group">
-									<label for="mediaURL">Media URL</label>
-									<input type="url" class="form-control" id="mediaURL"  name="mediaURL" value="">
-								</div>
-								<div class="form-group">
-									<label for="mediaOriginalURL">Media Original URL</label>
-									<input type="url" class="form-control" id="mediaOriginalURL"  name="mediaOriginalURL" value="">
-								</div>
-								<div class="form-group">
-									<label for="duration">Duration (seconds)</label>
-									<input type="number" class="form-control" id="duration"  name="duration" value="">
-								</div>
-								<div class="form-group">
-									<label for="aligned">Aligned</label>
-									<select class="form-control mb-3" id="aligned" name="aligned">
-										<option value="0">No</option>
-										<option value="1">Yes</option>
-									</select>
-								</div>
-								<div class="form-group">
-									<label for="content">Media Content</label>
-									<textarea class="form-control" id="content"  name="content"></textarea>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-6 mb-4">
-						<div class="card h-100">
-							<div class="card-header">Annotations</div>
-							<div class="card-body">
+							<div class="card-header">People</div>
+							<div class="card-body" id="media-people-body">
 								WIP // TODO
 							</div>
+                            <button id="media-people-body-button-add" class="btn button" type="button">add</button>
+						</div>
+					</div>
+				<div class="col-6 mb-4">
+						<div class="card h-100">
+							<div class="card-header">Documents</div>
+							<div class="card-body" id="media-documents-body">
+								WIP // TODO
+							</div>
+                            <button id="media-documents-body-button-add" class="btn button" type="button">add</button>
 						</div>
 					</div>
 				</div>
@@ -133,13 +148,11 @@
 				</div>
 
 			</form>
-			
-			<script type="text/javascript">
-				$("#mediaAddForm").ajaxForm({
-					url:"server/ajaxServer.php"
-				});
-			</script>
 		</div>
 	</div>
 </main>
+<link rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/jquery.typeahead.min.css">
+<link rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/data/media/client/media.new.css">
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.typeahead.min.js"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/manage/data/media/client/media.new.js"></script>
 <?php include_once(__DIR__ . '/../../../../footer.php'); ?>
