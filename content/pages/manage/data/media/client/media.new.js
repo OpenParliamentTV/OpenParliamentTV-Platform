@@ -12,7 +12,7 @@ $(function() {
 
     $("#media-text-body-button-add").on("click", function(item,event) {
 
-        var itemTmpDate = "person-"+Date.now();
+        var itemTmpDate = "text-"+Date.now();
         var template =
             "<div class='media-text-item' id='"+itemTmpDate+"'>" +
             "   <input type='text' name='textContents["+itemTmpDate+"][type]' class='form-control mb-2' data-itemTmp='"+itemTmpDate+"' placeholder='type (proceedings)'>" +
