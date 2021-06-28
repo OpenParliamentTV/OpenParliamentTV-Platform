@@ -23,7 +23,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]]
 		);
-		$pageTitle = 'Detail Agenda Item';
+		$pageTitle = '<span class="icon-list-numbered"></span>'.$apiResult["data"]["attributes"]["title"];
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -40,7 +40,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]]
 		);
-		$pageTitle = 'Detail Document';
+		$pageTitle = '<span class="icon-doc-text"></span>'.$apiResult["data"]["attributes"]["label"];
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -57,7 +57,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]]
 		);
-		$pageTitle = 'Detail Electoral Period';
+		$pageTitle = '<span class="icon-check"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – '.$apiResult["data"]["attributes"]["number"].'. Electoral Period';
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -104,7 +104,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]]
 		);
-		$pageTitle = 'Detail Organisation';
+		$pageTitle = '<span class="icon-bank"></span>'.$apiResult["data"]["attributes"]["labelAlternative"];
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -121,7 +121,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]]
 		);
-		$pageTitle = 'Detail Person';
+		$pageTitle = '<span class="icon-torso"></span>'.$apiResult["data"]["attributes"]["label"];
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -138,7 +138,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]]
 		);
-		$pageTitle = 'Detail Session';
+		$pageTitle = '<span class="icon-group"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – Session '.$apiResult["data"]["attributes"]["number"];
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -155,7 +155,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]]
 		);
-		$pageTitle = 'Detail Term';
+		$pageTitle = '<span class="icon-tag-1"></span>'.$apiResult["data"]["attributes"]["label"];
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -614,7 +614,7 @@ $lang = in_array($lang, $acceptLang) ? $lang : 'de';
         //TODO: Move API to root $config and add it to JS Object
     </script>
 </head>
-<body class='<?= (($_SESSION["login"]) ? "login" : "") ?>'>
+<body class='darkmode <?= (($_SESSION["login"]) ? "login" : "") ?>'>
 <?= $content ?>
 </body>
 </html>
