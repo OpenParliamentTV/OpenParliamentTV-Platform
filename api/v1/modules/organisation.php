@@ -56,7 +56,7 @@ function organisationGetByID($id = false) {
         if ($item) {
 
             $return["meta"]["requestStatus"] = "success";
-            $organisationDataObj = organisationGetDataObject($item, $db);
+            $organisationDataObj["data"] = organisationGetDataObject($item, $db);
             $return = array_replace_recursive($return, $organisationDataObj);
 
         } else {
@@ -276,8 +276,8 @@ function organisationSearch($parameter, $db = false) {
         $return["errors"] = array();
         $errorarray["status"] = "404";
         $errorarray["code"] = "1";
-        $errorarray["title"] = "Too less parameter";
-        $errorarray["detail"] = "Too less Parameter"; //TODO: Description
+        $errorarray["title"] = "Not enough parameters";
+        $errorarray["detail"] = "Not enough parameters"; //TODO: Description
         array_push($return["errors"], $errorarray);
 
     }
@@ -287,7 +287,7 @@ function organisationSearch($parameter, $db = false) {
     }
 
 
-    $return["links"]["self"] = $config["dir"]["api"]."/"."search/organisation?".getURLParameterFromArray($filteredParameters);
+    $return["links"]["self"] = $config["dir"]["api"]."/search/organisations?".getURLParameterFromArray($filteredParameters);
 
     return $return;
 

@@ -59,7 +59,7 @@ function personGetByID($id = false) {
         if ($item) {
 
             $return["meta"]["requestStatus"] = "success";
-            $personDataObj = personGetDataObject($item, $db);
+            $personDataObj["data"] = personGetDataObject($item, $db);
             $return = array_replace_recursive($return, $personDataObj);
 
 
@@ -164,7 +164,7 @@ function personGetDataObject($item = false, $db = false) {
 
         }
 
-        $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/"."search/media?personID=".$return["id"];
+        $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?personID=".$return["id"];
 
     } else {
 
@@ -661,8 +661,8 @@ function personSearch($parameter, $db = false) {
         $return["errors"] = array();
         $errorarray["status"] = "404";
         $errorarray["code"] = "1";
-        $errorarray["title"] = "Too less parameter";
-        $errorarray["detail"] = "Too less Parameter"; //TODO: Description
+        $errorarray["title"] = "Not enough parameters";
+        $errorarray["detail"] = "Not enough parameters"; //TODO: Description
         array_push($return["errors"], $errorarray);
 
     }
@@ -672,7 +672,7 @@ function personSearch($parameter, $db = false) {
     }
 
 
-    $return["links"]["self"] = $config["dir"]["api"]."/"."search/people?".getURLParameterFromArray($filteredParameters);
+    $return["links"]["self"] = $config["dir"]["api"]."/search/people?".getURLParameterFromArray($filteredParameters);
 
     return $return;
 

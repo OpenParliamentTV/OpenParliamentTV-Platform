@@ -326,12 +326,12 @@ function mediaGetByID($id = false) {
 
             }
 
-            $return["data"]["relationships"]["documents"]["links"]["self"] = $config["dir"]["api"]."/"."searchAnnotations?mediaID=".$return["data"]["id"]."&type=document";
-            $return["data"]["relationships"]["organisations"]["links"]["self"] = $config["dir"]["api"]."/"."searchAnnotations?mediaID=".$return["data"]["id"]."&type=organisation";
-            $return["data"]["relationships"]["terms"]["links"]["self"] = $config["dir"]["api"]."/"."searchAnnotations?mediaID=".$return["data"]["id"]."&type=term";
-            $return["data"]["relationships"]["people"]["links"]["self"] = $config["dir"]["api"]."/"."searchAnnotations?mediaID=".$return["data"]["id"]."&type=person";
+            $return["data"]["relationships"]["documents"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$return["data"]["id"]."&type=document";
+            $return["data"]["relationships"]["organisations"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$return["data"]["id"]."&type=organisation";
+            $return["data"]["relationships"]["terms"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$return["data"]["id"]."&type=term";
+            $return["data"]["relationships"]["people"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$return["data"]["id"]."&type=person";
 
-            $return["data"]["relationships"]["annotations"]["links"]["self"] = $config["dir"]["api"]."/"."searchAnnotations?mediaID=".$return["data"]["id"];
+            $return["data"]["relationships"]["annotations"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$return["data"]["id"];
 
         } else {
 
@@ -379,7 +379,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         }
         $return["meta"]["requestStatus"] = "success";
 
-        //TODO: $return["data"]["links"]["self"] = $config["dir"]["api"]."/"."search/organisation?".getURLParameterFromArray($filteredParameters);
+        //TODO: $return["data"]["links"]["self"] = $config["dir"]["api"]."/"."search/organisations?".getURLParameterFromArray($filteredParameters);
 
     } catch (Exception $e) {
 
@@ -613,8 +613,8 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         $return["errors"] = array();
         $errorarray["status"] = "404";
         $errorarray["code"] = "1";
-        $errorarray["title"] = "Too less parameter";
-        $errorarray["detail"] = "Too less Parameter"; //TODO: Description
+        $errorarray["title"] = "Not enough parameters";
+        $errorarray["detail"] = "Not enough parameters"; //TODO: Description
         array_push($return["errors"], $errorarray);
 
     }
@@ -624,7 +624,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
     }
 
 
-    $return["data"]["links"]["self"] = $config["dir"]["api"]."/"."search/organisation?".getURLParameterFromArray($filteredParameters);
+    $return["data"]["links"]["self"] = $config["dir"]["api"]."/search/organisations?".getURLParameterFromArray($filteredParameters);
 
     return $return;
 

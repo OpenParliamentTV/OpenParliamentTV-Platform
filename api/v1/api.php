@@ -245,7 +245,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                     break;
 
-                    case "organisation":
+                    case "organisations":
 
                         require_once (__DIR__."/modules/organisation.php");
 
@@ -263,7 +263,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                     break;
 
-                    case "document":
+                    case "documents":
 
                         require_once (__DIR__."/modules/document.php");
 
@@ -281,7 +281,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                     break;
 
-                    case "term":
+                    case "terms":
 
                         require_once (__DIR__."/modules/term.php");
 

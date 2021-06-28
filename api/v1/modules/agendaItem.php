@@ -40,7 +40,7 @@ function agendaItemGetByID($id = false) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Invalid MediaID";
-        $errorarray["detail"] = "SessionID could not be associated with a parliament"; //TODO: Description
+        $errorarray["detail"] = "AgendaItemID could not be associated with a parliament"; //TODO: Description
         array_push($return["errors"], $errorarray);
 
         return $return;
@@ -100,7 +100,7 @@ function agendaItemGetByID($id = false) {
             $return["data"]["attributes"]["parliament"] = $parliament;
             $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
-            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/"."search?type=media&agendaItemID=".$return["data"]["id"]; //TODO: Check Link and Parameter
+            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?agendaItemID=".$return["data"]["id"]; //TODO: Check Link and Parameter
 
             //TODO: Session Relation?
 

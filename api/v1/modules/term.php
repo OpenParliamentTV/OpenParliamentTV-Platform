@@ -60,7 +60,7 @@ function termGetByID($id = false) {
         if ($item) {
 
             $return["meta"]["requestStatus"] = "success";
-            $termDataObj = termGetDataObject($item, $db);
+            $termDataObj["data"] = termGetDataObject($item, $db);
             $return = array_replace_recursive($return, $termDataObj);
 
         } else {
@@ -299,8 +299,8 @@ function termSearch($parameter, $db = false) {
         $return["errors"] = array();
         $errorarray["status"] = "404";
         $errorarray["code"] = "1";
-        $errorarray["title"] = "Too less parameter";
-        $errorarray["detail"] = "Too less Parameter"; //TODO: Description
+        $errorarray["title"] = "Not enough parameters";
+        $errorarray["detail"] = "Not enough parameters"; //TODO: Description
         array_push($return["errors"], $errorarray);
 
     }
@@ -310,7 +310,7 @@ function termSearch($parameter, $db = false) {
     }
 
 
-    $return["links"]["self"] = $config["dir"]["api"]."/search/term?".getURLParameterFromArray($filteredParameters);
+    $return["links"]["self"] = $config["dir"]["api"]."/search/terms?".getURLParameterFromArray($filteredParameters);
 
     return $return;
 
