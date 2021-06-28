@@ -376,9 +376,9 @@ function getSearchBody($request, $getAllResults) {
 
 	//TODO: Check if timestamp is needed for date ordering
 	if (isset($request["sort"]) && ($request["sort"] == 'date-asc' || $request["sort"] == 'topic-asc')) {
-		$sort = array("attributes.dateStart"=>"asc");
+		$sort = array("attributes.timestamp"=>"asc");
 	} else if (isset($request["sort"]) && ($request["sort"] == 'date-desc' || $request["sort"] == 'topic-desc')) {
-		$sort = array("attributes.dateStart"=>"desc");
+		$sort = array("attributes.timestamp"=>"desc");
 	} else {
 		$sort = array("_score");
 	}

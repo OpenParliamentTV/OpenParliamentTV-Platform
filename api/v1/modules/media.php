@@ -160,6 +160,7 @@ function mediaGetByID($id = false) {
             $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["attributes"]["order"] = (int)$item["MediaOrder"];
             $return["data"]["attributes"]["aligned"] = (($item["MediaAligned"] === 1) ? true : false);
+            $return["data"]["attributes"]["timestamp"] = strtotime($item["MediaDateStart"]);
             $return["data"]["attributes"]["dateStart"] = $item["MediaDateStart"];
             $return["data"]["attributes"]["dateEnd"] = $item["MediaDateEnd"];
             $return["data"]["attributes"]["duration"] = (float)$item["MediaDuration"];
