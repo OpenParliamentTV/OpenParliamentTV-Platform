@@ -11,12 +11,18 @@ $pageTitle = L::brand;
 $page = (isset($_REQUEST["a"]) && strlen($_REQUEST["a"]) > 2) ? $_REQUEST["a"] : "main";
 
 require_once('config.php');
+require_once (__DIR__."/api/v1/api.php");
 
 switch ($page) {
 	/*********************************
 	* RESOURCES / DETAIL PAGES 
 	*********************************/
 	case "agendaItem":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>$page, 
+			"id"=>$_REQUEST["id"]]
+		);
 		$pageTitle = 'Detail Agenda Item';
 		$pageType = 'default';
 		$pageBreadcrumbs = [
@@ -29,6 +35,11 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "document":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>$page, 
+			"id"=>$_REQUEST["id"]]
+		);
 		$pageTitle = 'Detail Document';
 		$pageType = 'default';
 		$pageBreadcrumbs = [
@@ -41,6 +52,11 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "electoralPeriod":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>$page, 
+			"id"=>$_REQUEST["id"]]
+		);
 		$pageTitle = 'Detail Electoral Period';
 		$pageType = 'default';
 		$pageBreadcrumbs = [
@@ -53,6 +69,11 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "embed":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>"media", 
+			"id"=>$_REQUEST["id"]]
+		);
 		$pageTitle = $speechTitleShort;
 		$pageType = 'default';
 		require_once(__DIR__."/modules/search/functions.php");
@@ -63,6 +84,11 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "media":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>$page, 
+			"id"=>$_REQUEST["id"]]
+		);
 		$pageTitle = $speechTitleShort;
 		$pageType = 'default';
 		require_once(__DIR__."/modules/search/functions.php");
@@ -73,6 +99,11 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "organisation":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>$page, 
+			"id"=>$_REQUEST["id"]]
+		);
 		$pageTitle = 'Detail Organisation';
 		$pageType = 'default';
 		$pageBreadcrumbs = [
@@ -85,6 +116,11 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "person":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>$page, 
+			"id"=>$_REQUEST["id"]]
+		);
 		$pageTitle = 'Detail Person';
 		$pageType = 'default';
 		$pageBreadcrumbs = [
@@ -97,6 +133,11 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "session":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>$page, 
+			"id"=>$_REQUEST["id"]]
+		);
 		$pageTitle = 'Detail Session';
 		$pageType = 'default';
 		$pageBreadcrumbs = [
@@ -109,6 +150,11 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "term":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>$page, 
+			"id"=>$_REQUEST["id"]]
+		);
 		$pageTitle = 'Detail Term';
 		$pageType = 'default';
 		$pageBreadcrumbs = [
