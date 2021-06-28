@@ -224,13 +224,21 @@ function getSearchBody($request, $getAllResults) {
 			
 			//???
 
-		} else if ($requestKey == "electoralPeriod" && strlen($requestValue) > 2) {
+		} else if ($requestKey == "electoralPeriodID" && strlen($requestValue) > 2) {
 			
-			$filter["must"][] = array("match"=>array("relationships.electoralPeriod.data.attributes.number" => $requestValue));
+			$filter["must"][] = array("term"=>array("relationships.electoralPeriod.data.id" => $requestValue));
+
+		} else if ($requestKey == "sessionID" && strlen($requestValue) > 2) {
+			
+			$filter["must"][] = array("match"=>array("relationships.session.data.id" => $requestValue));
 
 		} else if ($requestKey == "sessionNumber" && strlen($requestValue) > 2) {
 			
 			$filter["must"][] = array("match"=>array("relationships.session.data.attributes.number" => $requestValue));
+
+		} else if ($requestKey == "agendaItemID" && strlen($requestValue) >= 1) {
+			
+			$filter["must"][] = array("match"=>array("relationships.agendaItem.data.id" => $requestValue));
 
 		} else if ($requestKey == "dateFrom") {
 			
@@ -287,6 +295,16 @@ function getSearchBody($request, $getAllResults) {
 				$filter["must"][] = array("match"=>array("relationships.people.data.attributes.faction.id" => $requestValue));
 
 			}
+		} else if ($requestKey == "organisationID") {
+			
+			$filter["should"][] = array("multi_match"=>array(
+				"query" => $requestValue,
+				"type" => "cross_fields",
+				"fields" => ["relationships.people.data.attributes.party.id", "relationships.people.data.attributes.faction.id"],
+				"operator" => "or"
+			));
+			$shouldCount++;
+
 		} else if ($requestKey == "person" && strlen($requestValue) > 1) {
 			
 			/*
@@ -303,8 +321,16 @@ function getSearchBody($request, $getAllResults) {
 			
 		} else if ($requestKey == "personID") {
 			
-			$filter["must"][] = array("match"=>array("relationships.people.data[0].id" => $requestValue));
+			$filter["must"][] = array("match"=>array("relationships.people.data.id" => $requestValue));
 			
+		} else if ($requestKey == "documentID") {
+			
+			$filter["must"][] = array("match"=>array("relationships.documents.data.id" => $requestValue));
+
+		} else if ($requestKey == "termID") {
+			
+			$filter["must"][] = array("match"=>array("relationships.terms.data.id" => $requestValue));
+
 		} else if ($requestKey == "id" && count($request) < 3) {
 			$filter["must"][] = array("match"=>array("id" => $requestValue));
 		}
