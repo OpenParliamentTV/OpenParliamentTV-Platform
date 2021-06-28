@@ -94,7 +94,7 @@
 <div class="resultList row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 	<?php
 	$paramStr = "";
-	$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","party","electoralPeriod","timefrom","timeto","gender","degree","aw_uuid","speakerID","sessionNumber", "page", "sort")));
+	$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","party","electoralPeriod","electoralPeriodID","agendaItemID","timefrom","timeto","gender","degree","aw_uuid","personID","organisationID","documentID","termID","sessionNumber","sessionID","page","sort")));
 	$paramCount = 1;
 	foreach ($allowedParams as $k=>$v) {
 		if ($paramCount == 1) {
