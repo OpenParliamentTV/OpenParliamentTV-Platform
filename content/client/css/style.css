@@ -409,12 +409,30 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     border-bottom-color: var(--border-color);
 }
 
+.nav-tabs .nav-link .icon-hypervideo {
+    margin-right: 4px;
+    font-size: 0.9em;
+    top: -1px;
+    position: relative;
+}
+
+.nav-tabs.transparent .nav-link.active {
+    background: transparent;
+    border-bottom-color: var(--secondary-bg-color);
+}
+
 .tab-content {
     background: var(--primary-bg-color);
     border-right: 1px solid var(--border-color);
     border-left: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
     padding: 6px 10px;
+}
+
+.tab-content.transparent {
+    background: transparent;
+    border: none;
+    padding: 6px 0px;
 }
 
 .switch {
@@ -807,6 +825,37 @@ input#edit-query {
     margin: 0;
 }
 
+.detailsHeader {
+    padding: 10px;
+    background: var(--primary-bg-color);
+    border: 1px solid var(--border-color);
+    margin-top: -1px;
+    overflow: hidden;
+    margin-bottom: 30px;
+}
+
+.detailsHeader h2 {
+    margin-bottom: 0px;
+}
+
+.detailsHeader .rounded-circle {
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 100%;
+    background: var(--secondary-bg-color);
+}
+
+.detailsHeader .partyIndicator {
+    margin: 3px 20px 4px 0;
+    padding: 2px 6px 2px 6px;
+    border-width: 1px;
+    border-style: solid;
+    background: var(--primary-bg-color);
+    border-radius: 4px;
+    display: inline-block;
+    text-decoration: none !important;
+}
+
 #speechListContainer {
     position: relative;
     z-index: 10;
@@ -816,6 +865,10 @@ input#edit-query {
     #speechListContainer {
         margin-top: 0px !important;
     }
+}
+
+#speechListContainer a {
+    text-decoration: none;
 }
 
 .sortDivider {
