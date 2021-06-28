@@ -50,7 +50,7 @@
 	$prevResult = ($speechIndex > 0) ? array_values(array_slice($result_items, $speechIndex-1, 1))[0] : null;
 	$nextResult = ($speechIndex < count($result_items)) ? array_values(array_slice($result_items, $speechIndex+1, 1))[0] : null;
 
-	$prevSpeech = json_decode(getPrevDocument($speech["_source"]["meta"]["timestamp"]), true);
+	$prevSpeech = json_decode(getPrevDocument($speech["_source"]["attributes"]["timestamp"]), true);
 
 	/*
 	echo '<pre>';
@@ -60,7 +60,7 @@
 
 	//$prevDate = gmdate("d.m.Y", strtotime($prevSpeech["_source"]["meta"]["date"]));
 
-	$nextSpeech = json_decode(getNextDocument($speech["_source"]["meta"]["timestamp"]), true);
+	$nextSpeech = json_decode(getNextDocument($speech["_source"]["attributes"]["timestamp"]), true);
 
 	/*
 	echo '<pre>';
