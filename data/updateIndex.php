@@ -37,14 +37,35 @@ function setOptions() {
 
 	$data = array();
 
-	/*
 	$data["mappings"] = array( "properties"=>array(
-		"content"=>array(
-			"type"=>"text",
-			"analyzer"=>"speech_html",
-			"search_analyzer"=>"standard"
-	)));
-	*/
+		"relationships"=>array( "properties"=>array(
+			"electoralPeriod"=>array( "properties"=>array(
+				"data"=>array( "properties"=>array(
+					"id"=>array(
+						"type"=>"keyword"
+					)
+				))
+			)),
+			"session"=>array( "properties"=>array(
+				"data"=>array( "properties"=>array(
+					"id"=>array(
+						"type"=>"keyword"
+					)
+				))
+			)),
+			"agendaItem"=>array( "properties"=>array(
+				"data"=>array( "properties"=>array(
+					"id"=>array(
+						"type"=>"keyword"
+					)
+				))
+			))
+		))
+	));
+
+	echo "<pre>";
+	print_r($data["mappings"]);
+	echo "</pre>";
 
 	$data["settings"] = array(
 		"index"=>array("max_ngram_diff"=>20),
@@ -56,7 +77,8 @@ function setOptions() {
 					"type"=>"custom",
 					//"tokenizer"=>"nGramTokenizer",
 					"tokenizer"=>"standard",
-					"filter"=>["lowercase", "custom_stemmer", "custom_synonyms"]
+					//"filter"=>["lowercase", "custom_stemmer", "custom_synonyms"]
+					"filter"=>["lowercase", "custom_stemmer"]
 				)
 			),
 			/*
@@ -72,12 +94,12 @@ function setOptions() {
 				"custom_stemmer"=>array(
 					"type"=>"stemmer",
 					"name"=>"light_german"
-				),
+				)/*,
 				"custom_synonyms"=>array(
 					"type"=>"synonym_graph",
 					"lenient"=>true,
 					"synonyms_path"=>"synonyms.txt"
-				)
+				)*/
 			)
 		)
 	);
@@ -95,46 +117,6 @@ function setOptions() {
 	echo '</pre>';
 
 }
-
-/**
- * @return mixed
- */
-function setMapping() {
-
-	global $ESClient;
-
-	/*
-	$data = array( "properties"=>array(
-		"content"=>array(
-			"type"=>"text",
-			"analyzer"=>"speech_html",
-			"search_analyzer"=>"standard"
-	)));
-
-	$url = "http://localhost:9200/openparliamenttv_de/_mapping?pretty";
-	$ch = curl_init( $url );
-
-	$payload = json_encode($data);
-
-	echo '<pre>';
-	print_r($payload);
-	echo '</pre>';
-
-	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-	curl_setopt( $ch, CURLOPT_POSTFIELDS, $payload );
-	curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-	$result = curl_exec($ch);
-	curl_close($ch);
-
-	echo '<pre>';
-	print_r($result);
-	echo '</pre>';
-	*/
-
-}
-
-
 
 /**
  * @return mixed
