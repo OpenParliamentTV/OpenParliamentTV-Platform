@@ -4,7 +4,7 @@
 <meta http-equiv="Expires" content="-1">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title><?= L::brand.' | '.$pageTitle ?></title>
+<title><?php echo L::brand.' | '.strip_tags($pageTitle); ?></title>
 <link rel="icon" type="image/png" href="<?= $config["dir"]["root"] ?>/favicon.png" />
 
 <?php
