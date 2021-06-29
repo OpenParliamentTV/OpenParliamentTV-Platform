@@ -2,21 +2,26 @@ main#content {
 	position: relative;
 }
 
+.mediaContainer {
+	padding: 30px 30px 0 30px;
+}
+
 .frametrail-body {
 	position: relative;
-	height: calc(100vh - 50px);
+	height: calc(100vh - 195px);
 	width: 100%;
 	font-family: "Open Sans","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
 	font-weight: 300;
 	font-size: 14px;
 	background: var(--primary-bg-color);
+	border: 1px solid var(--border-color);
 }
 
-.frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .mainContainer:not([data-edit-mode="layout"]):not([data-edit-mode="overlays"]):not([data-edit-mode="codesnippets"]):not([data-edit-mode="annotations"]), 
-.frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .loadingScreen, 
-.frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .userLoginOverlay, 
-.frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .titlebar:not(.editActive), 
-.themeItem[data-theme="abgeordnetenwatch"] {
+.frametrail-body[data-frametrail-theme="openparliamenttv"] .mainContainer:not([data-edit-mode="layout"]):not([data-edit-mode="overlays"]):not([data-edit-mode="codesnippets"]):not([data-edit-mode="annotations"]), 
+.frametrail-body[data-frametrail-theme="openparliamenttv"] .loadingScreen, 
+.frametrail-body[data-frametrail-theme="openparliamenttv"] .userLoginOverlay, 
+.frametrail-body[data-frametrail-theme="openparliamenttv"] .titlebar:not(.editActive), 
+.themeItem[data-theme="openparliamenttv"] {
 	--primary-bg-color: rgba(255, 255, 255, 1);
 	--secondary-bg-color: rgba(255, 255, 255, .6);
 	--semi-transparent-bg-color: rgba(255, 255, 255, .8);
@@ -31,10 +36,10 @@ main#content {
 	--video-background-color: #fff;
 }
 
-body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .mainContainer:not([data-edit-mode="layout"]):not([data-edit-mode="overlays"]):not([data-edit-mode="codesnippets"]):not([data-edit-mode="annotations"]), 
-body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .loadingScreen, 
-body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .userLoginOverlay, 
-body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .titlebar:not(.editActive) {
+body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .mainContainer:not([data-edit-mode="layout"]):not([data-edit-mode="overlays"]):not([data-edit-mode="codesnippets"]):not([data-edit-mode="annotations"]), 
+body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .loadingScreen, 
+body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .userLoginOverlay, 
+body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titlebar:not(.editActive) {
 	--primary-bg-color: #303139;
     --secondary-bg-color: #404149;
     --semi-transparent-bg-color: rgba(47, 50, 58, .8); 
@@ -54,10 +59,16 @@ body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .title
 }
 
 .playerTitle {
-	background: transparent;
-	min-height: 124px;
-	margin-bottom: 10px;
+	background: var(--primary-bg-color);
+	height: 80px;
 	position: relative;
+	text-align: left;
+	padding: 10px 14px;
+	line-height: 26px;
+	width: 100%;
+	border-top: 1px solid var(--border-color);
+	border-left: 1px solid var(--border-color);
+	border-right: 1px solid var(--border-color);
 }
 
 .playerTitle .partyIndicator, .customhtmlContainer .partyIndicator {
@@ -74,60 +85,13 @@ body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .title
 	margin-left: 2px;
 }
 
-.playerTitle {
-	text-align: left;
-	padding: 10px 14px;
-    line-height: 20px;
-}
-
-@media (max-width:768px) {
-    .playerTitle {
-		width: 100%;
-	}
-}
-@media (min-width: 768) and (max-width:992px) {
-	.playerTitle {
-		width: 50%;
-	}
-}
-@media (min-width:992px) {
-	.playerTitle {
-		width: 500px;
-	}
-}
-@media (min-width:1200px) {
-	.playerTitle {
-		width: 600px;
-	}
-}
-
 .playerTitle .speechMeta {
 	margin-bottom: 4px;
 }
 
-.playerTitle .speechTOPs {
-	border-top: 1px solid rgba(0,0,0,.1);
-	width: auto;
-	height: 58px;
-	overflow: auto;
-	padding-top: 10px;
-	padding-right: 4px;
-	margin-top: 8px;
-	font-size: 1rem;
-	line-height: 23px;
-}
-
-.playerTitle .speechTOPs div {
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	overflow: hidden;
-	width: 100%;
-	color: #888;
-}
-
 .playerTitle h3 {
 	margin-top: 8px;
-	font-size: 1.3em;
+	font-size: 1rem;
 }
 
 .titlebar {
@@ -251,7 +215,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .title
 }
 
 .areaLeftContainer {
-	border-right: 10px solid var(--secondary-bg-color);
+	border-right: 1px solid var(--border-color);
 }
 
 .areaLeftContainer .layoutAreaToggleCloseButton {
@@ -314,8 +278,17 @@ body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .title
 	background: var(--primary-bg-color) !important;
 }
 
+.layoutArea .layoutAreaTabs {
+	display: none; !important;
+}
+
 .titlebarTitle  {
 	font-weight: 300;
+}
+
+.layoutArea .contentViewContainer {
+	width: 100% !important;
+	right: 0px !important;
 }
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer {
@@ -378,8 +351,24 @@ body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .title
 	right: 37px;
 }
 
+.playerContainer .overlayTimeline {
+	display: none;
+}
+
+.playerContainer .playerProgress {
+	background: var(--primary-bg-color) !important;
+}
+
 .playerContainer .playerProgress .ui-slider-range {
-	background-color: rgba(190, 190, 190, 0.4);
+	background-color: rgba(235, 235, 234, 0.4);
+}
+
+body.darkmode .playerContainer .playerProgress .ui-slider-range {
+	background-color: rgba(154, 155, 156, 0.2);
+}
+
+.playerContainer .playerProgress .ui-slider-handle-circle {
+	margin-bottom: -24px !important;
 }
 
 .hypervideoContainer .videoContainer .videoStartOverlay .playButtonBig {
@@ -391,5 +380,9 @@ body.darkmode .frametrail-body[data-frametrail-theme="abgeordnetenwatch"] .title
 }
 
 .playerContainer .controls {
-	border-bottom: 1px solid rgba(0,0,0,.1);
+	background: transparent;
+}
+
+body.darkmode .playerContainer .controls {
+	background: rgba(190, 190, 190,.2);
 }
