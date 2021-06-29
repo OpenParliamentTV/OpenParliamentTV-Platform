@@ -31,7 +31,7 @@ include_once(__DIR__ . '/../../header.php');
 	</div>
 	<div class="row">
 		<div class="col-12">
-			<ul class="nav nav-tabs transparent" role="tablist">
+			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span> Related Media</a>
 				</li>
@@ -39,7 +39,7 @@ include_once(__DIR__ . '/../../header.php');
 					<a class="nav-link" id="agendaItems-tab" data-toggle="tab" href="#agendaItems" role="tab" aria-controls="agendaItems" aria-selected="false"><span class="icon-list-numbered"></span> Agenda Items</a>
 				</li>
 			</ul>
-			<div class="tab-content transparent">
+			<div class="tab-content">
 				<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
 					<div id="speechListContainer">
 						<div class="resultWrapper">
