@@ -63,9 +63,11 @@ function setOptions() {
 		))
 	));
 
+	/*
 	echo "<pre>";
 	print_r($data["mappings"]);
 	echo "</pre>";
+	*/
 
 	$data["settings"] = array(
 		"index"=>array("max_ngram_diff"=>20),
@@ -77,8 +79,7 @@ function setOptions() {
 					"type"=>"custom",
 					//"tokenizer"=>"nGramTokenizer",
 					"tokenizer"=>"standard",
-					//"filter"=>["lowercase", "custom_stemmer", "custom_synonyms"]
-					"filter"=>["lowercase", "custom_stemmer"]
+					"filter"=>["lowercase", "custom_stemmer", "custom_synonyms"]
 				)
 			),
 			/*
@@ -94,12 +95,12 @@ function setOptions() {
 				"custom_stemmer"=>array(
 					"type"=>"stemmer",
 					"name"=>"light_german"
-				)/*,
+				),
 				"custom_synonyms"=>array(
 					"type"=>"synonym_graph",
 					"lenient"=>true,
-					"synonyms_path"=>"synonyms.txt"
-				)*/
+					"synonyms_path"=>"analysis/synonyms.txt"
+				)
 			)
 		)
 	);
