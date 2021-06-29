@@ -60,9 +60,9 @@ function updatePlayer() {
 
     //console.log(playerData);
 
-	if (window.OPTV_Player) {
+	if (window.OPTV_Player && typeof window.OPTV_Player.destroy == "function") {
 		window.OPTV_Player.destroy();
-        $('#content').prepend('<div id="awplayer" class="frametrail-body" data-frametrail-theme="abgeordnetenwatch"></div>');
+        $('#mediaContainer').append('<div id="OPTV_Player" class="frametrail-body" data-frametrail-theme="openparliamenttv"></div>');
 	}
 
     if (prevResultURL) {
@@ -157,7 +157,7 @@ function updatePlayer() {
     }
 	
 	window.OPTV_Player = FrameTrail.init({
-        target:             '#awplayer',
+        target:             '#OPTV_Player',
         contentTargets:     {},
         contents:           [{
             hypervideo: {
@@ -311,7 +311,7 @@ function updatePlayer() {
             "alwaysForceLogin": false,
             "allowCollaboration": false,
             "allowUploads": false,
-            "theme": "abgeordnetenwatch",
+            "theme": "openparliamenttv",
             "defaultHypervideoHidden": false,
             "userColorCollection": [
                 "597081",
