@@ -446,6 +446,10 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     min-height: 200px;
 }
 
+.tab-content .tab-pane table {
+    background: var(--primary-bg-color);
+}
+
 .switch {
     position: relative;
     display: inline-block;
