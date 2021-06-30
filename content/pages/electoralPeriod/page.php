@@ -33,6 +33,9 @@ include_once(__DIR__ . '/../../header.php');
 				<li class="nav-item">
 					<a class="nav-link" id="sessions-tab" data-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false"><span class="icon-group"></span> Sessions</a>
 				</li>
+				<li class="nav-item ml-auto">
+					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span> Data</a>
+				</li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
@@ -47,6 +50,9 @@ include_once(__DIR__ . '/../../header.php');
 				</div>
 				<div class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
 					[CONTENT]
+				</div>
+				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
+					[ITEM DATA]
 				</div>
 			</div>
 		</div>
