@@ -152,21 +152,20 @@ function searchStats($request) {
 		"speechesPerParty" => array(),
 		"speechesPerGender" => array()
 	));
-	
+		
 	foreach ($results["hits"]["hits"] as $hit) {
 	
 		$resultInfo = array(
-			"id" => $hit["_source"]["meta"]["id"],
-			"date" => $hit["_source"]["meta"]["date"],
-			"party" => $hit["_source"]["meta"]["speakerParty"],
-			"electoralPeriod" => $hit["_source"]["meta"]["electoralPeriod"],
-			"sessionNumber" => $hit["_source"]["meta"]["sessionNumber"],
-			"gender" => $hit["_source"]["meta"]["speakerGender"]
+			"id" => $hit["_source"]["id"],
+			"date" => $hit["_source"]["attributes"]["dateStart"],
+			"party" => $hit["_source"]["relationships"]["people"]["data"][0]["party"]["alternativeLabel"],
+			"electoralPeriod" => $hit["_source"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"],
+			"sessionNumber" => $hit["_source"]["relationships"]["session"]["data"]["attributes"]["number"]
 		);
 
 		$stats["results"][] = $resultInfo;
 
-		$stats["info"]["speechesPerParty"][$hit["_source"]["meta"]["speakerParty"]]++;	
+		$stats["info"]["speechesPerParty"][$hit["_source"]["relationships"]["people"]["data"][0]["party"]["alternativeLabel"]]++;	
 
 
 	}
