@@ -1,1 +1,1583 @@
-[{"socialMediaIDs": {"twitter": "Wir2020Partei", "facebook": "deinePartei", "instagram": "wir2020_offiziell"}, "label": "WiR2020", "abstract": "Partei in Deutschland", "type": "party", "websiteURI": "https://wir2020partei.eu", "id": "Q101545487"}, {"socialMediaIDs": {"twitter": "diebasispartei", "facebook": "diebasispartei", "instagram": "diebasispartei"}, "label": "Basisdemokratische Partei Deutschland", "abstract": "politische Partei in Deutschland", "type": "party", "labelAlternative": "dieBasis", "websiteURI": "https://diebasis-partei.de", "id": "Q101243970"}, {"type": "party", "socialMediaIDs": {}, "id": "Q94694456", "label": "Hamburger Liste f\u00fcr Ausl\u00e4nderstopp"}, {"type": "party", "socialMediaIDs": {"facebook": "BuergerlisteBraunlageSanktAndreasbergHohegeiss"}, "id": "Q87564058", "label": "B\u00fcrgerliste Braunlage-Sankt Andreasberg-Hohegei\u00df"}, {"socialMediaIDs": {}, "label": "Deutscher S\u00fcdwest Bund", "abstract": "politische Partei in S\u00fcdwestafrika", "type": "party", "id": "Q84557257"}, {"type": "party", "socialMediaIDs": {"facebook": "zusammenbayern"}, "id": "Q83981679", "label": "Zusammen in Bayern"}, {"socialMediaIDs": {}, "label": "Aktion Partei f\u00fcr Tierschutz \u2013 das Original", "abstract": "politische Partei in Deutschland", "type": "party", "websiteURI": "https://www.tierschutz-hier.de", "id": "Q65227016"}, {"socialMediaIDs": {}, "label": "Freie W\u00e4hler Mecklenburg-Vorpommern", "abstract": "Landesverein", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/FreieW\u00e4hlerMecklenburgVorpommernLogo.svg/300px-FreieW\u00e4hlerMecklenburgVorpommernLogo.png", "websiteURI": "https://www.freie-waehler-mv.eu/", "id": "Q60846954"}, {"socialMediaIDs": {"twitter": "hfp_germany", "facebook": "humanistischefriedenspartei"}, "label": "Humanistische Friedenspartei", "abstract": "politische Partei in Deutschland", "type": "party", "labelAlternative": "HFP", "websiteURI": "https://www.diestelkind.de/hfp", "id": "Q60214018"}, {"socialMediaIDs": {}, "label": "mut", "abstract": "deutsche Kleinpartei", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Mut_logo.jpg/300px-Mut_logo.jpg", "websiteURI": "https://www.mut-bayern.de", "id": "Q56876363"}, {"socialMediaIDs": {}, "label": "Die blaue Partei", "abstract": "ehemalige politische Kleinpartei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Die_blaue_Partei_Logo_vectorized.svg/300px-Die_blaue_Partei_Logo_vectorized.png", "websiteURI": "https://www.dieblauepartei.de/", "id": "Q41877670"}, {"socialMediaIDs": {"twitter": "dieurbane", "facebook": "dieUrbane", "instagram": "dieurbane"}, "label": "Die Urbane. Eine HipHop Partei", "abstract": "Deutsche Partei", "type": "party", "labelAlternative": "du.", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Die_Urbane_Logo.png/300px-Die_Urbane_Logo.png", "websiteURI": "https://www.die-urbane.de/", "id": "Q39528824"}, {"socialMediaIDs": {"twitter": "DieHumanisten", "facebook": "parteiderhumanisten"}, "label": "Partei der Humanisten", "abstract": "deutsche politische Partei", "type": "party", "labelAlternative": "Die Humanisten", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/PDH_Logo_Redesign.svg/300px-PDH_Logo_Redesign.png", "websiteURI": "https://diehumanisten.de/", "id": "Q39528463"}, {"socialMediaIDs": {}, "label": "Deutsche Mitte", "abstract": "Kleinpartei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/DM-Logo_final.png/300px-DM-Logo_final.png", "id": "Q32860410"}, {"socialMediaIDs": {"twitter": "brauchtbewegung", "facebook": "demokratiebewegen", "instagram": "brauchtbewegung"}, "label": "Demokratie in Bewegung", "abstract": "politische Kleinpartei in Deutschland", "type": "party", "labelAlternative": "DiB", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/DiB_Logo.jpg/300px-DiB_Logo.jpg", "websiteURI": "https://bewegung.jetzt/", "id": "Q31841142"}, {"socialMediaIDs": {}, "label": "Aufbruch C", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/AUFBRUCH_C_-_Christliche_werte_f\u00fcr_eine_menschliche_Politik.jpg/300px-AUFBRUCH_C_-_Christliche_werte_f\u00fcr_eine_menschliche_Politik.jpg", "websiteURI": "http://www.aufbruch-c.de/", "id": "Q31839313"}, {"socialMediaIDs": {"twitter": "_VPartei_", "facebook": "VPartei", "instagram": "_vpartei_"}, "label": "V-Partei\u00b3", "abstract": "Politische Kleinpartei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Schriftzug-v-partei.png/300px-Schriftzug-v-partei.png", "websiteURI": "https://v-partei.de/", "id": "Q31839237"}, {"socialMediaIDs": {"twitter": "jed_bund", "facebook": "jedbund", "instagram": "jed.bund"}, "label": "Jugend- und Entwicklungspartei Deutschlands", "abstract": "ehemalige linksliberale deutsche Partei", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Parteilogo_der_Jugend-_und_Entwicklungspartei_Deutschlands,_2017.jpg/300px-Parteilogo_der_Jugend-_und_Entwicklungspartei_Deutschlands,_2017.jpg", "websiteURI": "http://jed-bund.de/", "id": "Q31838368"}, {"socialMediaIDs": {}, "label": "B\u00fcndnis Grundeinkommen", "abstract": "politische Partei in Deutschland", "type": "party", "labelAlternative": "BGE", "thumbnailURI": ["https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/BGE_Logo.jpeg/300px-BGE_Logo.jpeg", "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/BGE_Logo_neu.png/300px-BGE_Logo_neu.png"], "websiteURI": "http://www.buendnis-grundeinkommen.de", "id": "Q31837192"}, {"socialMediaIDs": {}, "label": "Allianz Deutscher Demokraten", "abstract": "deutsche Kleinpartei", "type": "party", "labelAlternative": "ADD", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Allianz_Deutscher_Demokraten_Partei_Logo_Aktualisiert.png/300px-Allianz_Deutscher_Demokraten_Partei_Logo_Aktualisiert.png", "websiteURI": "https://ad-demokraten.de/", "id": "Q31837153"}, {"socialMediaIDs": {"facebook": "gartenpartei"}, "label": "Gartenpartei", "abstract": "Politische Partei in Deutschland", "type": "party", "websiteURI": "http://www.gartenpartei.eu/", "id": "Q27926499"}, {"socialMediaIDs": {}, "label": "Die Linke Mecklenburg-Vorpommern", "abstract": "Landesverband der Partei Die Linke f\u00fcr Mecklenburg-Vorpommern", "type": "party", "websiteURI": "http://www.die-linke-mv.de/", "id": "Q26882660"}, {"socialMediaIDs": {}, "label": "Partei f\u00fcr Gesundheitsforschung", "abstract": "Deutsche Kleinpartei", "type": "party", "labelAlternative": "Gesundheitsforschung", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Logo_parteifuergesundheitsforschung.png/300px-Logo_parteifuergesundheitsforschung.png", "websiteURI": "http://www.parteifuergesundheitsforschung.de", "id": "Q26271103"}, {"socialMediaIDs": {}, "label": "MENSCHLICHE WELT", "abstract": "deutsche Partei", "type": "party", "labelAlternative": "MENSCHLICHE WELT", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Logo_von_MENSCHLICHE_WELT.png/300px-Logo_von_MENSCHLICHE_WELT.png", "id": "Q26271094"}, {"socialMediaIDs": {}, "label": "AfD Mecklenburg-Vorpommern", "abstract": "Landesverband der Partei Alternative f\u00fcr Deutschland in Mecklenburg-Vorpommern", "type": "party", "websiteURI": "http://www.afd-mv.de/", "id": "Q24706445"}, {"socialMediaIDs": {}, "label": "Der III. Weg", "abstract": "rechtsextreme neonazistische Kleinpartei in Deutschland", "type": "party", "labelAlternative": "III. Weg", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/An_oak_wreath_on_logo_of_the_German_party_\"The_Third_Path\"_-_Parteilogo_\"Der_III._Weg.jpg/300px-An_oak_wreath_on_logo_of_the_German_party_\"The_Third_Path\"_-_Parteilogo_\"Der_III._Weg.jpg", "websiteURI": "http://www.der-dritte-weg.info/", "id": "Q21040614"}, {"socialMediaIDs": {}, "label": "Liberal-Konservative Reformer", "abstract": "politische Partei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Liberal-Konservative_Reformer.png/300px-Liberal-Konservative_Reformer.png", "websiteURI": "http://www.alfa-partei.de/", "id": "Q20681849"}, {"socialMediaIDs": {}, "label": "B\u00fcndnis C \u2013 Christen f\u00fcr Deutschland", "abstract": "christliche Partei in Deutschland", "type": "party", "labelAlternative": "B\u00fcndnis C", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Logo_der_Partei_B\u00fcndnis_C_-_Christen_f\u00fcr_Deutschland.svg/300px-Logo_der_Partei_B\u00fcndnis_C_-_Christen_f\u00fcr_Deutschland.png", "websiteURI": "https://buendnis-c.de/", "id": "Q19836118"}, {"socialMediaIDs": {}, "label": "Die Gr\u00fcnen", "abstract": "ehemalige politische Partei in Deutschland, Vorl\u00e4ufer von B\u00fcndnis 90/Die Gr\u00fcnen", "type": "party", "id": "Q18761823"}, {"socialMediaIDs": {}, "label": "Hamburger B\u00fcrger-Liste", "type": "party", "websiteURI": "http://hhbl.hamburg", "id": "Q18666221"}, {"socialMediaIDs": {}, "label": "Neue Liberale", "abstract": "deutsche Kleinpartei", "type": "party", "labelAlternative": "NL", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Neue_Liberale.svg/300px-Neue_Liberale.png", "websiteURI": "http://neueliberale.org", "id": "Q18333914"}, {"socialMediaIDs": {}, "label": "Partei f\u00fcr Franken", "abstract": "Partei", "type": "party", "websiteURI": "http://www.die-franken.eu/", "id": "Q15839584"}, {"type": "party", "socialMediaIDs": {}, "id": "Q15839583", "label": "Partei der guten Deutschen"}, {"socialMediaIDs": {}, "label": "Freie W\u00e4hler in Th\u00fcringen", "type": "party", "websiteURI": "https://th.freiewaehler.eu/", "id": "Q15810446"}, {"socialMediaIDs": {}, "label": "Aktive Demokratie direkt", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Aktive_Demokratie_direkt_Logo.png/300px-Aktive_Demokratie_direkt_Logo.png", "id": "Q15781964"}, {"socialMediaIDs": {"twitter": "AfD_Bund", "facebook": "alternativefuerde"}, "label": "Alternative f\u00fcr Deutschland", "abstract": "rechtspopulistische, rechtsextreme politische Partei in Deutschland", "type": "party", "labelAlternative": "AfD", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/AfD-Logo-2017.svg/300px-AfD-Logo-2017.png", "websiteURI": "https://www.alternativefuer.de/", "id": "Q6721203"}, {"socialMediaIDs": {}, "label": "Q6541460", "type": "party", "websiteURI": "http://libertas-deutschland.de/", "id": "Q6541460"}, {"socialMediaIDs": {"twitter": "dierechtebund"}, "label": "Die Rechte", "abstract": "Rechtsextreme neonazistische Kleinstpartei in Deutschland", "type": "party", "labelAlternative": "DIE RECHTE", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Parteilogo_der_Partei_DIE_RECHTE_ab_11-2017.jpg/300px-Parteilogo_der_Partei_DIE_RECHTE_ab_11-2017.jpg", "websiteURI": "https://die-rechte.net/", "id": "Q3027329"}, {"socialMediaIDs": {}, "label": "Allianz f\u00fcr Gesundheit, Frieden und soziale Gerechtigkeit", "type": "party", "labelAlternative": "AGFG", "websiteURI": "http://www.agfg.de/", "id": "Q2649141"}, {"socialMediaIDs": {}, "label": "Allianz der Mitte", "type": "party", "labelAlternative": "ADM", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Allianz_der_mitte_parteilogo.png/300px-Allianz_der_mitte_parteilogo.png", "websiteURI": "http://www.allianzdermitte.de/", "id": "Q2649134"}, {"socialMediaIDs": {}, "label": "Unabh\u00e4ngige Arbeiter-Partei", "abstract": "Partei in Deutschland", "type": "party", "id": "Q2492232"}, {"socialMediaIDs": {}, "label": "UNABH\u00c4NGIGE f\u00fcr b\u00fcrgernahe Demokratie", "abstract": "Partei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Unabhaengige.gif/300px-Unabhaengige.gif", "websiteURI": "http://www.unabhaengige.info/", "id": "Q2492228"}, {"type": "party", "socialMediaIDs": {}, "id": "Q2308111", "label": "Spa\u00dfpartei f\u00fcr Deutschland"}, {"socialMediaIDs": {}, "label": "Sarazzistische Partei \u2013 f\u00fcr Volksentscheide", "abstract": "Partei in Deutschland", "type": "party", "id": "Q2224618"}, {"socialMediaIDs": {}, "label": "Rentner Partei Deutschland", "abstract": "Kleinpartei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Rentner_Partei_Deutschland.png/300px-Rentner_Partei_Deutschland.png", "websiteURI": "http://www.rentnerparteideutschland.com/", "id": "Q2144386"}, {"socialMediaIDs": {}, "label": "Rechte Mitte HeimatHamburg", "abstract": "deutsche Organisation", "type": "party", "id": "Q2135400"}, {"socialMediaIDs": {}, "label": "Partei der Nichtw\u00e4hler", "abstract": "Partei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Partei_nichtw\u00e4hler_logo.jpg/300px-Partei_nichtw\u00e4hler_logo.jpg", "websiteURI": "http://www.parteidernichtwaehler.de/", "id": "Q2054247"}, {"socialMediaIDs": {}, "label": "Partei der Arbeitswilligen und Sozial Schwachen", "abstract": "Partei in Deutschland", "type": "party", "labelAlternative": "PASS", "id": "Q2054243"}, {"socialMediaIDs": {}, "label": "Nationalliberale Aktion", "abstract": "deutsche Partei", "type": "party", "id": "Q1968439"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1968394", "label": "Nationalistische Front"}, {"socialMediaIDs": {}, "label": "Marxistische Gruppe", "abstract": "kommunistische Organisation in der BRD", "type": "party", "websiteURI": "http://gegenstandpunkt.com/english/en_index.html", "id": "Q1906181"}, {"socialMediaIDs": {}, "label": "Kreuzberger Patriotische Demokraten/Realistisches Zentrum", "abstract": "politische Partei in Deutschland", "type": "party", "websiteURI": "http://www.kpd-rz.de/", "id": "Q1788201"}, {"socialMediaIDs": {}, "label": "Volkssozialistische Bewegung Deutschlands / Partei der Arbeit", "abstract": "Rechtsextreme Organisation", "type": "party", "id": "Q1758284"}, {"socialMediaIDs": {}, "label": "Kommunistische Partei Deutschlands - Aufbauorganisation", "abstract": "K-Gruppe", "type": "party", "labelAlternative": "KPD/AO", "id": "Q1752945"}, {"socialMediaIDs": {}, "label": "Nationale Offensive", "type": "party", "labelAlternative": "NO", "id": "Q1717924"}, {"socialMediaIDs": {}, "label": "Volksinteressenbund Th\u00fcringen", "type": "party", "websiteURI": "http://www.vibt.de", "id": "Q1703781"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1667346", "label": "Internationale Kommunisten Deutschlands (1933)"}, {"socialMediaIDs": {}, "label": "Initiative Direkte Demokratie", "abstract": "Partei in Deutschland", "type": "party", "id": "Q1663564"}, {"socialMediaIDs": {}, "label": "Humanwirtschaftspartei", "abstract": "Partei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Humanwirtschaftspartei.gif/300px-Humanwirtschaftspartei.gif", "websiteURI": "http://www.humanwirtschaftspartei.de/", "id": "Q1636736"}, {"socialMediaIDs": {}, "label": "Liberale Demokraten", "abstract": "Partei in Deutschland", "type": "party", "thumbnailURI": ["https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Logo_Liberale_Demokraten_(1982-2007).jpg/300px-Logo_Liberale_Demokraten_(1982-2007).jpg", "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/LD_Logo.png/300px-LD_Logo.png", "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Logo_Liberale_Demokraten_-_Die_Sozialliberalen.svg/300px-Logo_Liberale_Demokraten_-_Die_Sozialliberalen.png"], "websiteURI": "http://www.liberale-demokraten.de/", "id": "Q1553322"}, {"socialMediaIDs": {}, "label": "Gr\u00fcne Aktion Zukunft", "abstract": "\u00f6kologisch orientierte Partei", "type": "party", "id": "Q1551901"}, {"socialMediaIDs": {}, "label": "Gesamtdeutsche Partei", "type": "party", "labelAlternative": "GDP", "id": "Q1516101"}, {"socialMediaIDs": {}, "label": "Freisinger Mitte", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Logo_der_Freisinger_Mitte_e.V..png/300px-Logo_der_Freisinger_Mitte_e.V..png", "websiteURI": "http://www.freisinger-mitte.de/", "id": "Q1454680"}, {"socialMediaIDs": {}, "label": "Freiheitliche Partei Deutschlands", "abstract": "Partei in Deutschland", "type": "party", "websiteURI": "http://fpdeutschlands.wordpress.com/", "id": "Q1454293"}, {"socialMediaIDs": {"twitter": "FWHessen", "facebook": "FreieWahlerHessen"}, "label": "Freie W\u00e4hler Hessen", "abstract": "politische Partei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Logo_Freie_W\u00e4hler_Hessen.png/300px-Logo_Freie_W\u00e4hler_Hessen.png", "websiteURI": "http://www.freiewaehler-hessen.de/1-0-Startseite.html", "id": "Q1454076"}, {"socialMediaIDs": {}, "label": "Freie W\u00e4hler Deutschland", "abstract": "Partei in Deutschland", "type": "party", "id": "Q1454073"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1454023", "label": "Freie Sozialistische Partei (Marxisten-Leninisten)"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1454000", "label": "Freie Sachsen \u2013 Allianz unabh\u00e4ngiger W\u00e4hler"}, {"socialMediaIDs": {}, "label": "Future!", "abstract": "Partei in Deutschland", "type": "party", "websiteURI": "http://www.jugendpartei.de/", "id": "Q1409772"}, {"socialMediaIDs": {}, "label": "Europ\u00e4ische Arbeiter-Partei", "abstract": "Kleinpartei im Umkreis der sogenannten LaRouche-Bewegung", "type": "party", "labelAlternative": "EAP", "id": "Q1377201"}, {"socialMediaIDs": {}, "label": "Freie Union", "abstract": "Partei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Freie_Union_logo.png/300px-Freie_Union_logo.png", "websiteURI": "http://freieunion.de/", "id": "Q1349989"}, {"socialMediaIDs": {}, "label": "Europ\u00e4ische F\u00f6deralistische Partei", "abstract": "ehemalige Parteien (1960-1995)", "type": "party", "id": "Q1346588"}, {"socialMediaIDs": {}, "label": "Elternpartei", "type": "party", "websiteURI": "http://elternpartei.de", "id": "Q1334084"}, {"socialMediaIDs": {}, "label": "Landesvereinigung Freie W\u00e4hler Bayern", "abstract": "Landesverband der Freien W\u00e4hler", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/FreieW\u00e4hlerBayernLogo2020.svg/300px-FreieW\u00e4hlerBayernLogo2020.png", "websiteURI": ["https://www.freie-waehler-bayern.de/", "http://www.fw-bayern.de/"], "id": "Q1231839"}, {"socialMediaIDs": {}, "label": "Die Violetten \u2013 f\u00fcr spirituelle Politik", "abstract": "Kleinpartei in Deutschland", "type": "party", "labelAlternative": "DIE VIOLETTEN", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Die_Violetten_Logo_20190515.jpg/300px-Die_Violetten_Logo_20190515.jpg", "websiteURI": "http://die-violetten.de/", "id": "Q1217286"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1214998", "label": "Die M\u00fcndigen B\u00fcrger"}, {"socialMediaIDs": {}, "label": "Die MittelstandsPartei \u2013 Die b\u00fcrgerliche Mitte", "type": "party", "websiteURI": "http://www.diemittelstandspartei.de/", "id": "Q1214847"}, {"socialMediaIDs": {}, "label": "Die Hannoveraner", "abstract": "W\u00e4hlergemeinschaft in Hannover", "type": "party", "id": "Q1213271"}, {"socialMediaIDs": {}, "label": "Deutsche Seniorenpartei", "abstract": "Partei in Deutschland", "type": "party", "websiteURI": "http://www.deutsche-senioren-partei.de/", "id": "Q1204149"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1203420", "label": "Deutsche Liga f\u00fcr Volk und Heimat"}, {"socialMediaIDs": {}, "label": "Deutsche Konservative", "abstract": "Partei in Deutschland", "type": "party", "websiteURI": "http://www.deutschekonservative.de/", "id": "Q1203244"}, {"socialMediaIDs": {}, "label": "Deutsche Gemeinschaft", "abstract": "Westdeutsche politische Partei 1949\u20131965", "type": "party", "id": "Q1202787"}, {"socialMediaIDs": {}, "label": "Deutsche Demokratische Partei (2004)", "abstract": "Partei in Deutschland", "type": "party", "id": "Q1202295"}, {"socialMediaIDs": {}, "label": "Deutsche Alternative", "abstract": "deutsche Partei", "type": "party", "id": "Q1202040"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1186331", "label": "Demokratische Sozialisten"}, {"socialMediaIDs": {}, "label": "Demokratische Linke (1999)", "abstract": "Partei in Deutschland", "type": "party", "websiteURI": "http://www.dl-berlin.de", "id": "Q1186191"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1084102", "label": "Christliche Volkspartei"}, {"socialMediaIDs": {}, "label": "Christliche Liga \u2013 Die Partei f\u00fcr das Leben", "abstract": "deutsche Kleinpartei", "type": "party", "labelAlternative": "LIGA", "id": "Q1084052"}, {"socialMediaIDs": {}, "label": "Christliche Bayerische Volkspartei", "abstract": "Kleinpartei in Bayern", "type": "party", "id": "Q1084004"}, {"socialMediaIDs": {}, "label": "Christlich-Konservative Partei Minden-Ravensbergs", "abstract": "ehemalige Partei", "type": "party", "id": "Q1083972"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1061626", "label": "Chance 2000"}, {"socialMediaIDs": {}, "label": "B\u00fcrgerliche Mitte", "type": "party", "websiteURI": "http://www.bue-mi.de", "id": "Q1021180"}, {"socialMediaIDs": {}, "label": "B\u00fcrgerbewegung pro Deutschland", "abstract": "deutsche Kleinpartei", "type": "party", "websiteURI": "http://www.pro-deutschland.net/", "id": "Q1021053"}, {"socialMediaIDs": {"facebook": "prochemnitz"}, "label": "B\u00fcrgerbewegung Pro Chemnitz", "abstract": "politische Partei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Pro_Chemnitz.png/300px-Pro_Chemnitz.png", "websiteURI": ["https://pro-chemnitz.de/", "http://pro-chemnitz.de/"], "id": "Q1021052"}, {"socialMediaIDs": {}, "label": "B\u00fcrger in Wut", "abstract": "politische Partei in Bremen", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/BIW-Logo.jpg/300px-BIW-Logo.jpg", "websiteURI": "http://www.buerger-in-wut.de/", "id": "Q1021023"}, {"socialMediaIDs": {}, "label": "B\u00fcndnis f\u00fcr Innovation und Gerechtigkeit", "abstract": "Partei in Deutschland", "type": "party", "labelAlternative": "BIG", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Buendnis_fuer_Innovation_und_Gerechtigkeit_logo.jpg/300px-Buendnis_fuer_Innovation_und_Gerechtigkeit_logo.jpg", "websiteURI": "http://bignrw.de/", "id": "Q1020875"}, {"socialMediaIDs": {"facebook": "gruenebremen"}, "label": "B\u00fcndnis 90/Die Gr\u00fcnen Bremen", "abstract": "Landesverband von B\u00fcndnis 90/Die Gr\u00fcnen", "type": "party", "websiteURI": "http://www.gruene-bremen.de", "id": "Q1020839"}, {"socialMediaIDs": {}, "label": "B\u00fcndnis 21/RRP", "abstract": "politische Partei in Deutschland", "type": "party", "labelAlternative": "RRP", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/RRP-Logo.png/300px-RRP-Logo.png", "websiteURI": "http://www.b\u00fcndnis21rrp.de/", "id": "Q1020832"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1009851", "label": "Bunte Liste \u2013 Wehrt euch"}, {"socialMediaIDs": {}, "label": "Bund f\u00fcr Gesamtdeutschland", "abstract": "Partei in Deutschland", "type": "party", "websiteURI": "http://www.bgd1.com/", "id": "Q1005283"}, {"socialMediaIDs": {}, "label": "Bund freier B\u00fcrger", "abstract": "Deutsche Kleinpartei", "type": "party", "id": "Q1005270"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1005170", "label": "Bund der Deutschen, Partei f\u00fcr Einheit, Frieden und Freiheit"}, {"socialMediaIDs": {}, "label": "Bund Westdeutscher Kommunisten", "type": "party", "labelAlternative": "BWK", "id": "Q1005139"}, {"type": "party", "socialMediaIDs": {}, "id": "Q1005083", "label": "Bund Freies Deutschland"}, {"socialMediaIDs": {}, "label": "Bremische Integrations-Partei Deutschlands", "type": "party", "labelAlternative": "BIP", "websiteURI": "http://www.integrations-partei.de/", "id": "Q908075"}, {"type": "party", "socialMediaIDs": {}, "id": "Q907561", "label": "Bremer Demokratische Volkspartei"}, {"socialMediaIDs": {}, "label": "Brandenburger Vereinigte B\u00fcrgerbewegungen/Freie W\u00e4hler", "abstract": "politische Vereinigung in Brandenburg", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Logo-BVB-FREIE-WAEHLER.svg/300px-Logo-BVB-FREIE-WAEHLER.png", "websiteURI": "http://www.bvb-fw.de/", "id": "Q897913"}, {"socialMediaIDs": {}, "label": "B\u00fcrgerrechtsbewegung Solidarit\u00e4t", "abstract": "Deutsche Partei, Teil der LaRouche - Bewegung", "type": "party", "websiteURI": "http://www.bueso.de", "id": "Q897197"}, {"socialMediaIDs": {"twitter": "gleichheit", "facebook": "Gleichheit", "instagram": "sgp_ikvi"}, "label": "Sozialistische Gleichheitspartei, Vierte Internationale", "abstract": "Partei in Deutschland", "type": "party", "labelAlternative": "SGP", "websiteURI": "https://www.gleichheit.de/", "id": "Q896251"}, {"socialMediaIDs": {}, "label": "Wirtschaftliche Aufbau-Vereinigung", "abstract": "ehemalige deutsche Partei des Mittelstandes", "type": "party", "id": "Q895674"}, {"socialMediaIDs": {}, "label": "Freie Volkspartei", "abstract": "politische Partei in der Bundesrepublik Deutschland", "type": "party", "id": "Q882711"}, {"socialMediaIDs": {"facebook": "rosaliste.de"}, "label": "Rosa Liste M\u00fcnchen", "abstract": "Politische Gruppierung in M\u00fcnchen", "type": "party", "websiteURI": "http://www.rosaliste.de/", "id": "Q882614"}, {"socialMediaIDs": {}, "label": "Freiheitliche Deutsche Arbeiterpartei", "abstract": "Deutsche rechtsextreme Kleinstpartei", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Free_German_Workers_Party_logo.svg/300px-Free_German_Workers_Party_logo.png", "id": "Q882551"}, {"type": "party", "socialMediaIDs": {}, "id": "Q881084", "label": "Christliche Volkspartei des Saarlandes"}, {"socialMediaIDs": {"twitter": "fdp_saar", "facebook": "fdpsaar"}, "label": "Freie Demokratische Partei/Demokratische Partei Saar", "abstract": "Landesverband der FDP", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Logo_der_Freien_Demokraten.svg/300px-Logo_der_Freien_Demokraten.png", "websiteURI": "http://www.fdp-saar.de/", "id": "Q881079"}, {"socialMediaIDs": {}, "label": "PETO \u2013 Die junge Alternative", "abstract": "Politische Partei in Monheim, NRW", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Peto.png/300px-Peto.png", "websiteURI": "http://www.peto.de/", "id": "Q880291"}, {"type": "party", "socialMediaIDs": {}, "id": "Q861478", "label": "Bildungspartei"}, {"socialMediaIDs": {"twitter": "BB_PRONRW", "facebook": "proNRW"}, "label": "B\u00fcrgerbewegung pro NRW", "abstract": "rechtsextreme deutsche Kleinpartei", "type": "party", "websiteURI": "https://pro-nrw.net/", "id": "Q826309"}, {"socialMediaIDs": {}, "label": "Bergpartei, die \u00dcberpartei", "abstract": "Deutsche Kleinpartei", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Cropped-logo-seite.png/300px-Cropped-logo-seite.png", "websiteURI": "http://uepd.de/wordpress/en/", "id": "Q820091"}, {"socialMediaIDs": {}, "label": "Bayerische Staatspartei", "abstract": "Kleinpartei in Bayern", "type": "party", "id": "Q812288"}, {"type": "party", "socialMediaIDs": {}, "id": "Q799120", "label": "Badische Volkspartei"}, {"socialMediaIDs": {}, "label": "Automobile Steuerzahler-Partei", "abstract": "deutsche Partei", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Asp.svg/300px-Asp.png", "id": "Q787513"}, {"socialMediaIDs": {}, "label": "Aufbruch f\u00fcr B\u00fcrgerrechte, Freiheit und Gesundheit", "abstract": "Partei in Deutschland", "type": "party", "labelAlternative": "AUFBRUCH", "websiteURI": "http://www.partei-aufbruch.de", "id": "Q759555"}, {"socialMediaIDs": {}, "label": "Sozialistische Reichspartei", "abstract": "ehemalige nationalsozialistische Partei in Deutschland", "type": "party", "id": "Q708012"}, {"socialMediaIDs": {}, "label": "Gesamtdeutscher Block/Bund der Heimatvertriebenen und Entrechteten", "abstract": "Ehemalige deutsche Partei", "type": "party", "labelAlternative": "GB/BHE", "id": "Q707844"}, {"socialMediaIDs": {}, "label": "Partei der Vernunft", "abstract": "Partei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/PDV-logo.png/300px-PDV-logo.png", "websiteURI": "http://www.parteidervernunft.de/", "id": "Q706864"}, {"socialMediaIDs": {}, "label": "Deutsche Partei", "abstract": "rechtsgerichtete politische Partei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Logo_Deutsche_Partei.svg/300px-Logo_Deutsche_Partei.png", "id": "Q674695"}, {"socialMediaIDs": {}, "label": "Neues Forum", "abstract": "B\u00fcrgerrechtsbewegung in der Revolution 1989 gegen den DDR-Staat, 1990 politische Partei", "type": "party", "websiteURI": "http://www.neuesforum.de/", "id": "Q646129"}, {"socialMediaIDs": {}, "label": "Deutsche Partei", "abstract": "Partei in Deutschland", "type": "party", "websiteURI": "http://www.deutsche-partei-dp.de/", "id": "Q639537"}, {"socialMediaIDs": {}, "label": "Freisinnige Vereinigung", "abstract": "liberale Partei im Deutschen Kaiserreich", "type": "party", "id": "Q633731"}, {"socialMediaIDs": {}, "label": "Arbeiter-Arbeiterinnen Partei Deutschland", "abstract": "deutsche Kleinpartei", "type": "party", "websiteURI": "http://www.apd-online.de", "id": "Q627067"}, {"socialMediaIDs": {}, "label": "Deutsche Konservative Partei \u2013 Deutsche Rechtspartei", "abstract": "ehem. politische Partei", "type": "party", "id": "Q584965"}, {"type": "party", "socialMediaIDs": {}, "id": "Q575810", "label": "Freiheitliche Volkspartei"}, {"socialMediaIDs": {}, "label": "Sozialdemokratische Partei in der DDR", "abstract": "Partei in der Wendezeit in der Deutschen Demokratischen Republik", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/SPD-DDR.svg/300px-SPD-DDR.png", "id": "Q563535"}, {"socialMediaIDs": {}, "label": "Deutsche Freisinnige Partei", "abstract": "politische Partei im Deutschen Kaiserreich", "type": "party", "id": "Q560777"}, {"socialMediaIDs": {}, "label": "B\u00fcrgerrechtspartei f\u00fcr mehr Freiheit und Demokratie \u2013 Die Freiheit", "abstract": "Partei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Logo-Die-Freiheit.jpg/300px-Logo-Die-Freiheit.jpg", "websiteURI": "http://www.diefreiheit.org/", "id": "Q559282"}, {"socialMediaIDs": {}, "label": "Sozialistischer Deutscher Studentenbund", "abstract": "politischer Studentenbund", "type": "party", "id": "Q558439"}, {"socialMediaIDs": {}, "label": "Deutsche Volksunion", "abstract": "ehemalige politische Partei, Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/DVU.png/300px-DVU.png", "websiteURI": "http://www.dvu.de/", "id": "Q505829"}, {"socialMediaIDs": {"facebook": "461041840901568"}, "label": "Marxistisch-Leninistische Partei Deutschlands", "abstract": "Kommunistische Kleinpartei in Deutschland", "type": "party", "labelAlternative": "MLPD", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/MLPD_Logo_2011_(2).svg/300px-MLPD_Logo_2011_(2).png", "websiteURI": "https://www.mlpd.de/", "id": "Q499632"}, {"socialMediaIDs": {}, "label": "Deutsche Reichspartei", "abstract": "ehemalige rechtsextreme Partei in Deutschland", "type": "party", "id": "Q495497"}, {"socialMediaIDs": {}, "label": "Die Friesen", "abstract": "deutsche Regionalpartei", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/LDF2010.png/300px-LDF2010.png", "websiteURI": "http://www.die-friesen.eu", "id": "Q493552"}, {"socialMediaIDs": {}, "label": "Partei Mensch Umwelt Tierschutz", "abstract": "Politische Partei in Deutschland", "type": "party", "labelAlternative": ["Tierschutzpartei", "PMUT"], "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Tierschutzpartei-Logo.svg/300px-Tierschutzpartei-Logo.png", "websiteURI": "http://www.tierschutzpartei.de", "id": "Q492561"}, {"type": "party", "socialMediaIDs": {}, "id": "Q491782", "label": "Naturgesetz Partei"}, {"socialMediaIDs": {}, "label": "Partei Bibeltreuer Christen", "abstract": "Partei in Deutschland", "type": "party", "labelAlternative": "PBC", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Partei_Bibeltreuer_Christen_logo.svg/300px-Partei_Bibeltreuer_Christen_logo.png", "websiteURI": "http://www.pbc.de/", "id": "Q487386"}, {"socialMediaIDs": {}, "label": "Anarchistische Pogo-Partei Deutschlands", "abstract": "Partei in Deutschland", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/APPD-Logo.svg/300px-APPD-Logo.png", "websiteURI": ["https://www.appd-gdnk.de/", "http://www.appd.de/"], "id": "Q486312"}, {"socialMediaIDs": {}, "label": "Die Grauen \u2013 Graue Panther", "abstract": "ehemalige deutsche Kleinpartei", "type": "party", "websiteURI": "http://www.agp-bv.de/bund/", "id": "Q462353"}, {"socialMediaIDs": {}, "label": "Partei Rechtsstaatlicher Offensive", "abstract": "politische Partei", "type": "party", "labelAlternative": ["Schill", "Offensive D", "PRO"], "websiteURI": "http://www.offensived.info", "id": "Q457217"}, {"socialMediaIDs": {}, "label": "Freundeskreis Reichsf\u00fchrer-SS", "abstract": "Interessengruppe zum Durchsetzen der Arisierungen im Nationalsozialismus", "type": "party", "id": "Q453636"}, {"socialMediaIDs": {}, "label": "Familien-Partei Deutschlands", "abstract": "Partei in Deutschland", "type": "party", "labelAlternative": "FAMILIE", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/FamilienPartei_Logo2007.svg/300px-FamilienPartei_Logo2007.png", "websiteURI": "http://www.familien-partei.de", "id": "Q453366"}, {"socialMediaIDs": {}, "label": "Gesamtdeutsche Volkspartei", "abstract": "deutsche Kleinpartei in den 1950er Jahren", "type": "party", "labelAlternative": "GVP", "id": "Q451497"}, {"type": "party", "socialMediaIDs": {}, "id": "Q448864", "label": "Demokratische Volkspartei"}, {"type": "party", "socialMediaIDs": {}, "id": "Q422607", "label": "Aktionsgemeinschaft Vierte Partei"}, {"socialMediaIDs": {}, "label": "Aktionsgemeinschaft Unabh\u00e4ngiger Deutscher", "abstract": "politische Partei in Deutschland", "type": "party", "id": "Q422605"}, {"socialMediaIDs": {}, "label": "Aktion Demokratischer Fortschritt", "abstract": "linksgerichtete politische Partei in der Bundesrepublik Deutschland (1969/69)", "type": "party", "labelAlternative": "ADF", "id": "Q422344"}, {"socialMediaIDs": {}, "label": "Nationalsozialer Verein", "abstract": "Partei im Deutschen Kaiserreich", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Letterhead_National-Social_Association.jpg/300px-Letterhead_National-Social_Association.jpg", "id": "Q339110"}, {"socialMediaIDs": {"twitter": "FREIEWAEHLER_BV", "facebook": "freie.waehler.bundesvereinigung"}, "label": "Freie W\u00e4hler", "abstract": "politische Partei", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Logo_Freie_W\u00e4hler_Hessen.png/300px-Logo_Freie_W\u00e4hler_Hessen.png", "websiteURI": "https://www.freiewaehler.eu/", "id": "Q327389"}, {"socialMediaIDs": {}, "label": "Feministische Partei Die Frauen", "abstract": "Partei in Deutschland", "type": "party", "labelAlternative": "DIE FRAUEN", "websiteURI": "http://www.feministischepartei.de/", "id": "Q321615"}, {"socialMediaIDs": {}, "label": "Statt Partei", "abstract": "deutsche Kleinpartei", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Stattpartei-logo.jpg/300px-Stattpartei-logo.jpg", "websiteURI": "http://www.statt-partei.de/", "id": "Q317143"}, {"socialMediaIDs": {}, "label": "Gruppe Internationale Marxisten", "abstract": "revolution\u00e4r-marxistische (trotzkistische) Kleinpartei", "type": "party", "labelAlternative": "GIM", "id": "Q317140"}, {"socialMediaIDs": {}, "label": "Revolution\u00e4r Sozialistischer Bund/Vierte Internationale", "abstract": "Partei in Deutschland", "type": "party", "websiteURI": "http://www.rsb4.de/", "id": "Q314946"}, {"socialMediaIDs": {}, "label": "Ab jetzt...Demokratie durch Volksabstimmung", "abstract": "politische Kleinpartei in Deutschland", "type": "party", "labelAlternative": "Volksabstimmung", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Volksabstimmung_Logo.jpg/300px-Volksabstimmung_Logo.jpg", "websiteURI": "http://blog.demokratie-durch-volksabstimmung.de/", "id": "Q304015"}, {"socialMediaIDs": {}, "label": "AUF \u2013 Partei f\u00fcr Arbeit, Umwelt und Familie", "abstract": "Partei in Deutschland", "type": "party", "labelAlternative": "AUF", "websiteURI": "http://www.auf-partei.de/", "id": "Q300093"}, {"socialMediaIDs": {}, "label": "\u00d6kologische Linke", "abstract": "\u00f6kosozialistische Partei in Deutschland", "type": "party", "labelAlternative": "\u00d6koLinX", "websiteURI": "http://www.oekologische-linke.de/", "id": "Q295037"}, {"socialMediaIDs": {"twitter": "republikaner", "facebook": "Republikaner"}, "label": "Die Republikaner", "abstract": "Partei in Deutschland", "type": "party", "websiteURI": "https://www.rep.de/", "id": "Q269316"}, {"socialMediaIDs": {}, "label": "Internationale sozialistische linke", "type": "party", "websiteURI": "http://www.islinke.de/", "id": "Q268931"}, {"socialMediaIDs": {"twitter": "Bayernpartei", "facebook": "Bayernpartei", "instagram": "bayernpartei"}, "label": "Bayernpartei", "abstract": "regionalistische politische Partei in Bayern", "type": "party", "labelAlternative": "BP", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Bayernpartei_Logo.svg/300px-Bayernpartei_Logo.png", "websiteURI": "https://bayernpartei.de/", "id": "Q255857"}, {"socialMediaIDs": {}, "label": "50Plus Das Generationen-B\u00fcndnis", "type": "party", "websiteURI": "http://www.50plus-bund.de/", "id": "Q241346"}, {"socialMediaIDs": {}, "label": "Arbeit & soziale Gerechtigkeit \u2013 Die Wahlalternative", "abstract": "linke Abspaltung der SPD (2004)", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/WASG-Logo.gif/300px-WASG-Logo.gif", "websiteURI": "http://archiv.w-asg.de/", "id": "Q166027"}, {"socialMediaIDs": {}, "label": "S\u00fcdschleswigscher W\u00e4hlerverband", "abstract": "Regionalpartei im Land Schleswig-Holstein", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/S\u00fcdschleswigscher_W\u00e4hlerverband,_Logo.svg/300px-S\u00fcdschleswigscher_W\u00e4hlerverband,_Logo.png", "websiteURI": ["http://www.ssw.de/", "http://www.ssw-landesverband.de/"], "id": "Q161545"}, {"socialMediaIDs": {}, "label": "Sozialistische Alternative", "abstract": "Trotzkistische Organisation", "type": "party", "websiteURI": "http://www.sozialismus.info", "id": "Q160277"}, {"socialMediaIDs": {}, "label": "Aktionsfront Nationaler Sozialisten/Nationale Aktivisten", "type": "party", "labelAlternative": "ANS/NA", "id": "Q160201"}, {"socialMediaIDs": {}, "label": "Nationaldemokratische Partei Deutschlands", "abstract": "neonazistische und rechtsextreme Partei in Deutschland", "type": "party", "labelAlternative": "NPD", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nationaldemokratische_Partei_Deutschlands_(NPD),_logo_2013.svg/300px-Nationaldemokratische_Partei_Deutschlands_(NPD),_logo_2013.png", "websiteURI": "https://npd.de/", "id": "Q156019"}, {"socialMediaIDs": {}, "label": "Partei des Demokratischen Sozialismus", "abstract": "ehemalige politische Partei in Deutschland", "type": "party", "labelAlternative": "PDS", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/PDS-Logo.svg/300px-PDS-Logo.png", "websiteURI": "http://archiv2007.sozialisten.de/", "id": "Q152554"}, {"socialMediaIDs": {}, "label": "Lausitzer Allianz", "abstract": "Kleinpartei in der Lausitz", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Logo_Lausitzer_Allianz.png/300px-Logo_Lausitzer_Allianz.png", "websiteURI": "http://www.lausitzer-allianz.org/", "id": "Q149520"}, {"socialMediaIDs": {"facebook": "dkppv", "instagram": "kommunistischepartei"}, "label": "Deutsche Kommunistische Partei", "abstract": "kommunistische Partei in Deutschland", "type": "party", "labelAlternative": "DKP", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Deutsche_Kommunistische_Partei_Logo.svg/300px-Deutsche_Kommunistische_Partei_Logo.png", "websiteURI": "http://www.dkp.de/", "id": "Q148861"}, {"socialMediaIDs": {}, "label": "Demokratie Jetzt", "abstract": "B\u00fcrgerrechtsbewegung in der Revolution 1989, ab 1990 politische Partei", "type": "party", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Bundesarchiv_Bild_183-1990-0209-022,_Logo_Demokratie_jetzt.jpg/300px-Bundesarchiv_Bild_183-1990-0209-022,_Logo_Demokratie_jetzt.jpg", "id": "Q138852"}, {"socialMediaIDs": {"twitter": "spdde", "facebook": "SPD"}, "label": "Sozialdemokratische Partei Deutschlands", "abstract": "politische Partei in Deutschland", "type": "party", "labelAlternative": "SPD", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Sozialdemokratische_Partei_Deutschlands,_Logo_um_2000.svg/300px-Sozialdemokratische_Partei_Deutschlands,_Logo_um_2000.png", "websiteURI": "https://www.spd.de/", "id": "Q49768"}, {"socialMediaIDs": {"twitter": "die_gruenen", "facebook": "B90DieGruenen", "instagram": "die_gruenen"}, "label": "B\u00fcndnis 90/Die Gr\u00fcnen", "abstract": "gr\u00fcne politische Partei in Deutschland", "type": "party", "labelAlternative": "GR\u00dcNE", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/B\u00fcndnis_90_-_Die_Gr\u00fcnen_Logo.svg/300px-B\u00fcndnis_90_-_Die_Gr\u00fcnen_Logo.png", "websiteURI": "https://www.gruene.de/", "id": "Q49766"}, {"socialMediaIDs": {"twitter": "dieLinke", "facebook": "linkspartei", "instagram": "dielinke"}, "label": "Die Linke", "abstract": "linke politische Partei in Deutschland", "type": "party", "labelAlternative": "DIE LINKE", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Die_Linke_logo.svg/300px-Die_Linke_logo.png", "websiteURI": "https://www.die-linke.de/", "id": "Q49764"}, {"socialMediaIDs": {"twitter": "CSU", "facebook": "CSU", "instagram": "christlichsozialeunion"}, "label": "Christlich-Soziale Union in Bayern", "abstract": "politische Partei in Bayern", "type": "party", "labelAlternative": "CSU", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/CSU_Logo_since_2016.svg/300px-CSU_Logo_since_2016.png", "websiteURI": "http://www.csu.de/", "id": "Q49763"}, {"socialMediaIDs": {"twitter": "CDU", "facebook": "CDU", "instagram": "cdu"}, "label": "Christlich Demokratische Union Deutschlands", "abstract": "politische Partei in Deutschland", "type": "party", "labelAlternative": "CDU", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Cdu-logo.svg/300px-Cdu-logo.png", "websiteURI": "https://www.cdu.de/", "id": "Q49762"}, {"socialMediaIDs": {"twitter": "DiePARTEI", "facebook": "DiePARTEI", "instagram": "diepartei"}, "label": "Partei f\u00fcr Arbeit, Rechtsstaat, Tierschutz, Elitenf\u00f6rderung und basisdemokratische Initiative", "abstract": "politische Partei in Deutschland, gegr\u00fcndet von Mitgliedern des Satiremagazins Titanic", "type": "party", "labelAlternative": "Die PARTEI", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Die_PARTEI_Logo_Blur_Schatten_Vektor_V2.svg/300px-Die_PARTEI_Logo_Blur_Schatten_Vektor_V2.png", "websiteURI": "https://www.die-partei.de/", "id": "Q22748"}, {"socialMediaIDs": {"twitter": "Piratenpartei", "facebook": "PiratenparteiDeutschland"}, "label": "Piratenpartei Deutschland", "abstract": "politische Partei in Deutschland", "type": "party", "labelAlternative": "PIRATEN", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Piratenpartei_deutschland_logo.svg/300px-Piratenpartei_deutschland_logo.png", "websiteURI": "https://www.piratenpartei.de/", "id": "Q13129"}, {"socialMediaIDs": {"twitter": "fdp", "facebook": "FDP"}, "label": "Freie Demokratische Partei", "abstract": "liberale Partei in Deutschland", "type": "party", "labelAlternative": "FDP", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Logo_der_Freien_Demokraten.jpg/300px-Logo_der_Freien_Demokraten.jpg", "websiteURI": "https://www.fdp.de/", "id": "Q13124"}]
+[
+  {
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "Wir2020Partei" },
+      { "label": "Facebook", "id": "deinePartei" },
+      { "label": "Instagram", "id": "wir2020_offiziell" }
+    ],
+    "id": "Q101545487",
+    "label": "WiR2020",
+    "websiteURI": "https://wir2020partei.eu",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "diebasispartei" },
+      { "label": "Facebook", "id": "diebasispartei" },
+      { "label": "Instagram", "id": "diebasispartei" }
+    ],
+    "id": "Q101243970",
+    "label": "Basisdemokratische Partei Deutschland",
+    "websiteURI": "https://diebasis-partei.de",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "dieBasis"
+  },
+  {
+    "type": "party",
+    "id": "Q94694456",
+    "label": "Hamburger Liste für Ausländerstopp",
+    "socialMediaIDs": []
+  },
+  {
+    "type": "party",
+    "id": "Q87564058",
+    "label": "Bürgerliste Braunlage-Sankt Andreasberg-Hohegeiß",
+    "socialMediaIDs": [
+      {
+        "label": "Facebook",
+        "id": "BuergerlisteBraunlageSanktAndreasbergHohegeiss"
+      }
+    ]
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q84557257",
+    "label": "Deutscher Südwest Bund",
+    "abstract": "politische Partei in Südwestafrika",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q83981679",
+    "label": "Zusammen in Bayern",
+    "socialMediaIDs": [{ "label": "Facebook", "id": "zusammenbayern" }]
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q65227016",
+    "label": "Aktion Partei für Tierschutz – das Original",
+    "websiteURI": "https://www.tierschutz-hier.de",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/FreieWählerMecklenburgVorpommernLogo.svg/300px-FreieWählerMecklenburgVorpommernLogo.png",
+    "socialMediaIDs": [],
+    "id": "Q60846954",
+    "label": "Freie Wähler Mecklenburg-Vorpommern",
+    "websiteURI": "https://www.freie-waehler-mv.eu/",
+    "abstract": "Landesverein",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "hfp_germany" },
+      { "label": "Facebook", "id": "humanistischefriedenspartei" }
+    ],
+    "id": "Q60214018",
+    "label": "Humanistische Friedenspartei",
+    "websiteURI": "https://www.diestelkind.de/hfp",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "HFP"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Mut_logo.jpg/300px-Mut_logo.jpg",
+    "socialMediaIDs": [],
+    "id": "Q56876363",
+    "label": "mut",
+    "websiteURI": "https://www.mut-bayern.de",
+    "abstract": "deutsche Kleinpartei",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Die_blaue_Partei_Logo_vectorized.svg/300px-Die_blaue_Partei_Logo_vectorized.png",
+    "socialMediaIDs": [],
+    "id": "Q41877670",
+    "label": "Die blaue Partei",
+    "websiteURI": "https://www.dieblauepartei.de/",
+    "abstract": "ehemalige politische Kleinpartei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Die_Urbane_Logo.png/300px-Die_Urbane_Logo.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "dieurbane" },
+      { "label": "Facebook", "id": "dieUrbane" },
+      { "label": "Instagram", "id": "dieurbane" }
+    ],
+    "id": "Q39528824",
+    "label": "Die Urbane. Eine HipHop Partei",
+    "websiteURI": "https://www.die-urbane.de/",
+    "abstract": "Deutsche Partei",
+    "type": "party",
+    "labelAlternative": "du."
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/PDH_Logo_Redesign.svg/300px-PDH_Logo_Redesign.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "DieHumanisten" },
+      { "label": "Facebook", "id": "parteiderhumanisten" }
+    ],
+    "id": "Q39528463",
+    "label": "Partei der Humanisten",
+    "websiteURI": "https://diehumanisten.de/",
+    "abstract": "deutsche politische Partei",
+    "type": "party",
+    "labelAlternative": "Die Humanisten"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/DM-Logo_final.png/300px-DM-Logo_final.png",
+    "socialMediaIDs": [],
+    "id": "Q32860410",
+    "label": "Deutsche Mitte",
+    "abstract": "Kleinpartei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/DiB_Logo.jpg/300px-DiB_Logo.jpg",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "brauchtbewegung" },
+      { "label": "Facebook", "id": "demokratiebewegen" },
+      { "label": "Instagram", "id": "brauchtbewegung" }
+    ],
+    "id": "Q31841142",
+    "label": "Demokratie in Bewegung",
+    "websiteURI": "https://bewegung.jetzt/",
+    "abstract": "politische Kleinpartei in Deutschland",
+    "type": "party",
+    "labelAlternative": "DiB"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/AUFBRUCH_C_-_Christliche_werte_für_eine_menschliche_Politik.jpg/300px-AUFBRUCH_C_-_Christliche_werte_für_eine_menschliche_Politik.jpg",
+    "socialMediaIDs": [],
+    "id": "Q31839313",
+    "label": "Aufbruch C",
+    "websiteURI": "http://www.aufbruch-c.de/",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Schriftzug-v-partei.png/300px-Schriftzug-v-partei.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "_VPartei_" },
+      { "label": "Facebook", "id": "VPartei" },
+      { "label": "Instagram", "id": "_vpartei_" }
+    ],
+    "id": "Q31839237",
+    "label": "V-Partei³",
+    "websiteURI": "https://v-partei.de/",
+    "abstract": "Politische Kleinpartei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Parteilogo_der_Jugend-_und_Entwicklungspartei_Deutschlands,_2017.jpg/300px-Parteilogo_der_Jugend-_und_Entwicklungspartei_Deutschlands,_2017.jpg",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "jed_bund" },
+      { "label": "Facebook", "id": "jedbund" },
+      { "label": "Instagram", "id": "jed.bund" }
+    ],
+    "id": "Q31838368",
+    "label": "Jugend- und Entwicklungspartei Deutschlands",
+    "websiteURI": "http://jed-bund.de/",
+    "abstract": "ehemalige linksliberale deutsche Partei",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/BGE_Logo_neu.png/300px-BGE_Logo_neu.png",
+    "socialMediaIDs": [],
+    "id": "Q31837192",
+    "label": "Bündnis Grundeinkommen",
+    "websiteURI": "http://www.buendnis-grundeinkommen.de",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "BGE"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/Allianz_Deutscher_Demokraten_Partei_Logo_Aktualisiert.png/300px-Allianz_Deutscher_Demokraten_Partei_Logo_Aktualisiert.png",
+    "socialMediaIDs": [],
+    "id": "Q31837153",
+    "label": "Allianz Deutscher Demokraten",
+    "websiteURI": "https://ad-demokraten.de/",
+    "abstract": "deutsche Kleinpartei",
+    "type": "party",
+    "labelAlternative": "ADD"
+  },
+  {
+    "socialMediaIDs": [{ "label": "Facebook", "id": "gartenpartei" }],
+    "id": "Q27926499",
+    "label": "Gartenpartei",
+    "websiteURI": "http://www.gartenpartei.eu/",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q26882660",
+    "label": "Die Linke Mecklenburg-Vorpommern",
+    "websiteURI": "http://www.die-linke-mv.de/",
+    "abstract": "Landesverband der Partei Die Linke für Mecklenburg-Vorpommern",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Logo_parteifuergesundheitsforschung.png/300px-Logo_parteifuergesundheitsforschung.png",
+    "socialMediaIDs": [],
+    "id": "Q26271103",
+    "label": "Partei für Gesundheitsforschung",
+    "websiteURI": "http://www.parteifuergesundheitsforschung.de",
+    "abstract": "Deutsche Kleinpartei",
+    "type": "party",
+    "labelAlternative": "Gesundheitsforschung"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Logo_von_MENSCHLICHE_WELT.png/300px-Logo_von_MENSCHLICHE_WELT.png",
+    "socialMediaIDs": [],
+    "id": "Q26271094",
+    "label": "MENSCHLICHE WELT",
+    "abstract": "deutsche Partei",
+    "type": "party",
+    "labelAlternative": "MENSCHLICHE WELT"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q24706445",
+    "label": "AfD Mecklenburg-Vorpommern",
+    "websiteURI": "http://www.afd-mv.de/",
+    "abstract": "Landesverband der Partei Alternative für Deutschland in Mecklenburg-Vorpommern",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/An_oak_wreath_on_logo_of_the_German_party_\"The_Third_Path\"_-_Parteilogo_\"Der_III._Weg.jpg/300px-An_oak_wreath_on_logo_of_the_German_party_\"The_Third_Path\"_-_Parteilogo_\"Der_III._Weg.jpg",
+    "socialMediaIDs": [],
+    "id": "Q21040614",
+    "label": "Der III. Weg",
+    "websiteURI": "http://www.der-dritte-weg.info/",
+    "abstract": "rechtsextreme neonazistische Kleinpartei in Deutschland",
+    "type": "party",
+    "labelAlternative": "III. Weg"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Liberal-Konservative_Reformer.png/300px-Liberal-Konservative_Reformer.png",
+    "socialMediaIDs": [],
+    "id": "Q20681849",
+    "label": "Liberal-Konservative Reformer",
+    "websiteURI": "http://www.alfa-partei.de/",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Logo_der_Partei_Bündnis_C_-_Christen_für_Deutschland.svg/300px-Logo_der_Partei_Bündnis_C_-_Christen_für_Deutschland.png",
+    "socialMediaIDs": [],
+    "id": "Q19836118",
+    "label": "Bündnis C – Christen für Deutschland",
+    "websiteURI": "https://buendnis-c.de/",
+    "abstract": "christliche Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "Bündnis C"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q18761823",
+    "label": "Die Grünen",
+    "abstract": "ehemalige politische Partei in Deutschland, Vorläufer von Bündnis 90/Die Grünen",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q18666221",
+    "label": "Hamburger Bürger-Liste",
+    "websiteURI": "http://hhbl.hamburg",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Neue_Liberale.svg/300px-Neue_Liberale.png",
+    "socialMediaIDs": [],
+    "id": "Q18333914",
+    "label": "Neue Liberale",
+    "websiteURI": "http://neueliberale.org",
+    "abstract": "deutsche Kleinpartei",
+    "type": "party",
+    "labelAlternative": "NL"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q15839584",
+    "label": "Partei für Franken",
+    "websiteURI": "http://www.die-franken.eu/",
+    "abstract": "Partei",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q15839583",
+    "label": "Partei der guten Deutschen",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q15810446",
+    "label": "Freie Wähler in Thüringen",
+    "websiteURI": "https://th.freiewaehler.eu/",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Aktive_Demokratie_direkt_Logo.png/300px-Aktive_Demokratie_direkt_Logo.png",
+    "socialMediaIDs": [],
+    "id": "Q15781964",
+    "label": "Aktive Demokratie direkt",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/AfD-Logo-2017.svg/300px-AfD-Logo-2017.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "AfD_Bund" },
+      { "label": "Facebook", "id": "alternativefuerde" }
+    ],
+    "id": "Q6721203",
+    "label": "Alternative für Deutschland",
+    "websiteURI": "https://www.alternativefuer.de/",
+    "abstract": "rechtspopulistische, rechtsextreme politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "AfD"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q6541460",
+    "label": "Q6541460",
+    "websiteURI": "http://libertas-deutschland.de/",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Parteilogo_der_Partei_DIE_RECHTE_ab_11-2017.jpg/300px-Parteilogo_der_Partei_DIE_RECHTE_ab_11-2017.jpg",
+    "socialMediaIDs": [{ "label": "Twitter", "id": "dierechtebund" }],
+    "id": "Q3027329",
+    "label": "Die Rechte",
+    "websiteURI": "https://die-rechte.net/",
+    "abstract": "Rechtsextreme neonazistische Kleinstpartei in Deutschland",
+    "type": "party",
+    "labelAlternative": "DIE RECHTE"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q2649141",
+    "label": "Allianz für Gesundheit, Frieden und soziale Gerechtigkeit",
+    "websiteURI": "http://www.agfg.de/",
+    "type": "party",
+    "labelAlternative": "AGFG"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Allianz_der_mitte_parteilogo.png/300px-Allianz_der_mitte_parteilogo.png",
+    "socialMediaIDs": [],
+    "id": "Q2649134",
+    "label": "Allianz der Mitte",
+    "websiteURI": "http://www.allianzdermitte.de/",
+    "type": "party",
+    "labelAlternative": "ADM"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q2492232",
+    "label": "Unabhängige Arbeiter-Partei",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Unabhaengige.gif/300px-Unabhaengige.gif",
+    "socialMediaIDs": [],
+    "id": "Q2492228",
+    "label": "UNABHÄNGIGE für bürgernahe Demokratie",
+    "websiteURI": "http://www.unabhaengige.info/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q2308111",
+    "label": "Spaßpartei für Deutschland",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q2224618",
+    "label": "Sarazzistische Partei – für Volksentscheide",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Rentner_Partei_Deutschland.png/300px-Rentner_Partei_Deutschland.png",
+    "socialMediaIDs": [],
+    "id": "Q2144386",
+    "label": "Rentner Partei Deutschland",
+    "websiteURI": "http://www.rentnerparteideutschland.com/",
+    "abstract": "Kleinpartei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q2135400",
+    "label": "Rechte Mitte HeimatHamburg",
+    "abstract": "deutsche Organisation",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Partei_nichtwähler_logo.jpg/300px-Partei_nichtwähler_logo.jpg",
+    "socialMediaIDs": [],
+    "id": "Q2054247",
+    "label": "Partei der Nichtwähler",
+    "websiteURI": "http://www.parteidernichtwaehler.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q2054243",
+    "label": "Partei der Arbeitswilligen und Sozial Schwachen",
+    "abstract": "Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "PASS"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1968439",
+    "label": "Nationalliberale Aktion",
+    "abstract": "deutsche Partei",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q1968394",
+    "label": "Nationalistische Front",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1906181",
+    "label": "Marxistische Gruppe",
+    "websiteURI": "http://gegenstandpunkt.com/english/en_index.html",
+    "abstract": "kommunistische Organisation in der BRD",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1788201",
+    "label": "Kreuzberger Patriotische Demokraten/Realistisches Zentrum",
+    "websiteURI": "http://www.kpd-rz.de/",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1758284",
+    "label": "Volkssozialistische Bewegung Deutschlands / Partei der Arbeit",
+    "abstract": "Rechtsextreme Organisation",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1752945",
+    "label": "Kommunistische Partei Deutschlands - Aufbauorganisation",
+    "abstract": "K-Gruppe",
+    "type": "party",
+    "labelAlternative": "KPD/AO"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1717924",
+    "label": "Nationale Offensive",
+    "type": "party",
+    "labelAlternative": "NO"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1703781",
+    "label": "Volksinteressenbund Thüringen",
+    "websiteURI": "http://www.vibt.de",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q1667346",
+    "label": "Internationale Kommunisten Deutschlands (1933)",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1663564",
+    "label": "Initiative Direkte Demokratie",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Humanwirtschaftspartei.gif/300px-Humanwirtschaftspartei.gif",
+    "socialMediaIDs": [],
+    "id": "Q1636736",
+    "label": "Humanwirtschaftspartei",
+    "websiteURI": "http://www.humanwirtschaftspartei.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Logo_Liberale_Demokraten_-_Die_Sozialliberalen.svg/300px-Logo_Liberale_Demokraten_-_Die_Sozialliberalen.png",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/LD_Logo.png/300px-LD_Logo.png",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Logo_Liberale_Demokraten_(1982-2007).jpg/300px-Logo_Liberale_Demokraten_(1982-2007).jpg"
+    ],
+    "socialMediaIDs": [],
+    "id": "Q1553322",
+    "label": "Liberale Demokraten",
+    "websiteURI": "http://www.liberale-demokraten.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1551901",
+    "label": "Grüne Aktion Zukunft",
+    "abstract": "ökologisch orientierte Partei",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1516101",
+    "label": "Gesamtdeutsche Partei",
+    "type": "party",
+    "labelAlternative": "GDP"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Logo_der_Freisinger_Mitte_e.V..png/300px-Logo_der_Freisinger_Mitte_e.V..png",
+    "socialMediaIDs": [],
+    "id": "Q1454680",
+    "label": "Freisinger Mitte",
+    "websiteURI": "http://www.freisinger-mitte.de/",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1454293",
+    "label": "Freiheitliche Partei Deutschlands",
+    "websiteURI": "http://fpdeutschlands.wordpress.com/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Logo_Freie_Wähler_Hessen.png/300px-Logo_Freie_Wähler_Hessen.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "FWHessen" },
+      { "label": "Facebook", "id": "FreieWahlerHessen" }
+    ],
+    "id": "Q1454076",
+    "label": "Freie Wähler Hessen",
+    "websiteURI": "http://www.freiewaehler-hessen.de/1-0-Startseite.html",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1454073",
+    "label": "Freie Wähler Deutschland",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q1454023",
+    "label": "Freie Sozialistische Partei (Marxisten-Leninisten)",
+    "socialMediaIDs": []
+  },
+  {
+    "type": "party",
+    "id": "Q1454000",
+    "label": "Freie Sachsen – Allianz unabhängiger Wähler",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1409772",
+    "label": "Future!",
+    "websiteURI": "http://www.jugendpartei.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1377201",
+    "label": "Europäische Arbeiter-Partei",
+    "abstract": "Kleinpartei im Umkreis der sogenannten LaRouche-Bewegung",
+    "type": "party",
+    "labelAlternative": "EAP"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Freie_Union_logo.png/300px-Freie_Union_logo.png",
+    "socialMediaIDs": [],
+    "id": "Q1349989",
+    "label": "Freie Union",
+    "websiteURI": "http://freieunion.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1346588",
+    "label": "Europäische Föderalistische Partei",
+    "abstract": "ehemalige Parteien (1960-1995)",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1334084",
+    "label": "Elternpartei",
+    "websiteURI": "http://elternpartei.de",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/FreieWählerBayernLogo2020.svg/300px-FreieWählerBayernLogo2020.png",
+    "socialMediaIDs": [],
+    "id": "Q1231839",
+    "label": "Landesvereinigung Freie Wähler Bayern",
+    "websiteURI": [
+      "http://www.fw-bayern.de/",
+      "https://www.freie-waehler-bayern.de/"
+    ],
+    "abstract": "Landesverband der Freien Wähler",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Die_Violetten_Logo_20190515.jpg/300px-Die_Violetten_Logo_20190515.jpg",
+    "socialMediaIDs": [],
+    "id": "Q1217286",
+    "label": "Die Violetten – für spirituelle Politik",
+    "websiteURI": "http://die-violetten.de/",
+    "abstract": "Kleinpartei in Deutschland",
+    "type": "party",
+    "labelAlternative": "DIE VIOLETTEN"
+  },
+  {
+    "type": "party",
+    "id": "Q1214998",
+    "label": "Die Mündigen Bürger",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1214847",
+    "label": "Die MittelstandsPartei – Die bürgerliche Mitte",
+    "websiteURI": "http://www.diemittelstandspartei.de/",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1213271",
+    "label": "Die Hannoveraner",
+    "abstract": "Wählergemeinschaft in Hannover",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1204149",
+    "label": "Deutsche Seniorenpartei",
+    "websiteURI": "http://www.deutsche-senioren-partei.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q1203420",
+    "label": "Deutsche Liga für Volk und Heimat",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1203244",
+    "label": "Deutsche Konservative",
+    "websiteURI": "http://www.deutschekonservative.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1202787",
+    "label": "Deutsche Gemeinschaft",
+    "abstract": "Westdeutsche politische Partei 1949–1965",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1202295",
+    "label": "Deutsche Demokratische Partei (2004)",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1202040",
+    "label": "Deutsche Alternative",
+    "abstract": "deutsche Partei",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q1186331",
+    "label": "Demokratische Sozialisten",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1186191",
+    "label": "Demokratische Linke (1999)",
+    "websiteURI": "http://www.dl-berlin.de",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q1084102",
+    "label": "Christliche Volkspartei",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1084052",
+    "label": "Christliche Liga – Die Partei für das Leben",
+    "abstract": "deutsche Kleinpartei",
+    "type": "party",
+    "labelAlternative": "LIGA"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1084004",
+    "label": "Christliche Bayerische Volkspartei",
+    "abstract": "Kleinpartei in Bayern",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1083972",
+    "label": "Christlich-Konservative Partei Minden-Ravensbergs",
+    "abstract": "ehemalige Partei",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q1061626",
+    "label": "Chance 2000",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1021180",
+    "label": "Bürgerliche Mitte",
+    "websiteURI": "http://www.bue-mi.de",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1021053",
+    "label": "Bürgerbewegung pro Deutschland",
+    "websiteURI": "http://www.pro-deutschland.net/",
+    "abstract": "deutsche Kleinpartei",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Pro_Chemnitz.png/300px-Pro_Chemnitz.png",
+    "socialMediaIDs": [{ "label": "Facebook", "id": "prochemnitz" }],
+    "id": "Q1021052",
+    "label": "Bürgerbewegung Pro Chemnitz",
+    "websiteURI": ["https://pro-chemnitz.de/", "http://pro-chemnitz.de/"],
+    "abstract": "politische Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/BIW-Logo.jpg/300px-BIW-Logo.jpg",
+    "socialMediaIDs": [],
+    "id": "Q1021023",
+    "label": "Bürger in Wut",
+    "websiteURI": "http://www.buerger-in-wut.de/",
+    "abstract": "politische Partei in Bremen",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Buendnis_fuer_Innovation_und_Gerechtigkeit_logo.jpg/300px-Buendnis_fuer_Innovation_und_Gerechtigkeit_logo.jpg",
+    "socialMediaIDs": [],
+    "id": "Q1020875",
+    "label": "Bündnis für Innovation und Gerechtigkeit",
+    "websiteURI": "http://bignrw.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "BIG"
+  },
+  {
+    "socialMediaIDs": [{ "label": "Facebook", "id": "gruenebremen" }],
+    "id": "Q1020839",
+    "label": "Bündnis 90/Die Grünen Bremen",
+    "websiteURI": "http://www.gruene-bremen.de",
+    "abstract": "Landesverband von Bündnis 90/Die Grünen",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/RRP-Logo.png/300px-RRP-Logo.png",
+    "socialMediaIDs": [],
+    "id": "Q1020832",
+    "label": "Bündnis 21/RRP",
+    "websiteURI": "http://www.bündnis21rrp.de/",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "RRP"
+  },
+  {
+    "type": "party",
+    "id": "Q1009851",
+    "label": "Bunte Liste – Wehrt euch",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1005283",
+    "label": "Bund für Gesamtdeutschland",
+    "websiteURI": "http://www.bgd1.com/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1005270",
+    "label": "Bund freier Bürger",
+    "abstract": "Deutsche Kleinpartei",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q1005170",
+    "label": "Bund der Deutschen, Partei für Einheit, Frieden und Freiheit",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q1005139",
+    "label": "Bund Westdeutscher Kommunisten",
+    "type": "party",
+    "labelAlternative": "BWK"
+  },
+  {
+    "type": "party",
+    "id": "Q1005083",
+    "label": "Bund Freies Deutschland",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q908075",
+    "label": "Bremische Integrations-Partei Deutschlands",
+    "websiteURI": "http://www.integrations-partei.de/",
+    "type": "party",
+    "labelAlternative": "BIP"
+  },
+  {
+    "type": "party",
+    "id": "Q907561",
+    "label": "Bremer Demokratische Volkspartei",
+    "socialMediaIDs": []
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Logo-BVB-FREIE-WAEHLER.svg/300px-Logo-BVB-FREIE-WAEHLER.png",
+    "socialMediaIDs": [],
+    "id": "Q897913",
+    "label": "Brandenburger Vereinigte Bürgerbewegungen/Freie Wähler",
+    "websiteURI": "http://www.bvb-fw.de/",
+    "abstract": "politische Vereinigung in Brandenburg",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q897197",
+    "label": "Bürgerrechtsbewegung Solidarität",
+    "websiteURI": "http://www.bueso.de",
+    "abstract": "Deutsche Partei, Teil der LaRouche - Bewegung",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "gleichheit" },
+      { "label": "Facebook", "id": "Gleichheit" },
+      { "label": "Instagram", "id": "sgp_ikvi" }
+    ],
+    "id": "Q896251",
+    "label": "Sozialistische Gleichheitspartei, Vierte Internationale",
+    "websiteURI": "https://www.gleichheit.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "SGP"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q895674",
+    "label": "Wirtschaftliche Aufbau-Vereinigung",
+    "abstract": "ehemalige deutsche Partei des Mittelstandes",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q882711",
+    "label": "Freie Volkspartei",
+    "abstract": "politische Partei in der Bundesrepublik Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [{ "label": "Facebook", "id": "rosaliste.de" }],
+    "id": "Q882614",
+    "label": "Rosa Liste München",
+    "websiteURI": "http://www.rosaliste.de/",
+    "abstract": "Politische Gruppierung in München",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Free_German_Workers_Party_logo.svg/300px-Free_German_Workers_Party_logo.png",
+    "socialMediaIDs": [],
+    "id": "Q882551",
+    "label": "Freiheitliche Deutsche Arbeiterpartei",
+    "abstract": "Deutsche rechtsextreme Kleinstpartei",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q881084",
+    "label": "Christliche Volkspartei des Saarlandes",
+    "socialMediaIDs": []
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Logo_der_Freien_Demokraten.svg/300px-Logo_der_Freien_Demokraten.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "fdp_saar" },
+      { "label": "Facebook", "id": "fdpsaar" }
+    ],
+    "id": "Q881079",
+    "label": "Freie Demokratische Partei/Demokratische Partei Saar",
+    "websiteURI": "http://www.fdp-saar.de/",
+    "abstract": "Landesverband der FDP",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Peto.png/300px-Peto.png",
+    "socialMediaIDs": [],
+    "id": "Q880291",
+    "label": "PETO – Die junge Alternative",
+    "websiteURI": "http://www.peto.de/",
+    "abstract": "Politische Partei in Monheim, NRW",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q861478",
+    "label": "Bildungspartei",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "BB_PRONRW" },
+      { "label": "Facebook", "id": "proNRW" }
+    ],
+    "id": "Q826309",
+    "label": "Bürgerbewegung pro NRW",
+    "websiteURI": "https://pro-nrw.net/",
+    "abstract": "rechtsextreme deutsche Kleinpartei",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Cropped-logo-seite.png/300px-Cropped-logo-seite.png",
+    "socialMediaIDs": [],
+    "id": "Q820091",
+    "label": "Bergpartei, die Überpartei",
+    "websiteURI": "http://uepd.de/wordpress/en/",
+    "abstract": "Deutsche Kleinpartei",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q812288",
+    "label": "Bayerische Staatspartei",
+    "abstract": "Kleinpartei in Bayern",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q799120",
+    "label": "Badische Volkspartei",
+    "socialMediaIDs": []
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Asp.svg/300px-Asp.png",
+    "socialMediaIDs": [],
+    "id": "Q787513",
+    "label": "Automobile Steuerzahler-Partei",
+    "abstract": "deutsche Partei",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q759555",
+    "label": "Aufbruch für Bürgerrechte, Freiheit und Gesundheit",
+    "websiteURI": "http://www.partei-aufbruch.de",
+    "abstract": "Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "AUFBRUCH"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q708012",
+    "label": "Sozialistische Reichspartei",
+    "abstract": "ehemalige nationalsozialistische Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q707844",
+    "label": "Gesamtdeutscher Block/Bund der Heimatvertriebenen und Entrechteten",
+    "abstract": "Ehemalige deutsche Partei",
+    "type": "party",
+    "labelAlternative": "GB/BHE"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/PDV-logo.png/300px-PDV-logo.png",
+    "socialMediaIDs": [],
+    "id": "Q706864",
+    "label": "Partei der Vernunft",
+    "websiteURI": "http://www.parteidervernunft.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Logo_Deutsche_Partei.svg/300px-Logo_Deutsche_Partei.png",
+    "socialMediaIDs": [],
+    "id": "Q674695",
+    "label": "Deutsche Partei",
+    "abstract": "rechtsgerichtete politische Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q646129",
+    "label": "Neues Forum",
+    "websiteURI": "http://www.neuesforum.de/",
+    "abstract": "Bürgerrechtsbewegung in der Revolution 1989 gegen den DDR-Staat, 1990 politische Partei",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q639537",
+    "label": "Deutsche Partei",
+    "websiteURI": "http://www.deutsche-partei-dp.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q633731",
+    "label": "Freisinnige Vereinigung",
+    "abstract": "liberale Partei im Deutschen Kaiserreich",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q627067",
+    "label": "Arbeiter-Arbeiterinnen Partei Deutschland",
+    "websiteURI": "http://www.apd-online.de",
+    "abstract": "deutsche Kleinpartei",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q584965",
+    "label": "Deutsche Konservative Partei – Deutsche Rechtspartei",
+    "abstract": "ehem. politische Partei",
+    "type": "party"
+  },
+  {
+    "type": "party",
+    "id": "Q575810",
+    "label": "Freiheitliche Volkspartei",
+    "socialMediaIDs": []
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/SPD-DDR.svg/300px-SPD-DDR.png",
+    "socialMediaIDs": [],
+    "id": "Q563535",
+    "label": "Sozialdemokratische Partei in der DDR",
+    "abstract": "Partei in der Wendezeit in der Deutschen Demokratischen Republik",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q560777",
+    "label": "Deutsche Freisinnige Partei",
+    "abstract": "politische Partei im Deutschen Kaiserreich",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Logo-Die-Freiheit.jpg/300px-Logo-Die-Freiheit.jpg",
+    "socialMediaIDs": [],
+    "id": "Q559282",
+    "label": "Bürgerrechtspartei für mehr Freiheit und Demokratie – Die Freiheit",
+    "websiteURI": "http://www.diefreiheit.org/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q558439",
+    "label": "Sozialistischer Deutscher Studentenbund",
+    "abstract": "politischer Studentenbund",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/DVU.png/300px-DVU.png",
+    "socialMediaIDs": [],
+    "id": "Q505829",
+    "label": "Deutsche Volksunion",
+    "websiteURI": "http://www.dvu.de/",
+    "abstract": "ehemalige politische Partei, Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/MLPD_Logo_2011_(2).svg/300px-MLPD_Logo_2011_(2).png",
+    "socialMediaIDs": [{ "label": "Facebook", "id": "461041840901568" }],
+    "id": "Q499632",
+    "label": "Marxistisch-Leninistische Partei Deutschlands",
+    "websiteURI": "https://www.mlpd.de/",
+    "abstract": "Kommunistische Kleinpartei in Deutschland",
+    "type": "party",
+    "labelAlternative": "MLPD"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q495497",
+    "label": "Deutsche Reichspartei",
+    "abstract": "ehemalige rechtsextreme Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/LDF2010.png/300px-LDF2010.png",
+    "socialMediaIDs": [],
+    "id": "Q493552",
+    "label": "Die Friesen",
+    "websiteURI": "http://www.die-friesen.eu",
+    "abstract": "deutsche Regionalpartei",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/Tierschutzpartei-Logo.svg/300px-Tierschutzpartei-Logo.png",
+    "socialMediaIDs": [],
+    "id": "Q492561",
+    "label": "Partei Mensch Umwelt Tierschutz",
+    "websiteURI": "http://www.tierschutzpartei.de",
+    "abstract": "Politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": ["Tierschutzpartei", "PMUT"]
+  },
+  {
+    "type": "party",
+    "id": "Q491782",
+    "label": "Naturgesetz Partei",
+    "socialMediaIDs": []
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Partei_Bibeltreuer_Christen_logo.svg/300px-Partei_Bibeltreuer_Christen_logo.png",
+    "socialMediaIDs": [],
+    "id": "Q487386",
+    "label": "Partei Bibeltreuer Christen",
+    "websiteURI": "http://www.pbc.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "PBC"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/APPD-Logo.svg/300px-APPD-Logo.png",
+    "socialMediaIDs": [],
+    "id": "Q486312",
+    "label": "Anarchistische Pogo-Partei Deutschlands",
+    "websiteURI": ["https://www.appd-gdnk.de/", "http://www.appd.de/"],
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q462353",
+    "label": "Die Grauen – Graue Panther",
+    "websiteURI": "http://www.agp-bv.de/bund/",
+    "abstract": "ehemalige deutsche Kleinpartei",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q457217",
+    "label": "Partei Rechtsstaatlicher Offensive",
+    "websiteURI": "http://www.offensived.info",
+    "abstract": "politische Partei",
+    "type": "party",
+    "labelAlternative": ["Offensive D", "Schill", "PRO"]
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q453636",
+    "label": "Freundeskreis Reichsführer-SS",
+    "abstract": "Interessengruppe zum Durchsetzen der Arisierungen im Nationalsozialismus",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/FamilienPartei_Logo2007.svg/300px-FamilienPartei_Logo2007.png",
+    "socialMediaIDs": [],
+    "id": "Q453366",
+    "label": "Familien-Partei Deutschlands",
+    "websiteURI": "http://www.familien-partei.de",
+    "abstract": "Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "FAMILIE"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q451497",
+    "label": "Gesamtdeutsche Volkspartei",
+    "abstract": "deutsche Kleinpartei in den 1950er Jahren",
+    "type": "party",
+    "labelAlternative": "GVP"
+  },
+  {
+    "type": "party",
+    "id": "Q448864",
+    "label": "Demokratische Volkspartei",
+    "socialMediaIDs": []
+  },
+  {
+    "type": "party",
+    "id": "Q422607",
+    "label": "Aktionsgemeinschaft Vierte Partei",
+    "socialMediaIDs": []
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q422605",
+    "label": "Aktionsgemeinschaft Unabhängiger Deutscher",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q422344",
+    "label": "Aktion Demokratischer Fortschritt",
+    "abstract": "linksgerichtete politische Partei in der Bundesrepublik Deutschland (1969/69)",
+    "type": "party",
+    "labelAlternative": "ADF"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Letterhead_National-Social_Association.jpg/300px-Letterhead_National-Social_Association.jpg",
+    "socialMediaIDs": [],
+    "id": "Q339110",
+    "label": "Nationalsozialer Verein",
+    "abstract": "Partei im Deutschen Kaiserreich",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Logo_Freie_Wähler_Hessen.png/300px-Logo_Freie_Wähler_Hessen.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "FREIEWAEHLER_BV" },
+      { "label": "Facebook", "id": "freie.waehler.bundesvereinigung" }
+    ],
+    "id": "Q327389",
+    "label": "Freie Wähler",
+    "websiteURI": "https://www.freiewaehler.eu/",
+    "abstract": "politische Partei",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q321615",
+    "label": "Feministische Partei Die Frauen",
+    "websiteURI": "http://www.feministischepartei.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "DIE FRAUEN"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Stattpartei-logo.jpg/300px-Stattpartei-logo.jpg",
+    "socialMediaIDs": [],
+    "id": "Q317143",
+    "label": "Statt Partei",
+    "websiteURI": "http://www.statt-partei.de/",
+    "abstract": "deutsche Kleinpartei",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q317140",
+    "label": "Gruppe Internationale Marxisten",
+    "abstract": "revolutionär-marxistische (trotzkistische) Kleinpartei",
+    "type": "party",
+    "labelAlternative": "GIM"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q314946",
+    "label": "Revolutionär Sozialistischer Bund/Vierte Internationale",
+    "websiteURI": "http://www.rsb4.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Volksabstimmung_Logo.jpg/300px-Volksabstimmung_Logo.jpg",
+    "socialMediaIDs": [],
+    "id": "Q304015",
+    "label": "Ab jetzt...Demokratie durch Volksabstimmung",
+    "websiteURI": "http://blog.demokratie-durch-volksabstimmung.de/",
+    "abstract": "politische Kleinpartei in Deutschland",
+    "type": "party",
+    "labelAlternative": "Volksabstimmung"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q300093",
+    "label": "AUF – Partei für Arbeit, Umwelt und Familie",
+    "websiteURI": "http://www.auf-partei.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "AUF"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q295037",
+    "label": "Ökologische Linke",
+    "websiteURI": "http://www.oekologische-linke.de/",
+    "abstract": "ökosozialistische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "ÖkoLinX"
+  },
+  {
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "republikaner" },
+      { "label": "Facebook", "id": "Republikaner" }
+    ],
+    "id": "Q269316",
+    "label": "Die Republikaner",
+    "websiteURI": "https://www.rep.de/",
+    "abstract": "Partei in Deutschland",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q268931",
+    "label": "Internationale sozialistische linke",
+    "websiteURI": "http://www.islinke.de/",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Bayernpartei_Logo.svg/300px-Bayernpartei_Logo.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "Bayernpartei" },
+      { "label": "Facebook", "id": "Bayernpartei" },
+      { "label": "Instagram", "id": "bayernpartei" }
+    ],
+    "id": "Q255857",
+    "label": "Bayernpartei",
+    "websiteURI": "https://bayernpartei.de/",
+    "abstract": "regionalistische politische Partei in Bayern",
+    "type": "party",
+    "labelAlternative": "BP"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q241346",
+    "label": "50Plus Das Generationen-Bündnis",
+    "websiteURI": "http://www.50plus-bund.de/",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/WASG-Logo.gif/300px-WASG-Logo.gif",
+    "socialMediaIDs": [],
+    "id": "Q166027",
+    "label": "Arbeit & soziale Gerechtigkeit – Die Wahlalternative",
+    "websiteURI": "http://archiv.w-asg.de/",
+    "abstract": "linke Abspaltung der SPD (2004)",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Südschleswigscher_Wählerverband,_Logo.svg/300px-Südschleswigscher_Wählerverband,_Logo.png",
+    "socialMediaIDs": [],
+    "id": "Q161545",
+    "label": "Südschleswigscher Wählerverband",
+    "websiteURI": ["http://www.ssw-landesverband.de/", "http://www.ssw.de/"],
+    "abstract": "Regionalpartei im Land Schleswig-Holstein",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q160277",
+    "label": "Sozialistische Alternative",
+    "websiteURI": "http://www.sozialismus.info",
+    "abstract": "Trotzkistische Organisation",
+    "type": "party"
+  },
+  {
+    "socialMediaIDs": [],
+    "id": "Q160201",
+    "label": "Aktionsfront Nationaler Sozialisten/Nationale Aktivisten",
+    "type": "party",
+    "labelAlternative": "ANS/NA"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nationaldemokratische_Partei_Deutschlands_(NPD),_logo_2013.svg/300px-Nationaldemokratische_Partei_Deutschlands_(NPD),_logo_2013.png",
+    "socialMediaIDs": [],
+    "id": "Q156019",
+    "label": "Nationaldemokratische Partei Deutschlands",
+    "websiteURI": "https://npd.de/",
+    "abstract": "neonazistische und rechtsextreme Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "NPD"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/PDS-Logo.svg/300px-PDS-Logo.png",
+    "socialMediaIDs": [],
+    "id": "Q152554",
+    "label": "Partei des Demokratischen Sozialismus",
+    "websiteURI": "http://archiv2007.sozialisten.de/",
+    "abstract": "ehemalige politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "PDS"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Logo_Lausitzer_Allianz.png/300px-Logo_Lausitzer_Allianz.png",
+    "socialMediaIDs": [],
+    "id": "Q149520",
+    "label": "Lausitzer Allianz",
+    "websiteURI": "http://www.lausitzer-allianz.org/",
+    "abstract": "Kleinpartei in der Lausitz",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Deutsche_Kommunistische_Partei_Logo.svg/300px-Deutsche_Kommunistische_Partei_Logo.png",
+    "socialMediaIDs": [
+      { "label": "Facebook", "id": "dkppv" },
+      { "label": "Instagram", "id": "kommunistischepartei" }
+    ],
+    "id": "Q148861",
+    "label": "Deutsche Kommunistische Partei",
+    "websiteURI": "http://www.dkp.de/",
+    "abstract": "kommunistische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "DKP"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Bundesarchiv_Bild_183-1990-0209-022,_Logo_Demokratie_jetzt.jpg/300px-Bundesarchiv_Bild_183-1990-0209-022,_Logo_Demokratie_jetzt.jpg",
+    "socialMediaIDs": [],
+    "id": "Q138852",
+    "label": "Demokratie Jetzt",
+    "abstract": "Bürgerrechtsbewegung in der Revolution 1989, ab 1990 politische Partei",
+    "type": "party"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2d/Sozialdemokratische_Partei_Deutschlands,_Logo_um_2000.svg/300px-Sozialdemokratische_Partei_Deutschlands,_Logo_um_2000.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "spdde" },
+      { "label": "Facebook", "id": "SPD" }
+    ],
+    "id": "Q49768",
+    "label": "Sozialdemokratische Partei Deutschlands",
+    "websiteURI": "https://www.spd.de/",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "SPD"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Bündnis_90_-_Die_Grünen_Logo.svg/300px-Bündnis_90_-_Die_Grünen_Logo.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "die_gruenen" },
+      { "label": "Facebook", "id": "B90DieGruenen" },
+      { "label": "Instagram", "id": "die_gruenen" }
+    ],
+    "id": "Q49766",
+    "label": "Bündnis 90/Die Grünen",
+    "websiteURI": "https://www.gruene.de/",
+    "abstract": "grüne politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "GRÜNE"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Die_Linke_logo.svg/300px-Die_Linke_logo.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "dieLinke" },
+      { "label": "Facebook", "id": "linkspartei" },
+      { "label": "Instagram", "id": "dielinke" }
+    ],
+    "id": "Q49764",
+    "label": "Die Linke",
+    "websiteURI": "https://www.die-linke.de/",
+    "abstract": "linke politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "DIE LINKE"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/CSU_Logo_since_2016.svg/300px-CSU_Logo_since_2016.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "CSU" },
+      { "label": "Facebook", "id": "CSU" },
+      { "label": "Instagram", "id": "christlichsozialeunion" }
+    ],
+    "id": "Q49763",
+    "label": "Christlich-Soziale Union in Bayern",
+    "websiteURI": "http://www.csu.de/",
+    "abstract": "politische Partei in Bayern",
+    "type": "party",
+    "labelAlternative": "CSU"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Cdu-logo.svg/300px-Cdu-logo.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "CDU" },
+      { "label": "Facebook", "id": "CDU" },
+      { "label": "Instagram", "id": "cdu" }
+    ],
+    "id": "Q49762",
+    "label": "Christlich Demokratische Union Deutschlands",
+    "websiteURI": "https://www.cdu.de/",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "CDU"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Die_PARTEI_Logo_Blur_Schatten_Vektor_V2.svg/300px-Die_PARTEI_Logo_Blur_Schatten_Vektor_V2.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "DiePARTEI" },
+      { "label": "Facebook", "id": "DiePARTEI" },
+      { "label": "Instagram", "id": "diepartei" }
+    ],
+    "id": "Q22748",
+    "label": "Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative",
+    "websiteURI": "https://www.die-partei.de/",
+    "abstract": "politische Partei in Deutschland, gegründet von Mitgliedern des Satiremagazins Titanic",
+    "type": "party",
+    "labelAlternative": "Die PARTEI"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Piratenpartei_deutschland_logo.svg/300px-Piratenpartei_deutschland_logo.png",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "Piratenpartei" },
+      { "label": "Facebook", "id": "PiratenparteiDeutschland" }
+    ],
+    "id": "Q13129",
+    "label": "Piratenpartei Deutschland",
+    "websiteURI": "https://www.piratenpartei.de/",
+    "abstract": "politische Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "PIRATEN"
+  },
+  {
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Logo_der_Freien_Demokraten.jpg/300px-Logo_der_Freien_Demokraten.jpg",
+    "socialMediaIDs": [
+      { "label": "Twitter", "id": "fdp" },
+      { "label": "Facebook", "id": "FDP" }
+    ],
+    "id": "Q13124",
+    "label": "Freie Demokratische Partei",
+    "websiteURI": "https://www.fdp.de/",
+    "abstract": "liberale Partei in Deutschland",
+    "type": "party",
+    "labelAlternative": "FDP"
+  }
+]
