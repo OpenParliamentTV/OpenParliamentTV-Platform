@@ -6,6 +6,9 @@ require_once(__DIR__."/../api/v1/api.php");
 
 error_reporting(E_ALL ^ E_WARNING ^ E_NOTICE);
 
+ignore_user_abort(true);
+set_time_limit(0);
+
 
 $meta["inputDir"] = __DIR__."/input/";
 $meta["doneDir"] = __DIR__."/done/";
@@ -41,6 +44,7 @@ function importJson2sql() {
 
     //ToDo: Remove temporary limit to 5 files
     $fileCnt = 0;
+    $mCnt = 0;
 
     foreach ($inputFiles as $file) {
 
@@ -57,6 +61,7 @@ function importJson2sql() {
 
             $return = apiV1($media);
             if ($return["meta"]["requestStatus"] != "success") {
+                /*
                 echo "<pre>";
                 echo "###########\n";
                 echo $file."\n";
@@ -67,6 +72,13 @@ function importJson2sql() {
                 echo "</textarea>";
                 echo "\n###########\n\n\n\n";
                 echo "</pre>";
+                */
+
+            } else {
+                $mCnt++;
+                if ($mCnt>=20) {
+                    header("Refresh:0");
+                }
             }
 
         }
@@ -82,11 +94,13 @@ function importJson2sql() {
         }
 
         //ToDo: Remove temporary limit to 5 files
+        /*
         $fileCnt++;
         if ($fileCnt >= 5) {
             echo 'EXITING ...';
             exit();
         }
+        */
 
     }
 }
