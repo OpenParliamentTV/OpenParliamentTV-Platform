@@ -286,7 +286,7 @@ function mediaGetByID($id = false) {
 
                     case "person":
 
-                        //TODO: What if no party or no fraction?
+                        //TODO: What if no party or no faction?
                         $pitem = $db->getRow("SELECT
                                 p.*,
                                 op.OrganisationID,
@@ -294,9 +294,9 @@ function mediaGetByID($id = false) {
                                 op.OrganisationID as PartyID,
                                 op.OrganisationLabel as PartyLabel,
                                 op.OrganisationLabelAlternative as PartyLabelAlternative,
-                                ofr.OrganisationID as FractionID,
-                                ofr.OrganisationLabel as FractionLabel,
-                                ofr.OrganisationLabelAlternative as FractionLabelAlternative
+                                ofr.OrganisationID as FactionID,
+                                ofr.OrganisationLabel as FactionLabel,
+                                ofr.OrganisationLabelAlternative as FactionLabelAlternative
                             FROM ?n AS p
                             LEFT JOIN ?n as op 
                                 ON op.OrganisationID = p.PersonPartyOrganisationID
@@ -318,9 +318,9 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["party"]["id"] = $pitem["PartyID"];
                         $tmpAnnotationItem["attributes"]["party"]["label"] = $pitem["PartyLabel"];
                         $tmpAnnotationItem["attributes"]["party"]["labelAlternative"] = $pitem["PartyLabelAlternative"];
-                        $tmpAnnotationItem["attributes"]["fraction"]["id"] = $pitem["FractionID"];
-                        $tmpAnnotationItem["attributes"]["fraction"]["label"] = $pitem["FractionLabel"];
-                        $tmpAnnotationItem["attributes"]["fraction"]["labelAlternative"] = $pitem["FractionLabelAlternative"];
+                        $tmpAnnotationItem["attributes"]["faction"]["id"] = $pitem["FactionID"];
+                        $tmpAnnotationItem["attributes"]["faction"]["label"] = $pitem["FactionLabel"];
+                        $tmpAnnotationItem["attributes"]["faction"]["labelAlternative"] = $pitem["FactionLabelAlternative"];
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["people"]["data"], $tmpAnnotationItem);
 
