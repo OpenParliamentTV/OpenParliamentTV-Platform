@@ -61,18 +61,16 @@ function importJson2sql() {
 
             $return = apiV1($media);
             if ($return["meta"]["requestStatus"] != "success") {
-                /*
-                echo "<pre>";
-                echo "###########\n";
-                echo $file."\n";
-                echo "\n-----------\n";
-                print_r($return);
-                echo "<textarea>";
-                print_r($media);
-                echo "</textarea>";
-                echo "\n###########\n\n\n\n";
-                echo "</pre>";
-                */
+                
+                $logMessage = "###########\n";
+                $logMessage .= $file."\n";
+                $logMessage .= "\n-----------\n";
+                $logMessage .= json_encode($return);
+                $logMessage .= "\nMEDIA ITEM:\n\n";
+                $logMessage .= json_encode($media);
+                $logMessage .= "\n###########\n\n\n\n";
+
+                file_put_contents("import-error-log.txt", $logMessage, FILE_APPEND);
 
             } else {
                 $mCnt++;
