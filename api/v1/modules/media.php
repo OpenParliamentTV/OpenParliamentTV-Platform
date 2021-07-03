@@ -1252,7 +1252,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
                     if (($tmpParty["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpParty["data"]))) {
                         //Add Organisation Faction
-                        $tmpOrganisationPartyWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $personWD["data"][0]["party_wp"]]);
+                        $tmpOrganisationPartyWD = apiV1(["action" => "wikidataService", "itemType" => "party", "str" => $personWD["data"][0]["party_wp"]]);
 
                         if (($tmpOrganisationPartyWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationPartyWD["data"]) > 0)) {
 
