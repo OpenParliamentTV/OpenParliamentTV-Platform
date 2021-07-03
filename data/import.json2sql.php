@@ -38,6 +38,10 @@ function importJson2sql() {
         $return["txt"] = "No Inputfiles";
         return $return;
     }
+
+    //ToDo: Remove temporary limit to 5 files
+    $fileCnt = 0;
+
     foreach ($inputFiles as $file) {
 
         if ((is_dir($meta["inputDir"] . $file)) || (!is_file($meta["inputDir"] . $file)) || (!preg_match('/.*\.json$/DA', $file))) {
@@ -75,6 +79,13 @@ function importJson2sql() {
 
             unlink($meta["inputDir"] . $file);
 
+        }
+
+        //ToDo: Remove temporary limit to 5 files
+        $fileCnt++;
+        if ($fileCnt >= 5) {
+            echo 'EXITING ...';
+            exit();
         }
 
     }
