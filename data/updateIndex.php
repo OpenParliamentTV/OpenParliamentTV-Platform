@@ -129,24 +129,71 @@ function updateIndex() {
 
     require_once("../api/v1/api.php");
 
-	$data = apiV1(["action"=>"getItem", "itemType"=>"media", "id"=>"DE-0190003001"]);
+	/*****************************************
+	* START UPDATING INDEX PROGRAMMATICALLY
+	* ToDo: Fix MySQL Query
+	*****************************************/
 
-	//print_r($data["data"]);
-	//return;
+	$parliament = "DE";
 
-	//$data = '';
+	$opts = array(
+        'host'	=> $config["parliament"][$parliament]["sql"]["access"]["host"],
+        'user'	=> $config["parliament"][$parliament]["sql"]["access"]["user"],
+        'pass'	=> $config["parliament"][$parliament]["sql"]["access"]["passwd"],
+        'db'	=> $config["parliament"][$parliament]["sql"]["db"]
+    );
 
-	$docParams = array("index" => "openparliamenttv_de", "id" => "DE-0190003001", "body" => json_encode($data["data"]));
+    try {
 
-	try {
-		$result = $ESClient->index($docParams);
-	} catch(Exception $e) {
-		$result = $e->getMessage();
+        $dbp = new SafeMySQL($opts);
+
+    } catch (exception $e) {
+
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "503";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Database connection error";
+        $errorarray["detail"] = "Connecting to parliament database failed"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+        return $return;
+
+    }
+
+    $allMediaIDs = $dbp->getAll("SELECT MediaID FROM media");
+	//print_r($allMediaIDs);
+
+	foreach ($allMediaIDs as $id) { 
+		
+		$data = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>"media", 
+			"id"=>$id["MediaID"]
+		]);
+
+		//print_r($data["data"]);
+
+		$docParams = array(
+			"index" => "openparliamenttv_de", 
+			"id" => $id["MediaID"], 
+			"body" => json_encode($data["data"])
+		);
+
+		try {
+			$result = $ESClient->index($docParams);
+		} catch(Exception $e) {
+			$result = $e->getMessage();
+		}
+
+		echo '<pre>';
+		print_r($result);
+		echo '</pre>';
+
 	}
 
-	echo '<pre>';
-	print_r($result);
-	echo '</pre>';
+    /*****************************************
+	* END UPDATING INDEX PROGRAMMATICALLY
+	*****************************************/
 
 }
 
