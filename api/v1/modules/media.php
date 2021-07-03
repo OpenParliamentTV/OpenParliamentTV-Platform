@@ -1158,7 +1158,18 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                         "PersonSocialMediaIDs" => json_encode($personWD["data"][0]["socialMediaIDs"]),
                         "PersonAdditionalInformation" => $person["additionalInformation"]
                     );
-                    $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
+
+                    try {
+
+                        $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
+
+                    } catch (exception $e) {
+
+                        reportConflict("Media", "mediaAdd Person Error", $nextID, "", "Person could not be added - MediaID " . $nextID . ", personJSON: " . json_encode($person)." Error:".$e->getMessage(), $db);
+                        echo "Error:".$e->getMessage();
+                        continue;
+
+                    }
 
                     $personDB = personGetByID($personWD["data"][0]["id"]);
 
