@@ -998,7 +998,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
     }
 
     include_once(__DIR__."/document.php");
-    foreach ($item["document"] as $document) {
+    foreach ($item["documents"] as $document) {
 
         if (!$document["sourceURI"]) {
 
@@ -1031,7 +1031,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                                 $document["wikidataID"],
                                 $document["label"],
                                 $document["labelAlternative"],
-                                $document["abstract"],
+                                (($document["abstract"]) ? $document["abstract"] : "undefined"),
                                 $document["thumbnailURI"],
                                 $document["thumbnailCreator"],
                                 $document["thumbnailLicense"],
