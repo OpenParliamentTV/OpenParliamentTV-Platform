@@ -49,10 +49,8 @@
 
 		$result_items = $result["data"];
 
-		//TODO: TotalResults in meta info
-		//$totalResults = $result["meta"]["results"]["total"];
-		$totalResults = 1;
-
+		$totalResults = $result["meta"]["results"]["total"];
+		
 		$totalResultString = $totalResults;
 
 		if ($totalResults >= 10000 ) {
