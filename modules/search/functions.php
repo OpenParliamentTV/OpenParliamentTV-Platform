@@ -353,8 +353,8 @@ function getSearchBody($request, $getAllResults) {
 		
 		if (strlen($fuzzy_match) > 0) {
 			
-			//TODO: Check which item is textContents is the right one
-			$query["bool"]["must"][] = array("match"=>array("attributes.textContents.textBody" => array(
+			//TODO: Check which item in textContents is the right one
+			$query["bool"]["must"][] = array("match"=>array("attributes.textContents.textBody.sentences.text" => array(
 				"query"=>$fuzzy_match,
 				"operator"=>"and",
 				//"fuzziness"=>0,
@@ -363,7 +363,7 @@ function getSearchBody($request, $getAllResults) {
 
 		foreach ($exact_query_matches[0] as $exact_match) {
 			$exact_match = preg_replace('/(["\'])/m', '', $exact_match);
-			$query["bool"]["must"][] = array("match_phrase"=>array("attributes.textContents.textBody"=>$exact_match));
+			$query["bool"]["must"][] = array("match_phrase"=>array("attributes.textContents.textBody.sentences.text"=>$exact_match));
 		}
 		
 
@@ -401,8 +401,8 @@ function getSearchBody($request, $getAllResults) {
 
 	if ($getAllResults === false) {
 		$data["highlight"] = array(
-			"number_of_fragments"=>0,
-			"fields"=>array("attributes.textContents.textBody"=>new \stdClass())
+			"number_of_fragments"=>5,
+			"fields"=>array("attributes.textContents.textBody.sentences.text"=>new \stdClass())
 		);
 	} else {
 		$data["_source"] = ["meta"];
