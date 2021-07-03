@@ -231,7 +231,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                         require_once (__DIR__."/modules/person.php");
 
-                        $item = personSearch($_REQUEST);
+                        $item = personSearch($request);
 
                         if ($item["meta"]["requestStatus"] == "success") {
 
@@ -249,7 +249,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                         require_once (__DIR__."/modules/organisation.php");
 
-                        $item = organisationSearch($_REQUEST);
+                        $item = organisationSearch($request);
 
                         if ($item["meta"]["requestStatus"] == "success") {
 
@@ -267,7 +267,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                         require_once (__DIR__."/modules/document.php");
 
-                        $item = documentSearch($_REQUEST);
+                        $item = documentSearch($request);
 
                         if ($item["meta"]["requestStatus"] == "success") {
 
@@ -285,7 +285,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                         require_once (__DIR__."/modules/term.php");
 
-                        $item = termSearch($_REQUEST);
+                        $item = termSearch($request);
 
                         if ($item["meta"]["requestStatus"] == "success") {
 
@@ -303,7 +303,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                         require_once (__DIR__."/modules/media.php");
 
-                        $item = mediaSearch($_REQUEST);
+                        $item = mediaSearch($request);
 
                         if ($item["meta"]["requestStatus"] == "success") {
 
@@ -336,6 +336,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
             break;
             case "wikidataService":
+                $return["data"] = array();
                 switch ($request["itemType"]) {
 
                     case "person":
@@ -480,7 +481,68 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
                                 $errorarray["status"] = "404";
                                 $errorarray["code"] = "1";
                                 $errorarray["title"] = "No results";
-                                $errorarray["detail"] = "Person not found in dump"; //TODO: Description
+                                $errorarray["detail"] = "Party not found in dump"; //TODO: Description
+                                array_push($return["errors"], $errorarray);
+                            }
+
+
+                        } else {
+
+                            $return["meta"]["requestStatus"] = "error";
+                            $return["errors"] = array();
+                            $errorarray["status"] = "503";
+                            $errorarray["code"] = "1";
+                            $errorarray["title"] = "Missing Parameter str";
+                            $errorarray["detail"] = "missing parameter str"; //TODO: Description
+                            array_push($return["errors"], $errorarray);
+
+                        }
+
+                    break;
+
+                    case "faction":
+
+                        if ($request["str"]) {
+
+                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-factions-final.txt"),true);
+
+                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
+
+                                $request["str"] = preg_replace("/\s/",".*", $request["str"]);
+
+                                $tmpType = "label";
+
+                            } else {
+
+                                $tmpType = "id";
+
+                            }
+
+                            $return["data"] = [];
+
+                            foreach ($dump as $k=>$v) {
+
+                                if ((preg_match("/".$request["str"]."/i",$v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/".$request["str"]."/i",$v["labelAlternative"])))) {
+
+                                    $return["meta"]["requestStatus"] = "success";
+                                    $return["data"][] = $v;
+
+
+                                }
+
+                            }
+
+                            if (count($return["data"]) > 0) {
+                                return $return;
+                            } else {
+                                // No Result found.
+
+                                $return["meta"]["requestStatus"] = "error";
+                                $return["errors"] = array();
+                                $errorarray["status"] = "404";
+                                $errorarray["code"] = "1";
+                                $errorarray["title"] = "No results";
+                                $errorarray["detail"] = "Faction not found in dump"; //TODO: Description
                                 array_push($return["errors"], $errorarray);
                             }
 
@@ -500,6 +562,30 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
                     break;
 
                 }
+
+            break;
+
+            case "addMedia":
+
+                //TODO Auth
+
+                include_once(__DIR__."/modules/media.php");
+
+                $item = mediaAdd($request);
+
+                if ($item["meta"]["requestStatus"] == "success") {
+
+                    unset($return["errors"]);
+
+                } else {
+
+                    unset($return["data"]);
+
+                }
+
+                $return = array_replace_recursive($return, $item);
+
+
 
             break;
 

@@ -11,7 +11,7 @@ require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
  * @param string $id PersonID (= WikidataID)
  * @return array
  */
-function personGetByID($id = false) {
+function personGetByID($id = false, $db = false) {
 
     global $config;
 
@@ -36,22 +36,23 @@ function personGetByID($id = false) {
             'db'	=> $config["platform"]["sql"]["db"]
         );
 
+        if (!$db) {
+            try {
 
-        try {
+                $db = new SafeMySQL($opts);
 
-            $db = new SafeMySQL($opts);
+            } catch (exception $e) {
 
-        } catch (exception $e) {
+                $return["meta"]["requestStatus"] = "error";
+                $return["errors"] = array();
+                $errorarray["status"] = "503";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Database connection error";
+                $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+                array_push($return["errors"], $errorarray);
+                return $return;
 
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-            return $return;
-
+            }
         }
 
         $item = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Person"]." WHERE PersonID=?s",$id);

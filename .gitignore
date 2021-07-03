@@ -34,6 +34,7 @@ langcache/*.php
 
 # Data
 data/input/*.json
+data/done/*.json
 modules/import/input/*json
 modules/import/done/*json
 

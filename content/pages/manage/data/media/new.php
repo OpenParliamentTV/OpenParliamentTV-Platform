@@ -95,6 +95,10 @@ if ($_REQUEST["aTEST"]) {
                                     <input type="text" class="form-control" id="mediaOriginID" name="media[originID]" value="">
                                 </div>
                                 <div class="form-group">
+                                    <label for="mediaOriginMediaID">mediaOriginMediaID</label>
+                                    <input type="text" class="form-control" id="mediaOriginMediaID" name="media[originMediaID]" value="">
+                                </div>
+                                <div class="form-group">
                                     <label for="mediaSourcePage">mediaSourcePage</label>
                                     <input type="text" class="form-control" id="mediaSourcePage" name="media[sourcePage]" value="">
                                 </div>
@@ -105,6 +109,10 @@ if ($_REQUEST["aTEST"]) {
                                 <div class="form-group">
                                     <label for="dateEnd">dateEnd (MediaDateEnd)</label>
                                     <input type="text" class="form-control" id="dateEnd" name="dateEnd" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label for="mediaAdditionalInformation">mediaAdditionalInformation</label>
+                                    <input type="text" class="form-control" id="mediaAdditionalInformation" name="media[additionalInformation]" value="">
                                 </div>
                             </div>
                         </div>

@@ -2,8 +2,9 @@
 
 require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../config.php");
-require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../../modules/utilities/functions.php");
+require_once (__DIR__."/../../../modules/utilities/functions.conflicts.php");
 
 
 
@@ -247,7 +248,8 @@ function mediaGetByID($id = false) {
 
                         $ditem = $db->getRow("SELECT * FROM ?n WHERE OrganisationID=?s LIMIT 1", $config["platform"]["sql"]["tbl"]["Organisation"], $annotation["AnnotationResourceID"]);
                         $tmpAnnotationItem["type"] = "organisation";
-                        $tmpAnnotationItem["id"] = $annotation["AnnotationID"];
+                        //$tmpAnnotationItem["id"] = $annotation["AnnotationID"];
+                        $tmpAnnotationItem["id"] = $annotation["AnnotationResourceID"];
                         $tmpAnnotationItem["attributes"]["context"] = $annotation["AnnotationContext"];
                         $tmpAnnotationItem["attributes"]["type"] = $ditem["OrganisationType"];
                         $tmpAnnotationItem["attributes"]["label"] = $ditem["OrganisationLabel"];
@@ -257,7 +259,7 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["OrganisationThumbnailLicense"];
                         $tmpAnnotationItem["attributes"]["color"] = $ditem["OrganisationColor"];
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
-                        array_push($return["data"]["relationships"]["organisation"]["data"], $tmpAnnotationItem);
+                        array_push($return["data"]["relationships"]["organisations"]["data"], $tmpAnnotationItem);
 
                     break;
 
@@ -276,7 +278,7 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["TermThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["TermThumbnailLicense"];
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
-                        array_push($return["data"]["relationships"]["term"]["data"], $tmpAnnotationItem);
+                        array_push($return["data"]["relationships"]["terms"]["data"], $tmpAnnotationItem);
 
                     break;
 
@@ -540,15 +542,6 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
     }
 
-
-
-
-
-
-
-
-
-
     if ($return["meta"]["requestStatus"] == "error") {
 
         return $return;
@@ -629,6 +622,993 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
     return $return;
 
+
+
+}
+
+
+
+
+/**
+ * Add Media
+ */
+
+function mediaAdd($item = false, $db = false, $dbp = false) {
+
+    global $config;
+
+
+    /**
+     *
+     *
+     * VALIDATE AND PROCESS DATA
+     *
+     *
+     */
+
+    $return["errors"] = array();
+    if (!array_key_exists($item["parliament"], $config["parliament"])) {
+
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing parameter";
+        $errorarray["detail"] = "Missing parameter 'parliament'"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+
+    }
+
+    if (!is_numeric($item["electoralPeriod"]["number"])) {
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing parameter";
+        $errorarray["detail"] = "Missing parameter 'electoralPeriod[number]'"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+    }
+
+    if (!is_numeric($item["session"]["number"])) {
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing parameter";
+        $errorarray["detail"] = "Missing parameter 'session[number]'"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+    }
+
+    if (!$item["agendaItem"]["officialTitle"]) {
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing parameter";
+        $errorarray["detail"] = "Missing parameter 'agendaItem[officialTitle]'"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+    }
+
+    if (!$item["agendaItem"]["title"]) {
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing parameter";
+        $errorarray["detail"] = "Missing parameter 'agendaItem[title]'"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+    }
+
+    if (!$item["media"]["videoFileURI"]) {
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing parameter";
+        $errorarray["detail"] = "Missing parameter 'media[videoFileURI]'"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+    }
+
+    if (!$item["media"]["sourcePage"]) {
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing parameter";
+        $errorarray["detail"] = "Missing parameter 'media[sourcePage]'"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+    }
+
+    if (!$item["dateStart"]) {
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing parameter";
+        $errorarray["detail"] = "Missing parameter 'dateStart'"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+    }
+
+
+
+
+    if (count($return["errors"]) > 0) {
+
+        return $return;
+
+    }
+
+    /**
+     *
+     *
+     * DB-Connection
+     *
+     *
+     */
+
+    if (!$db) {
+
+        $opts = array(
+            'host'	=> $config["platform"]["sql"]["access"]["host"],
+            'user'	=> $config["platform"]["sql"]["access"]["user"],
+            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+            'db'	=> $config["platform"]["sql"]["db"]
+        );
+
+        try {
+
+            $db = new SafeMySQL($opts);
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "1";
+            $errorarray["title"] = "Database connection error";
+            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+
+    }
+
+    if (!$dbp) {
+
+        $opts = array(
+            'host'	=> $config["parliament"][$item["parliament"]]["sql"]["access"]["host"],
+            'user'	=> $config["parliament"][$item["parliament"]]["sql"]["access"]["user"],
+            'pass'	=> $config["parliament"][$item["parliament"]]["sql"]["access"]["passwd"],
+            'db'	=> $config["parliament"][$item["parliament"]]["sql"]["db"]
+        );
+
+        try {
+
+            $dbp = new SafeMySQL($opts);
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "2";
+            $errorarray["title"] = "Database connection error";
+            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+
+    }
+
+
+
+    $dbcheck = $dbp->getRow("SELECT MediaID FROM ?n WHERE MediaSourcePage = ?s", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"], $item["media"]["sourcePage"]);
+
+    if ($dbcheck) {
+
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "4";
+        $errorarray["title"] = "Mediaitem already exists";
+        $errorarray["detail"] = "Mediaitem already exists with ID: ".$dbcheck["MediaID"]; //TODO: Description
+        array_push($return["errors"], $errorarray);
+        return $return;
+
+    }
+
+
+
+
+    /**
+     * Electoral Period
+     */
+
+    $tmpElectoralPeriodID = $dbp->getRow("SELECT ElectoralPeriodID FROM ?n WHERE ElectoralPeriodNumber = ?i LIMIT 1", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["ElectoralPeriod"], $item["electoralPeriod"]["number"]);
+
+    if (!$tmpElectoralPeriodID) {
+
+        $tmpElectoralPeriodID = $item["parliament"]."-".sprintf("%02d", $item["electoralPeriod"]["number"]);
+        $dbp->query("INSERT INTO ?n SET ElectoralPeriodNumber = ?i, ElectoralPeriodID = ?s", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["ElectoralPeriod"], $item["electoralPeriod"]["number"], $tmpElectoralPeriodID);
+
+    }
+
+    $item["electoralPeriod"] = $tmpElectoralPeriodID;
+
+
+
+
+
+    /**
+     * Session of Electoral Period
+     */
+
+    $item["session"]["SessionID"] = $item["electoralPeriod"]["ElectoralPeriodID"].sprintf("%04d", $item["session"]["number"]);
+
+    $tmpSession = $dbp->getRow("SELECT * FROM ?n WHERE SessionID = ?s LIMIT 1", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Session"], $item["session"]["SessionID"]);
+
+    if (!$tmpSession) {
+
+        $dbp->query("INSERT INTO ?n SET
+                        SessionID=?s,
+                        SessionNumber=?s,
+                        SessionElectoralPeriodID=?s,
+                        SessionDateStart=?s,
+                        SessionDateEnd=?s",
+                        $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Session"],
+                        $item["session"]["SessionID"],
+                        $item["session"]["number"],
+                        $item["electoralPeriod"]["ElectoralPeriodID"],
+                        $item["session"]["dateStart"],
+                        $item["session"]["dateEnd"]);
+
+    }
+
+
+
+
+    /**
+     * AgendaItem of Session of Electoral Period
+     */
+
+    $tmpAgendaItem = $dbp->getRow("SELECT * FROM ?n
+                                    WHERE
+                                        AgendaItemSessionID = ?s
+                                    AND
+                                        AgendaItemOfficialTitle LIKE ?s
+                                    AND
+                                        AgendaItemTitle LIKE ?s",
+                                    $config["parliament"][$item["parliament"]]["sql"]["tbl"]["AgendaItem"],
+                                    $item["session"]["SessionID"],
+                                    $item["agendaItem"]["officialTitle"],
+                                    $item["agendaItem"]["title"]);
+    if (!$tmpAgendaItem) {
+
+        $dbp->query("INSERT INTO ?n SET
+                        AgendaItemSessionID=?s,
+                        AgendaItemOfficialTitle=?s,
+                        AgendaItemTitle=?s",
+                        $config["parliament"][$item["parliament"]]["sql"]["tbl"]["AgendaItem"],
+                        $item["session"]["SessionID"],
+                        $item["agendaItem"]["officialTitle"],
+                        $item["agendaItem"]["title"]);
+
+        $item["agendaItem"]["id"] = $dbp->insertId();
+
+    } else {
+
+        $item["agendaItem"]["id"] = $tmpAgendaItem["AgendaItemID"];
+
+    }
+
+
+
+
+
+
+    /**
+     * Media Add
+     */
+
+    $nextID = $dbp->getOne("SELECT MediaID FROM ?n WHERE MediaID LIKE ?s ORDER BY MediaID DESC LIMIT 1",
+                            $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"], $item["session"]["SessionID"]."%");
+
+    if (!$nextID) {
+
+        $nextID = $item["session"]["SessionID"].sprintf("%03d", 1);
+
+    } else {
+        $nextID = ((int)substr($nextID, -3))+1;
+        $nextID = $item["session"]["SessionID"].sprintf("%03d", $nextID);
+
+    }
+
+    try {
+        $dbp->query("INSERT INTO ?n SET
+                        MediaID=?s,
+                        MediaOriginID=?s,
+                        MediaOriginMediaID=?s,
+                        MediaAgendaItemID=?s,
+                        MediaCreator=?s,
+                        MediaLicense=?s,
+                        MediaOrder=0,
+                        MediaAligned=0,
+                        MediaPublic=0,
+                        MediaDateStart=?s,
+                        MediaDateEnd=?s,
+                        MediaDuration=?i,
+                        MediaVideoFileURI=?s,
+                        MediaAudioFileURI=?s,
+                        MediaSourcePage=?s,
+                        MediaThumbnailURI=?s,
+                        MediaThumbnailCreator=?s,
+                        MediaThumbnailLicense=?s,
+                        MediaAdditionalInformation=?s",
+                        $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"],
+                        $nextID,
+                        $item["media"]["originID"],
+                        $item["media"]["originMediaID"],
+                        $item["agendaItem"]["id"],
+                        $item["media"]["creator"],
+                        $item["media"]["license"],
+                        $item["dateStart"],
+                        $item["dateEnd"],
+                        $item["media"]["duration"],
+                        $item["media"]["videoFileURI"],
+                        $item["media"]["audioFileURI"],
+                        $item["media"]["sourcePage"],
+                        $item["media"]["thumbnailURI"],
+                        $item["media"]["thumbnailCreator"],
+                        $item["media"]["thumbnailLicense"],
+                        $item["media"]["additionalInformation"]);
+    } catch (exception $e) {
+
+        reportConflict("Media","mediaAdd failed","","","Could not add Media with ID: originID: ".$item["media"]["originID"].", originMediaID: ".$item["media"]["originMediaID"]." (new id:".$nextID.") Error:".$e->getMessage(),$db);
+
+        echo $e->getMessage();
+
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "503";
+        $errorarray["code"] = "2";
+        $errorarray["title"] = "Database error";
+        $errorarray["detail"] = "Adding media to database failed"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+        return $return;
+
+    }
+
+    foreach ($item["textContents"] as $textContent) {
+
+        $dbp->query("INSERT INTO ?n SET
+                       TextOriginTextID=?s,
+                       TextMediaID=?s,
+                       TextType=?s,
+                       TextBody=?s,
+                       TextSourceURI=?s,
+                       TextCreator=?s,
+                       TextLicense=?s,
+                       TextHash=?s,
+                       TextLanguage=?s",
+                        $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Text"],
+                        $textContent["originTextID"],
+                        $nextID,
+                        $textContent["type"],
+                        json_encode($textContent["textBody"]),
+                        $textContent["sourceURI"],
+                        $textContent["creator"],
+                        $textContent["license"],
+                        hash("sha256",json_encode($textContent["textBody"])),
+                        $textContent["language"]);
+
+    }
+
+    include_once(__DIR__."/document.php");
+    foreach ($item["document"] as $document) {
+
+        if (!$document["sourceURI"]) {
+
+            reportConflict("Media","mediaAdd document no sourceURI","","","Could not add Document to Database because sourceURI was missing for MediaID ".$nextID." personJSON: ".json_encode($document),$db);
+
+            continue;
+
+
+        } else {
+
+            $tmpDocumentID = $db->getOne("SELECT DocumentID FROM ?n WHERE DocumentSourceURI = ?s", $config["platform"]["sql"]["tbl"]["Document"], $document["sourceURI"]);
+
+            if (!$tmpDocumentID) {
+
+                $db->query("INSERT INTO ?n
+                            SET
+                                DocumentType=?s,
+                                DocumentWikidataID=?s,
+                                DocumentLabel=?s,
+                                DocumentLabelAlternative=?s,
+                                DocumentAbstract=?s,
+                                DocumentThumbnailURI=?s,
+                                DocumentThumbnailCreator=?s,
+                                DocumentThumbnailLicense=?s,
+                                DocumentSourceURI=?s,
+                                DocumentEmbedURI=?s,
+                                DocumentAdditionalInformation=?s",
+                            $config["platform"]["sql"]["tbl"]["Document"],
+                                $document["type"],
+                                $document["wikidataID"],
+                                $document["label"],
+                                $document["labelAlternative"],
+                                $document["abstract"],
+                                $document["thumbnailURI"],
+                                $document["thumbnailCreator"],
+                                $document["thumbnailLicense"],
+                                $document["sourceURI"],
+                                $document["embedURI"],
+                                $document["additionalInformation"]);
+                $tmpDocumentID = $db->insertId();
+
+            }
+
+            $document["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
+            $document["context"] = ($document["context"]) ? $document["context"] : "proceedingsReference";
+            $document["frametrailType"] = ($document["frametrailType"]) ? $document["frametrailType"] : "Annotation";
+
+            $tmpAnnotationItem = array(
+                "AnnotationMediaID" => $nextID,
+                "AnnotationType" => "document",
+                "AnnotationResourceID" => $tmpDocumentID,
+                "AnnotationContext" => $document["context"],
+                "AnnotationFrametrailType" => $document["frametrailType"],
+                "AnnotationTimeStart" => $document["timeStart"],
+                "AnnotationTimeEnd" => $document["timeEnd"],
+                "AnnotationCreator" => $document["creator"],
+                "AnnotationTags" => $document["tags"],
+                "AnnotationAdditionalInformation" => $document["additionalInformation"]
+            );
+
+            $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationItem);
+
+        }
+
+    }
+
+
+    include_once(__DIR__."/person.php");
+    include_once(__DIR__."/organisation.php");
+
+    if (count($item["people"]) < 1) {
+
+        reportConflict("Media","mediaAdd no person","","","Media has no people. MediaID ".$nextID,$db);
+
+    }
+
+    //TODO: Check which method works better and remove the other.
+    $method = 1;
+
+    if ($method == 1) {
+
+        foreach ($item["people"] as $person) {
+
+            $personWD = apiV1(["action" => "wikidataService", "itemType" => "person", "str" => $person["label"]]);
+
+            if (($personWD["meta"]["requestStatus"] == "success") && (count($personWD["data"]) > 0)) {
+                //Person found in Wikidata
+
+                if (gettype($personWD["data"][0]["factionID"]) == "array") {
+
+                    if (count($personWD["data"][0]["factionID"]) == 0) {
+                        unset($personWD["data"][0]["factionID"]);
+                    } else {
+                        foreach ($personWD["data"][0]["factionID"] as $tmpFactionID) {
+
+                            if (preg_match("/(Q|P)\d+/i", $tmpFactionID)) {
+                                $personWD["data"][0]["faction_wp"] = $tmpFactionID;
+                                break;
+                            }
+
+                        }
+                    }
+
+
+
+                } elseif (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["factionID"])) {
+
+                    $personWD["data"][0]["faction_wp"] = $personWD["data"][0]["factionID"];
+
+                }
+
+                if (gettype($personWD["data"][0]["partyID"]) == "array") {
+
+
+                    if (count($personWD["data"][0]["partyID"]) == 0) {
+                        unset($personWD["data"][0]["partyID"]);
+                    } else {
+
+                        foreach ($personWD["data"][0]["partyID"] as $tmpPartyID) {
+
+                            if (preg_match("/(Q|P)\d+/i", $tmpPartyID)) {
+                                $personWD["data"][0]["party_wp"] = $tmpPartyID;
+                                break;
+                            }
+
+                        }
+                    }
+
+                } elseif (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["partyID"])) {
+
+                    $personWD["data"][0]["party_wp"] = $personWD["data"][0]["partyID"];
+
+                }
+
+                $personDB = personGetByID($personWD["data"][0]["id"]);
+
+                if (($personDB["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$personDB["data"]))) {
+                    //Person does not exist in Database
+
+                    $tmpNewPerson = array(
+                        "PersonID" => $personWD["data"][0]["id"],
+                        "PersonType" => $person["type"],
+                        "PersonLabel" => $personWD["data"][0]["label"],
+                        //"PersonFirstName"=>$personDB["data"][0]["firstName"], //TODO: WikidataServiceDumps
+                        //"PersonLastName"=>$personDB["data"][0]["lastName"], //TODO: WikidataServiceDumps
+                        //"PersonDegree"=>$personDB["data"][0]["degree"], //TODO: WikidataServiceDumps
+                        "PersonBirthDate" => $personWD["data"][0]["birthDate"],
+                        "PersonGender" => $personWD["data"][0]["gender"],
+                        "PersonAbstract" => $personWD["data"][0]["abstract"],
+                        "PersonThumbnailURI" => ((gettype($personWD["data"][0]["thumbnailURI"]) == "array") ? $personWD["data"][0]["thumbnailURI"][0] : $personWD["data"][0]["thumbnailURI"]),
+                        "PersonThumbnailCreator" => $personWD["data"][0]["thumbnailCreator"],
+                        "PersonThumbnailLicense" => $personWD["data"][0]["thumbnailLicense"],
+                        "PersonEmbedURI" => $personWD["data"][0]["embedURI"],
+                        "PersonOriginID" => $personWD["data"][0]["originID"],
+                        "PersonPartyOrganisationID" => $personWD["data"][0]["party_wp"],
+                        "PersonFactionOrganisationID" => $personWD["data"][0]["faction_wp"],
+                        "PersonSocialMediaIDs" => json_encode($personWD["data"][0]["socialMediaIDs"]),
+                        "PersonAdditionalInformation" => $person["additionalInformation"]
+                    );
+                    $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
+
+                    $personDB = personGetByID($personWD["data"][0]["id"]);
+
+                }
+
+                //Add Person Annotation
+                $person["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
+
+                if (!$person["context"]) {
+                    reportConflict("Media", "mediaAdd person without context", "", "", "Person has no context - MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
+                    $person["context"] = "unknown";
+                }
+
+                $tmpAnnotationPerson = array(
+                    "AnnotationMediaID" => $nextID,
+                    "AnnotationType" => "person",
+                    "AnnotationResourceID" => $personDB["data"]["id"],
+                    "AnnotationContext" => $person["context"],
+                    "AnnotationFrametrailType" => (($person["frametrailType"]) ? $person["frametrailType"] : "Annotation"),
+                    "AnnotationTimeStart" => $person["timeStart"],
+                    "AnnotationTimeEnd" => $person["timeEnd"],
+                    "AnnotationCreator" => $person["creator"],
+                    "AnnotationTags" => $person["tags"],
+                    "AnnotationAdditionalInformation" => $person["additionalInformation"]
+                );
+
+                $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationPerson);
+
+
+                //Faction Add
+
+                if (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["faction_wp"])) {
+
+                    $tmpFaction = organisationGetByID($personWD["data"][0]["faction_wp"]);
+
+                    if (($tmpFaction["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpFaction["data"]))) {
+                        //Add Organisation Faction
+                        $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $personWD["data"][0]["faction_wp"]]);
+
+                        if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"]) > 0)) {
+
+                            $tmpFactionObj = array(
+                                "OrganisationID" => $tmpOrganisationFactionWD["data"][0]["id"],
+                                "OrganisationType" => $tmpOrganisationFactionWD["data"][0]["type"],
+                                "OrganisationLabel" => $tmpOrganisationFactionWD["data"][0]["label"],
+                                "OrganisationLabelAlternative" => $tmpOrganisationFactionWD["data"][0]["labelAlternative"],
+                                "OrganisationAbstract" => $tmpOrganisationFactionWD["data"][0]["abstract"],
+                                "OrganisationThumbnailURI" => $tmpOrganisationFactionWD["data"][0]["thumbnailURI"],
+                                "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
+                                "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
+                                "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
+                                "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
+                                "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
+                                "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
+                                "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
+                            );
+                            $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
+
+                        } else {
+
+                            reportConflict("Media", "mediaAdd faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
+
+                        }
+                    }
+                }
+
+                //Party Add
+
+                if (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["party_wp"])) {
+
+                    $tmpParty = organisationGetByID($personWD["data"][0]["party_wp"]);
+
+                    if (($tmpParty["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpParty["data"]))) {
+                        //Add Organisation Faction
+                        $tmpOrganisationPartyWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $personWD["data"][0]["party_wp"]]);
+
+                        if (($tmpOrganisationPartyWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationPartyWD["data"]) > 0)) {
+
+                            $tmpPartyObj = array(
+                                "OrganisationID" => $tmpOrganisationPartyWD["data"][0]["id"],
+                                "OrganisationType" => $tmpOrganisationPartyWD["data"][0]["type"],
+                                "OrganisationLabel" => $tmpOrganisationPartyWD["data"][0]["label"],
+                                "OrganisationLabelAlternative" => $tmpOrganisationPartyWD["data"][0]["labelAlternative"],
+                                "OrganisationAbstract" => $tmpOrganisationPartyWD["data"][0]["abstract"],
+                                "OrganisationThumbnailURI" => $tmpOrganisationPartyWD["data"][0]["thumbnailURI"],
+                                "OrganisationThumbnailCreator" => $tmpOrganisationPartyWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
+                                "OrganisationThumbnailLicense" => $tmpOrganisationPartyWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
+                                "OrganisationEmbedURI" => $tmpOrganisationPartyWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
+                                "OrganisationWebsiteURI" => $tmpOrganisationPartyWD["data"][0]["websiteURI"],
+                                "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationPartyWD["data"][0]["socialMediaIDs"]),
+                                "OrganisationColor" => $tmpOrganisationPartyWD["data"][0]["color"], //TODO WIKIDATA DUMP
+                                "OrganisationAdditionalInformation" => $tmpOrganisationPartyWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
+                            );
+                            $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpPartyObj);
+
+                        } else {
+
+                            reportConflict("Media", "mediaAdd party not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
+
+                        }
+                    }
+                }
+
+
+                //Current Faction Add
+
+                if (array_key_exists("faction",$person)) {
+
+                    $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $person["faction"]]);
+                    //echo "<pre>\n\napiSearch:<br>\n";
+                    //print_r($tmpOrganisationFactionWD);
+
+                    if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"])>0)) {
+
+                        $tmpFaction = organisationGetByID($tmpOrganisationFactionWD["data"][0]["id"]);
+
+                        if (($tmpFaction["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpFaction["data"]))) {
+                            //Add Organisation Faction
+
+                            $tmpFactionObj = array(
+                                "OrganisationID" => $tmpOrganisationFactionWD["data"][0]["id"],
+                                "OrganisationType" => $tmpOrganisationFactionWD["data"][0]["type"],
+                                "OrganisationLabel" => $tmpOrganisationFactionWD["data"][0]["label"],
+                                "OrganisationLabelAlternative" => $tmpOrganisationFactionWD["data"][0]["labelAlternative"],
+                                "OrganisationAbstract" => $tmpOrganisationFactionWD["data"][0]["abstract"],
+                                "OrganisationThumbnailURI" => $tmpOrganisationFactionWD["data"][0]["thumbnailURI"],
+                                "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
+                                "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
+                                "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
+                                "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
+                                "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
+                                "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
+                                "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
+                            );
+                            echo $db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
+                            $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
+
+                            //$tmpFaction["data"] = $tmpFactionObj;
+                            $tmpFaction = organisationGetByID($tmpOrganisationFactionWD["data"][0]["id"]);
+
+                        }
+                        //echo "\nTmpFaction:\n";
+                        //print_r($tmpFaction);
+                        if (preg_match("/(Q|P)\d+/i", $tmpFaction["data"]["id"])) {
+
+                            $annotationFaction["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
+
+                            $tmpAnnotationItem = array(
+                                "AnnotationMediaID" => $nextID,
+                                "AnnotationType" => "organisation",
+                                "AnnotationResourceID" => $tmpFaction["data"]["id"],
+                                "AnnotationContext" => "faction",
+                                "AnnotationFrametrailType" => "Annotation",
+                                "AnnotationTimeStart" => "",
+                                "AnnotationTimeEnd" => "",
+                                "AnnotationCreator" => $annotationFaction["creator"],
+                                "AnnotationTags" => "",
+                                "AnnotationAdditionalInformation" => ""
+                            );
+
+                            $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationItem);
+
+                        } else {
+
+                            reportConflict("Media", "mediaAdd current faction did not match wikidata id scheme", "", "", "MediaID " . $nextID . " Person: " . json_encode($person), $db);
+
+                        }
+
+                    } else {
+
+                        reportConflict("Media", "mediaAdd current faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
+
+                    }
+                }
+
+                /*
+                                echo "<pre>#############\n";
+                                print_r($personDB);
+                                print_r($personWD);
+                                print_r($person);
+                                echo "</pre>\n#############\n\n\n\n";
+                                */
+
+            } else {
+                //Person not found in Wikidata
+                reportConflict("Media", "mediaAdd person not found", "", "", "Person not found in wikidata - MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
+            }
+
+        }
+
+
+    } else {
+        foreach ($item["people"] as $person) {
+
+
+            if ($person["wikidataID"]) {
+                $personDB = personGetByID($person["wikidataID"]);
+            } else {
+                $personDB = personSearch(["name" => $person["label"]]);
+            }
+
+            if (($personDB["meta"]["requestStatus"] != "success") || (count($personDB["data"]) < 1)) {
+
+                //Person is not in Database yet.
+                $personWD = apiV1(["action" => "wikidataService", "itemType" => "person", "str" => $person["label"]]);
+
+                if (($personWD["meta"]["requestStatus"] == "success") && (count($personWD["data"]) > 0)) {
+
+                    if (count($personWD["data"]) > 1) {
+                        reportConflict("Media", "mediaAdd person unclear", "", "", "More then one person has been found. First one has been added: MediaID " . $nextID . " personJSON: " . json_encode($person) . " personWikidataJSON: " . json_encode($personWD), $db);
+                    }
+
+                    if (gettype($personWD["data"][0]["faction"]) == "array") {
+
+                        if (count($personWD["data"][0]["faction"]) == 0) {
+                            unset($personWD["data"][0]["faction"]);
+                        } else {
+                            foreach ($personWD["data"][0]["faction"] as $tmpFactionID) {
+
+                                if (preg_match("/(Q|P)\d+/i", $tmpFactionID)) {
+                                    $personWD["data"][0]["faction_wp"] = $tmpFactionID;
+                                    break;
+                                }
+
+                            }
+                        }
+
+
+
+                    } elseif (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["faction"])) {
+
+                        $personWD["data"][0]["faction_wp"] = $personWD["data"][0]["faction"];
+
+                    }
+
+                    if (gettype($personWD["data"][0]["party"]) == "array") {
+
+
+                        if (count($personWD["data"][0]["party"]) == 0) {
+                            unset($personWD["data"][0]["party"]);
+                        } else {
+
+                            foreach ($personWD["data"][0]["party"] as $tmpPartyID) {
+
+                                if (preg_match("/(Q|P)\d+/i", $tmpPartyID)) {
+                                    $personWD["data"][0]["party_wp"] = $tmpPartyID;
+                                    break;
+                                }
+
+                            }
+                        }
+
+                    } elseif (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["party"])) {
+
+                        $personWD["data"][0]["party_wp"] = $personWD["data"][0]["party"];
+
+                    }
+                    //print_r($personDB);
+                    $personDB = personGetByID($personWD["data"][0]["id"]);
+                    if (($personDB["meta"]["requestStatus"] != "success") || (count($personDB["data"]) < 1)) {
+                        $tmpNewPerson = array(
+                            "PersonID" => $personWD["data"][0]["id"],
+                            "PersonType" => $person["type"],
+                            "PersonLabel" => $personWD["data"][0]["label"],
+                            //"PersonFirstName"=>$personDB["data"][0]["firstName"], //TODO: WikidataServiceDumps
+                            //"PersonLastName"=>$personDB["data"][0]["lastName"], //TODO: WikidataServiceDumps
+                            //"PersonDegree"=>$personDB["data"][0]["degree"], //TODO: WikidataServiceDumps
+                            "PersonBirthDate" => $personWD["data"][0]["birthDate"],
+                            "PersonGender" => $personWD["data"][0]["gender"],
+                            "PersonAbstract" => $personWD["data"][0]["abstract"],
+                            "PersonThumbnailURI" => ((gettype($personWD["data"][0]["thumbnailURI"]) == "array") ? $personWD["data"][0]["thumbnailURI"][0] : $personWD["data"][0]["thumbnailURI"]),
+                            "PersonThumbnailCreator" => $personWD["data"][0]["thumbnailCreator"],
+                            "PersonThumbnailLicense" => $personWD["data"][0]["thumbnailLicense"],
+                            "PersonEmbedURI" => $personWD["data"][0]["embedURI"],
+                            "PersonOriginID" => $personWD["data"][0]["originID"],
+                            "PersonPartyOrganisationID" => $personWD["data"][0]["party_wp"],
+                            "PersonFactionOrganisationID" => $personWD["data"][0]["faction_wp"],
+                            "PersonSocialMediaIDs" => json_encode($personWD["data"][0]["socialMediaIDs"]),
+                            "PersonAdditionalInformation" => $person["additionalInformation"]
+                        );
+                        $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
+                    }
+                    //print_r($tmpNewPerson);
+                    //echo $db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
+
+
+
+                    $personDB = personGetByID($personWD["data"][0]["id"]);
+
+                } else {
+
+                    reportConflict("Media", "mediaAdd person not found", "", "", "Person has not been found in wikidataDump: MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
+
+                }
+
+            } elseif ((!array_key_exists("id", $personDB["data"])) && (count($personDB["data"]) > 1)) {
+
+                reportConflict("Media", "mediaAdd person unclear", "", "", "More then one person has been found. First one has been used: MediaID " . $nextID . " personJSON: " . json_encode($person)." personDB-data: ".json_encode($personDB["data"]), $db);
+                $personDB["data"] = $personDB["data"][0];
+
+            }
+
+            if ($personDB["data"]["id"]) {
+
+                $person["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
+
+                if (!$person["context"]) {
+                    reportConflict("Media", "mediaAdd person without context", "", "", "Person has no context - MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
+                    $person["context"] = "unknown";
+                }
+
+                $tmpAnnotationPerson = array(
+                    "AnnotationMediaID" => $nextID,
+                    "AnnotationType" => "person",
+                    "AnnotationResourceID" => $personDB["data"]["id"],
+                    "AnnotationContext" => $person["context"],
+                    "AnnotationFrametrailType" => (($person["frametrailType"]) ? $person["frametrailType"] : "Annotation"),
+                    "AnnotationTimeStart" => $person["timeStart"],
+                    "AnnotationTimeEnd" => $person["timeEnd"],
+                    "AnnotationCreator" => $person["creator"],
+                    "AnnotationTags" => $person["tags"],
+                    "AnnotationAdditionalInformation" => $person["additionalInformation"]
+                );
+
+                $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationPerson);
+
+            }
+
+
+            // ORGANISATIONS
+
+            //FACTION
+
+            //Check if Faction of DB-Entry exists
+            if (($personDB["data"]["faction"]) && (!is_array($personDB["data"]["faction"]))) {
+
+                $tmpOrganisationFaction = organisationGetByID($personDB["data"]["faction"], $db);
+
+                if (($tmpOrganisationFaction["meta"]["requestStatus"] != "success") || (!array_key_exists("id", $tmpOrganisationFaction["data"]))) {
+
+                    $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $personDB["data"]["faction"]]);
+
+                    if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"]) > 0)) {
+
+                        $tmpFactionObj = array(
+                            "OrganisationID" => $tmpOrganisationFactionWD["data"][0]["id"],
+                            "OrganisationType" => $tmpOrganisationFactionWD["data"][0]["type"],
+                            "OrganisationLabel" => $tmpOrganisationFactionWD["data"][0]["label"],
+                            "OrganisationLabelAlternative" => $tmpOrganisationFactionWD["data"][0]["labelAlternative"],
+                            "OrganisationAbstract" => $tmpOrganisationFactionWD["data"][0]["abstract"],
+                            "OrganisationThumbnailURI" => $tmpOrganisationFactionWD["data"][0]["thumbnailURI"],
+                            "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
+                            "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
+                            "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
+                            "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
+                            "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
+                            "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
+                            "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
+                        );
+                        $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
+
+                    } else {
+
+                        reportConflict("Media", "mediaAdd faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
+
+                    }
+
+
+                }
+            }
+
+            //if (($person["faction"]) && ($person["faction"] != null)) {
+            if ($person["faction"]) {
+
+                $tmpOrganisationFaction = organisationSearch(["name"=>$person["faction"]], $db);
+
+                if (($tmpOrganisationFaction["meta"]["requestStatus"] != "success") || (count($tmpOrganisationFaction["data"]) < 1)) {
+
+                    $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $person["faction"]]);
+
+                    if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"]) > 0)) {
+
+                        $tmpFactionObj = array(
+                            "OrganisationID" => $tmpOrganisationFactionWD["data"][0]["id"],
+                            "OrganisationType" => $tmpOrganisationFactionWD["data"][0]["type"],
+                            "OrganisationLabel" => $tmpOrganisationFactionWD["data"][0]["label"],
+                            "OrganisationLabelAlternative" => $tmpOrganisationFactionWD["data"][0]["labelAlternative"],
+                            "OrganisationAbstract" => $tmpOrganisationFactionWD["data"][0]["abstract"],
+                            "OrganisationThumbnailURI" => $tmpOrganisationFactionWD["data"][0]["thumbnailURI"],
+                            "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
+                            "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
+                            "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
+                            "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
+                            "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
+                            "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
+                            "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
+                        );
+                        $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
+
+                        $person["faction"] = $tmpOrganisationFactionWD["data"][0]["id"];
+
+                    } else {
+
+                        reportConflict("Media", "mediaAdd faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
+
+                    }
+
+
+                } else {
+
+                    $person["faction"] = $tmpOrganisationFaction["data"]["id"];
+
+                }
+
+
+                if (preg_match("/(Q|P)\d+/i", $person["faction"])) {
+
+                    $annotationFaction["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
+
+                    $tmpAnnotationItem = array(
+                        "AnnotationMediaID" => $nextID,
+                        "AnnotationType" => "organisation",
+                        "AnnotationResourceID" => $person["faction"],
+                        "AnnotationContext" => "faction",
+                        "AnnotationFrametrailType" => "Annotation",
+                        "AnnotationTimeStart" => "",
+                        "AnnotationTimeEnd" => "",
+                        "AnnotationCreator" => $annotationFaction["creator"],
+                        "AnnotationTags" => "",
+                        "AnnotationAdditionalInformation" => ""
+                    );
+
+                    $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationItem);
+
+                } elseif ($person["faction"] == null) {
+                    //Conflict?
+                } else {
+
+                    reportConflict("Media", "mediaAdd faction did not match wikidata id scheme", "", "", "MediaID " . $nextID . " Person: " . json_encode($person), $db);
+
+                }
+
+            }
+
+        }
+    }
+
+    $return["meta"]["requestStatus"] = "success";
+
+    return $return;
 
 
 }

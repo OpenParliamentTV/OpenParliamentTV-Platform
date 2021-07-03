@@ -9,11 +9,12 @@ require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
  * @param string $id String of OrganisationID (= WikidataID)
  * @return array
  */
-function organisationGetByID($id = false) {
+function organisationGetByID($id = false, $db = false) {
 
     global $config;
 
-    if (!$id) {
+
+    if (!preg_match("/(Q|P)\d+/i", $id)) {
 
         $return["meta"]["requestStatus"] = "error";
         $return["errors"] = array();
@@ -27,27 +28,31 @@ function organisationGetByID($id = false) {
 
     } else {
 
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        );
+        if (!$db) {
 
-        try {
+            $opts = array(
+                'host'	=> $config["platform"]["sql"]["access"]["host"],
+                'user'	=> $config["platform"]["sql"]["access"]["user"],
+                'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+                'db'	=> $config["platform"]["sql"]["db"]
+            );
 
-            $db = new SafeMySQL($opts);
+            try {
 
-        } catch (Exception $e) {
+                $db = new SafeMySQL($opts);
 
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-            return $return;
+            } catch (exception $e) {
+
+                $return["meta"]["requestStatus"] = "error";
+                $return["errors"] = array();
+                $errorarray["status"] = "503";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Database connection error";
+                $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+                array_push($return["errors"], $errorarray);
+                return $return;
+
+            }
 
         }
 
