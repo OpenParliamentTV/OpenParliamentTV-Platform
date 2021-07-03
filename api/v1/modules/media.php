@@ -374,13 +374,21 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
     try {
         $search = searchSpeeches($parameter);
-
         foreach ($search["hits"]["hits"] as $hit) {
 
-            $return["data"][] = $hit["_source"];
+            $resultData = $hit["_source"];
+            $resultData["_score"] = $hit["_score"];
+            $resultData["_highlight"] = $hit["highlight"];
+            $resultData["_finds"] = $hit["finds"];
+
+            $return["data"][] = $resultData;
 
         }
         $return["meta"]["requestStatus"] = "success";
+
+        //TODO: Check if this makes sense here
+        $return["meta"]["results"]["count"] = count($search["hits"]["hits"]);
+        $return["meta"]["results"]["total"] = $search["hits"]["total"]["value"];
 
         //TODO: $return["data"]["links"]["self"] = $config["dir"]["api"]."/"."search/organisations?".getURLParameterFromArray($filteredParameters);
 
