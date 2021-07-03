@@ -1323,8 +1323,8 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                                 "AnnotationResourceID" => $tmpFaction["data"]["id"],
                                 "AnnotationContext" => "faction",
                                 "AnnotationFrametrailType" => "Annotation",
-                                "AnnotationTimeStart" => "",
-                                "AnnotationTimeEnd" => "",
+                                //"AnnotationTimeStart" => "",
+                                //"AnnotationTimeEnd" => "",
                                 "AnnotationCreator" => $annotationFaction["creator"],
                                 "AnnotationTags" => "",
                                 "AnnotationAdditionalInformation" => ""
