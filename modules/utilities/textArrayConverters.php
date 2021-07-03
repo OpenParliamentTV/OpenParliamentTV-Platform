@@ -63,13 +63,17 @@ $exampleAlignmentOutput = '{
  ]
 }';
 
-//print_r(textObjectToHTMLString($exampleTextObject));
-//print_r(textObjectToAlignmentInput($exampleTextObject));
+$exampleMediaFileURI = 'https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7174046/7174046_h264_720_400_2000kb_baseline_de_2192.mp4';
 
+//print_r(textObjectToHTMLString($exampleTextObject, $exampleMediaFileURI, 'DE-0190003001'));
+print_r(textObjectToAlignmentInput($exampleTextObject, $exampleMediaFileURI, 'DE-0190003001'));
+
+/*
 header('Content-Type: application/json');
 print_r(mergeAlignmentOutputWithTextObject($exampleAlignmentOutput, $exampleTextObject));
+*/
 
-function textObjectToHTMLString($inputTextObject, $autoAddIDs = false) {
+function textObjectToHTMLString($inputTextObject, $mediaFileURI, $mediaID, $autoAddIDs = false) {
 	
 	$sentenceID = 0;
 
@@ -82,7 +86,7 @@ function textObjectToHTMLString($inputTextObject, $autoAddIDs = false) {
 		echo 'Input text needs to be a String';
 	}
 	
-	$outputHTML = '<div>';
+	$outputHTML = '<div data-media-file-uri="'.$mediaFileURI.'" data-media-id="'.$mediaID.'">';
 
 	foreach ($inputTextObject['textBody'] as $paragraph) {
 		
@@ -114,11 +118,11 @@ function textObjectToHTMLString($inputTextObject, $autoAddIDs = false) {
 
 }
 
-function textObjectToAlignmentInput($inputTextObject) {
+function textObjectToAlignmentInput($inputTextObject, $mediaFileURI, $mediaID) {
 	
 	$outputXML = '<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="utf-8"/></head><body>';
 
-	$outputXML .= textObjectToHTMLString($inputTextObject, true);
+	$outputXML .= textObjectToHTMLString($inputTextObject, $mediaFileURI, $mediaID, true);
 
 	$outputXML .= '</body></html>';
 
