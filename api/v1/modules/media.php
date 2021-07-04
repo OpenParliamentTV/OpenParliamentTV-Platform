@@ -5,8 +5,7 @@ require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/functions.conflicts.php");
-
-
+require_once (__DIR__."/../../../modules/utilities/textArrayConverters.php");
 
 /**
  * @param string $id MediaID
@@ -645,7 +644,6 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
     global $config;
 
-
     /**
      *
      *
@@ -981,6 +979,10 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
     }
 
     foreach ($item["textContents"] as $textContent) {
+
+        foreach ($textContent["textBody"] as $textBodyIndex => $textBodyItem) {
+            $textContent["textBody"][$textBodyIndex]["text"] = simpleTextBodyArrayToHTMLString($textBodyItem);
+        }
 
         $dbp->query("INSERT INTO ?n SET
                        TextOriginTextID=?s,
