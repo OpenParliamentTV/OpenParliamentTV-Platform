@@ -105,11 +105,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "media":
-		$apiResult = apiV1([
-			"action"=>"search", 
-			"itemType"=>$page, 
-			"id"=>$_REQUEST["id"]]
-		);
+		// API Result is included via include.media.php
 		$pageTitle = '';
 		$pageType = 'default';
 		ob_start();
