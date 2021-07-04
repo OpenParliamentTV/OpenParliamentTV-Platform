@@ -300,19 +300,6 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	box-sizing: border-box;
 }
 
-.layoutArea .contentViewContainer .contentViewContents .customhtmlContainer p[klasse="redner"]:first-child {
-	display: none;
-}
-
-.layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .rede {
-	padding: 13px;
-}
-
-.layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .rede .kommentar {
-	padding-bottom: 6px;
-	font-style: italic;
-}
-
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased {
 	background-color: transparent;
 }
@@ -322,11 +309,13 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	color: #000;
 }
 
-.layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .kommentar {
+.layoutArea .contentViewContainer .contentViewContents .customhtmlContainer p[data-type="comment"] {
+	padding-bottom: 6px;
+	font-style: italic;
 	margin-bottom: 1rem;
 }
 
-.layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .kommentar::before {
+.layoutArea .contentViewContainer .contentViewContents .customhtmlContainer p[data-type="comment"]::before {
 	font-family: frametrail-webfont !important;
 	content: '\f0e5';
 	padding-right: 7px;
