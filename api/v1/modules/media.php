@@ -935,7 +935,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                         MediaLicense=?s,
                         MediaOrder=0,
                         MediaAligned=0,
-                        MediaPublic=0,
+                        MediaPublic=1,
                         MediaDateStart=?s,
                         MediaDateEnd=?s,
                         MediaDuration=?i,
