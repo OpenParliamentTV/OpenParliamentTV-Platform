@@ -194,6 +194,7 @@ function searchStats($request) {
  * @return array
  */
 function getSearchBody($request, $getAllResults) {
+	
 	$filter = array("must"=>array(), "should"=>array());
 
 	//ONLY INCLUDE ALIGNED SPEECHES

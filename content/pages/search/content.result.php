@@ -19,6 +19,8 @@
 	if (!$_REQUEST["a"] || count($_REQUEST) < 2) {
 	?>
 	
+
+
 	<div class="row justify-content-center">
 		<div id="introHint" class="col-11 col-md-8 col-lg-6 col-xl-5">
 			<img src="content/client/images/arrow.png" class="bigArrow d-none d-md-inline">

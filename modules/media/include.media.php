@@ -1,10 +1,12 @@
 <?php
-
-	/*
-	echo '<pre>';
-	print_r($apiResult["data"]);
-	echo '</pre>';
-	*/
+	
+	require_once(__DIR__."/../../api/v1/api.php");
+	
+	$apiInput = $_REQUEST;
+	$apiInput["action"] = "search";
+	$apiInput["a"] = "search";
+	$apiInput["itemType"] = "media";
+	$apiResult = apiV1($apiInput);
 
 	$autoplayResults = boolval($_REQUEST['playresults']);
 
@@ -15,6 +17,8 @@
 	        break;
 	    }
 	}
+
+	$textContentsHTML = textObjectToHTMLString(json_encode($speech["attributes"]['textContents'][0]), $speech["attributes"]['videoFileURI'], $speech["id"]);
 
 	$prevResult = ($speechIndex > 0) ? array_values(array_slice($apiResult["data"], $speechIndex-1, 1))[0] : null;
 	$nextResult = ($speechIndex < count($apiResult["data"])) ? array_values(array_slice($apiResult["data"], $speechIndex+1, 1))[0] : null;

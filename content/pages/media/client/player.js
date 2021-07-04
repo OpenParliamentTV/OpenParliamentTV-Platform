@@ -39,7 +39,7 @@ function updateContents(resultURL) {
         updateAjax.abort();
     }
     var resultURLParts = resultURL.split('?'),
-        ajaxURLParams = 'id='+ resultURLParts[0];
+        ajaxURLParams = 'a=media&id='+ resultURLParts[0];
     if (resultURLParts[1]) {
         ajaxURLParams += '&'+ resultURLParts[1];
     }
@@ -62,7 +62,7 @@ function updatePlayer() {
 
 	if (window.OPTV_Player && typeof window.OPTV_Player.destroy == "function") {
 		window.OPTV_Player.destroy();
-        $('#mediaContainer').append('<div id="OPTV_Player" class="frametrail-body" data-frametrail-theme="openparliamenttv"></div>');
+        $('.playerTitle').after('<div id="OPTV_Player" class="frametrail-body" data-frametrail-theme="openparliamenttv"></div>');
 	}
 
     if (prevResultURL) {
@@ -381,11 +381,13 @@ function updatePlayer() {
         //$('.videoStartOverlay').removeClass('inactive').show();
     });
 
-    /*
+    
     OPTV_Player.on('ended', function() {
-        location.href = $('.nextSpeech').attr('href');
+        if (autoplayResults && nextResultURL) {
+            updateQuery(nextResultID);
+        }
     });
-    */
+    
 }
 
 function updateAutoplayState() {
