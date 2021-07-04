@@ -18,7 +18,11 @@
 	    }
 	}
 
-	$textContentsHTML = textObjectToHTMLString(json_encode($speech["attributes"]['textContents'][0]), $speech["attributes"]['videoFileURI'], $speech["id"]);
+	if (isset($speech["_highlight"])) {
+		$textContentsHTML = $speech["_highlight"]["attributes.textContents.textHTML"][0];
+	} else {
+		$textContentsHTML = textObjectToHTMLString(json_encode($speech["attributes"]['textContents'][0]), $speech["attributes"]['videoFileURI'], $speech["id"]);
+	}
 
 	$prevResult = ($speechIndex > 0) ? array_values(array_slice($apiResult["data"], $speechIndex-1, 1))[0] : null;
 	$nextResult = ($speechIndex < count($apiResult["data"])) ? array_values(array_slice($apiResult["data"], $speechIndex+1, 1))[0] : null;

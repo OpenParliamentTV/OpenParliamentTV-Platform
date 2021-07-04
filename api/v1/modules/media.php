@@ -181,7 +181,15 @@ function mediaGetByID($id = false) {
                 $tmpTextItem = array();
                 $tmpTextItem["id"] = $itemText["TextID"];
                 $tmpTextItem["type"] = $itemText["TextType"];
-                $tmpTextItem["textBody"] = json_decode($itemText["TextBody"]);
+                $tmpTextItem["textBody"] = json_decode($itemText["TextBody"], true);
+
+                //TODO: Check if this makes sense here (and if it makes sense at all)
+                $textHTML = '';
+                foreach ($tmpTextItem["textBody"] as $paragraph) {
+                    $textHTML .= $paragraph["text"];
+                }
+                $tmpTextItem["textHTML"] = $textHTML;
+
                 $tmpTextItem["sourceURI"] = $itemText["TextSourceURI"];
                 $tmpTextItem["creator"] = $itemText["TextCreator"];
                 $tmpTextItem["license"] = $itemText["TextLicense"];

@@ -70,10 +70,9 @@ function searchSpeeches($request) {
 			$resultCnt++;
 			$results["hits"]["hits"][$resultCnt-1]["finds"] = array();
 
+			$html = $hit["highlight"]["attributes.textContents.textHTML"][0];
 
-			$html = $hit["highlight"]["content"][0];
-
-			if ($html) {
+			if (strlen($html) > 1) {
 				$dom = new DOMDocument();
 				@$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
 				$xPath = new DOMXPath($dom);
@@ -89,10 +88,9 @@ function searchSpeeches($request) {
 
 				foreach($elems as $k=>$elem) {
 
-					$tmp["data-start"] = $elem->parentNode->getAttribute("data-start");
-					$tmp["data-end"] = $elem->parentNode->getAttribute("data-end");
+					$tmp["data-start"] = ($elem->parentNode->hasAttribute("data-start")) ? $elem->parentNode->getAttribute("data-start") : null;
+					$tmp["data-end"] = ($elem->parentNode->hasAttribute("data-end")) ? $elem->parentNode->getAttribute("data-end") : null;
 					$tmp["class"] = ($elem->parentNode->hasAttribute("class")) ? $elem->parentNode->getAttribute("class") : "";
-					$tmp["klasse"] = ($elem->parentNode->hasAttribute("klasse")) ? $elem->parentNode->getAttribute("klasse") : "";
 					$tmp["context"] = DOMinnerHTML($elem->parentNode);
 
 					if (!in_array($tmp, $results["hits"]["hits"][$resultCnt-1]["finds"])) {
@@ -355,7 +353,7 @@ function getSearchBody($request, $getAllResults) {
 		if (strlen($fuzzy_match) > 0) {
 			
 			//TODO: Check which item in textContents is the right one
-			$query["bool"]["must"][] = array("match"=>array("attributes.textContents.textBody.sentences.text" => array(
+			$query["bool"]["must"][] = array("match"=>array("attributes.textContents.textHTML" => array(
 				"query"=>$fuzzy_match,
 				"operator"=>"and",
 				//"fuzziness"=>0,
@@ -364,11 +362,11 @@ function getSearchBody($request, $getAllResults) {
 
 		foreach ($exact_query_matches[0] as $exact_match) {
 			$exact_match = preg_replace('/(["\'])/m', '', $exact_match);
-			$query["bool"]["must"][] = array("match_phrase"=>array("attributes.textContents.textBody.sentences.text"=>$exact_match));
+			$query["bool"]["must"][] = array("match_phrase"=>array("attributes.textContents.textHTML"=>$exact_match));
 		}
 		
 
-		//$query["bool"]["must"] = array("regexp"=>array("attributes.textContents[0].textBody"=>array("value"=>"(".$request["q"].")")));
+		//$query["bool"]["must"] = array("regexp"=>array("attributes.textContents[0].textHTML"=>array("value"=>"(".$request["q"].")")));
 	}
 	if ($shouldCount >= 1) {
 		$query["bool"]["filter"]["bool"]["minimum_should_match"] = $shouldCount;
@@ -402,8 +400,8 @@ function getSearchBody($request, $getAllResults) {
 
 	if ($getAllResults === false) {
 		$data["highlight"] = array(
-			"number_of_fragments"=>5,
-			"fields"=>array("attributes.textContents.textBody.sentences.text"=>new \stdClass())
+			"number_of_fragments"=>0,
+			"fields"=>array("attributes.textContents.textHTML"=>new \stdClass())
 		);
 	} else {
 		$data["_source"] = ["meta"];

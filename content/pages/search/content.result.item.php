@@ -18,11 +18,11 @@
 			?>
 		</a>
 		<?php 
-		if (isset($result_item["finds"]) && count($result_item["finds"]) > 0) {
+		if (isset($result_item["_finds"]) && count($result_item["_finds"]) > 0) {
 			echo '<div class="resultSnippets">';
 		}
-		if (isset($result_item['finds'])) {
-			foreach($result_item['finds'] as $result) {
+		if (isset($result_item['_finds'])) {
+			foreach($result_item['_finds'] as $result) {
 				?>
 				<a class="resultSnippet" href='media/<?= $result_item["id"].$paramStr.'#t='.$result['data-start'] ?>' title="▶ Ausschnitt direkt abspielen"><?= $result['context'] ?></a>
 				<?php
