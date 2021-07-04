@@ -2,72 +2,6 @@
 
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
-$exampleTextObject = '{
-	"type": "proceedings",
-	"sourceURI": "example.xml",
-	"creator": "Deutscher Bundestag",
-	"license": "Public Domain",
-	"language": "DE-de",
-	"originTextID": null,
-	"textBody": [
-	  {
-	    "type": "speech",
-	    "speaker": "Hermann Otto Solms",
-	    "speakerstatus": "mainSpeaker",
-	    "text": "Guten Morgen, liebe Kolleginnen und Kollegen! Nehmen Sie bitte Platz.",
-	    "sentences": [
-	    	{
-	    		"text": "Guten Morgen, liebe Kolleginnen und Kollegen!"
-	    	},
-	    	{
-	    		"text": "Nehmen Sie bitte Platz."
-	    	}
-	    ]
-	  },
-	  {
-	    "type": "comment",
-	    "speaker": null,
-	    "speakerstatus": null,
-	    "text": "(Lachen bei Abgeordneten der AfD)",
-	    "sentences": [
-	    	{
-	    		"text": "(Lachen bei Abgeordneten der AfD)"
-	    	}
-	    ]
-	  }
-	]
-}';
-
-$exampleAlignmentOutput = '{
- "fragments": [
-  {
-   "begin": "2.45768", 
-   "children": [], 
-   "end": "5.087213976", 
-   "id": "s000001", 
-   "language": "deu", 
-   "lines": [
-    "Guten Morgen, liebe Kolleginnen und Kollegen! "
-   ]
-  }, 
-  {
-   "begin": "5.092234", 
-   "children": [], 
-   "end": "7.197823", 
-   "id": "s000002", 
-   "language": "deu", 
-   "lines": [
-    "Nehmen Sie bitte Platz. "
-   ]
-  }
- ]
-}';
-
-$exampleMediaFileURI = 'https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7174046/7174046_h264_720_400_2000kb_baseline_de_2192.mp4';
-
-//print_r(textObjectToHTMLString($exampleTextObject, $exampleMediaFileURI, 'DE-0190003001'));
-print_r(textObjectToAlignmentInput($exampleTextObject, $exampleMediaFileURI, 'DE-0190003001'));
-
 /*
 header('Content-Type: application/json');
 print_r(mergeAlignmentOutputWithTextObject($exampleAlignmentOutput, $exampleTextObject));
@@ -80,10 +14,10 @@ function textObjectToHTMLString($inputTextObject, $mediaFileURI, $mediaID, $auto
 	if (is_string($inputTextObject)) {
 		$inputTextObject = json_decode($inputTextObject, 1);
 		if (!$inputTextObject) {
-			echo 'Input text could not be parsed as JSON.';
+			//echo 'Input text could not be parsed as JSON.';
 		}
 	} else {
-		echo 'Input text needs to be a String';
+		//echo 'Input text needs to be a String';
 	}
 	
 	$outputHTML = '<div data-media-file-uri="'.$mediaFileURI.'" data-media-id="'.$mediaID.'">';
@@ -91,8 +25,16 @@ function textObjectToHTMLString($inputTextObject, $mediaFileURI, $mediaID, $auto
 	foreach ($inputTextObject['textBody'] as $paragraph) {
 		
 		$outputHTML .= '<p data-type="'.$paragraph['type'].'">';
-		
-		foreach ($paragraph['sentences'] as $sentence) {
+
+		//TODO: REMOVE QUICK FIX 
+		if (count($paragraph['sentences']) == 1) {
+			$sentences = $paragraph['sentences'][0];
+		} else {
+			$sentences = $paragraph['sentences'];
+		}
+
+		foreach ($sentences as $sentence) {
+
 			$idAttribute = '';
 			$timeAttributes = '';
 			
@@ -100,13 +42,14 @@ function textObjectToHTMLString($inputTextObject, $mediaFileURI, $mediaID, $auto
 				$idAttribute = ' id="s'.sprintf('%06d', ++$sentenceID).'"';
 			}
 
-			if ($sentence['timeStart'] && $sentence['timeEnd']) {
+			if (isset($sentence['timeStart']) && isset($sentence['timeEnd'])) {
 				
 				$timeAttributes = ' class="timebased" data-start="'.$sentence['timeStart'].'" data-end="'.$sentence['timeEnd'].'"';
 
 			}
-			
-			$outputHTML .= '<span'.$idAttribute.$timeAttributes.'>'.$sentence['text'].'</span>';
+
+			$sentenceText = (is_array($sentence)) ? $sentence['text'] : $sentence;
+			$outputHTML .= '<span'.$idAttribute.$timeAttributes.'>'.$sentenceText.'</span>';
 		}
 
 		$outputHTML .= '</p>';
@@ -116,6 +59,39 @@ function textObjectToHTMLString($inputTextObject, $mediaFileURI, $mediaID, $auto
 
 	return $outputHTML;
 
+}
+
+function simpleTextBodyArrayToHTMLString($textBody) {
+	
+	$outputHTML = '<p data-type="'.$textBody['type'].'">';
+
+	//TODO: REMOVE QUICK FIX 
+	/*
+	if (count($paragraph['sentences']) == 1) {
+		$sentences = $paragraph['sentences'][0];
+	} else {
+		$sentences = $paragraph['sentences'];
+	}
+	*/
+	$sentences = $textBody['sentences'];
+
+	foreach ($sentences as $sentence) {
+
+		$timeAttributes = '';
+
+		if (isset($sentence['timeStart']) && isset($sentence['timeEnd'])) {
+			
+			$timeAttributes = ' class="timebased" data-start="'.$sentence['timeStart'].'" data-end="'.$sentence['timeEnd'].'"';
+
+		}
+
+		$sentenceText = (is_array($sentence)) ? $sentence['text'] : $sentence;
+		$outputHTML .= '<span'.$timeAttributes.'>'.$sentenceText.'</span>';
+	}
+
+	$outputHTML .= '</p>';
+
+	return $outputHTML;
 }
 
 function textObjectToAlignmentInput($inputTextObject, $mediaFileURI, $mediaID) {
