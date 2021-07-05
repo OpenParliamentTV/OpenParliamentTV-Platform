@@ -1,5 +1,13 @@
 main#content {
 	position: relative;
+	opacity: .2;
+	transition-property: opacity;
+	transition-duration: 1000ms;
+}
+
+main#content.ready {
+	padding: 0px;
+	opacity: 1;
 }
 
 .mediaContainer {
@@ -206,8 +214,8 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	background: var(--secondary-bg-color) !important;
 }
 
-.layoutArea {
-	/*--secondary-bg-color: rgba(255, 255, 255, 1);*/
+.layoutArea, .videoContainer {
+	transition-duration: 0ms !important
 }
 
 .hypervideoContainer .videoContainer, .areaLeftContainer, .areaRightContainer {

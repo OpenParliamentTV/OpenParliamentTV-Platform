@@ -35,7 +35,10 @@ $(document).ready( function() {
 
 function updateContents(resultURL) {
 	//$('.loadingIndicator').show();
-	if(updateAjax && updateAjax.readyState != 4){
+	
+    $('#content').removeClass('ready');
+
+    if(updateAjax && updateAjax.readyState != 4){
         updateAjax.abort();
     }
     var resultURLParts = resultURL.split('?'),
@@ -59,6 +62,7 @@ function updateContents(resultURL) {
 function updatePlayer() {
 
     //console.log(playerData);
+    $('#content').removeClass('ready');
 
 	if (window.OPTV_Player && typeof window.OPTV_Player.destroy == "function") {
 		window.OPTV_Player.destroy();
@@ -334,6 +338,7 @@ function updatePlayer() {
 
     OPTV_Player.on('ready', function() {
 
+        $('#content').addClass('ready');
         /*
         var downloadOptions = $('<div class="downloadOptions">'
                             +       '<div class="icon icon-download"></div>'
