@@ -94,7 +94,7 @@
 <div class="resultList row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 	<?php
 	$paramStr = "";
-	$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","party","electoralPeriod","electoralPeriodID","agendaItemID","timefrom","timeto","gender","degree","aw_uuid","personID","organisationID","documentID","termID","sessionNumber","sessionID","page","sort")));
+	$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","person","personID","party","electoralPeriod","electoralPeriodID","agendaItemID","timefrom","timeto","gender","degree","aw_uuid","organisation","organisationID","documentID","termID","sessionNumber","sessionID","page","sort")));
 	$paramCount = 1;
 	foreach ($allowedParams as $k=>$v) {
 		if ($paramCount == 1) {
@@ -131,8 +131,8 @@
 			echo '<div class="sortDivider"><b>'.$formattedDate.'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
 			$currentDate = $formattedDate;
 		} elseif ($sortFactor == 'topic' && $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"] != $currentAgendaItem) {
-			echo '<div class="sortDivider"><b>'.$formattedDate.' - '.$result_item["_source"]["meta"]["agendaItemSecondTitle"].'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
-			$currentAgendaItem = $result_item["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"];
+			echo '<div class="sortDivider"><b>'.$formattedDate.' - '.$result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"].'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
+			$currentAgendaItem = $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"];
 		}
 
 		$highlightedName = $result_item["relationships"]["people"]["data"][0]["attributes"]["label"];
