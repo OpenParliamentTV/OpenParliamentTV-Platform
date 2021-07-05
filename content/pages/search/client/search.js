@@ -1,7 +1,7 @@
 var minDate = new Date('2017-10-01');
 var maxDate = new Date();
 var statsAjax;
-var partyChart = null,
+var factionChart = null,
 	timeRangeChart = null;
 
 $(document).ready( function() {
@@ -35,7 +35,7 @@ $(document).ready( function() {
 		}
 	});
 
-	$('[name="party[]"], [name="sessionNumber"]').change(function() {
+	$('[name="factionID[]"], [name="sessionNumber"]').change(function() {
 		updateQuery();
 	});
 
@@ -48,13 +48,13 @@ $(document).ready( function() {
 	$('[name="sessionNumber"]').val(getQueryVariable('sessionNumber'));
 	$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
 
-	var partyQueries = getQueryVariable('party');
+	var factionQueries = getQueryVariable('factionID');
 
-	if (partyQueries) {
-		for (var p=0; p<partyQueries.length; p++) {
-			var cleanValue = partyQueries[p].replace('+', ' ').toUpperCase();
-			if ($('[name="party[]"][value="'+cleanValue+'"]').length != 0) {
-				$('[name="party[]"][value="'+cleanValue+'"]')[0].checked = true;
+	if (factionQueries) {
+		for (var p=0; p<factionQueries.length; p++) {
+			var cleanValue = factionQueries[p].replace('+', ' ').toUpperCase();
+			if ($('[name="factionID[]"][value="'+cleanValue+'"]').length != 0) {
+				$('[name="factionID[]"][value="'+cleanValue+'"]')[0].checked = true;
 			}
 		}
 	}
@@ -123,7 +123,7 @@ $(document).ready( function() {
 
 	$('#filterForm .formCheckbox').hover(function() {
 		$('.resultItem, #filterForm .formCheckbox').addClass('inactive');
-		$('.resultItem[data-party="'+ $(this).children('input').val() +'"]').removeClass('inactive');
+		$('.resultItem[data-faction="'+ $(this).children('input').val() +'"]').removeClass('inactive');
 		$(this).removeClass('inactive');
 	}, function() {
 		$('.resultItem, #filterForm .formCheckbox').removeClass('inactive');
@@ -133,14 +133,14 @@ $(document).ready( function() {
 
 function updateStatsViz() {
 	getResultStats(function(data) {
-		updatePartyChart(data.info.speechesPerParty);
+		updateFactionChart(data.info.speechesPerFaction);
 		updateTimeRangeChart(data.results);
 	});
 }
 
-function updatePartyChart(speechesPerParty) {
+function updateFactionChart(speechesPerFaction) {
 
-	var partyData = {
+	var factionData = {
 	    datasets: [{
 	        data: [],
 	        backgroundColor: [],
@@ -149,22 +149,22 @@ function updatePartyChart(speechesPerParty) {
 	    labels: []
 	};
 
-	for (var party in speechesPerParty) {
-		if (speechesPerParty.hasOwnProperty(party)) {           
-			var partyColor = (partyColors[party]) ? partyColors[party] : "#aaaaaa";
+	for (var faction in speechesPerFaction) {
+		if (speechesPerFaction.hasOwnProperty(faction)) {           
+			var factionColor = (factionColors[faction]) ? factionColors[faction] : "#aaaaaa";
 
-			partyData.datasets[0].data.push(speechesPerParty[party]);
-			partyData.labels.push(party);
-			partyData.datasets[0].backgroundColor.push(partyColor);
-			partyData.datasets[0].borderWidth.push(1);
+			factionData.datasets[0].data.push(speechesPerFaction[faction]);
+			factionData.labels.push(faction);
+			factionData.datasets[0].backgroundColor.push(factionColor);
+			factionData.datasets[0].borderWidth.push(1);
 		}
 	}
 
-	if (!partyChart) {
-		var partyCtx = document.getElementById('partyChart').getContext('2d');
-		partyChart = new Chart(partyCtx, {
+	if (!factionChart) {
+		var factionCtx = document.getElementById('factionChart').getContext('2d');
+		factionChart = new Chart(factionCtx, {
 			type: 'doughnut',
-			data: partyData,
+			data: factionData,
 			options: {
 				responsive: true,
 				aspectRatio: 1,
@@ -182,16 +182,16 @@ function updatePartyChart(speechesPerParty) {
 		});
 	} else {
 		//empty chart
-		partyChart.data.labels = [];
-		partyChart.data.datasets[0].data = [];
-		partyChart.data.datasets[0].backgroundColor = [];
+		factionChart.data.labels = [];
+		factionChart.data.datasets[0].data = [];
+		factionChart.data.datasets[0].backgroundColor = [];
 		// update chart
-		for (var i = 0; i <= partyData.datasets[0].data.length; i++) {
-			partyChart.data.labels.push(partyData.labels[i]);
-			partyChart.data.datasets[0].data.push(partyData.datasets[0].data[i]);
-			partyChart.data.datasets[0].backgroundColor.push(partyData.datasets[0].backgroundColor[i]);
+		for (var i = 0; i <= factionData.datasets[0].data.length; i++) {
+			factionChart.data.labels.push(factionData.labels[i]);
+			factionChart.data.datasets[0].data.push(factionData.datasets[0].data[i]);
+			factionChart.data.datasets[0].backgroundColor.push(factionData.datasets[0].backgroundColor[i]);
 		}
-		partyChart.update();
+		factionChart.update();
 	}
 	
 }
@@ -244,7 +244,7 @@ function updateTimeRangeChart(results) {
 
 	for (var i=0; i < results; i++) {
 		timeRangeData.datasets[0].data.push(results[i]);
-		timeRangeData.labels.push(party);
+		timeRangeData.labels.push(faction);
 	}
 
 	if (!timeRangeChart) {

@@ -1,11 +1,11 @@
-<article class="resultItem col" data-speech-id="<?= $result_item["id"] ?>" data-party="<?= $result_item["relationships"]["people"]["data"][0]["attributes"]["party"]["labelAlternative"] ?>">
-	<div class="resultContent partyIndicator" data-party="<?= $result_item["relationships"]["people"]["data"][0]["attributes"]["party"]["labelAlternative"] ?>">
+<article class="resultItem col" data-speech-id="<?= $result_item["id"] ?>" data-faction="<?= $result_item["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"] ?>">
+	<div class="resultContent partyIndicator" data-faction="<?= $result_item["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"] ?>">
 		<a style="display: block;" href='<?= $config["dir"]["root"] ?>/media/<?= $result_item["id"].$paramStr ?>'>
 			<div class="icon-play-1"></div>
 			<div class="resultDuration"><?= $formattedDuration ?></div>
 			<div class="resultDate"><?= $formattedDate ?></div>
 			<div class="resultMeta">
-				<?= $highlightedName .' ('.$result_item["relationships"]["people"]["data"][0]["attributes"]["party"]["labelAlternative"].')' ?>
+				<?= $highlightedName .' ('.$result_item["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"].')' ?>
 			</div>
 			<hr>
 			<?php

@@ -147,7 +147,7 @@ function searchStats($request) {
 
 	$stats = array("results" => array(), "info" => array(
 		"totalSpeeches" => $results["hits"]["total"]["value"],
-		"speechesPerParty" => array(),
+		"speechesPerFaction" => array(),
 		"speechesPerGender" => array()
 	));
 			
@@ -156,19 +156,19 @@ function searchStats($request) {
 		$resultInfo = array(
 			"id" => $hit["_source"]["id"],
 			"date" => $hit["_source"]["attributes"]["dateStart"],
-			"party" => $hit["_source"]["relationships"]["people"]["data"][0]["attributes"]["party"]["labelAlternative"],
+			"faction" => $hit["_source"]["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"],
 			"electoralPeriod" => $hit["_source"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"],
 			"sessionNumber" => $hit["_source"]["relationships"]["session"]["data"]["attributes"]["number"]
 		);
 
 		$stats["results"][] = $resultInfo;
 
-		$stats["info"]["speechesPerParty"][$hit["_source"]["relationships"]["people"]["data"][0]["attributes"]["party"]["labelAlternative"]]++;	
+		$stats["info"]["speechesPerFaction"][$hit["_source"]["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"]]++;	
 
 
 	}
 
-	arsort($stats["info"]["speechesPerParty"]);
+	arsort($stats["info"]["speechesPerFaction"]);
 
 	//$results->totalFinds = $findCnt;
 
@@ -251,7 +251,7 @@ function getSearchBody($request, $getAllResults) {
 				foreach ($requestValue as $partyOrFaction) {
 					
 					//TODO: Get mainSpeaker from people Array 
-					//TODO: people.data[0].attributes.party needs alternativeLabel as well!
+					//TODO: people.data[0].attributes.party needs labelAlternative as well!
 					$filter["should"][] = array("match_phrase"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $partyOrFaction));
 
 				}
@@ -259,7 +259,7 @@ function getSearchBody($request, $getAllResults) {
 			} else {
 				
 				//TODO: Get mainSpeaker from people Array 
-				//TODO: people.data[0].attributes.party needs alternativeLabel as well!
+				//TODO: people.data[0].attributes.party needs labelAlternative as well!
 				$filter["must"][] = array("match"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $requestValue));
 
 			}
@@ -283,14 +283,14 @@ function getSearchBody($request, $getAllResults) {
 				foreach ($requestValue as $factionID) {
 					
 					//TODO: Get mainSpeaker from people Array 
-					$filter["should"][] = array("match_phrase"=>array("relationships.people.data.attributes.faction.id" => $factionID));
+					$filter["should"][] = array("match_phrase"=>array("relationships.organisations.data.id" => $factionID));
 
 				}
 				$shouldCount++;
 			} else {
 				
 				//TODO: Get mainSpeaker from people Array 
-				$filter["must"][] = array("match"=>array("relationships.people.data.attributes.faction.id" => $requestValue));
+				$filter["must"][] = array("match"=>array("relationships.organisations.data.id" => $requestValue));
 
 			}
 		} else if ($requestKey == "organisationID") {
