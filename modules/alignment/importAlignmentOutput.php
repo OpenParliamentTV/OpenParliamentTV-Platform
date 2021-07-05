@@ -55,10 +55,79 @@ function importAlignmentOutput() {
 	}
 }
 
-function updateData($mediaID, $updatedTextContentsArray) {
+function updateData($mediaID = false, $updatedTextContentsArray = false, $dbp = false) {
 
 	global $ESClient;
 	global $config;
+
+	if ((!$mediaID) || ($updatedTextContentsArray)) {
+	    return false;
+    }
+
+	$infos = getInfosFromStringID($mediaID);
+
+    if (!$dbp) {
+
+        $opts = array(
+            'host'	=> $config["parliament"][$infos["parliament"]]["sql"]["access"]["host"],
+            'user'	=> $config["parliament"][$infos["parliament"]]["sql"]["access"]["user"],
+            'pass'	=> $config["parliament"][$infos["parliament"]]["sql"]["access"]["passwd"],
+            'db'	=> $config["parliament"][$infos["parliament"]]["sql"]["db"]
+        );
+
+        try {
+
+            $dbp = new SafeMySQL($opts);
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "2";
+            $errorarray["title"] = "Database connection error";
+            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+
+    }
+
+    $dbp->query("UPDATE ?n SET TextBody=?s WHERE TextType=?s AND TextMediaID=?s",
+                $config["parliament"][$infos["parliament"]]["sql"]["tbl"]["Text"],
+                json_encode($updatedTextContentsArray["textBody"]),
+                "proceedings",
+                $mediaID);
+
+    $dbp->query("UPDATE ?n SET MediaAligned=?i WHERE MediaID=?s LIMIT 1",
+                $config["parliament"][$infos["parliament"]]["sql"]["tbl"]["Media"],
+                1,
+                $mediaID);
+
+
+    
+    $data = apiV1([
+        "action"=>"getItem",
+        "itemType"=>"media",
+        "id"=>$mediaID
+    ]);
+
+    $docParams = array(
+        "index" => "openparliamenttv_de",
+        "id" => $mediaID,
+        "body" => json_encode($data["data"])
+    );
+
+    try {
+        $result = $ESClient->index($docParams);
+    } catch(Exception $e) {
+        $result = $e->getMessage();
+    }
+
+    echo '<pre>';
+    print_r($result);
+    echo '</pre>';
 
 	/*
 	
