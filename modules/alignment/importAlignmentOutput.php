@@ -106,7 +106,7 @@ function updateData($mediaID = false, $updatedTextContentsArray = false, $dbp = 
                 $mediaID);
 
 
-    
+
     $data = apiV1([
         "action"=>"getItem",
         "itemType"=>"media",
