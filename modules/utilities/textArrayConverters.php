@@ -142,7 +142,17 @@ function mergeAlignmentOutputWithTextObject($alignmentOutput, $inputTextObject) 
 				}
 			}
 		}
+
+		$inputTextObject['textBody'][$paragraphIndex]['text'] = simpleTextBodyArrayToHTMLString($inputTextObject['textBody'][$paragraphIndex]);
 	}
+
+	$newTextHTML = '';
+	foreach ($inputTextObject['textBody'] as $paragraphIndex => $paragraph) {
+		foreach ($paragraph['sentences'] as $sentenceIndex => $sentence) {
+			$newTextHTML .= $inputTextObject['textBody'][$paragraphIndex]['text'];
+		}
+	}
+	$inputTextObject['textHTML'] = $newTextHTML;
 
 	return json_encode($inputTextObject, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
