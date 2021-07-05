@@ -195,10 +195,18 @@ function searchStats($request) {
  */
 function getSearchBody($request, $getAllResults) {
 	
-	$filter = array("must"=>array(), "should"=>array());
+	$filter = array("must"=>array(), "should"=>array(), "must_not"=>array());
 
 	//ONLY INCLUDE ALIGNED SPEECHES
 	//$filter["must"][] = array("match"=>array("attributes.aligned" => true));
+	
+	// FILTER OUT FRAGESTTUNDE ETC.
+	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Befragung"));
+	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Fragestunde"));
+	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Wahl der"));
+	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Wahl des"));
+	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungseröffnung"));
+	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungsende"));
 
 	$shouldCount = 0;
 
@@ -339,7 +347,8 @@ function getSearchBody($request, $getAllResults) {
 	$query = array("bool"=>array(
 			"filter"=>array("bool"=>array(
 				"must"=>$filter["must"],
-				"should"=>$filter["should"]))));
+				"should"=>$filter["should"],
+				"must_not"=>$filter["must_not"]))));
 
 	$request["q"] = str_replace(['„','“','\'','«','«'], '"', $request["q"]);
 
