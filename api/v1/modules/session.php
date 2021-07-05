@@ -99,9 +99,11 @@ function sessionGetByID($id = false) {
 
         }
 
-        $agendaItems = $dbp->getAll("SELECT * FROM ?n WHERE AgendaItemSessionID=?s",$config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],$id);
+
 
         if ($item) {
+
+            $agendaItems = $dbp->getAll("SELECT * FROM ?n WHERE AgendaItemSessionID=?s",$config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],$id);
 
             $return["meta"]["requestStatus"] = "success";
             $return["data"]["type"] = "session";

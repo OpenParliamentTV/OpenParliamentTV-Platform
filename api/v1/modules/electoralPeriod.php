@@ -92,6 +92,17 @@ function electoralPeriodGetByID($id = false) {
 
         if ($item) {
 
+            //$sessionItems = $dbp->getAll("SELECT * FROM ?n WHERE SessionElectoralPeriod=?s",$config["parliament"][$parliament]["sql"]["tbl"]["Session"],$id);
+            $sessionItems = $dbp->getAll("SELECT sess.*, COUNT(ai.AgendaItemID) AS AgendaItemCount
+                                            FROM ?n AS sess 
+                                            LEFT JOIN ?n as ai
+                                                ON ai.AgendaItemSessionID=sess.SessionID
+                                            WHERE SessionElectoralPeriodID=?s
+                                            GROUP BY sess.SessionID",
+                                            $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                                            $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+                                            $id);
+
             $return["meta"]["requestStatus"] = "success";
             $return["data"]["type"] = "electoralPeriod";
             $return["data"]["id"] = $item["ElectoralPeriodID"];
@@ -102,8 +113,19 @@ function electoralPeriodGetByID($id = false) {
             $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
             $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/"."search/media?electoralPeriodID=".$return["data"]["id"]; //TODO: Check Link and Parameter
+            foreach ($sessionItems as $sessionItem) {
+                $tmpItem = array();
+                $tmpItem["data"]["type"] = "session";
+                $tmpItem["data"]["id"] = $sessionItem["SessionID"];
+                $tmpItem["data"]["attributes"]["dateStart"] = $sessionItem["SessionDateStart"];
+                $tmpItem["data"]["attributes"]["dateEnd"] = $sessionItem["SessionDateEnd"];
+                $tmpItem["data"]["attributes"]["number"] = $sessionItem["SessionNumber"];
+                $tmpItem["data"]["attributes"]["agendaItemCount"] = $sessionItem["AgendaItemCount"];
+                $tmpItem["data"]["links"]["self"] = $config["dir"]["api"]."/session/".$sessionItem["SessionID"];
+                $return["data"]["relationships"]["sessions"]["data"][] = $tmpItem;
+            }
+            $return["data"]["relationships"]["sessions"]["links"]["self"] = $config["dir"]["api"]."/search/session?electoralPeriodID=".$return["data"]["id"];
 
-            //TODO: Agenda and Session relationships too?
 
         } else {
 
