@@ -16,30 +16,27 @@
 				<div class="col col-12 col-xl-8">
 					<div class="form-group">
 						<div class="chartContainer d-none d-md-block">
-							<canvas id="partyChart"></canvas>
+							<canvas id="factionChart"></canvas>
 						</div>
 						<div class="checkboxList">
 							<label style="display: block;" for="edit-party"><b><?php echo L::party; ?></b></label>
-							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-party="CDU">
-								<input id="edit-party-17362" name="party[]" value="CDU" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17362">CDU</label>
+							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-faction="Q1023134">
+								<input id="edit-party-17362" name="factionID[]" value="Q1023134" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17362">CDU/CSU</label>
 							</div>
-							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-party="SPD">
-								<input id="edit-party-16118" name="party[]" value="SPD" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16118">SPD</label>
+							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-faction="Q2207512">
+								<input id="edit-party-16118" name="factionID[]" value="Q2207512" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16118">SPD</label>
 							</div>
-							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-party="AfD">
-								<input id="edit-party-17364" name="party[]" value="AfD" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17364">AfD</label>
+							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-faction="Q42575708">
+								<input id="edit-party-17364" name="factionID[]" value="Q42575708" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17364">AfD</label>
 							</div>
-							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-party="FDP">
-								<input id="edit-party-17363" name="party[]" value="FDP" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17363">FDP</label>
+							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-faction="Q1387991">
+								<input id="edit-party-17363" name="factionID[]" value="Q1387991" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17363">FDP</label>
 							</div>
-							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-party="DIE LINKE">
-								<input id="edit-party-16124" name="party[]" value="DIE LINKE" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16124">DIE LINKE</label>
+							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-faction="Q1826856">
+								<input id="edit-party-16124" name="factionID[]" value="Q1826856" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16124">DIE LINKE</label>
 							</div>
-							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-party="DIE GRÜNEN">
-								<input id="edit-party-16122" name="party[]" value="DIE GRÜNEN" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16122">DIE GRÜNEN</label>
-							</div>
-							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-party="CSU">
-								<input id="edit-party-16120" name="party[]" value="CSU" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16120">CSU</label>
+							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-faction="Q1007353">
+								<input id="edit-party-16122" name="factionID[]" value="Q1007353" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16122">DIE GRÜNEN</label>
 							</div>
 						</div>
 						<div style="clear: both;"></div>

@@ -607,32 +607,47 @@ input:checked + .slider:before, .switch-container.active .slider:before {
     border-color: #aaaaaa;
 }
 
-.partyIndicator[data-party="DIE LINKE"] {
+.partyIndicator[data-party="DIE LINKE"], 
+.partyIndicator[data-faction="DIE LINKE"],
+.partyIndicator[data-faction="Q1826856"] {
     background-color: #bc3475;
     border-color: #bc3475;
 }
 
-.partyIndicator[data-party="DIE GRÜNEN"], .partyIndicator[data-party="DIE GR\u00dcNEN"] {
+.partyIndicator[data-party="DIE GRÜNEN"], 
+.partyIndicator[data-party="DIE GR\u00dcNEN"],
+.partyIndicator[data-faction="DIE GRÜNEN"], 
+.partyIndicator[data-faction="DIE GR\u00dcNEN"],
+.partyIndicator[data-faction="Q1007353"] {
     background-color: #4a932b;
     border-color: #4a932b;
 }
 
-.partyIndicator[data-party="CDU"], .partyIndicator[data-party="CSU"] {
+.partyIndicator[data-party="CDU"], 
+.partyIndicator[data-party="CSU"],
+.partyIndicator[data-faction="CDU/CSU"],
+.partyIndicator[data-faction="Q1023134"] {
     background-color: #000000;
     border-color: #000000;
 }
 
-.partyIndicator[data-party="SPD"] {
+.partyIndicator[data-party="SPD"],
+.partyIndicator[data-faction="SPD"],
+.partyIndicator[data-faction="Q2207512"] {
     background-color: #df0b25;
     border-color: #df0b25;
 }
 
-.partyIndicator[data-party="FDP"] {
+.partyIndicator[data-party="FDP"],
+.partyIndicator[data-faction="FDP"],
+.partyIndicator[data-faction="Q1387991"] {
     background-color: #feeb34;
     border-color: #feeb34;
 }
 
-.partyIndicator[data-party="AfD"] {
+.partyIndicator[data-party="AfD"],
+.partyIndicator[data-faction="AfD"],
+.partyIndicator[data-faction="Q42575708"] {
     background-color: #1a9fdd;
     border-color: #1a9fdd;
 }

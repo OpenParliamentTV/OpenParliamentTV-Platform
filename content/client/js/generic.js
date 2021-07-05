@@ -1,9 +1,8 @@
 var updateAjax,
-	partyColors = {
+	factionColors = {
 		"DIE LINKE": "#bc3475",
 		"DIE GRÜNEN": "#4a932b",
-		"CDU": "#000000",
-		"CSU": "#000000",
+		"CDU/CSU": "#000000",
 		"SPD": "#df0b25",
 		"FDP": "#feeb34",
 		"AfD": "#1a9fdd"
