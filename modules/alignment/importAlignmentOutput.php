@@ -23,7 +23,6 @@ function importAlignmentOutput() {
 	$outputFiles = array_values(array_diff(scandir('output'), array('.', '..', '.DS_Store', '.gitkeep', '.gitignore')));
 
 	foreach($outputFiles as $file) {
-
 		$fileNameArray = preg_split("/[\\_|\\.]/", $file);
 		$mediaID = $fileNameArray[0];
 		$textType = $fileNameArray[1];
@@ -60,7 +59,7 @@ function updateData($mediaID = false, $updatedTextContentsArray = false, $dbp = 
 	global $ESClient;
 	global $config;
 
-	if ((!$mediaID) || ($updatedTextContentsArray)) {
+	if ((!$mediaID) || (!$updatedTextContentsArray)) {
 	    return false;
     }
 
