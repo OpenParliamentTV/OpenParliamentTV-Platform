@@ -152,10 +152,12 @@ function searchStats($request) {
 	));
 			
 	foreach ($results["hits"]["hits"] as $hit) {
-	
+		
+		$normalizedDate = date("Y-m-d", strtotime($hit["_source"]["attributes"]["dateStart"]));
+
 		$resultInfo = array(
 			"id" => $hit["_source"]["id"],
-			"date" => $hit["_source"]["attributes"]["dateStart"],
+			"date" => $normalizedDate,
 			"faction" => $hit["_source"]["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"],
 			"electoralPeriod" => $hit["_source"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"],
 			"sessionNumber" => $hit["_source"]["relationships"]["session"]["data"]["attributes"]["number"]
