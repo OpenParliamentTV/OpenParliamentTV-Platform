@@ -74,7 +74,17 @@ function sessionGetByID($id = false) {
 
         try {
 
-            $item = $dbp->getRow("SELECT * FROM ?n WHERE SessionID=?s", $config["parliament"][$parliament]["sql"]["tbl"]["Session"], $id);
+            $item = $dbp->getRow("SELECT
+                                    sess.*,
+                                    ep.*
+                                  FROM ?n AS sess
+                                  LEFT JOIN ?n as ep
+                                  ON
+                                    sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
+                                  WHERE SessionID=?s",
+                                    $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+                                    $id);
 
         } catch (exception $e) {
 
@@ -89,6 +99,8 @@ function sessionGetByID($id = false) {
 
         }
 
+        $agendaItems = $dbp->getAll("SELECT * FROM ?n WHERE AgendaItemSessionID=?s",$config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],$id);
+
         if ($item) {
 
             $return["meta"]["requestStatus"] = "success";
@@ -102,6 +114,23 @@ function sessionGetByID($id = false) {
             $return["data"]["attributes"]["dateEnd"] = $item["SessionDateEnd"];
             $return["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
             $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?sessionID=".$return["data"]["id"]; //TODO: Check Link and Parameter
+            $return["data"]["relationships"]["electoralPeriod"]["data"]["type"] = "electoralPeriod";
+            $return["data"]["relationships"]["electoralPeriod"]["data"]["id"] = $item["ElectoralPeriodID"];
+            $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] = $item["ElectoralPeriodNumber"];
+            $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["dateStart"] = $item["ElectoralPeriodDateStart"];
+            $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["dateEnd"] = $item["ElectoralPeriodDateEnd"];
+            $return["data"]["relationships"]["electoralPeriod"]["links"]["self"] = $config["dir"]["api"]."/electoralPeriod/".$item["ElectoralPeriodID"];
+            foreach ($agendaItems as $agendaItem) {
+                $tmpItem = array();
+                $tmpItem["data"]["type"] = "agendaItem";
+                $tmpItem["data"]["id"] = $agendaItem["AgendaItemID"];
+                $tmpItem["data"]["attributes"]["officialTitle"] = $agendaItem["AgendaItemOfficialTitle"];
+                $tmpItem["data"]["attributes"]["title"] = $agendaItem["AgendaItemTitle"];
+                $tmpItem["data"]["attributes"]["order"] = $agendaItem["AgendaItemOrder"];
+                $tmpItem["data"]["links"]["self"] = $config["dir"]["api"]."/agendaItem/".$agendaItem["AgendaItemID"];
+                $return["data"]["relationships"]["agendaItems"]["data"][] = $tmpItem;
+            }
+            $return["data"]["relationships"]["agendaItems"]["links"]["self"] = $config["dir"]["api"]."/search/agendaItem?sessionID=".$return["data"]["id"];
 
         } else {
 
