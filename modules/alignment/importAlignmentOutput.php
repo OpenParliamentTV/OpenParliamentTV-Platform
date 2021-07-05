@@ -94,7 +94,8 @@ function updateData($mediaID, $updatedTextContentsArray) {
 	echo '<pre>';
 	print_r($result);
 	echo '</pre>';
-
+	
+	*/
 
 
 }
