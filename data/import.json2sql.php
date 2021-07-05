@@ -102,5 +102,10 @@ function importJson2sql() {
 
     }
 }
-importJson2sql();
+
+try {
+    importJson2sql();
+} catch (exception $e) {
+    header("Refresh:0");
+}
 ?>

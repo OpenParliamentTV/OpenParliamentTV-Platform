@@ -439,6 +439,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
                             if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
 
                                 $request["str"] = preg_replace("/\s/",".*", $request["str"]);
+                                $request["str"] = preg_replace("/\//","\\/", $request["str"]);
 
                                 $tmpType = "label";
 
@@ -509,6 +510,10 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
                             if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
 
                                 $request["str"] = preg_replace("/\s/",".*", $request["str"]);
+                                $request["str"] = preg_replace("/\//","\\/", $request["str"]);
+                                //$request["str"] = preg_replace("/\//",".*", $request["str"]);
+                                //$request["str"] = preg_replace("/\\//",".*", $request["str"]);
+
 
                                 $tmpType = "label";
 
@@ -522,7 +527,13 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                             foreach ($dump as $k=>$v) {
 
-                                if ((preg_match("/".$request["str"]."/i",$v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/".$request["str"]."/i",$v["labelAlternative"])))) {
+                                if (
+                                        (preg_match("/".$request["str"]."/i",$v[$tmpType]))
+                                        || (
+                                                    (($tmpType == "label") && (gettype($v["labelAlternative"]) == "string"))
+                                                &&  (preg_match("/".$request["str"]."/i",$v["labelAlternative"]))
+                                            )
+                                    ) {
 
                                     $return["meta"]["requestStatus"] = "success";
                                     $return["data"][] = $v;
@@ -531,7 +542,10 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
                                 }
 
                             }
-
+                            /*
+                            $return["tmp"] = $dump;
+                            $return["tmp_str"] = $request["str"];
+                            */
                             if (count($return["data"]) > 0) {
                                 return $return;
                             } else {
