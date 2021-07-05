@@ -1,5 +1,4 @@
 <?php
-
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
 set_time_limit(0);
@@ -16,13 +15,6 @@ $ESClient = Elasticsearch\ClientBuilder::create()
     ->build();
 
 require_once (__DIR__."/../config.php");
-
-/*
-$response = $ESClient->indices()->delete(array("index"=>"openparliamenttv_de"));
-echo '<pre>';
-print_r($response);
-echo '</pre>';
-*/
 
 setOptions();
 updateIndex();
