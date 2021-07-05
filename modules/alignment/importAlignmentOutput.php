@@ -1,5 +1,14 @@
 <?php
 
+require __DIR__.'/../../vendor/autoload.php';
+
+$hosts = ["https://@localhost:9200"];
+$ESClient = Elasticsearch\ClientBuilder::create()
+    ->setHosts($hosts)
+    ->setBasicAuthentication("admin","admin")
+    ->setSSLVerification(realpath(__DIR__."/../../opensearch-root-ssl.pem"))
+    ->build();
+
 require_once (__DIR__."/../../config.php");
 require_once(__DIR__.'/../../api/v1/api.php');
 require_once (__DIR__."/../utilities/safemysql.class.php");
@@ -39,16 +48,54 @@ function importAlignmentOutput() {
 		if (isset($mediaTextContents)) {
 			$updatedTextContents = mergeAlignmentOutputWithTextObject($file_contents, $mediaTextContents);
 
-			echo "<pre>";
-			print_r(json_decode($updatedTextContents));
-			echo "</pre>";
+			updateData($mediaID, json_decode($updatedTextContents, true));
 
 			//unlink("output/".$file);
 		}
 	}
-	/*****************************************
-	* ToDo: Write Output to MySQL DB
-	*****************************************/
+}
+
+function updateData($mediaID, $updatedTextContentsArray) {
+
+	global $ESClient;
+	global $config;
+
+	/*
+	
+	TODO: 
+
+	1. Update DB table text, where: 
+	"TextMediaID": $mediaID
+	
+	Update Fields: 
+	"TextBody": json_encode($updatedTextContentsArray["textBody"])
+	"TextHTML": $updatedTextContentsArray["textHTML"]
+	
+	2. Update OpenSearch Index like:
+
+	$data = apiV1([
+		"action"=>"getItem", 
+		"itemType"=>"media", 
+		"id"=>$mediaID
+	]);
+	
+	$docParams = array(
+		"index" => "openparliamenttv_de", 
+		"id" => $mediaID, 
+		"body" => json_encode($data["data"])
+	);
+	
+	try {
+		$result = $ESClient->index($docParams);
+	} catch(Exception $e) {
+		$result = $e->getMessage();
+	}
+
+	echo '<pre>';
+	print_r($result);
+	echo '</pre>';
+
+
 
 }
 
