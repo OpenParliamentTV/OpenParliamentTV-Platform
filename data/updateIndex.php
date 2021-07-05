@@ -8,7 +8,6 @@ date_default_timezone_set('CET');
 
 require __DIR__.'/../vendor/autoload.php';
 
-//$hosts = ["https://admin:admin@localhost:9200"];
 $hosts = ["https://@localhost:9200"];
 $ESClient = Elasticsearch\ClientBuilder::create()
     ->setHosts($hosts)
