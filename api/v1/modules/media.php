@@ -237,7 +237,7 @@ function mediaGetByID($id = false) {
 
                         $ditem = $db->getRow("SELECT * FROM ?n WHERE DocumentID=?i LIMIT 1", $config["platform"]["sql"]["tbl"]["Document"], $annotation["AnnotationResourceID"]);
                         $tmpAnnotationItem["type"] = "document";
-                        $tmpAnnotationItem["id"] = $annotation["AnnotationID"];
+                        $tmpAnnotationItem["id"] = $annotation["AnnotationResourceID"];
                         $tmpAnnotationItem["attributes"]["context"] = $annotation["AnnotationContext"];
                         $tmpAnnotationItem["attributes"]["type"] = $ditem["DocumentType"];
                         $tmpAnnotationItem["attributes"]["label"] = $ditem["DocumentLabel"];
