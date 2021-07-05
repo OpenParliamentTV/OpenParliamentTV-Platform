@@ -19,19 +19,22 @@ require_once(__DIR__."/../../../modules/utilities/textArrayConverters.php");
         'mediaSource': '<?= $speech["attributes"]['videoFileURI'] ?>',
     	'transcriptHTML': '<?= $textContentsHTML ?>',
         'aw_username': null,
-        'finds': [<?php if (isset($speech['finds']) && count($speech['finds']) != 0) {
-                    $rCnt = 0;
-                    foreach ($speech['finds'] as $result) { 
-                        if ($result['class'] !== 'kommentar') {
-                            ?>
-                                {
-                                    'start': <?php echo (float)$result['data-start'] ?>,
-                                    'end': <?php echo (float)$result['data-end']-0.3 ?>
-                                },
-                            <?php 
-                        }
-                    }}
-                    ?>
+        'finds': [
+            <?php 
+            if (isset($speech['_finds']) && count($speech['_finds']) != 0) {
+                $rCnt = 0;
+                foreach ($speech['_finds'] as $result) { 
+                    if (isset($result['data-start']) && isset($result['data-end'])) {
+                        ?>
+                            {
+                                'start': <?php echo (float)$result['data-start'] ?>,
+                                'end': <?php echo (float)$result['data-end']-0.3 ?>
+                            },
+                        <?php 
+                    }
+                }
+            }
+            ?>
         ]
     };
 

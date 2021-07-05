@@ -13,7 +13,7 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 					<div class="col-6 col-md-9 col-lg-10">
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
-						<div><a href="../electoralPeriod/DE-019">???</a>. Electoral Period</div>
+						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. Electoral Period</a></div>
 						<h2>Session <?= $apiResult["data"]["attributes"]["number"] ?></h2>
 						<div><?php 
 							$startDateParts = explode("T", $apiResult["data"]["attributes"]["dateStart"]);
@@ -54,7 +54,15 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 				</div>
 				<div class="tab-pane fade" id="agendaItems" role="tabpanel" aria-labelledby="agendaItems-tab">
-					[CONTENT]
+					<div class="relationshipsList">
+					<?php 
+					foreach ($apiResult["data"]["relationships"]["agendaItems"]["data"] as $relationshipItem) {
+					?>
+						<div class="entityPreview" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$apiResult["data"]["attributes"]["parliament"]."-".$relationshipItem["data"]["id"] ?>"><?= $relationshipItem["data"]["attributes"]["officialTitle"].": ".$relationshipItem["data"]["attributes"]["title"] ?></a></div>
+					<?php 
+					} 
+					?>
+					</div>
 				</div>
 				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
 					[ITEM DATA]

@@ -28,13 +28,37 @@ if (!function_exists("L")) {
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="people" role="tabpanel" aria-labelledby="people-tab">
-                [CONTENT]
+                <div class="relationshipsList">
+                <?php 
+                foreach ($speech["relationships"]["people"]["data"] as $relationshipItem) {
+                ?>
+                    <div class="entityPreview" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["type"]."/".$relationshipItem["id"] ?>"><?= $relationshipItem["attributes"]["label"] ?></a></div>
+                <?php 
+                } 
+                ?>
+                </div>
             </div>
             <div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
-                [CONTENT]
+                <div class="relationshipsList">
+                <?php 
+                foreach ($speech["relationships"]["organisations"]["data"] as $relationshipItem) {
+                ?>
+                    <div class="entityPreview" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["type"]."/".$relationshipItem["id"] ?>"><?= $relationshipItem["attributes"]["label"] ?></a></div>
+                <?php 
+                } 
+                ?>
+                </div>
             </div>
             <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
-                [CONTENT]
+                <div class="relationshipsList">
+                <?php 
+                foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
+                ?>
+                    <div class="entityPreview" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["type"]."/".$relationshipItem["id"] ?>"><?= $relationshipItem["attributes"]["label"] ?></a></div>
+                <?php 
+                } 
+                ?>
+                </div>
             </div>
             <div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
                 [CONTENT]

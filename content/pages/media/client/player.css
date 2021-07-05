@@ -300,6 +300,10 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	box-sizing: border-box;
 }
 
+.layoutArea .contentViewContainer .contentViewContents .customhtmlContainer span {
+	margin-right: 4px;
+}
+
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased {
 	background-color: transparent;
 }
@@ -311,7 +315,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer p[data-type="comment"] {
 	padding-bottom: 6px;
-	font-style: italic;
+	color: var(--secondary-fg-color);
 	margin-bottom: 1rem;
 }
 

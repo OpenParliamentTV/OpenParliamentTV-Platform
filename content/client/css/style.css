@@ -409,6 +409,17 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     display: inline;
 }
 
+.relationshipsList {
+    
+}
+
+.relationshipsList .entityPreview {
+    padding: 8px 10px;
+    background: var(--primary-bg-color);
+    float: left;
+    margin: 0 10px 10px 0;
+}
+
 .nav-tabs {
     border-bottom-color: var(--border-color);
 }
@@ -616,8 +627,12 @@ input:checked + .slider:before, .switch-container.active .slider:before {
 
 .partyIndicator[data-party="DIE GRÜNEN"], 
 .partyIndicator[data-party="DIE GR\u00dcNEN"],
+.partyIndicator[data-party="GRÜNE"],
+.partyIndicator[data-party="GR\u00dcNE"],
 .partyIndicator[data-faction="DIE GRÜNEN"], 
 .partyIndicator[data-faction="DIE GR\u00dcNEN"],
+.partyIndicator[data-faction="GRÜNE"],
+.partyIndicator[data-faction="GR\u00dcNE"],
 .partyIndicator[data-faction="Q1007353"] {
     background-color: #4a932b;
     border-color: #4a932b;

@@ -49,7 +49,15 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 				</div>
 				<div class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
-					[CONTENT]
+					<div class="relationshipsList">
+					<?php 
+					foreach ($apiResult["data"]["relationships"]["sessions"]["data"] as $relationshipItem) {
+					?>
+						<div class="entityPreview" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$relationshipItem["data"]["id"] ?>">Session <?= $relationshipItem["data"]["attributes"]["number"] ?></a></div>
+					<?php 
+					} 
+					?>
+					</div>
 				</div>
 				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
 					[ITEM DATA]
