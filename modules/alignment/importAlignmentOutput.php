@@ -69,7 +69,6 @@ function updateData($mediaID, $updatedTextContentsArray) {
 	
 	Update Fields: 
 	"TextBody": json_encode($updatedTextContentsArray["textBody"])
-	"TextHTML": $updatedTextContentsArray["textHTML"]
 	
 	2. Update OpenSearch Index like:
 
