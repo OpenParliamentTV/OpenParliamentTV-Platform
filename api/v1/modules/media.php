@@ -1158,7 +1158,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
                     $tmpNewPerson = array(
                         "PersonID" => $personWD["data"][0]["id"],
-                        "PersonType" => $person["type"],
+                        "PersonType" => "memberOfParliament", //$person["type"] //TODO: fix input
                         "PersonLabel" => $personWD["data"][0]["label"],
                         //"PersonFirstName"=>$personDB["data"][0]["firstName"], //TODO: WikidataServiceDumps
                         //"PersonLastName"=>$personDB["data"][0]["lastName"], //TODO: WikidataServiceDumps
@@ -1169,12 +1169,13 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                         "PersonThumbnailURI" => ((gettype($personWD["data"][0]["thumbnailURI"]) == "array") ? $personWD["data"][0]["thumbnailURI"][0] : $personWD["data"][0]["thumbnailURI"]),
                         "PersonThumbnailCreator" => $personWD["data"][0]["thumbnailCreator"],
                         "PersonThumbnailLicense" => $personWD["data"][0]["thumbnailLicense"],
+                        "PersonWebsiteURI" => ((gettype($personWD["data"][0]["websiteURI"]) == "array") ? $personWD["data"][0]["websiteURI"][0] : $personWD["data"][0]["websiteURI"]),
                         "PersonEmbedURI" => $personWD["data"][0]["embedURI"],
                         "PersonOriginID" => $personWD["data"][0]["originID"],
                         "PersonPartyOrganisationID" => $personWD["data"][0]["party_wp"],
                         "PersonFactionOrganisationID" => $personWD["data"][0]["faction_wp"],
                         "PersonSocialMediaIDs" => json_encode($personWD["data"][0]["socialMediaIDs"]),
-                        "PersonAdditionalInformation" => $person["additionalInformation"]
+                        "PersonAdditionalInformation" => json_encode($personWD["data"][0]["additionalInformation"])
                     );
 
                     try {
@@ -1450,7 +1451,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                     if (($personDB["meta"]["requestStatus"] != "success") || (count($personDB["data"]) < 1)) {
                         $tmpNewPerson = array(
                             "PersonID" => $personWD["data"][0]["id"],
-                            "PersonType" => $person["type"],
+                            "PersonType" => "memberOfParliament", //$person["type"] //TODO: fix input
                             "PersonLabel" => $personWD["data"][0]["label"],
                             //"PersonFirstName"=>$personDB["data"][0]["firstName"], //TODO: WikidataServiceDumps
                             //"PersonLastName"=>$personDB["data"][0]["lastName"], //TODO: WikidataServiceDumps
@@ -1462,12 +1463,14 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                             "PersonThumbnailCreator" => $personWD["data"][0]["thumbnailCreator"],
                             "PersonThumbnailLicense" => $personWD["data"][0]["thumbnailLicense"],
                             "PersonEmbedURI" => $personWD["data"][0]["embedURI"],
+                            "PersonWebsiteURI" => ((gettype($personWD["data"][0]["websiteURI"]) == "array") ? $personWD["data"][0]["websiteURI"][0] : $personWD["data"][0]["websiteURI"]),
                             "PersonOriginID" => $personWD["data"][0]["originID"],
                             "PersonPartyOrganisationID" => $personWD["data"][0]["party_wp"],
                             "PersonFactionOrganisationID" => $personWD["data"][0]["faction_wp"],
                             "PersonSocialMediaIDs" => json_encode($personWD["data"][0]["socialMediaIDs"]),
-                            "PersonAdditionalInformation" => $person["additionalInformation"]
+                            "PersonAdditionalInformation" => json_encode($personWD["data"][0]["additionalInformation"])
                         );
+                        file_put_contents(__DIR__."/tmp.log",$db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson, FILE_APPEND));
                         $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
                     }
                     //print_r($tmpNewPerson);
