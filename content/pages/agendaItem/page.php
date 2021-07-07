@@ -1,17 +1,17 @@
 <?php 
 include_once(__DIR__ . '/../../header.php'); 
 ?>
-<main class="container subpage">
+<main class="container-fluid subpage">
 	<div class="detailsHeader">
 		<div class="row" style="position: relative; z-index: 1">
 			<div class="col-12">
 				<div class="row align-items-center">
-					<div class="col-4 col-md-3 col-lg-2">
+					<div class="col flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<span class="icon-list-numbered" style="position: absolute;top: 50%;left: 50%;font-size: 50px;transform: translateX(-50%) translateY(-50%);"></span>
 						</div>
 					</div>
-					<div class="col-6 col-md-9 col-lg-10">
+					<div class="col">
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
 						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. Electoral Period</a> | <a href="../session/<?= $apiResult["data"]["relationships"]["session"]["data"]["id"] ?>">Session: <?= $apiResult["data"]["relationships"]["session"]["data"]["attributes"]["number"] ?></a></div>
 						<h2><?= $apiResult["data"]["attributes"]["title"] ?></h2>

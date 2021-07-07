@@ -1,17 +1,17 @@
 <?php 
 include_once(__DIR__ . '/../../header.php'); 
 ?>
-<main class="container subpage">
+<main class="container-fluid subpage">
 	<div class="detailsHeader">
 		<div class="row" style="position: relative; z-index: 1">
 			<div class="col-12">
 				<div class="row align-items-center">
-					<div class="col-4 col-md-3 col-lg-2">
+					<div class="col flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<span class="icon-group" style="position: absolute;top: 50%;left: 50%;font-size: 70px;transform: translateX(-50%) translateY(-50%);"></span>
 						</div>
 					</div>
-					<div class="col-6 col-md-9 col-lg-10">
+					<div class="col">
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
 						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. Electoral Period</a></div>
 						<h2>Session <?= $apiResult["data"]["attributes"]["number"] ?></h2>
@@ -54,11 +54,11 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 				</div>
 				<div class="tab-pane fade" id="agendaItems" role="tabpanel" aria-labelledby="agendaItems-tab">
-					<div class="relationshipsList">
+					<div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">
 					<?php 
 					foreach ($apiResult["data"]["relationships"]["agendaItems"]["data"] as $relationshipItem) {
 					?>
-						<div class="entityPreview" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$apiResult["data"]["attributes"]["parliament"]."-".$relationshipItem["data"]["id"] ?>"><?= $relationshipItem["data"]["attributes"]["officialTitle"].": ".$relationshipItem["data"]["attributes"]["title"] ?></a></div>
+						<div class="entityPreview col" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$apiResult["data"]["attributes"]["parliament"]."-".$relationshipItem["data"]["id"] ?>"><?= $relationshipItem["data"]["attributes"]["officialTitle"].": <br>".$relationshipItem["data"]["attributes"]["title"] ?></a></div>
 					<?php 
 					} 
 					?>

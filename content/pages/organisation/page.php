@@ -1,17 +1,17 @@
 <?php 
 include_once(__DIR__ . '/../../header.php'); 
 ?>
-<main class="container subpage">
+<main class="container-fluid subpage">
 	<div class="detailsHeader">
 		<div class="row" style="position: relative; z-index: 1">
 			<div class="col-12">
 				<div class="row align-items-center">
-					<div class="col-4 col-md-3 col-lg-2">
+					<div class="col flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"] ?>" alt="..." class="img-fluid" style="position: absolute; top: 50%; transform: translateY(-50%) translateX(-50%);left: 50%;width: 80%;">
 						</div>
 					</div>
-					<div class="col-6 col-md-9 col-lg-10">
+					<div class="col">
 						<h2><?= $apiResult["data"]["attributes"]["labelAlternative"] ?></h2>
 						<div><?= $apiResult["data"]["attributes"]["label"] ?></div>
 						<div><?= $apiResult["data"]["attributes"]["abstract"] ?></div>

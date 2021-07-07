@@ -196,6 +196,36 @@ footer {
     float: left;
 }
 
+.breadcrumb-page .text-truncate {
+    max-width: 230px;
+}
+
+@media (min-width:576px) {
+    .breadcrumb-page .text-truncate {
+        max-width: 300px;
+    }
+}
+@media (min-width:620px) {
+    .breadcrumb-page .text-truncate {
+        max-width: 380px;
+    }
+}
+@media (min-width:768px) {
+    .breadcrumb-page .text-truncate {
+        max-width: 380px;
+    }
+}
+@media (min-width:992px) {
+    .breadcrumb-page .text-truncate {
+        max-width: 600px;
+    }
+}
+@media (min-width:1200px) {
+    .breadcrumb-page .text-truncate {
+        max-width: 820px;
+    }
+}
+
 .breadcrumb-page [class^="icon-"] {
     margin-right: 4px;
 }
@@ -234,12 +264,17 @@ main.container, main.container-fluid {
     min-height: calc(100% - 70px);
 }
 
-main.container.subpage {
+main.container.subpage, main.container-fluid.subpage {
     padding-top: 30px;
     padding-bottom: 30px;
     margin-bottom: 0px;
     position: relative;
     z-index: 1
+}
+
+main.container-fluid.subpage {
+    padding-right: 30px;
+    padding-left: 30px;
 }
 
 a, a:hover {
@@ -410,14 +445,30 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 }
 
 .relationshipsList {
-    
+    margin-left: -5px;
+    margin-right: -5px;
+    max-height: 800px;
+    overflow: auto;
 }
 
 .relationshipsList .entityPreview {
-    padding: 8px 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.relationshipsList .entityPreview a {
     background: var(--primary-bg-color);
-    float: left;
-    margin: 0 10px 10px 0;
+    padding: 8px 10px;
+    display: block;
+    margin-bottom: 10px;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    height: calc(100% - 10px);
+}
+
+.relationshipsList .entityPreview a:hover {
+    border-color: var(--primary-fg-color);
 }
 
 .nav-tabs {
@@ -629,10 +680,12 @@ input:checked + .slider:before, .switch-container.active .slider:before {
 .partyIndicator[data-party="DIE GR\u00dcNEN"],
 .partyIndicator[data-party="GRÜNE"],
 .partyIndicator[data-party="GR\u00dcNE"],
+.partyIndicator[data-party="BÜNDNIS 90/DIE GRÜNEN"],
 .partyIndicator[data-faction="DIE GRÜNEN"], 
 .partyIndicator[data-faction="DIE GR\u00dcNEN"],
 .partyIndicator[data-faction="GRÜNE"],
 .partyIndicator[data-faction="GR\u00dcNE"],
+.partyIndicator[data-faction="BÜNDNIS 90/DIE GRÜNEN"],
 .partyIndicator[data-faction="Q1007353"] {
     background-color: #4a932b;
     border-color: #4a932b;
@@ -881,6 +934,17 @@ input#edit-query {
 
 .detailsHeader h2 {
     margin-bottom: 0px;
+}
+
+.detailsHeader .detailsThumbnailContainer {
+    flex-basis: 130px;
+    padding-right: 0px;
+}
+
+@media (min-width:992px) {
+    .detailsHeader .detailsThumbnailContainer {
+        flex-basis: 160px;
+    }
 }
 
 .detailsHeader .rounded-circle {

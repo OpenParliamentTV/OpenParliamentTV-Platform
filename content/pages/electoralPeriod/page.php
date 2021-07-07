@@ -1,17 +1,17 @@
 <?php 
 include_once(__DIR__ . '/../../header.php'); 
 ?>
-<main class="container subpage">
+<main class="container-fluid subpage">
 	<div class="detailsHeader">
 		<div class="row" style="position: relative; z-index: 1">
 			<div class="col-12">
 				<div class="row align-items-center">
-					<div class="col-4 col-md-3 col-lg-2">
+					<div class="col flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<span class="icon-check" style="position: absolute;top: 50%;left: 50%;font-size: 70px;transform: translateX(-50%) translateY(-50%);"></span>
 						</div>
 					</div>
-					<div class="col-6 col-md-9 col-lg-10">
+					<div class="col">
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
 						<h2><?= $apiResult["data"]["attributes"]["number"] ?>. Electoral Period</h2>
 						<div><?php 
@@ -49,11 +49,12 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 				</div>
 				<div class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
-					<div class="relationshipsList">
+					<div class="relationshipsList row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6">
 					<?php 
 					foreach ($apiResult["data"]["relationships"]["sessions"]["data"] as $relationshipItem) {
+						$formattedDateStart = date("d.m.Y", strtotime($relationshipItem["data"]["attributes"]["dateStart"]));
 					?>
-						<div class="entityPreview" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$relationshipItem["data"]["id"] ?>">Session <?= $relationshipItem["data"]["attributes"]["number"] ?></a></div>
+						<div class="entityPreview col" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$relationshipItem["data"]["id"] ?>"><?= $formattedDateStart ?><br>Session <?= $relationshipItem["data"]["attributes"]["number"] ?></a></div>
 					<?php 
 					} 
 					?>
