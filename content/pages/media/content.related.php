@@ -28,33 +28,33 @@ if (!function_exists("L")) {
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="people" role="tabpanel" aria-labelledby="people-tab">
-                <div class="relationshipsList">
+                <div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">
                 <?php 
                 foreach ($speech["relationships"]["people"]["data"] as $relationshipItem) {
                 ?>
-                    <div class="entityPreview" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["type"]."/".$relationshipItem["id"] ?>"><?= $relationshipItem["attributes"]["label"] ?></a></div>
+                    <div class="entityPreview col" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["type"]."/".$relationshipItem["id"] ?>"><?= $relationshipItem["attributes"]["label"] ?></a></div>
                 <?php 
                 } 
                 ?>
                 </div>
             </div>
             <div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
-                <div class="relationshipsList">
+                <div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">
                 <?php 
                 foreach ($speech["relationships"]["organisations"]["data"] as $relationshipItem) {
                 ?>
-                    <div class="entityPreview" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["type"]."/".$relationshipItem["id"] ?>"><?= $relationshipItem["attributes"]["label"] ?></a></div>
+                    <div class="entityPreview col" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["type"]."/".$relationshipItem["id"] ?>"><?= $relationshipItem["attributes"]["label"] ?></a></div>
                 <?php 
                 } 
                 ?>
                 </div>
             </div>
             <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
-                <div class="relationshipsList">
+                <div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">
                 <?php 
                 foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
                 ?>
-                    <div class="entityPreview" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["type"]."/".$relationshipItem["id"] ?>"><?= $relationshipItem["attributes"]["label"] ?></a></div>
+                    <div class="entityPreview col" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["type"]."/".$relationshipItem["id"] ?>"><?= $relationshipItem["attributes"]["label"] ?></a></div>
                 <?php 
                 } 
                 ?>
