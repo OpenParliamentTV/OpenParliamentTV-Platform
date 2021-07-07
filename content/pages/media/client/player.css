@@ -12,6 +12,7 @@ main#content.ready {
 
 .mediaContainer {
 	padding: 30px 30px 0 30px;
+	height: calc(100vh - 50px);
 }
 
 .frametrail-body {
