@@ -1,5 +1,5 @@
-<article class="resultItem col" data-speech-id="<?= $result_item["id"] ?>" data-faction="<?= $result_item["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"] ?>">
-	<div class="resultContent partyIndicator" data-faction="<?= $result_item["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"] ?>">
+<article class="resultItem col" data-speech-id="<?= $result_item["id"] ?>" data-faction="<?= $result_item["relationships"]["organisations"]["data"][0]["id"] ?>">
+	<div class="resultContent partyIndicator" data-faction="<?= $result_item["relationships"]["organisations"]["data"][0]["id"] ?>">
 		<a style="display: block;" href='<?= $config["dir"]["root"] ?>/media/<?= $result_item["id"].$paramStr ?>'>
 			<div class="icon-play-1"></div>
 			<div class="resultDuration"><?= $formattedDuration ?></div>
