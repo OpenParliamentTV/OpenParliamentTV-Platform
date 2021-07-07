@@ -54,6 +54,6 @@ include_once(__DIR__ . '/../../header.php');
 <script type="text/javascript">
 	$(document).ready( function() {
 		<?php $actualAgendaItemIDParts = explode("-", $apiResult["data"]["id"]); ?>
-		updateMediaList("agendaItemID=<?= $actualAgendaItemIDParts[1] ?>");
+		updateMediaList("agendaItemID=<?= $actualAgendaItemIDParts[1] ?>&sort=date-asc");
 	});
 </script>
