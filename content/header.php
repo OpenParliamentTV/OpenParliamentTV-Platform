@@ -1,19 +1,19 @@
 <header>
 	<nav class="navbar justify-content-between navbar-light">
-		<div>
+		<div class="<?=($page != "media") ? "flex-fill" : ""?>">
 			<a href="<?= $config["dir"]["root"] ?>/" class="breadcrumb-page navbar-text large brand">
-				<img src="<?= $config["dir"]["root"] ?>/content/client/images/optv-logo_klein.png"><span class="<?=($page != "media") ? "d-none d-sm-inline" : "d-none d-lg-inline"?>"><?php echo L::brand; ?></span>
+				<img src="<?= $config["dir"]["root"] ?>/content/client/images/optv-logo_klein.png"><span class="<?=($page != "media") ? "d-none d-md-inline" : "d-none d-lg-inline"?>"><?php echo L::brand; ?></span>
 			</a>
 			<?php 
 				if (isset($pageBreadcrumbs)) {
 					foreach ($pageBreadcrumbs as $breadcrumb) {
 						if (isset($breadcrumb["path"])) {
 							echo '<div class="breadcrumb-page">
-								<span class="navbar-text breadcrumb-separator">/</span><a href="'.$config["dir"]["root"].$breadcrumb["path"].'" class="navbar-text pl-0 pr-0">'.$breadcrumb["label"].'</a>
+								<span class="navbar-text breadcrumb-separator  text-truncate">/</span><a href="'.$config["dir"]["root"].$breadcrumb["path"].'" class="navbar-text pl-0 pr-0 text-truncate">'.$breadcrumb["label"].'</a>
 							</div>';
 						} else {
 							echo '<div class="breadcrumb-page">
-								<span class="navbar-text breadcrumb-separator">/</span><span class="navbar-text pl-0 pr-0">'.$breadcrumb["label"].'</span>
+								<span class="navbar-text breadcrumb-separator  text-truncate">/</span><span class="navbar-text pl-0 pr-0 text-truncate">'.$breadcrumb["label"].'</span>
 							</div>';
 						}
 					}
