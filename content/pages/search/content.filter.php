@@ -19,7 +19,7 @@
 							<canvas id="factionChart"></canvas>
 						</div>
 						<div class="checkboxList">
-							<label style="display: block;" for="edit-party"><b><?php echo L::party; ?></b></label>
+							<label style="display: block;" for="edit-party"><b><?php echo L::faction; ?></b></label>
 							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-faction="Q1023134">
 								<input id="edit-party-17362" name="factionID[]" value="Q1023134" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17362">CDU/CSU</label>
 							</div>
