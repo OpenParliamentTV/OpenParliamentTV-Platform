@@ -33,6 +33,7 @@ composer.phar
 langcache/*.php
 
 # Data
+data/import-error-log.txt
 data/input/*.json
 data/done/*.json
 modules/alignment/data/*.xml
