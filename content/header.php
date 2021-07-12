@@ -48,6 +48,12 @@
 			<div class="dropdown d-inline">
 				<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-torso"></span></button>
 				<div class="dropdown-menu dropdown-menu-right">
+					<div id="toggleDarkmode" class="navbar-text switch-container <?= ($color_scheme == "dark") ? "active" : "" ?>">
+						<span class="switch">
+							<span class="slider round"></span>
+						</span><span class="d-none d-md-inline">Dark Mode</span>
+					</div>
+					<div class="dropdown-divider"></div>
 					<a class="dropdown-item <?= ($page == "manage") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/manage">Dashboard</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item <?= ($page == "login") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/login"><?php echo L::login; ?></a>

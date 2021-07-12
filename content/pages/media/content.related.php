@@ -9,6 +9,7 @@ if (!function_exists("L")) {
 ?>
 <div class="row">
     <div class="col-12">
+        <!--
         <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="true"><span class="icon-torso"></span> People</a>
@@ -67,5 +68,6 @@ if (!function_exists("L")) {
                 [ITEM DATA]
             </div>
         </div>
+        -->
     </div>
 </div>

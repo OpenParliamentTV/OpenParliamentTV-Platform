@@ -39,7 +39,8 @@ define('CSAJAX_DEBUG', false);
  */
 $valid_requests = array(
     'dipbt.bundestag.de',
-    'dip21.bundestag.de'
+    'dip21.bundestag.de',
+    'dserver.bundestag.de'
 );
 
 /**

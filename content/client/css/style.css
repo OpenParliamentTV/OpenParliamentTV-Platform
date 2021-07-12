@@ -73,10 +73,12 @@ body {
 }
 
 header {
-    position: relative;
+    position: fixed;
+    top: 0px;
     height: 50px;
     background: transparent;
     z-index: 21;
+    width: 100%;
 }
 
 header .navbar {
@@ -181,7 +183,7 @@ header #navbarNavSettings .nav-item {
 .navbar button[aria-expanded="true"] {
     background: var(--primary-fg-color) !important;
     border-color: var(--primary-fg-color) !important;
-    color: var(--primary-bg-color);
+    color: var(--primary-bg-color) !important;
 }
 
 footer {
@@ -251,6 +253,7 @@ body.darkmode .partnerLogos img {
 
 main {
     z-index: 1;
+    margin-top: 50px;
 }
 
 main.container-fluid, header > .container-fluid {
@@ -292,6 +295,14 @@ h1, h2, h3, h4, h5, h6 {
 
 h1, h2 {
     font-size: 1.2rem;
+}
+
+.bg-white {
+    background: var(--primary-bg-color) !important;
+}
+
+hr {
+    border-top: 1px solid var(--border-color) !important;
 }
 
 /*
@@ -550,7 +561,7 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     width: 13px;
     left: 2px;
     bottom: 2px;
-    background-color: white;
+    background-color: var(--primary-bg-color);
     -webkit-transition: .4s;
     transition: .4s;
 }
@@ -577,6 +588,30 @@ input:checked + .slider:before, .switch-container.active .slider:before {
     border-radius: 50%;
 }
 
+.mainLoadingIndicator {
+    position: fixed;
+    top: 47px;
+    left: 0px;
+    width: 100%;
+    pointer-events: all;
+    height: calc(100vh - 47px);
+    background: var(--secondary-bg-color);
+    z-index: 20;
+    opacity: 1;
+}
+
+body.ready .mainLoadingIndicator {
+    opacity: 0;
+    pointer-events: none;
+}
+
+body > main {
+    opacity: 0;
+}
+
+body.ready > main {
+    opacity: 1;
+}
 
 .loadingIndicator {
     position: absolute;

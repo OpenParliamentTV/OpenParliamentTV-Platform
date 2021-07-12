@@ -11,11 +11,11 @@ $(document).ready( function() {
 	$(window).scroll(function(){
 		var scroll = $(window).scrollTop();
 
-		if (scroll >= 40 && !$('body').hasClass('fixed')) {
+		if (scroll >= 10 && !$('body').hasClass('fixed')) {
 			$('#speechListContainer').css('margin-top', $('.filterContainer').height() + 115);
 			$('body').addClass('fixed');
 			
-		} else if (scroll < 40) {
+		} else if (scroll < 10) {
 			$('body').removeClass('fixed');
 			$('#speechListContainer').css('margin-top', 0);
 		}

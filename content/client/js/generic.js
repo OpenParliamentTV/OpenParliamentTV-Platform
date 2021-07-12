@@ -1,12 +1,72 @@
 var updateAjax,
 	factionColors = {
 		"DIE LINKE": "#bc3475",
-		"DIE GRÜNEN": "#4a932b",
+		"BÜNDNIS 90/DIE GRÜNEN": "#4a932b",
 		"CDU/CSU": "#000000",
 		"SPD": "#df0b25",
 		"FDP": "#feeb34",
 		"AfD": "#1a9fdd"
 	};
+
+$(document).ready(function() {
+
+	$('#toggleDarkmode').click(function(evt) {
+		if ($(this).hasClass('active')) {
+			$(this).removeClass('active');
+			$('body').removeClass('darkmode');
+			setCookie('color_scheme', 'light', 30);
+		} else {
+			$(this).addClass('active');
+			$('body').addClass('darkmode');
+			setCookie('color_scheme', 'dark', 30);
+		}
+		evt.stopPropagation();
+	});
+
+	window.setTimeout(function() {
+		$('body').addClass('ready');
+	}, 1400);
+
+	$(document).ajaxComplete(function( event,request, settings ) {
+	    updateLinkTransitions();
+	});
+
+	updateLinkTransitions();
+
+});
+
+function updateLinkTransitions() {
+	$('a[href^="/"], a[href^="./"], a[href^="../"], a[href^="'+ config.dir.root +'"]').not('a[target="_blank"]').click(function(evt) {
+		$('body').removeClass('ready');
+		$('body > main').hide();
+		evt.stopPropagation();
+		evt.preventDefault();
+		
+		var currentHREF = $(this).attr('href');
+
+		window.setTimeout(function(href) {
+			window.location = currentHREF;
+		}, 400, currentHREF);
+	});
+}
+
+function setCookie(identifier, value, expiryDays) {
+	let date = new Date();
+	date.setTime(date.getTime() + (expiryDays * 24 * 60 * 60 * 1000));
+	const expires = "expires=" + date.toUTCString();
+	document.cookie = identifier + "=" + value + "; " + expires + "; path=/";
+}
+
+function getCookie(identifier) {
+	const name = identifier + "=";
+	const cDecoded = decodeURIComponent(document.cookie); //to be careful
+	const cArr = cDecoded .split('; ');
+	let res;
+	cArr.forEach(val => {
+		if (val.indexOf(name) === 0) res = val.substring(name.length);
+	})
+	return res;
+}
 
 function delay(callback, ms) {
 	var timer = 0;

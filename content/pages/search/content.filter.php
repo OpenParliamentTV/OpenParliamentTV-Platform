@@ -1,4 +1,4 @@
-<div id="filterbar" class="col-12 nosearch" style="margin-top: 0px;">
+<div id="filterbar" class="col-12 nosearch" style="margin-top: 45px;">
 	<form id="filterForm" method="get" accept-charset="UTF-8">
 		<!--<input type="hidden" name="a" value="search">-->
 		<!--<label for="edit-query">Suchbegriff eingeben </label>-->
