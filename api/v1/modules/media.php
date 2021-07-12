@@ -1359,7 +1359,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
                     } else {
 
-                        reportConflict("Media", "mediaAdd current faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
+                        reportConflict("Media", "mediaAdd current faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person: " . json_encode($person), $db);
 
                     }
                 }
