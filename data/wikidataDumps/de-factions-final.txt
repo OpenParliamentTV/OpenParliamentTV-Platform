@@ -1,1 +1,138 @@
-[{"type": "faction", "id": "Q1826856", "label": "Fraktion Die Linke", "socialMediaIDs": [{"label": "Twitter", "id": "linksfraktion"}, {"label": "Facebook", "id": "linksfraktion"}, {"label": "Instagram", "id": "linksfraktion"}], "abstract": "Fraktion im Deutschen Bundestag", "websiteURI": "https://www.linksfraktion.de/", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Die_Linke_BT_Fraktion_Logo.svg/300px-Die_Linke_BT_Fraktion_Logo.svg", "labelAlternative": "DIE LINKE"}, {"type": "faction", "id": "Q1023134", "label": "CDU/CSU-Bundestagsfraktion", "socialMediaIDs": [{"label": "Twitter", "id": "cducsubt"}, {"label": "Facebook", "id": "cducsubundestagsfraktion"}, {"label": "Instagram", "id": "cducsubt"}], "abstract": "Fraktion von CDU und CSU im Deutschen Bundestag", "websiteURI": "https://www.cducsu.de/", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Cducsu_fraktion_logo_rgb.svg/300px-Cducsu_fraktion_logo_rgb.svg", "labelAlternative": "CDU/CSU"}, {"type": "faction", "id": "Q1387991", "label": "FDP-Bundestagsfraktion", "socialMediaIDs": [{"label": "Twitter", "id": "fdpbt"}, {"label": "Facebook", "id": "fdpbt"}, {"label": "Instagram", "id": "fdpbt"}], "abstract": "Fraktion der FDP im Deutschen Bundestag", "websiteURI": "https://www.fdpbt.de/", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Logo_fdp_bundestagsfraktion.svg/300px-Logo_fdp_bundestagsfraktion.svg", "labelAlternative": "FDP"}, {"type": "faction", "id": "Q2207512", "label": "SPD-Bundestagsfraktion", "socialMediaIDs": [{"label": "Twitter", "id": "spdbt"}, {"label": "Facebook", "id": "spdbundestagsfraktion"}, {"label": "Instagram", "id": "spdbt"}], "abstract": "Fraktion der SPD-Abgeordneten im Deutschen Bundestag", "websiteURI": "https://www.spdfraktion.de/", "labelAlternative": "SPD"}, {"type": "faction", "id": "Q42575708", "label": "AfD-Bundestagsfraktion", "socialMediaIDs": [{"label": "Twitter", "id": "AfDimBundestag"}, {"label": "Facebook", "id": "afdimbundestag"}, {"label": "Instagram", "id": "afdimbundestag"}], "abstract": "Fraktion der Alternative für Deutschland im Deutschen Bundestag", "websiteURI": "https://www.afdbundestag.de/", "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/AFD_Fraktion_im_Bundestag_Logo.svg/300px-AFD_Fraktion_im_Bundestag_Logo.svg", "labelAlternative": "AfD"}, {"type": "faction", "id": "Q1007353", "label": "Bundestagsfraktion Bündnis 90/Die Grünen", "socialMediaIDs": [{"label": "Twitter", "id": "GrueneBundestag"}, {"label": "Facebook", "id": "Gruene.im.Bundestag"}, {"label": "Instagram", "id": "gruenebundestag"}], "abstract": "Fraktion im Deutschen Bundestag", "websiteURI": "https://www.gruene-bundestag.de/", "labelAlternative": "BÜNDNIS 90/DIE GRÜNEN"}]
+[
+  {
+    "type": "faction",
+    "id": "Q1826856",
+    "label": "Fraktion Die Linke",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "linksfraktion"
+      },
+      {
+        "label": "Facebook",
+        "id": "linksfraktion"
+      },
+      {
+        "label": "Instagram",
+        "id": "linksfraktion"
+      }
+    ],
+    "abstract": "Fraktion im Deutschen Bundestag",
+    "websiteURI": "https://www.linksfraktion.de/",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Die_Linke_BT_Fraktion_Logo.svg/300px-Die_Linke_BT_Fraktion_Logo.svg",
+    "labelAlternative": "DIE LINKE"
+  },
+  {
+    "type": "faction",
+    "id": "Q1023134",
+    "label": "CDU/CSU-Bundestagsfraktion",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "cducsubt"
+      },
+      {
+        "label": "Facebook",
+        "id": "cducsubundestagsfraktion"
+      },
+      {
+        "label": "Instagram",
+        "id": "cducsubt"
+      }
+    ],
+    "abstract": "Fraktion von CDU und CSU im Deutschen Bundestag",
+    "websiteURI": "https://www.cducsu.de/",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Cducsu_fraktion_logo_rgb.svg/300px-Cducsu_fraktion_logo_rgb.svg",
+    "labelAlternative": "CDU/CSU"
+  },
+  {
+    "type": "faction",
+    "id": "Q1387991",
+    "label": "FDP-Bundestagsfraktion",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "fdpbt"
+      },
+      {
+        "label": "Facebook",
+        "id": "fdpbt"
+      },
+      {
+        "label": "Instagram",
+        "id": "fdpbt"
+      }
+    ],
+    "abstract": "Fraktion der FDP im Deutschen Bundestag",
+    "websiteURI": "https://www.fdpbt.de/",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Logo_fdp_bundestagsfraktion.svg/300px-Logo_fdp_bundestagsfraktion.svg",
+    "labelAlternative": "FDP"
+  },
+  {
+    "type": "faction",
+    "id": "Q2207512",
+    "label": "SPD-Bundestagsfraktion",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "spdbt"
+      },
+      {
+        "label": "Facebook",
+        "id": "spdbundestagsfraktion"
+      },
+      {
+        "label": "Instagram",
+        "id": "spdbt"
+      }
+    ],
+    "abstract": "Fraktion der SPD-Abgeordneten im Deutschen Bundestag",
+    "websiteURI": "https://www.spdfraktion.de/",
+    "labelAlternative": "SPD"
+  },
+  {
+    "type": "faction",
+    "id": "Q42575708",
+    "label": "AfD-Bundestagsfraktion",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "AfDimBundestag"
+      },
+      {
+        "label": "Facebook",
+        "id": "afdimbundestag"
+      },
+      {
+        "label": "Instagram",
+        "id": "afdimbundestag"
+      }
+    ],
+    "abstract": "Fraktion der Alternative für Deutschland im Deutschen Bundestag",
+    "websiteURI": "https://www.afdbundestag.de/",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/AFD_Fraktion_im_Bundestag_Logo.svg/300px-AFD_Fraktion_im_Bundestag_Logo.svg",
+    "labelAlternative": "AfD"
+  },
+  {
+    "type": "faction",
+    "id": "Q1007353",
+    "label": "Bundestagsfraktion Bündnis 90/Die Grünen",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "GrueneBundestag"
+      },
+      {
+        "label": "Facebook",
+        "id": "Gruene.im.Bundestag"
+      },
+      {
+        "label": "Instagram",
+        "id": "gruenebundestag"
+      }
+    ],
+    "abstract": "Fraktion im Deutschen Bundestag",
+    "websiteURI": "https://www.gruene-bundestag.de/",
+    "labelAlternative": "BÜNDNIS 90/DIE GRÜNEN"
+  }
+]
