@@ -245,6 +245,8 @@ function mediaGetByID($id = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["DocumentThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["DocumentThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["DocumentThumbnailLicense"];
+                        $tmpAnnotationItem["attributes"]["sourceURI"] = $ditem["DocumentSourceURI"];
+                        $tmpAnnotationItem["attributes"]["embedURI"] = $ditem["DocumentEmbedURI"];
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["documents"]["data"], $tmpAnnotationItem);
 
@@ -1020,7 +1022,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
         if (!$document["sourceURI"]) {
 
-            reportConflict("Media","mediaAdd document no sourceURI","","","Could not add Document to Database because sourceURI was missing for MediaID ".$nextID." personJSON: ".json_encode($document),$db);
+            reportConflict("Media","mediaAdd document no sourceURI",$nextID,"","Could not add Document to Database because sourceURI was missing for MediaID ".$nextID." personJSON: ".json_encode($document),$db);
 
             continue;
 
