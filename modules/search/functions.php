@@ -201,12 +201,14 @@ function getSearchBody($request, $getAllResults) {
 	//$filter["must"][] = array("match"=>array("attributes.aligned" => true));
 	
 	// FILTER OUT FRAGESTTUNDE ETC.
+	/*
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Befragung"));
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Fragestunde"));
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Wahl der"));
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Wahl des"));
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungseröffnung"));
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungsende"));
+	*/
 
 	$shouldCount = 0;
 
@@ -240,7 +242,7 @@ function getSearchBody($request, $getAllResults) {
 			
 			$filter["must"][] = array("match"=>array("relationships.session.data.id" => $requestValue));
 
-		} else if ($requestKey == "sessionNumber" && strlen($requestValue) > 2) {
+		} else if ($requestKey == "sessionNumber" && strlen($requestValue) >= 1) {
 			
 			$filter["must"][] = array("match"=>array("relationships.session.data.attributes.number" => $requestValue));
 
@@ -339,8 +341,8 @@ function getSearchBody($request, $getAllResults) {
 			
 			$filter["must"][] = array("match"=>array("relationships.terms.data.id" => $requestValue));
 
-		} else if ($requestKey == "id" && count($request) < 3) {
-			$filter["must"][] = array("match"=>array("id" => $requestValue));
+		} else if ($requestKey == "id" && strlen($requestValue) > 3 && !$getAllResults) {
+			$filter["must"][] = array("match_phrase"=>array("id" => $requestValue));
 		}
 	}
 
@@ -359,12 +361,16 @@ function getSearchBody($request, $getAllResults) {
 	$fuzzy_match = preg_replace($quotationMarksRegex, '', $request["q"]);
 
 	if (strlen($request["q"]) >= 1) {
-		$query["bool"]["must"] = array();
+		$boolCondition = "must";
+		if ($request["id"]) {
+			$boolCondition = "should";
+		}
+		$query["bool"][$boolCondition] = array();
 		
 		if (strlen($fuzzy_match) > 0) {
 			
 			//TODO: Check which item in textContents is the right one
-			$query["bool"]["must"][] = array("match"=>array("attributes.textContents.textHTML" => array(
+			$query["bool"][$boolCondition][] = array("match"=>array("attributes.textContents.textHTML" => array(
 				"query"=>$fuzzy_match,
 				"operator"=>"and",
 				//"fuzziness"=>0,

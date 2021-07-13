@@ -10,25 +10,13 @@
 
 	$autoplayResults = boolval($_REQUEST['playresults']);
 
-	foreach ($apiResult["data"] as $index=>$result_item) {
-	    if ($result_item["id"] == $_REQUEST["id"]) {
-	        $speech = $result_item;
-	        $speechIndex = $index;
-	        break;
-	    }
-	}
+	$speech = $apiResult["data"][0];
 
 	if (isset($speech["_highlight"])) {
 		$textContentsHTML = $speech["_highlight"]["attributes.textContents.textHTML"][0];
 	} else {
 		$textContentsHTML = textObjectToHTMLString(json_encode($speech["attributes"]['textContents'][0]), $speech["attributes"]['videoFileURI'], $speech["id"]);
 	}
-
-	$prevResult = ($speechIndex > 0) ? array_values(array_slice($apiResult["data"], $speechIndex-1, 1))[0] : null;
-	$nextResult = ($speechIndex < count($apiResult["data"])) ? array_values(array_slice($apiResult["data"], $speechIndex+1, 1))[0] : null;
-
-	$prevSpeech = json_decode(getPrevDocument($speech["attributes"]["timestamp"]), true);
-	$nextSpeech = json_decode(getNextDocument($speech["attributes"]["timestamp"]), true);
 
 	$formattedDate = date("d.m.Y", strtotime($speech["attributes"]["dateStart"]));
 

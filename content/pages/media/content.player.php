@@ -32,6 +32,8 @@ $relatedContentsHTML =
 
 ?>
 <script type="text/javascript">
+    currentMediaID = '<?= $speech["id"] ?>';
+    
     playerData = {
     	'title': '',
     	'documents': [],
@@ -58,29 +60,7 @@ $relatedContentsHTML =
     };
 
     var isMobile = <?php if ($isMobile) { echo 'true'; } else { echo 'false'; } ?>
-
-    prevResultURL = <?php if ($prevResult) { 
-            echo "'media/".$prevResult["id"].$paramStr."'.replace(/\s/g, '+')";
-        } else {
-            echo 'null';
-        } ?>;
-    nextResultURL = <?php if ($nextResult) { 
-            echo "'media/".$nextResult["id"].$paramStr."'.replace(/\s/g, '+')";
-        } else {
-            echo 'null';
-        } ?>;
-    prevResultID = <?php if ($prevResult) { 
-            echo "'".$prevResult["id"]."'";
-        } else {
-            echo 'null';
-        } ?>;
-    nextResultID = <?php if ($nextResult) { 
-            echo "'".$nextResult["id"]."'";
-        } else {
-            echo 'null';
-        } ?>;
     
-    //console.log(nextResultURL);
 </script>
 <div class="mediaContainer">
     <div class="playerTabs">
