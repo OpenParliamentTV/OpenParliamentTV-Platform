@@ -1089,535 +1089,263 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
     if (count($item["people"]) < 1) {
 
-        reportConflict("Media","mediaAdd no person","","","Media has no people. MediaID ".$nextID,$db);
+        reportConflict("Media","mediaAdd no person",$nextID,"","Media has no people.",$db);
 
     }
 
-    //TODO: Check which method works better and remove the other.
-    $method = 1;
+    foreach ($item["people"] as $person) {
 
-    if ($method == 1) {
+        $personWD = apiV1(["action" => "wikidataService", "itemType" => "person", "str" => $person["label"]]);
 
-        foreach ($item["people"] as $person) {
+        if (($personWD["meta"]["requestStatus"] == "success") && (count($personWD["data"]) > 0)) {
+            //Person found in Wikidata
 
-            $personWD = apiV1(["action" => "wikidataService", "itemType" => "person", "str" => $person["label"]]);
+            if (gettype($personWD["data"][0]["factionID"]) == "array") {
 
-            if (($personWD["meta"]["requestStatus"] == "success") && (count($personWD["data"]) > 0)) {
-                //Person found in Wikidata
+                if (count($personWD["data"][0]["factionID"]) == 0) {
+                    unset($personWD["data"][0]["factionID"]);
+                } else {
+                    foreach ($personWD["data"][0]["factionID"] as $tmpFactionID) {
 
-                if (gettype($personWD["data"][0]["factionID"]) == "array") {
-
-                    if (count($personWD["data"][0]["factionID"]) == 0) {
-                        unset($personWD["data"][0]["factionID"]);
-                    } else {
-                        foreach ($personWD["data"][0]["factionID"] as $tmpFactionID) {
-
-                            if (preg_match("/(Q|P)\d+/i", $tmpFactionID)) {
-                                $personWD["data"][0]["faction_wp"] = $tmpFactionID;
-                                break;
-                            }
-
+                        if (preg_match("/(Q|P)\d+/i", $tmpFactionID)) {
+                            $personWD["data"][0]["faction_wp"] = $tmpFactionID;
+                            break;
                         }
+
                     }
-
-
-
-                } elseif (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["factionID"])) {
-
-                    $personWD["data"][0]["faction_wp"] = $personWD["data"][0]["factionID"];
-
                 }
 
-                if (gettype($personWD["data"][0]["partyID"]) == "array") {
 
 
-                    if (count($personWD["data"][0]["partyID"]) == 0) {
-                        unset($personWD["data"][0]["partyID"]);
-                    } else {
+            } elseif (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["factionID"])) {
 
-                        foreach ($personWD["data"][0]["partyID"] as $tmpPartyID) {
+                $personWD["data"][0]["faction_wp"] = $personWD["data"][0]["factionID"];
 
-                            if (preg_match("/(Q|P)\d+/i", $tmpPartyID)) {
-                                $personWD["data"][0]["party_wp"] = $tmpPartyID;
-                                break;
-                            }
+            }
 
+            if (gettype($personWD["data"][0]["partyID"]) == "array") {
+
+
+                if (count($personWD["data"][0]["partyID"]) == 0) {
+                    unset($personWD["data"][0]["partyID"]);
+                } else {
+
+                    foreach ($personWD["data"][0]["partyID"] as $tmpPartyID) {
+
+                        if (preg_match("/(Q|P)\d+/i", $tmpPartyID)) {
+                            $personWD["data"][0]["party_wp"] = $tmpPartyID;
+                            break;
                         }
+
                     }
+                }
 
-                } elseif (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["partyID"])) {
+            } elseif (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["partyID"])) {
 
-                    $personWD["data"][0]["party_wp"] = $personWD["data"][0]["partyID"];
+                $personWD["data"][0]["party_wp"] = $personWD["data"][0]["partyID"];
+
+            }
+
+            $personDB = personGetByID($personWD["data"][0]["id"]);
+
+            if (($personDB["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$personDB["data"]))) {
+                //Person does not exist in Database
+
+                $tmpNewPerson = array(
+                    "PersonID" => $personWD["data"][0]["id"],
+                    "PersonType" => "memberOfParliament", //$person["type"] //TODO: fix input
+                    "PersonLabel" => $personWD["data"][0]["label"],
+                    //"PersonFirstName"=>$personDB["data"][0]["firstName"], //TODO: WikidataServiceDumps
+                    //"PersonLastName"=>$personDB["data"][0]["lastName"], //TODO: WikidataServiceDumps
+                    //"PersonDegree"=>$personDB["data"][0]["degree"], //TODO: WikidataServiceDumps
+                    "PersonBirthDate" => $personWD["data"][0]["birthDate"],
+                    "PersonGender" => $personWD["data"][0]["gender"],
+                    "PersonAbstract" => $personWD["data"][0]["abstract"],
+                    "PersonThumbnailURI" => ((gettype($personWD["data"][0]["thumbnailURI"]) == "array") ? $personWD["data"][0]["thumbnailURI"][0] : $personWD["data"][0]["thumbnailURI"]),
+                    "PersonThumbnailCreator" => $personWD["data"][0]["thumbnailCreator"],
+                    "PersonThumbnailLicense" => $personWD["data"][0]["thumbnailLicense"],
+                    "PersonWebsiteURI" => ((gettype($personWD["data"][0]["websiteURI"]) == "array") ? $personWD["data"][0]["websiteURI"][0] : $personWD["data"][0]["websiteURI"]),
+                    "PersonEmbedURI" => $personWD["data"][0]["embedURI"],
+                    "PersonOriginID" => $personWD["data"][0]["originID"],
+                    "PersonPartyOrganisationID" => $personWD["data"][0]["party_wp"],
+                    "PersonFactionOrganisationID" => $personWD["data"][0]["faction_wp"],
+                    "PersonSocialMediaIDs" => json_encode($personWD["data"][0]["socialMediaIDs"]),
+                    "PersonAdditionalInformation" => json_encode($personWD["data"][0]["additionalInformation"])
+                );
+
+                try {
+
+                    $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
+
+                } catch (exception $e) {
+
+                    reportConflict("Media", "mediaAdd Person Error", $nextID, "", "Person could not be added - MediaID " . $nextID . ", personJSON: " . json_encode($person)." Error:".$e->getMessage(), $db);
+                    echo "Error:".$e->getMessage();
+                    continue;
 
                 }
 
                 $personDB = personGetByID($personWD["data"][0]["id"]);
 
-                if (($personDB["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$personDB["data"]))) {
-                    //Person does not exist in Database
+            }
 
-                    $tmpNewPerson = array(
-                        "PersonID" => $personWD["data"][0]["id"],
-                        "PersonType" => "memberOfParliament", //$person["type"] //TODO: fix input
-                        "PersonLabel" => $personWD["data"][0]["label"],
-                        //"PersonFirstName"=>$personDB["data"][0]["firstName"], //TODO: WikidataServiceDumps
-                        //"PersonLastName"=>$personDB["data"][0]["lastName"], //TODO: WikidataServiceDumps
-                        //"PersonDegree"=>$personDB["data"][0]["degree"], //TODO: WikidataServiceDumps
-                        "PersonBirthDate" => $personWD["data"][0]["birthDate"],
-                        "PersonGender" => $personWD["data"][0]["gender"],
-                        "PersonAbstract" => $personWD["data"][0]["abstract"],
-                        "PersonThumbnailURI" => ((gettype($personWD["data"][0]["thumbnailURI"]) == "array") ? $personWD["data"][0]["thumbnailURI"][0] : $personWD["data"][0]["thumbnailURI"]),
-                        "PersonThumbnailCreator" => $personWD["data"][0]["thumbnailCreator"],
-                        "PersonThumbnailLicense" => $personWD["data"][0]["thumbnailLicense"],
-                        "PersonWebsiteURI" => ((gettype($personWD["data"][0]["websiteURI"]) == "array") ? $personWD["data"][0]["websiteURI"][0] : $personWD["data"][0]["websiteURI"]),
-                        "PersonEmbedURI" => $personWD["data"][0]["embedURI"],
-                        "PersonOriginID" => $personWD["data"][0]["originID"],
-                        "PersonPartyOrganisationID" => $personWD["data"][0]["party_wp"],
-                        "PersonFactionOrganisationID" => $personWD["data"][0]["faction_wp"],
-                        "PersonSocialMediaIDs" => json_encode($personWD["data"][0]["socialMediaIDs"]),
-                        "PersonAdditionalInformation" => json_encode($personWD["data"][0]["additionalInformation"])
-                    );
+            //Add Person Annotation
+            $person["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
 
-                    try {
+            if (!$person["context"]) {
+                reportConflict("Media", "mediaAdd person without context", "", "", "Person has no context - MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
+                $person["context"] = "unknown";
+            }
 
-                        $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
+            $tmpAnnotationPerson = array(
+                "AnnotationMediaID" => $nextID,
+                "AnnotationType" => "person",
+                "AnnotationResourceID" => $personDB["data"]["id"],
+                "AnnotationContext" => $person["context"],
+                "AnnotationFrametrailType" => (($person["frametrailType"]) ? $person["frametrailType"] : "Annotation"),
+                "AnnotationTimeStart" => $person["timeStart"],
+                "AnnotationTimeEnd" => $person["timeEnd"],
+                "AnnotationCreator" => $person["creator"],
+                "AnnotationTags" => $person["tags"],
+                "AnnotationAdditionalInformation" => $person["additionalInformation"]
+            );
 
-                    } catch (exception $e) {
-
-                        reportConflict("Media", "mediaAdd Person Error", $nextID, "", "Person could not be added - MediaID " . $nextID . ", personJSON: " . json_encode($person)." Error:".$e->getMessage(), $db);
-                        echo "Error:".$e->getMessage();
-                        continue;
-
-                    }
-
-                    $personDB = personGetByID($personWD["data"][0]["id"]);
-
-                }
-
-                //Add Person Annotation
-                $person["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
-
-                if (!$person["context"]) {
-                    reportConflict("Media", "mediaAdd person without context", "", "", "Person has no context - MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
-                    $person["context"] = "unknown";
-                }
-
-                $tmpAnnotationPerson = array(
-                    "AnnotationMediaID" => $nextID,
-                    "AnnotationType" => "person",
-                    "AnnotationResourceID" => $personDB["data"]["id"],
-                    "AnnotationContext" => $person["context"],
-                    "AnnotationFrametrailType" => (($person["frametrailType"]) ? $person["frametrailType"] : "Annotation"),
-                    "AnnotationTimeStart" => $person["timeStart"],
-                    "AnnotationTimeEnd" => $person["timeEnd"],
-                    "AnnotationCreator" => $person["creator"],
-                    "AnnotationTags" => $person["tags"],
-                    "AnnotationAdditionalInformation" => $person["additionalInformation"]
-                );
-
-                $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationPerson);
+            $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationPerson);
 
 
-                //Faction Add
+            //Faction Add
 
-                if (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["faction_wp"])) {
+            if (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["faction_wp"])) {
 
-                    $tmpFaction = organisationGetByID($personWD["data"][0]["faction_wp"]);
+                $tmpFaction = organisationGetByID($personWD["data"][0]["faction_wp"]);
 
-                    if (($tmpFaction["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpFaction["data"]))) {
-                        //Add Organisation Faction
-                        $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $personWD["data"][0]["faction_wp"]]);
+                if (($tmpFaction["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpFaction["data"]))) {
+                    //Add Organisation Faction
+                    $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $personWD["data"][0]["faction_wp"]]);
 
-                        if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"]) > 0)) {
+                    if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"]) > 0)) {
 
-                            $tmpFactionObj = array(
-                                "OrganisationID" => $tmpOrganisationFactionWD["data"][0]["id"],
-                                "OrganisationType" => $tmpOrganisationFactionWD["data"][0]["type"],
-                                "OrganisationLabel" => $tmpOrganisationFactionWD["data"][0]["label"],
-                                "OrganisationLabelAlternative" => $tmpOrganisationFactionWD["data"][0]["labelAlternative"],
-                                "OrganisationAbstract" => $tmpOrganisationFactionWD["data"][0]["abstract"],
-                                "OrganisationThumbnailURI" => $tmpOrganisationFactionWD["data"][0]["thumbnailURI"],
-                                "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
-                                "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
-                                "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
-                                "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
-                                "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
-                                "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
-                                "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
-                            );
-                            $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
-
-                        } else {
-
-                            reportConflict("Media", "mediaAdd faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
-
-                        }
-                    }
-                }
-
-                //Party Add
-
-                if (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["party_wp"])) {
-
-                    $tmpParty = organisationGetByID($personWD["data"][0]["party_wp"]);
-
-                    if (($tmpParty["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpParty["data"]))) {
-                        //Add Organisation Faction
-                        $tmpOrganisationPartyWD = apiV1(["action" => "wikidataService", "itemType" => "party", "str" => $personWD["data"][0]["party_wp"]]);
-
-                        if (($tmpOrganisationPartyWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationPartyWD["data"]) > 0)) {
-
-                            $tmpPartyObj = array(
-                                "OrganisationID" => $tmpOrganisationPartyWD["data"][0]["id"],
-                                "OrganisationType" => $tmpOrganisationPartyWD["data"][0]["type"],
-                                "OrganisationLabel" => $tmpOrganisationPartyWD["data"][0]["label"],
-                                "OrganisationLabelAlternative" => $tmpOrganisationPartyWD["data"][0]["labelAlternative"],
-                                "OrganisationAbstract" => $tmpOrganisationPartyWD["data"][0]["abstract"],
-                                "OrganisationThumbnailURI" => $tmpOrganisationPartyWD["data"][0]["thumbnailURI"],
-                                "OrganisationThumbnailCreator" => $tmpOrganisationPartyWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
-                                "OrganisationThumbnailLicense" => $tmpOrganisationPartyWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
-                                "OrganisationEmbedURI" => $tmpOrganisationPartyWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
-                                "OrganisationWebsiteURI" => $tmpOrganisationPartyWD["data"][0]["websiteURI"],
-                                "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationPartyWD["data"][0]["socialMediaIDs"]),
-                                "OrganisationColor" => $tmpOrganisationPartyWD["data"][0]["color"], //TODO WIKIDATA DUMP
-                                "OrganisationAdditionalInformation" => $tmpOrganisationPartyWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
-                            );
-                            $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpPartyObj);
-
-                        } else {
-
-                            reportConflict("Media", "mediaAdd party not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
-
-                        }
-                    }
-                }
-
-
-                //Current Faction Add
-
-                if (array_key_exists("faction",$person)) {
-
-                    $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $person["faction"]]);
-                    //echo "<pre>\n\napiSearch:<br>\n";
-                    //print_r($tmpOrganisationFactionWD);
-
-                    if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"])>0)) {
-
-                        $tmpFaction = organisationGetByID($tmpOrganisationFactionWD["data"][0]["id"]);
-
-                        if (($tmpFaction["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpFaction["data"]))) {
-                            //Add Organisation Faction
-
-                            $tmpFactionObj = array(
-                                "OrganisationID" => $tmpOrganisationFactionWD["data"][0]["id"],
-                                "OrganisationType" => $tmpOrganisationFactionWD["data"][0]["type"],
-                                "OrganisationLabel" => $tmpOrganisationFactionWD["data"][0]["label"],
-                                "OrganisationLabelAlternative" => $tmpOrganisationFactionWD["data"][0]["labelAlternative"],
-                                "OrganisationAbstract" => $tmpOrganisationFactionWD["data"][0]["abstract"],
-                                "OrganisationThumbnailURI" => $tmpOrganisationFactionWD["data"][0]["thumbnailURI"],
-                                "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
-                                "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
-                                "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
-                                "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
-                                "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
-                                "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
-                                "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
-                            );
-                            echo $db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
-                            $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
-
-                            //$tmpFaction["data"] = $tmpFactionObj;
-                            $tmpFaction = organisationGetByID($tmpOrganisationFactionWD["data"][0]["id"]);
-
-                        }
-                        //echo "\nTmpFaction:\n";
-                        //print_r($tmpFaction);
-                        if (preg_match("/(Q|P)\d+/i", $tmpFaction["data"]["id"])) {
-
-                            $annotationFaction["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
-
-                            $tmpAnnotationItem = array(
-                                "AnnotationMediaID" => $nextID,
-                                "AnnotationType" => "organisation",
-                                "AnnotationResourceID" => $tmpFaction["data"]["id"],
-                                "AnnotationContext" => "faction",
-                                "AnnotationFrametrailType" => "Annotation",
-                                //"AnnotationTimeStart" => "",
-                                //"AnnotationTimeEnd" => "",
-                                "AnnotationCreator" => $annotationFaction["creator"],
-                                "AnnotationTags" => "",
-                                "AnnotationAdditionalInformation" => ""
-                            );
-
-                            $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationItem);
-
-                        } else {
-
-                            reportConflict("Media", "mediaAdd current faction did not match wikidata id scheme", "", "", "MediaID " . $nextID . " Person: " . json_encode($person), $db);
-
-                        }
+                        $tmpFactionObj = array(
+                            "OrganisationID" => $tmpOrganisationFactionWD["data"][0]["id"],
+                            "OrganisationType" => $tmpOrganisationFactionWD["data"][0]["type"],
+                            "OrganisationLabel" => $tmpOrganisationFactionWD["data"][0]["label"],
+                            "OrganisationLabelAlternative" => $tmpOrganisationFactionWD["data"][0]["labelAlternative"],
+                            "OrganisationAbstract" => $tmpOrganisationFactionWD["data"][0]["abstract"],
+                            "OrganisationThumbnailURI" => $tmpOrganisationFactionWD["data"][0]["thumbnailURI"],
+                            "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
+                            "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
+                            "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
+                            "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
+                            "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
+                            "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
+                            "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
+                        );
+                        $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
 
                     } else {
 
-                        reportConflict("Media", "mediaAdd current faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person: " . json_encode($person), $db);
+                        reportConflict("Media", "mediaAdd faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
 
                     }
                 }
-
-                /*
-                                echo "<pre>#############\n";
-                                print_r($personDB);
-                                print_r($personWD);
-                                print_r($person);
-                                echo "</pre>\n#############\n\n\n\n";
-                                */
-
-            } else {
-                //Person not found in Wikidata
-                reportConflict("Media", "mediaAdd person not found", "", "", "Person not found in wikidata - MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
             }
 
+            //Party Add
+
+            if (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["party_wp"])) {
+
+                $tmpParty = organisationGetByID($personWD["data"][0]["party_wp"]);
+
+                if (($tmpParty["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpParty["data"]))) {
+                    //Add Organisation Faction
+                    $tmpOrganisationPartyWD = apiV1(["action" => "wikidataService", "itemType" => "party", "str" => $personWD["data"][0]["party_wp"]]);
+
+                    if (($tmpOrganisationPartyWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationPartyWD["data"]) > 0)) {
+
+                        $tmpPartyObj = array(
+                            "OrganisationID" => $tmpOrganisationPartyWD["data"][0]["id"],
+                            "OrganisationType" => $tmpOrganisationPartyWD["data"][0]["type"],
+                            "OrganisationLabel" => $tmpOrganisationPartyWD["data"][0]["label"],
+                            "OrganisationLabelAlternative" => $tmpOrganisationPartyWD["data"][0]["labelAlternative"],
+                            "OrganisationAbstract" => $tmpOrganisationPartyWD["data"][0]["abstract"],
+                            "OrganisationThumbnailURI" => $tmpOrganisationPartyWD["data"][0]["thumbnailURI"],
+                            "OrganisationThumbnailCreator" => $tmpOrganisationPartyWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
+                            "OrganisationThumbnailLicense" => $tmpOrganisationPartyWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
+                            "OrganisationEmbedURI" => $tmpOrganisationPartyWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
+                            "OrganisationWebsiteURI" => $tmpOrganisationPartyWD["data"][0]["websiteURI"],
+                            "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationPartyWD["data"][0]["socialMediaIDs"]),
+                            "OrganisationColor" => $tmpOrganisationPartyWD["data"][0]["color"], //TODO WIKIDATA DUMP
+                            "OrganisationAdditionalInformation" => $tmpOrganisationPartyWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
+                        );
+                        $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpPartyObj);
+
+                    } else {
+
+                        reportConflict("Media", "mediaAdd party not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
+
+                    }
+                }
+            }
+
+
+        } else {
+            //Person not found in Wikidata
+            reportConflict("Media", "mediaAdd person not found", "", "", "Person not found in wikidata - MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
         }
 
 
-    } else {
-        foreach ($item["people"] as $person) {
 
+        //Current Faction Add
 
-            if ($person["wikidataID"]) {
-                $personDB = personGetByID($person["wikidataID"]);
-            } else {
-                $personDB = personSearch(["name" => $person["label"]]);
-            }
+        if (array_key_exists("faction",$person)) {
 
-            if (($personDB["meta"]["requestStatus"] != "success") || (count($personDB["data"]) < 1)) {
+            $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $person["faction"]]);
+            //echo "<pre>\n\napiSearch:<br>\n";
+            //print_r($tmpOrganisationFactionWD);
 
-                //Person is not in Database yet.
-                $personWD = apiV1(["action" => "wikidataService", "itemType" => "person", "str" => $person["label"]]);
+            if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"])>0)) {
 
-                if (($personWD["meta"]["requestStatus"] == "success") && (count($personWD["data"]) > 0)) {
+                $tmpFaction = organisationGetByID($tmpOrganisationFactionWD["data"][0]["id"]);
 
-                    if (count($personWD["data"]) > 1) {
-                        reportConflict("Media", "mediaAdd person unclear", "", "", "More then one person has been found. First one has been added: MediaID " . $nextID . " personJSON: " . json_encode($person) . " personWikidataJSON: " . json_encode($personWD), $db);
-                    }
+                if (($tmpFaction["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpFaction["data"]))) {
+                    //Add Organisation Faction
 
-                    if (gettype($personWD["data"][0]["faction"]) == "array") {
+                    $tmpFactionObj = array(
+                        "OrganisationID" => $tmpOrganisationFactionWD["data"][0]["id"],
+                        "OrganisationType" => $tmpOrganisationFactionWD["data"][0]["type"],
+                        "OrganisationLabel" => $tmpOrganisationFactionWD["data"][0]["label"],
+                        "OrganisationLabelAlternative" => $tmpOrganisationFactionWD["data"][0]["labelAlternative"],
+                        "OrganisationAbstract" => $tmpOrganisationFactionWD["data"][0]["abstract"],
+                        "OrganisationThumbnailURI" => $tmpOrganisationFactionWD["data"][0]["thumbnailURI"],
+                        "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
+                        "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
+                        "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
+                        "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
+                        "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
+                        "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
+                        "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
+                    );
+                    echo $db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
+                    $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
 
-                        if (count($personWD["data"][0]["faction"]) == 0) {
-                            unset($personWD["data"][0]["faction"]);
-                        } else {
-                            foreach ($personWD["data"][0]["faction"] as $tmpFactionID) {
-
-                                if (preg_match("/(Q|P)\d+/i", $tmpFactionID)) {
-                                    $personWD["data"][0]["faction_wp"] = $tmpFactionID;
-                                    break;
-                                }
-
-                            }
-                        }
-
-
-
-                    } elseif (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["faction"])) {
-
-                        $personWD["data"][0]["faction_wp"] = $personWD["data"][0]["faction"];
-
-                    }
-
-                    if (gettype($personWD["data"][0]["party"]) == "array") {
-
-
-                        if (count($personWD["data"][0]["party"]) == 0) {
-                            unset($personWD["data"][0]["party"]);
-                        } else {
-
-                            foreach ($personWD["data"][0]["party"] as $tmpPartyID) {
-
-                                if (preg_match("/(Q|P)\d+/i", $tmpPartyID)) {
-                                    $personWD["data"][0]["party_wp"] = $tmpPartyID;
-                                    break;
-                                }
-
-                            }
-                        }
-
-                    } elseif (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["party"])) {
-
-                        $personWD["data"][0]["party_wp"] = $personWD["data"][0]["party"];
-
-                    }
-                    //print_r($personDB);
-                    $personDB = personGetByID($personWD["data"][0]["id"]);
-                    if (($personDB["meta"]["requestStatus"] != "success") || (count($personDB["data"]) < 1)) {
-                        $tmpNewPerson = array(
-                            "PersonID" => $personWD["data"][0]["id"],
-                            "PersonType" => "memberOfParliament", //$person["type"] //TODO: fix input
-                            "PersonLabel" => $personWD["data"][0]["label"],
-                            //"PersonFirstName"=>$personDB["data"][0]["firstName"], //TODO: WikidataServiceDumps
-                            //"PersonLastName"=>$personDB["data"][0]["lastName"], //TODO: WikidataServiceDumps
-                            //"PersonDegree"=>$personDB["data"][0]["degree"], //TODO: WikidataServiceDumps
-                            "PersonBirthDate" => $personWD["data"][0]["birthDate"],
-                            "PersonGender" => $personWD["data"][0]["gender"],
-                            "PersonAbstract" => $personWD["data"][0]["abstract"],
-                            "PersonThumbnailURI" => ((gettype($personWD["data"][0]["thumbnailURI"]) == "array") ? $personWD["data"][0]["thumbnailURI"][0] : $personWD["data"][0]["thumbnailURI"]),
-                            "PersonThumbnailCreator" => $personWD["data"][0]["thumbnailCreator"],
-                            "PersonThumbnailLicense" => $personWD["data"][0]["thumbnailLicense"],
-                            "PersonEmbedURI" => $personWD["data"][0]["embedURI"],
-                            "PersonWebsiteURI" => ((gettype($personWD["data"][0]["websiteURI"]) == "array") ? $personWD["data"][0]["websiteURI"][0] : $personWD["data"][0]["websiteURI"]),
-                            "PersonOriginID" => $personWD["data"][0]["originID"],
-                            "PersonPartyOrganisationID" => $personWD["data"][0]["party_wp"],
-                            "PersonFactionOrganisationID" => $personWD["data"][0]["faction_wp"],
-                            "PersonSocialMediaIDs" => json_encode($personWD["data"][0]["socialMediaIDs"]),
-                            "PersonAdditionalInformation" => json_encode($personWD["data"][0]["additionalInformation"])
-                        );
-                        file_put_contents(__DIR__."/tmp.log",$db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson, FILE_APPEND));
-                        $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
-                    }
-                    //print_r($tmpNewPerson);
-                    //echo $db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
-
-
-
-                    $personDB = personGetByID($personWD["data"][0]["id"]);
-
-                } else {
-
-                    reportConflict("Media", "mediaAdd person not found", "", "", "Person has not been found in wikidataDump: MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
+                    //$tmpFaction["data"] = $tmpFactionObj;
+                    $tmpFaction = organisationGetByID($tmpOrganisationFactionWD["data"][0]["id"]);
 
                 }
-
-            } elseif ((!array_key_exists("id", $personDB["data"])) && (count($personDB["data"]) > 1)) {
-
-                reportConflict("Media", "mediaAdd person unclear", "", "", "More then one person has been found. First one has been used: MediaID " . $nextID . " personJSON: " . json_encode($person)." personDB-data: ".json_encode($personDB["data"]), $db);
-                $personDB["data"] = $personDB["data"][0];
-
-            }
-
-            if ($personDB["data"]["id"]) {
-
-                $person["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
-
-                if (!$person["context"]) {
-                    reportConflict("Media", "mediaAdd person without context", "", "", "Person has no context - MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
-                    $person["context"] = "unknown";
-                }
-
-                $tmpAnnotationPerson = array(
-                    "AnnotationMediaID" => $nextID,
-                    "AnnotationType" => "person",
-                    "AnnotationResourceID" => $personDB["data"]["id"],
-                    "AnnotationContext" => $person["context"],
-                    "AnnotationFrametrailType" => (($person["frametrailType"]) ? $person["frametrailType"] : "Annotation"),
-                    "AnnotationTimeStart" => $person["timeStart"],
-                    "AnnotationTimeEnd" => $person["timeEnd"],
-                    "AnnotationCreator" => $person["creator"],
-                    "AnnotationTags" => $person["tags"],
-                    "AnnotationAdditionalInformation" => $person["additionalInformation"]
-                );
-
-                $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationPerson);
-
-            }
-
-
-            // ORGANISATIONS
-
-            //FACTION
-
-            //Check if Faction of DB-Entry exists
-            if (($personDB["data"]["faction"]) && (!is_array($personDB["data"]["faction"]))) {
-
-                $tmpOrganisationFaction = organisationGetByID($personDB["data"]["faction"], $db);
-
-                if (($tmpOrganisationFaction["meta"]["requestStatus"] != "success") || (!array_key_exists("id", $tmpOrganisationFaction["data"]))) {
-
-                    $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $personDB["data"]["faction"]]);
-
-                    if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"]) > 0)) {
-
-                        $tmpFactionObj = array(
-                            "OrganisationID" => $tmpOrganisationFactionWD["data"][0]["id"],
-                            "OrganisationType" => $tmpOrganisationFactionWD["data"][0]["type"],
-                            "OrganisationLabel" => $tmpOrganisationFactionWD["data"][0]["label"],
-                            "OrganisationLabelAlternative" => $tmpOrganisationFactionWD["data"][0]["labelAlternative"],
-                            "OrganisationAbstract" => $tmpOrganisationFactionWD["data"][0]["abstract"],
-                            "OrganisationThumbnailURI" => $tmpOrganisationFactionWD["data"][0]["thumbnailURI"],
-                            "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
-                            "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
-                            "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
-                            "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
-                            "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
-                            "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
-                            "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
-                        );
-                        $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
-
-                    } else {
-
-                        reportConflict("Media", "mediaAdd faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
-
-                    }
-
-
-                }
-            }
-
-            //if (($person["faction"]) && ($person["faction"] != null)) {
-            if ($person["faction"]) {
-
-                $tmpOrganisationFaction = organisationSearch(["name"=>$person["faction"]], $db);
-
-                if (($tmpOrganisationFaction["meta"]["requestStatus"] != "success") || (count($tmpOrganisationFaction["data"]) < 1)) {
-
-                    $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $person["faction"]]);
-
-                    if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"]) > 0)) {
-
-                        $tmpFactionObj = array(
-                            "OrganisationID" => $tmpOrganisationFactionWD["data"][0]["id"],
-                            "OrganisationType" => $tmpOrganisationFactionWD["data"][0]["type"],
-                            "OrganisationLabel" => $tmpOrganisationFactionWD["data"][0]["label"],
-                            "OrganisationLabelAlternative" => $tmpOrganisationFactionWD["data"][0]["labelAlternative"],
-                            "OrganisationAbstract" => $tmpOrganisationFactionWD["data"][0]["abstract"],
-                            "OrganisationThumbnailURI" => $tmpOrganisationFactionWD["data"][0]["thumbnailURI"],
-                            "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
-                            "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
-                            "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
-                            "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
-                            "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
-                            "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
-                            "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
-                        );
-                        $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
-
-                        $person["faction"] = $tmpOrganisationFactionWD["data"][0]["id"];
-
-                    } else {
-
-                        reportConflict("Media", "mediaAdd faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
-
-                    }
-
-
-                } else {
-
-                    $person["faction"] = $tmpOrganisationFaction["data"]["id"];
-
-                }
-
-
-                if (preg_match("/(Q|P)\d+/i", $person["faction"])) {
+                //echo "\nTmpFaction:\n";
+                //print_r($tmpFaction);
+                if (preg_match("/(Q|P)\d+/i", $tmpFaction["data"]["id"])) {
 
                     $annotationFaction["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
 
                     $tmpAnnotationItem = array(
                         "AnnotationMediaID" => $nextID,
                         "AnnotationType" => "organisation",
-                        "AnnotationResourceID" => $person["faction"],
-                        "AnnotationContext" => "faction",
+                        "AnnotationResourceID" => $tmpFaction["data"]["id"],
+                        "AnnotationContext" => $person["context"]."-faction",
                         "AnnotationFrametrailType" => "Annotation",
-                        "AnnotationTimeStart" => "",
-                        "AnnotationTimeEnd" => "",
+                        //"AnnotationTimeStart" => "",
+                        //"AnnotationTimeEnd" => "",
                         "AnnotationCreator" => $annotationFaction["creator"],
                         "AnnotationTags" => "",
                         "AnnotationAdditionalInformation" => ""
@@ -1625,18 +1353,23 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
                     $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationItem);
 
-                } elseif ($person["faction"] == null) {
-                    //Conflict?
                 } else {
 
-                    reportConflict("Media", "mediaAdd faction did not match wikidata id scheme", "", "", "MediaID " . $nextID . " Person: " . json_encode($person), $db);
+                    reportConflict("Media", "mediaAdd current faction did not match wikidata id scheme", $nextID, "", "MediaID " . $nextID . " Person: " . json_encode($person), $db);
 
                 }
 
-            }
+            } else {
 
+                reportConflict("Media", "mediaAdd current faction not found in wikidataDump", $nextID, "", "MediaID " . $nextID . " Person: " . json_encode($person), $db);
+
+            }
         }
+
     }
+
+
+
 
     $return["meta"]["requestStatus"] = "success";
 
