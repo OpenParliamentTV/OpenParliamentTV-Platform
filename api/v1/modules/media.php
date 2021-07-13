@@ -1164,7 +1164,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                     "PersonThumbnailURI" => ((gettype($personWD["data"][0]["thumbnailURI"]) == "array") ? $personWD["data"][0]["thumbnailURI"][0] : $personWD["data"][0]["thumbnailURI"]),
                     "PersonThumbnailCreator" => $personWD["data"][0]["thumbnailCreator"],
                     "PersonThumbnailLicense" => $personWD["data"][0]["thumbnailLicense"],
-                    "PersonWebsiteURI" => ((gettype($personWD["data"][0]["websiteURI"]) == "array") ? $personWD["data"][0]["websiteURI"][0] : $personWD["data"][0]["websiteURI"]),
+                    "PersonWebsiteURI" => ((gettype($personWD["data"][0]["websiteURI"]) == "array") ? json_encode($personWD["data"][0]["websiteURI"]) : $personWD["data"][0]["websiteURI"]),
                     "PersonEmbedURI" => $personWD["data"][0]["embedURI"],
                     "PersonOriginID" => $personWD["data"][0]["originID"],
                     "PersonPartyOrganisationID" => $personWD["data"][0]["party_wp"],
@@ -1235,7 +1235,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                             "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
                             "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
                             "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
-                            "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
+                            "OrganisationWebsiteURI" => ((gettype($tmpOrganisationFactionWD["data"][0]["websiteURI"]) == "array" ) ? json_encode($tmpOrganisationFactionWD["data"][0]["websiteURI"]) : $tmpOrganisationFactionWD["data"][0]["websiteURI"]),
                             "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
                             "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
                             "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
@@ -1272,7 +1272,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                             "OrganisationThumbnailCreator" => $tmpOrganisationPartyWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
                             "OrganisationThumbnailLicense" => $tmpOrganisationPartyWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
                             "OrganisationEmbedURI" => $tmpOrganisationPartyWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
-                            "OrganisationWebsiteURI" => $tmpOrganisationPartyWD["data"][0]["websiteURI"],
+                            "OrganisationWebsiteURI" => ((gettype($tmpOrganisationPartyWD["data"][0]["websiteURI"]) == "array" ) ? json_encode($tmpOrganisationPartyWD["data"][0]["websiteURI"]) : $tmpOrganisationPartyWD["data"][0]["websiteURI"]),
                             "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationPartyWD["data"][0]["socialMediaIDs"]),
                             "OrganisationColor" => $tmpOrganisationPartyWD["data"][0]["color"], //TODO WIKIDATA DUMP
                             "OrganisationAdditionalInformation" => $tmpOrganisationPartyWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
@@ -1320,7 +1320,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                         "OrganisationThumbnailCreator" => $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
                         "OrganisationThumbnailLicense" => $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
                         "OrganisationEmbedURI" => $tmpOrganisationFactionWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
-                        "OrganisationWebsiteURI" => $tmpOrganisationFactionWD["data"][0]["websiteURI"],
+                        "OrganisationWebsiteURI" =>  ((gettype($tmpOrganisationFactionWD["data"][0]["websiteURI"]) == "array" ) ? json_encode($tmpOrganisationFactionWD["data"][0]["websiteURI"]) : $tmpOrganisationFactionWD["data"][0]["websiteURI"]),
                         "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]),
                         "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
                         "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
