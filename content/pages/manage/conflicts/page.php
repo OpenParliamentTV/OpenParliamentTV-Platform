@@ -5,6 +5,54 @@
 			<h2><?php echo L::manageConflicts; ?></h2>
 
 			<table class="table table-striped table-hover"
+				   id="conflictsTableStats"
+				   data-toggle="table"
+				   data-sortable="true">
+
+				<thead>
+				<tr>
+					<th scope="col">Type</th>
+					<th scope="col">Count</th>
+				</tr>
+				</thead>
+				<tbody>
+
+			<?php
+            include_once(__DIR__."/../../../../modules/utilities/functions.conflicts.php");
+
+			//TODO Auth
+
+            if (!$db) {
+                $db = new SafeMySQL(array(
+                    'host'	=> $config["platform"]["sql"]["access"]["host"],
+                    'user'	=> $config["platform"]["sql"]["access"]["user"],
+                    'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+                    'db'	=> $config["platform"]["sql"]["db"]
+                ));
+            }
+
+            $conflictsStats = $db->getAll("SELECT `ConflictSubject`, COUNT(`ConflictID`) as ConflictCount FROM ?n WHERE 1 GROUP BY `ConflictSubject`", $config["platform"]["sql"]["tbl"]["Conflict"]);
+            $conflictsStatsOverall = 0;
+			foreach ($conflictsStats as $conflictStat) {
+                $conflictsStatsOverall += $conflictStat["ConflictCount"];
+				echo "
+					<tr>
+							<td>".$conflictStat["ConflictSubject"]."</td>
+							<td>".$conflictStat["ConflictCount"]."</td>
+					</tr>";
+
+			}
+            echo "
+            <tr>
+                <td>Total</td>
+                <td>".$conflictsStatsOverall."</td>
+            </tr>";
+			?>
+
+
+				</tbody>
+			</table><br><br><br>
+            <table class="table table-striped table-hover"
 				   id="conflictsTable"
 				   data-toggle="table"
 				   data-search="true"
@@ -31,7 +79,7 @@
 			//TODO Auth
 
 
-			include_once(__DIR__."/../../../../modules/import/functions.conflicts.php");
+
 
 			$conflicts = getConflicts();
 			foreach ($conflicts as $k=>$conflict) {

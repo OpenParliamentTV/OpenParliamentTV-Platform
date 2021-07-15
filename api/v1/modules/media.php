@@ -1307,7 +1307,28 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
     foreach ($item["people"] as $person) {
 
-        $personWD = apiV1(["action" => "wikidataService", "itemType" => "person", "str" => $person["label"]]);
+
+        // Cycle through all first names to get a match with wikidata
+
+        $personNames = explode(" ", $person["label"]);
+        $personNameLast = array_pop($personNames);
+        $personWD = false;
+
+        foreach ($personNames as $personNameTemp) {
+
+            $personTemp = apiV1(["action" => "wikidataService", "itemType" => "person", "str" => $personNameTemp." ".$personNameLast]);
+
+            if (($personTemp["meta"]["requestStatus"] == "success") && (count($personTemp["data"]) > 0)) {
+
+                $personWD = $personTemp;
+
+                break;
+
+            }
+
+        }
+
+
 
         if (($personWD["meta"]["requestStatus"] == "success") && (count($personWD["data"]) > 0)) {
             //Person found in Wikidata
@@ -1646,7 +1667,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
                 } else {
 
-                    reportConflict("Media", "mediaAdd party not found in wikidataDump", $nextID, "", "Person in DB: " . json_encode($personDB["data"]) ." Person WD: ".json_encode($personWD), $db);
+                    reportConflict("Media", "mediaAdd party not found in wikidataDump", $nextID, "", "(".$personWD["data"][0]["party_wp"].") | Person in DB: " . json_encode($personDB["data"],JSON_PRETTY_PRINT) ." Person WD: ".json_encode($personWD, JSON_PRETTY_PRINT), $db);
 
                 }
             }
@@ -1774,7 +1795,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
             } else {
 
-                reportConflict("Media", "mediaAdd current faction not found in wikidataDump", $nextID, "", "Person: " . json_encode($person), $db);
+                reportConflict("Media", "mediaAdd current faction not found in wikidataDump", $nextID, "", "(".$person["faction"].") - Person: " . json_encode($person, JSON_PRETTY_PRINT), $db);
 
             }
         }
