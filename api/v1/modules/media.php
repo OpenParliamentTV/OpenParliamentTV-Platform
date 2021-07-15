@@ -1642,7 +1642,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
                 } else {
 
-                    reportConflict("Media", "mediaAdd party not found in wikidataDump", $nextID, "", "Person in DB: " . json_encode($personDB["data"]), $db);
+                    reportConflict("Media", "mediaAdd party not found in wikidataDump", $nextID, "", "Person in DB: " . json_encode($personDB["data"]) ." Person WD: ".json_encode($personWD), $db);
 
                 }
             }
@@ -1650,7 +1650,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
         } else {
             //Person not found in Wikidata
-            reportConflict("Media", "mediaAdd person not found", "", "", "Person not found in wikidata - MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
+            reportConflict("Media", "mediaAdd person not found", $nextID, "", "Person not found in wikidata - MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
         }
 
 
