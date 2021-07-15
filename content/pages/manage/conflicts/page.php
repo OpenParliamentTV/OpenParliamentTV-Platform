@@ -48,10 +48,39 @@
                 <td>".$conflictsStatsOverall."</td>
             </tr>";
 			?>
-
-
-				</tbody>
+                </tbody>
 			</table><br><br><br>
+
+            <?php
+            //TODO Auth
+
+            $pagination = "server"; // "client" or anything else for server/ajax
+
+            if ($pagination == "client") {
+
+            //$conflicts = getConflicts("all"); // If we want to do pagination at client side
+            $conflicts = getConflicts("all",10,0); // If we want to do pagination at server side
+            //print_r($conflicts);
+            $tableConflictsBody = "";
+            foreach ($conflicts as $k=>$conflict) {
+
+                $tableConflictsBody .= "
+					<tr data-conflictid='".$conflict["ConflictID"]."' data-conflictidentifier='".$conflict["ConflictIdentifier"]."' data-conflictrival='".$conflict["ConflictRival"]."' class='clickable' style='cursor:pointer;'>
+							<td>".$conflict["ConflictID"]."</td>
+							<td>".$conflict["ConflictEntity"]."</td>
+							<td>".$conflict["ConflictIdentifier"]."</td>
+							<td>".$conflict["ConflictRival"]."</td>
+							<td>".$conflict["ConflictSubject"]."</td>
+							<td>".$conflict["ConflictDescription"]."</td>
+							<td>".$conflict["ConflictDate"]."</td>
+							<td>".$conflict["ConflictResolved"]."</td>
+					</tr>";
+
+            }
+
+            ?>
+
+
             <table class="table table-striped table-hover"
 				   id="conflictsTable"
 				   data-toggle="table"
@@ -75,30 +104,7 @@
 				</thead>
 				<tbody>
 
-			<?php
-			//TODO Auth
-
-
-
-
-			$conflicts = getConflicts();
-			foreach ($conflicts as $k=>$conflict) {
-
-				echo "
-					<tr data-conflictid='".$conflict["ConflictID"]."' data-conflictidentifier='".$conflict["ConflictIdentifier"]."' data-conflictrival='".$conflict["ConflictRival"]."' class='clickable' style='cursor:pointer;'>
-							<td>".$conflict["ConflictID"]."</td>
-							<td>".$conflict["ConflictEntity"]."</td>
-							<td>".$conflict["ConflictIdentifier"]."</td>
-							<td>".$conflict["ConflictRival"]."</td>
-							<td>".$conflict["ConflictSubject"]."</td>
-							<td>".$conflict["ConflictDescription"]."</td>
-							<td>".$conflict["ConflictDate"]."</td>
-							<td>".$conflict["ConflictResolved"]."</td>
-					</tr>";
-
-			}
-
-			?>
+			        <?=$tableConflictsBody?>
 
 
 				</tbody>
@@ -108,7 +114,87 @@
 					window.location = window.location+"/"+$(this).data("conflictid");
 				});
 			</script>
+            <?php
 
+            } else {
+
+            ?>
+                <table class="table table-striped table-hover" id="conflictsTable"></table>
+                <script type="application/javascript">
+                    $(function() {
+                        $('#conflictsTable').bootstrapTable({
+                            url: config["dir"]["root"] + "/server/ajaxServer.php?a=conflictsTable",
+                            pagination: true,
+                            sidePagination: "server",
+                            columns: [
+                                {
+                                    field: "ConflictID",
+                                    title: "ID",
+                                    formatter: function(value, row) {
+
+                                        return '<div data-id="'+row["ConflictID"]+'" class="conflictsDetailToggle">'+value+' <i class="icon-right-open-big"> </i></div>';
+
+                                    }
+                                },
+                                {
+                                    field: "ConflictEntity",
+                                    title: "Entity"
+                                },
+                                {
+                                    field: "ConflictIdentifier",
+                                    title: "Identifier"
+                                },
+                                {
+                                    field: "ConflictRival",
+                                    title: "Rival"
+                                },
+                                {
+                                    field: "ConflictSubject",
+                                    title: "Subject"
+                                },
+                                {
+                                    field: "ConflictDescription",
+                                    title: "Description",
+                                    formatter: function(value, row) {
+
+                                        return '<div id="conflicts-detail-'+row["ConflictID"]+'" class="conflictsDetail">'+value+'</div>';
+
+                                    }
+                                },
+                                {
+                                    field: "ConflictDate",
+                                    title: "Date"
+                                },
+                                {
+                                    field: "ConflictResolved",
+                                    title: "Resolved"
+                                }
+                            ]
+                        });
+                    });
+                    $(document).on("click",".conflictsDetailToggle", function() {
+                       $("#conflicts-detail-" + $(this).data("id")).toggleClass("conflictsDetail");
+                    });
+                </script>
+                <style>
+                    .conflictsDetailToggle {
+                        white-space: nowrap;
+                        cursor: pointer;
+                    }
+                    .conflictsDetail {
+                        max-height: 100px;
+                        max-width: 100px;
+                        overflow:hidden;
+                        cursor: pointer;
+                    }
+                </style>
+
+
+            <?php
+            }
+
+
+            ?>
 
 		</div>
 	</div>

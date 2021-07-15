@@ -13,6 +13,14 @@ require_once (__DIR__."/../config.php");
 
 switch ($_REQUEST["a"]) {
 
+    case "conflictsTable":
+
+        require_once (__DIR__."/../modules/utilities/functions.conflicts.php");
+        echo json_encode(getConflicts("all",$_REQUEST["limit"],$_REQUEST["offset"],true));
+        return;
+
+    break;
+
 	case "registerUser":
 
 		if ($config["allow"]["register"]) {
@@ -25,6 +33,7 @@ switch ($_REQUEST["a"]) {
 		} //TODO: Response if registration is not allowed
 
 	break;
+
 
 	case "devAddTestuser":
 
@@ -104,7 +113,7 @@ switch ($_REQUEST["a"]) {
 	break;
 
 
-
+    /*
 	case "getMedia":
 		require_once(__DIR__."/../modules/media/functions.media.php");
 
@@ -430,6 +439,7 @@ switch ($_REQUEST["a"]) {
 	break;
 
 
+
 	case "manageUsersGet":
 
 		require_once(__DIR__."/../modules/user-management/users.backend.php");
@@ -449,7 +459,7 @@ switch ($_REQUEST["a"]) {
 		}
 
 	break;
-
+*/
 
 
 	case "stats":

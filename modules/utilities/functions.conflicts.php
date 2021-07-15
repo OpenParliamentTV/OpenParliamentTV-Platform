@@ -46,7 +46,7 @@ function reportConflict($entity, $subject, $identifier="", $rival="", $descripti
 
 }
 
-function getConflicts($id = "all", $includeResolved = false, $dbPlatform = false) {
+function getConflicts($id = "all", $limit = 0, $offset = 0, $getCount = false, $includeResolved = false, $dbPlatform = false) {
 
 	//TODO Auth
 
@@ -76,8 +76,23 @@ function getConflicts($id = "all", $includeResolved = false, $dbPlatform = false
 		$queryPart .= " AND ConflictResolved=0";
 	}
 
+	if ($limit != 0) {
 
-	return $dbPlatform->getAll("SELECT * FROM  " . $config["platform"]["sql"]["tbl"]["Conflict"]." WHERE ?p", $queryPart);
+        $queryPart .= $dbPlatform->parse(" LIMIT ?i, ?i",$offset,$limit);
+
+    }
+
+	if ($getCount == true) {
+
+	    $return["total"] = $dbPlatform->getOne("SELECT COUNT(ConflictID) as count FROM  " . $config["platform"]["sql"]["tbl"]["Conflict"]);
+	    $return["rows"] = $dbPlatform->getAll("SELECT * FROM  " . $config["platform"]["sql"]["tbl"]["Conflict"]." WHERE ?p", $queryPart);
+
+    } else {
+        $return = $dbPlatform->getAll("SELECT * FROM  " . $config["platform"]["sql"]["tbl"]["Conflict"]." WHERE ?p", $queryPart);
+    }
+
+
+	return $return;
 
 }
 
