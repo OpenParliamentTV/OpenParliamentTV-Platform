@@ -1475,6 +1475,8 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
             if (!$tmpPersonAnnotation) {
 
+                $person["additionalInformation"]["role"] = $person["role"];
+
                 $tmpAnnotationPerson = array(
                     "AnnotationMediaID" => $nextID,
                     "AnnotationType" => "person",
