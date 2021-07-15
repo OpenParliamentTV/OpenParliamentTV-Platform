@@ -47,15 +47,33 @@ function importJson2sql() {
     $mCnt = 0;
 
     foreach ($inputFiles as $file) {
+        //echo "FileLoop";
 
         if ((is_dir($meta["inputDir"] . $file)) || (!is_file($meta["inputDir"] . $file)) || (!preg_match('/.*\.json$/DA', $file))) {
             continue;
         }
 
+        try {
+            $json = json_decode(file_get_contents($meta["inputDir"] . $file), true);
+        } catch (exception $e) {
 
-        $json = json_decode(file_get_contents($meta["inputDir"] . $file), true);
+            $db = new SafeMySQL(array(
+                'host'	=> $config["platform"]["sql"]["access"]["host"],
+                'user'	=> $config["platform"]["sql"]["access"]["user"],
+                'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+                'db'	=> $config["platform"]["sql"]["db"]
+            ));
+
+
+            reportConflict("Media", "mediaAdd File Parse Error", "", "", "Could not parse json from file: ". $file . " ||| Error:" . $e->getMessage(), $db);
+            echo "<pre>JSON could not parsed!\n";
+            print_r($e);
+            echo "</pre>";
+            //header("Refresh:0");
+        }
 
         foreach ($json as $spKey => $media) {
+            //echo "MediaLoop";
             $media["action"] = "addMedia";
             $media["itemType"] = "addMedia";
 
@@ -104,8 +122,12 @@ function importJson2sql() {
 }
 
 try {
+    //print_r(importJson2sql());
     importJson2sql();
 } catch (exception $e) {
+    //echo "<pre>";
+    //print_r($e);
+    //echo "</pre>";
     header("Refresh:0");
 }
 ?>
