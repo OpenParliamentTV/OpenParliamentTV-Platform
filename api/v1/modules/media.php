@@ -742,6 +742,8 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
     if (count($return["errors"]) > 0) {
 
+        reportConflict("Media","mediaAdd failed - required fields missing","","","Item: ".json_encode($item)." ||| Errors: ".json_encode($return),$db);
+
         return $return;
 
     }
@@ -811,7 +813,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
     }
 
 
-
+    /*
     $dbcheck = $dbp->getRow("SELECT MediaID FROM ?n WHERE MediaSourcePage = ?s", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"], $item["media"]["sourcePage"]);
 
     if ($dbcheck) {
@@ -826,6 +828,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         return $return;
 
     }
+    */
 
 
 
@@ -834,14 +837,48 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
      * Electoral Period
      */
 
-    $tmpElectoralPeriodID = $dbp->getRow("SELECT ElectoralPeriodID FROM ?n WHERE ElectoralPeriodNumber = ?i LIMIT 1", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["ElectoralPeriod"], $item["electoralPeriod"]["number"]);
+    $tmpElectoralPeriod = $dbp->getRow("SELECT * FROM ?n WHERE ElectoralPeriodNumber = ?i LIMIT 1", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["ElectoralPeriod"], $item["electoralPeriod"]["number"]);
 
-    if (!$tmpElectoralPeriodID) {
+    if (!$tmpElectoralPeriod) {
 
         $tmpElectoralPeriodID = $item["parliament"]."-".sprintf("%02d", $item["electoralPeriod"]["number"]);
-        $dbp->query("INSERT INTO ?n SET ElectoralPeriodNumber = ?i, ElectoralPeriodID = ?s", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["ElectoralPeriod"], $item["electoralPeriod"]["number"], $tmpElectoralPeriodID);
+        $dbp->query("INSERT INTO ?n
+                        SET
+                            ElectoralPeriodNumber = ?i,
+                            ElectoralPeriodID = ?s,
+                            ElectoralPeriodDateStart=?s,
+                            ElectoralPeriodDateEnd=?s",
+                    $config["parliament"][$item["parliament"]]["sql"]["tbl"]["ElectoralPeriod"],
+                    $item["electoralPeriod"]["number"],
+                    $tmpElectoralPeriodID,
+                    $item["electoralPeriod"]["dateStart"],
+                    $item["electoralPeriod"]["dateEnd"]);
+
+        //$tmpElectoralPeriod = $dbp->getRow("SELECT * FROM ?n WHERE ElectoralPeriodNumber = ?i LIMIT 1", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["ElectoralPeriod"], $item["electoralPeriod"]["number"]);
+
+    } else {
+
+        $tmpElectoralPeriodID = $tmpElectoralPeriod["ElectoralPeriodID"];
+        $tmpElectoralPeriodUpdate = array();
+        if ((!$tmpElectoralPeriod["ElectoralPeriodDateStart"]) && ($item["electoralPeriod"]["dateStart"])) {
+
+            $tmpElectoralPeriodUpdate[] = $dbp->parse("ElectoralPeriodDateStart=?s",$item["electoralPeriod"]["dateStart"]);
+
+        }
+
+        if ((!$tmpElectoralPeriod["ElectoralPeriodDateEnd"]) && ($item["electoralPeriod"]["dateEnd"])) {
+
+            $tmpElectoralPeriodUpdate[] = $dbp->parse("ElectoralPeriodDateEnd=?s",$item["electoralPeriod"]["dateEnd"]);
+
+        }
+
+        if ($tmpElectoralPeriodUpdate) {
+            $tmpElectoralPeriodUpdate = "UPDATE ".$config["parliament"][$item["parliament"]]["sql"]["tbl"]["ElectoralPeriod"]." SET " . implode(", ", $tmpElectoralPeriodUpdate) ." WHERE ElectoralPeriodID = ?s";
+            $dbp->query($tmpElectoralPeriodUpdate,$tmpElectoralPeriodID);
+        }
 
     }
+
 
     $item["electoralPeriod"] = $tmpElectoralPeriodID;
 
@@ -853,7 +890,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
      * Session of Electoral Period
      */
 
-    $item["session"]["SessionID"] = $item["electoralPeriod"]["ElectoralPeriodID"].sprintf("%04d", $item["session"]["number"]);
+    $item["session"]["SessionID"] = $item["electoralPeriod"].sprintf("%04d", $item["session"]["number"]);
 
     $tmpSession = $dbp->getRow("SELECT * FROM ?n WHERE SessionID = ?s LIMIT 1", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Session"], $item["session"]["SessionID"]);
 
@@ -868,9 +905,28 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                         $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Session"],
                         $item["session"]["SessionID"],
                         $item["session"]["number"],
-                        $item["electoralPeriod"]["ElectoralPeriodID"],
+                        $item["electoralPeriod"],
                         $item["session"]["dateStart"],
                         $item["session"]["dateEnd"]);
+
+    } else {
+        $tmpSessionUpdate = array();
+        if ((!$tmpSession["SessionDateStart"]) && ($item["session"]["dateStart"])) {
+
+            $tmpSessionUpdate[] = $dbp->parse("SessionDateStart=?s",$item["session"]["dateStart"]);
+
+        }
+
+        if ((!$tmpSession["SessionDateEnd"]) && ($item["session"]["dateEnd"])) {
+
+            $tmpSessionUpdate[] = $dbp->parse("SessionDateEnd=?s",$item["session"]["dateEnd"]);
+
+        }
+
+        if ($tmpSessionUpdate) {
+            $tmpSessionUpdate = "UPDATE ".$config["parliament"][$item["parliament"]]["sql"]["tbl"]["Session"]." SET " . implode(", ", $tmpSessionUpdate) ." WHERE SessionID = ?s";
+            $dbp->query($tmpSessionUpdate,$item["session"]["SessionID"]);
+        }
 
     }
 
@@ -909,6 +965,18 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
         $item["agendaItem"]["id"] = $tmpAgendaItem["AgendaItemID"];
 
+        if ((!$tmpAgendaItem["AgendaItemOrder"]) && ($item["agendaItem"]["order"])) {
+
+            $dbp->query("UPDATE ?n SET
+                        AgendaItemOrder=?i
+                        WHERE
+                        AgendaItemID=?i",
+                $config["parliament"][$item["parliament"]]["sql"]["tbl"]["AgendaItem"],
+                $item["agendaItem"]["order"],
+                $item["agendaItem"]["id"]);
+
+        }
+
     }
 
 
@@ -920,73 +988,135 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
      * Media Add
      */
 
-    $nextID = $dbp->getOne("SELECT MediaID FROM ?n WHERE MediaID LIKE ?s ORDER BY MediaID DESC LIMIT 1",
-                            $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"], $item["session"]["SessionID"]."%");
+    $tmpMediaItem = $dbp->getRow("SELECT * FROM ?n WHERE MediaSourcePage = ?s", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"], $item["media"]["sourcePage"]);
 
-    if (!$nextID) {
+    if (!$tmpMediaItem) {
 
-        $nextID = $item["session"]["SessionID"].sprintf("%03d", 1);
+        $nextID = $dbp->getOne("SELECT MediaID FROM ?n WHERE MediaID LIKE ?s ORDER BY MediaID DESC LIMIT 1",
+                                $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"], $item["session"]["SessionID"]."%");
+
+        if (!$nextID) {
+
+            $nextID = $item["session"]["SessionID"].sprintf("%03d", 1);
+
+        } else {
+            $nextID = ((int)substr($nextID, -3))+1;
+            $nextID = $item["session"]["SessionID"].sprintf("%03d", $nextID);
+
+        }
+
+        try {
+            $dbp->query("INSERT INTO ?n SET
+                            MediaID=?s,
+                            MediaOriginID=?s,
+                            MediaOriginMediaID=?s,
+                            MediaAgendaItemID=?s,
+                            MediaCreator=?s,
+                            MediaLicense=?s,
+                            MediaOrder=0,
+                            MediaAligned=0,
+                            MediaPublic=1,
+                            MediaDateStart=?s,
+                            MediaDateEnd=?s,
+                            MediaDuration=?i,
+                            MediaVideoFileURI=?s,
+                            MediaAudioFileURI=?s,
+                            MediaSourcePage=?s,
+                            MediaThumbnailURI=?s,
+                            MediaThumbnailCreator=?s,
+                            MediaThumbnailLicense=?s,
+                            MediaAdditionalInformation=?s",
+                            $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"],
+                            $nextID,
+                            $item["media"]["originID"],
+                            $item["media"]["originMediaID"],
+                            $item["agendaItem"]["id"],
+                            $item["media"]["creator"],
+                            $item["media"]["license"],
+                            $item["dateStart"],
+                            $item["dateEnd"],
+                            $item["media"]["duration"],
+                            $item["media"]["videoFileURI"],
+                            $item["media"]["audioFileURI"],
+                            $item["media"]["sourcePage"],
+                            $item["media"]["thumbnailURI"],
+                            $item["media"]["thumbnailCreator"],
+                            $item["media"]["thumbnailLicense"],
+                            json_encode($item["media"]["additionalInformation"]));
+        } catch (exception $e) {
+
+            reportConflict("Media","mediaAdd failed","","","Could not add Media with ID: originID: ".$item["media"]["originID"].", originMediaID: ".$item["media"]["originMediaID"]." (new id:".$nextID.") Error:".$e->getMessage(),$db);
+
+            echo $e->getMessage();
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "2";
+            $errorarray["title"] = "Database error";
+            $errorarray["detail"] = "Adding media to database failed"; //TODO: Description
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
 
     } else {
-        $nextID = ((int)substr($nextID, -3))+1;
-        $nextID = $item["session"]["SessionID"].sprintf("%03d", $nextID);
+
+        $nextID = $tmpMediaItem["MediaID"];
+        $tmpMediaItemUpdate = array();
+        if ((!$tmpMediaItem["MediaOriginID"]) && ($item["media"]["originID"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaOriginID=?s",$item["media"]["originID"]);
+        }
+        if ((!$tmpMediaItem["MediaOriginMediaID"]) && ($item["media"]["originMediaID"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaOriginMediaID=?s",$item["media"]["originMediaID"]);
+        }
+        if ((!$tmpMediaItem["MediaOrder"]) && ($item["media"]["order"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaOrder=?s",$item["media"]["order"]);
+        }
+        if ((!$tmpMediaItem["MediaOrder"]) && ($item["order"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaOrder=?i",$item["order"]);
+        }
+        if ((!$tmpMediaItem["MediaDateStart"]) && ($item["dateStart"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaDateStart=?s",$item["dateStart"]);
+        }
+        if ((!$tmpMediaItem["MediaDateEnd"]) && ($item["dateEnd"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaDateEnd=?s",$item["dateEnd"]);
+        }
+        if ((!$tmpMediaItem["MediaDuration"]) && ($item["media"]["duration"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaDuration=?i",$item["media"]["duration"]);
+        }
+        if ((!$tmpMediaItem["MediaVideoFileURI"]) && ($item["media"]["videoFileURI"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaVideoFileURI=?s",$item["media"]["videoFileURI"]);
+        }
+        if ((!$tmpMediaItem["MediaAudioFileURI"]) && ($item["media"]["audioFileURI"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaAudioFileURI=?s",$item["media"]["audioFileURI"]);
+        }
+        if ((!$tmpMediaItem["MediaThumbnailURI"]) && ($item["media"]["thumbnailURI"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaThumbnailURI=?s",$item["media"]["thumbnailURI"]);
+        }
+        if ((!$tmpMediaItem["MediaThumbnailCreator"]) && ($item["media"]["thumbnailCreator"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaThumbnailCreator=?s",$item["media"]["thumbnailCreator"]);
+        }
+        if ((!$tmpMediaItem["MediaThumbnailLicense"]) && ($item["media"]["thumbnailCreator"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaThumbnailLicense=?s",$item["media"]["thumbnailLicense"]);
+        }
+        if ((!$tmpMediaItem["MediaAdditionalInformation"]) && ($item["media"]["additionalInformation"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaAdditionalInformation=?s",json_encode($item["media"]["additionalInformation"]));
+        }
+
+        if ($tmpMediaItemUpdate) {
+            $tmpMediaItemUpdate = "UPDATE ".$config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"]." SET " . implode(", ", $tmpMediaItemUpdate) ." WHERE MediaID = ?s";
+            //echo $dbp->parse($tmpMediaItemUpdate,$tmpMediaItem["MediaID"]);
+            $dbp->query($tmpMediaItemUpdate,$tmpMediaItem["MediaID"]);
+        }
+
 
     }
 
-    try {
-        $dbp->query("INSERT INTO ?n SET
-                        MediaID=?s,
-                        MediaOriginID=?s,
-                        MediaOriginMediaID=?s,
-                        MediaAgendaItemID=?s,
-                        MediaCreator=?s,
-                        MediaLicense=?s,
-                        MediaOrder=0,
-                        MediaAligned=0,
-                        MediaPublic=1,
-                        MediaDateStart=?s,
-                        MediaDateEnd=?s,
-                        MediaDuration=?i,
-                        MediaVideoFileURI=?s,
-                        MediaAudioFileURI=?s,
-                        MediaSourcePage=?s,
-                        MediaThumbnailURI=?s,
-                        MediaThumbnailCreator=?s,
-                        MediaThumbnailLicense=?s,
-                        MediaAdditionalInformation=?s",
-                        $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"],
-                        $nextID,
-                        $item["media"]["originID"],
-                        $item["media"]["originMediaID"],
-                        $item["agendaItem"]["id"],
-                        $item["media"]["creator"],
-                        $item["media"]["license"],
-                        $item["dateStart"],
-                        $item["dateEnd"],
-                        $item["media"]["duration"],
-                        $item["media"]["videoFileURI"],
-                        $item["media"]["audioFileURI"],
-                        $item["media"]["sourcePage"],
-                        $item["media"]["thumbnailURI"],
-                        $item["media"]["thumbnailCreator"],
-                        $item["media"]["thumbnailLicense"],
-                        $item["media"]["additionalInformation"]);
-    } catch (exception $e) {
 
-        reportConflict("Media","mediaAdd failed","","","Could not add Media with ID: originID: ".$item["media"]["originID"].", originMediaID: ".$item["media"]["originMediaID"]." (new id:".$nextID.") Error:".$e->getMessage(),$db);
-
-        echo $e->getMessage();
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "2";
-        $errorarray["title"] = "Database error";
-        $errorarray["detail"] = "Adding media to database failed"; //TODO: Description
-        array_push($return["errors"], $errorarray);
-        return $return;
-
-    }
+    /**
+     * Text Add
+     */
 
     foreach ($item["textContents"] as $textContent) {
 
@@ -994,28 +1124,62 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
             $textContent["textBody"][$textBodyIndex]["text"] = simpleTextBodyArrayToHTMLString($textBodyItem);
         }
 
-        $dbp->query("INSERT INTO ?n SET
-                       TextOriginTextID=?s,
-                       TextMediaID=?s,
-                       TextType=?s,
-                       TextBody=?s,
-                       TextSourceURI=?s,
-                       TextCreator=?s,
-                       TextLicense=?s,
-                       TextHash=?s,
-                       TextLanguage=?s",
-                        $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Text"],
-                        $textContent["originTextID"],
-                        $nextID,
-                        $textContent["type"],
-                        json_encode($textContent["textBody"]),
-                        $textContent["sourceURI"],
-                        $textContent["creator"],
-                        $textContent["license"],
-                        hash("sha256",json_encode($textContent["textBody"])),
-                        $textContent["language"]);
+        $textHash = hash("sha256",json_encode($textContent["textBody"]));
+
+        $tmpTextItem = $dbp->getRow("SELECT * FROM ?n WHERE TextMediaID = ?s AND TextHash = ?s AND TextType=?s",
+            $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Text"], $nextID, $textHash, $textContent["type"]);
+
+        if (!$tmpTextItem) {
+
+            try {
+                $dbp->query("INSERT INTO ?n SET
+                           TextOriginTextID=?s,
+                           TextMediaID=?s,
+                           TextType=?s,
+                           TextBody=?s,
+                           TextSourceURI=?s,
+                           TextCreator=?s,
+                           TextLicense=?s,
+                           TextHash=?s,
+                           TextLanguage=?s",
+                    $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Text"],
+                    $textContent["originTextID"],
+                    $nextID,
+                    $textContent["type"],
+                    json_encode($textContent["textBody"]),
+                    $textContent["sourceURI"],
+                    $textContent["creator"],
+                    $textContent["license"],
+                    $textHash,
+                    $textContent["language"]);
+            } catch (exception $e) {
+
+                reportConflict("Media", "mediaAdd TextContent Add failed", $nextID, "", "Could not add Text to Media. TextItem: ". $textContent . " ||| Error:" . $e->getMessage(), $db);
+
+            }
+
+        } else {
+            $tmpTextItemUpdate = array();
+            if ((!$tmpTextItem["TextOriginTextID"]) && ($textContent["originTextID"])) {
+                $tmpTextItemUpdate[] = $dbp->parse("TextOriginTextID=?s", $textContent["originTextID"]);
+            }
+            if ((!$tmpTextItem["TextSourceURI"]) && ($textContent["sourceURI"])) {
+                $tmpTextItemUpdate[] = $dbp->parse("TextSourceURI=?s", $textContent["sourceURI"]);
+            }
+
+            if ($tmpTextItemUpdate) {
+                $tmpTextItemUpdate = "UPDATE " . $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Text"] . " SET " . implode(", ", $tmpTextItemUpdate) . " WHERE TextID = ?i";
+                $dbp->query($tmpTextItemUpdate, $textContent["TextID"]);
+            }
+        }
 
     }
+
+
+
+    /**
+     * Document Add
+     */
 
     include_once(__DIR__."/document.php");
     foreach ($item["documents"] as $document) {
@@ -1029,9 +1193,9 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
         } else {
 
-            $tmpDocumentID = $db->getOne("SELECT DocumentID FROM ?n WHERE DocumentSourceURI = ?s", $config["platform"]["sql"]["tbl"]["Document"], $document["sourceURI"]);
+            $tmpDocument = $db->getRow("SELECT * FROM ?n WHERE DocumentSourceURI = ?s", $config["platform"]["sql"]["tbl"]["Document"], $document["sourceURI"]);
 
-            if (!$tmpDocumentID) {
+            if (!$tmpDocument) {
 
                 $db->query("INSERT INTO ?n
                             SET
@@ -1046,19 +1210,53 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                                 DocumentSourceURI=?s,
                                 DocumentEmbedURI=?s,
                                 DocumentAdditionalInformation=?s",
-                            $config["platform"]["sql"]["tbl"]["Document"],
-                                $document["type"],
-                                $document["wikidataID"],
-                                $document["label"],
-                                $document["labelAlternative"],
-                                (($document["abstract"]) ? $document["abstract"] : "undefined"),
-                                $document["thumbnailURI"],
-                                $document["thumbnailCreator"],
-                                $document["thumbnailLicense"],
-                                $document["sourceURI"],
-                                $document["embedURI"],
-                                $document["additionalInformation"]);
+                    $config["platform"]["sql"]["tbl"]["Document"],
+                    $document["type"],
+                    $document["wikidataID"],
+                    $document["label"],
+                    $document["labelAlternative"],
+                    (($document["abstract"]) ? $document["abstract"] : "undefined"),
+                    $document["thumbnailURI"],
+                    $document["thumbnailCreator"],
+                    $document["thumbnailLicense"],
+                    $document["sourceURI"],
+                    $document["embedURI"],
+                    json_encode($document["additionalInformation"]));
                 $tmpDocumentID = $db->insertId();
+
+            } else {
+
+                $tmpDocumentID = $tmpDocument["DocumentID"];
+                $tmpDocumentUpdate = array();
+                if ((!$tmpDocument["DocumentWikidataID"]) && ($document["wikidataID"])) {
+                    $tmpDocumentUpdate[] = $dbp->parse("DocumentWikidataID=?s", $document["wikidataID"]);
+                }
+                if ((!$tmpDocument["DocumentLabelAlternative"]) && ($document["labelAlternative"])) {
+                    $tmpDocumentUpdate[] = $dbp->parse("DocumentLabelAlternative=?s", $document["labelAlternative"]);
+                }
+                if (((!$tmpDocument["DocumentAbstract"]) || ($tmpDocument["DocumentAbstract"] == "undefined")) && ($document["abstract"])) {
+                    $tmpDocumentUpdate[] = $dbp->parse("DocumentAbstract=?s", $document["abstract"]);
+                }
+                if ((!$tmpDocument["DocumentThumbnailURI"]) && ($document["thumbnailURI"])) {
+                    $tmpDocumentUpdate[] = $dbp->parse("DocumentThumbnailURI=?s", $document["thumbnailURI"]);
+                }
+                if ((!$tmpDocument["DocumentThumbnailCreator"]) && ($document["thumbnailCreator"])) {
+                    $tmpDocumentUpdate[] = $dbp->parse("DocumentThumbnailCreator=?s", $document["thumbnailCreator"]);
+                }
+                if ((!$tmpDocument["DocumentThumbnailLicense"]) && ($document["thumbnailLicense"])) {
+                    $tmpDocumentUpdate[] = $dbp->parse("DocumentThumbnailLicense=?s", $document["thumbnailLicense"]);
+                }
+                if ((!$tmpDocument["DocumentEmbedURI"]) && ($document["embedURI"])) {
+                    $tmpDocumentUpdate[] = $dbp->parse("DocumentEmbedURI=?s", $document["embedURI"]);
+                }
+                if ((!$tmpDocument["DocumentAdditionalInformation"]) && ($document["additionalInformation"])) {
+                    $tmpDocumentUpdate[] = $dbp->parse("DocumentAdditionalInformation=?s", json_encode($document["additionalInformation"]));
+                }
+
+                if ($tmpDocumentUpdate) {
+                    $tmpDocumentUpdate = "UPDATE " . $config["platform"]["sql"]["tbl"]["Document"] . " SET " . implode(", ", $tmpDocumentUpdate) . " WHERE DocumentID = ?i";
+                    $db->query($tmpDocumentUpdate, $tmpDocumentID);
+                }
 
             }
 
@@ -1066,20 +1264,32 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
             $document["context"] = ($document["context"]) ? $document["context"] : "proceedingsReference";
             $document["frametrailType"] = ($document["frametrailType"]) ? $document["frametrailType"] : "Annotation";
 
-            $tmpAnnotationItem = array(
-                "AnnotationMediaID" => $nextID,
-                "AnnotationType" => "document",
-                "AnnotationResourceID" => $tmpDocumentID,
-                "AnnotationContext" => $document["context"],
-                "AnnotationFrametrailType" => $document["frametrailType"],
-                "AnnotationTimeStart" => $document["timeStart"],
-                "AnnotationTimeEnd" => $document["timeEnd"],
-                "AnnotationCreator" => $document["creator"],
-                "AnnotationTags" => $document["tags"],
-                "AnnotationAdditionalInformation" => $document["additionalInformation"]
-            );
 
-            $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationItem);
+            $tmpDocumentAnnotation = $dbp->getRow("SELECT * FROM ?n WHERE AnnotationMediaID=?s AND AnnotationResourceID=?s AND AnnotationType=?s",
+                $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"],
+                $nextID,
+                $tmpDocumentID,
+                "document");
+
+            if (!$tmpDocumentAnnotation) {
+
+                $tmpAnnotationItem = array(
+                    "AnnotationMediaID" => $nextID,
+                    "AnnotationType" => "document",
+                    "AnnotationResourceID" => $tmpDocumentID,
+                    "AnnotationContext" => $document["context"],
+                    "AnnotationFrametrailType" => $document["frametrailType"],
+                    "AnnotationTimeStart" => $document["timeStart"],
+                    "AnnotationTimeEnd" => $document["timeEnd"],
+                    "AnnotationCreator" => $document["creator"],
+                    "AnnotationTags" => $document["tags"],
+                    "AnnotationAdditionalInformation" => json_encode($document["additionalInformation"])
+                );
+
+                $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationItem);
+
+            }
+
 
         }
 
@@ -1150,6 +1360,9 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
             $personDB = personGetByID($personWD["data"][0]["id"]);
 
+            $personWD["data"][0]["thumbnailURI"] = ((gettype($personWD["data"][0]["thumbnailURI"]) == "array") ? $personWD["data"][0]["thumbnailURI"][0] : $personWD["data"][0]["thumbnailURI"]);
+            $personWD["data"][0]["websiteURI"] = ((gettype($personWD["data"][0]["websiteURI"]) == "array") ? json_encode($personWD["data"][0]["websiteURI"]) : $personWD["data"][0]["websiteURI"]);
+
             if (($personDB["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$personDB["data"]))) {
                 //Person does not exist in Database
 
@@ -1157,16 +1370,16 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                     "PersonID" => $personWD["data"][0]["id"],
                     "PersonType" => "memberOfParliament", //$person["type"] //TODO: fix input
                     "PersonLabel" => $personWD["data"][0]["label"],
-                    //"PersonFirstName"=>$personDB["data"][0]["firstName"], //TODO: WikidataServiceDumps
-                    //"PersonLastName"=>$personDB["data"][0]["lastName"], //TODO: WikidataServiceDumps
-                    //"PersonDegree"=>$personDB["data"][0]["degree"], //TODO: WikidataServiceDumps
+                    "PersonFirstName"=>($personWD["data"][0]["firstName"] ? $personWD["data"][0]["firstName"] : $person["firstname"]), //TODO: WikidataServiceDumps
+                    "PersonLastName"=>($personWD["data"][0]["lastName"] ? $personWD["data"][0]["lastName"] : $person["lastname"]), //TODO: WikidataServiceDumps
+                    "PersonDegree"=>($personWD["data"][0]["degree"] ? $personWD["data"][0]["degree"] : $person["degree"]), //TODO: WikidataServiceDumps
                     "PersonBirthDate" => $personWD["data"][0]["birthDate"],
                     "PersonGender" => $personWD["data"][0]["gender"],
                     "PersonAbstract" => $personWD["data"][0]["abstract"],
-                    "PersonThumbnailURI" => ((gettype($personWD["data"][0]["thumbnailURI"]) == "array") ? $personWD["data"][0]["thumbnailURI"][0] : $personWD["data"][0]["thumbnailURI"]),
+                    "PersonThumbnailURI" => $personWD["data"][0]["thumbnailURI"],
                     "PersonThumbnailCreator" => $personWD["data"][0]["thumbnailCreator"],
                     "PersonThumbnailLicense" => $personWD["data"][0]["thumbnailLicense"],
-                    "PersonWebsiteURI" => ((gettype($personWD["data"][0]["websiteURI"]) == "array") ? json_encode($personWD["data"][0]["websiteURI"]) : $personWD["data"][0]["websiteURI"]),
+                    "PersonWebsiteURI" => $personWD["data"][0]["websiteURI"],
                     "PersonEmbedURI" => $personWD["data"][0]["embedURI"],
                     "PersonOriginID" => $personWD["data"][0]["originID"],
                     "PersonPartyOrganisationID" => $personWD["data"][0]["party_wp"],
@@ -1189,44 +1402,105 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
                 $personDB = personGetByID($personWD["data"][0]["id"]);
 
+            } else {
+                $tmpPersonUpdate = array();
+                if ((!$personDB["data"]["PersonFirstName"]) && (($person["firstname"] || $personWD["data"][0]["firstName"]))) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonFirstName=?s", ($personWD["data"][0]["firstName"] ? $personWD["data"][0]["firstName"] :$person["firstname"]) );
+                }
+                if ((!$personDB["data"]["PersonLastName"]) && (($person["lastname"] || $personWD["data"][0]["lastName"]))) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonLastName=?s", ($personWD["data"][0]["lastName"] ? $personWD["data"][0]["lastName"] :$person["lastname"]) );
+                }
+                if ((!$personDB["data"]["PersonDegree"]) && (($person["degree"] || $personWD["data"][0]["degree"]))) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonDegree=?s", ($personWD["data"][0]["degree"] ? $personWD["data"][0]["degree"] :$person["degree"]) );
+                }
+                if ((!$personDB["data"]["PersonBirthDate"]) && (($person["birthDate"] || $personWD["data"][0]["birthDate"]))) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonBirthDate=?s", ($personWD["data"][0]["birthDate"] ? $personWD["data"][0]["birthDate"] :$person["birthDate"]) );
+                }
+                if ((!$personDB["data"]["PersonGender"]) && (($person["gender"] || $personWD["data"][0]["gender"]))) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonGender=?s", ($personWD["data"][0]["birthDate"] ? $personWD["data"][0]["birthDate"] :$person["birthDate"]) );
+                }
+                if ((!$personDB["data"]["PersonAbstract"]) && (($person["abstract"] || $personWD["data"][0]["abstract"]))) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonAbstract=?s", ($personWD["data"][0]["abstract"] ? $personWD["data"][0]["abstract"] :$person["abstract"]) );
+                }
+                if ((!$personDB["data"]["PersonWebsiteURI"]) && (($person["websiteURI"] || $personWD["data"][0]["websiteURI"]))) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonWebsiteURI=?s", ($personWD["data"][0]["websiteURI"] ? $personWD["data"][0]["websiteURI"] :$person["websiteURI"]) );
+                }
+                if ((!$personDB["data"]["PersonEmbedURI"]) && (($person["embedURI"] || $personWD["data"][0]["embedURI"]))) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonEmbedURI=?s", ($personWD["data"][0]["embedURI"] ? $personWD["data"][0]["embedURI"] :$person["embedURI"]) );
+                }
+                if ((!$personDB["data"]["PersonThumbnailURI"]) && (($person["thumbnailURI"] || $personWD["data"][0]["thumbnailURI"]))) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonThumbnailURI=?s", ($personWD["data"][0]["thumbnailURI"] ? $personWD["data"][0]["thumbnailURI"] :$person["thumbnailURI"]) );
+                }
+                if ((!$personDB["data"]["PersonThumbnailCreator"]) && (($person["thumbnailCreator"] || $personWD["data"][0]["thumbnailCreator"]))) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonThumbnailCreator=?s", ($personWD["data"][0]["thumbnailCreator"] ? $personWD["data"][0]["thumbnailCreator"] :$person["thumbnailCreator"]) );
+                }
+                if ((!$personDB["data"]["PersonThumbnailLicense"]) && (($person["thumbnailLicense"] || $personWD["data"][0]["thumbnailLicense"]))) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonThumbnailLicense=?s", ($personWD["data"][0]["thumbnailLicense"] ? $personWD["data"][0]["thumbnailLicense"] :$person["thumbnailLicense"]) );
+                }
+                if ((!$personDB["data"]["PersonPartyOrganisationID"]) && ($personWD["data"][0]["party_wp"])) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonPartyOrganisationID=?s", $personWD["data"][0]["party_wp"]);
+                }
+                if ((!$personDB["data"]["PersonFactionOrganisationID"]) && ($personWD["data"][0]["faction_wp"])) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonFactionOrganisationID=?s", $personWD["data"][0]["faction_wp"]);
+                }
+                if ((!$personDB["data"]["PersonSocialMediaIDs"]) && ($personWD["data"][0]["socialMediaIDs"])) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonSocialMediaIDs=?s", json_encode($personWD["data"][0]["socialMediaIDs"]));
+                }
+                if ((!$personDB["data"]["PersonAdditionalInformation"]) && ($personWD["data"][0]["additionalInformation"])) {
+                    $tmpPersonUpdate[] = $dbp->parse("PersonAdditionalInformation=?s", json_encode($personWD["data"][0]["additionalInformation"]));
+                }
+
+                if ($tmpPersonUpdate) {
+                    $tmpPersonUpdate = "UPDATE " . $config["platform"]["sql"]["tbl"]["Person"] . " SET " . implode(", ", $tmpPersonUpdate) . " WHERE PersonID = ?s";
+                    $db->query($tmpPersonUpdate, $personDB["data"]["id"]);
+                }
+
             }
 
             //Add Person Annotation
             $person["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
 
             if (!$person["context"]) {
-                reportConflict("Media", "mediaAdd person without context", "", "", "Person has no context - MediaID " . $nextID . " personJSON: " . json_encode($person), $db);
+                reportConflict("Media", "mediaAdd person without context", $nextID, "", "Person has no context - personJSON: " . json_encode($person), $db);
                 $person["context"] = "unknown";
             }
 
-            $tmpAnnotationPerson = array(
-                "AnnotationMediaID" => $nextID,
-                "AnnotationType" => "person",
-                "AnnotationResourceID" => $personDB["data"]["id"],
-                "AnnotationContext" => $person["context"],
-                "AnnotationFrametrailType" => (($person["frametrailType"]) ? $person["frametrailType"] : "Annotation"),
-                "AnnotationTimeStart" => $person["timeStart"],
-                "AnnotationTimeEnd" => $person["timeEnd"],
-                "AnnotationCreator" => $person["creator"],
-                "AnnotationTags" => $person["tags"],
-                "AnnotationAdditionalInformation" => $person["additionalInformation"]
-            );
+            $tmpPersonAnnotation = $dbp->getRow("SELECT * FROM ?n WHERE AnnotationMediaID=?s AND AnnotationResourceID=?s AND AnnotationType=?s",
+                $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"],
+                $nextID,
+                $personDB["data"]["id"],
+                "person");
 
-            $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationPerson);
+            if (!$tmpPersonAnnotation) {
 
+                $tmpAnnotationPerson = array(
+                    "AnnotationMediaID" => $nextID,
+                    "AnnotationType" => "person",
+                    "AnnotationResourceID" => $personDB["data"]["id"],
+                    "AnnotationContext" => $person["context"],
+                    "AnnotationFrametrailType" => (($person["frametrailType"]) ? $person["frametrailType"] : "Annotation"),
+                    "AnnotationTimeStart" => $person["timeStart"],
+                    "AnnotationTimeEnd" => $person["timeEnd"],
+                    "AnnotationCreator" => $person["creator"],
+                    "AnnotationTags" => $person["tags"],
+                    "AnnotationAdditionalInformation" => json_encode($person["additionalInformation"])
+                );
+
+                $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationPerson);
+            }
 
             //Faction Add
 
             if (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["faction_wp"])) {
 
-                $tmpFaction = organisationGetByID($personWD["data"][0]["faction_wp"]);
+                $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $personWD["data"][0]["faction_wp"]]);
 
-                if (($tmpFaction["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpFaction["data"]))) {
-                    //Add Organisation Faction
-                    $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $personWD["data"][0]["faction_wp"]]);
+                if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"]) > 0)) {
 
-                    if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"]) > 0)) {
+                    $tmpFaction = organisationGetByID($personWD["data"][0]["faction_wp"]);
 
+                    if (($tmpFaction["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpFaction["data"]))) {
+                        //Add Organisation Faction
                         $tmpFactionObj = array(
                             "OrganisationID" => $tmpOrganisationFactionWD["data"][0]["id"],
                             "OrganisationType" => $tmpOrganisationFactionWD["data"][0]["type"],
@@ -1246,9 +1520,50 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
                     } else {
 
-                        reportConflict("Media", "mediaAdd faction not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
+                        //Check Organisation Faction for updates
+                        $tmpFactionUpdate = array();
+                        if ((!$tmpFaction["data"]["OrganisationLabelAlternative"]) && ($tmpOrganisationFactionWD["data"][0]["labelAlternative"])) {
+                            $tmpFactionUpdate[] = $dbp->parse("OrganisationLabelAlternative=?s", $tmpOrganisationFactionWD["data"][0]["labelAlternative"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationAbstract"]) && ($tmpOrganisationFactionWD["data"][0]["abstract"])) {
+                            $tmpFactionUpdate[] = $dbp->parse("OrganisationAbstract=?s", $tmpOrganisationFactionWD["data"][0]["abstract"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationThumbnailURI"]) && ($tmpOrganisationFactionWD["data"][0]["thumbnailURI"])) {
+                            $tmpFactionUpdate[] = $dbp->parse("OrganisationThumbnailURI=?s", $tmpOrganisationFactionWD["data"][0]["thumbnailURI"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationThumbnailCreator"]) && ($tmpOrganisationFactionWD["data"][0]["thumbnailCreator"])) {
+                            $tmpFactionUpdate[] = $dbp->parse("OrganisationThumbnailCreator=?s", $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationThumbnailLicense"]) && ($tmpOrganisationFactionWD["data"][0]["thumbnailLicense"])) {
+                            $tmpFactionUpdate[] = $dbp->parse("OrganisationThumbnailLicense=?s", $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationEmbedURI"]) && ($tmpOrganisationFactionWD["data"][0]["embedURI"])) {
+                            $tmpFactionUpdate[] = $dbp->parse("OrganisationEmbedURI=?s", $tmpOrganisationFactionWD["data"][0]["embedURI"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationWebsiteURI"]) && ($tmpOrganisationFactionWD["data"][0]["websiteURI"])) {
+                            $tmpFactionUpdate[] = $dbp->parse("OrganisationWebsiteURI=?s", ((gettype($tmpOrganisationFactionWD["data"][0]["websiteURI"]) == "array" ) ? json_encode($tmpOrganisationFactionWD["data"][0]["websiteURI"]) : $tmpOrganisationFactionWD["data"][0]["websiteURI"]));
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationSocialMediaIDs"]) && ($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"])) {
+                            $tmpFactionUpdate[] = $dbp->parse("OrganisationSocialMediaIDs=?s", json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]));
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationColor"]) && ($tmpOrganisationFactionWD["data"][0]["color"])) {
+                            $tmpFactionUpdate[] = $dbp->parse("OrganisationColor=?s", $tmpOrganisationFactionWD["data"][0]["color"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationAdditionalInformation"]) && ($tmpOrganisationFactionWD["data"][0]["additionalInformation"])) {
+                            $tmpFactionUpdate[] = $dbp->parse("OrganisationAdditionalInformation=?s", json_encode($tmpOrganisationFactionWD["data"][0]["additionalInformation"]));
+                        }
+
+                        if ($tmpFactionUpdate) {
+                            $tmpFactionUpdate = "UPDATE " . $config["platform"]["sql"]["tbl"]["Organisation"] . " SET " . implode(", ", $tmpFactionUpdate) . " WHERE OrganisationID = ?s";
+                            $db->query($tmpFactionUpdate, $tmpFaction["data"]["id"]);
+                        }
 
                     }
+
+                } else {
+
+                    reportConflict("Media", "mediaAdd faction not found in wikidataDump", $nextID, "", "Person in DB: " . json_encode($personDB["data"]), $db);
+
                 }
             }
 
@@ -1256,36 +1571,79 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
             if (preg_match("/(Q|P)\d+/i", $personWD["data"][0]["party_wp"])) {
 
-                $tmpParty = organisationGetByID($personWD["data"][0]["party_wp"]);
+                $tmpOrganisationPartyWD = apiV1(["action" => "wikidataService", "itemType" => "party", "str" => $personWD["data"][0]["party_wp"]]);
 
-                if (($tmpParty["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpParty["data"]))) {
-                    //Add Organisation Faction
-                    $tmpOrganisationPartyWD = apiV1(["action" => "wikidataService", "itemType" => "party", "str" => $personWD["data"][0]["party_wp"]]);
+                if (($tmpOrganisationPartyWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationPartyWD["data"]) > 0)) {
 
-                    if (($tmpOrganisationPartyWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationPartyWD["data"]) > 0)) {
+                    $tmpParty = organisationGetByID($personWD["data"][0]["party_wp"]);
 
-                        $tmpPartyObj = array(
-                            "OrganisationID" => $tmpOrganisationPartyWD["data"][0]["id"],
-                            "OrganisationType" => $tmpOrganisationPartyWD["data"][0]["type"],
-                            "OrganisationLabel" => $tmpOrganisationPartyWD["data"][0]["label"],
-                            "OrganisationLabelAlternative" => $tmpOrganisationPartyWD["data"][0]["labelAlternative"],
-                            "OrganisationAbstract" => $tmpOrganisationPartyWD["data"][0]["abstract"],
-                            "OrganisationThumbnailURI" => $tmpOrganisationPartyWD["data"][0]["thumbnailURI"],
-                            "OrganisationThumbnailCreator" => $tmpOrganisationPartyWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
-                            "OrganisationThumbnailLicense" => $tmpOrganisationPartyWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
-                            "OrganisationEmbedURI" => $tmpOrganisationPartyWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
-                            "OrganisationWebsiteURI" => ((gettype($tmpOrganisationPartyWD["data"][0]["websiteURI"]) == "array" ) ? json_encode($tmpOrganisationPartyWD["data"][0]["websiteURI"]) : $tmpOrganisationPartyWD["data"][0]["websiteURI"]),
-                            "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationPartyWD["data"][0]["socialMediaIDs"]),
-                            "OrganisationColor" => $tmpOrganisationPartyWD["data"][0]["color"], //TODO WIKIDATA DUMP
-                            "OrganisationAdditionalInformation" => $tmpOrganisationPartyWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
-                        );
-                        $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpPartyObj);
+                    if (($tmpParty["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$tmpParty["data"]))) {
+                        //Add Organisation Faction
+
+                            $tmpPartyObj = array(
+                                "OrganisationID" => $tmpOrganisationPartyWD["data"][0]["id"],
+                                "OrganisationType" => $tmpOrganisationPartyWD["data"][0]["type"],
+                                "OrganisationLabel" => $tmpOrganisationPartyWD["data"][0]["label"],
+                                "OrganisationLabelAlternative" => $tmpOrganisationPartyWD["data"][0]["labelAlternative"],
+                                "OrganisationAbstract" => $tmpOrganisationPartyWD["data"][0]["abstract"],
+                                "OrganisationThumbnailURI" => $tmpOrganisationPartyWD["data"][0]["thumbnailURI"],
+                                "OrganisationThumbnailCreator" => $tmpOrganisationPartyWD["data"][0]["thumbnailCreator"], //TODO WIKIDATA DUMP
+                                "OrganisationThumbnailLicense" => $tmpOrganisationPartyWD["data"][0]["thumbnailLicense"], //TODO WIKIDATA DUMP
+                                "OrganisationEmbedURI" => $tmpOrganisationPartyWD["data"][0]["embedURI"], //TODO WIKIDATA DUMP
+                                "OrganisationWebsiteURI" => ((gettype($tmpOrganisationPartyWD["data"][0]["websiteURI"]) == "array" ) ? json_encode($tmpOrganisationPartyWD["data"][0]["websiteURI"]) : $tmpOrganisationPartyWD["data"][0]["websiteURI"]),
+                                "OrganisationSocialMediaIDs" => json_encode($tmpOrganisationPartyWD["data"][0]["socialMediaIDs"]),
+                                "OrganisationColor" => $tmpOrganisationPartyWD["data"][0]["color"], //TODO WIKIDATA DUMP
+                                "OrganisationAdditionalInformation" => $tmpOrganisationPartyWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
+                            );
+                            $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpPartyObj);
 
                     } else {
 
-                        reportConflict("Media", "mediaAdd party not found in wikidataDump", "", "", "MediaID " . $nextID . " Person in DB: " . json_encode($personDB["data"]), $db);
+
+                        //Check Organisation Party for updates
+                        $tmpPartyUpdate = array();
+                        if ((!$tmpFaction["data"]["OrganisationLabelAlternative"]) && ($tmpOrganisationPartyWD["data"][0]["labelAlternative"])) {
+                            $tmpPartyUpdate[] = $dbp->parse("OrganisationLabelAlternative=?s", $tmpOrganisationPartyWD["data"][0]["labelAlternative"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationAbstract"]) && ($tmpOrganisationPartyWD["data"][0]["abstract"])) {
+                            $tmpPartyUpdate[] = $dbp->parse("OrganisationAbstract=?s", $tmpOrganisationPartyWD["data"][0]["abstract"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationThumbnailURI"]) && ($tmpOrganisationPartyWD["data"][0]["thumbnailURI"])) {
+                            $tmpPartyUpdate[] = $dbp->parse("OrganisationThumbnailURI=?s", $tmpOrganisationPartyWD["data"][0]["thumbnailURI"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationThumbnailCreator"]) && ($tmpOrganisationPartyWD["data"][0]["thumbnailCreator"])) {
+                            $tmpPartyUpdate[] = $dbp->parse("OrganisationThumbnailCreator=?s", $tmpOrganisationPartyWD["data"][0]["thumbnailCreator"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationThumbnailLicense"]) && ($tmpOrganisationPartyWD["data"][0]["thumbnailLicense"])) {
+                            $tmpPartyUpdate[] = $dbp->parse("OrganisationThumbnailLicense=?s", $tmpOrganisationPartyWD["data"][0]["thumbnailLicense"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationEmbedURI"]) && ($tmpOrganisationPartyWD["data"][0]["embedURI"])) {
+                            $tmpPartyUpdate[] = $dbp->parse("OrganisationEmbedURI=?s", $tmpOrganisationPartyWD["data"][0]["embedURI"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationWebsiteURI"]) && ($tmpOrganisationPartyWD["data"][0]["websiteURI"])) {
+                            $tmpPartyUpdate[] = $dbp->parse("OrganisationWebsiteURI=?s", ((gettype($tmpOrganisationPartyWD["data"][0]["websiteURI"]) == "array" ) ? json_encode($tmpOrganisationPartyWD["data"][0]["websiteURI"]) : $tmpOrganisationPartyWD["data"][0]["websiteURI"]));
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationSocialMediaIDs"]) && ($tmpOrganisationPartyWD["data"][0]["socialMediaIDs"])) {
+                            $tmpPartyUpdate[] = $dbp->parse("OrganisationSocialMediaIDs=?s", json_encode($tmpOrganisationPartyWD["data"][0]["socialMediaIDs"]));
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationColor"]) && ($tmpOrganisationPartyWD["data"][0]["color"])) {
+                            $tmpPartyUpdate[] = $dbp->parse("OrganisationColor=?s", $tmpOrganisationPartyWD["data"][0]["color"]);
+                        }
+                        if ((!$tmpFaction["data"]["OrganisationAdditionalInformation"]) && ($tmpOrganisationPartyWD["data"][0]["additionalInformation"])) {
+                            $tmpPartyUpdate[] = $dbp->parse("OrganisationAdditionalInformation=?s", json_encode($tmpOrganisationPartyWD["data"][0]["additionalInformation"]));
+                        }
+
+                        if ($tmpPartyUpdate) {
+                            $tmpPartyUpdate = "UPDATE " . $config["platform"]["sql"]["tbl"]["Organisation"] . " SET " . implode(", ", $tmpPartyUpdate) . " WHERE OrganisationID = ?s";
+                            $db->query($tmpPartyUpdate, $tmpParty["data"]["id"]);
+                        }
 
                     }
+
+                } else {
+
+                    reportConflict("Media", "mediaAdd party not found in wikidataDump", $nextID, "", "Person in DB: " . json_encode($personDB["data"]), $db);
+
                 }
             }
 
@@ -1299,11 +1657,9 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
         //Current Faction Add
 
-        if (array_key_exists("faction",$person)) {
+        if ((array_key_exists("faction",$person)) && ($person["faction"] != "")) {
 
             $tmpOrganisationFactionWD = apiV1(["action" => "wikidataService", "itemType" => "faction", "str" => $person["faction"]]);
-            //echo "<pre>\n\napiSearch:<br>\n";
-            //print_r($tmpOrganisationFactionWD);
 
             if (($tmpOrganisationFactionWD["meta"]["requestStatus"] == "success") && (count($tmpOrganisationFactionWD["data"])>0)) {
 
@@ -1327,33 +1683,84 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                         "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
                         "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
                     );
-                    echo $db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
+                    //echo $db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
                     $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
 
                     //$tmpFaction["data"] = $tmpFactionObj;
                     $tmpFaction = organisationGetByID($tmpOrganisationFactionWD["data"][0]["id"]);
 
+                } else {
+
+
+                    //Check Organisation Faction for updates
+                    $tmpFactionUpdate = array();
+                    if ((!$tmpFaction["data"]["OrganisationLabelAlternative"]) && ($tmpOrganisationFactionWD["data"][0]["labelAlternative"])) {
+                        $tmpFactionUpdate[] = $dbp->parse("OrganisationLabelAlternative=?s", $tmpOrganisationFactionWD["data"][0]["labelAlternative"]);
+                    }
+                    if ((!$tmpFaction["data"]["OrganisationAbstract"]) && ($tmpOrganisationFactionWD["data"][0]["abstract"])) {
+                        $tmpFactionUpdate[] = $dbp->parse("OrganisationAbstract=?s", $tmpOrganisationFactionWD["data"][0]["abstract"]);
+                    }
+                    if ((!$tmpFaction["data"]["OrganisationThumbnailURI"]) && ($tmpOrganisationFactionWD["data"][0]["thumbnailURI"])) {
+                        $tmpFactionUpdate[] = $dbp->parse("OrganisationThumbnailURI=?s", $tmpOrganisationFactionWD["data"][0]["thumbnailURI"]);
+                    }
+                    if ((!$tmpFaction["data"]["OrganisationThumbnailCreator"]) && ($tmpOrganisationFactionWD["data"][0]["thumbnailCreator"])) {
+                        $tmpFactionUpdate[] = $dbp->parse("OrganisationThumbnailCreator=?s", $tmpOrganisationFactionWD["data"][0]["thumbnailCreator"]);
+                    }
+                    if ((!$tmpFaction["data"]["OrganisationThumbnailLicense"]) && ($tmpOrganisationFactionWD["data"][0]["thumbnailLicense"])) {
+                        $tmpFactionUpdate[] = $dbp->parse("OrganisationThumbnailLicense=?s", $tmpOrganisationFactionWD["data"][0]["thumbnailLicense"]);
+                    }
+                    if ((!$tmpFaction["data"]["OrganisationEmbedURI"]) && ($tmpOrganisationFactionWD["data"][0]["embedURI"])) {
+                        $tmpFactionUpdate[] = $dbp->parse("OrganisationEmbedURI=?s", $tmpOrganisationFactionWD["data"][0]["embedURI"]);
+                    }
+                    if ((!$tmpFaction["data"]["OrganisationWebsiteURI"]) && ($tmpOrganisationFactionWD["data"][0]["websiteURI"])) {
+                        $tmpFactionUpdate[] = $dbp->parse("OrganisationWebsiteURI=?s", ((gettype($tmpOrganisationFactionWD["data"][0]["websiteURI"]) == "array" ) ? json_encode($tmpOrganisationFactionWD["data"][0]["websiteURI"]) : $tmpOrganisationFactionWD["data"][0]["websiteURI"]));
+                    }
+                    if ((!$tmpFaction["data"]["OrganisationSocialMediaIDs"]) && ($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"])) {
+                        $tmpFactionUpdate[] = $dbp->parse("OrganisationSocialMediaIDs=?s", json_encode($tmpOrganisationFactionWD["data"][0]["socialMediaIDs"]));
+                    }
+                    if ((!$tmpFaction["data"]["OrganisationColor"]) && ($tmpOrganisationFactionWD["data"][0]["color"])) {
+                        $tmpFactionUpdate[] = $dbp->parse("OrganisationColor=?s", $tmpOrganisationFactionWD["data"][0]["color"]);
+                    }
+                    if ((!$tmpFaction["data"]["OrganisationAdditionalInformation"]) && ($tmpOrganisationFactionWD["data"][0]["additionalInformation"])) {
+                        $tmpFactionUpdate[] = $dbp->parse("OrganisationAdditionalInformation=?s", json_encode($tmpOrganisationFactionWD["data"][0]["additionalInformation"]));
+                    }
+
+                    if ($tmpFactionUpdate) {
+                        $tmpFactionUpdate = "UPDATE " . $config["platform"]["sql"]["tbl"]["Organisation"] . " SET " . implode(", ", $tmpFactionUpdate) . " WHERE OrganisationID = ?s";
+                        $db->query($tmpFactionUpdate, $tmpFaction["data"]["id"]);
+                    }
+
+
                 }
-                //echo "\nTmpFaction:\n";
-                //print_r($tmpFaction);
+
                 if (preg_match("/(Q|P)\d+/i", $tmpFaction["data"]["id"])) {
 
-                    $annotationFaction["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
+                    $tmpCurrentFaction = $dbp->getRow("SELECT AnnotationID FROM ?n WHERE AnnotationMediaID=?s AND AnnotationResourceID=?s AND AnnotationContext=?s",
+                                                $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"],
+                                                $nextID,
+                                                $tmpFaction["data"]["id"],
+                                                $person["context"]."-faction");
 
-                    $tmpAnnotationItem = array(
-                        "AnnotationMediaID" => $nextID,
-                        "AnnotationType" => "organisation",
-                        "AnnotationResourceID" => $tmpFaction["data"]["id"],
-                        "AnnotationContext" => $person["context"]."-faction",
-                        "AnnotationFrametrailType" => "Annotation",
-                        //"AnnotationTimeStart" => "",
-                        //"AnnotationTimeEnd" => "",
-                        "AnnotationCreator" => $annotationFaction["creator"],
-                        "AnnotationTags" => "",
-                        "AnnotationAdditionalInformation" => ""
-                    );
+                    if (!$tmpCurrentFaction) {
 
-                    $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationItem);
+                        $annotationFaction["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
+
+                        $tmpAnnotationItem = array(
+                            "AnnotationMediaID" => $nextID,
+                            "AnnotationType" => "organisation",
+                            "AnnotationResourceID" => $tmpFaction["data"]["id"],
+                            "AnnotationContext" => $person["context"]."-faction",
+                            "AnnotationFrametrailType" => "Annotation",
+                            //"AnnotationTimeStart" => "",
+                            //"AnnotationTimeEnd" => "",
+                            "AnnotationCreator" => $annotationFaction["creator"],
+                            "AnnotationTags" => "",
+                            "AnnotationAdditionalInformation" => ""
+                        );
+
+                        $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationItem);
+
+                    }
 
                 } else {
 
@@ -1363,7 +1770,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
             } else {
 
-                reportConflict("Media", "mediaAdd current faction not found in wikidataDump", $nextID, "", "MediaID " . $nextID . " Person: " . json_encode($person), $db);
+                reportConflict("Media", "mediaAdd current faction not found in wikidataDump", $nextID, "", "Person: " . json_encode($person), $db);
 
             }
         }
