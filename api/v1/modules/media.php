@@ -1362,6 +1362,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
             $personWD["data"][0]["thumbnailURI"] = ((gettype($personWD["data"][0]["thumbnailURI"]) == "array") ? $personWD["data"][0]["thumbnailURI"][0] : $personWD["data"][0]["thumbnailURI"]);
             $personWD["data"][0]["websiteURI"] = ((gettype($personWD["data"][0]["websiteURI"]) == "array") ? json_encode($personWD["data"][0]["websiteURI"]) : $personWD["data"][0]["websiteURI"]);
+            $personWD["data"][0]["birthDate"] = ((gettype($personWD["data"][0]["birthDate"]) == "array") ? $personWD["data"][0]["birthDate"][0] : $personWD["data"][0]["birthDate"]);
 
             if (($personDB["meta"]["requestStatus"] != "success") || (!array_key_exists("id",$personDB["data"]))) {
                 //Person does not exist in Database
@@ -1376,10 +1377,10 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                     "PersonBirthDate" => $personWD["data"][0]["birthDate"],
                     "PersonGender" => $personWD["data"][0]["gender"],
                     "PersonAbstract" => $personWD["data"][0]["abstract"],
-                    "PersonThumbnailURI" => $personWD["data"][0]["thumbnailURI"],
+                    "PersonThumbnailURI" => ($personWD["data"][0]["thumbnailURI"] ? $personWD["data"][0]["thumbnailURI"] : ""),
                     "PersonThumbnailCreator" => $personWD["data"][0]["thumbnailCreator"],
                     "PersonThumbnailLicense" => $personWD["data"][0]["thumbnailLicense"],
-                    "PersonWebsiteURI" => $personWD["data"][0]["websiteURI"],
+                    "PersonWebsiteURI" => ($personWD["data"][0]["websiteURI"] ? $personWD["data"][0]["websiteURI"] : ""),
                     "PersonEmbedURI" => $personWD["data"][0]["embedURI"],
                     "PersonOriginID" => $personWD["data"][0]["originID"],
                     "PersonPartyOrganisationID" => $personWD["data"][0]["party_wp"],
@@ -1389,7 +1390,8 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                 );
 
                 try {
-
+                    //print_r($tmpNewPerson);
+                    //echo $db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
                     $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
 
                 } catch (exception $e) {
