@@ -123,7 +123,7 @@
                 <script type="application/javascript">
                     $(function() {
                         $('#conflictsTable').bootstrapTable({
-                            url: config["dir"]["root"] + "/server/ajaxServer.php?a=conflictsTable",
+                            url: config["dir"]["root"] + "/server/ajaxServer.php?a=conflictsTable<?=(($_REQUEST["search"]["subject"]) ? "&search=".http_build_query($_REQUEST["search"]) : "")?>",
                             pagination: true,
                             sidePagination: "server",
                             columns: [

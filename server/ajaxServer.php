@@ -16,7 +16,7 @@ switch ($_REQUEST["a"]) {
     case "conflictsTable":
 
         require_once (__DIR__."/../modules/utilities/functions.conflicts.php");
-        echo json_encode(getConflicts("all",$_REQUEST["limit"],$_REQUEST["offset"],true));
+        echo json_encode(getConflicts("all",$_REQUEST["limit"],$_REQUEST["offset"],$_REQUEST["search"],true), JSON_PRETTY_PRINT);
         return;
 
     break;

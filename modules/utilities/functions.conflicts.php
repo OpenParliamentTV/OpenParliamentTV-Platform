@@ -46,7 +46,7 @@ function reportConflict($entity, $subject, $identifier="", $rival="", $descripti
 
 }
 
-function getConflicts($id = "all", $limit = 0, $offset = 0, $getCount = false, $includeResolved = false, $dbPlatform = false) {
+function getConflicts($id = "all", $limit = 0, $offset = 0, $search = false, $getCount = false, $includeResolved = false, $dbPlatform = false) {
 
 	//TODO Auth
 
@@ -68,6 +68,17 @@ function getConflicts($id = "all", $limit = 0, $offset = 0, $getCount = false, $
 	} else {
 		$queryPart .= $dbPlatform->parse("ConflictID=?i",$id);
 	}
+
+	if ($search) {
+        parse_str($search, $search);
+    }
+	if (gettype($search["subject"]) == "array") {
+
+	    foreach ($search["subject"] as $subject) {
+            $queryPart .= $dbPlatform->parse(" AND ConflictSubject=?s", $subject);
+        }
+
+    }
 
 
 	if ($includeResolved === true) {
