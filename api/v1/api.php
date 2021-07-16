@@ -347,7 +347,8 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                             if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
 
-                                $request["str"] = preg_replace("/\s/",".*", $request["str"]);
+                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
+                                //$request["str"] = preg_replace("/\xa0/",".*", $request["str"]);
 
                                 $tmpType = "label";
 
@@ -360,7 +361,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
                             foreach ($dump as $k=>$v) {
 
 
-                                if (preg_match("/".$request["str"]."/i",$v[$tmpType])) {
+                                if (preg_match("/".convertAccentsAndSpecialToNormal($request["str"])."/ui",convertAccentsAndSpecialToNormal($v[$tmpType]))) {
 
                                     $return["meta"]["requestStatus"] = "success";
 
@@ -438,7 +439,8 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                             if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
 
-                                $request["str"] = preg_replace("/\s/",".*", $request["str"]);
+                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
+                                //$request["str"] = preg_replace("/\xa0/",".*", $request["str"]);
                                 $request["str"] = preg_replace("/\//","\\/", $request["str"]);
 
                                 $tmpType = "label";
@@ -509,10 +511,8 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                             if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
 
-                                $request["str"] = preg_replace("/\s/",".*", $request["str"]);
+                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
                                 $request["str"] = preg_replace("/\//","\\/", $request["str"]);
-                                //$request["str"] = preg_replace("/\//",".*", $request["str"]);
-                                //$request["str"] = preg_replace("/\\//",".*", $request["str"]);
 
 
                                 $tmpType = "label";
