@@ -37,7 +37,7 @@
                 $conflictsStatsOverall += $conflictStat["ConflictCount"];
 				echo "
 					<tr>
-							<td>".$conflictStat["ConflictSubject"]."</td>
+							<td><a href='?search[subject][]=".$conflictStat["ConflictSubject"]."'>".$conflictStat["ConflictSubject"]."</a></td>
 							<td>".$conflictStat["ConflictCount"]."</td>
 					</tr>";
 
