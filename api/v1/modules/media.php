@@ -1307,9 +1307,9 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
     foreach ($item["people"] as $person) {
 
-
         // Cycle through all first names to get a match with wikidata
 
+        /*
         $personNames = explode(" ", $person["label"]);
         $personNameLast = array_pop($personNames);
         $personWD = false;
@@ -1327,10 +1327,32 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
             }
 
         }
+        */
 
+        $personWD = false;
 
+        $personTempLabel = apiV1([
+            "action" => "wikidataService", 
+            "itemType" => "person", 
+            "str" => $person["label"]
+        ]);
 
-        if (($personWD["meta"]["requestStatus"] == "success") && (count($personWD["data"]) > 0)) {
+        if (($personTempLabel["meta"]["requestStatus"] == "success") && (count($personTempLabel["data"]) > 0)) {
+            $personWD = $personTempLabel;
+        } else if (isset($person["firstname"]) && isset($person["lastname"])) {
+            //Person not found by label, try special case where firstname + lastname != label
+
+            $personTempFirstLast = apiV1([
+                "action" => "wikidataService", 
+                "itemType" => "person", 
+                "str" => $person["firstname"]." ".$person["lastname"]
+            ]);
+            if (($personTempFirstLast["meta"]["requestStatus"] == "success") && (count($personTempFirstLast["data"]) > 0)) {
+                $personWD = $personTempFirstLast;
+            }
+        }
+
+        if ($personWD && ($personWD["meta"]["requestStatus"] == "success") && (count($personWD["data"]) > 0)) {
             //Person found in Wikidata
 
             if (gettype($personWD["data"][0]["factionID"]) == "array") {
