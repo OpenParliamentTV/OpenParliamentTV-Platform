@@ -360,8 +360,27 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                             foreach ($dump as $k=>$v) {
 
+                                $success = false;
 
                                 if (preg_match("/".convertAccentsAndSpecialToNormal($request["str"])."/ui",convertAccentsAndSpecialToNormal($v[$tmpType]))) {
+                                    $success = true;
+                                } else if (isset($v["altLabel"])) {
+                                    if (is_string($v["altLabel"])) {
+                                        if (preg_match("/".convertAccentsAndSpecialToNormal($request["str"])."/ui",convertAccentsAndSpecialToNormal($v["altLabel"]))) {
+                                            $success = true;
+                                        }
+                                    } else if (is_array($v["altLabel"])) {
+                                        foreach ($v["altLabel"] as $altLabel) {
+                                            if (preg_match("/".convertAccentsAndSpecialToNormal($request["str"])."/ui",convertAccentsAndSpecialToNormal($altLabel))) {
+                                                $success = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                }
+
+                                if ($success) {
 
                                     $return["meta"]["requestStatus"] = "success";
 
@@ -395,8 +414,6 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
 
                                     $return["data"][] = $v;
-
-
                                 }
 
                             }
