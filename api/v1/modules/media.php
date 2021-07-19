@@ -841,7 +841,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
     if (!$tmpElectoralPeriod) {
 
-        $tmpElectoralPeriodID = $item["parliament"]."-".sprintf("%02d", $item["electoralPeriod"]["number"]);
+        $tmpElectoralPeriodID = $item["parliament"]."-".sprintf("%03d", $item["electoralPeriod"]["number"]);
         $dbp->query("INSERT INTO ?n
                         SET
                             ElectoralPeriodNumber = ?i,
