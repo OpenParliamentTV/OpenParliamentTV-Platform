@@ -50,6 +50,36 @@ function setOptions() {
 						"type"=>"keyword"
 					)
 				))
+			)),
+			"people"=>array( "properties"=>array(
+				"data"=>array( "properties"=>array(
+					"attributes"=>array(
+						"type": "nested",
+						"properties"=>array(
+							"label"=>array(
+								"type"=>"string"
+							),
+							"context"=>array(
+								"type"=>"string"
+							)
+						)
+					)
+				))
+			)),
+			"organisations"=>array( "properties"=>array(
+				"data"=>array( "properties"=>array(
+					"attributes"=>array(
+						"type": "nested",
+						"properties"=>array(
+							"label"=>array(
+								"type"=>"string"
+							),
+							"context"=>array(
+								"type"=>"string"
+							)
+						)
+					)
+				))
 			))
 		))
 	));
