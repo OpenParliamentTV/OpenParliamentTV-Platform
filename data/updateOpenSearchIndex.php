@@ -54,7 +54,9 @@ function setOptions() {
 			"people"=>array( "properties"=>array(
 				"data"=>array( "properties"=>array(
 					"attributes"=>array(
-						"type": "nested",
+						"type"=>array(
+							"nested"
+						),
 						"properties"=>array(
 							"label"=>array(
 								"type"=>"string"
@@ -69,7 +71,9 @@ function setOptions() {
 			"organisations"=>array( "properties"=>array(
 				"data"=>array( "properties"=>array(
 					"attributes"=>array(
-						"type": "nested",
+						"type"=>array(
+							"nested"
+						),
 						"properties"=>array(
 							"label"=>array(
 								"type"=>"string"
