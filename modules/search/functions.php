@@ -279,30 +279,78 @@ function getSearchBody($request, $getAllResults) {
 			if (is_array($requestValue)) {
 				foreach ($requestValue as $partyID) {
 					
-					//TODO: Get mainSpeaker from people Array 
-					$filter["should"][] = array("match_phrase"=>array("relationships.people.data.attributes.party.id" => $partyID));
+					$filter["should"][] = array(
+						"nested" => array(
+							"path" => "relationships.organisations.data",
+							"query" => array("bool" => array("must"=>array(
+								array("match" => array(
+									"relationships.organisations.data.id" => $partyID
+								)),
+								array("match_phrase" => array(
+									"relationships.organisations.data.attributes.context" => 'main-speaker-party'
+								))
+							)))
+						)
+					);
+
+					$shouldCount++;
 
 				}
-				$shouldCount++;
+				
 			} else {
 				
-				//TODO: Get mainSpeaker from people Array 
-				$filter["must"][] = array("match"=>array("relationships.people.data.attributes.party.id" => $requestValue));
+				$filter["must"][] = array(
+					"nested" => array(
+						"path" => "relationships.organisations.data",
+						"query" => array("bool" => array("must"=>array(
+							array("match" => array(
+								"relationships.organisations.data.id" => $requestValue
+							)),
+							array("match_phrase" => array(
+								"relationships.organisations.data.attributes.context" => 'main-speaker-party'
+							))
+						)))
+					)
+				);
 
 			}
 		} else if ($requestKey == "factionID") {
 			if (is_array($requestValue)) {
 				foreach ($requestValue as $factionID) {
 					
-					//TODO: Get mainSpeaker from people Array 
-					$filter["should"][] = array("match_phrase"=>array("relationships.organisations.data.id" => $factionID));
+					$filter["should"][] = array(
+						"nested" => array(
+							"path" => "relationships.organisations.data",
+							"query" => array("bool" => array("must"=>array(
+								array("match" => array(
+									"relationships.organisations.data.id" => $factionID
+								)),
+								array("match_phrase" => array(
+									"relationships.organisations.data.attributes.context" => 'main-speaker-faction'
+								))
+							)))
+						)
+					);
+
+					$shouldCount++;
 
 				}
-				$shouldCount++;
+				
 			} else {
 				
-				//TODO: Get mainSpeaker from people Array 
-				$filter["must"][] = array("match"=>array("relationships.organisations.data.id" => $requestValue));
+				$filter["must"][] = array(
+					"nested" => array(
+						"path" => "relationships.organisations.data",
+						"query" => array("bool" => array("must"=>array(
+							array("match" => array(
+								"relationships.organisations.data.id" => $requestValue
+							)),
+							array("match_phrase" => array(
+								"relationships.organisations.data.attributes.context" => 'main-speaker-faction'
+							))
+						)))
+					)
+				);
 
 			}
 		} else if ($requestKey == "organisationID") {
@@ -331,7 +379,21 @@ function getSearchBody($request, $getAllResults) {
 			
 		} else if ($requestKey == "personID") {
 			
-			$filter["must"][] = array("match"=>array("relationships.people.data.id" => $requestValue));
+			//$filter["must"][] = array("match"=>array("relationships.people.data.id" => $requestValue));
+
+			$filter["must"][] = array(
+				"nested" => array(
+					"path" => "relationships.people.data",
+					"query" => array("bool" => array("must"=>array(
+						array("match" => array(
+							"relationships.people.data.id" => $requestValue
+						)),
+						array("match" => array(
+							"relationships.people.data.attributes.context" => 'main-speaker'
+						))
+					)))
+				)
+			);
 			
 		} else if ($requestKey == "documentID") {
 			

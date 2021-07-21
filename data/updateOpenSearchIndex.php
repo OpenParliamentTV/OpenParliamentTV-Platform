@@ -52,39 +52,15 @@ function setOptions() {
 				))
 			)),
 			"people"=>array( "properties"=>array(
-				"data"=>array( "properties"=>array(
-					"attributes"=>array(
-						"type"=>array(
-							"nested"
-						),
-						"properties"=>array(
-							"label"=>array(
-								"type"=>"string"
-							),
-							"context"=>array(
-								"type"=>"string"
-							)
-						)
-					)
-				))
+				"data"=>array( 
+					"type"=>"nested"
+				)
 			)),
 			"organisations"=>array( "properties"=>array(
-				"data"=>array( "properties"=>array(
-					"attributes"=>array(
-						"type"=>array(
-							"nested"
-						),
-						"properties"=>array(
-							"label"=>array(
-								"type"=>"string"
-							),
-							"context"=>array(
-								"type"=>"string"
-							)
-						)
-					)
-				))
-			))
+				"data"=>array( 
+					"type"=>"nested"
+				)
+			)),
 		))
 	));
 
