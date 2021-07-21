@@ -365,22 +365,22 @@ function getSearchBody($request, $getAllResults) {
 
 		} else if ($requestKey == "person" && strlen($requestValue) > 1) {
 			
-			/*
-			$filter["should"][] = array("multi_match"=>array(
-				"query" => $requestValue,
-				"type" => "cross_fields",
-				"fields" => ["meta.speakerFirstName", "meta.speakerLastName"],
-				"operator" => "and"
-			));
-			$shouldCount++;
-			*/
-			//TODO: Check if "must" or "should"
-			$filter["must"][] = array("match_phrase"=>array("relationships.people.data.attributes.label" => $requestValue));
+			$filter["must"][] = array(
+				"nested" => array(
+					"path" => "relationships.people.data",
+					"query" => array("bool" => array("must"=>array(
+						array("match_phrase" => array(
+							"relationships.people.data.attributes.label" => $requestValue
+						)),
+						array("match" => array(
+							"relationships.people.data.attributes.context" => 'main-speaker'
+						))
+					)))
+				)
+			);
 			
 		} else if ($requestKey == "personID") {
 			
-			//$filter["must"][] = array("match"=>array("relationships.people.data.id" => $requestValue));
-
 			$filter["must"][] = array(
 				"nested" => array(
 					"path" => "relationships.people.data",
