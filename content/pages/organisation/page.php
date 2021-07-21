@@ -57,8 +57,13 @@ include_once(__DIR__ . '/../../header.php');
 </main>
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/searchResults.js"></script>
+<?php 
+	$subType = ($apiResult["data"]["attributes"]["type"] == "faction" || 
+				$apiResult["data"]["attributes"]["type"] == "party") ? 
+					$apiResult["data"]["attributes"]["type"] : "organisation";
+?>
 <script type="text/javascript">
 	$(document).ready( function() {
-		updateMediaList("organisationID=<?= $apiResult["data"]["id"] ?>");
+		updateMediaList("<?= $subType ?>ID=<?= $apiResult["data"]["id"] ?>");
 	});
 </script>
