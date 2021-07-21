@@ -38,6 +38,9 @@
 							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-faction="Q1007353">
 								<input id="edit-party-16122" name="factionID[]" value="Q1007353" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16122">DIE GRÜNEN</label>
 							</div>
+							<div class="formCheckbox custom-control custom-checkbox partyIndicator" data-faction="Q4316268">
+								<input id="edit-party-16123" name="factionID[]" value="Q4316268" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16123">fraktionslos</label>
+							</div>
 						</div>
 						<div style="clear: both;"></div>
 					</div>
