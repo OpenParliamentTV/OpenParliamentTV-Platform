@@ -293,9 +293,9 @@ function getSearchBody($request, $getAllResults) {
 						)
 					);
 
-					$shouldCount++;
-
 				}
+
+				$shouldCount++;
 				
 			} else {
 				
@@ -332,9 +332,9 @@ function getSearchBody($request, $getAllResults) {
 						)
 					);
 
-					$shouldCount++;
-
 				}
+
+				$shouldCount++;
 				
 			} else {
 				
