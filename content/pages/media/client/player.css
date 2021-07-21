@@ -416,7 +416,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 
 .layoutArea .contentViewContainer .contentViewContents em {
 	background: var(--highlight-color);
-	color: #fff;
+	color: var(--primary-bg-color);
 	padding: 0 2px;
     border-radius: 3px;
     font-style: normal;
