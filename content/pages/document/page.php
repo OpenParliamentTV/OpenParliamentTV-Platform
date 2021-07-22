@@ -1,5 +1,7 @@
 <?php 
-include_once(__DIR__ . '/../../header.php'); 
+include_once(__DIR__ . '/../../header.php');
+require_once(__DIR__."/../../../modules/utilities/functions.entities.php");
+$flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <main class="container-fluid subpage">
 	<div class="detailsHeader">
@@ -43,7 +45,21 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 				</div>
 				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
-					[ITEM DATA]
+					<table id="dataTable" class="table table-striped table-bordered">
+						<thead>
+							<tr>
+								<th>Key</th>
+								<th>Value</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+							foreach ($flatDataArray as $key => $value) {
+								echo '<tr><td>'.$key.'</td><td>'.$value.'</td><tr>';
+							}
+							?>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -54,5 +70,28 @@ include_once(__DIR__ . '/../../header.php');
 <script type="text/javascript">
 	$(document).ready( function() {
 		updateMediaList("documentID=<?= $apiResult["data"]["id"] ?>&sort=topic-asc");
+		$('#dataTable').bootstrapTable({
+			showToggle: false,
+			multiToggleDefaults: [],
+			search: true,
+			searchAlign: 'left',
+			buttonsAlign: 'right',
+			showExport: true,
+			exportDataType: 'basic',
+			exportTypes: ['csv', 'excel', 'txt', 'json'],
+			exportOptions: {
+				htmlContent: true,
+				excelstyles: ['mso-data-placement', 'color', 'background-color'],
+				fileName: 'Export',
+				onCellHtmlData: function(cell, rowIndex, colIndex, htmlData) {
+					var cleanedString = cell.html().replace(/<br\s*[\/]?>/gi, "\r\n");
+					//htmlData = cleanedString;
+					return htmlData;
+				}
+			},
+			sortName: false,
+			cardView: false,
+			locale: 'de-DE'
+		});
 	});
 </script>

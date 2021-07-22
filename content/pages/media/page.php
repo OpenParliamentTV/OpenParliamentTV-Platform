@@ -2,6 +2,8 @@
 include_once(__DIR__ . '/../../header.php'); 
 require_once(__DIR__."/../../../modules/media/functions.php");
 require_once(__DIR__."/../../../modules/media/include.media.php");
+require_once(__DIR__."/../../../modules/utilities/functions.entities.php");
+$flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <main id="content">
     <?php include_once('content.player.php'); ?>
