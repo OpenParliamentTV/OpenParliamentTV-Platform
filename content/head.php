@@ -29,7 +29,7 @@ if ($page != 'media') {
 ?>
 
 <?php
-if ($pageType == 'admin') {
+if ($pageType == 'admin' || $pageType == 'entity') {
 ?>
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap-table.min.css" />
 <?php
@@ -43,7 +43,7 @@ if ($pageType == 'admin') {
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap.bundle.min.js"></script>
 
 <?php
-if ($pageType == 'admin') {
+if ($pageType == 'admin' || $pageType == 'entity') {
 ?>
   <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table.min.js"></script>
   <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-de-DE.js"></script>

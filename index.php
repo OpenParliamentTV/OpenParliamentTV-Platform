@@ -55,7 +55,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]]
 		);
 		$pageTitle = '<span class="icon-list-numbered"></span>'.$apiResult["data"]["attributes"]["title"];
-		$pageType = 'default';
+		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
 				'label' => $pageTitle
@@ -72,7 +72,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]]
 		);
 		$pageTitle = '<span class="icon-doc-text"></span>'.$apiResult["data"]["attributes"]["label"];
-		$pageType = 'default';
+		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
 				'label' => $pageTitle
@@ -89,7 +89,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]]
 		);
 		$pageTitle = '<span class="icon-check"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – '.$apiResult["data"]["attributes"]["number"].'. Electoral Period';
-		$pageType = 'default';
+		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
 				'label' => $pageTitle
@@ -106,7 +106,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]]
 		);
 		$pageTitle = '';
-		$pageType = 'default';
+		$pageType = 'entity';
 		ob_start();
 		include_once("./content/pages/embed/page.php");
 		$content = ob_get_clean();
@@ -114,7 +114,7 @@ switch ($page) {
 	case "media":
 		// API Result is included via include.media.php
 		$pageTitle = '';
-		$pageType = 'default';
+		$pageType = 'entity';
 		ob_start();
 		include_once("./content/pages/media/page.php");
 		$content = ob_get_clean();
@@ -126,7 +126,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]]
 		);
 		$pageTitle = '<span class="icon-bank"></span>'.$apiResult["data"]["attributes"]["labelAlternative"];
-		$pageType = 'default';
+		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
 				'label' => $pageTitle
@@ -143,7 +143,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]]
 		);
 		$pageTitle = '<span class="icon-torso"></span>'.$apiResult["data"]["attributes"]["label"];
-		$pageType = 'default';
+		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
 				'label' => $pageTitle
@@ -160,7 +160,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]]
 		);
 		$pageTitle = '<span class="icon-group"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – Session '.$apiResult["data"]["attributes"]["number"];
-		$pageType = 'default';
+		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
 				'label' => $pageTitle
@@ -177,7 +177,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]]
 		);
 		$pageTitle = '<span class="icon-tag-1"></span>'.$apiResult["data"]["attributes"]["label"];
-		$pageType = 'default';
+		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
 				'label' => $pageTitle
@@ -189,7 +189,7 @@ switch ($page) {
 	break;
 	case "user":
 		$pageTitle = 'Detail User';
-		$pageType = 'default';
+		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
 				'label' => $pageTitle
