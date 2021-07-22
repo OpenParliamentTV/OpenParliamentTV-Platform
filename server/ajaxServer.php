@@ -465,7 +465,7 @@ switch ($_REQUEST["a"]) {
 	case "stats":
 		require_once(__DIR__."/../modules/search/functions.php");
 		
-		$allowedParams = array_intersect_key($_REQUEST,array_flip(array("a","q","name","party","electoralPeriod","timefrom","timeto","gender","degree","aw_uuid","speakerID","sessionNumber", "page", "sort")));
+		$allowedParams = array_intersect_key($_REQUEST,array_flip(array("a","q","person","party","electoralPeriod","timefrom","timeto","gender","degree","aw_uuid","faction","factionID","organisation","organisationID","speakerID","sessionNumber", "page", "sort")));
 
 		$return["success"] = "true";
 		$return["text"] = "searchresults";
