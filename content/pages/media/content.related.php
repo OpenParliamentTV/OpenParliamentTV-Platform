@@ -9,8 +9,8 @@ if (!function_exists("L")) {
 ?>
 <div class="row">
     <div class="col-12">
-        <!--
         <ul class="nav nav-tabs" role="tablist">
+            <!--
             <li class="nav-item">
                 <a class="nav-link active" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="true"><span class="icon-torso"></span> People</a>
             </li>
@@ -23,11 +23,13 @@ if (!function_exists("L")) {
             <li class="nav-item">
                 <a class="nav-link" id="terms-tab" data-toggle="tab" href="#terms" role="tab" aria-controls="terms" aria-selected="false"><span class="icon-tag-1"></span> Terms</a>
             </li>
+            -->
             <li class="nav-item ml-auto">
                 <a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span> Data</a>
             </li>
         </ul>
         <div class="tab-content">
+            <!--
             <div class="tab-pane fade show active" id="people" role="tabpanel" aria-labelledby="people-tab">
                 <div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">
                 <?php 
@@ -64,10 +66,10 @@ if (!function_exists("L")) {
             <div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
                 [CONTENT]
             </div>
+            -->
             <div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
                 [ITEM DATA]
             </div>
         </div>
-        -->
     </div>
 </div>
