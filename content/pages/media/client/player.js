@@ -396,6 +396,7 @@ function updatePlayer() {
 	OPTV_Player.on('ready', function() {
 
 		$('#content').addClass('ready');
+		processHash();
 		/*
 		var downloadOptions = $('<div class="downloadOptions">'
 							+       '<div class="icon icon-download"></div>'

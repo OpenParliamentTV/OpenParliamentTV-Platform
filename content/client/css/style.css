@@ -354,6 +354,7 @@ hr {
     border-color: var(--border-color);
     background-color: var(--primary-bg-color);
     color: var(--primary-fg-color);
+    font-weight: 300;
 }
 
 .dropdown-item:focus, 
