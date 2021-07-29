@@ -355,6 +355,7 @@ hr {
     background-color: var(--primary-bg-color);
     color: var(--primary-fg-color);
     font-weight: 300;
+    font-size: 14px;
 }
 
 .dropdown-item:focus, 
@@ -454,6 +455,23 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 
 .btn[data-toggle="collapse"].collapsed .labelShow {
     display: inline;
+}
+
+.modal-content {
+    background: var(--primary-bg-color);
+}
+
+.modal-content .close {
+    color: var(--primary-fg-color);
+    opacity: .8;
+}
+
+.modal-content .close:hover {
+    opacity:  1;
+}
+
+.text-muted {
+    color: var(--primary-fg-color) !important;
 }
 
 .relationshipsList {
