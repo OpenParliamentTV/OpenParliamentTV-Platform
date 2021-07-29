@@ -112,7 +112,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "media":
-		// API Result is included via include.media.php
+		require_once("./modules/media/include.media.php");
 		$pageTitle = '';
 		$pageType = 'entity';
 		ob_start();
