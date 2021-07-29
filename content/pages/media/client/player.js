@@ -12,7 +12,8 @@ $(document).ready( function() {
 	window.onpopstate = function(event) {
 		var regExResult = /media\/([a-zA-Z0-9_-]+)/.exec(location.pathname);
 		if (regExResult && regExResult.length > 1) {
-			updateContents(regExResult[1] + window.location.search);
+			var searchParams = removeQuoteParamsFromURL(window.location.search.toString());
+			updateContents(regExResult[1] + searchParams);
 		}
 	}
 
@@ -109,8 +110,10 @@ function updatePrevNext() {
 	prevResultID = (prevResultItem) ? prevResultItem.id : null;
 	nextResultID = (nextResultItem) ? nextResultItem.id : null;
 
-	prevResultURL = (prevResultID) ? 'media/'+ prevResultID + window.location.search : null;
-	nextResultURL = (nextResultID) ? 'media/'+ nextResultID + window.location.search : null;
+	var searchParams = removeQuoteParamsFromURL(window.location.search.toString());
+
+	prevResultURL = (prevResultID) ? 'media/'+ prevResultID + searchParams : null;
+	nextResultURL = (nextResultID) ? 'media/'+ nextResultID + searchParams : null;
 }
 
 function updatePlayer() {
@@ -396,7 +399,7 @@ function updatePlayer() {
 	OPTV_Player.on('ready', function() {
 
 		$('#content').addClass('ready');
-		processHash();
+		processQuery();
 		/*
 		var downloadOptions = $('<div class="downloadOptions">'
 							+       '<div class="icon icon-download"></div>'
@@ -422,6 +425,18 @@ function updatePlayer() {
 		$('.frametrail-body .titlebar').append(playerOptions);
 		*/
 		window.setTimeout(function() {
+			
+			var queryTime = getQueryVariable('t');
+			if (queryTime) {
+				if (queryTime.indexOf(',') !== -1) {
+					queryTimeParts = queryTime.split(',');
+					OPTV_Player.currentTime = queryTimeParts[0];
+				} else {
+					OPTV_Player.currentTime = queryTime;
+				}
+				
+			}
+
 			if (autoplayResults && playerData.finds.length > 0) {
 				OPTV_Player.currentTime = playerData.finds[0].start;
 			}
@@ -478,7 +493,8 @@ function updateQuery(resultID) {
 		thisResultID = resultID;
 	}
 
-	var locationString = 'media/'+ thisResultID + location.search.replace(/(&playresults=[0-1])/, ''),
+	var searchParams = removeQuoteParamsFromURL(window.location.search.toString());
+	var locationString = 'media/'+ thisResultID + searchParams.replace(/(&playresults=[0-1])/, ''),
 		prevResultURLString = (prevResultURL) ? prevResultURL.replace(/(&playresults=[0-1])/, '') : null,
 		nextResultURLString = (nextResultURL) ? nextResultURL.replace(/(&playresults=[0-1])/, '') : null;
 	
@@ -549,4 +565,29 @@ function goToNextResultSnippet() {
 	} else {
 		$('#nextResultSnippetButton').attr("disabled", true);
 	}
+}
+
+function getQueryVariable(variable) {
+
+	var query = window.location.search.substring(1),
+		vars = query.split("&"),
+		pair;
+
+	for (var i = 0; i < vars.length; i++) {
+		pair = vars[i].split("=");
+		if (pair[0] == variable) {
+			return pair[1];
+		}
+	}
+
+}
+
+function removeQuoteParamsFromURL(string) {
+	var returnString = string;
+	var regEx = /[?|&][t|f|c]=[^&]*/g;
+	returnString = returnString.replace(regEx, '');
+	if (returnString.charAt(0) == '&') {
+		returnString = '?'+ returnString.substring(1);
+	}
+	return returnString;
 }

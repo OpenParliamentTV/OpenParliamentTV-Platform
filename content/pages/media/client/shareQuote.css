@@ -120,3 +120,63 @@
 	background: #f39c12 !important;
 	color: #fff !important;
 }
+
+#shareQuoteModal .sharePreview {
+    border: 6px solid transparent;
+}
+
+#shareQuoteModal .sharePreview:hover, #shareQuoteModal .sharePreview.active {
+    outline: 3px solid #f39c12;
+    cursor: pointer;
+}
+
+#shareQuoteModal .card {
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+    transition: background-color .15s ease-in-out,border-color .15s ease-in-out;
+    border-radius: .85714em;
+    border: 1px solid #e1e8ed;
+    outline-offset: -1px;
+    background: #fff;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 1.2em;
+    font-size:  12px;
+}
+
+#shareQuoteModal .card .cardMeta {
+    box-sizing: border-box;
+    padding: .75em;
+    text-decoration: none;
+}
+
+#shareQuoteModal .card .cardMeta .cardTitleWrapper {
+    display: block;
+    border-collapse: separate;
+    text-align: left;
+    word-wrap: break-word;
+    color: #505050;
+    -webkit-border-horizontal-spacing: 0;
+    -webkit-border-vertical-spacing: 0;
+    direction: ltr;
+}
+
+#shareQuoteModal .card .cardMeta .cardTitleWrapper .cardTitle {
+    margin: 0 0 .15em;
+    line-height: 18px;
+}
+
+#shareQuoteModal .card .cardMeta .cardTitleWrapper .cardDescription {
+    max-height: 2.6em;
+    margin-top: .32333em;
+    -webkit-line-clamp: 2;
+}
+
+#shareQuoteModal .card .cardMeta .cardWebsite {
+    margin-top: .32333em;
+    overflow: hidden;
+    color: #8899a6;
+    text-overflow: ellipsis;
+    text-transform: lowercase;
+    white-space: nowrap;
+}

@@ -4,15 +4,23 @@
  *************************************************/
 
 var shareThis = window.ShareThis,
-	start, end, prefix, suffix;
+	start, end, prefix, suffix, shareURL;
 
 $(document).ready( function() {
 	initShareQuote();
+
+	$('#shareQuoteModal .sharePreview').click(function() {
+		$('#shareQuoteModal .sharePreview').removeClass('active');
+		$(this).addClass('active');
+		var thisTheme = $(this).data('theme');
+		shareURL = shareURL.replace(/c=\w+/, 'c='+thisTheme);
+		$('#shareQuoteModal #shareURL').val(shareURL);
+	});
 });
 
 function initShareQuote() {
 	
-	processHash();
+	processQuery();
 
 	const selectionShare = shareThis({
 		selector: "#content",
@@ -35,18 +43,24 @@ function initShareQuote() {
 	},false);
 }
 
-function processHash() {
-	var hashT = getHashVariable('t'),
-		hashA = getHashVariable('a');
-	if (typeof hashT === "string") {
-		var t = hashT.split(",");
+function processQuery() {
+	var queryT = getQueryVariable('t'),
+		queryF = getQueryVariable('f');
+	if (typeof queryT === "string") {
+		var t = queryT.split(",");
 		start = t[0];
 		if (t.length > 1) end = t[1];
+	} else {
+		start = null;
+		end = null;
 	}
-	if (typeof hashA === "string") {
-		var a = hashA.split(",");
+	if (typeof queryF === "string") {
+		var a = queryF.split(",");
 		prefix = a[0];
 		suffix = a[1];
+	} else {
+		prefix = null;
+		suffix = null;
 	}
 
 	var words = document.querySelectorAll("[data-start]");
@@ -152,15 +166,11 @@ function getSelectionMediaFragment() {
 		var fNode = selection.focusNode.parentNode;
 		var aNode = selection.anchorNode.parentNode;
 
-		if (
-			aNode.getAttribute("data-start") == null
-		) {
+		if (aNode.getAttribute("data-start") == null) {
 			aNode = aNode.nextElementSibling;
 		}
 
-		if (
-			fNode.getAttribute("data-start") == null
-		) {
+		if (fNode.getAttribute("data-start") == null) {
 			fNode = fNode.previousElementSibling;
 		}
 
@@ -172,22 +182,24 @@ function getSelectionMediaFragment() {
 			return;
 		}
 
-		var aNodeTime = parseFloat(aNode.getAttribute("data-start"));
-		var aNodeDuration = parseInt(aNode.getAttribute("data-d"), 10);
-		var fNodeTime;
-		var fNodeDuration;
+		var aNodeStart = parseFloat(aNode.getAttribute("data-start"));
+		var aNodeEnd = parseFloat(aNode.getAttribute("data-end"));
+		//var aNodeDuration = parseInt(aNode.getAttribute("data-d"), 10);
+		var fNodeStart ;
+		//var fNodeDuration;
 
 		if (fNode != null && fNode.getAttribute("data-start") != null) {
-			fNodeTime = parseFloat(fNode.getAttribute("data-start"));
-			fNodeDuration = parseInt(fNode.getAttribute("data-d"), 10);
+			fNodeStart = parseFloat(fNode.getAttribute("data-start"));
+			fNodeEnd = parseFloat(fNode.getAttribute("data-end"));
+			//fNodeDuration = parseInt(fNode.getAttribute("data-d"), 10);
 		}
 
-		var nodeStart = aNodeTime;
-		var nodeDuration = fNodeTime + fNodeDuration - aNodeTime;
+		var nodeStart = aNodeStart;
+		var nodeDuration = fNodeEnd - aNodeStart;
 
-		if (aNodeTime >= fNodeTime) {
-			nodeStart = fNodeTime;
-			nodeDuration = aNodeTime + aNodeDuration - fNodeTime;
+		if (aNodeStart >= fNodeStart) {
+			nodeStart = fNodeStart;
+			nodeDuration = aNodeEnd - fNodeStart;
 		}
 
 		if (nodeDuration == 0 || nodeDuration == null || isNaN(nodeDuration)) {
@@ -229,27 +241,22 @@ function getSelectionMediaFragment() {
 		// fragment = "#t=" + nodeStart + "," + (Math.round((nodeStart + nodeDuration) * 10) / 10);
 		var nodeEnd = nodeStart + nodeDuration;
 		if (prefix && suffix) {
-			history.replaceState(
-				{},
-				"",
-				"#t="+ nodeStart + "," + nodeEnd + "&a="+ prefix + "," + suffix
-					
-			);
+			
+			var baseURL = window.location.toString(),
+				currentTheme = $('#shareQuoteModal .sharePreview.active').data('theme');
+			if (baseURL.indexOf("?") > 0) {
+				baseURL = baseURL.substring(0, baseURL.indexOf("?"));
+			}
+			shareURL = baseURL +"?t="+ nodeStart + "," + nodeEnd + "&f="+ prefix + "," + suffix + "&c="+ currentTheme;
 
-			var currentPreviewSrc = $('#shareQuoteModal #sharePreviewLight').attr('src').split('?'),
+			var currentPreviewSrc = $('#shareQuoteModal .sharePreview[data-theme="l"] img').attr('src').split('?'),
 				newPreviewSrc = currentPreviewSrc[0] + '?text=' + encodeURIComponent(selection.toString());
-			$('#shareQuoteModal #sharePreviewLight').attr('src', newPreviewSrc + '&theme=light');
-			$('#shareQuoteModal #sharePreviewDark').attr('src', newPreviewSrc + '&theme=dark');
-			$('#shareQuoteModal #shareURL').val(document.location);
+			$('#shareQuoteModal .sharePreview[data-theme="l"] img').attr('src', newPreviewSrc + '&c=l');
+			$('#shareQuoteModal .sharePreview[data-theme="d"] img').attr('src', newPreviewSrc + '&c=d');
+			$('#shareQuoteModal #shareURL').val(shareURL);
 		}
 		
-	} else {
-		var uri = window.location.toString();
-		if (uri.indexOf("#") > 0) {
-			var clean_uri = uri.substring(0, uri.indexOf("#"));
-			history.replaceState({}, document.title, clean_uri);
-		}
-	}
+	} 
 
 	return fragment;
 }
