@@ -1,7 +1,7 @@
 <?php
 require_once('gd-text.php');
 
-function renderImageQuote($theme = 'light', $text = '') {
+function renderImageQuote($theme = 'l', $text = '') {
 	
 	$maxCharacters = 250;
 	if (strlen($text) >= $maxCharacters) {
@@ -24,11 +24,13 @@ function renderImageQuote($theme = 'light', $text = '') {
 	$image = imagecreatetruecolor($imageWidth, $imageHeight);
 
 	switch ($theme) {
-		case 'dark':
+		case 'd':
+			// dark
 			$backgroundColor = imagecolorallocate($image, 48, 49, 57);
 			$fontColor = new Color(255, 255, 255);
 			break;
-		case 'light':
+		case 'l':
+			// light
 			$backgroundColor = imagecolorallocate($image, 243, 244, 245);
 			$fontColor = new Color(115, 116, 124);
 			break;
@@ -73,6 +75,106 @@ function getFontSize($textLength) {
 	$baseSize = 80;
 	$fontSize = $baseSize - ($textLength/8);
 	return $fontSize;
+}
+
+function getQuoteFromRequestParams($timings, $fragments, $transcriptHTML) {
+	
+	$quoteString = '';
+
+	$t = explode(",", $timings);
+	$start = $t[0];
+	if (count($t) > 1) $end = $t[1];
+	$f = explode(",", $fragments);
+	$prefix = $f[0];
+	$suffix = $f[1];
+
+	if ( empty( $transcriptHTML ) ) {
+        return false;
+    }
+
+    // converts all special characters to utf-8
+    $transcriptHTML = mb_convert_encoding($transcriptHTML, 'HTML-ENTITIES', 'UTF-8');
+
+    // creating new document
+    $htmlDOC = new DOMDocument('1.0', 'utf-8');
+
+    //turning off some errors
+    libxml_use_internal_errors(true);
+
+    // it loads the content without adding enclosing html/body tags and also the doctype declaration
+    $htmlDOC->LoadHTML($transcriptHTML, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+    // do whatever you want to do with this code now
+
+	$words = array();
+
+	foreach($htmlDOC->getElementsByTagName('span') as $spanElem) {
+        if (!empty($spanElem->getAttribute('data-start'))) {
+        	$words[] = $spanElem;
+        }
+    } 
+
+	if ($start && $end) {
+		for ($i = 1; $i < count($words); $i++) {
+			$wordStart = $words[$i]->getAttribute("data-start");
+			if ($wordStart >= $start && $end > $wordStart) {
+				$quoteString .= $words[$i]->nodeValue;
+			}
+		}
+
+		return $quoteString;
+		/*
+		if (prefix && suffix) {
+			// console.log(prefix, suffix);
+			var matches = Array.from(document.querySelectorAll(".share-match"));
+			var matchesHash = matches
+				.map(function(t) {
+					var root = t.innerText
+						.trim()
+						.replace(/[^\w\s]|_/g, "")
+						.replace(/\s+/g, "")
+						.toLowerCase()
+						.trim();
+					return root.substr(0, 1).toUpperCase() + root.substr(1, 3);
+				})
+				.join("");
+
+			// console.log(matchesHash);
+
+			var prefixMatch = matchesHash.indexOf(prefix);
+			if (prefixMatch > 0) {
+				matches
+					.slice(
+						0,
+						matchesHash.substring(0, prefixMatch).split(/(?=[A-Z])/)
+						.length
+					)
+					.forEach(function(m) {
+						m.classList.add("share-mismatch");
+						m.classList.remove("share-match");
+					});
+			}
+
+			var suffixMatch = matchesHash.indexOf(suffix);
+			if (suffixMatch < matchesHash.length - 1 - suffix.length) {
+				// matches.slice(0, matchesHash.substring(suffixMatch).split(/(?=[A-Z])/).length - 1).forEach(function (m) {
+				matches
+					.slice(
+						matches.length -
+						matchesHash.substring(suffixMatch).split(/(?=[A-Z])/).length +
+						suffix.split(/(?=[A-Z])/).length
+					)
+					.forEach(function(m) {
+						m.classList.add("share-mismatch");
+						m.classList.remove("share-match");
+					});
+			}
+
+			// console.log(prefixMatch, suffixMatch);
+		}
+		*/
+	}
+	return 'Test';
 }
 
 

@@ -24,7 +24,7 @@
 		if (isset($result_item['_finds'])) {
 			foreach($result_item['_finds'] as $result) {
 				?>
-				<a class="resultSnippet" href='media/<?= $result_item["id"].$paramStr.'#t='.$result['data-start'] ?>' title="▶ Ausschnitt direkt abspielen"><?= $result['context'] ?></a>
+				<a class="resultSnippet" href='media/<?= $result_item["id"].$paramStr.'&t='.$result['data-start'] ?>' title="▶ Ausschnitt direkt abspielen"><?= $result['context'] ?></a>
 				<?php
 			}
 		}

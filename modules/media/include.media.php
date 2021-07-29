@@ -1,9 +1,13 @@
 <?php
-	
+	require_once("functions.php");
+	require_once(__DIR__."/../utilities/functions.entities.php");
 	require_once(__DIR__."/../../api/v1/api.php");
-	
+
 	$apiInput = $_REQUEST;
 	unset($apiInput["page"]);
+	unset($apiInput["t"]);
+	unset($apiInput["f"]);
+	unset($apiInput["theme"]);
 	$apiInput["action"] = "search";
 	$apiInput["a"] = "search";
 	$apiInput["itemType"] = "media";
