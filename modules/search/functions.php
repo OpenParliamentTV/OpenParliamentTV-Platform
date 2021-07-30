@@ -1,13 +1,25 @@
 <?php
 
 require_once(__DIR__.'/../../vendor/autoload.php');
+require_once(__DIR__.'/../../config.php');
 
-$hosts = ["https://@localhost:9200"];
-$ESClient = Elasticsearch\ClientBuilder::create()
-    ->setHosts($hosts)
-    ->setBasicAuthentication("admin","admin")
-    ->setSSLVerification(realpath(__DIR__."/../../opensearch-root-ssl.pem"))
-    ->build();
+$ESClientBuilder = Elasticsearch\ClientBuilder::create();
+
+if ($config["ES"]["hosts"]) {
+    $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+}
+if ($config["ES"]["BasicAuthentication"]["user"]) {
+    $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
+}
+if ($config["ES"]["SSL"]["pem"]) {
+    $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
+}
+//print_r($ESClientBuilder);
+
+$ESClient = $ESClientBuilder->build();
+
+
+
 function getIndexCount() {
 	
 	global $ESClient;
@@ -33,15 +45,22 @@ function getIndexCount() {
  */
 function searchSpeeches($request) {
     require_once(__DIR__.'/../../vendor/autoload.php');
+    require(__DIR__.'/../../config.php');
 
-    $hosts = ["https://@localhost:9200"];
-    $ESClient = Elasticsearch\ClientBuilder::create()
-        ->setHosts($hosts)
-        ->setBasicAuthentication("admin","admin")
-        ->setSSLVerification(realpath(__DIR__."/../../opensearch-root-ssl.pem"))
-        ->build();
+    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
 
-	//global $ESClient;
+    if ($config["ES"]["hosts"]) {
+        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+    }
+    if ($config["ES"]["BasicAuthentication"]["user"]) {
+        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
+    }
+    if ($config["ES"]["SSL"]["pem"]) {
+        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
+    }
+
+    $ESClient = $ESClientBuilder->build();
+
 
 	$data = getSearchBody($request, false);
 	

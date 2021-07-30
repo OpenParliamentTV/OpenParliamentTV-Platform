@@ -20,12 +20,31 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
     require __DIR__ . '/../vendor/autoload.php';
 
-    $hosts = ["https://@localhost:9200"];
+    /*
+     * TODO: REMOVE IF OTHER WORKS
+     *
+     * $hosts = ["https://@localhost:9200"];
     $ESClient = Elasticsearch\ClientBuilder::create()
         ->setHosts($hosts)
         ->setBasicAuthentication("admin", "admin")
         ->setSSLVerification(realpath(__DIR__ . "/../../opensearch-root-ssl.pem"))
         ->build();
+    */
+    require_once(__DIR__.'/../config.php');
+
+    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
+
+    if ($config["ES"]["hosts"]) {
+        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+    }
+    if ($config["ES"]["BasicAuthentication"]["user"]) {
+        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
+    }
+    if ($config["ES"]["SSL"]["pem"]) {
+        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
+    }
+
+    $ESClient = $ESClientBuilder->build();
 
     $response = $ESClient->indices()->delete(array("index" => "openparliamenttv_de"));
     echo '<pre>';

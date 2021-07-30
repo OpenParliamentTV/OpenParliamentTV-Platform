@@ -29,7 +29,6 @@ $config["platform"]["sql"]["tbl"]["User"] = "user";
 
 
 //DB - Parliament config
-
 $config["parliament"]["DE"]["label"] = "Deutscher Bundestag";
 $config["parliament"]["DE"]["sql"]["access"]["host"] = "localhost";
 $config["parliament"]["DE"]["sql"]["access"]["user"] = "root";
@@ -42,6 +41,22 @@ $config["parliament"]["DE"]["sql"]["tbl"]["Session"] = "session";
 $config["parliament"]["DE"]["sql"]["tbl"]["Media"] = "media";
 $config["parliament"]["DE"]["sql"]["tbl"]["Annotation"] = "annotation";
 $config["parliament"]["DE"]["sql"]["tbl"]["Text"] = "text";
+
+//ES Config
+$config["ES"]["hosts"] = false;
+$config["ES"]["BasicAuthentication"]["user"] = false;
+$config["ES"]["BasicAuthentication"]["passwd"] = false;
+$config["ES"]["SSL"]["pem"] = false;
+
+if (!preg_match("/openparliament\.tv/", $_SERVER["SERVER_NAME"])) {
+
+    $config["ES"]["hosts"] = ["https://@localhost:9200"];
+    $config["ES"]["BasicAuthentication"]["user"] = "admin";
+    $config["ES"]["BasicAuthentication"]["passwd"] = "admin";
+    $config["ES"]["SSL"]["pem"] = realpath(__DIR__."/../opensearch-root-ssl.pem");
+
+}
+
 
 
 ?>
