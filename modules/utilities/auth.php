@@ -105,6 +105,7 @@ function auth($userID, $action, $entity, $db = false) {
 
 		    $whitelist = array(
 		        "default",
+		        "results",
                 "entity"
             );
 

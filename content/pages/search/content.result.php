@@ -1,12 +1,18 @@
 <?php
+session_start();
+error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
 //TODO: Check AUTH - dont allow direct access to this page - just if its included
 
-if ($auth["meta"]["requestStatus"] != "success") {
-    exit;
-}
+include_once(__DIR__ . '/../../../modules/utilities/auth.php');
 
-	error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+$auth = auth($_SESSION["userdata"]["id"], "requestPage", "results");
+
+if ($auth["meta"]["requestStatus"] != "success") {
+    echo "Not authorized";
+} else {
+
+
 	if (!function_exists("L")) {
 		require_once(__DIR__."/../../../i18n.class.php");
 		$i18n = new i18n(__DIR__.'/../../../lang/lang_{LANGUAGE}.json', __DIR__.'/../../../langcache/', 'de');
@@ -153,5 +159,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 </div>
 <?php 
 	include_once('content.result.pagination.php');
+}
 }
 ?>
