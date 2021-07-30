@@ -47,9 +47,7 @@ function loginCheck($mail = "", $passwd = "") {
 					$return["success"] = "true";
 					$return["txt"] = "Login success"; // TODO i18n
 
-                    $currentTime = time();
-
-					$db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserLastLogin=?s WHERE UserID=?i LIMIT 1", $currentTime, $userdata["UserID"]);
+					$db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserLastLogin=?i WHERE UserID=?i LIMIT 1", time(), $userdata["UserID"]);
 
 				} elseif ($userdata["UserBlocked"] == 1) {
 
