@@ -56,9 +56,9 @@
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item <?= ($page == "manage") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/manage">Dashboard</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item <?= ($page == "login") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/login"><?php echo L::login; ?></a>
-					<a class="dropdown-item <?= ($page == "register") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/register"><?php echo L::registerNewAccount; ?></a>
-					<a class="dropdown-item <?= ($page == "logout") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/logout"><?php echo L::logout; ?></a>
+					<a class="dropdown-item <?= ($page == "login") ? "active" : "" ?><?= ($_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/login"><?php echo L::login; ?></a>
+					<a class="dropdown-item <?= ($page == "register") ? "active" : "" ?><?= ($_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/register"><?php echo L::registerNewAccount; ?></a>
+					<a class="dropdown-item <?= ($page == "logout") ? "active" : "" ?><?= (!$_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/logout"><?php echo L::logout; ?></a>
 				</div>
 			</div>
 			<div class="dropdown d-inline">
