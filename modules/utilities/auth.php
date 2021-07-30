@@ -84,13 +84,13 @@ function auth($userID, $action, $entity, $db = false) {
 
 		case "requestPage":
 
-		    $allowedPages = array(
+		    $whitelist = array(
 		        "default",
                 "entity"
             );
 
 
-            if (in_array($entity, $allowedPages)) {
+            if (in_array($entity, $whitelist)) {
                 $return["meta"]["requestStatus"] = "success";
                 $return["errors"] = array();
                 $errorarray["status"] = "200";
@@ -113,6 +113,36 @@ function auth($userID, $action, $entity, $db = false) {
             }
 
 		break;
+
+        case "apiV1":
+            $whitelist = array(
+                "getItem",
+                "search"
+            );
+
+            if (in_array($entity, $whitelist)) {
+                $return["meta"]["requestStatus"] = "success";
+                $return["errors"] = array();
+                $errorarray["status"] = "200";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Allowed";
+                $errorarray["detail"] = "Action permitted"; //TODO: Description
+                array_push($return["errors"], $errorarray);
+                return $return;
+            } else {
+
+                $return["meta"]["requestStatus"] = "error";
+                $return["errors"] = array();
+                $errorarray["status"] = "403"; //TODO CODE
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Not permitted";
+                $errorarray["detail"] = "Not permitted"; //TODO: Description
+                array_push($return["errors"], $errorarray);
+                return $return;
+
+            }
+
+        break;
 
 		default:
             $return["meta"]["requestStatus"] = "error";

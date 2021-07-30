@@ -7,9 +7,21 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
 header('Content-Type: application/json');
 
-require_once (__DIR__."/api.php");
 
-$return = apiV1($_REQUEST);
+include_once(__DIR__ . '/../../modules/utilities/auth.php');
+$auth = auth($_SESSION["userdata"]["id"], "apiV1", $_REQUEST["action"]);
+
+if ($auth["meta"]["requestStatus"] != "success") {
+
+    $return = $auth;
+
+} else {
+
+    require_once(__DIR__ . "/api.php");
+
+    $return = apiV1($_REQUEST);
+
+}
 
 echo json_encode($return, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
