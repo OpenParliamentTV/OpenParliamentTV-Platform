@@ -85,7 +85,8 @@ function auth($userID, $action, $entity, $db = false) {
 		case "requestPage":
 
 		    $allowedPages = array(
-		        "manage_page"
+		        "default",
+                "entity"
             );
 
 

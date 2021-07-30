@@ -3,7 +3,7 @@
 include_once(__DIR__ . '/../../header.php');
 include_once(__DIR__ . '/../../../modules/utilities/auth.php');
 
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", "manage_page");
+$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
 //$auth["meta"]["requestStatus"] = "success";
 
 if ($auth["meta"]["requestStatus"] != "success") {
