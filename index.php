@@ -286,6 +286,10 @@ switch ($page) {
 				'label' => $pageTitle
 			]
 		];
+        require_once(__DIR__."/modules/user-management/logout.backend.php");
+
+        logout();
+
 		ob_start();
 		include_once("./content/pages/logout/page.php");
 		$content = ob_get_clean();
