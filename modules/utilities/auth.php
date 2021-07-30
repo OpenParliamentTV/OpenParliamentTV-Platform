@@ -84,24 +84,42 @@ function auth($userID, $action, $entity, $db = false) {
 
 		case "requestPage":
 
-            $return["meta"]["requestStatus"] = "success";
-            $return["errors"] = array();
-            $errorarray["status"] = "200";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Allowed";
-            $errorarray["detail"] = "Action permitted"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-            return $return;
+		    $allowedPages = array(
+		        "manage_page"
+            );
+
+
+            if (in_array($entity, $allowedPages)) {
+                $return["meta"]["requestStatus"] = "success";
+                $return["errors"] = array();
+                $errorarray["status"] = "200";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Allowed";
+                $errorarray["detail"] = "Action permitted"; //TODO: Description
+                array_push($return["errors"], $errorarray);
+                return $return;
+            } else {
+
+                $return["meta"]["requestStatus"] = "error";
+                $return["errors"] = array();
+                $errorarray["status"] = "403"; //TODO CODE
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Not permitted";
+                $errorarray["detail"] = "Not permitted"; //TODO: Description
+                array_push($return["errors"], $errorarray);
+                return $return;
+
+            }
 
 		break;
 
 		default:
-            $return["meta"]["requestStatus"] = "success";
+            $return["meta"]["requestStatus"] = "error";
             $return["errors"] = array();
             $errorarray["status"] = "403";
             $errorarray["code"] = "1";
-            $errorarray["title"] = "Allowed";
-            $errorarray["detail"] = "User is admin - action was permitted"; //TODO: Description
+            $errorarray["title"] = "Not allowed";
+            $errorarray["detail"] = "Request is not permitted."; //TODO: Description
             array_push($return["errors"], $errorarray);
             return $return;
 	}

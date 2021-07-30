@@ -1,4 +1,22 @@
-<?php include_once(__DIR__ . '/../../header.php'); ?>
+<?php
+
+include_once(__DIR__ . '/../../header.php');
+include_once(__DIR__ . '/../../../modules/utilities/auth.php');
+
+$auth = auth($_SESSION["userdata"]["id"], "requestPage", "about");
+//$auth["meta"]["requestStatus"] = "success";
+
+if ($auth["meta"]["requestStatus"] != "success") {
+
+    echo "NOT ALLOWED";
+    echo "<pre>";
+    //print_r($_SESSION);
+    print_r($auth);
+    echo "</pre>";
+
+} else {
+
+?>
 <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
@@ -57,4 +75,10 @@
 	?>
 
 </main>
-<?php include_once(__DIR__ . '/../../footer.php'); ?>
+    <?php
+
+}
+
+include_once(__DIR__ . '/../../footer.php');
+
+?>
