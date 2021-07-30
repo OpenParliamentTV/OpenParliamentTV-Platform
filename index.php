@@ -599,14 +599,7 @@ switch ($page) {
 	break;
 	*/
 	case "search":
-		$pageTitle = 'Search';
-		$pageType = 'default';
-		require_once("./modules/search/include.search.php");
-		ob_start();
-		include_once("./content/pages/search/page.php");
-		$content = ob_get_clean();
-	break;
-	case "main":
+    case "main":
 		$pageTitle = 'Search';
 		$pageType = 'default';
 		require_once("./modules/search/include.search.php");
