@@ -1,7 +1,7 @@
 $(function() {
 
 	$("#login-form").ajaxForm({
-		url: "server/ajaxServer.php",
+		url: config["dir"]["root"]+"/server/ajaxServer.php",
 		data: {"a":"login"},
 		dataType: "json",
 		method:"POST",
@@ -42,7 +42,7 @@ $(function() {
 
 	$(".button-logout").click(function() {
 		$.ajax({
-			url: "server/ajaxServer.php",
+			url: config["dir"]["root"]+"/server/ajaxServer.php",
 			data: {"a": "logout"},
 			dataType: "json",
 			method: "POST",

@@ -1,4 +1,16 @@
 <?php
+include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
+
+$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
+
+if ($auth["meta"]["requestStatus"] != "success") {
+
+    $alertText = $auth["errors"][0]["detail"];
+    include_once (__DIR__."/../../../login/page.php");
+
+} else {
+
+
 include_once(__DIR__ . '/../../../../header.php');
 include_once(__DIR__ . '/../../../../../modules/get/functions.get.organisation.php');
 $data = getOrganisation(false,false,$_REQUEST["id"]);
@@ -77,4 +89,7 @@ $data = getOrganisation(false,false,$_REQUEST["id"]);
 			</div>
 		</div>
 	</main>
-<?php include_once(__DIR__ . '/../../../../footer.php'); ?>
+<?php
+    include_once(__DIR__ . '/../../../../footer.php');
+}
+?>

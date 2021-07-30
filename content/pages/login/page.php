@@ -2,10 +2,10 @@
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
-			<div class="alert alert-info" role="alert">
-			  Lorem Ipsum Please Login Dolor Sit Amet Dolor Sit Amet Lorem Ipsum Dolor Sit Amet Dolor Sit Amet Lorem Ipsum Dolor Sit Amet.
-			</div>
-			<?php
+            <?php
+            if ($alertText) {
+                echo '<div class="alert alert-info" role="alert">'.$alertText.'</div>';
+            }
 			if ($_SESSION["login"] == 1) {
 
 			?>

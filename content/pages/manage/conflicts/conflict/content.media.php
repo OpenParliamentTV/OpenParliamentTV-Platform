@@ -1,6 +1,11 @@
-
 <table class="table table-borderless" id="conflictCompareTable">
 <?php
+
+exit;
+
+//TODO: Deprecated
+
+
 require_once(__DIR__."/../../../../../modules/media/functions.media.php");
 $media1 = getMedia($conflict["ConflictIdentifier"]);
 $media2 = getMedia($conflict["ConflictRival"]);

@@ -13,7 +13,8 @@ function auth($userID, $action, $entity, $db = false) {
         $errorarray["status"] = "401"; //TODO CODE
         $errorarray["code"] = "1";
         $errorarray["title"] = "Userdata missing";
-        $errorarray["detail"] = "No Userdata has been provided."; //TODO: Description
+        //$errorarray["detail"] = "No Userdata has been provided."; //TODO: Description
+        $errorarray["detail"] = "Please login to access to this page."; //TODO: Description
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -58,25 +59,43 @@ function auth($userID, $action, $entity, $db = false) {
 
 	$user = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserID=?i",$userID);
 
-	if ((!$user) || ($user["UserActive"] != true) || ($user["UserBlocked"] != false)) {
+	if (!$user) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "403"; //TODO CODE
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Account not found";
+        $errorarray["detail"] = "Account has not been found"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+        return $return;
+	}
+
+	if ($user["UserActive"] != true) {
         $return["meta"]["requestStatus"] = "error";
         $return["errors"] = array();
         $errorarray["status"] = "403"; //TODO CODE
         $errorarray["code"] = "1";
         $errorarray["title"] = "Account not active";
-        $errorarray["detail"] = "This account has not been activated, is blocked or was not found"; //TODO: Description
+        $errorarray["detail"] = "Please validate your E-Mail."; //TODO: Description
+        array_push($return["errors"], $errorarray);
+        return $return;
+	}
+
+	if ($user["UserBlocked"] != false) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "403"; //TODO CODE
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Account is blocked";
+        $errorarray["detail"] = "An administrator need to enable this account"; //TODO: Description
         array_push($return["errors"], $errorarray);
         return $return;
 	}
 
 	if ($user["UserRole"] == "admin") {
         $return["meta"]["requestStatus"] = "success";
-        $return["errors"] = array();
-        $errorarray["status"] = "200";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Allowed";
-        $errorarray["detail"] = "User is admin - action was permitted"; //TODO: Description
-        array_push($return["errors"], $errorarray);
+        $return["meta"]["detail"] = "User is admin - action was permitted";
+        $return["meta"]["code"] = "200";
         return $return;
 	}
 
@@ -91,14 +110,12 @@ function auth($userID, $action, $entity, $db = false) {
 
 
             if (in_array($entity, $whitelist)) {
+
                 $return["meta"]["requestStatus"] = "success";
-                $return["errors"] = array();
-                $errorarray["status"] = "200";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Allowed";
-                $errorarray["detail"] = "Action permitted"; //TODO: Description
-                array_push($return["errors"], $errorarray);
+                $return["meta"]["detail"] = "Action permitted";
+                $return["meta"]["code"] = "200";
                 return $return;
+
             } else {
 
                 $return["meta"]["requestStatus"] = "error";
@@ -121,14 +138,12 @@ function auth($userID, $action, $entity, $db = false) {
             );
 
             if (in_array($entity, $whitelist)) {
+
                 $return["meta"]["requestStatus"] = "success";
-                $return["errors"] = array();
-                $errorarray["status"] = "200";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Allowed";
-                $errorarray["detail"] = "Action permitted"; //TODO: Description
-                array_push($return["errors"], $errorarray);
+                $return["meta"]["detail"] = "Action permitted";
+                $return["meta"]["code"] = "200";
                 return $return;
+
             } else {
 
                 $return["meta"]["requestStatus"] = "error";

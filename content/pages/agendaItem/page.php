@@ -1,4 +1,17 @@
-<?php 
+<?php
+
+include_once(__DIR__ . '/../../../modules/utilities/auth.php');
+
+$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
+
+if ($auth["meta"]["requestStatus"] != "success") {
+
+    $alertText = $auth["errors"][0]["detail"];
+    include_once (__DIR__."/../login/page.php");
+
+} else {
+
+
 include_once(__DIR__ . '/../../header.php');
 require_once(__DIR__."/../../../modules/utilities/functions.entities.php");
 $flatDataArray = flattenEntityJSON($apiResult["data"]);
@@ -96,3 +109,9 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		});
 	});
 </script>
+
+<?php
+
+}
+
+?>

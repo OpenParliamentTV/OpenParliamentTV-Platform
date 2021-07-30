@@ -1,4 +1,16 @@
 <?php
+include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
+
+$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
+
+if ($auth["meta"]["requestStatus"] != "success") {
+
+    $alertText = $auth["errors"][0]["detail"];
+    include_once (__DIR__."/../../../login/page.php");
+
+} else {
+
+
 require_once(__DIR__ . '/../../../../../config.php');
 include_once(__DIR__ . '/../../../../header.php');
 
@@ -163,4 +175,8 @@ if ($_REQUEST["aTEST"]) {
 <link rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/data/media/client/media.new.css">
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.typeahead.min.js"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/manage/data/media/client/media.new.js"></script>
-<?php include_once(__DIR__ . '/../../../../footer.php'); ?>
+<?php
+    include_once(__DIR__ . '/../../../../footer.php');
+
+}
+?>

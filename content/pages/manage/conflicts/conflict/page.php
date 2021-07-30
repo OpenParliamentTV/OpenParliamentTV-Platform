@@ -1,4 +1,9 @@
 <?php
+
+exit;
+
+//TODO Deprecated.
+
 include_once(__DIR__ . '/../../../../header.php');
 
 require_once(__DIR__."/../../../../../modules/utilities/functions.conflicts.php");

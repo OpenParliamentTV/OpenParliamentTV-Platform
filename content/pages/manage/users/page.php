@@ -1,5 +1,18 @@
-<?php include_once(__DIR__ . '/../../../header.php'); ?>
-<main class="container subpage">
+<?php
+include_once(__DIR__ . '/../../../../modules/utilities/auth.php');
+
+$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
+
+if ($auth["meta"]["requestStatus"] != "success") {
+
+    $alertText = $auth["errors"][0]["detail"];
+    include_once (__DIR__."/../../login/page.php");
+
+} else {
+
+    include_once(__DIR__ . '/../../../header.php'); ?>
+
+    <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 			<h2><?php echo L::manageUsers; ?></h2>
@@ -28,4 +41,7 @@
 	</div>
 </main>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/manage/users/client/users.overview.js"></script>
-<?php include_once(__DIR__ . '/../../../footer.php'); ?>
+<?php
+include_once(__DIR__ . '/../../../footer.php');
+}
+?>

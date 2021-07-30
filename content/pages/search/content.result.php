@@ -1,4 +1,11 @@
-<?php	
+<?php
+
+//TODO: Check AUTH - dont allow direct access to this page - just if its included
+
+if ($auth["meta"]["requestStatus"] != "success") {
+    exit;
+}
+
 	error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 	if (!function_exists("L")) {
 		require_once(__DIR__."/../../../i18n.class.php");
