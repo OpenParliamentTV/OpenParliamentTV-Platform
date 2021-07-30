@@ -67,10 +67,9 @@ function registerUser($mail = "", $passwd = "", $name="", $db = false) {
 				UserPasswordHash=?s,
 				UserPasswordPepper=?s,
 				UserRole=?s,
-				UserRegisterDate=?s,
 				UserActive=?i,
 				UserRegisterConfirmation=?s",
-				$name, $mail, hash("sha512", $pepper.$passwd.$config["salt"]),  $pepper, "user", time(), 0, $confirmationCode);
+				$name, $mail, hash("sha512", $pepper.$passwd.$config["salt"]),  $pepper, "user", 0, $confirmationCode);
 			$userID = $db->insertId();
 
 			$registrationMailSubject = "Your registration"; // TODO i18n
