@@ -44,8 +44,8 @@ switch ($_REQUEST["a"]) {
 			//require_once(__DIR__."/../modules/user-management/register.backend.json.php");
 			require_once(__DIR__."/../modules/user-management/register.backend.sql.php");
 
-			$return[] = registerUser("admin@admin.com","Admin!!11","DEV-Admin");
-			$return[] = registerUser("test@test.com","User!!11","DEV-Test User");
+			$return[] = registerUser("admin@openparliament.tv","Admin!!11","DEV-Admin");
+			$return[] = registerUser("test@openparliament.tv","User!!11","DEV-Test User");
 
 
 
