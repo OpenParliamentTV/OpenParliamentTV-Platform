@@ -25,7 +25,7 @@ if (!function_exists("L")) {
             </li>
             -->
             <li class="nav-item ml-auto">
-                <a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span> Data</a>
+                <a class="nav-link active" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span> Data</a>
             </li>
         </ul>
         <div class="tab-content">
@@ -66,10 +66,51 @@ if (!function_exists("L")) {
             <div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
                 [CONTENT]
             </div>
-            -->
-            <div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
-                [ITEM DATA]
+            <div class="tab-pane fade  show active bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
+                <table id="dataTable" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        foreach ($flatDataArray as $key => $value) {
+                            echo '<tr><td>'.$key.'</td><td>'.$value.'</td><tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
+            -->
         </div>
     </div>
 </div>
+<!--
+<script type="text/javascript">
+    $('#dataTable').bootstrapTable({
+        showToggle: false,
+        multiToggleDefaults: [],
+        search: true,
+        searchAlign: 'left',
+        buttonsAlign: 'right',
+        showExport: true,
+        exportDataType: 'basic',
+        exportTypes: ['csv', 'excel', 'txt', 'json'],
+        exportOptions: {
+            htmlContent: true,
+            excelstyles: ['mso-data-placement', 'color', 'background-color'],
+            fileName: 'Export',
+            onCellHtmlData: function(cell, rowIndex, colIndex, htmlData) {
+                var cleanedString = cell.html().replace(/<br\s*[\/]?>/gi, "\r\n");
+                //htmlData = cleanedString;
+                return htmlData;
+            }
+        },
+        sortName: false,
+        cardView: false,
+        locale: 'de-DE'
+    });
+</script>
+-->

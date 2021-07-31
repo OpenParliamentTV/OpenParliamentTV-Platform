@@ -14,7 +14,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 include_once(__DIR__ . '/../../header.php'); 
 require_once(__DIR__."/../../../modules/media/include.media.php");
-$flatDataArray = flattenEntityJSON($apiResult["data"]);
+$flatDataArray = flattenEntityJSON($apiResult["data"][0]);
 ?>
 <main id="content">
     <?php include_once('content.player.php'); ?>

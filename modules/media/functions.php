@@ -29,6 +29,38 @@ if ($config["ES"]["SSL"]["pem"]) {
 
 $ESClient = $ESClientBuilder->build();
 
+function getMainSpeakerFromPeopleArray($peopleArray) {
+	
+	foreach ($peopleArray as $person) {
+		if ($person['attributes']['context'] == 'main-speaker') {
+			$mainSpeaker = $person;
+			break;
+		}
+	}
+
+	if (!isset($mainSpeaker)) {
+		$mainSpeaker = $peopleArray[0];
+	}
+	
+	return $mainSpeaker;
+}
+
+function getMainFactionFromOrganisationsArray($organisationsArray) {
+	
+	foreach ($organisationsArray as $organisation) {
+		if ($organisation['attributes']['context'] == 'main-speaker-faction') {
+			$mainFaction = $organisation;
+			break;
+		}
+	}
+
+	if (!isset($mainFaction)) {
+		$mainFaction = $organisationsArray[0];
+	}
+
+	return $mainFaction;
+}
+
 function getPrevDocument($currentDocumentTimestamp) {
 	
 	global $ESClient;

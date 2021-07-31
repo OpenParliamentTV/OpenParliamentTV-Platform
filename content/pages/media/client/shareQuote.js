@@ -244,13 +244,13 @@ function getSelectionMediaFragment() {
 			
 			var baseURL = window.location.toString(),
 				currentTheme = $('#shareQuoteModal .sharePreview.active').data('theme');
-			if (baseURL.indexOf("?") > 0) {
-				baseURL = baseURL.substring(0, baseURL.indexOf("?"));
+			if (baseURL.indexOf('?') > 0) {
+				baseURL = baseURL.substring(0, baseURL.indexOf('?'));
 			}
-			shareURL = baseURL +"?t="+ nodeStart + "," + nodeEnd + "&f="+ prefix + "," + suffix + "&c="+ currentTheme;
+			shareURL = baseURL +'?t='+ nodeStart + ',' + nodeEnd + '&f='+ prefix + ',' + suffix + '&c='+ currentTheme;
 
 			var currentPreviewSrc = $('#shareQuoteModal .sharePreview[data-theme="l"] img').attr('src').split('?'),
-				newPreviewSrc = currentPreviewSrc[0] + '?text=' + encodeURIComponent(selection.toString());
+				newPreviewSrc = currentPreviewSrc[0] + '?id='+ currentMediaID +'&t='+ nodeStart + ',' + nodeEnd + '&f='+ prefix + ',' + suffix;
 			$('#shareQuoteModal .sharePreview[data-theme="l"] img').attr('src', newPreviewSrc + '&c=l');
 			$('#shareQuoteModal .sharePreview[data-theme="d"] img').attr('src', newPreviewSrc + '&c=d');
 			$('#shareQuoteModal #shareURL').val(shareURL);

@@ -350,7 +350,10 @@ hr {
 .nav-tabs .nav-item.show .nav-link, 
 .nav-tabs .nav-link.active,
 .dropdown-menu,
-.dropdown-item {
+.dropdown-item, 
+input[type="text"], 
+input[type="password"], 
+textarea {
     border-color: var(--border-color);
     background-color: var(--primary-bg-color);
     color: var(--primary-fg-color);

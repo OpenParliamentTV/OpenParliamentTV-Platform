@@ -11,6 +11,12 @@ require_once(__DIR__."/../../../modules/media/functions.php");
 require_once(__DIR__."/../../../modules/media/include.media.php");
 require_once(__DIR__."/../../../modules/utilities/textArrayConverters.php");
 
+$proceedingsPanel = (isset($textContentsHTML)) ? '<div class="tab-pane fade show active" id="proceedings" role="tabpanel" aria-labelledby="proceedings-tab">'.$textContentsHTML.'</div>' : '';
+$proceedingsTab = (isset($textContentsHTML)) ? '<li class="nav-item">
+        <a class="nav-link active" id="proceedings-tab" data-toggle="tab" href="#proceedings" role="tab" aria-controls="proceedings" aria-selected="true"><span class="tabTitle">Proceedings</span><span class="icon-doc-text-1"></span></a>
+    </li>' : '';
+$relatedPeopleActiveClass = (isset($textContentsHTML)) ? '' : 'show active';
+
 $relatedPeopleHTML = '';
 foreach ($speech["relationships"]["people"]["data"] as $relationshipItem) {
     $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">'.$relationshipItem["attributes"]["label"].'<br>('.$relationshipItem["attributes"]["context"].')</a></div>';
@@ -20,15 +26,23 @@ $relatedOrganisationsHTML = '';
 foreach ($speech["relationships"]["organisations"]["data"] as $relationshipItem) {
     $relatedOrganisationsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">'.$relationshipItem["attributes"]["label"].'</a></div>';
 }
-
+$documentsTab = '';
 $relatedDocumentsHTML = '';
-foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
-    //$relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">'.$relationshipItem["attributes"]["label"].'</a></div>';
-    $relatedDocumentsHTML .= '<iframe src="'.$config["dir"]["root"].'/modules/pdf-viewer/web/viewer.html?file=https://dserver.bundestag.de/btd/19/027/1902730.pdf"></iframe>';
+if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relationships"]["documents"]["data"]) > 0) {
+    //TODO: Add all documents
+    $documentsTab = '<li class="nav-item">
+            <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="tabTitle">Documents</span><span class="icon-doc-text"></span></a>
+        </li>';
+    $relatedDocumentsHTML .= '<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab"><iframe src="'.$config["dir"]["root"].'/modules/pdf-viewer/web/viewer.html?file='.$speech["relationships"]["documents"]["data"][0]["attributes"]["sourceURI"].'"></iframe></div>';
 }
+/*
+foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
+    
+}
+*/
 
 $relatedContentsHTML = 
-'<div class="tab-content"><div class="tab-pane fade show active" id="proceedings" role="tabpanel" aria-labelledby="proceedings-tab">'.$textContentsHTML.'</div><div class="tab-pane fade show" id="people" role="tabpanel" aria-labelledby="people-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedPeopleHTML.'</div></div><div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedOrganisationsHTML.'</div></div><div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">'.$relatedDocumentsHTML.'</div><div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div></div>';
+'<div class="tab-content">'.$proceedingsPanel.'<div class="tab-pane fade show '.$relatedPeopleActiveClass.'" id="people" role="tabpanel" aria-labelledby="people-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedPeopleHTML.'</div></div><div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedOrganisationsHTML.'</div></div>'.$relatedDocumentsHTML.'<div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div></div>';
 
 ?>
 <script type="text/javascript">
@@ -65,20 +79,16 @@ $relatedContentsHTML =
 <div class="mediaContainer">
     <div class="playerTabs">
         <ul class="nav nav-tabs" role="tablist">
+            <?= $proceedingsTab ?>
             <li class="nav-item">
-                <a class="nav-link active" id="proceedings-tab" data-toggle="tab" href="#proceedings" role="tab" aria-controls="proceedings" aria-selected="true"><span class="tabTitle">Proceedings</span><span class="icon-doc-text-1"></span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="true"><span class="tabTitle">People</span><span class="icon-group"></span></a>
+                <a class="nav-link <?= $relatedPeopleActiveClass ?>" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="true"><span class="tabTitle">People</span><span class="icon-group"></span></a>
             </li>
             <!--
             <li class="nav-item">
                 <a class="nav-link" id="organisations-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="false"><span class="tabTitle">Organisations</span><span class="icon-bank"></span></a>
             </li>
             -->
-            <li class="nav-item">
-                <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="tabTitle">Documents</span><span class="icon-doc-text"></span></a>
-            </li>
+            <?= $documentsTab ?>
             <!--
             <li class="nav-item">
                 <a class="nav-link" id="terms-tab" data-toggle="tab" href="#terms" role="tab" aria-controls="terms" aria-selected="false"><span class="tabTitle">Terms</span><span class="icon-tag-1"></span></a>
@@ -88,11 +98,15 @@ $relatedContentsHTML =
     </div>
     <div class="playerTitle">
         <div class="speechMeta"><?= $formattedDate ?> | <?= $speech["attributes"]["parliamentLabel"] ?> | <a href="../electoralPeriod/<?= $speech["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $speech["relationships"]["electoralPeriod"]['data']['attributes']['number'] ?>. Electoral Period</a> – <a href="../session/<?= $speech["relationships"]["session"]["data"]["id"] ?>">Session <?= $speech["relationships"]["session"]['data']['attributes']['number'] ?></a> – <a href="../agendaItem/<?= $speech["attributes"]["parliament"]."-".$speech["relationships"]["agendaItem"]["data"]["id"] ?>"><?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"] ?></a></div>
-        <h3><a href="../person/<?= $speech["relationships"]["people"]["data"][0]["id"] ?>"><?= $speech["relationships"]["people"]['data'][0]['attributes']['label'] ?></a><a href="../organisation/<?= $speech["relationships"]["people"]["data"][0]["attributes"]["faction"]["id"] ?>"><span class="partyIndicator" data-faction="<?= $speech["relationships"]["people"]['data'][0]['attributes']['faction']['labelAlternative'] ?>"><?= $speech["relationships"]["people"]['data'][0]['attributes']['faction']['labelAlternative'] ?></span></a> - <?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["title"] ?></h3>
+        <h3><a href="../person/<?= $mainSpeaker["id"] ?>"><?= $mainSpeaker['attributes']['label'] ?></a><a href="../organisation/<?= $mainFaction["id"] ?>"><span class="partyIndicator" data-faction="<?= $mainFaction["id"] ?>"><?= $mainFaction["attributes"]["labelAlternative"] ?></span></a> - <?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["title"] ?></h3>
     </div>
     <div id="OPTV_Player"></div>
+    <!--
     <div class="text-center" style="height: 35px;"><span class="icon-angle-double-down" style="font-size: 22px;"></span></div>
+    -->
 </div>
+<!--
 <div class="container mb-5">
-    <?php include_once('content.related.php'); ?>
+    <?php //include_once('content.related.php'); ?>
 </div>
+-->
