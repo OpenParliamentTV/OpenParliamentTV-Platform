@@ -28,7 +28,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					</div>
 					<div class="col">
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
-						<h2><?= $apiResult["data"]["attributes"]["number"] ?>. Electoral Period</h2>
+						<h2><?= $apiResult["data"]["attributes"]["number"] ?>. <?php echo L::electoralPeriod ?></h2>
 						<div><?php 
 							$formattedDateStart = date("d.m.Y", strtotime($apiResult["data"]["attributes"]["dateStart"]));
 							$formattedDateEnd = ($apiResult["data"]["attributes"]["dateEnd"]) ? date("d.m.Y", strtotime($apiResult["data"]["attributes"]["dateEnd"])) : "";
@@ -46,7 +46,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span> <?php echo L::relatedMedia ?></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="sessions-tab" data-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false"><span class="icon-group"></span> Sessions</a>
+					<a class="nav-link" id="sessions-tab" data-toggle="tab" href="#sessions" role="tab" aria-controls="sessions" aria-selected="false"><span class="icon-group"></span> <?php echo L::sessions ?></a>
 				</li>
 				<li class="nav-item ml-auto">
 					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span> <?php echo L::data ?></a>
@@ -69,7 +69,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					foreach ($apiResult["data"]["relationships"]["sessions"]["data"] as $relationshipItem) {
 						$formattedDateStart = date("d.m.Y", strtotime($relationshipItem["data"]["attributes"]["dateStart"]));
 					?>
-						<div class="entityPreview col" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$relationshipItem["data"]["id"] ?>"><?= $formattedDateStart ?><br>Session <?= $relationshipItem["data"]["attributes"]["number"] ?></a></div>
+						<div class="entityPreview col" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$relationshipItem["data"]["id"] ?>"><?= $formattedDateStart ?><br><?php echo L::session ?> <?= $relationshipItem["data"]["attributes"]["number"] ?></a></div>
 					<?php 
 					} 
 					?>

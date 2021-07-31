@@ -26,7 +26,7 @@ function initShareQuote() {
 		selector: "#content",
 		sharers: [{
 			'render': function() {
-				return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#shareQuoteModal">Share Quote</button>'
+				return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#shareQuoteModal">Zitat teilen</button>'
 			},
 			'name': 'OPTV' 
 		}]

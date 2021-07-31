@@ -16,7 +16,9 @@
 	"name": "Name",
 	"enterName": "Enter Name",
 	"session": "Session",
+	"sessions": "Sessions",
 	"electoralPeriod": "Electoral Period",
+	"electoralPeriods": "Electoral Periods",
 	"showAll": "All",
 	"timePeriod": "Time Period",
 	"today": "today",
@@ -44,6 +46,7 @@
 	"topic": "Topic",
 	"date": "Date",
 	"agendaItem": "Agenda Item",
+	"agendaItems": "Agenda Items",
 	"previousSpeech": "Previous Speech",
 	"nextSpeech": "Next Speech",
 	"previousPage": "Previous Page",
@@ -73,5 +76,10 @@
 	"documents": "Documents",
 	"relatedMedia": "Related Speeches",
 	"organisations": "Organisations",
-	"data": "Data"
+	"data": "Data",
+	"selectTheme": "Select Theme",
+	"shareQuote": "Share Quote",
+	"shareQuoteMessageTheme": "This image will be shown when sharing the URL on social networks.",
+	"shareQuoteMessageURL": "Copy this URL to link directly to your quote.",
+	"close": "Close"
 }

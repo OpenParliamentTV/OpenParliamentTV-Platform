@@ -23,20 +23,20 @@ $flatDataArray = flattenEntityJSON($apiResult["data"][0]);
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Share Quote</h5>
+                <h5 class="modal-title"><?php echo L::shareQuote; ?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <label>Select Theme:</label>
+                <label><?php echo L::selectTheme; ?>:</label>
                 <div class="row row-cols-1 row-cols-sm-2">
                     <div class="col">
                         <div class="card sharePreview active" data-theme="l">
                             <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
-                                    <div class="cardTitle text-truncate">Open Parliament TV | Redebeitrag X Y </div>
+                                    <div class="cardTitle text-truncate">Open Parliament TV | <?php echo L::speech; ?> X Y </div>
                                     <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= $formattedDate ?>: <?= $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] ?></div>
                                 </div>
                                 <div class="overflow-hidden text-uppercase text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
@@ -48,7 +48,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"][0]);
                             <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
-                                    <div class="cardTitle text-truncate">Open Parliament TV | Redebeitrag X Y </div>
+                                    <div class="cardTitle text-truncate">Open Parliament TV | <?php echo L::speech; ?> X Y </div>
                                     <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= $formattedDate ?>: <?= $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] ?></div>
                                 </div>
                                 <div class="overflow-hidden text-uppercase text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
@@ -56,15 +56,15 @@ $flatDataArray = flattenEntityJSON($apiResult["data"][0]);
                         </div>
                     </div>
                 </div>
-                <small class="d-block mt-2 text-muted">This image will be shown when sharing the URL on social networks.</small>
+                <small class="d-block mt-2 text-muted"><?php echo L::shareQuoteMessageTheme; ?></small>
                 <div class="form-group mt-3">
                     <label for="shareURL">URL</label>
                     <textarea id="shareURL" class="form-control" type="text" name="shareURL"aria-describedby="shareURLhelp" rows=3></textarea>
-                    <small id="shareURLhelp" class="form-text text-muted">Copy this URL to link directly to your quote.</small>
+                    <small id="shareURLhelp" class="form-text text-muted"><?php echo L::shareQuoteMessageURL; ?></small>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo L::close; ?></button>
             </div>
         </div>
     </div>

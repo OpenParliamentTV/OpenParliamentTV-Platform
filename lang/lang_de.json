@@ -16,7 +16,9 @@
 	"name": "Name",
 	"enterName": "Namen eingeben",
 	"session": "Sitzung",
+	"sessions": "Sitzungen",
 	"electoralPeriod": "Wahlperiode",
+	"electoralPeriods": "Wahlperioden",
 	"showAll": "Alle",
 	"timePeriod": "Zeitraum",
 	"today": "heute",
@@ -44,6 +46,7 @@
 	"topic": "Thema",
 	"date": "Datum",
 	"agendaItem": "Tagesordnungspunkt",
+	"agendaItems": "Tagesordnungspunkte",
 	"previousSpeech": "Vorheriger Redebeitrag",
 	"nextSpeech": "Nächster Redebeitrag",
 	"previousPage": "Vorherige Seite",
@@ -73,5 +76,10 @@
 	"documents": "Dokumente",
 	"relatedMedia": "Verwandte Redebeiträge",
 	"organisations": "Organisations",
-	"data": "Daten"
+	"data": "Daten",
+	"selectTheme": "Design auswählen",
+	"shareQuote": "Zitat teilen",
+	"shareQuoteMessageTheme": "Dieses Bild wird verwendet wenn du die URL auf sozialen Netzwerken teilst.",
+	"shareQuoteMessageURL": "Kopiere diese URL um direkt auf die Stelle deines Zitats zu verweisen.",
+	"close": "Schließen"
 }

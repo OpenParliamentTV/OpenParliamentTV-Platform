@@ -88,7 +88,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]]
 		);
-		$pageTitle = '<span class="icon-check"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – '.$apiResult["data"]["attributes"]["number"].'. Electoral Period';
+		$pageTitle = '<span class="icon-check"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – '.$apiResult["data"]["attributes"]["number"].'. '.L::electoralPeriod;
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
@@ -159,7 +159,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]]
 		);
-		$pageTitle = '<span class="icon-group"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – Session '.$apiResult["data"]["attributes"]["number"];
+		$pageTitle = '<span class="icon-group"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – '.L::session.' '.$apiResult["data"]["attributes"]["number"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
@@ -604,7 +604,7 @@ switch ($page) {
 	*/
 	case "search":
     case "main":
-		$pageTitle = 'Search';
+		$pageTitle = L::search;
 		$pageType = 'default';
 		require_once("./modules/search/include.search.php");
 		ob_start();

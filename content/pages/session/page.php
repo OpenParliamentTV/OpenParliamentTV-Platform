@@ -28,8 +28,8 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					</div>
 					<div class="col">
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
-						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. Electoral Period</a></div>
-						<h2>Session <?= $apiResult["data"]["attributes"]["number"] ?></h2>
+						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. <?php echo L::electoralPeriod ?></a></div>
+						<h2><?php echo L::session ?> <?= $apiResult["data"]["attributes"]["number"] ?></h2>
 						<div><?php 
 							$startDateParts = explode("T", $apiResult["data"]["attributes"]["dateStart"]);
 							$endDateParts = explode("T", $apiResult["data"]["attributes"]["dateEnd"]);
@@ -51,7 +51,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span> <?php echo L::relatedMedia ?></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="agendaItems-tab" data-toggle="tab" href="#agendaItems" role="tab" aria-controls="agendaItems" aria-selected="false"><span class="icon-list-numbered"></span> Agenda Items</a>
+					<a class="nav-link" id="agendaItems-tab" data-toggle="tab" href="#agendaItems" role="tab" aria-controls="agendaItems" aria-selected="false"><span class="icon-list-numbered"></span> <?php echo L::agendaItems ?></a>
 				</li>
 				<li class="nav-item ml-auto">
 					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span> <?php echo L::data ?></a>
