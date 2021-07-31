@@ -4,9 +4,10 @@ include_once(__DIR__ . '/../modules/utilities/auth.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "elasticSearch", "deleteIndex");
 
-if ($auth["meta"]["requestStatus"] != "success") {
+if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli")) {
 
     $alertText = $auth["errors"][0]["detail"];
+    echo $alertText;
 
 
 } else {
