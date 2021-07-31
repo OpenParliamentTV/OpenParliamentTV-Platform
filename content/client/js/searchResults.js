@@ -12,7 +12,12 @@ function updateMediaList(query) {
 	}).done(function(data) {
 		$('#speechListContainer .resultWrapper').html($(data));
 		$('.loadingIndicator').hide();
-		$('#speechListContainer [name="sort"]').val((getSortFromQuery(currentQuery)) ? getSortFromQuery(currentQuery) : 'relevance');
+		$('#speechListContainer [name="sort"]').val((getQueryVariableFromString('sort', currentQuery)) ? getQueryVariableFromString('sort', currentQuery) : 'relevance');
+		$('.resultWrapper > nav a').each(function() {
+			var thisPage = getQueryVariableFromString('page', $(this).attr('href'));
+			if (!thisPage) { thisPage = 1; }
+			$(this).attr('href', '#page='+ thisPage);
+		});
 		updateListeners();
 	}).fail(function(err) {
 		console.log(err);
@@ -20,6 +25,19 @@ function updateMediaList(query) {
 }
 
 function updateListeners() {
+	$('.resultWrapper > nav a').click(function(evt) {
+		evt.stopPropagation();
+		evt.preventDefault();
+		var page = 1;
+		var pageParts = $(this).attr('href').split('#page=');
+		if (pageParts.length > 1) {
+			page = pageParts[1];
+		}
+		currentQuery = currentQuery.replace(/&page=[0-9]+/, '');
+		currentQuery += '&page='+ page;
+		updateMediaList(currentQuery);
+	});
+
 	$('#speechListContainer [name="sort"]').on('change', function() {
 		currentQuery = currentQuery.replace(/&sort=[a-zA-Z|-]+/, '');
 		if ($(this).val() != 'relevance') {
@@ -36,16 +54,26 @@ function updateListeners() {
 	});
 }
 
-function getSortFromQuery(queryString) {
-	var query = queryString,
+function getQueryVariableFromString(variable, queryString) {
+	var query = queryString.replace('?', ''),
 		vars = query.split("&"),
 		pair,
-		returnValue = null;
+		returnValues = null;
 	for (var i = 0; i < vars.length; i++) {
 		pair = vars[i].split("=");
-		if (pair[0] == 'sort') {
-			returnValue = pair[1];
+		
+		pair[0] = decodeURIComponent(pair[0]);
+		pair[1] = decodeURIComponent(pair[1]).replace(/\+/g, ' ');
+		
+		if (pair[0].indexOf('[]') != -1) {
+			if (pair[0].replace('[]', '') == variable) {
+				if (!returnValues) returnValues = [];
+				returnValues.push(pair[1]);
+			}
+		} else if (pair[0] == variable) {
+			returnValues = pair[1];
 		}
 	}
-	return returnValue;
+
+	return returnValues;
 }
