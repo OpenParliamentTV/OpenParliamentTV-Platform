@@ -1,6 +1,5 @@
 <?php
-
-
+session_start();
 include_once(__DIR__ . '/../modules/utilities/auth.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "elasticSearch", "updateIndex");
