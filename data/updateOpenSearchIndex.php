@@ -9,8 +9,10 @@ $config["ES_Offset"] = false;
  * will continue with the 6th Media Item and will get 1000000 items in total (or less).
  */
 
-$auth = auth($_SESSION["userdata"]["id"], "elasticSearch", "updateIndex");
+//$config["ES_Offset"] = " LIMIT 27476,1000000";
 
+$auth = auth($_SESSION["userdata"]["id"], "elasticSearch", "updateIndex");
+//$auth["meta"]["requestStatus"] = "success";
 if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli")) {
 
     $alertText = $auth["errors"][0]["detail"];
