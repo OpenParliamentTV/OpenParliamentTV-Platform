@@ -34,7 +34,7 @@
 	"dataPolicyHintPart4": "klicken Sie bitte hier und entfernen Sie den Haken",
 	"dataPolicyHintPart5": "Näheres in ",
 	"dataPolicyHintPart6": "unserer Datenschutzerklärung",
-	"speechesFound": "Reden gefunden",
+	"speechesFound": "Redebeiträge gefunden",
 	"autoplayAll": "Alle automatisch abspielen",
 	"autoplayResults": "Ergebnisse automatisch abspielen",
 	"sortBy": "Sortieren nach",
@@ -66,5 +66,12 @@
 	"manageUsers": "Nutzer:innen verwalten",
 	"notifications": "Benachrichtigungen",
 	"manageNotifications": "Benachrichtigungen verwalten",
-	"platformSettings": "Plattform-Einstellungen"
+	"platformSettings": "Plattform-Einstellungen",
+	"proceedings": "Protokoll",
+	"personSingular": "Person",
+	"personPlural": "Personen",
+	"documents": "Dokumente",
+	"relatedMedia": "Verwandte Redebeiträge",
+	"organisations": "Organisations",
+	"data": "Daten"
 }

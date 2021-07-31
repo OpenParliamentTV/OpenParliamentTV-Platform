@@ -66,5 +66,12 @@
 	"manageUsers": "Manage Users",
 	"notifications": "Notifications",
 	"manageNotifications": "Manage Notifications",
-	"platformSettings": "Platform Settings"
+	"platformSettings": "Platform Settings",
+	"proceedings": "Proceedings",
+	"personSingular": "Person",
+	"personPlural": "People",
+	"documents": "Documents",
+	"relatedMedia": "Related Speeches",
+	"organisations": "Organisations",
+	"data": "Data"
 }

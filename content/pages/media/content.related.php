@@ -15,7 +15,7 @@ if (!function_exists("L")) {
                 <a class="nav-link active" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="true"><span class="icon-torso"></span> People</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="organisations-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="false"><span class="icon-bank"></span> Organisations</a>
+                <a class="nav-link" id="organisations-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="false"><span class="icon-bank"></span> <?php echo L::organisations ?></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="icon-doc-text"></span> Documents</a>
@@ -25,7 +25,7 @@ if (!function_exists("L")) {
             </li>
             -->
             <li class="nav-item ml-auto">
-                <a class="nav-link active" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span> Data</a>
+                <a class="nav-link active" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span> <?php echo L::data ?></a>
             </li>
         </ul>
         <div class="tab-content">

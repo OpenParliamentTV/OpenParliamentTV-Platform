@@ -40,13 +40,13 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		<div class="col-12">
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span> Related Media</a>
+					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span> <?php echo L::relatedMedia ?></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="false"><span class="icon-torso"></span> People</a>
+					<a class="nav-link" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="false"><span class="icon-torso"></span> <?php echo L::personPlural ?></a>
 				</li>
 				<li class="nav-item ml-auto">
-					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span> Data</a>
+					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span> <?php echo L::data ?></a>
 				</li>
 			</ul>
 			<div class="tab-content">

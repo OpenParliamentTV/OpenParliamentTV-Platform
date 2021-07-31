@@ -13,7 +13,7 @@ require_once(__DIR__."/../../../modules/utilities/textArrayConverters.php");
 
 $proceedingsPanel = (isset($textContentsHTML)) ? '<div class="tab-pane fade show active" id="proceedings" role="tabpanel" aria-labelledby="proceedings-tab">'.$textContentsHTML.'</div>' : '';
 $proceedingsTab = (isset($textContentsHTML)) ? '<li class="nav-item">
-        <a class="nav-link active" id="proceedings-tab" data-toggle="tab" href="#proceedings" role="tab" aria-controls="proceedings" aria-selected="true"><span class="tabTitle">Proceedings</span><span class="icon-doc-text-1"></span></a>
+        <a class="nav-link active" id="proceedings-tab" data-toggle="tab" href="#proceedings" role="tab" aria-controls="proceedings" aria-selected="true"><span class="tabTitle">'.L::proceedings.'</span><span class="icon-doc-text-1"></span></a>
     </li>' : '';
 $relatedPeopleActiveClass = (isset($textContentsHTML)) ? '' : 'show active';
 
@@ -31,7 +31,7 @@ $relatedDocumentsHTML = '';
 if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relationships"]["documents"]["data"]) > 0) {
     //TODO: Add all documents
     $documentsTab = '<li class="nav-item">
-            <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="tabTitle">Documents</span><span class="icon-doc-text"></span></a>
+            <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="tabTitle">'.L::documents.'</span><span class="icon-doc-text"></span></a>
         </li>';
     $relatedDocumentsHTML .= '<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab"><iframe src="'.$config["dir"]["root"].'/modules/pdf-viewer/web/viewer.html?file='.$speech["relationships"]["documents"]["data"][0]["attributes"]["sourceURI"].'"></iframe></div>';
 }
@@ -81,7 +81,7 @@ $relatedContentsHTML =
         <ul class="nav nav-tabs" role="tablist">
             <?= $proceedingsTab ?>
             <li class="nav-item">
-                <a class="nav-link <?= $relatedPeopleActiveClass ?>" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="true"><span class="tabTitle">People</span><span class="icon-group"></span></a>
+                <a class="nav-link <?= $relatedPeopleActiveClass ?>" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="true"><span class="tabTitle"><?php echo L::personPlural ?></span><span class="icon-group"></span></a>
             </li>
             <!--
             <li class="nav-item">
@@ -97,7 +97,7 @@ $relatedContentsHTML =
         </ul>
     </div>
     <div class="playerTitle">
-        <div class="speechMeta"><?= $formattedDate ?> | <?= $speech["attributes"]["parliamentLabel"] ?> | <a href="../electoralPeriod/<?= $speech["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $speech["relationships"]["electoralPeriod"]['data']['attributes']['number'] ?>. Electoral Period</a> – <a href="../session/<?= $speech["relationships"]["session"]["data"]["id"] ?>">Session <?= $speech["relationships"]["session"]['data']['attributes']['number'] ?></a> – <a href="../agendaItem/<?= $speech["attributes"]["parliament"]."-".$speech["relationships"]["agendaItem"]["data"]["id"] ?>"><?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"] ?></a></div>
+        <div class="speechMeta"><?= $formattedDate ?> | <?= $speech["attributes"]["parliamentLabel"] ?> | <a href="../electoralPeriod/<?= $speech["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $speech["relationships"]["electoralPeriod"]['data']['attributes']['number'] ?>. <?php echo L::electoralPeriod; ?></a> – <a href="../session/<?= $speech["relationships"]["session"]["data"]["id"] ?>"><?php echo L::session; ?> <?= $speech["relationships"]["session"]['data']['attributes']['number'] ?></a> – <a href="../agendaItem/<?= $speech["attributes"]["parliament"]."-".$speech["relationships"]["agendaItem"]["data"]["id"] ?>"><?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"] ?></a></div>
         <h3><a href="../person/<?= $mainSpeaker["id"] ?>"><?= $mainSpeaker['attributes']['label'] ?></a><a href="../organisation/<?= $mainFaction["id"] ?>"><span class="partyIndicator" data-faction="<?= $mainFaction["id"] ?>"><?= $mainFaction["attributes"]["labelAlternative"] ?></span></a> - <?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["title"] ?></h3>
     </div>
     <div id="OPTV_Player"></div>
