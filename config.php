@@ -48,7 +48,7 @@ $config["ES"]["BasicAuthentication"]["user"] = false;
 $config["ES"]["BasicAuthentication"]["passwd"] = false;
 $config["ES"]["SSL"]["pem"] = false;
 
-if (!preg_match("/openparliament\.tv/", $_SERVER["SERVER_NAME"])) {
+if ((array_key_exists("SERVER_NAME", $_SERVER)) && (!preg_match("/openparliament\.tv/", $_SERVER["SERVER_NAME"]))) {
 
     $config["ES"]["hosts"] = ["https://@localhost:9200"];
     $config["ES"]["BasicAuthentication"]["user"] = "admin";
