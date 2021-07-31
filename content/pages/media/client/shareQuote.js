@@ -194,6 +194,9 @@ function getSelectionMediaFragment() {
 			//fNodeDuration = parseInt(fNode.getAttribute("data-d"), 10);
 		}
 
+		if (!aNodeStart || !fNodeEnd) {
+			return;
+		}
 		var nodeStart = aNodeStart;
 		var nodeDuration = fNodeEnd - aNodeStart;
 
