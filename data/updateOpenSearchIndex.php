@@ -2,6 +2,13 @@
 session_start();
 include_once(__DIR__ . '/../modules/utilities/auth.php');
 
+$config["ES_Offset"] = false;
+/**
+ * Example:
+ * $config["ES_Offset"] = " LIMIT 5,1000000";
+ * will continue with the 6th Media Item and will get 1000000 items in total (or less).
+ */
+
 $auth = auth($_SESSION["userdata"]["id"], "elasticSearch", "updateIndex");
 
 if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli")) {
@@ -197,7 +204,7 @@ function updateIndex()
 
     }
 
-    $allMediaIDs = $dbp->getAll("SELECT MediaID FROM media");
+    $allMediaIDs = $dbp->getAll("SELECT MediaID FROM media".($config["ES_Offset"] ? $config["ES_Offset"] : ""));
     //print_r($allMediaIDs);
 
     foreach ($allMediaIDs as $id) {
