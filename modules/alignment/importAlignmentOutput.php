@@ -1,50 +1,74 @@
 <?php
 
-require __DIR__.'/../../vendor/autoload.php';
+session_start();
+include_once(__DIR__ . '/../../modules/utilities/auth.php');
 
-/*
- *
- * TODO: REMOVE IF OTHER WORKS
- *
-$hosts = ["https://@localhost:9200"];
-$ESClient = Elasticsearch\ClientBuilder::create()
-    ->setHosts($hosts)
-    ->setBasicAuthentication("admin","admin")
-    ->setSSLVerification(realpath(__DIR__."/../../opensearch-root-ssl.pem"))
-    ->build();*/
-require_once (__DIR__."/../../config.php");
-$ESClientBuilder = Elasticsearch\ClientBuilder::create();
+/**
+ * Example:
+ * $config["ES_Offset"] = " LIMIT 5,1000000";
+ * will continue with the 6th Media Item and will get 1000000 items in total (or less).
+ */
 
-if ($config["ES"]["hosts"]) {
-    $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+//$config["ES_Offset"] = " LIMIT 27476,1000000";
+
+$auth = auth($_SESSION["userdata"]["id"], "elasticSearch", "updateIndex");
+//$auth["meta"]["requestStatus"] = "success";
+if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli")) {
+
+    $alertText = $auth["errors"][0]["detail"];
+    echo $alertText;
+
+
+} else {
+
+
+    require __DIR__ . '/../../vendor/autoload.php';
+
+    /*
+     *
+     * TODO: REMOVE IF OTHER WORKS
+     *
+    $hosts = ["https://@localhost:9200"];
+    $ESClient = Elasticsearch\ClientBuilder::create()
+        ->setHosts($hosts)
+        ->setBasicAuthentication("admin","admin")
+        ->setSSLVerification(realpath(__DIR__."/../../opensearch-root-ssl.pem"))
+        ->build();*/
+    require_once(__DIR__ . "/../../config.php");
+    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
+
+    if ($config["ES"]["hosts"]) {
+        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+    }
+    if ($config["ES"]["BasicAuthentication"]["user"]) {
+        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"], $config["ES"]["BasicAuthentication"]["passwd"]);
+    }
+    if ($config["ES"]["SSL"]["pem"]) {
+        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
+    }
+    $ESClient = $ESClientBuilder->build();
+
+
+    require_once(__DIR__ . '/../../api/v1/api.php');
+    require_once(__DIR__ . "/../utilities/safemysql.class.php");
+    require_once(__DIR__ . "/../utilities/textArrayConverters.php");
+
+    importAlignmentOutput();
+
 }
-if ($config["ES"]["BasicAuthentication"]["user"]) {
-    $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
-}
-if ($config["ES"]["SSL"]["pem"]) {
-    $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
-}
-$ESClient = $ESClientBuilder->build();
-
-
-require_once(__DIR__.'/../../api/v1/api.php');
-require_once (__DIR__."/../utilities/safemysql.class.php");
-require_once(__DIR__."/../utilities/textArrayConverters.php");
-
-importAlignmentOutput();
 
 function importAlignmentOutput() {
 	
 	global $config;
 
-	$outputFiles = array_values(array_diff(scandir('output'), array('.', '..', '.DS_Store', '.gitkeep', '.gitignore')));
+	$outputFiles = array_values(array_diff(scandir(__DIR__ . '/output'), array('.', '..', '.DS_Store', '.gitkeep', '.gitignore')));
 
 	foreach($outputFiles as $file) {
 		$fileNameArray = preg_split("/[\\_|\\.]/", $file);
 		$mediaID = $fileNameArray[0];
 		$textType = $fileNameArray[1];
 
-		$file_contents = file_get_contents('output/'.$file);
+		$file_contents = file_get_contents(__DIR__ . '/output/'.$file);
 
 		$mediaData = apiV1([
 			"action"=>"getItem", 
