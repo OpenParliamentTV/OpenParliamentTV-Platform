@@ -14,7 +14,7 @@ function auth($userID, $action, $entity, $db = false) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Userdata missing";
         //$errorarray["detail"] = "No Userdata has been provided."; //TODO: Description
-        $errorarray["detail"] = "Please login to access to this page."; //TODO: Description
+        $errorarray["detail"] = "<b>Dies ist ein Prototyp</b>. Er enthält fehlerhafte Daten, Beispieltexte und Bedienelemente die noch nicht funktionieren. <br><br>Melde dich bitte an um den Prototypen auszuprobieren:"; //TODO: Description
         array_push($return["errors"], $errorarray);
         return $return;
     }

@@ -10,8 +10,8 @@
 
 			?>
 
-				Logged in as:<br> <?=$_SESSION["userdata"]["name"]?> (<?=$_SESSION["userdata"]["mail"]?>, <?=$_SESSION["userdata"]["role"]?>)<br><br>
-				<button type="button" class="button-logout btn btn-primary">Logout</button>
+				Angemeldet als:<br> <?=$_SESSION["userdata"]["name"]?> (<?=$_SESSION["userdata"]["mail"]?>, <?=$_SESSION["userdata"]["role"]?>)<br><br>
+				<button type="button" class="button-logout btn btn-primary">Abmelden</button>
 
 			<?php
 
@@ -20,17 +20,17 @@
 			?>
 				<form id="login-form">
 					<div class="form-group">
-						<label for="login-mail">E-mail</label>
+						<label for="login-mail">E-Mail</label>
 						<input type="email" class="form-control" id="login-mail" name="mail">
 					</div>
 					<div class="form-group">
-						<label for="login-password">Password</label>
+						<label for="login-password">Passwort</label>
 						<input type="password" class="form-control" id="login-password" name="password">
 					</div>
-					<button type="submit" class="btn btn-primary btn-sm">Login</button>
+					<button type="submit" class="btn btn-primary btn-sm">Anmelden</button>
 					<div id="login-response"></div>
 				</form>
-				<a href="passwordReset" target="_self">Forgot password?</a>
+				<a href="passwordReset" target="_self">Passwort vergessen?</a>
 			<?php
 			}
 			?>
