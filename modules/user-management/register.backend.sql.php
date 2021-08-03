@@ -72,20 +72,25 @@ function registerUser($mail = "", $passwd = "", $name="", $db = false) {
 				$name, $mail, hash("sha512", $pepper.$passwd.$config["salt"]),  $pepper, "user", 0, $confirmationCode);
 			$userID = $db->insertId();
 
-			$registrationMailSubject = "Your registration"; // TODO i18n
-			$registrationMailMessagePart1 = "You registered to Openparliament-TV. Please confirm your Mail-Address by visit the following website:\r\n"; // TODO i18n
-			$registrationMailMessageLink = $_SERVER['HTTP_HOST']."/index.php?a=registerConfirm&id=".$userID."&c=".$confirmationCode; // TODO i18n
-			$registrationMailMessagePart2 = "\r\n\r\nThank you.\r\n"; // TODO i18n
-			$registrationMailMessage = $registrationMailMessagePart1.$registrationMailMessageLink.$registrationMailMessagePart2;  // TODO i18n
+			$registrationMailSubject = "Open Parliament TV: Registrierung"; // TODO i18n
+			$registrationMailVerifyLink = $config['dir']['root'].'/registerConfirm?id='.$userID.'&c='.$confirmationCode;
+
+			$message = '<html><body>';
+			$message .= '<p>Vielen Dank für deine Registrierung auf <b>de.openparliament.tv</b>.</p>'; // TODO i18n
+			$message .= '<p>Bitte bestätige deine E-Mail-Adresse indem du folgenden Link anklickst:</p>\r\n'; // TODO i18n
+			$message .= '<a href="'.$registrationMailVerifyLink.'"></a><br>\r\n';
+			$message .= '</body></html>';
 
 			$header = array(
+				'MIME-Version' => '1.0',
+				'Content-type' => 'text/html; charset=iso-8859-1',
 				'From' => $config["mail"]["from"],
 				'Reply-To' => $config["mail"]["replyto"],
 				'X-Mailer' => 'PHP/' . phpversion()
 			);
 
 
-			mail($mail, $registrationMailSubject, $registrationMailMessage, $header);
+			mail($mail, $registrationMailSubject, $message, $header);
 
 			$return["success"] = "true";
 			$return["txt"] = "User has been registered"; // TODO i18n
