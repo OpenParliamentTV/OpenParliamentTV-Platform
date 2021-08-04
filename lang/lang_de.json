@@ -101,5 +101,11 @@
 	"mailAddress": "E-Mail Adresse",
 	"messageLoginErrorGeneric": "Ein Fehler ist aufgetreten. Bitte versuche erneut, dich anzumelden.",
 	"messageLoginErrorPasswordNotCorrect": "Passwort ist nicht korrekt",
-	"messageLoginSuccessGeneric": "Anmeldung erfolgreich. Du wirst weitergeleitet..."
+	"messageLoginSuccessGeneric": "Anmeldung erfolgreich. Du wirst weitergeleitet...",
+	"messageLogoutSuccess": "Du wurdest erfolgreich abgemeldet.",
+	"messagePasswordResetMailSent": "Wir haben dir einen Link geschickt, mit dem du dein Passwort zurücksetzen kannst.",
+	"messagePasswordResetCodeIncorrect": "Der Code um dein Passwort zurückzusetzen ist nicht korrekt.",
+	"messagePasswordResetSuccess": "Dein Passwort wurde erfolgreich geändert",
+	"messagePasswordTooWeak": "Passwort ist zu schwach. Passwörter müssen mindestens <ul><li>1 Großbuchstaben</li><li>1 Kleinbuchstaben</li><li>1 Zahl</li><li>1 Sonderzeichen</li></ul>enthalten und müssen mindestens 8 Zeichen lang sein.",
+	"messagePasswordNotIdentical": "Die zwei Passwörter stimmen nicht überein"
 }

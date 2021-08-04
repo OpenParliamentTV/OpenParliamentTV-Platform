@@ -1,7 +1,12 @@
 <?php
-
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/../utilities/safemysql.class.php");
+
+if (!function_exists("L")) {
+	require_once(__DIR__."/../../i18n.class.php");
+	$i18n = new i18n(__DIR__."/../../lang/lang_{LANGUAGE}.json", __DIR__."/../../langcache/", "de");
+	$i18n->init();
+}
 
 function registerConfirm($id = "", $registerConfirmation = "", $db = false) {
 

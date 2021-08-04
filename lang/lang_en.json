@@ -101,5 +101,11 @@
 	"mailAddress": "Mail Address",
 	"messageLoginErrorGeneric": "An error occured while trying to log in. Please try again.",
 	"messageLoginErrorPasswordNotCorrect": "Password is not correct",
-	"messageLoginSuccessGeneric": "Login successful. You will be redirected..."
+	"messageLoginSuccessGeneric": "Login successful. You will be redirected...",
+	"messageLogoutSuccess": "You have been logged out.",
+	"messagePasswordResetMailSent": "We've sent you a link to reset your password.",
+	"messagePasswordResetCodeIncorrect": "The password reset code you provided is not correct.",
+	"messagePasswordResetSuccess": "Your password has been changed",
+	"messagePasswordTooWeak": "Password is too weak. Passwords need to include at least <ul><li>1 uppercase character</li><li>1 lowercase character</li><li>1 numerical character</li><li>1 special character</li></ul>and need to be at least 8 characters long.",
+	"messagePasswordNotIdentical": "The two passwords are not the same"
 }

@@ -1,10 +1,13 @@
 <?php
-
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/../utilities/safemysql.class.php");
 require_once(__DIR__."/../utilities/functions.php");
 
-
+if (!function_exists("L")) {
+	require_once(__DIR__."/../../i18n.class.php");
+	$i18n = new i18n(__DIR__."/../../lang/lang_{LANGUAGE}.json", __DIR__."/../../langcache/", "de");
+	$i18n->init();
+}
 
 function registerUser($mail = "", $passwd = "", $name="", $db = false) {
 
@@ -14,7 +17,7 @@ function registerUser($mail = "", $passwd = "", $name="", $db = false) {
 	if ($mail == "" || $passwd== "" || $name=="") {
 
 		$return["success"] = "false";
-		$return["txt"] = "Parameter missing"; // TODO i18n
+		$return["txt"] = L::messageErrorParameterMissingDetail;
 		return $return;
 
 	} elseif (!filter_var($mail, FILTER_VALIDATE_EMAIL)) {
@@ -26,7 +29,7 @@ function registerUser($mail = "", $passwd = "", $name="", $db = false) {
 	} elseif (passwordStrength($passwd) != true) {
 
 		$return["success"] = "false";
-		$return["txt"] = "Password doesn't comply with the requirements"; // TODO i18n
+		$return["txt"] = L::messagePasswordTooWeak;
 		return $return;
 
 

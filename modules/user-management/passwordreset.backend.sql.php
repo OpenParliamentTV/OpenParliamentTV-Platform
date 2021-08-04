@@ -1,8 +1,13 @@
 <?php
-
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/../utilities/safemysql.class.php");
 require_once(__DIR__."/../utilities/functions.php");
+
+if (!function_exists("L")) {
+	require_once(__DIR__."/../../i18n.class.php");
+	$i18n = new i18n(__DIR__."/../../lang/lang_{LANGUAGE}.json", __DIR__."/../../langcache/", "de");
+	$i18n->init();
+}
 
 
 /**
@@ -21,7 +26,7 @@ function passwordResetMail($mail = "", $db = false) {
 	if (($mail == "") || (!filter_var($mail, FILTER_VALIDATE_EMAIL))) {
 
 		$return["success"] = "false";
-		$return["txt"] = "Parameter missing"; // TODO i18n
+		$return["txt"] = L::messageErrorParameterMissingDetail;
 		return $return;
 
 	} else {
@@ -62,12 +67,12 @@ function passwordResetMail($mail = "", $db = false) {
 			mail($mail, $passwordresetMailSubject, $passwordresetMailMessage, $header);
 
 			$return["success"] = "true";
-			$return["txt"] = "Link to reset the password has been sent."; // TODO i18n
+			$return["txt"] = L::messagePasswordResetMailSent;
 
 		} else {
 
 			$return["success"] = "false";
-			$return["txt"] = "User not found"; // TODO i18n
+			$return["txt"] = L::messageAuthAccountNotFoundDetail;
 
 		}
 	}
@@ -90,7 +95,7 @@ function passwordResetCheckCode($id = false, $code = false) {
 	if ((!$id) || (strlen($code) <= 10)) {
 
 		$return["success"] = "false";
-		$return["txt"] = "Parameter missing"; // TODO i18n
+		$return["txt"] = L::messageErrorParameterMissingDetail;
 		return $return;
 
 	} else {
@@ -109,7 +114,7 @@ function passwordResetCheckCode($id = false, $code = false) {
 		if ($userdata["UserPasswordReset"] != $code) {
 
 			$return["success"] = "false";
-			$return["txt"] = "Code incorrect for given user."; // TODO i18n
+			$return["txt"] = L::messagePasswordResetCodeIncorrect;
 
 			return $return;
 
@@ -117,8 +122,8 @@ function passwordResetCheckCode($id = false, $code = false) {
 
 			$return["success"] = "true";
 			$return["txt"] = "Password reset allowed"; // TODO i18n
-			$return["UserPasswordReset"] = $userdata["UserPasswordReset"]; // TODO i18n
-			$return["UserID"] = $userdata["UserID"]; // TODO i18n
+			$return["UserPasswordReset"] = $userdata["UserPasswordReset"];
+			$return["UserID"] = $userdata["UserID"];
 
 			return $return;
 
@@ -136,7 +141,7 @@ function passwordResetChangePassword($id = false, $code = false, $password = fal
 	if ((!$id) || (!$code)) {
 
 		$return["success"] = "false";
-		$return["txt"] = "Parameter missing"; // TODO i18n
+		$return["txt"] = L::messageErrorParameterMissingDetail;
 		return $return;
 
 	}
@@ -144,7 +149,8 @@ function passwordResetChangePassword($id = false, $code = false, $password = fal
 	if (!passwordResetChangePassword($password)) {
 
 		$return["success"] = "false";
-		$return["txt"] = "Password too weak"; // TODO i18n
+		$return["txt"] = L::messagePasswordTooWeak;
+
 		return $return;
 
 	}
@@ -152,7 +158,7 @@ function passwordResetChangePassword($id = false, $code = false, $password = fal
 	if ($password != $passwordCheck) {
 
 		$return["success"] = "false";
-		$return["txt"] = "Passwords not the same"; // TODO i18n
+		$return["txt"] = L::messagePasswordNotIdentical;
 		return $return;
 
 	}
@@ -161,7 +167,7 @@ function passwordResetChangePassword($id = false, $code = false, $password = fal
 	if ($checkCode["success"] != "true") {
 
 		$return["success"] = "false";
-		$return["txt"] = "wrong password resetcode"; // TODO i18n
+		$return["txt"] = L::messagePasswordResetCodeIncorrect;
 		return $return;
 
 	}
@@ -184,7 +190,7 @@ function passwordResetChangePassword($id = false, $code = false, $password = fal
 
 	$db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserPasswordHash=?s, UserPasswordReset=?i, UserPasswordPepper=?s WHERE UserID=?i", hash("sha512", $pepper.$password.$config["salt"]), 0,  $pepper, $id);
 	$return["success"] = "true";
-	$return["txt"] = "User has been registered"; // TODO i18n
+	$return["txt"] = L::messagePasswordResetSuccess;
 	return $return;
 
 

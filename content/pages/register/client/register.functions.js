@@ -19,8 +19,8 @@ $(function() {
 
 				} else {
 
-					$("#register-response").text("Your registration failed.: "+ret["txt"]);
-					console.log(ret["txt"]);
+					$("#register-response").html(ret["txt"]);
+					//console.log(ret["txt"]);
 
 				}
 
