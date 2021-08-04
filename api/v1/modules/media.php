@@ -11,7 +11,7 @@ require_once (__DIR__."/../../../modules/utilities/textArrayConverters.php");
  * @param string $id MediaID
  * @return array
  */
-function mediaGetByID($id = false) {
+function mediaGetByID($id = false, $db = false, $dbp = false) {
 
     global $config;
 
@@ -64,54 +64,53 @@ function mediaGetByID($id = false) {
 
     } else {
 
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        );
+        if (!$db) {
+            try {
 
+                $db = new SafeMySQL(array(
+                    'host'	=> $config["platform"]["sql"]["access"]["host"],
+                    'user'	=> $config["platform"]["sql"]["access"]["user"],
+                    'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+                    'db'	=> $config["platform"]["sql"]["db"]
+                ));
 
-        try {
+            } catch (exception $e) {
 
-            $db = new SafeMySQL($opts);
+                $return["meta"]["requestStatus"] = "error";
+                $return["errors"] = array();
+                $errorarray["status"] = "503";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Database connection error";
+                $errorarray["detail"] = "Connecting to platform database failed"; //TODO: Description
+                array_push($return["errors"], $errorarray);
+                return $return;
 
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to platform database failed"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-            return $return;
-
+            }
         }
 
 
-        $opts = array(
-            'host'	=> $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user'	=> $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass'	=> $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db'	=> $config["parliament"][$parliament]["sql"]["db"]
-        );
+        if (!$dbp) {
+            try {
 
-        try {
+                $dbp = new SafeMySQL(array(
+                    'host'	=> $config["parliament"][$parliament]["sql"]["access"]["host"],
+                    'user'	=> $config["parliament"][$parliament]["sql"]["access"]["user"],
+                    'pass'	=> $config["parliament"][$parliament]["sql"]["access"]["passwd"],
+                    'db'	=> $config["parliament"][$parliament]["sql"]["db"]
+                ));
 
-            $dbp = new SafeMySQL($opts);
+            } catch (exception $e) {
 
-        } catch (exception $e) {
+                $return["meta"]["requestStatus"] = "error";
+                $return["errors"] = array();
+                $errorarray["status"] = "503";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Database connection error";
+                $errorarray["detail"] = "Connecting to parliament database failed"; //TODO: Description
+                array_push($return["errors"], $errorarray);
+                return $return;
 
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to parliament database failed"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-            return $return;
-
+            }
         }
 
         $item = $dbp->getRow("

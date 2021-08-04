@@ -9,7 +9,10 @@ include_once(__DIR__ . '/../../modules/utilities/auth.php');
  * will continue with the 6th Media Item and will get 1000000 items in total (or less).
  */
 
-//$config["ES_Offset"] = " LIMIT 27476,1000000";
+$config["alignment"]["platform"] = "DE";
+#$config["alignment"]["startID"] = "DE-0190160184";
+
+
 
 $auth = auth($_SESSION["userdata"]["id"], "elasticSearch", "updateIndex");
 //$auth["meta"]["requestStatus"] = "success";
@@ -24,17 +27,8 @@ if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli"))
 
     require __DIR__ . '/../../vendor/autoload.php';
 
-    /*
-     *
-     * TODO: REMOVE IF OTHER WORKS
-     *
-    $hosts = ["https://@localhost:9200"];
-    $ESClient = Elasticsearch\ClientBuilder::create()
-        ->setHosts($hosts)
-        ->setBasicAuthentication("admin","admin")
-        ->setSSLVerification(realpath(__DIR__."/../../opensearch-root-ssl.pem"))
-        ->build();*/
     require_once(__DIR__ . "/../../config.php");
+
     $ESClientBuilder = Elasticsearch\ClientBuilder::create();
 
     if ($config["ES"]["hosts"]) {
@@ -53,20 +47,83 @@ if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli"))
     require_once(__DIR__ . "/../utilities/safemysql.class.php");
     require_once(__DIR__ . "/../utilities/textArrayConverters.php");
 
-    importAlignmentOutput();
+    if ($config["alignment"]["platform"]) {
+        try {
+
+            $dbp = new SafeMySQL(array(
+                'host'	=> $config["parliament"][$config["alignment"]["platform"]]["sql"]["access"]["host"],
+                'user'	=> $config["parliament"][$config["alignment"]["platform"]]["sql"]["access"]["user"],
+                'pass'	=> $config["parliament"][$config["alignment"]["platform"]]["sql"]["access"]["passwd"],
+                'db'	=> $config["parliament"][$config["alignment"]["platform"]]["sql"]["db"]
+            ));
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "1";
+            $errorarray["title"] = "Database connection error";
+            $errorarray["detail"] = "Connecting to parliament database failed"; //TODO: Description
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+    } else {
+        $dbp = false;
+    }
+
+    try {
+
+        $db = new SafeMySQL(array(
+            'host'	=> $config["platform"]["sql"]["access"]["host"],
+            'user'	=> $config["platform"]["sql"]["access"]["user"],
+            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+            'db'	=> $config["platform"]["sql"]["db"]
+        ));
+
+    } catch (exception $e) {
+
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "503";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Database connection error";
+        $errorarray["detail"] = "Connecting to platform database failed"; //TODO: Description
+        array_push($return["errors"], $errorarray);
+        return $return;
+
+    }
+
+
+
+    importAlignmentOutput($db,$dbp);
 
 }
 
-function importAlignmentOutput() {
+function importAlignmentOutput($db = false, $dbp = false) {
 	
 	global $config;
 
 	$outputFiles = array_values(array_diff(scandir(__DIR__ . '/output'), array('.', '..', '.DS_Store', '.gitkeep', '.gitignore')));
 
+
+
 	foreach($outputFiles as $file) {
+	    if (is_dir(__DIR__."/output/".$file)) {
+	        continue;
+        }
+
 		$fileNameArray = preg_split("/[\\_|\\.]/", $file);
 		$mediaID = $fileNameArray[0];
 		$textType = $fileNameArray[1];
+
+        if ($config["alignment"]["startID"]) {
+            if ($mediaID < $config["alignment"]["startID"]) {
+                echo "Skipping ".$mediaID." \n";
+                continue;
+            }
+        }
 
 		$file_contents = file_get_contents(__DIR__ . '/output/'.$file);
 
@@ -74,7 +131,7 @@ function importAlignmentOutput() {
 			"action"=>"getItem", 
 			"itemType"=>"media", 
 			"id"=>$mediaID
-		]);
+		],$db,$dbp);
 
 		$mediaTextContentsArray = $mediaData["data"]["attributes"]["textContents"];
 
@@ -88,14 +145,14 @@ function importAlignmentOutput() {
 		if (isset($mediaTextContents)) {
 			$updatedTextContents = mergeAlignmentOutputWithTextObject($file_contents, $mediaTextContents);
 
-			updateData($mediaID, json_decode($updatedTextContents, true));
+			updateData($mediaID, json_decode($updatedTextContents, true), $db, $dbp);
 
 			//unlink("output/".$file);
 		}
 	}
 }
 
-function updateData($mediaID = false, $updatedTextContentsArray = false, $dbp = false) {
+function updateData($mediaID = false, $updatedTextContentsArray = false,$db = false, $dbp = false) {
 
 	global $ESClient;
 	global $config;
@@ -108,16 +165,14 @@ function updateData($mediaID = false, $updatedTextContentsArray = false, $dbp = 
 
     if (!$dbp) {
 
-        $opts = array(
-            'host'	=> $config["parliament"][$infos["parliament"]]["sql"]["access"]["host"],
-            'user'	=> $config["parliament"][$infos["parliament"]]["sql"]["access"]["user"],
-            'pass'	=> $config["parliament"][$infos["parliament"]]["sql"]["access"]["passwd"],
-            'db'	=> $config["parliament"][$infos["parliament"]]["sql"]["db"]
-        );
-
         try {
 
-            $dbp = new SafeMySQL($opts);
+            $dbp = new SafeMySQL(array(
+                'host'	=> $config["parliament"][$infos["parliament"]]["sql"]["access"]["host"],
+                'user'	=> $config["parliament"][$infos["parliament"]]["sql"]["access"]["user"],
+                'pass'	=> $config["parliament"][$infos["parliament"]]["sql"]["access"]["passwd"],
+                'db'	=> $config["parliament"][$infos["parliament"]]["sql"]["db"]
+            ));
 
         } catch (exception $e) {
 
@@ -151,7 +206,7 @@ function updateData($mediaID = false, $updatedTextContentsArray = false, $dbp = 
         "action"=>"getItem",
         "itemType"=>"media",
         "id"=>$mediaID
-    ]);
+    ], $db, $dbp);
 
     $docParams = array(
         "index" => "openparliamenttv_de",

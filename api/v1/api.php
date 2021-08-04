@@ -7,7 +7,7 @@ require_once ("config.php");
 require_once (__DIR__."/../../modules/utilities/functions.php");
 require_once (__DIR__."/../../modules/utilities/safemysql.class.php");
 
-function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE-0190002123
+function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: getItem; type: media; id: DE-0190002123
 
     global $config;
 
@@ -127,7 +127,7 @@ function apiV1($request = false) { // TODO: action: getItem; type: media; id: DE
 
                         require_once (__DIR__."/modules/media.php");
 
-                        $item = mediaGetByID($request["id"]);
+                        $item = mediaGetByID($request["id"], $db, $dbp);
 
                         if ($item["meta"]["requestStatus"] == "success") {
 
