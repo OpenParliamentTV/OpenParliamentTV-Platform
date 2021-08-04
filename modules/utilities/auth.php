@@ -12,9 +12,8 @@ function auth($userID, $action, $entity, $db = false) {
         $return["errors"] = array();
         $errorarray["status"] = "401"; //TODO CODE
         $errorarray["code"] = "1";
-        $errorarray["title"] = "Userdata missing";
-        //$errorarray["detail"] = "No Userdata has been provided."; //TODO: Description
-        $errorarray["detail"] = "<b>Dies ist ein Prototyp</b>. Er enthält fehlerhafte Daten, Beispieltexte und Bedienelemente die noch nicht funktionieren. <br><br>Melde dich bitte an um den Prototypen auszuprobieren:"; //TODO: Description
+        $errorarray["title"] = L::messageAuthLoginRequiredTitle;
+        $errorarray["detail"] = L::messageAuthLoginRequiredDetail;
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -24,8 +23,8 @@ function auth($userID, $action, $entity, $db = false) {
         $return["errors"] = array();
         $errorarray["status"] = "503"; //TODO CODE
         $errorarray["code"] = "1";
-        $errorarray["title"] = "Parameter missing";
-        $errorarray["detail"] = "Auth required parameter are missing"; //TODO: Description
+        $errorarray["title"] = L::messageErrorParameterMissingTitle;
+        $errorarray["detail"] = L::messageErrorParameterMissingDetail;
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -47,8 +46,8 @@ function auth($userID, $action, $entity, $db = false) {
             $return["errors"] = array();
             $errorarray["status"] = "503"; //TODO CODE
             $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            $errorarray["title"] = L::messageErrorNoDatabaseConnectionTitle;
+            $errorarray["detail"] = L::messageErrorNoDatabaseConnectionDetail;
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -64,8 +63,8 @@ function auth($userID, $action, $entity, $db = false) {
         $return["errors"] = array();
         $errorarray["status"] = "403"; //TODO CODE
         $errorarray["code"] = "1";
-        $errorarray["title"] = "Account not found";
-        $errorarray["detail"] = "Account has not been found"; //TODO: Description
+        $errorarray["title"] = L::messageAuthAccountNotFoundTitle;
+        $errorarray["detail"] = L::messageAuthAccountNotFoundDetail;
         array_push($return["errors"], $errorarray);
         return $return;
 	}
@@ -75,8 +74,8 @@ function auth($userID, $action, $entity, $db = false) {
         $return["errors"] = array();
         $errorarray["status"] = "403"; //TODO CODE
         $errorarray["code"] = "1";
-        $errorarray["title"] = "Account not active";
-        $errorarray["detail"] = "Please validate your E-Mail."; //TODO: Description
+        $errorarray["title"] = L::messageAuthAccountNotActiveTitle;
+        $errorarray["detail"] = L::messageAuthAccountNotActiveDetail;
         array_push($return["errors"], $errorarray);
         return $return;
 	}
@@ -86,8 +85,8 @@ function auth($userID, $action, $entity, $db = false) {
         $return["errors"] = array();
         $errorarray["status"] = "403"; //TODO CODE
         $errorarray["code"] = "1";
-        $errorarray["title"] = "Account is blocked";
-        $errorarray["detail"] = "An administrator need to enable this account"; //TODO: Description
+        $errorarray["title"] = L::messageAuthAccountBlockedTitle;
+        $errorarray["detail"] = L::messageAuthAccountBlockedDetail;
         array_push($return["errors"], $errorarray);
         return $return;
 	}
@@ -123,8 +122,8 @@ function auth($userID, $action, $entity, $db = false) {
                 $return["errors"] = array();
                 $errorarray["status"] = "403"; //TODO CODE
                 $errorarray["code"] = "1";
-                $errorarray["title"] = "Not permitted";
-                $errorarray["detail"] = "Not permitted"; //TODO: Description
+                $errorarray["title"] = L::messageAuthNotPermittedTitle;
+                $errorarray["detail"] = L::messageAuthNotPermittedDetail;
                 array_push($return["errors"], $errorarray);
                 return $return;
 
@@ -151,8 +150,8 @@ function auth($userID, $action, $entity, $db = false) {
                 $return["errors"] = array();
                 $errorarray["status"] = "403"; //TODO CODE
                 $errorarray["code"] = "1";
-                $errorarray["title"] = "Not permitted";
-                $errorarray["detail"] = "Not permitted"; //TODO: Description
+                $errorarray["title"] = L::messageAuthNotPermittedTitle;
+                $errorarray["detail"] = L::messageAuthNotPermittedDetail;
                 array_push($return["errors"], $errorarray);
                 return $return;
 
@@ -165,8 +164,8 @@ function auth($userID, $action, $entity, $db = false) {
             $return["errors"] = array();
             $errorarray["status"] = "403";
             $errorarray["code"] = "1";
-            $errorarray["title"] = "Not allowed";
-            $errorarray["detail"] = "Request is not permitted."; //TODO: Description
+            $errorarray["title"] = L::messageAuthNotPermittedTitle;
+            $errorarray["detail"] = L::messageAuthNotPermittedDetail;
             array_push($return["errors"], $errorarray);
             return $return;
 	}

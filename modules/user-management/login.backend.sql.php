@@ -3,6 +3,11 @@
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/../utilities/safemysql.class.php");
 
+require_once(__DIR__."/../../i18n.class.php");
+$i18n = new i18n(__DIR__."/../../lang/lang_{LANGUAGE}.json", __DIR__."/../../langcache/", "de");
+$i18n->setForcedLang('de');
+$i18n->init();
+
 function loginCheck($mail = "", $passwd = "") {
 
 	global $config;
@@ -11,7 +16,7 @@ function loginCheck($mail = "", $passwd = "") {
 	if ($mail == "" || $passwd== "") {
 
 		$return["success"] = "false";
-		$return["txt"] = "Parameter missing";
+		$return["txt"] = L::messageErrorParameterMissingDetail;
 		return $return;
 
 	} else {
@@ -45,19 +50,19 @@ function loginCheck($mail = "", $passwd = "") {
 					$_SESSION["userdata"]["id"]		= $userdata["UserID"];
 					$_SESSION["userdata"]["role"] 	= $userdata["UserRole"];
 					$return["success"] = "true";
-					$return["txt"] = "Login success"; // TODO i18n
+					$return["txt"] = L::messageLoginSuccessGeneric;
 
 					$db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserLastLogin=current_timestamp() WHERE UserID=?i LIMIT 1", $userdata["UserID"]);
 
 				} elseif ($userdata["UserBlocked"] == 1) {
 
 					$return["success"] = "false";
-					$return["txt"] = "Account has been blocked. Please get in touch"; // TODO i18n
+					$return["txt"] = L::messageAuthAccountBlockedDetail;
 
 				} else {
 
 					$return["success"] = "false";
-					$return["txt"] = "Login not active"; // TODO i18n
+					$return["txt"] = L::messageAuthAccountNotActiveDetail;
 
 				}
 
@@ -67,7 +72,7 @@ function loginCheck($mail = "", $passwd = "") {
 			} else {
 
 				$return["success"] = "false";
-				$return["txt"] = "Password not correct"; // TODO i18n
+				$return["txt"] = L::messageLoginErrorPasswordNotCorrect;
 				return $return;
 
 			}
@@ -76,7 +81,7 @@ function loginCheck($mail = "", $passwd = "") {
 		} else {
 
 			$return["success"] = "false";
-			$return["txt"] = "Userdata not found"; // TODO i18n
+			$return["txt"] = L::messageAuthAccountNotFoundDetail;
 			return $return;
 
 		}

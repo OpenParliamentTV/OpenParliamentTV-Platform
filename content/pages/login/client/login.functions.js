@@ -12,15 +12,14 @@ $(function() {
 
 				if (ret["success"] == "true") {
 
-					$("#login-response").text("Login successful. You will be redirected");
+					$("#login-response").text(ret["txt"]);
 					setTimeout(function() {
 						location.reload();
 					},2000);
 
 				} else {
 
-					$("#login-response").text("Your login credentials are not correct.");
-					console.log(ret["txt"]); //TODO Login not active as text output (// TODO i18n)
+					$("#login-response").text(ret["txt"]);
 
 				}
 
