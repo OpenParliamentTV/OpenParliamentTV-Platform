@@ -3,9 +3,7 @@
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
-			<div class="alert alert-info" role="alert">
-			  Todo: Confirmation of registration  // TODO i18n
-			</div>
+			<div class="alert alert-info" role="alert"><?php echo L::registerConfirmMailAddress; ?></div>
 
 			<?php
 

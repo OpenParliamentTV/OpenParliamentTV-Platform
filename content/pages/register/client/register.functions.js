@@ -11,7 +11,7 @@ $(function() {
 
 				if (ret["success"] == "true") {
 
-					$("#register-response").text("Registration successful. You will be redirected");
+					$("#register-response").text(ret["txt"]);
 					setTimeout(function() {
 						location.reload();
 					},2000);
@@ -26,13 +26,13 @@ $(function() {
 
 			} else {
 
-				$("#register-response").text("There was an error (code #02) while registration. Please try again");
+				$("#register-response").text("There was an error (code #02) while registering your account. Please try again");
 
 			}
 		},
 		error: function() {
 
-			$("#register-response").text("There was an error (code #01) while registration. Please try again");
+			$("#register-response").text("There was an error (code #01) while registering your account. Please try again");
 
 		}
 	});

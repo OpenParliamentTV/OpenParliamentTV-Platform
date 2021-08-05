@@ -53,7 +53,7 @@ function registerUser($mail = "", $passwd = "", $name="", $db = false) {
 		if ($userdata) {
 
 			$return["success"] = "false";
-			$return["txt"] = "Mail already registered"; // TODO i18n
+			$return["txt"] = L::messageAccountWithMailAlreadyExists;
 			return $return;
 
 			//TODO: Send Mail with forgotten-link?
@@ -96,7 +96,7 @@ function registerUser($mail = "", $passwd = "", $name="", $db = false) {
 			mail($mail, $registrationMailSubject, $message, $header);
 
 			$return["success"] = "true";
-			$return["txt"] = "User has been registered"; // TODO i18n
+			$return["txt"] = L::messageRegisterSuccess;
 			$return["UserID"] = $userID; // TODO maybe delete for production server?
 			return $return;
 

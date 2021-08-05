@@ -16,7 +16,7 @@ function registerConfirm($id = "", $registerConfirmation = "", $db = false) {
 	if ($id == "" || $registerConfirmation== "") {
 
 		$return["success"] = "false";
-		$return["txt"] = "Parameter missing"; // TODO i18n
+		$return["txt"] = L::messageErrorParameterMissingDetail;
 		return $return;
 
 	} else {
@@ -40,7 +40,7 @@ function registerConfirm($id = "", $registerConfirmation = "", $db = false) {
 			if ($userdata["UserBlocked"] == 1) {
 
 				$return["success"] = "false";
-				$return["txt"] = "Account has been blocked. Please get in touch"; // TODO i18n
+				$return["txt"] = L::messageAuthAccountBlockedDetail;
 
 				return $return;
 
@@ -53,14 +53,14 @@ function registerConfirm($id = "", $registerConfirmation = "", $db = false) {
 				$db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserActive=1, UserRegisterConfirmation=1 WHERE UserID=?i LIMIT 1", $userdata["UserID"]);
 
 				$return["success"] = "true";
-				$return["txt"] = "Account has been activated"; // TODO i18n
+				$return["txt"] = L::messageAccountActivationSuccess;
 
 				return $return;
 
 			} else {
 
 				$return["success"] = "false";
-				$return["txt"] = "wrong confirmation code"; // TODO i18n
+				$return["txt"] = L::messageRegisterWrongConfirmationCode;
 
 				return $return;
 
@@ -70,7 +70,7 @@ function registerConfirm($id = "", $registerConfirmation = "", $db = false) {
 		} else {
 
 			$return["success"] = "false";
-			$return["txt"] = "Userdata not found"; // TODO i18n
+			$return["txt"] = L::messageErrorGeneric;
 
 			return $return;
 

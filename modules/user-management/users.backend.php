@@ -17,7 +17,7 @@ function getUsers($id = false, $db = false) {
     if ($_SESSION["userdata"]["role"] != "admin") {
 
         $return["success"] = "false";
-        $return["txt"] = "Not allowed";
+        $return["txt"] = L::messageAuthNotPermittedDetail;
 
         return $return;
 

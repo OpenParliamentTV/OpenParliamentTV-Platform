@@ -2,10 +2,7 @@
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
-			<div class="alert alert-info" role="alert">
-			  Password reset.
-				// TODO i18n
-			</div>
+			<div class="alert alert-info" role="alert"><?php echo L::resetPassword; ?></div>
 			<?php
 			if ($_REQUEST["mail"]) {
 				include_once(__DIR__ . '/../../../modules/user-management/passwordreset.backend.sql.php');
@@ -16,13 +13,11 @@
 
 				if ($response["success"] != "true") {
 
-					echo "There was an error with your password reset.";
+					echo $response["txt"];
 
 				} else {
 
-					echo "The mail with the password reset link has been sent.<br>
-				Please check your mail account.<br>
-				In case you didn't receive the mail, make sure you also take a look at the spam folder.<br><br>";
+					echo L::messagePasswordResetMailSent;
 
 
 				}
@@ -38,7 +33,7 @@
 
 				if (strlen($_REQUEST["c"]) < 10) {
 
-					echo "There was an error with your reset code. Please check it or try it again."; // TODO i18n
+					echo L::messagePasswordResetCodeIncorrect;
 
 				} elseif (!$_REQUEST["password"]) {
 
@@ -55,14 +50,14 @@
 							<input type="hidden" name="id" value="<?= $response["UserID"] ?>">
 
 							<div class="form-group">
-								<label for="login-password">Password</label>
+								<label for="login-password"><?php echo L::password; ?></label>
 								<input type="password" class="form-control" id="login-password" name="password">
 							</div>
 							<div class="form-group">
-								<label for="login-password-check">Password</label>
+								<label for="login-password-check"><?php echo L::passwordConfirm; ?></label>
 								<input type="password" class="form-control" id="login-password" name="password-check">
 							</div>
-							<button type="submit" class="btn btn-primary btn-sm">Change Password</button>
+							<button type="submit" class="btn btn-primary btn-sm"><?php echo L::changePassword; ?></button>
 						</form>
 					<?php
 					} else {
@@ -74,11 +69,11 @@
 
 				} elseif ($_REQUEST["password"] && ($_REQUEST["password"] != $_REQUEST["password-check"])) {
 
-					echo "Password and Password-Check were not the same."; //TODO Output & i18n
+					echo L::messagePasswordNotIdentical;
 
 				} elseif ($_REQUEST["password"] && (!passwordStrength($_REQUEST["password"]))) {
 
-					echo "Password is too weak."; //TODO Output & i18n
+					echo L::messagePasswordTooWeak;
 
 				} elseif ($_REQUEST["password"] && ($_REQUEST["password"] == $_REQUEST["password-check"])) {
 
@@ -93,11 +88,11 @@
 
 						if ($resetResponse["success"] == "true") {
 
-							echo "Your password has been changed."; //TODO Output & i18n
+							echo L::messagePasswordResetSuccess;
 
 						} else {
 
-							echo "There was an error. Please try again."; //TODO Output & i18n
+							echo L::messageErrorGeneric;
 							print_r($resetResponse);
 
 						}
@@ -105,7 +100,7 @@
 
 					} else {
 
-						echo "Resetcode was not correct for the given user".
+						echo L::messagePasswordResetCodeIncorrect;
 						print_r($response); //TODO Output & i18n
 
 					}
@@ -119,9 +114,9 @@
 				<form id="resetpassword-mail-form" method="post">
 					<input type="hidden" name="a" value="passwordReset">
 					<div class="form-group">
-						<label for="login-mail">E-mail</label>
+						<label for="login-mail"><?php echo L::mailAddress; ?></label>
 						<input type="email" class="form-control" id="resetpassword-mail" name="mail">
-					<button type="submit" class="btn btn-primary btn-sm">Send reset link</button>
+					<button type="submit" class="btn btn-primary btn-sm"><?php echo L::resetPassword; ?></button>
 				</form>
 			<?php
 			}

@@ -307,7 +307,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "registerConfirm":
-		$pageTitle = L::registerNewAccount; //TODO i18n
+		$pageTitle = L::registerConfirmMailAddress;
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -319,7 +319,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "passwordReset":
-		$pageTitle = L::registerNewAccount; //TODO i18n
+		$pageTitle = L::resetPassword;
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
