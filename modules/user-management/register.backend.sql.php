@@ -75,13 +75,13 @@ function registerUser($mail = "", $passwd = "", $name="", $db = false) {
 				$name, $mail, hash("sha512", $pepper.$passwd.$config["salt"]),  $pepper, "user", 0, $confirmationCode);
 			$userID = $db->insertId();
 
-			$registrationMailSubject = "Open Parliament TV: Registrierung"; // TODO i18n
+			$registrationMailSubject = L::brand.': '.L::registerNewAccount;
 			$registrationMailVerifyLink = $config['dir']['root'].'/registerConfirm?id='.$userID.'&c='.$confirmationCode;
 
 			$message = '<html><body>';
-			$message .= '<p>Vielen Dank für deine Registrierung auf <b>de.openparliament.tv</b>.</p>'; // TODO i18n
-			$message .= '<p>Bitte bestätige deine E-Mail-Adresse indem du folgenden Link anklickst:</p>\r\n'; // TODO i18n
-			$message .= '<a href="'.$registrationMailVerifyLink.'"></a><br>\r\n';
+			$message .= '<p>'.L::messageRegisterThankYou.' <b>'.$config['dir']['root'].'</b>.</p>';
+			$message .= '<p>'.L::messageRegisterClickLinkToValidate.'</p>';
+			$message .= '<p><a href="'.$registrationMailVerifyLink.'">'.$registrationMailVerifyLink.'</a></p>';
 			$message .= '</body></html>';
 
 			$header = array(

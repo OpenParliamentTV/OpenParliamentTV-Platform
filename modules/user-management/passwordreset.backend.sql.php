@@ -51,11 +51,14 @@ function passwordResetMail($mail = "", $db = false) {
 
 			$db->query("UPDATE " . $config["platform"]["sql"]["tbl"]["User"] . " SET UserPasswordReset=?s WHERE UserID=?i LIMIT 1", $confirmationCode, $userdata["UserID"]);
 
-			$passwordresetMailSubject = "Open Parliament TV: Reset your password";  // TODO i18n
-			$passwordresetMailMessagePart1 = "You requested to reset your password. Please visit the following website:\r\n";  // TODO i18n
-			$passwordresetMailMessageLink = $registrationMailVerifyLink = $config['dir']['root']."/passwordReset?id=" . $userdata["UserID"] . "&c=" . $confirmationCode;
-			$passwordresetMailMessagePart2 = "\r\n\r\nIn case your didn't request to reset the password, you can just ignore this mail.\r\n";  // TODO i18n
-			$passwordresetMailMessage = $passwordresetMailMessagePart1 . $passwordresetMailMessageLink . $passwordresetMailMessagePart2;  // TODO i18n
+			$passwordresetMailSubject = L::brand.': '.L::resetPassword;
+			$passwordresetMailVerifyLink = $config['dir']['root'].'/passwordReset?id='.$userdata['UserID'].'&c='.$confirmationCode;
+
+			$message = '<html><body>';
+			$message .= '<p>'.L::messagePasswordResetMailStart.'</p>';
+			$message .= '<p><a href="'.$passwordresetMailVerifyLink.'">'.$passwordresetMailVerifyLink.'</a></p>';
+			$message .= '<p>'.L::messagePasswordResetMailEnd.'</p>';
+			$message .= '</body></html>';
 
 			$header = array(
 				'From' => $config["mail"]["from"],
@@ -64,7 +67,7 @@ function passwordResetMail($mail = "", $db = false) {
 			);
 
 
-			mail($mail, $passwordresetMailSubject, $passwordresetMailMessage, $header);
+			mail($mail, $passwordresetMailSubject, $message, $header);
 
 			$return["success"] = "true";
 			$return["txt"] = L::messagePasswordResetMailSent;
