@@ -51,7 +51,7 @@
 					<div id="toggleDarkmode" class="navbar-text switch-container <?= ($color_scheme == "dark") ? "active" : "" ?>">
 						<span class="switch">
 							<span class="slider round"></span>
-						</span><span class="d-none d-md-inline">Dark Mode</span>
+						</span><span class="d-inline">Dark Mode</span>
 					</div>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item <?= ($page == "manage") ? "active" : "" ?><?= (!$_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/manage">Dashboard</a>
