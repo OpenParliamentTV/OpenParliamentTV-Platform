@@ -9,7 +9,7 @@
 			</div>
 		</div>
 		<button class="btn btn-primary btn-sm d-block d-md-none" type="button" data-toggle="collapse" data-target=".filterContainer" aria-expanded="false" aria-controls="">
-			<span class="icon-menu-1"></span>Filter <span class="labelShow">anzeigen</span><span class="labelCollapse">ausblenden</span><span class="icon-up-open-big"><span>
+			<span class="icon-menu-1"></span><span class="labelShow"><?php echo L::filtersShow; ?></span><span class="labelCollapse"><?php echo L::filtersHide; ?></span><span class="icon-up-open-big"><span>
 		</button>
 		<div class="filterContainer collapse show d-md-block">
 			<div class="row row-cols-1 row-cols-xl-3">

@@ -30,6 +30,8 @@
 	"faction": "Faction",
 	"featureBullet1": "<b>synchronised</b> with the proceedings",
 	"featureBullet2": "<b>searchable</b> word by word",
+	"filtersHide": "Hide Filters",
+	"filtersShow": "Show Filters",
 	"fundedBy": "Funded by",
 	"imprint": "Imprint",
 	"login": "Sign In",
