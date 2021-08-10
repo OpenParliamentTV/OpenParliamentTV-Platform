@@ -21,7 +21,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		<div class="row" style="position: relative; z-index: 1">
 			<div class="col-12">
 				<div class="row align-items-center">
-					<div class="col flex-grow-0 detailsThumbnailContainer">
+					<div class="col flex-grow-0 d-none d-sm-block detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<span class="icon-group" style="position: absolute;top: 50%;left: 50%;font-size: 70px;transform: translateX(-50%) translateY(-50%);"></span>
 						</div>
@@ -29,7 +29,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<div class="col">
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
 						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. <?php echo L::electoralPeriod ?></a></div>
-						<h2><?php echo L::session ?> <?= $apiResult["data"]["attributes"]["number"] ?></h2>
+						<h2 class="mt-2"><?php echo L::session ?> <?= $apiResult["data"]["attributes"]["number"] ?></h2>
 						<div><?php 
 							$startDateParts = explode("T", $apiResult["data"]["attributes"]["dateStart"]);
 							$endDateParts = explode("T", $apiResult["data"]["attributes"]["dateEnd"]);

@@ -21,7 +21,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		<div class="row" style="position: relative; z-index: 1">
 			<div class="col-12">
 				<div class="row align-items-center">
-					<div class="col flex-grow-0 detailsThumbnailContainer">
+					<div class="col flex-grow-0 d-none d-sm-block detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<span class="icon-list-numbered" style="position: absolute;top: 50%;left: 50%;font-size: 50px;transform: translateX(-50%) translateY(-50%);"></span>
 						</div>
@@ -29,8 +29,8 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<div class="col">
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
 						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. <?php echo L::electoralPeriod ?></a> | <a href="../session/<?= $apiResult["data"]["relationships"]["session"]["data"]["id"] ?>"><?php echo L::session ?>: <?= $apiResult["data"]["relationships"]["session"]["data"]["attributes"]["number"] ?></a></div>
+						<div class="mt-2"><?= $apiResult["data"]["attributes"]["officialTitle"] ?></div>
 						<h2><?= $apiResult["data"]["attributes"]["title"] ?></h2>
-						<div><?= $apiResult["data"]["attributes"]["officialTitle"] ?></div>
 					</div>
 				</div>
 			</div>

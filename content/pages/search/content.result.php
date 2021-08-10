@@ -91,7 +91,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	*/
 ?>
 <div class="filterSummary row">
-	<div class="col-12 col-sm-6" style="padding-left: 10px;"><label class="col-form-label"><?= $findsString ?><strong><?= $totalResultString ?></strong> Reden gefunden</label>
+	<div class="col-12 col-sm-6" style="padding-left: 10px;"><label class="col-form-label"><?= $findsString ?><strong><?= $totalResultString ?></strong> <?php echo L::speechesFound; ?></label>
 		<button type="button" id="play-submit" class="btn btn-sm btn-outline-primary"><?php echo L::autoplayAll; ?><span class="icon-play-1"></span></button>
 	</div>
 	<div class="col-12 col-sm-6" style="text-align: right; padding-right: 10px;">

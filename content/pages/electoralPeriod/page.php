@@ -21,7 +21,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		<div class="row" style="position: relative; z-index: 1">
 			<div class="col-12">
 				<div class="row align-items-center">
-					<div class="col flex-grow-0 detailsThumbnailContainer">
+					<div class="col flex-grow-0 d-none d-sm-block detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<span class="icon-check" style="position: absolute;top: 50%;left: 50%;font-size: 70px;transform: translateX(-50%) translateY(-50%);"></span>
 						</div>

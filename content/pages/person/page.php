@@ -26,7 +26,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					</div>
 					<div class="col">
 						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
-						<a href="../<?= $apiResult["data"]["relationships"]["party"]["data"]["type"] ?>/<?= $apiResult["data"]["relationships"]["party"]["data"]["id"] ?>" class="partyIndicator" data-party="<?= $apiResult["data"]["relationships"]["party"]["data"]["attributes"]["labelAlternative"] ?>"><?= $apiResult["data"]["relationships"]["party"]["data"]["attributes"]["labelAlternative"] ?></a>
+						<a href="../organisation/<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>" class="partyIndicator" data-faction="<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["faction"]["data"]["attributes"]["labelAlternative"] ?></a>
 						<div><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
 						<a target="_blank" href="<?= $apiResult["data"]["attributes"]["websiteURI"] ?>"><?= $apiResult["data"]["attributes"]["websiteURI"] ?></a>
 					</div>
@@ -39,9 +39,6 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span> <?php echo L::relatedMedia ?></a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="organisations-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="false"><span class="icon-bank"></span> <?php echo L::organisations ?></a>
 				</li>
 				<li class="nav-item ml-auto">
 					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span> <?php echo L::data ?></a>
@@ -57,9 +54,6 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 							<div class="workingSpinner" style="position: fixed; top: 65%;"></div>
 						</div>
 					</div>
-				</div>
-				<div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
-					[CONTENT]
 				</div>
 				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
 					<table id="dataTable" class="table table-striped table-bordered">
