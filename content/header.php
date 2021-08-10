@@ -2,7 +2,19 @@
 	<nav class="navbar justify-content-between navbar-light">
 		<div class="<?=($page != "media") ? "flex-fill" : ""?>">
 			<a href="<?= $config["dir"]["root"] ?>/" class="breadcrumb-page navbar-text large brand">
-				<img src="<?= $config["dir"]["root"] ?>/content/client/images/optv-logo_klein.png"><span class="<?=($page != "media") ? "d-none d-md-inline" : "d-none d-lg-inline"?>"><?php echo L::brand; ?></span>
+			<?php 
+			if ($page != "media") {
+				if ($page == "search" || $page == "main") {
+					$brandClass = "d-block";
+				} else {
+					$brandClass = "d-none d-md-inline";
+				} 
+				
+			} else {
+				$brandClass = "d-none d-lg-inline";
+			}
+			?>
+				<img src="<?= $config["dir"]["root"] ?>/content/client/images/optv-logo_klein.png"><span class="<?= $brandClass ?>"><?php echo L::brand; ?></span>
 			</a>
 			<?php 
 				if (isset($pageBreadcrumbs)) {

@@ -519,6 +519,14 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     border-bottom-color: var(--secondary-bg-color);
 }
 
+.nav-tabs .nav-link .nav-item-label {
+    padding-left: 6px;
+}
+
+.nav-tabs .nav-link.active .nav-item-label {
+    display: inline !important;
+}
+
 .tab-content {
     background: var(--primary-bg-color);
     border-right: 1px solid var(--border-color);
