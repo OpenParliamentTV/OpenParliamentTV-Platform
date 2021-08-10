@@ -91,16 +91,17 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	*/
 ?>
 <div class="filterSummary row">
-	<div class="col-6" style="padding-left: 10px;"><label class="col-form-label"><?= $findsString ?><strong><?= $totalResultString ?></strong> Reden gefunden</label>
-	<button type="button" id="play-submit" class="btn btn-sm btn-outline-primary">Alle automatisch abspielen<span class="icon-play-1"></span></button></div>
-	<div class="col-6" style="text-align: right; padding-right: 10px;">
-		<label class="col-form-label" for="sort">Sortieren nach</label>
+	<div class="col-12 col-sm-6" style="padding-left: 10px;"><label class="col-form-label"><?= $findsString ?><strong><?= $totalResultString ?></strong> Reden gefunden</label>
+		<button type="button" id="play-submit" class="btn btn-sm btn-outline-primary"><?php echo L::autoplayAll; ?><span class="icon-play-1"></span></button>
+	</div>
+	<div class="col-12 col-sm-6" style="text-align: right; padding-right: 10px;">
+		<label class="col-form-label" for="sort"><?php echo L::sortBy; ?></label>
 		<select style="width: auto;" class="custom-select custom-select-sm" id="sort" name="sort">
-			<option value="relevance" selected>Relevanz</option>
-			<option value="topic-asc">Thema (aufsteigend)</option>
-			<option value="topic-desc">Thema (absteigend)</option>
-			<option value="date-asc">Datum (aufsteigend)</option>
-			<option value="date-desc">Datum (absteigend)</option>
+			<option value="relevance" selected><?php echo L::relevance; ?></option>
+			<option value="topic-asc"><?php echo L::topic; ?> (<?php echo L::sortByAsc; ?>)</option>
+			<option value="topic-desc"><?php echo L::topic; ?> (<?php echo L::sortByDesc; ?>)</option>
+			<option value="date-asc"><?php echo L::date; ?> (<?php echo L::sortByAsc; ?>)</option>
+			<option value="date-desc"><?php echo L::date; ?> (<?php echo L::sortByDesc; ?>)</option>
 		</select>
 	</div>
 </div>

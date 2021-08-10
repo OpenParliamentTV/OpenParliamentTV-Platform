@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <meta http-equiv="cache-control" content="no-cache">
 <meta http-equiv="Expires" content="-1">
-<meta name="viewport" content="width=device-width, initial-scale=0.96, maximum-scale=0.96">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <?php include_once(__DIR__ . '/components/metadata.php'); ?>
 

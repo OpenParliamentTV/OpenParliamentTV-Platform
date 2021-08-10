@@ -20,12 +20,13 @@
 				}
 			?>
 		</div>
-		<div class="navbarCenterOptions">
-			<?php
-			if ($_REQUEST["a"] == "media" && $isResult) {
-				$autoplayResultsClass = (boolval($_REQUEST['playresults'])) ? "active" : "";
-				$backParamStr = preg_replace('/(&playresults=[0-1])/', '', ltrim($paramStr, '&'));
-			?>
+		
+		<?php
+		if ($_REQUEST["a"] == "media" && $isResult) {
+			$autoplayResultsClass = (boolval($_REQUEST['playresults'])) ? "active" : "";
+			$backParamStr = preg_replace('/(&playresults=[0-1])/', '', ltrim($paramStr, '&'));
+		?>
+			<div class="navbarCenterOptions">
 				<a href='<?= $config["dir"]["root"]."/search".$backParamStr ?>' class="btn btn-primary btn-sm"><span class="icon-left-open-big"></span><span class="icon-search"></span><span class="sr-only"><?php echo L::backToResults; ?></span></a>
 				<div id="prevResultSnippetButton" class="btn btn-primary btn-sm"><span class="icon-left-open-big"></span><span class="sr-only"><?php echo L::previousSpeech; ?></span></div>
 				<div id="nextResultSnippetButton" class="btn btn-primary btn-sm"><span class="icon-right-open-big"></span><span class="sr-only"><?php echo L::nextSpeech; ?></span></div>
@@ -34,36 +35,25 @@
 						<span class="slider round"></span>
 					</span><span class="d-none d-md-inline"><?php echo L::autoplayResults; ?></span>
 				</div>
-			<?php
-			}
-			?>
-		</div>
+			</div>
+		<?php
+		}
+		?>
 		<div class="navbarRightOptions">
-			<?php if ($pageType != "admin" && $page != "login" && $page != "logout" && $page != "register") { ?>
-				<button class="btn btn-primary btn-sm d-inline" type="button">
-					<span class="icon-share"></span>
-					<span class="sr-only"><?php echo L::share; ?></span>
-				</button>
-			<?php } ?>
 			<div class="dropdown d-inline">
-				<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-torso"></span></button>
+				<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-menu"></span></button>
 				<div class="dropdown-menu dropdown-menu-right">
-					<div id="toggleDarkmode" class="navbar-text switch-container <?= ($color_scheme == "dark") ? "active" : "" ?>">
+					<div id="toggleDarkmode" style="padding-left: 1.5rem;" class="navbar-text switch-container <?= ($color_scheme == "dark") ? "active" : "" ?>">
 						<span class="switch">
 							<span class="slider round"></span>
 						</span><span class="d-inline">Dark Mode</span>
 					</div>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item <?= ($page == "manage") ? "active" : "" ?><?= (!$_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/manage">Dashboard</a>
-					<div class="dropdown-divider<?= (!$_SESSION["login"]) ? " d-none" : "" ?>"></div>
-					<a class="dropdown-item <?= ($page == "login") ? "active" : "" ?><?= ($_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/login"><?php echo L::login; ?></a>
+					<a class="dropdown-item <?= ($page == "login") ? "active" : "" ?><?= ($_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/login"><?php echo L::login; ?> <span class="icon-login"></span></a>
 					<a class="dropdown-item <?= ($page == "register") ? "active" : "" ?><?= ($_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/register"><?php echo L::registerNewAccount; ?></a>
-					<a class="dropdown-item <?= ($page == "logout") ? "active" : "" ?><?= (!$_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/logout"><?php echo L::logout; ?></a>
-				</div>
-			</div>
-			<div class="dropdown d-inline">
-				<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-menu"></span></button>
-				<div class="dropdown-menu dropdown-menu-right">
+					<a class="dropdown-item <?= ($page == "logout") ? "active" : "" ?><?= (!$_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/logout"><?php echo L::logout; ?> <span class="icon-logout"></span></a>
+					<div class="dropdown-divider"></div>
 					<a class="dropdown-item <?= ($page == "about") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/about"><?php echo L::about; ?></a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item <?= ($page == "datapolicy") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/datapolicy"><?php echo L::dataPolicy; ?></a>
