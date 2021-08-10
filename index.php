@@ -2,13 +2,13 @@
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 require_once('i18n.class.php');
-$i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'de');
+$i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'en');
 //$i18n->setForcedLang('de');
 $i18n->init();
 
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 $acceptLang = ['de', 'en'];
-$lang = in_array($lang, $acceptLang) ? $lang : 'de';
+$lang = in_array($lang, $acceptLang) ? $lang : 'en';
 
 $color_scheme = isset($_COOKIE["color_scheme"]) ? $_COOKIE["color_scheme"] : false;
 if ($color_scheme === false) $color_scheme = 'light';
