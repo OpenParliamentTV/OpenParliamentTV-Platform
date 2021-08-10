@@ -58,8 +58,8 @@
 							<select id="edit-session"class="custom-select custom-select-sm" name="sessionNumber">
 								<option value="" selected><?php echo L::showAll; ?></option>
 								<?php
-								for ($i=1; $i <= 192; $i++) { 
-								 	echo '<option value="'.$i.'">'.$i.'. Sitzung</option>';
+								for ($i=1; $i <= 237; $i++) { 
+								 	echo '<option value="'.$i.'">'.$i.'. '.L::session.'</option>';
 								} 
 								?>
 							</select>
