@@ -11,13 +11,15 @@ main#content.ready {
 }
 
 .mediaContainer {
-	padding: 30px 30px 0 30px;
-	height: calc(100vh - 50px);
+	padding: 30px;
+	min-height: calc(100vh - 50px);
+	min-height: calc(var(--vh, 1vh) * 100 - 50px);
 }
 
 .frametrail-body {
 	position: relative;
 	height: calc(100vh - 195px);
+	min-height: 300px;
 	width: 100%;
 	font-family: "Open Sans","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
 	font-weight: 300;
@@ -26,6 +28,13 @@ main#content.ready {
 	border-left: 1px solid var(--border-color);
 	border-right: 1px solid var(--border-color);
 	border-bottom: 1px solid var(--border-color);
+}
+
+@media (max-width: 768px) {
+	.frametrail-body {
+		height: calc(100vh - 305px);
+		height: calc(var(--vh, 1vh) * 100 - 305px);
+	}
 }
 
 .frametrail-body[data-frametrail-theme="openparliamenttv"] .mainContainer:not([data-edit-mode="layout"]):not([data-edit-mode="overlays"]):not([data-edit-mode="codesnippets"]):not([data-edit-mode="annotations"]), 
@@ -139,12 +148,6 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 
 .playerTabs .nav-tabs .nav-link .tabTitle {
 	display: block;
-}
-
-@media (max-width: 768px) {
-	.frametrail-body {
-		height: calc(100vh - 305px);
-	}
 }
 
 @media (min-width: 768px) and (max-width:992px) {

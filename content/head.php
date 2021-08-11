@@ -38,6 +38,11 @@ if ($pageType == 'admin' || $pageType == 'entity') {
 }
 ?>
 
+<script type="text/javascript">
+  // Set vh var based on actual height (mobile browsers)
+  let vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+</script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery-ui.min.js"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.form.min.js"></script>
