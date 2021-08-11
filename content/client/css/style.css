@@ -1033,18 +1033,18 @@ input#edit-query {
     text-decoration: none !important;
 }
 
-#speechListContainer {
+#speechListContainer, #interventionListContainer {
     position: relative;
     z-index: 10;
 }
 
 @media (max-width:768px) {
-    #speechListContainer {
+    #speechListContainer, #interventionListContainer {
         margin-top: 0px !important;
     }
 }
 
-#speechListContainer a {
+#speechListContainer a, #interventionListContainer a {
     text-decoration: none;
 }
 

@@ -400,19 +400,39 @@ function getSearchBody($request, $getAllResults) {
 			
 		} else if ($requestKey == "personID") {
 			
-			$filter["must"][] = array(
-				"nested" => array(
-					"path" => "relationships.people.data",
-					"query" => array("bool" => array("must"=>array(
-						array("match" => array(
-							"relationships.people.data.id" => $requestValue
-						)),
-						array("match" => array(
-							"relationships.people.data.attributes.context" => 'main-speaker'
-						))
-					)))
-				)
-			);
+			if (isset($request["context"]) && strlen($request["context"]) > 2) {
+				$filter["must"][] = array(
+					"nested" => array(
+						"path" => "relationships.people.data",
+						"query" => array("bool" => array("must"=>array(
+							array("match" => array(
+								"relationships.people.data.id" => $requestValue
+							)),
+							array("match_phrase" => array(
+								"relationships.people.data.attributes.context" => $request["context"]
+							))
+						)))
+					)
+				);
+
+			} else {
+				
+				$filter["must"][] = array(
+					"nested" => array(
+						"path" => "relationships.people.data",
+						"query" => array("bool" => array("must"=>array(
+							array("match" => array(
+								"relationships.people.data.id" => $requestValue
+							)),
+							array("match" => array(
+								"relationships.people.data.attributes.context" => 'main-speaker'
+							))
+						)))
+					)
+				);
+
+			}
+			
 			
 		} else if ($requestKey == "documentID") {
 			

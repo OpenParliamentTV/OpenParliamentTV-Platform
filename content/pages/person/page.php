@@ -38,7 +38,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		<div class="col-12">
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::relatedMedia ?></span></a>
+					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::speeches ?></span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="interventions-tab" data-toggle="tab" href="#interventions" role="tab" aria-controls="interventions" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label d-none d-sm-inline">Zwischenfragen</span></a>
 				</li>
 				<li class="nav-item ml-auto">
 					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
@@ -47,6 +50,16 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
 					<div id="speechListContainer">
+						<div class="resultWrapper">
+							<?php include_once('content.result.php'); ?>
+						</div>
+						<div class="loadingIndicator">
+							<div class="workingSpinner" style="position: fixed; top: 65%;"></div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="interventions" role="tabpanel" aria-labelledby="interventions-tab">
+					<div id="interventionListContainer">
 						<div class="resultWrapper">
 							<?php include_once('content.result.php'); ?>
 						</div>
@@ -81,6 +94,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 <script type="text/javascript">
 	$(document).ready( function() {
 		updateMediaList("personID=<?= $apiResult["data"]["id"] ?>");
+		updateMediaList("personID=<?= $apiResult["data"]["id"] ?>", "#interventionListContainer");
 		$('#dataTable').bootstrapTable({
 			showToggle: false,
 			multiToggleDefaults: [],

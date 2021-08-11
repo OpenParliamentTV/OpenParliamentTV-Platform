@@ -1,31 +1,35 @@
-var currentQuery = null;
+var currentQueries = {};
 
-function updateMediaList(query) {
-	currentQuery = query;
-	$('.loadingIndicator').show();
-	if(updateAjax && updateAjax.readyState != 4){
-        updateAjax.abort();
-    }
-	updateAjax = $.ajax({
+function updateMediaList(query, targetSelector) {
+	if (!targetSelector) {
+		var targetSelector = '#speechListContainer';
+	}
+
+	currentQueries[targetSelector] = query;
+
+	$(targetSelector +' .loadingIndicator').show();
+	
+	$.ajax({
 		method: "POST",
 		url: config.dir.root+"/content/pages/search/content.result.php?a=search&"+query
 	}).done(function(data) {
-		$('#speechListContainer .resultWrapper').html($(data));
-		$('.loadingIndicator').hide();
-		$('#speechListContainer [name="sort"]').val((getQueryVariableFromString('sort', currentQuery)) ? getQueryVariableFromString('sort', currentQuery) : 'relevance');
-		$('.resultWrapper > nav a').each(function() {
+		$(targetSelector +' .resultWrapper').html($(data));
+		$(targetSelector +' .loadingIndicator').hide();
+		console.log(targetSelector);
+		$(targetSelector +' [name="sort"]').val((getQueryVariableFromString('sort', currentQueries[targetSelector])) ? getQueryVariableFromString('sort', currentQueries[targetSelector]) : 'relevance');
+		$(targetSelector +' .resultWrapper > nav a').each(function() {
 			var thisPage = getQueryVariableFromString('page', $(this).attr('href'));
 			if (!thisPage) { thisPage = 1; }
 			$(this).attr('href', '#page='+ thisPage);
 		});
-		updateListeners();
+		updateListeners(targetSelector);
 	}).fail(function(err) {
 		console.log(err);
 	});
 }
 
-function updateListeners() {
-	$('.resultWrapper > nav a').click(function(evt) {
+function updateListeners(targetSelector) {
+	$(targetSelector +' .resultWrapper > nav a').click(function(evt) {
 		evt.stopPropagation();
 		evt.preventDefault();
 		var page = 1;
@@ -33,20 +37,20 @@ function updateListeners() {
 		if (pageParts.length > 1) {
 			page = pageParts[1];
 		}
-		currentQuery = currentQuery.replace(/&page=[0-9]+/, '');
-		currentQuery += '&page='+ page;
-		updateMediaList(currentQuery);
+		currentQueries[targetSelector] = currentQueries[targetSelector].replace(/&page=[0-9]+/, '');
+		currentQueries[targetSelector] += '&page='+ page;
+		updateMediaList(currentQueries[targetSelector], targetSelector);
 	});
 
-	$('#speechListContainer [name="sort"]').on('change', function() {
-		currentQuery = currentQuery.replace(/&sort=[a-zA-Z|-]+/, '');
+	$(targetSelector +' [name="sort"]').on('change', function() {
+		currentQueries[targetSelector] = currentQueries[targetSelector].replace(/&sort=[a-zA-Z|-]+/, '');
 		if ($(this).val() != 'relevance') {
-			currentQuery += '&sort=' + $(this).val();
+			currentQueries[targetSelector] += '&sort=' + $(this).val();
 		}
-		updateMediaList(currentQuery);
+		updateMediaList(currentQueries[targetSelector], targetSelector);
 	});
-	$('#speechListContainer #play-submit').on('click',function() {
-		var firstResult = $('.resultList').find('.resultItem').first();
+	$(targetSelector +' #play-submit').on('click',function() {
+		var firstResult = $(targetSelector +' .resultList').find('.resultItem').first();
 
 		if (firstResult.length != 0) {
 			location.href = firstResult.children('.resultContent').children('a').eq(0).attr("href") + '&playresults=1';
