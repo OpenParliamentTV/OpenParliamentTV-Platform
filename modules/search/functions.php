@@ -220,14 +220,12 @@ function getSearchBody($request, $getAllResults) {
 	//$filter["must"][] = array("match"=>array("attributes.aligned" => true));
 	
 	// FILTER OUT FRAGESTTUNDE ETC.
-	/*
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Befragung"));
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Fragestunde"));
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Wahl der"));
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Wahl des"));
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungseröffnung"));
 	$filter["must_not"][] = array("match"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungsende"));
-	*/
 
 	$shouldCount = 0;
 
