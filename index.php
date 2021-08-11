@@ -18,7 +18,7 @@ $isMobile = (preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberr
 
 
 $paramStr = "";
-$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","person","party","partyID","faction","factionID","organisation","organisationID","electoralPeriod","dateFrom","dateTo","gender","degree","aw_uuid","speakerID","sessionNumber","documentID","playresults", "page", "sort")));
+$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","person","personID","context","party","partyID","faction","factionID","organisation","organisationID","electoralPeriod","dateFrom","dateTo","gender","degree","aw_uuid","speakerID","sessionNumber","documentID","playresults", "page", "sort")));
 $paramCount = 1;
 foreach ($allowedParams as $k=>$v) {
     if ($paramCount == 1) {
