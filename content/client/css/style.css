@@ -898,7 +898,7 @@ input#edit-query {
 
 @media (max-width:1200px) {
     .filterContainer .form-group:first-child {
-        margin-bottom: 1rem;
+        margin-bottom: 0.5rem;
     }
 }
 
@@ -1001,6 +1001,11 @@ input#edit-query {
 
 #introHint ul {
     margin: 0;
+}
+
+.examplesContainer {
+    font-size: 1rem;
+    line-height: 30px;
 }
 
 .detailsHeader {
