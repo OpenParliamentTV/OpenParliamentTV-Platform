@@ -16,6 +16,14 @@ main#content.ready {
 	min-height: calc(var(--vh, 1vh) * 100 - 50px);
 }
 
+@media (max-width: 768px) {
+	.mediaContainer {
+		padding: 15px;
+		min-height: calc(100vh - 50px);
+		min-height: calc(var(--vh, 1vh) * 100 - 50px);
+	}
+}
+
 .frametrail-body {
 	position: relative;
 	height: calc(100vh - 195px);
@@ -32,8 +40,8 @@ main#content.ready {
 
 @media (max-width: 768px) {
 	.frametrail-body {
-		height: calc(100vh - 305px);
-		height: calc(var(--vh, 1vh) * 100 - 305px);
+		height: calc(100vh - 275px);
+		height: calc(var(--vh, 1vh) * 100 - 275px);
 	}
 }
 
@@ -84,7 +92,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 
 .playerTitle {
 	background: var(--primary-bg-color);
-	height: 104px;
+	height: 120px;
 	overflow: auto;
 	position: relative;
 	float: right;
@@ -117,7 +125,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 
 .playerTabs {
 	background: var(--primary-bg-color);
-	height: 80px;
+	height: 60px;
 	position: relative;
 	display: flex;
 	background: transparent;
@@ -136,7 +144,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 }
 
 .playerTabs .nav-tabs .nav-link {
-	padding: 9px 16px;
+	padding: 3px 10px;
 	text-align: center;
 	height: 100%;
 }
@@ -153,6 +161,11 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 @media (min-width: 768px) and (max-width:992px) {
 	.playerTabs {
 		width: 50%;
+		height: 80px;
+	}
+
+	.playerTabs .nav-tabs .nav-link {
+		padding: 9px 16px;
 	}
 
 	.playerTitle {
@@ -164,6 +177,11 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 @media (min-width:992px) {
 	.playerTabs {
 		width: 500px;
+		height: 80px;
+	}
+
+	.playerTabs .nav-tabs .nav-link {
+		padding: 9px 16px;
 	}
 
     .playerTitle {
@@ -175,6 +193,11 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 @media (min-width:1200px) {
     .playerTabs {
 		width: 600px;
+		height: 80px;
+	}
+
+	.playerTabs .nav-tabs .nav-link {
+		padding: 9px 16px;
 	}
 
     .playerTitle {

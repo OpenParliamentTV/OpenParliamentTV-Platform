@@ -283,6 +283,18 @@ main.container-fluid.subpage {
     padding-left: 30px;
 }
 
+@media (max-width: 768px) {
+    main.container.subpage, main.container-fluid.subpage {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+
+    main.container-fluid.subpage {
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+}
+
 a, a:hover {
     color: var(--primary-fg-color);
 }

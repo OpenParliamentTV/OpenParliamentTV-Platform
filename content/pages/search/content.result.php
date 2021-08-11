@@ -91,12 +91,12 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	*/
 ?>
 <div class="filterSummary row">
-	<div class="col-12 col-sm-6" style="padding-left: 10px;"><label class="col-form-label"><?= $findsString ?><strong><?= $totalResultString ?></strong> <?php echo L::speechesFound; ?></label>
-		<button type="button" id="play-submit" class="btn btn-sm btn-outline-primary"><?php echo L::autoplayAll; ?><span class="icon-play-1"></span></button>
+	<div class="col-12 col-sm-6 mb-3 mb-sm-0 px-0 px-sm-2"><label class="col-form-label px-0 mr-0 mr-sm-1 col-12 col-sm-auto text-center text-sm-left"><?= $findsString ?><strong><?= $totalResultString ?></strong> <?php echo L::speechesFound; ?></label>
+		<button type="button" id="play-submit" class="btn btn-sm btn-outline-primary col-12 col-sm-auto" style="background-color: var(--highlight-color); color: var(--primary-bg-color);"><?php echo L::autoplayAll; ?><span class="icon-play-1"></span></button>
 	</div>
-	<div class="col-12 col-sm-6" style="text-align: right; padding-right: 10px;">
+	<div class="col-12 col-sm-6 pr-0 pr-sm-2" style="text-align: right;">
 		<label class="col-form-label" for="sort"><?php echo L::sortBy; ?></label>
-		<select style="width: auto;" class="custom-select custom-select-sm" id="sort" name="sort">
+		<select style="width: auto;" class="custom-select custom-select-sm ml-1" id="sort" name="sort">
 			<option value="relevance" selected><?php echo L::relevance; ?></option>
 			<option value="topic-asc"><?php echo L::topic; ?> (<?php echo L::sortByAsc; ?>)</option>
 			<option value="topic-desc"><?php echo L::topic; ?> (<?php echo L::sortByDesc; ?>)</option>
