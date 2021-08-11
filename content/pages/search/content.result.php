@@ -20,8 +20,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	}
 	//require_once(__DIR__."/../../../modules/search/functions.php");
 	//require_once(__DIR__."/../../../modules/search/include.search.php");
+	
 	/*
-
 	echo '<pre>';
 	print_r($_REQUEST);
 	echo '</pre>';
@@ -108,7 +108,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 <div class="resultList row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 	<?php
 	$paramStr = "";
-	$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","person","personID","party","faction","factionID","electoralPeriod","electoralPeriodID","agendaItemID","dateFrom","dateTo","gender","degree","aw_uuid","organisation","organisationID","documentID","termID","sessionNumber","sessionID","page","sort")));
+	$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","person","personID","context","party","faction","factionID","electoralPeriod","electoralPeriodID","agendaItemID","dateFrom","dateTo","gender","degree","aw_uuid","organisation","organisationID","documentID","termID","sessionNumber","sessionID","page","sort")));
 	$paramCount = 1;
 	foreach ($allowedParams as $k=>$v) {
 		if ($paramCount == 1) {
