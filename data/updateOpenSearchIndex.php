@@ -97,12 +97,26 @@ function setOptions()
             )),
             "people" => array("properties" => array(
                 "data" => array(
-                    "type" => "nested"
+                    "type" => "nested",
+                    "properties" => array(
+                        "attributes" => array("properties" => array(
+                            "context" => array(
+                                "type" => "keyword"
+                            )
+                        ))
+                    ))
                 )
             )),
             "organisations" => array("properties" => array(
                 "data" => array(
-                    "type" => "nested"
+                    "type" => "nested",
+                    "properties" => array(
+                        "attributes" => array("properties" => array(
+                            "context" => array(
+                                "type" => "keyword"
+                            )
+                        ))
+                    ))
                 )
             )),
         ))
