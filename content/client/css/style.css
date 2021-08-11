@@ -1168,6 +1168,10 @@ input#edit-query {
     color: #999;
 }
 
+body.darkmode .resultSnippets {
+    color: #D9D9D9;
+}
+
 .resultItem .resultSnippets .resultSnippet {
     position: relative;
 }
@@ -1175,6 +1179,11 @@ input#edit-query {
 .resultItem .resultSnippets .resultSnippet:hover {
     background: #eaebed;
     color: #000;
+}
+
+body.darkmode .resultItem .resultSnippets .resultSnippet:hover {
+    background-color: #686A6F;
+    color: #fff;
 }
 
 .resultItem .resultSnippets .resultSnippet:before {

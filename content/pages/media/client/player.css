@@ -388,7 +388,8 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 }
 
 .layoutArea .contentViewContainer .contentViewContents {
-	width: calc(100% - 4px);
+	top: 0px !important;
+	width: 100%;
 }
 
 .contentViewTab, .layoutArea .contentViewContainer .contentViewContents {
@@ -412,9 +413,15 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	font-size: 1em;
 	width: 100%;
 	height: 100%;
+	max-height: 100%;
 	padding: 0px;
+	margin: 0px;
 	background: var(--secondary-bg-color);
 	box-sizing: border-box;
+}
+
+body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer {
+	color: #D9D9D9;
 }
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .tab-content {
@@ -445,6 +452,11 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased:hover, .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased.active {
 	background-color: #eaebed;
 	color: #000;
+}
+
+body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased:hover, body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased.active {
+	background-color: #686A6F;
+	color: #fff;
 }
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer p[data-type="comment"] {
