@@ -1060,6 +1060,14 @@ input#edit-query {
     text-decoration: none;
 }
 
+#speechListContainer .examplesContainer a, #interventionListContainer .examplesContainer a {
+    text-decoration: underline dotted;
+}
+
+#speechListContainer .examplesContainer a:hover, #interventionListContainer .examplesContainer a:hover {
+    text-decoration: underline;
+}
+
 .sortDivider {
     flex: none;
     max-width: 100%;

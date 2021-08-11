@@ -43,7 +43,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<li><?php echo L::featureBullet1; ?></li>
 					<li><?php echo L::featureBullet2; ?></li>
 				</ul>
-				<?php echo L::examples; ?>: <br>
+				<div class="examplesContainer mt-3"><?php echo L::examples; ?>: <br>
+					<a href='<?= $config["dir"]["root"] ?>/search?q=Rente'>Rente</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Brexit'>Brexit</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=NetzDG'>NetzDG</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Hase%20Igel'>Hase und Igel</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=%22das%20ist%20die%20Wahrheit%22'>"das ist die Wahrheit"</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=BAMF'>BAMF</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Corona'>Corona</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Lobbyregister'>Lobbyregister</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Katze%20Sack'>Katze im Sack</a>, , <a href='<?= $config["dir"]["root"] ?>/search?q=Pflegeversicherung'>Pflegeversicherung</a>
+				</div>
 			</div>
 		</div>
 	</div>
