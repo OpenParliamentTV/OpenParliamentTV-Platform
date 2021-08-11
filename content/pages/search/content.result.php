@@ -28,25 +28,24 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	*/
 	require_once(__DIR__."/../../../api/v1/api.php");
 
-
 	if (!$_REQUEST["a"] || count($_REQUEST) < 2) {
 	?>
 	
-
-
 	<div class="row justify-content-center">
 		<div id="introHint" class="col-11 col-md-8 col-lg-6 col-xl-5">
 			<img src="content/client/images/arrow.png" class="bigArrow d-none d-md-inline">
-			<div class="introHintText">
+			<div class="introHintText mt-0 mt-md-5">
 				<b><?= $indexCount ?> <?php echo L::speeches; ?></b>
 				<ul>
 					<li><?php echo L::featureBullet1; ?></li>
 					<li><?php echo L::featureBullet2; ?></li>
 				</ul>
-				<div class="examplesContainer mt-3"><?php echo L::examples; ?>: <br>
-					<a href='<?= $config["dir"]["root"] ?>/search?q=Rente'>Rente</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Brexit'>Brexit</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=NetzDG'>NetzDG</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Hase%20Igel'>Hase und Igel</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=%22das%20ist%20die%20Wahrheit%22'>"das ist die Wahrheit"</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=BAMF'>BAMF</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Corona'>Corona</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Lobbyregister'>Lobbyregister</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Katze%20Sack'>Katze im Sack</a>, , <a href='<?= $config["dir"]["root"] ?>/search?q=Pflegeversicherung'>Pflegeversicherung</a>
-				</div>
 			</div>
+		</div>
+	</div>
+	<div class="row justify-content-center">
+		<div class="examplesContainer mt-3 mb-5 col-11 col-md-8 col-lg-6 col-xl-5"><b><?php echo L::examples; ?>:</b> <br>
+			<a href='<?= $config["dir"]["root"] ?>/search?q=Mietpreisbremse'>Mietpreisbremse</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Rente'>Rente</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Brexit'>Brexit</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Pariser%20Abkommen'>Pariser Abkommen</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=NetzDG'>NetzDG</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=BAMF'>BAMF</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Klimawandel'>Klimawandel</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Lobbyregister'>Lobbyregister</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Pflegeversicherung'>Pflegeversicherung</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Datenschutz-Grundverordnung'>Datenschutz-Grundverordnung</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Katze%20Sack'>Katze im Sack</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Hase%20Igel'>Hase und Igel</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=%22das%20ist%20die%20Wahrheit%22'>"das ist die Wahrheit"</a>, <a href='<?= $config["dir"]["root"] ?>/search?q=Tropfen%20hei%C3%9Fen%20Stein'>Tropfen auf den heißen Stein</a>
 		</div>
 	</div>
 
