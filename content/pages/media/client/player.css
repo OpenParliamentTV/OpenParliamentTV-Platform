@@ -73,9 +73,10 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	display: none !important;
 }
 
-.playerTitle, .playerTabs {
+.playerTitle {
 	background: var(--primary-bg-color);
-	height: 80px;
+	height: 104px;
+	overflow: auto;
 	position: relative;
 	float: right;
 	text-align: left;
@@ -83,14 +84,39 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	line-height: 26px;
 	width: 100%;
 	border: 1px solid var(--border-color);
+	margin-bottom: 15px;
+}
+
+.playerTitle .partyIndicator, .customhtmlContainer .partyIndicator {
+	margin: 2px 2px 2px 6px;
+	padding: 0px 6px;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 4px;
+	background: transparent;
+	white-space: nowrap;
+}
+
+.playerTitle .speechMeta {
+	margin-bottom: 4px;
+}
+
+.playerTitle h3 {
+	margin-top: 8px;
+	font-size: 1rem;
 }
 
 .playerTabs {
+	background: var(--primary-bg-color);
+	height: 80px;
+	position: relative;
 	display: flex;
 	background: transparent;
 	align-items: end;
 	float: left;
 	padding: 0px;
+	line-height: 26px;
+	width: 100%;
 	border: 0px;
 }
 
@@ -115,13 +141,21 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	display: block;
 }
 
-@media (min-width: 768) and (max-width:992px) {
+@media (max-width: 768px) {
+	.frametrail-body {
+		height: calc(100vh - 305px);
+	}
+}
+
+@media (min-width: 768px) and (max-width:992px) {
 	.playerTabs {
 		width: 50%;
 	}
 
 	.playerTitle {
 		width: 50%;
+		margin-bottom: 0px;
+		height: 80px;
 	}
 }
 @media (min-width:992px) {
@@ -131,6 +165,8 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 
     .playerTitle {
 		width: calc(100% - 500px);
+		margin-bottom: 0px;
+		height: 80px;
 	}
 }
 @media (min-width:1200px) {
@@ -140,30 +176,13 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 
     .playerTitle {
 		width: calc(100% - 600px);
+		margin-bottom: 0px;
+		height: 80px;
 	}
-}
-
-.playerTitle .partyIndicator, .customhtmlContainer .partyIndicator {
-	margin: 2px 2px 2px 6px;
-	padding: 0px 6px;
-	border-width: 1px;
-	border-style: solid;
-	border-radius: 4px;
-	background: transparent;
-	white-space: nowrap;
 }
 
 .customhtmlContainer .partyIndicator {
 	margin-left: 2px;
-}
-
-.playerTitle .speechMeta {
-	margin-bottom: 4px;
-}
-
-.playerTitle h3 {
-	margin-top: 8px;
-	font-size: 1rem;
 }
 
 .titlebar {

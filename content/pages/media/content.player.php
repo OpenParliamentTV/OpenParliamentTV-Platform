@@ -77,6 +77,10 @@ $relatedContentsHTML =
     
 </script>
 <div class="mediaContainer">
+    <div class="playerTitle">
+        <div class="speechMeta"><?= $formattedDate ?> | <span class="d-none d-md-inline"><?= $speech["attributes"]["parliamentLabel"] ?> / </span><a href="../electoralPeriod/<?= $speech["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $speech["relationships"]["electoralPeriod"]['data']['attributes']['number'] ?><span class="d-none d-md-inline">. <?php echo L::electoralPeriod; ?></span></a> / <a href="../session/<?= $speech["relationships"]["session"]["data"]["id"] ?>"><span class="d-none d-md-inline"><?php echo L::session; ?> </span><?= $speech["relationships"]["session"]['data']['attributes']['number'] ?></a> / <a href="../agendaItem/<?= $speech["attributes"]["parliament"]."-".$speech["relationships"]["agendaItem"]["data"]["id"] ?>"><?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"] ?></a></div>
+        <h3><a href="../person/<?= $mainSpeaker["id"] ?>"><?= $mainSpeaker['attributes']['label'] ?></a><a href="../organisation/<?= $mainFaction["id"] ?>"><span class="partyIndicator" data-faction="<?= $mainFaction["id"] ?>"><?= $mainFaction["attributes"]["labelAlternative"] ?></span></a> - <?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["title"] ?></h3>
+    </div>
     <div class="playerTabs">
         <ul class="nav nav-tabs" role="tablist">
             <?= $proceedingsTab ?>
@@ -95,10 +99,6 @@ $relatedContentsHTML =
             </li>
             -->
         </ul>
-    </div>
-    <div class="playerTitle">
-        <div class="speechMeta"><?= $formattedDate ?> | <?= $speech["attributes"]["parliamentLabel"] ?> | <a href="../electoralPeriod/<?= $speech["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $speech["relationships"]["electoralPeriod"]['data']['attributes']['number'] ?>. <?php echo L::electoralPeriod; ?></a> – <a href="../session/<?= $speech["relationships"]["session"]["data"]["id"] ?>"><?php echo L::session; ?> <?= $speech["relationships"]["session"]['data']['attributes']['number'] ?></a> – <a href="../agendaItem/<?= $speech["attributes"]["parliament"]."-".$speech["relationships"]["agendaItem"]["data"]["id"] ?>"><?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"] ?></a></div>
-        <h3><a href="../person/<?= $mainSpeaker["id"] ?>"><?= $mainSpeaker['attributes']['label'] ?></a><a href="../organisation/<?= $mainFaction["id"] ?>"><span class="partyIndicator" data-faction="<?= $mainFaction["id"] ?>"><?= $mainFaction["attributes"]["labelAlternative"] ?></span></a> - <?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["title"] ?></h3>
     </div>
     <div id="OPTV_Player"></div>
     <!--
