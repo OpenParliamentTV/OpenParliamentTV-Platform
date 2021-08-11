@@ -26,12 +26,7 @@ function textObjectToHTMLString($inputTextObject, $mediaFileURI, $mediaID, $auto
 		
 		$outputHTML .= '<p data-type="'.$paragraph['type'].'">';
 
-		//TODO: REMOVE QUICK FIX 
-		if (count($paragraph['sentences']) == 1) {
-			$sentences = $paragraph['sentences'][0];
-		} else {
-			$sentences = $paragraph['sentences'];
-		}
+		$sentences = $paragraph['sentences'];
 
 		foreach ($sentences as $sentence) {
 
