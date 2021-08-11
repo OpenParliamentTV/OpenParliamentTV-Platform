@@ -123,7 +123,7 @@ function updatePlayer() {
 
 	if (window.OPTV_Player && typeof window.OPTV_Player.destroy == "function") {
 		window.OPTV_Player.destroy();
-		$('.playerTitle').after('<div id="OPTV_Player" class="frametrail-body" data-frametrail-theme="openparliamenttv"></div>');
+		$('.playerTabs').after('<div id="OPTV_Player" class="frametrail-body" data-frametrail-theme="openparliamenttv"></div>');
 	}
 
 	if (resultList) {
