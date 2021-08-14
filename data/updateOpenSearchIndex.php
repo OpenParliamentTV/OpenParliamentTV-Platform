@@ -119,8 +119,8 @@ function setOptions()
                     ))
                 )
             )),
-        ))
-    ));
+        )
+    );
 
     /*
     echo "<pre>";
