@@ -16,6 +16,10 @@
 					<label for="register-password"><?php echo L::password; ?></label>
 					<input type="password" class="form-control" id="register-password" name="password">
 				</div>
+				<div class="form-group">
+					<label for="register-passwordCheck"><?php echo L::password; ?></label>
+					<input type="password" class="form-control" id="register-passwordCheck" name="passwordCheck">
+				</div>
 				<button type="submit" class="btn btn-primary btn-sm"><?php echo L::registerNewAccount; ?></button>
 			</form>
 			<div id="register-response"></div>

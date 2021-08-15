@@ -28,7 +28,7 @@ switch ($_REQUEST["a"]) {
 			//require_once(__DIR__."/../modules/user-management/register.backend.json.php");
 			require_once(__DIR__."/../modules/user-management/register.backend.sql.php");
 
-			$return = registerUser($_REQUEST["mail"],$_REQUEST["password"],$_REQUEST["name"]);
+			$return = registerUser($_REQUEST["mail"],$_REQUEST["password"],$_REQUEST["passwordCheck"],$_REQUEST["name"]);
 
 		} //TODO: Response if registration is not allowed
 

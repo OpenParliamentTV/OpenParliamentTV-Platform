@@ -9,7 +9,7 @@ if (!function_exists("L")) {
 	$i18n->init();
 }
 
-function registerUser($mail = "", $passwd = "", $name="", $db = false) {
+function registerUser($mail = "", $passwd = "", $passwdCheck="", $name="", $db = false) {
 
 	global $config;
 
@@ -28,10 +28,15 @@ function registerUser($mail = "", $passwd = "", $name="", $db = false) {
 
 	} elseif (passwordStrength($passwd) != true) {
 
-		$return["success"] = "false";
-		$return["txt"] = L::messagePasswordTooWeak;
-		return $return;
+        $return["success"] = "false";
+        $return["txt"] = L::messagePasswordTooWeak;
+        return $return;
 
+    } elseif ($passwd != $passwdCheck) {
+
+        $return["success"] = "false";
+        $return["txt"] = L::messagePasswordTooWeak; // TODO: Password and passwordCheck are not the same.
+        return $return;
 
 	} else {
 
