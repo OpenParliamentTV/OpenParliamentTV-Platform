@@ -375,7 +375,7 @@ function getSearchBody($request, $getAllResults) {
 			$filter["should"][] = array("multi_match"=>array(
 				"query" => $requestValue,
 				"type" => "cross_fields",
-				"fields" => ["relationships.people.data.attributes.party.id", "relationships.people.data.attributes.faction.id"],
+				"fields" => ["relationships.people.data.attributes.party.id", "relationships.people.data.attributes.faction.labelAlternative"],
 				"operator" => "or"
 			));
 			$shouldCount++;
