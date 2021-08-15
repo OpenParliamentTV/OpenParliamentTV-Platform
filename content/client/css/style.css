@@ -376,6 +376,10 @@ textarea {
     font-size: 14px;
 }
 
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    border-color:  var(--border-color);
+}
+
 .dropdown-item:focus, 
 .dropdown-item:hover,
 .dropdown-item.active {
