@@ -169,7 +169,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
             $return["data"]["attributes"]["thumbnailURI"] = $item["MediaThumbnailURI"];
             $return["data"]["attributes"]["thumbnailCreator"] = $item["MediaThumbnailCreator"];
             $return["data"]["attributes"]["thumbnailLicense"] = $item["MediaThumbnailLicense"];
-            $return["data"]["attributes"]["additionalInformation"] = json_decode($item["PersonAdditionalInformation"],true);
+            $return["data"]["attributes"]["additionalInformation"] = json_decode($item["MediaAdditionalInformation"],true);
             $return["data"]["attributes"]["lastChanged"] = $item["MediaLastChanged"];
             $return["data"]["attributes"]["textContents"] = array();
 
@@ -323,6 +323,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $pitem["PersonThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $pitem["PersonThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $pitem["PersonThumbnailLicense"];
+                        $tmpAnnotationItem["attributes"]["additionalInformation"] = array_merge_recursive(json_decode($pitem["PersonAdditionalInformation"],true), json_decode($annotation["AnnotationAdditionalInformation"],true));
                         $tmpAnnotationItem["attributes"]["party"]["id"] = $pitem["PartyID"];
                         $tmpAnnotationItem["attributes"]["party"]["label"] = $pitem["PartyLabel"];
                         $tmpAnnotationItem["attributes"]["party"]["labelAlternative"] = $pitem["PartyLabelAlternative"];
