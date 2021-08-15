@@ -244,6 +244,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["DocumentThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["DocumentThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["DocumentThumbnailLicense"];
+                        $tmpAnnotationItem["attributes"]["additionalInformation"] = array_merge_recursive(json_decode($ditem["DocumentAdditionalInformation"],true), json_decode($annotation["AnnotationAdditionalInformation"],true));
                         $tmpAnnotationItem["attributes"]["sourceURI"] = $ditem["DocumentSourceURI"];
                         $tmpAnnotationItem["attributes"]["embedURI"] = $ditem["DocumentEmbedURI"];
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
@@ -265,6 +266,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["OrganisationThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["OrganisationThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["OrganisationThumbnailLicense"];
+                        $tmpAnnotationItem["attributes"]["additionalInformation"] = array_merge_recursive(json_decode($ditem["OrganisationAdditionalInformation"],true), json_decode($annotation["AnnotationAdditionalInformation"],true));
                         $tmpAnnotationItem["attributes"]["color"] = $ditem["OrganisationColor"];
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["organisations"]["data"], $tmpAnnotationItem);
@@ -285,6 +287,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["TermThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["TermThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["TermThumbnailLicense"];
+                        $tmpAnnotationItem["attributes"]["additionalInformation"] = array_merge_recursive(json_decode($ditem["TermAdditionalInformation"],true), json_decode($annotation["AnnotationAdditionalInformation"],true));
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["terms"]["data"], $tmpAnnotationItem);
 
