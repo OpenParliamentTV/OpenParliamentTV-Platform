@@ -106,7 +106,7 @@ function setOptions()
                         ))
                     ))
                 )
-            )),
+            ),
             "organisations" => array("properties" => array(
                 "data" => array(
                     "type" => "nested",
@@ -120,7 +120,7 @@ function setOptions()
                 )
             )),
         )
-    );
+    ));
 
     /*
     echo "<pre>";
