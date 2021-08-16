@@ -73,6 +73,15 @@ function setOptions()
     $data = array();
 
     $data["mappings"] = array("properties" => array(
+        "attributes" => array("properties" => array(
+            "textContents" => array("properties" => array(
+                "textHTML" => array(
+                    "type" => "text",
+                    "analyzer" => "html_analyzer",
+                    "search_analyzer" => "standard"
+                )
+            ))
+        )),
         "relationships" => array("properties" => array(
             "electoralPeriod" => array("properties" => array(
                 "data" => array("properties" => array(
@@ -138,6 +147,12 @@ function setOptions()
                     "type" => "custom",
                     //"tokenizer"=>"nGramTokenizer",
                     "tokenizer" => "standard",
+                    "filter" => ["lowercase", "custom_stemmer", "custom_synonyms"]
+                ),
+                "html_analyzer" => array(
+                    "type" => "custom",
+                    "tokenizer" => "standard",
+                    "char_filter" => ["html_strip"],
                     "filter" => ["lowercase", "custom_stemmer", "custom_synonyms"]
                 )
             ),
