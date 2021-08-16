@@ -313,7 +313,7 @@ function getResultStats(statsCallback) {
 	}).done(function(data) {
 		statsCallback(data.return);
 	}).fail(function(err) {
-		console.log(err);
+		//console.log(err);
 	});
 }
 
