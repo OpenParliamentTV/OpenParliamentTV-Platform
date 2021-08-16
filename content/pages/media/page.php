@@ -30,13 +30,13 @@ $flatDataArray = flattenEntityJSON($apiResult["data"][0]);
             </div>
             <div class="modal-body">
                 <label><?php echo L::selectTheme; ?>:</label>
-                <div class="row row-cols-1 row-cols-sm-2">
+                <div class="row row-cols-2">
                     <div class="col">
                         <div class="card sharePreview active" data-theme="l">
                             <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
-                                    <div class="cardTitle text-truncate">Open Parliament TV | <?php echo L::speech; ?> X Y </div>
+                                    <div class="cardTitle text-truncate">Open Parliament TV | <?= $speechTitleShort ?></div>
                                     <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= $formattedDate ?>: <?= $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] ?></div>
                                 </div>
                                 <div class="overflow-hidden text-uppercase text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
@@ -48,7 +48,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"][0]);
                             <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
-                                    <div class="cardTitle text-truncate">Open Parliament TV | <?php echo L::speech; ?> X Y </div>
+                                    <div class="cardTitle text-truncate">Open Parliament TV | <?= $speechTitleShort ?></div>
                                     <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= $formattedDate ?>: <?= $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] ?></div>
                                 </div>
                                 <div class="overflow-hidden text-uppercase text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>

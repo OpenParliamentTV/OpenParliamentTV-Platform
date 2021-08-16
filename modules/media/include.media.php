@@ -3,6 +3,12 @@
 	require_once(__DIR__."/../utilities/functions.entities.php");
 	require_once(__DIR__."/../../api/v1/api.php");
 
+	if (!function_exists("L")) {
+		require_once(__DIR__."/../../i18n.class.php");
+		$i18n = new i18n(__DIR__.'/../../lang/lang_{LANGUAGE}.json', __DIR__.'/../../langcache/', 'en');
+		$i18n->init();
+	}
+
 	$apiInput = $_REQUEST;
 	unset($apiInput["page"]);
 	unset($apiInput["t"]);
@@ -36,7 +42,7 @@
 
 	$formattedDate = date("d.m.Y", strtotime($speech["attributes"]["dateStart"]));
 
-	$speechTitleShort = 'Speech '.$mainSpeaker['attributes']['label'].', '.$mainFaction['attributes']['labelAlternative'].'  ('.$formattedDate.')';
+	$speechTitleShort = L::speech.' '.$mainSpeaker['attributes']['label'].', '.$mainFaction['attributes']['labelAlternative'].' | '.$formattedDate;
 
 	$speechTitle = '<div class="speechMeta">'.$formattedDate.' | '.$speech["relationships"]["electoralPeriod"]['data']['attributes']['number'].'. Electoral Period | Session '.$speech["relationships"]["session"]['data']['attributes']['number'].' | '.$speech["relationships"]["agendaItem"]["data"]['attributes']["officialTitle"].'</div>'.$mainSpeaker['attributes']['label'].' <span class="partyIndicator" data-party="'.$mainFaction['id'].'">'.$mainFaction['attributes']['labelAlternative'].'</span><div class=\"speechTOPs\">'.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].'</div>';
 

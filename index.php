@@ -113,7 +113,7 @@ switch ($page) {
 	break;
 	case "media":
 		require_once("./modules/media/include.media.php");
-		$pageTitle = '';
+		$pageTitle = $speechTitleShort;
 		$pageType = 'entity';
 		ob_start();
 		include_once("./content/pages/media/page.php");
