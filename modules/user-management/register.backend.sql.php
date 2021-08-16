@@ -61,8 +61,6 @@ function registerUser($mail = "", $passwd = "", $passwdCheck="", $name="", $db =
 			$return["txt"] = L::messageAccountWithMailAlreadyExists;
 			return $return;
 
-			//TODO: Send Mail with forgotten-link?
-
 		} else {
 
 			$pepper = bin2hex(random_bytes(9));
