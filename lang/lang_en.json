@@ -57,6 +57,8 @@
 	"messageErrorGeneric": "An error occured. Please try again.",
 	"messageErrorNoDatabaseConnectionDetail": "Connecting to database failed",
 	"messageErrorNoDatabaseConnectionTitle": "Database connection error",
+	"messageErrorNotFound": "Not found",
+	"messageErrorNotFoundQuote": "\"Sometimes the expected is unexpectedly not present.\"",
 	"messageErrorParameterMissingDetail": "One or more required parameters are missing",
 	"messageErrorParameterMissingTitle": "Parameters missing",
 	"messageLoginErrorGeneric": "An error occured while trying to log in. Please try again.",

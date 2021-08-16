@@ -57,6 +57,8 @@
 	"messageErrorGeneric": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
 	"messageErrorNoDatabaseConnectionDetail": "Verbindung zur Datenbank konnte nicht hergestellt werden",
 	"messageErrorNoDatabaseConnectionTitle": "Datenbank Verbindungsfehler",
+	"messageErrorNotFound": "Nicht gefunden",
+	"messageErrorNotFoundQuote": "„Manchmal ist das Erwartete ganz unerwartet gar nicht da.“",
 	"messageErrorParameterMissingDetail": "Ein oder mehrere erforderliche Parameter fehlen",
 	"messageErrorParameterMissingTitle": "Parameter fehlen",
 	"messageLoginErrorGeneric": "Ein Fehler ist aufgetreten. Bitte versuche erneut, dich anzumelden.",

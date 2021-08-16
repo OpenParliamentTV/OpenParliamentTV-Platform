@@ -3,7 +3,7 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 require_once('i18n.class.php');
 $i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'en');
-//$i18n->setForcedLang('de');
+//$i18n->setForcedLang('en');
 $i18n->init();
 
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
@@ -39,7 +39,7 @@ foreach ($allowedParams as $k=>$v) {
 $isResult = (strlen($paramStr) > 2) ? true : false;
 
 $pageTitle = '';
-$page = (isset($_REQUEST["a"]) && strlen($_REQUEST["a"]) > 2) ? $_REQUEST["a"] : "main";
+$page = (isset($_REQUEST["a"]) && strlen($_REQUEST["a"]) > 0) ? $_REQUEST["a"] : "main";
 
 require_once('config.php');
 require_once (__DIR__."/api/v1/api.php");
@@ -611,6 +611,14 @@ switch ($page) {
 		include_once("./content/pages/search/page.php");
 		$content = ob_get_clean();
 	break;
+	default:
+		$pageTitle = '404 - '.L::messageErrorNotFound;
+		$pageType = 'default';
+		ob_start();
+		include_once("./content/pages/404/page.php");
+		$content = ob_get_clean();
+	break;
+
 }
 ?>
 <!DOCTYPE html>
