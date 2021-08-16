@@ -11,7 +11,7 @@ $(function() {
 
 				if (ret["success"] == "true") {
 
-					$("#register-response").text(ret["txt"]);
+					$("#register-response").removeClass("alert-danger").addClass("alert-success").text(ret["txt"]);
 					setTimeout(function() {
 						location.reload();
 					},2000);
@@ -19,20 +19,20 @@ $(function() {
 
 				} else {
 
-					$("#register-response").html(ret["txt"]);
+					$("#register-response").removeClass("alert-success").addClass("alert-danger").html(ret["txt"]);
 					//console.log(ret["txt"]);
 
 				}
 
 			} else {
 
-				$("#register-response").text("There was an error (code #02) while registering your account. Please try again");
+				$("#register-response").removeClass("alert-success").addClass("alert-danger").text("There was an error (code #02) while registering your account. Please try again");
 
 			}
 		},
 		error: function() {
 
-			$("#register-response").text("There was an error (code #01) while registering your account. Please try again");
+			$("#register-response").removeClass("alert-success").addClass("alert-danger").text("There was an error (code #01) while registering your account. Please try again");
 
 		}
 	});

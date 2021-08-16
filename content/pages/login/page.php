@@ -10,14 +10,15 @@
 
 			?>
 
-				Angemeldet als:<br> <?=$_SESSION["userdata"]["name"]?> (<?=$_SESSION["userdata"]["mail"]?>, <?=$_SESSION["userdata"]["role"]?>)<br><br>
-				<button type="button" class="button-logout btn btn-primary"><?php echo L::logout; ?></button>
+				<div class="alert alert-info">Angemeldet als:<br><b><?=$_SESSION["userdata"]["name"]?></b><br><?=$_SESSION["userdata"]["mail"]?></div>
+				<button type="button" class="button-logout btn btn-primary btn-sm"><?php echo L::logout; ?></button>
 
 			<?php
 
 			} else {
 
 			?>
+				<h2 class="mb-3"><?php echo L::login; ?></h2>
 				<form id="login-form">
 					<div class="form-group">
 						<label for="login-mail"><?php echo L::mailAddress; ?></label>
@@ -28,7 +29,7 @@
 						<input type="password" class="form-control" id="login-password" name="password">
 					</div>
 					<button type="submit" class="btn btn-primary btn-sm"><?php echo L::login; ?></button>
-					<div id="login-response"></div>
+					<div id="login-response" class="alert mt-3"></div>
 				</form>
 				<a href="passwordReset" target="_self"><?php echo L::passwordForgotQuestion; ?></a>
 			<?php

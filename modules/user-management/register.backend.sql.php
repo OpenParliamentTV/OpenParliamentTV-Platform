@@ -35,7 +35,7 @@ function registerUser($mail = "", $passwd = "", $passwdCheck="", $name="", $db =
     } elseif ($passwd != $passwdCheck) {
 
         $return["success"] = "false";
-        $return["txt"] = L::messagePasswordTooWeak; // TODO: Password and passwordCheck are not the same.
+        $return["txt"] = L::messagePasswordNotIdentical;
         return $return;
 
 	} else {
@@ -84,21 +84,22 @@ function registerUser($mail = "", $passwd = "", $passwdCheck="", $name="", $db =
 			$registrationMailVerifyLink = $config['dir']['root'].'/registerConfirm?id='.$userID.'&c='.$confirmationCode;
 
 			$message = '<html><body>';
+			$message .= '<p>'.L::hello.' '.$name.',</p>';
 			$message .= '<p>'.L::messageRegisterThankYou.' <b>'.$config['dir']['root'].'</b>.</p>';
 			$message .= '<p>'.L::messageRegisterClickLinkToValidate.'</p>';
 			$message .= '<p><a href="'.$registrationMailVerifyLink.'">'.$registrationMailVerifyLink.'</a></p>';
+			$message .= '<p>'.L::messageMailGreetings.',<br>'.L::brand.'</p>';
 			$message .= '</body></html>';
 
 			$header = array(
 				'MIME-Version' => '1.0',
-				'Content-type' => 'text/html; charset=iso-8859-1',
+				'Content-type' => 'text/html; charset=utf-8',
 				'From' => $config["mail"]["from"],
-				'Reply-To' => $config["mail"]["replyto"],
 				'X-Mailer' => 'PHP/' . phpversion()
 			);
 
 
-			mail($mail, $registrationMailSubject, $message, $header);
+			mail($name.' <'.$mail.'>', $registrationMailSubject, $message, $header);
 
 			$return["success"] = "true";
 			$return["txt"] = L::messageRegisterSuccess;

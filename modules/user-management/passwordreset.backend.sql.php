@@ -55,19 +55,22 @@ function passwordResetMail($mail = "", $db = false) {
 			$passwordresetMailVerifyLink = $config['dir']['root'].'/passwordReset?id='.$userdata['UserID'].'&c='.$confirmationCode;
 
 			$message = '<html><body>';
+			$message .= '<p>'.L::hello.' '.$userdata["UserName"].',</p>';
 			$message .= '<p>'.L::messagePasswordResetMailStart.'</p>';
 			$message .= '<p><a href="'.$passwordresetMailVerifyLink.'">'.$passwordresetMailVerifyLink.'</a></p>';
 			$message .= '<p>'.L::messagePasswordResetMailEnd.'</p>';
+			$message .= '<p>'.L::messageMailGreetings.',<br>'.L::brand.'</p>';
 			$message .= '</body></html>';
 
 			$header = array(
+				'MIME-Version' => '1.0',
+				'Content-type' => 'text/html; charset=utf-8',
 				'From' => $config["mail"]["from"],
-				'Reply-To' => $config["mail"]["replyto"],
 				'X-Mailer' => 'PHP/' . phpversion()
 			);
 
 
-			mail($mail, $passwordresetMailSubject, $message, $header);
+			mail($userdata["UserName"].' <'.$mail.'>', $passwordresetMailSubject, $message, $header);
 
 			$return["success"] = "true";
 			$return["txt"] = L::messagePasswordResetMailSent;

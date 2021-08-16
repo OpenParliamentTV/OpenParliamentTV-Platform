@@ -12,21 +12,21 @@ $(function() {
 
 				if (ret["success"] == "true") {
 
-					$("#login-response").text(ret["txt"]);
+					$("#login-response").removeClass("alert-danger").addClass("alert-success").text(ret["txt"]);
 					setTimeout(function() {
 						location.reload();
 					},2000);
 
 				} else {
 
-					$("#login-response").text(ret["txt"]);
+					$("#login-response").removeClass("alert-success").addClass("alert-danger").text(ret["txt"]);
 
 				}
 
 
 			} else {
 
-				$("#login-response").text("There was an error (code #02) while logging in. Please try again");
+				$("#login-response").removeClass("alert-success").addClass("alert-danger").text("There was an error (code #02) while logging in. Please try again");
 
 			}
 
@@ -34,7 +34,7 @@ $(function() {
 
 		error: function() {
 
-			$("#login-response").text("There was an error (code #01) while logging in. Please try again");
+			$("#login-response").removeClass("alert-success").addClass("alert-danger").text("There was an error (code #01) while logging in. Please try again");
 
 		}
 	});
