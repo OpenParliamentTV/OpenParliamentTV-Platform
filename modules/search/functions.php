@@ -380,6 +380,41 @@ function getSearchBody($request, $getAllResults) {
 			));
 			$shouldCount++;
 
+		} else if ($requestKey == "abgeordnetenwatchID") {
+			
+			if (isset($request["context"]) && strlen($request["context"]) > 2) {
+				$filter["must"][] = array(
+					"nested" => array(
+						"path" => "relationships.people.data",
+						"query" => array("bool" => array("must"=>array(
+							array("match" => array(
+								"relationships.people.data.attributes.additionalInformation.abgeordnetenwatchID" => $requestValue
+							)),
+							array("match_phrase" => array(
+								"relationships.people.data.attributes.context" => $request["context"]
+							))
+						)))
+					)
+				);
+
+			} else {
+				
+				$filter["must"][] = array(
+					"nested" => array(
+						"path" => "relationships.people.data",
+						"query" => array("bool" => array("must"=>array(
+							array("match" => array(
+								"relationships.people.data.attributes.additionalInformation.abgeordnetenwatchID" => $requestValue
+							)),
+							array("match" => array(
+								"relationships.people.data.attributes.context" => 'main-speaker'
+							))
+						)))
+					)
+				);
+
+			}
+
 		} else if ($requestKey == "person" && strlen($requestValue) > 1) {
 			
 			$filter["must"][] = array(
