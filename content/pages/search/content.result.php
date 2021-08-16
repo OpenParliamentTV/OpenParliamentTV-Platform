@@ -19,7 +19,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		$i18n->init();
 	}
 	//require_once(__DIR__."/../../../modules/search/functions.php");
-	//require_once(__DIR__."/../../../modules/search/include.search.php");
+	require_once(__DIR__."/../../../modules/search/include.search.php");
 	
 	/*
 	echo '<pre>';
