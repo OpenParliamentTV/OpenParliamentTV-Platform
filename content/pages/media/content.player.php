@@ -33,7 +33,17 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
     $documentsTab = '<li class="nav-item">
             <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="tabTitle">'.L::documents.'</span><span class="icon-doc-text"></span></a>
         </li>';
-    $relatedDocumentsHTML .= '<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab"><iframe src="'.$config["dir"]["root"].'/modules/pdf-viewer/web/viewer.html?file='.$speech["relationships"]["documents"]["data"][0]["attributes"]["sourceURI"].'"></iframe></div>';
+    $relatedDocumentsHTML .= '<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">';
+
+    //<iframe src="'.$config["dir"]["root"].'/modules/pdf-viewer/web/viewer.html?file='.$speech["relationships"]["documents"]["data"][0]["attributes"]["sourceURI"].'"></iframe>
+    foreach ($speech["relationships"]["documents"]["data"] as $tmpDocument) {
+
+        $relatedDocumentsHTML .= '<div class="relationshipsDocument relationshipsDocument_'.$tmpDocument["attributes"]["type"].'">       <a href="'.$tmpDocument["attributes"]["sourceURI"].'" target="_blank">'.$tmpDocument["attributes"]["label"].'</a>       </div>';
+
+    }
+
+
+    $relatedDocumentsHTML .= '</div>';
 }
 /*
 foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {

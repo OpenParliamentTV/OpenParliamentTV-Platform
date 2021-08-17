@@ -525,3 +525,24 @@ body.darkmode .playerContainer .playerProgress .ui-slider-range {
 body.darkmode .playerContainer .controls {
 	background: rgba(190, 190, 190,.2);
 }
+
+.relationshipsDocument {
+	padding: 4px;
+	border-bottom: 1px solid #ccc;
+	font-size: 21px;
+}
+.relationshipsDocument:last-child {
+	border-bottom: none;
+}
+
+
+.relationshipsDocument.relationshipsDocument_officialDocument:before {
+	content: '\F10D';
+	font-family: "frametrail-webfont";
+
+}
+.relationshipsDocument.relationshipsDocument_legalDocument:before {
+	content: '\F19C';
+	font-family: "frametrail-webfont";
+
+}
