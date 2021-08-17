@@ -38,11 +38,12 @@
 		} else {
 			$textContentsHTML = textObjectToHTMLString(json_encode($speech["attributes"]['textContents'][0]), $speech["attributes"]['videoFileURI'], $speech["id"]);
 		}
+		$textContentsHTML = str_replace("\n","\\n",$textContentsHTML);
 	}
 
 	$formattedDate = date("d.m.Y", strtotime($speech["attributes"]["dateStart"]));
 
-	$speechTitleShort = L::speech.' '.$mainSpeaker['attributes']['label'].', '.$mainFaction['attributes']['labelAlternative'].' | '.$formattedDate;
+	$speechTitleShort = $mainSpeaker['attributes']['label'].', '.$mainFaction['attributes']['labelAlternative'].' | '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' | '.$formattedDate;
 
 	$speechTitle = '<div class="speechMeta">'.$formattedDate.' | '.$speech["relationships"]["electoralPeriod"]['data']['attributes']['number'].'. Electoral Period | Session '.$speech["relationships"]["session"]['data']['attributes']['number'].' | '.$speech["relationships"]["agendaItem"]["data"]['attributes']["officialTitle"].'</div>'.$mainSpeaker['attributes']['label'].' <span class="partyIndicator" data-party="'.$mainFaction['id'].'">'.$mainFaction['attributes']['labelAlternative'].'</span><div class=\"speechTOPs\">'.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].'</div>';
 
