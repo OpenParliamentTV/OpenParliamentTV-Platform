@@ -23,6 +23,13 @@
 define('CSAJAX_FILTERS', true);
 
 /**
+ * Enables or disables Expect: 100-continue header. Some webservers don't 
+ * handle this header correctly.
+ * Recommended value: false
+ */
+define('CSAJAX_SUPPRESS_EXPECT', false);
+
+/**
  * If set to true, $valid_requests should hold only domains i.e. a.example.com, b.example.com, usethisdomain.com
  * If set to false, $valid_requests should hold the whole URL ( without the parameters ) i.e. http://example.com/this/is/long/url/
  * Recommended value: false (for security reasons - do not forget that anyone can access your proxy)
@@ -50,8 +57,8 @@ $valid_requests = array(
  * See http://php.net/manual/en/function.curl-setopt-array.php
  */
 $curl_options = array(
-    CURLOPT_SSL_VERIFYPEER => false,
-    CURLOPT_SSL_VERIFYHOST => 2,
+    //CURLOPT_SSL_VERIFYPEER => false,
+    //CURLOPT_SSL_VERIFYHOST => 2,
 );
 
 /* * * STOP EDITING HERE UNLESS YOU KNOW WHAT YOU ARE DOING * * */
@@ -139,6 +146,12 @@ if ($request_method == 'GET' && count($request_params) > 0 && (!array_key_exists
 
 // let the request begin
 $ch = curl_init($request_url);
+
+// Suppress Expect header
+if (CSAJAX_SUPPRESS_EXPECT) {
+    array_push($request_headers, 'Expect:'); 
+}
+
 curl_setopt($ch, CURLOPT_HTTPHEADER, $request_headers);   // (re-)send headers
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);     // return response
 curl_setopt($ch, CURLOPT_HEADER, true);       // enabled response headers
