@@ -57,8 +57,8 @@ $valid_requests = array(
  * See http://php.net/manual/en/function.curl-setopt-array.php
  */
 $curl_options = array(
-    //CURLOPT_SSL_VERIFYPEER => false,
-    //CURLOPT_SSL_VERIFYHOST => 2,
+    CURLOPT_SSL_VERIFYPEER => false,
+    CURLOPT_SSL_VERIFYHOST => 2,
 );
 
 /* * * STOP EDITING HERE UNLESS YOU KNOW WHAT YOU ARE DOING * * */
