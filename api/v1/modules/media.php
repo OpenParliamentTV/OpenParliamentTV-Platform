@@ -415,7 +415,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         $return["meta"]["requestStatus"] = "success";
 
         //TODO: Check if this makes sense here
-        $return["meta"]["results"]["count"] = count($search["hits"]["hits"]);
+        $return["meta"]["results"]["count"] = ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0;
         $return["meta"]["results"]["total"] = $search["hits"]["total"]["value"];
 
         //TODO: $return["data"]["links"]["self"] = $config["dir"]["api"]."/"."search/organisations?".getURLParameterFromArray($filteredParameters);
