@@ -44,18 +44,6 @@ if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli"))
     }
     $ESClient = $ESClientBuilder->build();
 
-    /*
-     *
-     * TODO: REMOVE IF OTHER WORKS
-    $hosts = ["https://@localhost:9200"];
-    $ESClient = Elasticsearch\ClientBuilder::create()
-        ->setHosts($hosts)
-        ->setBasicAuthentication("admin", "admin")
-        ->setSSLVerification(realpath(__DIR__ . "/../../opensearch-root-ssl.pem"))
-        ->build();
-
-    require_once(__DIR__ . "/../config.php");*/
-
     setOptions();
     updateIndex();
 
@@ -78,7 +66,14 @@ function setOptions()
                 "textHTML" => array(
                     "type" => "text",
                     "analyzer" => "html_analyzer",
-                    "search_analyzer" => "standard"
+                    //"analyzer" => "standard",
+                    "search_analyzer" => "standard",
+                    "fields" => array(
+                        "autocomplete" => array(
+                            "analyzer" => "autocomplete_html_analyzer",
+                            "type" => "text"
+                        )
+                    )
                 )
             ))
         )),
@@ -152,8 +147,22 @@ function setOptions()
                 "html_analyzer" => array(
                     "type" => "custom",
                     "tokenizer" => "standard",
-                    "char_filter" => ["html_strip"],
-                    "filter" => ["lowercase", "custom_stemmer", "custom_synonyms"]
+                    "char_filter" => ["custom_html_strip"],
+                    //"filter" => ["lowercase", "custom_stemmer", "custom_synonyms"]
+                    "filter" => ["lowercase", "custom_synonyms"]
+                ),
+                "autocomplete_html_analyzer" => array(
+                    "type" => "custom",
+                    "tokenizer" => "standard",
+                    "char_filter" => ["custom_html_strip"],
+                    "filter" => ["custom_stopwords","lowercase", "custom_synonyms"]
+                )
+            ),
+            "char_filter" => array(
+                "custom_html_strip" => array(
+                    "type" => "pattern_replace",
+                    "pattern" => "<\w+\s[^>]+>|</\w+>",
+                    "replacement" => " "
                 )
             ),
             /*
@@ -166,6 +175,11 @@ function setOptions()
             ),
             */
             "filter" => array(
+                "custom_stopwords" => array(
+                    "type" => "stop",
+                    "ignore_case" => true,
+                    "stopwords" => ["und"]
+                ),
                 "custom_stemmer" => array(
                     "type" => "stemmer",
                     "name" => "light_german"
