@@ -206,6 +206,60 @@ function searchStats($request) {
 
 }
 
+/**
+ * @param string $textQuery
+ * @return array
+ */
+function searchAutocomplete($textQuery) {
+    
+    if (!isset($textQuery) || !strlen($textQuery) > 2 ) {
+    	return array();
+    }
+    
+    require_once(__DIR__.'/../../vendor/autoload.php');
+    require(__DIR__.'/../../config.php');
+
+    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
+
+    if ($config["ES"]["hosts"]) {
+        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+    }
+    if ($config["ES"]["BasicAuthentication"]["user"]) {
+        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
+    }
+    if ($config["ES"]["SSL"]["pem"]) {
+        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
+    }
+
+    $ESClient = $ESClientBuilder->build();
+
+    $data = getAutocompleteSearchBody($textQuery);
+	
+	$searchParams = array("index" => "openparliamenttv_de", "body" => $data);
+	
+	try {
+		$results = $ESClient->search($searchParams);
+	} catch(Exception $e) {
+		//print_r($e->getMessage());
+		$results = null;
+	}
+
+	/*
+	echo '<pre>';
+	print_r($results); 
+	echo '</pre>';
+	*/
+
+	if ($results && isset($results["suggest"]["autosuggest"][0]["options"])) {
+		$return = $results["suggest"]["autosuggest"][0]["options"];
+	} else {
+		$return = array();
+	}
+
+	return $return;
+
+}
+
 
 /*
  * @param array $request
@@ -563,6 +617,32 @@ function getSearchBody($request, $getAllResults) {
 	print_r($data);
 	echo '</pre>';
 	*/
+
+	return $data;
+}
+
+/*
+ * @param string $text
+ * @return array
+ */
+function getAutocompleteSearchBody($text) {
+
+	$maxResults = 6;
+
+	$data = array(
+		"suggest" => array(
+			"text" => $text,
+			"autosuggest" => array(
+				"term" => array(
+					"field" => "attributes.textContents.textHTML.autocomplete",
+					"size" => $maxResults,
+					"sort" => "frequency",
+					"suggest_mode" => "always",
+					"min_word_length" => 4
+				)
+			)
+		)
+	);
 
 	return $data;
 }

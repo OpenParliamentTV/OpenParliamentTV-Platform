@@ -24,7 +24,7 @@
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(search)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2 [QSA,L]
+	RewriteRule ^(search|autocomplete)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2 [QSA,L]
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?action=getItem&itemType=$1&id=$2 [QSA,L]
