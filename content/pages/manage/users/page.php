@@ -34,7 +34,66 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="all-users" role="tabpanel" aria-labelledby="all-users-tab">
-					<table id="manageUsersOverviewTable"></table>
+					<table id="manageUsersOverviewTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>UserName</th>
+                                <th>Mail</th>
+                                <th>Role</th>
+                                <th>Active</th>
+                                <th>Blocked</th>
+                                <th>Password</th>
+                                <th>LastLogin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+
+                            require_once(__DIR__."/../../../../modules/utilities/safemysql.class.php");
+
+                            if (!$db) {
+                                try {
+
+                                    $db = new SafeMySQL(array(
+                                        'host' => $config["platform"]["sql"]["access"]["host"],
+                                        'user' => $config["platform"]["sql"]["access"]["user"],
+                                        'pass' => $config["platform"]["sql"]["access"]["passwd"],
+                                        'db' => $config["platform"]["sql"]["db"]
+                                    ));
+
+                                } catch (exception $e) {
+
+                                    $return["meta"]["requestStatus"] = "error";
+                                    $return["errors"] = array();
+                                    $errorarray["status"] = "503";
+                                    $errorarray["code"] = "1";
+                                    $errorarray["title"] = "Database connection error";
+                                    $errorarray["detail"] = "Connecting to platform database failed"; //TODO: Description
+                                    array_push($return["errors"], $errorarray);
+                                    return $return;
+
+                                }
+                            }
+
+                            $users = $db->getAll("SELECT * FROM ?n",$config["platform"]["sql"]["tbl"]["User"]);
+
+                            foreach ($users as $user) {
+
+                                echo "<tr>
+                                        <td><input type='text' name='UserName' data-userid='".$user["UserID"]."' value='".$user["UserName"]."' class='userform-username form-control'></td>
+                                        <td><input type='text' name='UserMail' data-userid='".$user["UserID"]."' value='".$user["UserMail"]."' class='userform-usermail form-control'></td>
+                                        <td><input type='text' name='UserRole' data-userid='".$user["UserID"]."' value='".$user["UserRole"]."' class='userform-userrole form-control'></td>
+                                        <td><input type='checkbox' name='UserActive' data-userid='".$user["UserID"]."' class='userform-useractive form-control'".(($user["UserActive"]==1)?" checked":"")."></td>
+                                        <td><input type='checkbox' name='UserBlocked' data-userid='".$user["UserID"]."' class='userform-userblocked form-control'".(($user["UserBlocked"]==1)?" checked":"")."></td>
+                                        <td><input type='input' name='UserPassword' data-userid='".$user["UserID"]."' placeholder='aA-zZ, Special >8 Chars' class='userform-userpassword form-control'> </td>
+                                        <td>".$user["UserLastLogin"]."</td>
+                                    </tr>";
+
+                            }
+
+                        ?>
+                        </tbody>
+                    </table>
 				</div>
 			</div>
 		</div>

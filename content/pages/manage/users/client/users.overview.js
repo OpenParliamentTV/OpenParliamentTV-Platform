@@ -1,6 +1,7 @@
 window.pad = (n,s=2) => (`${new Array(s).fill(0)}${n}`).slice(-s);
 $(function() {
 
+	/*
 	var tableData = [];
 	$.ajax({
 		url: '../server/ajaxServer.php',
@@ -81,6 +82,71 @@ $(function() {
 		}
 
 	});
+
+	*/
+
+	$("#manageUsersOverviewTable").on("change", ".userform-useractive, .userform-userblocked", function() {
+		//console.log(this);
+		let item = this;
+		let data = {};
+		data["action"] = "change";
+		data["itemType"] = "user";
+		data["UserID"] = $(this).data("userid");
+		data[$(this).attr("name")] = ((this.checked) ? 1 : 0);
+
+		$.ajax({
+			url: config["dir"]["root"]+"/api/v1/index.php",
+			data: data,
+			item: item,
+			success: function(ret) {
+				console.log(ret);
+				if (ret["meta"]["requestStatus"] === "success") {
+					$(item).animate({backgroundColor:"#d3f5e1"}, 1000, function() {
+						$(item).animate({backgroundColor:""});
+					})
+				} else {
+					$(item).animate({backgroundColor:"#f5d3dd"}, 1000, function() {
+						$(item).animate({backgroundColor:""});
+					})
+				}
+			}
+		});
+
+	});
+
+	$("#manageUsersOverviewTable").on("keyup", ".userform-username, .userform-usermail, .userform-userrole, .userform-userpassword", function(e) {
+		//console.log(this);
+		//console.log(e.key);
+		if (e.key === "Enter") {
+			e.preventDefault();
+			let item = this;
+			let data = {};
+			data["action"] = "change";
+			data["itemType"] = "user";
+			data["UserID"] = $(this).data("userid");
+			data[$(this).attr("name")] = $(this).val();
+			$.ajax({
+				url: config["dir"]["root"]+"/api/v1/index.php",
+				data: data,
+				item: item,
+				success: function(ret) {
+					console.log(ret);
+					if (ret["meta"]["requestStatus"] === "success") {
+						$(item).animate({backgroundColor:"#d3f5e1"}, 1000, function() {
+							$(item).animate({backgroundColor:""});
+						})
+					} else {
+						$(item).animate({backgroundColor:"#f5d3dd"}, 1000, function() {
+							$(item).animate({backgroundColor:""});
+						})
+					}
+				}
+			})
+		}
+
+	});
+
+
 
 
 
