@@ -279,7 +279,7 @@ $(function() {
 
         if ($(this).val().length > 2) {
             $.ajax({
-                url:config["dir"]["root"]+"/api/v1/search/document", //TODO: Move API to root $config and add it to JS Object
+                url:config["dir"]["root"]+"/api/v1/search/documents", //TODO: Move API to root $config and add it to JS Object
                 data: {
                     "label":$(this).val()
                 },
