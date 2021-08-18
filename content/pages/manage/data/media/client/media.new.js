@@ -383,4 +383,17 @@ $(function() {
         $(this).parent().remove();
     });
 
+    $("#mediaAddForm").ajaxForm({
+        type:"POST",
+        data:{
+          action:"addMedia",
+          itemType:"media"
+        },
+        url: config["dir"]["root"]+"/api/v1/index.php",
+        complete: function(r) {
+            console.log(r);
+            console.log(r.responseText);
+        }
+    })
+
 });

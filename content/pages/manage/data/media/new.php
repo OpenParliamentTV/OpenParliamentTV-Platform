@@ -25,7 +25,7 @@ if ($_REQUEST["aTEST"]) {
 		<div class="col-12">
 			<h2>Add New Media</h2>
 			<form action="" method="post" id="mediaAddForm">
-				<input type="hidden" name="aTEST" value="mediaAddTEST">
+				<input type="hidden" name="a" value="mediaAdd">
 				<div class="row">
 					<div class="col-6 mb-4">
 						<div class="card h-100">
