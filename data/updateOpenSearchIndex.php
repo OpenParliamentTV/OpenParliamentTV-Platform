@@ -178,7 +178,7 @@ function setOptions()
                 "custom_stopwords" => array(
                     "type" => "stop",
                     "ignore_case" => true,
-                    "stopwords" => ["und"]
+                    "stopwords" => "_german_"
                 ),
                 "custom_stemmer" => array(
                     "type" => "stemmer",
