@@ -627,7 +627,7 @@ function getSearchBody($request, $getAllResults) {
  */
 function getAutocompleteSearchBody($text) {
 
-	$maxResults = 6;
+	$maxResults = 4;
 
 	$data = array(
 		"suggest" => array(
@@ -636,9 +636,10 @@ function getAutocompleteSearchBody($text) {
 				"term" => array(
 					"field" => "attributes.textContents.textHTML.autocomplete",
 					"size" => $maxResults,
-					"sort" => "frequency",
+					"sort" => "score",
+					"min_doc_freq" => 3,
 					"suggest_mode" => "always",
-					"min_word_length" => 4
+					"min_word_length" => 3
 				)
 			)
 		)
