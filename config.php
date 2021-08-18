@@ -34,7 +34,6 @@ $config["parliament"]["DE"]["sql"]["access"]["host"] = "localhost";
 $config["parliament"]["DE"]["sql"]["access"]["user"] = "root";
 $config["parliament"]["DE"]["sql"]["access"]["passwd"] = "";
 $config["parliament"]["DE"]["sql"]["db"] = "openparliamenttv_de";
-
 $config["parliament"]["DE"]["sql"]["tbl"]["AgendaItem"] = "agendaitem";
 $config["parliament"]["DE"]["sql"]["tbl"]["ElectoralPeriod"] = "electoralperiod";
 $config["parliament"]["DE"]["sql"]["tbl"]["Session"] = "session";
@@ -42,12 +41,30 @@ $config["parliament"]["DE"]["sql"]["tbl"]["Media"] = "media";
 $config["parliament"]["DE"]["sql"]["tbl"]["Annotation"] = "annotation";
 $config["parliament"]["DE"]["sql"]["tbl"]["Text"] = "text";
 
+
+//DB - Parliament config Brandenburg
+$config["parliament"]["DE-BB"]["label"] = "Landtag Brandenburg";
+$config["parliament"]["DE-BB"]["sql"]["access"]["host"] = "localhost";
+$config["parliament"]["DE-BB"]["sql"]["access"]["user"] = "root";
+$config["parliament"]["DE-BB"]["sql"]["access"]["passwd"] = "";
+$config["parliament"]["DE-BB"]["sql"]["db"] = "openparliamenttv_de_bb";
+$config["parliament"]["DE-BB"]["sql"]["tbl"]["AgendaItem"] = "agendaitem";
+$config["parliament"]["DE-BB"]["sql"]["tbl"]["ElectoralPeriod"] = "electoralperiod";
+$config["parliament"]["DE-BB"]["sql"]["tbl"]["Session"] = "session";
+$config["parliament"]["DE-BB"]["sql"]["tbl"]["Media"] = "media";
+$config["parliament"]["DE-BB"]["sql"]["tbl"]["Annotation"] = "annotation";
+$config["parliament"]["DE-BB"]["sql"]["tbl"]["Text"] = "text";
+
+
+
+
 //ES Config
 $config["ES"]["hosts"] = false;
 $config["ES"]["BasicAuthentication"]["user"] = false;
 $config["ES"]["BasicAuthentication"]["passwd"] = false;
 $config["ES"]["SSL"]["pem"] = false;
 
+/*
 if (((array_key_exists("SERVER_NAME", $_SERVER)) && (!preg_match("/openparliament\.tv/", $_SERVER["SERVER_NAME"])))
     || (!array_key_exists("PWD", $_SERVER) && (php_sapi_name() == "cli"))
     || (array_key_exists("PWD", $_SERVER) && (!preg_match("/openparliament\.tv/", $_SERVER["PWD"])))) {
@@ -58,7 +75,5 @@ if (((array_key_exists("SERVER_NAME", $_SERVER)) && (!preg_match("/openparliamen
     $config["ES"]["SSL"]["pem"] = realpath(__DIR__."/../opensearch-root-ssl.pem");
 
 }
-
-
-
+*/
 ?>
