@@ -56,24 +56,10 @@ $config["parliament"]["DE-BB"]["sql"]["tbl"]["Annotation"] = "annotation";
 $config["parliament"]["DE-BB"]["sql"]["tbl"]["Text"] = "text";
 
 
-
-
 //ES Config
-$config["ES"]["hosts"] = false;
-$config["ES"]["BasicAuthentication"]["user"] = false;
-$config["ES"]["BasicAuthentication"]["passwd"] = false;
-$config["ES"]["SSL"]["pem"] = false;
+$config["ES"]["hosts"] = ["https://@localhost:9200"];
+$config["ES"]["BasicAuthentication"]["user"] = "admin";
+$config["ES"]["BasicAuthentication"]["passwd"] = "admin";
+$config["ES"]["SSL"]["pem"] = realpath(__DIR__."/../opensearch-root-ssl.pem");
 
-/*
-if (((array_key_exists("SERVER_NAME", $_SERVER)) && (!preg_match("/openparliament\.tv/", $_SERVER["SERVER_NAME"])))
-    || (!array_key_exists("PWD", $_SERVER) && (php_sapi_name() == "cli"))
-    || (array_key_exists("PWD", $_SERVER) && (!preg_match("/openparliament\.tv/", $_SERVER["PWD"])))) {
-
-    $config["ES"]["hosts"] = ["https://@localhost:9200"];
-    $config["ES"]["BasicAuthentication"]["user"] = "admin";
-    $config["ES"]["BasicAuthentication"]["passwd"] = "admin";
-    $config["ES"]["SSL"]["pem"] = realpath(__DIR__."/../opensearch-root-ssl.pem");
-
-}
-*/
 ?>
