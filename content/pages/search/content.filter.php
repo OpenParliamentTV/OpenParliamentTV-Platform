@@ -1,11 +1,28 @@
 <div id="filterbar" class="col-12 nosearch" style="margin-top: 45px;">
 	<form id="filterForm" method="get" accept-charset="UTF-8">
-		<!--<input type="hidden" name="a" value="search">-->
-		<!--<label for="edit-query">Suchbegriff eingeben </label>-->
-		<div class="searchContainer input-group">
-			<input class="form-control" placeholder="<?php echo L::enterSearchTerm; ?>" id="edit-query" name="q" value="" type="text">
-			<div class="input-group-append">
-				<button type="button" id="edit-submit" class="btn btn-sm btn-outline-primary"><span class="icon-search"></span><span class="sr-only"><?php echo L::search; ?></span></button>
+		<input type="hidden" name="q" value="">
+		<div class="searchContainer">
+			<div class="position-relative">
+				<div>
+					<div class="searchInputContainer clearfix">
+						<input id="edit-query" placeholder="<?php echo L::enterSearchTerm; ?>" name="edit-query" value="" type="text">
+					</div>
+					<button type="button" id="edit-submit" class="btn btn-sm btn-outline-primary"><span class="icon-search"></span><span class="sr-only"><?php echo L::search; ?></span></button>
+				</div>
+				<div class="searchSuggestionContainer">
+					<div class="row">
+						<div class="col col-12 col-sm-6 col-lg-5">
+							<div style="font-weight: bolder;">Suggestions</div>
+							<hr class="my-1">
+							<div id="suggestionContainerText"></div>
+						</div>
+						<div class="col col-12 col-sm-6 col-lg-7">
+							<div style="font-weight: bolder;"><span class="icon-torso"></span><?php echo L::personPlural; ?></div>
+							<hr class="my-1">
+							<div id="suggestionContainerPeople"></div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<button class="btn btn-primary btn-sm d-block d-md-none" type="button" data-toggle="collapse" data-target=".filterContainer" aria-expanded="false" aria-controls="">
@@ -45,13 +62,13 @@
 						<div style="clear: both;"></div>
 					</div>
 				</div>
+				<!--
 				<div class="col col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3">
 					<div class="form-group">
 						<label for="edit-keys"><b><?php echo L::name; ?></b></label>
 						<input class="form-control form-control-sm" placeholder="<?php echo L::enterName; ?>" id="edit-keys" name="person" value="" type="text">
 					</div>
 				</div>
-				<!--
 				<div class="col col-12 col-sm-6 col-md-5 col-lg-4 col-xl-2">
 					<div class="row row-cols-2">
 						<div class="col col-5 form-group">

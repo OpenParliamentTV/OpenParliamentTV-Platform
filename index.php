@@ -52,8 +52,8 @@ switch ($page) {
 		$apiResult = apiV1([
 			"action"=>"getItem", 
 			"itemType"=>$page, 
-			"id"=>$_REQUEST["id"]]
-		);
+			"id"=>$_REQUEST["id"]
+		]);
 		$pageTitle = '<span class="icon-list-numbered"></span>'.$apiResult["data"]["attributes"]["title"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
@@ -69,8 +69,8 @@ switch ($page) {
 		$apiResult = apiV1([
 			"action"=>"getItem", 
 			"itemType"=>$page, 
-			"id"=>$_REQUEST["id"]]
-		);
+			"id"=>$_REQUEST["id"]
+		]);
 		$pageTitle = '<span class="icon-doc-text"></span>'.$apiResult["data"]["attributes"]["label"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
@@ -86,8 +86,8 @@ switch ($page) {
 		$apiResult = apiV1([
 			"action"=>"getItem", 
 			"itemType"=>$page, 
-			"id"=>$_REQUEST["id"]]
-		);
+			"id"=>$_REQUEST["id"]
+		]);
 		$pageTitle = '<span class="icon-check"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – '.$apiResult["data"]["attributes"]["number"].'. '.L::electoralPeriod;
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
@@ -103,8 +103,8 @@ switch ($page) {
 		$apiResult = apiV1([
 			"action"=>"getItem", 
 			"itemType"=>"media", 
-			"id"=>$_REQUEST["id"]]
-		);
+			"id"=>$_REQUEST["id"]
+		]);
 		$pageTitle = '';
 		$pageType = 'entity';
 		ob_start();
@@ -123,8 +123,8 @@ switch ($page) {
 		$apiResult = apiV1([
 			"action"=>"getItem", 
 			"itemType"=>$page, 
-			"id"=>$_REQUEST["id"]]
-		);
+			"id"=>$_REQUEST["id"]
+		]);
 		$pageTitle = '<span class="icon-bank"></span>'.$apiResult["data"]["attributes"]["labelAlternative"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
@@ -140,8 +140,8 @@ switch ($page) {
 		$apiResult = apiV1([
 			"action"=>"getItem", 
 			"itemType"=>$page, 
-			"id"=>$_REQUEST["id"]]
-		);
+			"id"=>$_REQUEST["id"]
+		]);
 		$pageTitle = '<span class="icon-torso"></span>'.$apiResult["data"]["attributes"]["label"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
@@ -157,8 +157,8 @@ switch ($page) {
 		$apiResult = apiV1([
 			"action"=>"getItem", 
 			"itemType"=>$page, 
-			"id"=>$_REQUEST["id"]]
-		);
+			"id"=>$_REQUEST["id"]
+		]);
 		$pageTitle = '<span class="icon-group"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – '.L::session.' '.$apiResult["data"]["attributes"]["number"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
@@ -174,8 +174,8 @@ switch ($page) {
 		$apiResult = apiV1([
 			"action"=>"getItem", 
 			"itemType"=>$page, 
-			"id"=>$_REQUEST["id"]]
-		);
+			"id"=>$_REQUEST["id"]
+		]);
 		$pageTitle = '<span class="icon-tag-1"></span>'.$apiResult["data"]["attributes"]["label"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
@@ -586,24 +586,31 @@ switch ($page) {
 			$content = ob_get_clean();
 		}
 	break;
-	/*
-	case "admin":
-		$pageTitle = 'Administration';
-		$pageType = 'admin';
-		ob_start();
-		include_once("./modules/admin/page.php");
-		$content = ob_get_clean();
-	break;
-	case "import":
-		$pageTitle = 'Administration'.' - Import json';
-		$pageType = 'admin';
-		ob_start();
-		include_once("./modules/importtasks/page.php");
-		$content = ob_get_clean();
-	break;
-	*/
 	case "search":
     case "main":
+		if ($page == 'search' && isset($_REQUEST['personID'])) {
+			// Get labels for personID values so we can display names
+			$personIDs = $_REQUEST['personID'];
+			$personDataFromRequest = array();
+			if (is_array($personIDs)) {
+				foreach ($personIDs as $personID) {
+					$personData = apiV1([
+						"action"=>"getItem", 
+						"itemType"=>'person', 
+						"id"=>$personID
+					]);
+					$personDataFromRequest[$personID] = $personData['data'];
+				}
+			} else {
+				$personData = apiV1([
+					"action"=>"getItem", 
+					"itemType"=>'person', 
+					"id"=>$personIDs
+				]);
+				$personDataFromRequest[$personIDs] = $personData['data'];
+			}
+		}
+
 		$pageTitle = L::search;
 		$pageType = 'default';
 		require_once("./modules/search/include.search.php");

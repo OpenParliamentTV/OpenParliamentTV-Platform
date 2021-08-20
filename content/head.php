@@ -63,6 +63,17 @@ if ($pageType == 'admin' || $pageType == 'entity') {
 }
 ?>
 
+<?php
+if (isset($personDataFromRequest)) {
+  // If set personDataFromRequest contains labels for personID values so we can display names
+?>
+  <script type="text/javascript">
+    var personDataFromRequest = JSON.parse('<?php echo json_encode($personDataFromRequest); ?>');
+  </script>
+<?php
+}
+?>
+
 <!-- Matomo -->
 <!--
 <script type="text/javascript">

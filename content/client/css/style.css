@@ -859,9 +859,135 @@ body.fixed .searchContainer {
     padding-bottom: 10px;
 }
 
-input#edit-query {
+.searchContainer .searchInputContainer {
+    border-color: var(--border-color);
+    background-color: var(--primary-bg-color);
+    color: var(--primary-fg-color);
+    font-weight: 300;
+    font-size: 14px;
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: calc(1.5em + .75rem + 2px);
+    padding: 6px 44px 0px 6px;
+    line-height: 1.5;
+    background-clip: padding-box;
+    border: 1px solid var(--border-color);
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    cursor: text;
+}
+.searchContainer .searchInputContainer.active {
+    box-shadow:  0 0 0 .2rem rgba(0,123,255,.5);
+}
+
+.searchContainer .searchInputContainer .queryItem,
+.searchContainer .searchInputContainer input#edit-query {
+    float: left;
+    width: auto;
+    padding: 2px 8px;
+    margin-right: 7px;
+    margin-bottom: 6px;
+    white-space: nowrap;
+}
+
+.searchContainer .searchInputContainer .queryItem {
+    position: relative;
+    padding-right: 24px;
+    border: 1px solid #aaaaaa;
+    border-radius:  3px;
+    cursor: default;
+}
+
+.searchContainer .searchInputContainer .queryItem .queryDeleteItem {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin-right: 0px;
+    font-size: 15px;
+    line-height: 23px;
+    width: 20px;
+    height: 100%;
+}
+
+.searchContainer .searchInputContainer .queryItem .queryDeleteItem:hover {
+    color: var(--primary-bg-color);
+    background: var(--primary-fg-color);
+    cursor: pointer;
+}
+
+.searchContainer .searchInputContainer .queryItem:hover {
+    border-color: var(--primary-fg-color);
+}
+
+.searchContainer .searchInputContainer .queryItem.markedForDeletion {
+    box-shadow: 0 0 0 .2rem var(--border-color);
+}
+
+.searchContainer .searchInputContainer input#edit-query,
+.searchContainer .searchInputContainer input#edit-query:focus,
+.searchContainer .searchInputContainer input#edit-query:focus-visible,
+.searchContainer .searchInputContainer input#edit-query:focus-within {
+    min-width: 200px;
+    border: 1px solid transparent;
+    outline: none;
+    background:  transparent;
+}
+
+.searchContainer button#edit-submit {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+}
+
+.searchContainer .searchSuggestionContainer {
+    position: absolute;
+    top: calc(100% - 2px);
+    width: calc(100% - 37px);
+    box-shadow: 0px 3px 3px var(--border-color);
+    height: auto;
+    padding: 9px 9px 4px 9px;
+    z-index: 22;
+    background: var( --primary-bg-color);
+    border: 1px solid var(--border-color);
+    border-top: 0px;
+    display: none;
+}
+
+.searchSuggestionContainer .suggestionItem {
+    border: 1px solid transparent;
+    padding: 2px 0;
+}
+
+.searchSuggestionContainer .suggestionItem.selected, 
+.searchSuggestionContainer .suggestionItem:hover {
+    border-color: var(--primary-fg-color);
+    padding-left: 6px;
+    right: 6px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.searchSuggestionContainer .suggestionItem {
+    border: 1px solid transparent;
+    padding: 2px 0;
+}
+
+.searchInputContainer .partyIndicator, 
+.searchSuggestionContainer .partyIndicator {
     display: inline-block;
-    width: calc(100% - 110px);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    background: transparent;
+    white-space: nowrap;
+    font-size: 70%;
+    vertical-align: middle;
+    margin-top: -3px;
+    margin-right: 0px;
+    margin-bottom:  0px;
+    padding: 0px 5px;
 }
 
 .filterContainer {
@@ -1070,11 +1196,20 @@ input#edit-query {
 }
 
 #speechListContainer .examplesContainer a, #interventionListContainer .examplesContainer a {
-    text-decoration: underline dotted;
+    float: left;
+    width: auto;
+    padding: 0px 8px;
+    margin-right: 7px;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    border: 1px solid #aaaaaa;
+    border-radius: 3px;
+    font-size: 14px;
+    line-height: 1.5;
 }
 
 #speechListContainer .examplesContainer a:hover, #interventionListContainer .examplesContainer a:hover {
-    text-decoration: underline;
+    border-color: var(--primary-fg-color);
 }
 
 .sortDivider {
