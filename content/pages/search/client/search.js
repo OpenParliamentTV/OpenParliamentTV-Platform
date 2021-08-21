@@ -28,7 +28,7 @@ $(document).ready( function() {
 	$(window).scroll();
 
 	window.onpopstate = function(event) {
-		updateResultList();
+		updateContentsFromURL();
 	}
 
 	$('body').on('click','#play-submit',function() {
@@ -47,80 +47,7 @@ $(document).ready( function() {
 		updateQuery();
 	});
 
-	$('[name="person"]').val(getQueryVariable('person'));
-
-	var peopleIDs = getQueryVariable('personID');
-	if ($.isArray(peopleIDs)) {
-		for (var i = 0; i < peopleIDs.length; i++) {
-			$('#filterForm').append('<input type="hidden" name="personID[]" value="'+ peopleIDs[i] +'">');
-		}
-	} else if (peopleIDs) {
-		$('#filterForm').append('<input type="hidden" name="personID[]" value="'+ peopleIDs +'">');
-	}
-
-	$('[name="q"]').val(getQueryVariable('q'));
-	$('[name="sessionNumber"]').val(getQueryVariable('sessionNumber'));
-	$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
-
-	initInteractiveQueryValues();
-
-	var factionQueries = getQueryVariable('factionID');
-
-	if (factionQueries) {
-		for (var p=0; p<factionQueries.length; p++) {
-			var cleanValue = factionQueries[p].replace('+', ' ').toUpperCase();
-			if ($('[name="factionID[]"][value="'+cleanValue+'"]').length != 0) {
-				$('[name="factionID[]"][value="'+cleanValue+'"]')[0].checked = true;
-			}
-		}
-	}
-
-	/* DATE FUNCTIONS START */
-
-	var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-
-	var queryFrom = getQueryVariable('dateFrom');
-	var queryTo = getQueryVariable('dateTo');
-
-	var queryFromDate = new Date(queryFrom);
-	var queryToDate = new Date(queryTo);
-
-	$('#sliderRange').slider({
-		range: true,
-		min: minDate.getTime(),
-		max: maxDate.getTime(),
-		slide: function (event, ui) {
-			
-			var date1 = new Date(ui.values[0]);
-			var date2 = new Date(ui.values[1]);
-			
-			var date2String = (date2.toISOString().slice(0,10) == maxDate.toISOString().slice(0,10)) ? 'heute' : date2.toLocaleDateString('de-DE', options);
-
-			$("#timeRange").val( date1.toLocaleDateString('de-DE', options) + " - " + date2String );
-
-			$('#dateFrom').val(date1.toISOString().slice(0,10));
-			$('#dateTo').val(date2.toISOString().slice(0,10));
-
-		},
-		stop: function (event, ui) {
-			updateQuery();
-		},
-		values: [(queryFrom) ? queryFromDate.getTime() : 0, (queryTo) ? queryToDate.getTime() : maxDate.getTime()]
-	});
-
-	var startDate = (queryFrom) ? queryFromDate.toLocaleDateString('de-DE', options) : minDate.toLocaleDateString('de-DE', options);
-	var endDate = (queryTo) ? queryToDate.toLocaleDateString('de-DE', options) : maxDate.toLocaleDateString('de-DE', options);
-
-	var endDateString = (endDate == maxDate.toLocaleDateString('de-DE', options)) ? 'heute' : endDate;
-
-	$( "#timeRange" ).val( startDate + " - " + endDateString );
-	
-	$('#dateFrom').val((queryFrom) ? queryFrom : minDate.toISOString().slice(0,10));
-	$('#dateTo').val((queryTo) ? queryTo : maxDate.toISOString().slice(0,10));
-
-	updateStatsViz();
-
-	/* DATE FUNCTIONS END */
+	updateContentsFromURL();
 
 	$('#edit-keys').keydown(function(evt) {
 		if (evt.keyCode == 13) {
@@ -292,6 +219,88 @@ $(document).ready( function() {
 	});
 
 });
+
+function updateContentsFromURL() {
+	$('[name="person"]').val(getQueryVariable('person'));
+
+	$('#filterForm input[name="personID[]"]').remove();
+	var peopleIDs = getQueryVariable('personID');
+	if ($.isArray(peopleIDs)) {
+		for (var i = 0; i < peopleIDs.length; i++) {
+			$('#filterForm').append('<input type="hidden" name="personID[]" value="'+ peopleIDs[i] +'">');
+		}
+	} else if (peopleIDs) {
+		$('#filterForm').append('<input type="hidden" name="personID[]" value="'+ peopleIDs +'">');
+	}
+
+	$('[name="q"]').val(getQueryVariable('q'));
+	$('[name="sessionNumber"]').val(getQueryVariable('sessionNumber'));
+	$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
+
+	$('[name="factionID[]"]').each(function() {
+		$(this)[0].checked = false;
+	});
+	var factionQueries = getQueryVariable('factionID');
+	if (factionQueries) {
+		for (var p=0; p<factionQueries.length; p++) {
+			var cleanValue = factionQueries[p].replace('+', ' ').toUpperCase();
+			if ($('[name="factionID[]"][value="'+cleanValue+'"]').length != 0) {
+				$('[name="factionID[]"][value="'+cleanValue+'"]')[0].checked = true;
+			}
+		}
+	}
+	
+	initInteractiveQueryValues();
+
+	/* DATE FUNCTIONS START */
+
+	var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+
+	var queryFrom = getQueryVariable('dateFrom');
+	var queryTo = getQueryVariable('dateTo');
+
+	var queryFromDate = new Date(queryFrom);
+	var queryToDate = new Date(queryTo);
+
+	$('#sliderRange').slider({
+		range: true,
+		min: minDate.getTime(),
+		max: maxDate.getTime(),
+		slide: function (event, ui) {
+			
+			var date1 = new Date(ui.values[0]);
+			var date2 = new Date(ui.values[1]);
+			
+			var date2String = (date2.toISOString().slice(0,10) == maxDate.toISOString().slice(0,10)) ? 'heute' : date2.toLocaleDateString('de-DE', options);
+
+			$("#timeRange").val( date1.toLocaleDateString('de-DE', options) + " - " + date2String );
+
+			$('#dateFrom').val(date1.toISOString().slice(0,10));
+			$('#dateTo').val(date2.toISOString().slice(0,10));
+
+		},
+		stop: function (event, ui) {
+			updateQuery();
+		},
+		values: [(queryFrom) ? queryFromDate.getTime() : 0, (queryTo) ? queryToDate.getTime() : maxDate.getTime()]
+	});
+
+	var startDate = (queryFrom) ? queryFromDate.toLocaleDateString('de-DE', options) : minDate.toLocaleDateString('de-DE', options);
+	var endDate = (queryTo) ? queryToDate.toLocaleDateString('de-DE', options) : maxDate.toLocaleDateString('de-DE', options);
+
+	var endDateString = (endDate == maxDate.toLocaleDateString('de-DE', options)) ? 'heute' : endDate;
+
+	$( "#timeRange" ).val( startDate + " - " + endDateString );
+	
+	$('#dateFrom').val((queryFrom) ? queryFrom : minDate.toISOString().slice(0,10));
+	$('#dateTo').val((queryTo) ? queryTo : maxDate.toISOString().slice(0,10));
+
+	updateStatsViz();
+
+	/* DATE FUNCTIONS END */
+
+	updateResultList();
+}
 
 function updateSuggestions() {
 	var textValue = $('#edit-query').val(),
@@ -671,6 +680,8 @@ function submitQueryText() {
 
 function initInteractiveQueryValues() {
 	
+	$('.searchInputContainer .queryItem').remove();
+
 	if ($('[name="personID[]"]').length != 0) {
 		var personIDs = $.map($('[name="personID[]"]'), function(el) { return el.value; });
 		if (personIDs && typeof personDataFromRequest !== 'undefined') {
