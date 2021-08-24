@@ -15,8 +15,8 @@ $(document).ready( function() {
 	$(window).scroll(function(){
 		var scroll = $(window).scrollTop();
 
-		if (scroll >= 10 && !$('body').hasClass('fixed')) {
-			$('#speechListContainer').css('margin-top', $('.filterContainer').height() + 115);
+		if (scroll >= 10 && !$('body').hasClass('fixed') && !$('#filterbar').hasClass('nosearch')) {
+			$('#speechListContainer').css('margin-top', $('.filterContainer').height() + 150);
 			$('body').addClass('fixed');
 			
 		} else if (scroll < 10) {
@@ -470,10 +470,17 @@ function renderPeopleSuggestions(inputValue, data) {
 }
 
 function updateStatsViz() {
-	getResultStats(function(data) {
-		updateFactionChart(data.info.speechesPerFaction);
-		updateTimeRangeChart(data.results);
-	});
+	var requestQuery = getQueryVariable('q'),
+		requestPersonID = getQueryVariable('personID');
+	if ((requestQuery && requestQuery.length >= 3) || requestPersonID) {
+		getResultStats(function(data) {
+			updateFactionChart(data.info.speechesPerFaction);
+			updateTimeRangeChart(data.results);
+		});
+	} else {
+		updateFactionChart([]);
+		updateTimeRangeChart([]);
+	}
 }
 
 function updateFactionChart(speechesPerFaction) {
@@ -487,14 +494,21 @@ function updateFactionChart(speechesPerFaction) {
 	    labels: []
 	};
 
-	for (var faction in speechesPerFaction) {
-		if (speechesPerFaction.hasOwnProperty(faction)) {           
-			var factionColor = (factionColors[faction]) ? factionColors[faction] : "#aaaaaa";
+	if (speechesPerFaction && speechesPerFaction.length == 0) {
+		factionData.datasets[0].data.push(1);
+		factionData.labels.push(' ');
+		factionData.datasets[0].backgroundColor.push('#aaaaaa');
+		factionData.datasets[0].borderWidth.push(1);
+	} else {
+		for (var faction in speechesPerFaction) {
+			if (speechesPerFaction.hasOwnProperty(faction)) {           
+				var factionColor = (factionColors[faction]) ? factionColors[faction] : "#aaaaaa";
 
-			factionData.datasets[0].data.push(speechesPerFaction[faction]);
-			factionData.labels.push(faction);
-			factionData.datasets[0].backgroundColor.push(factionColor);
-			factionData.datasets[0].borderWidth.push(1);
+				factionData.datasets[0].data.push(speechesPerFaction[faction]);
+				factionData.labels.push(faction);
+				factionData.datasets[0].backgroundColor.push(factionColor);
+				factionData.datasets[0].borderWidth.push(1);
+			}
 		}
 	}
 
@@ -638,8 +652,19 @@ function updateResultList() {
     }
 	updateAjax = $.ajax({
 		method: "POST",
-		url: "./content/pages/search/content.result.php?a=search&"+ getSerializedForm()
+		url: "./content/pages/search/content.result.php?a=search&queryOnly=1&"+ getSerializedForm()
 	}).done(function(data) {
+		var requestQuery = getQueryVariable('q'),
+			requestPersonID = getQueryVariable('personID');
+		if ((requestQuery && requestQuery.length >= 3) || requestPersonID) {
+			$('#filterbar').removeClass('nosearch');
+			$('.filterContainer').removeClass('d-none').addClass('d-md-block');
+			$('#toggleFilterContainer').removeClass('d-none').addClass('d-block');
+		} else {
+			$('#filterbar').addClass('nosearch');
+			$('.filterContainer').removeClass('d-md-block').addClass('d-none');
+			$('#toggleFilterContainer').removeClass('d-block').addClass('d-none');
+		}
 		$('#speechListContainer .resultWrapper').html($(data));
 		$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
 		updateStatsViz(minDate, maxDate);

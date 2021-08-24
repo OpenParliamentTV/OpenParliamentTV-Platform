@@ -1,4 +1,4 @@
-<div id="filterbar" class="col-12 nosearch" style="margin-top: 45px;">
+<div id="filterbar" class="col-12 nosearch">
 	<form id="filterForm" method="get" accept-charset="UTF-8">
 		<input type="hidden" name="q" value="">
 		<div class="searchContainer">
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 		</div>
-		<button class="btn btn-primary btn-sm d-block d-md-none" type="button" data-toggle="collapse" data-target=".filterContainer" aria-expanded="false" aria-controls="">
+		<button id="toggleFilterContainer" class="btn btn-primary btn-sm d-block d-md-none" type="button" data-toggle="collapse" data-target=".filterContainer" aria-expanded="false" aria-controls="">
 			<span class="icon-menu-1"></span><span class="labelShow"><?php echo L::filtersShow; ?></span><span class="labelCollapse"><?php echo L::filtersHide; ?></span><span class="icon-up-open-big"><span>
 		</button>
 		<div class="filterContainer collapse show d-md-block">

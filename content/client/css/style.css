@@ -805,7 +805,16 @@ body.ready > main {
 }
 
 #filterbar {
+    margin-top: 45px;
+    padding-top: 0px;
     padding-bottom: 20px;
+    transition-property: padding-top;
+    transition-duration: 400ms;
+}
+
+#filterbar.nosearch {
+    padding-top: 30px;
+    padding-bottom:  0px;
 }
 
 @media (min-width:768px) {
@@ -821,6 +830,10 @@ body.ready > main {
         padding: 0 30px 20px 30px;
         max-width: calc(1500px);
     }
+
+    #filterbar.nosearch {
+        padding-top: 80px;
+    }
 }
 
 @media (min-width: 1500px) {
@@ -828,6 +841,10 @@ body.ready > main {
         left: auto;
         padding: 0 15px 20px 15px;
         max-width: calc(1500px - 30px);
+    }
+
+    #filterbar.nosearch {
+        padding-top: 100px;
     }
 }
 

@@ -28,7 +28,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	*/
 	require_once(__DIR__."/../../../api/v1/api.php");
 
-	if (!$_REQUEST["a"] || count($_REQUEST) < 2) {
+	if (!$_REQUEST["a"] || count($_REQUEST) < 2 || 
+		($_REQUEST["queryOnly"] == 1 && !$_REQUEST["q"] && !$_REQUEST["personID"])) {
 	?>
 	
 	<div class="row justify-content-center">
