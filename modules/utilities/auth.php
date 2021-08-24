@@ -140,7 +140,8 @@ function auth($userID, $action, $entity, $db = false) {
         case "apiV1":
             $whitelist = array(
                 "getItem",
-                "search"
+                "search",
+                "autocomplete"
             );
 
             if (in_array($entity, $whitelist)) {
