@@ -13,6 +13,7 @@ $ESClient = Elasticsearch\ClientBuilder::create()
     ->build();
 */
 require_once(__DIR__.'/../../config.php');
+require_once(__DIR__.'/../utilities/functions.entities.php');
 
 $ESClientBuilder = Elasticsearch\ClientBuilder::create();
 
@@ -28,38 +29,6 @@ if ($config["ES"]["SSL"]["pem"]) {
 //print_r($ESClientBuilder);
 
 $ESClient = $ESClientBuilder->build();
-
-function getMainSpeakerFromPeopleArray($peopleArray) {
-	
-	foreach ($peopleArray as $person) {
-		if ($person['attributes']['context'] == 'main-speaker') {
-			$mainSpeaker = $person;
-			break;
-		}
-	}
-
-	if (!isset($mainSpeaker)) {
-		$mainSpeaker = $peopleArray[0];
-	}
-	
-	return $mainSpeaker;
-}
-
-function getMainFactionFromOrganisationsArray($organisationsArray) {
-	
-	foreach ($organisationsArray as $organisation) {
-		if ($organisation['attributes']['context'] == 'main-speaker-faction') {
-			$mainFaction = $organisation;
-			break;
-		}
-	}
-
-	if (!isset($mainFaction)) {
-		$mainFaction = $organisationsArray[0];
-	}
-
-	return $mainFaction;
-}
 
 function getPrevDocument($currentDocumentTimestamp) {
 	

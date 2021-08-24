@@ -86,16 +86,25 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	display: none !important;
 }
 
+#toggleAutoplayResults .slider::before {
+	font-family: "frametrail-webfont";
+	font-style: normal;
+	font-weight: normal;
+	content: '\e8a7';
+	text-align: center;
+	line-height: 13px;
+	font-size: 10px;
+} 
+
 .frametrail-body .statusMessage:not(.error) {
 	display: none !important;
 }
 
 .playerTitle {
 	background: var(--primary-bg-color);
-	height: 120px;
+	height: auto;
 	overflow: auto;
 	position: relative;
-	float: right;
 	text-align: left;
 	padding: 10px 14px;
 	line-height: 26px;
@@ -115,11 +124,11 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 }
 
 .playerTitle .speechMeta {
-	margin-bottom: 4px;
+	margin-bottom: 3px;
 }
 
 .playerTitle h3 {
-	margin-top: 8px;
+	margin: 0px;
 	font-size: 1rem;
 }
 
@@ -130,7 +139,6 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	display: flex;
 	background: transparent;
 	align-items: end;
-	float: left;
 	padding: 0px;
 	line-height: 26px;
 	width: 100%;
@@ -140,7 +148,8 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 .playerTabs .nav-tabs {
 	width: 100%;
 	height: 100%;
-	padding: 0 15px;
+	padding: 0 12px 0 15px;
+	border-bottom-color:  transparent;
 }
 
 .playerTabs .nav-tabs .nav-link {
@@ -160,7 +169,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 
 @media (min-width: 768px) and (max-width:992px) {
 	.playerTabs {
-		width: 50%;
+		width: auto;
 		height: 80px;
 	}
 
@@ -169,14 +178,13 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	}
 
 	.playerTitle {
-		width: 50%;
-		margin-bottom: 0px;
-		height: 80px;
+		margin: 0px;
+		height: 70px;
 	}
 }
 @media (min-width:992px) {
 	.playerTabs {
-		width: 500px;
+		width: auto;
 		height: 80px;
 	}
 
@@ -185,14 +193,13 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	}
 
     .playerTitle {
-		width: calc(100% - 500px);
-		margin-bottom: 0px;
-		height: 80px;
+		margin: 0px;
+		height: 70px;
 	}
 }
 @media (min-width:1200px) {
     .playerTabs {
-		width: 600px;
+		width: auto;
 		height: 80px;
 	}
 
@@ -201,9 +208,8 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	}
 
     .playerTitle {
-		width: calc(100% - 600px);
-		margin-bottom: 0px;
-		height: 80px;
+		margin: 0px;
+		height: 70px;
 	}
 }
 

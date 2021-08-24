@@ -18,15 +18,16 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		$i18n = new i18n(__DIR__.'/../../../lang/lang_{LANGUAGE}.json', __DIR__.'/../../../langcache/', 'en');
 		$i18n->init();
 	}
-	//require_once(__DIR__."/../../../modules/search/functions.php");
-	require_once(__DIR__."/../../../modules/search/include.search.php");
 	
+	require_once(__DIR__.'/../../../modules/utilities/functions.entities.php');
+	require_once(__DIR__."/../../../modules/search/include.search.php");
+	require_once(__DIR__."/../../../api/v1/api.php");
+
 	/*
 	echo '<pre>';
 	print_r($_REQUEST);
 	echo '</pre>';
 	*/
-	require_once(__DIR__."/../../../api/v1/api.php");
 
 	if (!$_REQUEST["a"] || count($_REQUEST) < 2 || 
 		($_REQUEST["queryOnly"] == 1 && !$_REQUEST["q"] && !$_REQUEST["personID"])) {
@@ -142,6 +143,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		$formattedDuration = gmdate("i:s", $result_item["attributes"]['duration']);
 
 		$formattedDate = date("d.m.Y", strtotime($result_item["attributes"]["dateStart"]));
+		
+		$mainSpeaker = getMainSpeakerFromPeopleArray($result_item["relationships"]["people"]['data']);
+		$mainFaction = getMainFactionFromOrganisationsArray($result_item["relationships"]["organisations"]['data']);
 
 		if ($sortFactor == 'date' && $formattedDate != $currentDate) {
 			echo '<div class="sortDivider"><b>'.$formattedDate.'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
@@ -151,7 +155,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			$currentAgendaItem = $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"];
 		}
 
-		$highlightedName = $result_item["relationships"]["people"]["data"][0]["attributes"]["label"];
+		$highlightedName = $mainSpeaker['attributes']['label'];
 		if (strlen($_REQUEST['person']) > 1) {
 			$highlightedName = str_replace($_REQUEST['person'], '<em>'.$_REQUEST['person'].'</em>', $highlightedName);
 		}

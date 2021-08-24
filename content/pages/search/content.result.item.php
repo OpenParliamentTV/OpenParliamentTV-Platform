@@ -5,7 +5,13 @@
 			<div class="resultDuration"><?= $formattedDuration ?></div>
 			<div class="resultDate"><?= $formattedDate ?></div>
 			<div class="resultMeta">
-				<?= $highlightedName .' ('.$result_item["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"].')' ?>
+				<?php 
+				if (isset($mainFaction['attributes']['labelAlternative'])) {
+					echo $highlightedName .' ('.$mainFaction['attributes']['labelAlternative'].')';
+				} else {
+					echo $highlightedName;
+				}
+				?>
 			</div>
 			<hr>
 			<?php
