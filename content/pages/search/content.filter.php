@@ -2,6 +2,9 @@
 	<form id="filterForm" method="get" accept-charset="UTF-8">
 		<input type="hidden" name="q" value="">
 		<div class="searchContainer">
+			<div class="parliamentFilterContainer">
+				<?php include_once('content.filter.parliaments.php'); ?>
+			</div>
 			<div class="position-relative">
 				<div>
 					<div class="searchInputContainer clearfix">
@@ -67,28 +70,6 @@
 					<div class="form-group">
 						<label for="edit-keys"><b><?php echo L::name; ?></b></label>
 						<input class="form-control form-control-sm" placeholder="<?php echo L::enterName; ?>" id="edit-keys" name="person" value="" type="text">
-					</div>
-				</div>
-				<div class="col col-12 col-sm-6 col-md-5 col-lg-4 col-xl-2">
-					<div class="row row-cols-2">
-						<div class="col col-5 form-group">
-							<label for="edit-session"><b><?php echo L::session; ?></b></label>
-							<select id="edit-session"class="custom-select custom-select-sm" name="sessionNumber">
-								<option value="" selected><?php echo L::showAll; ?></option>
-								<?php
-								for ($i=1; $i <= 237; $i++) { 
-								 	echo '<option value="'.$i.'">'.$i.'. '.L::session.'</option>';
-								} 
-								?>
-							</select>
-						</div>
-						<div class="col col-7 form-group">
-							<label for="edit-electoralPeriod"><b><?php echo L::electoralPeriod; ?></b></label>
-							<select id="edit-electoralPeriod"class="custom-select custom-select-sm" name="electoralPeriod">
-								<option value="" selected><?php echo L::showAll; ?></option>
-								<option value="19">19</option>
-							</select>
-						</div>
 					</div>
 				</div>
 				-->

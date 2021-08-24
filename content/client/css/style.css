@@ -859,6 +859,21 @@ body.fixed .searchContainer {
     padding-bottom: 10px;
 }
 
+.searchContainer .parliamentFilterContainer select {
+    border-radius: 0px;
+    border-bottom-width: 0px;
+    border-right-width: 0px;
+}
+
+.searchContainer .parliamentFilterContainer .row > div:first-child select {
+    border-top-left-radius: .25rem;
+}
+
+.searchContainer .parliamentFilterContainer .row > div:last-child select {
+    border-top-right-radius: .25rem;
+    border-right-width: 1px;
+}
+
 .searchContainer .searchInputContainer {
     border-color: var(--border-color);
     background-color: var(--primary-bg-color);
@@ -874,6 +889,7 @@ body.fixed .searchContainer {
     background-clip: padding-box;
     border: 1px solid var(--border-color);
     border-radius: .25rem;
+    border-top-left-radius: 0px;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     cursor: text;
 }
@@ -939,6 +955,8 @@ body.fixed .searchContainer {
     top: 0px;
     right: 0px;
     height: 100%;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 
 .searchContainer .searchSuggestionContainer {

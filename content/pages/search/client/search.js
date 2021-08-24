@@ -221,7 +221,10 @@ $(document).ready( function() {
 });
 
 function updateContentsFromURL() {
-	$('[name="person"]').val(getQueryVariable('person'));
+	
+	initParliamentSelectMenu()
+
+	//$('[name="person"]').val(getQueryVariable('person'));
 
 	$('#filterForm input[name="personID[]"]').remove();
 	var peopleIDs = getQueryVariable('personID');
@@ -300,6 +303,27 @@ function updateContentsFromURL() {
 	/* DATE FUNCTIONS END */
 
 	updateResultList();
+}
+
+function initParliamentSelectMenu() {
+	$('.parliamentFilterContainer').on('change', 'select', function(evt) {
+		var targetSelectMenu = $(evt.currentTarget);
+		if (targetSelectMenu.attr('name') == 'parliament') {
+			$('.parliamentFilterContainer #selectElectoralPeriod').remove();
+			$('.parliamentFilterContainer #selectSession').remove();
+		} else if (targetSelectMenu.attr('name') == 'electoralPeriod') {
+			$('.parliamentFilterContainer #selectSession').remove();
+		}
+		updateQuery();
+		$.ajax({
+			method: "POST",
+			url: "./content/pages/search/content.filter.parliaments.php?"+ getSerializedForm()
+		}).done(function(data) {
+			$('.parliamentFilterContainer').html($(data));
+		}).fail(function(err) {
+			//console.log(err);
+		});
+	});
 }
 
 function updateSuggestions() {
@@ -716,6 +740,12 @@ function getSerializedForm() {
 		} else if ($(element).attr('name') == 'sort' && $(element).val() == 'relevance') {
 			return false;
 		} else if ($(element).attr('name') == 'edit-query') {
+			return false;
+		} else if ($(element).attr('name') == 'parliament' && $(element).val() == 'all') {
+			return false;
+		} else if ($(element).attr('name') == 'electoralPeriod' && $(element).val() == 'all') {
+			return false;
+		} else if ($(element).attr('name') == 'sessionNumber' && $(element).val() == 'all') {
 			return false;
 		} else if ($(element).val() != '') {
 			return true;
