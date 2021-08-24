@@ -28,7 +28,7 @@ function getIndexCount() {
 		$return = $ESClient->count(['index' => 'openparliamenttv_de']);
 		$result = $return["count"];
 	} catch(Exception $e) {
-		print_r($e->getMessage());
+		//print_r($e->getMessage());
 		$result = 0;
 	}
 	
@@ -69,8 +69,7 @@ function searchSpeeches($request) {
 	try {
 		$results = $ESClient->search($searchParams);
 	} catch(Exception $e) {
-		print_r($e->getMessage());
-		$results = null;
+		$results = $e->getMessage();
 	}
 
 	/*

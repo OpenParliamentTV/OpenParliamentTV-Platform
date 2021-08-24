@@ -400,38 +400,56 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
     //return searchSpeeches($parameter);
 
+    $allowedFields = ["parliament", "electoralPeriod", "sessionID", "sessionNumber", "agendaItemID", "context", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "abgeordnetenwatchID", "organisation", "organisationID", "documentID", "termID", "id", "q"];
+
+    $filteredParameters = array_filter(
+        $parameter,
+        function ($key) use ($allowedFields) {
+            return in_array($key, $allowedFields);
+        },
+        ARRAY_FILTER_USE_KEY
+    );
+
     try {
         $search = searchSpeeches($parameter);
-        foreach ($search["hits"]["hits"] as $hit) {
+        if (isset($search["hits"]["hits"])) {
+            foreach ($search["hits"]["hits"] as $hit) {
 
-            $resultData = $hit["_source"];
-            $resultData["_score"] = $hit["_score"];
-            $resultData["_highlight"] = $hit["highlight"];
-            $resultData["_finds"] = $hit["finds"];
+                $resultData = $hit["_source"];
+                $resultData["_score"] = $hit["_score"];
+                $resultData["_highlight"] = $hit["highlight"];
+                $resultData["_finds"] = $hit["finds"];
 
-            $return["data"][] = $resultData;
+                $return["data"][] = $resultData;
+
+            }
+            $return["meta"]["requestStatus"] = "success";
+
+            //TODO: Check if this makes sense here
+            $return["meta"]["results"]["count"] = ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0;
+            $return["meta"]["results"]["total"] = $search["hits"]["total"]["value"];
+
+        } else {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503"; //TODO: check this
+            $errorarray["code"] = "3"; //TODO: check this
+            $errorarray["title"] = "OpenSearch Error";
+            $errorarray["detail"] = json_encode($search);
+            array_push($return["errors"], $errorarray);
 
         }
-        $return["meta"]["requestStatus"] = "success";
-
-        //TODO: Check if this makes sense here
-        $return["meta"]["results"]["count"] = ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0;
-        $return["meta"]["results"]["total"] = $search["hits"]["total"]["value"];
-
-        //TODO: $return["data"]["links"]["self"] = $config["dir"]["api"]."/"."search/organisations?".getURLParameterFromArray($filteredParameters);
 
     } catch (Exception $e) {
 
     }
 
-
-
-    //$return["data"] = $search["hits"]["hits"]["_source"];
-
+    $return["links"]["self"] = $config["dir"]["api"]."/"."search/media?".getURLParameterFromArray($filteredParameters);
 
     return $return;
 
-
+    /*
     //Find out what Parliament Database is meant
 
     if ($parameter["parliament"]) {
@@ -535,9 +553,9 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
 
 
-    /************ VALIDATION START ************/
+    // VALIDATION START
 
-    /************ External VALIDATION START ************/
+    // External VALIDATION START
 
     if ($filteredParameters["party"]) {
         $tmpParty["name"] = $filteredParameters["party"];
@@ -658,7 +676,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
     return $return;
 
-
+    */
 
 }
 
