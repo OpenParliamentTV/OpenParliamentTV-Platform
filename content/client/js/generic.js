@@ -25,7 +25,7 @@ $(document).ready(function() {
 
 	window.setTimeout(function() {
 		$('body').addClass('ready');
-	}, 1400);
+	}, 900);
 
 	$(document).ajaxComplete(function( event,request, settings ) {
 	    updateLinkTransitions();
@@ -37,16 +37,20 @@ $(document).ready(function() {
 
 function updateLinkTransitions() {
 	$('a[href^="/"], a[href^="./"], a[href^="../"], a[href^="'+ config.dir.root +'"]').not('a[target="_blank"]').click(function(evt) {
-		$('body').removeClass('ready');
-		$('body > main').hide();
-		evt.stopPropagation();
-		evt.preventDefault();
-		
-		var currentHREF = $(this).attr('href');
+		if (evt.shiftKey || evt.ctrlKey || evt.altKey || evt.metaKey) {
+			// click with meta key down
+		} else {
+			$('body').removeClass('ready');
+			$('body > main').hide();
+			evt.stopPropagation();
+			evt.preventDefault();
+			
+			var currentHREF = $(this).attr('href');
 
-		window.setTimeout(function(href) {
-			window.location = currentHREF;
-		}, 400, currentHREF);
+			window.setTimeout(function(href) {
+				window.location = currentHREF;
+			}, 400, currentHREF);
+		}
 	});
 }
 
