@@ -22,7 +22,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 ?>
 <div class="row no-gutters">
 	<div id="selectParliament" class="col-6 col-sm-auto">
-		<select class="form-control form-control-sm" id="parliament" name="parliament">
+		<select class="form-control form-control-sm" name="parliament">
 			<option value="all" <?php if (!isset($_REQUEST['parliament'])) { echo 'selected'; } ?>><?php echo L::showAll; ?> <?php echo L::parliaments; ?></option>
 			<?php
 			foreach($config["parliament"] as $k=>$v) {
@@ -45,14 +45,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	if (isset($_REQUEST['parliament'])) {
 	?>
 	<div id="selectElectoralPeriod" class="col-2 col-sm-auto">
-		<select id="edit-electoralPeriod" class="custom-select custom-select-sm" name="electoralPeriod">
+		<select class="form-control form-control-sm" name="electoralPeriod">
 			<option value="all" <?php if (!isset($_REQUEST['electoralPeriod'])) { echo 'selected'; } ?>><?php echo L::showAll; ?> <?php echo L::electoralPeriods; ?></option>
 			<?php
 			$selectedString = '';
 			if (isset($_REQUEST['electoralPeriod']) && $_REQUEST['electoralPeriod'] == '19') {
 				$selectedString = ' selected';
 			}
-			echo '<option value="19"'.$selectedString.'>19. '.L::electoralPeriod.'</option>';
+			echo '<option value="19"'.$selectedString.'>19. '. L::electoralPeriod .'</option>';
 			?>
 		</select>
 	</div>
@@ -61,7 +61,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	if (isset($_REQUEST['parliament']) && isset($_REQUEST['electoralPeriod'])) {
 	?>
 	<div id="selectSession" class="col-4 col-sm-auto">
-		<select id="edit-session" class="custom-select custom-select-sm" name="sessionNumber">
+		<select class="form-control form-control-sm" name="sessionNumber">
 			<option value="all" <?php if (!isset($_REQUEST['sessionNumber'])) { echo 'selected'; } ?>><?php echo L::showAll; ?> <?php echo L::sessions; ?></option>
 			<?php
 			for ($i=1; $i <= 237; $i++) { 
@@ -69,7 +69,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				if (isset($_REQUEST['sessionNumber']) && $_REQUEST['sessionNumber'] == $i) {
 					$selectedString = ' selected';
 				}
-			 	echo '<option value="'.$i.'"'.$selectedString.'>'.$i.'. '.L::session.'</option>';
+			 	echo '<option value="'.$i.'"'.$selectedString.'>'.$i.'. '. L::session .'</option>';
 			} 
 			?>
 		</select>

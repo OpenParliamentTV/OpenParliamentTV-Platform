@@ -39,7 +39,7 @@ $(document).ready( function() {
 		}
 	});
 
-	$('[name="factionID[]"], [name="sessionNumber"]').change(function() {
+	$('[name="factionID[]"]').change(function() {
 		updateQuery();
 	});
 
@@ -218,11 +218,11 @@ $(document).ready( function() {
 		$('.resultItem, #filterForm .formCheckbox').removeClass('inactive');
 	});
 
+	initParliamentSelectMenu();
+
 });
 
 function updateContentsFromURL() {
-	
-	initParliamentSelectMenu()
 
 	//$('[name="person"]').val(getQueryVariable('person'));
 
@@ -237,7 +237,6 @@ function updateContentsFromURL() {
 	}
 
 	$('[name="q"]').val(getQueryVariable('q'));
-	$('[name="sessionNumber"]').val(getQueryVariable('sessionNumber'));
 	$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
 
 	$('[name="factionID[]"]').each(function() {
