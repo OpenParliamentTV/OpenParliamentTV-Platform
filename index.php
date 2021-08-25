@@ -2,13 +2,13 @@
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 require_once('i18n.class.php');
-$i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'en');
+$i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'de');
 //$i18n->setForcedLang('en');
 $i18n->init();
 
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 $acceptLang = ['de', 'en'];
-$lang = in_array($lang, $acceptLang) ? $lang : 'en';
+$lang = in_array($lang, $acceptLang) ? $lang : 'de';
 
 $color_scheme = isset($_COOKIE["color_scheme"]) ? $_COOKIE["color_scheme"] : false;
 if ($color_scheme === false) $color_scheme = 'light';
@@ -39,6 +39,7 @@ foreach ($allowedParams as $k=>$v) {
 $isResult = (strlen($paramStr) > 2) ? true : false;
 
 $pageTitle = '';
+$pageDescription = L::claim;
 $page = (isset($_REQUEST["a"]) && strlen($_REQUEST["a"]) > 0) ? $_REQUEST["a"] : "main";
 
 require_once('config.php');
@@ -55,6 +56,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
 		$pageTitle = '<span class="icon-list-numbered"></span>'.$apiResult["data"]["attributes"]["title"];
+		$pageDescription = L::speeches.' '.L::basedOn.': '.$apiResult["data"]["attributes"]["officialTitle"].' - '.$apiResult["data"]["attributes"]["title"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
@@ -72,6 +74,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
 		$pageTitle = '<span class="icon-doc-text"></span>'.$apiResult["data"]["attributes"]["label"];
+		$pageDescription = L::speeches.' '.L::basedOn.': '.$apiResult["data"]["attributes"]["label"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
@@ -89,6 +92,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
 		$pageTitle = '<span class="icon-check"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – '.$apiResult["data"]["attributes"]["number"].'. '.L::electoralPeriod;
+		$pageDescription = L::speeches.' '.L::inDER.' '.$apiResult["data"]["attributes"]["number"].'. '.L::electoralPeriod.' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
@@ -100,12 +104,9 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "embed":
-		$apiResult = apiV1([
-			"action"=>"getItem", 
-			"itemType"=>"media", 
-			"id"=>$_REQUEST["id"]
-		]);
-		$pageTitle = '';
+		require_once("./modules/media/include.media.php");
+		$pageTitle = $speechTitleShort;
+		$pageDescription = $speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' ('.$formattedDate.')';
 		$pageType = 'entity';
 		ob_start();
 		include_once("./content/pages/embed/page.php");
@@ -114,6 +115,7 @@ switch ($page) {
 	case "media":
 		require_once("./modules/media/include.media.php");
 		$pageTitle = $speechTitleShort;
+		$pageDescription = $speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' ('.$formattedDate.')';
 		$pageType = 'entity';
 		ob_start();
 		include_once("./content/pages/media/page.php");
@@ -126,6 +128,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
 		$pageTitle = '<span class="icon-bank"></span>'.$apiResult["data"]["attributes"]["labelAlternative"];
+		$pageDescription = L::speeches.' '.L::by.': '.$apiResult["data"]["attributes"]["label"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
@@ -143,6 +146,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
 		$pageTitle = '<span class="icon-torso"></span>'.$apiResult["data"]["attributes"]["label"];
+		$pageDescription = L::speeches.' '.L::by.': '.$apiResult["data"]["attributes"]["label"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
@@ -160,6 +164,7 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
 		$pageTitle = '<span class="icon-group"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – '.L::session.' '.$apiResult["data"]["attributes"]["number"];
+		$pageDescription = L::speeches.' '.L::inDER.' '.$apiResult["data"]["attributes"]["number"].'. '.L::session.' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[

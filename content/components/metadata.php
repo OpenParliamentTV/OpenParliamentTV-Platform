@@ -1,6 +1,6 @@
 <?php 
 $title = L::brand.' | '.strip_tags($pageTitle);
-$description = 'Description Lorem Ipsum';
+$description = $pageDescription;
 $url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 switch ($page) {
   case 'main':

@@ -5,7 +5,7 @@ require_once(__DIR__."/../utilities/functions.php");
 
 if (!function_exists("L")) {
 	require_once(__DIR__."/../../i18n.class.php");
-	$i18n = new i18n(__DIR__."/../../lang/lang_{LANGUAGE}.json", __DIR__."/../../langcache/", "en");
+	$i18n = new i18n(__DIR__."/../../lang/lang_{LANGUAGE}.json", __DIR__."/../../langcache/", "de");
 	$i18n->init();
 }
 
