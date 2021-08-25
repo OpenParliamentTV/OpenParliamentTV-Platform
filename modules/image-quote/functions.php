@@ -1,7 +1,7 @@
 <?php
 require_once('gd-text.php');
 
-function renderImageQuote($theme = 'l', $text = '') {
+function renderImageQuote($theme = 'l', $text = '', $author = '', $authorSecondary = '') {
 	
 	$maxCharacters = 250;
 	if (strlen($text) >= $maxCharacters) {
@@ -14,8 +14,8 @@ function renderImageQuote($theme = 'l', $text = '') {
 		$text .= ' [...]';
 	}
 
-	$imageWidth = 1080;
-	$imageHeight = 800;
+	$imageWidth = 1120;
+	$imageHeight = 600;
 	
 	$fontSize = getFontSize(strlen($text));
 	$lineHeight = 1.5;
@@ -56,15 +56,33 @@ function renderImageQuote($theme = 'l', $text = '') {
 	$quoteBox->setFontColor($fontColor);
 	$quoteBox->setFontSize($fontSize);
 	$quoteBox->setLineHeight($lineHeight);
-	$quoteBox->setBox(40, 100, ($imageWidth - 80), ($imageHeight - 280));
+	$quoteBox->setBox(60, 110, ($imageWidth - 120), ($imageHeight - 330));
 	$quoteBox->setTextAlign('center', 'center');
 	$quoteBox->draw($text);
+
+	$authorBox = new Box($image);
+	$authorBox->setFontFace(__DIR__.'/'.$font);
+	$authorBox->setFontColor($fontColor);
+	$authorBox->setFontSize(34);
+	$authorBox->setLineHeight($lineHeight);
+	$authorBox->setBox(60, ($imageHeight - 180), ($imageWidth - 300), 80);
+	$authorBox->setTextAlign('left', 'bottom');
+	$authorBox->draw($author);
+
+	$authorSecondaryBox = new Box($image);
+	$authorSecondaryBox->setFontFace(__DIR__.'/'.$font);
+	$authorSecondaryBox->setFontColor($fontColor);
+	$authorSecondaryBox->setFontSize(34);
+	$authorSecondaryBox->setLineHeight($lineHeight);
+	$authorSecondaryBox->setBox(60, ($imageHeight - 120), ($imageWidth - 300), 80);
+	$authorSecondaryBox->setTextAlign('left', 'center');
+	$authorSecondaryBox->draw($authorSecondary);
 
 	$quotationMarkBox = new Box($image);
 	$quotationMarkBox->setFontFace(__DIR__.'/'.$font);
 	$quotationMarkBox->setFontColor($fontColor);
-	$quotationMarkBox->setFontSize(180);
-	$quotationMarkBox->setBox(40, 0, 100, 100);
+	$quotationMarkBox->setFontSize(160);
+	$quotationMarkBox->setBox(30, -10, 100, 100);
 	$quotationMarkBox->setTextAlign('left', 'top');
 	$quotationMarkBox->draw("“");
 
@@ -72,7 +90,7 @@ function renderImageQuote($theme = 'l', $text = '') {
 }
 
 function getFontSize($textLength) {
-	$baseSize = 80;
+	$baseSize = 70;
 	$fontSize = $baseSize - ($textLength/8);
 	return $fontSize;
 }

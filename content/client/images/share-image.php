@@ -7,6 +7,12 @@ $quote = '';
 if (isset($_REQUEST['t']) && isset($_REQUEST['f'])) {
 	$quote = getQuoteFromRequestParams($_REQUEST['t'], $_REQUEST['f'], $textContentsHTML);
 }
-renderImageQuote($_REQUEST['c'], $quote);
+$author = $mainSpeaker['attributes']['label'];
+if (isset($mainFaction['attributes']['labelAlternative'])) {
+	$authorSecondary = $mainFaction['attributes']['labelAlternative'].' | '.$formattedDate;
+} else {
+	$authorSecondary = $formattedDate;
+}
+renderImageQuote($_REQUEST['c'], $quote, $author, $authorSecondary);
 
 ?>

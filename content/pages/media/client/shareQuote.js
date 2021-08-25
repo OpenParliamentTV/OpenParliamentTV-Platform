@@ -23,7 +23,7 @@ function initShareQuote() {
 	processQuery();
 
 	const selectionShare = shareThis({
-		selector: "#content",
+		selector: "#OPTV_Player",
 		sharers: [{
 			'render': function() {
 				return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#shareQuoteModal">Zitat teilen</button>'
@@ -34,13 +34,18 @@ function initShareQuote() {
 
 	selectionShare.init();
 
-	window.addEventListener("mouseup", function() {
-		var mediaFragment = getSelectionMediaFragment();
-
-		if (mediaFragment && mediaFragment !== "") {
-			//document.location.hash = mediaFragment;
+	$(window).on('mouseup touchend touchcancel', function(evt) {
+		if ($(evt.target).hasClass('timebased')) {
+			getSelectionMediaFragment();
+			if (OPTV_Player){ 
+				OPTV_Player.pause();
+			}
 		}
-	},false);
+	});
+
+	$('#shareURL').click(function() {
+		$(this).select();
+	});
 }
 
 function processQuery() {

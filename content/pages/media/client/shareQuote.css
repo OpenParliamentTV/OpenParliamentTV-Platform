@@ -44,7 +44,7 @@
     margin: 0.25em -.5em;
     border-width: 0.5em 0.5em 0;
     border-style: solid;
-    border-color: var(--primary-bg-color) transparent;
+    border-color: #fff transparent;
 }
 .share-this-popover > ul {
     pointer-events: auto;
@@ -62,13 +62,13 @@
 }
 .share-this-popover > ul > li {
     display: inline-block;
-    background: var(--primary-bg-color);
+    background: #fff;
     padding: 3px;
     border-radius: .25rem;
 }
 .share-this-popover > ul > li > button {
-	background: var(--primary-bg-color) !important;
-    color: var(--primary-fg-color) !important;
+	background: #f39c12 !important;
+    color: #fff !important;
     border: none !important;
 }
 .share-this-popover > ul > li > button:focus,
@@ -164,12 +164,14 @@
 #shareQuoteModal .card .cardMeta .cardTitleWrapper .cardTitle {
     margin: 0 0 .15em;
     line-height: 18px;
+    font-weight: bold;
 }
 
 #shareQuoteModal .card .cardMeta .cardTitleWrapper .cardDescription {
     max-height: 2.6em;
     margin-top: .32333em;
     -webkit-line-clamp: 2;
+    font-weight: normal;
 }
 
 #shareQuoteModal .card .cardMeta .cardWebsite {

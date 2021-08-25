@@ -29,17 +29,17 @@ $flatDataArray = flattenEntityJSON($apiResult["data"][0]);
                 </button>
             </div>
             <div class="modal-body">
-                <label><?php echo L::selectTheme; ?>:</label>
-                <div class="row row-cols-2">
+                <label>1. <?php echo L::selectTheme; ?>:</label>
+                <div class="form-row row-cols-2">
                     <div class="col">
                         <div class="card sharePreview active" data-theme="l">
                             <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
                                     <div class="cardTitle text-truncate">Open Parliament TV | <?= $speechTitleShort ?></div>
-                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= $formattedDate ?>: <?= $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] ?></div>
+                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] ?> (<?= $formattedDate ?>)</div>
                                 </div>
-                                <div class="overflow-hidden text-uppercase text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
+                                <div class="overflow-hidden text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
                             </div>
                         </div>
                     </div>
@@ -49,18 +49,17 @@ $flatDataArray = flattenEntityJSON($apiResult["data"][0]);
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
                                     <div class="cardTitle text-truncate">Open Parliament TV | <?= $speechTitleShort ?></div>
-                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= $formattedDate ?>: <?= $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] ?></div>
+                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] ?> (<?= $formattedDate ?>)</div>
                                 </div>
-                                <div class="overflow-hidden text-uppercase text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
+                                <div class="overflow-hidden text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <small class="d-block mt-2 text-muted"><?php echo L::shareQuoteMessageTheme; ?></small>
                 <div class="form-group mt-3">
-                    <label for="shareURL">URL</label>
-                    <textarea id="shareURL" class="form-control" type="text" name="shareURL"aria-describedby="shareURLhelp" rows=3></textarea>
-                    <small id="shareURLhelp" class="form-text text-muted"><?php echo L::shareQuoteMessageURL; ?></small>
+                    <label for="shareURL">2. <?php echo L::shareQuoteMessageURL; ?>:</label>
+                    <textarea id="shareURL" class="form-control" type="text" name="shareURL" rows=3></textarea>
                 </div>
             </div>
             <div class="modal-footer">
