@@ -22,10 +22,13 @@ foreach ($speech["relationships"]["people"]["data"] as $relationshipItem) {
     $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">'.$relationshipItem["attributes"]["label"].'<br>('.$relationshipItem["attributes"]["context"].')</a></div>';
 }
 
+/*
 $relatedOrganisationsHTML = '';
 foreach ($speech["relationships"]["organisations"]["data"] as $relationshipItem) {
     $relatedOrganisationsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">'.$relationshipItem["attributes"]["label"].'</a></div>';
 }
+*/
+
 $documentsTab = '';
 $relatedDocumentsHTML = '';
 if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relationships"]["documents"]["data"]) > 0) {
@@ -52,7 +55,7 @@ foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
 */
 
 $relatedContentsHTML = 
-'<div class="tab-content">'.$proceedingsPanel.'<div class="tab-pane fade show '.$relatedPeopleActiveClass.'" id="people" role="tabpanel" aria-labelledby="people-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedPeopleHTML.'</div></div><div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedOrganisationsHTML.'</div></div>'.$relatedDocumentsHTML.'<div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div></div>';
+'<div class="tab-content">'.$proceedingsPanel.'<div class="tab-pane fade show '.$relatedPeopleActiveClass.'" id="people" role="tabpanel" aria-labelledby="people-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedPeopleHTML.'</div></div>'.$relatedDocumentsHTML.'<div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div></div>';
 
 ?>
 <script type="text/javascript">
