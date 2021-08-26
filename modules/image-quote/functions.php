@@ -192,7 +192,6 @@ function getQuoteFromRequestParams($timings, $fragments, $transcriptHTML) {
 		}
 		*/
 	}
-	return 'Test';
 }
 
 
