@@ -93,7 +93,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <script type="text/javascript">
 	$(document).ready( function() {
-		updateMediaList("<?= $subType ?>ID=<?= $apiResult["data"]["id"] ?>");
+		updateMediaList("<?= $subType ?>ID=<?= $apiResult["data"]["id"] ?>&sort=date-desc");
 		$('#dataTable').bootstrapTable({
 			showToggle: false,
 			multiToggleDefaults: [],

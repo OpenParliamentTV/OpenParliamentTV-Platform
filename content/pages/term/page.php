@@ -75,7 +75,7 @@ include_once(__DIR__ . '/../../header.php');
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/searchResults.js"></script>
 <script type="text/javascript">
 	$(document).ready( function() {
-		updateMediaList("termID=<?= $apiResult["data"]["id"] ?>");
+		updateMediaList("termID=<?= $apiResult["data"]["id"] ?>&sort=date-desc");
 	});
 </script>
 
