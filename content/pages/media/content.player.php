@@ -36,26 +36,18 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
     $documentsTab = '<li class="nav-item">
             <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="tabTitle">'.L::documents.'</span><span class="icon-doc-text"></span></a>
         </li>';
-    $relatedDocumentsHTML .= '<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">';
 
     //<iframe src="'.$config["dir"]["root"].'/modules/pdf-viewer/web/viewer.html?file='.$speech["relationships"]["documents"]["data"][0]["attributes"]["sourceURI"].'"></iframe>
-    foreach ($speech["relationships"]["documents"]["data"] as $tmpDocument) {
+    foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
 
-        $relatedDocumentsHTML .= '<div class="relationshipsDocument relationshipsDocument_'.$tmpDocument["attributes"]["type"].'">       <a href="'.$tmpDocument["attributes"]["sourceURI"].'" target="_blank">'.$tmpDocument["attributes"]["label"].'</a>       </div>';
+        $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><a href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">'.$relationshipItem["attributes"]["label"].'</a></div>';
 
     }
 
-
-    $relatedDocumentsHTML .= '</div>';
 }
-/*
-foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
-    
-}
-*/
 
 $relatedContentsHTML = 
-'<div class="tab-content">'.$proceedingsPanel.'<div class="tab-pane fade show '.$relatedPeopleActiveClass.'" id="people" role="tabpanel" aria-labelledby="people-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedPeopleHTML.'</div></div>'.$relatedDocumentsHTML.'<div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div></div>';
+'<div class="tab-content">'.$proceedingsPanel.'<div class="tab-pane fade show '.$relatedPeopleActiveClass.'" id="people" role="tabpanel" aria-labelledby="people-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedPeopleHTML.'</div></div><div class="tab-pane fade show" id="documents" role="tabpanel" aria-labelledby="documents-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedDocumentsHTML.'</div></div><div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div></div>';
 
 ?>
 <script type="text/javascript">
