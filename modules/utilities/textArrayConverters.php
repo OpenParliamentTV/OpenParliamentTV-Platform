@@ -44,7 +44,7 @@ function textObjectToHTMLString($inputTextObject, $mediaFileURI, $mediaID, $auto
 			}
 
 			$sentenceText = (is_array($sentence)) ? $sentence['text'] : $sentence;
-			$outputHTML .= '<span'.$idAttribute.$timeAttributes.'>'.$sentenceText.'</span>';
+			$outputHTML .= '<span'.$idAttribute.$timeAttributes.'>'.$sentenceText.' </span>';
 		}
 
 		$outputHTML .= '</p>';
@@ -81,7 +81,7 @@ function simpleTextBodyArrayToHTMLString($textBody) {
 		}
 
 		$sentenceText = (is_array($sentence)) ? $sentence['text'] : $sentence;
-		$outputHTML .= '<span'.$timeAttributes.'>'.$sentenceText.'</span>';
+		$outputHTML .= '<span'.$timeAttributes.'>'.$sentenceText.' </span>';
 	}
 
 	$outputHTML .= '</p>';
