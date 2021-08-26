@@ -398,6 +398,16 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	width: 100%;
 }
 
+.layoutArea .contentViewContainer .contentViewContents::after {
+	position: absolute;
+	content: '';
+	top: 0px;
+	left: 0px;
+	width: calc(100% - 20px);
+	height: 0px;
+	box-shadow: 0 0 5px 10px var(--secondary-bg-color);
+}
+
 .contentViewTab, .layoutArea .contentViewContainer .contentViewContents {
 	background: var(--primary-bg-color) !important;
 }
@@ -475,6 +485,10 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 	padding-bottom: 6px;
 	color: var(--secondary-fg-color);
 	margin-bottom: 1rem;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer p[data-type="comment"]::before {
