@@ -643,6 +643,21 @@ function updateQuery() {
 
 	history.pushState(null, "", "search?"+ getSerializedForm());
 	updateResultList();
+	if ($('input[name="q"]').val() != '' || peopleIDs.length != 0) {
+		if (peopleIDs.length != 0) {
+			var newDocumentTitle = '';
+			document.title = '';
+			$('.searchInputContainer .queryItem[data-type="person"]').each(function() {
+				newDocumentTitle += $(this).find('.queryText').text() + ' ';
+			});
+			newDocumentTitle += $('input[name="q"]').val() +' - '+ localizedLabels.speeches +' | '+ localizedLabels.brand;
+			document.title = newDocumentTitle;
+		} else {
+			document.title = $('input[name="q"]').val() +' - '+ localizedLabels.speeches +' | '+ localizedLabels.brand;
+		}
+	} else {
+		document.title = localizedLabels.brand;
+	}
 }
 
 function updateResultList() {

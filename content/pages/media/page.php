@@ -36,8 +36,8 @@ $flatDataArray = flattenEntityJSON($apiResult["data"][0]);
                             <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
-                                    <div class="cardTitle text-truncate">Open Parliament TV | <?= $speechTitleShort ?></div>
-                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] ?> (<?= $formattedDate ?>)</div>
+                                    <div class="cardTitle text-truncate"><?= $speechTitleShort ?> | <?php echo L::brand ?></div>
+                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= L::speech.' '.L::onTheSubject.' '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' '.L::by.' '.$mainSpeaker['attributes']['label'].' ('.$speech["attributes"]["parliamentLabel"].', '.$formattedDate.')' ?></div>
                                 </div>
                                 <div class="overflow-hidden text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
                             </div>
@@ -48,8 +48,8 @@ $flatDataArray = flattenEntityJSON($apiResult["data"][0]);
                             <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
-                                    <div class="cardTitle text-truncate">Open Parliament TV | <?= $speechTitleShort ?></div>
-                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] ?> (<?= $formattedDate ?>)</div>
+                                    <div class="cardTitle text-truncate"><?= $speechTitleShort ?> | <?php echo L::brand ?></div>
+                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= L::speech.' '.L::onTheSubject.' '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' '.L::by.' '.$mainSpeaker['attributes']['label'].' ('.$speech["attributes"]["parliamentLabel"].', '.$formattedDate.')' ?></div>
                                 </div>
                                 <div class="overflow-hidden text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
                             </div>
@@ -63,7 +63,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"][0]);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo L::close; ?></button>
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><?php echo L::close; ?></button>
             </div>
         </div>
     </div>

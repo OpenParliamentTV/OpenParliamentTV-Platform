@@ -1,12 +1,20 @@
 <?php 
-$title = L::brand.' | '.strip_tags($pageTitle);
 $description = $pageDescription;
 $url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 switch ($page) {
   case 'main':
+    $title = L::brand;
     $ogType = 'website';
     break;
+  case 'search': 
+    if (count($_REQUEST) < 2 || (!$_REQUEST["q"] && !$_REQUEST["personID"])) {
+      $title = L::brand;
+    } else {
+      $title = strip_tags($pageTitle).' | '.L::brand;
+    }
+    break;
   case 'media':
+    $title = strip_tags($pageTitle).' | '.L::brand;
     if (isset($_REQUEST['t']) && isset($_REQUEST['f'])) {
       $image = $config["dir"]["root"].'/content/client/images/share-image.php?id='.$_REQUEST['id'].'&t='.$_REQUEST['t'].'&f='.$_REQUEST['f'].'&c='.$_REQUEST['c'];
     } else {
@@ -14,8 +22,8 @@ switch ($page) {
     }
     $ogType = 'video';
     break;
-  
   default:
+    $title = strip_tags($pageTitle).' | '.L::brand;
     $image = $config["dir"]["root"].'/content/client/images/thumbnail.png';
     $ogType = 'article';
     break;

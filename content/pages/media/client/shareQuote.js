@@ -26,7 +26,7 @@ function initShareQuote() {
 		selector: "#OPTV_Player",
 		sharers: [{
 			'render': function() {
-				return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#shareQuoteModal">Zitat teilen</button>'
+				return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#shareQuoteModal">'+ localizedLabels.shareQuote +'</button>'
 			},
 			'name': 'OPTV' 
 		}]
@@ -37,9 +37,6 @@ function initShareQuote() {
 	$(window).on('mouseup touchend touchcancel', function(evt) {
 		if ($(evt.target).hasClass('timebased')) {
 			getSelectionMediaFragment();
-			if (OPTV_Player){ 
-				OPTV_Player.pause();
-			}
 		}
 	});
 
@@ -166,7 +163,14 @@ function getSelectionMediaFragment() {
 
 	if (selection.toString() !== "") {
 		
+		if (OPTV_Player){ 
+			OPTV_Player.pause();
+		}
 		$('.share-match').removeClass('share-match');
+
+		var searchParams = removeQuoteParamsFromURL(window.location.search.toString());
+		var locationString = currentMediaID + searchParams;
+		history.pushState(null, "", locationString);
 
 		var fNode = selection.focusNode.parentNode;
 		var aNode = selection.anchorNode.parentNode;

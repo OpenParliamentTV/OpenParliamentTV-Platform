@@ -10,6 +10,9 @@ $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 $acceptLang = ['de', 'en'];
 $lang = in_array($lang, $acceptLang) ? $lang : 'de';
 
+// just used inside JS const
+$langJSONString = file_get_contents('lang/lang_'.$lang.'.json');
+
 $color_scheme = isset($_COOKIE["color_scheme"]) ? $_COOKIE["color_scheme"] : false;
 if ($color_scheme === false) $color_scheme = 'light';
 
@@ -115,7 +118,7 @@ switch ($page) {
 	case "media":
 		require_once("./modules/media/include.media.php");
 		$pageTitle = $speechTitleShort;
-		$pageDescription = $speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' ('.$formattedDate.')';
+		$pageDescription = L::speech.' '.L::onTheSubject.' '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' '.L::by.' '.$mainSpeaker['attributes']['label'].' ('.$speech["attributes"]["parliamentLabel"].', '.$formattedDate.')';
 		$pageType = 'entity';
 		ob_start();
 		include_once("./content/pages/media/page.php");
@@ -593,30 +596,44 @@ switch ($page) {
 	break;
 	case "search":
     case "main":
-		if ($page == 'search' && isset($_REQUEST['personID'])) {
-			// Get labels for personID values so we can display names
-			$personIDs = $_REQUEST['personID'];
-			$personDataFromRequest = array();
-			if (is_array($personIDs)) {
-				foreach ($personIDs as $personID) {
+		if ($page == 'search') {
+			
+			if (isset($_REQUEST['personID'])) {
+				// Get labels for personID values so we can display names
+				$personIDs = $_REQUEST['personID'];
+				$personDataFromRequest = array();
+				if (is_array($personIDs)) {
+					foreach ($personIDs as $personID) {
+						$personData = apiV1([
+							"action"=>"getItem", 
+							"itemType"=>'person', 
+							"id"=>$personID
+						]);
+						$personDataFromRequest[$personID] = $personData['data'];
+						$pageTitle .= $personData['data']['attributes']['label'].' ';
+					}
+				} else {
 					$personData = apiV1([
 						"action"=>"getItem", 
 						"itemType"=>'person', 
-						"id"=>$personID
+						"id"=>$personIDs
 					]);
-					$personDataFromRequest[$personID] = $personData['data'];
+					$personDataFromRequest[$personIDs] = $personData['data'];
+					$pageTitle .= $personData['data']['attributes']['label'].' ';
 				}
+			}
+
+			$pageTitle .= $_REQUEST["q"];
+
+			if (count($_REQUEST) < 2 || (!$_REQUEST["q"] && !$_REQUEST["personID"])) {
+				$pageTitle .= L::search;
+			} elseif ($_REQUEST["parliament"] && strlen($_REQUEST["parliament"]) >= 2) {
+				$pageTitle .= ' - '.L::speeches.' - '.$config["parliament"][$_REQUEST["parliament"]]["label"];
 			} else {
-				$personData = apiV1([
-					"action"=>"getItem", 
-					"itemType"=>'person', 
-					"id"=>$personIDs
-				]);
-				$personDataFromRequest[$personIDs] = $personData['data'];
+				$pageTitle .= ' - '.L::speeches;
 			}
 		}
 
-		$pageTitle = L::search;
 		$pageType = 'default';
 		require_once("./modules/search/include.search.php");
 		ob_start();
@@ -625,6 +642,7 @@ switch ($page) {
 	break;
 	default:
 		$pageTitle = '404 - '.L::messageErrorNotFound;
+		$pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
 		$pageType = 'default';
 		ob_start();
 		include_once("./content/pages/404/page.php");
@@ -643,6 +661,8 @@ switch ($page) {
                 "root": "<?=$config["dir"]["root"]?>"
             }
         }
+
+        const localizedLabels = <?= $langJSONString ?>;
 
         //TODO: Move API to root $config and add it to JS Object
     </script>
