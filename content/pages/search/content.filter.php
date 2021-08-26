@@ -1,6 +1,7 @@
 <div id="filterbar" class="col-12 nosearch">
 	<form id="filterForm" method="get" accept-charset="UTF-8">
 		<input type="hidden" name="q" value="">
+		<input type="hidden" name="context" value="">
 		<div class="searchContainer">
 			<div class="parliamentFilterContainer">
 				<?php include_once('content.filter.parliaments.php'); ?>

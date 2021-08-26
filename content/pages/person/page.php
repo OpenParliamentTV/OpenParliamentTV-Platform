@@ -94,7 +94,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 <script type="text/javascript">
 	$(document).ready( function() {
 		updateMediaList("personID=<?= $apiResult["data"]["id"] ?>");
-		updateMediaList("personID=<?= $apiResult["data"]["id"] ?>", "#interventionListContainer");
+		updateMediaList("personID=<?= $apiResult["data"]["id"] ?>&context=speaker", "#interventionListContainer");
 		$('#dataTable').bootstrapTable({
 			showToggle: false,
 			multiToggleDefaults: [],

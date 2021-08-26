@@ -237,6 +237,7 @@ function updateContentsFromURL() {
 	}
 
 	$('[name="q"]').val(getQueryVariable('q'));
+	$('[name="context"]').val(getQueryVariable('context'));
 	$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
 
 	$('[name="factionID[]"]').each(function() {
