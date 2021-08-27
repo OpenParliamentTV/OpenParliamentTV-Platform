@@ -7,6 +7,13 @@ function flattenEntityJSON($array, $prefix = '') {
     if (!is_array($array)) $array = (array)$array;
     
     foreach($array as $key => $value) {
+        
+        if ($key == 'relationships' || 
+            $key == 'gender' || 
+            $key == 'socialMediaIDs') {
+            continue;
+        }
+
         $_key = ltrim($prefix.$sep.$key, ".");
         
         if (is_array($value) || is_object($value)) {
