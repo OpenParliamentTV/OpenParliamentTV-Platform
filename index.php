@@ -223,7 +223,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "documentation":
-		$pageTitle = 'Documentation';
+		$pageTitle = L::documentation;
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -239,7 +239,7 @@ switch ($page) {
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
-				'label' => 'Documentation',
+				'label' => L::documentation,
 				'path' => '/documentation'
 			],
 			[

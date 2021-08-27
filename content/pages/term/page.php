@@ -13,6 +13,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 
 include_once(__DIR__ . '/../../header.php'); 
+require_once(__DIR__."/../../../modules/utilities/functions.entities.php");
+$flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <main class="container-fluid subpage">
 	<div class="detailsHeader">
@@ -65,7 +67,7 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 				</div>
 				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
-					[ITEM DATA]
+					<?php include_once(__DIR__ . '/../../components/entity.data.php'); ?>
 				</div>
 			</div>
 		</div>
