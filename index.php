@@ -58,7 +58,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]
 		]);
-		$pageTitle = '<span class="icon-list-numbered"></span>'.$apiResult["data"]["attributes"]["title"];
+		$pageTitle = '<span class="icon-list-numbered"></span>'.L::agendaItem.': '.$apiResult["data"]["attributes"]["title"].' - '.$apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"].'/'.$apiResult["data"]["relationships"]["session"]["data"]["attributes"]["number"].' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
 		$pageDescription = L::speeches.' '.L::basedOn.': '.$apiResult["data"]["attributes"]["officialTitle"].' - '.$apiResult["data"]["attributes"]["title"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
@@ -94,7 +94,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]
 		]);
-		$pageTitle = '<span class="icon-check"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – '.$apiResult["data"]["attributes"]["number"].'. '.L::electoralPeriod;
+		$pageTitle = '<span class="icon-check"></span>'.$apiResult["data"]["attributes"]["number"].'. '.L::electoralPeriod.' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
 		$pageDescription = L::speeches.' '.L::inDER.' '.$apiResult["data"]["attributes"]["number"].'. '.L::electoralPeriod.' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
@@ -166,7 +166,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]
 		]);
-		$pageTitle = '<span class="icon-group"></span>'.$apiResult["data"]["attributes"]["parliamentLabel"].' – '.L::session.' '.$apiResult["data"]["attributes"]["number"];
+		$pageTitle = '<span class="icon-group"></span>'.L::session.' '.$apiResult["data"]["attributes"]["number"].' – '.$apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"].'. '.L::electoralPeriod.' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
 		$pageDescription = L::speeches.' '.L::inDER.' '.$apiResult["data"]["attributes"]["number"].'. '.L::session.' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [
