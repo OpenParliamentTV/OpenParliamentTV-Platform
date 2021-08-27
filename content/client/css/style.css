@@ -42,20 +42,20 @@ body.darkmode {
 
 @font-face {
     font-family: 'Open Sans';
-    src: url("../fonts/opensans-light-webfont.woff2") format("woff2"),url(../fonts/opensans-light-webfont.woff) format("woff");
+    src: url("../fonts/OpenSans-Light.ttf");
     font-weight: 300;
     font-style: normal;
 }
 @font-face {
     font-family: 'Open Sans';
-    src: url("../fonts/opensans-semibold-webfont.woff2") format("woff2"),url(../fonts/opensans-semibold-webfont.woff) format("woff");
-    font-weight: 500;
+    src: url("../fonts/OpenSans-Regular.ttf");
+    font-weight: 400;
     font-style: normal;
 }
 @font-face {
-    font-family: 'Open Sans Krypto';
-    src: url("../fonts/opensans-light-krypto-webfont.woff2") format("woff2"),url(../fonts/opensans-light-krypto-webfont.woff) format("woff");
-    font-weight: 300;
+    font-family: 'Open Sans';
+    src: url("../fonts/OpenSans-SemiBold.ttf");
+    font-weight: 500;
     font-style: normal;
 }
 
@@ -508,19 +508,40 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     padding-right: 5px;
 }
 
-.relationshipsList .entityPreview a {
+.relationshipsList .entityPreview .entityContainer {
     background: var(--primary-bg-color);
-    padding: 8px 10px;
+    padding: 0px;
     display: block;
     margin-bottom: 10px;
-    text-decoration: none;
     border-radius: 4px;
     border: 1px solid var(--border-color);
     height: calc(100% - 10px);
+    position: relative;
 }
 
-.relationshipsList .entityPreview a:hover {
+.relationshipsList .entityPreview .entityContainer:hover {
     border-color: var(--primary-fg-color);
+}
+
+.relationshipsList .entityPreview .entityContainer a {
+    display: block;
+    padding: 8px 10px;
+    text-decoration: none;
+}
+
+.relationshipsList .entityPreview[data-type="document"] .entityContainer .btn {
+    padding: 2px 1px;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.relationshipsList .entityPreview[data-type="document"] .entityContainer .btn span {
+    margin: 0px;
+}
+
+.relationshipsList .entityPreview .entityContainer .entityTitle {
+    font-weight: bolder;
 }
 
 .nav-tabs {
@@ -543,7 +564,7 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     padding-left: 6px;
 }
 
-.nav-tabs .nav-link.active .nav-item-label {
+.nav-tabs .nav-link.active:not(#data-tab) .nav-item-label {
     display: inline !important;
 }
 
