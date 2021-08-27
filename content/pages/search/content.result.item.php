@@ -1,4 +1,11 @@
-<article class="resultItem col" data-speech-id="<?= $result_item["id"] ?>" data-faction="<?= $result_item["relationships"]["organisations"]["data"][0]["id"] ?>">
+<?php 
+if (isset($result_item["_finds"]) && count($result_item['_finds']) > 0) {
+	$snippets = $result_item["_finds"];
+} else {
+	$snippets = null;
+}
+?>
+<article class="resultItem col<?= ($snippets !== null) ? ' snippets' : '' ?>" data-speech-id="<?= $result_item["id"] ?>" data-faction="<?= $result_item["relationships"]["organisations"]["data"][0]["id"] ?>">
 	<div class="resultContent partyIndicator" data-faction="<?= $result_item["relationships"]["organisations"]["data"][0]["id"] ?>">
 		<a style="display: block;" href='<?= $config["dir"]["root"] ?>/media/<?= $result_item["id"].$paramStr ?>'>
 			<div class="icon-play-1"></div>
@@ -24,37 +31,37 @@
 			?>
 		</a>
 		<?php 
-		if (isset($result_item["_finds"]) && count($result_item["_finds"]) > 0) {
+		if ($snippets) {
 			echo '<div class="resultSnippets">';
 		}
-		if (isset($result_item['_finds'])) {
-			foreach($result_item['_finds'] as $result) {
+		if ($snippets) {
+			foreach($snippets as $result) {
 				?>
 				<a class="resultSnippet" href='media/<?= $result_item["id"].$paramStr.'&t='.$result['data-start'] ?>' title="▶ Ausschnitt direkt abspielen"><?= $result['context'] ?></a>
 				<?php
 			}
 		}
 		
-		if (isset($result_item["finds"]) && count($result_item['finds']) > 0) {
+		if ($snippets) {
 			echo '</div>';
 			echo '<div class="resultTimeline">';
 		}
 
-		if (isset($result_item['finds'])) {
+		if ($snippets) {
 			?>
-			<span class="badge badge-primary badge-pill"><?=count($result_item["finds"])?></span>
+			<span class="badge badge-primary badge-pill"><?=count($snippets)?></span>
 			<?php
-			foreach($result_item['finds'] as $result) {
+			foreach($snippets as $result) {
 			
-					$leftPercent = 100 * ((float)$result["data-start"] / $result_item["_source"]["meta"]["duration"]);
-					$widthPercent  = 100 * (($result['data-end'] - $result['data-start']) / $result_item["_source"]["meta"]['duration']);
+					$leftPercent = 100 * ((float)$result["data-start"] / $result_item["attributes"]["duration"]);
+					$widthPercent  = 100 * (($result['data-end'] - $result['data-start']) / $result_item["attributes"]['duration']);
 				?>
 				<div class="hit" style="left: <?= $leftPercent ?>%; width: <?= $widthPercent ?>%;"></div>
 				<?php
 			}
 		}
 		
-		if (isset($result_item["finds"]) && count($result_item['finds']) > 0) {
+		if ($snippets) {
 			echo '</div>';
 		}
 		?>

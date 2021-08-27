@@ -219,6 +219,46 @@ function updatePlayer() {
 		}
 		
 	}
+
+	// Add video source attribution
+	/*
+	speechCodeSnippets.push({
+		"@context": [
+			"http://www.w3.org/ns/anno.jsonld",
+			{
+				"frametrail": "http://frametrail.org/ns/"
+			}
+		],
+		"creator": {
+			"nickname": "demo",
+			"type": "Person",
+			"id": "1"
+		},
+		"created": "Wed Mar 14 2018 11:33:19 GMT+0100 (CET)",
+		"type": "Annotation",
+		"frametrail:type": "Overlay",
+		"target": {
+			"type": "Video",
+			"source": playerData.mediaSource,
+			"selector": {
+				"conformsTo": "http://www.w3.org/TR/media-frags/",
+				"type": "FragmentSelector",
+				"value": "t=0,1000&xywh=percent:40,80,60,20"
+			}
+		},
+		"body": {
+            "type": "TextualBody",
+            "frametrail:type": "text",
+            "format": "text/html",
+            "value": "",
+            "frametrail:name": "",
+            "frametrail:attributes": {
+                "text": "&lt;div class=&quot;sourceAttribution&quot;&gt;&lt;span&gt;Quelle: Deutscher Bundestag / &lt;a href=&quot;https://dbtv.de/12345&quot; target=&quot;_blank&quot;&gt;https://dbtv.de/12345&lt;/a&gt;&lt;/span&gt;&lt;/div&gt;"
+            }
+        },
+		"frametrail:attributes": {}
+	});
+	*/
 	
 	window.OPTV_Player = FrameTrail.init({
 		target:             '#OPTV_Player',

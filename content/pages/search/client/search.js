@@ -351,7 +351,7 @@ function updateSuggestions() {
 		*/
 
 		if (textValue.indexOf(' ') != -1) {
-			var exactSuggestionItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">"'+ textValue +'"</span><span class="ml-2" style="opacity: .68;">(exact match)</span></div>');
+			var exactSuggestionItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">"'+ textValue +'"</span><span class="ml-2" style="opacity: .68;">('+ localizedLabels.exactMatch +')</span></div>');
 			
 			exactSuggestionItem.click(function(evt) {
 				var textValue = $(this).children('.suggestionItemLabel').text();
@@ -444,12 +444,30 @@ function renderTextSuggestions(inputValue, data) {
 
 function renderPeopleSuggestions(inputValue, data) {
 	var maxSuggestions = 4;
+
+	var textValue = $.trim(inputValue),
+		isExactMatch = /\".+\"/.test(textValue),
+		inputTermsArray = [];
+	
+	if (textValue.indexOf(' ') != -1 && !isExactMatch) {
+		var textValueParts = textValue.split(' ');
+		for (var i = 0; i < textValueParts.length; i++) {
+			inputTermsArray.push(textValueParts[i]);
+		}
+	} else {
+		inputTermsArray.push(textValue);
+	}
 	
 	if (data.length == 0) {
-		$('.searchSuggestionContainer #suggestionContainerPeople').append('<div class="my-3">Keine Personen gefunden</div>');
+		$('.searchSuggestionContainer #suggestionContainerPeople').append('<div class="my-3">'+ localizedLabels.noPeopleFound +'</div>');
 	} else {
 		for (var i = 0; i < data.length; i++) {
-			var suggestionItemPerson = '<span class="suggestionItemLabel">'+ data[i].attributes.label +'</span>',
+			var highlightedLabel = data[i].attributes.label;
+			for (var h = inputTermsArray.length - 1; h >= 0; h--) {
+				highlightedLabel = highlightedLabel.split(inputTermsArray[h]).join('<em>' + inputTermsArray[h] + '</em>');
+			}
+
+			var suggestionItemPerson = '<span class="suggestionItemLabel">'+ highlightedLabel +'</span>',
 				suggestionItemFaction = (data[i].relationships.faction.data) ? '<span class="ml-2 partyIndicator" data-faction="'+ data[i].relationships.faction.data.attributes.labelAlternative +'">'+ data[i].relationships.faction.data.attributes.labelAlternative +'</span>' : '',
 				suggestionItem = $('<div class="suggestionItem" data-type="person" data-item-id="'+ data[i].id +'">'+ suggestionItemPerson + suggestionItemFaction +'</div>');
 

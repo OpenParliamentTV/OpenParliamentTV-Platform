@@ -71,7 +71,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	--primary-bg-color: #303139;
     --secondary-bg-color: #404149;
     --semi-transparent-bg-color: rgba(47, 50, 58, .8); 
-    --primary-fg-color: #fff; /* Texts Borders etc. */
+    --primary-fg-color: #efefef; /* Texts Borders etc. */
     --secondary-fg-color: #f3f4f5; /* Secondary Texts, Borders, Editable Panels etc. */
     --semi-transparent-fg-color: rgba(255, 255, 255, .3);
     --semi-transparent-fg-highlight-color: rgba(255, 255, 255, .4);
@@ -94,7 +94,11 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	text-align: center;
 	line-height: 13px;
 	font-size: 10px;
-} 
+}
+
+#toggleAutoplayResults.active .slider::before {
+	content: '\e8a9';
+}
 
 .frametrail-body .statusMessage:not(.error) {
 	display: none !important;
@@ -121,6 +125,8 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	border-radius: 4px;
 	background: transparent;
 	white-space: nowrap;
+	font-size: 14px;
+	vertical-align: 1px;
 }
 
 .playerTitle .speechMeta {
@@ -398,7 +404,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	width: 100%;
 }
 
-.layoutArea .contentViewContainer .contentViewContents::after {
+.layoutArea .contentViewContainer .contentViewContents::before {
 	position: absolute;
 	content: '';
 	top: 0px;
@@ -406,6 +412,18 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	width: calc(100% - 20px);
 	height: 0px;
 	box-shadow: 0 0 5px 10px var(--secondary-bg-color);
+	z-index: 11;
+}
+
+.layoutArea .contentViewContainer .contentViewContents::after {
+	position: absolute;
+	content: '';
+	bottom: 0px;
+	left: 0px;
+	width: calc(100% - 20px);
+	height: 0px;
+	box-shadow: 0 0 5px 10px var(--secondary-bg-color);
+	z-index: 11;
 }
 
 .contentViewTab, .layoutArea .contentViewContainer .contentViewContents {
@@ -542,6 +560,14 @@ body.darkmode .playerContainer .playerProgress .ui-slider-range {
 
 .hypervideoContainer .videoContainer .videoStartOverlay .playButtonBig [class^="icon-"]::before, .hypervideoContainer .videoContainer .videoStartOverlay .playButtonBig [class*=" icon-"]::before {
 	color: #444444;
+}
+
+.hypervideoContainer .videoContainer .overlayContainer .sourceAttribution {
+	height: 100%;
+}
+
+.hypervideoContainer .videoContainer .overlayContainer .sourceAttribution span {
+	vertical-align: bottom;
 }
 
 .playerContainer .controls {

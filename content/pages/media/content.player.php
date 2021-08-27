@@ -15,12 +15,12 @@ $proceedingsPanel = (isset($textContentsHTML)) ? '<div class="tab-pane fade show
 $proceedingsTab = (isset($textContentsHTML)) ? '<li class="nav-item">
         <a class="nav-link active" id="proceedings-tab" data-toggle="tab" href="#proceedings" role="tab" aria-controls="proceedings" aria-selected="true"><span class="tabTitle">'.L::proceedings.'</span><span class="icon-doc-text-1"></span></a>
     </li>' : '';
-$relatedPeopleActiveClass = (isset($textContentsHTML)) ? '' : 'show active';
+$relationshipsActiveClass = (isset($textContentsHTML)) ? '' : 'show active';
 
 $relatedPeopleHTML = '';
 foreach ($speech["relationships"]["people"]["data"] as $relationshipItem) {
     $contextLabelIdentifier = lcfirst(implode('', array_map('ucfirst', explode('-', $relationshipItem["attributes"]["context"]))));
-    $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.L('context'.$contextLabelIdentifier).'</div></a></div></div>';
+    $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="thumbnailContainer"><div class="rounded-circle"><img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="..."></div></div><div><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.$relationshipItem["attributes"]["faction"]["labelAlternative"].'</div><div><span class="icon-megaphone"></span>'.L('context'.$contextLabelIdentifier).'</div></div></a></div></div>';
 }
 
 /*
@@ -30,14 +30,9 @@ foreach ($speech["relationships"]["organisations"]["data"] as $relationshipItem)
 }
 */
 
-$documentsTab = '';
 $relatedDocumentsHTML = '';
 if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relationships"]["documents"]["data"]) > 0) {
     
-    $documentsTab = '<li class="nav-item">
-            <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="tabTitle">'.L::documents.'</span><span class="icon-doc-text"></span></a>
-        </li>';
-
     //<iframe src="'.$config["dir"]["root"].'/modules/pdf-viewer/web/viewer.html?file='.$speech["relationships"]["documents"]["data"][0]["attributes"]["sourceURI"].'"></iframe>
     foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
 
@@ -52,7 +47,7 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
 }
 
 $relatedContentsHTML = 
-'<div class="tab-content">'.$proceedingsPanel.'<div class="tab-pane fade show '.$relatedPeopleActiveClass.'" id="people" role="tabpanel" aria-labelledby="people-tab"><div class="relationshipsList row row-cols-1 row-cols-lg-2">'.$relatedPeopleHTML.'</div></div><div class="tab-pane fade show" id="documents" role="tabpanel" aria-labelledby="documents-tab"><div class="relationshipsList row row-cols-1 row-cols-lg-2">'.$relatedDocumentsHTML.'</div></div><div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div></div>';
+'<div class="tab-content">'.$proceedingsPanel.'<div class="tab-pane fade show '.$relationshipsActiveClass.'" id="relationships" role="tabpanel" aria-labelledby="relationships-tab"><div class="relationshipsCategoryHeader">'.L::personPlural.'</div><div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">'.$relatedPeopleHTML.'</div><hr><div class="relationshipsCategoryHeader">'.L::documents.'</div><div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">'.$relatedDocumentsHTML.'</div></div><div class="tab-pane fade show" id="documents" role="tabpanel" aria-labelledby="documents-tab"></div><div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div></div>';
 
 ?>
 <script type="text/javascript">
@@ -99,15 +94,12 @@ $relatedContentsHTML =
             <ul class="nav nav-tabs flex-nowrap" role="tablist">
                 <?= $proceedingsTab ?>
                 <li class="nav-item">
-                    <a class="nav-link <?= $relatedPeopleActiveClass ?>" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="true"><span class="tabTitle"><?php echo L::personPlural ?></span><span class="icon-torso"></span></a>
+                    <a class="nav-link <?= $relationshipsActiveClass ?>" id="relationships-tab" data-toggle="tab" href="#relationships" role="tab" aria-controls="relationships" aria-selected="true"><span class="tabTitle"><?php echo L::relationships; ?></span><span class="icon-flow-cascade"></span></a>
                 </li>
                 <!--
                 <li class="nav-item">
                     <a class="nav-link" id="organisations-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="false"><span class="tabTitle">Organisations</span><span class="icon-bank"></span></a>
                 </li>
-                -->
-                <?= $documentsTab ?>
-                <!--
                 <li class="nav-item">
                     <a class="nav-link" id="terms-tab" data-toggle="tab" href="#terms" role="tab" aria-controls="terms" aria-selected="false"><span class="tabTitle">Terms</span><span class="icon-tag-1"></span></a>
                 </li>

@@ -16,7 +16,7 @@
 				<div class="searchSuggestionContainer">
 					<div class="row">
 						<div class="col col-12 col-sm-6 col-lg-5">
-							<div style="font-weight: bolder;">Suggestions</div>
+							<div style="font-weight: bolder;"><?php echo L::suggestions; ?></div>
 							<hr class="my-1">
 							<div id="suggestionContainerText"></div>
 						</div>

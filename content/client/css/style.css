@@ -23,7 +23,7 @@ body.darkmode {
     --primary-bg-color: #404149;
     --secondary-bg-color: #303139;
     --semi-transparent-bg-color: rgba(47, 50, 58, .8); 
-    --primary-fg-color: #fff; /* Texts Borders etc. */
+    --primary-fg-color: #efefef; /* Texts Borders etc. */
     --secondary-fg-color: #f3f4f5; /* Secondary Texts, Borders, Editable Panels etc. */
     --semi-transparent-fg-color: rgba(255, 255, 255, .3);
     --semi-transparent-fg-highlight-color: rgba(255, 255, 255, .4);
@@ -507,11 +507,14 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     color: var(--primary-fg-color) !important;
 }
 
+.relationshipsCategoryHeader {
+    font-weight: bolder;
+    margin: -4px 0 10px 3px;
+}
+
 .relationshipsList {
     margin-left: -5px;
     margin-right: -5px;
-    max-height: 800px;
-    overflow: auto;
 }
 
 .relationshipsList .entityPreview {
@@ -525,19 +528,29 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     display: block;
     margin-bottom: 10px;
     border-radius: 4px;
-    border: 1px solid var(--border-color);
     height: calc(100% - 10px);
     position: relative;
 }
 
-.relationshipsList .entityPreview .entityContainer:hover {
+.relationshipsList .entityPreview .entityContainer:not(.partyIndicator) {
+    border: 1px solid var(--border-color);
+}
+
+.relationshipsList .entityPreview .entityContainer:not(.partyIndicator):hover {
     border-color: var(--primary-fg-color);
 }
 
+.relationshipsList .entityPreview .entityContainer .thumbnailContainer {
+    width: 60px;
+    height: 60px;
+    margin: 0 10px 0px 0;
+}
+
 .relationshipsList .entityPreview .entityContainer a {
-    display: block;
     padding: 8px 10px;
     text-decoration: none;
+    display: flex;
+    flex-direction: row;
 }
 
 .relationshipsList .entityPreview[data-type="document"] .entityContainer .btn {
@@ -1050,6 +1063,16 @@ body.fixed .searchContainer {
     padding: 2px 0;
 }
 
+.searchSuggestionContainer .suggestionItem .suggestionItemLabel em {
+    font-weight: normal;
+    font-style: normal;
+    color: #000;
+}
+
+body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em {
+    color: #fff;
+}
+
 .searchInputContainer .partyIndicator, 
 .searchSuggestionContainer .partyIndicator {
     display: inline-block;
@@ -1238,14 +1261,17 @@ body.fixed .searchContainer {
     }
 }
 
-.detailsHeader .rounded-circle {
+.detailsHeader .rounded-circle,
+.entityPreview .rounded-circle {
     position: relative;
     overflow: hidden;
     padding-bottom: 100%;
     background: var(--secondary-bg-color);
 }
 
-.detailsHeader .rounded-circle img {
+.detailsHeader .rounded-circle img,
+.entityPreview .rounded-circle img {
+    position: absolute;
     width: 100%;
     object-fit: cover;
     height: 100%;
@@ -1323,6 +1349,10 @@ body.fixed .searchContainer {
     border-style: solid;
     /*border: 1px solid var(--border-color);*/
     border-radius: 4px;
+}
+
+.resultItem:not(.snippets) .resultContent {
+    padding-bottom: 10px;
 }
 
 .resultItem .resultContent:hover {
