@@ -1245,6 +1245,13 @@ body.fixed .searchContainer {
     background: var(--secondary-bg-color);
 }
 
+.detailsHeader .rounded-circle img {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+    object-position: top;
+}
+
 .detailsHeader .partyIndicator {
     margin: 3px 20px 4px 0;
     padding: 2px 6px 2px 6px;

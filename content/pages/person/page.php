@@ -21,7 +21,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				<div class="row align-items-center">
 					<div class="col flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
-							<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"] ?>" alt="..." class="img-fluid" style="position: absolute;">
+							<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute;">
 						</div>
 					</div>
 					<div class="col">
