@@ -3,12 +3,19 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 require_once('i18n.class.php');
 $i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'de');
-//$i18n->setForcedLang('en');
-$i18n->init();
-
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-$acceptLang = ['de', 'en'];
+$acceptLang = ['de', 'en', 'fr'];
+
+//TODO: Move this to config and apply for all i18n.init() calls
+/*
+if ($lang == 'fr') {
+	$lang = 'en';
+	$i18n->setForcedLang('en');
+}
+*/
+
 $lang = in_array($lang, $acceptLang) ? $lang : 'de';
+$i18n->init();
 
 // just used inside JS const
 $langJSONString = file_get_contents('lang/lang_'.$lang.'.json');
