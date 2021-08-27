@@ -376,6 +376,17 @@ textarea {
     font-size: 14px;
 }
 
+.input-group-text {
+    font-size: 14px;
+    background-color: var(--secondary-bg-color) !important;
+    border-color: var(--border-color) !important;
+    color: inherit;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .th-inner {
+    font-weight: 400;
+}
+
 .nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
     border-color:  var(--border-color);
 }
@@ -573,7 +584,7 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     border-right: 1px solid var(--border-color);
     border-left: 1px solid var(--border-color);
     border-bottom: 1px solid var(--border-color);
-    padding: 6px 10px;
+    padding: 2px 4px;
 }
 
 .tab-content.transparent {
@@ -584,14 +595,23 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 
 .tab-content .tab-pane {
     background: var(--secondary-bg-color);
-    padding: 10px;
+    padding: 1rem;
     margin: 2px 0;
     min-height: 200px;
+}
+
+.tab-content .tab-pane .resultWrapper {
+    padding: 10px 15px;
 }
 
 .tab-content .tab-pane table {
     background: var(--primary-bg-color);
 }
+
+.tab-content .tab-pane.bg-white .alert a {
+    color: inherit;
+}
+
 
 .switch {
     position: relative;
