@@ -86,7 +86,6 @@ function documentGetDataObject($item = false, $db = false) {
 
     if ((is_array($item)) && $db) {
 
-        $return["meta"]["requestStatus"] = "success";
         $return["type"] = "document";
         $return["id"] = $item["DocumentID"];
         $return["attributes"]["type"] = $item["DocumentType"];
