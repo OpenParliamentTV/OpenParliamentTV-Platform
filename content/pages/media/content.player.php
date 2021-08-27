@@ -99,7 +99,7 @@ $relatedContentsHTML =
             <ul class="nav nav-tabs flex-nowrap" role="tablist">
                 <?= $proceedingsTab ?>
                 <li class="nav-item">
-                    <a class="nav-link <?= $relatedPeopleActiveClass ?>" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="true"><span class="tabTitle"><?php echo L::personPlural ?></span><span class="icon-group"></span></a>
+                    <a class="nav-link <?= $relatedPeopleActiveClass ?>" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="true"><span class="tabTitle"><?php echo L::personPlural ?></span><span class="icon-torso"></span></a>
                 </li>
                 <!--
                 <li class="nav-item">
