@@ -30,9 +30,11 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
 						<h2><?= $apiResult["data"]["attributes"]["number"] ?>. <?php echo L::electoralPeriod ?></h2>
 						<div><?php 
-							$formattedDateStart = date("d.m.Y", strtotime($apiResult["data"]["attributes"]["dateStart"]));
-							$formattedDateEnd = ($apiResult["data"]["attributes"]["dateEnd"]) ? date("d.m.Y", strtotime($apiResult["data"]["attributes"]["dateEnd"])) : "";
-							echo $formattedDateStart." – ".$formattedDateEnd; 
+							if ($apiResult["data"]["attributes"]["dateStart"]) {
+								$formattedDateStart = date("d.m.Y", strtotime($apiResult["data"]["attributes"]["dateStart"]));
+								$formattedDateEnd = ($apiResult["data"]["attributes"]["dateEnd"]) ? date("d.m.Y", strtotime($apiResult["data"]["attributes"]["dateEnd"])) : "";
+								echo $formattedDateStart." – ".$formattedDateEnd; 
+							}
 						?></div>
 					</div>
 				</div>
