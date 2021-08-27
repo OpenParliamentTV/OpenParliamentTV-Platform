@@ -19,7 +19,8 @@ $relatedPeopleActiveClass = (isset($textContentsHTML)) ? '' : 'show active';
 
 $relatedPeopleHTML = '';
 foreach ($speech["relationships"]["people"]["data"] as $relationshipItem) {
-    $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">'.$relationshipItem["attributes"]["label"].'<br>('.$relationshipItem["attributes"]["context"].')</a></div>';
+    $contextLabelIdentifier = lcfirst(implode('', array_map('ucfirst', explode('-', $relationshipItem["attributes"]["context"]))));
+    $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.L('context'.$contextLabelIdentifier).'</div></a></div></div>';
 }
 
 /*
@@ -32,7 +33,7 @@ foreach ($speech["relationships"]["organisations"]["data"] as $relationshipItem)
 $documentsTab = '';
 $relatedDocumentsHTML = '';
 if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relationships"]["documents"]["data"]) > 0) {
-    //TODO: Add all documents
+    
     $documentsTab = '<li class="nav-item">
             <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="tabTitle">'.L::documents.'</span><span class="icon-doc-text"></span></a>
         </li>';
@@ -40,14 +41,18 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
     //<iframe src="'.$config["dir"]["root"].'/modules/pdf-viewer/web/viewer.html?file='.$speech["relationships"]["documents"]["data"][0]["attributes"]["sourceURI"].'"></iframe>
     foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
 
-        $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><a href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">'.$relationshipItem["attributes"]["label"].'</a></div>';
+        if (isset($relationshipItem["attributes"]["additionalInformation"]["subType"])) {
+            $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div>'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.$relationshipItem["attributes"]["labelAlternative"].'</div><div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"].'</div></a><a href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank"><span class="btn btn-sm icon-file-pdf"></span></a></div></div>';
+        } else {
+            $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div></a><a class="btn btn-sm" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank"><span class="icon-file-pdf"></span></a></div></div>';
+        }
 
     }
 
 }
 
 $relatedContentsHTML = 
-'<div class="tab-content">'.$proceedingsPanel.'<div class="tab-pane fade show '.$relatedPeopleActiveClass.'" id="people" role="tabpanel" aria-labelledby="people-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedPeopleHTML.'</div></div><div class="tab-pane fade show" id="documents" role="tabpanel" aria-labelledby="documents-tab"><div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">'.$relatedDocumentsHTML.'</div></div><div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div></div>';
+'<div class="tab-content">'.$proceedingsPanel.'<div class="tab-pane fade show '.$relatedPeopleActiveClass.'" id="people" role="tabpanel" aria-labelledby="people-tab"><div class="relationshipsList row row-cols-1 row-cols-lg-2">'.$relatedPeopleHTML.'</div></div><div class="tab-pane fade show" id="documents" role="tabpanel" aria-labelledby="documents-tab"><div class="relationshipsList row row-cols-1 row-cols-lg-2">'.$relatedDocumentsHTML.'</div></div><div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div></div>';
 
 ?>
 <script type="text/javascript">

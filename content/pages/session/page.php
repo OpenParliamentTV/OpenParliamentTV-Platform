@@ -48,10 +48,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		<div class="col-12">
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::relatedMedia ?></span></a>
+					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::relatedMedia ?></span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="agendaItems-tab" data-toggle="tab" href="#agendaItems" role="tab" aria-controls="agendaItems" aria-selected="false"><span class="icon-list-numbered"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::agendaItems ?></span></a>
+					<a class="nav-link" id="agendaItems-tab" data-toggle="tab" href="#agendaItems" role="tab" aria-controls="agendaItems" aria-selected="false"><span class="icon-list-numbered"></span><span class="nav-item-label"><?php echo L::agendaItems ?></span></a>
 				</li>
 				<li class="nav-item ml-auto">
 					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
@@ -73,7 +73,14 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<?php 
 					foreach ($apiResult["data"]["relationships"]["agendaItems"]["data"] as $relationshipItem) {
 					?>
-						<div class="entityPreview col" data-type="<?= $relationshipItem["type"] ?>"><a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$apiResult["data"]["attributes"]["parliament"]."-".$relationshipItem["data"]["id"] ?>"><?= $relationshipItem["data"]["attributes"]["officialTitle"].": <br>".$relationshipItem["data"]["attributes"]["title"] ?></a></div>
+						<div class="entityPreview col" data-type="<?= $relationshipItem["type"] ?>">
+							<div class="entityContainer">
+								<a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$apiResult["data"]["attributes"]["parliament"]."-".$relationshipItem["data"]["id"] ?>">
+									<div><?= $relationshipItem["data"]["attributes"]["officialTitle"] ?></div>
+									<div class="entityTitle"><?= $relationshipItem["data"]["attributes"]["title"] ?></div>
+								</a>
+							</div>
+						</div>
 					<?php 
 					} 
 					?>

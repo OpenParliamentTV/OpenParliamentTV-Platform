@@ -40,11 +40,13 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		<div class="col-12">
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::relatedMedia ?></span></a>
+					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::relatedMedia ?></span></a>
 				</li>
+				<!--
 				<li class="nav-item">
 					<a class="nav-link" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="false"><span class="icon-torso"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::personPlural ?></span></a>
 				</li>
+				-->
 				<li class="nav-item ml-auto">
 					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
 				</li>
@@ -60,9 +62,11 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						</div>
 					</div>
 				</div>
+				<!--
 				<div class="tab-pane fade" id="people" role="tabpanel" aria-labelledby="people-tab">
 					[CONTENT]
 				</div>
+				-->
 				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
 					<table id="dataTable" class="table table-striped table-bordered">
 						<thead>
