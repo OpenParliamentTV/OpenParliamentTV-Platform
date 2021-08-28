@@ -82,52 +82,55 @@ function searchSpeeches($request) {
 	$findCnt = 0;
 	
 	if (strlen($request["q"]) >= 1) {
-		foreach ($results["hits"]["hits"] as $hit) {
+		if (isset($results["hits"]["hits"])) {
+			foreach ($results["hits"]["hits"] as $hit) {
 		
-			//if ($resultCnt >= $maxFullResults) { break; }
-			$resultCnt++;
-			$results["hits"]["hits"][$resultCnt-1]["finds"] = array();
+				//if ($resultCnt >= $maxFullResults) { break; }
+				$resultCnt++;
+				$results["hits"]["hits"][$resultCnt-1]["finds"] = array();
 
-			$html = $hit["highlight"]["attributes.textContents.textHTML"][0];
+				$html = $hit["highlight"]["attributes.textContents.textHTML"][0];
 
-			if (strlen($html) > 1) {
-				$dom = new DOMDocument();
-				@$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
-				$xPath = new DOMXPath($dom);
-				//$elems = $xPath->query("//div[@class='rede']/*");
-				//$elems = $xPath->query("//div | //p/span");
-				$elems = $xPath->query("//em");
-				
-				/*
-				echo '<pre>';
-				print_r($html); 
-				echo '</pre>';
-				*/
-
-				foreach($elems as $k=>$elem) {
-
-					$tmp["data-start"] = ($elem->parentNode->hasAttribute("data-start")) ? $elem->parentNode->getAttribute("data-start") : null;
-					$tmp["data-end"] = ($elem->parentNode->hasAttribute("data-end")) ? $elem->parentNode->getAttribute("data-end") : null;
-					$tmp["class"] = ($elem->parentNode->hasAttribute("class")) ? $elem->parentNode->getAttribute("class") : "";
-					$tmp["context"] = DOMinnerHTML($elem->parentNode);
-
-					if (!in_array($tmp, $results["hits"]["hits"][$resultCnt-1]["finds"])) {
-						$results["hits"]["hits"][$resultCnt-1]["finds"][] = $tmp;
-						$findCnt++;
-					}
+				if (strlen($html) > 1) {
+					$dom = new DOMDocument();
+					@$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
+					$xPath = new DOMXPath($dom);
+					//$elems = $xPath->query("//div[@class='rede']/*");
+					//$elems = $xPath->query("//div | //p/span");
+					$elems = $xPath->query("//em");
 					
-
 					/*
 					echo '<pre>';
-					print_r(DOMinnerHTML($elem->parentNode));
+					print_r($html); 
 					echo '</pre>';
 					*/
-					
-					
-				}
-			}
 
+					foreach($elems as $k=>$elem) {
+
+						$tmp["data-start"] = ($elem->parentNode->hasAttribute("data-start")) ? $elem->parentNode->getAttribute("data-start") : null;
+						$tmp["data-end"] = ($elem->parentNode->hasAttribute("data-end")) ? $elem->parentNode->getAttribute("data-end") : null;
+						$tmp["class"] = ($elem->parentNode->hasAttribute("class")) ? $elem->parentNode->getAttribute("class") : "";
+						$tmp["context"] = DOMinnerHTML($elem->parentNode);
+
+						if (!in_array($tmp, $results["hits"]["hits"][$resultCnt-1]["finds"])) {
+							$results["hits"]["hits"][$resultCnt-1]["finds"][] = $tmp;
+							$findCnt++;
+						}
+						
+
+						/*
+						echo '<pre>';
+						print_r(DOMinnerHTML($elem->parentNode));
+						echo '</pre>';
+						*/
+						
+						
+					}
+				}
+
+			}
 		}
+		
 	}
 
 	//$results->totalFinds = $findCnt;
