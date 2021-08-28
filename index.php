@@ -4,7 +4,7 @@ session_start();
 require_once('i18n.class.php');
 $i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'de');
 $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-$acceptLang = ['de', 'en', 'fr'];
+$acceptLang = ['de', 'en'];
 
 //TODO: Move this to config and apply for all i18n.init() calls
 /*
