@@ -307,6 +307,10 @@ function getSearchBody($request, $getAllResults) {
 			
 			//???
 
+		} else if ($requestKey == "electoralPeriod" && strlen($requestValue) > 2) {
+			
+			$filter["must"][] = array("term"=>array("relationships.electoralPeriod.data.attributes.number" => $requestValue));
+
 		} else if ($requestKey == "electoralPeriodID" && strlen($requestValue) > 2) {
 			
 			$filter["must"][] = array("term"=>array("relationships.electoralPeriod.data.id" => $requestValue));
@@ -431,7 +435,7 @@ function getSearchBody($request, $getAllResults) {
 			$filter["should"][] = array("multi_match"=>array(
 				"query" => $requestValue,
 				"type" => "cross_fields",
-				"fields" => ["relationships.people.data.attributes.party.id", "relationships.people.data.attributes.faction.labelAlternative"],
+				"fields" => ["relationships.people.data.attributes.party.id", "relationships.people.data.attributes.faction.id"],
 				"operator" => "or"
 			));
 			$shouldCount++;
