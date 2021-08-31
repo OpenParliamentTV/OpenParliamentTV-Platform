@@ -274,7 +274,7 @@ function updateContentsFromURL() {
 			var date1 = new Date(ui.values[0]);
 			var date2 = new Date(ui.values[1]);
 			
-			var date2String = (date2.toISOString().slice(0,10) == maxDate.toISOString().slice(0,10)) ? 'heute' : date2.toLocaleDateString('de-DE', options);
+			var date2String = (date2.toISOString().slice(0,10) == maxDate.toISOString().slice(0,10)) ? localizedLabels.today : date2.toLocaleDateString('de-DE', options);
 
 			$("#timeRange").val( date1.toLocaleDateString('de-DE', options) + " - " + date2String );
 
@@ -291,7 +291,7 @@ function updateContentsFromURL() {
 	var startDate = (queryFrom) ? queryFromDate.toLocaleDateString('de-DE', options) : minDate.toLocaleDateString('de-DE', options);
 	var endDate = (queryTo) ? queryToDate.toLocaleDateString('de-DE', options) : maxDate.toLocaleDateString('de-DE', options);
 
-	var endDateString = (endDate == maxDate.toLocaleDateString('de-DE', options)) ? 'heute' : endDate;
+	var endDateString = (endDate == maxDate.toLocaleDateString('de-DE', options)) ? localizedLabels.today : endDate;
 
 	$( "#timeRange" ).val( startDate + " - " + endDateString );
 	
