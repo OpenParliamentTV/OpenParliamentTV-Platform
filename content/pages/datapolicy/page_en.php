@@ -3,53 +3,53 @@
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 		    <h2><?php echo L::dataPolicy; ?></h2>
-			<p>Die für die Datenerhebung, -verarbeitung und -nutzung verantwortliche Stelle ist Joscha Jäger, Bülowstr. 37, 90491 Nürnberg. Zuständige Aufsichtsbehörde ist die <a href="https://www.datenschutz-bayern.de/vorstell/impressum.html">Bayerische Landesbeauftragte für den Datenschutz (BayLfD)</a>.</p>
-			<p>Die Sicherheit Ihrer Daten hat bei uns höchste Priorität. Wir ergreifen jede nur mögliche Maßnahme, um Ihre persönlichen Daten vor unbefugtem Zugriff zu schützen. Sämtliche Anforderungen der EU-Datenschutzgrundverordnung (DSGVO), des Bundesdatenschutzgesetzes (BDSG), des Telemediengesetzes (TMG) sowie alle weiteren datenschutzrechtlichen Vorschriften werden von uns eingehalten. Sie können unsere Seite besuchen, ohne Angaben zu Ihrer Person zu machen.</p>
-			<p>Auf der Webseite OpenParliament.TV sowie den parlamentspezifischen Unterseiten (z.B. de.openparliament.tv) können Sie Parlamentsreden in Kombination mit den Plenarprotokollen und zusätzlichen Informationen abrufen und durchsuchen.</p>
+			<p>The data controller is Joscha Jäger, Bülowstr. 37, 90491 Nürnberg. The competent supervisory authority is the <a href="https://www.datenschutz-bayern.de/vorstell/impressum.html">Bavarian Commissioner for Data Protection (BayLfD)</a>.</p>
+			<p>The security of your data is our highest priority. We take every possible measure to protect your personal data from unauthorised access. We comply with all requirements of the EU General Data Protection Regulation (GDPR), the Federal Data Protection Act (BDSG), the Telemedia Act (TMG) and all other data protection regulations. You can visit our site without providing any personal information.</p>
+			<p>The webseite OpenParliament.TV and the parlament-specific subdomains (eg. de.openparliament.tv) allows you to watch and search parliamentary debates in combination with plenary proceedings and additional information.</p>
 			<hr>
-			<h3>1. Bei der Verwendung der Seite ohne Anmeldung werden Zugriffsdaten ausschließlich zur Optimierung und Verbesserung des Angebots gespeichert (Zweckbindung).</h3>
-			<h4>1.1 Datenarten</h4>
-			<p>Dabei handelt es sich z.B. um folgende Daten</p>
+			<h3>1. When using the site without login, access data is stored exclusively for the purpose of optimising and improving the service (purpose limitation).</h3>
+			<h4>1.1 Types of data</h4>
+			<p>This includes, for example, the following data</p>
 			<ul>
-				<li>der Rechneradresse (IP-Adresse) in gekürzter Form</li>
-				<li>der Seite, von der aus die Datei angefordert wurde,</li>
-				<li>dem Namen der übertragenen Datei,</li>
-				<li>dem Datum und der Uhrzeit der Abfrage,</li>
-				<li>der übertragenen Datenmenge,</li>
-				<li>dem Zugriffsstatus (Datei übertragen, Datei nicht gefunden etc.) und</li>
-				<li>einer Beschreibung des Typs des verwendeten Webbrowsers.</li>
+				<li>the computer address (IP address) in abbreviated form,</li>
+				<li>the page from which the file was requested,</li>
+				<li>the name of the transferred file,</li>
+				<li>the date and time of the request,</li>
+				<li>dthe amount of data transferred,</li>
+				<li>the access status (file transferred, file not found, etc.) and</li>
+				<li>a description of the type of web browser used.</li>
 			</ul>
-			<h4>1.2 Auswertung mittels Matomo. Opt-out möglich.</h4>
-			<p>Zur Auswertung nutzt die Website OpenParliament.TV&nbsp;<a href="http://www.matomo.org">Matomo</a>, ein Open-Source-Webanalysewerkzeug. Matomo verwendet sogenannte "Cookies", Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermöglicht. Die durch den Cookie erzeugten Informationen über Ihre Benutzung dieser Website (einschließlich Ihrer IP-Adresse) bleiben dabei unter der Datenhoheit von OpenParliament.TV. Wir benutzen diese Informationen, um die Nutzung auszuwerten und um Reports über die Websiteaktivitäten zusammenzustellen.</p>
-			<p>OpenParliament.TV wird diese Informationen nicht an Dritte übertragen.</p>
-			<p>Durch die Nutzung dieser Website erklären Sie sich mit der Bearbeitung der über Sie erhobenen Daten durch OpenParliament.TV in der zuvor beschriebenen Art und Weise und zu dem zuvor benannten Zweck einverstanden. Wenn Sie die Analyse durch Matomo ausschalten möchten, können sie dies mit diesem Link tun:&nbsp;<a href="https://stats.openparliament.tv/index.php?module=CoreAdminHome&amp;action=optOut&amp;language=de" target="_blank">Zur Opt-Out-Seite</a>. Hierdurch wird ein so genannter opt-out cookie mit dem Namen "piwik_ignore" gesetzt, der Matomo signalisiert, dass es Ihr Verhalten nicht analysieren soll.</p>
-			<h4>1.3 Personenbezug kann in Einzelfällen nicht vollständig ausgeschlossen werden.</h4>
-			<p>Die Erhebung von personenbezogenen Informationen kann durch die Nutzung von Matomo und der Kürzung der IP-Adresse nahezu vollständig vermieden werden. Eine Rückführung dieser Daten auf einzelne Personen ist in einzelfällen Fällen jedoch zumindest theoretisch nicht ganz auszuschließen.</p>
+			<h4>1.2 Evaluation by means of Matomo. Opt-out possible.</h4>
+			<p>The website OpenParliament.TV uses&nbsp;<a href="http://www.matomo.org">Matomo</a>, an open source web analysis tool, for evaluation. No cookies are set in the process. We use the information collected to evaluate usage and to compile reports on website activity.</p>
+			<p>OpenParliament.TV will not transfer this information to third parties.</p>
+			<p>By using this website, you consent to the processing of data about you by OpenParliament.TV in the manner and for the purposes set out above. If you would like to switch off the analysis by Matomo, you can do so using this link:&nbsp;<a href="https://stats.openparliament.tv/index.php?module=CoreAdminHome&amp;action=optOut&amp;language=de" target="_blank">To the opt-out page.</a>. This sets a so-called opt-out cookie with the name "piwik_ignore", which signals to Matomo that it should not analyse your behaviour.</p>
+			<h4>1.3 Personal reference cannot be completely ruled out in individual cases.</h4>
+			<p>The collection of personal information can be almost completely avoided by using Matomo and shortening the IP address. However, a traceability of this data to individual persons cannot be completely ruled out in individual cases, at least theoretically.</p>
 			<hr>
-			<h3>2. Nutzung von OpenParliament.TV als personalisierte Archivplattform für Parlamentsreden (mit Anmeldung)</h3>
-			<p>Personenbezogene Daten wie Name oder Pseudonym und zusätzliche Daten wie z.B. Email-Adresse, nutzerspezifische Zugriffsrechte und nutzerspezifische Alerts (Liste an Begriffen / Suchanfragen) werden erhoben, wenn, soweit und solange dies im Rahmen der Nutzung des oben genannten Dienstes erforderlich ist. Die Löschung der im Rahmen der vorgenannten Nutzung erhobenen Daten ist jederzeit möglich (siehe auch Punkt 5).</p>
-			<h3>3. Übermittlung von Daten an Dritte</h3>
-			<h4>3.1. Übermittlung im Rahmen der <b>[ABGEORDNETENWATCH, BUNDESTAG, VIDEODIENSTLEISTER, WIKIMEDIA]</b></h4>
-			<p><b>[BESCHREIBUNG]</b></p>
-			<h4>3.2. Keine Übermittlung an Dritte zu Werbezwecken ohne ausdrückliche Einwilligung</h4>
-			<p>Eine Weitergabe Ihrer personenbezogenen Daten an Dritte erfolgt grundsätzlich nur, sofern dies zur Erbringung unserer Dienstleistung oder zur Vertragsdurchführung notwendig ist oder Sie ausdrücklich eingewilligt haben. Behörden oder anderen staatlichen Institutionen werden nur im Rahmen der gesetzlichen Informationspflichten oder aufgrund gerichtlicher Entscheidungen Auskunft erteilt.</p>
-			<h4>3.3 Auskunftsanordnungen</h4>
-			<p>Auf Anordnung der zuständigen Stellen müssen und dürfen wir im Einzelfall Auskunft über diese Daten erteilen, soweit dies für Zwecke der Strafverfolgung, zur Gefahrenabwehr, zur Erfüllung der gesetzlichen Aufgaben der Verfassungsschutzbehörden oder des Militärischen Abschirmdienstes oder zur Durchsetzung der Rechte am geistigen Eigentum erforderlich ist.</p>
+			<h3>2. Use of OpenParliament.TV as personalised archive platform for parliamentary debates (with Login)</h3>
+			<p>Personal data such as name or pseudonym and additional data like email address, user-specific access rights and user-specific alerts (lists of terms / search requests) are collected if, as far as and as long as this is necessary in the context of the use of the two aforementioned services. The deletion of the aforementioned data is possible at any time (see also under 5).</p>
+			<h3>3. Publication / transmission of data to third parties</h3>
+			<h4>3.1. Publication / transmission of data to bodies <b>[ABGEORDNETENWATCH, BUNDESTAG, VIDEOSERVICEPARTNER, WIKIMEDIA]</b></h4>
+			<p><b>[DESCRIPTION]</b></p>
+			<h4>3.2. No transmission to third parties for advertising purposes without express consent</h4>
+			<p>Your personal data will only be passed on to third parties if this is necessary for the provision of our service or the execution of the contract, or if you have expressly consented to this. Authorities or other state institutions will only be provided with information within the scope of the statutory duty to provide information or on the basis of court decisions.</p>
+			<h4>3.3 Information orders</h4>
+			<p>By order of the competent authorities, we must and may provide information about this data in individual cases, insofar as this is necessary for the purposes of criminal prosecution, to avert danger, to fulfil the statutory tasks of the constitution protection authorities or the Military Counter-Intelligence Service or to enforce intellectual property rights.</p>
 			<hr>
-			<h3>4. Abrufbarkeit der Datenschutzerklärung</h3>
-			<p>Sie können die Datenschutzerklärung jederzeit von jeder Seite dieses Internetangebots unter dem Link „Datenschutz“ abrufen. Bitte nehmen Sie zur Kenntnis, dass Änderungen des Angebots, gesetzliche und rechtliche Neuerungen sowie ggf. nachträglich erkannte Regelungslücken Änderungen dieser Datenschutzerklärung erforderlich werden lassen können.</p>
+			<h3>4. Retrievability of the data protection declaration</h3>
+			<p>You can call up the data protection declaration at any time from any page of this website under the link "Data Policy". Please note that changes to the offer, statutory and legal innovations as well as any subsequently identified regulatory gaps may make changes to this data protection declaration necessary.</p>
 			<hr>
-			<h3>5. Fragen, Auskunftsrecht, Widerspruchsrechte und Profiling</h3>
-			<p>Ihr Vertrauen ist uns wichtig. Daher möchten wir Ihnen jederzeit und kostenlos Rede und Antwort bezüglich der Verarbeitung Ihrer personenbezogenen Daten stehen. Auch haben Sie nach der Art. 15 ff. DSGVO ein Recht auf unentgeltliche Auskunft über Ihre gespeicherten Daten sowie ggf. ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten sowie zur Datenübertragbarkeit. Sie können außerdem jederzeit die uns erteilte Einwilligung zur Datenerhebung und Verwendung ohne Angaben von Gründen widerrufen. Sie können sich bei einer Aufsichtsbehörde beschweren, wenn Sie der Ansicht sind, dass die Verarbeitung Ihrer personenbezogenen Daten rechtswidrig erfolgt.</p>
-			<p>Sie haben keine vertragliche oder gesetzliche Pflicht uns personenbezogene Daten bereitzustellen. Allerdings sind wir ohne die von Ihnen mitgeteilten Daten nicht in der Lage, Ihnen unsere Services anzubieten.</p>
-			<p>Wir verwenden keine automatisierten Entscheidungsfindungen, die Ihnen gegenüber rechtliche Wirkungen entfaltet oder Sie beeinträchtigt.</p>
+			<h3>5. Questions, right to information, right to object and profiling</h3>
+			<p>Your trust is important to us. Therefore, we would like to answer your questions regarding the processing of your personal data at any time and free of charge. If you have a profile with fragdenstaat.de, you can export your stored data at any time on the profile page. You also have a right of access to your personal data pursuant to Art. 15 et seq. DSGVO, you have a right to free information about your stored data and, if applicable, a right to correction, blocking or deletion of this data as well as to data portability. You can also revoke the consent given to us for data collection and use at any time without giving reasons. You can complain to a supervisory authority if you believe that the processing of your personal data is unlawful.</p>
+			<p>You have no contractual or legal obligation to provide us with personal data. However, we are unable to provide you with our services without the data you provide.</p>
+			<p>We do not use automated decision making that has legal effect on you or affects you.</p>
 			<hr>
-			<p>Wenn Sie Fragen haben, die Ihnen diese Datenschutzerklärung nicht beantworten konnte oder wenn Sie zu einem Punkt vertiefte Informationen wünschen, wenden Sie sich bitte jederzeit an joscha.jaeger [AT] openparliament.tv.</p>
+			<p>If you have any questions that have not been answered by this privacy policy or if you would like more detailed information on any point, please contact joscha.jaeger [AT] openparliament.tv at any time.</p>
 			<hr>
-			<h3>6. Sicherheitshinweis</h3>
-			<p>Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
+			<h3>6. Security notice</h3>
+			<p>We would like to point out that data transmission on the Internet (e.g. when communicating by e-mail) can have security gaps. Complete protection of data against access by third parties is not possible.</p>
 			<hr>
-			<p>Stand 28. August 2021</p>
+			<p>Status 28. August 2021</p>
 		</div>
 	</div>
 </main>
