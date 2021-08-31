@@ -35,7 +35,7 @@
 	</div>
 	<hr>
 	<div class="row">
-		<div class="col-12" style="font-size: 11px; text-align: center;"><?php echo L::dataPolicyHintPart1; ?> <a href="https://matomo.org" target="_blank">Matomo</a><?php echo L::dataPolicyHintPart2; ?> <br><?php echo L::dataPolicyHintPart3; ?><a href="https://stats.openparliament.tv/index.php?module=CoreAdminHome&amp;action=optOut&amp;language=de"><?php echo L::dataPolicyHintPart4; ?></a>. <?php echo L::dataPolicyHintPart5; ?> <a href="<?= $config["dir"]["root"] ?>/datapolicy"><?php echo L::dataPolicyHintPart6; ?></a>.</div>
+		<div class="col-12" style="font-size: 12px; text-align: center;"><?php echo L::dataPolicyHintPart1; ?> <a href="https://matomo.org" target="_blank">Matomo</a><?php echo L::dataPolicyHintPart2; ?> <br><?php echo L::dataPolicyHintPart3; ?><a href="https://stats.openparliament.tv/index.php?module=CoreAdminHome&amp;action=optOut&amp;language=de"><?php echo L::dataPolicyHintPart4; ?></a>. <?php echo L::dataPolicyHintPart5; ?> <a href="<?= $config["dir"]["root"] ?>/datapolicy"><?php echo L::dataPolicyHintPart6; ?></a>.</div>
 	</div>
 </footer>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/generic.js"></script>
