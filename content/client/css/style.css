@@ -61,6 +61,7 @@ body.darkmode {
 
 html, body {
     height: 100%;
+    font-size: 16px;
 }
 
 body {
@@ -310,6 +311,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1, h2 {
     font-size: 1.2rem;
+    margin-bottom: 0.7rem;
 }
 
 .bg-white {
@@ -435,19 +437,35 @@ textarea {
     background-color: transparent;
 }
 
+.table thead th {
+    font-weight: normal;
+}
+
 .table thead th, 
 .table-bordered td, 
 .table-bordered th {
     border-color: var(--border-color);
-    font-weight: normal;
 }
 
 .table-hover tbody tr:hover {
     color: var(--primary-fg-color);
 }
 
+.accordion .card {
+    margin-bottom: 6px;
+}
+
+.accordion .card-header {
+    padding: 0px;
+}
+
+.accordion .card-header button .icon-down-open-big {
+    float: right;
+}
+
 .btn, input, select {
     font-weight: 300 !important;
+    font-size: 14px;
 }
 
 .btn:not([class^='btn-outline-'], [class*='btn-outline-']),
@@ -457,9 +475,9 @@ textarea {
     background: var(--primary-bg-color);
 }
 
-.btn:not([class^='btn-outline-'], [class*='btn-outline-']):hover, 
-.btn:not([class^='btn-outline-'], [class*='btn-outline-']):focus, 
-.btn:not([class^='btn-outline-'], [class*='btn-outline-']):not(.disabled).active,
+.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link):hover, 
+.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link):focus, 
+.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link):not(.disabled).active,
 .btn.btn-outline-primary:hover, 
 .btn.btn-outline-primary:focus, 
 .btn.btn-outline-primary:not(.disabled).active {
@@ -486,6 +504,10 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 
 .btn[data-toggle="collapse"].collapsed .icon-up-open-big::before {
     content: '\e8f7';
+}
+
+.btn[data-toggle="collapse"].collapsed .icon-down-open-big::before {
+    content: '\e8f6';
 }
 
 .btn[data-toggle="collapse"] .labelShow, .btn[data-toggle="collapse"].collapsed .labelCollapse {
