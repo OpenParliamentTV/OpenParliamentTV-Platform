@@ -2,21 +2,13 @@
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 require_once('i18n.class.php');
-$i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'de');
-$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-$acceptLang = ['de', 'en'];
-
 //TODO: Move this to config and apply for all i18n.init() calls
-/*
-if ($lang == 'fr') {
-	$lang = 'en';
-	$i18n->setForcedLang('en');
-}
-*/
-
-$lang = in_array($lang, $acceptLang) ? $lang : 'de';
+$i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'de');
 $i18n->init();
-
+$userLang = $i18n->getUserLangs();
+$acceptLang = ['de', 'en'];
+$langIntersection = array_values(array_intersect($userLang, $acceptLang));
+$lang = (count($langIntersection) > 0) ? $langIntersection[0] : 'de';
 // just used inside JS const
 $langJSONString = file_get_contents('lang/lang_'.$lang.'.json');
 
@@ -226,35 +218,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		include_once("./content/pages/about/page.php");
-		$content = ob_get_clean();
-	break;
-	case "documentation":
-		$pageTitle = L::documentation;
-		$pageType = 'default';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/documentation/page.php");
-		$content = ob_get_clean();
-	break;
-	case "documentation-api":
-		$pageTitle = 'API';
-		$pageType = 'default';
-		$pageBreadcrumbs = [
-			[
-				'label' => L::documentation,
-				'path' => '/documentation'
-			],
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/documentation/api/page.php");
+		include_once("./content/pages/about/page_".$lang.".php");
 		$content = ob_get_clean();
 	break;
 	case "datapolicy":
@@ -266,7 +230,19 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		include_once("./content/pages/datapolicy/page.php");
+		include_once("./content/pages/datapolicy/page_".$lang.".php");
+		$content = ob_get_clean();
+	break;
+	case "faq":
+		$pageTitle = 'FAQ';
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/faq/page.php");
 		$content = ob_get_clean();
 	break;
 	case "imprint":
@@ -278,7 +254,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		include_once("./content/pages/imprint/page.php");
+		include_once("./content/pages/imprint/page_".$lang.".php");
 		$content = ob_get_clean();
 	break;
 	case "login":

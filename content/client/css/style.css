@@ -376,6 +376,11 @@ textarea {
     font-size: 14px;
 }
 
+.form-control:disabled, 
+.form-control[readonly] {
+    background-color: var(--secondary-bg-color);
+}
+
 .input-group-text {
     font-size: 14px;
     background-color: var(--secondary-bg-color) !important;
@@ -434,6 +439,7 @@ textarea {
 .table-bordered td, 
 .table-bordered th {
     border-color: var(--border-color);
+    font-weight: normal;
 }
 
 .table-hover tbody tr:hover {
@@ -546,7 +552,8 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     margin: 0 10px 0px 0;
 }
 
-.relationshipsList .entityPreview .entityContainer a {
+.relationshipsList .entityPreview .entityContainer a, 
+.relationshipsList .entityPreview .entityContainer .linkWrapper {
     padding: 8px 10px;
     text-decoration: none;
     display: flex;

@@ -3,20 +3,15 @@
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 			<h2><?php echo L::imprint; ?></h2>
-			<?php
-
-			/*
-			<!--
-			<p>Open Knowledge Foundation Deutschland e.V.<br>
-				Singerstr. 109, 10179 Berlin<br>
-				<a href="https://okfn.de/" target="_blank">https://okfn.de</a></p>
-			<p>
-				Eingetragen beim Amtsgericht Charlottenburg, VR 30468 B.<br>
-				Vertretungsberichtiger Vorstand: Andreas Pawelke, Daniel Dietrich, Jana Wichmann, Kristina Klein, Lucy Chambers. <br>
-				Inhaltlich verantwortlich gemäß § 5 TMG, § 55 RStV: Joscha Jäger<br>
-			Umsatzsteuernummer: DE278022128</p>
-			<h2>Kontakt & Anfragen</h2>
-			<p>Joscha Jäger, Projektleiter: [MAIL]</p>
+			<p>Joscha Jäger<br>
+				Bülowstr. 37, 90491 Nürnberg<br>
+				joscha.jaeger [AT] openparliament.tv<br>
+				+49-177-7896559 (nur für rechtliche Anfragen)<br>
+				<a href="https://openparliament.tv/" target="_blank">https://openparliament.tv</a>
+			</p>
+			<p>Inhaltlich verantwortlich gemäß § 5 TMG, § 55 RStV: Joscha Jäger</p>
+			<h2><?php echo L::contactRequests; ?></h2>
+			<p>Joscha Jäger, <?php echo L::projectLead; ?>: joscha.jaeger [AT] openparliament.tv</p>
 			<hr>
 			<h2>Haftungsausschluss</h2>
 			<h3>Haftung für Inhalte</h3>
@@ -25,9 +20,6 @@
 			<p>Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.</p>
 			<h3>Urheberrecht</h3>
 			<p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Sie sind mit einer Creative Commons Lizenz urheberrechtlich geschützt. Sofern nicht anders angegeben, stehen die Inhalte dieser Seite unter der Creative Commons Namensnennung 3.0 DE Lizenz. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.</p>
-			-->
-			*/
-			?>
 		</div>
 	</div>
 </main>

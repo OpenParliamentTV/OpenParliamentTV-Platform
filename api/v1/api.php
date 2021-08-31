@@ -12,8 +12,8 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
     global $config;
 
     $return["meta"]["api"]["version"] = 1;
-    $return["meta"]["api"]["documentation"] = $config["dir"]["root"]."/documentation/api";
-    $return["meta"]["api"]["license"]["label"] = "Open Database License (ODbL) v1.0";
+    $return["meta"]["api"]["documentation"] = $config["dir"]["root"]."/api";
+    $return["meta"]["api"]["license"]["label"] = "ODC Open Database License (ODbL) v1.0";
     $return["meta"]["api"]["license"]["link"] = "https://opendatacommons.org/licenses/odbl/1-0/";
     $return["meta"]["requestStatus"] = "error";
     $return["errors"] = array();

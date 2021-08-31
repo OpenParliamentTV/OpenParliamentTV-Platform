@@ -1,6 +1,6 @@
 <div class="alert alert-info" role="alert">
 	<div class="mb-1"><?php echo L::messageOpenData; ?>: </div>
-	<a href="<?= $config["dir"]["root"] ?>/documentation/api"><?= $config["dir"]["root"] ?>/documentation/api</a>
+	<a href="<?= $config["dir"]["root"] ?>/api"><?= $config["dir"]["root"] ?>/api</a>
 </div>
 <div class="input-group">
 	<div class="input-group-prepend">
