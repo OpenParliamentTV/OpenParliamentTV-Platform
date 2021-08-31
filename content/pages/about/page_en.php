@@ -65,7 +65,7 @@ include_once(__DIR__ . '/../../header.php');
 			</ul>
 			<hr>
 			<h3>FAQ</h3>
-			<p>Questions about the project, our data or technical specifications are answered in our <a href="faq" target="_blank">Frequently Asked Questions</a>.
+			<p>Questions about the project, our data or technical specifications are answered in our <a href="faq">Frequently Asked Questions</a>.
 		</div>
 	</div>
 	<!--

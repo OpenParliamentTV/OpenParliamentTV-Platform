@@ -242,7 +242,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		include_once("./content/pages/faq/page.php");
+		include_once("./content/pages/faq/page_".$lang.".php");
 		$content = ob_get_clean();
 	break;
 	case "imprint":
