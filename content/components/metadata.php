@@ -1,5 +1,5 @@
 <?php 
-$description = $pageDescription;
+$description = strip_tags($pageDescription);
 $url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 switch ($page) {
   case 'main':
