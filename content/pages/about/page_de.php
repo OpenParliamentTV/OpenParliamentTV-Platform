@@ -68,6 +68,7 @@ include_once(__DIR__ . '/../../header.php');
 			<p>Fragen zum Projekt, zu unserer Datengrundlage und zu technischen Einzelheiten beantworten wir in unseren <a href="faq" target="_blank">Frequently Asked Questions</a>.
 		</div>
 	</div>
+	<!--
 	<hr>
 	<div class="row">
 		<div class="col-12">
@@ -172,6 +173,7 @@ include_once(__DIR__ . '/../../header.php');
 			</div>
 		</div>
 	</div>
+	-->
 	<hr>
 	<div class="row mb-4">
 		<div class="col-12">
