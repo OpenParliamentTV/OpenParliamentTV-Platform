@@ -23,14 +23,44 @@
 			<p>Zur Auswertung nutzt die Website OpenParliament.TV&nbsp;<a href="http://www.matomo.org">Matomo</a>, ein Open-Source-Webanalysewerkzeug. Matomo verwendet sogenannte "Cookies", Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermöglicht. Die durch den Cookie erzeugten Informationen über Ihre Benutzung dieser Website (einschließlich Ihrer IP-Adresse) bleiben dabei unter der Datenhoheit von OpenParliament.TV. Wir benutzen diese Informationen, um die Nutzung auszuwerten und um Reports über die Websiteaktivitäten zusammenzustellen.</p>
 			<p>OpenParliament.TV wird diese Informationen nicht an Dritte übertragen.</p>
 			<p>Durch die Nutzung dieser Website erklären Sie sich mit der Bearbeitung der über Sie erhobenen Daten durch OpenParliament.TV in der zuvor beschriebenen Art und Weise und zu dem zuvor benannten Zweck einverstanden. Wenn Sie die Analyse durch Matomo ausschalten möchten, können sie dies mit diesem Link tun:&nbsp;<a href="https://stats.openparliament.tv/index.php?module=CoreAdminHome&amp;action=optOut&amp;language=de" target="_blank">Zur Opt-Out-Seite</a>. Hierdurch wird ein so genannter opt-out cookie mit dem Namen "piwik_ignore" gesetzt, der Matomo signalisiert, dass es Ihr Verhalten nicht analysieren soll.</p>
-			<h4>1.3 Personenbezug kann in Einzelfällen nicht vollständig ausgeschlossen werden.</h4>
+			<iframe style="border: 0; height: 180px; width: 100%;" src="https://stats.openparliament.tv/index.php?module=CoreAdminHome&action=optOut&language=de&backgroundColor=fff4c5&fontColor=&fontSize=14px&fontFamily=Open%20Sans"
+		        ></iframe>
+			<h4 class="mt-3">1.3 Personenbezug kann in Einzelfällen nicht vollständig ausgeschlossen werden.</h4>
 			<p>Die Erhebung von personenbezogenen Informationen kann durch die Nutzung von Matomo und der Kürzung der IP-Adresse nahezu vollständig vermieden werden. Eine Rückführung dieser Daten auf einzelne Personen ist in einzelfällen Fällen jedoch zumindest theoretisch nicht ganz auszuschließen.</p>
 			<hr>
 			<h3>2. Nutzung von OpenParliament.TV als personalisierte Archivplattform für Parlamentsreden (mit Anmeldung)</h3>
 			<p>Personenbezogene Daten wie Name oder Pseudonym und zusätzliche Daten wie z.B. Email-Adresse, nutzerspezifische Zugriffsrechte und nutzerspezifische Alerts (Liste an Begriffen / Suchanfragen) werden erhoben, wenn, soweit und solange dies im Rahmen der Nutzung des oben genannten Dienstes erforderlich ist. Die Löschung der im Rahmen der vorgenannten Nutzung erhobenen Daten ist jederzeit möglich (siehe auch Punkt 5).</p>
+			<hr>
 			<h3>3. Übermittlung von Daten an Dritte</h3>
-			<h4>3.1. Übermittlung im Rahmen der <b>[ABGEORDNETENWATCH, BUNDESTAG, VIDEODIENSTLEISTER, WIKIMEDIA]</b></h4>
-			<p><b>[BESCHREIBUNG]</b></p>
+			<h4>3.1. Eingebundene Inhalte Dritter</h4>
+			<p>An verschiedenen Stellen auf der Seite binden wir Inhalte von Dritten als "iFrame" oder über den "Source" von Bildern oder Videos ein. Die Anbieter haben eigene Datenschutzbestimmungen, OpenParliament.TV hat keinen Einfluss auf die jeweiligen verwendeten Daten und tritt nicht als Verantwortlicher auf. OpenParliament.TV haftet nicht für Schäden, die durch Ihre Nutzung dieser Plattformen und Dienste entstehen.<p>
+			<p>Gesetzliche Grundlage für die Speicherung und Verarbeitung der Daten ist Art. 6 Abs. 1 lit. f DS-GVO.</p>
+			<p>Die folgenden Anbieter setzen wir auf OpenParliament.TV ein, dort finden Sie auch die jeweiligen Datenschutzbestimmungen:</p>
+			
+			<p>a) Deutscher Bundestag</p>
+			<p>Auf unseren Webseiten werden zum Teil PDF-Dateien eingebunden, welche sich auf den Servern von bundestag.de befinden. Der Dienst bundestag.de wird betrieben durch Deutscher Bundestag, Platz der Republik 1, D-11011 Berlin.</p>
+			<p>Wenn Sie eine Internetseite auf unserer Webseite aufrufen, auf der ein Inhalt des Deutschen Bundestages eingebunden ist, wird automatisch eine Verbindung zu den Servern des Deutschen Bundestages hergestellt und das eingebundene Dokument auf der Webseite dargestellt. Der Deutsche Bundestag setzt hierzu ggf. Cookies ein, die dem Server des Deutschen Bundestages übermitteln, welche unserer Internetseiten Sie besucht haben und welche Aktionen Sie ausgeführt haben.</p>
+			<p>Wir weisen darauf hin, dass wir keine Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung durch den Deutschen Bundestag haben und dass wir für die Datenerhebung und -verarbeitung durch den Deutschen Bundestag nicht verantwortlich sind.</p>
+			<p>Informationen zur Erhebung und Nutzung der Daten durch den Deutschen Bundestag finden Sie in der Datenschutzerklärung: https://www.bundestag.de/datenschutz</p>
+
+			<p>b) TV1</p>
+			<p>Auf unseren Webseiten werden Video-Dateien eingebunden, welche sich auf den Servern von TV1.eu befinden. Der Dienst TV1.eu wird im Rahmen des Betriebs der Mediathek des Deutschen Bundestages betrieben durch die TV1 GmbH, Betastr. 9a, D-85774 Unterföhring.</p>
+			<p>Wenn Sie eine Internetseite auf unserer Webseite aufrufen, auf der ein Inhalt von TV1 eingebunden ist, wird automatisch eine Verbindung zu den Servern von TV1 hergestellt und das eingebundene Video auf der Webseite dargestellt. TV1 setzt hierzu ggf. Cookies ein, die dem TV1-Server übermitteln, welche unserer Internetseiten Sie besucht haben und welche Aktionen Sie ausgeführt haben.</p>
+			<p>Wir weisen darauf hin, dass wir keine Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung durch TV1 haben und dass wir für die Datenerhebung und -verarbeitung durch TV1 nicht verantwortlich sind.</p>
+			<p>Informationen zur Erhebung und Nutzung der Daten durch TV1 finden Sie in der Datenschutzerklärung: https://tv1.eu/datenschutz/</p>
+
+			<p>c) Wikimedia Foundation</p>
+			<p>Auf unseren Webseiten werden Bild-Dateien eingebunden, welche sich auf den Servern der Wikimedia Foundation (wikimedia.org) befinden. Verantwortlich für die Datenverarbeitung der Wikimedia Foundation ist Bird & Bird GDPR Representative Ireland, 29 Earlsfort Terrace, Dublin 2, D02 AY28, Ireland.</p>
+			<p>Wenn Sie eine Internetseite auf unserer Webseite aufrufen, auf der ein Inhalt der Wikimedia Foundation eingebunden ist, wird automatisch eine Verbindung zu den Servern der Wikimedia Foundation hergestellt und das eingebundene Bild auf der Webseite dargestellt. Die Wikimedia Foundation setzt hierzu ggf. Cookies ein, die dem Server der Wikimedia Foundation übermitteln, welche unserer Internetseiten Sie besucht haben und welche Aktionen Sie ausgeführt haben.</p>
+			<p>Wir weisen darauf hin, dass wir keine Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung durch die Wikimedia Foundation haben und dass wir für die Datenerhebung und -verarbeitung durch die Wikimedia Foundation nicht verantwortlich sind.</p>
+			<p>Informationen zur Erhebung und Nutzung der Daten durch die Wikimedia Foundation finden Sie in der Datenschutzerklärung: https://foundation.wikimedia.org/wiki/Privacy_policy</p>
+
+			<p>d) Abgeordnetenwatch.de</p>
+			<p>Auf unseren Webseiten werden ggf. Profile von Abgeordnetenwatch.de per "iFrame" eingebunden, welche sich auf den Servern von Abgeordnetenwatch.de befinden. Der Dienst Abgeordnetenwatch.de wird betrieben durch den Parlamentwatch e.V., Mittelweg 12, 20148 Hamburg.</p>
+			<p>Wenn Sie eine Internetseite auf unserer Webseite aufrufen, auf der ein Inhalt von Abgeordnetenwatch.de eingebunden ist, wird automatisch eine Verbindung zu den Servern von Abgeordnetenwatch.de hergestellt und das eingebundene Profil auf der Webseite dargestellt. Abgeordnetenwatch.de setzt hierzu ggf. Cookies ein, die dem Abgeordnetenwatch.de-Server übermitteln, welche unserer Internetseiten Sie besucht haben und welche Aktionen Sie ausgeführt haben.</p>
+			<p>Wir weisen darauf hin, dass wir keine Kenntnis vom Inhalt der übermittelten Daten sowie deren Nutzung durch Abgeordnetenwatch.de haben und dass wir für die Datenerhebung und -verarbeitung durch Abgeordnetenwatch.de nicht verantwortlich sind.</p>
+			<p>Informationen zur Erhebung und Nutzung der Daten durch Abgeordnetenwatch.de finden Sie in der Datenschutzerklärung: https://www.abgeordnetenwatch.de/datenschutzerklaerung</p>
+
 			<h4>3.2. Keine Übermittlung an Dritte zu Werbezwecken ohne ausdrückliche Einwilligung</h4>
 			<p>Eine Weitergabe Ihrer personenbezogenen Daten an Dritte erfolgt grundsätzlich nur, sofern dies zur Erbringung unserer Dienstleistung oder zur Vertragsdurchführung notwendig ist oder Sie ausdrücklich eingewilligt haben. Behörden oder anderen staatlichen Institutionen werden nur im Rahmen der gesetzlichen Informationspflichten oder aufgrund gerichtlicher Entscheidungen Auskunft erteilt.</p>
 			<h4>3.3 Auskunftsanordnungen</h4>
