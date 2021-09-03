@@ -4,6 +4,7 @@ $url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 switch ($page) {
   case 'main':
     $title = L::brand;
+    $image = $config["dir"]["root"].'/content/client/images/thumbnail.png';
     $ogType = 'website';
     break;
   case 'search': 
@@ -12,6 +13,7 @@ switch ($page) {
     } else {
       $title = strip_tags($pageTitle).' | '.L::brand;
     }
+    $image = $config["dir"]["root"].'/content/client/images/thumbnail.png';
     break;
   case 'media':
     $title = strip_tags($pageTitle).' | '.L::brand;
