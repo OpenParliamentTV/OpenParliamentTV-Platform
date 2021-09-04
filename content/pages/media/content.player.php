@@ -112,6 +112,56 @@ $relatedContentsHTML =
     <div class="text-center" style="height: 35px;"><span class="icon-angle-double-down" style="font-size: 22px;"></span></div>
     -->
 </div>
+<div id="shareQuoteModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><span class="icon-share"></span> <?php echo L::shareQuote; ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning"><?php echo L::messageShareQuotePart1; ?> <b><?= $mainSpeaker['attributes']['label'] ?></b>? <?php echo L::messageShareQuotePart2; ?>!</div>
+                <label>1. <?php echo L::selectTheme; ?>:</label>
+                <div class="form-row row-cols-2">
+                    <div class="col">
+                        <div class="card sharePreview active" data-theme="l">
+                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
+                            <div class="antialiased text-break cardMeta">
+                                <div class="overflow-hidden select-none cardTitleWrapper">
+                                    <div class="cardTitle text-truncate"><?= $speechTitleShort ?> | <?php echo L::brand ?></div>
+                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= L::speech.' '.L::onTheSubject.' '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' '.L::by.' '.$mainSpeaker['attributes']['label'].' ('.$speech["attributes"]["parliamentLabel"].', '.$formattedDate.')' ?></div>
+                                </div>
+                                <div class="overflow-hidden text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card sharePreview" data-theme="d">
+                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
+                            <div class="antialiased text-break cardMeta">
+                                <div class="overflow-hidden select-none cardTitleWrapper">
+                                    <div class="cardTitle text-truncate"><?= $speechTitleShort ?> | <?php echo L::brand ?></div>
+                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= L::speech.' '.L::onTheSubject.' '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' '.L::by.' '.$mainSpeaker['attributes']['label'].' ('.$speech["attributes"]["parliamentLabel"].', '.$formattedDate.')' ?></div>
+                                </div>
+                                <div class="overflow-hidden text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <small class="d-block mt-2 text-muted"><?php echo L::shareQuoteMessageTheme; ?></small>
+                <div class="form-group mt-3">
+                    <label for="shareURL">2. <?php echo L::shareQuoteMessageURL; ?>:</label>
+                    <textarea id="shareURL" class="form-control" type="text" name="shareURL" rows=3></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><?php echo L::close; ?></button>
+            </div>
+        </div>
+    </div>
+</div>
 <!--
 <div class="container mb-5">
     <?php //include_once('content.related.php'); ?>

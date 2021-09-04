@@ -99,6 +99,8 @@
 	"messageRegisterSuccess": "Registrierung erfolgreich. Bitte überprüfe dein Postfach und validiere deine E-Mail Adresse.",
 	"messageRegisterThankYou": "Vielen Dank für deine Registrierung auf",
 	"messageRegisterWrongConfirmationCode": "Bestätigungscode ist nicht korrekt",
+	"messageShareQuotePart1": "Ist dieses Zitat wirklich von",
+	"messageShareQuotePart2": "Wir ordnen Zitate den Hauptredner:innen zu. Bitte stelle sicher dass dieses Zitat <b>keine Zwischenfrage oder Kommentar von einer anderen Person ist</b>",
 	"name": "Name",
 	"newNeutral": "Neues",
 	"nextPage": "Nächste Seite",

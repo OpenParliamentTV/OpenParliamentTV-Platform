@@ -26,7 +26,7 @@ function initShareQuote() {
 		selector: "#OPTV_Player",
 		sharers: [{
 			'render': function() {
-				return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#shareQuoteModal">'+ localizedLabels.shareQuote +'</button>'
+				return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#shareQuoteModal"><span class="icon-share"></span> '+ localizedLabels.shareQuote +'</button>'
 			},
 			'name': 'OPTV' 
 		}]

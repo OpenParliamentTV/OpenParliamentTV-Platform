@@ -71,10 +71,11 @@
     color: #fff !important;
     border: none !important;
 }
-.share-this-popover > ul > li > button:focus,
-.share-this-popover > ul > li > button:hover {
-    background: var(--primary-fg-color) !important;
-    color: var(--primary-bg-color) !important;
+.share-this-popover > ul > li > button.btn:focus,
+.share-this-popover > ul > li > button.btn:hover {
+    background: #f39c12 !important;
+    color: #fff !important;
+    font-weight: normal !important;
 }
 @media (pointer:coarse) {
     .share-this-popover {
@@ -117,8 +118,8 @@
     }
 }
 .share-match {
-	background: #f39c12 !important;
-	color: #fff !important;
+	color: #333 !important;
+    background: #ffeaa7 !important;
 }
 
 #shareQuoteModal .sharePreview {

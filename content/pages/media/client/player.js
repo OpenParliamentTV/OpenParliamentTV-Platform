@@ -20,6 +20,7 @@ $(document).ready( function() {
 	updateAutoplayState();
 
 	updatePlayer();
+	$('#shareQuoteModal').appendTo('body');
 
 	getResultList(function(data) {
 		resultList = data.results;
@@ -71,6 +72,7 @@ function updateContents(resultURL) {
 	//$('.loadingIndicator').show();
 	
 	$('#content').removeClass('ready');
+	$('#shareQuoteModal').remove();
 
 	if(updateAjax && updateAjax.readyState != 4){
 		updateAjax.abort();
@@ -86,6 +88,7 @@ function updateContents(resultURL) {
 	}).done(function(data) {
 		$('#content').html($(data));
 		updatePlayer();
+		$('#shareQuoteModal').appendTo('body');
 		updateAutoplayState();
 		$('.loadingIndicator').hide();
 	}).fail(function(err) {
@@ -433,6 +436,7 @@ function updatePlayer() {
 			],
 			"videoFit": "contain"
 		},
+		language: document.documentElement.lang,
 		users: {}
 	});
 

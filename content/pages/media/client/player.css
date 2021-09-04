@@ -490,8 +490,8 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased::-moz-selection,
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased::selection {
-	color: #fff !important;
-	background: #f39c12 !important;
+	color: #333 !important;
+	background: #ffeaa7 !important;
 }
 
 body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased:hover, body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased.active {
