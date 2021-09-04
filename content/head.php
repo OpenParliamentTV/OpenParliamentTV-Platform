@@ -6,7 +6,17 @@
 
 <?php include_once(__DIR__ . '/components/metadata.php'); ?>
 
-<link rel="icon" type="image/png" href="<?= $config["dir"]["root"] ?>/favicon.png" />
+<!-- Start Icons -->
+<link rel="apple-touch-icon" sizes="180x180" href="<?= $config["dir"]["root"] ?>/content/client/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="<?= $config["dir"]["root"] ?>/content/client/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="<?= $config["dir"]["root"] ?>/content/client/images/favicon-16x16.png">
+<!--<link rel="manifest" href="<?= $config["dir"]["root"] ?>/content/client/images/site.webmanifest">-->
+<link rel="mask-icon" href="<?= $config["dir"]["root"] ?>/content/client/images/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="<?= $config["dir"]["root"] ?>/content/client/images/favicon.ico">
+<meta name="msapplication-TileColor" content="#00aba9">
+<meta name="msapplication-config" content="<?= $config["dir"]["root"] ?>/content/client/images/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<!-- End Icons -->
 
 <?php
 if ($page != 'media') {
