@@ -123,7 +123,7 @@ $relatedContentsHTML =
             </div>
             <div class="modal-body">
                 <div class="alert alert-warning"><?php echo L::messageShareQuotePart1; ?> <b><?= $mainSpeaker['attributes']['label'] ?></b>? <?php echo L::messageShareQuotePart2; ?>!</div>
-                <label>1. <?php echo L::selectTheme; ?>:</label>
+                <label><b>1. <?php echo L::selectTheme; ?></b>:</label>
                 <div class="form-row row-cols-2">
                     <div class="col">
                         <div class="card sharePreview active" data-theme="l">
@@ -152,7 +152,7 @@ $relatedContentsHTML =
                 </div>
                 <small class="d-block mt-2 text-muted"><?php echo L::shareQuoteMessageTheme; ?></small>
                 <div class="form-group mt-3">
-                    <label for="shareURL">2. <?php echo L::shareQuoteMessageURL; ?>:</label>
+                    <label for="shareURL"><b>2. <?php echo L::shareQuoteMessageURL; ?></b>:</label>
                     <textarea id="shareURL" class="form-control" type="text" name="shareURL" rows=3></textarea>
                 </div>
             </div>
