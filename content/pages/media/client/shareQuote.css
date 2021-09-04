@@ -79,7 +79,7 @@
 }
 @media (pointer:coarse) {
     .share-this-popover {
-        font-size: 150%;
+        /*font-size: 150%*/;
     }
     .share-this-popover::before {
         bottom: auto;
