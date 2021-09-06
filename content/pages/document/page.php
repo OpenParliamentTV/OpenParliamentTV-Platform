@@ -19,13 +19,13 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		<div class="row" style="position: relative; z-index: 1">
 			<div class="col-12">
 				<div class="row align-items-center">
-					<div class="col flex-grow-0 detailsThumbnailContainer">
+					<div class="col d-none d-md-block flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<span class="icon-doc-text" style="position: absolute;top: 50%;left: 50%;font-size: 70px;transform: translateX(-50%) translateY(-50%);"></span>
 						</div>
 					</div>
 					<div class="col">
-						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
+						<h2><span class="d-md-none icon-doc-text" style="font-size: 15px;top: -2px;position: relative;"></span> <?= $apiResult["data"]["attributes"]["label"] ?></h2>
 						<?= $apiResult["data"]["attributes"]["labelAlternative"] ?>
 						<div><?php echo L::source ?>:</div>
 						<a target="_blank" href="<?= $apiResult["data"]["attributes"]["sourceURI"] ?>"><?= $apiResult["data"]["attributes"]["sourceURI"] ?></a>
