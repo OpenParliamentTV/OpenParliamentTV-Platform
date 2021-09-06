@@ -40268,7 +40268,13 @@ FrameTrail.defineType(
                                     if ( startTime-0.5 <= currentTime && endTime-0.5 >= currentTime ) {
                                         if ( !$(this).hasClass('active') ) {
                                             $(this).addClass('active');
-                                            scrollTimebasedElements();
+                                            var timebasedTabParent = $(this).parents('.tab-pane.timebasedTab');
+                                            if (timebasedTabParent.length != 0) {
+                                                scrollTimebasedElements(timebasedTabParent);
+                                            } else {
+                                                scrollTimebasedElements();
+                                            }
+                                            
                                         }
                                     } else if ( $(this).hasClass('active') ) {
                                         $(this).removeClass('active');
@@ -40276,12 +40282,12 @@ FrameTrail.defineType(
                                 });
                             }
 
-                            function scrollTimebasedElements() {
+                            function scrollTimebasedElements(elementToScroll) {
                                 
                                 if (self.isMouseOver) {
                                     return;
                                 }
-                                var customhtmlContainer = self.contentViewContainer.find('.customhtmlContainer'),
+                                var customhtmlContainer = (elementToScroll) ? elementToScroll : self.contentViewContainer.find('.customhtmlContainer'),
                                     firstActiveElement = customhtmlContainer.find('.timebased.active').eq(0);
 
 
@@ -55230,13 +55236,11 @@ FrameTrail.defineModule('ViewOverview', function(FrameTrail){
         toggleViewMode(FrameTrail.getState('viewMode'));
         toggleEditMode(FrameTrail.getState('editMode'));
 
-        if (OverviewList.perfectScrollbar) {
-            OverviewList.perfectScrollbar({
-                wheelSpeed: 4,
-                suppressScrollX: true,
-                wheelPropagation: true
-            });
-        }
+        OverviewList.perfectScrollbar({
+            wheelSpeed: 4,
+            suppressScrollX: true,
+            wheelPropagation: true
+        });
 
     };
 
@@ -55518,9 +55522,7 @@ FrameTrail.defineModule('ViewOverview', function(FrameTrail){
 
         }
 
-        if (OverviewList.perfectScrollbar) {
-            OverviewList.perfectScrollbar('update');
-        }
+        OverviewList.perfectScrollbar('update');
 
     };
 
@@ -55664,7 +55666,6 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
                         + '            <div class="layoutAreaToggleCloseButton"></div>'
                         + '        </div>'
                         + '        <div class="playerContainer">'
-                        + '            <div class="playerProgress"></div>'
                         + '            <div class="hypervideoContainer">'
                         + '                <div class="areaLeftContainer layoutArea" data-area="areaLeft">'
                         + '                    <div class="layoutAreaTabs"></div>'
@@ -55698,6 +55699,7 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
                         + '            </div>'
                         + '            <div class="codeSnippetTimeline timeline"></div>'
                         + '            <div class="overlayTimeline timeline"></div>'
+                        + '            <div class="playerProgress"></div>'
                         + '            <div class="controls">'
                         + '                <div class="leftControlPanel">'
                         + '                    <div class="playButton playerControl"><span class="icon-play-1"></span></div>'
@@ -56227,11 +56229,10 @@ FrameTrail.defineModule('ViewVideo', function(FrameTrail){
             });
         }
 
-        domElement.find('.playerProgress .ui-slider-handle-circle').css({
-            bottom:
+        PlayerProgress.css({
+            height:
                 Controls.height()
-            +   CodeSnippetTimeline.height()
-            +   ((editMode == 'codesnippets') ? 6 : OverlayTimeline.height())
+            +   ((editMode == 'codesnippets') ? CodeSnippetTimeline.height() : OverlayTimeline.height())
             +   ((editMode == 'annotations') ? AnnotationTimeline.height() : 0)
         });
 

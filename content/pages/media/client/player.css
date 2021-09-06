@@ -340,7 +340,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 }
 
 .hypervideoContainer .videoContainer, .areaLeftContainer, .areaRightContainer {
-	border-bottom: 1px solid rgba(0,0,0,.1);
+	border-bottom: none;
 }
 
 .areaLeftContainer {
@@ -452,6 +452,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	margin: 0px;
 	background: var(--secondary-bg-color);
 	box-sizing: border-box;
+	overflow: hidden !important;
 }
 
 body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer {
@@ -473,6 +474,7 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .tab-content .tab-pane {
 	height: calc(100% - 4px);
+	overflow: auto;
 }
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer span {
@@ -536,10 +538,19 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 
 .playerContainer .overlayTimeline {
 	display: none;
+	height: 0px;
+    min-height: 0px;
+    flex-basis: 0px;
 }
 
 .playerContainer .playerProgress {
 	background: var(--primary-bg-color) !important;
+	border-top: 1px solid rgba(0,0,0,.1);
+}
+
+body.darkmode .playerContainer .playerProgress {
+	background: var(--primary-bg-color) !important;
+	border-top: 1px solid rgba(0,0,0,.1);
 }
 
 .playerContainer .playerProgress .ui-slider-range {

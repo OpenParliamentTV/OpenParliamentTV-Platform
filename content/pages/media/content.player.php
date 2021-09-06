@@ -11,7 +11,7 @@ require_once(__DIR__."/../../../modules/media/functions.php");
 require_once(__DIR__."/../../../modules/media/include.media.php");
 require_once(__DIR__."/../../../modules/utilities/textArrayConverters.php");
 
-$proceedingsPanel = (isset($textContentsHTML)) ? '<div class="tab-pane fade show active" id="proceedings" role="tabpanel" aria-labelledby="proceedings-tab">'.$textContentsHTML.'</div>' : '';
+$proceedingsPanel = (isset($textContentsHTML)) ? '<div class="tab-pane timebasedTab fade show active" id="proceedings" role="tabpanel" aria-labelledby="proceedings-tab">'.$textContentsHTML.'</div>' : '';
 $proceedingsTab = (isset($textContentsHTML)) ? '<li class="nav-item">
         <a class="nav-link active" id="proceedings-tab" data-toggle="tab" href="#proceedings" role="tab" aria-controls="proceedings" aria-selected="true"><span class="tabTitle">'.L::proceedings.'</span><span class="icon-doc-text-1"></span></a>
     </li>' : '';
