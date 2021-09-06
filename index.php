@@ -285,6 +285,18 @@ switch ($page) {
 		include_once("./content/pages/logout/page.php");
 		$content = ob_get_clean();
 	break;
+	case "passwordReset":
+		$pageTitle = L::resetPassword;
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/passwordreset/page.php");
+		$content = ob_get_clean();
+	break;
 	case "register":
 		$pageTitle = L::registerNewAccount;
 		$pageType = 'default';
@@ -309,8 +321,8 @@ switch ($page) {
 		include_once("./content/pages/registerconfirm/page.php");
 		$content = ob_get_clean();
 	break;
-	case "passwordReset":
-		$pageTitle = L::resetPassword;
+	case "version":
+		$pageTitle = 'Version';
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -318,7 +330,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		include_once("./content/pages/passwordreset/page.php");
+		include_once("./content/pages/version/page_".$lang.".php");
 		$content = ob_get_clean();
 	break;
 	/*********************************

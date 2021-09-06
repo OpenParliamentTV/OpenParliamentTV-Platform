@@ -131,6 +131,7 @@
 	"registerNewAccount": "Registrieren",
 	"relatedMedia": "Redebeiträge",
 	"relationships": "Querverweise",
+	"releaseNotes": "Versionshinweise",
 	"relevance": "Relevanz",
 	"requestInvite": "Einladung anfordern",
 	"resetPassword": "Passwort zurücksetzen",
@@ -161,5 +162,8 @@
 	"today": "heute",
 	"topic": "Thema",
 	"user": "Nutzer:in",
-	"users": "Nutzer:innen"
+	"users": "Nutzer:innen",
+	"versionCurrent": "Aktuelle Version",
+	"versionNext": "Nächste Version",
+	"versionPrevious": "Vorherige Versionen"
 }

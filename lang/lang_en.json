@@ -131,6 +131,7 @@
 	"registerNewAccount": "Sign Up",
 	"relatedMedia": "Speeches",
 	"relationships": "Relationships",
+	"releaseNotes": "Release Notes",
 	"relevance": "Relevance",
 	"requestInvite": "Request Invite",
 	"resetPassword": "Reset Password",
@@ -161,5 +162,8 @@
 	"today": "today",
 	"topic": "Topic",
 	"user": "User",
-	"users": "Users"
+	"users": "Users",
+	"versionCurrent": "Current Version",
+	"versionNext": "Next Version",
+	"versionPrevious": "Previous Versions"
 }
