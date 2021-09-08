@@ -768,9 +768,13 @@ function initInteractiveQueryValues() {
 		var personIDs = $.map($('[name="personID[]"]'), function(el) { return el.value; });
 		if (personIDs && typeof personDataFromRequest !== 'undefined') {
 			for (var i = personIDs.length - 1; i >= 0; i--) {
-				var label = personDataFromRequest[personIDs[i]].attributes.label,
-					secondaryLabel = personDataFromRequest[personIDs[i]].relationships.faction.data.attributes.labelAlternative;
-				addQueryItem('person', label, secondaryLabel, personIDs[i]);
+				var label = personDataFromRequest[personIDs[i]].attributes.label;
+				if (personDataFromRequest[personIDs[i]].relationships.faction.data) {
+					var secondaryLabel = personDataFromRequest[personIDs[i]].relationships.faction.data.attributes.labelAlternative;
+					addQueryItem('person', label, secondaryLabel, personIDs[i]);
+				} else {
+					addQueryItem('person', label, false, personIDs[i]);
+				}
 			}
 		}
 	}
