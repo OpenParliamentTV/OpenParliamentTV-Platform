@@ -64,7 +64,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		<select class="form-control form-control-sm" name="sessionNumber">
 			<option value="all" <?php if (!isset($_REQUEST['sessionNumber'])) { echo 'selected'; } ?>><?php echo L::showAll; ?> <?php echo L::sessions; ?></option>
 			<?php
-			for ($i=1; $i <= 237; $i++) { 
+			for ($i=1; $i <= 239; $i++) { 
 			 	$selectedString = '';
 				if (isset($_REQUEST['sessionNumber']) && $_REQUEST['sessionNumber'] == $i) {
 					$selectedString = ' selected';
