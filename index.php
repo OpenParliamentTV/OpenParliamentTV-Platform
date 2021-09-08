@@ -43,6 +43,7 @@ $isResult = (strlen($paramStr) > 2) ? true : false;
 $pageTitle = '';
 $pageDescription = L::claim;
 $page = (isset($_REQUEST["a"]) && strlen($_REQUEST["a"]) > 0) ? $_REQUEST["a"] : "main";
+$schemaItemScopeString = '';
 
 require_once('config.php');
 require_once (__DIR__."/api/v1/api.php");
@@ -241,6 +242,7 @@ switch ($page) {
 				'label' => $pageTitle
 			]
 		];
+		$schemaItemScopeString = ' itemscope itemtype="https://schema.org/FAQPage"';
 		ob_start();
 		include_once("./content/pages/faq/page_".$lang.".php");
 		$content = ob_get_clean();
@@ -647,7 +649,7 @@ switch ($page) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $lang; ?>" dir="ltr">
+<html lang="<?php echo $lang; ?>" dir="ltr" <?= $schemaItemScopeString ?>>
 <head>
 	<?php require_once('content/head.php'); ?>
     <script type="text/javascript">
