@@ -55,7 +55,8 @@ function getMainFactionFromOrganisationsArray($organisationsArray) {
     }
 
     if (!isset($mainFaction)) {
-        $mainFaction = $organisationsArray[0];
+        //$mainFaction = $organisationsArray[0];
+        $mainFaction = null;
     }
 
     return $mainFaction;
