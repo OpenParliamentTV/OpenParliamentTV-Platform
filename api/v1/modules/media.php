@@ -239,8 +239,8 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["id"] = $annotation["AnnotationResourceID"];
                         $tmpAnnotationItem["attributes"]["context"] = $annotation["AnnotationContext"];
                         $tmpAnnotationItem["attributes"]["type"] = $ditem["DocumentType"];
-                        $tmpAnnotationItem["attributes"]["label"] = $ditem["DocumentLabel"];
-                        $tmpAnnotationItem["attributes"]["labelAlternative"] = $ditem["DocumentLabelAlternative"];
+                        $tmpAnnotationItem["attributes"]["label"] = str_replace(array("\r","\n"), " ", $ditem["DocumentLabel"]);
+                        $tmpAnnotationItem["attributes"]["labelAlternative"] = str_replace(array("\r","\n"), " ", $ditem["DocumentLabelAlternative"]);
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["DocumentThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["DocumentThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["DocumentThumbnailLicense"];

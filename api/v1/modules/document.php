@@ -90,8 +90,8 @@ function documentGetDataObject($item = false, $db = false) {
         $return["id"] = $item["DocumentID"];
         $return["attributes"]["type"] = $item["DocumentType"];
         $return["attributes"]["wikidataID"] = $item["DocumentWikidataID"];
-        $return["attributes"]["label"] = $item["DocumentLabel"];
-        $return["attributes"]["labelAlternative"] = $item["DocumentLabelAlternative"];
+        $return["attributes"]["label"] = str_replace(array("\r","\n"), " ", $item["DocumentLabel"]);
+        $return["attributes"]["labelAlternative"] = str_replace(array("\r","\n"), " ", $item["DocumentLabelAlternative"]);
         $return["attributes"]["abstract"] = $item["DocumentAbstract"];
         $return["attributes"]["thumbnailURI"] = $item["DocumentThumbnailURI"];
         $return["attributes"]["thumbnailCreator"] = $item["DocumentThumbnailCreator"];
