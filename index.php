@@ -76,7 +76,7 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]
 		]);
-		$pageTitle = '<span class="icon-doc-text"></span>'.$apiResult["data"]["attributes"]["label"];
+		$pageTitle = '<span class="icon-doc-text"></span>'.$apiResult["data"]["attributes"]["labelAlternative"];
 		$pageDescription = L::speeches.' '.L::basedOn.': '.$apiResult["data"]["attributes"]["label"];
 		$pageType = 'entity';
 		$pageBreadcrumbs = [

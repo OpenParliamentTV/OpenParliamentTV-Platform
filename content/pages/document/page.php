@@ -25,9 +25,14 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						</div>
 					</div>
 					<div class="col">
-						<h2><span class="d-md-none icon-doc-text" style="font-size: 15px;top: -2px;position: relative;"></span> <?= $apiResult["data"]["attributes"]["label"] ?></h2>
+						<?php 
+						if (isset($apiResult["data"]["attributes"]["additionalInformation"]["subType"])) { 
+							echo '<div>'.$apiResult["data"]["attributes"]["additionalInformation"]["subType"].' '.L::by.': '.$apiResult["data"]["attributes"]["additionalInformation"]["creator"][0].'</div>';
+						}
+						?>
+						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
 						<?= $apiResult["data"]["attributes"]["labelAlternative"] ?>
-						<div><?php echo L::source ?>:</div>
+						<div class="mt-1"><?php echo L::source ?>:</div>
 						<a target="_blank" href="<?= $apiResult["data"]["attributes"]["sourceURI"] ?>"><?= $apiResult["data"]["attributes"]["sourceURI"] ?></a>
 					</div>
 				</div>

@@ -36,8 +36,13 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
     //<iframe src="'.$config["dir"]["root"].'/modules/pdf-viewer/web/viewer.html?file='.$speech["relationships"]["documents"]["data"][0]["attributes"]["sourceURI"].'"></iframe>
     foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
 
+        //TODO: Remove Quick Fix
+        $relationshipItem["attributes"]["label"] = str_replace(array("\r","\n"), " ", $relationshipItem["attributes"]["label"]);
+        $relationshipItem["attributes"]["labelAlternative"] = str_replace(array("\r","\n"), " ", $relationshipItem["attributes"]["labelAlternative"]);
+
         if (isset($relationshipItem["attributes"]["additionalInformation"]["subType"])) {
-            $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div>'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.$relationshipItem["attributes"]["labelAlternative"].'</div><div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"].'</div></a><a href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank"><span class="btn btn-sm icon-file-pdf"></span></a></div></div>';
+
+            $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="entityType">'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.$relationshipItem["attributes"]["labelAlternative"].'</div><div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"][0].'</div></a><a class="entityButton" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank"><span class="btn btn-sm icon-file-pdf"></span></a></div></div>';
         } else {
             $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div></a><a class="btn btn-sm" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank"><span class="icon-file-pdf"></span></a></div></div>';
         }

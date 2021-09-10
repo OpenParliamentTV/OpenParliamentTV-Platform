@@ -582,19 +582,36 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     flex-direction: row;
 }
 
+.relationshipsList .entityPreview[data-type="document"] .entityContainer a, 
+.relationshipsList .entityPreview[data-type="document"] .entityContainer .linkWrapper {
+    flex-direction: column;
+}
+
+.relationshipsList .entityPreview .entityContainer .entityButton {
+    padding: 0;
+}
+
 .relationshipsList .entityPreview[data-type="document"] .entityContainer .btn {
     padding: 2px 1px;
     position: absolute;
     top: 5px;
     right: 5px;
+    margin-right: 0px;
 }
 
 .relationshipsList .entityPreview[data-type="document"] .entityContainer .btn span {
     margin: 0px;
 }
 
+.relationshipsList .entityPreview .entityContainer .entityType {
+    padding: 0 33px 4px 0;
+}
+
 .relationshipsList .entityPreview .entityContainer .entityTitle {
     font-weight: bolder;
+    max-height: 167px;
+    overflow: auto;
+    hyphens: auto;
 }
 
 .nav-tabs {
