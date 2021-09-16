@@ -120,6 +120,8 @@ function termSearch($parameter, $db = false) {
 
     global $config;
 
+    $outputLimit = 25;
+
     if (!$db) {
 
         $opts = array(
@@ -279,10 +281,31 @@ function termSearch($parameter, $db = false) {
     if (count($conditions) > 0) {
 
         $query .= " WHERE ".implode(" AND ",$conditions);
+
+
+        $totalCount = $db->getAll($query);
+
+        $query .= " LIMIT ";
+
+        if ($parameter["page"]) {
+
+            $query .= ($parameter["page"]-1)*$outputLimit.",";
+
+        } else {
+
+            $parameter["page"] = 1;
+
+        }
+
+        $query .= $outputLimit;
+
+
         //echo $db->parse($query);
         $findings = $db->getAll($query);
 
         $return["meta"]["requestStatus"] = "success";
+        $return["meta"]["page"] = $parameter["page"];
+        $return["meta"]["pageTotal"] = ceil(count($totalCount)/$outputLimit);
 
         if (!$return["data"]) {
             $return["data"] = array();
