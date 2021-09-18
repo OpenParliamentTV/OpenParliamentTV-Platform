@@ -348,7 +348,9 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                             //$dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-mdbs-final.txt"),true);
                             foreach ($config["parliament"] as $p=>$v) {
-                                $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["people"]),true);
+                                if (file_exists($v["cache"]["wp"]."/people.json")) {
+                                    $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["people"]),true);
+                                }
 
                             }
 
@@ -461,10 +463,12 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                         if ($request["str"]) {
 
-                            //$dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-parties-final.txt"),true);
+                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/parties.txt"),true);
+                            /*
                             foreach ($config["parliament"] as $p=>$v) {
                                 $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["parties"]),true);
                             }
+                            */
 
                             if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
 
@@ -482,23 +486,15 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                             $return["data"] = [];
 
-                            foreach ($dump as $p=>$d) {
+                            //foreach ($dump as $p=>$d) {
 
-                                foreach ($d as $k => $v) {
-                                    /*
-                                     *
-                                     * //TODO Remove this debug
-                                    if (gettype($v["labelAlternative"]) == "array") {
-                                        print_r($v);
-                                    }
-                                    //echo gettype($v["labelAlternative"])."\n";
-                                    */
+                                foreach ($dump as $k => $v) {
 
 
                                     if ((preg_match("/" . $request["str"] . "/i", $v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/" . $request["str"] . "/i", $v["labelAlternative"])))) {
 
                                         $return["meta"]["requestStatus"] = "success";
-                                        $v["parliament"] = $p;
+                                        //$v["parliament"] = $p;
                                         $return["data"][] = $v;
 
 
@@ -506,7 +502,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                                 }
 
-                            }
+                            //}
 
                             if (count($return["data"]) > 0) {
                                 return $return;
@@ -541,10 +537,10 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                         if ($request["str"]) {
 
-                            //$dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-factions-final.txt"),true);
-                            foreach ($config["parliament"] as $p=>$v) {
+                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/factions.txt"),true);
+                            /*foreach ($config["parliament"] as $p=>$v) {
                                 $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["factions"]),true);
-                            }
+                            }*/
 
                             if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
 
@@ -562,9 +558,9 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                             $return["data"] = [];
 
-                            foreach ($dump as $p=>$d) {
+                            //foreach ($dump as $p=>$d) {
 
-                                foreach ($d as $k => $v) {
+                                foreach ($dump as $k => $v) {
 
                                     if (
                                         (preg_match("/" . $request["str"] . "/i", $v[$tmpType]))
@@ -575,14 +571,14 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                                     ) {
 
                                         $return["meta"]["requestStatus"] = "success";
-                                        $v["parliament"] = $p;
+                                        //$v["parliament"] = $p;
                                         $return["data"][] = $v;
 
 
                                     }
 
                                 }
-                            }
+                            //}
                             /*
                             $return["tmp"] = $dump;
                             $return["tmp_str"] = $request["str"];
