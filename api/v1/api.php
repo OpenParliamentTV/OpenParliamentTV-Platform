@@ -349,6 +349,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                             //$dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-mdbs-final.txt"),true);
                             foreach ($config["parliament"] as $p=>$v) {
                                 $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["people"]),true);
+
                             }
 
                             if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
@@ -366,9 +367,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                             foreach ($dump as $p=>$d) {
 
-
                                 foreach ($d as $k => $v) {
-
                                     $success = false;
 
                                     if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v[$tmpType]))) {
@@ -427,18 +426,18 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                                 }
 
-                                if (count($return["data"]) > 0) {
-                                    return $return;
-                                } else {
-                                    // No Result found.
-                                    $return["meta"]["requestStatus"] = "error";
-                                    $return["errors"] = array();
-                                    $errorarray["status"] = "404";
-                                    $errorarray["code"] = "1";
-                                    $errorarray["title"] = "No results";
-                                    $errorarray["detail"] = "Person not found in dump"; //TODO: Description
-                                    array_push($return["errors"], $errorarray);
-                                }
+                            }
+                            if (count($return["data"]) > 0) {
+                                return $return;
+                            } else {
+                                // No Result found.
+                                $return["meta"]["requestStatus"] = "error";
+                                $return["errors"] = array();
+                                $errorarray["status"] = "404";
+                                $errorarray["code"] = "1";
+                                $errorarray["title"] = "No results";
+                                $errorarray["detail"] = "Person not found in dump"; //TODO: Description
+                                array_push($return["errors"], $errorarray);
                             }
 
 
