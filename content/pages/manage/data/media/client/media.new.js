@@ -62,6 +62,7 @@ $(function() {
             } else if (this.match(/^##dateStart\:/)) {
 
                 $("#sessionDateStart").val(this.replaceAll("#","").replace("dateStart: ",""));
+                $("#dateStart").val(this.replaceAll("#","").replace("dateStart: ",""));
 
             } else if (this.match(/^##dateEnd\:/)) {
 
@@ -199,6 +200,7 @@ $(function() {
                                         "data-wikidataid='"+ret.data?.[i]?.id+"' " +
                                         "data-party='"+ret["data"][i]?.relationships?.party?.data?.id+"' " +
                                         "data-faction='"+ret["data"][i]?.relationships?.faction?.data?.id+"' " +
+                                        "data-type='"+ret["data"][i]?.attributes?.type+"' " +
                                         "data-label='"+ret["data"][i]?.attributes?.label+"'>"+
                                         ret["data"][i]?.attributes?.label+" " +
                                         "("+ret["data"][i]?.relationships?.party?.data?.attributes?.labelAlternative+")</li>");
@@ -251,6 +253,7 @@ $(function() {
                                         "data-wikidataid='" + ret.data?.[i]?.id + "' " +
                                         "data-party='" + ret.data?.[i]?.partyID + "' " +
                                         "data-faction='" + ret.data?.[i]?.factionID + "' " +
+                                        "data-type='" + ret.data?.[i]?.type + "' " +
                                         "data-label='" + ret.data?.[i]?.label + "'>" +
                                         ret.data?.[i]?.label + " (" + ret.data?.[i]?.parliament + ")</li>");
 
@@ -304,6 +307,7 @@ $(function() {
         $("#"+$(this).data("itemtmp")+" .person-name").val($(this).data("label"));
         $("#"+$(this).data("itemtmp")+" .person-wikidataID").val($(this).data("wikidataid"));
         $("#"+$(this).data("itemtmp")+" .person-faction").val($(this).data("faction"));
+        $("#"+$(this).data("itemtmp")+" .person-type").val($(this).data("type"));
         $("#"+$(this).data("itemtmp")+" .person-party").val($(this).data("party"));
         if ($(this).data("wikidataid")) {
             $("#"+$(this).data("itemtmp")+" .wikipedialink").attr("href","https://www.wikidata.org/wiki/"+$(this).data("wikidataid")).removeClass("disabled");

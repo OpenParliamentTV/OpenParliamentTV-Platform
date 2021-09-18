@@ -1072,7 +1072,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                             $item["media"]["license"],
                             $item["dateStart"],
                             $item["dateEnd"],
-                            $item["media"]["duration"],
+                            ($item["media"]["duration"] ? Number($item["media"]["duration"]) : 0),
                             $item["media"]["videoFileURI"],
                             $item["media"]["audioFileURI"],
                             $item["media"]["sourcePage"],

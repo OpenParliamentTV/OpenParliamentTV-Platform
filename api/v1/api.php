@@ -463,7 +463,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                         if ($request["str"]) {
 
-                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/parties.txt"),true);
+                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/parties.json"),true);
                             /*
                             foreach ($config["parliament"] as $p=>$v) {
                                 $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["parties"]),true);
@@ -537,7 +537,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                         if ($request["str"]) {
 
-                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/factions.txt"),true);
+                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/factions.json"),true);
                             /*foreach ($config["parliament"] as $p=>$v) {
                                 $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["factions"]),true);
                             }*/

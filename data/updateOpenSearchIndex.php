@@ -11,6 +11,24 @@ $config["ES_Offset"] = false;
 
 //$config["ES_Offset"] = " LIMIT 27476,1000000";
 
+
+
+$config["ES_Parliament_Index"] = "DE-BB";
+/**
+ * Example:
+ * $config["ES_Parliament_Index"] = "DE";
+ * $config["ES_Parliament_Index"] = "DE-BB";
+ * use the key of the $config["parliament"] object - it will be set to lowercase later.
+ */
+
+
+if (!array_key_exists($config["ES_Parliament_Index"], $config["parliament"])) {
+    echo "Wrong configuration. Using first parliament configurated.";
+    reset($config["parliament"]);
+    $config["ES_Parliament_Index"] = key($config["parliament"]);
+}
+
+
 $auth = auth($_SESSION["userdata"]["id"], "elasticSearch", "updateIndex");
 //$auth["meta"]["requestStatus"] = "success";
 if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli")) {
@@ -57,6 +75,7 @@ function setOptions()
 {
 
     global $ESClient;
+    global $config;
 
     $data = array();
 
@@ -193,7 +212,7 @@ function setOptions()
         )
     );
 
-    $indexParams = array("index" => "openparliamenttv_de", "body" => $data);
+    $indexParams = array("index" => "openparliamenttv_".strtolower($config["ES_Parliament_Index"]), "body" => $data);
 
     try {
         $result = $ESClient->indices()->create($indexParams);
@@ -223,18 +242,18 @@ function updateIndex()
      * ToDo: Fix MySQL Query
      *****************************************/
 
+
     $parliament = "DE";
 
-    $opts = array(
-        'host' => $config["parliament"][$parliament]["sql"]["access"]["host"],
-        'user' => $config["parliament"][$parliament]["sql"]["access"]["user"],
-        'pass' => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-        'db' => $config["parliament"][$parliament]["sql"]["db"]
-    );
 
     try {
 
-        $dbp = new SafeMySQL($opts);
+        $dbp = new SafeMySQL(array(
+            'host' => $config["parliament"][$config["ES_Parliament_Index"]]["sql"]["access"]["host"],
+            'user' => $config["parliament"][$config["ES_Parliament_Index"]]["sql"]["access"]["user"],
+            'pass' => $config["parliament"][$config["ES_Parliament_Index"]]["sql"]["access"]["passwd"],
+            'db' => $config["parliament"][$config["ES_Parliament_Index"]]["sql"]["db"]
+        ));
 
     } catch (exception $e) {
 
@@ -258,12 +277,12 @@ function updateIndex()
             "action" => "getItem",
             "itemType" => "media",
             "id" => $id["MediaID"]
-        ]);
+        ], false, $dbp);
 
         //print_r($data["data"]);
 
         $docParams = array(
-            "index" => "openparliamenttv_de",
+            "index" => "openparliamenttv_".strtolower($config["ES_Parliament_Index"]),
             "id" => $id["MediaID"],
             "body" => json_encode($data["data"])
         );

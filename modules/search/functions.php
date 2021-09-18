@@ -44,8 +44,20 @@ function getIndexCount() {
  * @return array
  */
 function searchSpeeches($request) {
+    //print_r($request);
+
     require_once(__DIR__.'/../../vendor/autoload.php');
     require(__DIR__.'/../../config.php');
+
+    if ($request["id"]) {
+        require_once(__DIR__.'/../utilities/functions.php');
+        $itemInfos = getInfosFromStringID($request["id"]);
+        $parliament = strtolower($itemInfos["parliament"]);
+    } else {
+        //TODO: How to seach in all indexes?
+        $parliament = "de";
+    }
+
 
     $ESClientBuilder = Elasticsearch\ClientBuilder::create();
 
@@ -64,7 +76,7 @@ function searchSpeeches($request) {
 
 	$data = getSearchBody($request, false);
 	
-	$searchParams = array("index" => "openparliamenttv_de", "body" => $data);
+	$searchParams = array("index" => "openparliamenttv_".$parliament, "body" => $data);
 	
 	try {
 		$results = $ESClient->search($searchParams);
