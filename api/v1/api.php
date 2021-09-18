@@ -349,7 +349,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                             //$dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-mdbs-final.txt"),true);
                             foreach ($config["parliament"] as $p=>$v) {
                                 if (file_exists($v["cache"]["wp"]."/people.json")) {
-                                    $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["people"]),true);
+                                    $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]."/people.json"),true);
                                 }
 
                             }

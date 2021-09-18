@@ -47,7 +47,43 @@ $(function() {
         let sentences = [];
         $.each(content, function() {
 
-            if (this.match(/^(Herr|Frau|Präsi|Vize|Mini).*[\:\*]$/)) {
+            if (this.match(/^##officialTitle\:/)) {
+
+                $("#agendaItemOfficialTitle").val(this.replaceAll("#","").replace("officialTitle: ",""));
+
+            } else if (this.match(/^##title\:/)) {
+
+                $("#agendaItemTitle").val(this.replaceAll("#","").replace("title: ",""));
+
+            } else if (this.match(/^##electoralPeriodNumber\:/)) {
+
+                $("#electoralPeriodNumber").val(this.replaceAll("#","").replace("electoralPeriodNumber: ",""));
+
+            } else if (this.match(/^##dateStart\:/)) {
+
+                $("#sessionDateStart").val(this.replaceAll("#","").replace("dateStart: ",""));
+
+            } else if (this.match(/^##dateEnd\:/)) {
+
+                $("#sessionDateEnd").val(this.replaceAll("#","").replace("dateEnd: ",""));
+
+            } else if (this.match(/^##sessionNumber\:/)) {
+
+                $("#sessionNumber").val(this.replaceAll("#","").replace("sessionNumber: ",""));
+
+            } else if (this.match(/^##parliament\:/)) {
+
+                $("#parliament").val(this.replaceAll("#","").replace("parliament: ",""));
+
+            } else if (this.match(/^##videoFileURI\:/)) {
+
+                $("#mediaVideoFileURI").val(this.replaceAll("#","").replace("videoFileURI: ",""));
+
+            } else if (this.match(/^##sourcePage\:/)) {
+
+                $("#mediaSourcePage").val(this.replaceAll("#","").replace("sourcePage: ",""));
+
+            } else if (this.match(/^(Herr|Frau|Präsi|Vize|Mini).*[\:\*]$/)) {
                 tmpName = this;
                 let tmpAddNameNot = 0;
 
@@ -213,8 +249,8 @@ $(function() {
                                         "<li class='fayt-result-person-item fayt-result-db-person-item' " +
                                         "data-itemtmp='" + tmpID + "' " +
                                         "data-wikidataid='" + ret.data?.[i]?.id + "' " +
-                                        "data-party='" + ret.data?.[i]?.party + "' " +
-                                        "data-faction='" + ret.data?.[i]?.faction + "' " +
+                                        "data-party='" + ret.data?.[i]?.partyID + "' " +
+                                        "data-faction='" + ret.data?.[i]?.factionID + "' " +
                                         "data-label='" + ret.data?.[i]?.label + "'>" +
                                         ret.data?.[i]?.label + " (" + ret.data?.[i]?.parliament + ")</li>");
 

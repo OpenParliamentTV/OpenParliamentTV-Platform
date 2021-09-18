@@ -55,7 +55,7 @@ $config["parliament"]["DE-BB"]["sql"]["tbl"]["Session"] = "session";
 $config["parliament"]["DE-BB"]["sql"]["tbl"]["Media"] = "media";
 $config["parliament"]["DE-BB"]["sql"]["tbl"]["Annotation"] = "annotation";
 $config["parliament"]["DE-BB"]["sql"]["tbl"]["Text"] = "text";
-$config["parliament"]["DE-BB"]["cache"]["wp"] = __DIR__."/data/wikidataDumps/DE";
+$config["parliament"]["DE-BB"]["cache"]["wp"] = __DIR__."/data/wikidataDumps/DE-BB";
 
 
 //ES Config

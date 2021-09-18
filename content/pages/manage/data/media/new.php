@@ -49,11 +49,11 @@ if ($_REQUEST["aTEST"]) {
 								</div>
 								<div class="form-group">
 									<label for="sessionDateStart">Session Date Start</label>
-									<input type="date" class="form-control" id="sessionDateStart" name="session[dateStart]" value="">
+									<input type="text" class="form-control" id="sessionDateStart" name="session[dateStart]" value="">
 								</div>
 								<div class="form-group">
 									<label for="sessionDateEnd">Session Date End</label>
-									<input type="date" class="form-control" id="sessionDateEnd" name="session[dateEnd]" value="">
+									<input type="text" class="form-control" id="sessionDateEnd" name="session[dateEnd]" value="">
 								</div>
 								<div class="form-group">
 									<label for="agendaItemOfficialTitle">AgendaItem Official Title</label>
