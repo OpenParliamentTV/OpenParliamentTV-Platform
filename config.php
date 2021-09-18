@@ -40,6 +40,9 @@ $config["parliament"]["DE"]["sql"]["tbl"]["Session"] = "session";
 $config["parliament"]["DE"]["sql"]["tbl"]["Media"] = "media";
 $config["parliament"]["DE"]["sql"]["tbl"]["Annotation"] = "annotation";
 $config["parliament"]["DE"]["sql"]["tbl"]["Text"] = "text";
+$config["parliament"]["DE"]["cache"]["wp"]["people"] = __DIR__."/data/wikidataDumps/de-mdbs-final.txt";
+$config["parliament"]["DE"]["cache"]["wp"]["parties"] = __DIR__."/data/wikidataDumps/de-parties-final.txt";
+$config["parliament"]["DE"]["cache"]["wp"]["factions"] = __DIR__."/data/wikidataDumps/de-factions-final.txt";
 
 
 //DB - Parliament config Brandenburg
@@ -54,6 +57,9 @@ $config["parliament"]["DE-BB"]["sql"]["tbl"]["Session"] = "session";
 $config["parliament"]["DE-BB"]["sql"]["tbl"]["Media"] = "media";
 $config["parliament"]["DE-BB"]["sql"]["tbl"]["Annotation"] = "annotation";
 $config["parliament"]["DE-BB"]["sql"]["tbl"]["Text"] = "text";
+$config["parliament"]["DE-BB"]["cache"]["wp"]["people"] = __DIR__."/data/wikidataDumps/DE-BB-mdbs-final.json";
+$config["parliament"]["DE-BB"]["cache"]["wp"]["parties"] = __DIR__."/data/wikidataDumps/DE-BB-parties-final.json";
+$config["parliament"]["DE-BB"]["cache"]["wp"]["factions"] = __DIR__."/data/wikidataDumps/DE-BB-factions-final.json";
 
 
 //ES Config

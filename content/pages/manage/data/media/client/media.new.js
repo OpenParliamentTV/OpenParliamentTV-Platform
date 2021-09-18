@@ -1,5 +1,11 @@
 $(function() {
-
+    function sleep(milliseconds) {
+        const date = Date.now();
+        let currentDate = null;
+        do {
+            currentDate = Date.now();
+        } while (currentDate - date < milliseconds);
+    }
 
     /**
      *
@@ -21,8 +27,8 @@ $(function() {
             "   <input type='text' name='textContents["+itemTmpDate+"][license]' class='form-control mb-2' data-itemTmp='"+itemTmpDate+"' placeholder='license (Public Domain)'>" +
             "   <input type='text' name='textContents["+itemTmpDate+"][language]' class='form-control mb-2' data-itemTmp='"+itemTmpDate+"' placeholder='language (DE-de)'>" +
             "   <input type='text' name='textContents["+itemTmpDate+"][originTextID]' class='form-control mb-2' data-itemTmp='"+itemTmpDate+"' placeholder='originTextID'>" +
-            "   <textarea name='textContents["+itemTmpDate+"][textBody]' class='form-control' data-itemTmp='"+itemTmpDate+"'></textarea>" +
-            "   <button class='media-text-item-remove btn' type='button'><i class='icon-trash-1'></i></button>" +
+            "   <textarea name='textContents["+itemTmpDate+"][textBody]' class='form-control' id='textarea-"+itemTmpDate+"' data-itemTmp='"+itemTmpDate+"'></textarea>" +
+            "   <button class='media-text-item-remove btn' type='button'><i class='icon-trash-1'></i></button><button class='media-text-item-convert btn' data-id='"+itemTmpDate+"' type='button'><i class='icon-align-left'></i><i class='icon-right'></i><i class='icon-database'></i></button>" +
             "</div>";
 
         $("#media-text-body").append(template);
@@ -31,6 +37,55 @@ $(function() {
 
     $("#mediaAddForm").on("click", ".media-text-item-remove", function(e) {
         $(this).parent().remove();
+    });
+
+    $("#mediaAddForm").on("click", ".media-text-item-convert", function(e) {
+
+        let item = $("#textarea-"+$(this).data("id"));
+        let content = item.val().split("\n");
+        let tmpName = "";
+        let sentences = [];
+        $.each(content, function() {
+
+            if (this.match(/^(Herr|Frau|Präsi|Vize|Mini).*[\:\*]$/)) {
+                tmpName = this;
+                let tmpAddNameNot = 0;
+
+                $(".person-name").each(function() {
+
+                   if (String($(this).val()) == String(tmpName)) {
+                       tmpAddNameNot = 1;
+                       return false;
+                   }
+
+                });
+
+                if (tmpAddNameNot < 1) {
+                    sleep(10);
+                    let tmpNewPerson = addPeopleBlock();
+                    $("input.person-name[data-itemtmp='"+tmpNewPerson+"']").val(tmpName);
+
+                }
+            } else if (this == "") {
+                return true;
+            } else if (this.match(/^\(.*\)$/)) {
+                let tmpItem = {"type":"comment", "speaker":null, "speakerstatus":null, "sentences": [{"text":this}]};
+                sentences.push(tmpItem);
+            } else {
+                let tmpItem = {"type":"speech", "speaker":tmpName, "speakerstatus":null, "text": this, "sentences": []};
+                //let tmpSentences = this.split(/[\.\?\!]+/);
+                let tmpSentences = this.replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|");
+                $.each(tmpSentences, function(){
+                    if (this != "") {
+                        tmpItem["sentences"].push({"text":this});
+                    }
+                });
+                sentences.push(tmpItem);
+            }
+
+        });
+        //console.log(sentences);
+        item.val(JSON.stringify(sentences, null, 2));
     });
 
 
@@ -44,8 +99,9 @@ $(function() {
      *
      */
 
-    $("#media-people-body-button-add").on("click", function(item,event) {
+    $("#media-people-body-button-add").on("click", addPeopleBlock);
 
+    function addPeopleBlock () {
         var itemTmpDate = "person-"+Date.now();
         var template =
             "<div class='media-person-item' id='"+itemTmpDate+"'>" +
@@ -56,7 +112,7 @@ $(function() {
             "       <div class='fayt-results' id='fayt-results-"+itemTmpDate+"'>" +
             "           <span class='fayr-results-label'>From Database</span>" +
             "           <ul id='fayt-results-db-"+itemTmpDate+"'></ul>" +
-        "               <span class='fayr-results-label'>From Wikipedia</span>" +
+            "               <span class='fayr-results-label'>From Wikipedia</span>" +
             "           <ul id='fayt-results-wd-"+itemTmpDate+"'></ul>" +
             "       </div>" +
             "   </div>" +
@@ -69,8 +125,8 @@ $(function() {
             "</div>";
 
         $("#media-people-body").append(template);
-
-    });
+        return itemTmpDate;
+    }
 
 
 
@@ -146,7 +202,7 @@ $(function() {
 
                         if (ret?.["data"].length > 0) {
 
-                            var maxItems = 5;
+                            var maxItems = 8;
                             var currItem = 0;
 
                             $(ret["data"]).each(function(i) {
@@ -160,7 +216,7 @@ $(function() {
                                         "data-party='" + ret.data?.[i]?.party + "' " +
                                         "data-faction='" + ret.data?.[i]?.faction + "' " +
                                         "data-label='" + ret.data?.[i]?.label + "'>" +
-                                        ret.data?.[i]?.label + " (" + ret.data?.[i]?.partyLabelAlternative + ")</li>");
+                                        ret.data?.[i]?.label + " (" + ret.data?.[i]?.parliament + ")</li>");
 
                                 } else {
                                     return;

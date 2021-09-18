@@ -346,7 +346,10 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                         if ($request["str"]) {
 
-                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-mdbs-final.txt"),true);
+                            //$dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-mdbs-final.txt"),true);
+                            foreach ($config["parliament"] as $p=>$v) {
+                                $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["people"]),true);
+                            }
 
                             if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
 
@@ -361,77 +364,81 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                             }
 
-                            foreach ($dump as $k=>$v) {
+                            foreach ($dump as $p=>$d) {
 
-                                $success = false;
 
-                                if (preg_match("/".convertAccentsAndSpecialToNormal($request["str"])."/ui",convertAccentsAndSpecialToNormal($v[$tmpType]))) {
-                                    $success = true;
-                                } else if (isset($v["altLabel"])) {
-                                    if (is_string($v["altLabel"])) {
-                                        if (preg_match("/".convertAccentsAndSpecialToNormal($request["str"])."/ui",convertAccentsAndSpecialToNormal($v["altLabel"]))) {
-                                            $success = true;
-                                        }
-                                    } else if (is_array($v["altLabel"])) {
-                                        foreach ($v["altLabel"] as $altLabel) {
-                                            if (preg_match("/".convertAccentsAndSpecialToNormal($request["str"])."/ui",convertAccentsAndSpecialToNormal($altLabel))) {
+                                foreach ($d as $k => $v) {
+
+                                    $success = false;
+
+                                    if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v[$tmpType]))) {
+                                        $success = true;
+                                    } else if (isset($v["altLabel"])) {
+                                        if (is_string($v["altLabel"])) {
+                                            if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v["altLabel"]))) {
                                                 $success = true;
-                                                break;
+                                            }
+                                        } else if (is_array($v["altLabel"])) {
+                                            foreach ($v["altLabel"] as $altLabel) {
+                                                if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($altLabel))) {
+                                                    $success = true;
+                                                    break;
+                                                }
                                             }
                                         }
+
+                                    }
+
+                                    if ($success) {
+
+                                        $return["meta"]["requestStatus"] = "success";
+
+                                        //FIX URL and Arrays in Party and Faction
+                                        if (gettype($v["party"]) == "array") {
+
+                                            $v["party-original-array"] = $v["party"];
+                                            $v["party"] = $v["party"][0];
+
+                                        }
+
+                                        if (preg_match("/www\.wiki/", $v["party"])) {
+                                            $v["party-original-URL"] = $v["party"];
+                                            $tmpArray = explode("/", $v["party"]);
+                                            $v["party"] = array_pop($tmpArray);
+
+                                            $v["partyLabelAlternative"] = apiV1(["action" => "wikidataService", "itemType" => "party", "str" => $v["party"]])["data"][0]["labelAlternative"];
+                                        }
+
+                                        if (gettype($v["faction"]) == "array") {
+                                            $v["faction-original-array"] = $v["faction"];
+                                            $v["faction"] = $v["faction"][0];
+                                        }
+
+                                        if (preg_match("/www\.wiki/", $v["faction"])) {
+                                            $v["faction-original-URL"] = $v["faction"];
+                                            $tmpArray = explode("/", $v["faction"]);
+                                            $v["faction"] = array_pop($tmpArray);
+                                        }
+
+                                        $v["parliament"] = $p;
+
+                                        $return["data"][] = $v;
                                     }
 
                                 }
 
-                                if ($success) {
-
-                                    $return["meta"]["requestStatus"] = "success";
-
-                                    //FIX URL and Arrays in Party and Faction
-                                    if (gettype($v["party"]) == "array") {
-
-                                        $v["party-original-array"] = $v["party"];
-                                        $v["party"] = $v["party"][0];
-
-                                    }
-
-                                    if (preg_match("/www\.wiki/",$v["party"])) {
-                                        $v["party-original-URL"] = $v["party"];
-                                        $tmpArray = explode("/",$v["party"]);
-                                        $v["party"] = array_pop($tmpArray);
-
-                                        $v["partyLabelAlternative"] = apiV1(["action"=>"wikidataService","itemType"=>"party","str"=>$v["party"]])["data"][0]["labelAlternative"];
-                                    }
-
-                                    if (gettype($v["faction"]) == "array") {
-                                        $v["faction-original-array"] = $v["faction"];
-                                        $v["faction"] = $v["faction"][0];
-                                    }
-
-                                    if (preg_match("/www\.wiki/",$v["faction"])) {
-                                        $v["faction-original-URL"] = $v["faction"];
-                                        $tmpArray = explode("/",$v["faction"]);
-                                        $v["faction"] = array_pop($tmpArray);
-                                    }
-
-
-
-                                    $return["data"][] = $v;
+                                if (count($return["data"]) > 0) {
+                                    return $return;
+                                } else {
+                                    // No Result found.
+                                    $return["meta"]["requestStatus"] = "error";
+                                    $return["errors"] = array();
+                                    $errorarray["status"] = "404";
+                                    $errorarray["code"] = "1";
+                                    $errorarray["title"] = "No results";
+                                    $errorarray["detail"] = "Person not found in dump"; //TODO: Description
+                                    array_push($return["errors"], $errorarray);
                                 }
-
-                            }
-
-                            if (count($return["data"]) > 0) {
-                                return $return;
-                            } else {
-                                // No Result found.
-                                $return["meta"]["requestStatus"] = "error";
-                                $return["errors"] = array();
-                                $errorarray["status"] = "404";
-                                $errorarray["code"] = "1";
-                                $errorarray["title"] = "No results";
-                                $errorarray["detail"] = "Person not found in dump"; //TODO: Description
-                                array_push($return["errors"], $errorarray);
                             }
 
 
@@ -455,7 +462,10 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                         if ($request["str"]) {
 
-                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-parties-final.txt"),true);
+                            //$dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-parties-final.txt"),true);
+                            foreach ($config["parliament"] as $p=>$v) {
+                                $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["parties"]),true);
+                            }
 
                             if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
 
@@ -473,22 +483,27 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                             $return["data"] = [];
 
-                            foreach ($dump as $k=>$v) {
-                                /*
-                                 *
-                                 * //TODO Remove this debug
-                                if (gettype($v["labelAlternative"]) == "array") {
-                                    print_r($v);
-                                }
-                                //echo gettype($v["labelAlternative"])."\n";
-                                */
+                            foreach ($dump as $p=>$d) {
+
+                                foreach ($d as $k => $v) {
+                                    /*
+                                     *
+                                     * //TODO Remove this debug
+                                    if (gettype($v["labelAlternative"]) == "array") {
+                                        print_r($v);
+                                    }
+                                    //echo gettype($v["labelAlternative"])."\n";
+                                    */
 
 
-                                if ((preg_match("/".$request["str"]."/i",$v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/".$request["str"]."/i",$v["labelAlternative"])))) {
+                                    if ((preg_match("/" . $request["str"] . "/i", $v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/" . $request["str"] . "/i", $v["labelAlternative"])))) {
 
-                                    $return["meta"]["requestStatus"] = "success";
-                                    $return["data"][] = $v;
+                                        $return["meta"]["requestStatus"] = "success";
+                                        $v["parliament"] = $p;
+                                        $return["data"][] = $v;
 
+
+                                    }
 
                                 }
 
@@ -527,7 +542,10 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                         if ($request["str"]) {
 
-                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-factions-final.txt"),true);
+                            //$dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-factions-final.txt"),true);
+                            foreach ($config["parliament"] as $p=>$v) {
+                                $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["factions"]),true);
+                            }
 
                             if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
 
@@ -545,22 +563,26 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                             $return["data"] = [];
 
-                            foreach ($dump as $k=>$v) {
+                            foreach ($dump as $p=>$d) {
 
-                                if (
-                                        (preg_match("/".$request["str"]."/i",$v[$tmpType]))
+                                foreach ($d as $k => $v) {
+
+                                    if (
+                                        (preg_match("/" . $request["str"] . "/i", $v[$tmpType]))
                                         || (
-                                                    (($tmpType == "label") && (gettype($v["labelAlternative"]) == "string"))
-                                                &&  (preg_match("/".$request["str"]."/i",$v["labelAlternative"]))
-                                            )
+                                            (($tmpType == "label") && (gettype($v["labelAlternative"]) == "string"))
+                                            && (preg_match("/" . $request["str"] . "/i", $v["labelAlternative"]))
+                                        )
                                     ) {
 
-                                    $return["meta"]["requestStatus"] = "success";
-                                    $return["data"][] = $v;
+                                        $return["meta"]["requestStatus"] = "success";
+                                        $v["parliament"] = $p;
+                                        $return["data"][] = $v;
 
+
+                                    }
 
                                 }
-
                             }
                             /*
                             $return["tmp"] = $dump;
