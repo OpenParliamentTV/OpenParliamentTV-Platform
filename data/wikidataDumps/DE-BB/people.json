@@ -5,7 +5,7 @@
     "label": "Nicole Walter-Mundt",
     "birthDate": "1965-01-01",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168704"
@@ -19,7 +19,7 @@
     "label": "Ricarda Budke",
     "birthDate": "1999-02-23",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2019 - 2024)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168746"
@@ -33,7 +33,7 @@
     "label": "Uwe Adler",
     "birthDate": "1974-01-01",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168819"
@@ -47,7 +47,7 @@
     "label": "Ortwin Baier",
     "birthDate": "1958-01-01",
     "partyID": "Q2415493",
-    "factionID": null,
+    "factionID": "Fraktionslos (Brandenburg 2019 - 2024)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168822"
@@ -61,7 +61,7 @@
     "label": "Harald Pohle",
     "birthDate": "1950-01-01",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168808"
@@ -75,7 +75,7 @@
     "label": "Ludwig Scheetz",
     "birthDate": "1986-01-01",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168823"
@@ -89,7 +89,7 @@
     "label": "Hardy Lux",
     "birthDate": "1971-02-04",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168816"
@@ -103,7 +103,7 @@
     "label": "Udo Wernitz",
     "birthDate": "1968-02-04",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168818"
@@ -117,7 +117,7 @@
     "label": "Wilko Möller",
     "birthDate": "1966-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168666"
@@ -131,7 +131,7 @@
     "label": "Kathleen Muxel",
     "birthDate": "1971-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168661"
@@ -145,7 +145,7 @@
     "label": "Volker Nothing",
     "birthDate": "1965-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168667"
@@ -159,7 +159,7 @@
     "label": "Daniel Münschke",
     "birthDate": "1980-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31240"
@@ -176,7 +176,7 @@
     "label": "Felix Horst Wolfgang Teichner",
     "birthDate": "1991-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168649"
@@ -190,7 +190,7 @@
     "label": "Rolf-Peter Hooge",
     "birthDate": "1952-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168662"
@@ -204,7 +204,7 @@
     "label": "Hans-Christoph Berndt",
     "birthDate": "1956-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168660"
@@ -218,7 +218,7 @@
     "label": "Sabine Barthel",
     "birthDate": "1962-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168648"
@@ -232,7 +232,7 @@
     "label": "Michael Hanko",
     "birthDate": "1964-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168671"
@@ -241,19 +241,19 @@
     "abstract": "deutscher Politiker (AfD), MdL"
   },
   {
-    "birthDate": "1964-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "145719"
     },
-    "partyID": "Q6721203",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Jan-Steffen John",
-    "abstract": "deutscher Politiker (AfD), MdL",
-    "gender": "male",
+    "birthDate": "1964-01-01",
+    "partyID": "Q6721203",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/20-01-22-Steffen-John-MdL_DSF5623.jpg/300px-20-01-22-Steffen-John-MdL_DSF5623.jpg",
+    "gender": "male",
     "id": "Q68098002",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (AfD), MdL",
+    "factionID": "Q108583380",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -263,7 +263,7 @@
     "label": "Peter Drenske",
     "birthDate": "1960-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "145726"
@@ -277,14 +277,14 @@
     "label": "Andreas Noack",
     "birthDate": "1965-01-01",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168813"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/20_01-22-Andreas-Noack-MdL_DSF5560.jpg/300px-20_01-22-Andreas-Noack-MdL_DSF5560.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker (SPD)",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/20_01-22-Andreas-Noack-MdL_DSF5560.jpg/300px-20_01-22-Andreas-Noack-MdL_DSF5560.jpg",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -294,7 +294,7 @@
     "label": "Lena Duggen",
     "birthDate": "1987-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "170307"
@@ -308,7 +308,7 @@
     "label": "Dennis Hohloch",
     "birthDate": "1989-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168659"
@@ -322,7 +322,7 @@
     "label": "Steffen Kubitzki",
     "birthDate": "1964-02-19",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168670"
@@ -331,18 +331,18 @@
     "abstract": "deutscher Politiker (AfD)"
   },
   {
-    "birthDate": "1971-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "168652"
     },
-    "partyID": "Q6721203",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Lars Hünich",
-    "abstract": "deutscher Politiker (AfD)",
+    "birthDate": "1971-01-01",
+    "partyID": "Q6721203",
     "gender": "male",
     "id": "Q68047248",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (AfD)",
+    "factionID": "Q108583380"
   },
   {
     "type": "memberOfParliament",
@@ -350,7 +350,7 @@
     "label": "Lars Günther",
     "birthDate": "1976-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168665"
@@ -364,7 +364,7 @@
     "label": "Lars Schieske",
     "birthDate": "1977-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168672"
@@ -378,7 +378,7 @@
     "label": "Daniel Keller",
     "birthDate": "1986-08-09",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168821"
@@ -392,7 +392,7 @@
     "label": "Johannes Funke",
     "birthDate": "1969-08-27",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168811"
@@ -406,7 +406,7 @@
     "label": "André Schaller",
     "birthDate": "1973-01-01",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168717"
@@ -423,7 +423,7 @@
     "label": "Elske Hildebrandt",
     "birthDate": "1974-02-13",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168827"
@@ -437,7 +437,7 @@
     "label": "Britta Kornmesser",
     "birthDate": "1968-01-01",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168817"
@@ -451,7 +451,7 @@
     "label": "Isabell Hiekel",
     "birthDate": "1963-01-01",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2019 - 2024)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168740"
@@ -465,7 +465,7 @@
     "label": "Marlen Block",
     "birthDate": "1980-06-29",
     "partyID": "Q49764",
-    "factionID": null,
+    "factionID": "Q108583412",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168762"
@@ -474,18 +474,18 @@
     "abstract": "deutsche Politikerin (Die Linke)"
   },
   {
-    "birthDate": "1975-06-23",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "168751"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Ronny Kretschmer",
-    "abstract": "deutscher Politiker (PDS, Die Linke)",
+    "birthDate": "1975-06-23",
+    "partyID": "Q49764",
     "gender": "male",
     "id": "Q67169479",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (PDS, Die Linke)",
+    "factionID": "Q108583412"
   },
   {
     "type": "memberOfParliament",
@@ -493,7 +493,7 @@
     "label": "Julian Brüning",
     "birthDate": "1994-01-01",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168719"
@@ -507,7 +507,7 @@
     "label": "Sebastian Walter (Politiker, 1990)",
     "birthDate": "1990-04-21",
     "partyID": "Q49764",
-    "factionID": null,
+    "factionID": "Q108583412",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168757"
@@ -521,7 +521,7 @@
     "label": "Daniel Freiherr von Lützow",
     "birthDate": "1974-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31220"
@@ -535,7 +535,7 @@
     "label": "Marianne Spring-Räumschüssel",
     "birthDate": "1946-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "145725"
@@ -549,7 +549,7 @@
     "label": "Matthias Stefke",
     "birthDate": "1963-01-01",
     "partyID": "BVB - Freie Wähler",
-    "factionID": null,
+    "factionID": "Q108583293",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168687"
@@ -564,7 +564,7 @@
     "label": "Philip Zeschmann",
     "birthDate": "1967-01-01",
     "partyID": "BVB - Freie Wähler",
-    "factionID": null,
+    "factionID": "Q108583293",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31186"
@@ -578,7 +578,7 @@
     "label": "Ilona Nicklisch",
     "birthDate": "1958-01-01",
     "partyID": "BVB - Freie Wähler",
-    "factionID": null,
+    "factionID": "Q108583293",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30741"
@@ -592,7 +592,7 @@
     "label": "Christine Wernicke",
     "birthDate": "1960-01-01",
     "partyID": "BVB - Freie Wähler",
-    "factionID": null,
+    "factionID": "Q108583293",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168678"
@@ -606,7 +606,7 @@
     "label": "Thomas von Gizycki",
     "birthDate": "1963-10-27",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2019 - 2024)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31129"
@@ -620,14 +620,14 @@
     "label": "Heiner Klemp",
     "birthDate": "1963-01-01",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2019 - 2024)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132933"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/20-01-22-Heiner-Klemp-MdL_DSF5513_1.jpg/300px-20-01-22-Heiner-Klemp-MdL_DSF5513_1.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker (Bündnis 90/Die Grünen), MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/20-01-22-Heiner-Klemp-MdL_DSF5513_1.jpg/300px-20-01-22-Heiner-Klemp-MdL_DSF5513_1.jpg",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -637,7 +637,7 @@
     "label": "Sahra Damus",
     "birthDate": "1982-01-01",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2019 - 2024)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31144"
@@ -651,7 +651,7 @@
     "label": "Marie Schäffer",
     "birthDate": "1990-01-01",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2019 - 2024)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "168735"
@@ -665,7 +665,7 @@
     "label": "Laura Lazarus",
     "birthDate": "1981-10-01",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31059"
@@ -691,7 +691,7 @@
     "label": "Knut Große",
     "birthDate": "1955-01-01",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30731"
@@ -705,7 +705,7 @@
     "label": "Carsten Preuß",
     "birthDate": "1962-01-01",
     "partyID": "Q49764",
-    "factionID": null,
+    "factionID": "Q108583412",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31079"
@@ -719,7 +719,7 @@
     "label": "Jan-Ulrich Weiß",
     "birthDate": "1975-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31206"
@@ -733,7 +733,7 @@
     "label": "Uwe Liebehenschel",
     "birthDate": "1971-04-24",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31055"
@@ -750,7 +750,7 @@
     "label": "Anke Schwarzenberg",
     "birthDate": "1954-05-06",
     "partyID": "Q49764",
-    "factionID": null,
+    "factionID": "Q108583412",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31088"
@@ -767,7 +767,7 @@
     "label": "Andreas Gliese",
     "birthDate": "1968-01-01",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30723"
@@ -781,7 +781,7 @@
     "label": "Kristy Augustin",
     "birthDate": "1979-02-06",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31064"
@@ -798,7 +798,7 @@
     "label": "Jan Redmann",
     "birthDate": "1979-01-01",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30742"
@@ -812,7 +812,7 @@
     "label": "Heide Schinowsky",
     "birthDate": "1975-07-03",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2014-2019)",
     "socialMediaIDs": [
       {
         "label": "Twitter",
@@ -831,7 +831,7 @@
     "label": "Raik Nowka",
     "birthDate": "1975-02-14",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31067"
@@ -843,22 +843,22 @@
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1984-06-30",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "31084"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "René Wilke",
-    "abstract": "deutscher Politiker",
-    "gender": "male",
+    "birthDate": "1984-06-30",
+    "partyID": "Q49764",
     "thumbnailURI": [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/16-03-09-René-Wilke_RR26667.jpg/300px-16-03-09-René-Wilke_RR26667.jpg",
       "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/16-03-10-René-Wilke_RR27134.jpg/300px-16-03-10-René-Wilke_RR27134.jpg"
     ],
+    "gender": "male",
     "id": "Q18335010",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -868,7 +868,7 @@
     "label": "Franz Wiese",
     "birthDate": "1952-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "63847"
@@ -880,19 +880,19 @@
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1983-12-18",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30720"
     },
-    "partyID": "BVB - Freie Wähler",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Péter Vida",
-    "abstract": "deutscher Politiker (BVB/Freie Wähler), Mitglied des brandenburgischen Landtags",
-    "gender": "male",
+    "birthDate": "1983-12-18",
+    "partyID": "BVB - Freie Wähler",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/16-03-09-Péter-Vida_RR26529.jpg/300px-16-03-09-Péter-Vida_RR26529.jpg",
+    "gender": "male",
     "id": "Q18334697",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (BVB/Freie Wähler), Mitglied des brandenburgischen Landtags",
+    "factionID": "Q108583293",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -902,7 +902,7 @@
     "label": "Isabelle Vandre",
     "birthDate": "1989-07-27",
     "partyID": "Q49764",
-    "factionID": null,
+    "factionID": "Q108583412",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31073"
@@ -920,7 +920,7 @@
     "label": "Iris Schülzke",
     "birthDate": "1959-01-01",
     "partyID": "BVB - Freie Wähler",
-    "factionID": null,
+    "factionID": "Q4316268",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31191"
@@ -937,7 +937,7 @@
     "label": "Sven Schröder",
     "birthDate": "1964-01-01",
     "partyID": "Q2415493",
-    "factionID": null,
+    "factionID": "Q4316268",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31213"
@@ -954,7 +954,7 @@
     "label": "Uwe Schmidt",
     "birthDate": "1947-05-20",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31113"
@@ -971,7 +971,7 @@
     "label": "Christina Schade",
     "birthDate": "1965-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31226"
@@ -988,7 +988,7 @@
     "label": "Britta Müller",
     "birthDate": "1971-01-01",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31114"
@@ -1005,7 +1005,7 @@
     "label": "Simona Koß",
     "birthDate": "1961-06-09",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31119"
@@ -1017,12 +1017,21 @@
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1972-11-17",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "31222"
     },
-    "websiteURI": "http://www.andreaskalbitz.de/",
+    "altLabel": "Andreas Edwin Kalbitz",
+    "label": "Andreas Kalbitz",
+    "birthDate": "1972-11-17",
     "partyID": "Q2415493",
+    "thumbnailURI": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/2020-01-23_Andreas_Kalbitz_AfD_MdL_by_OlafKosinsky8925.jpg/300px-2020-01-23_Andreas_Kalbitz_AfD_MdL_by_OlafKosinsky8925.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Andreas_Kalbitz_2016_(2).jpg/300px-Andreas_Kalbitz_2016_(2).jpg"
+    ],
+    "gender": "male",
+    "websiteURI": "http://www.andreaskalbitz.de/",
+    "id": "Q18222369",
     "socialMediaIDs": [
       {
         "label": "Twitter",
@@ -1037,34 +1046,25 @@
         "id": "andreas.kalbitz"
       }
     ],
-    "type": "memberOfParliament",
-    "label": "Andreas Kalbitz",
     "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtages",
-    "gender": "male",
-    "thumbnailURI": [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/2020-01-23_Andreas_Kalbitz_AfD_MdL_by_OlafKosinsky8925.jpg/300px-2020-01-23_Andreas_Kalbitz_AfD_MdL_by_OlafKosinsky8925.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Andreas_Kalbitz_2016_(2).jpg/300px-Andreas_Kalbitz_2016_(2).jpg"
-    ],
-    "altLabel": "Andreas Edwin Kalbitz",
-    "id": "Q18222369",
-    "factionID": null,
+    "factionID": "Q108583380",
     "thumbnailCreator": "Olaf Kosinsky",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1957-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "63848"
     },
-    "partyID": "Q6721203",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Thomas Jung",
-    "abstract": "deutscher Jurist und Politiker (AfD, ehemals Die Freiheit), MdL",
-    "gender": "male",
+    "birthDate": "1957-01-01",
+    "partyID": "Q6721203",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Landtagsprojekt_Brandenburg_Thomas_Jung_by_Olaf_Kosinsky-1.jpg/300px-Landtagsprojekt_Brandenburg_Thomas_Jung_by_Olaf_Kosinsky-1.jpg",
+    "gender": "male",
     "id": "Q18222365",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Jurist und Politiker (AfD, ehemals Die Freiheit), MdL",
+    "factionID": "Q108583380",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Olaf_Kosinsky\" title=\"User:Olaf Kosinsky\">Olaf Kosinsky</a>",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
@@ -1074,31 +1074,31 @@
     "label": "Andrea Johlige",
     "birthDate": "1977-05-28",
     "partyID": "Q49764",
-    "factionID": null,
+    "factionID": "Q108583412",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30721"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/16-03-10-Andrea-Johlige_RR27161.jpg/300px-16-03-10-Andrea-Johlige_RR27161.jpg",
     "gender": "female",
     "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/16-03-10-Andrea-Johlige_RR27161.jpg/300px-16-03-10-Andrea-Johlige_RR27161.jpg",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1984-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "31217"
     },
-    "websiteURI": "https://www.landtag.brandenburg.de/de/parlament/abgeordnete/hein_stefan/666533?_referer=395887&_lang=de",
-    "partyID": "Q6721203",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Stefan Hein",
-    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
+    "birthDate": "1984-01-01",
+    "partyID": "Q6721203",
     "gender": "male",
+    "websiteURI": "https://www.landtag.brandenburg.de/de/parlament/abgeordnete/hein_stefan/666533?_referer=395887&_lang=de",
     "id": "Q18222222",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
+    "factionID": "Q4316268"
   },
   {
     "type": "memberOfParliament",
@@ -1106,7 +1106,7 @@
     "label": "Inka Gossmann-Reetz",
     "birthDate": "1969-03-13",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31111"
@@ -1123,7 +1123,7 @@
     "label": "Kathrin Dannenberg",
     "birthDate": "1966-08-12",
     "partyID": "Q49764",
-    "factionID": null,
+    "factionID": "Q108583412",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "63849"
@@ -1152,7 +1152,7 @@
     "label": "Birgit Bessin",
     "birthDate": "1978-01-01",
     "partyID": "Q6721203",
-    "factionID": null,
+    "factionID": "Q108583380",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31218"
@@ -1169,7 +1169,7 @@
     "label": "Diana Bader",
     "birthDate": "1976-02-05",
     "partyID": "Q49764",
-    "factionID": null,
+    "factionID": "Q108583412",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "63852"
@@ -1181,19 +1181,19 @@
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1973-10-27",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30726"
     },
-    "partyID": "Q49768",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Daniel Kurth",
-    "abstract": "deutscher Politiker (SPD), Mitglied des brandenburgischen Landtags",
-    "gender": "male",
+    "birthDate": "1973-10-27",
+    "partyID": "Q49768",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/16-03-10-Daniel-Kurth_RR27211.jpg/300px-16-03-10-Daniel-Kurth_RR27211.jpg",
+    "gender": "male",
     "id": "Q18202313",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (SPD), Mitglied des brandenburgischen Landtags",
+    "factionID": "Q108583167",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -1203,14 +1203,14 @@
     "label": "Björn Lüttmann",
     "birthDate": "1975-12-11",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31112"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/16-03-09-Björn-Lüttmann_RR26649.jpg/300px-16-03-09-Björn-Lüttmann_RR26649.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/16-03-09-Björn-Lüttmann_RR26649.jpg/300px-16-03-09-Björn-Lüttmann_RR26649.jpg",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -1220,14 +1220,14 @@
     "label": "Helmut Barthel",
     "birthDate": "1953-07-22",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31116"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/16-03-10-Helmut-Barthel_RR27204.jpg/300px-16-03-10-Helmut-Barthel_RR27204.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/16-03-10-Helmut-Barthel_RR27204.jpg/300px-16-03-10-Helmut-Barthel_RR27204.jpg",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -1237,14 +1237,14 @@
     "label": "Wolfgang Roick",
     "birthDate": "1968-10-10",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31122"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/16-03-10-Wolfgang-Roick_RR27252.jpg/300px-16-03-10-Wolfgang-Roick_RR27252.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/16-03-10-Wolfgang-Roick_RR27252.jpg/300px-16-03-10-Wolfgang-Roick_RR27252.jpg",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -1254,83 +1254,83 @@
     "label": "Erik Stohn",
     "birthDate": "1983-12-20",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "31117"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Landtagsprojekt_Brandenburg_Erik_Stohn_by_Olaf_Kosinsky-1.jpg/300px-Landtagsprojekt_Brandenburg_Erik_Stohn_by_Olaf_Kosinsky-1.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker (SPD), Mitglied des brandenburgischen Landtags",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Landtagsprojekt_Brandenburg_Erik_Stohn_by_Olaf_Kosinsky-1.jpg/300px-Landtagsprojekt_Brandenburg_Erik_Stohn_by_Olaf_Kosinsky-1.jpg",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Olaf_Kosinsky\" title=\"User:Olaf Kosinsky\">Olaf Kosinsky</a>",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1958-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "31109"
     },
-    "websiteURI": "https://ulrike-liedtke.de/de/home/",
-    "partyID": "Q49768",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Ulrike Liedtke",
-    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
-    "gender": "female",
+    "birthDate": "1958-01-01",
+    "partyID": "Q49768",
     "thumbnailURI": [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/16-03-09-Ulrike-Liedtke_RR26463.jpg/300px-16-03-09-Ulrike-Liedtke_RR26463.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/2020_01-22_Ulrike_Liedtke_SPD_MdL_by_OlafKosinsky8809.jpg/300px-2020_01-22_Ulrike_Liedtke_SPD_MdL_by_OlafKosinsky8809.jpg"
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/2020_01-22_Ulrike_Liedtke_SPD_MdL_by_OlafKosinsky8809.jpg/300px-2020_01-22_Ulrike_Liedtke_SPD_MdL_by_OlafKosinsky8809.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/16-03-09-Ulrike-Liedtke_RR26463.jpg/300px-16-03-09-Ulrike-Liedtke_RR26463.jpg"
     ],
+    "gender": "female",
+    "websiteURI": "https://ulrike-liedtke.de/de/home/",
     "id": "Q18202218",
-    "factionID": null,
-    "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
-    "thumbnailLicense": "GFDL 1.2"
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
+    "factionID": "Q108583167",
+    "thumbnailCreator": "Olaf Kosinsky",
+    "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1957-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "31202"
     },
-    "partyID": "Q6721203",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Rainer van Raemdonck",
-    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
+    "birthDate": "1957-01-01",
+    "partyID": "Q6721203",
     "gender": "male",
     "id": "Q18169745",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
+    "factionID": "Q108583380"
   },
   {
-    "birthDate": "1967-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "31203"
     },
-    "partyID": "Q6721203",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Andreas Galau",
-    "abstract": "deutscher Verwaltungsbeamter und Politiker (AfD), MdL",
-    "gender": "male",
+    "birthDate": "1967-01-01",
+    "partyID": "Q6721203",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Landtagsprojekt_Brandenburg_Andreas_Galau_by_Olaf_Kosinsky.jpg/300px-Landtagsprojekt_Brandenburg_Andreas_Galau_by_Olaf_Kosinsky.jpg",
+    "gender": "male",
     "id": "Q18169572",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Verwaltungsbeamter und Politiker (AfD), MdL",
+    "factionID": "Q108583380",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Olaf_Kosinsky\" title=\"User:Olaf Kosinsky\">Olaf Kosinsky</a>",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1972-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "31214"
     },
-    "partyID": "Q6721203",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Steffen Königer",
-    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
-    "gender": "male",
+    "birthDate": "1972-01-01",
+    "partyID": "Q6721203",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Landtagsprojekt_Brandenburg_Steffen_Königer_by_Olaf_Kosinsky-1.jpg/300px-Landtagsprojekt_Brandenburg_Steffen_Königer_by_Olaf_Kosinsky-1.jpg",
+    "gender": "male",
     "id": "Q18169570",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
+    "factionID": "Q108583380",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Olaf_Kosinsky\" title=\"User:Olaf Kosinsky\">Olaf Kosinsky</a>",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
@@ -1340,7 +1340,7 @@
     "label": "Petra Budke",
     "birthDate": "1958-11-03",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2019 - 2024)",
     "socialMediaIDs": [
       {
         "label": "Facebook",
@@ -1360,7 +1360,7 @@
     "label": "René Kretzschmar",
     "birthDate": "1979-04-22",
     "partyID": "Q49764",
-    "factionID": null,
+    "factionID": "Q108583412",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "36772"
@@ -1381,12 +1381,17 @@
     "abstract": "deutsche Politikerin (Die Linke)"
   },
   {
-    "birthDate": "1986-02-10",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30839"
     },
-    "websiteURI": "http://www.norbert-mueller.net",
+    "label": "Norbert Müller",
+    "birthDate": "1986-02-10",
     "partyID": "Q49764",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Norbert_Müller,_Bundestagsabgeordneter_DIE_LINKE_(17665398238).jpg/300px-Norbert_Müller,_Bundestagsabgeordneter_DIE_LINKE_(17665398238).jpg",
+    "gender": "male",
+    "websiteURI": "http://www.norbert-mueller.net",
+    "id": "Q15263649",
     "socialMediaIDs": [
       {
         "label": "Twitter",
@@ -1397,45 +1402,40 @@
         "id": "norbert.mueller.dielinke"
       }
     ],
-    "type": "memberOfParliament",
-    "label": "Norbert Müller",
     "abstract": "deutscher Politiker (Die Linke), MdB",
-    "gender": "male",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Norbert_Müller,_Bundestagsabgeordneter_DIE_LINKE_(17665398238).jpg/300px-Norbert_Müller,_Bundestagsabgeordneter_DIE_LINKE_(17665398238).jpg",
-    "id": "Q15263649",
-    "factionID": "Q1826856",
+    "factionID": null,
     "thumbnailCreator": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/132349519@N07\">DIE LINKE Brandenburg</a>",
     "thumbnailLicense": "CC BY 2.0"
   },
   {
-    "birthDate": "1948-03-14",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Wolfgang Thiel",
+    "birthDate": "1948-03-14",
     "partyID": [
       "Q49764",
-      "Q152554",
-      "Q49750"
+      "Q49750",
+      "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Wolfgang Thiel",
-    "abstract": "deutscher Politiker, MdL Brandenburg",
     "gender": "male",
     "id": "Q2591569",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL Brandenburg",
     "factionID": null
   },
   {
-    "birthDate": "1953-12-14",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "133098"
     },
-    "partyID": "Q49768",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Wolfgang Pohl",
-    "abstract": "deutscher Politiker, MdL in Brandenburg, Oberbürgermeister von Frankfurt",
+    "birthDate": "1953-12-14",
+    "partyID": "Q49768",
     "gender": "male",
     "id": "Q2590885",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL in Brandenburg, Oberbürgermeister von Frankfurt",
+    "factionID": "Q108583167"
   },
   {
     "type": "memberOfParliament",
@@ -1471,27 +1471,27 @@
     "factionID": null,
     "socialMediaIDs": [],
     "additionalInformation": {},
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/KAS-Havelland-Bild-15189-1.jpg/300px-KAS-Havelland-Bild-15189-1.jpg",
     "gender": "male",
     "abstract": "deutscher Volkswirt, Unternehmer und Politiker, MdL, MdA, MdEP",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/KAS-Havelland-Bild-15189-1.jpg/300px-KAS-Havelland-Bild-15189-1.jpg",
     "affiliation": "http://www.wikidata.org/entity/Q1023134",
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1944-02-06",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Wilfried Schrey",
-    "abstract": "deutscher Politiker, MdL",
-    "gender": "male",
+    "birthDate": "1944-02-06",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/KAS-Schrey,_Wilfried_-Bild-27811-2_(cropped).jpg/300px-KAS-Schrey,_Wilfried_-Bild-27811-2_(cropped).jpg",
+    "gender": "male",
     "id": "Q2571348",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
     "factionID": null,
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
@@ -1502,7 +1502,7 @@
     "label": "Werner-Siegwart Schippel",
     "birthDate": "1951-10-24",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "133071"
@@ -1542,7 +1542,7 @@
     "label": "Ursula Nonnemacher",
     "birthDate": "1957-06-29",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2019 - 2024)",
     "socialMediaIDs": [
       {
         "label": "Twitter",
@@ -1552,9 +1552,9 @@
     "additionalInformation": {
       "abgeordnetenwatchID": "30832"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Landtagsprojekt_Brandenburg_Ursula_Nonnemacher_by_Olaf_Kosinsky-1.jpg/300px-Landtagsprojekt_Brandenburg_Ursula_Nonnemacher_by_Olaf_Kosinsky-1.jpg",
     "gender": "female",
     "abstract": "deutsche Politikerin, MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Landtagsprojekt_Brandenburg_Ursula_Nonnemacher_by_Olaf_Kosinsky-1.jpg/300px-Landtagsprojekt_Brandenburg_Ursula_Nonnemacher_by_Olaf_Kosinsky-1.jpg",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Olaf_Kosinsky\" title=\"User:Olaf Kosinsky\">Olaf Kosinsky</a>",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
@@ -1564,7 +1564,7 @@
     "label": "Ulrich Freese",
     "birthDate": "1951-04-12",
     "partyID": "Q49768",
-    "factionID": "Q2207512",
+    "factionID": null,
     "socialMediaIDs": [
       {
         "label": "Twitter",
@@ -1578,9 +1578,9 @@
     "additionalInformation": {
       "abgeordnetenwatchID": "79377"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Ulrich_Freese_im_Deutschen_Bundestag_Berlin.jpg/300px-Ulrich_Freese_im_Deutschen_Bundestag_Berlin.jpg",
     "gender": "male",
     "abstract": "deutscher Gewerkschafter und Politiker (SPD), MdB",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Ulrich_Freese_im_Deutschen_Bundestag_Berlin.jpg/300px-Ulrich_Freese_im_Deutschen_Bundestag_Berlin.jpg",
     "affiliation": "http://www.wikidata.org/entity/Q2207512",
     "altLabel": "Ulrich Ronald Freese",
     "websiteURI": "http://www.ulrich-freese.de/",
@@ -1588,18 +1588,18 @@
     "thumbnailLicense": "CC BY-SA 4.0"
   },
   {
-    "birthDate": "1981-09-18",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "133060"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Torsten Krause",
-    "abstract": "deutscher Politiker",
+    "birthDate": "1981-09-18",
+    "partyID": "Q49764",
     "gender": "male",
     "id": "Q2444891",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker",
+    "factionID": "Q108583412"
   },
   {
     "type": "memberOfParliament",
@@ -1612,9 +1612,9 @@
     "additionalInformation": {
       "abgeordnetenwatchID": "133058"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Torstenbathmann_fdp.JPG/300px-Torstenbathmann_fdp.JPG",
     "gender": "male",
     "abstract": "deutscher Politiker (FDP)",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Torstenbathmann_fdp.JPG/300px-Torstenbathmann_fdp.JPG",
     "altLabel": "Bathmann",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Z_thomas\" title=\"User:Z thomas\">Z thomas</a>",
     "thumbnailLicense": "CC BY 3.0"
@@ -1630,26 +1630,26 @@
     "additionalInformation": {
       "abgeordnetenwatchID": "133054"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/KAS-Lunacek,_Thomas-Bild-35526-2.jpg/300px-KAS-Lunacek,_Thomas-Bild-35526-2.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker (CDU), MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/KAS-Lunacek,_Thomas-Bild-35526-2.jpg/300px-KAS-Lunacek,_Thomas-Bild-35526-2.jpg",
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1970-07-04",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30830"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Thomas Domres",
-    "abstract": "deutscher Politiker (PDS, Die Linke), MdL",
-    "gender": "male",
+    "birthDate": "1970-07-04",
+    "partyID": "Q49764",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/16-03-09-Thomas-Domres_RR26662.jpg/300px-16-03-09-Thomas-Domres_RR26662.jpg",
+    "gender": "male",
     "id": "Q2423435",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (PDS, Die Linke), MdL",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -1659,14 +1659,14 @@
     "label": "Sören Kosanke",
     "birthDate": "1977-02-04",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "133037"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/16-03-09-Sören-Kosanke_RR26678.jpg/300px-16-03-09-Sören-Kosanke_RR26678.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker (SPD), Landtagsabgeordneter in Brandenburg",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/16-03-09-Sören-Kosanke_RR26678.jpg/300px-16-03-09-Sören-Kosanke_RR26678.jpg",
     "altLabel": "Kosanke",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
@@ -1677,14 +1677,14 @@
     "label": "Sylvia Lehmann",
     "birthDate": "1954-04-23",
     "partyID": "Q49768",
-    "factionID": "Q2207512",
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "133049"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Landtagsprojekt_Brandenburg_Sylvia_Lehmann_by_Olaf_Kosinsky-1.jpg/300px-Landtagsprojekt_Brandenburg_Sylvia_Lehmann_by_Olaf_Kosinsky-1.jpg",
     "gender": "female",
     "abstract": "deutsche Politikerin, MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Landtagsprojekt_Brandenburg_Sylvia_Lehmann_by_Olaf_Kosinsky-1.jpg/300px-Landtagsprojekt_Brandenburg_Sylvia_Lehmann_by_Olaf_Kosinsky-1.jpg",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Olaf_Kosinsky\" title=\"User:Olaf Kosinsky\">Olaf Kosinsky</a>",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
@@ -1694,7 +1694,7 @@
     "label": "Susanne Melior",
     "birthDate": "1958-09-01",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [
       {
         "label": "Facebook",
@@ -1704,26 +1704,26 @@
     "additionalInformation": {
       "abgeordnetenwatchID": "29409"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Susanne_Melior_2009.jpg/300px-Susanne_Melior_2009.jpg",
     "gender": "female",
     "abstract": "deutsche Politikerin (SPD), MdEP",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Susanne_Melior_2009.jpg/300px-Susanne_Melior_2009.jpg",
     "thumbnailCreator": "SPD Landesverband Brandenburg",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1967-04-26",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30827"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Stefan Ludwig",
-    "abstract": "deutscher Politiker (Die Linke), MdL",
-    "gender": "male",
+    "birthDate": "1967-04-26",
+    "partyID": "Q49764",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Landtagsprojekt_Brandenburg_Stefan_Ludwig_by_Olaf_Kosinsky-1.jpg/300px-Landtagsprojekt_Brandenburg_Stefan_Ludwig_by_Olaf_Kosinsky-1.jpg",
+    "gender": "male",
     "id": "Q2336997",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (Die Linke), MdL",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Olaf_Kosinsky\" title=\"User:Olaf Kosinsky\">Olaf Kosinsky</a>",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
@@ -1740,33 +1740,33 @@
     "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags"
   },
   {
-    "birthDate": "1953-01-14",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Siegfried von Rabenau",
+    "birthDate": "1953-01-14",
     "partyID": [
       "Q49758",
       "Q49768"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Siegfried von Rabenau",
-    "abstract": "deutscher Politiker, MdL",
     "gender": "male",
     "id": "Q2283910",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
     "factionID": null
   },
   {
-    "birthDate": "1951-05-25",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Siegfried Lietzmann",
+    "birthDate": "1951-05-25",
     "partyID": [
       "Q49755",
       "Q13124"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Siegfried Lietzmann",
-    "abstract": "deutscher Unternehmer und Politiker, MdL",
     "gender": "male",
     "id": "Q2283564",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Unternehmer und Politiker, MdL",
     "factionID": null
   },
   {
@@ -1775,7 +1775,7 @@
     "label": "Saskia Ludwig",
     "birthDate": "1968-05-23",
     "partyID": "Q49762",
-    "factionID": "Q1023134",
+    "factionID": "Q108583055",
     "socialMediaIDs": [
       {
         "label": "Twitter",
@@ -1805,34 +1805,34 @@
     "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags"
   },
   {
-    "birthDate": "1941-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Rosemarie Fuchs",
+    "dateOfDeath": "2002-08-26T00:00:00Z",
+    "birthDate": "1941-01-01",
     "partyID": [
       "Q646129",
       "Q13124"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Rosemarie Fuchs",
-    "abstract": "deutsche Ingenieurin und Politikerin, MdL",
     "gender": "female",
-    "dateOfDeath": "2002-08-26T00:00:00Z",
     "id": "Q2166869",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Ingenieurin und Politikerin, MdL",
     "factionID": null
   },
   {
-    "birthDate": "1946-12-19",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Roland Sessner",
-    "abstract": "deutscher Mathematiker, Hochschullehrer und Politiker, MdL",
+    "birthDate": "1946-12-19",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "male",
     "id": "Q2163043",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Mathematiker, Hochschullehrer und Politiker, MdL",
     "factionID": null
   },
   {
@@ -1872,8 +1872,8 @@
     "additionalInformation": {},
     "gender": "female",
     "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
-    "altLabel": "Schildhauer-Gaffrey",
-    "dateOfDeath": "2003-07-18T00:00:00Z"
+    "dateOfDeath": "2003-07-18T00:00:00Z",
+    "altLabel": "Schildhauer-Gaffrey"
   },
   {
     "type": "memberOfParliament",
@@ -1899,25 +1899,25 @@
     "additionalInformation": {
       "abgeordnetenwatchID": "119228"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/KAS-Prignitz-Bild-15173-1.jpg/300px-KAS-Prignitz-Bild-15173-1.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/KAS-Prignitz-Bild-15173-1.jpg/300px-KAS-Prignitz-Bild-15173-1.jpg",
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1941-01-01",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Rainer Matthes",
-    "abstract": "deutscher Landwirt und Politiker, MdL",
+    "birthDate": "1941-01-01",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "male",
     "id": "Q2128289",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Landwirt und Politiker, MdL",
     "factionID": null
   },
   {
@@ -1926,31 +1926,31 @@
     "label": "Rainer Genilke",
     "birthDate": "1968-03-01",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30820"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/16-03-09-Rainer-Genilke_RR26779.jpg/300px-16-03-09-Rainer-Genilke_RR26779.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker (CDU), MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/16-03-09-Rainer-Genilke_RR26779.jpg/300px-16-03-09-Rainer-Genilke_RR26779.jpg",
     "altLabel": "Genilke",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1947-08-10",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "133017"
     },
-    "partyID": "Q13124",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Raimund Tomczak",
-    "abstract": "deutscher Politiker, MdL",
+    "birthDate": "1947-08-10",
+    "partyID": "Q13124",
     "gender": "male",
     "id": "Q2127817",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
+    "factionID": "FDP (Brandenburg 2009-2014)"
   },
   {
     "type": "memberOfParliament",
@@ -1979,34 +1979,34 @@
     "dateOfDeath": "2012-09-23T00:00:00Z"
   },
   {
-    "birthDate": "1941-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Peter Busch",
+    "birthDate": "1941-01-01",
     "partyID": [
       "Q49762",
       "Q49756"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Peter Busch",
-    "abstract": "deutscher Politiker, MdL",
     "gender": "male",
     "id": "Q2074201",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
     "factionID": null
   },
   {
-    "birthDate": "1940-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Otto Theel",
+    "birthDate": "1940-01-01",
     "partyID": [
       "Q49764",
-      "Q152554",
-      "Q49750"
+      "Q49750",
+      "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Otto Theel",
-    "abstract": "deutscher Politiker, MdL",
     "gender": "male",
     "id": "Q2040780",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
     "factionID": null
   },
   {
@@ -2027,31 +2027,31 @@
     "label": "Mike Bischoff",
     "birthDate": "1965-04-02",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30811"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/16-03-09-Mike-Bischoff_RR26435.jpg/300px-16-03-09-Mike-Bischoff_RR26435.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker, MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/16-03-09-Mike-Bischoff_RR26435.jpg/300px-16-03-09-Mike-Bischoff_RR26435.jpg",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1946-12-24",
-    "additionalInformation": {},
-    "partyID": [
-      "Q152554",
-      "Q49750"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Michael Schumann",
-    "abstract": "deutscher Philosoph und Politiker, MdV, MdL, MdB",
-    "gender": "male",
     "dateOfDeath": "2000-12-02T00:00:00Z",
+    "birthDate": "1946-12-24",
+    "partyID": [
+      "Q49750",
+      "Q152554"
+    ],
+    "gender": "male",
     "id": "Q1929282",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Philosoph und Politiker, MdV, MdL, MdB",
     "factionID": null
   },
   {
@@ -2060,14 +2060,14 @@
     "label": "Michael Schierack",
     "birthDate": "1966-11-12",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30814"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/16-03-09-Michael-Schierack_RR26519.jpg/300px-16-03-09-Michael-Schierack_RR26519.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker, MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0b/16-03-09-Michael-Schierack_RR26519.jpg/300px-16-03-09-Michael-Schierack_RR26519.jpg",
     "altLabel": "Schierack",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
@@ -2078,7 +2078,7 @@
     "label": "Michael Jungclaus",
     "birthDate": "1964-06-19",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2014-2019)",
     "socialMediaIDs": [
       {
         "label": "Twitter",
@@ -2088,26 +2088,26 @@
     "additionalInformation": {
       "abgeordnetenwatchID": "30810"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/16-03-09-Michael-Jungclaus_RR26726.jpg/300px-16-03-09-Michael-Jungclaus_RR26726.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker, MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/16-03-09-Michael-Jungclaus_RR26726.jpg/300px-16-03-09-Michael-Jungclaus_RR26726.jpg",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "affiliation": "http://www.wikidata.org/entity/Q1023134",
-    "birthDate": "1947-04-11",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Michael Fischer",
-    "abstract": "deutscher Politiker (CDU)",
+    "birthDate": "1947-04-11",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "male",
     "id": "Q1927421",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (CDU)",
+    "affiliation": "http://www.wikidata.org/entity/Q1023134",
     "factionID": null
   },
   {
@@ -2123,69 +2123,69 @@
     "abstract": "deutscher Politiker (DVU), MdL"
   },
   {
-    "birthDate": "1957-12-13",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "altLabel": "Michael Luthardt",
+    "label": "Michael-Egidius Luthardt",
+    "birthDate": "1957-12-13",
     "partyID": [
       "Q49764",
       "Q49750"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Michael-Egidius Luthardt",
-    "abstract": "deutscher Politiker, MdL",
     "gender": "male",
-    "altLabel": "Michael Luthardt",
     "id": "Q1926703",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
     "factionID": null
   },
   {
-    "birthDate": "1961-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Martina Schlanke",
+    "birthDate": "1961-01-01",
     "partyID": [
       "Q49762",
       "Q49756"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Martina Schlanke",
-    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
     "gender": "female",
     "id": "Q1905506",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
     "factionID": null
   },
   {
-    "birthDate": "1959-09-23",
-    "additionalInformation": {},
-    "partyID": "Q49768",
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
-    "label": "Martina Gregor-Ness",
-    "abstract": "deutsche Politikerin, MdL",
-    "gender": "female",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mgregor-2.jpg/300px-Mgregor-2.jpg",
+    "additionalInformation": {},
     "altLabel": [
       "Gregor-Ness",
       "Martina Gregor"
     ],
+    "label": "Martina Gregor-Ness",
+    "birthDate": "1959-09-23",
+    "partyID": "Q49768",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mgregor-2.jpg/300px-Mgregor-2.jpg",
+    "gender": "female",
     "id": "Q1905424",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
     "factionID": null,
     "thumbnailCreator": "Martina Gregor bearbeitet durch <a href=\"https://de.wikipedia.org/wiki/user:regi51\" class=\"extiw\" title=\"de:user:regi51\">Regi51</a>",
     "thumbnailLicense": "GFDL"
   },
   {
-    "birthDate": "1943-01-02",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Martin Habermann",
-    "abstract": "deutscher Politiker, MdL",
-    "gender": "male",
+    "birthDate": "1943-01-02",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/KAS-Niederlausitz-Bild-15201-1.jpg/300px-KAS-Niederlausitz-Bild-15201-1.jpg",
+    "gender": "male",
     "id": "Q1903940",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
     "factionID": null,
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
@@ -2201,9 +2201,9 @@
     "additionalInformation": {
       "abgeordnetenwatchID": "30747"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/2017_Woodstock_497_Martin_Gorholt.jpg/300px-2017_Woodstock_497_Martin_Gorholt.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/2017_Woodstock_497_Martin_Gorholt.jpg/300px-2017_Woodstock_497_Martin_Gorholt.jpg",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Sicherlich\" title=\"User:Sicherlich\">Ralf Lotys</a> (Sicherlich)",
     "thumbnailLicense": "CC BY 4.0"
   },
@@ -2216,9 +2216,9 @@
     "factionID": null,
     "socialMediaIDs": [],
     "additionalInformation": {},
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/KAS-Potsdam-Bild-15190-1.jpg/300px-KAS-Potsdam-Bild-15190-1.jpg",
     "gender": "male",
     "abstract": "deutscher Physiker, Politikwissenschaftler, Hochschullehrer und Politiker, MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/KAS-Potsdam-Bild-15190-1.jpg/300px-KAS-Potsdam-Bild-15190-1.jpg",
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
@@ -2253,14 +2253,14 @@
     "label": "Marie Luise von Halem",
     "birthDate": "1962-08-15",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2014-2019)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30808"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/16-03-09-Marie-Luise-von-Halem_RR26835.jpg/300px-16-03-09-Marie-Luise-von-Halem_RR26835.jpg",
     "gender": "female",
     "abstract": "deutsche Politikerin, MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/16-03-09-Marie-Luise-von-Halem_RR26835.jpg/300px-16-03-09-Marie-Luise-von-Halem_RR26835.jpg",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -2277,19 +2277,19 @@
     "abstract": "deutsche Politikerin der PDS, Die Linke"
   },
   {
-    "birthDate": "1956-10-16",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132980"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Margitta Mächtig",
-    "abstract": "deutsche Politikerin, Landtagsabgeordnete in Brandenburg",
-    "gender": "female",
+    "birthDate": "1956-10-16",
+    "partyID": "Q49764",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/16-03-09-Margitta-Mächtig_RR26692.JPG/300px-16-03-09-Margitta-Mächtig_RR26692.JPG",
+    "gender": "female",
     "id": "Q1895337",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, Landtagsabgeordnete in Brandenburg",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -2299,14 +2299,14 @@
     "label": "Marco Büchel",
     "birthDate": "1983-03-16",
     "partyID": "Q49764",
-    "factionID": null,
+    "factionID": "Q108583412",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132977"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/16-03-09-Marco-Büchel_RR26699.jpg/300px-16-03-09-Marco-Büchel_RR26699.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker (Die Linke), MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/16-03-09-Marco-Büchel_RR26699.jpg/300px-16-03-09-Marco-Büchel_RR26699.jpg",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -2353,14 +2353,14 @@
     "label": "Ludwig Burkardt",
     "birthDate": "1946-07-15",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30805"
     },
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Ludwig_Burkardt.jpg/300px-Ludwig_Burkardt.jpg",
     "gender": "male",
     "abstract": "deutscher Politiker, MdL",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Ludwig_Burkardt.jpg/300px-Ludwig_Burkardt.jpg",
     "dateOfDeath": "2015-05-30T00:00:00Z",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/w/index.php?title=User:Jens303&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Jens303 (page does not exist)\">Jens303</a>",
     "thumbnailLicense": "CC BY-SA 3.0"
@@ -2405,34 +2405,34 @@
     "abstract": "deutsche Politikerin, MdL"
   },
   {
-    "birthDate": "1938-05-11",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Marga Beck",
-    "abstract": "deutsche Politikerin, MdL",
+    "birthDate": "1938-05-11",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "female",
     "id": "Q1800066",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
     "factionID": null
   },
   {
-    "birthDate": "1961-03-19",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "133090"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Kornelia Wehlan",
-    "abstract": "deutsche Politikerin, MdL",
-    "gender": "female",
     "altLabel": "Wehlan",
+    "label": "Kornelia Wehlan",
+    "birthDate": "1961-03-19",
+    "partyID": "Q49764",
+    "gender": "female",
     "id": "Q1784518",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
+    "factionID": "Q108583412"
   },
   {
     "type": "memberOfParliament",
@@ -2453,7 +2453,7 @@
     "label": "Klaus Ness",
     "birthDate": "1962-02-15",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30804"
@@ -2486,22 +2486,22 @@
     "additionalInformation": {},
     "gender": "male",
     "abstract": "deutscher Verwaltungsbeamter und Politiker, MdL, MdB, brandenburger Landesminister",
-    "altLabel": "Kühbacher",
-    "affiliation": "http://www.wikidata.org/entity/Q2207512"
+    "affiliation": "http://www.wikidata.org/entity/Q2207512",
+    "altLabel": "Kühbacher"
   },
   {
-    "birthDate": "1942-12-13",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Klaus-Dieter Arlt",
-    "abstract": "deutscher Politiker, MdL",
+    "birthDate": "1942-12-13",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "male",
     "id": "Q1744724",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
     "factionID": null
   },
   {
@@ -2510,7 +2510,7 @@
     "label": "Klara Geywitz",
     "birthDate": "1976-02-18",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30803"
@@ -2523,49 +2523,49 @@
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1956-07-13",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30831"
     },
-    "partyID": "Q49768",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Udo Folgart",
-    "abstract": "deutscher Politiker, MdL Brandenburg",
+    "birthDate": "1956-07-13",
+    "partyID": "Q49768",
     "gender": "male",
     "id": "Q1743782",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL Brandenburg",
+    "factionID": "Q108583167"
   },
   {
-    "birthDate": "1956-02-16",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Kerstin Osten",
+    "birthDate": "1956-02-16",
     "partyID": [
       "Q49764",
-      "Q152554",
-      "Q49750"
+      "Q49750",
+      "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Kerstin Osten",
-    "abstract": "deutsche Politikerin, MdL",
     "gender": "female",
     "id": "Q1739684",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
     "factionID": null
   },
   {
-    "birthDate": "1955-12-19",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30802"
     },
-    "partyID": "Q49768",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Kerstin Kircheis",
-    "abstract": "deutsche Politikerin, MdL",
+    "birthDate": "1955-12-19",
+    "partyID": "Q49768",
     "gender": "female",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/16-03-09-Kerstin-Kircheis_RR26757.jpg/300px-16-03-09-Kerstin-Kircheis_RR26757.jpg",
     "id": "Q1739670",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
+    "factionID": "Q108583167",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -2586,18 +2586,18 @@
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1932-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Karl Schmutzler",
+    "birthDate": "1932-01-01",
     "partyID": [
       "Q49762",
       "Q49756"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Karl Schmutzler",
-    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
     "gender": "male",
     "id": "Q1732875",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
     "factionID": null
   },
   {
@@ -2613,53 +2613,53 @@
     "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags"
   },
   {
-    "birthDate": "1948-01-01",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
-    "label": "Karl-Heinz Kretschmer",
-    "abstract": "deutscher Ingenieur und Politiker, MdL",
-    "gender": "male",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/KAS-Herzberg-Bild-15197-1.jpg/300px-KAS-Herzberg-Bild-15197-1.jpg",
+    "additionalInformation": {},
     "altLabel": "Karl Kretschmer",
+    "label": "Karl-Heinz Kretschmer",
+    "birthDate": "1948-01-01",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/KAS-Herzberg-Bild-15197-1.jpg/300px-KAS-Herzberg-Bild-15197-1.jpg",
+    "gender": "male",
     "id": "Q1729902",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Ingenieur und Politiker, MdL",
     "factionID": null,
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1977-07-28",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30809"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Matthias Loehr",
-    "abstract": "deutscher Politiker (Die Linke), MdL",
+    "birthDate": "1977-07-28",
+    "partyID": "Q49764",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/16-03-10-Matthias-Loehr_RR26875.jpg/300px-16-03-10-Matthias-Loehr_RR26875.jpg",
     "id": "Q1727676",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (Die Linke), MdL",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1946-03-10",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132836"
     },
-    "partyID": "Q13124",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Alfred Pracht",
-    "abstract": "deutscher Pädagoge, Politikwissenschaftler und Politiker, MdL",
+    "birthDate": "1946-03-10",
+    "partyID": "Q13124",
     "gender": "male",
     "id": "Q1727572",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Pädagoge, Politikwissenschaftler und Politiker, MdL",
     "factionID": null
   },
   {
@@ -2701,17 +2701,17 @@
     "dateOfDeath": "2003-03-12T00:00:00Z"
   },
   {
-    "birthDate": "1953-05-31",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132957"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Karin Weber",
-    "abstract": "deutsche Politikerin, Landtagsabgeordnete in Brandenburg",
+    "birthDate": "1953-05-31",
+    "partyID": "Q49764",
     "gender": "female",
     "id": "Q1720013",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, Landtagsabgeordnete in Brandenburg",
     "factionID": null
   },
   {
@@ -2727,37 +2727,37 @@
     "abstract": "deutscher Politiker (SPD, Freie Wähler), Mitglied des brandenburgischen Landtags"
   },
   {
-    "birthDate": "1940-07-18",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Jürgen Meißner",
+    "birthDate": "1940-07-18",
     "partyID": [
       "Q49762",
       "Q49756"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Jürgen Meißner",
-    "abstract": "deutscher Landwirt und Politiker, MdV, MdL",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/KAS-Spree-Neiße-Bild-15205-1.jpg/300px-KAS-Spree-Neiße-Bild-15205-1.jpg",
     "id": "Q1717471",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Landwirt und Politiker, MdV, MdL",
     "factionID": null,
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1966-01-12",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132954"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Jürgen Maresch",
-    "abstract": "deutscher Politiker, Landtagsabgeordneter in Brandenburg",
+    "birthDate": "1966-01-12",
+    "partyID": "Q49764",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/JuergenMaresch2.jpg/300px-JuergenMaresch2.jpg",
     "id": "Q1717450",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, Landtagsabgeordneter in Brandenburg",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/File:Juergen.Maresch.tif\" title=\"File:Juergen.Maresch.tif\">Juergen.Maresch.tif</a>: <a href=\"//commons.wikimedia.org/w/index.php?title=User:J%C3%BCrgenmaresch&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Jürgenmaresch (page does not exist)\">Jürgenmaresch</a>derivative work: <a href=\"//commons.wikimedia.org/wiki/User:Rosentod\" title=\"User:Rosentod\">Rosentod</a> (<a href=\"//commons.wikimedia.org/wiki/User_talk:Rosentod\" title=\"User talk:Rosentod\">talk</a>)",
     "thumbnailLicense": "Public domain"
   },
@@ -2767,7 +2767,7 @@
     "label": "Linda Teuteberg",
     "birthDate": "1981-04-22",
     "partyID": "Q13124",
-    "factionID": "Q1387991",
+    "factionID": "FDP (Brandenburg 2009-2014)",
     "socialMediaIDs": [
       {
         "label": "Twitter",
@@ -2799,7 +2799,7 @@
     "label": "Martin Neumann",
     "birthDate": "1956-01-27",
     "partyID": "Q13124",
-    "factionID": "Q1387991",
+    "factionID": null,
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "119216"
@@ -2812,34 +2812,34 @@
     "thumbnailLicense": "CC BY 4.0"
   },
   {
-    "birthDate": "1935-06-23",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Johannes Winter",
-    "abstract": "deutscher Politiker, MdV, MdL",
+    "birthDate": "1935-06-23",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "male",
     "id": "Q1698643",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdV, MdL",
     "factionID": null
   },
   {
-    "birthDate": "1980-07-02",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Peer Jürgens",
+    "birthDate": "1980-07-02",
     "partyID": [
       "Q49764",
       "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Peer Jürgens",
-    "abstract": "deutscher Politiker (Die Linke), MdL",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/074_Naziaufmarsch_24.03.2012_Frankfurt_Oder.jpg/300px-074_Naziaufmarsch_24.03.2012_Frankfurt_Oder.jpg",
     "id": "Q1695297",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (Die Linke), MdL",
     "factionID": null,
     "thumbnailCreator": "Willi Wallroth",
     "thumbnailLicense": "Public domain"
@@ -2911,47 +2911,47 @@
     "abstract": "deutscher Politiker, MdL"
   },
   {
-    "birthDate": "1955-09-08",
+    "type": "memberOfParliament",
     "additionalInformation": {},
-    "partyID": [
-      "Q49764",
-      "Q152554",
-      "Q49750"
-    ],
     "altLabel": [
       "Molorciuc",
       "Wolff-Molorciuc"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Irene Wolff-Molorciuc",
-    "abstract": "deutsche Politikerin, Landtagsabgeordnete in Brandenburg",
-    "gender": "female",
     "dateOfDeath": "2012-07-25T00:00:00Z",
+    "birthDate": "1955-09-08",
+    "partyID": [
+      "Q49764",
+      "Q49750",
+      "Q152554"
+    ],
+    "gender": "female",
     "id": "Q1672577",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, Landtagsabgeordnete in Brandenburg",
     "factionID": null
   },
   {
-    "birthDate": "1941-02-20",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "31216"
     },
-    "websiteURI": "https://www.afd.de/dr-alexander-gauland",
+    "altLabel": "Eberhardt Alexander Gauland",
+    "label": "Alexander Gauland",
+    "birthDate": "1941-02-20",
     "partyID": "Q6721203",
+    "gender": "male",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/2019-04-11_Pressekonferenz_der_AfD_by_Olaf_Kosinsky-8116_(cropped).jpg/300px-2019-04-11_Pressekonferenz_der_AfD_by_Olaf_Kosinsky-8116_(cropped).jpg",
+    "websiteURI": "https://www.afd.de/dr-alexander-gauland",
+    "id": "Q1670311",
     "socialMediaIDs": [
       {
         "label": "Twitter",
         "id": "AG_AfD"
       }
     ],
-    "type": "memberOfParliament",
-    "label": "Alexander Gauland",
     "abstract": "deutscher Jurist, Historiker und Politiker (AfD)",
-    "gender": "male",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/2019-04-11_Pressekonferenz_der_AfD_by_Olaf_Kosinsky-8116_(cropped).jpg/300px-2019-04-11_Pressekonferenz_der_AfD_by_Olaf_Kosinsky-8116_(cropped).jpg",
-    "altLabel": "Eberhardt Alexander Gauland",
-    "id": "Q1670311",
-    "factionID": "Q42575708",
+    "factionID": "Q108583380",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q30108329\" class=\"extiw\" title=\"d:Q30108329\">Olaf Kosinsky</a>",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
@@ -2973,7 +2973,7 @@
     "label": "Ingo Senftleben",
     "birthDate": "1974-08-10",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30799"
@@ -2986,19 +2986,19 @@
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1952-04-15",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "altLabel": "Kolodzeike",
+    "label": "Ingeborg Kolodzeike",
+    "birthDate": "1952-04-15",
     "partyID": [
       "Q49764",
       "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Ingeborg Kolodzeike",
-    "abstract": "deutsche Politikerin, MdL",
     "gender": "female",
-    "altLabel": "Kolodzeike",
     "id": "Q1662902",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
     "factionID": null
   },
   {
@@ -3007,7 +3007,7 @@
     "label": "Sven Petke",
     "birthDate": "1967-11-28",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30828"
@@ -3024,7 +3024,7 @@
     "label": "Ina Muhß",
     "birthDate": "1957-09-10",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132944"
@@ -3037,18 +3037,18 @@
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1934-10-08",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "133034"
     },
-    "partyID": "Q49768",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Sieglinde Heppener",
-    "abstract": "deutsche Politikerin, MdL",
+    "birthDate": "1934-10-08",
+    "partyID": "Q49768",
     "gender": "female",
     "id": "Q1642786",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
+    "factionID": "Q108583167"
   },
   {
     "type": "memberOfParliament",
@@ -3056,7 +3056,7 @@
     "label": "Thomas Günther",
     "birthDate": "1967-08-08",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "133096"
@@ -3123,7 +3123,7 @@
     "label": "Roswitha Schier",
     "birthDate": "1962-07-14",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30824"
@@ -3140,7 +3140,7 @@
     "label": "Henryk Wichmann",
     "birthDate": "1977-07-10",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30740"
@@ -3192,19 +3192,19 @@
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1945-01-26",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132936"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Helga Böhnisch",
-    "abstract": "deutsche Politikerin, MdL",
-    "gender": "female",
     "dateOfDeath": "2014-06-15T00:00:00Z",
+    "birthDate": "1945-01-26",
+    "partyID": "Q49764",
+    "gender": "female",
     "id": "Q1602154",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
+    "factionID": "Q108583412"
   },
   {
     "type": "memberOfParliament",
@@ -3219,19 +3219,19 @@
     "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags"
   },
   {
-    "birthDate": "1942-05-14",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "altLabel": "Nieschke, Heinz-Dieter",
+    "label": "Heinz-Dieter Nieschke",
+    "birthDate": "1942-05-14",
     "partyID": [
       "Q49762",
       "Q49756"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Heinz-Dieter Nieschke",
-    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
     "gender": "male",
-    "altLabel": "Nieschke, Heinz-Dieter",
     "id": "Q1599858",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
     "factionID": null
   },
   {
@@ -3260,14 +3260,19 @@
     "abstract": "deutscher Politiker, MdL und Landesminister"
   },
   {
-    "birthDate": "1962-03-28",
+    "type": "memberOfParliament",
     "additionalInformation": {},
-    "websiteURI": "http://www.harald-petzold.de/",
+    "label": "Harald Petzold",
+    "birthDate": "1962-03-28",
     "partyID": [
       "Q49764",
-      "Q152554",
-      "Q49750"
+      "Q49750",
+      "Q152554"
     ],
+    "gender": "male",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Harald_Petzold,_Bundestagsabgeordneter_DIE_LINKE_(17853688281).jpg/300px-Harald_Petzold,_Bundestagsabgeordneter_DIE_LINKE_(17853688281).jpg",
+    "websiteURI": "http://www.harald-petzold.de/",
+    "id": "Q1584668",
     "socialMediaIDs": [
       {
         "label": "Twitter",
@@ -3282,12 +3287,7 @@
         "id": "harald.petzold283"
       }
     ],
-    "type": "memberOfParliament",
-    "label": "Harald Petzold",
     "abstract": "deutscher Politiker, MdB",
-    "gender": "male",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Harald_Petzold,_Bundestagsabgeordneter_DIE_LINKE_(17853688281).jpg/300px-Harald_Petzold,_Bundestagsabgeordneter_DIE_LINKE_(17853688281).jpg",
-    "id": "Q1584668",
     "factionID": null,
     "thumbnailCreator": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/132349519@N07\">DIE LINKE Brandenburg</a>",
     "thumbnailLicense": "CC BY 2.0"
@@ -3305,51 +3305,51 @@
     "abstract": "deutscher Politiker, MdL"
   },
   {
-    "birthDate": "1954-04-09",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132890"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Hans-Jürgen Scharfenberg",
-    "abstract": "deutscher Politiker, MdL",
+    "birthDate": "1954-04-09",
+    "partyID": "Q49764",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/16-03-10-Hans-Jürgen-Scharfenberg_RR27168.jpg/300px-16-03-10-Hans-Jürgen-Scharfenberg_RR27168.jpg",
     "id": "Q1577809",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1940-09-17",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Hannelore Birkholz",
+    "birthDate": "1940-09-17",
     "partyID": [
       "Q49764",
       "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Hannelore Birkholz",
-    "abstract": "deutsche Politikerin, MdL",
     "gender": "female",
     "id": "Q1575846",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
     "factionID": null
   },
   {
-    "birthDate": "1946-09-05",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Peter Wagner",
-    "abstract": "deutscher Arzt und Politiker, MdL",
-    "gender": "male",
     "dateOfDeath": "2009-01-25T00:00:00Z",
+    "birthDate": "1946-09-05",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
+    "gender": "male",
     "id": "Q1563773",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Arzt und Politiker, MdL",
     "factionID": null
   },
   {
@@ -3365,23 +3365,23 @@
     "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags"
   },
   {
-    "affiliation": "http://www.wikidata.org/entity/Q1023134",
-    "birthDate": "1959-01-21",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "118617"
     },
-    "partyID": "Q49762",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
+    "altLabel": "Nooke",
     "label": "Günter Nooke",
-    "abstract": "deutscher Politiker, DDR-Bürgerrechtler, MdV, MdL, MdB",
+    "birthDate": "1959-01-21",
+    "partyID": "Q49762",
     "gender": "male",
     "thumbnailURI": [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/Impressions_June_24,_2015_(19109116655)_(cropped).jpg/300px-Impressions_June_24,_2015_(19109116655)_(cropped).jpg",
       "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Bundesarchiv_Bild_183-1990-0130-310,_Günter_Nooke.jpg/300px-Bundesarchiv_Bild_183-1990-0130-310,_Günter_Nooke.jpg"
     ],
-    "altLabel": "Nooke",
     "id": "Q1560862",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, DDR-Bürgerrechtler, MdV, MdL, MdB",
+    "affiliation": "http://www.wikidata.org/entity/Q1023134",
     "factionID": null,
     "thumbnailCreator": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/37647965@N06\">Deutsche Welle</a> from Bonn, Berlin, Deutschland",
     "thumbnailLicense": "CC BY 2.0"
@@ -3429,18 +3429,18 @@
     "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags"
   },
   {
-    "birthDate": "1952-05-25",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Rainer Siebert",
+    "birthDate": "1952-05-25",
     "partyID": [
       "Q49755",
       "Q13124"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Rainer Siebert",
-    "abstract": "deutscher Pädagoge und Politiker, MdL",
     "gender": "male",
     "id": "Q1546696",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Pädagoge und Politiker, MdL",
     "factionID": null
   },
   {
@@ -3465,7 +3465,7 @@
     "label": "Gordon Hoffmann",
     "birthDate": "1978-12-31",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30794"
@@ -3482,7 +3482,7 @@
     "label": "Ralf Holzschuher",
     "birthDate": "1963-02-17",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30822"
@@ -3509,83 +3509,83 @@
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1954-04-30",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132922"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Gerrit Große",
-    "abstract": "deutsche Politikerin, MdL",
+    "birthDate": "1954-04-30",
+    "partyID": "Q49764",
     "gender": "female",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/16-03-10-Gerrit-Große_RR26995.jpg/300px-16-03-10-Gerrit-Große_RR26995.jpg",
     "id": "Q1514759",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1938-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Gerhard Thierbach",
+    "birthDate": "1938-01-01",
     "partyID": [
       "Q49762",
       "Q49768"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Gerhard Thierbach",
-    "abstract": "deutscher Pädagoge und Politiker, MdL",
     "gender": "male",
     "id": "Q1512648",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Pädagoge und Politiker, MdL",
     "factionID": null
   },
   {
-    "birthDate": "1944-10-30",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Gerhard Reinfeld",
+    "birthDate": "1944-10-30",
     "partyID": [
       "Q49758",
       "Q49762",
       "Q677182"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Gerhard Reinfeld",
-    "abstract": "deutscher Ingenieur und Politiker, MdL",
     "gender": "male",
     "id": "Q1512322",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Ingenieur und Politiker, MdL",
     "factionID": null
   },
   {
-    "birthDate": "1952-06-14",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Gerd-Rüdiger Hoffmann",
+    "birthDate": "1952-06-14",
     "partyID": [
       "Q49764",
-      "Q152554",
-      "Q49750"
+      "Q49750",
+      "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Gerd-Rüdiger Hoffmann",
-    "abstract": "deutscher Politiker, MdL, inoffizieller Mitarbeiter der DDR-Staatssicherheit",
     "gender": "male",
     "id": "Q1510384",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL, inoffizieller Mitarbeiter der DDR-Staatssicherheit",
     "factionID": null
   },
   {
-    "birthDate": "1925-05-21",
-    "additionalInformation": {},
-    "partyID": [
-      "Q152554",
-      "Q49750"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Heinz Dobberstein",
-    "abstract": "deutscher Politiker (PDS), MdL",
-    "gender": "male",
     "dateOfDeath": "2014-05-17T00:00:00Z",
+    "birthDate": "1925-05-21",
+    "partyID": [
+      "Q49750",
+      "Q152554"
+    ],
+    "gender": "male",
     "id": "Q1497989",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (PDS), MdL",
     "factionID": null
   },
   {
@@ -3594,7 +3594,7 @@
     "label": "Marion Vogdt",
     "birthDate": "1956-10-19",
     "partyID": "Q13124",
-    "factionID": null,
+    "factionID": "FDP (Brandenburg 2009-2014)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "35085"
@@ -3608,7 +3608,7 @@
     "label": "Gabriele Theiss",
     "birthDate": "1959-01-01",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132916"
@@ -3632,34 +3632,34 @@
     "abstract": "deutsche Politikerin (SPD), MdL"
   },
   {
-    "birthDate": "1951-01-01",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49758",
-      "Q646129",
-      "Q49766"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Rolf Wettstädt",
-    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
+    "birthDate": "1951-01-01",
+    "partyID": [
+      "Q646129",
+      "Q49766",
+      "Q49758"
+    ],
     "gender": "male",
     "id": "Q1482541",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
     "factionID": null
   },
   {
-    "birthDate": "1975-01-19",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "133089"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Kerstin Meier",
-    "abstract": "deutsche Politikerin (Die Linke), Landtagsabgeordnete in Brandenburg",
+    "birthDate": "1975-01-19",
+    "partyID": "Q49764",
     "gender": "female",
     "id": "Q1477895",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin (Die Linke), Landtagsabgeordnete in Brandenburg",
+    "factionID": "Q108583412"
   },
   {
     "type": "memberOfParliament",
@@ -3667,7 +3667,7 @@
     "label": "Jens Lipsdorf",
     "birthDate": "1967-07-18",
     "partyID": "Q13124",
-    "factionID": null,
+    "factionID": "FDP (Brandenburg 2009-2014)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132948"
@@ -3676,19 +3676,19 @@
     "abstract": "deutscher Archäologe und Politiker, MdL"
   },
   {
-    "birthDate": "1947-09-19",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Heinz Vietze",
+    "birthDate": "1947-09-19",
     "partyID": [
       "Q49764",
-      "Q152554",
-      "Q49750"
+      "Q49750",
+      "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Heinz Vietze",
-    "abstract": "deutscher Politiker, MdL, SED-Funktionär, inoffizieller Mitarbeiter der DDR-Staatssicherheit",
     "gender": "male",
     "id": "Q1472513",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL, SED-Funktionär, inoffizieller Mitarbeiter der DDR-Staatssicherheit",
     "factionID": null
   },
   {
@@ -3717,37 +3717,37 @@
     "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags"
   },
   {
-    "birthDate": "1957-01-29",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Frank Werner",
-    "abstract": "brandenburgischer Politiker, MdL",
+    "birthDate": "1957-01-29",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Frank_Werner_(1994).jpg/300px-Frank_Werner_(1994).jpg",
     "id": "Q1444434",
+    "socialMediaIDs": [],
+    "abstract": "brandenburgischer Politiker, MdL",
     "factionID": null,
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1955-09-12",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Frank Hammer",
+    "birthDate": "1955-09-12",
     "partyID": [
       "Q49764",
-      "Q152554",
-      "Q49750"
+      "Q49750",
+      "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Frank Hammer",
-    "abstract": "deutscher Autor und Politiker, MdL",
     "gender": "male",
     "id": "Q1443368",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Autor und Politiker, MdL",
     "factionID": null
   },
   {
@@ -3756,7 +3756,7 @@
     "label": "Frank Bommert",
     "birthDate": "1961-04-25",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30791"
@@ -3768,34 +3768,34 @@
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1951-07-10",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Frank-Michael Schober",
-    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
-    "gender": "male",
     "dateOfDeath": "2013-01-21T00:00:00Z",
+    "birthDate": "1951-07-10",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
+    "gender": "male",
     "id": "Q1442810",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags",
     "factionID": null
   },
   {
-    "birthDate": "1939-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Renate Schneider",
+    "birthDate": "1939-01-01",
     "partyID": [
       "Q49755",
       "Q13124"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Renate Schneider",
-    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
     "gender": "female",
     "id": "Q1437945",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
     "factionID": null
   },
   {
@@ -3838,18 +3838,18 @@
     "dateOfDeath": "2010-01-07T00:00:00Z"
   },
   {
-    "birthDate": "1959-01-24",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Heiko Müller",
+    "birthDate": "1959-01-24",
     "partyID": [
       "Q646129",
       "Q49768"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Heiko Müller",
-    "abstract": "deutscher Ingenieur und Politiker, MdL",
     "gender": "male",
     "id": "Q1414537",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Ingenieur und Politiker, MdL",
     "factionID": null
   },
   {
@@ -3858,7 +3858,7 @@
     "label": "Sabine Niels",
     "birthDate": "1973-06-11",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2009-2014)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "133032"
@@ -3882,18 +3882,18 @@
     "abstract": "deutscher Politiker, Mitglied des brandenburgischen Landtags"
   },
   {
-    "birthDate": "1961-06-29",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30796"
     },
-    "partyID": "Q13124",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Hans-Peter Goetz",
-    "abstract": "deutscher Politiker",
+    "birthDate": "1961-06-29",
+    "partyID": "Q13124",
     "gender": "male",
     "id": "Q1392885",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker",
+    "factionID": "FDP (Brandenburg 2009-2014)"
   },
   {
     "type": "memberOfParliament",
@@ -3956,17 +3956,17 @@
     "abstract": "deutsche Politikerin, MdL"
   },
   {
-    "birthDate": "1948-01-27",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30729"
     },
-    "partyID": "Q49766",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Elke Seidel",
-    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
+    "birthDate": "1948-01-27",
+    "partyID": "Q49766",
     "gender": "female",
     "id": "Q1331573",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
     "factionID": null
   },
   {
@@ -3975,7 +3975,7 @@
     "label": "Elisabeth Alter",
     "birthDate": "1953-10-10",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30790"
@@ -3992,7 +3992,7 @@
     "label": "Tina Fischer",
     "birthDate": "1971-08-20",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30756"
@@ -4021,7 +4021,7 @@
     "label": "Gregor Beyer",
     "birthDate": "1968-09-11",
     "partyID": "Q13124",
-    "factionID": null,
+    "factionID": "FDP (Brandenburg 2009-2014)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30795"
@@ -4033,7 +4033,7 @@
     "thumbnailLicense": "CC BY 3.0"
   },
   {
-    "birthDate": "1955-03-13",
+    "type": "memberOfParliament",
     "additionalInformation": [
       {
         "abgeordnetenwatchID": "132998"
@@ -4042,16 +4042,16 @@
         "abgeordnetenwatchID": "30812"
       }
     ],
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Monika Schulz-Höpfner",
-    "abstract": "deutsche Politikerin, MdL",
+    "birthDate": "1955-03-13",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "female",
     "id": "Q1279681",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
     "factionID": null
   },
   {
@@ -4068,33 +4068,33 @@
     "dateOfDeath": "2003-03-18T00:00:00Z"
   },
   {
-    "birthDate": "1964-01-01",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Dyrck Schneidenbach",
-    "abstract": "deutscher Ingenieur und Politiker, MdL",
+    "birthDate": "1964-01-01",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "male",
     "id": "Q1269202",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Ingenieur und Politiker, MdL",
     "factionID": null
   },
   {
-    "birthDate": "1960-03-12",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132959"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Kerstin Bednarsky",
-    "abstract": "deutsche Politikerin (Die Linke), MdV, MdL",
-    "gender": "female",
+    "birthDate": "1960-03-12",
+    "partyID": "Q49764",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Bundesarchiv_Bild_183-1990-0622-303,_Kerstin_Bednarsky.jpg/300px-Bundesarchiv_Bild_183-1990-0622-303,_Kerstin_Bednarsky.jpg",
+    "gender": "female",
     "id": "Q1264059",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin (Die Linke), MdV, MdL",
     "factionID": null,
     "thumbnailCreator": "Schöps, Elke",
     "thumbnailLicense": "CC BY-SA 3.0 de"
@@ -4112,55 +4112,55 @@
     "abstract": "deutscher Pädagoge, Physiker und Politiker (SPD), MdL"
   },
   {
-    "birthDate": "1935-08-29",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Klaus Häßler",
-    "abstract": "deutscher Politiker, MdL",
+    "dateOfDeath": "2008-11-06T00:00:00Z",
+    "birthDate": "1935-08-29",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/KAS-Spree-Neiße-Bild-15206-1.jpg/300px-KAS-Spree-Neiße-Bild-15206-1.jpg",
-    "dateOfDeath": "2008-11-06T00:00:00Z",
     "id": "Q1233275",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
     "factionID": null,
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1941-07-13",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Dieter Helm",
+    "birthDate": "1941-07-13",
     "partyID": [
       "Q49762",
       "Q49756"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Dieter Helm",
-    "abstract": "deutscher Politiker, MdV, MdL",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/KAS-Ostprignitz-Ruppin-Bild-15175-1.jpg/300px-KAS-Ostprignitz-Ruppin-Bild-15175-1.jpg",
     "id": "Q1222104",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdV, MdL",
     "factionID": null,
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1949-01-24",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132881"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Dieter Groß",
-    "abstract": "deutscher Politiker (Die Linke), Landtagsabgeordneter in Brandenburg",
+    "birthDate": "1949-01-24",
+    "partyID": "Q49764",
     "gender": "male",
     "id": "Q1222020",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (Die Linke), Landtagsabgeordneter in Brandenburg",
+    "factionID": "Q108583412"
   },
   {
     "type": "memberOfParliament",
@@ -4168,7 +4168,7 @@
     "label": "Dieter Dombrowski",
     "birthDate": "1951-06-23",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30782"
@@ -4185,7 +4185,7 @@
     "label": "Dierk Homeyer",
     "birthDate": "1955-10-01",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "118293"
@@ -4243,7 +4243,7 @@
     "label": "Detlef Baer",
     "birthDate": "1955-09-28",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30780"
@@ -4269,7 +4269,7 @@
     "label": "Danny Eichelbaum",
     "birthDate": "1973-12-25",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30779"
@@ -4281,13 +4281,20 @@
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "affiliation": "http://www.wikidata.org/entity/Q2207512",
-    "birthDate": "1960-09-28",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "78903"
     },
-    "websiteURI": "http://www.dagmar-ziegler.de/",
+    "label": "Dagmar Ziegler",
+    "birthDate": "1960-09-28",
     "partyID": "Q49768",
+    "thumbnailURI": [
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/2020-02-13_Dagmar_Ziegler_(KPFC)_01.jpg/300px-2020-02-13_Dagmar_Ziegler_(KPFC)_01.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ziegler,_Dagmar-0861.jpg/300px-Ziegler,_Dagmar-0861.jpg"
+    ],
+    "gender": "female",
+    "websiteURI": "http://www.dagmar-ziegler.de/",
+    "id": "Q1157334",
     "socialMediaIDs": [
       {
         "label": "Twitter",
@@ -4302,18 +4309,11 @@
         "id": "zieglermdb"
       }
     ],
-    "type": "memberOfParliament",
-    "label": "Dagmar Ziegler",
     "abstract": "deutsche Politikerin (SPD), MdB, Bundestagsvizepräsidentin; ehemaliges MdL",
-    "gender": "female",
-    "thumbnailURI": [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Ziegler,_Dagmar-0861.jpg/300px-Ziegler,_Dagmar-0861.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/2020-02-13_Dagmar_Ziegler_(KPFC)_01.jpg/300px-2020-02-13_Dagmar_Ziegler_(KPFC)_01.jpg"
-    ],
-    "id": "Q1157334",
-    "factionID": "Q2207512",
-    "thumbnailCreator": "Foto-AG Gymnasium Melle",
-    "thumbnailLicense": "CC BY 3.0"
+    "affiliation": "http://www.wikidata.org/entity/Q2207512",
+    "factionID": null,
+    "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:KPFC\" title=\"User:KPFC\">Rafael P. D. Suppmann</a>",
+    "thumbnailLicense": "CC BY-SA 4.0"
   },
   {
     "type": "memberOfParliament",
@@ -4333,7 +4333,7 @@
     "label": "Steeven Bretz",
     "birthDate": "1976-03-07",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30826"
@@ -4350,7 +4350,7 @@
     "label": "Christoph Schulze",
     "birthDate": "1965-08-19",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q4316268",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30778"
@@ -4359,38 +4359,38 @@
     "abstract": "deutscher Politiker, MdL"
   },
   {
-    "birthDate": "1948-01-01",
-    "additionalInformation": {},
-    "partyID": [
-      "Q152554",
-      "Q49750"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Christian Otto",
-    "abstract": "deutscher Politiker (PDS), Landtagsabgeordneter in Brandenburg",
-    "gender": "male",
     "dateOfDeath": "2006-08-04T00:00:00Z",
+    "birthDate": "1948-01-01",
+    "partyID": [
+      "Q49750",
+      "Q152554"
+    ],
+    "gender": "male",
     "id": "Q1081296",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (PDS), Landtagsabgeordneter in Brandenburg",
     "factionID": null
   },
   {
-    "birthDate": "1962-03-17",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132869"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Christian Görke",
-    "abstract": "deutscher Politiker (Die Linke), Landtagsabgeordneter in Brandenburg",
+    "birthDate": "1962-03-17",
+    "partyID": "Q49764",
     "gender": "male",
     "thumbnailURI": [
       "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/16-03-09-Christian-Görke_RR26732.jpg/300px-16-03-09-Christian-Görke_RR26732.jpg",
       "https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/2019-04-12_Sitzung_des_Bundesrates_by_Olaf_Kosinsky-0135.jpg/300px-2019-04-12_Sitzung_des_Bundesrates_by_Olaf_Kosinsky-0135.jpg"
     ],
     "id": "Q1080069",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (Die Linke), Landtagsabgeordneter in Brandenburg",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -4444,19 +4444,19 @@
     "abstract": "deutsche Politikerin, MdL"
   },
   {
-    "birthDate": "1980-01-21",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132866"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Carolin Steinmetzer-Mann",
-    "abstract": "deutsche Politikerin (Die Linke), MdL",
-    "gender": "female",
     "altLabel": "Steinmetzer-Mann",
+    "label": "Carolin Steinmetzer-Mann",
+    "birthDate": "1980-01-21",
+    "partyID": "Q49764",
+    "gender": "female",
     "id": "Q1044360",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin (Die Linke), MdL",
+    "factionID": "Q108583412"
   },
   {
     "type": "memberOfParliament",
@@ -4472,20 +4472,20 @@
     "altLabel": "Hartfelder"
   },
   {
-    "birthDate": "1941-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Carmen Kirmes",
+    "birthDate": "1941-01-01",
     "partyID": [
       "Q646129",
       "Q13124",
       "Q49750"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Carmen Kirmes",
-    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
-    "gender": "female",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Carmen_kirmes.jpg/300px-Carmen_kirmes.jpg",
+    "gender": "female",
     "id": "Q1043660",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
     "factionID": null,
     "thumbnailCreator": "Fotograf Dietmar Horn, Kleinmachnow Deutschland / Rechteinhaber: C. Kirmes",
     "thumbnailLicense": "CC BY-SA 3.0 de"
@@ -4523,7 +4523,7 @@
     "label": "Britta Stark",
     "birthDate": "1963-05-12",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132865"
@@ -4549,25 +4549,25 @@
     "dateOfDeath": "2013-03-19T00:00:00Z"
   },
   {
-    "affiliation": [
-      "http://www.wikidata.org/entity/Q1023134",
-      "http://www.wikidata.org/entity/Q509589"
-    ],
-    "birthDate": "1898-04-28",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q1713314",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Ernst Lemmer",
-    "abstract": "deutscher Politiker (DDP, DStP, CDU), MdR, MdA",
+    "dateOfDeath": "1970-08-18T00:00:00Z",
+    "birthDate": "1898-04-28",
+    "partyID": [
+      "Q49762",
+      "Q1713314",
+      "Q49754"
+    ],
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Bundesarchiv_Bild_146-2007-0100,_Ernst_Lemmer.jpg/300px-Bundesarchiv_Bild_146-2007-0100,_Ernst_Lemmer.jpg",
-    "dateOfDeath": "1970-08-18T00:00:00Z",
     "id": "Q897275",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (DDP, DStP, CDU), MdR, MdA",
+    "affiliation": [
+      "http://www.wikidata.org/entity/Q509589",
+      "http://www.wikidata.org/entity/Q1023134"
+    ],
     "factionID": null,
     "thumbnailCreator": "Unknown authorUnknown author",
     "thumbnailLicense": "CC BY-SA 3.0 de"
@@ -4591,7 +4591,7 @@
     "label": "Björn Lakenmacher",
     "birthDate": "1975-01-21",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132864"
@@ -4603,25 +4603,25 @@
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1950-12-15",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "78908"
     },
-    "websiteURI": "http://www.birgitwoellert.de/",
+    "label": "Birgit Wöllert",
+    "birthDate": "1950-12-15",
     "partyID": "Q49764",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Birgit_Wöllert,_Bundestagsabgeordnete_DIE_LINKE_(17853690751).jpg/300px-Birgit_Wöllert,_Bundestagsabgeordnete_DIE_LINKE_(17853690751).jpg",
+    "gender": "female",
+    "websiteURI": "http://www.birgitwoellert.de/",
+    "id": "Q865376",
     "socialMediaIDs": [
       {
         "label": "Facebook",
         "id": "birgitwoellert"
       }
     ],
-    "type": "memberOfParliament",
-    "label": "Birgit Wöllert",
     "abstract": "deutsche Politikerin, Landtagsabgeordnete in Brandenburg",
-    "gender": "female",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Birgit_Wöllert,_Bundestagsabgeordnete_DIE_LINKE_(17853690751).jpg/300px-Birgit_Wöllert,_Bundestagsabgeordnete_DIE_LINKE_(17853690751).jpg",
-    "id": "Q865376",
-    "factionID": "Q1826856",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/132349519@N07\">DIE LINKE Brandenburg</a>",
     "thumbnailLicense": "CC BY 2.0"
   },
@@ -4638,32 +4638,32 @@
     "abstract": "deutsche Politikerin, MdL"
   },
   {
-    "birthDate": "1957-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30773"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Bettina Fortunato",
-    "abstract": "deutsche Politikerin, MdL",
+    "birthDate": "1957-01-01",
+    "partyID": "Q49764",
     "gender": "female",
     "id": "Q832613",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL",
+    "factionID": "Q108583412"
   },
   {
-    "birthDate": "1934-07-31",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Bernhard Gonnermann",
+    "birthDate": "1934-07-31",
     "partyID": [
       "Q49764",
       "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Bernhard Gonnermann",
-    "abstract": "deutscher Politiker, MdL und Hochschullehrer",
     "gender": "male",
     "id": "Q825100",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL und Hochschullehrer",
     "factionID": null
   },
   {
@@ -4684,7 +4684,7 @@
     "label": "Benjamin Raschke",
     "birthDate": "1982-12-23",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2019 - 2024)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30762"
@@ -4714,7 +4714,7 @@
     "label": "Beate Blechinger",
     "birthDate": "1947-05-22",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132857"
@@ -4757,7 +4757,7 @@
     "label": "Barbara Richstein",
     "birthDate": "1965-09-24",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "118159"
@@ -4783,7 +4783,7 @@
     "label": "Barbara Hackenschmidt",
     "birthDate": "1955-05-01",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30771"
@@ -4800,7 +4800,7 @@
     "label": "Axel Vogel",
     "birthDate": "1956-06-03",
     "partyID": "Q49766",
-    "factionID": null,
+    "factionID": "DIE GRÜNEN (Brandenburg 2019 - 2024)",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132854"
@@ -4812,20 +4812,20 @@
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1952-05-15",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Axel Henschke",
+    "birthDate": "1952-05-15",
     "partyID": [
       "Q49764",
-      "Q152554",
-      "Q49750"
+      "Q49750",
+      "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Axel Henschke",
-    "abstract": "deutscher Politiker, Landtagsabgeordneter in Brandenburg",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/Henschke_axel5.jpg/300px-Henschke_axel5.jpg",
     "id": "Q792188",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, Landtagsabgeordneter in Brandenburg",
     "factionID": null,
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Willi_Wallroth\" title=\"User:Willi Wallroth\">Willi Wallroth</a>",
     "thumbnailLicense": "Public domain"
@@ -4836,7 +4836,7 @@
     "label": "Anja Heinrich",
     "birthDate": "1971-06-14",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30769"
@@ -4848,19 +4848,19 @@
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1956-11-21",
-    "additionalInformation": {},
-    "partyID": "Q49768",
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
-    "label": "Angelika Thiel-Vigh",
-    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
-    "gender": "female",
+    "additionalInformation": {},
     "altLabel": [
       "Angelika Thiel",
       "Thiel-Vigh"
     ],
+    "label": "Angelika Thiel-Vigh",
+    "birthDate": "1956-11-21",
+    "partyID": "Q49768",
+    "gender": "female",
     "id": "Q534631",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags",
     "factionID": null
   },
   {
@@ -4876,17 +4876,17 @@
     "abstract": "deutsche Politikerin, Mitglied des brandenburgischen Landtags"
   },
   {
-    "birthDate": "1959-08-07",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "118328"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Andreas Trunschke",
-    "abstract": "deutscher Politiker, MdL",
+    "birthDate": "1959-08-07",
+    "partyID": "Q49764",
     "gender": "male",
     "id": "Q500993",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
     "factionID": null
   },
   {
@@ -4895,7 +4895,7 @@
     "label": "Andreas Kuhnert",
     "birthDate": "1951-02-05",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30767"
@@ -4905,33 +4905,33 @@
     "dateOfDeath": "2019-12-11T00:00:00Z"
   },
   {
-    "birthDate": "1973-07-03",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132841"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Andreas Büttner",
-    "abstract": "deutscher Politiker (Die Linke, ehemals CDU und FDP), Staatssekretär in Brandenburg",
+    "birthDate": "1973-07-03",
+    "partyID": "Q49764",
     "gender": "male",
     "id": "Q496541",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (Die Linke, ehemals CDU und FDP), Staatssekretär in Brandenburg",
+    "factionID": "Q108583412"
   },
   {
-    "birthDate": "1957-02-14",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30784"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Andreas Bernig",
-    "abstract": "deutscher Politiker, MdL",
+    "birthDate": "1957-02-14",
+    "partyID": "Q49764",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/16-03-09-Andreas-Bernig_RR26808.jpg/300px-16-03-09-Andreas-Bernig_RR26808.jpg",
     "id": "Q496112",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -4941,7 +4941,7 @@
     "label": "Alwin Ziel",
     "birthDate": "1941-04-22",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132837"
@@ -4968,35 +4968,35 @@
     "thumbnailLicense": "CC BY-SA 2.0"
   },
   {
-    "birthDate": "1956-04-05",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "118345"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Dagmar Enkelmann",
-    "abstract": "deutsche Politikerin (Die Linke), MdV, MdL, MdB",
-    "gender": "female",
+    "birthDate": "1956-04-05",
+    "partyID": "Q49764",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Dagmar_Enkelmann.jpg/300px-Dagmar_Enkelmann.jpg",
+    "gender": "female",
     "id": "Q126166",
-    "factionID": "Q1826856",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin (Die Linke), MdV, MdL, MdB",
+    "factionID": null,
     "thumbnailCreator": "Unknown authorUnknown author",
     "thumbnailLicense": "CC BY 3.0"
   },
   {
-    "birthDate": "1958-06-30",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "63850"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Volkmar Schöneburg",
-    "abstract": "deutscher Rechtsanwalt, Richter und Politiker",
+    "birthDate": "1958-06-30",
+    "partyID": "Q49764",
     "gender": "male",
     "id": "Q114169",
-    "factionID": null
+    "socialMediaIDs": [],
+    "abstract": "deutscher Rechtsanwalt, Richter und Politiker",
+    "factionID": "Q108583412"
   },
   {
     "type": "memberOfParliament",
@@ -5004,7 +5004,7 @@
     "label": "Petra Bierwirth",
     "birthDate": "1960-11-13",
     "partyID": "Q49768",
-    "factionID": "Q2207512",
+    "factionID": null,
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "119196"
@@ -5014,34 +5014,34 @@
     "affiliation": "http://www.wikidata.org/entity/Q2207512"
   },
   {
-    "birthDate": "1949-01-23",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132921"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Gerlinde Stobrawa",
-    "abstract": "deutsche Politikerin, MdL, inoffizieller Mitarbeiter der DDR-Staatssicherheit",
+    "birthDate": "1949-01-23",
+    "partyID": "Q49764",
     "gender": "female",
     "id": "Q111311",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL, inoffizieller Mitarbeiter der DDR-Staatssicherheit",
     "factionID": null
   },
   {
-    "birthDate": "1921-06-16",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Gustav Just",
+    "dateOfDeath": "2011-02-23T00:00:00Z",
+    "birthDate": "1921-06-16",
     "partyID": [
       "Q49750",
       "Q49768"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Gustav Just",
-    "abstract": "deutscher Politiker (SED, SPD), MdL und Journalist",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Bundesarchiv_Bild_183-26867-0001,_Berlin,_Konstantin_Fedin,_Gustav_Just,_Franz_Carl_Weiskopf.jpg/300px-Bundesarchiv_Bild_183-26867-0001,_Berlin,_Konstantin_Fedin,_Gustav_Just,_Franz_Carl_Weiskopf.jpg",
-    "dateOfDeath": "2011-02-23T00:00:00Z",
     "id": "Q110726",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (SED, SPD), MdL und Journalist",
     "factionID": null,
     "thumbnailCreator": "Quaschinsky, Hans-Günter",
     "thumbnailLicense": "CC BY-SA 3.0 de"
@@ -5067,7 +5067,7 @@
     "label": "Jörg Vogelsänger",
     "birthDate": "1964-05-17",
     "partyID": "Q49768",
-    "factionID": "Q2207512",
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30719"
@@ -5095,38 +5095,38 @@
     "abstract": "deutscher Politiker, MdL, Landesminister in Brandenburg"
   },
   {
-    "birthDate": "1948-09-24",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Manfred Walther",
-    "abstract": "deutscher Politiker",
+    "birthDate": "1948-09-24",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "male",
     "id": "Q107840",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker",
     "factionID": null
   },
   {
-    "birthDate": "1957-10-17",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30738"
     },
-    "partyID": "Q49768",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
+    "altLabel": "Baaske",
     "label": "Günter Baaske",
-    "abstract": "deutscher Politiker, MdL, Landesminister in Brandenburg",
+    "birthDate": "1957-10-17",
+    "partyID": "Q49768",
     "gender": "male",
     "thumbnailURI": [
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/036_Naziaufmarsch_24.03.2012_Frankfurt_Oder.jpg/300px-036_Naziaufmarsch_24.03.2012_Frankfurt_Oder.jpg",
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/036_Naziaufmarsch_24.03.2012_Frankfurt_Oder_-_Günter_Baaske.jpg/300px-036_Naziaufmarsch_24.03.2012_Frankfurt_Oder_-_Günter_Baaske.jpg"
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/036_Naziaufmarsch_24.03.2012_Frankfurt_Oder_-_Günter_Baaske.jpg/300px-036_Naziaufmarsch_24.03.2012_Frankfurt_Oder_-_Günter_Baaske.jpg",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/036_Naziaufmarsch_24.03.2012_Frankfurt_Oder.jpg/300px-036_Naziaufmarsch_24.03.2012_Frankfurt_Oder.jpg"
     ],
-    "altLabel": "Baaske",
     "id": "Q107529",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL, Landesminister in Brandenburg",
+    "factionID": "Q108583167",
     "thumbnailCreator": "Willi Wallroth",
     "thumbnailLicense": "Public domain"
   },
@@ -5136,7 +5136,7 @@
     "label": "Holger Rupprecht",
     "birthDate": "1953-01-19",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30797"
@@ -5153,7 +5153,7 @@
     "label": "Steffen Reiche",
     "birthDate": "1960-06-27",
     "partyID": "Q49768",
-    "factionID": "Q2207512",
+    "factionID": null,
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "119353"
@@ -5166,50 +5166,50 @@
     "thumbnailLicense": "CC BY 3.0 de"
   },
   {
-    "birthDate": "1956-10-08",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30821"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Ralf Christoffers",
-    "abstract": "deutscher Politiker, MdL",
+    "birthDate": "1956-10-08",
+    "partyID": "Q49764",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Landtagsprojekt_Brandenburg_Ralf_Christoffers_by_Olaf_Kosinsky-1.jpg/300px-Landtagsprojekt_Brandenburg_Ralf_Christoffers_by_Olaf_Kosinsky-1.jpg",
     "id": "Q104951",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdL",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Olaf_Kosinsky\" title=\"User:Olaf Kosinsky\">Olaf Kosinsky</a>",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1954-03-20",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "133026"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Renate Adolph",
-    "abstract": "deutsche Politikerin, MdL, inoffizieller Mitarbeiter der DDR-Staatssicherheit",
+    "birthDate": "1954-03-20",
+    "partyID": "Q49764",
     "gender": "female",
     "id": "Q104549",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL, inoffizieller Mitarbeiter der DDR-Staatssicherheit",
     "factionID": null
   },
   {
-    "birthDate": "1971-02-10",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Stefan Sarrach",
+    "birthDate": "1971-02-10",
     "partyID": [
       "Q49764",
-      "Q152554",
-      "Q49768"
+      "Q49768",
+      "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Stefan Sarrach",
-    "abstract": "deutscher Jurist und Politiker (Die Linke), MdL",
     "gender": "male",
     "id": "Q103819",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Jurist und Politiker (Die Linke), MdL",
     "factionID": null
   },
   {
@@ -5226,19 +5226,19 @@
     "altLabel": "Gujjula"
   },
   {
-    "birthDate": "1951-04-04",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "132846"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Anita Tack",
-    "abstract": "deutsche Politikerin, MdL, Landesministerin in Brandenburg",
-    "gender": "female",
+    "birthDate": "1951-04-04",
+    "partyID": "Q49764",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/16-03-09-_Anita-Tack_RR26820.jpg/300px-16-03-09-_Anita-Tack_RR26820.jpg",
+    "gender": "female",
     "id": "Q101714",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL, Landesministerin in Brandenburg",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a href=\"https://www.wikidata.org/wiki/Q15080600\" class=\"extiw\" title=\"d:Q15080600\">Ralf Roletschek</a>",
     "thumbnailLicense": "GFDL 1.2"
   },
@@ -5248,7 +5248,7 @@
     "label": "Jutta Lieske",
     "birthDate": "1961-09-06",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "30800"
@@ -5260,20 +5260,20 @@
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1960-07-16",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "30801"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Kerstin Kaiser",
-    "abstract": "deutsche Politikerin (Die Linke), MdL, inoffizielle Mitarbeiterin der DDR-Staatssicherheit",
-    "gender": "female",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Kerstin_Kaiser_und_Bodo_Ramelow_in_Dresden-2.jpg/300px-Kerstin_Kaiser_und_Bodo_Ramelow_in_Dresden-2.jpg",
     "altLabel": "Kerstin Kaiser-Nicht",
+    "label": "Kerstin Kaiser",
+    "birthDate": "1960-07-16",
+    "partyID": "Q49764",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/Kerstin_Kaiser_und_Bodo_Ramelow_in_Dresden-2.jpg/300px-Kerstin_Kaiser_und_Bodo_Ramelow_in_Dresden-2.jpg",
+    "gender": "female",
     "id": "Q101555",
-    "factionID": null,
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin (Die Linke), MdL, inoffizielle Mitarbeiterin der DDR-Staatssicherheit",
+    "factionID": "Q108583412",
     "thumbnailCreator": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/photos/35701146@N06\">dielinke_sachsen</a>",
     "thumbnailLicense": "CC BY 2.0"
   },
@@ -5283,7 +5283,7 @@
     "label": "Dietmar Woidke",
     "birthDate": "1961-10-22",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132887"
@@ -5296,13 +5296,18 @@
     "thumbnailLicense": "CC BY-SA 3.0"
   },
   {
-    "affiliation": "http://www.wikidata.org/entity/Q2207512",
-    "birthDate": "1943-09-08",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "119515"
     },
-    "websiteURI": "http://www.wolfgang-gehrcke.de/",
+    "altLabel": "Wolfgang Gehrcke-Reymann",
+    "label": "Wolfgang Gehrcke",
+    "birthDate": "1943-09-08",
     "partyID": "Q49764",
+    "gender": "male",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Wolfgang_Gehrcke.jpg/300px-Wolfgang_Gehrcke.jpg",
+    "websiteURI": "http://www.wolfgang-gehrcke.de/",
+    "id": "Q99456",
     "socialMediaIDs": [
       {
         "label": "Twitter",
@@ -5313,14 +5318,9 @@
         "id": "WolfgangGehrckeOfficial"
       }
     ],
-    "type": "memberOfParliament",
-    "label": "Wolfgang Gehrcke",
     "abstract": "deutscher Politiker, MdL, MdB",
-    "gender": "male",
-    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Wolfgang_Gehrcke.jpg/300px-Wolfgang_Gehrcke.jpg",
-    "altLabel": "Wolfgang Gehrcke-Reymann",
-    "id": "Q99456",
-    "factionID": "Q1826856",
+    "affiliation": "http://www.wikidata.org/entity/Q2207512",
+    "factionID": null,
     "thumbnailCreator": "Foto: Uwe Steinert für <a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/54639760@N08\">Fraktion DIE LINKE. im Bundestag</a>",
     "thumbnailLicense": "CC BY 2.0"
   },
@@ -5330,7 +5330,7 @@
     "label": "Martina Münch",
     "birthDate": "1961-12-29",
     "partyID": "Q49768",
-    "factionID": null,
+    "factionID": "Q108583167",
     "socialMediaIDs": [],
     "additionalInformation": {
       "abgeordnetenwatchID": "132894"
@@ -5342,74 +5342,74 @@
     "thumbnailLicense": "CC BY-SA 4.0"
   },
   {
-    "birthDate": "1966-05-03",
-    "additionalInformation": {},
-    "partyID": [
-      "Q49754",
-      "Q49762"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Frank Dietrich",
-    "abstract": "deutscher Politiker, MdV, MdL",
+    "dateOfDeath": "2011-07-24T00:00:00Z",
+    "birthDate": "1966-05-03",
+    "partyID": [
+      "Q49762",
+      "Q49754"
+    ],
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/KAS-Spree-Neiße-Bild-15134-1.jpg/300px-KAS-Spree-Neiße-Bild-15134-1.jpg",
-    "dateOfDeath": "2011-07-24T00:00:00Z",
     "id": "Q97924",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdV, MdL",
     "factionID": null,
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
+    "type": "memberOfParliament",
+    "additionalInformation": {},
+    "label": "Christel Fiebiger",
     "birthDate": [
       "1946-12-29",
       "1946-01-01"
     ],
-    "additionalInformation": {},
     "partyID": [
       "Q49764",
-      "Q152554",
-      "Q49750"
+      "Q49750",
+      "Q152554"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Christel Fiebiger",
-    "abstract": "deutsche Politikerin, MdL, MdEP",
     "gender": "female",
     "id": "Q96075",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Politikerin, MdL, MdEP",
     "factionID": null
   },
   {
-    "birthDate": "1951-04-01",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "133015"
     },
-    "partyID": "Q49762",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Johanna Wanka",
-    "abstract": "deutsche Mathematikerin und Politikerin (CDU)",
-    "gender": "female",
+    "birthDate": "1951-04-01",
+    "partyID": "Q49762",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Johanna_Wanka_MWK_2.jpg/300px-Johanna_Wanka_MWK_2.jpg",
+    "gender": "female",
     "id": "Q95574",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Mathematikerin und Politikerin (CDU)",
     "factionID": null,
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:AxelHH\" title=\"User:AxelHH\">Axel Hindemith</a>",
     "thumbnailLicense": "CC BY 3.0"
   },
   {
-    "birthDate": "1952-02-14",
-    "additionalInformation": {},
-    "partyID": [
-      "Q560536",
-      "Q49754"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Peter-Michael Diestel",
-    "abstract": "deutscher Politiker, MdV, stellvertretender Ministerpräsident und Minister des Inneren der DDR, MdL",
+    "birthDate": "1952-02-14",
+    "partyID": [
+      "Q49754",
+      "Q560536"
+    ],
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/KAS-Diestel,_Peter-Michael-Bild-15158-1_(cropped).jpg/300px-KAS-Diestel,_Peter-Michael-Bild-15158-1_(cropped).jpg",
     "id": "Q89295",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker, MdV, stellvertretender Ministerpräsident und Minister des Inneren der DDR, MdL",
     "factionID": null,
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
@@ -5431,57 +5431,57 @@
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "affiliation": "http://www.wikidata.org/entity/Q1023134",
-    "birthDate": "1956-05-25",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Ulrich Junghanns",
+    "birthDate": "1956-05-25",
     "partyID": [
       "Q49762",
       "Q49756"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Ulrich Junghanns",
-    "abstract": "deutscher Politiker und Wirtschaftsminister von Brandenburg",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Ulrich_Junghanns_(2004).jpg/300px-Ulrich_Junghanns_(2004).jpg",
     "id": "Q78131",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker und Wirtschaftsminister von Brandenburg",
+    "affiliation": "http://www.wikidata.org/entity/Q1023134",
     "factionID": null,
     "thumbnailCreator": "CDU",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1941-04-26",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "altLabel": "Regine Radischewski",
+    "label": "Regine Hildebrandt",
+    "dateOfDeath": "2001-11-26T00:00:00Z",
+    "birthDate": "1941-04-26",
     "partyID": [
       "Q563535",
       "Q49768"
     ],
-    "altLabel": "Regine Radischewski",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Regine Hildebrandt",
-    "abstract": "deutsche Biologin und Politikerin, MdV, MdL",
-    "gender": "female",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Bundesarchiv_Bild_183-1990-0425-304,_Dr._Regine_Hildebrandt.jpg/300px-Bundesarchiv_Bild_183-1990-0425-304,_Dr._Regine_Hildebrandt.jpg",
-    "dateOfDeath": "2001-11-26T00:00:00Z",
+    "gender": "female",
     "id": "Q77980",
+    "socialMediaIDs": [],
+    "abstract": "deutsche Biologin und Politikerin, MdV, MdL",
     "factionID": null,
     "thumbnailCreator": "Schöps, Elke",
     "thumbnailLicense": "CC BY-SA 3.0 de"
   },
   {
-    "birthDate": "1952-06-05",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "125535"
     },
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Helmuth Markov",
-    "abstract": "deutscher Politiker (Die Linke), MdL, MdEP",
+    "birthDate": "1952-06-05",
+    "partyID": "Q49764",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Helmuth_Markov.jpg/300px-Helmuth_Markov.jpg",
     "id": "Q74179",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (Die Linke), MdL, MdEP",
     "factionID": null,
     "thumbnailCreator": "MdJEV",
     "thumbnailLicense": "CC BY-SA 4.0"
@@ -5492,7 +5492,7 @@
     "label": "Christian Ehler",
     "birthDate": "1963-08-17",
     "partyID": "Q49762",
-    "factionID": null,
+    "factionID": "Q108583055",
     "socialMediaIDs": [
       {
         "label": "Facebook",
@@ -5510,21 +5510,21 @@
     "thumbnailLicense": "CC BY 2.0"
   },
   {
-    "birthDate": "1941-08-17",
+    "type": "memberOfParliament",
     "additionalInformation": {
       "abgeordnetenwatchID": "118955"
     },
-    "websiteURI": "http://www.lothar-bisky.de",
-    "partyID": "Q49764",
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
     "label": "Lothar Bisky",
-    "abstract": "deutscher Politiker (PDS/Linke), MdL, MdB, MdEP (1941–2013)",
+    "dateOfDeath": "2013-08-13T00:00:00Z",
+    "birthDate": "1941-08-17",
+    "partyID": "Q49764",
     "gender": "male",
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Lothar_Bisky.jpg/300px-Lothar_Bisky.jpg",
-    "dateOfDeath": "2013-08-13T00:00:00Z",
+    "websiteURI": "http://www.lothar-bisky.de",
     "id": "Q71018",
-    "factionID": "Q1826856",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (PDS/Linke), MdL, MdB, MdEP (1941–2013)",
+    "factionID": null,
     "thumbnailCreator": "n.n.",
     "thumbnailLicense": "Attribution"
   },
@@ -5546,40 +5546,40 @@
     "thumbnailLicense": "CC-BY-SA-3.0"
   },
   {
-    "affiliation": "http://www.wikidata.org/entity/Q2207512",
-    "birthDate": "1953-12-29",
-    "additionalInformation": {},
-    "websiteURI": "http://www.matthias-platzeck.de/",
-    "partyID": [
-      "Q316223",
-      "Q446007",
-      "Q49755",
-      "Q49768"
-    ],
-    "socialMediaIDs": [],
     "type": "memberOfParliament",
+    "additionalInformation": {},
     "label": "Matthias Platzeck",
-    "abstract": "deutscher Politiker (SPD), MdV, MdL, ehem. Ministerpräsident von Brandenburg",
-    "gender": "male",
+    "birthDate": "1953-12-29",
+    "partyID": [
+      "Q446007",
+      "Q49768",
+      "Q49755",
+      "Q316223"
+    ],
     "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Grundsteinlegung-schiffshebewerk-ndf-2009-32.jpg/300px-Grundsteinlegung-schiffshebewerk-ndf-2009-32.jpg",
+    "gender": "male",
+    "websiteURI": "http://www.matthias-platzeck.de/",
     "id": "Q57682",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker (SPD), MdV, MdL, ehem. Ministerpräsident von Brandenburg",
+    "affiliation": "http://www.wikidata.org/entity/Q2207512",
     "factionID": null,
     "thumbnailCreator": "<a href=\"//commons.wikimedia.org/wiki/User:Ralf_Roletschek\" title=\"User:Ralf Roletschek\">Marcela</a> (<a href=\"//commons.wikimedia.org/wiki/User_talk:Ralf_Roletschek\" title=\"User talk:Ralf Roletschek\">talk</a>)",
     "thumbnailLicense": "GFDL 1.2"
   },
   {
-    "birthDate": "1952-01-01",
+    "type": "memberOfParliament",
     "additionalInformation": {},
+    "label": "Peter Schüler",
+    "birthDate": "1952-01-01",
     "partyID": [
       "Q49766",
       "Q49750"
     ],
-    "socialMediaIDs": [],
-    "type": "memberOfParliament",
-    "label": "Peter Schüler",
-    "abstract": "deutscher Politiker",
     "gender": "male",
     "id": "Q16825",
+    "socialMediaIDs": [],
+    "abstract": "deutscher Politiker",
     "factionID": null
   }
 ]

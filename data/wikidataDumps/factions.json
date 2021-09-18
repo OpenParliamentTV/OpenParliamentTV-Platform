@@ -1,0 +1,202 @@
+[
+  {
+    "type": "faction",
+    "id": "Q1826856",
+    "label": "Fraktion Die Linke",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "linksfraktion"
+      },
+      {
+        "label": "Facebook",
+        "id": "linksfraktion"
+      },
+      {
+        "label": "Instagram",
+        "id": "linksfraktion"
+      }
+    ],
+    "websiteURI": "https://www.linksfraktion.de/",
+    "abstract": "Fraktion im Deutschen Bundestag",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Die_Linke_BT_Fraktion_Logo.svg/300px-Die_Linke_BT_Fraktion_Logo.png",
+    "labelAlternative": "DIE LINKE"
+  },
+  {
+    "type": "faction",
+    "id": "Q1023134",
+    "label": "CDU/CSU-Bundestagsfraktion",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "cducsubt"
+      },
+      {
+        "label": "Facebook",
+        "id": "cducsubundestagsfraktion"
+      },
+      {
+        "label": "Instagram",
+        "id": "cducsubt"
+      }
+    ],
+    "websiteURI": "https://www.cducsu.de/",
+    "abstract": "Fraktion von CDU und CSU im Deutschen Bundestag",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Cducsu_fraktion_logo_rgb.svg/300px-Cducsu_fraktion_logo_rgb.png",
+    "labelAlternative": "CDU/CSU"
+  },
+  {
+    "type": "faction",
+    "id": "Q1387991",
+    "label": "FDP-Bundestagsfraktion",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "fdpbt"
+      },
+      {
+        "label": "Facebook",
+        "id": "fdpbt"
+      },
+      {
+        "label": "Instagram",
+        "id": "fdpbt"
+      }
+    ],
+    "websiteURI": "https://www.fdpbt.de/",
+    "abstract": "Fraktion der FDP im Deutschen Bundestag",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Logo_fdp_bundestagsfraktion.svg/300px-Logo_fdp_bundestagsfraktion.png",
+    "labelAlternative": "FDP"
+  },
+  {
+    "type": "faction",
+    "id": "Q108583055",
+    "label": "CDU Landtagsfraktion Brandenburg",
+    "socialMediaIDs": [],
+    "websiteURI": "https://cdu-fraktion-brandenburg.de/",
+    "abstract": "Fraktion der Partei CDU im Landtag Brandenburg",
+    "labelAlternative": "CDU"
+  },
+  {
+    "type": "faction",
+    "id": "Q108583167",
+    "label": "SPD Landtagsfraktion Brandenburg",
+    "socialMediaIDs": [],
+    "websiteURI": "https://www.spd-fraktion-brandenburg.de/",
+    "abstract": "Fraktion der Partei SPD im Landtag Brandenburg",
+    "labelAlternative": "SPD"
+  },
+  {
+    "type": "faction",
+    "id": "Q108583380",
+    "label": "AfD Landtagsfraktion Brandenburg",
+    "socialMediaIDs": [],
+    "websiteURI": "https://afd-fraktion-brandenburg.de/",
+    "abstract": "Fraktion der Partei AfD im Landtag Brandenburg",
+    "labelAlternative": "AfD"
+  },
+  {
+    "type": "faction",
+    "id": "Q108583412",
+    "label": "DIE LINKE Landtagsfraktion Brandenburg",
+    "socialMediaIDs": [],
+    "websiteURI": "https://www.linksfraktion-brandenburg.de/",
+    "abstract": "Fraktion der Partei DIE LINKE im Landtag Brandenburg",
+    "labelAlternative": "DIE LINKE"
+  },
+  {
+    "type": "faction",
+    "id": "Q108583221",
+    "label": "Bündnis 90/Die Grünen Landtagsfraktion Brandenburg",
+    "socialMediaIDs": [],
+    "websiteURI": "https://gruene-fraktion-brandenburg.de/",
+    "abstract": "Fraktion der Partei Bündnis 90/Die Grünen im Landtag Brandenburg",
+    "labelAlternative": "BÜNDNIS 90/DIE GRÜNEN"
+  },
+  {
+    "type": "faction",
+    "id": "Q108583293",
+    "label": "BVB/Freie Wähler Landtagsfraktion Brandenburg",
+    "socialMediaIDs": [],
+    "websiteURI": "https://www.bvb-fw-fraktion.de/",
+    "abstract": "Fraktion der Brandenburger Vereinigte Bürgerbewegungen/Freie Wähler im Landtag Brandenburg",
+    "labelAlternative": "BVB/Freie Wähler"
+  },
+  {
+    "type": "faction",
+    "id": "Q42575708",
+    "label": "AfD-Bundestagsfraktion",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "AfDimBundestag"
+      },
+      {
+        "label": "Facebook",
+        "id": "afdimbundestag"
+      },
+      {
+        "label": "Instagram",
+        "id": "afdimbundestag"
+      }
+    ],
+    "websiteURI": "https://www.afdbundestag.de/",
+    "abstract": "Fraktion der Alternative für Deutschland im Deutschen Bundestag",
+    "thumbnailURI": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/AFD_Fraktion_im_Bundestag_Logo.svg/300px-AFD_Fraktion_im_Bundestag_Logo.png",
+    "labelAlternative": "AfD"
+  },
+  {
+    "type": "faction",
+    "id": "Q2207512",
+    "label": "SPD-Bundestagsfraktion",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "spdbt"
+      },
+      {
+        "label": "Facebook",
+        "id": "spdbundestagsfraktion"
+      },
+      {
+        "label": "Instagram",
+        "id": "spdbt"
+      }
+    ],
+    "websiteURI": "https://www.spdfraktion.de/",
+    "abstract": "Fraktion der SPD-Abgeordneten im Deutschen Bundestag",
+    "labelAlternative": "SPD"
+  },
+  {
+    "type": "faction",
+    "id": "Q1007353",
+    "label": "Bundestagsfraktion Bündnis 90/Die Grünen",
+    "socialMediaIDs": [
+      {
+        "label": "Twitter",
+        "id": "GrueneBundestag"
+      },
+      {
+        "label": "Facebook",
+        "id": "Gruene.im.Bundestag"
+      },
+      {
+        "label": "Instagram",
+        "id": "gruenebundestag"
+      }
+    ],
+    "websiteURI": "https://www.gruene-bundestag.de/",
+    "abstract": "Fraktion im Deutschen Bundestag",
+    "labelAlternative": "BÜNDNIS 90/DIE GRÜNEN"
+  },
+  {
+    "type": "faction",
+    "id": "Q4316268",
+    "label": "fraktionslos",
+    "socialMediaIDs": [],
+    "thumbnailURI": "",
+    "abstract": "fraktionslose Abgeordnete",
+    "websiteURI": "",
+    "labelAlternative": "fraktionslos"
+  }
+]
