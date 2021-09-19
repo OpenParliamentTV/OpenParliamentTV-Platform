@@ -47,7 +47,7 @@ if (isset($result_item["_finds"]) && count($result_item['_finds']) > 0) {
 			echo '<div class="resultTimeline">';
 		}
 
-		if ($snippets) {
+		if ($snippets && $result_item["attributes"]['duration'] !== 0) {
 			?>
 			<span class="badge badge-primary badge-pill"><?=count($snippets)?></span>
 			<?php
