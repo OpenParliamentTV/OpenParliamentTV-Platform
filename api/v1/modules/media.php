@@ -1503,7 +1503,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                     $tmpPersonUpdate[] = $dbp->parse("PersonBirthDate=?s", ($personWD["data"][0]["birthDate"] ? $personWD["data"][0]["birthDate"] :$person["birthDate"]) );
                 }
                 if ((!$personDB["data"]["PersonGender"]) && (($person["gender"] || $personWD["data"][0]["gender"]))) {
-                    $tmpPersonUpdate[] = $dbp->parse("PersonGender=?s", ($personWD["data"][0]["birthDate"] ? $personWD["data"][0]["birthDate"] :$person["birthDate"]) );
+                    $tmpPersonUpdate[] = $dbp->parse("PersonGender=?s", ($personWD["data"][0]["gender"] ? $personWD["data"][0]["gender"] :$person["gender"]) );
                 }
                 if ((!$personDB["data"]["PersonAbstract"]) && (($person["abstract"] || $personWD["data"][0]["abstract"]))) {
                     $tmpPersonUpdate[] = $dbp->parse("PersonAbstract=?s", ($personWD["data"][0]["abstract"] ? $personWD["data"][0]["abstract"] :$person["abstract"]) );
