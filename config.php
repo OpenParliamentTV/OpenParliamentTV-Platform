@@ -4,6 +4,7 @@ $config["dir"]["root"] = "";
 
 $config["allow"]["register"] = true;
 $config["allow"]["login"] = true;
+$config["allow"]["publicAccess"] = true;
 $config["salt"] = "gMu2bs)v7ZN!677hH";
 
 $config["mode"] = "dev";
