@@ -21,7 +21,7 @@ $(function() {
         var itemTmpDate = "text-"+Date.now();
         var template =
             "<div class='media-text-item' id='"+itemTmpDate+"'>" +
-            "   <input type='text' name='textContents["+itemTmpDate+"][type]' class='form-control mb-2' data-itemTmp='"+itemTmpDate+"' placeholder='type (proceedings)'>" +
+            "   <input type='text' name='textContents["+itemTmpDate+"][type]' class='form-control mb-2' id='text-type-"+itemTmpDate+"' data-itemTmp='"+itemTmpDate+"' placeholder='type (proceedings)'>" +
             "   <input type='text' name='textContents["+itemTmpDate+"][sourceURI]' class='form-control mb-2' data-itemTmp='"+itemTmpDate+"' placeholder='sourceURI'>" +
             "   <input type='text' name='textContents["+itemTmpDate+"][creator]' class='form-control mb-2' data-itemTmp='"+itemTmpDate+"' placeholder='creator (Deutscher Bundestag)'>" +
             "   <input type='text' name='textContents["+itemTmpDate+"][license]' class='form-control mb-2' data-itemTmp='"+itemTmpDate+"' placeholder='license (Public Domain)'>" +
@@ -122,6 +122,7 @@ $(function() {
 
         });
         //console.log(sentences);
+        $('#text-type-'+$(this).data("id")).val("proceedings");
         item.val(JSON.stringify(sentences));
         //item.val(JSON.stringify(sentences, null, 2));
     });
