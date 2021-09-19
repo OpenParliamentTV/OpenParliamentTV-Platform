@@ -34,7 +34,7 @@ function getPrevDocument($currentDocumentTimestamp) {
 	
 	global $ESClient;
 	
-	$searchParams = array("index" => "openparliamenttv_de", 
+	$searchParams = array("index" => "openparliamenttv_*", 
 		"body" => array(
 			"size" => 1,
 			"query" => array(
@@ -69,7 +69,7 @@ function getNextDocument($currentDocumentTimestamp) {
 	
 	global $ESClient;
 	
-	$searchParams = array("index" => "openparliamenttv_de", 
+	$searchParams = array("index" => "openparliamenttv_*", 
 		"body" => array(
 			"size" => 1,
 			"query" => array(
@@ -103,7 +103,7 @@ function getNextDocument($currentDocumentTimestamp) {
 function getDocument($documentID) {
 	global $ESClient;
 	
-	$docParams = array("index" => "openparliamenttv_de", 
+	$docParams = array("index" => "openparliamenttv_*", 
 		"id" => $documentID, 
 		"_source" => true);
 	

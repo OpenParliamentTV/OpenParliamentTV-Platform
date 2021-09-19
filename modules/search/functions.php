@@ -25,7 +25,7 @@ function getIndexCount() {
 	global $ESClient;
 
 	try {
-		$return = $ESClient->count(['index' => 'openparliamenttv_de']);
+		$return = $ESClient->count(['index' => 'openparliamenttv_*']);
 		$result = $return["count"];
 	} catch(Exception $e) {
 		//print_r($e->getMessage());
@@ -49,6 +49,7 @@ function searchSpeeches($request) {
     require_once(__DIR__.'/../../vendor/autoload.php');
     require(__DIR__.'/../../config.php');
 
+    /*
     if ($request["id"]) {
         require_once(__DIR__.'/../utilities/functions.php');
         $itemInfos = getInfosFromStringID($request["id"]);
@@ -57,7 +58,7 @@ function searchSpeeches($request) {
         //TODO: How to seach in all indexes?
         $parliament = "de";
     }
-
+    */
 
     $ESClientBuilder = Elasticsearch\ClientBuilder::create();
 
@@ -76,10 +77,10 @@ function searchSpeeches($request) {
 
 	$data = getSearchBody($request, false);
 	
-	$searchParams = array("index" => "openparliamenttv_".$parliament, "body" => $data);
+	$searchParams = array("index" => "openparliamenttv_*", "body" => $data);
 	
 	try {
-		//$results = $ESClient->get(['index' => "openparliamenttv_".$parliament, 'id' => 'DE-BB-0070047001']);
+		//$results = $ESClient->get(['index' => "openparliamenttv_*", 'id' => 'DE-BB-0070047001']);
 
 		$results = $ESClient->search($searchParams);
 	} catch(Exception $e) {
@@ -168,7 +169,7 @@ function searchStats($request) {
 
 	$data = getSearchBody($request, true);
 	
-	$searchParams = array("index" => "openparliamenttv_de", "body" => $data);
+	$searchParams = array("index" => "openparliamenttv_*", "body" => $data);
 	
 	try {
 		$results = $ESClient->search($searchParams);
@@ -251,7 +252,7 @@ function searchAutocomplete($textQuery) {
 
     $data = getAutocompleteSearchBody($textQuery);
 	
-	$searchParams = array("index" => "openparliamenttv_de", "body" => $data);
+	$searchParams = array("index" => "openparliamenttv_*", "body" => $data);
 	
 	try {
 		$results = $ESClient->search($searchParams);
