@@ -122,7 +122,8 @@ $(function() {
 
         });
         //console.log(sentences);
-        item.val(JSON.stringify(sentences, null, 2));
+        item.val(JSON.stringify(sentences));
+        //item.val(JSON.stringify(sentences, null, 2));
     });
 
 
