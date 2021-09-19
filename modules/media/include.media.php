@@ -17,6 +17,7 @@
 	$apiInput["action"] = "search";
 	$apiInput["a"] = "search";
 	$apiInput["itemType"] = "media";
+	//print_r($apiInput);
 	$apiResult = apiV1($apiInput);
 
 	/*

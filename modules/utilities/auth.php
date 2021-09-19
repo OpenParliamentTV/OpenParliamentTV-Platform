@@ -9,11 +9,13 @@ if (!function_exists("L")) {
     $i18n->init();
 }
 
+
+
 function auth($userID, $action, $entity, $db = false) {
 
 	global $config;
 
-    if  (!$userID) {
+    if  (($config["allow"]["publicAccess"] != true) && (!$userID)) {
         $return["meta"]["requestStatus"] = "error";
         $return["errors"] = array();
         $errorarray["status"] = "401"; //TODO CODE
@@ -61,48 +63,50 @@ function auth($userID, $action, $entity, $db = false) {
 
     }
 
+    if (($config["allow"]["publicAccess"] != true) || ($userID)) {
 
-	$user = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserID=?i",$userID);
+        $user = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserID=?i",$userID);
 
-	if (!$user) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "403"; //TODO CODE
-        $errorarray["code"] = "1";
-        $errorarray["title"] = L::messageAuthAccountNotFoundTitle;
-        $errorarray["detail"] = L::messageAuthAccountNotFoundDetail;
-        array_push($return["errors"], $errorarray);
-        return $return;
-	}
+        if (!$user) {
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "403"; //TODO CODE
+            $errorarray["code"] = "1";
+            $errorarray["title"] = L::messageAuthAccountNotFoundTitle;
+            $errorarray["detail"] = L::messageAuthAccountNotFoundDetail;
+            array_push($return["errors"], $errorarray);
+            return $return;
+        }
 
-	if ($user["UserActive"] != true) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "403"; //TODO CODE
-        $errorarray["code"] = "1";
-        $errorarray["title"] = L::messageAuthAccountNotActiveTitle;
-        $errorarray["detail"] = L::messageAuthAccountNotActiveDetail;
-        array_push($return["errors"], $errorarray);
-        return $return;
-	}
+        if ($user["UserActive"] != true) {
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "403"; //TODO CODE
+            $errorarray["code"] = "1";
+            $errorarray["title"] = L::messageAuthAccountNotActiveTitle;
+            $errorarray["detail"] = L::messageAuthAccountNotActiveDetail;
+            array_push($return["errors"], $errorarray);
+            return $return;
+        }
 
-	if ($user["UserBlocked"] != false) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "403"; //TODO CODE
-        $errorarray["code"] = "1";
-        $errorarray["title"] = L::messageAuthAccountBlockedTitle;
-        $errorarray["detail"] = L::messageAuthAccountBlockedDetail;
-        array_push($return["errors"], $errorarray);
-        return $return;
-	}
+        if ($user["UserBlocked"] != false) {
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "403"; //TODO CODE
+            $errorarray["code"] = "1";
+            $errorarray["title"] = L::messageAuthAccountBlockedTitle;
+            $errorarray["detail"] = L::messageAuthAccountBlockedDetail;
+            array_push($return["errors"], $errorarray);
+            return $return;
+        }
 
-	if ($user["UserRole"] == "admin") {
-        $return["meta"]["requestStatus"] = "success";
-        $return["meta"]["detail"] = "User is admin - action was permitted";
-        $return["meta"]["code"] = "200";
-        return $return;
-	}
+        if ($user["UserRole"] == "admin") {
+            $return["meta"]["requestStatus"] = "success";
+            $return["meta"]["detail"] = "User is admin - action was permitted";
+            $return["meta"]["code"] = "200";
+            return $return;
+        }
+    }
 
 	switch ($action) {
 

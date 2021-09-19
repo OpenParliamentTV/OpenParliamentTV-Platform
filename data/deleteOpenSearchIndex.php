@@ -47,7 +47,7 @@ if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli"))
 
     $ESClient = $ESClientBuilder->build();
 
-    $response = $ESClient->indices()->delete(array("index" => "openparliamenttv_de"));
+    $response = $ESClient->indices()->delete(array("index" => "openparliamenttv_de-bb"));
     echo '<pre>';
     print_r($response);
     echo '</pre>';
