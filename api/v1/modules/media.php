@@ -1157,11 +1157,15 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
     foreach ($item["textContents"] as $textContent) {
 
+        if (gettype($textContent["textBody"]) == "string") {
+            $textContent["textBody"] = json_decode($textContent["textBody"],true);
+        }
+
         foreach ($textContent["textBody"] as $textBodyIndex => $textBodyItem) {
             $textContent["textBody"][$textBodyIndex]["text"] = simpleTextBodyArrayToHTMLString($textBodyItem);
         }
 
-        $textHash = hash("sha256",((gettype($textContent["textBody"]) == "string") ? $textContent["textBody"] : json_encode($textContent["textBody"])));
+        $textHash = hash("sha256",json_encode($textContent["textBody"]));
 
         $tmpTextItem = $dbp->getRow("SELECT * FROM ?n WHERE TextMediaID = ?s AND TextHash = ?s AND TextType=?s",
             $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Text"], $nextID, $textHash, $textContent["type"]);
@@ -1183,7 +1187,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                     $textContent["originTextID"],
                     $nextID,
                     $textContent["type"],
-                    ((gettype($textContent["textBody"]) == "string") ? $textContent["textBody"] : json_encode($textContent["textBody"])),
+                    json_encode($textContent["textBody"]),
                     $textContent["sourceURI"],
                     $textContent["creator"],
                     $textContent["license"],
