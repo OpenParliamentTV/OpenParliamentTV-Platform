@@ -13,7 +13,7 @@ $config["ES_Offset"] = false;
 
 
 
-$config["ES_Parliament_Index"] = "DE-BB";
+$config["ES_Parliament_Index"] = "DE";
 /**
  * Example:
  * $config["ES_Parliament_Index"] = "DE";
