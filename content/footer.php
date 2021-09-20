@@ -1,6 +1,6 @@
 <footer>
 	<div class="row">
-		<div class="col-12 col-lg-8 col-xl-8">
+		<div class="col-12">
 			<div style="float: left; margin-right: 15px; padding: 15px 10px 0px 10px">
 				<div><?php echo L::fundedBy; ?>:</div>
 				<div class="partnerLogos">
@@ -12,7 +12,8 @@
 				<div><?php echo L::supportedBy; ?>:</div>
 				<div class="partnerLogos">
 					<img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/abgeordnetenwatch-sw.png" style="height: 26px; margin-top: -4px;">
-					<img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/correctiv.svg" style="height: 40px; margin-top: -8px; margin-bottom: 2px; margin-left: 10px;">
+					<img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/correctiv.svg" style="height: 40px; margin-top: -8px; margin-bottom: 20px; margin-left: 10px;">
+					<img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/bbc-news-labs.png" style="height: 23px; margin-top: -3px;  margin-left: 10px;">
 					<div class="clearfix"></div>
 				</div>
 			</div>
