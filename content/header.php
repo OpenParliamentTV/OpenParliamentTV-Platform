@@ -64,10 +64,12 @@
 					</div>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item <?= ($page == "manage") ? "active" : "" ?><?= (!$_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/manage">Dashboard</a>
+					<!--
 					<a class="dropdown-item <?= ($page == "login") ? "active" : "" ?><?= ($_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/login"><?php echo L::login; ?> <span class="icon-login"></span></a>
 					<a class="dropdown-item <?= ($page == "register") ? "active" : "" ?><?= ($_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/register"><?php echo L::registerNewAccount; ?></a>
+					-->
 					<a class="dropdown-item <?= ($page == "logout") ? "active" : "" ?><?= (!$_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/logout"><?php echo L::logout; ?> <span class="icon-logout"></span></a>
-					<div class="dropdown-divider"></div>
+					<!--<div class="dropdown-divider"></div>-->
 					<a class="dropdown-item <?= ($page == "about") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/about"><?php echo L::about; ?></a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item <?= ($page == "datapolicy") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/datapolicy"><?php echo L::dataPolicy; ?></a>
