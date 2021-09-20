@@ -12,26 +12,19 @@
 				<div><?php echo L::supportedBy; ?>:</div>
 				<div class="partnerLogos">
 					<img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/abgeordnetenwatch-sw.png" style="height: 26px; margin-top: -4px;">
+					<img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/correctiv.svg" style="height: 40px; margin-top: -8px; margin-bottom: 2px; margin-left: 10px;">
 					<div class="clearfix"></div>
 				</div>
 			</div>
+			<!--
 			<div style="float: left; padding: 15px 10px 0px 10px">
 				<div><?php echo L::mediaPartners; ?>:</div>
 				<div class="partnerLogos">
-					<!--<img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/zeit-online.png" style="height: 21px; margin-top: 0px;">-->
 					<div class="clearfix"></div>
 				</div>
 			</div>
+			-->
 		</div>
-		<!--
-		<hr class="d-block d-lg-none" style="width: 100%">
-		<div class="col-12 col-lg-4 col-xl-4">
-			<div class="d-flex align-content-end">
-				<img class="ml-auto align-self-center" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/okfde.svg" style="height: 100px; margin-top: 0px;">
-				<div class="align-self-center" style="font-size: 11px; max-width: 260px;">OpenParliament.TV ist ein gemeinnütziges Projekt des Open Knowledge Foundation Deutschland e.V.</div>
-			</div>
-		</div>
-		-->
 	</div>
 	<hr>
 	<div class="row">
