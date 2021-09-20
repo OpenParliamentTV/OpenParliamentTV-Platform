@@ -102,7 +102,7 @@ function organisationGetDataObject($item = false, $db = false) {
         $return["attributes"]["color"] = $item["OrganisationColor"];
         $return["attributes"]["additionalInformation"] = json_decode($item["OrganisationAdditionalInformation"],true);
         $return["attributes"]["lastChanged"] = $item["OrganisationLastChanged"];
-        $return["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
+        $return["links"]["self"] = $config["dir"]["api"]."/".$return["type"]."/".$return["id"];
         $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/"."search/media?organisationID=".$return["id"];
         $return["relationships"]["people"]["links"]["self"] = $config["dir"]["api"]."/"."search/people?organisationID=".$return["id"];
 
