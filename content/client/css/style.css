@@ -535,6 +535,32 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     color: var(--primary-fg-color) !important;
 }
 
+.copyrightInfo {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: var(--primary-bg-color);
+    padding: 2px 6px;
+    font-size: 12px;
+    border-bottom-left-radius: 10px;
+    transition-property: width, max-width;
+    transition-duration: 400ms;
+    max-width: 28px;
+    opacity: .8;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.copyrightInfo .icon-info-circled {
+    margin-right: 6px;
+}
+
+.copyrightInfo:hover {
+    max-width: 100%;
+    cursor: default;
+    opacity: 1;
+}
+
 .relationshipsCategoryHeader {
     font-weight: bolder;
     margin: -4px 0 10px 3px;
@@ -1322,6 +1348,43 @@ body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em
     object-fit: cover;
     height: 100%;
     object-position: top;
+}
+
+.thumbnailContainer .copyrightInfo,
+.detailsThumbnailContainer .copyrightInfo {
+    top: auto;
+    bottom: 10%;
+    right: 0px;
+    border-top-left-radius: 10px;
+    width: 26%;
+    max-width: 26%;
+}
+
+.thumbnailContainer .copyrightInfo:hover,
+.detailsThumbnailContainer .copyrightInfo:hover {
+    width: 26%;
+    max-width: 26% !important;
+    overflow: visible;
+    border-top-left-radius: 0px;
+}
+
+.thumbnailContainer .copyrightInfo .copyrightText,
+.detailsThumbnailContainer .copyrightInfo .copyrightText {
+    position: absolute;
+    display: none;
+    bottom: 18px;
+    background: var(--primary-bg-color);
+    z-index: 1000000001;
+    padding: 2px 6px;
+    box-shadow: 0 0 1px 0px var(--primary-fg-color);
+    left: 0px;
+    width: 400px;
+    white-space: normal;
+}
+
+.thumbnailContainer .copyrightInfo:hover .copyrightText,
+.detailsThumbnailContainer .copyrightInfo:hover .copyrightText {
+    display: block;
 }
 
 .detailsHeader .partyIndicator {

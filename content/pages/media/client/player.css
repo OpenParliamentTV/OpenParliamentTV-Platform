@@ -339,6 +339,12 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	transition-duration: 0ms !important
 }
 
+#videoAttribution {
+	position: absolute;
+	top: 4px;
+	right: 4px;
+}
+
 .hypervideoContainer .videoContainer, .areaLeftContainer, .areaRightContainer {
 	border-bottom: none;
 }

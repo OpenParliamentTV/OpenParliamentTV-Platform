@@ -167,6 +167,7 @@ $relatedContentsHTML =
         </div>
     </div>
 </div>
+<div id="videoAttribution" class="copyrightInfo" style="display: none;"><span class="icon-info-circled"></span><span class="copyrightText"><?php echo L::source; ?>: <?= $speech["attributes"]["creator"] ?>, <?= $speech["attributes"]["license"] ?></span></div>
 <!--
 <div class="container mb-5">
     <?php //include_once('content.related.php'); ?>

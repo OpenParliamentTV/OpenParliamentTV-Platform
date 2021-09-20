@@ -23,10 +23,17 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<div class="rounded-circle">
 							<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute;">
 						</div>
+						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?php echo L::source; ?>: <?= $apiResult["data"]["attributes"]["thumbnailCreator"] ?>, <?= $apiResult["data"]["attributes"]["thumbnailLicense"] ?></span></div>
 					</div>
 					<div class="col">
 						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
-						<a href="../organisation/<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>" class="partyIndicator" data-faction="<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["faction"]["data"]["attributes"]["labelAlternative"] ?></a>
+						<?php 
+						if (isset($apiResult["data"]["relationships"]["faction"]["data"]["id"])) {
+						?>
+							<a href="../organisation/<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>" class="partyIndicator" data-faction="<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["faction"]["data"]["attributes"]["labelAlternative"] ?></a>
+						<?php 
+						}
+						?>
 						<div><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
 						<a target="_blank" href="<?= $apiResult["data"]["attributes"]["websiteURI"] ?>"><?= $apiResult["data"]["attributes"]["websiteURI"] ?></a>
 					</div>

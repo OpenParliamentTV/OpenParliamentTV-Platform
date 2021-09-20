@@ -442,6 +442,8 @@ function updatePlayer() {
 
 	OPTV_Player.on('ready', function() {
 
+		$('#videoAttribution').appendTo('.frametrail-body .hypervideo').show();
+
 		$('#content').addClass('ready');
 		processQuery();
 		/*
