@@ -56,6 +56,7 @@ include_once(__DIR__ . '/../../header.php');
 			<hr>
 			<h3>Open Source</h3>
 			<p>Open Parliament TV is a <b>non-commercial Open Source project</b>. All project components are published under <b>open licenses</b> at Github: </p>
+			<div class="alert alert-warning py-1 px-2">The repositories will be set public on the official launch date (20. October)</div>
 			<ul>
 				<li><a href="https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture" target="_blank">OpenParliamentTV-Architecture</a></li>
 				<li><a href="https://github.com/OpenParliamentTV/OpenParliamentTV-Platform" target="_blank">OpenParliamentTV-Platform</a></li>
@@ -63,9 +64,11 @@ include_once(__DIR__ . '/../../header.php');
 				<li><a href="https://github.com/OpenParliamentTV/OpenParliamentTV-NEL" target="_blank">OpenParliamentTV-NEL</a></li>
 				<li><a href="https://github.com/OpenParliamentTV/OpenParliamentTV-Alignment" target="_blank">OpenParliamentTV-Alignment</a></li>
 			</ul>
+			<!--
 			<hr>
 			<h3>FAQ</h3>
-			<p>Questions about the project, our data or technical specifications are answered in our <a href="faq">Frequently Asked Questions</a>.
+			<p>Questions about the project, our data or technical specifications are answered in our <a href="faq">Frequently Asked Questions</a>.</p>
+			-->
 		</div>
 	</div>
 	<!--
