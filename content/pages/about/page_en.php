@@ -71,7 +71,6 @@ include_once(__DIR__ . '/../../header.php');
 			-->
 		</div>
 	</div>
-	<!--
 	<hr>
 	<div class="row">
 		<div class="col-12">
@@ -82,7 +81,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="linkWrapper">
 								<div class="thumbnailContainer">
 								<div class="rounded-circle">
-									<img src="" alt="...">
+									<img src="<?= $config["dir"]["root"] ?>/content/client/images/team/joscha.jpg" alt="Joscha Jäger">
 								</div>
 							</div>
 							<div>
@@ -98,13 +97,13 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="linkWrapper">
 								<div class="thumbnailContainer">
 								<div class="rounded-circle">
-									<img src="" alt="...">
+									<img src="<?= $config["dir"]["root"] ?>/content/client/images/team/alexa.jpg" alt="Alexa Steinbrück">
 								</div>
 							</div>
 							<div>
 								<div class="entityTitle">Alexa Steinbrück</div>
 								<div>Data Scientist</div>
-								<div><span class="icon-angle-right"></span>Developer: Named Entity Linking</div>
+								<div><span class="icon-angle-right"></span>Developer: Wikidata Integration & NEL</div>
 							</div>
 						</div>
 					</div>
@@ -119,8 +118,8 @@ include_once(__DIR__ . '/../../header.php');
 							</div>
 							<div>
 								<div class="entityTitle">Michael Morgenstern</div>
-								<div>Backend Developer & Designer</div>
-								<div><span class="icon-angle-right"></span>Platform Architecture & -Administration</div>
+								<div>Developer & Designer</div>
+								<div><span class="icon-angle-right"></span>Platform Development & -Architecture</div>
 							</div>
 						</div>
 					</div>
@@ -130,7 +129,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="linkWrapper">
 								<div class="thumbnailContainer">
 								<div class="rounded-circle">
-									<img src="" alt="...">
+									<img src="<?= $config["dir"]["root"] ?>/content/client/images/team/olivier.jpg" alt="Olivier Aubert">
 								</div>
 							</div>
 							<div>
@@ -146,7 +145,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="linkWrapper">
 								<div class="thumbnailContainer">
 								<div class="rounded-circle">
-									<img src="" alt="...">
+									<img src="<?= $config["dir"]["root"] ?>/content/client/images/team/philo.jpg" alt="Philo van Kemenade">
 								</div>
 							</div>
 							<div>
@@ -157,6 +156,7 @@ include_once(__DIR__ . '/../../header.php');
 						</div>
 					</div>
 				</div>
+				<!--
 				<div class="entityPreview col" data-type="person">
 					<div class="entityContainer">
 						<div class="linkWrapper">
@@ -173,10 +173,10 @@ include_once(__DIR__ . '/../../header.php');
 						</div>
 					</div>
 				</div>
+				-->
 			</div>
 		</div>
 	</div>
-	-->
 	<hr>
 	<div class="row mb-4">
 		<div class="col-12">
