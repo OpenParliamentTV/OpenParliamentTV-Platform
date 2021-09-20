@@ -8,7 +8,10 @@ var shareThis = window.ShareThis,
 
 $(document).ready( function() {
 	initShareQuote();
+});
 
+function initShareQuote() {
+	
 	$('#shareQuoteModal .sharePreview').click(function() {
 		$('#shareQuoteModal .sharePreview').removeClass('active');
 		$(this).addClass('active');
@@ -16,9 +19,6 @@ $(document).ready( function() {
 		shareURL = shareURL.replace(/c=\w+/, 'c='+thisTheme);
 		$('#shareQuoteModal #shareURL').val(shareURL);
 	});
-});
-
-function initShareQuote() {
 	
 	processQuery();
 
