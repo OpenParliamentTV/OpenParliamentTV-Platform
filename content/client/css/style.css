@@ -256,7 +256,7 @@ footer .partnerLogos img {
 }
 
 body.darkmode footer .partnerLogos img {
-    filter: grayscale(1) invert(1) brightness(10) opacity(0.7);
+    filter: grayscale(1) invert(1) brightness(10) opacity(0.7) !important;
 }
 
 main {
