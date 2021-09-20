@@ -13,7 +13,7 @@
 				<div class="partnerLogos">
 					<img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/abgeordnetenwatch-sw.png" style="height: 26px; margin-top: -4px;">
 					<img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/correctiv.svg" style="height: 40px; margin-top: -8px; margin-bottom: 20px; margin-left: 10px;">
-					<img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/bbc-news-labs.png" style="height: 23px; margin-top: -3px;  margin-left: 10px;">
+					<img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/bbc-news-labs.svg" style="height: 33px; margin-top: -8px;  margin-left: 10px;">
 					<div class="clearfix"></div>
 				</div>
 			</div>

@@ -251,8 +251,12 @@ footer {
     float: left;
 }
 
+footer .partnerLogos img {
+    margin-right: 36px;
+}
+
 body.darkmode footer .partnerLogos img {
-    filter: grayscale(1) brightness(10) opacity(0.7);
+    filter: grayscale(1) invert(1) brightness(10) opacity(0.7);
 }
 
 main {
