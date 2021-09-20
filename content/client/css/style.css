@@ -605,12 +605,12 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     padding: 8px 10px;
     text-decoration: none;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
-.relationshipsList .entityPreview[data-type="document"] .entityContainer a, 
-.relationshipsList .entityPreview[data-type="document"] .entityContainer .linkWrapper {
-    flex-direction: column;
+.relationshipsList .entityPreview[data-type="person"] .entityContainer a, 
+.relationshipsList .entityPreview[data-type="person"] .entityContainer .linkWrapper {
+    flex-direction: row;
 }
 
 .relationshipsList .entityPreview .entityContainer .entityButton {
