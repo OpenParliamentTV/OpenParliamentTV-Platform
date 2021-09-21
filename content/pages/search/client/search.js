@@ -684,9 +684,16 @@ function updateResultList() {
 	if(updateAjax && updateAjax.readyState != 4){
         updateAjax.abort();
     }
+    
+    var pageParam = getQueryVariable('page'),
+    	pageString = '';
+    if (pageParam) {
+    	pageString = 'page=' + pageParam + '&';
+    }
+
 	updateAjax = $.ajax({
 		method: "POST",
-		url: "./content/pages/search/content.result.php?a=search&queryOnly=1&"+ getSerializedForm()
+		url: "./content/pages/search/content.result.php?a=search&queryOnly=1&" + pageString + getSerializedForm()
 	}).done(function(data) {
 		var requestQuery = getQueryVariable('q'),
 			requestPersonID = getQueryVariable('personID');
