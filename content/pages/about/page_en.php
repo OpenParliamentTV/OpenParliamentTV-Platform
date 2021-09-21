@@ -113,12 +113,12 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="linkWrapper">
 								<div class="thumbnailContainer">
 								<div class="rounded-circle">
-									<img src="" alt="...">
+									<img src="<?= $config["dir"]["root"] ?>/content/client/images/team/michael.jpg" alt="Michael Morgenstern">
 								</div>
 							</div>
 							<div>
 								<div class="entityTitle">Michael Morgenstern</div>
-								<div>Developer & Designer</div>
+								<div>Creative Technologist</div>
 								<div><span class="icon-angle-right"></span>Platform Development & -Architecture</div>
 							</div>
 						</div>
