@@ -26,6 +26,9 @@ include_once(__DIR__ . '/../../header.php');
 			<hr>
 			<h3>Was ist Open Parliament TV?</h3>
 			<p>Wir entwickeln mit Open Parliament TV die Abläufe und Werkzeuge, welche für einen zeitgemäßen Umgang mit den Inhalten des Parlamentsfernsehens nötig sind. Im Kern <b>synchronisieren </b>wir die<b> Videoaufzeichnungen </b>mit den<b> Plenarprotokollen.</b> Hierüber können wir die Videos zunächst über eine Volltextsuche zugänglich machen.</p>
+			<div class="my-3 px-0">
+				<img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/thumbnail.png" style="border: 2px solid var(--primary-bg-color);" alt="Open Parliament TV Screenshot">
+			</div>
 			<p>Durch die Verknüpfung von Videoaufzeichnung und Protokolltext können wir die Reden zusätzlich</p>
 			<ul>
 				<li>um <b>interaktive Transkripte</b> erweitern <br>(Klick auf einen Satz &gt; Sprung zu Zeitpunkt im Video)</li>
@@ -38,6 +41,11 @@ include_once(__DIR__ . '/../../header.php');
 			<h3>Projektziel</h3>
 			<p>Ziel des Open Parliament TV Projektes ist es, fundamental und langfristig zu ändern, wie Menschen mit videobasierten Veröffentlichungen politischer Debatten umgehen. Wir möchten Debatten in den Parlamenten <b>transparenter</b>, <b>zugänglicher</b> und <b>besser verständlich</b> machen.</p>
 			<p>Ausgehend von Bundestagsreden haben wir ein System <b>interoperabler</b> und gut dokumentierter <b>Einzelkomponenten</b> geschaffen, welches eine <b>Übertragbarkeit</b> auf Landesparlamente, Stadtratssitzungen, Sitzungen des EU Parlaments sowie auf weitere nationale Parlamente ermöglicht. Die Übertragbarkeit der Projektbausteine ist eine zentrale Komponente des Projekts und wurde von Beginn an berücksichtigt.</p>
+			<!--
+			<div class="my-3 px-0">
+				<img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/data-ingest.png" style="border: 2px solid var(--primary-bg-color);" alt="Open Parliament TV Data Ingest">
+			</div>
+			-->
 			<p>Langfristig soll Open Parliament TV dazu beitragen, politische Debatten <b>über verschiedene Ebenen und verschiedene Länder</b> hinweg interparlamentar zugänglich zu machen:</p>
 			<a href="https://openparliament.tv/proposal" target="_blank" class="btn btn-primary btn-sm"><span class="icon-doc-text"></span>Open Parliament TV - Open Source Project Proposal (auf Englisch)</a>
 		</div>
@@ -156,24 +164,6 @@ include_once(__DIR__ . '/../../header.php');
 						</div>
 					</div>
 				</div>
-				<!--
-				<div class="entityPreview col" data-type="person">
-					<div class="entityContainer">
-						<div class="linkWrapper">
-								<div class="thumbnailContainer">
-								<div class="rounded-circle">
-									<img src="" alt="...">
-								</div>
-							</div>
-							<div>
-								<div class="entityTitle">Liliana Melgar Estrada</div>
-								<div>Information Scientist</div>
-								<div><span class="icon-angle-right"></span>Beraterin: Akademische Kooperationen</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				-->
 			</div>
 		</div>
 	</div>

@@ -22,10 +22,14 @@ include_once(__DIR__ . '/../../header.php');
 	<div class="row">
 		<div class="col-12 col-lg-8">
 			<p><img src="<?= $config["dir"]["root"] ?>/content/client/images/optv-logo.png" style="float: right; width: 200px; margin-left: 20px;">Plenary debates are the publicly visible outcome of controversial internal debates, hearings, negotiations and analyses. Videos of the respective speeches are the “spectacular” parts of politics, which find their way into newsrooms, social media feeds and Late Night Shows. But the way <b>video contents</b> are currently published is largely based upon sharing <b>short key moments</b>, with a clear <b>lack of contextual information</b> (full speech, relevant original documents, additional materials, other speeches on the same subject, public discourse, fact checks, etc.). </p>
-			<p>This leaves us in a situation where video clips are used to share short moments, but as soon as the speeches are used for in-depth analyses, fact checks, learning or longform reporting, we rely solely on the text-based transcripts and quotes.</p>
+			<p>This means video clips are used to share short moments, but as soon as the speeches are used for in-depth analyses, fact checks, learning or longform reporting, we rely solely on the text-based transcripts and quotes.</p>
 			<hr>
 			<h3>What is Open Parliament TV?</h3>
+			<img src="<?= $config["dir"]["root"] ?>/content/client/images/thumbnail.png">
 			<p>With Open Parliament TV we develop the workflows, tools and user interfaces required to facilitate new ways of experiencing political speeches. At the core we <b>synchronise</b> the <b>video recordings</b> with the <b>plenary proceedings</b>. This is how we can provide a full text search for the videos.</p>
+			<div class="my-3 px-0">
+				<img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/thumbnail.png" style="border: 2px solid var(--primary-bg-color);" alt="Open Parliament TV Screenshot">
+			</div>
 			<p>By connecting the video recording with the proccedings text we can additionally enrich the videos with</p>
 			<ul>
 				<li><b>interactive transcripts</b> <br>(click on a sentence &gt; jump to point of time in the video)</li>
@@ -151,29 +155,11 @@ include_once(__DIR__ . '/../../header.php');
 							<div>
 								<div class="entityTitle">Philo van Kemenade</div>
 								<div>Creative Technologist</div>
-								<div><span class="icon-angle-right"></span>Advisor: Architecture & Collaborations</div>
+								<div><span class="icon-angle-right"></span>Advisor: Architecture & Partnerships</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!--
-				<div class="entityPreview col" data-type="person">
-					<div class="entityContainer">
-						<div class="linkWrapper">
-								<div class="thumbnailContainer">
-								<div class="rounded-circle">
-									<img src="" alt="...">
-								</div>
-							</div>
-							<div>
-								<div class="entityTitle">Liliana Melgar Estrada</div>
-								<div>Information Scientist</div>
-								<div><span class="icon-angle-right"></span>Advisor: Academic Collaborations</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				-->
 			</div>
 		</div>
 	</div>
