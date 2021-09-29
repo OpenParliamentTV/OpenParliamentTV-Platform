@@ -25,7 +25,6 @@ include_once(__DIR__ . '/../../header.php');
 			<p>This means video clips are used to share short moments, but as soon as the speeches are used for in-depth analyses, fact checks, learning or longform reporting, we rely solely on the text-based transcripts and quotes.</p>
 			<hr>
 			<h3>What is Open Parliament TV?</h3>
-			<img src="<?= $config["dir"]["root"] ?>/content/client/images/thumbnail.png">
 			<p>With Open Parliament TV we develop the workflows, tools and user interfaces required to facilitate new ways of experiencing political speeches. At the core we <b>synchronise</b> the <b>video recordings</b> with the <b>plenary proceedings</b>. This is how we can provide a full text search for the videos.</p>
 			<div class="my-3 px-0">
 				<img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/thumbnail.png" style="border: 2px solid var(--primary-bg-color);" alt="Open Parliament TV Screenshot">
