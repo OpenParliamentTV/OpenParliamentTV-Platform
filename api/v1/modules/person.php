@@ -99,7 +99,7 @@ function personGetDataObject($item = false, $db = false) {
         $return["attributes"]["gender"] = $item["PersonGender"];
         $return["attributes"]["abstract"] = $item["PersonAbstract"];
         $return["attributes"]["thumbnailURI"] = $item["PersonThumbnailURI"];
-        $return["attributes"]["thumbnailCreator"] = $item["PersonThumbnailCreator"];
+        $return["attributes"]["thumbnailCreator"] = htmlentities($item["PersonThumbnailCreator"]);
         $return["attributes"]["thumbnailLicense"] = $item["PersonThumbnailLicense"];
         $return["attributes"]["embedURI"] = $item["PersonEmbedURI"];
         $return["attributes"]["websiteURI"] = $item["PersonWebsiteURI"];
