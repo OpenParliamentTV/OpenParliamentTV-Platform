@@ -624,17 +624,91 @@ function getSearchBody($request, $getAllResults) {
 		
 		if (strlen($fuzzy_match) > 0) {
 			
-			//TODO: Check which item in textContents is the right one
-			$query["bool"][$boolCondition][] = array("match"=>array("attributes.textContents.textHTML" => array(
-				"query"=>$fuzzy_match,
-				"operator"=>"and",
-				//"fuzziness"=>0,
-				"prefix_length"=>0)));
+			$query_array = preg_split("/(\s)/", $fuzzy_match);
+
+			foreach ($query_array as $query_item) {
+				if (strpos($query_item, '*') !== false) {
+					
+					$query["bool"][$boolCondition][] = array(
+						"wildcard" => array("attributes.textContents.textHTML" => array(
+								"value"=>$query_item,
+								"case_insensitive"=>true
+							)
+						)
+					);
+
+				} else if (strlen($query_item) != 0) {
+
+					//TODO: Check which item in textContents is the right one
+					$query["bool"][$boolCondition][] = array(
+						"match"=>array("attributes.textContents.textHTML" => array(
+								"query"=>$query_item,
+								//"operator"=>"and",
+								//"fuzziness"=>0,
+								"prefix_length"=>0
+							)
+						)
+					);
+
+				}
+			}
 		}
 
 		foreach ($exact_query_matches[0] as $exact_match) {
 			$exact_match = preg_replace('/(["\'])/m', '', $exact_match);
-			$query["bool"]["must"][] = array("match_phrase"=>array("attributes.textContents.textHTML"=>$exact_match));
+			if (strpos($exact_match, '*') !== false) {
+				
+				$exact_query_array = preg_split("/(\s)/", $exact_match);
+
+				$query["bool"]["must"]["span_near"] = array(
+					"clauses" => array(),
+					"slop" => 0,
+					"in_order" => true
+				);
+
+				foreach ($exact_query_array as $exact_query_item) {
+					
+					if (strpos($exact_query_item, '*') !== false) {
+						$query["bool"]["must"]["span_near"]["clauses"][] = array(
+							"span_multi" => array(
+								"match" => array(
+									"wildcard" => array(
+										"attributes.textContents.textHTML" => array(
+											"value"=>$exact_query_item,
+											"case_insensitive"=>true
+										)
+									)
+								)
+							)
+						);
+					} else {
+						$query["bool"]["must"]["span_near"]["clauses"][] = array(
+							"span_term" => array(
+								"attributes.textContents.textHTML" => strtolower($exact_query_item)
+							)
+						);
+					}
+
+					
+				}
+
+				/*
+				["must"][] = array(
+					"wildcard"=>array(
+						"attributes.textContents.textHTML"=>$exact_match
+					)
+				);
+				*/
+
+			} else {
+				
+				$query["bool"]["must"][] = array(
+					"match_phrase"=>array(
+						"attributes.textContents.textHTML"=>$exact_match
+					)
+				);
+
+			}
 		}
 		
 

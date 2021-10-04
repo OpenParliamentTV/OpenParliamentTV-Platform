@@ -367,6 +367,17 @@ function updateSuggestions() {
 	    }
 
 	    if (textValue.indexOf(' ') == -1) {
+	    	
+	    	var wildcardSuggestionItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">'+ textValue +'*</span><span class="ml-2" style="opacity: .68;">('+ localizedLabels.wildcardSearch +')</span></div>');
+			
+			wildcardSuggestionItem.click(function(evt) {
+				var textValue = $(this).children('.suggestionItemLabel').text();
+				addQueryItem('text', textValue);
+				updateQuery();
+			});
+
+			$('#suggestionContainerText').append(wildcardSuggestionItem);
+
 	    	suggestionsTextAjax = $.ajax({
 				method: "POST",
 				url: './api/v1/autocomplete/text?q='+ textValue
