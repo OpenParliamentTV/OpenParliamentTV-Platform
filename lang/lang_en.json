@@ -165,5 +165,6 @@
 	"users": "Users",
 	"versionCurrent": "Current Version",
 	"versionNext": "Next Version",
-	"versionPrevious": "Previous Versions"
+	"versionPrevious": "Previous Versions",
+	"wildcardSearch": "term begins with"
 }
