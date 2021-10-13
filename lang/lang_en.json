@@ -50,6 +50,7 @@
 	"filtersShow": "Show Filters",
 	"fundedBy": "Funded by",
 	"hello": "Hello",
+	"imageMaterial": "Pictures",
 	"imprint": "Imprint",
 	"inDEM": "in the",
 	"inDER": "in the",
@@ -122,6 +123,9 @@
 	"personSingular": "Person",
 	"personalSettings": "Personal Settings",
 	"platformSettings": "Platform Settings",
+	"press": "Press",
+	"pressKit": "Press-Kit",
+	"pressReleases": "Press Releases",
 	"previousPage": "Previous Page",
 	"previousResult": "Previous Result",
 	"previousSpeech": "Previous Speech",
@@ -166,5 +170,6 @@
 	"versionCurrent": "Current Version",
 	"versionNext": "Next Version",
 	"versionPrevious": "Previous Versions",
-	"wildcardSearch": "term begins with"
+	"wildcardSearchBegin": "term begins with",
+	"wildcardSearchEnd": "term ends with"
 }

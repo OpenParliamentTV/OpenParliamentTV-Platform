@@ -50,6 +50,7 @@
 	"filtersShow": "Filter anzeigen",
 	"fundedBy": "Gefördert von",
 	"hello": "Hallo",
+	"imageMaterial": "Bildmaterial",
 	"imprint": "Impressum",
 	"inDEM": "im",
 	"inDER": "in der",
@@ -122,6 +123,9 @@
 	"personSingular": "Person",
 	"personalSettings": "Persönliche Einstellungen",
 	"platformSettings": "Plattform-Einstellungen",
+	"press": "Presse",
+	"pressKit": "Presse-Kit",
+	"pressReleases": "Pressemitteilungen",
 	"previousPage": "Vorherige Seite",
 	"previousResult": "Vorheriges Ergebnis",
 	"previousSpeech": "Vorheriger Redebeitrag",
@@ -166,5 +170,6 @@
 	"versionCurrent": "Aktuelle Version",
 	"versionNext": "Nächste Version",
 	"versionPrevious": "Vorherige Versionen",
-	"wildcardSearch": "Begriff beginnt mit"
+	"wildcardSearchBegin": "Begriff beginnt mit",
+	"wildcardSearchEnd": "Begriff endet mit"
 }

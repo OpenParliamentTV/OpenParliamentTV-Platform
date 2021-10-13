@@ -632,7 +632,9 @@ function getSearchBody($request, $getAllResults) {
 					$query["bool"][$boolCondition][] = array(
 						"wildcard" => array("attributes.textContents.textHTML" => array(
 								"value"=>$query_item,
-								"case_insensitive"=>true
+								"case_insensitive"=>true,
+								"boost"=>1.0,
+								"rewrite"=>"scoring_boolean"
 							)
 						)
 					);

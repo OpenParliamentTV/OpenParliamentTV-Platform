@@ -299,6 +299,18 @@ switch ($page) {
 		include_once("./content/pages/passwordreset/page.php");
 		$content = ob_get_clean();
 	break;
+	case "press":
+		$pageTitle = L::press;
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/press/page.php");
+		$content = ob_get_clean();
+	break;
 	case "register":
 		$pageTitle = L::registerNewAccount;
 		$pageType = 'default';
