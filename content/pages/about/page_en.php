@@ -74,7 +74,7 @@ include_once(__DIR__ . '/../../header.php');
 			-->
 		</div>
 	</div>
-	<hr>
+	<hr id="team">
 	<div class="row">
 		<div class="col-12">
 			<h2>Team</h2>
