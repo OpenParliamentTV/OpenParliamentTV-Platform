@@ -732,6 +732,7 @@ function updateResultList() {
 		$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
 		updateStatsViz(minDate, maxDate);
 		$('.loadingIndicator').hide();
+		runCounterAnimation();
 	}).fail(function(err) {
 		//console.log(err);
 	});
@@ -846,4 +847,41 @@ function getSerializedForm() {
     }).serialize();
 	
     return formData;
+}
+
+function easeOutQuad(t) {
+	return t === 1 ? 1 : 1 - Math.pow(2, -20 * t);
+}
+
+function animateCountUp(el) {
+	let animationDuration = 4000;
+	let frameDuration = 1000 / 60;
+	let totalFrames = Math.round( animationDuration / frameDuration );
+	let frame = 0;
+	const countTo = parseInt( el.innerHTML, 10 );
+	// Start the animation running 60 times per second
+	const counter = setInterval( () => {
+		frame++;
+		// Calculate our progress as a value between 0 and 1
+		// Pass that value to our easing function to get our
+		// progress on a curve
+		const progress = easeOutQuad( frame / totalFrames );
+		// Use the progress value to calculate the current count
+		const currentCount = Math.round( countTo * progress );
+
+		// If the current count has changed, update the element
+		if ( parseInt( el.innerHTML, 10 ) !== currentCount ) {
+			el.innerHTML = currentCount;
+		}
+
+		// If we’ve reached our last frame, stop the animation
+		if ( frame === totalFrames ) {
+			clearInterval( counter );
+		}
+	}, frameDuration );
+}
+
+function runCounterAnimation() {
+	const countupEls = document.querySelectorAll( '.countup' );
+	countupEls.forEach( animateCountUp );
 }

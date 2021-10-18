@@ -3,7 +3,7 @@
 		<input type="hidden" name="q" value="">
 		<input type="hidden" name="context" value="">
 		<div class="searchContainer">
-			<div class="parliamentFilterContainer">
+			<div class="parliamentFilterContainer d-none">
 				<?php include_once('content.filter.parliaments.php'); ?>
 			</div>
 			<div class="position-relative">
