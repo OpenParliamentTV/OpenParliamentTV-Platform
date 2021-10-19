@@ -109,7 +109,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="alert alert-info mt-4">Frage nicht beantwortet? Kontaktiere uns gerne jederzeit per Mail unter joscha.jaeger [at] openparliament.tv oder per Twitter: @OpenParlTV.Frage nicht beantwortet? Kontaktiere uns gerne jederzeit per Mail unter joscha.jaeger [at] openparliament.tv oder per Twitter: @OpenParlTV.</div>
+			<div class="alert alert-info mt-4">Frage nicht beantwortet? Kontaktiere uns gerne jederzeit per Mail unter joscha.jaeger [at] openparliament.tv oder per Twitter: @OpenParlTV. </div>
 		</div>
 	</div>
 </main>
