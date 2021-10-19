@@ -17,7 +17,9 @@
 				<img src="<?= $config["dir"]["root"] ?>/content/client/images/optv-logo_klein.png"><span class="<?= $brandClass ?>"><?php echo L::brand; ?></span>
 			</a>
 			<!-- Beta Version Notice -->
+			<!--
 			<span style="font-size: 10px;position: relative;top: -2px;line-height: 10px;float: left;"><span class="icon-info-circled"></span><a href="<?= $config["dir"]["root"] ?>/version" style="display: inline-block;vertical-align: top;">Public <br>Beta</a></span>
+			-->
 			<?php 
 				if (isset($pageBreadcrumbs)) {
 					foreach ($pageBreadcrumbs as $breadcrumb) {
