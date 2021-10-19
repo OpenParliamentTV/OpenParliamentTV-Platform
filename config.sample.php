@@ -1,7 +1,7 @@
 <?php
 
 /**
- * The URI to your openparliament instance
+ * The URI to your Open Parliament TV instance
  * Example: https://de.openparliament.tv
  */
 $config["dir"]["root"] = "";
