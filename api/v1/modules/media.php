@@ -30,7 +30,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
         $errorarray["status"] = "500";
         $errorarray["code"] = "1";
         $errorarray["title"] = "ID Error";
-        $errorarray["detail"] = "Could not parse ID"; //TODO: Description
+        $errorarray["detail"] = "Could not parse ID";
         array_push($return["errors"], $errorarray);
         return $return;
 
@@ -45,7 +45,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
+        $errorarray["detail"] = "Required parameter of the request is missing";
         array_push($return["errors"], $errorarray);
 
         return $return;
@@ -57,7 +57,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Invalid MediaID";
-        $errorarray["detail"] = "MediaID could not be associated with a parliament"; //TODO: Description
+        $errorarray["detail"] = "MediaID could not be associated with a parliament";
         array_push($return["errors"], $errorarray);
 
         return $return;
@@ -81,7 +81,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                 $errorarray["status"] = "503";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "Database connection error";
-                $errorarray["detail"] = "Connecting to platform database failed"; //TODO: Description
+                $errorarray["detail"] = "Connecting to platform database failed";
                 array_push($return["errors"], $errorarray);
                 return $return;
 
@@ -106,7 +106,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                 $errorarray["status"] = "503";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "Database connection error";
-                $errorarray["detail"] = "Connecting to parliament database failed"; //TODO: Description
+                $errorarray["detail"] = "Connecting to parliament database failed";
                 array_push($return["errors"], $errorarray);
                 return $return;
 
@@ -142,7 +142,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                 $errorarray["status"] = "511";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "Media not allowed to access";
-                $errorarray["detail"] = "The media is not public"; //TODO: Description
+                $errorarray["detail"] = "The media is not public";
                 array_push($return["errors"], $errorarray);
                 return $return;
 
@@ -261,7 +261,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
 
                         $ditem = $db->getRow("SELECT * FROM ?n WHERE OrganisationID=?s LIMIT 1", $config["platform"]["sql"]["tbl"]["Organisation"], $annotation["AnnotationResourceID"]);
                         $tmpAnnotationItem["type"] = "organisation";
-                        //$tmpAnnotationItem["id"] = $annotation["AnnotationID"];
+
                         $tmpAnnotationItem["id"] = $annotation["AnnotationResourceID"];
                         $tmpAnnotationItem["attributes"]["context"] = $annotation["AnnotationContext"];
                         $tmpAnnotationItem["attributes"]["type"] = $ditem["OrganisationType"];
@@ -309,7 +309,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
 
                     case "person":
 
-                        //TODO: What if no party or no faction?
+                        //TODO: What if there is no party or no faction?
                         $pitem = $db->getRow("SELECT
                                 p.*,
                                 op.OrganisationID,
@@ -371,7 +371,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
             $errorarray["status"] = "404";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Media not found";
-            $errorarray["detail"] = "Media with the given ID was not found in database"; //TODO: Description
+            $errorarray["detail"] = "Media with the given ID was not found in database";
             array_push($return["errors"], $errorarray);
 
         }
@@ -392,13 +392,6 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
     require_once (__DIR__."/../../../modules/search/functions.php");
 
-    //print_r($parameter);
-
-    //print_r(searchSpeeches($parameter));
-
-
-
-    //return searchSpeeches($parameter);
 
     $allowedFields = ["parliament", "electoralPeriod", "sessionID", "sessionNumber", "agendaItemID", "context", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "abgeordnetenwatchID", "organisation", "organisationID", "documentID", "termID", "id", "q"];
 
@@ -433,8 +426,8 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
             $return["meta"]["requestStatus"] = "error";
             $return["errors"] = array();
-            $errorarray["status"] = "503"; //TODO: check this
-            $errorarray["code"] = "3"; //TODO: check this
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "3";
             $errorarray["title"] = "OpenSearch Error";
             $errorarray["detail"] = json_encode($search);
             array_push($return["errors"], $errorarray);
@@ -449,234 +442,6 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
     return $return;
 
-    /*
-    //Find out what Parliament Database is meant
-
-    if ($parameter["parliament"]) {
-
-        $parliament = $parameter["parliament"];
-
-
-    } else {
-
-        if ((array_key_exists("electoralPeriod", $parameter)) && (gettype($parameter["electoralPeriod"]) == "string")) {
-
-            $parliament = getInfosFromStringID($parameter["electoralPeriod"]);
-            $parliament = $parliament["parliament"];
-
-        } elseif ((array_key_exists("session", $parameter)) && (gettype($parameter["session"]) == "string")) {
-
-            $parliament = getInfosFromStringID($parameter["session"]);
-            $parliament = $parliament["parliament"];
-
-        }
-    }
-
-    if (!array_key_exists($parliament,$config["parliament"])) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid MediaID";
-        $errorarray["detail"] = "MediaID could not be associated with a parliament"; //TODO: Description
-        array_push($return["errors"], $errorarray);
-
-        return $return;
-    }
-
-    if (!$db) {
-
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        );
-
-        try {
-
-            $db = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
-    }
-
-    if (!$dbp) {
-
-        $opts = array(
-            'host'	=> $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user'	=> $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass'	=> $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db'	=> $config["parliament"][$parliament]["sql"]["db"]
-        );
-
-        try {
-
-            $dbp = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "2";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
-    }
-
-    $allowedFields = ["parliament", "electoralPeriod", "session", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "personAbgeordnetenwatchID", "organisation", "organisationID"];
-
-    $filteredParameters = array_filter(
-        $parameter,
-        function ($key) use ($allowedFields) {
-            return in_array($key, $allowedFields);
-        },
-        ARRAY_FILTER_USE_KEY
-    );
-
-
-
-
-    // VALIDATION START
-
-    // External VALIDATION START
-
-    if ($filteredParameters["party"]) {
-        $tmpParty["name"] = $filteredParameters["party"];
-        $tmpParty["type"] = "party";
-        require_once (__DIR__."/organisation.php");
-
-        try {
-
-            $partyResponse = organisationSearch($tmpParty, $db);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "2";
-            $errorarray["title"] = "Error by getting data from platform";
-            $errorarray["detail"] = "Party query failed"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
-
-        if (is_array($partyResponse)) {
-            if ($partyResponse["meta"]["requestStatus"] == "error") {
-
-                $partyResponse["errors"][0]["detail"] = "Party: ".$partyResponse["errors"][0]["detail"];
-                $return["meta"]["requestStatus"] = "error";
-                $return["errors"][] = $partyResponse["errors"][0];
-
-            } else {
-                foreach ($partyResponse["data"] as $tmpParty) {
-                    $conditionsAnnotations[] = $db->parse("((AnnotationType = organisation) AND (AnnotationResourceID LIKE ?s))", $tmpParty["id"]);
-                }
-            }
-        }
-
-    }
-
-    if ($return["meta"]["requestStatus"] == "error") {
-
-        return $return;
-
-    }
-
-    $query = "SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Organisation"];
-
-    $conditions = array();
-
-    foreach ($filteredParameters as $k=>$para) {
-        if ($k == "name") {
-            if (is_array($para)) {
-
-                $tmpStringArray = array();
-
-                foreach ($para as $tmppara) {
-
-                    $tmpStringArray[] = $db->parse("(MATCH(OrganisationLabel, OrganisationLabelAlternative, OrganisationAbstract) AGAINST (?s IN BOOLEAN MODE))", "*" . $tmppara . "*");
-                    //TODO: check if OR (Label LIKE ?s) is needed when more data is present
-                }
-
-                $tmpStringArray = " (" . implode(" OR ", $tmpStringArray) . ")";
-                $conditions[] = $tmpStringArray;
-
-            } else {
-
-                $conditions[] = $db->parse("MATCH(OrganisationLabel, OrganisationLabelAlternative, OrganisationAbstract) AGAINST (?s IN BOOLEAN MODE)", "*" . $para . "*");
-                //TODO: check if OR (Label LIKE ?s) is needed when more data is present
-
-            }
-        }
-
-        if ($k == "type") {
-
-            $conditions[] = $db->parse("OrganisationType = ?s", $para);
-
-        }
-
-    }
-
-
-    if (count($conditions) > 0) {
-
-        $query .= " WHERE ".implode(" AND ",$conditions);
-        //echo $db->parse($query);
-        $findings = $db->getAll($query);
-
-        $return["meta"]["requestStatus"] = "success";
-
-        if (!$return["data"]) {
-            $return["data"] = array();
-        }
-
-        foreach ($findings as $finding) {
-            //print_r($finding);
-            array_push($return["data"], organisationGetDataObject($finding,$db));
-        }
-
-    } else {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Not enough parameters";
-        $errorarray["detail"] = "Not enough parameters"; //TODO: Description
-        array_push($return["errors"], $errorarray);
-
-    }
-
-    if (!array_key_exists("data", $return)) {
-        $return["data"] = array();
-    }
-
-
-    $return["data"]["links"]["self"] = $config["dir"]["api"]."/search/organisations?".getURLParameterFromArray($filteredParameters);
-
-    return $return;
-
-    */
 
 }
 
@@ -706,7 +471,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing parameter";
-        $errorarray["detail"] = "Missing parameter 'parliament'"; //TODO: Description
+        $errorarray["detail"] = "Missing parameter 'parliament'";
         array_push($return["errors"], $errorarray);
 
     }
@@ -716,7 +481,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing parameter";
-        $errorarray["detail"] = "Missing parameter 'electoralPeriod[number]'"; //TODO: Description
+        $errorarray["detail"] = "Missing parameter 'electoralPeriod[number]'";
         array_push($return["errors"], $errorarray);
     }
 
@@ -725,7 +490,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing parameter";
-        $errorarray["detail"] = "Missing parameter 'session[number]'"; //TODO: Description
+        $errorarray["detail"] = "Missing parameter 'session[number]'";
         array_push($return["errors"], $errorarray);
     }
 
@@ -734,7 +499,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing parameter";
-        $errorarray["detail"] = "Missing parameter 'agendaItem[officialTitle]'"; //TODO: Description
+        $errorarray["detail"] = "Missing parameter 'agendaItem[officialTitle]'";
         array_push($return["errors"], $errorarray);
     }
 
@@ -743,7 +508,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing parameter";
-        $errorarray["detail"] = "Missing parameter 'agendaItem[title]'"; //TODO: Description
+        $errorarray["detail"] = "Missing parameter 'agendaItem[title]'";
         array_push($return["errors"], $errorarray);
     }
 
@@ -752,7 +517,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing parameter";
-        $errorarray["detail"] = "Missing parameter 'media[videoFileURI]'"; //TODO: Description
+        $errorarray["detail"] = "Missing parameter 'media[videoFileURI]'";
         array_push($return["errors"], $errorarray);
     }
 
@@ -761,7 +526,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing parameter";
-        $errorarray["detail"] = "Missing parameter 'media[sourcePage]'"; //TODO: Description
+        $errorarray["detail"] = "Missing parameter 'media[sourcePage]'";
         array_push($return["errors"], $errorarray);
     }
 
@@ -770,7 +535,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing parameter";
-        $errorarray["detail"] = "Missing parameter 'dateStart'"; //TODO: Description
+        $errorarray["detail"] = "Missing parameter 'dateStart'";
         array_push($return["errors"], $errorarray);
     }
 
@@ -813,7 +578,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
             $errorarray["status"] = "503";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            $errorarray["detail"] = "Connecting to platform database failed #1";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -841,32 +606,13 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
             $errorarray["status"] = "503";
             $errorarray["code"] = "2";
             $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            $errorarray["detail"] = "Connecting to parliament database failed";
             array_push($return["errors"], $errorarray);
             return $return;
 
         }
 
     }
-
-
-    /*
-    $dbcheck = $dbp->getRow("SELECT MediaID FROM ?n WHERE MediaSourcePage = ?s", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"], $item["media"]["sourcePage"]);
-
-    if ($dbcheck) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "4";
-        $errorarray["title"] = "Mediaitem already exists";
-        $errorarray["detail"] = "Mediaitem already exists with ID: ".$dbcheck["MediaID"]; //TODO: Description
-        array_push($return["errors"], $errorarray);
-        return $return;
-
-    }
-    */
-
 
 
 
@@ -891,7 +637,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                     $item["electoralPeriod"]["dateStart"],
                     $item["electoralPeriod"]["dateEnd"]);
 
-        //$tmpElectoralPeriod = $dbp->getRow("SELECT * FROM ?n WHERE ElectoralPeriodNumber = ?i LIMIT 1", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["ElectoralPeriod"], $item["electoralPeriod"]["number"]);
+
 
     } else {
 
@@ -1091,7 +837,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
             $errorarray["status"] = "503";
             $errorarray["code"] = "2";
             $errorarray["title"] = "Database error";
-            $errorarray["detail"] = "Adding media to database failed"; //TODO: Description
+            $errorarray["detail"] = "Adding media to database failed";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -1143,7 +889,6 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
         if ($tmpMediaItemUpdate) {
             $tmpMediaItemUpdate = "UPDATE ".$config["parliament"][$item["parliament"]]["sql"]["tbl"]["Media"]." SET " . implode(", ", $tmpMediaItemUpdate) ." WHERE MediaID = ?s";
-            //echo $dbp->parse($tmpMediaItemUpdate,$tmpMediaItem["MediaID"]);
             $dbp->query($tmpMediaItemUpdate,$tmpMediaItem["MediaID"]);
         }
 
@@ -1348,27 +1093,6 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
     foreach ($item["people"] as $person) {
 
-        // Cycle through all first names to get a match with wikidata
-
-        /*
-        $personNames = explode(" ", $person["label"]);
-        $personNameLast = array_pop($personNames);
-        $personWD = false;
-
-        foreach ($personNames as $personNameTemp) {
-
-            $personTemp = apiV1(["action" => "wikidataService", "itemType" => "person", "str" => $personNameTemp." ".$personNameLast]);
-
-            if (($personTemp["meta"]["requestStatus"] == "success") && (count($personTemp["data"]) > 0)) {
-
-                $personWD = $personTemp;
-
-                break;
-
-            }
-
-        }
-        */
 
         $personWD = false;
 
@@ -1455,9 +1179,9 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                     "PersonID" => $personWD["data"][0]["id"],
                     "PersonType" => "memberOfParliament", //$person["type"] //TODO: fix input
                     "PersonLabel" => $personWD["data"][0]["label"],
-                    "PersonFirstName"=>($personWD["data"][0]["firstName"] ? $personWD["data"][0]["firstName"] : $person["firstname"]), //TODO: WikidataServiceDumps
-                    "PersonLastName"=>($personWD["data"][0]["lastName"] ? $personWD["data"][0]["lastName"] : $person["lastname"]), //TODO: WikidataServiceDumps
-                    "PersonDegree"=>($personWD["data"][0]["degree"] ? $personWD["data"][0]["degree"] : $person["degree"]), //TODO: WikidataServiceDumps
+                    "PersonFirstName"=>($personWD["data"][0]["firstName"] ? $personWD["data"][0]["firstName"] : $person["firstname"]),
+                    "PersonLastName"=>($personWD["data"][0]["lastName"] ? $personWD["data"][0]["lastName"] : $person["lastname"]),
+                    "PersonDegree"=>($personWD["data"][0]["degree"] ? $personWD["data"][0]["degree"] : $person["degree"]),
                     "PersonBirthDate" => $personWD["data"][0]["birthDate"],
                     "PersonGender" => $personWD["data"][0]["gender"],
                     "PersonAbstract" => $personWD["data"][0]["abstract"],
@@ -1474,8 +1198,6 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                 );
 
                 try {
-                    //print_r($tmpNewPerson);
-                    //echo $db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
                     $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Person"], $tmpNewPerson);
 
                 } catch (exception $e) {
@@ -1771,10 +1493,10 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                         "OrganisationColor" => $tmpOrganisationFactionWD["data"][0]["color"], //TODO WIKIDATA DUMP
                         "OrganisationAdditionalInformation" => $tmpOrganisationFactionWD["data"][0]["additionalInformation"] //TODO WIKIDATA DUMP
                     );
-                    //echo $db->parse("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
+
                     $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Organisation"], $tmpFactionObj);
 
-                    //$tmpFaction["data"] = $tmpFactionObj;
+
                     $tmpFaction = organisationGetByID($tmpOrganisationFactionWD["data"][0]["id"]);
 
                 } else {

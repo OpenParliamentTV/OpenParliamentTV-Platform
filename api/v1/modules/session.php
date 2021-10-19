@@ -27,7 +27,7 @@ function sessionGetByID($id = false) {
         $errorarray["status"] = "500";
         $errorarray["code"] = "1";
         $errorarray["title"] = "ID Error";
-        $errorarray["detail"] = "Could not parse SessionID"; //TODO: Description
+        $errorarray["detail"] = "Could not parse SessionID";
         array_push($return["errors"], $errorarray);
         return $return;
 
@@ -40,7 +40,7 @@ function sessionGetByID($id = false) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Invalid SessionID";
-        $errorarray["detail"] = "SessionID could not be associated with a parliament"; //TODO: Description
+        $errorarray["detail"] = "SessionID could not be associated with a parliament";
         array_push($return["errors"], $errorarray);
 
         return $return;
@@ -66,7 +66,7 @@ function sessionGetByID($id = false) {
             $errorarray["status"] = "503";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to parliament database failed"; //TODO: Description
+            $errorarray["detail"] = "Connecting to parliament database failed";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -93,7 +93,7 @@ function sessionGetByID($id = false) {
             $errorarray["status"] = "503";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Database error";
-            $errorarray["detail"] = "Database error"; //TODO: Description
+            $errorarray["detail"] = "Database request failed.";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -115,7 +115,7 @@ function sessionGetByID($id = false) {
             $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["attributes"]["dateEnd"] = $item["SessionDateEnd"];
             $return["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
-            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?sessionID=".$return["data"]["id"]; //TODO: Check Link and Parameter
+            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?sessionID=".$return["data"]["id"];
             $return["data"]["relationships"]["electoralPeriod"]["data"]["type"] = "electoralPeriod";
             $return["data"]["relationships"]["electoralPeriod"]["data"]["id"] = $item["ElectoralPeriodID"];
             $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] = $item["ElectoralPeriodNumber"];
@@ -141,7 +141,7 @@ function sessionGetByID($id = false) {
             $errorarray["status"] = "404";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Session not found";
-            $errorarray["detail"] = "Session with the given ID was not found in database"; //TODO: Description
+            $errorarray["detail"] = "Session with the given ID was not found in database";
             array_push($return["errors"], $errorarray);
 
         }

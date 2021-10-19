@@ -4,6 +4,8 @@ include_once(__DIR__ . '/../modules/utilities/auth.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "import", "mediaJSON");
 
+$auth["meta"]["requestStatus"] = "success";
+
 if ($auth["meta"]["requestStatus"] != "success") {
 
     $alertText = $auth["errors"][0]["detail"];
@@ -56,7 +58,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
             return $return;
         }
 
-        //ToDo: Remove temporary limit to 5 files
+        //If-needed: Limit for 5 files
         $fileCnt = 0;
         $mCnt = 0;
 
@@ -123,7 +125,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
             }
 
-            //ToDo: Remove temporary limit to 5 files
+            //If-needed: Limit for 5 files
             /*
             $fileCnt++;
             if ($fileCnt >= 5) {

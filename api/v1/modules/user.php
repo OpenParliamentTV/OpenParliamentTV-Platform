@@ -22,7 +22,7 @@ function userChange($parameter) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter (UserID) is missing"; //TODO: Description
+        $errorarray["detail"] = "Required parameter (UserID) is missing";
         array_push($return["errors"], $errorarray);
 
         return $return;
@@ -45,7 +45,7 @@ function userChange($parameter) {
         $errorarray["status"] = "503";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed"; //TODO: Description
+        $errorarray["detail"] = "Connecting to platform database failed";
         array_push($return["errors"], $errorarray);
         return $return;
 
@@ -113,7 +113,7 @@ function userChange($parameter) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "No parameter";
-        $errorarray["detail"] = "No parameter for changing userdata has been provided"; //TODO: Description
+        $errorarray["detail"] = "No parameter for changing userdata has been provided";
         array_push($return["errors"], $errorarray);
 
         return $return;

@@ -3,7 +3,7 @@
 
 exit;
 
-//TODO: Deprecated
+//TODO
 
 
 require_once(__DIR__."/../../../../../modules/media/functions.media.php");

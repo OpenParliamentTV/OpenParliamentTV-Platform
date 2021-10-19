@@ -64,7 +64,7 @@ if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli"))
             $errorarray["status"] = "503";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to parliament database failed"; //TODO: Description
+            $errorarray["detail"] = "Connecting to parliament database failed";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -89,7 +89,7 @@ if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli"))
         $errorarray["status"] = "503";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed"; //TODO: Description
+        $errorarray["detail"] = "Connecting to platform database failed";
         array_push($return["errors"], $errorarray);
         return $return;
 
@@ -181,7 +181,7 @@ function updateData($mediaID = false, $updatedTextContentsArray = false,$db = fa
             $errorarray["status"] = "503";
             $errorarray["code"] = "2";
             $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            $errorarray["detail"] = "Connecting to database failed";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -223,43 +223,6 @@ function updateData($mediaID = false, $updatedTextContentsArray = false,$db = fa
     echo '<pre>';
     print_r($result);
     echo '</pre>';
-
-	/*
-	
-	TODO: 
-
-	1. Update DB table text, where: 
-	"TextMediaID": $mediaID
-	
-	Update Fields: 
-	"TextBody": json_encode($updatedTextContentsArray["textBody"])
-	
-	2. Update OpenSearch Index like:
-
-	$data = apiV1([
-		"action"=>"getItem", 
-		"itemType"=>"media", 
-		"id"=>$mediaID
-	]);
-	
-	$docParams = array(
-		"index" => "openparliamenttv_de", 
-		"id" => $mediaID, 
-		"body" => json_encode($data["data"])
-	);
-	
-	try {
-		$result = $ESClient->index($docParams);
-	} catch(Exception $e) {
-		$result = $e->getMessage();
-	}
-
-	echo '<pre>';
-	print_r($result);
-	echo '</pre>';
-	
-	*/
-
 
 }
 

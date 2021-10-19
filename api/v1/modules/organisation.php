@@ -21,7 +21,7 @@ function organisationGetByID($id = false, $db = false) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
+        $errorarray["detail"] = "Required parameter of the request is missing";
         array_push($return["errors"], $errorarray);
 
         return $return;
@@ -48,7 +48,7 @@ function organisationGetByID($id = false, $db = false) {
                 $errorarray["status"] = "503";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "Database connection error";
-                $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+                $errorarray["detail"] = "Connecting to platform database failed";
                 array_push($return["errors"], $errorarray);
                 return $return;
 
@@ -71,7 +71,7 @@ function organisationGetByID($id = false, $db = false) {
             $errorarray["status"] = "404";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Organisation not found";
-            $errorarray["detail"] = "Organisation with the given ID was not found in database"; //TODO: Description
+            $errorarray["detail"] = "Organisation with the given ID was not found in database";
             array_push($return["errors"], $errorarray);
 
         }
@@ -142,7 +142,7 @@ function organisationSearch($parameter, $db = false) {
             $errorarray["status"] = "503";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            $errorarray["detail"] = "Connecting to platform database failed";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -177,7 +177,7 @@ function organisationSearch($parameter, $db = false) {
                     $errorarray["status"] = "400";
                     $errorarray["code"] = "1";
                     $errorarray["title"] = "name too short";
-                    $errorarray["detail"] = "Searching for name needs at least 3 characters."; //  TODO: Description
+                    $errorarray["detail"] = "Searching for name needs at least 3 characters.";
                     $return["errors"][] = $errorarray;
 
                 }
@@ -192,7 +192,7 @@ function organisationSearch($parameter, $db = false) {
                 $errorarray["status"] = "400";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "name too short";
-                $errorarray["detail"] = "Searching for name needs at least 3 characters."; //  TODO: Description
+                $errorarray["detail"] = "Searching for name needs at least 3 characters.";
                 $return["errors"][] = $errorarray;
 
             }
@@ -207,7 +207,7 @@ function organisationSearch($parameter, $db = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "2";
         $errorarray["title"] = "type too short";
-        $errorarray["detail"] = "Searching for type needs at least 2 characters."; //  due to database limitations TODO: Description
+        $errorarray["detail"] = "Searching for type needs at least 2 characters."; //  due to database limitations
         $return["errors"][] = $errorarray;
 
     }
@@ -280,7 +280,7 @@ function organisationSearch($parameter, $db = false) {
 
         $query .= $outputLimit;
 
-        //echo $db->parse($query);
+
         $findings = $db->getAll($query);
 
         $return["meta"]["requestStatus"] = "success";
@@ -292,7 +292,7 @@ function organisationSearch($parameter, $db = false) {
         }
 
         foreach ($findings as $finding) {
-            //print_r($finding);
+
             array_push($return["data"], organisationGetDataObject($finding,$db));
         }
 
@@ -303,7 +303,7 @@ function organisationSearch($parameter, $db = false) {
         $errorarray["status"] = "404";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Not enough parameters";
-        $errorarray["detail"] = "Not enough parameters"; //TODO: Description
+        $errorarray["detail"] = "Not enough parameters";
         array_push($return["errors"], $errorarray);
 
     }

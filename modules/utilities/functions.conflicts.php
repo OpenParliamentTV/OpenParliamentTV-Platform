@@ -28,7 +28,7 @@ require_once(__DIR__."/uniqueFreeString.php");
  */
 function reportConflict($entity, $subject, $identifier="", $rival="", $description="", $dbPlatform = false) {
 
-	//TODO Auth
+
 
 	global $config;
 
@@ -48,7 +48,7 @@ function reportConflict($entity, $subject, $identifier="", $rival="", $descripti
 
 function getConflicts($id = "all", $limit = 0, $offset = 0, $search = false, $getCount = false, $includeResolved = false, $dbPlatform = false) {
 
-	//TODO Auth
+
 
 	global $config;
 

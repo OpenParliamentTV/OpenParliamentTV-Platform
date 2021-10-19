@@ -1,5 +1,8 @@
 <?php
 
+exit;
+//HELPER FILE for fixing some things
+
 require_once (__DIR__."/../config.php");
 require_once(__DIR__."/../modules/utilities/safemysql.class.php");
 

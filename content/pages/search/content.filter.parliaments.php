@@ -2,7 +2,6 @@
 session_start();
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
-//TODO: Check AUTH - dont allow direct access to this page - just if its included
 
 include_once(__DIR__ . '/../../../modules/utilities/auth.php');
 

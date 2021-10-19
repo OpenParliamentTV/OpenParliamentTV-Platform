@@ -68,7 +68,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     $errorarray["status"] = "503";
                                     $errorarray["code"] = "1";
                                     $errorarray["title"] = "Database connection error";
-                                    $errorarray["detail"] = "Connecting to platform database failed"; //TODO: Description
+                                    $errorarray["detail"] = "Connecting to platform database failed";
                                     array_push($return["errors"], $errorarray);
                                     return $return;
 

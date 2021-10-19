@@ -33,9 +33,6 @@ function exportAlignmentInput($mediaID = false) {
 
 	} else {
 
-		/*****************************************
-		* ToDo: Check / Fix MySQL Queries
-		*****************************************/
 
 		$parliament = "DE";
 
@@ -57,14 +54,14 @@ function exportAlignmentInput($mediaID = false) {
 	        $errorarray["status"] = "503";
 	        $errorarray["code"] = "1";
 	        $errorarray["title"] = "Database connection error";
-	        $errorarray["detail"] = "Connecting to parliament database failed"; //TODO: Description
+	        $errorarray["detail"] = "Connecting to parliament database failed";
 	        array_push($return["errors"], $errorarray);
 	        return $return;
 
 	    }
 
 	    $allMediaIDs = $dbp->getAll("SELECT MediaID FROM media");
-		//print_r($allMediaIDs);
+
 
 		foreach ($allMediaIDs as $id) { 
 			

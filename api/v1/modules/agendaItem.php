@@ -27,7 +27,7 @@ function agendaItemGetByID($id = false) {
         $errorarray["status"] = "500";
         $errorarray["code"] = "1";
         $errorarray["title"] = "ID Error";
-        $errorarray["detail"] = "Could not parse AgendaItemID"; //TODO: Description
+        $errorarray["detail"] = "Could not parse AgendaItemID";
         array_push($return["errors"], $errorarray);
         return $return;
 
@@ -40,7 +40,7 @@ function agendaItemGetByID($id = false) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Invalid MediaID";
-        $errorarray["detail"] = "AgendaItemID could not be associated with a parliament"; //TODO: Description
+        $errorarray["detail"] = "AgendaItemID could not be associated with a parliament";
         array_push($return["errors"], $errorarray);
 
         return $return;
@@ -66,7 +66,7 @@ function agendaItemGetByID($id = false) {
             $errorarray["status"] = "503";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to parliament database failed"; //TODO: Description
+            $errorarray["detail"] = "Connecting to parliament database failed";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -74,7 +74,6 @@ function agendaItemGetByID($id = false) {
 
         try {
 
-            //$item = $dbp->getRow("SELECT * FROM ?n WHERE AgendaItemID=?s", $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"], $IDInfos["id_part"]);
             $item = $dbp->getRow("SELECT ai.*,
                                          sess.*,
                                          ep.*
@@ -96,7 +95,7 @@ function agendaItemGetByID($id = false) {
             $errorarray["status"] = "503";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Database error";
-            $errorarray["detail"] = "Database error"; //TODO: Description
+            $errorarray["detail"] = "Database error #1";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -113,7 +112,7 @@ function agendaItemGetByID($id = false) {
             $return["data"]["attributes"]["parliament"] = $parliament;
             $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
-            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?agendaItemID=".$return["data"]["id"]; //TODO: Check Link and Parameter
+            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?agendaItemID=".$return["data"]["id"];
             $return["data"]["relationships"]["session"]["data"]["type"] = "session";
             $return["data"]["relationships"]["session"]["data"]["id"] = $item["SessionID"];
             $return["data"]["relationships"]["session"]["data"]["attributes"]["number"] = $item["SessionNumber"];
@@ -127,7 +126,6 @@ function agendaItemGetByID($id = false) {
             $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["dateEnd"] = $item["ElectoralPeriodDateEnd"];
             $return["data"]["relationships"]["electoralPeriod"]["links"]["self"] = $config["dir"]["api"]."/electoralPeriod/".$item["ElectoralPeriodID"];
 
-            //TODO: Session Relation?
 
         } else {
 
@@ -136,7 +134,7 @@ function agendaItemGetByID($id = false) {
             $errorarray["status"] = "404";
             $errorarray["code"] = "1";
             $errorarray["title"] = "AgendaItem not found";
-            $errorarray["detail"] = "AgendaItem with the given ID was not found in database"; //TODO: Description
+            $errorarray["detail"] = "AgendaItem with the given ID was not found in database";
             array_push($return["errors"], $errorarray);
 
         }

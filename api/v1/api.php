@@ -7,7 +7,7 @@ require_once ("config.php");
 require_once (__DIR__."/../../modules/utilities/functions.php");
 require_once (__DIR__."/../../modules/utilities/safemysql.class.php");
 
-function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: getItem; type: media; id: DE-0190002123
+function apiV1($request = false, $db = false, $dbp = false) {
 
     global $config;
 
@@ -23,7 +23,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
+        $errorarray["detail"] = "Required parameters of the request are missing";
         array_push($return["errors"], $errorarray);
         $return["links"]["self"] = htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"]);
 
@@ -218,7 +218,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                         $errorarray["status"] = "422";
                         $errorarray["code"] = "1";
                         $errorarray["title"] = "Missing request parameter";
-                        $errorarray["detail"] = "Required parameter (type) of the request is missing"; //TODO: Description
+                        $errorarray["detail"] = "Required parameter (type) of the request is missing";
                         array_push($return["errors"], $errorarray);
 
                     break;
@@ -325,7 +325,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                         $errorarray["status"] = "422";
                         $errorarray["code"] = "2";
                         $errorarray["title"] = "Missing request parameter";
-                        $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
+                        $errorarray["detail"] = "Required parameter of the request is missing";
                         array_push($return["errors"], $errorarray);
                         $return["links"]["self"] = htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"]);
                     break;
@@ -346,7 +346,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                         if ($request["str"]) {
 
-                            //$dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/de-mdbs-final.txt"),true);
+
                             foreach ($config["parliament"] as $p=>$v) {
                                 if (file_exists($v["cache"]["wp"]."/people.json")) {
                                     $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]."/people.json"),true);
@@ -438,7 +438,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                                 $errorarray["status"] = "404";
                                 $errorarray["code"] = "1";
                                 $errorarray["title"] = "No results";
-                                $errorarray["detail"] = "Person not found in dump"; //TODO: Description
+                                $errorarray["detail"] = "Person not found in dump";
                                 array_push($return["errors"], $errorarray);
                             }
 
@@ -453,7 +453,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                             $errorarray["status"] = "503";
                             $errorarray["code"] = "1";
                             $errorarray["title"] = "Missing Parameter str";
-                            $errorarray["detail"] = "missing parameter str"; //TODO: Description
+                            $errorarray["detail"] = "missing parameter str";
                             array_push($return["errors"], $errorarray);
 
                         }
@@ -494,7 +494,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                                     if ((preg_match("/" . $request["str"] . "/i", $v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/" . $request["str"] . "/i", $v["labelAlternative"])))) {
 
                                         $return["meta"]["requestStatus"] = "success";
-                                        //$v["parliament"] = $p;
+
                                         $return["data"][] = $v;
 
 
@@ -514,7 +514,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                                 $errorarray["status"] = "404";
                                 $errorarray["code"] = "1";
                                 $errorarray["title"] = "No results";
-                                $errorarray["detail"] = "Party not found in dump"; //TODO: Description
+                                $errorarray["detail"] = "Party not found in dump";
                                 array_push($return["errors"], $errorarray);
                             }
 
@@ -526,7 +526,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                             $errorarray["status"] = "503";
                             $errorarray["code"] = "1";
                             $errorarray["title"] = "Missing Parameter str";
-                            $errorarray["detail"] = "missing parameter str"; //TODO: Description
+                            $errorarray["detail"] = "missing parameter str";
                             array_push($return["errors"], $errorarray);
 
                         }
@@ -571,7 +571,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                                     ) {
 
                                         $return["meta"]["requestStatus"] = "success";
-                                        //$v["parliament"] = $p;
+
                                         $return["data"][] = $v;
 
 
@@ -579,10 +579,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
 
                                 }
                             //}
-                            /*
-                            $return["tmp"] = $dump;
-                            $return["tmp_str"] = $request["str"];
-                            */
+
                             if (count($return["data"]) > 0) {
                                 return $return;
                             } else {
@@ -593,7 +590,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                                 $errorarray["status"] = "404";
                                 $errorarray["code"] = "1";
                                 $errorarray["title"] = "No results";
-                                $errorarray["detail"] = "Faction not found in dump"; //TODO: Description
+                                $errorarray["detail"] = "Faction not found in dump";
                                 array_push($return["errors"], $errorarray);
                             }
 
@@ -605,7 +602,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                             $errorarray["status"] = "503";
                             $errorarray["code"] = "1";
                             $errorarray["title"] = "Missing Parameter str";
-                            $errorarray["detail"] = "missing parameter str"; //TODO: Description
+                            $errorarray["detail"] = "missing parameter str";
                             array_push($return["errors"], $errorarray);
 
                         }
@@ -617,8 +614,6 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
             break;
 
             case "addMedia":
-
-                //TODO Auth
 
                 include_once(__DIR__."/modules/media.php");
 
@@ -669,7 +664,7 @@ function apiV1($request = false, $db = false, $dbp = false) { // TODO: action: g
                 $errorarray["status"] = "422";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "Missing request parameter";
-                $errorarray["detail"] = "Required parameter (action) of the request is missing"; //TODO: Description
+                $errorarray["detail"] = "Required parameter (action) of the request is missing";
                 array_push($return["errors"], $errorarray);
 
                 break;

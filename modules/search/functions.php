@@ -80,7 +80,7 @@ function searchSpeeches($request) {
 	$searchParams = array("index" => "openparliamenttv_*", "body" => $data);
 	
 	try {
-		//$results = $ESClient->get(['index' => "openparliamenttv_*", 'id' => 'DE-BB-0070047001']);
+		//Example: $results = $ESClient->get(['index' => "openparliamenttv_*", 'id' => 'DE-BB-0070047001']);
 
 		$results = $ESClient->search($searchParams);
 	} catch(Exception $e) {
@@ -340,8 +340,9 @@ function getSearchBody($request, $getAllResults) {
 			$filter["must"][] = array("match"=>array("relationships.session.data.attributes.number" => $requestValue));
 
 		} else if ($requestKey == "agendaItemID" && strlen($requestValue) >= 1) {
-			
-			$filter["must"][] = array("match"=>array("relationships.agendaItem.data.id" => $requestValue));
+            $agendaItemStringsplit = explode("-",$requestValue);
+            $agendaItemID = array_pop($agendaItemStringsplit);
+			$filter["must"][] = array("match"=>array("relationships.agendaItem.data.id" => $agendaItemID));
 
 		} else if ($requestKey == "dateFrom") {
 			

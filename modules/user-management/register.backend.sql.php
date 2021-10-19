@@ -101,7 +101,7 @@ function registerUser($mail = "", $passwd = "", $passwdCheck="", $name="", $db =
 
 			$return["success"] = "true";
 			$return["txt"] = L::messageRegisterSuccess;
-			$return["UserID"] = $userID; // TODO maybe delete for production server?
+            //$return["UserID"] = $userID; // TODO maybe delete for production server?
 			return $return;
 
 		}

@@ -22,7 +22,7 @@ function personGetByID($id = false, $db = false) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
+        $errorarray["detail"] = "Required parameter of the request is missing";
         array_push($return["errors"], $errorarray);
 
         return $return;
@@ -48,7 +48,7 @@ function personGetByID($id = false, $db = false) {
                 $errorarray["status"] = "503";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "Database connection error";
-                $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+                $errorarray["detail"] = "Connecting to platform database failed";
                 array_push($return["errors"], $errorarray);
                 return $return;
 
@@ -71,7 +71,7 @@ function personGetByID($id = false, $db = false) {
             $errorarray["status"] = "404";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Person not found";
-            $errorarray["detail"] = "Person with the given ID was not found in database"; //TODO: Description
+            $errorarray["detail"] = "Person with the given ID was not found in database";
             array_push($return["errors"], $errorarray);
 
         }
@@ -205,7 +205,7 @@ function personSearch($parameter, $db = false) {
             $errorarray["status"] = "503";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            $errorarray["detail"] = "Connecting to platform database failed";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -234,7 +234,7 @@ function personSearch($parameter, $db = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Name too short";
-        $errorarray["detail"] = "Searching for name needs at least 3 characters."; //  due to database limitations TODO: Description
+        $errorarray["detail"] = "Searching for name needs at least 3 characters."; //  due to database limitations
         $return["errors"][] = $errorarray;
 
     }
@@ -246,7 +246,7 @@ function personSearch($parameter, $db = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "type invalid";
-        $errorarray["detail"] = "type needs to be 'memberOfParliament' or 'unknown'"; // TODO: Description
+        $errorarray["detail"] = "type needs to be 'memberOfParliament' or 'unknown'"; // TODO: Define what types exist
         $return["errors"][] = $errorarray;
 
     }
@@ -262,8 +262,8 @@ function personSearch($parameter, $db = false) {
                     $return["meta"]["requestStatus"] = "error";
                     $errorarray["status"] = "400";
                     $errorarray["code"] = "1";
-                    $errorarray["title"] = "Party too short";
-                    $errorarray["detail"] = "Searching for party needs at least 1 characters."; //  TODO: Description
+                    $errorarray["title"] = "Party input too short";
+                    $errorarray["detail"] = "Searching for party needs at least 1 character.";
                     $return["errors"][] = $errorarray;
                 }
             }
@@ -275,8 +275,8 @@ function personSearch($parameter, $db = false) {
                 $return["meta"]["requestStatus"] = "error";
                 $errorarray["status"] = "400";
                 $errorarray["code"] = "1";
-                $errorarray["title"] = "Party too short";
-                $errorarray["detail"] = "Searching for party needs at least 1 characters."; //  TODO: Description
+                $errorarray["title"] = "Party input too short";
+                $errorarray["detail"] = "Searching for party needs at least 1 character.";
                 $return["errors"][] = $errorarray;
 
             }
@@ -299,7 +299,7 @@ function personSearch($parameter, $db = false) {
                     $errorarray["status"] = "400";
                     $errorarray["code"] = "1";
                     $errorarray["title"] = "Wrong partyID";
-                    $errorarray["detail"] = "partyID doesn't match the pattern."; //  TODO: Description
+                    $errorarray["detail"] = "partyID doesn't match the pattern.";
                     $return["errors"][] = $errorarray;
 
                 }
@@ -314,7 +314,7 @@ function personSearch($parameter, $db = false) {
                 $errorarray["status"] = "400";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "Wrong partyID";
-                $errorarray["detail"] = "partyID doesn't match the pattern."; //  TODO: Description
+                $errorarray["detail"] = "partyID doesn't match the pattern.";
                 $return["errors"][] = $errorarray;
 
             }
@@ -335,7 +335,7 @@ function personSearch($parameter, $db = false) {
                     $errorarray["status"] = "400";
                     $errorarray["code"] = "1";
                     $errorarray["title"] = "Faction too short";
-                    $errorarray["detail"] = "Searching for faction needs at least 1 characters."; //  TODO: Description
+                    $errorarray["detail"] = "Searching for faction needs at least 1 character.";
                     $return["errors"][] = $errorarray;
                 }
             }
@@ -348,7 +348,7 @@ function personSearch($parameter, $db = false) {
                 $errorarray["status"] = "400";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "faction too short";
-                $errorarray["detail"] = "Searching for faction needs at least 1 characters."; //  TODO: Description
+                $errorarray["detail"] = "Searching for faction needs at least 1 character.";
                 $return["errors"][] = $errorarray;
 
             }
@@ -369,7 +369,7 @@ function personSearch($parameter, $db = false) {
                     $errorarray["status"] = "400";
                     $errorarray["code"] = "1";
                     $errorarray["title"] = "Wrong factionID";
-                    $errorarray["detail"] = "factionID doesn't match the pattern."; //  TODO: Description
+                    $errorarray["detail"] = "factionID doesn't match the pattern.";
                     $return["errors"][] = $errorarray;
 
                 }
@@ -384,7 +384,7 @@ function personSearch($parameter, $db = false) {
                 $errorarray["status"] = "400";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "Wrong factionID";
-                $errorarray["detail"] = "factionID doesn't match the pattern."; //  TODO: Description
+                $errorarray["detail"] = "factionID doesn't match the pattern.";
                 $return["errors"][] = $errorarray;
 
             }
@@ -403,7 +403,7 @@ function personSearch($parameter, $db = false) {
             $errorarray["status"] = "400";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Wrong organisationID";
-            $errorarray["detail"] = "organisationID doesn't match the pattern."; //  TODO: Description
+            $errorarray["detail"] = "organisationID doesn't match the pattern.";
             $return["errors"][] = $errorarray;
         }
 
@@ -417,21 +417,21 @@ function personSearch($parameter, $db = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "degree too short";
-        $errorarray["detail"] = "Searching for degree needs at least 1 characters."; //  TODO: Description
+        $errorarray["detail"] = "Searching for degree needs at least 1 character.";
         $return["errors"][] = $errorarray;
 
     }
 
 
 
-    //TODO: Gender to $config?
-    if (array_key_exists("gender", $filteredParameters) && (!in_array($filteredParameters["gender"], array("male", "female", "nonbinary", "bi", "queer")))) {
+    //TODO: Gender to $config
+    if (array_key_exists("gender", $filteredParameters) && (!in_array($filteredParameters["gender"], array("male", "female", "nonbinary")))) {
 
         $return["meta"]["requestStatus"] = "error";
         $errorarray["status"] = "400";
         $errorarray["code"] = "1";
         $errorarray["title"] = "gender not valid.";
-        $errorarray["detail"] = "Searching for gender had invalid value."; //
+        $errorarray["detail"] = "Searching for gender had invalid value.";
         $return["errors"][] = $errorarray;
 
     }
@@ -475,7 +475,6 @@ function personSearch($parameter, $db = false) {
     }
 
 
-    //JSON_UNQUOTE(JSON_EXTRACT(p.PersonAdditionalInformation,'$.abgeordnetenwatchID')) AS PersonAbgeordnetenwatchID,
 
     $query = "SELECT            p.*,
                                 op.OrganisationID as PartyID,
@@ -634,7 +633,6 @@ function personSearch($parameter, $db = false) {
 
         if ($k == "abgeordnetenwatchID") {
 
-            //$conditions[] = $db->parse("p.PersonAdditionalInformation LIKE ?s", $para);
             $conditions[] = $db->parse("JSON_EXTRACT(p.PersonAdditionalInformation, '$.abgeordnetenwatchID') = ?s", $para);
 
         }
@@ -663,7 +661,6 @@ function personSearch($parameter, $db = false) {
 
 
 
-        //echo $db->parse($query);
         $findings = $db->getAll($query);
 
         $return["meta"]["requestStatus"] = "success";
@@ -675,7 +672,6 @@ function personSearch($parameter, $db = false) {
         }
 
         foreach ($findings as $finding) {
-            //print_r($finding);
             array_push($return["data"],personGetDataObject($finding,$db));
         }
 

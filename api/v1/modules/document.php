@@ -23,7 +23,7 @@ function documentGetByID($id = false) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
+        $errorarray["detail"] = "Required parameter of the request is missing";
         array_push($return["errors"], $errorarray);
 
         return $return;
@@ -49,7 +49,7 @@ function documentGetByID($id = false) {
             $errorarray["status"] = "503";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            $errorarray["detail"] = "Connecting to database failed #1";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -70,7 +70,7 @@ function documentGetByID($id = false) {
             $errorarray["status"] = "404";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Document not found";
-            $errorarray["detail"] = "Document with the given ID was not found in database"; //TODO: Description
+            $errorarray["detail"] = "Document with the given ID was not found in database";
             array_push($return["errors"], $errorarray);
 
         }
@@ -101,7 +101,7 @@ function documentGetDataObject($item = false, $db = false) {
         $return["attributes"]["additionalInformation"] = json_decode($item["DocumentAdditionalInformation"],true);
         $return["attributes"]["lastChanged"] = $item["DocumentLastChanged"];
         $return["links"]["self"] = $config["dir"]["api"]."/".$return["type"]."/".$return["id"];
-        $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?documentID=".$return["id"]; //TODO: Link
+        $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?documentID=".$return["id"];
 
     } else {
 
@@ -140,7 +140,7 @@ function documentSearch($parameter, $db = false) {
             $errorarray["status"] = "503";
             $errorarray["code"] = "1";
             $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
+            $errorarray["detail"] = "Connecting to database failed #2";
             array_push($return["errors"], $errorarray);
             return $return;
 
@@ -175,7 +175,7 @@ function documentSearch($parameter, $db = false) {
                     $errorarray["status"] = "400";
                     $errorarray["code"] = "1";
                     $errorarray["title"] = "label too short";
-                    $errorarray["detail"] = "Searching for label needs at least 3 characters."; //  TODO: Description
+                    $errorarray["detail"] = "Searching for label needs at least 3 characters.";
                     $return["errors"][] = $errorarray;
 
                 }
@@ -189,8 +189,8 @@ function documentSearch($parameter, $db = false) {
                 $return["meta"]["requestStatus"] = "error";
                 $errorarray["status"] = "400";
                 $errorarray["code"] = "1";
-                $errorarray["title"] = "name too short";
-                $errorarray["detail"] = "Searching for label needs at least 3 characters."; //  TODO: Description
+                $errorarray["title"] = "label too short";
+                $errorarray["detail"] = "Searching for label needs at least 3 characters.";
                 $return["errors"][] = $errorarray;
 
             }
@@ -205,7 +205,7 @@ function documentSearch($parameter, $db = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "2";
         $errorarray["title"] = "type too short";
-        $errorarray["detail"] = "Searching for type needs at least 2 characters."; // TODO: Description
+        $errorarray["detail"] = "Searching for type needs at least 2 characters.";
         $return["errors"][] = $errorarray;
 
     }
@@ -218,7 +218,7 @@ function documentSearch($parameter, $db = false) {
         $errorarray["status"] = "400";
         $errorarray["code"] = "2";
         $errorarray["title"] = "wrong wikidataID";
-        $errorarray["detail"] = "wikidataID doesn't match the pattern."; // TODO: Description
+        $errorarray["detail"] = "wikidataID doesn't match the pattern.";
         $return["errors"][] = $errorarray;
 
     }
@@ -297,8 +297,6 @@ function documentSearch($parameter, $db = false) {
         $query .= $outputLimit;
 
 
-
-        //echo $db->parse($query);
         $findings = $db->getAll($query);
 
         $return["meta"]["requestStatus"] = "success";
@@ -310,7 +308,7 @@ function documentSearch($parameter, $db = false) {
         }
 
         foreach ($findings as $finding) {
-            //print_r($finding);
+
             $itemObj = documentGetDataObject($finding,$db);
             unset($itemObj["meta"]);
             array_push($return["data"], $itemObj);
@@ -323,7 +321,7 @@ function documentSearch($parameter, $db = false) {
         $errorarray["status"] = "404";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Not enough parameters";
-        $errorarray["detail"] = "Not enough parameters"; //TODO: Description
+        $errorarray["detail"] = "Not enough parameters";
         array_push($return["errors"], $errorarray);
 
     }

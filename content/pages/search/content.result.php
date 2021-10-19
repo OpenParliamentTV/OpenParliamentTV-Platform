@@ -2,7 +2,7 @@
 session_start();
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
-//TODO: Check AUTH - dont allow direct access to this page - just if its included
+
 
 include_once(__DIR__ . '/../../../modules/utilities/auth.php');
 
@@ -22,11 +22,7 @@ require_once(__DIR__.'/../../../modules/utilities/functions.entities.php');
 require_once(__DIR__."/../../../modules/search/include.search.php");
 require_once(__DIR__."/../../../api/v1/api.php");
 
-/*
-echo '<pre>';
-print_r($_REQUEST);
-echo '</pre>';
-*/
+
 
 if (!$_REQUEST["a"] || count($_REQUEST) < 2 || 
 	($_REQUEST["queryOnly"] == 1 && !$_REQUEST["q"] && !$_REQUEST["personID"])) {
@@ -61,11 +57,7 @@ if (!$_REQUEST["a"] || count($_REQUEST) < 2 ||
 	$parameter["itemType"] = "media";
 	$result = apiV1($parameter);
 
-	/*
-	echo '<pre>';
-	print_r($result);
-	echo '</pre>';
-	*/
+
 
 	$result_items = $result["data"];
 
@@ -89,11 +81,6 @@ if (!$_REQUEST["a"] || count($_REQUEST) < 2 ||
 
 // ELSE FINISHES AT END OF FILE
 
-/*
-echo '<pre>';
-print_r($result_items[0]);
-echo '</pre>';
-*/
 
 if ($totalResults != 0) {
 ?>
