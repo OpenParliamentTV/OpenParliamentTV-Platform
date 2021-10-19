@@ -513,7 +513,7 @@ function renderPeopleSuggestions(inputValue, data) {
 function updateStatsViz() {
 	var requestQuery = getQueryVariable('q'),
 		requestPersonID = getQueryVariable('personID');
-	if ((requestQuery && requestQuery.length >= 3) || requestPersonID) {
+	if ((requestQuery && requestQuery.length >= 2) || requestPersonID) {
 		getResultStats(function(data) {
 			updateFactionChart(data.info.speechesPerFaction);
 			updateTimeRangeChart(data.results);
@@ -719,7 +719,7 @@ function updateResultList() {
 	}).done(function(data) {
 		var requestQuery = getQueryVariable('q'),
 			requestPersonID = getQueryVariable('personID');
-		if ((requestQuery && requestQuery.length >= 3) || requestPersonID) {
+		if ((requestQuery && requestQuery.length >= 2) || requestPersonID) {
 			$('#filterbar').removeClass('nosearch');
 			$('.filterContainer').removeClass('d-none').addClass('d-md-block');
 			$('#toggleFilterContainer').removeClass('d-none').addClass('d-block');
