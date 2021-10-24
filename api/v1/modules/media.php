@@ -854,11 +854,15 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         if ((!$tmpMediaItem["MediaOriginMediaID"]) && ($item["media"]["originMediaID"])) {
             $tmpMediaItemUpdate[] = $dbp->parse("MediaOriginMediaID=?s",$item["media"]["originMediaID"]);
         }
+        //TODO: Check which order position is right
         if ((!$tmpMediaItem["MediaOrder"]) && ($item["media"]["order"])) {
             $tmpMediaItemUpdate[] = $dbp->parse("MediaOrder=?s",$item["media"]["order"]);
         }
         if ((!$tmpMediaItem["MediaOrder"]) && ($item["order"])) {
             $tmpMediaItemUpdate[] = $dbp->parse("MediaOrder=?i",$item["order"]);
+        }
+        if ((!$tmpMediaItem["MediaAligned"]) && ($item["media"]["aligned"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaAligned=?i",(int)$item["media"]["aligned"]);
         }
         if ((!$tmpMediaItem["MediaDateStart"]) && ($item["dateStart"])) {
             $tmpMediaItemUpdate[] = $dbp->parse("MediaDateStart=?s",$item["dateStart"]);
