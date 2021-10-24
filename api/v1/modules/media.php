@@ -158,7 +158,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
             $return["data"]["attributes"]["parliament"] = $parliament;
             $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["attributes"]["order"] = (int)$item["MediaOrder"];
-            $return["data"]["attributes"]["aligned"] = (($item["MediaAligned"] === 1) ? true : false);
+            $return["data"]["attributes"]["aligned"] = (($item["MediaAligned"] === "1") ? true : false);
             $return["data"]["attributes"]["timestamp"] = strtotime($item["MediaDateStart"]);
             $return["data"]["attributes"]["dateStart"] = $item["MediaDateStart"];
             $return["data"]["attributes"]["dateEnd"] = $item["MediaDateEnd"];
@@ -797,7 +797,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                             MediaCreator=?s,
                             MediaLicense=?s,
                             MediaOrder=0,
-                            MediaAligned=0,
+                            MediaAligned=?i,
                             MediaPublic=1,
                             MediaDateStart=?s,
                             MediaDateEnd=?s,
@@ -816,9 +816,10 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                             $item["agendaItem"]["id"],
                             $item["media"]["creator"],
                             $item["media"]["license"],
+                            ($item["media"]["aligned"] ? $item["media"]["aligned"] : 0),
                             $item["dateStart"],
                             $item["dateEnd"],
-                            ($item["media"]["duration"] ? Number($item["media"]["duration"]) : 0),
+                            ($item["media"]["duration"] ? (float)$item["media"]["duration"] : 0), //TODO Check
                             $item["media"]["videoFileURI"],
                             $item["media"]["audioFileURI"],
                             $item["media"]["sourcePage"],
