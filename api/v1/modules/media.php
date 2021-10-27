@@ -158,7 +158,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
             $return["data"]["attributes"]["parliament"] = $parliament;
             $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["attributes"]["order"] = (int)$item["MediaOrder"];
-            $return["data"]["attributes"]["aligned"] = (($item["MediaAligned"] === 1) ? true : false);
+            $return["data"]["attributes"]["aligned"] = (($item["MediaAligned"] === "1") ? true : false);
             $return["data"]["attributes"]["timestamp"] = strtotime($item["MediaDateStart"]);
             $return["data"]["attributes"]["dateStart"] = $item["MediaDateStart"];
             $return["data"]["attributes"]["dateEnd"] = $item["MediaDateEnd"];
@@ -797,7 +797,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                             MediaCreator=?s,
                             MediaLicense=?s,
                             MediaOrder=0,
-                            MediaAligned=0,
+                            MediaAligned=?i,
                             MediaPublic=1,
                             MediaDateStart=?s,
                             MediaDateEnd=?s,
@@ -816,9 +816,10 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                             $item["agendaItem"]["id"],
                             $item["media"]["creator"],
                             $item["media"]["license"],
+                            ($item["media"]["aligned"] ? $item["media"]["aligned"] : 0),
                             $item["dateStart"],
                             $item["dateEnd"],
-                            ($item["media"]["duration"] ? Number($item["media"]["duration"]) : 0),
+                            ($item["media"]["duration"] ? (float)$item["media"]["duration"] : 0), //TODO Check
                             $item["media"]["videoFileURI"],
                             $item["media"]["audioFileURI"],
                             $item["media"]["sourcePage"],
@@ -853,11 +854,15 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         if ((!$tmpMediaItem["MediaOriginMediaID"]) && ($item["media"]["originMediaID"])) {
             $tmpMediaItemUpdate[] = $dbp->parse("MediaOriginMediaID=?s",$item["media"]["originMediaID"]);
         }
+        //TODO: Check which order position is right
         if ((!$tmpMediaItem["MediaOrder"]) && ($item["media"]["order"])) {
             $tmpMediaItemUpdate[] = $dbp->parse("MediaOrder=?s",$item["media"]["order"]);
         }
         if ((!$tmpMediaItem["MediaOrder"]) && ($item["order"])) {
             $tmpMediaItemUpdate[] = $dbp->parse("MediaOrder=?i",$item["order"]);
+        }
+        if ((!$tmpMediaItem["MediaAligned"]) && ($item["media"]["aligned"])) {
+            $tmpMediaItemUpdate[] = $dbp->parse("MediaAligned=?i",(int)$item["media"]["aligned"]);
         }
         if ((!$tmpMediaItem["MediaDateStart"]) && ($item["dateStart"])) {
             $tmpMediaItemUpdate[] = $dbp->parse("MediaDateStart=?s",$item["dateStart"]);

@@ -4,7 +4,7 @@ include_once(__DIR__ . '/../modules/utilities/auth.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "import", "mediaJSON");
 
-$auth["meta"]["requestStatus"] = "success";
+//DEV TODO $auth["meta"]["requestStatus"] = "success";
 
 if ($auth["meta"]["requestStatus"] != "success") {
 
