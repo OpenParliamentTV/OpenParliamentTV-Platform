@@ -1090,6 +1090,11 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
     include_once(__DIR__."/person.php");
     include_once(__DIR__."/organisation.php");
 
+    //TODO: Think about a better way to handle speeches without people
+    if ((!$item["people"]) || (gettype($item["people"]) != "array")) {
+        $item["people"] = array();
+    }
+
     if (count($item["people"]) < 1) {
 
         reportConflict("Media","mediaAdd no person",$nextID,"","Media has no people.",$db);
