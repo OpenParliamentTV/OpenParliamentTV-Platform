@@ -57,11 +57,15 @@ $relatedContentsHTML =
 ?>
 <script type="text/javascript">
     currentMediaID = '<?= $speech["id"] ?>';
+
+    // TODO: Replace URL Quick Fix
+    var originMediaID = '<?= $speech["attributes"]['originMediaID'] ?>';
+    var videoSource = 'https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/'+ originMediaID +'/'+ originMediaID +'_h264_720_400_2000kb_baseline_de_2192.mp4';
     
     playerData = {
     	'title': '',
     	'documents': [],
-        'mediaSource': '<?= $speech["attributes"]['videoFileURI'] ?>',
+        'mediaSource': videoSource,
     	'transcriptHTML': '<?= $relatedContentsHTML ?>',
         'aw_username': null,
         'finds': [
