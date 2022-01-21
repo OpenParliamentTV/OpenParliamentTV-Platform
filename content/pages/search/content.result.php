@@ -40,6 +40,7 @@ if (!$_REQUEST["a"] || count($_REQUEST) < 2 ||
 				<li><?php echo L::fromTime; ?> 2017 <?php echo L::until; ?> <?php echo L::today; ?></li>
 				<li><?php echo L::moreParliamentsSoon; ?> <br class="d-inline d-sm-none"/>(<a href='<?= $config["dir"]["root"] ?>/faq'> <u><?php echo L::moreInfo; ?></u> </a>)</li>
 			</ul>
+			<div class="text-center alert mt-3 px-1 py-0 alert-info" style="font-size: 14px;"><span class="icon-attention mr-1"></span><a href="<?= $config["dir"]["root"] ?>/announcements" style="color: inherit; text-decoration: underline;"><?php echo L::messageAnnouncementCurrentState; ?></a></div>
 		</div>
 	</div>
 </div>

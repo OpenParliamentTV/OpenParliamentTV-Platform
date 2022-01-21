@@ -287,6 +287,18 @@ switch ($page) {
 		include_once("./content/pages/logout/page.php");
 		$content = ob_get_clean();
 	break;
+	case "announcements":
+		$pageTitle = L::announcements;
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/announcements/page_".$lang.".php");
+		$content = ob_get_clean();
+	break;
 	case "passwordReset":
 		$pageTitle = L::resetPassword;
 		$pageType = 'default';
