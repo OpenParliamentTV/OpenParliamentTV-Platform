@@ -161,6 +161,22 @@ include_once(__DIR__ . '/../../header.php');
 						</div>
 					</div>
 				</div>
+				<div class="entityPreview col" data-type="person">
+					<div class="entityContainer">
+						<div class="linkWrapper">
+								<div class="thumbnailContainer">
+								<div class="rounded-circle">
+									<img src="<?= $config["dir"]["root"] ?>/content/client/images/team/joseph.jpg" alt="Joseph">
+								</div>
+							</div>
+							<div>
+								<div class="entityTitle">Joseph</div>
+								<div>Projektmanager</div>
+								<div><span class="icon-angle-right"></span>Berater: Parlamente & Politik</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
