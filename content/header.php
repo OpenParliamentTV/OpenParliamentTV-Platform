@@ -1,4 +1,5 @@
 <header>
+	<div class="text-center alert m-0 px-1 py-0 alert-info" style="font-size: 14px;">* <span class="icon-attention mr-1"></span><a href="<?= $config["dir"]["root"] ?>/announcements" style="color: inherit; text-decoration: underline;"><?php echo L::messageAnnouncementCurrentState; ?></a></div>
 	<nav class="navbar justify-content-between navbar-light">
 		<div class="<?=($page != "media") ? "flex-fill" : ""?>">
 			<a href="<?= $config["dir"]["root"] ?>/" class="breadcrumb-page navbar-text large brand">

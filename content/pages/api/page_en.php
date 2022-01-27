@@ -18,7 +18,7 @@ include_once(__DIR__ . '/../../header.php');
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 			<h2>API <?php echo L::documentation; ?></h2>
-			<div class="alert bg-white"><div class="alert px-2 py-1 alert-info" style="font-size: 14px;"><span class="icon-attention mr-1"></span><a href="<?= $config["dir"]["root"] ?>/announcements" style="color: inherit; text-decoration: underline;"><?php echo L::messageAnnouncementCurrentState; ?></a></div><?php echo L::messageOpenData; ?>. There is currently no limit on requests nor do you need an api key. But please get in touch if you plan to copy our entire dataset. Instead of making millions of api requests you can just get an SQL dump from us.</div>
+			<div class="alert bg-white"><?php echo L::messageOpenData; ?>. There is currently no limit on requests nor do you need an api key. But please get in touch if you plan to copy our entire dataset. Instead of making millions of api requests you can just get an SQL dump from us.</div>
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="search-tab" data-toggle="tab" href="#search" role="tab" aria-controls="search" aria-selected="true"><span class="nav-item-label">Search</span></a>
