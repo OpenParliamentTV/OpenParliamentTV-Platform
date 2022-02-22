@@ -50,6 +50,13 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
 	return $aReturn;
 }
 
+// Polyfill for PHP 4 - PHP 7, safe to utilize with PHP 8
+if (!function_exists('str_contains')) {
+    function str_contains($haystack, $needle) {
+        return $needle !== '' && mb_strpos($haystack, $needle) !== false;
+    }
+}
+
 
 /**
  * @param string $password
@@ -190,8 +197,8 @@ function convertAccentsAndSpecialToNormal($string) {
         'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ĕ'=>'E', 'Ē'=>'E', 'Ę'=>'E', 'Ė'=>'E',
         'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ĕ'=>'e', 'ē'=>'e', 'ę'=>'e', 'ė'=>'e',
 
-        'Ĝ'=>'G', 'Ğ'=>'G', 'Ġ'=>'G', 'Ģ'=>'G',
-        'ĝ'=>'g', 'ğ'=>'g', 'ġ'=>'g', 'ģ'=>'g',
+        'Ĝ'=>'G', 'Ğ'=>'G', 'Ǧ'=>'G', 'Ġ'=>'G', 'Ģ'=>'G',
+        'ĝ'=>'g', 'ğ'=>'g', 'ǧ'=>'g', 'ġ'=>'g', 'ģ'=>'g',
 
         'Ĥ'=>'H', 'Ħ'=>'H',
         'ĥ'=>'h', 'ħ'=>'h',

@@ -493,6 +493,18 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         $errorarray["detail"] = "Missing parameter 'session[number]'";
         array_push($return["errors"], $errorarray);
     }
+    /**
+     *
+     * TODO:
+     *
+     *  Temp because parser/merger seems to have a problem with providing both parameter.
+     *  So here we fix it:
+     * If officialTitle fails (or is emtpy) it gets the title value.
+     * If title fails (or is emtpy) it gets the officialTitle value.
+     */
+    $item["agendaItem"]["officialTitle"] = ($item["agendaItem"]["officialTitle"] ? $item["agendaItem"]["officialTitle"] : $item["agendaItem"]["title"]);
+    $item["agendaItem"]["title"] = ($item["agendaItem"]["title"] ? $item["agendaItem"]["title"] : $item["agendaItem"]["officialTitle"]);
+
 
     if (!$item["agendaItem"]["officialTitle"]) {
         $return["meta"]["requestStatus"] = "error";
@@ -1114,16 +1126,43 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
         if (($personTempLabel["meta"]["requestStatus"] == "success") && (count($personTempLabel["data"]) > 0)) {
             $personWD = $personTempLabel;
-        } else if (isset($person["firstname"]) && isset($person["lastname"])) {
-            //Person not found by label, try special case where firstname + lastname != label
+        } else {
+            if (isset($person["firstname"]) && isset($person["lastname"])) {
 
-            $personTempFirstLast = apiV1([
-                "action" => "wikidataService", 
-                "itemType" => "person", 
-                "str" => $person["firstname"]." ".$person["lastname"]
-            ]);
-            if (($personTempFirstLast["meta"]["requestStatus"] == "success") && (count($personTempFirstLast["data"]) > 0)) {
-                $personWD = $personTempFirstLast;
+                //Person not found by label, try special case where firstname + lastname != label
+
+                $personTempFirstLast = apiV1([
+                    "action" => "wikidataService",
+                    "itemType" => "person",
+                    "str" => $person["firstname"] . " " . $person["lastname"]
+                ]);
+
+                if (($personTempFirstLast["meta"]["requestStatus"] == "success") && (count($personTempFirstLast["data"]) > 0)) {
+                    $personWD = $personTempFirstLast;
+                }
+            }
+                //TODO as long as the parser doesn't fix names containing ", Funktion" and "(Party)", we try it here
+            if (!$personWD && str_contains($person["label"], ",")) {
+                $personSplitLabel = explode(",", $person["label"]);
+                $personTempSplitComma = apiV1([
+                    "action" => "wikidataService",
+                    "itemType" => "person",
+                    "str" => $personSplitLabel[0]
+                ]);
+                if (($personTempSplitComma["meta"]["requestStatus"] == "success") && (count($personTempSplitComma["data"]) > 0)) {
+                    $personWD = $personTempSplitComma;
+                }
+            }
+            if (!$personWD && str_contains($person["label"], "(")) {
+                $personSplitBLabel = explode("(",$person["label"]);
+                $personTempSplitB = apiV1([
+                    "action" => "wikidataService",
+                    "itemType" => "person",
+                    "str" => $personSplitBLabel[0]
+                ]);
+                if (($personTempSplitB["meta"]["requestStatus"] == "success") && (count($personTempSplitB["data"]) > 0)) {
+                    $personWD = $personTempSplitB;
+                }
             }
         }
 
