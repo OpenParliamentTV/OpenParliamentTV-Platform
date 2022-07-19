@@ -393,7 +393,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
     require_once (__DIR__."/../../../modules/search/functions.php");
 
 
-    $allowedFields = ["parliament", "electoralPeriod", "sessionID", "sessionNumber", "agendaItemID", "context", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "abgeordnetenwatchID", "organisation", "organisationID", "documentID", "termID", "id", "q"];
+    $allowedFields = ["parliament", "electoralPeriod", "sessionID", "sessionNumber", "agendaItemID", "context", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "abgeordnetenwatchID", "organisation", "organisationID", "documentID", "termID", "id", "procedureID", "q"];
 
     $filteredParameters = array_filter(
         $parameter,
@@ -403,39 +403,50 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         ARRAY_FILTER_USE_KEY
     );
 
-    try {
-        $search = searchSpeeches($parameter);
-        if (isset($search["hits"]["hits"])) {
-            foreach ($search["hits"]["hits"] as $hit) {
+    if (!empty($filteredParameters)) {
 
-                $resultData = $hit["_source"];
-                $resultData["_score"] = $hit["_score"];
-                $resultData["_highlight"] = $hit["highlight"];
-                $resultData["_finds"] = $hit["finds"];
+        try {
+            $search = searchSpeeches($parameter);
+            if (isset($search["hits"]["hits"])) {
+                foreach ($search["hits"]["hits"] as $hit) {
 
-                $return["data"][] = $resultData;
+                    $resultData = $hit["_source"];
+                    $resultData["_score"] = $hit["_score"];
+                    $resultData["_highlight"] = $hit["highlight"];
+                    $resultData["_finds"] = $hit["finds"];
+
+                    $return["data"][] = $resultData;
+
+                }
+                $return["meta"]["requestStatus"] = "success";
+
+                //TODO: Check if this makes sense here
+                $return["meta"]["results"]["count"] = ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0;
+                $return["meta"]["results"]["total"] = $search["hits"]["total"]["value"];
+
+            } else {
+
+                $return["meta"]["requestStatus"] = "error";
+                $return["errors"] = array();
+                $errorarray["status"] = "503";
+                $errorarray["code"] = "3";
+                $errorarray["title"] = "OpenSearch Error";
+                $errorarray["detail"] = json_encode($search);
+                array_push($return["errors"], $errorarray);
 
             }
-            $return["meta"]["requestStatus"] = "success";
 
-            //TODO: Check if this makes sense here
-            $return["meta"]["results"]["count"] = ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0;
-            $return["meta"]["results"]["total"] = $search["hits"]["total"]["value"];
-
-        } else {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "3";
-            $errorarray["title"] = "OpenSearch Error";
-            $errorarray["detail"] = json_encode($search);
-            array_push($return["errors"], $errorarray);
+        } catch (Exception $e) {
 
         }
-
-    } catch (Exception $e) {
-
+    } else {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "503";
+        $errorarray["code"] = "3";
+        $errorarray["title"] = "OpenSearch Error";
+        $errorarray["detail"] = "No valid parameter given";
+        array_push($return["errors"], $errorarray);
     }
 
     $return["links"]["self"] = $config["dir"]["api"]."/"."search/media?".getURLParameterFromArray($filteredParameters);
