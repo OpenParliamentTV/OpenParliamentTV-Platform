@@ -58,17 +58,26 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]
 		]);
-		$pageTitle = '<span class="icon-list-numbered"></span>'.L::agendaItem.': '.$apiResult["data"]["attributes"]["title"].' - '.$apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"].'/'.$apiResult["data"]["relationships"]["session"]["data"]["attributes"]["number"].' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
-		$pageDescription = L::speeches.' '.L::basedOn.': '.$apiResult["data"]["attributes"]["officialTitle"].' - '.$apiResult["data"]["attributes"]["title"];
-		$pageType = 'entity';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/agendaItem/page.php");
-		$content = ob_get_clean();
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = '<span class="icon-list-numbered"></span>'.L::agendaItem.': '.$apiResult["data"]["attributes"]["title"].' - '.$apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"].'/'.$apiResult["data"]["relationships"]["session"]["data"]["attributes"]["number"].' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
+            $pageDescription = L::speeches.' '.L::basedOn.': '.$apiResult["data"]["attributes"]["officialTitle"].' - '.$apiResult["data"]["attributes"]["title"];
+            $pageType = 'entity';
+            $pageBreadcrumbs = [
+                [
+                    'label' => $pageTitle
+                ]
+            ];
+            ob_start();
+            include_once("./content/pages/agendaItem/page.php");
+            $content = ob_get_clean();
+        }
 	break;
 	case "document":
 		$apiResult = apiV1([
@@ -76,17 +85,26 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]
 		]);
-		$pageTitle = '<span class="icon-doc-text"></span>'.$apiResult["data"]["attributes"]["labelAlternative"];
-		$pageDescription = L::speeches.' '.L::basedOn.': '.$apiResult["data"]["attributes"]["label"];
-		$pageType = 'entity';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/document/page.php");
-		$content = ob_get_clean();
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = '<span class="icon-doc-text"></span>' . $apiResult["data"]["attributes"]["labelAlternative"];
+            $pageDescription = L::speeches . ' ' . L::basedOn . ': ' . $apiResult["data"]["attributes"]["label"];
+            $pageType = 'entity';
+            $pageBreadcrumbs = [
+                [
+                    'label' => $pageTitle
+                ]
+            ];
+            ob_start();
+            include_once("./content/pages/document/page.php");
+            $content = ob_get_clean();
+        }
 	break;
 	case "electoralPeriod":
 		$apiResult = apiV1([
@@ -94,17 +112,26 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]
 		]);
-		$pageTitle = '<span class="icon-check"></span>'.$apiResult["data"]["attributes"]["number"].'. '.L::electoralPeriod.' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
-		$pageDescription = L::speeches.' '.L::inDER.' '.$apiResult["data"]["attributes"]["number"].'. '.L::electoralPeriod.' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
-		$pageType = 'entity';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/electoralPeriod/page.php");
-		$content = ob_get_clean();
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = '<span class="icon-check"></span>' . $apiResult["data"]["attributes"]["number"] . '. ' . L::electoralPeriod . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
+            $pageDescription = L::speeches . ' ' . L::inDER . ' ' . $apiResult["data"]["attributes"]["number"] . '. ' . L::electoralPeriod . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
+            $pageType = 'entity';
+            $pageBreadcrumbs = [
+                [
+                    'label' => $pageTitle
+                ]
+            ];
+            ob_start();
+            include_once("./content/pages/electoralPeriod/page.php");
+            $content = ob_get_clean();
+        }
 	break;
 	case "embed":
 		require_once("./modules/media/include.media.php");
@@ -130,17 +157,26 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]
 		]);
-		$pageTitle = '<span class="icon-bank"></span>'.$apiResult["data"]["attributes"]["labelAlternative"];
-		$pageDescription = L::speeches.' '.L::by.': '.$apiResult["data"]["attributes"]["label"];
-		$pageType = 'entity';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/organisation/page.php");
-		$content = ob_get_clean();
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = '<span class="icon-bank"></span>' . $apiResult["data"]["attributes"]["labelAlternative"];
+            $pageDescription = L::speeches . ' ' . L::by . ': ' . $apiResult["data"]["attributes"]["label"];
+            $pageType = 'entity';
+            $pageBreadcrumbs = [
+                [
+                    'label' => $pageTitle
+                ]
+            ];
+            ob_start();
+            include_once("./content/pages/organisation/page.php");
+            $content = ob_get_clean();
+        }
 	break;
 	case "person":
 		$apiResult = apiV1([
@@ -148,17 +184,26 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]
 		]);
-		$pageTitle = '<span class="icon-torso"></span>'.$apiResult["data"]["attributes"]["label"];
-		$pageDescription = L::speeches.' '.L::by.': '.$apiResult["data"]["attributes"]["label"];
-		$pageType = 'entity';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/person/page.php");
-		$content = ob_get_clean();
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = '<span class="icon-torso"></span>' . $apiResult["data"]["attributes"]["label"];
+            $pageDescription = L::speeches . ' ' . L::by . ': ' . $apiResult["data"]["attributes"]["label"];
+            $pageType = 'entity';
+            $pageBreadcrumbs = [
+                [
+                    'label' => $pageTitle
+                ]
+            ];
+            ob_start();
+            include_once("./content/pages/person/page.php");
+            $content = ob_get_clean();
+        }
 	break;
 	case "session":
 		$apiResult = apiV1([
@@ -166,34 +211,53 @@ switch ($page) {
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]
 		]);
-		$pageTitle = '<span class="icon-group"></span>'.L::session.' '.$apiResult["data"]["attributes"]["number"].' – '.$apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"].'. '.L::electoralPeriod.' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
-		$pageDescription = L::speeches.' '.L::inDER.' '.$apiResult["data"]["attributes"]["number"].'. '.L::session.' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
-		$pageType = 'entity';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/session/page.php");
-		$content = ob_get_clean();
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = '<span class="icon-group"></span>' . L::session . ' ' . $apiResult["data"]["attributes"]["number"] . ' – ' . $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] . '. ' . L::electoralPeriod . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
+            $pageDescription = L::speeches . ' ' . L::inDER . ' ' . $apiResult["data"]["attributes"]["number"] . '. ' . L::session . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
+            $pageType = 'entity';
+            $pageBreadcrumbs = [
+                [
+                    'label' => $pageTitle
+                ]
+            ];
+            ob_start();
+            include_once("./content/pages/session/page.php");
+            $content = ob_get_clean();
+        }
 	break;
 	case "term":
+	    /* TODO */
 		$apiResult = apiV1([
 			"action"=>"getItem", 
 			"itemType"=>$page, 
 			"id"=>$_REQUEST["id"]
 		]);
-		$pageTitle = '<span class="icon-tag-1"></span>'.$apiResult["data"]["attributes"]["label"];
-		$pageType = 'entity';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/term/page.php");
-		$content = ob_get_clean();
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = '<span class="icon-tag-1"></span>' . $apiResult["data"]["attributes"]["label"];
+            $pageType = 'entity';
+            $pageBreadcrumbs = [
+                [
+                    'label' => $pageTitle
+                ]
+            ];
+            ob_start();
+            include_once("./content/pages/term/page.php");
+            $content = ob_get_clean();
+        }
 	break;
 	case "user":
 		$pageTitle = 'Detail User';
