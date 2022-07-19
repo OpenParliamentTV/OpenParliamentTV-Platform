@@ -1,12 +1,19 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
+
+$acceptLang = ['de', 'en'];
+
+if ($_REQUEST["lang"] && in_array($_REQUEST["lang"], $acceptLang)) {
+
+    $_SESSION["lang"] = $_REQUEST["lang"];
+
+}
 require_once('i18n.class.php');
 //TODO: Move this to config and apply for all i18n.init() calls
 $i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'de');
 $i18n->init();
 $userLang = $i18n->getUserLangs();
-$acceptLang = ['de', 'en'];
 $langIntersection = array_values(array_intersect($userLang, $acceptLang));
 $lang = (count($langIntersection) > 0) ? $langIntersection[0] : 'de';
 // just used inside JS const
