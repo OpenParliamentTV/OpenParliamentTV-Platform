@@ -66,6 +66,16 @@
 						</span><span class="d-inline">Dark Mode</span>
 					</div>
 					<div class="dropdown-divider"></div>
+                    <div class="list-group btn-group list-group-horizontal">
+                        <?php
+                        foreach ($acceptLang as $tmpLang) {
+                            $tmpParams = array_merge(array(),$_REQUEST);
+                            $tmpParams["lang"] = $tmpLang;
+                            $linkChangeLanguage[$tmpLang] = "//".$_SERVER["HTTP_HOST"]."?".http_build_query($tmpParams);
+                            echo "<a class='btn list-group-item".(($lang==$tmpLang)?" active" : "")."' href='".$linkChangeLanguage[$tmpLang]."' target='_self'>".strtoupper($tmpLang)."</a>";
+}                        ?>
+                    </div>
+					<div class="dropdown-divider"></div>
 					<a class="dropdown-item <?= ($page == "manage") ? "active" : "" ?><?= (!$_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/manage">Dashboard</a>
 					<!--
 					<a class="dropdown-item <?= ($page == "login") ? "active" : "" ?><?= ($_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/login"><?php echo L::login; ?> <span class="icon-login"></span></a>

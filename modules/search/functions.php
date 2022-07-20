@@ -344,6 +344,10 @@ function getSearchBody($request, $getAllResults) {
             $agendaItemID = array_pop($agendaItemStringsplit);
 			$filter["must"][] = array("match"=>array("relationships.agendaItem.data.id" => $agendaItemID));
 
+		} else if ($requestKey == "procedureID" && strlen($requestValue) >= 1) {
+
+			$filter["must"][] = array("match"=>array("relationships.documents.data.attributes.additionalInformation.procedureIDs" => $requestValue));
+
 		} else if ($requestKey == "dateFrom") {
 			
 			$filter["must"][] = array("range"=>array("attributes.dateStart"=>array("gte"=>$requestValue)));

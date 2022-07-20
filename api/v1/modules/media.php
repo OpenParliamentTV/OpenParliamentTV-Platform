@@ -393,7 +393,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
     require_once (__DIR__."/../../../modules/search/functions.php");
 
 
-    $allowedFields = ["parliament", "electoralPeriod", "sessionID", "sessionNumber", "agendaItemID", "context", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "abgeordnetenwatchID", "organisation", "organisationID", "documentID", "termID", "id", "q"];
+    $allowedFields = ["parliament", "electoralPeriod", "sessionID", "sessionNumber", "agendaItemID", "context", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "abgeordnetenwatchID", "organisation", "organisationID", "documentID", "termID", "id", "procedureID", "q"];
 
     $filteredParameters = array_filter(
         $parameter,
@@ -403,39 +403,50 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         ARRAY_FILTER_USE_KEY
     );
 
-    try {
-        $search = searchSpeeches($parameter);
-        if (isset($search["hits"]["hits"])) {
-            foreach ($search["hits"]["hits"] as $hit) {
+    if (!empty($filteredParameters)) {
 
-                $resultData = $hit["_source"];
-                $resultData["_score"] = $hit["_score"];
-                $resultData["_highlight"] = $hit["highlight"];
-                $resultData["_finds"] = $hit["finds"];
+        try {
+            $search = searchSpeeches($parameter);
+            if (isset($search["hits"]["hits"])) {
+                foreach ($search["hits"]["hits"] as $hit) {
 
-                $return["data"][] = $resultData;
+                    $resultData = $hit["_source"];
+                    $resultData["_score"] = $hit["_score"];
+                    $resultData["_highlight"] = $hit["highlight"];
+                    $resultData["_finds"] = $hit["finds"];
+
+                    $return["data"][] = $resultData;
+
+                }
+                $return["meta"]["requestStatus"] = "success";
+
+                //TODO: Check if this makes sense here
+                $return["meta"]["results"]["count"] = ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0;
+                $return["meta"]["results"]["total"] = $search["hits"]["total"]["value"];
+
+            } else {
+
+                $return["meta"]["requestStatus"] = "error";
+                $return["errors"] = array();
+                $errorarray["status"] = "503";
+                $errorarray["code"] = "3";
+                $errorarray["title"] = "OpenSearch Error";
+                $errorarray["detail"] = json_encode($search);
+                array_push($return["errors"], $errorarray);
 
             }
-            $return["meta"]["requestStatus"] = "success";
 
-            //TODO: Check if this makes sense here
-            $return["meta"]["results"]["count"] = ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0;
-            $return["meta"]["results"]["total"] = $search["hits"]["total"]["value"];
-
-        } else {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "3";
-            $errorarray["title"] = "OpenSearch Error";
-            $errorarray["detail"] = json_encode($search);
-            array_push($return["errors"], $errorarray);
+        } catch (Exception $e) {
 
         }
-
-    } catch (Exception $e) {
-
+    } else {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "503";
+        $errorarray["code"] = "3";
+        $errorarray["title"] = "OpenSearch Error";
+        $errorarray["detail"] = "No valid parameter given";
+        array_push($return["errors"], $errorarray);
     }
 
     $return["links"]["self"] = $config["dir"]["api"]."/"."search/media?".getURLParameterFromArray($filteredParameters);
@@ -493,6 +504,18 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
         $errorarray["detail"] = "Missing parameter 'session[number]'";
         array_push($return["errors"], $errorarray);
     }
+    /**
+     *
+     * TODO:
+     *
+     *  Temp because parser/merger seems to have a problem with providing both parameter.
+     *  So here we fix it:
+     * If officialTitle fails (or is emtpy) it gets the title value.
+     * If title fails (or is emtpy) it gets the officialTitle value.
+     */
+    $item["agendaItem"]["officialTitle"] = ($item["agendaItem"]["officialTitle"] ? $item["agendaItem"]["officialTitle"] : $item["agendaItem"]["title"]);
+    $item["agendaItem"]["title"] = ($item["agendaItem"]["title"] ? $item["agendaItem"]["title"] : $item["agendaItem"]["officialTitle"]);
+
 
     if (!$item["agendaItem"]["officialTitle"]) {
         $return["meta"]["requestStatus"] = "error";
@@ -1114,16 +1137,43 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
         if (($personTempLabel["meta"]["requestStatus"] == "success") && (count($personTempLabel["data"]) > 0)) {
             $personWD = $personTempLabel;
-        } else if (isset($person["firstname"]) && isset($person["lastname"])) {
-            //Person not found by label, try special case where firstname + lastname != label
+        } else {
+            if (isset($person["firstname"]) && isset($person["lastname"])) {
 
-            $personTempFirstLast = apiV1([
-                "action" => "wikidataService", 
-                "itemType" => "person", 
-                "str" => $person["firstname"]." ".$person["lastname"]
-            ]);
-            if (($personTempFirstLast["meta"]["requestStatus"] == "success") && (count($personTempFirstLast["data"]) > 0)) {
-                $personWD = $personTempFirstLast;
+                //Person not found by label, try special case where firstname + lastname != label
+
+                $personTempFirstLast = apiV1([
+                    "action" => "wikidataService",
+                    "itemType" => "person",
+                    "str" => $person["firstname"] . " " . $person["lastname"]
+                ]);
+
+                if (($personTempFirstLast["meta"]["requestStatus"] == "success") && (count($personTempFirstLast["data"]) > 0)) {
+                    $personWD = $personTempFirstLast;
+                }
+            }
+                //TODO as long as the parser doesn't fix names containing ", Funktion" and "(Party)", we try it here
+            if (!$personWD && str_contains($person["label"], ",")) {
+                $personSplitLabel = explode(",", $person["label"]);
+                $personTempSplitComma = apiV1([
+                    "action" => "wikidataService",
+                    "itemType" => "person",
+                    "str" => $personSplitLabel[0]
+                ]);
+                if (($personTempSplitComma["meta"]["requestStatus"] == "success") && (count($personTempSplitComma["data"]) > 0)) {
+                    $personWD = $personTempSplitComma;
+                }
+            }
+            if (!$personWD && str_contains($person["label"], "(")) {
+                $personSplitBLabel = explode("(",$person["label"]);
+                $personTempSplitB = apiV1([
+                    "action" => "wikidataService",
+                    "itemType" => "person",
+                    "str" => $personSplitBLabel[0]
+                ]);
+                if (($personTempSplitB["meta"]["requestStatus"] == "success") && (count($personTempSplitB["data"]) > 0)) {
+                    $personWD = $personTempSplitB;
+                }
             }
         }
 
