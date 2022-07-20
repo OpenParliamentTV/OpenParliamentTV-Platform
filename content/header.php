@@ -71,7 +71,7 @@
                         foreach ($acceptLang as $tmpLang) {
                             $tmpParams = array_merge(array(),$_REQUEST);
                             $tmpParams["lang"] = $tmpLang;
-                            $linkChangeLanguage[$tmpLang] = "//".$_SERVER["HTTP_HOST"]."?".http_build_query($tmpParams);
+                            $linkChangeLanguage[$tmpLang] = "?".http_build_query($tmpParams);
                             echo "<a class='btn list-group-item".(($lang==$tmpLang)?" active" : "")."' href='".$linkChangeLanguage[$tmpLang]."' target='_self'>".strtoupper($tmpLang)."</a>";
 }                        ?>
                     </div>
