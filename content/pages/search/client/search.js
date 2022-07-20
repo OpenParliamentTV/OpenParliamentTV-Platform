@@ -713,9 +713,15 @@ function updateResultList() {
     	pageString = 'page=' + pageParam + '&';
     }
 
+    var langParam = getQueryVariable('lang'),
+    	langString = '';
+    if (langParam) {
+    	langString = 'lang=' + langParam + '&';
+    }
+
 	updateAjax = $.ajax({
 		method: "POST",
-		url: "./content/pages/search/content.result.php?a=search&queryOnly=1&" + pageString + getSerializedForm()
+		url: "./content/pages/search/content.result.php?a=search&queryOnly=1&" + langString + pageString + getSerializedForm()
 	}).done(function(data) {
 		var requestQuery = getQueryVariable('q'),
 			requestPersonID = getQueryVariable('personID');
