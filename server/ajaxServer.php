@@ -16,7 +16,7 @@ switch ($_REQUEST["a"]) {
 
     case "lang":
 
-        if ($_REQUEST["lang"] && in_array($_REQUEST["lang"], $acceptLang)) {
+        if ($_REQUEST["lang"] && array_key_exists($_REQUEST["lang"], $acceptLang)) {
 
             $_SESSION["lang"] = $_REQUEST["lang"];
 
@@ -123,7 +123,7 @@ switch ($_REQUEST["a"]) {
 
 
 	break;
-	
+
 
 
 	case "stats":

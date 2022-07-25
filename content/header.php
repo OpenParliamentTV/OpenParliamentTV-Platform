@@ -68,11 +68,11 @@
 					<div class="dropdown-divider"></div>
                     <div class="list-group btn-group list-group-horizontal">
                         <?php
-                        foreach ($acceptLang as $tmpLang) {
+                        foreach ($acceptLang as $tmpLangK=>$tmpLang) {
                             $tmpParams = array_merge(array(),$_REQUEST);
-                            $tmpParams["lang"] = $tmpLang;
-                            $linkChangeLanguage[$tmpLang] = "?".http_build_query($tmpParams);
-                            echo "<a class='btn list-group-item langswitch".(($lang==$tmpLang)?" active" : "")."' href='".$linkChangeLanguage[$tmpLang]."' target='_self' data-lang='".$tmpLang."'>".strtoupper($tmpLang)."</a>";
+                            $tmpParams["lang"] = $tmpLang["short"];
+                            $linkChangeLanguage = "?".http_build_query($tmpParams);
+                            echo "<a class='btn list-group-item langswitch".(($lang==$tmpLang["short"])?" active" : "")."' href='".$linkChangeLanguage."' target='_self' data-lang='".$tmpLang["short"]."'>".strtoupper($tmpLang["short"])."</a>";
 }                        ?>
                     </div>
 					<div class="dropdown-divider"></div>

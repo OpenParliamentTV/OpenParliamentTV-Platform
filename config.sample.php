@@ -37,7 +37,18 @@ $config["salt"] = "";
  * Available languages of the platform (translation files can be found at /lang/*.json
  */
 
-$acceptLang = ['de', 'en'];
+$acceptLang = array(
+    "de"=>array(
+        "short"=>"de",
+        "name"=>"Deutsch",
+        "icon"=>""
+    ),
+    "en"=>array(
+        "short"=>"en",
+        "name"=>"English",
+        "icon"=>""
+    )
+);
 
 /**
  * for debugging and developing

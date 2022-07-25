@@ -4,7 +4,8 @@ session_start();
 
 require_once (__DIR__."/config.php");
 
-if ($_REQUEST["lang"] && in_array($_REQUEST["lang"], $acceptLang)) {
+
+if ($_REQUEST["lang"] && array_key_exists($_REQUEST["lang"], $acceptLang)) {
 
     $_SESSION["lang"] = $_REQUEST["lang"];
 
@@ -15,7 +16,7 @@ require_once('i18n.class.php');
 $i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'de');
 $i18n->init();
 $userLang = $i18n->getUserLangs();
-$langIntersection = array_values(array_intersect($userLang, $acceptLang));
+$langIntersection = array_values(array_intersect($userLang, array_keys($acceptLang)));
 $lang = (count($langIntersection) > 0) ? $langIntersection[0] : 'de';
 // just used inside JS const
 $langJSONString = file_get_contents('lang/lang_'.$lang.'.json');
