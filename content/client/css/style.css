@@ -326,6 +326,10 @@ hr {
     border-top: 1px solid var(--border-color) !important;
 }
 
+.langswitch {
+    border: 1px solid #cfcfcf !important;
+}
+
 /*
 .fancy-form .form-group {
     position: relative;

@@ -58,21 +58,22 @@
 		?>
 		<div class="navbarRightOptions">
 			<div class="dropdown d-inline">
-				<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="icon-menu"></span></button>
-				<div class="dropdown-menu dropdown-menu-right">
+				<button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo L::menu; ?> <span class="icon-menu"></span></button>
+				<div class="dropdown-menu dropdown-menu-right" style="width: 200px;">
 					<div id="toggleDarkmode" style="padding-left: 1.5rem;" class="navbar-text switch-container <?= ($color_scheme == "dark") ? "active" : "" ?>">
 						<span class="switch">
 							<span class="slider round"></span>
 						</span><span class="d-inline">Dark Mode</span>
 					</div>
 					<div class="dropdown-divider"></div>
-                    <div class="list-group btn-group list-group-horizontal">
+					<div class="py-2 px-4"><?php echo L::chooseLanguage; ?>:</div>
+                    <div class="btn-group-vertical d-block px-4 mb-3" role="group">
                         <?php
                         foreach ($acceptLang as $tmpLangK=>$tmpLang) {
                             $tmpParams = array_merge(array(),$_REQUEST);
                             $tmpParams["lang"] = $tmpLang["short"];
                             $linkChangeLanguage = "?".http_build_query($tmpParams);
-                            echo "<a class='btn list-group-item langswitch".(($lang==$tmpLang["short"])?" active" : "")."' href='".$linkChangeLanguage."' target='_self' data-lang='".$tmpLang["short"]."'>".strtoupper($tmpLang["short"])."</a>";
+                            echo "<a class='btn btn-sm langswitch".(($lang==$tmpLang["short"])?" active" : "")."' href='".$linkChangeLanguage."' target='_self' data-lang='".$tmpLang["short"]."'>".$tmpLang["name"]."</a>";
 }                        ?>
                     </div>
 					<div class="dropdown-divider"></div>
