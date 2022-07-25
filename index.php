@@ -2,13 +2,14 @@
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 session_start();
 
-$acceptLang = ['de', 'en'];
+require_once (__DIR__."/config.php");
 
 if ($_REQUEST["lang"] && in_array($_REQUEST["lang"], $acceptLang)) {
 
     $_SESSION["lang"] = $_REQUEST["lang"];
 
 }
+
 require_once('i18n.class.php');
 //TODO: Move this to config and apply for all i18n.init() calls
 $i18n = new i18n('lang/lang_{LANGUAGE}.json', 'langcache/', 'de');

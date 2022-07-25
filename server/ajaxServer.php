@@ -14,6 +14,22 @@ include_once(__DIR__ . '/../modules/utilities/auth.php');
 
 switch ($_REQUEST["a"]) {
 
+    case "lang":
+
+        if ($_REQUEST["lang"] && in_array($_REQUEST["lang"], $acceptLang)) {
+
+            $_SESSION["lang"] = $_REQUEST["lang"];
+
+            $return["success"] = "true";
+            $return["text"] = "Language has been set";
+            $return["return"] = "";
+
+        }
+
+    break;
+
+
+
     case "conflictsTable":
 
         $auth = auth($_SESSION["userdata"]["id"], "conflicts", "request");
@@ -32,6 +48,8 @@ switch ($_REQUEST["a"]) {
         return;
 
     break;
+
+
 
 	case "registerUser":
 
@@ -105,6 +123,7 @@ switch ($_REQUEST["a"]) {
 
 
 	break;
+	
 
 
 	case "stats":

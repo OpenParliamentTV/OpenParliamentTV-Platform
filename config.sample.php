@@ -33,6 +33,11 @@ $config["allow"]["publicAccess"] = true;
  */
 $config["salt"] = "";
 
+/**
+ * Available languages of the platform (translation files can be found at /lang/*.json
+ */
+
+$acceptLang = ['de', 'en'];
 
 /**
  * for debugging and developing

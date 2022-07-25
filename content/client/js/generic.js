@@ -10,6 +10,21 @@ var updateAjax,
 
 $(document).ready(function() {
 
+	$(".langswitch").on("click",function(e) {
+		e.preventDefault();
+		$.ajax({
+			url:config["dir"]["root"]+"/server/ajaxServer.php",
+			data: {
+				a:"lang",
+				lang:$(this).data("lang")
+			},
+			method: "POST",
+			success: function() {
+				location.reload();
+			}
+		})
+	});
+
 	$('#toggleDarkmode').click(function(evt) {
 		if ($(this).hasClass('active')) {
 			$(this).removeClass('active');

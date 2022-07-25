@@ -72,7 +72,7 @@
                             $tmpParams = array_merge(array(),$_REQUEST);
                             $tmpParams["lang"] = $tmpLang;
                             $linkChangeLanguage[$tmpLang] = "?".http_build_query($tmpParams);
-                            echo "<a class='btn list-group-item".(($lang==$tmpLang)?" active" : "")."' href='".$linkChangeLanguage[$tmpLang]."' target='_self'>".strtoupper($tmpLang)."</a>";
+                            echo "<a class='btn list-group-item langswitch".(($lang==$tmpLang)?" active" : "")."' href='".$linkChangeLanguage[$tmpLang]."' target='_self' data-lang='".$tmpLang."'>".strtoupper($tmpLang)."</a>";
 }                        ?>
                     </div>
 					<div class="dropdown-divider"></div>
