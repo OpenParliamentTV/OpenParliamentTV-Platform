@@ -15,7 +15,7 @@
 				$brandClass = "d-none d-lg-inline";
 			}
 			?>
-				<img src="<?= $config["dir"]["root"] ?>/content/client/images/optv-logo_klein.png"><span class="<?= $brandClass ?>"><?php echo L::brand; ?></span>
+				<img src="<?= $config["dir"]["root"] ?>/content/client/images/optv-logo_klein.png"><span class="<?= $brandClass ?>">Open <b>Parliament TV</b></span>
 			</a>
 			<!-- Beta Version Notice -->
 			<!--
