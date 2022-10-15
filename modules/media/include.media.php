@@ -34,11 +34,12 @@
         $mainSpeaker = getMainSpeakerFromPeopleArray($speech["relationships"]["people"]['data']);
         $mainFaction = getMainFactionFromOrganisationsArray($speech["relationships"]["organisations"]['data']);
 
-        if (isset($speech["attributes"]['textContents'][0])) {
+        $lastTextContents = end($speech["attributes"]['textContents']);
+        if ($lastTextContents) {
             if (isset($speech["_highlight"])) {
                 $textContentsHTML = $speech["_highlight"]["attributes.textContents.textHTML"][0];
             } else {
-                $textContentsHTML = textObjectToHTMLString(json_encode($speech["attributes"]['textContents'][0]), $speech["attributes"]['videoFileURI'], $speech["id"]);
+                $textContentsHTML = textObjectToHTMLString(json_encode($speech["attributes"]['textContents'][(count($speech["attributes"]['textContents'])-1)]), $speech["attributes"]['videoFileURI'], $speech["id"]);
             }
             $textContentsHTML = str_replace("\n", "\\n", $textContentsHTML);
         }
