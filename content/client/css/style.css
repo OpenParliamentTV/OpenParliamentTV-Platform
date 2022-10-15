@@ -782,11 +782,11 @@ input:checked + .slider:before, .switch-container.active .slider:before {
 
 .mainLoadingIndicator {
     position: fixed;
-    top: 47px;
+    top: 44px;
     left: 0px;
     width: 100%;
     pointer-events: all;
-    height: calc(100vh - 47px);
+    height: calc(100vh - 44px);
     background: var(--secondary-bg-color);
     z-index: 20;
     opacity: 1;
