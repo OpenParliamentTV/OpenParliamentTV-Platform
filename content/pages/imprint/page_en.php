@@ -3,10 +3,12 @@
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 			<h2><?php echo L::imprint; ?></h2>
-			<p>Joscha Jäger<br>
-				Bülowstr. 37, 90491 Nürnberg<br>
-				joscha.jaeger [AT] openparliament.tv<br>
-				+49-177-7896559 (only for legal requests)<br>
+			<p>Open Parliament TV<br>
+				c/o Center for the Cultivation of Technology gemeinnützige GmbH<br>
+				Aufgang 4<br>
+				Gottschedstraße 4<br>
+				13357 Berlin<br>
+				info [AT] openparliament.tv<br>
 				<a href="https://openparliament.tv/" target="_blank">https://openparliament.tv</a>
 			</p>
 			<p>Inhaltlich verantwortlich gemäß § 5 TMG, § 55 RStV: Joscha Jäger</p>
