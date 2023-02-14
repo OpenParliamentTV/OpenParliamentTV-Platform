@@ -26,11 +26,6 @@ function getFilesWithDates ($dir,$pattern = "~[0-9]{5}-session\.json~") {
 
 function updateFilesFromGit($parliament = "DE") {
 
-
-    //$parliament = ($_REQUEST["parliament"] ? $_REQUEST["parliament"] : "DE");
-
-
-
     $return = false;
 
     require_once(__DIR__ . "/../config.php");
@@ -40,8 +35,6 @@ function updateFilesFromGit($parliament = "DE") {
     require_once(__DIR__ . "/../api/v1/modules/media.php");
     global $config;
 
-    //TODO DEV
-    $config["parliament"]["DE"]["git"]["repository"]="https://github.com/OpenHypervideo/GH-Integration-Test.git";
 
     if (!is_dir(__DIR__."/repos/")) {
         mkdir(__DIR__."/repos/");
@@ -63,11 +56,6 @@ function updateFilesFromGit($parliament = "DE") {
     }
 
     shell_exec($config["parliament"][$parliament]["git"]["bin"]." config --global --add safe.directory ".$realpath);
-   /* echo $config["parliament"][$parliament]["git"]["bin"].' -C "'.__DIR__."/repos/".$parliament.'/" status';
-    echo shell_exec($config["parliament"][$parliament]["git"]["bin"].' -C "'.__DIR__."/repos/".$parliament.'/" status');
-
-    exit;
-   */
 
 
     chdir($realpath);
@@ -101,6 +89,5 @@ function updateFilesFromGit($parliament = "DE") {
     return $return;
 
 }
-//updateFilesFromGit();
 
 ?>
