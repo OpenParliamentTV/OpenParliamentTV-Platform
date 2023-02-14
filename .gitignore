@@ -37,6 +37,7 @@ langcache/*.php
 data/import-error-log.txt
 data/input/*.json
 data/done/*.json
+data/repos/*
 modules/alignment/data/*.xml
 modules/alignment/output/*.json
 modules/import/input/*.json
