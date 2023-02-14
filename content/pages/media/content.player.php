@@ -18,10 +18,24 @@ $proceedingsTab = (isset($textContentsHTML)) ? '<li class="nav-item">
 $relationshipsActiveClass = (isset($textContentsHTML)) ? '' : 'show active';
 
 $relatedPeopleHTML = '';
-foreach ($speech["relationships"]["people"]["data"] as $relationshipItem) {
-    $contextLabelIdentifier = lcfirst(implode('', array_map('ucfirst', explode('-', $relationshipItem["attributes"]["context"]))));
-    $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="thumbnailContainer"><div class="rounded-circle"><img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="..."></div></div><div><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.$relationshipItem["attributes"]["faction"]["labelAlternative"].'</div><div><span class="icon-megaphone"></span>'.L('context'.$contextLabelIdentifier).'</div></div></a></div></div>';
-}
+foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relationshipItem) {
+    foreach ($speech["annotations"]["data"] as $annotation) {
+        if ($annotation["id"] == $relationshipItem["id"]) {
+            $speech["relationships"]["people"]["data"][$relationshipKey]["annotations"][] = $annotation;
+
+            //TODO: What about people who were found as NER?
+            if ($annotation["context"] != "NER") {
+                $relationshipItem["attributes"]["context"] = $annotation["context"];
+                $contextLabelIdentifier = lcfirst(implode('', array_map('ucfirst', explode('-', $relationshipItem["attributes"]["context"]))));
+                $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="thumbnailContainer"><div class="rounded-circle"><img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="..."></div></div><div><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.$relationshipItem["attributes"]["faction"]["labelAlternative"].'</div><div><span class="icon-megaphone"></span>'.L('context'.$contextLabelIdentifier).'</div></div></a></div></div>';
+
+            } else {
+                //TODO: NER
+                $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="thumbnailContainer"><div class="rounded-circle"><img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="..."></div></div><div><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.$relationshipItem["attributes"]["faction"]["labelAlternative"].'</div><div><span class="icon-megaphone"></span>NER</div></div></a></div></div>';
+            }
+        }
+    }
+    }
 
 /*
 $relatedOrganisationsHTML = '';

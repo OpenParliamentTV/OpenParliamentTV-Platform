@@ -3,7 +3,7 @@
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 		    <h2><?php echo L::dataPolicy; ?></h2>
-			<p>The data controller is Joscha Jäger c/o Center for the Cultivation of Technology gemeinnützige GmbH, Aufgang 4, Gottschedstraße 4, 13357 Berlin. The competent supervisory authority is the <a href="https://www.datenschutz-berlin.de">Berlin Commissioner for Data Protection and Freedom of Information</a>.</p>
+            <p>The data controller is Joscha Jäger c/o Center for the Cultivation of Technology gemeinnützige GmbH, Aufgang 4, Gottschedstraße 4, 13357 Berlin. The competent supervisory authority is the <a href="https://www.datenschutz-berlin.de">Berlin Commissioner for Data Protection and Freedom of Information</a>.</p>
 			<p>The security of your data is our highest priority. We take every possible measure to protect your personal data from unauthorised access. We comply with all requirements of the EU General Data Protection Regulation (GDPR), the Federal Data Protection Act (BDSG), the Telemedia Act (TMG) and all other data protection regulations. You can visit our site without providing any personal information.</p>
 			<p>The webseite OpenParliament.TV and the parlament-specific subdomains (eg. de.openparliament.tv) allows you to watch and search parliamentary debates in combination with plenary proceedings and additional information.</p>
 			<hr>

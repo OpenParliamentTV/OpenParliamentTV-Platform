@@ -138,7 +138,7 @@ if ($totalResults != 0) {
 
 			$formattedDate = date("d.m.Y", strtotime($result_item["attributes"]["dateStart"]));
 			
-			$mainSpeaker = getMainSpeakerFromPeopleArray($result_item["relationships"]["people"]['data']);
+			$mainSpeaker = getMainSpeakerFromPeopleArray($result_item["annotations"]['data'], $result_item["relationships"]["people"]['data']);
 			$mainFaction = getMainFactionFromOrganisationsArray($result_item["relationships"]["organisations"]['data']);
 
 			if ($sortFactor == 'date' && $formattedDate != $currentDate) {

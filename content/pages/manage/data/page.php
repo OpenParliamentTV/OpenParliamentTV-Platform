@@ -41,7 +41,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				</li>
 			</ul>
 			<div class="tab-content">
-				<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">Tabelle Media, <a href="../media/8757">Beispiel Link</a>, <a href="./data/media/8757">Manage / Edit Link</a></div>
+				<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
+                    <!--Tabelle Media, <a href="../media/8757">Beispiel Link</a>, <a href="./data/media/8757">Manage / Edit Link</a>-->
+                    <a href="./data/media/irregularities">Show irregularities</a>
+                </div>
 				<div class="tab-pane fade" id="people" role="tabpanel" aria-labelledby="people-tab">Tabelle Person, <a href="../person/8757">Beispiel Link</a>, <a href="./data/person/8757">Manage / Edit Link</a></div>
 				<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">Tabelle Document, <a href="../document/8757">Beispiel Link</a>, <a href="./data/document/8757">Manage / Edit Link</a></div>
 				<div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
