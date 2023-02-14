@@ -78,6 +78,7 @@ $config["platform"]["sql"]["tbl"]["Document"] = "document";
 $config["platform"]["sql"]["tbl"]["Person"] = "person";
 $config["platform"]["sql"]["tbl"]["Auth"] = "auth";
 $config["platform"]["sql"]["tbl"]["Conflict"] = "conflict";
+$config["platform"]["sql"]["tbl"]["Entitysuggestion"] = "entitysuggestion";
 $config["platform"]["sql"]["tbl"]["User"] = "user";
 
 

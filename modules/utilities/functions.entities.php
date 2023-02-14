@@ -116,32 +116,31 @@ function reportEntitySuggestion($entitysuggestionExternalID, $entitysuggestionTy
         return;
     }
 
-    //TODO: Table name as variable / Config
-    $exists = $dbPlatform->getRow("SELECT * FROM entitysuggestion WHERE EntitysuggestionExternalID = ?s", $entitysuggestionExternalID);
+    $exists = $dbPlatform->getRow("SELECT * FROM ?n WHERE EntitysuggestionExternalID = ?s", $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $entitysuggestionExternalID);
 
     if ($exists) {
 
         $context = json_decode($exists["EntitysuggestionContext"],true);
         $context[$entitysuggestionContext] = $entitysuggestionContext;
         $context = json_encode($context, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-        //TODO: Table name as variable / Config
+
         try {
-            $dbPlatform->query("UPDATE entitysuggestion SET EntitysuggestionContext = ?s WHERE EntitysuggestionID = ?i", $context, $exists["EntitysuggestionID"]);
+            $dbPlatform->query("UPDATE ?n SET EntitysuggestionContext = ?s WHERE EntitysuggestionID = ?i",$config["platform"]["sql"]["tbl"]["Entitysuggestion"], $context, $exists["EntitysuggestionID"]);
         } catch (exception $e) {
             echo $e;
         }
     } else {
 
         $context[$entitysuggestionContext] = $entitysuggestionContext;
-        //TODO: Table name as variable / Config
+
         try {
-            $dbPlatform->query("INSERT INTO entitysuggestion SET
+            $dbPlatform->query("INSERT INTO ?n SET
                                     EntitysuggestionExternalID = ?s,
                                     EntitysuggestionType = ?s,
                                     EntitysuggestionLabel = ?s,
                                     EntitysuggestionContent = ?s,
                                     EntitysuggestionContext = ?s",
-
+                $config["platform"]["sql"]["tbl"]["Entitysuggestion"],
                 $entitysuggestionExternalID,
                 $entitysuggestionType,
                 $entitysuggestionLabel,
