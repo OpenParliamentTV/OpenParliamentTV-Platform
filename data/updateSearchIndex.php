@@ -1,11 +1,6 @@
 <?php
-session_start();
-//include_once(__DIR__ . '/../modules/utilities/auth.php');
-
-
 
 function updateSearchIndex($parliament, $items, $initIndex = false) {
-    //print_r($items);
 
     if (!$parliament || !is_array($items) || count($items) < 1) {
         echo "no!".$parliament.count($items);
@@ -53,13 +48,13 @@ function updateSearchIndex($parliament, $items, $initIndex = false) {
 
     $return["updated"] = 0;
 
+    //TODO:  Bulk Update?
     foreach ($items as $item) {
         $docParams = array(
             "index" => "openparliamenttv_" . strtolower($config["parliament"][$parliament]["ES"]["index"]),
             "id" => $item["data"]["id"],
             "body" => json_encode($item["data"])
         );
-        //print_r($docParams);
 
         try {
             $result = $ESClient->index($docParams);
