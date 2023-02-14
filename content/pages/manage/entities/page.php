@@ -47,12 +47,12 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 ));
             }
 
-            $entitysuggestions = $db->getAll("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount FROM ?n;", $config["platform"]["sql"]["tbl"]["Entitysuggestion"]);
+            $entitysuggestions = $db->getAll("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount, JSON_EXTRACT(EntitysuggestionContent,'$.type') as EntitysuggestionContentType FROM ?n;", $config["platform"]["sql"]["tbl"]["Entitysuggestion"]);
 
 			foreach ($entitysuggestions as $entity) {
 				echo "
 					<tr>
-							<td>".$entity["EntitysuggestionType"]."</td>
+							<td>".$entity["EntitysuggestionType"]." ".($entity["EntitysuggestionContentType"] ? "<span class='font-italic'>(".$entity["EntitysuggestionContentType"].")</span>" : "")."</td>
 							<td>".$entity["EntitysuggestionLabel"]."</td>
 							<td>".$entity["EntitysuggestionExternalID"]."</td>
 							<td>".$entity["EntitysuggestionCount"]."</td>
