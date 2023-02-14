@@ -98,6 +98,8 @@ $config["parliament"]["DE"]["sql"]["tbl"]["Session"] = "session";
 $config["parliament"]["DE"]["sql"]["tbl"]["Media"] = "media";
 $config["parliament"]["DE"]["sql"]["tbl"]["Annotation"] = "annotation";
 $config["parliament"]["DE"]["sql"]["tbl"]["Text"] = "text";
+$config["parliament"]["DE"]["git"]["bin"] = "git"; //Executable for fit
+$config["parliament"]["DE"]["ES"]["index"] = "de"; // openparliamenttv_THIS
 
 /**
  * Path to the wikidata dumps. See Docs for more informations
