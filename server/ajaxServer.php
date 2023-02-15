@@ -45,7 +45,25 @@ switch ($_REQUEST["a"]) {
             echo json_encode(getConflicts("all", $_REQUEST["limit"], $_REQUEST["offset"], $_REQUEST["search"], true), JSON_PRETTY_PRINT);
 
         }
-        return;
+
+    break;
+
+    case "entitysuggestionGet":
+
+        $auth = auth($_SESSION["userdata"]["id"], "entitysuggestion", "get");
+
+        if ($auth["meta"]["requestStatus"] != "success") {
+
+            $alertText = $auth["errors"][0]["detail"];
+            include_once (__DIR__."/../../../login/page.php");
+
+        } else {
+            $return["success"] = "true";
+            $return["text"] = "Entity suggestion";
+            require_once(__DIR__ . "/../modules/utilities/functions.entities.php");
+            $return["return"] = getEntitySuggestion($_REQUEST["id"]);
+
+        }
 
     break;
 

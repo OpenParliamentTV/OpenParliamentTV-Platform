@@ -155,4 +155,40 @@ function reportEntitySuggestion($entitysuggestionExternalID, $entitysuggestionTy
 
 }
 
+function getEntitySuggestion($id, $db=false) {
+
+    global $config;
+
+    if (!$db) {
+        try {
+
+            $db = new SafeMySQL(array(
+                'host'	=> $config["platform"]["sql"]["access"]["host"],
+                'user'	=> $config["platform"]["sql"]["access"]["user"],
+                'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+                'db'	=> $config["platform"]["sql"]["db"]
+            ));
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "1";
+            $errorarray["title"] = "Database connection error";
+            $errorarray["detail"] = "Connecting to platform database failed";
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+    }
+
+    $item = $db->getRow("SELECT * FROM ?n WHERE EntitysuggestionID = ?i", $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $id);
+
+    $item["EntitysuggestionContext"] = json_decode($item["EntitysuggestionContext"],true);
+
+    return $item;
+
+}
+
 ?>
