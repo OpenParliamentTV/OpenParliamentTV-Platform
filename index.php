@@ -499,6 +499,26 @@ switch ($page) {
 			$content = ob_get_clean();
 		}
 	break;
+	case "manage-entities":
+		ob_start();
+		if (isset($_REQUEST["id"])) {
+			//TODO
+		} else {
+			$pageTitle = L::manageEntities;
+			$pageType = 'admin';
+			$pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => $pageTitle
+				]
+			];
+			include_once("./content/pages/manage/entities/page.php");
+			$content = ob_get_clean();
+		}
+	break;
 	case "manage-data":
 		$pageTitle = L::data;
 		$pageType = 'admin';

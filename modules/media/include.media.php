@@ -31,7 +31,7 @@
 
         $speech = $apiResult["data"][0];
 
-        $mainSpeaker = getMainSpeakerFromPeopleArray($speech["relationships"]["people"]['data']);
+        $mainSpeaker = getMainSpeakerFromPeopleArray($speech["annotations"]["data"],$speech["relationships"]["people"]['data']);
         $mainFaction = getMainFactionFromOrganisationsArray($speech["relationships"]["organisations"]['data']);
 
         $lastTextContents = end($speech["attributes"]['textContents']);

@@ -92,6 +92,7 @@ function personGetDataObject($item = false, $db = false) {
         $return["id"] = $item["PersonID"];
         $return["attributes"]["type"] = $item["PersonType"];
         $return["attributes"]["label"] = $item["PersonLabel"];
+        $return["attributes"]["labelAlternative"] = json_decode($item["PersonLabelAlternative"],true);
         $return["attributes"]["firstName"] = $item["PersonFirstName"];
         $return["attributes"]["lastName"] = $item["PersonLastName"];
         $return["attributes"]["degree"] = $item["PersonDegree"];

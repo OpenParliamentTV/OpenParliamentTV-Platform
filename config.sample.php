@@ -78,6 +78,7 @@ $config["platform"]["sql"]["tbl"]["Document"] = "document";
 $config["platform"]["sql"]["tbl"]["Person"] = "person";
 $config["platform"]["sql"]["tbl"]["Auth"] = "auth";
 $config["platform"]["sql"]["tbl"]["Conflict"] = "conflict";
+$config["platform"]["sql"]["tbl"]["Entitysuggestion"] = "entitysuggestion";
 $config["platform"]["sql"]["tbl"]["User"] = "user";
 
 
@@ -98,6 +99,8 @@ $config["parliament"]["DE"]["sql"]["tbl"]["Session"] = "session";
 $config["parliament"]["DE"]["sql"]["tbl"]["Media"] = "media";
 $config["parliament"]["DE"]["sql"]["tbl"]["Annotation"] = "annotation";
 $config["parliament"]["DE"]["sql"]["tbl"]["Text"] = "text";
+$config["parliament"]["DE"]["git"]["bin"] = "git"; //Executable for fit
+$config["parliament"]["DE"]["ES"]["index"] = "de"; // openparliamenttv_THIS
 
 /**
  * Path to the wikidata dumps. See Docs for more informations

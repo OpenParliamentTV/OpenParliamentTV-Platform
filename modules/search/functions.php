@@ -76,13 +76,16 @@ function searchSpeeches($request) {
 
 
 	$data = getSearchBody($request, false);
-	
+
 	$searchParams = array("index" => "openparliamenttv_*", "body" => $data);
+
+    //echo json_encode($searchParams, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 	
 	try {
 		//Example: $results = $ESClient->get(['index' => "openparliamenttv_*", 'id' => 'DE-BB-0070047001']);
 
 		$results = $ESClient->search($searchParams);
+		//print_r($results);
 	} catch(Exception $e) {
 		$results = $e->getMessage();
 	}
@@ -283,491 +286,494 @@ function searchAutocomplete($textQuery) {
  * @param bool $getAllResults
  * @return array
  */
+
 function getSearchBody($request, $getAllResults) {
-	
-	$filter = array("must"=>array(), "should"=>array(), "must_not"=>array());
 
-	//ONLY INCLUDE ALIGNED SPEECHES
-	//$filter["must"][] = array("match"=>array("attributes.aligned" => true));
-	
-	// FILTER OUT FRAGESTUNDE ETC.
-	
-	$filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Befragung"));
-	$filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Fragestunde"));
-	$filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Wahl der"));
-	$filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Wahl des"));
-	$filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungseröffnung"));
-	$filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungsende"));
-	
-	$shouldCount = 0;
+    $filter = array("must"=>array(), "should"=>array(), "must_not"=>array());
 
-	foreach ($request as $requestKey => $requestValue) {
-		
-		/*
-		if ($requestKey != "a" && 
-			$requestKey != "q" && 
-			$requestKey != "name" && 
-			$requestKey != "timefrom" && 
-			$requestKey != "timeto" && 
-			$requestKey != "party" && 
-			$requestKey != "playresults" &&
-			$requestKey != "page" && 
-			$requestKey != "id" &&
-			$requestKey != "sort") {
-			
-			if (strlen($requestValue) > 0) {
-				$filter["must"][] = array("match"=>array("meta.".$requestKey => $requestValue));
-			}
-		*/
-		if ($requestKey == "parliament" && strlen($requestValue) > 2) {
-			
-			//???
+    //ONLY INCLUDE ALIGNED SPEECHES
+    //$filter["must"][] = array("match"=>array("attributes.aligned" => true));
 
-		} else if ($requestKey == "electoralPeriod" && strlen($requestValue) > 2) {
-			
-			$filter["must"][] = array("term"=>array("relationships.electoralPeriod.data.attributes.number" => $requestValue));
+    // FILTER OUT FRAGESTUNDE ETC.
 
-		} else if ($requestKey == "electoralPeriodID" && strlen($requestValue) > 2) {
-			
-			$filter["must"][] = array("term"=>array("relationships.electoralPeriod.data.id" => $requestValue));
+    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Befragung"));
+    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Fragestunde"));
+    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Wahl der"));
+    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Wahl des"));
+    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungseröffnung"));
+    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungsende"));
 
-		} else if ($requestKey == "sessionID" && strlen($requestValue) > 2) {
-			
-			$filter["must"][] = array("match"=>array("relationships.session.data.id" => $requestValue));
 
-		} else if ($requestKey == "sessionNumber" && strlen($requestValue) >= 1) {
-			
-			$filter["must"][] = array("match"=>array("relationships.session.data.attributes.number" => $requestValue));
+    $shouldCount = 0;
 
-		} else if ($requestKey == "agendaItemID" && strlen($requestValue) >= 1) {
+    foreach ($request as $requestKey => $requestValue) {
+
+        /*
+        if ($requestKey != "a" &&
+            $requestKey != "q" &&
+            $requestKey != "name" &&
+            $requestKey != "timefrom" &&
+            $requestKey != "timeto" &&
+            $requestKey != "party" &&
+            $requestKey != "playresults" &&
+            $requestKey != "page" &&
+            $requestKey != "id" &&
+            $requestKey != "sort") {
+
+            if (strlen($requestValue) > 0) {
+                $filter["must"][] = array("match"=>array("meta.".$requestKey => $requestValue));
+            }
+        */
+        if ($requestKey == "parliament" && strlen($requestValue) > 2) {
+
+            //???
+
+        } else if ($requestKey == "electoralPeriod" && strlen($requestValue) > 2) {
+
+            $filter["must"][] = array("term"=>array("relationships.electoralPeriod.data.attributes.number" => $requestValue));
+
+        } else if ($requestKey == "electoralPeriodID" && strlen($requestValue) > 2) {
+
+            $filter["must"][] = array("term"=>array("relationships.electoralPeriod.data.id" => $requestValue));
+
+        } else if ($requestKey == "sessionID" && strlen($requestValue) > 2) {
+
+            $filter["must"][] = array("match"=>array("relationships.session.data.id" => $requestValue));
+
+        } else if ($requestKey == "sessionNumber" && strlen($requestValue) >= 1) {
+
+            $filter["must"][] = array("match"=>array("relationships.session.data.attributes.number" => $requestValue));
+
+        } else if ($requestKey == "agendaItemID" && strlen($requestValue) >= 1) {
             $agendaItemStringsplit = explode("-",$requestValue);
             $agendaItemID = array_pop($agendaItemStringsplit);
-			$filter["must"][] = array("match"=>array("relationships.agendaItem.data.id" => $agendaItemID));
+            $filter["must"][] = array("match"=>array("relationships.agendaItem.data.id" => $agendaItemID));
 
-		} else if ($requestKey == "procedureID" && strlen($requestValue) >= 1) {
+        } else if ($requestKey == "procedureID" && strlen($requestValue) >= 1) {
 
-			$filter["must"][] = array("match"=>array("relationships.documents.data.attributes.additionalInformation.procedureIDs" => $requestValue));
+            $filter["must"][] = array("match"=>array("relationships.documents.data.attributes.additionalInformation.procedureIDs" => $requestValue));
 
-		} else if ($requestKey == "dateFrom") {
-			
-			$filter["must"][] = array("range"=>array("attributes.dateStart"=>array("gte"=>$requestValue)));
+        } else if ($requestKey == "dateFrom") {
 
-		} else if ($requestKey == "dateTo") {
-			
-			$filter["must"][] = array("range"=>array("attributes.dateStart"=>array("lte"=>$requestValue)));
+            $filter["must"][] = array("range"=>array("attributes.dateStart"=>array("gte"=>$requestValue)));
 
-		} else if ($requestKey == "party" || $requestKey == "faction") {
-			if (is_array($requestValue)) {
-				foreach ($requestValue as $partyOrFaction) {
-					
-					//TODO: Get mainSpeaker from people Array 
-					//TODO: people.data[0].attributes.party needs labelAlternative as well!
-					$filter["should"][] = array("match_phrase"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $partyOrFaction));
+        } else if ($requestKey == "dateTo") {
 
-				}
-				$shouldCount++;
-			} else {
-				
-				//TODO: Get mainSpeaker from people Array 
-				//TODO: people.data[0].attributes.party needs labelAlternative as well!
-				$filter["must"][] = array("match"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $requestValue));
+            $filter["must"][] = array("range"=>array("attributes.dateStart"=>array("lte"=>$requestValue)));
 
-			}
-		} else if ($requestKey == "partyID") {
-			if (is_array($requestValue)) {
-				foreach ($requestValue as $partyID) {
-					
-					$filter["should"][] = array(
-						"nested" => array(
-							"path" => "relationships.organisations.data",
-							"query" => array("bool" => array("must"=>array(
-								array("match" => array(
-									"relationships.organisations.data.id" => $partyID
-								)),
-								array("match_phrase" => array(
-									"relationships.organisations.data.attributes.context" => 'main-speaker-party'
-								))
-							)))
-						)
-					);
+        } else if ($requestKey == "party" || $requestKey == "faction") {
+            if (is_array($requestValue)) {
+                foreach ($requestValue as $partyOrFaction) {
 
-				}
+                    //TODO: Get mainSpeaker from people Array
+                    //TODO: people.data[0].attributes.party needs labelAlternative as well!
+                    $filter["should"][] = array("match_phrase"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $partyOrFaction));
 
-				$shouldCount++;
-				
-			} else {
-				
-				$filter["must"][] = array(
-					"nested" => array(
-						"path" => "relationships.organisations.data",
-						"query" => array("bool" => array("must"=>array(
-							array("match" => array(
-								"relationships.organisations.data.id" => $requestValue
-							)),
-							array("match_phrase" => array(
-								"relationships.organisations.data.attributes.context" => 'main-speaker-party'
-							))
-						)))
-					)
-				);
+                }
+                $shouldCount++;
+            } else {
 
-			}
-		} else if ($requestKey == "factionID") {
-			if (is_array($requestValue)) {
-				foreach ($requestValue as $factionID) {
-					
-					$filter["should"][] = array(
-						"nested" => array(
-							"path" => "relationships.organisations.data",
-							"query" => array("bool" => array("must"=>array(
-								array("match" => array(
-									"relationships.organisations.data.id" => $factionID
-								)),
-								array("match_phrase" => array(
-									"relationships.organisations.data.attributes.context" => 'main-speaker-faction'
-								))
-							)))
-						)
-					);
+                //TODO: Get mainSpeaker from people Array
+                //TODO: people.data[0].attributes.party needs labelAlternative as well!
+                $filter["must"][] = array("match"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $requestValue));
 
-				}
+            }
+        } else if ($requestKey == "partyID") {
+            if (is_array($requestValue)) {
+                foreach ($requestValue as $partyID) {
 
-				$shouldCount++;
-				
-			} else {
-				
-				$filter["must"][] = array(
-					"nested" => array(
-						"path" => "relationships.organisations.data",
-						"query" => array("bool" => array("must"=>array(
-							array("match" => array(
-								"relationships.organisations.data.id" => $requestValue
-							)),
-							array("match_phrase" => array(
-								"relationships.organisations.data.attributes.context" => 'main-speaker-faction'
-							))
-						)))
-					)
-				);
+                    $filter["should"][] = array(
+                        "nested" => array(
+                            "path" => "relationships.organisations.data",
+                            "query" => array("bool" => array("must"=>array(
+                                array("match" => array(
+                                    "relationships.organisations.data.id" => $partyID
+                                )),
+                                array("match_phrase" => array(
+                                    "relationships.organisations.data.attributes.context" => 'main-speaker-party'
+                                ))
+                            )))
+                        )
+                    );
 
-			}
-		} else if ($requestKey == "organisationID") {
-			
-			$filter["should"][] = array("multi_match"=>array(
-				"query" => $requestValue,
-				"type" => "cross_fields",
-				"fields" => ["relationships.people.data.attributes.party.id", "relationships.people.data.attributes.faction.id"],
-				"operator" => "or"
-			));
-			$shouldCount++;
+                }
 
-		} else if ($requestKey == "abgeordnetenwatchID") {
-			
-			if (isset($request["context"]) && strlen($request["context"]) > 2) {
-				$filter["must"][] = array(
-					"nested" => array(
-						"path" => "relationships.people.data",
-						"query" => array("bool" => array("must"=>array(
-							array("match" => array(
-								"relationships.people.data.attributes.additionalInformation.abgeordnetenwatchID" => $requestValue
-							)),
-							array("match_phrase" => array(
-								"relationships.people.data.attributes.context" => $request["context"]
-							))
-						)))
-					)
-				);
+                $shouldCount++;
 
-			} else {
-				
-				$filter["must"][] = array(
-					"nested" => array(
-						"path" => "relationships.people.data",
-						"query" => array("bool" => array("must"=>array(
-							array("match" => array(
-								"relationships.people.data.attributes.additionalInformation.abgeordnetenwatchID" => $requestValue
-							)),
-							array("match" => array(
-								"relationships.people.data.attributes.context" => 'main-speaker'
-							))
-						)))
-					)
-				);
+            } else {
 
-			}
+                $filter["must"][] = array(
+                    "nested" => array(
+                        "path" => "relationships.organisations.data",
+                        "query" => array("bool" => array("must"=>array(
+                            array("match" => array(
+                                "relationships.organisations.data.id" => $requestValue
+                            )),
+                            array("match_phrase" => array(
+                                "relationships.organisations.data.attributes.context" => 'main-speaker-party'
+                            ))
+                        )))
+                    )
+                );
 
-		} else if ($requestKey == "person" && strlen($requestValue) > 1) {
-			
-			$filter["must"][] = array(
-				"nested" => array(
-					"path" => "relationships.people.data",
-					"query" => array("bool" => array("must"=>array(
-						array("match_phrase" => array(
-							"relationships.people.data.attributes.label" => $requestValue
-						)),
-						array("match" => array(
-							"relationships.people.data.attributes.context" => 'main-speaker'
-						))
-					)))
-				)
-			);
-			
-		} else if ($requestKey == "personID") {
-			
-			if (is_array($requestValue)) {
+            }
+        } else if ($requestKey == "factionID") {
+            if (is_array($requestValue)) {
+                foreach ($requestValue as $factionID) {
 
-				foreach ($requestValue as $personID) {
+                    $filter["should"][] = array(
+                        "nested" => array(
+                            "path" => "relationships.organisations.data",
+                            "query" => array("bool" => array("must"=>array(
+                                array("match" => array(
+                                    "relationships.organisations.data.id" => $factionID
+                                )),
+                                array("match_phrase" => array(
+                                    "relationships.organisations.data.attributes.context" => 'main-speaker-faction'
+                                ))
+                            )))
+                        )
+                    );
 
-					if (isset($request["context"]) && strlen($request["context"]) > 2) {
-						$filter["should"][] = array(
-							"nested" => array(
-								"path" => "relationships.people.data",
-								"query" => array("bool" => array("must"=>array(
-									array("match" => array(
-										"relationships.people.data.id" => $personID
-									)),
-									array("match_phrase" => array(
-										"relationships.people.data.attributes.context" => $request["context"]
-									))
-								)))
-							)
-						);
+                }
 
-					} else {
-						
-						$filter["should"][] = array(
-							"nested" => array(
-								"path" => "relationships.people.data",
-								"query" => array("bool" => array("must"=>array(
-									array("match" => array(
-										"relationships.people.data.id" => $personID
-									)),
-									array("match" => array(
-										"relationships.people.data.attributes.context" => 'main-speaker'
-									))
-								)))
-							)
-						);
+                $shouldCount++;
 
-					}
+            } else {
 
-				}
+                $filter["must"][] = array(
+                    "nested" => array(
+                        "path" => "relationships.organisations.data",
+                        "query" => array("bool" => array("must"=>array(
+                            array("match" => array(
+                                "relationships.organisations.data.id" => $requestValue
+                            )),
+                            array("match_phrase" => array(
+                                "relationships.organisations.data.attributes.context" => 'main-speaker-faction'
+                            ))
+                        )))
+                    )
+                );
 
-				$shouldCount++;
+            }
+        } else if ($requestKey == "organisationID") {
 
-			} else {
+            $filter["should"][] = array("multi_match"=>array(
+                "query" => $requestValue,
+                "type" => "cross_fields",
+                "fields" => ["relationships.people.data.attributes.party.id", "relationships.people.data.attributes.faction.id"],
+                "operator" => "or"
+            ));
+            $shouldCount++;
 
-				if (isset($request["context"]) && strlen($request["context"]) > 2) {
-					$filter["must"][] = array(
-						"nested" => array(
-							"path" => "relationships.people.data",
-							"query" => array("bool" => array("must"=>array(
-								array("match" => array(
-									"relationships.people.data.id" => $requestValue
-								)),
-								array("match_phrase" => array(
-									"relationships.people.data.attributes.context" => $request["context"]
-								))
-							)))
-						)
-					);
+        } else if ($requestKey == "abgeordnetenwatchID") {
 
-				} else {
-					
-					$filter["must"][] = array(
-						"nested" => array(
-							"path" => "relationships.people.data",
-							"query" => array("bool" => array("must"=>array(
-								array("match" => array(
-									"relationships.people.data.id" => $requestValue
-								)),
-								array("match" => array(
-									"relationships.people.data.attributes.context" => 'main-speaker'
-								))
-							)))
-						)
-					);
+            if (isset($request["context"]) && strlen($request["context"]) > 2) {
+                $filter["must"][] = array(
+                    "nested" => array(
+                        "path" => "relationships.people.data",
+                        "query" => array("bool" => array("must"=>array(
+                            array("match" => array(
+                                "relationships.people.data.attributes.additionalInformation.abgeordnetenwatchID" => $requestValue
+                            )),
+                            array("match_phrase" => array(
+                                "relationships.people.data.attributes.context" => $request["context"]
+                            ))
+                        )))
+                    )
+                );
 
-				}
+            } else {
 
-			}
-			
-			
-		} else if ($requestKey == "documentID") {
-			
-			$filter["must"][] = array("match"=>array("relationships.documents.data.id" => $requestValue));
+                $filter["must"][] = array(
+                    "nested" => array(
+                        "path" => "relationships.people.data",
+                        "query" => array("bool" => array("must"=>array(
+                            array("match" => array(
+                                "relationships.people.data.attributes.additionalInformation.abgeordnetenwatchID" => $requestValue
+                            )),
+                            array("match" => array(
+                                "relationships.people.data.attributes.context" => 'main-speaker'
+                            ))
+                        )))
+                    )
+                );
 
-		} else if ($requestKey == "termID") {
-			
-			$filter["must"][] = array("match"=>array("relationships.terms.data.id" => $requestValue));
+            }
 
-		} else if ($requestKey == "id" && strlen($requestValue) > 3 && !$getAllResults) {
-			$filter["must"][] = array("match_phrase"=>array("id" => $requestValue));
-		}
-	}
-	
-	$query = array("bool"=>array(
-			"filter"=>array("bool"=>array(
-				"must"=>$filter["must"],
-				"should"=>$filter["should"],
-				"must_not"=>$filter["must_not"]))));
+        } else if ($requestKey == "person" && strlen($requestValue) > 1) {
 
-	$request["q"] = str_replace(['„','“','\'','«','«'], '"', $request["q"]);
+            $filter["must"][] = array(
+                "nested" => array(
+                    "path" => "annotations.data.data",
+                    "query" => array("bool" => array("must"=>array(
+                        array("match_phrase" => array(
+                            "annotations.data.label" => $requestValue
+                        )),
+                        array("match" => array(
+                            "annotations.data.context" => 'main-speaker'
+                        ))
+                    )))
+                )
+            );
 
-	$quotationMarksRegex = '/(["\'])(?:(?=(\\\\?))\2.)*?\1/m';
+        } else if ($requestKey == "personID") {
 
-	preg_match_all($quotationMarksRegex, $request["q"], $exact_query_matches);
+            if (is_array($requestValue)) {
 
-	$fuzzy_match = preg_replace($quotationMarksRegex, '', $request["q"]);
+                foreach ($requestValue as $personID) {
 
-	if (strlen($request["q"]) >= 1) {
-		$boolCondition = "must";
-		if ($request["id"]) {
-			$boolCondition = "should";
-		}
-		$query["bool"][$boolCondition] = array();
-		
-		if (strlen($fuzzy_match) > 0) {
-			
-			$query_array = preg_split("/(\s)/", $fuzzy_match);
+                    if (isset($request["context"]) && strlen($request["context"]) > 2) {
+                        $filter["should"][] = array(
+                            "nested" => array(
+                                "path" => "annotations.data.data",
+                                "query" => array("bool" => array("must"=>array(
+                                    array("match" => array(
+                                        "annotations.data.id" => $personID
+                                    )),
+                                    array("match_phrase" => array(
+                                        "annotations.data.context" => $request["context"]
+                                    ))
+                                )))
+                            )
+                        );
 
-			foreach ($query_array as $query_item) {
-				if (strpos($query_item, '*') !== false) {
-					
-					$query["bool"][$boolCondition][] = array(
-						"wildcard" => array("attributes.textContents.textHTML" => array(
-								"value"=>$query_item,
-								"case_insensitive"=>true,
-								"boost"=>1.0,
-								"rewrite"=>"scoring_boolean"
-							)
-						)
-					);
+                    } else {
 
-				} else if (strlen($query_item) != 0) {
+                        $filter["should"][] = array(
+                            "nested" => array(
+                                "path" => "annotations.data",
+                                "query" => array("bool" => array("must"=>array(
+                                    array("match" => array(
+                                        "annotations.data.id" => $personID
+                                    )),
+                                    array("match" => array(
+                                        "annotations.data.context" => 'main-speaker'
+                                    ))
+                                )))
+                            )
+                        );
 
-					//TODO: Check which item in textContents is the right one
-					$query["bool"][$boolCondition][] = array(
-						"match"=>array("attributes.textContents.textHTML" => array(
-								"query"=>$query_item,
-								//"operator"=>"and",
-								//"fuzziness"=>0,
-								"prefix_length"=>0
-							)
-						)
-					);
+                    }
 
-				}
-			}
-		}
+                }
 
-		foreach ($exact_query_matches[0] as $exact_match) {
-			$exact_match = preg_replace('/(["\'])/m', '', $exact_match);
-			if (strpos($exact_match, '*') !== false) {
-				
-				$exact_query_array = preg_split("/(\s)/", $exact_match);
+                $shouldCount++;
 
-				$query["bool"]["must"]["span_near"] = array(
-					"clauses" => array(),
-					"slop" => 0,
-					"in_order" => true
-				);
+            } else {
 
-				foreach ($exact_query_array as $exact_query_item) {
-					
-					if (strpos($exact_query_item, '*') !== false) {
-						$query["bool"]["must"]["span_near"]["clauses"][] = array(
-							"span_multi" => array(
-								"match" => array(
-									"wildcard" => array(
-										"attributes.textContents.textHTML" => array(
-											"value"=>$exact_query_item,
-											"case_insensitive"=>true
-										)
-									)
-								)
-							)
-						);
-					} else {
-						$query["bool"]["must"]["span_near"]["clauses"][] = array(
-							"span_term" => array(
-								"attributes.textContents.textHTML" => strtolower($exact_query_item)
-							)
-						);
-					}
+                if (isset($request["context"]) && strlen($request["context"]) > 2) {
+                    $filter["must"][] = array(
+                        "nested" => array(
+                            "path" => "annotations.data",
+                            "query" => array("bool" => array("must"=>array(
+                                array("match" => array(
+                                    "annotations.data.id" => $requestValue
+                                )),
+                                array("match_phrase" => array(
+                                    "annotations.data.context" => $request["context"]
+                                ))
+                            )))
+                        )
+                    );
 
-					
-				}
+                } else {
 
-				/*
-				["must"][] = array(
-					"wildcard"=>array(
-						"attributes.textContents.textHTML"=>$exact_match
-					)
-				);
-				*/
+                    $filter["must"][] = array(
+                        "nested" => array(
+                            "path" => "annotations.data",
+                            "query" => array("bool" => array("must"=>array(
+                                array("match" => array(
+                                    "annotations.data.id" => $requestValue
+                                )),
+                                array("match" => array(
+                                    "annotations.data.context" => 'main-speaker'
+                                ))
+                            )))
+                        )
+                    );
 
-			} else {
-				
-				$query["bool"]["must"][] = array(
-					"match_phrase"=>array(
-						"attributes.textContents.textHTML"=>$exact_match
-					)
-				);
+                }
 
-			}
-		}
-		
+            }
 
-		//$query["bool"]["must"] = array("regexp"=>array("attributes.textContents[0].textHTML"=>array("value"=>"(".$request["q"].")")));
-	}
-	if ($shouldCount >= 1) {
-		$query["bool"]["filter"]["bool"]["minimum_should_match"] = $shouldCount;
-	}
 
-	//TODO: Check if timestamp is needed for date ordering
-	if (isset($request["sort"]) && ($request["sort"] == 'date-asc' || $request["sort"] == 'topic-asc')) {
-		$sort = array("attributes.timestamp"=>"asc");
-	} else if (isset($request["sort"]) && ($request["sort"] == 'date-desc' || $request["sort"] == 'topic-desc')) {
-		$sort = array("attributes.timestamp"=>"desc");
-	} else {
-		$sort = array("_score");
-	}
+        } else if ($requestKey == "documentID") {
 
-	$maxFullResults = ($getAllResults === true) ? 10000 : 40;
+            $filter["must"][] = array("match"=>array("relationships.documents.data.id" => $requestValue));
 
-	if ((!$_REQUEST["a"] || count($request) < 2) && !$getAllResults) {
-		$maxFullResults = 10;
-	}
+        } else if ($requestKey == "termID") {
 
-	$from = 0;
+            $filter["must"][] = array("match"=>array("relationships.terms.data.id" => $requestValue));
 
-	if ($request["page"] && !$getAllResults) {
-		$from = (intval($request["page"])-1) * $maxFullResults;
-	}
+        } else if ($requestKey == "id" && strlen($requestValue) > 3 && !$getAllResults) {
+            $filter["must"][] = array("match_phrase"=>array("id" => $requestValue));
+        }
+    }
 
-	$data = array("from"=>$from, "size"=>$maxFullResults,
-		"sort"=>$sort,
-		"query"=>$query);
-		//"query"=>array("bool"=>array("must"=>array("match_phrase"=>array("id"=>$request['id'])))));
-		//"query"=>array("bool"=>array("filter"=>array("bool"=>array("must"=>array("match_phrase"=>array("id"=>$request['id'])))))));
+    $query = array("bool"=>array(
+        "filter"=>array("bool"=>array(
+            "must"=>$filter["must"],
+            "should"=>$filter["should"],
+            "must_not"=>$filter["must_not"]))));
 
-	if ($getAllResults === false) {
-		$data["highlight"] = array(
-			"number_of_fragments"=>0,
-			"fields"=>array("attributes.textContents.textHTML"=>new \stdClass())
-		);
-	} else {
-		$data["_source"] = ["id", "attributes.dateStart", "relationships"];
-	}
 
-	/*
-	echo '<pre>';
-	print_r($data);
-	echo '</pre>';
-	*/
+    $request["q"] = str_replace(['„','“','\'','«','«'], '"', $request["q"]);
 
-	return $data;
+    $quotationMarksRegex = '/(["\'])(?:(?=(\\\\?))\2.)*?\1/m';
+
+    preg_match_all($quotationMarksRegex, $request["q"], $exact_query_matches);
+
+    $fuzzy_match = preg_replace($quotationMarksRegex, '', $request["q"]);
+
+    if (strlen($request["q"]) >= 1) {
+        $boolCondition = "must";
+        if ($request["id"]) {
+            $boolCondition = "should";
+        }
+        $query["bool"][$boolCondition] = array();
+
+        if (strlen($fuzzy_match) > 0) {
+
+            $query_array = preg_split("/(\s)/", $fuzzy_match);
+
+            foreach ($query_array as $query_item) {
+                if (strpos($query_item, '*') !== false) {
+
+                    $query["bool"][$boolCondition][] = array(
+                        "wildcard" => array("attributes.textContents.textHTML" => array(
+                            "value"=>$query_item,
+                            "case_insensitive"=>true,
+                            "boost"=>1.0,
+                            "rewrite"=>"scoring_boolean"
+                        )
+                        )
+                    );
+
+                } else if (strlen($query_item) != 0) {
+
+                    //TODO: Check which item in textContents is the right one
+                    $query["bool"][$boolCondition][] = array(
+                        "match"=>array("attributes.textContents.textHTML" => array(
+                            "query"=>$query_item,
+                            //"operator"=>"and",
+                            //"fuzziness"=>0,
+                            "prefix_length"=>0
+                        )
+                        )
+                    );
+
+                }
+            }
+        }
+
+        foreach ($exact_query_matches[0] as $exact_match) {
+            $exact_match = preg_replace('/(["\'])/m', '', $exact_match);
+            if (strpos($exact_match, '*') !== false) {
+
+                $exact_query_array = preg_split("/(\s)/", $exact_match);
+
+                $query["bool"]["must"]["span_near"] = array(
+                    "clauses" => array(),
+                    "slop" => 0,
+                    "in_order" => true
+                );
+
+                foreach ($exact_query_array as $exact_query_item) {
+
+                    if (strpos($exact_query_item, '*') !== false) {
+                        $query["bool"]["must"]["span_near"]["clauses"][] = array(
+                            "span_multi" => array(
+                                "match" => array(
+                                    "wildcard" => array(
+                                        "attributes.textContents.textHTML" => array(
+                                            "value"=>$exact_query_item,
+                                            "case_insensitive"=>true
+                                        )
+                                    )
+                                )
+                            )
+                        );
+                    } else {
+                        $query["bool"]["must"]["span_near"]["clauses"][] = array(
+                            "span_term" => array(
+                                "attributes.textContents.textHTML" => strtolower($exact_query_item)
+                            )
+                        );
+                    }
+
+
+                }
+
+                /*
+                ["must"][] = array(
+                    "wildcard"=>array(
+                        "attributes.textContents.textHTML"=>$exact_match
+                    )
+                );
+                */
+
+            } else {
+
+                $query["bool"]["must"][] = array(
+                    "match_phrase"=>array(
+                        "attributes.textContents.textHTML"=>$exact_match
+                    )
+                );
+
+            }
+        }
+
+
+        //$query["bool"]["must"] = array("regexp"=>array("attributes.textContents[0].textHTML"=>array("value"=>"(".$request["q"].")")));
+    }
+    if ($shouldCount >= 1) {
+        $query["bool"]["filter"]["bool"]["minimum_should_match"] = $shouldCount;
+    }
+
+    //TODO: Check if timestamp is needed for date ordering
+    if (isset($request["sort"]) && ($request["sort"] == 'date-asc' || $request["sort"] == 'topic-asc')) {
+        $sort = array("attributes.timestamp"=>"asc");
+    } else if (isset($request["sort"]) && ($request["sort"] == 'date-desc' || $request["sort"] == 'topic-desc')) {
+        $sort = array("attributes.timestamp"=>"desc");
+    } else {
+        $sort = array("_score");
+    }
+
+    $maxFullResults = ($getAllResults === true) ? 10000 : 40;
+
+    if ((!$_REQUEST["a"] || count($request) < 2) && !$getAllResults) {
+        $maxFullResults = 10;
+    }
+
+    $from = 0;
+
+    if ($request["page"] && !$getAllResults) {
+        $from = (intval($request["page"])-1) * $maxFullResults;
+    }
+
+    $data = array("from"=>$from, "size"=>$maxFullResults,
+        "sort"=>$sort,
+        "query"=>$query);
+    //"query"=>array("bool"=>array("must"=>array("match_phrase"=>array("id"=>$request['id'])))));
+    //"query"=>array("bool"=>array("filter"=>array("bool"=>array("must"=>array("match_phrase"=>array("id"=>$request['id'])))))));
+
+    if ($getAllResults === false) {
+        $data["highlight"] = array(
+            "number_of_fragments"=>0,
+            "fields"=>array("attributes.textContents.textHTML"=>new \stdClass())
+        );
+    } else {
+        $data["_source"] = ["id", "attributes.dateStart", "relationships"];
+    }
+
+
+    /*echo '<pre>';
+    print_r($data);
+    echo '</pre>';
+    */
+
+    return $data;
 }
 
 /*
