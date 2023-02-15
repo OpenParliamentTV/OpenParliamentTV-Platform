@@ -51,25 +51,25 @@ function updateFilesFromGit($parliament = "DE") {
     if (!is_dir(__DIR__."/repos/".$parliament."/.git")) {
 
         chdir($realpath);
-        shell_exec($config["parliament"][$parliament]["git"]["bin"].' -C "'.$realpath.'" clone '.$config["parliament"][$parliament]["git"]["repository"].' .');
+        shell_exec($config["bin"]["git"].' -C "'.$realpath.'" clone '.$config["parliament"][$parliament]["git"]["repository"].' .');
 
     }
 
-    shell_exec($config["parliament"][$parliament]["git"]["bin"]." config --global --add safe.directory ".$realpath);
+    shell_exec($config["bin"]["git"]." config --global --add safe.directory ".$realpath);
 
 
     chdir($realpath);
 
     //If files were deleted locally restore them first
 
-    shell_exec($config["parliament"][$parliament]["git"]["bin"].' -C "'.$realpath.'" checkout -f HEAD');
+    shell_exec($config["bin"]["git"].' -C "'.$realpath.'" checkout -f HEAD');
 
     //get all current files
     $currentFiles = getFilesWithDates($realpath."/processed/");
 
 
     //get all changes from git
-    shell_exec($config["parliament"][$parliament]["git"]["bin"].' -C "'.$realpath.'" pull');
+    shell_exec($config["bin"]["git"].' -C "'.$realpath.'" pull');
 
     //get all current files again
     $newCurrentFiles = getFilesWithDates($realpath."/processed/");

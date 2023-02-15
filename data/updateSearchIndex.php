@@ -2,6 +2,13 @@
 
 function updateSearchIndex($parliament, $items, $initIndex = false) {
 
+    if (!is_array($items)) {
+        if (is_file($items)) {
+            $inputFile = $items;
+            $items = json_decode(file_get_contents($items),true);
+        }
+    }
+
     if (!$parliament || !is_array($items) || count($items) < 1) {
         echo "no!".$parliament.count($items);
         return false;
@@ -64,6 +71,11 @@ function updateSearchIndex($parliament, $items, $initIndex = false) {
             echo $e->getMessage();
         }
     }
+
+    if (is_file($inputFile)) {
+        unlink($inputFile);
+    }
+
     return $return["updated"];
 
 }
@@ -202,10 +214,60 @@ function getSearchIndexParameter()
             )
         )
     );
+
     return $data;
 
 }
+function deleteSearchIndex($parliament, $init = false) {
 
+    if (!$parliament) {
+
+        echo "no parliament given";
+        return false;
+
+    }
+    require_once(__DIR__ . '/../config.php');
+    require_once (__DIR__."/../vendor/autoload.php");
+    global $config;
+
+    set_time_limit(0);
+    ini_set('memory_limit', '500M');
+    date_default_timezone_set('CET');
+
+    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
+
+    if ($config["ES"]["hosts"]) {
+        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+    }
+    if ($config["ES"]["BasicAuthentication"]["user"]) {
+        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
+    }
+    if ($config["ES"]["SSL"]["pem"]) {
+        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
+    }
+    $ESClient = $ESClientBuilder->build();
+
+    $ESClient->indices()->delete(array("index" => "openparliamenttv_".strtolower($parliament)));
+
+    /**
+     * Set Index structure if parameter 2 is true
+     */
+
+    if ($init == true) {
+
+        $indexParams = array(
+            "index" => "openparliamenttv_" . strtolower($config["parliament"][$parliament]["ES"]["index"]),
+            "body" => getSearchIndexParameter()
+        );
+
+        try {
+            $ESClient->indices()->create($indexParams);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+
+}
 
 
 

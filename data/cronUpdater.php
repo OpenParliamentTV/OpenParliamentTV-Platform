@@ -30,14 +30,21 @@ if (is_cli()) {
     require_once(__DIR__ . "/../api/v1/api.php");
     require_once(__DIR__ . "/../api/v1/modules/media.php");
 
-    $val = getopt(null, ["parliament:"]);
+    $val = getopt(null, ["parliament:","fromDB:"]);
 
     $meta["inputDir"] = __DIR__ . "/input/";
     $meta["doneDir"] = __DIR__ . "/done/";
     $meta["preserveFiles"] = true;
     $meta["parliament"] = ($val["parliament"] ? $val["parliament"] : "DE");
+    $meta["fromDB"] = ($val["fromDB"] ? true : false);
 
+    if ($meta["fromDB"] === false) {
+
+        //TODO: UpdateIndex from Database not from git files to run this script in background e.g. from admin interface
+
+    }
     if (!is_dir($meta["inputDir"])) {
+
 
         mkdir($meta["inputDir"]);
 

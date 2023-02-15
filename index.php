@@ -491,6 +491,24 @@ switch ($page) {
 		include_once("./content/pages/manage/config/page.php");
 		$content = ob_get_clean();
 	break;
+	case "manage-opensearch":
+		$pageTitle = L::platformSettings;
+		$pageType = 'admin';
+
+		//TODO
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/manage/opensearch/page.php");
+		$content = ob_get_clean();
+	break;
 	case "manage-conflicts":
 		ob_start();
 		if (isset($_REQUEST["id"])) {

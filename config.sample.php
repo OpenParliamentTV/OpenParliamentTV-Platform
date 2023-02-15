@@ -63,6 +63,11 @@ $config["mode"] = "production";
 $config["mail"]["from"] = "noreply@openparliament.tv";
 $config["mail"]["replyto"] = "noreply@openparliament.tv";
 
+/**
+ * Executabels
+ */
+$config["bin"]["git"] = "git";
+$config["bin"]["php"] = "php";
 
 /**
  * Platform Database (mariadb/MySQL) information
@@ -99,7 +104,6 @@ $config["parliament"]["DE"]["sql"]["tbl"]["Session"] = "session";
 $config["parliament"]["DE"]["sql"]["tbl"]["Media"] = "media";
 $config["parliament"]["DE"]["sql"]["tbl"]["Annotation"] = "annotation";
 $config["parliament"]["DE"]["sql"]["tbl"]["Text"] = "text";
-$config["parliament"]["DE"]["git"]["bin"] = "git"; //Executable for fit
 $config["parliament"]["DE"]["ES"]["index"] = "de"; // openparliamenttv_THIS
 
 /**
