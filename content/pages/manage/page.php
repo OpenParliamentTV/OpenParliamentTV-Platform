@@ -41,6 +41,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				<div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
 					<a class="d-block p-4 bg-white text-center" href="./manage/config"><?php echo L::platformSettings; ?></a>
 				</div>
+				<div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
+					<a class="d-block p-4 bg-white text-center" href="./manage/entities"><?php echo L::manageEntities; ?></a>
+				</div>
 			</div>
 			<hr>
 			<h2>DEBUG</h2>

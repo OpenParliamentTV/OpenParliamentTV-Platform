@@ -504,7 +504,7 @@ switch ($page) {
 		if (isset($_REQUEST["id"])) {
 			//TODO
 		} else {
-			$pageTitle = L::manageConflicts;
+			$pageTitle = L::manageEntities;
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[

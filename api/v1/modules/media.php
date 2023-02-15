@@ -563,6 +563,7 @@ function mediaIrregularity($type = false, $parliament = false, $getDetails = fal
             $items = $dbp->getAll("SELECT m.MediaID, m.MediaAligned, m.MediaPublic, m.MediaLastChanged FROM ?n as m WHERE m.MediaID NOT IN (SELECT t.TextMediaID FROM ?n as t)",
                 $config["parliament"][$parliament]["sql"]["tbl"]["Media"],
                 $config["parliament"][$parliament]["sql"]["tbl"]["Text"]);
+            // Alternative: SELECT m.MediaID, m.MediaAligned, m.MediaPublic, m.MediaLastChanged FROM media as m LEFT OUTER JOIN text as t ON (m.MediaID = t.TextMediaID) WHERE t.TextMediaID IS NULL;
         break;
         case "moreTexts":
             $items = $dbp->getAll("SELECT t.TextMediaID as MediaID, m.MediaAligned, m.MediaPublic, m.MediaLastChanged, count(t.TextMediaID) as TextEntries FROM ?n as t LEFT JOIN ?n as m ON m.MediaID = t.TextMediaID GROUP BY t.TextMediaID HAVING count(*) > 1;",
