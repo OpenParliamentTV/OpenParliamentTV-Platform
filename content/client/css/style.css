@@ -261,7 +261,7 @@ body.darkmode footer .partnerLogos img {
 
 main {
     z-index: 1;
-    margin-top: 50px;
+    margin-top: 46px;
 }
 
 main.container-fluid, header > .container-fluid {
@@ -328,6 +328,12 @@ hr {
 
 .langswitch {
     border: 1px solid #cfcfcf !important;
+}
+
+.bg-color-image {
+    background-image: url(../images/bg.png);
+    background-clip: padding-box;
+    background-position: center center;
 }
 
 /*
