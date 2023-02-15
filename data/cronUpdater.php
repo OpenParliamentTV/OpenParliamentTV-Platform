@@ -68,6 +68,7 @@ if (is_cli()) {
 
     if (count(array_diff($inputFiles, array('..', '.'))) < 1) {
         //no files in input, exit script
+
         exit;
     }
 
@@ -84,6 +85,7 @@ if (is_cli()) {
 
         echo "Could not connect to Parliament Database.";
         logger("", "Could not connect to Parliament Database: ".$e->getMessage());
+
         exit;
 
     }
@@ -122,6 +124,7 @@ if (is_cli()) {
             reportConflict("Media", "mediaAdd cronUpdater - File Parse Error", "", "", "Could not parse json from file: " . $file . " ||| Error:" . $e->getMessage(), $db);
             echo "Could parse file ".$file." | ".$e->getMessage();
             logger("ERROR", "Could parse file ".$file." | ".$e->getMessage());
+
             exit;
         }
 

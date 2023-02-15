@@ -51,7 +51,7 @@ function updateFilesFromGit($parliament = "DE") {
     if (!is_dir(__DIR__."/repos/".$parliament."/.git")) {
 
         chdir($realpath);
-        shell_exec($config["parliament"][$parliament]["git"]["bin"]." clone ".$config["parliament"][$parliament]["git"]["repository"]." .");
+        shell_exec($config["parliament"][$parliament]["git"]["bin"].' -C "'.$realpath.'" clone '.$config["parliament"][$parliament]["git"]["repository"].' .');
 
     }
 
