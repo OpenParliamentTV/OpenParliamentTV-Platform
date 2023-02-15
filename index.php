@@ -295,6 +295,34 @@ switch ($page) {
 		include_once("./content/pages/about/page_".$lang.".php");
 		$content = ob_get_clean();
 	break;
+	case "campaigns":
+		$pageTitle = L::campaigns;
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/campaigns/page.php");
+		$content = ob_get_clean();
+	break;
+	case "campaigns-wortlaut":
+		$pageTitle = "WORTlaut";
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::campaigns,
+				'path' => '/campaigns'
+			],
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/campaigns/wortlaut/page_".$lang.".php");
+		$content = ob_get_clean();
+	break;
 	case "datapolicy":
 		$pageTitle = L::dataPolicy;
 		$pageType = 'default';
