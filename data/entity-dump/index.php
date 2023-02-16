@@ -29,7 +29,8 @@ try {
 }
 
 if (!$_REQUEST["type"]) {
-    echo "To get a specific type, define type = 'person', 'term', 'organisation', 'document' or 'all'";
+    echo "To get a specific type, define type = 'person', 'term', 'organisation', 'document' or 'all'. <br>
+          To just get items, having a wikidata-id as id, use the parameter 'wiki'=true. in this case you can also add 'wikikeys'=true to get an object with wikidata ids as keys.";
 } else {
 
 
@@ -54,7 +55,7 @@ if (!$_REQUEST["type"]) {
         $organisations = $db->getAll("SELECT OrganisationID as id, OrganisationLabel as label, OrganisationLabelAlternative as labelAlternative, 'organisation' as 'type' FROM ?n",$config["platform"]["sql"]["tbl"]["Organisation"]);
         //TODO: When labelAlternative is already a json, dont do the following:
         foreach ($organisations as $k=>$organisation) {
-            $organisations[$k]["labelAlternative"] = array($organisation["labelAlternative"]);
+            $organisations[$k]["labelAlternative"] = (($organisation["labelAlternative"]!=null) ? array($organisation["labelAlternative"]) : array());
         }
         $response["meta"]["organisations_count"] = count($organisations);
         $response["data"] = array_merge($response["data"], $organisations);
@@ -73,7 +74,7 @@ if (!$_REQUEST["type"]) {
 
     }
 
-    if (($_REQUEST["type"] == "document") || ($_REQUEST["type"] == "all")) {
+    if (($_REQUEST["type"] == "document") || (($_REQUEST["type"] == "all") && (!$_REQUEST["wiki"]))) {
 
         $documents = $db->getAll("SELECT DocumentWikidataID as id, DocumentLabel as label, DocumentLabelAlternative as labelAlternative, DocumentID as optvID, 'document' as 'type' FROM ?n",$config["platform"]["sql"]["tbl"]["Document"]);
         //TODO: When labelAlternative is already a json, dont do the following:
@@ -84,6 +85,24 @@ if (!$_REQUEST["type"]) {
         $response["data"] = array_merge($response["data"], $documents);
 
     }
+
+    if ($_REQUEST["wiki"]) {
+        $items = array();
+        foreach ($response["data"] as $item) {
+            if (!preg_match("~Q[0-9]?~",$item["id"])) {
+                continue;
+            } else {
+                if ($_REQUEST["wikikeys"]) {
+                    $items[$item["id"]] = $item;
+                } else {
+                    array_push($items,$item);
+                }
+            }
+        }
+        $response["data"] = $items;
+
+    }
+
     $response["meta"]["total_count"] = count($response["data"]);
     header('Content-Type: application/json; charset=utf-8');
     echo json_encode($response,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
