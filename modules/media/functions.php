@@ -120,6 +120,8 @@ function getDocument($documentID) {
 
 function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
 
+    global $config;
+
     if (!$annotations || !$relationships || !$mediaSource) {
         return false;
     }
@@ -141,32 +143,32 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
         } elseif ($annotation["type"] == "document") {
             $tmpType = "documents";
         }
-        
+
         foreach ($relationships[$tmpType]["data"] as $relationship) {
             if ($annotation["id"] == $relationship["id"]) {
                 $tmpItem = array();
-                $tmpItem["@context"][0]                 = "http://www.w3.org/ns/anno.jsonld";
-                $tmpItem["@context"][1]["frametrail"]   = "http://frametrail.org/ns/";
-                $tmpItem["creator"]["nickname"]         = "system";
-                $tmpItem["creator"]["type"]             = "system";
-                $tmpItem["creator"]["id"]               = "0";
-                $tmpItem["created"]                     = "";
-                $tmpItem["type"]                        = "Annotation";
-                $tmpItem["frametrail:type"]             = "Annotation";
-                $tmpItem["frametrail:tags"]             = array($annotation["type"]);
-                $tmpItem["target"]["type"] = "video";
-                $tmpItem["target"]["source"] = $mediaSource;
+                $tmpItem["@context"][0]                     = "http://www.w3.org/ns/anno.jsonld";
+                $tmpItem["@context"][1]["frametrail"]       = "http://frametrail.org/ns/";
+                $tmpItem["creator"]["nickname"]             = "system";
+                $tmpItem["creator"]["type"]                 = "system";
+                $tmpItem["creator"]["id"]                   = "0";
+                $tmpItem["created"]                         = "";
+                $tmpItem["type"]                            = "Annotation";
+                $tmpItem["frametrail:type"]                 = "Annotation";
+                $tmpItem["frametrail:tags"]                 = array($annotation["type"]);
+                $tmpItem["target"]["type"]                  = "video";
+                $tmpItem["target"]["source"]                = $mediaSource;
                 $tmpItem["target"]["selector"]["confirmsTo"] = "http://www.w3.org/TR/media-frags/";
-                $tmpItem["target"]["selector"]["type"] = "FragmentSelector";
-                $tmpItem["target"]["selector"]["value"] = "t=".$annotation["timeStart"].",".$annotation["timeEnd"];
-                $tmpItem["body"]["type"] = "Text";
-                $tmpItem["body"]["frametrail:type"] = "webpage";
-                $tmpItem["body"]["format"] = "text/html";
-                $tmpItem["body"]["value"] = $relationship["links"]["self"];
-                $tmpItem["body"]["frametrail:name"] = $relationship["attributes"]["label"];
-                $tmpItem["body"]["frametrail:thumb"] = $relationship["attributes"]["thumbnailURI"];
-                $tmpItem["body"]["frametrail:resourceId"] = null;
-                $tmpItem["body"]["frametrail:attributes"] = array();
+                $tmpItem["target"]["selector"]["type"]      = "FragmentSelector";
+                $tmpItem["target"]["selector"]["value"]     = "t=".$annotation["timeStart"].",".$annotation["timeEnd"];
+                $tmpItem["body"]["type"]                    = "Text";
+                $tmpItem["body"]["frametrail:type"]         = "webpage";
+                $tmpItem["body"]["format"]                  = "text/html";
+                $tmpItem["body"]["value"]                   = $config["dir"]["root"]."/".$annotation["type"]."/".$annotation["id"];
+                $tmpItem["body"]["frametrail:name"]         = $relationship["attributes"]["label"];
+                $tmpItem["body"]["frametrail:thumb"]        = $relationship["attributes"]["thumbnailURI"];
+                $tmpItem["body"]["frametrail:resourceId"]   = null;
+                $tmpItem["body"]["frametrail:attributes"]   = array();
                 array_push($return, $tmpItem);
                 break;
 
