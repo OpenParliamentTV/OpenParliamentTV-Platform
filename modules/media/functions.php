@@ -180,5 +180,16 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
 
 }
 
+function countNERfrequency($annotations, $id) {
+    $return = 0;
+    foreach ($annotations as $annotation) {
+        if (($annotation["id"] == $id) && ($annotation["context"] == "NER")) {
+            $return++;
+        }
+    }
+    return $return;
+
+}
+
 
 ?>

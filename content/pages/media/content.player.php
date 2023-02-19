@@ -54,8 +54,9 @@ foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relati
                 if (in_array($annotation["id"],$tmpPeople["NER"])) {
                     continue;
                 }
+                $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
                 $tmpPeople["NER"][] = $annotation["id"];
-                $relatedPeopleHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER">
+                $relatedPeopleHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
                                                 <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
                                                     <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
                                                         <div class="thumbnailContainer">
@@ -66,6 +67,7 @@ foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relati
                                                         <div>
                                                             <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
                                                             <div>'.$relationshipItem["attributes"]["faction"]["labelAlternative"].'</div>
+                                                            <div>Gefunden: '.$tmpCount.'</div>
                                                         </div>
                                                     </a>
                                                 </div>
@@ -118,9 +120,9 @@ if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["r
                     if (in_array($annotation["id"],$tmpOrganisations["NER"])) {
                         continue;
                     }
-
+                    $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
                     $tmpOrganisations["NER"][] = $annotation["id"];
-                    $relatedOrganisationsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER">
+                    $relatedOrganisationsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
                                             <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
                                                 <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
                                                     <div class="thumbnailContainer">
@@ -131,6 +133,7 @@ if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["r
                                                     <div>
                                                         <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
                                                         <div>'.$relationshipItem["attributes"]["labelAlternative"].'</div>
+                                                        <div>Gefunden: '.$tmpCount.'</div>
                                                     </div>
                                                 </a>
                                             </div>
@@ -196,10 +199,10 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                     if (in_array($annotation["id"],$tmpDocuments["NER"])) {
                         continue;
                     }
-
+                    $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
                     $tmpDocuments["NER"][] = $annotation["id"];
                     if (isset($relationshipItem["attributes"]["additionalInformation"]["subType"])) {
-                        $relatedDocumentsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER">
+                        $relatedDocumentsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
                                             <div class="entityContainer">
                                                 <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
                                                     <div class="entityType">'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div>
@@ -209,17 +212,19 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                                                 </a>
                                                 <a class="entityButton" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
                                                     <span class="btn btn-sm icon-file-pdf"></span>
+                                                    <div>Gefunden: '.$tmpCount.'</div>
                                                 </a>
                                             </div>
                                         </div>\n';
                     } else {
-                        $relatedDocumentsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER">
+                        $relatedDocumentsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
                                             <div class="entityContainer">
                                                 <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
                                                     <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
                                                 </a>
                                                 <a class="btn btn-sm" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
                                                     <span class="icon-file-pdf"></span>
+                                                    <div>Gefunden: '.$tmpCount.'</div>
                                                 </a>
                                             </div>
                                         </div>\n';
