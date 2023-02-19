@@ -179,7 +179,6 @@ function personGetDataObject($item = false, $db = false) {
 
 }
 
-
 function personSearch($parameter, $db = false) {
 
     global $config;
@@ -699,4 +698,149 @@ function personSearch($parameter, $db = false) {
 
 }
 
+function personAdd($item, $db = false) {
+
+    global $config;
+
+    if (!$db) {
+
+        $opts = array(
+            'host'	=> $config["platform"]["sql"]["access"]["host"],
+            'user'	=> $config["platform"]["sql"]["access"]["user"],
+            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+            'db'	=> $config["platform"]["sql"]["db"]
+        );
+
+        try {
+
+            $db = new SafeMySQL($opts);
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "1";
+            $errorarray["title"] = "Database connection error";
+            $errorarray["detail"] = "Connecting to platform database failed";
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+
+    }
+
+    if ((!$item["id"]) || (!preg_match("/(Q|P)\d+/i", $item["id"]))) {
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "ID seems to be wrong or missing";
+        $errorarray["label"] = "id";
+        $errorarray["detail"] = "Required parameter of the request is missing";
+        $return["errors"][] = $errorarray;
+    }
+
+    if ((!$item["label"]) || (strlen($item["label"]) < 3)) {
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Label seems to be too short or missing";
+        $errorarray["label"] = "label";
+        $errorarray["detail"] = "Required parameter of the request is missing";
+        $return["errors"][] = $errorarray;
+    }
+
+    if ((!$item["type"]) || (strlen($item["type"]) < 3)) {
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Type seems to be too short or missing";
+        $errorarray["label"] = "type";
+        $errorarray["detail"] = "Required parameter of the request is missing";
+        $return["errors"][] = $errorarray;
+    }
+
+    if ($return["errors"]) {
+        $return["meta"]["requestStatus"] = "error";
+        return $return;
+    } else {
+
+        $itemTmp = $db->getRow("SELECT PersonID FROM ".$config["platform"]["sql"]["tbl"]["Person"]." WHERE PersonID=?s",$item["id"]);
+
+        if ($itemTmp) {
+            $return["meta"]["requestStatus"] = "error";
+            $errorarray["status"] = "422"; //todo
+            $errorarray["code"] = "2";
+            $errorarray["title"] = "Item with ID already exists in Database";
+            $errorarray["label"] = "error_info";
+            $errorarray["detail"] = "Item already exists in Database";
+            $return["errors"][] = $errorarray;
+            return $return;
+
+        } else {
+
+            try {
+
+                $socialMedia = array();
+                if ($item["socialMediaIDsLabel"]) {
+                    foreach ($item["socialMediaIDsLabel"] as $k=>$v) {
+                        //just add when both is not empty
+                        if ($v && $item["socialMediaIDsValue"][$k]) {
+                            $socialMedia[] = array("label" => $v, "id" => $item["socialMediaIDsValue"][$k]);
+                        }
+                    }
+                }
+
+                $labelAlternative = array();
+                if (is_array($item["labelAlternative"])) {
+                    foreach ($item["labelAlternative"] as $v) {
+                        if ($v) {
+                            $labelAlternative[] = $v;
+                        }
+                    }
+                }
+
+                $tmpNewPerson = array(
+                    "PersonID" => $item["id"],
+                    "PersonType" => $item["type"],
+                    "PersonLabel" => $item["label"],
+                    "PersonLabelAlternative" => json_encode($labelAlternative, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                    "PersonFirstName"=>$item["firstname"],
+                    "PersonLastName"=>$item["lastname"],
+                    "PersonDegree"=>$item["degree"],
+                    "PersonBirthDate" => $item["birthdate"],
+                    "PersonGender" => $item["data"][0]["gender"],
+                    "PersonAbstract" => $item["abstract"],
+                    "PersonThumbnailURI" => $item["thumbnailuri"],
+                    "PersonThumbnailCreator" => $item["thumbnailcreator"],
+                    "PersonThumbnailLicense" => $item["thumbnaillicense"],
+                    "PersonEmbedURI" => $item["embeduri"],
+                    "PersonWebsiteURI" => ($item["websiteuri"] ? $item["websiteuri"] : ""),
+                    "PersonOriginID" => $item["originid"],
+                    "PersonPartyOrganisationID" => $item["party"],
+                    "PersonFactionOrganisationID" => $item["faction"],
+                    "PersonSocialMediaIDs" => json_encode($socialMedia, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                    "PersonAdditionalInformation" => $item["additionalinformation"]
+                );
+
+                $db->query("INSERT INTO ?n SET ?u",$config["platform"]["sql"]["tbl"]["Person"],$tmpNewPerson);
+
+                $return["meta"]["requestStatus"] = "success";
+                $return["meta"]["itemID"] = $db->insertId();
+
+            } catch (exception $e) {
+
+                $return["meta"]["requestStatus"] = "error";
+                $errorarray["status"] = "422"; //todo
+                $errorarray["code"] = "2";
+                $errorarray["title"] = "Add to database failed";
+                $errorarray["label"] = "error_info";
+                $errorarray["detail"] = $e->getMessage();
+                $return["errors"][] = $errorarray;
+
+            }
+
+        }
+    }
+
+    return $return;
+
+}
 ?>

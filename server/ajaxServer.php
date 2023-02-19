@@ -108,6 +108,8 @@ switch ($_REQUEST["a"]) {
                 case "organisation":
                     require_once(__DIR__."/../api/v1/modules/organisation.php");
                     $return = organisationAdd($_REQUEST);
+
+                    //TODO Transfer $return["meta"]["requestStatus"] = success/error to $return["success"] = true/false - also in frontend
                     //$return["success"] = "true";
                     $return["text"] = "Entity added";
                     if ($_REQUEST["entitysuggestionid"]) {
@@ -122,6 +124,22 @@ switch ($_REQUEST["a"]) {
                     }
                 break;
                 case "person":
+                    require_once(__DIR__."/../api/v1/modules/person.php");
+                    $return = personAdd($_REQUEST);
+
+                    //TODO Transfer $return["meta"]["requestStatus"] = success/error to $return["success"] = true/false - also in frontend
+                    //$return["success"] = "true";
+                    $return["text"] = "Entity added";
+                    if ($_REQUEST["entitysuggestionid"]) {
+                        require_once (__DIR__."/../modules/utilities/functions.entities.php");
+                        $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "PERSON");
+                        $return["sessions"] = array();
+                        foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
+                            $itemInfos = getInfosFromStringID($item);
+                            $tmpFileName = substr($itemInfos["electoralPeriodNumber"],1).substr($itemInfos["sessionNumber"],1)."-session.json";
+                            $return["sessions"][$itemInfos["parliament"]][$tmpFileName]["fileExists"] = is_file(__DIR__."/../data/repos/".$itemInfos["parliament"]."/processed/".$tmpFileName);
+                        }
+                    }
 
                 break;
                 default:

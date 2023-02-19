@@ -448,7 +448,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     $("input, select, textarea").css("border","");
                     if (ret["meta"]["requestStatus"] != "success") {
                         for (let error in ret["errors"]) {
-                            $("#organisationReturn").append('<div>'+ret["errors"][error]["title"]+'</div>');
+                            $("#personReturn").append('<div>'+ret["errors"][error]["title"]+'</div>');
                             if ("label" in ret["errors"][error]) {
                                 $("[name='"+ret["errors"][error]["label"]+"']").css("border","1px solid red");
                             }
@@ -476,9 +476,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 $("#affectedSessions_false").show();
                                 $("#affectedSessions_true").hide();
                             }
-
-
-
 
                         } else {
                             $("#affectedSessions_false").show();
