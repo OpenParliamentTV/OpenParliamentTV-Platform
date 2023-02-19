@@ -303,6 +303,25 @@ switch ($_REQUEST["a"]) {
 
     break;
 
+    case "searchPersonAtWikidata":
+
+        $auth = auth($_SESSION["userdata"]["id"], "searchWikipedia", "person");
+
+        if ($auth["meta"]["requestStatus"] != "success") {
+
+            //TODO Response
+
+        } else {
+
+            require_once (__DIR__."/../modules/utilities/functions.wikidata.php");
+            $return["success"] = "true";
+            $return["text"] = "searchresults";
+            $return["return"] = searchPersonAtWikidata($_REQUEST["label"]);
+
+        }
+
+    break;
+
 
 
 	case "registerUser":

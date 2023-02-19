@@ -133,6 +133,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <span class="icon-cancel"></span>
                     <span class="d-none d-md-inline">Back to table</span>
                 </button>
+                <div class="row" id="searchPersonLabelReturn" style="display: none">
+                </div>
                 <div class="row">
                     <div class="col-12">
                         <form id="entityAddPersonForm" method="post">
@@ -151,9 +153,12 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" style="position: relative">
                                 <label for="label">Label</label>
                                 <input type="text" class="form-control" name="label">
+                                <button class="btn" style="position: absolute;bottom:0px;right:0px;" type="button" id="searchPersonLabelBtn">
+                                    <span class="icon-search-1"></span>
+                                </button>
                             </div>
                             <div class="form-group">
                                 <label for="firstName">First Name</label>
@@ -487,6 +492,19 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 } //TODO failed
             });
 
+            $("#searchPersonLabelBtn").on("click",function() {
+                $.ajax({
+                    url:"<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
+                    dataType:"json",
+                    data:{"a":"searchPersonAtWikidata","label":$("#entityAddPersonForm input[name='label']").val()},
+                    method:"post",
+                    success: function(ret) {
+                        $("#searchPersonLabelReturn").html("<div class='col-12'></div>").show();
+                        $("#searchPersonLabelReturn div").jsonView(JSON.stringify(ret));
+                    }
+                })
+            });
+
 
             /**
              *
@@ -554,6 +572,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     $("#entityAddOrganisationDiv").slideDown();
                                 break;
                                 case "PERSON":
+                                    $("#searchPersonLabelReturn").hide().empty();
                                     $('#entityAddPersonForm')[0].reset();
                                     $('#entityAddPersonForm .form-dyncontent > div').empty();
 
@@ -609,18 +628,20 @@ if ($auth["meta"]["requestStatus"] != "success") {
         })
     </script>
     <style type="text/css">
-        #entitiesDetailsContent {
+        #entitiesDetailsContent, #searchPersonLabelReturn div {
             background: #fafafa;
             color: #986801;
             max-height: 300px;
             overflow: auto;
             margin-bottom: 20px;
         }
-        #entitiesDetailsContent .b {
+        #entitiesDetailsContent .b,#searchPersonLabelReturn div .b {
             color: #383a42;
         }
         #entitiesDetailsContent li > span:not(.num):not(.null):not(.q):not(.block),
-        #entitiesDetailsContent .str, #entitiesDetailsContent a {
+        #entitiesDetailsContent .str, #entitiesDetailsContent a,
+        #searchPersonLabelReturn li > span:not(.num):not(.null):not(.q):not(.block),
+        #searchPersonLabelReturn .str, #searchPersonLabelReturn a {
             color: #50a14f;
         }
     </style>
