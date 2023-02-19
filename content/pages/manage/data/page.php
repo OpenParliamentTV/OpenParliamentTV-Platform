@@ -21,6 +21,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			<div class="card mb-3">
 				<div class="card-body">
 					<a href="<?= $config["dir"]["root"] ?>/manage/data/media/new" class="btn btn-outline-success btn-sm mr-1">New Media Item</a>
+					<button type="button" id="runCronUpdater" class="btn btn-outline-success btn-sm mr-1">Run cronUpdater</button>
 				</div>
 			</div>
 			<ul class="nav nav-tabs" role="tablist">
@@ -58,6 +59,43 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		</div>
 	</div>
 </main>
+
+    <div class="modal fade" id="successRunCronDialog" tabindex="-1" role="dialog" aria-labelledby="successRunCronDialogLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successRunCronDialogLabel">Run cronUpdater</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    The cronUpdater should run in background now
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script type="text/javascript">
+    $(function() {
+        $("#runCronUpdater").on("click", function() {
+            $.ajax({
+                url:"<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
+                dataType:"json",
+                data:{"a":"runCronUpdater"},
+                method:"post",
+                success: function(ret) {
+
+                    $('#successRunCronDialog').modal('show');
+
+                }
+            })
+        })
+    })
+</script>
 <?php
 
     include_once(__DIR__ . '/../../../footer.php');

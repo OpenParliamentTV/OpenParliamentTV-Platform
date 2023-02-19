@@ -286,4 +286,14 @@ function is_cli()
     return false;
 }
 
+
+function executeAsyncShellCommand($cmd = null) {
+
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        pclose(popen("start /B " . $cmd, "r"));
+    } else {
+        exec("$cmd > /dev/null &");
+    }
+}
+
 ?>
