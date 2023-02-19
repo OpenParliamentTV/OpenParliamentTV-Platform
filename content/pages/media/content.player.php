@@ -17,56 +17,243 @@ $proceedingsTab = (isset($textContentsHTML)) ? '<li class="nav-item">
     </li>' : '';
 $relationshipsActiveClass = (isset($textContentsHTML)) ? '' : 'show active';
 
-$relatedPeopleHTML = '';
+$relatedPeopleHTML = "";
+$relatedPeopleHTMLNER = "";
 foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relationshipItem) {
+    $tmpPeople["NER"] = array();
+    $tmpPeople["speaker"] = array();
     foreach ($speech["annotations"]["data"] as $annotation) {
         if ($annotation["id"] == $relationshipItem["id"]) {
             $speech["relationships"]["people"]["data"][$relationshipKey]["annotations"][] = $annotation;
 
-            //TODO: What about people who were found as NER?
             if ($annotation["context"] != "NER") {
+                if (in_array($annotation["id"],$tmpPeople["speaker"])) {
+                    continue;
+                }
+                $tmpPeople["speaker"][] = $annotation["id"];
                 $relationshipItem["attributes"]["context"] = $annotation["context"];
                 $contextLabelIdentifier = lcfirst(implode('', array_map('ucfirst', explode('-', $relationshipItem["attributes"]["context"]))));
-                $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="thumbnailContainer"><div class="rounded-circle"><img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="..."></div></div><div><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.$relationshipItem["attributes"]["faction"]["labelAlternative"].'</div><div><span class="icon-megaphone"></span>'.L('context'.$contextLabelIdentifier).'</div></div></a></div></div>';
+                $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="default">
+                                            <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
+                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
+                                                    <div class="thumbnailContainer">
+                                                        <div class="rounded-circle">
+                                                            <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                        <div>'.$relationshipItem["attributes"]["faction"]["labelAlternative"].'</div>
+                                                        <div><span class="icon-megaphone"></span>'.L('context'.$contextLabelIdentifier).'</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>\n';
 
             } else {
-                //TODO: NER
-                $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="thumbnailContainer"><div class="rounded-circle"><img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="..."></div></div><div><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.$relationshipItem["attributes"]["faction"]["labelAlternative"].'</div><div><span class="icon-megaphone"></span>NER</div></div></a></div></div>';
+                if (in_array($annotation["id"],$tmpPeople["NER"])) {
+                    continue;
+                }
+                $tmpPeople["NER"][] = $annotation["id"];
+                $relatedPeopleHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER">
+                                                <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
+                                                    <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
+                                                        <div class="thumbnailContainer">
+                                                            <div class="rounded-circle">
+                                                                <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                            <div>'.$relationshipItem["attributes"]["faction"]["labelAlternative"].'</div>
+                                                            <div><span class="icon-megaphone"></span>NER</div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>\n';
             }
         }
     }
+}
+
+
+$relatedOrganisationsHTML = "";
+$relatedOrganisationsHTMLNER = "";
+if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["relationships"]["organisations"]["data"]) > 0) {
+
+    foreach ($speech["relationships"]["organisations"]["data"] as $relationshipItem) {
+
+        $tmpOrganisations["NER"] = array();
+        $tmpOrganisations["default"] = array();
+
+        foreach ($speech["annotations"]["data"] as $annotation) {
+
+            if ($annotation["id"] == $relationshipItem["id"]) {
+
+                if ($annotation["context"] != "NER") {
+
+                    if (in_array($annotation["id"],$tmpOrganisations["default"])) {
+                        continue;
+                    }
+
+                    $tmpOrganisations["default"][] = $annotation["id"];
+                    $relatedOrganisationsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="default">
+                                            <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
+                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
+                                                    <div class="thumbnailContainer">
+                                                        <div class="rounded-circle">
+                                                            <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                        <div>'.$relationshipItem["attributes"]["labelAlternative"].'</div>
+                                                        <div><span class="icon-megaphone"></span></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>\n';
+
+                } else {
+
+                    if (in_array($annotation["id"],$tmpOrganisations["NER"])) {
+                        continue;
+                    }
+
+                    $tmpOrganisations["NER"][] = $annotation["id"];
+                    $relatedOrganisationsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER">
+                                            <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
+                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
+                                                    <div class="thumbnailContainer">
+                                                        <div class="rounded-circle">
+                                                            <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                        <div>'.$relationshipItem["attributes"]["labelAlternative"].'</div>
+                                                        <div><span class="icon-megaphone"></span></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>\n';
+
+                }
+            }
+        }
     }
 
-/*
-$relatedOrganisationsHTML = '';
-foreach ($speech["relationships"]["organisations"]["data"] as $relationshipItem) {
-    $relatedOrganisationsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">'.$relationshipItem["attributes"]["label"].'</a></div>';
 }
-*/
 
-$relatedDocumentsHTML = '';
+
+$relatedDocumentsHTML = "";
+$relatedDocumentsHTMLNER = "";
 if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relationships"]["documents"]["data"]) > 0) {
-    
-    //<iframe src="'.$config["dir"]["root"].'/modules/pdf-viewer/web/viewer.html?file='.$speech["relationships"]["documents"]["data"][0]["attributes"]["sourceURI"].'"></iframe>
+
     foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
 
-        //TODO: Remove Quick Fix
-        $relationshipItem["attributes"]["label"] = str_replace(array("\r","\n"), " ", $relationshipItem["attributes"]["label"]);
-        $relationshipItem["attributes"]["labelAlternative"] = str_replace(array("\r","\n"), " ", $relationshipItem["attributes"]["labelAlternative"]);
+        $tmpDocuments["NER"] = array();
+        $tmpDocuments["default"] = array();
 
-        if (isset($relationshipItem["attributes"]["additionalInformation"]["subType"])) {
+        foreach ($speech["annotations"]["data"] as $annotation) {
 
-            $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="entityType">'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div><div>'.$relationshipItem["attributes"]["labelAlternative"].'</div><div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"][0].'</div></a><a class="entityButton" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank"><span class="btn btn-sm icon-file-pdf"></span></a></div></div>';
-        } else {
-            $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'"><div class="entityContainer"><a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'"><div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div></a><a class="btn btn-sm" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank"><span class="icon-file-pdf"></span></a></div></div>';
+            if ($annotation["id"] == $relationshipItem["id"]) {
+
+                if ($annotation["context"] != "NER") {
+
+                    if (in_array($annotation["id"],$tmpDocuments["default"])) {
+                        continue;
+                    }
+
+                    $tmpDocuments["default"][] = $annotation["id"];
+                    if (isset($relationshipItem["attributes"]["additionalInformation"]["subType"])) {
+                        $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'">
+                                            <div class="entityContainer">
+                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'" data-context="default">
+                                                    <div class="entityType">'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div>
+                                                    <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                    <div>'.$relationshipItem["attributes"]["labelAlternative"].'</div>
+                                                    <div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"][0].'</div>
+                                                </a>
+                                                <a class="entityButton" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
+                                                    <span class="btn btn-sm icon-file-pdf"></span>
+                                                </a>
+                                            </div>
+                                        </div>\n';
+                    } else {
+                        $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="default">
+                                            <div class="entityContainer">
+                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
+                                                    <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                </a>
+                                                <a class="btn btn-sm" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
+                                                    <span class="icon-file-pdf"></span>
+                                                </a>
+                                            </div>
+                                        </div>\n';
+                    }
+
+                } else {
+
+                    if (in_array($annotation["id"],$tmpDocuments["NER"])) {
+                        continue;
+                    }
+
+                    $tmpDocuments["NER"][] = $annotation["id"];
+                    if (isset($relationshipItem["attributes"]["additionalInformation"]["subType"])) {
+                        $relatedDocumentsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER">
+                                            <div class="entityContainer">
+                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
+                                                    <div class="entityType">'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div>
+                                                    <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                    <div>'.$relationshipItem["attributes"]["labelAlternative"].'</div>
+                                                    <div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"][0].'</div>
+                                                </a>
+                                                <a class="entityButton" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
+                                                    <span class="btn btn-sm icon-file-pdf"></span>
+                                                </a>
+                                            </div>
+                                        </div>\n';
+                    } else {
+                        $relatedDocumentsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER">
+                                            <div class="entityContainer">
+                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
+                                                    <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                </a>
+                                                <a class="btn btn-sm" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
+                                                    <span class="icon-file-pdf"></span>
+                                                </a>
+                                            </div>
+                                        </div>\n';
+                    }
+
+                }
+            }
         }
-
     }
 
 }
 
-$relatedContentsHTML = 
-'<div class="tab-content">'.$proceedingsPanel.'<div class="tab-pane fade show '.$relationshipsActiveClass.'" id="relationships" role="tabpanel" aria-labelledby="relationships-tab"><div class="relationshipsCategoryHeader">'.L::personPlural.'</div><div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">'.$relatedPeopleHTML.'</div><hr><div class="relationshipsCategoryHeader">'.L::documents.'</div><div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">'.$relatedDocumentsHTML.'</div></div><div class="tab-pane fade show" id="documents" role="tabpanel" aria-labelledby="documents-tab"></div><div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div></div>';
+$relatedContentsHTML =
+'<div class="tab-content">
+    '.$proceedingsPanel.'
+    <div class="tab-pane fade show '.$relationshipsActiveClass.'" id="relationships" role="tabpanel" aria-labelledby="relationships-tab">
+        <div class="relationshipsCategoryHeader">'.L::personPlural.'</div>
+        <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">'.$relatedPeopleHTML.'</div>
+        <hr>
+        <div class="relationshipsCategoryHeader">'.L::documents.'</div>
+        <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">'.$relatedDocumentsHTML.'</div>
+        <hr>
+        <div class="relationshipsCategoryHeader">NER</div>
+        <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">
+            '.$relatedDocumentsHTMLNER.' '.$relatedPeopleHTMLNER.' '.$relatedOrganisationsHTMLNER.' '.$relatedDocumentsHTMLNER.'
+        </div>
+    </div>
+    <div class="tab-pane fade show" id="documents" role="tabpanel" aria-labelledby="documents-tab"></div>
+    <div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div>
+</div>';
+
+$relatedContentsHTML = str_replace(array("\r","\n"), " ",$relatedContentsHTML);
 
 ?>
 <script type="text/javascript">
