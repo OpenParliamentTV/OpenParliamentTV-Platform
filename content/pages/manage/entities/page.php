@@ -62,10 +62,12 @@ if ($auth["meta"]["requestStatus"] != "success") {
                             <div class="form-group">
                                 <label for="type">Type</label>
                                 <select class="form-control" name="type">
-                                    <option value="">..TODO..</option>
+                                    <option value="">Please Select</option>
                                     <option value="party">Party</option>
                                     <option value="faction">Faction</option>
-                                    <option value="ngo">NGO</option>
+                                    <option value="government">Government</option>
+                                    <option value="company">Company</option>
+                                    <option value="organisation">Organisation</option>
                                 </select>
                             </div>
 
