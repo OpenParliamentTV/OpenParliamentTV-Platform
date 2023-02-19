@@ -120,16 +120,18 @@ function getDocument($documentID) {
 
 function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
 
-    if (!$annotations || $relationships || $mediaSource) {
+    if (!$annotations || !$relationships || !$mediaSource) {
         return false;
     }
 
     $return = array();
 
     foreach($annotations as $annotation) {
+
         if (!$annotation["timeStart"]) {
             continue;
         }
+
         if ($annotation["type"] == "person") {
             $tmpType = "people";
         } elseif ($annotation["type"] == "organisation") {
@@ -139,9 +141,9 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
         } elseif ($annotation["type"] == "document") {
             $tmpType = "documents";
         }
+        
         foreach ($relationships[$tmpType]["data"] as $relationship) {
             if ($annotation["id"] == $relationship["id"]) {
-
                 $tmpItem = array();
                 $tmpItem["@context"][0]                 = "http://www.w3.org/ns/anno.jsonld";
                 $tmpItem["@context"][1]["frametrail"]   = "http://frametrail.org/ns/";

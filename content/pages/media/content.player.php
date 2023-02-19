@@ -98,7 +98,8 @@ $relatedContentsHTML =
                 }
             }
             ?>
-        ]
+        ],
+        'annotations': <?= json_encode(getFrametrailAnnotations($speech["annotations"]["data"], $speech["relationships"], $speech["attributes"]["videoFileURI"]))?>
     };
 
     var isMobile = <?php if ($isMobile) { echo 'true'; } else { echo 'false'; } ?>
