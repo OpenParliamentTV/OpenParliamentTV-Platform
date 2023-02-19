@@ -155,7 +155,7 @@ function reportEntitySuggestion($entitysuggestionExternalID, $entitysuggestionTy
 
 }
 
-function getEntitySuggestion($id, $db=false) {
+function getEntitySuggestion($id, $idType="internal", $type="", $db=false) {
 
     global $config;
 
@@ -182,8 +182,11 @@ function getEntitySuggestion($id, $db=false) {
 
         }
     }
-
-    $item = $db->getRow("SELECT * FROM ?n WHERE EntitysuggestionID = ?i", $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $id);
+    if ($idType == "internal") {
+        $item = $db->getRow("SELECT * FROM ?n WHERE EntitysuggestionID = ?i", $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $id);
+    } elseif ($idType == "external") {
+        $item = $db->getRow("SELECT * FROM ?n WHERE EntitysuggestionExternalID = ?s AND EntitysuggestionType=?s", $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $id,$type);
+    }
 
     $item["EntitysuggestionContext"] = json_decode($item["EntitysuggestionContext"],true);
 

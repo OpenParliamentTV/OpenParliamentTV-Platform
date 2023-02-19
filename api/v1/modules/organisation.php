@@ -116,11 +116,12 @@ function organisationGetDataObject($item = false, $db = false) {
 
 }
 
-function organisationSearch($parameter, $db = false) {
+function organisationSearch($parameter, $db = false, $noLimit = false) {
 
     global $config;
 
-    $outputLimit = 25;
+    //TODO: Write real no limit logic
+    $outputLimit = ($noLimit ? 10000 :25);
 
     if (!$db) {
 
@@ -321,4 +322,155 @@ function organisationSearch($parameter, $db = false) {
 
 }
 
+function organisationAdd($item, $db = false) {
+
+    global $config;
+
+    if (!$db) {
+
+        $opts = array(
+            'host'	=> $config["platform"]["sql"]["access"]["host"],
+            'user'	=> $config["platform"]["sql"]["access"]["user"],
+            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+            'db'	=> $config["platform"]["sql"]["db"]
+        );
+
+        try {
+
+            $db = new SafeMySQL($opts);
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "2";
+            $errorarray["title"] = "Database connection error";
+            $errorarray["detail"] = "Connecting to platform database failed";
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+
+    }
+
+    if ((!$item["id"]) || (!preg_match("/(Q|P)\d+/i", $item["id"]))) {
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "ID seems to be wrong or missing";
+        $errorarray["label"] = "id";
+        $errorarray["detail"] = "Required parameter of the request is missing";
+        $return["errors"][] = $errorarray;
+    }
+
+    if (!$item["type"]) {
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Type is missing";
+        $errorarray["label"] = "type";
+        $errorarray["detail"] = "Required parameter of the request is missing";
+        $return["errors"][] = $errorarray;
+    }
+
+    if (!$item["label"]) {
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Label is missing";
+        $errorarray["label"] = "label";
+        $errorarray["detail"] = "Required parameter of the request is missing";
+        $return["errors"][] = $errorarray;
+    }
+
+    if ($return["errors"]) {
+        $return["meta"]["requestStatus"] = "error";
+        return $return;
+    } else {
+
+        $itemTmp = $db->getRow("SELECT OrganisationID FROM ".$config["platform"]["sql"]["tbl"]["Organisation"]." WHERE OrganisationID=?s",$item["id"]);
+
+        if ($itemTmp) {
+            $return["meta"]["requestStatus"] = "error";
+            $errorarray["status"] = "422"; //todo
+            $errorarray["code"] = "2";
+            $errorarray["title"] = "Item with ID already exists in Database";
+            $errorarray["label"] = "error_info";
+            $errorarray["detail"] = "Item already exists in Database";
+            $return["errors"][] = $errorarray;
+            return $return;
+
+        } else {
+
+            try {
+
+                $socialMedia = array();
+                if ($item["socialMediaIDsLabel"]) {
+                    foreach ($item["socialMediaIDsLabel"] as $k=>$v) {
+                        //just add when both is not empty
+                        if ($v && $item["socialMediaIDsValue"][$k]) {
+                            $socialMedia[] = array("label" => $v, "id" => $item["socialMediaIDsValue"][$k]);
+                        }
+                    }
+                }
+
+                $labelAlternative = array();
+                if (is_array($item["labelAlternative"])) {
+                    foreach ($item["labelAlternative"] as $v) {
+                        if ($v) {
+                            $labelAlternative[] = $v;
+                        }
+                    }
+                }
+
+
+                $db->query("INSERT INTO ?n SET ".
+                                    "OrganisationID=?s, ".
+                                    "OrganisationType=?s, ".
+                                    "OrganisationLabel=?s, ".
+                                    "OrganisationLabelAlternative=?s, ".
+                                    "OrganisationAbstract=?s, ".
+                                    "OrganisationThumbnailURI=?s, ".
+                                    "OrganisationThumbnailCreator=?s, ".
+                                    "OrganisationThumbnailLicense=?s, ".
+                                    "OrganisationEmbedURI=?s, ".
+                                    "OrganisationWebsiteURI=?s, ".
+                                    "OrganisationSocialMediaIDs=?s, ".
+                                    "OrganisationColor=?s, ".
+                                    "OrganisationAdditionalInformation=?s",
+
+                                    $config["platform"]["sql"]["tbl"]["Organisation"],
+                                    $item["id"],
+                                    $item["type"],
+                                    $item["label"],
+                                    (is_array($labelAlternative) ? json_encode($labelAlternative,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["labelAlternative"]),
+                                    $item["abstract"],
+                                    $item["thumbnailuri"],
+                                    $item["thumbnailcreator"],
+                                    $item["thumbnaillicense"],
+                                    $item["embeduri"],
+                                    $item["websiteuri"],
+                                    json_encode($socialMedia,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                                    $item["color"],
+                                    (is_array($item["additionalinformation"]) ? json_encode($item["additionalinformation"],JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["additionalinformation"])
+                );
+                $return["meta"]["requestStatus"] = "success";
+                $return["meta"]["itemID"] = $db->insertId();
+
+            } catch (exception $e) {
+
+                $return["meta"]["requestStatus"] = "error";
+                $errorarray["status"] = "422"; //todo
+                $errorarray["code"] = "2";
+                $errorarray["title"] = "Add to database failed";
+                $errorarray["label"] = "error_info";
+                $errorarray["detail"] = $e->getMessage();
+                $return["errors"][] = $errorarray;
+
+            }
+
+        }
+    }
+
+    return $return;
+
+}
 ?>

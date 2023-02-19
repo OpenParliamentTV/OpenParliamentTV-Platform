@@ -48,6 +48,32 @@ switch ($_REQUEST["a"]) {
 
     break;
 
+    case "reimportSessions":
+
+        $auth = auth($_SESSION["userdata"]["id"], "entitysuggestion", "get");
+
+        if ($auth["meta"]["requestStatus"] != "success") {
+
+            //TODO: response
+            //$alertText = $auth["errors"][0]["detail"];
+            //include_once (__DIR__."/../../../login/page.php");
+
+        } else {
+
+            $return["success"] = "true";
+            $return["text"] = "Reimport Sessions";
+
+            require_once (__DIR__."/../modules/utilities/functions.php");
+            foreach($_REQUEST["files"] as $parliament=>$files) {
+                foreach ($files as $file) {
+                    copy(__DIR__."/../data/repos/".$parliament."/processed/".$file,__DIR__."/../data/input/".$file);
+                }
+            }
+
+        }
+
+    break;
+
     case "entitysuggestionGet":
 
         $auth = auth($_SESSION["userdata"]["id"], "entitysuggestion", "get");
@@ -60,9 +86,48 @@ switch ($_REQUEST["a"]) {
 
         } else {
             $return["success"] = "true";
-            $return["text"] = "Entity suggestion";
+            $return["text"] = "Get entity suggestion";
             require_once(__DIR__ . "/../modules/utilities/functions.entities.php");
             $return["return"] = getEntitySuggestion($_REQUEST["id"]);
+
+        }
+
+    break;
+
+    case "entityAdd":
+
+        $auth = auth($_SESSION["userdata"]["id"], "entity", "add");
+
+        if ($auth["meta"]["requestStatus"] != "success") {
+
+            //TODO Response
+
+        } else {
+            require_once (__DIR__."/../modules/utilities/functions.php");
+            switch ($_REQUEST["entityType"]) {
+                case "organisation":
+                    require_once(__DIR__."/../api/v1/modules/organisation.php");
+                    $return = organisationAdd($_REQUEST);
+                    //$return["success"] = "true";
+                    $return["text"] = "Entity added";
+                    if ($_REQUEST["entitysuggestionid"]) {
+                        require_once (__DIR__."/../modules/utilities/functions.entities.php");
+                        $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "ORG");
+                        $return["sessions"] = array();
+                        foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
+                            $itemInfos = getInfosFromStringID($item);
+                            $tmpFileName = substr($itemInfos["electoralPeriodNumber"],1).substr($itemInfos["sessionNumber"],1)."-session.json";
+                            $return["sessions"][$itemInfos["parliament"]][$tmpFileName]["fileExists"] = is_file(__DIR__."/../data/repos/".$itemInfos["parliament"]."/processed/".$tmpFileName);
+                        }
+                    }
+                break;
+                case "person":
+
+                break;
+                default:
+
+                break;
+            }
 
         }
 

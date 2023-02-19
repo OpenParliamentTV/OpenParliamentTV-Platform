@@ -127,7 +127,7 @@ function getInfosFromStringID($stringID = "") {
 
         $length = strlen($id);
 
-        if (strlen($length) >= 8) {
+        if ($length >= 8) {
 
             $return["type"] = "media";
             $return["id_part"] = $id;
