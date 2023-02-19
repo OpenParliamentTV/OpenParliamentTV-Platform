@@ -32,7 +32,7 @@ main#content.ready {
 	font-family: "Open Sans","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif;
 	font-weight: 300;
 	font-size: 14px;
-	background: var(--primary-bg-color);
+	background: transparent;
 	border-left: 1px solid var(--border-color);
 	border-right: 1px solid var(--border-color);
 	border-bottom: 1px solid var(--border-color);
@@ -331,7 +331,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	background-color: var(--secondary-bg-color);
 }
 
-.layoutArea, .hypervideoContainer {
+.layoutArea[data-area="areaLeft"], .hypervideoContainer {
 	background: var(--secondary-bg-color) !important;
 }
 
@@ -410,7 +410,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	width: 100%;
 }
 
-.layoutArea .contentViewContainer .contentViewContents::before {
+.layoutArea[data-area="areaLeft"] .contentViewContainer .contentViewContents::before {
 	position: absolute;
 	content: '';
 	top: 0px;
@@ -421,7 +421,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	z-index: 11;
 }
 
-.layoutArea .contentViewContainer .contentViewContents::after {
+.layoutArea[data-area="areaLeft"] .contentViewContainer .contentViewContents::after {
 	position: absolute;
 	content: '';
 	bottom: 0px;
@@ -540,6 +540,23 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 
 .layoutArea[data-area="areaLeft"] .layoutAreaTabs {
 	right: 37px;
+}
+
+.resourceThumb .resourceOverlay {
+	display: none;
+}
+
+.layoutArea[data-area="areaBottom"][data-size="small"] .contentViewContainer {
+	overflow: visible;
+}
+
+.layoutArea[data-area="areaBottom"][data-size="small"] .resourceThumb .resourceTitle {
+	font-weight: bolder;
+	font-size: 100%;
+}
+
+.layoutArea[data-area="areaBottom"][data-size="small"] .resourceThumb:hover .resourceTitle {
+	display: block !important;
 }
 
 .playerContainer .overlayTimeline {
