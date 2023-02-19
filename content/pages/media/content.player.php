@@ -66,7 +66,6 @@ foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relati
                                                         <div>
                                                             <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
                                                             <div>'.$relationshipItem["attributes"]["faction"]["labelAlternative"].'</div>
-                                                            <div><span class="icon-megaphone"></span>NER</div>
                                                         </div>
                                                     </a>
                                                 </div>
@@ -132,7 +131,6 @@ if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["r
                                                     <div>
                                                         <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
                                                         <div>'.$relationshipItem["attributes"]["labelAlternative"].'</div>
-                                                        <div><span class="icon-megaphone"></span></div>
                                                     </div>
                                                 </a>
                                             </div>
