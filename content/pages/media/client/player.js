@@ -286,6 +286,22 @@ function updatePlayer() {
 					"layoutArea": {
 						"areaTop": [],
 						"areaBottom": [
+							{
+								"type": "TimedContent",
+								"contentSize": "small",
+								"name": "Erkannte Begriffe (beta)",
+								"description": "",
+								"cssClass": "",
+								"collectionFilter": {
+									"tags": [],
+									"types": [],
+									"users": [],
+									"text": ""
+								},
+								"onClickContentItem": "",
+								"html": "",
+								"transcriptSource": ""
+							}
 							/*
 							{
 								"type": "TimedContent",
@@ -397,7 +413,7 @@ function updatePlayer() {
 				"contents": speechCodeSnippets,
 				"subtitles": []
 			},
-			annotations: false
+			annotations: playerData.annotations
 			//annotations: ["<?=$annotationSource?>"]
 		}],
 		startID: '0',
