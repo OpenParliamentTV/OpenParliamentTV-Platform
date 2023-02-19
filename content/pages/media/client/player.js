@@ -413,7 +413,7 @@ function updatePlayer() {
 				"contents": speechCodeSnippets,
 				"subtitles": []
 			},
-			annotations: playerData.annotations
+			annotations: ((playerData.annotations.length == 0) ? false : playerData.annotations)
 			//annotations: ["<?=$annotationSource?>"]
 		}],
 		startID: '0',
