@@ -164,7 +164,7 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
                 $tmpItem["body"]["type"]                    = "Text";
                 $tmpItem["body"]["frametrail:type"]         = "webpage";
                 $tmpItem["body"]["format"]                  = "text/html";
-                $tmpItem["body"]["value"]                   = $config["dir"]["root"]."/".$annotation["type"]."/".$annotation["id"];
+                $tmpItem["body"]["value"]                   = $config["dir"]["root"]."/embed/entity/?type=".$annotation["type"]."&id=".$annotation["id"];
                 $tmpItem["body"]["frametrail:name"]         = $relationship["attributes"]["label"];
                 $tmpItem["body"]["frametrail:thumb"]        = $relationship["attributes"]["thumbnailURI"];
                 $tmpItem["body"]["frametrail:resourceId"]   = null;
