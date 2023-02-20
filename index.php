@@ -142,13 +142,17 @@ switch ($page) {
             $content = ob_get_clean();
         }
 	break;
-	case "embed":
-		require_once("./modules/media/include.media.php");
-		$pageTitle = $speechTitleShort;
-		$pageDescription = $speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' ('.$formattedDate.')';
-		$pageType = 'entity';
+	case "embed-entity":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>$_REQUEST["type"], 
+			"id"=>$_REQUEST["id"]
+		]);
+		$pageTitle = 'Embed Entity';
+		$pageDescription = '';
+		$pageType = 'embed';
 		ob_start();
-		include_once("./content/pages/embed/page.php");
+		include_once("./content/pages/embed/entity/page.php");
 		$content = ob_get_clean();
 	break;
 	case "media":
