@@ -657,3 +657,100 @@ body.darkmode .playerContainer .playerProgress .ui-slider-range {
 body.darkmode .playerContainer .controls {
 	background: rgba(190, 190, 190,.2);
 }
+
+.areaBottomDetails {
+    flex: 0 1 190px;
+    min-height: 190px;
+}
+
+/* Media Queries */
+
+@media (min-height: 1500px) {
+    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+        flex-basis: 300px;
+    }
+
+    .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
+        width: 520px;
+    }
+}
+
+@media (min-height: 1300px) and (max-height: 1500px) {
+    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+        flex-basis: 200px;
+    }
+
+    .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
+        width: 520px;
+    }
+}
+
+@media (min-height: 1100px) and (max-height: 1300px) {
+    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+        flex-basis: 200px;
+    }
+
+    .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
+        width: 380px;
+    }
+}
+
+@media (min-height: 920px) and (max-height: 1100px) {
+    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+        flex-basis: 200px;
+    }
+
+    .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
+        width: 380px;
+    }
+}
+
+@media (min-height: 820px) and (max-height: 920px) {
+    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+        flex-basis: 200px;
+    }
+
+    .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
+        width: 380px;
+    }
+}
+
+@media (min-height: 680px) and (max-height: 820px) {
+    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+        flex-basis: 200px;
+    }
+
+    .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
+        width: 380px;
+    }
+}
+
+@media (min-height: 540px) and (max-height: 680px) {
+    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+        flex-basis: 200px;
+    }
+
+    .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
+        width: 350px;
+    }
+}
+
+@media (min-height: 400px) and (max-height: 540px) {
+    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+        flex-basis: 200px;
+    }
+
+    .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
+        width: 320px;
+    }
+}
+
+@media (max-height: 400px) {
+    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+        flex-basis: 190px;
+    }
+
+    .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
+        width: 300px;
+    }
+}
