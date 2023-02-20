@@ -272,6 +272,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
             </div>
             <div id="entitiesDiv" class="contentContainer">
                 <h3>Entitysuggestions</h3>
+                <button class="btn btn-sm input-group-text entityaddform mb-3" style="position: absolute; top:0px; right:0px;">
+                    <span class="icon-plus"></span>
+                    <span class="d-none d-md-inline">Add Entity</span>
+                </button>
                 <table class="table table-striped table-hover"
                        id="entitiesTable"
                        data-toggle="table"
@@ -484,10 +488,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 
             $(".mainContainer").on("click", ".entityaddform", function() {
-                $(".contentContainer").not("#entitiesDiv").slideUp();
+                
+                $(".contentContainer").not("#entityAddDiv").slideUp();
                 $("#entityAddDiv").slideDown();
                 $("#entityAddForm .formItem").hide();
-                ("#entityAddForm")[0].reset();
+                $("#entityAddForm")[0].reset();
                 $("#entityAddForm .formItem input, #entityAddForm .formItem textarea, #entityAddForm .formItem select").prop("disabled",true);
 
                 if ($(this).data("id")) {
