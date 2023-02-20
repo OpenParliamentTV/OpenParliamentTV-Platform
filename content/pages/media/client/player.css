@@ -38,6 +38,15 @@ main#content.ready {
 	border-bottom: 1px solid var(--border-color);
 }
 
+.frametrail-body.inFullscreen {
+	/*background: var(--secondary-fg-color);*/
+	background: #f3f4f5;
+}
+
+body.darkmode .frametrail-body.inFullscreen {
+	background: var(--primary-bg-color);
+}
+
 @media (max-width: 768px) {
 	.frametrail-body {
 		height: calc(100vh - 245px);
@@ -328,7 +337,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 }
 
 .mainContainer {
-	background-color: var(--secondary-bg-color);
+	background: transparent !important;
 }
 
 .layoutArea[data-area="areaLeft"], .hypervideoContainer {
@@ -436,8 +445,16 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	background: var(--primary-bg-color) !important;
 }
 
-.layoutArea .layoutAreaTabs {
-	display: none; !important;
+body.darkmode .contentViewTab, body.darkmode .layoutArea .contentViewContainer, body.darkmode .layoutArea .contentViewContainer .contentViewContents {
+	background: var(--secondary-bg-color) !important;
+}
+
+.layoutArea[data-area="areaLeft"] .layoutAreaTabs {
+	display: none !important;
+}
+
+.layoutArea[data-area="areaBottom"].closed .layoutAreaTabs {
+	display: none !important;
 }
 
 .titlebarTitle  {
@@ -546,8 +563,37 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 	display: none;
 }
 
+.layoutArea[data-area="areaBottom"][data-size="small"] {
+	flex-basis: 88px;
+	min-height: 88px;
+}
+
 .layoutArea[data-area="areaBottom"][data-size="small"] .contentViewContainer {
 	overflow: visible;
+}
+
+.layoutArea[data-area="areaBottom"][data-size="small"] .collectionElement {
+	opacity: 1;
+	background: transparent;
+	border-radius: 4px;
+}
+
+body.darkmode .layoutArea[data-area="areaBottom"][data-size="small"] .collectionElement {
+	border-color: var(--secondary-bg-color);
+}
+
+body.darkmode .layoutArea[data-area="areaBottom"][data-size="small"] .collectionElement.active {
+	border-color: var(--secondary-fg-color);
+}
+
+.layoutArea[data-area="areaBottom"][data-size="small"] .collectionElement .resourceThumb {
+	border-radius: 50%;
+	border: 1px solid var(--border-color);
+	background-position: center;
+}
+
+.layoutArea[data-area="areaBottom"][data-size="small"] .collectionElement:not(.open):not(.active):hover .resourceThumb {
+	border-color: var(--primary-fg-color);
 }
 
 .layoutArea[data-area="areaBottom"][data-size="small"] .resourceThumb .resourceTitle {

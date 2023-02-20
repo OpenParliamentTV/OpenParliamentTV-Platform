@@ -67,7 +67,7 @@ foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relati
                                                         <div>
                                                             <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
                                                             <div>'.$relationshipItem["attributes"]["faction"]["labelAlternative"].'</div>
-                                                            <div>Gefunden: '.$tmpCount.'</div>
+                                                            <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</span></div>
                                                         </div>
                                                     </a>
                                                 </div>
@@ -133,7 +133,7 @@ if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["r
                                                     <div>
                                                         <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
                                                         <div>'.$relationshipItem["attributes"]["labelAlternative"].'</div>
-                                                        <div>Gefunden: '.$tmpCount.'</div>
+                                                        <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
                                                     </div>
                                                 </a>
                                             </div>
@@ -212,7 +212,7 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                                                 </a>
                                                 <a class="entityButton" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
                                                     <span class="btn btn-sm icon-file-pdf"></span>
-                                                    <div>Gefunden: '.$tmpCount.'</div>
+                                                    <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
                                                 </a>
                                             </div>
                                         </div>\n';
@@ -224,7 +224,7 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                                                 </a>
                                                 <a class="btn btn-sm" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
                                                     <span class="icon-file-pdf"></span>
-                                                    <div>Gefunden: '.$tmpCount.'</div>
+                                                    <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
                                                 </a>
                                             </div>
                                         </div>\n';
@@ -247,7 +247,8 @@ $relatedContentsHTML =
         <div class="relationshipsCategoryHeader">'.L::documents.'</div>
         <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">'.$relatedDocumentsHTML.'</div>
         <hr>
-        <div class="relationshipsCategoryHeader">NER</div>
+        <div class="relationshipsCategoryHeader">'.L::automaticallyDetected.' (beta)</div>
+        <div class="alert px-1 py-0 alert-warning"><span class="icon-attention mr-1"></span>'.L::messageAutomaticallyDetected.'</div>
         <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">
             '.$relatedDocumentsHTMLNER.' '.$relatedPeopleHTMLNER.' '.$relatedOrganisationsHTMLNER.' '.$relatedDocumentsHTMLNER.'
         </div>

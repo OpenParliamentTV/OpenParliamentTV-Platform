@@ -618,7 +618,7 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 }
 
 .relationshipsList .entityPreview .entityContainer .thumbnailContainer {
-    width: 60px;
+    min-width: 60px;
     height: 60px;
     margin: 0 10px 0px 0;
 }
@@ -632,8 +632,17 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 }
 
 .relationshipsList .entityPreview[data-type="person"] .entityContainer a, 
-.relationshipsList .entityPreview[data-type="person"] .entityContainer .linkWrapper {
+.relationshipsList .entityPreview[data-type="person"] .entityContainer .linkWrapper,
+.relationshipsList .entityPreview[data-type="organisation"] .entityContainer a, 
+.relationshipsList .entityPreview[data-type="organisation"] .entityContainer .linkWrapper,
+.relationshipsList .entityPreview[data-type="term"] .entityContainer a, 
+.relationshipsList .entityPreview[data-type="term"] .entityContainer .linkWrapper {
     flex-direction: row;
+}
+
+.relationshipsList .entityPreview .entityContainer a > div:not(.thumbnailContainer), 
+.relationshipsList .entityPreview .entityContainer .linkWrapper > div:not(.thumbnailContainer) {
+    max-width: calc(100% - 30px);
 }
 
 .relationshipsList .entityPreview .entityContainer .entityButton {
@@ -661,6 +670,7 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     max-height: 167px;
     overflow: auto;
     hyphens: auto;
+    white-space: normal;
 }
 
 .nav-tabs {
