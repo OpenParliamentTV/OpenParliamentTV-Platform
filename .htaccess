@@ -36,6 +36,12 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^(manage)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
 	########################################
+	# Rewrite /embed/ urls
+	########################################
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(embed)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
+	########################################
 	# Rewrite /campaigns/ urls
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-d
