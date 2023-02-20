@@ -43,23 +43,53 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </div>
                 </div>
             </div>
-            <div id="entityAddOrganisationDiv" style="position:relative; display: none;" class="pt-5 pb-5 contentContainer">
-                <h3>Add Organisation</h3>
+            <div id="entityAddDiv" style="position:relative; display: none;" class="pt-5 pb-5 contentContainer">
+                <h3>Add Entity</h3>
                 <button class="btn btn-sm input-group-text entitiesToggleDetailsAndTable mb-3" style="position: absolute; top:0px; right:0px;">
                     <span class="icon-cancel"></span>
                     <span class="d-none d-md-inline">Back to table</span>
                 </button>
+                <div class="row" id="searchEntityReturn" style="display: none">
+                </div>
                 <div class="row">
                     <div class="col-12">
-                        <form id="entityAddOrganisationForm" method="post">
+                        <form id="entityAddForm" method="post">
                             <input name="a" value="entityAdd" type="hidden">
-                            <input name="entityType" value="organisation" type="hidden">
                             <input name="entitysuggestionid" value="" type="hidden">
                             <div class="form-group">
+                                <label for="entityType">Entity-Type</label>
+                                <select class="form-control" name="entityType">
+                                    <option value="person">Person</option>
+                                    <option value="organisation">Organisation</option>
+                                    <option value="document">Document</option>
+                                    <option value="term">Term</option>
+                                </select>
+                            </div>
+                            <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
                                 <label for="id">Wikidata ID</label>
                                 <input type="text" class="form-control" name="id">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypeTerm">
+                                <label for="type">Type</label>
+                                <select class="form-control" name="type">
+                                    <option value="">..TODO..</option>
+                                </select>
+                            </div>
+                            <div class="form-group formItem formItemTypeDocument">
+                                <label for="type">Type</label>
+                                <select class="form-control" name="type">
+                                    <option value="">..TODO..</option>
+                                    <option value="officialDocument">officialDocument</option>
+                                </select>
+                            </div>
+                            <div class="form-group formItem formItemTypePerson">
+                                <label for="type">Type</label>
+                                <select class="form-control" name="type">
+                                    <option value="">..TODO..</option>
+                                    <option value="memberOfParliament">Member Of Parliament</option>
+                                </select>
+                            </div>
+                            <div class="form-group formItem formItemTypeOrganisation">
                                 <label for="type">Type</label>
                                 <select class="form-control" name="type">
                                     <option value="">Please Select</option>
@@ -71,120 +101,36 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm" style="position: relative">
                                 <label for="label">Label</label>
                                 <input type="text" class="form-control" name="label">
-                            </div>
-                            <div class="form-group">
-                                <label for="labelAlternative[]">Alternative Label</label> <button class="labelAlternativeAdd btn" type="button"><span class="icon-plus"></span></button>
-                                <div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="abstract">Abstract</label>
-                                <textarea class="form-control" name="abstract"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="thumbnailuri">Thumbnail URI</label>
-                                <input type="text" class="form-control" name="thumbnailuri">
-                            </div>
-                            <div class="form-group">
-                                <label for="thumbnailcreator">Thumbnail Creator</label>
-                                <input type="text" class="form-control" name="thumbnailcreator">
-                            </div>
-                            <div class="form-group">
-                                <label for="thumbnaillicense">Thumbnail License</label>
-                                <input type="text" class="form-control" name="thumbnaillicense">
-                            </div>
-                            <div class="form-group">
-                                <label for="embeduri">Embed URI</label>
-                                <input type="text" class="form-control" name="embeduri">
-                            </div>
-                            <div class="form-group">
-                                <label for="websiteuri">Website URI</label>
-                                <input type="text" class="form-control" name="websiteuri">
-                            </div>
-                            <div class="form-group form-dyncontent">
-                                <label for="socialMediaIDsLabel[]">Social Media IDs</label> <button class="socialMediaIDsAdd btn" type="button"><span class="icon-plus"></span></button>
-                                <div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="color">Color</label>
-                                <input type="text" class="form-control" name="color">
-                            </div>
-                            <div class="form-group">
-                                <label for="additionalinformation">Additional Informations (JSON)</label>
-                                <textarea class="form-control" name="additionalinformation"></textarea>
-                            </div>
-                            <div id="organisationReturn"></div>
-                            <div>
-                                <button class="btn btn-outline-secondary" id="organisationAddFormCancel"><span class="icon-trash-empty"></span> Cancel</button>
-                                <button class="btn btn-outline-primary" id="organisationAddFormSubmit" type="submit"><span class="icon-upload"></span> Add Organisation</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <button class="btn btn-sm input-group-text entitiesToggleDetailsAndTable mt-3" style="position: absolute; bottom:0px; right:0px;">
-                    <span class="icon-cancel"></span><span class="d-none d-md-inline">Back to table</span>
-                </button>
-            </div>
-            <div id="entityAddPersonDiv" style="position:relative; display: none;" class="pt-5 pb-5 contentContainer">
-                <h3>Add Person</h3>
-                <button class="btn btn-sm input-group-text entitiesToggleDetailsAndTable mb-3" style="position: absolute; top:0px; right:0px;">
-                    <span class="icon-cancel"></span>
-                    <span class="d-none d-md-inline">Back to table</span>
-                </button>
-                <div class="row" id="searchPersonLabelReturn" style="display: none">
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <form id="entityAddPersonForm" method="post">
-                            <input name="a" value="entityAdd" type="hidden">
-                            <input name="entityType" value="person" type="hidden">
-                            <input name="entitysuggestionid" value="" type="hidden">
-                            <div class="form-group">
-                                <label for="id">Wikidata ID</label>
-                                <input type="text" class="form-control" name="id">
-                            </div>
-                            <div class="form-group">
-                                <label for="type">Type</label>
-                                <select class="form-control" name="type">
-                                    <option value="">..TODO..</option>
-                                    <option value="memberOfParliament">Member Of Parliament</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group" style="position: relative">
-                                <label for="label">Label</label>
-                                <input type="text" class="form-control" name="label">
-                                <button class="btn" style="position: absolute;bottom:0px;right:0px;" type="button" id="searchPersonLabelBtn">
+                                <!--<button class="btn" style="position: absolute;bottom:0px;right:0px;" type="button" id="searchPersonLabelBtn">
                                     <span class="icon-search-1"></span>
-                                </button>
+                                </button>-->
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson">
                                 <label for="firstName">First Name</label>
                                 <input type="text" class="form-control" name="firstName">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson">
                                 <label for="lastName">Last Name</label>
                                 <input type="text" class="form-control" name="lastName">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson">
                                 <label for="degree">Degree</label>
                                 <input type="text" class="form-control" name="degree">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
                                 <label for="labelAlternative[]">Alternative Label</label> <button class="labelAlternativeAdd btn" type="button"><span class="icon-plus"></span></button>
                                 <div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson">
                                 <label for="birthdate">Date Of Birth</label>
                                 <input type="text" class="form-control" name="birthdate" placeholder="YYYY-MM-DD">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson">
                                 <label for="gender">Gender</label>
                                 <select class="form-control" name="gender">
                                     <option value="">..TODO..</option>
@@ -192,36 +138,39 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     <option value="male">Male</option>
                                 </select>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
                                 <label for="abstract">Abstract</label>
                                 <textarea class="form-control" name="abstract"></textarea>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
                                 <label for="thumbnailuri">Thumbnail URI</label>
                                 <input type="text" class="form-control" name="thumbnailuri">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
                                 <label for="thumbnailcreator">Thumbnail Creator</label>
                                 <input type="text" class="form-control" name="thumbnailcreator">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
                                 <label for="thumbnaillicense">Thumbnail License</label>
                                 <input type="text" class="form-control" name="thumbnaillicense">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypeDocument formItemTypeTerm">
+                                <label for="sourceuri">Source URI</label>
+                                <input type="text" class="form-control" name="sourceuri">
+                            </div>
+                            <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
                                 <label for="embeduri">Embed URI</label>
                                 <input type="text" class="form-control" name="embeduri">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson formItemTypeOrganisation">
                                 <label for="websiteuri">Website URI</label>
                                 <input type="text" class="form-control" name="websiteuri">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson">
                                 <label for="originid">Original ID</label>
                                 <input type="text" class="form-control" name="originid">
                             </div>
-
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson">
                                 <label for="party">Party</label>
                                 <select class="form-control" name="party">
 
@@ -237,7 +186,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 </select>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group formItem formItemTypePerson">
                                 <label for="party">Faction</label>
                                 <select class="form-control" name="party">
 
@@ -255,19 +204,24 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
                                 </select>
                             </div>
-                            <div class="form-group form-dyncontent">
+                            <div class="form-group form-dyncontent formItem formItemTypePerson">
                                 <label for="socialMediaIDsLabel[]">Social Medias</label> <button class="socialMediaIDsAdd btn" type="button"><span class="icon-plus"></span></button>
                                 <div>
                                 </div>
                             </div>
-                            <div class="form-group">
+
+                            <div class="form-group formItem formItemTypeOrganisation">
+                                <label for="color">Color</label>
+                                <input type="text" class="form-control" name="color">
+                            </div>
+                            <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
                                 <label for="additionalinformation">Additional Informations (JSON)</label>
                                 <textarea class="form-control" name="additionalinformation" placeholder='{"abgeordnetenwatchID":""}'></textarea>
                             </div>
-                            <div id="personReturn"></div>
+                            <div id="entityAddReturn"></div>
                             <div>
-                                <button class="btn btn-outline-secondary" id="personAddFormCancel"><span class="icon-trash-empty"></span> Cancel</button>
-                                <button class="btn btn-outline-primary" id="personAddFormSubmit" type="submit"><span class="icon-upload"></span> Add Person</button>
+                                <button class="btn btn-outline-secondary" id="entityAddFormCancelBtn"><span class="icon-trash-empty"></span> Cancel</button>
+                                <button class="btn btn-outline-primary" id="entityAddFormSubmitlBtn" type="submit"><span class="icon-upload"></span> Add Entity</button>
                             </div>
                         </form>
                     </div>
@@ -378,121 +332,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     <script type="application/javascript">
         $(function() {
 
-
-
-            /**
-             *
-             *
-             * ORGANISATION
-             *
-             *
-             */
-            $('#entityAddOrganisationForm').ajaxForm({
-                url:"<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
-                dataType:"json",
-                success: function(ret) {
-
-                    $("#organisationReturn").empty();
-                    $("input, select, textarea").css("border","");
-                    if (ret["meta"]["requestStatus"] != "success") {
-                        for (let error in ret["errors"]) {
-                            $("#organisationReturn").append('<div>'+ret["errors"][error]["title"]+'</div>');
-                            if ("label" in ret["errors"][error]) {
-                                $("[name='"+ret["errors"][error]["label"]+"']").css("border","1px solid red");
-                            }
-                        }
-                    } else {
-
-                        $("#affectedSessions").empty();
-
-                        $(".contentContainer").not("#entityAddSuccess").slideUp();
-                        $("#entityAddSuccess").slideDown();
-
-                        if ("EntitysuggestionItem" in ret) {
-                            $("#reimportSessions").data("entitysuggestionid",ret["EntitysuggestionItem"]["EntitysuggestionItemID"]);
-                            if (("sessions" in ret) && (Object.keys(ret["sessions"]).length>0)) {
-                                for (let parliament in ret["sessions"]) {
-                                    let sessioncontent = "";
-                                    for (let session in ret["sessions"][parliament]) {
-                                        sessioncontent += "<div class='sessionFilesDiv'>"+session+" | File exists: "+ret["sessions"][parliament][session]["fileExists"]+"<input type='hidden' name='files["+parliament+"][]' class='reimportfile' value='"+session+"'>";
-                                    }
-                                    $("#affectedSessions").append("<div class='parlamentDiv><h4>Parlament "+parliament+"</h4>"+sessioncontent+"</div>");
-                                }
-                                $("#affectedSessions_true").show();
-                                $("#affectedSessions_false").hide();
-                            } else {
-                                $("#affectedSessions_false").show();
-                                $("#affectedSessions_true").hide();
-                            }
-
-
-
-
-                        } else {
-                            $("#affectedSessions_false").show();
-                            $("#affectedSessions_true").hide();
-                        }
-
-                    }
-
-                } //TODO failed
-            });
-
-
-            /**
-             *
-             *
-             * PERSON
-             *
-             *
-             */
-            $('#entityAddPersonForm').ajaxForm({
-                url:"<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
-                dataType:"json",
-                success: function(ret) {
-
-                    $("#personReturn").empty();
-                    $("input, select, textarea").css("border","");
-                    if (ret["meta"]["requestStatus"] != "success") {
-                        for (let error in ret["errors"]) {
-                            $("#personReturn").append('<div>'+ret["errors"][error]["title"]+'</div>');
-                            if ("label" in ret["errors"][error]) {
-                                $("[name='"+ret["errors"][error]["label"]+"']").css("border","1px solid red");
-                            }
-                        }
-                    } else {
-
-                        $("#affectedSessions").empty();
-
-                        $(".contentContainer").not("#entityAddSuccess").slideUp();
-                        $("#entityAddSuccess").slideDown();
-
-                        if ("EntitysuggestionItem" in ret) {
-                            $("#reimportSessions").data("entitysuggestionid",ret["EntitysuggestionItem"]["EntitysuggestionItemID"]);
-                            if (("sessions" in ret) && (Object.keys(ret["sessions"]).length>0)) {
-                                for (let parliament in ret["sessions"]) {
-                                    let sessioncontent = "";
-                                    for (let session in ret["sessions"][parliament]) {
-                                        sessioncontent += "<div class='sessionFilesDiv'>"+session+" | File exists: "+ret["sessions"][parliament][session]["fileExists"]+"<input type='hidden' name='files["+parliament+"][]' class='reimportfile' value='"+session+"'>";
-                                    }
-                                    $("#affectedSessions").append("<div class='parlamentDiv><h4>Parlament "+parliament+"</h4>"+sessioncontent+"</div>");
-                                }
-                                $("#affectedSessions_true").show();
-                                $("#affectedSessions_false").hide();
-                            } else {
-                                $("#affectedSessions_false").show();
-                                $("#affectedSessions_true").hide();
-                            }
-
-                        } else {
-                            $("#affectedSessions_false").show();
-                            $("#affectedSessions_true").hide();
-                        }
-
-                    }
-
-                } //TODO failed
-            });
+            /*
 
             $("#searchPersonLabelBtn").on("click",function() {
                 $.ajax({
@@ -506,6 +346,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     }
                 })
             });
+             */
 
 
             /**
@@ -515,6 +356,56 @@ if ($auth["meta"]["requestStatus"] != "success") {
              *
              *
              */
+
+            $('#entityAddForm').ajaxForm({
+                url: "<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
+                dataType: "json",
+                success: function (ret) {
+
+                    $("#entityAddReturn").empty();
+                    $("input, select, textarea").css("border", "");
+
+                    if (ret["meta"]["requestStatus"] != "success") {
+                        for (let error in ret["errors"]) {
+                            $("#entityAddReturn").append('<div>' + ret["errors"][error]["title"] + '</div>');
+                            if ("label" in ret["errors"][error]) {
+                                $("[name='" + ret["errors"][error]["label"] + "']").css("border", "1px solid red");
+                            }
+                        }
+                    } else {
+
+                        $("#affectedSessions").empty();
+
+                        $(".contentContainer").not("#entityAddSuccess").slideUp();
+                        $("#entityAddSuccess").slideDown();
+
+                        if ("EntitysuggestionItem" in ret) {
+                            $("#reimportSessions").data("entitysuggestionid", ret["EntitysuggestionItem"]["EntitysuggestionItemID"]);
+                            if (("sessions" in ret) && (Object.keys(ret["sessions"]).length > 0)) {
+                                for (let parliament in ret["sessions"]) {
+                                    let sessioncontent = "";
+                                    for (let session in ret["sessions"][parliament]) {
+                                        sessioncontent += "<div class='sessionFilesDiv'>" + session + " | File exists: " + ret["sessions"][parliament][session]["fileExists"] + "<input type='hidden' name='files[" + parliament + "][]' class='reimportfile' value='" + session + "'>";
+                                    }
+                                    $("#affectedSessions").append("<div class='parlamentDiv><h4>Parlament " + parliament + "</h4>" + sessioncontent + "</div>");
+                                }
+                                $("#affectedSessions_true").show();
+                                $("#affectedSessions_false").hide();
+                            } else {
+                                $("#affectedSessions_false").show();
+                                $("#affectedSessions_true").hide();
+                            }
+
+                        } else {
+                            $("#affectedSessions_false").show();
+                            $("#affectedSessions_true").hide();
+                        }
+
+                    }
+                }
+            });
+
+
             $(".labelAlternativeAdd").on("click", function() {
                 $(this).parent().find("div:first").append('<span style="position: relative">' +
                     '<input type="text" class="form-control" name="labelAlternative[]">' +
@@ -523,9 +414,12 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     '</button></span>');
             });
 
+
+
             $(".mainContainer").on("click", ".labelAlternativeRemove", function() {
                 $(this).parent().remove();
             });
+
 
 
             $(".socialMediaIDsAdd").on("click", function() {
@@ -542,6 +436,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     '                                    </div>');
             });
 
+
+
             $(".mainContainer").on("click", ".socialMediaIDsRemove", function() {
                 $(this).parent().remove();
             });
@@ -555,62 +451,101 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
             });
 
+
+
+            $(".mainContainer").on("change", "select[name='entityType']", function() {
+                let tempItem = "";
+                switch ($(this).val()) {
+                    case "organisation":
+                        tempItem=".formItemTypeOrganisation";
+                    break;
+                    case "person":
+                        tempItem=".formItemTypePerson";
+                    break;
+                    case "term":
+                        tempItem=".formItemTypeTerm";
+                    break;
+                    case "document":
+                        tempItem=".formItemTypeDocument";
+                    break;
+                    default:
+                        tempItem=".not";
+                    break;
+                }
+                $("#entityAddForm .formItem input, #entityAddForm .formItem textarea, #entityAddForm .formItem select").prop("disabled",true);
+                $(".formItem").slideUp(function() {
+                    $(tempItem +" input, "+tempItem+" textarea, "+tempItem+" select").prop("disabled",false);
+                    $(tempItem).slideDown();
+                });
+
+
+            });
+
+
+
             $(".mainContainer").on("click", ".entityaddform", function() {
-                $.ajax({
-                    url: config["dir"]["root"] + "/server/ajaxServer.php",
-                    data: {"a":"entitysuggestionGet","id":$(this).data("id")},
-                    success: function(ret) {
-                        if (ret["success"] == "true") {
+                $(".contentContainer").not("#entitiesDiv").slideUp();
+                $("#entityAddDiv").slideDown();
+                $("#entityAddForm .formItem").hide();
+                ("#entityAddForm")[0].reset();
+                $("#entityAddForm .formItem input, #entityAddForm .formItem textarea, #entityAddForm .formItem select").prop("disabled",true);
 
-                            switch (ret["return"]["EntitysuggestionType"]) {
-                                case "ORG":
-                                    $('#entityAddOrganisationForm')[0].reset();
-                                    $('#entityAddOrganisationForm .form-dyncontent > div').empty();
-                                    $("#entityAddOrganisationDiv input[name='entitysuggestionid']").val(ret["return"]["EntitysuggestionID"]);
-                                    $("#entityAddOrganisationDiv input[name='id']").val(ret["return"]["EntitysuggestionExternalID"]);
-                                    $("#entityAddOrganisationDiv input[name='label']").val(ret["return"]["EntitysuggestionLabel"]);
+                if ($(this).data("id")) {
 
-                                    $(".contentContainer").not("#entityAddOrganisationDiv").slideUp();
-                                    $("#entityAddOrganisationDiv").slideDown();
-                                break;
-                                case "PERSON":
-                                    $("#searchPersonLabelReturn").hide().empty();
-                                    $('#entityAddPersonForm')[0].reset();
-                                    $('#entityAddPersonForm .form-dyncontent > div').empty();
+                    $.ajax({
+                        url: config["dir"]["root"] + "/server/ajaxServer.php",
+                        data: {"a":"entitysuggestionGet","id":$(this).data("id")},
+                        success: function(ret) {
+                            if (ret["success"] == "true") {
+                                $("input[name='id']").val(ret["return"]["EntitysuggestionExternalID"]);
+                                $("input[name='label']").val(ret["return"]["EntitysuggestionLabel"]);
+                                switch (ret["return"]["EntitysuggestionType"]) {
+                                    case "ORG":
+                                        $("select[name='entityType']").val("organisation").trigger("change");
+                                    break;
 
-                                    $("#entityAddPersonForm input[name='entitysuggestionid']").val(ret["return"]["EntitysuggestionID"]);
-                                    $("#entityAddPersonForm input[name='id']").val(ret["return"]["EntitysuggestionExternalID"]);
-                                    $("#entityAddPersonForm input[name='label']").val(ret["return"]["EntitysuggestionLabel"]);
-                                    $(".contentContainer").not("#entityAddPersonDiv").slideUp();
-                                    $("#entityAddPersonDiv").slideDown()
+                                    case "PERSON":
+                                        $("select[name='entityType']").val("person").trigger("change");
+                                    break;
 
+                                    case "DOC":
+                                        $("select[name='entityType']").val("document").trigger("change");
+                                    break;
 
-                                break;
+                                    case "TERM":
+                                    default:
+                                        $("select[name='entityType']").val("term").trigger("change");
+                                    break;
+                                }
+                                $(".contentContainer").not("#entityAddDiv").slideUp();
+                                $("#entityAddDiv").slideDown();
                             }
                         }
-                    }
-                })
+                    });
+                }
             })
+
+
 
             $(".mainContainer").on("click", ".entitysuggestiondetails",function() {
 
-               $.ajax({
-                   url: config["dir"]["root"] + "/server/ajaxServer.php",
-                   data: {"a":"entitysuggestionGet","id":$(this).data("id")},
-                   success: function(ret) {
-                       if (ret["success"] == "true") {
-                           let wikiIDRegex = new RegExp("Q[0-9]+");
-                           $("#entitiesDetailsExternalID").html((wikiIDRegex.test(ret["return"]["EntitysuggestionExternalID"]) ? '<a href="https://www.wikidata.org/wiki/'+ret["return"]["EntitysuggestionExternalID"]+'" target="_blank">'+ret["return"]["EntitysuggestionExternalID"]+'</a>' : ret["return"]["EntitysuggestionExternalID"]));
-                           $("#entitiesDetailsLabel").html(ret["return"]["EntitysuggestionLabel"]);
-                           $("#entitiesDetailsType").html(ret["return"]["EntitysuggestionType"]);
-                           $("#entitiesDetailsMediaCount").html(Object.keys(ret["return"]["EntitysuggestionContext"]).length);
-                           //$("#entitiesDetailsContent").html(ret["return"]["EntitysuggestionContent"]);
-                           $("#entitiesDetailsContent").empty();
-                           $("#entitiesDetailsContent").jsonView(ret["return"]["EntitysuggestionContent"]);
+                       $.ajax({
+                           url: config["dir"]["root"] + "/server/ajaxServer.php",
+                           data: {"a":"entitysuggestionGet","id":$(this).data("id")},
+                           success: function(ret) {
+                               if (ret["success"] == "true") {
+                                   let wikiIDRegex = new RegExp("Q[0-9]+");
+                                   $("#entitiesDetailsExternalID").html((wikiIDRegex.test(ret["return"]["EntitysuggestionExternalID"]) ? '<a href="https://www.wikidata.org/wiki/'+ret["return"]["EntitysuggestionExternalID"]+'" target="_blank">'+ret["return"]["EntitysuggestionExternalID"]+'</a>' : ret["return"]["EntitysuggestionExternalID"]));
+                                   $("#entitiesDetailsLabel").html(ret["return"]["EntitysuggestionLabel"]);
+                                   $("#entitiesDetailsType").html(ret["return"]["EntitysuggestionType"]);
+                                   $("#entitiesDetailsMediaCount").html(Object.keys(ret["return"]["EntitysuggestionContext"]).length);
+                                   //$("#entitiesDetailsContent").html(ret["return"]["EntitysuggestionContent"]);
+                                   $("#entitiesDetailsContent").empty();
+                                   $("#entitiesDetailsContent").jsonView(ret["return"]["EntitysuggestionContent"]);
 
-                           $("#entitiesDetailsContext").html("");
-                           for (let item in ret["return"]["EntitysuggestionContext"]) {
-                               $("#entitiesDetailsContext").append('<a href="<?=$config["dir"]["root"]?>/media/'+item+'" target="_blank">'+item+'</a><br>');
+                                   $("#entitiesDetailsContext").html("");
+                                   for (let item in ret["return"]["EntitysuggestionContext"]) {
+                                       $("#entitiesDetailsContext").append('<a href="<?=$config["dir"]["root"]?>/media/'+item+'" target="_blank">'+item+'</a><br>');
                            }
                            $(".contentContainer").not("#entitiesDetailsDiv").slideUp();
                            $("#entitiesDetailsDiv").slideDown();
@@ -618,6 +553,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
                    }
                })
             });
+
+
 
             $("#reimportSessionsButton").on("click", function() {
 
@@ -630,6 +567,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
         })
     </script>
     <style type="text/css">
+        .formItem {
+            display: none;
+        }
         #entitiesDetailsContent, #searchPersonLabelReturn div {
             background: #fafafa;
             color: #986801;

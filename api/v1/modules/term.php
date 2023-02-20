@@ -187,7 +187,6 @@ function termGetDataObject($item = false, $db = false) {
 }
 
 
-
 function termSearch($parameter, $db = false) {
 
     global $config;
@@ -410,6 +409,164 @@ function termSearch($parameter, $db = false) {
     return $return;
 
 
+
+}
+
+
+function termAdd($item, $db = false) {
+
+    global $config;
+
+    if (!$db) {
+
+        $opts = array(
+            'host'	=> $config["platform"]["sql"]["access"]["host"],
+            'user'	=> $config["platform"]["sql"]["access"]["user"],
+            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+            'db'	=> $config["platform"]["sql"]["db"]
+        );
+
+        try {
+
+            $db = new SafeMySQL($opts);
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "2";
+            $errorarray["title"] = "Database connection error";
+            $errorarray["detail"] = "Connecting to platform database failed";
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+
+    }
+
+    if (!$item["type"]) {
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Type is missing";
+        $errorarray["label"] = "type";
+        $errorarray["detail"] = "Required parameter of the request is missing";
+        $return["errors"][] = $errorarray;
+    }
+
+    if ((!$item["id"]) || (!preg_match("/(Q|P)\d+/i", $item["id"]))) {
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "ID seems to be wrong or missing";
+        $errorarray["label"] = "id";
+        $errorarray["detail"] = "Required parameter of the request is missing";
+        $return["errors"][] = $errorarray;
+    }
+
+    if ((!$item["label"]) || strlen($item["label"]) < 3) {
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Label is missing or < 3";
+        $errorarray["label"] = "label";
+        $errorarray["detail"] = "Required parameter of the request is missing";
+        $return["errors"][] = $errorarray;
+    }
+
+    if ((!$item["abstract"]) || strlen($item["abstract"]) < 5) {
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Abstract is missing or <5";
+        $errorarray["label"] = "abstract";
+        $errorarray["detail"] = "Required parameter of the request is missing";
+        $return["errors"][] = $errorarray;
+    }
+
+    if ((!$item["sourceuri"]) || strlen($item["sourceuri"]) < 5) {
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Source URI is missing or too short";
+        $errorarray["label"] = "sourceuri";
+        $errorarray["detail"] = "Required parameter of the request is missing";
+        $return["errors"][] = $errorarray;
+    }
+
+    if ($return["errors"]) {
+        $return["meta"]["requestStatus"] = "error";
+        return $return;
+    } else {
+
+
+        $itemTmp = $db->getRow("SELECT TermWikidataID FROM ?n WHERE TermWikidataID=?s",$config["platform"]["sql"]["tbl"]["Term"],$item["id"]);
+
+        if ($itemTmp) {
+            $return["meta"]["requestStatus"] = "error";
+            $errorarray["status"] = "422"; //todo
+            $errorarray["code"] = "2";
+            $errorarray["title"] = "An item with same WikidataID already exists in Database";
+            $errorarray["label"] = "error_info";
+            $errorarray["detail"] = "Item already exists in Database";
+            $return["errors"][] = $errorarray;
+            return $return;
+
+        } else {
+
+            try {
+
+                $labelAlternative = array();
+                if (is_array($item["labelAlternative"])) {
+                    foreach ($item["labelAlternative"] as $v) {
+                        if ($v) {
+                            $labelAlternative[] = $v;
+                        }
+                    }
+                }
+
+
+                $db->query("INSERT INTO ?n SET ".
+                    "TermType=?s, ".
+                    "TermWikidataID=?s, ".
+                    "TermLabel=?s, ".
+                    "TermLabelAlternative=?s, ".
+                    "TermAbstract=?s, ".
+                    "TermThumbnailURI=?s, ".
+                    "TermThumbnailCreator=?s, ".
+                    "TermThumbnailLicense=?s, ".
+                    "TermSourceURI=?s, ".
+                    "TermEmbedURI=?s, ".
+                    "TermAdditionalInformation=?s",
+
+                    $config["platform"]["sql"]["tbl"]["Term"],
+                    $item["type"],
+                    $item["id"],
+                    $item["label"],
+                    (is_array($labelAlternative) ? json_encode($labelAlternative,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["labelAlternative"]),
+                    $item["abstract"],
+                    $item["thumbnailuri"],
+                    $item["thumbnailcreator"],
+                    $item["thumbnaillicense"],
+                    $item["sourceuri"],
+                    $item["embeduri"],
+                    (is_array($item["additionalinformation"]) ? json_encode($item["additionalinformation"],JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["additionalinformation"])
+                );
+                $return["meta"]["requestStatus"] = "success";
+                $return["meta"]["itemID"] = $db->insertId();
+
+            } catch (exception $e) {
+
+                $return["meta"]["requestStatus"] = "error";
+                $errorarray["status"] = "422"; //todo
+                $errorarray["code"] = "2";
+                $errorarray["title"] = "Add to database failed";
+                $errorarray["label"] = "error_info";
+                $errorarray["detail"] = $e->getMessage();
+                $return["errors"][] = $errorarray;
+
+            }
+
+        }
+    }
+
+    return $return;
 
 }
 

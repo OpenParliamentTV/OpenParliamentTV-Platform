@@ -100,7 +100,9 @@ switch ($_REQUEST["a"]) {
 
         if ($auth["meta"]["requestStatus"] != "success") {
 
-            //TODO Response
+            $return["success"] = "false";
+            $return["text"] = "Forbidden";
+            $return["code"] = "403";
 
         } else {
             require_once (__DIR__."/../modules/utilities/functions.php");
@@ -112,9 +114,9 @@ switch ($_REQUEST["a"]) {
                     //TODO Transfer $return["meta"]["requestStatus"] = success/error to $return["success"] = true/false - also in frontend
                     //$return["success"] = "true";
                     $return["text"] = "Entity added";
-                    if ($_REQUEST["entitysuggestionid"]) {
-                        require_once (__DIR__."/../modules/utilities/functions.entities.php");
-                        $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "ORG");
+                    require_once (__DIR__."/../modules/utilities/functions.entities.php");
+                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "ORG");
+                    if ($return["EntitysuggestionItem"]) {
                         $return["sessions"] = array();
                         foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
                             $itemInfos = getInfosFromStringID($item);
@@ -130,9 +132,9 @@ switch ($_REQUEST["a"]) {
                     //TODO Transfer $return["meta"]["requestStatus"] = success/error to $return["success"] = true/false - also in frontend
                     //$return["success"] = "true";
                     $return["text"] = "Entity added";
-                    if ($_REQUEST["entitysuggestionid"]) {
-                        require_once (__DIR__."/../modules/utilities/functions.entities.php");
-                        $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "PERSON");
+                    require_once (__DIR__."/../modules/utilities/functions.entities.php");
+                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "PERSON");
+                    if ($return["EntitysuggestionItem"]) {
                         $return["sessions"] = array();
                         foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
                             $itemInfos = getInfosFromStringID($item);
@@ -140,7 +142,42 @@ switch ($_REQUEST["a"]) {
                             $return["sessions"][$itemInfos["parliament"]][$tmpFileName]["fileExists"] = is_file(__DIR__."/../data/repos/".$itemInfos["parliament"]."/processed/".$tmpFileName);
                         }
                     }
+                break;
+                case "document":
+                    require_once(__DIR__."/../api/v1/modules/document.php");
+                    $return = documentAdd($_REQUEST);
 
+                    //TODO Transfer $return["meta"]["requestStatus"] = success/error to $return["success"] = true/false - also in frontend
+                    //$return["success"] = "true";
+                    $return["text"] = "Entity added";
+                    require_once (__DIR__."/../modules/utilities/functions.entities.php");
+                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "MISC"); //TODO: MISC LOC or anything else
+                    if ($return["EntitysuggestionItem"]) {
+                        $return["sessions"] = array();
+                        foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
+                            $itemInfos = getInfosFromStringID($item);
+                            $tmpFileName = substr($itemInfos["electoralPeriodNumber"],1).substr($itemInfos["sessionNumber"],1)."-session.json";
+                            $return["sessions"][$itemInfos["parliament"]][$tmpFileName]["fileExists"] = is_file(__DIR__."/../data/repos/".$itemInfos["parliament"]."/processed/".$tmpFileName);
+                        }
+                    }
+                break;
+                case "term":
+                    require_once(__DIR__."/../api/v1/modules/term.php");
+                    $return = documentAdd($_REQUEST);
+
+                    //TODO Transfer $return["meta"]["requestStatus"] = success/error to $return["success"] = true/false - also in frontend
+                    //$return["success"] = "true";
+                    $return["text"] = "Entity added";
+                    require_once (__DIR__."/../modules/utilities/functions.entities.php");
+                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "MISC"); //TODO: MISC LOC or anything else
+                    if ($return["EntitysuggestionItem"]) {
+                        $return["sessions"] = array();
+                        foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
+                            $itemInfos = getInfosFromStringID($item);
+                            $tmpFileName = substr($itemInfos["electoralPeriodNumber"],1).substr($itemInfos["sessionNumber"],1)."-session.json";
+                            $return["sessions"][$itemInfos["parliament"]][$tmpFileName]["fileExists"] = is_file(__DIR__."/../data/repos/".$itemInfos["parliament"]."/processed/".$tmpFileName);
+                        }
+                    }
                 break;
                 default:
 
