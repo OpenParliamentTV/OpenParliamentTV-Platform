@@ -37,14 +37,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<a target="_blank" href="<?= $apiResult["data"]["attributes"]["websiteURI"] ?>"><?= $apiResult["data"]["attributes"]["websiteURI"] ?></a>
 					</div>
 				</div>
-				<div class="row">
-					<div class="col">
-						<a target="_blank" class="d-block mt-3 btn btn-primary" href="<?= $config["dir"]["root"] ?>/<?= $apiResult["data"]["type"] ?>/<?= $apiResult["data"]["id"] ?>" role="button">Open Entity in New Tab</a>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
+	<a target="_blank" class="d-block btn btn-primary" href="<?= $config["dir"]["root"] ?>/<?= $apiResult["data"]["type"] ?>/<?= $apiResult["data"]["id"] ?>" role="button" style="position: absolute; bottom: 20px; left: 20px; width: calc(100% - 40px);">Open Entity in New Tab</a>
 </main>
 <script type="text/javascript">
 	$(document).ready( function() {
