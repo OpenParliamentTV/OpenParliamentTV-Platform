@@ -155,7 +155,7 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
                 $tmpItem["created"]                         = "";
                 $tmpItem["type"]                            = "Annotation";
                 $tmpItem["frametrail:type"]                 = "Annotation";
-                $tmpItem["frametrail:tags"]                 = array($annotation["type"]);
+                $tmpItem["frametrail:tags"]                 = array($annotation["type"],$relationship["attributes"]["type"]);
                 $tmpItem["target"]["type"]                  = "video";
                 $tmpItem["target"]["source"]                = $mediaSource;
                 $tmpItem["target"]["selector"]["confirmsTo"] = "http://www.w3.org/TR/media-frags/";
