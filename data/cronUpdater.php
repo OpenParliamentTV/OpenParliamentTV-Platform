@@ -9,9 +9,9 @@
 
 require_once(__DIR__ . "/../modules/utilities/functions.php");
 
-
+//file_put_contents(__DIR__."/__tmplog.log", date("Y.m.d H:i:s:u")." outsideCLI\n", FILE_APPEND);
 if (is_cli()) {
-
+//    file_put_contents(__DIR__."/__tmplog.log", date("Y.m.d H:i:s:u")." IS CLI\n", FILE_APPEND);
     function cliLog($message)
     {
         $message = date("Y.m.d H:i:s:u") . " - ". $message.PHP_EOL;
@@ -58,6 +58,7 @@ if (is_cli()) {
 
     require_once (__DIR__."/updateSearchIndex.php");
     require_once (__DIR__."/updateFilesFromGit.php");
+    require_once (__DIR__."/entity-dump/function.entityDump.php");
 
     try {
         //TODO - Just on return true go ahead
@@ -138,6 +139,8 @@ if (is_cli()) {
 
         $mediaItems = array();
 
+        $entityDump = getEntityDump(array("type"=>"all","wiki"=>true,"wikikeys"=>"true"),$db);
+
         foreach ($json["data"] as $spKey => $media) {
 
             $media["action"] = "addMedia";
@@ -146,7 +149,7 @@ if (is_cli()) {
 
             try {
 
-                $return = mediaAdd($media,$db,$dbp);
+                $return = mediaAdd($media,$db,$dbp,$entityDump);
 
             } catch (exception $e) {
 
