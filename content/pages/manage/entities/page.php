@@ -73,7 +73,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 <label for="type">Type</label>
                                 <select class="form-control" name="type">
                                     <option value="">..TODO..</option>
-                                    <option value="term">Term</option>
+                                    <option value="otherTerm">Other Term</option>
                                 </select>
                             </div>
                             <div class="form-group formItem formItemTypeDocument">
@@ -82,7 +82,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     <option value="">..TODO..</option>
                                     <option value="officialDocument">officialDocument</option>
                                     <option value="legalDocument">legalDocument</option>
-                                    <option value="document">document</option>
+                                    <option value="otherDocument">Other Document</option>
                                 </select>
                             </div>
                             <div class="form-group formItem formItemTypePerson">
@@ -101,7 +101,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     <option value="faction">Faction</option>
                                     <option value="government">Government</option>
                                     <option value="company">Company</option>
-                                    <option value="organisation">Organisation</option>
+                                    <option value="ngo">NGO</option>
+                                    <option value="otherOrganisation">Other Organisation</option>
                                 </select>
                             </div>
 
