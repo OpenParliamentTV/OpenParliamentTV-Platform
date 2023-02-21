@@ -139,7 +139,7 @@ if ($totalResults != 0) {
 			$formattedDate = date("d.m.Y", strtotime($result_item["attributes"]["dateStart"]));
 			
 			$mainSpeaker = getMainSpeakerFromPeopleArray($result_item["annotations"]['data'], $result_item["relationships"]["people"]['data']);
-			$mainFaction = getMainFactionFromOrganisationsArray($result_item["relationships"]["organisations"]['data']);
+			$mainFaction = getMainFactionFromOrganisationsArray($result_item["annotations"]['data'], $result_item["relationships"]["organisations"]['data']);
 
 			if ($sortFactor == 'date' && $formattedDate != $currentDate) {
 				echo '<div class="sortDivider"><b>'.$formattedDate.'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';

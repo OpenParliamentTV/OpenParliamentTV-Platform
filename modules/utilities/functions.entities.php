@@ -64,14 +64,15 @@ function getMainSpeakerFromPeopleArray($annotationsArray, $peopleArray) {
     return $mainSpeaker;
 }
 
-function getMainFactionFromOrganisationsArray($organisationsArray) {
+function getMainFactionFromOrganisationsArray($annotationsArray, $organisationsArray) {
 
-
-    //TODO: Context part of Annotation, not organisation?!
-    foreach ($organisationsArray as $organisation) {
-        if ($organisation['attributes']['context'] == 'main-speaker-faction') {
-            $mainFaction = $organisation;
-            break;
+    foreach ($annotationsArray as $annotation) {
+        if ($annotation["context"] == "main-speaker-faction") {
+            foreach ($organisationsArray as $organisation) {
+                if ($organisation["id"] == $annotation["id"]) {
+                    $mainFaction = $organisation;
+                }
+            }
         }
     }
 
