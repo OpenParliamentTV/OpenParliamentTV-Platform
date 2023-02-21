@@ -289,7 +289,7 @@ function updatePlayer() {
 							{
 								"type": "TimedContent",
 								"contentSize": "small",
-								"name": "Erkannte Begriffe (beta)",
+								"name": localizedLabels.automaticallyDetected + " (beta)",
 								"description": "",
 								"cssClass": "",
 								"collectionFilter": {
