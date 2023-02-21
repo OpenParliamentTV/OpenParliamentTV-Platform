@@ -444,15 +444,15 @@ function documentAdd($item, $db = false) {
                 $db->query("INSERT INTO ?n SET ".
                     "DocumentType=?s, ".
                     "DocumentWikidataID=?s, ".
-                    "OrganisationLabel=?s, ".
-                    "OrganisationLabelAlternative=?s, ".
-                    "OrganisationAbstract=?s, ".
-                    "OrganisationThumbnailURI=?s, ".
-                    "OrganisationThumbnailCreator=?s, ".
-                    "OrganisationThumbnailLicense=?s, ".
-                    "OrganisationSourceURI=?s, ".
-                    "OrganisationEmbedURI=?s, ".
-                    "OrganisationAdditionalInformation=?s",
+                    "DocumentLabel=?s, ".
+                    "DocumentLabelAlternative=?s, ".
+                    "DocumentAbstract=?s, ".
+                    "DocumentThumbnailURI=?s, ".
+                    "DocumentThumbnailCreator=?s, ".
+                    "DocumentThumbnailLicense=?s, ".
+                    "DocumentSourceURI=?s, ".
+                    "DocumentEmbedURI=?s, ".
+                    "DocumentAdditionalInformation=?s",
 
                     $config["platform"]["sql"]["tbl"]["Document"],
                     $item["type"],
