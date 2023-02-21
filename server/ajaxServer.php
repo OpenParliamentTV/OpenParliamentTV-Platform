@@ -115,7 +115,7 @@ switch ($_REQUEST["a"]) {
                     //$return["success"] = "true";
                     $return["text"] = "Entity added";
                     require_once (__DIR__."/../modules/utilities/functions.entities.php");
-                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "ORG");
+                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external");
                     if ($return["EntitysuggestionItem"]) {
                         $return["sessions"] = array();
                         foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
@@ -133,7 +133,7 @@ switch ($_REQUEST["a"]) {
                     //$return["success"] = "true";
                     $return["text"] = "Entity added";
                     require_once (__DIR__."/../modules/utilities/functions.entities.php");
-                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "PERSON");
+                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external");
                     if ($return["EntitysuggestionItem"]) {
                         $return["sessions"] = array();
                         foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
@@ -151,7 +151,7 @@ switch ($_REQUEST["a"]) {
                     //$return["success"] = "true";
                     $return["text"] = "Entity added";
                     require_once (__DIR__."/../modules/utilities/functions.entities.php");
-                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "MISC"); //TODO: MISC LOC or anything else
+                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external"); //TODO: MISC LOC or anything else
                     if ($return["EntitysuggestionItem"]) {
                         $return["sessions"] = array();
                         foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
@@ -169,7 +169,7 @@ switch ($_REQUEST["a"]) {
                     //$return["success"] = "true";
                     $return["text"] = "Entity added";
                     require_once (__DIR__."/../modules/utilities/functions.entities.php");
-                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external", "MISC"); //TODO: MISC LOC or anything else
+                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external"); //TODO: MISC LOC or anything else
                     if ($return["EntitysuggestionItem"]) {
                         $return["sessions"] = array();
                         foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
