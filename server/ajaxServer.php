@@ -163,7 +163,7 @@ switch ($_REQUEST["a"]) {
                 break;
                 case "term":
                     require_once(__DIR__."/../api/v1/modules/term.php");
-                    $return = documentAdd($_REQUEST);
+                    $return = termAdd($_REQUEST);
 
                     //TODO Transfer $return["meta"]["requestStatus"] = success/error to $return["success"] = true/false - also in frontend
                     //$return["success"] = "true";
