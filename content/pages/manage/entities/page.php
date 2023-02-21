@@ -73,6 +73,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 <label for="type">Type</label>
                                 <select class="form-control" name="type">
                                     <option value="">..TODO..</option>
+                                    <option value="term">Term</option>
                                 </select>
                             </div>
                             <div class="form-group formItem formItemTypeDocument">
@@ -80,6 +81,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 <select class="form-control" name="type">
                                     <option value="">..TODO..</option>
                                     <option value="officialDocument">officialDocument</option>
+                                    <option value="legalDocument">legalDocument</option>
+                                    <option value="document">document</option>
                                 </select>
                             </div>
                             <div class="form-group formItem formItemTypePerson">
@@ -87,6 +90,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 <select class="form-control" name="type">
                                     <option value="">..TODO..</option>
                                     <option value="memberOfParliament">Member Of Parliament</option>
+                                    <option value="person">Person</option>
                                 </select>
                             </div>
                             <div class="form-group formItem formItemTypeOrganisation">
@@ -488,7 +492,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 
             $(".mainContainer").on("click", ".entityaddform", function() {
-                
+
                 $(".contentContainer").not("#entityAddDiv").slideUp();
                 $("#entityAddDiv").slideDown();
                 $("#entityAddForm .formItem").hide();
