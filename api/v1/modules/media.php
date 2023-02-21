@@ -289,7 +289,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["OrganisationThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["OrganisationThumbnailLicense"];
                         
-                        $organisationAdditionalinformation = json_decode($ditem["OrganisationAdditionalInformation"],true);
+                        $organisationAdditionalinformation = json_decode(($ditem["OrganisationAdditionalInformation"] ?? ""),true);
                         $annotationAdditionalInformation = json_decode($annotation["AnnotationAdditionalInformation"],true);
                         //$tmpAnnotationItem["attributes"]["additionalInformation"] = array_merge_recursive((is_array($organisationAdditionalinformation) ? $organisationAdditionalinformation : array()), (is_array($annotationAdditionalInformation) ? $annotationAdditionalInformation : array()));
                         $tmpAnnotationItem["attributes"]["additionalInformation"] = (is_array($organisationAdditionalinformation) ? $organisationAdditionalinformation : array());
@@ -598,7 +598,7 @@ function mediaIrregularity($type = false, $parliament = false, $getDetails = fal
  * Add Media
  */
 
-function mediaAdd($item = false, $db = false, $dbp = false) {
+function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false) {
 
     global $config;
 
@@ -930,6 +930,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
 
 
+
     /**
      * Media Add
      */
@@ -1077,6 +1078,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
      * as long the speech["debug"]["confidence"] parameter is missing, we need to check if there is a person with ["context"] = "main-proceeding-speaker"
      */
 
+    /*
     if ((!$item["people"]) || (gettype($item["people"]) != "array")) {
         $item["people"] = array();
     }
@@ -1088,8 +1090,16 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
             $confidence = 0.5;
         }
     }
+    */
 
-    if ($confidence == 1) {
+    if (!$entityDump) {
+
+        require_once (__DIR__."/../../../data/entity-dump/function.entityDump.php");
+        $entityDump = getEntityDump(array("type"=>"all","wiki"=>true,"wikikeys"=>"true"),$db);
+
+    }
+
+    if (($item["debug"]["confidence"] == 1) && (count($item["debug"]["linkedMediaIndexes"]) == 1)) {
 
         $dbp->query("DELETE FROM ?n WHERE AnnotationMediaID = ?s AND AnnotationContext = ?s", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $nextID, "NER");
 
@@ -1121,118 +1131,43 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
                         foreach ($sentence["entities"] as $entity) {
 
 
-                            if ($entity["wtype"] == "PERSON") {
+                            if (!$entity["wid"]) {
+                                continue;
+                            }
 
-                                $personDB = personGetByID($entity["wid"]);
+                            if (!array_key_exists($entity["wid"],$entityDump["data"])) {
 
-                                if ($personDB["meta"]["requestStatus"] != "success") {
+                                reportEntitySuggestion($entity["wid"], $entity["wtype"], $entity["label"], json_encode($entity, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $nextID, $db);
 
-                                    reportEntitySuggestion($entity["wid"], $entity["wtype"], $entity["label"], json_encode($entity, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $nextID, $db);
+                            } else {
 
-                                } else {
+                                $entity["additionalInformation"]["confidence"] = $entity["score"];
 
-                                    $entity["additionalInformation"]["confidence"] = $entity["score"];
+                                $tmpAnnotation = array(
+                                    "AnnotationMediaID" => $nextID,
+                                    "AnnotationType" => $entityDump["data"][$entity["wid"]]["type"],
+                                    "AnnotationResourceID" => $entity["wid"],
+                                    "AnnotationContext" => (($entity["context"]) ? $entity["context"] : "NER"),  //TODO: Context?
+                                    "AnnotationFrametrailType" => (($entity["frametrailType"]) ? $entity["frametrailType"] : "Annotation"), //TODO Type?
+                                    "AnnotationTimeStart" => $sentence["timeStart"],
+                                    "AnnotationTimeEnd" => $sentence["timeEnd"],
+                                    "AnnotationCreator" => "NER",
+                                    "AnnotationTags" => $entity["tags"],
+                                    "AnnotationAdditionalInformation" => json_encode($entity["additionalInformation"])
+                                );
 
-                                    $tmpAnnotation = array(
-                                        "AnnotationMediaID" => $nextID,
-                                        "AnnotationType" => "person",
-                                        "AnnotationResourceID" => $personDB["data"]["id"],
-                                        "AnnotationContext" => (($entity["context"]) ? $entity["context"] : "NER"),  //TODO: Context?
-                                        "AnnotationFrametrailType" => (($entity["frametrailType"]) ? $entity["frametrailType"] : "Annotation"), //TODO Type?
-                                        "AnnotationTimeStart" => $sentence["timeStart"],  //TODO from Data?
-                                        "AnnotationTimeEnd" => $sentence["timeEnd"], //TODO from Data?
-                                        "AnnotationCreator" => "NER",
-                                        "AnnotationTags" => $entity["tags"],
-                                        "AnnotationAdditionalInformation" => json_encode($entity["additionalInformation"])
-                                    );
+                                $entities[] = $entity["wid"];
 
-                                    $entities[] = $entity["wid"];
+                                try {
 
-                                    try {
+                                    $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotation);
 
-                                        $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotation);
+                                } catch (exception $e) {
 
-                                    } catch (exception $e) {
-                                        //echo $e->getMessage();
-                                        reportConflict("Media", "mediaAdd Annotation", $nextID, "", "Could not add Annotation to Media. TextItem: " . $tmpAnnotation . " ||| Error:" . $e->getMessage(), $db);
-
-                                    }
-                                }
-                            } elseif ($entity["wtype"] == "ORG") {
-
-                                $orgDB = organisationGetByID($entity["wid"]);
-
-                                if ($orgDB["meta"]["requestStatus"] != "success") {
-                                    //echo "ERROR Report ORG";
-                                    reportEntitySuggestion($entity["wid"], $entity["wtype"], $entity["label"], json_encode($entity, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $nextID, $db);
-
-                                } else {
-
-                                    $entity["additionalInformation"]["confidence"] = $entity["score"];
-                                    $tmpAnnotation = array(
-                                        "AnnotationMediaID" => $nextID,
-                                        "AnnotationType" => "organisation",
-                                        "AnnotationResourceID" => $orgDB["data"]["id"],
-                                        "AnnotationContext" => (($entity["context"]) ? $entity["context"] : "NER"),  //TODO: Context?
-                                        "AnnotationFrametrailType" => (($entity["frametrailType"]) ? $entity["frametrailType"] : "Annotation"), //TODO Type?
-                                        "AnnotationTimeStart" => $sentence["timeStart"],  //TODO from Data?
-                                        "AnnotationTimeEnd" => $sentence["timeEnd"], //TODO from Data?
-                                        "AnnotationCreator" => "NER",
-                                        "AnnotationTags" => $entity["tags"],
-                                        "AnnotationAdditionalInformation" => json_encode($entity["additionalInformation"])
-                                    );
-
-                                    $entities[] = $entity["wid"];
-                                    try {
-
-                                        $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotation);
-
-                                    } catch (exception $e) {
-                                        //echo $e->getMessage();
-                                        reportConflict("Media", "mediaAdd Annotation", $nextID, "", "Could not add Annotation to Media. TextItem: " . $tmpAnnotation . " ||| Error:" . $e->getMessage(), $db);
-
-                                    }
-                                }
-                            } elseif (($entity["wtype"] == "TERM") || ($entity["wtype"] == "LOC")) {
-                                //TODO: LOC for Location
-
-                                $termDB = termGetByWikidataID($entity["wid"]);
-
-                                if ($termDB["meta"]["requestStatus"] != "success") {
-
-                                    reportEntitySuggestion($entity["wid"], $entity["wtype"], $entity["label"], json_encode($entity, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $nextID, $db);
-
-                                } else {
-
-                                    $entity["additionalInformation"]["confidence"] = $entity["score"];
-
-                                    $tmpAnnotation = array(
-                                        "AnnotationMediaID" => $nextID,
-                                        "AnnotationType" => "term",
-                                        "AnnotationResourceID" => $termDB["data"]["id"],
-                                        "AnnotationContext" => (($entity["context"]) ? $entity["context"] : "NER"),  //TODO: Context?
-                                        "AnnotationFrametrailType" => (($entity["frametrailType"]) ? $entity["frametrailType"] : "Annotation"), //TODO Type?
-                                        "AnnotationTimeStart" => $sentence["timeStart"],  //TODO from Data?
-                                        "AnnotationTimeEnd" => $sentence["timeEnd"], //TODO from Data?
-                                        "AnnotationCreator" => "NER",
-                                        "AnnotationTags" => $entity["tags"],
-                                        "AnnotationAdditionalInformation" => json_encode($entity["additionalInformation"])
-                                    );
-
-                                    $entities[] = $entity["wid"];
-
-                                    try {
-
-                                        $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotation);
-
-                                    } catch (exception $e) {
-                                        //echo $e->getMessage();
-                                        reportConflict("Media", "mediaAdd Annotation", $nextID, "", "Could not add Annotation to Media. TextItem: " . $tmpAnnotation . " ||| Error:" . $e->getMessage(), $db);
-
-                                    }
-
+                                    reportConflict("Media", "mediaAdd Annotation", $nextID, "", "Could not add Annotation to Media. TextItem: " . $tmpAnnotation . " ||| Error:" . $e->getMessage(), $db);
 
                                 }
+
                             }
 
 
@@ -1367,7 +1302,6 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
 
                 continue;
 
-
             } else {
 
                 $tmpDocument = $db->getRow("SELECT * FROM ?n WHERE DocumentSourceURI = ?s", $config["platform"]["sql"]["tbl"]["Document"], $document["sourceURI"]);
@@ -1471,6 +1405,8 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
             }
 
         }
+
+
     }
 
     //TODO: Think about a better way to handle speeches without people
@@ -1510,9 +1446,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
             continue;
         }
 
-        $personDB = personGetByID($person["wid"]);
-
-        if ($personDB["meta"]["requestStatus"] != "success") {
+        if (!array_key_exists($person["wid"],$entityDump["data"])) {
             reportEntitySuggestion($person["wid"], "PERSON", $person["label"], json_encode($person,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $nextID, $db);
             continue;
         }
@@ -1525,42 +1459,33 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
             $person["context"] = "unknown";
         }
 
-       /* $tmpPersonAnnotation = $dbp->getRow("SELECT * FROM ?n WHERE AnnotationMediaID=?s AND AnnotationResourceID=?s AND AnnotationType=?s",
-            $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"],
-            $nextID,
-            $personDB["data"]["id"],
-            "person");
+        $person["additionalInformation"]["role"] = $person["role"];
 
-        if (!$tmpPersonAnnotation) {*/
+        $tmpAnnotationPerson = array(
+            "AnnotationMediaID" => $nextID,
+            "AnnotationType" => "person",
+            "AnnotationResourceID" => $person["wid"],
+            "AnnotationContext" => $person["context"],
+            "AnnotationFrametrailType" => (($person["frametrailType"]) ? $person["frametrailType"] : "Annotation"),
+            "AnnotationTimeStart" => $person["timeStart"],
+            "AnnotationTimeEnd" => $person["timeEnd"],
+            "AnnotationCreator" => $person["creator"],
+            "AnnotationTags" => $person["tags"],
+            "AnnotationAdditionalInformation" => json_encode($person["additionalInformation"])
+        );
 
-            $person["additionalInformation"]["role"] = $person["role"];
+        $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationPerson);
 
-            $tmpAnnotationPerson = array(
-                "AnnotationMediaID" => $nextID,
-                "AnnotationType" => "person",
-                "AnnotationResourceID" => $personDB["data"]["id"],
-                "AnnotationContext" => $person["context"],
-                "AnnotationFrametrailType" => (($person["frametrailType"]) ? $person["frametrailType"] : "Annotation"),
-                "AnnotationTimeStart" => $person["timeStart"],
-                "AnnotationTimeEnd" => $person["timeEnd"],
-                "AnnotationCreator" => $person["creator"],
-                "AnnotationTags" => $person["tags"],
-                "AnnotationAdditionalInformation" => json_encode($person["additionalInformation"])
-            );
 
-            $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$item["parliament"]]["sql"]["tbl"]["Annotation"], $tmpAnnotationPerson);
-       /* }*/
-
-        if ((array_key_exists("faction",$person)) && (is_array($person["faction"])) && ($person["faction"]["label"] != "")) {
+        if ((array_key_exists("faction",$person)) && (is_array($person["faction"]))) {
 
             if ((!$person["faction"]["wid"]) || (!preg_match("/(Q|P)\d+/i", $person["faction"]["wid"]))) {
                 reportConflict("Media", "faction has no WikidataID", $nextID, "", "This faction has no or incorrect WikidataID:" . json_encode($person, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $db);
                 continue;
             }
 
-            $factionDB = organisationGetByID($person["faction"]["wid"]);
 
-            if ($factionDB["meta"]["requestStatus"] != "success") {
+            if (!array_key_exists($person["faction"]["wid"], $entityDump["data"])) {
                 reportEntitySuggestion($person["faction"]["wid"], "FACTION", $person["faction"]["label"], json_encode($person["faction"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $nextID, $db);
                 continue;
             }
@@ -1568,7 +1493,7 @@ function mediaAdd($item = false, $db = false, $dbp = false) {
             $tmpAnnotationItem = array(
                 "AnnotationMediaID" => $nextID,
                 "AnnotationType" => "organisation",
-                "AnnotationResourceID" => $factionDB["data"]["id"],
+                "AnnotationResourceID" => $person["faction"]["wid"],
                 "AnnotationContext" => $person["context"]."-faction",
                 "AnnotationFrametrailType" => "Annotation",
                 //"AnnotationTimeStart" => "",
