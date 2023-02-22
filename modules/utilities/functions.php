@@ -287,6 +287,11 @@ function is_cli()
 }
 
 
+function isJson($str) {
+    $json = json_decode($str);
+    return $json && $str != $json;
+}
+
 function executeAsyncShellCommand($cmd = null) {
 
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {

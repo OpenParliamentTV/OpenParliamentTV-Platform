@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__.'/../../config.php');
 require_once(__DIR__."/../../modules/utilities/safemysql.class.php");
+require_once(__DIR__."/../../modules/utilities/functions.php");
 
 function getEntityDump($parameter, $db = false) {
 
@@ -48,9 +49,16 @@ function getEntityDump($parameter, $db = false) {
     if (($parameter["type"] == "organisation") || ($parameter["type"] == "all")) {
 
         $organisations = $db->getAll("SELECT OrganisationID as id, OrganisationLabel as label, OrganisationLabelAlternative as labelAlternative, 'organisation' as 'type', OrganisationType as subType FROM ?n",$config["platform"]["sql"]["tbl"]["Organisation"]);
-        //TODO: When labelAlternative is already a json, dont do the following:
+
         foreach ($organisations as $k=>$organisation) {
-            $organisations[$k]["labelAlternative"] = (($organisation["labelAlternative"]!=null) ? array($organisation["labelAlternative"]) : array());
+            if (isJson($organisation["labelAlternative"])) {
+                $organisations[$k]["labelAlternative"] = json_decode($organisation["labelAlternative"]);
+            } elseif ($organisation["labelAlternative"]!=null) {
+                $organisations[$k]["labelAlternative"] = array($organisation["labelAlternative"]);
+            } else {
+                $organisations[$k]["labelAlternative"] = array();
+            }
+            //$organisations[$k]["labelAlternative"] = (($organisation["labelAlternative"]!=null) ? array($organisation["labelAlternative"]) : array());
         }
         $response["meta"]["organisations_count"] = count($organisations);
         $response["data"] = array_merge($response["data"], $organisations);
@@ -60,9 +68,16 @@ function getEntityDump($parameter, $db = false) {
     if (($parameter["type"] == "term") || ($parameter["type"] == "all")) {
 
         $terms = $db->getAll("SELECT TermWikidataID as id, TermLabel as label, TermLabelAlternative as labelAlternative, TermID as optvID, 'term' as 'type', TermType as subType FROM ?n",$config["platform"]["sql"]["tbl"]["Term"]);
-        //TODO: When labelAlternative is already a json, dont do the following:
+
         foreach ($terms as $k=>$term) {
-            $terms[$k]["labelAlternative"] = array($term["labelAlternative"]);
+            if (isJson($term["labelAlternative"])) {
+                $terms[$k]["labelAlternative"] = json_decode($term["labelAlternative"]);
+            } elseif ($term["labelAlternative"]!=null) {
+                $terms[$k]["labelAlternative"] = array($term["labelAlternative"]);
+            } else {
+                $terms[$k]["labelAlternative"] = array();
+            }
+            //$terms[$k]["labelAlternative"] = array($term["labelAlternative"]);
         }
         $response["meta"]["terms_count"] = count($terms);
         $response["data"] = array_merge($response["data"], $terms);
@@ -71,10 +86,18 @@ function getEntityDump($parameter, $db = false) {
 
     if (($parameter["type"] == "document") || (($parameter["type"] == "all") && (!$parameter["wiki"]))) {
 
+        //TODO SELECT DocumentWikidataID as id, DocumentLabel as label, DocumentLabelAlternative as labelAlternative, DocumentID as optvID, 'document' as 'type', DocumentType as subType FROM document WHERE DocumentWikidataID LIKE "Q%";
         $documents = $db->getAll("SELECT DocumentWikidataID as id, DocumentLabel as label, DocumentLabelAlternative as labelAlternative, DocumentID as optvID, 'document' as 'type', DocumentType as subType FROM ?n",$config["platform"]["sql"]["tbl"]["Document"]);
-        //TODO: When labelAlternative is already a json, dont do the following:
+
         foreach ($documents as $k=>$document) {
-            $documents[$k]["labelAlternative"] = array($document["labelAlternative"]);
+            if (isJson($document["labelAlternative"])) {
+                $documents[$k]["labelAlternative"] = json_decode($document["labelAlternative"]);
+            } elseif ($term["labelAlternative"]!=null) {
+                $documents[$k]["labelAlternative"] = array($document["labelAlternative"]);
+            } else {
+                $documents[$k]["labelAlternative"] = array();
+            }
+            //$documents[$k]["labelAlternative"] = array($document["labelAlternative"]);
         }
         $response["meta"]["documents_count"] = count($documents);
         $response["data"] = array_merge($response["data"], $documents);
