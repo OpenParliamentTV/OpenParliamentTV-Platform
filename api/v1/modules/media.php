@@ -306,7 +306,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
 
                         $ditem = $db->getRow("SELECT * FROM ?n WHERE TermID=?i LIMIT 1", $config["platform"]["sql"]["tbl"]["Term"], $annotation["AnnotationResourceID"]);
                         $tmpAnnotationItem["type"] = "term";
-                        $tmpAnnotationItem["id"] = $annotation["AnnotationID"];
+                        $tmpAnnotationItem["id"] = $annotation["AnnotationResourceID"];
                         $tmpAnnotationItem["attributes"]["context"] = $annotation["AnnotationContext"];
                         $tmpAnnotationItem["attributes"]["type"] = $ditem["TermType"];
                         $tmpAnnotationItem["attributes"]["label"] = $ditem["TermLabel"];
@@ -1146,7 +1146,7 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
                                 $tmpAnnotation = array(
                                     "AnnotationMediaID" => $nextID,
                                     "AnnotationType" => $entityDump["data"][$entity["wid"]]["type"],
-                                    "AnnotationResourceID" => (($entity["type"] == "document" || $entity["type"] == "term") ? $entity["optvID"] : $entity["wid"]),
+                                    "AnnotationResourceID" => ((($entityDump["data"][$entity["wid"]]["type"] == "document") || ($entityDump["data"][$entity["wid"]]["type"] == "term")) ? $entityDump["data"][$entity["wid"]]["optvID"] : $entity["wid"]),
                                     "AnnotationContext" => (($entity["context"]) ? $entity["context"] : "NER"),  //TODO: Context?
                                     "AnnotationFrametrailType" => (($entity["frametrailType"]) ? $entity["frametrailType"] : "Annotation"), //TODO Type?
                                     "AnnotationTimeStart" => $sentence["timeStart"],
