@@ -287,9 +287,12 @@ function is_cli()
 }
 
 
-function isJson($str) {
-    $json = json_decode($str);
-    return $json && $str != $json;
+function isJson($string) {
+    $decoded = json_decode($string);
+    if ( !is_object($decoded) && !is_array($decoded) ) {
+        return false;
+    }
+    return (json_last_error() == JSON_ERROR_NONE);
 }
 
 function executeAsyncShellCommand($cmd = null) {

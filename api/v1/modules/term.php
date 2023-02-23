@@ -165,7 +165,7 @@ function termGetDataObject($item = false, $db = false) {
         $return["attributes"]["type"] = $item["TermType"];
         $return["attributes"]["wikidataID"] = $item["TermWikidataID"];
         $return["attributes"]["label"] = $item["TermLabel"];
-        $return["attributes"]["labelAlternative"] = $item["TermLabelAlternative"];
+        $return["attributes"]["labelAlternative"] = json_decode($item["TermLabelAlternative"],true);
         $return["attributes"]["abstract"] = $item["TermAbstract"];
         $return["attributes"]["thumbnailURI"] = $item["TermThumbnailURI"];
         $return["attributes"]["thumbnailCreator"] = $item["TermThumbnailCreator"];
@@ -539,14 +539,14 @@ function termAdd($item, $db = false) {
                     $item["type"],
                     $item["id"],
                     $item["label"],
-                    (is_array($labelAlternative) ? json_encode($labelAlternative,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["labelAlternative"]),
+                    (is_array($labelAlternative) ? json_encode($labelAlternative, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : "[".$item["labelAlternative"]."]"),
                     $item["abstract"],
                     $item["thumbnailuri"],
                     $item["thumbnailcreator"],
                     $item["thumbnaillicense"],
                     $item["sourceuri"],
                     $item["embeduri"],
-                    (is_array($item["additionalinformation"]) ? json_encode($item["additionalinformation"],JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["additionalinformation"])
+                    (is_array($item["additionalinformation"]) ? json_encode($item["additionalinformation"],JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["additionalinformation"])
                 );
                 $return["meta"]["requestStatus"] = "success";
                 $return["meta"]["itemID"] = $db->insertId();

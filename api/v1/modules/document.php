@@ -91,7 +91,8 @@ function documentGetDataObject($item = false, $db = false) {
         $return["attributes"]["type"] = $item["DocumentType"];
         $return["attributes"]["wikidataID"] = $item["DocumentWikidataID"];
         $return["attributes"]["label"] = str_replace(array("\r","\n"), " ", $item["DocumentLabel"]);
-        $return["attributes"]["labelAlternative"] = str_replace(array("\r","\n"), " ", $item["DocumentLabelAlternative"]);
+        //$return["attributes"]["labelAlternative"] = str_replace(array("\r","\n"), " ", $item["DocumentLabelAlternative"]);
+        $return["attributes"]["labelAlternative"] = json_decode($item["DocumentLabelAlternative"],true);
         $return["attributes"]["abstract"] = $item["DocumentAbstract"];
         $return["attributes"]["thumbnailURI"] = $item["DocumentThumbnailURI"];
         $return["attributes"]["thumbnailCreator"] = $item["DocumentThumbnailCreator"];
@@ -458,14 +459,14 @@ function documentAdd($item, $db = false) {
                     $item["type"],
                     $item["id"],
                     $item["label"],
-                    (is_array($labelAlternative) ? json_encode($labelAlternative,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["labelAlternative"]),
+                    (is_array($labelAlternative) ? json_encode($labelAlternative,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : "[".$item["labelAlternative"]."]"),
                     $item["abstract"],
                     $item["thumbnailuri"],
                     $item["thumbnailcreator"],
                     $item["thumbnaillicense"],
                     $item["sourceuri"],
                     $item["embeduri"],
-                    (is_array($item["additionalinformation"]) ? json_encode($item["additionalinformation"],JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["additionalinformation"])
+                    (is_array($item["additionalinformation"]) ? json_encode($item["additionalinformation"],JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["additionalinformation"])
                 );
                 $return["meta"]["requestStatus"] = "success";
                 $return["meta"]["itemID"] = $db->insertId();

@@ -801,7 +801,7 @@ function personAdd($item, $db = false) {
                     "PersonID" => $item["id"],
                     "PersonType" => $item["type"],
                     "PersonLabel" => $item["label"],
-                    "PersonLabelAlternative" => json_encode($labelAlternative, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                    "PersonLabelAlternative" => (is_array($labelAlternative) ? json_encode($labelAlternative,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : "[".$item["labelAlternative"]."]"),
                     "PersonFirstName"=>$item["firstname"],
                     "PersonLastName"=>$item["lastname"],
                     "PersonDegree"=>$item["degree"],
@@ -816,7 +816,7 @@ function personAdd($item, $db = false) {
                     "PersonOriginID" => $item["originid"],
                     "PersonPartyOrganisationID" => $item["party"],
                     "PersonFactionOrganisationID" => $item["faction"],
-                    "PersonSocialMediaIDs" => json_encode($socialMedia, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                    "PersonSocialMediaIDs" => json_encode($socialMedia, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
                     "PersonAdditionalInformation" => $item["additionalinformation"]
                 );
 

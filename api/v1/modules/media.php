@@ -257,7 +257,8 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["attributes"]["context"] = $annotation["AnnotationContext"];
                         $tmpAnnotationItem["attributes"]["type"] = $ditem["DocumentType"];
                         $tmpAnnotationItem["attributes"]["label"] = str_replace(array("\r","\n"), " ", $ditem["DocumentLabel"]);
-                        $tmpAnnotationItem["attributes"]["labelAlternative"] = str_replace(array("\r","\n"), " ", $ditem["DocumentLabelAlternative"]);
+                        //$tmpAnnotationItem["attributes"]["labelAlternative"] = str_replace(array("\r","\n"), " ", $ditem["DocumentLabelAlternative"]);
+                        $tmpAnnotationItem["attributes"]["labelAlternative"] = json_decode($ditem["DocumentLabelAlternative"]);
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["DocumentThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["DocumentThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["DocumentThumbnailLicense"];
@@ -284,7 +285,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["attributes"]["context"] = $annotation["AnnotationContext"];
                         $tmpAnnotationItem["attributes"]["type"] = $ditem["OrganisationType"];
                         $tmpAnnotationItem["attributes"]["label"] = $ditem["OrganisationLabel"];
-                        $tmpAnnotationItem["attributes"]["labelAlternative"] = $ditem["OrganisationLabelAlternative"];
+                        $tmpAnnotationItem["attributes"]["labelAlternative"] = json_decode($ditem["OrganisationLabelAlternative"]);
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["OrganisationThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["OrganisationThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["OrganisationThumbnailLicense"];
@@ -310,7 +311,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["attributes"]["context"] = $annotation["AnnotationContext"];
                         $tmpAnnotationItem["attributes"]["type"] = $ditem["TermType"];
                         $tmpAnnotationItem["attributes"]["label"] = $ditem["TermLabel"];
-                        $tmpAnnotationItem["attributes"]["labelAlternative"] = $ditem["TermLabelAlternative"];
+                        $tmpAnnotationItem["attributes"]["labelAlternative"] = json_decode($ditem["TermLabelAlternative"]);
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["TermThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["TermThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["TermThumbnailLicense"];
@@ -367,10 +368,10 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
 
                         $tmpAnnotationItem["attributes"]["party"]["id"] = $pitem["PartyID"];
                         $tmpAnnotationItem["attributes"]["party"]["label"] = $pitem["PartyLabel"];
-                        $tmpAnnotationItem["attributes"]["party"]["labelAlternative"] = $pitem["PartyLabelAlternative"];
+                        $tmpAnnotationItem["attributes"]["party"]["labelAlternative"] = json_decode($pitem["PartyLabelAlternative"]);
                         $tmpAnnotationItem["attributes"]["faction"]["id"] = $pitem["FactionID"];
                         $tmpAnnotationItem["attributes"]["faction"]["label"] = $pitem["FactionLabel"];
-                        $tmpAnnotationItem["attributes"]["faction"]["labelAlternative"] = $pitem["FactionLabelAlternative"];
+                        $tmpAnnotationItem["attributes"]["faction"]["labelAlternative"] = json_decode($pitem["FactionLabelAlternative"]);
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
                         array_push($return["data"]["relationships"]["people"]["data"], $tmpAnnotationItem);
 
@@ -1325,7 +1326,7 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
                         $document["type"],
                         $document["wikidataID"],
                         $document["label"],
-                        $document["labelAlternative"],
+                        (is_array($document["labelAlternative"]) ? json_encode($document["labelAlternative"]) : "[".$document["labelAlternative"]."]"),
                         (($document["abstract"]) ? $document["abstract"] : "undefined"),
                         $document["thumbnailURI"],
                         $document["thumbnailCreator"],
@@ -1343,7 +1344,7 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
                         $tmpDocumentUpdate[] = $dbp->parse("DocumentWikidataID=?s", $document["wikidataID"]);
                     }
                     if ((!$tmpDocument["DocumentLabelAlternative"]) && ($document["labelAlternative"])) {
-                        $tmpDocumentUpdate[] = $dbp->parse("DocumentLabelAlternative=?s", $document["labelAlternative"]);
+                        $tmpDocumentUpdate[] = $dbp->parse("DocumentLabelAlternative=?s", (is_array($document["labelAlternative"]) ? json_encode($document["labelAlternative"]) : "[".$document["labelAlternative"]."]"));
                     }
                     if (((!$tmpDocument["DocumentAbstract"]) || ($tmpDocument["DocumentAbstract"] == "undefined")) && ($document["abstract"])) {
                         $tmpDocumentUpdate[] = $dbp->parse("DocumentAbstract=?s", $document["abstract"]);

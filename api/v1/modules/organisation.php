@@ -91,7 +91,7 @@ function organisationGetDataObject($item = false, $db = false) {
         $return["id"] = $item["OrganisationID"];
         $return["attributes"]["type"] = $item["OrganisationType"];
         $return["attributes"]["label"] = $item["OrganisationLabel"];
-        $return["attributes"]["labelAlternative"] = $item["OrganisationLabelAlternative"];
+        $return["attributes"]["labelAlternative"] = json_decode($item["OrganisationLabelAlternative"],true);
         $return["attributes"]["abstract"] = $item["OrganisationAbstract"];
         $return["attributes"]["thumbnailURI"] = $item["OrganisationThumbnailURI"];
         $return["attributes"]["thumbnailCreator"] = $item["OrganisationThumbnailCreator"];
@@ -441,16 +441,16 @@ function organisationAdd($item, $db = false) {
                                     $item["id"],
                                     $item["type"],
                                     $item["label"],
-                                    (is_array($labelAlternative) ? json_encode($labelAlternative,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["labelAlternative"]),
+                                    (is_array($labelAlternative) ? json_encode($labelAlternative, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : "[".$item["labelAlternative"]."]"),
                                     $item["abstract"],
                                     $item["thumbnailuri"],
                                     $item["thumbnailcreator"],
                                     $item["thumbnaillicense"],
                                     $item["embeduri"],
                                     $item["websiteuri"],
-                                    json_encode($socialMedia,JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+                                    json_encode($socialMedia),
                                     $item["color"],
-                                    (is_array($item["additionalinformation"]) ? json_encode($item["additionalinformation"],JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["additionalinformation"])
+                                    (is_array($item["additionalinformation"]) ? json_encode($item["additionalinformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["additionalinformation"])
                 );
                 $return["meta"]["requestStatus"] = "success";
                 $return["meta"]["itemID"] = $db->insertId();
