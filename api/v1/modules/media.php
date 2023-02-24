@@ -219,10 +219,11 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
             $return["data"]["relationships"]["agendaItem"]["data"]["attributes"]["title"] = $item["AgendaItemTitle"];
             $return["data"]["relationships"]["agendaItem"]["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["relationships"]["agendaItem"]["data"]["type"]."/".$parliament."-".$return["data"]["relationships"]["agendaItem"]["data"]["id"];
 
-            $return["data"]["relationships"]["documents"]["data"] = array();
-            $return["data"]["relationships"]["organisations"]["data"] = array();
-            $return["data"]["relationships"]["terms"]["data"] = array();
             $return["data"]["relationships"]["people"]["data"] = array();
+            $return["data"]["relationships"]["organisations"]["data"] = array();
+            $return["data"]["relationships"]["documents"]["data"] = array();
+            $return["data"]["relationships"]["terms"]["data"] = array();
+
             //$return["data"]["relationships"]["annotations"]["data"] = array();
 
             $annotations = $dbp->getAll("SELECT * FROM ?n WHERE AnnotationMediaID=?s",$config["parliament"][$parliament]["sql"]["tbl"]["Annotation"],$item["MediaID"]);
@@ -238,7 +239,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                 end,
                 AnnotationContext ASC, AnnotationType ASC;
              */
-            $annotations = annotationRawSortByMainspeaker($annotations);
+            $annotations = annotationRawSortByMainSpeaker($annotations);
 
             $tmpResouces = array();
             foreach ($annotations as $annotation) {

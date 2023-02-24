@@ -251,7 +251,7 @@ function convertAccentsAndSpecialToNormal($string) {
 }
 
 
-function annotationRawSortByMainspeaker($array = array()){
+function annotationRawSortByMainSpeaker($array = array()){
     usort($array, function($a, $b) {
         $a_val = 0;
         $b_val = 0;
@@ -267,7 +267,7 @@ function annotationRawSortByMainspeaker($array = array()){
         if(isset($b['AnnotationContext'])) {
             if($b['AnnotationContext'] === 'main-speaker') {
                 $b_val = 2;
-            } elseif(($b['AnnotationContext'] === 'vice-president') || ($b['AnnotationContext'] === 'vice-president')) {
+            } elseif(($b['AnnotationContext'] === 'vice-president') || ($b['AnnotationContext'] === 'president')) {
                 $b_val = 1;
             }
         }
