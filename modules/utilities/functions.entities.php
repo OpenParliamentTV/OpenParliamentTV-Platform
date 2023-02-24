@@ -35,7 +35,7 @@ function flattenEntityJSON($array, $prefix = '') {
 function getMainSpeakerFromPeopleArray($annotationsArray, $peopleArray) {
 
     foreach ($annotationsArray as $annotation) {
-        if ($annotation["context"] == "main-speaker") {
+        if ($annotation["attributes"]["context"] == "main-speaker") {
             foreach ($peopleArray as $person) {
                 if ($person["id"] == $annotation["id"]) {
                     $mainSpeaker = $person;
@@ -48,7 +48,7 @@ function getMainSpeakerFromPeopleArray($annotationsArray, $peopleArray) {
         //TODO
         //$mainSpeaker = $peopleArray[0];
         foreach ($annotationsArray as $annotation) {
-            if (preg_match("~president~",$annotation["context"])) {
+            if (preg_match("~president~",$annotation["attributes"]["context"])) {
                 foreach ($peopleArray as $person) {
                     if ($person["id"] == $annotation["id"]) {
                         $mainSpeaker = $person;
@@ -67,7 +67,7 @@ function getMainSpeakerFromPeopleArray($annotationsArray, $peopleArray) {
 function getMainFactionFromOrganisationsArray($annotationsArray, $organisationsArray) {
 
     foreach ($annotationsArray as $annotation) {
-        if ($annotation["context"] == "main-speaker-faction") {
+        if ($annotation["attributes"]["context"] == "main-speaker-faction") {
             foreach ($organisationsArray as $organisation) {
                 if ($organisation["id"] == $annotation["id"]) {
                     $mainFaction = $organisation;
