@@ -193,8 +193,10 @@ function searchStats($request) {
 
     foreach ($results["hits"]["hits"] as $hit) {
 
+        //print_r($hit["_source"]["annotations"]["data"]);
+
         $mainFaction = getMainFactionFromOrganisationsArray($hit["_source"]["annotations"]["data"], $hit["_source"]["relationships"]["organisations"]["data"]);
-        
+
         if ($mainFaction) {
 
             $normalizedDate = date("Y-m-d", strtotime($hit["_source"]["attributes"]["dateStart"]));
@@ -746,7 +748,7 @@ function getSearchBody($request, $getAllResults) {
         $sort = array("_score");
     }
 
-    $maxFullResults = ($getAllResults === true) ? 10000 : 40;
+    $maxFullResults = ($getAllResults === true) ? 3000 : 40;
 
     if ((!$_REQUEST["a"] || count($request) < 2) && !$getAllResults) {
         $maxFullResults = 10;
