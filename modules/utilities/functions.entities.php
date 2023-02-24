@@ -198,4 +198,56 @@ function getEntitySuggestion($id, $idType="internal", $type="", $db=false) {
 
 }
 
+
+function getEntitySuggestionsTable($limit = 0, $offset = 0, $sorted = false, $search = false, $getCount = false, $db = false) {
+
+    global $config;
+
+    if (!$db) {
+        try {
+
+            $db = new SafeMySQL(array(
+                'host'	=> $config["platform"]["sql"]["access"]["host"],
+                'user'	=> $config["platform"]["sql"]["access"]["user"],
+                'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+                'db'	=> $config["platform"]["sql"]["db"]
+            ));
+
+        } catch (exception $e) {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "1";
+            $errorarray["title"] = "Database connection error";
+            $errorarray["detail"] = "Connecting to platform database failed";
+            array_push($return["errors"], $errorarray);
+            return $return;
+
+        }
+    }
+    $queryPart = "";
+
+    if ($search) {
+        parse_str($search, $search);
+    }
+
+    if (gettype($search["subject"]) == "array") {
+
+        foreach ($search["subject"] as $subject) {
+            $queryPart .= $db->parse(" AND ConflictSubject=?s", $subject);
+        }
+
+    }
+
+    if ($limit != 0) {
+
+        $queryPart .= $db->parse(" LIMIT ?i, ?i",$offset,$limit);
+
+    }
+
+    $entitysuggestions = $db->getAll("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount, JSON_EXTRACT(EntitysuggestionContent,'$.type') as EntitysuggestionContentType FROM ?n;", $config["platform"]["sql"]["tbl"]["Entitysuggestion"]);
+
+}
+
 ?>
