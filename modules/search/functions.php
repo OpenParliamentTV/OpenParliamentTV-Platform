@@ -390,10 +390,10 @@ function getSearchBody($request, $getAllResults) {
                             "path" => "annotations.data",
                             "query" => array("bool" => array("must"=>array(
                                 array("match" => array(
-                                    "annotations.data" => $partyID
+                                    "annotations.data.id" => $partyID
                                 )),
                                 array("match_phrase" => array(
-                                    "annotations.data.context" => 'main-speaker-party'
+                                    "annotations.data.attributes.context" => 'main-speaker-party'
                                 ))
                             )))
                         )
@@ -413,7 +413,7 @@ function getSearchBody($request, $getAllResults) {
                                 "annotations.data.id" => $requestValue
                             )),
                             array("match_phrase" => array(
-                                "annotations.data.context" => 'main-speaker-party'
+                                "annotations.data.attributes.context" => 'main-speaker-party'
                             ))
                         )))
                     )
@@ -432,7 +432,7 @@ function getSearchBody($request, $getAllResults) {
                                     "annotations.data.id" => $factionID
                                 )),
                                 array("match_phrase" => array(
-                                    "annotations.data.context" => 'main-speaker-faction'
+                                    "annotations.data.attributes.context" => 'main-speaker-faction'
                                 ))
                             )))
                         )
@@ -452,7 +452,7 @@ function getSearchBody($request, $getAllResults) {
                                 "annotations.data.id" => $requestValue
                             )),
                             array("match_phrase" => array(
-                                "annotations.data.context" => 'main-speaker-faction'
+                                "annotations.data.attributes.context" => 'main-speaker-faction'
                             ))
                         )))
                     )
@@ -508,13 +508,13 @@ function getSearchBody($request, $getAllResults) {
 
             $filter["must"][] = array(
                 "nested" => array(
-                    "path" => "annotations.data.data",
+                    "path" => "annotations.data",
                     "query" => array("bool" => array("must"=>array(
                         array("match_phrase" => array(
                             "annotations.data.label" => $requestValue
                         )),
                         array("match" => array(
-                            "annotations.data.context" => 'main-speaker'
+                            "annotations.data.attributes.context" => 'main-speaker'
                         ))
                     )))
                 )
@@ -529,13 +529,13 @@ function getSearchBody($request, $getAllResults) {
                     if (isset($request["context"]) && strlen($request["context"]) > 2) {
                         $filter["should"][] = array(
                             "nested" => array(
-                                "path" => "annotations.data.data",
+                                "path" => "annotations.data",
                                 "query" => array("bool" => array("must"=>array(
                                     array("match" => array(
                                         "annotations.data.id" => $personID
                                     )),
                                     array("match_phrase" => array(
-                                        "annotations.data.context" => $request["context"]
+                                        "annotations.data.attributes.context" => $request["context"]
                                     ))
                                 )))
                             )
@@ -551,7 +551,7 @@ function getSearchBody($request, $getAllResults) {
                                         "annotations.data.id" => $personID
                                     )),
                                     array("match" => array(
-                                        "annotations.data.context" => 'main-speaker'
+                                        "annotations.data.attributes.context" => 'main-speaker'
                                     ))
                                 )))
                             )

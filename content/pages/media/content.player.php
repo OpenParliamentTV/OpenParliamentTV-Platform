@@ -26,12 +26,12 @@ foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relati
         if ($annotation["id"] == $relationshipItem["id"]) {
             $speech["relationships"]["people"]["data"][$relationshipKey]["annotations"][] = $annotation;
 
-            if ($annotation["context"] != "NER") {
+            if ($annotation["attributes"]["context"] != "NER") {
                 if (in_array($annotation["id"],$tmpPeople["speaker"])) {
                     continue;
                 }
                 $tmpPeople["speaker"][] = $annotation["id"];
-                $relationshipItem["attributes"]["context"] = $annotation["context"];
+                $relationshipItem["attributes"]["context"] = $annotation["attributes"]["context"];
                 $contextLabelIdentifier = lcfirst(implode('', array_map('ucfirst', explode('-', $relationshipItem["attributes"]["context"]))));
                 $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="default">
                                             <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
@@ -91,7 +91,7 @@ if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["r
 
             if ($annotation["id"] == $relationshipItem["id"]) {
 
-                if ($annotation["context"] != "NER") {
+                if ($annotation["attributes"]["context"] != "NER") {
 
                     if (in_array($annotation["id"],$tmpOrganisations["default"])) {
                         continue;
@@ -160,7 +160,7 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
 
             if ($annotation["id"] == $relationshipItem["id"]) {
 
-                if ($annotation["context"] != "NER") {
+                if ($annotation["attributes"]["context"] != "NER") {
 
                     if (in_array($annotation["id"],$tmpDocuments["default"])) {
                         continue;

@@ -231,13 +231,17 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
 
 
                 //POSITION BEFORE CONTINUE
-                $return["data"]["annotations"]["data"][] = array(
-                    "type"      =>  $annotation["AnnotationType"],
+                $annotationAttributes = array(
                     "timeStart" =>  $annotation["AnnotationTimeStart"],
                     "timeEnd" =>  $annotation["AnnotationTimeEnd"],
-                    "id" =>  $annotation["AnnotationResourceID"],
                     "context" =>  $annotation["AnnotationContext"],
                     "additionalInformation" =>  json_decode($annotation["AnnotationAdditionalInformation"],true)
+                );
+
+                $return["data"]["annotations"]["data"][] = array(
+                    "type"      =>  $annotation["AnnotationType"],
+                    "id" =>  $annotation["AnnotationResourceID"],
+                    "attributes" => $annotationAttributes
                 );
 
                 $tmpAnnotationItem = array();

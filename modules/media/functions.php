@@ -130,7 +130,7 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
 
     foreach($annotations as $annotation) {
 
-        if (!$annotation["timeStart"]) {
+        if (!$annotation["attributes"]["timeStart"]) {
             continue;
         }
 
@@ -160,7 +160,7 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
                 $tmpItem["target"]["source"]                = $mediaSource;
                 $tmpItem["target"]["selector"]["confirmsTo"] = "http://www.w3.org/TR/media-frags/";
                 $tmpItem["target"]["selector"]["type"]      = "FragmentSelector";
-                $tmpItem["target"]["selector"]["value"]     = "t=".$annotation["timeStart"].",".$annotation["timeEnd"];
+                $tmpItem["target"]["selector"]["value"]     = "t=".$annotation["attributes"]["timeStart"].",".$annotation["attributes"]["timeEnd"];
                 $tmpItem["body"]["type"]                    = "Text";
                 $tmpItem["body"]["frametrail:type"]         = "webpage";
                 $tmpItem["body"]["format"]                  = "text/html";
@@ -183,7 +183,7 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
 function countNERfrequency($annotations, $id) {
     $return = 0;
     foreach ($annotations as $annotation) {
-        if (($annotation["id"] == $id) && ($annotation["context"] == "NER")) {
+        if (($annotation["id"] == $id) && ($annotation["attributes"]["context"] == "NER")) {
             $return++;
         }
     }

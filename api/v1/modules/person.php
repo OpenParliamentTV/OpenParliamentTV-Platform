@@ -119,7 +119,7 @@ function personGetDataObject($item = false, $db = false) {
                 $return["relationships"]["party"]["data"]["type"] = "organisation";
                 $return["relationships"]["party"]["data"]["id"] = $itemParty["OrganisationID"];
                 $return["relationships"]["party"]["data"]["attributes"]["label"] = $itemParty["OrganisationLabel"];
-                $return["relationships"]["party"]["data"]["attributes"]["labelAlternative"] = $itemParty["OrganisationLabelAlternative"];
+                $return["relationships"]["party"]["data"]["attributes"]["labelAlternative"] = json_decode($itemParty["OrganisationLabelAlternative"],true);
                 $return["relationships"]["party"]["data"]["attributes"]["thumbnailURI"] = $itemParty["OrganisationThumbnailURI"];
                 $return["relationships"]["party"]["data"]["attributes"]["thumbnailCreator"] = $itemParty["OrganisationThumbnailCreator"];
                 $return["relationships"]["party"]["data"]["attributes"]["thumbnailLicense"] = $itemParty["OrganisationThumbnailLicense"];
@@ -147,7 +147,7 @@ function personGetDataObject($item = false, $db = false) {
                 $return["relationships"]["faction"]["data"]["type"] = "organisation";
                 $return["relationships"]["faction"]["data"]["id"] = $itemFaction["OrganisationID"];
                 $return["relationships"]["faction"]["data"]["attributes"]["label"] = $itemFaction["OrganisationLabel"];
-                $return["relationships"]["faction"]["data"]["attributes"]["labelAlternative"] = $itemFaction["OrganisationLabelAlternative"];
+                $return["relationships"]["faction"]["data"]["attributes"]["labelAlternative"] = json_decode($itemFaction["OrganisationLabelAlternative"],true);
                 $return["relationships"]["faction"]["data"]["attributes"]["thumbnailURI"] = $itemFaction["OrganisationThumbnailURI"];
                 $return["relationships"]["faction"]["data"]["attributes"]["thumbnailCreator"] = $itemFaction["OrganisationThumbnailCreator"];
                 $return["relationships"]["faction"]["data"]["attributes"]["thumbnailLicense"] = $itemFaction["OrganisationThumbnailLicense"];
@@ -670,7 +670,7 @@ function personSearch($parameter, $db = false) {
         if (!$return["data"]) {
             $return["data"] = array();
         }
-
+        
         foreach ($findings as $finding) {
             array_push($return["data"],personGetDataObject($finding,$db));
         }
