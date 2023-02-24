@@ -774,7 +774,7 @@ function getSearchBody($request, $getAllResults) {
 
 
     /*echo '<pre>';
-    print_r($data);
+    echo json_encode($data);
     echo '</pre>';
     */
 
