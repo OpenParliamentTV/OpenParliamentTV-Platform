@@ -198,12 +198,12 @@ function searchStats($request) {
             $resultInfo = array(
                 "id" => $hit["_source"]["id"],
                 "date" => $normalizedDate,
-                "faction" => $hit["_source"]["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"],
+                "faction" => $hit["_source"]["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"][0],
                 "electoralPeriod" => $hit["_source"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"],
                 "sessionNumber" => $hit["_source"]["relationships"]["session"]["data"]["attributes"]["number"]
             );
 
-            $stats["info"]["speechesPerFaction"][$hit["_source"]["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"]]++;
+            $stats["info"]["speechesPerFaction"][$hit["_source"]["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"][0]]++;
 
         }
 
@@ -387,13 +387,13 @@ function getSearchBody($request, $getAllResults) {
 
                     $filter["should"][] = array(
                         "nested" => array(
-                            "path" => "relationships.organisations.data",
+                            "path" => "annotations.data",
                             "query" => array("bool" => array("must"=>array(
                                 array("match" => array(
-                                    "relationships.organisations.data.id" => $partyID
+                                    "annotations.data" => $partyID
                                 )),
                                 array("match_phrase" => array(
-                                    "relationships.organisations.data.attributes.context" => 'main-speaker-party'
+                                    "annotations.data.context" => 'main-speaker-party'
                                 ))
                             )))
                         )
@@ -407,13 +407,13 @@ function getSearchBody($request, $getAllResults) {
 
                 $filter["must"][] = array(
                     "nested" => array(
-                        "path" => "relationships.organisations.data",
+                        "path" => "annotations.data",
                         "query" => array("bool" => array("must"=>array(
                             array("match" => array(
-                                "relationships.organisations.data.id" => $requestValue
+                                "annotations.data.id" => $requestValue
                             )),
                             array("match_phrase" => array(
-                                "relationships.organisations.data.attributes.context" => 'main-speaker-party'
+                                "annotations.data.context" => 'main-speaker-party'
                             ))
                         )))
                     )
@@ -426,13 +426,13 @@ function getSearchBody($request, $getAllResults) {
 
                     $filter["should"][] = array(
                         "nested" => array(
-                            "path" => "relationships.organisations.data",
+                            "path" => "annotations.data",
                             "query" => array("bool" => array("must"=>array(
                                 array("match" => array(
-                                    "relationships.organisations.data.id" => $factionID
+                                    "annotations.data.id" => $factionID
                                 )),
                                 array("match_phrase" => array(
-                                    "relationships.organisations.data.attributes.context" => 'main-speaker-faction'
+                                    "annotations.data.context" => 'main-speaker-faction'
                                 ))
                             )))
                         )
@@ -446,13 +446,13 @@ function getSearchBody($request, $getAllResults) {
 
                 $filter["must"][] = array(
                     "nested" => array(
-                        "path" => "relationships.organisations.data",
+                        "path" => "annotations.data",
                         "query" => array("bool" => array("must"=>array(
                             array("match" => array(
-                                "relationships.organisations.data.id" => $requestValue
+                                "annotations.data.id" => $requestValue
                             )),
                             array("match_phrase" => array(
-                                "relationships.organisations.data.attributes.context" => 'main-speaker-faction'
+                                "annotations.data.context" => 'main-speaker-faction'
                             ))
                         )))
                     )
