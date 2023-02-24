@@ -262,6 +262,35 @@ function updatePlayer() {
 		"frametrail:attributes": {}
 	});
 	*/
+
+	var areaBottomContents = [];
+
+	if (config.display.ner) {
+		areaBottomContents = [
+			{
+				"type": "TimedContent",
+				"contentSize": "small",
+				"name": localizedLabels.automaticallyDetected + " (beta)",
+				"description": "",
+				"cssClass": "",
+				"collectionFilter": {
+					"tags": [
+						"otherOrganisation", 
+						"government", 
+						"memberOfParliament", 
+						"document", 
+						"term"
+					],
+					"types": [],
+					"users": [],
+					"text": ""
+				},
+				"onClickContentItem": "",
+				"html": "",
+				"transcriptSource": ""
+			}
+		];
+	}
 	
 	window.OPTV_Player = FrameTrail.init({
 		target:             '#OPTV_Player',
@@ -285,93 +314,8 @@ function updatePlayer() {
 					"hidden": false,
 					"layoutArea": {
 						"areaTop": [],
-						"areaBottom": [
-							{
-								"type": "TimedContent",
-								"contentSize": "small",
-								"name": localizedLabels.automaticallyDetected + " (beta)",
-								"description": "",
-								"cssClass": "",
-								"collectionFilter": {
-									"tags": [],
-									"types": [],
-									"users": [],
-									"text": ""
-								},
-								"onClickContentItem": "",
-								"html": "",
-								"transcriptSource": ""
-							}
-							/*
-							{
-								"type": "TimedContent",
-								"contentSize": "small",
-								"name": "Erkannte Drucksachen (beta)",
-								"description": "",
-								"cssClass": "",
-								"collectionFilter": {
-									"tags": [],
-									"types": [],
-									"users": [],
-									"text": ""
-								},
-								"onClickContentItem": "",
-								"html": "",
-								"transcriptSource": ""
-							},
-							{
-								"type": "TimedContent",
-								"contentSize": "small",
-								"name": "Erkannte Begriffe (beta)",
-								"description": "",
-								"cssClass": "",
-								"collectionFilter": {
-									"tags": [],
-									"types": [],
-									"users": [],
-									"text": ""
-								},
-								"onClickContentItem": "",
-								"html": "",
-								"transcriptSource": ""
-							},
-							{
-								"type": "TimedContent",
-								"contentSize": "small",
-								"name": "Fragen / Antworten",
-								"description": "",
-								"cssClass": "",
-								"collectionFilter": {
-									"tags": [],
-									"types": [],
-									"users": [],
-									"text": ""
-								},
-								"onClickContentItem": "",
-								"html": "",
-								"transcriptSource": ""
-							}
-							*/
-						],
+						"areaBottom": areaBottomContents,
 						"areaLeft": [
-							/*
-							{
-								"type": "CustomHTML",
-								"contentSize": "large",
-								"name": "<span class=\"icon-torso\"></span>",
-								"description": "",
-								"cssClass": "",
-								"collectionFilter": {
-									"tags": [],
-									"types": [],
-									"users": [],
-									"text": ""
-								},
-								"onClickContentItem": "",
-								"html": "<iframe style=\"position: relative; width: 100%; height: 100%; border: none;\" src=\"https://embed.abgeordnetenwatch.de/profile/"+ playerData.aw_username +"\"></iframe>",
-								"transcriptSource": ""
-							},
-							*/
 							{
 								"type": "CustomHTML",
 								"contentSize": "large",

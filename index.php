@@ -823,6 +823,9 @@ switch ($page) {
         const config = {
             "dir": {
                 "root": "<?=$config["dir"]["root"]?>"
+            },
+            "display": {
+            	"ner": <?= json_encode($config["display"]["ner"]) ?>
             }
         }
 

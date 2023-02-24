@@ -50,7 +50,7 @@ foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relati
                                             </div>
                                         </div>\n';
 
-            } else {
+            } else if ($config["display"]["ner"]) {
                 if (in_array($annotation["id"],$tmpPeople["NER"])) {
                     continue;
                 }
@@ -115,7 +115,7 @@ if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["r
                                             </div>
                                         </div>\n';
 
-                } else {
+                } else if ($config["display"]["ner"]) {
 
                     if (in_array($annotation["id"],$tmpOrganisations["NER"])) {
                         continue;
@@ -194,7 +194,7 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                                         </div>\n';
                     }
 
-                } else {
+                } else if ($config["display"]["ner"]) {
 
                     if (in_array($annotation["id"],$tmpDocuments["NER"])) {
                         continue;
@@ -237,6 +237,18 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
 
 }
 
+$nerPanel = '';
+
+if ($config["display"]["ner"]) {
+    $nerPanel = 
+    '<hr>
+    <div class="relationshipsCategoryHeader">'.L::automaticallyDetected.' (beta)</div>
+    <div class="alert px-1 py-0 alert-warning"><span class="icon-attention mr-1"></span>'.L::messageAutomaticallyDetected.'</div>
+    <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">
+        '.$relatedDocumentsHTMLNER.' '.$relatedPeopleHTMLNER.' '.$relatedOrganisationsHTMLNER.' '.$relatedDocumentsHTMLNER.'
+    </div>';
+}
+
 $relatedContentsHTML =
 '<div class="tab-content">
     '.$proceedingsPanel.'
@@ -246,12 +258,7 @@ $relatedContentsHTML =
         <hr>
         <div class="relationshipsCategoryHeader">'.L::documents.'</div>
         <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">'.$relatedDocumentsHTML.'</div>
-        <hr>
-        <div class="relationshipsCategoryHeader">'.L::automaticallyDetected.' (beta)</div>
-        <div class="alert px-1 py-0 alert-warning"><span class="icon-attention mr-1"></span>'.L::messageAutomaticallyDetected.'</div>
-        <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">
-            '.$relatedDocumentsHTMLNER.' '.$relatedPeopleHTMLNER.' '.$relatedOrganisationsHTMLNER.' '.$relatedDocumentsHTMLNER.'
-        </div>
+        '.$nerPanel.'
     </div>
     <div class="tab-pane fade show" id="documents" role="tabpanel" aria-labelledby="documents-tab"></div>
     <div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div>

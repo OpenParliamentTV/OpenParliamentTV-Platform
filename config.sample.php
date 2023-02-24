@@ -6,6 +6,11 @@
  */
 $config["dir"]["root"] = "";
 
+/**
+ * Display NER results in UI
+ * true or false
+ */
+$config["display"]["ner"] = true;
 
 /**
  * Allow user to register
