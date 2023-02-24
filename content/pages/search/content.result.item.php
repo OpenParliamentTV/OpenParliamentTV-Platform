@@ -4,10 +4,12 @@ if (isset($result_item["_finds"]) && count($result_item['_finds']) > 0) {
 } else {
 	$snippets = null;
 }
+$paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedParams));
+
 ?>
 <article class="resultItem col<?= ($snippets !== null) ? ' snippets' : '' ?>" data-speech-id="<?= $result_item["id"] ?>" data-faction="<?= $mainFaction["id"] ?>">
 	<div class="resultContent partyIndicator" data-faction="<?= $mainFaction["id"] ?>">
-		<a style="display: block;" href='<?= $config["dir"]["root"] ?>/media/<?= $result_item["id"].$paramStr ?>'>
+		<a style="display: block;" href='<?= $config["dir"]["root"] ?>/media/<?= $result_item["id"]."?".$paramStr ?>'>
 			<div class="icon-play-1"></div>
 			<div class="resultDuration"><?= $formattedDuration ?></div>
 			<div class="resultDate"><?= $formattedDate ?></div>
@@ -37,7 +39,7 @@ if (isset($result_item["_finds"]) && count($result_item['_finds']) > 0) {
 		if ($snippets) {
 			foreach($snippets as $result) {
 				?>
-				<a class="resultSnippet" href='media/<?= $result_item["id"].$paramStr.'&t='.$result['data-start'] ?>' title="▶ Ausschnitt direkt abspielen"><?= $result['context'] ?></a>
+				<a class="resultSnippet" href='media/<?= $result_item["id"]."?".$paramStr.'&t='.$result['data-start'] ?>' title="▶ Ausschnitt direkt abspielen"><?= $result['context'] ?></a>
 				<?php
 			}
 		}
