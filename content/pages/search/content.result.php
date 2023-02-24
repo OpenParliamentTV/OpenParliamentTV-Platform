@@ -107,32 +107,6 @@ if ($totalResults != 0) {
 		$paramStr = "";
 		$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","person","personID","context","party","faction","factionID","parliament","electoralPeriod","electoralPeriodID","agendaItemID","dateFrom","dateTo","gender","degree","abgeordnetenwatchID","organisation","organisationID","documentID","termID","sessionNumber","sessionID","page","sort")));
 
-
-
-		/*
-		 *
-		print_r($allowedParams);
-		echo preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedParams));
-
-		$paramCount = 1;
-		foreach ($allowedParams as $k=>$v) {
-			if ($paramCount == 1) {
-				$paramPrefix = "?";
-			} else {
-				$paramPrefix = "&";
-			}
-			if (is_array($v)) {
-				foreach ($v as $i) {
-					if (strlen($i) == 0) { continue; }
-					$paramStr .= $paramPrefix.$k."[]=".$i;
-				}
-			} else if (strlen($v) > 0) {
-				$paramStr .= $paramPrefix.$k."=".$_REQUEST[$k];
-			}
-			$paramCount++;
-
-		}*/
-
 		$sortFactor = null;
 		$currentDate = null;
 		$currentAgendaItem = null;

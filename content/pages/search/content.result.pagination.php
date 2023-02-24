@@ -4,8 +4,6 @@ $numberOfPages = ceil($totalResults / 40);
 $currentPage = (isset($_REQUEST["page"]) && $_REQUEST["page"] != "") ? $_REQUEST["page"] : 1;
 $prevDisabledClass = ($currentPage == 1) ? "disabled" : "";
 $nextDisabledClass = ($currentPage == $numberOfPages) ? "disabled" : "";
-//$cleanParamStr = preg_replace("/&page=[0-9]+/m", "", ltrim($paramStr, '&'));
-//preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedParams))
 if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
     $pagePrev = $allowedParams;
     $pagePrev["page"] = $currentPage-1;
@@ -26,7 +24,7 @@ if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
 		for ($i=1; $i <= $numberOfPages; $i++) { 
 			if ($i == 1) {
                 $pageNumber = $allowedParams;
-                $pageNumber["page"] = $i;
+                unset($pageNumber["page"]);
 			?>
 				<li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='search?<?=preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($pageNumber)) ?>'><?=$i?></a></li>
 			<?php
