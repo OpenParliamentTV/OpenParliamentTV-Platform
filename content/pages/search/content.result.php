@@ -106,6 +106,14 @@ if ($totalResults != 0) {
 		<?php
 		$paramStr = "";
 		$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","person","personID","context","party","faction","factionID","parliament","electoralPeriod","electoralPeriodID","agendaItemID","dateFrom","dateTo","gender","degree","abgeordnetenwatchID","organisation","organisationID","documentID","termID","sessionNumber","sessionID","page","sort")));
+
+
+
+		/*
+		 *
+		print_r($allowedParams);
+		echo preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedParams));
+
 		$paramCount = 1;
 		foreach ($allowedParams as $k=>$v) {
 			if ($paramCount == 1) {
@@ -123,7 +131,7 @@ if ($totalResults != 0) {
 			}
 			$paramCount++;
 
-		}
+		}*/
 
 		$sortFactor = null;
 		$currentDate = null;
