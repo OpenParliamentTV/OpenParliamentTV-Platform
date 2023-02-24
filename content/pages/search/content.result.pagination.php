@@ -30,8 +30,6 @@ if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
 			    $cleanParamStr = http_build_query($url);
 
 			?>
-                    <!-- <li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='<?= "search".$cleanParamStr ?>'><?=$i?></a></li>
-                    -->
 				<li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='search?<?=$cleanParamStr ?>'><?=$i?></a></li>
 			<?php
 			}
@@ -41,8 +39,6 @@ if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
                 $url["page"] = $i;
                 $cleanParamStr = http_build_query($url);
                 ?>
-                    <!-- <li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='<?= "search".$cleanParamStr."&page=".$i ?>'><?=$i?></a></li>
-                    -->
 				<li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='search?<?=$cleanParamStr?>'><?=$i?></a></li>
 			<?php
 				$lastPageWasGap = false;
