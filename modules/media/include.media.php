@@ -46,9 +46,9 @@
 
         $formattedDate = date("d.m.Y", strtotime($speech["attributes"]["dateStart"]));
 
-        $speechTitleShort = $mainSpeaker['attributes']['label'] . ', ' . $mainFaction['attributes']['labelAlternative'] . ' | ' . $formattedDate . ' | ' . $speech["relationships"]["agendaItem"]["data"]['attributes']["title"];
+        $speechTitleShort = $mainSpeaker['attributes']['label'] . ', ' . $mainFaction['attributes']['labelAlternative'][0] . ' | ' . $formattedDate . ' | ' . $speech["relationships"]["agendaItem"]["data"]['attributes']["title"];
 
-        $speechTitle = '<div class="speechMeta">' . $formattedDate . ' | ' . $speech["relationships"]["electoralPeriod"]['data']['attributes']['number'] . '. Electoral Period | Session ' . $speech["relationships"]["session"]['data']['attributes']['number'] . ' | ' . $speech["relationships"]["agendaItem"]["data"]['attributes']["officialTitle"] . '</div>' . $mainSpeaker['attributes']['label'] . ' <span class="partyIndicator" data-party="' . $mainFaction['id'] . '">' . $mainFaction['attributes']['labelAlternative'] . '</span><div class=\"speechTOPs\">' . $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] . '</div>';
+        $speechTitle = '<div class="speechMeta">' . $formattedDate . ' | ' . $speech["relationships"]["electoralPeriod"]['data']['attributes']['number'] . '. Electoral Period | Session ' . $speech["relationships"]["session"]['data']['attributes']['number'] . ' | ' . $speech["relationships"]["agendaItem"]["data"]['attributes']["officialTitle"] . '</div>' . $mainSpeaker['attributes']['label'] . ' <span class="partyIndicator" data-party="' . $mainFaction['id'] . '">' . $mainFaction['attributes']['labelAlternative'][0] . '</span><div class=\"speechTOPs\">' . $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] . '</div>';
     }
 
 ?>

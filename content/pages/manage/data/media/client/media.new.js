@@ -205,8 +205,8 @@ $(function() {
                                         "data-type='"+ret["data"][i]?.attributes?.type+"' " +
                                         "data-label='"+ret["data"][i]?.attributes?.label+"'>"+
                                         ret["data"][i]?.attributes?.label+" " +
-                                        "("+ret["data"][i]?.relationships?.party?.data?.attributes?.labelAlternative+")</li>");
-                                    //$("#fayt-results-db-"+tmpID).append("<li class='fayt-result-person-item fayt-result-db-person-item' data-itemtmp='"+tmpID+"' data-wikidataid='"+ret["data"][i]?.["id"]+"' data-party='"+ret["data"][i]?.["relationships"]?["party"]?.["data"]?.["id"]+"' data-faction='"+ret["data"][i]?.["relationships"]?.["faction"]?.["data"]?.["id"]+"' data-label='"+ret["data"][i]?.["attributes"]?.["label"]+"'>"+ret["data"][i]?.["attributes"]?.["label"]+" ("+ret["data"][i]?.["relationships"]?.["party"]?.["data"]?.["attributes"]?.["labelAlternative"]+")</li>");
+                                        "("+ret["data"][i]?.relationships?.party?.data?.attributes?.labelAlternative[0]+")</li>");
+                                    //$("#fayt-results-db-"+tmpID).append("<li class='fayt-result-person-item fayt-result-db-person-item' data-itemtmp='"+tmpID+"' data-wikidataid='"+ret["data"][i]?.["id"]+"' data-party='"+ret["data"][i]?.["relationships"]?["party"]?.["data"]?.["id"]+"' data-faction='"+ret["data"][i]?.["relationships"]?.["faction"]?.["data"]?.["id"]+"' data-label='"+ret["data"][i]?.["attributes"]?.["label"]+"'>"+ret["data"][i]?.["attributes"]?.["label"]+" ("+ret["data"][i]?.["relationships"]?.["party"]?.["data"]?.["attributes"]?.["labelAlternative"][0]+")</li>");
                                 } else {
                                     return;
                                 }

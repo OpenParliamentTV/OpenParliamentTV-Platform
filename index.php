@@ -102,7 +102,7 @@ switch ($page) {
             include_once("./content/pages/404/page.php");
             $content = ob_get_clean();
         } else {
-            $pageTitle = '<span class="icon-doc-text"></span>' . $apiResult["data"]["attributes"]["labelAlternative"];
+            $pageTitle = '<span class="icon-doc-text"></span>' . $apiResult["data"]["attributes"]["labelAlternative"][0];
             $pageDescription = L::speeches . ' ' . L::basedOn . ': ' . $apiResult["data"]["attributes"]["label"];
             $pageType = 'entity';
             $pageBreadcrumbs = [
@@ -178,7 +178,7 @@ switch ($page) {
             include_once("./content/pages/404/page.php");
             $content = ob_get_clean();
         } else {
-            $pageTitle = '<span class="icon-bank"></span>' . $apiResult["data"]["attributes"]["labelAlternative"];
+            $pageTitle = '<span class="icon-bank"></span>' . $apiResult["data"]["attributes"]["labelAlternative"][0];
             $pageDescription = L::speeches . ' ' . L::by . ': ' . $apiResult["data"]["attributes"]["label"];
             $pageType = 'entity';
             $pageBreadcrumbs = [

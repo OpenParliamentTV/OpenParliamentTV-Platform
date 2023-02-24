@@ -13,8 +13,8 @@ if (isset($result_item["_finds"]) && count($result_item['_finds']) > 0) {
 			<div class="resultDate"><?= $formattedDate ?></div>
 			<div class="resultMeta">
 				<?php 
-				if (isset($mainFaction['attributes']['labelAlternative'])) {
-					echo $highlightedName .' ('.$mainFaction['attributes']['labelAlternative'].')';
+				if (isset($mainFaction['attributes']['labelAlternative'][0])) {
+					echo $highlightedName .' ('.$mainFaction['attributes']['labelAlternative'][0].')';
 				} else {
 					echo $highlightedName;
 				}

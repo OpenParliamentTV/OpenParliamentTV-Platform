@@ -38,7 +38,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					</div>
 					<div class="col">
 						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
-						<div><?= $apiResult["data"]["attributes"]["labelAlternative"] ?></div>
+						<div><?= $apiResult["data"]["attributes"]["labelAlternative"][0] ?></div>
 						<div><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
 					</div>
 				</div>
