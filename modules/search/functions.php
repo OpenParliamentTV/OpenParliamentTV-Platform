@@ -2,6 +2,7 @@
 
 require_once(__DIR__.'/../../vendor/autoload.php');
 require_once(__DIR__.'/../../config.php');
+require_once(__DIR__ .'/../../modules/utilities/functions.entities.php');
 
 $ESClientBuilder = Elasticsearch\ClientBuilder::create();
 
@@ -189,21 +190,23 @@ function searchStats($request) {
 		"speechesPerFaction" => array(),
 		"speechesPerGender" => array()
 	));
-			
-	foreach ($results["hits"]["hits"] as $hit) {
-		
-        if ($hit["_source"]["relationships"]["organisations"]["data"][0]["attributes"]["type"] == "faction") {
+
+    foreach ($results["hits"]["hits"] as $hit) {
+
+        $mainFaction = getMainFactionFromOrganisationsArray($hit["_source"]["annotations"]["data"], $hit["_source"]["relationships"]["organisations"]["data"]);
+        
+        if ($mainFaction) {
 
             $normalizedDate = date("Y-m-d", strtotime($hit["_source"]["attributes"]["dateStart"]));
             $resultInfo = array(
                 "id" => $hit["_source"]["id"],
                 "date" => $normalizedDate,
-                "faction" => $hit["_source"]["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"][0],
+                "faction" => $mainFaction["attributes"]["labelAlternative"][0],
                 "electoralPeriod" => $hit["_source"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"],
                 "sessionNumber" => $hit["_source"]["relationships"]["session"]["data"]["attributes"]["number"]
             );
 
-            $stats["info"]["speechesPerFaction"][$hit["_source"]["relationships"]["organisations"]["data"][0]["attributes"]["labelAlternative"][0]]++;
+            $stats["info"]["speechesPerFaction"][$mainFaction["attributes"]["labelAlternative"][0]]++;
 
         }
 
@@ -767,7 +770,7 @@ function getSearchBody($request, $getAllResults) {
             "fields"=>array("attributes.textContents.textHTML"=>new \stdClass())
         );
     } else {
-        $data["_source"] = ["id", "attributes.dateStart", "relationships"];
+        $data["_source"] = ["id", "attributes.dateStart", "relationships", "annotations"];
     }
 
 

@@ -152,9 +152,11 @@ function getSearchIndexParameter()
             "data" => array(
                 "type" => "nested",
                 "properties" => array(
-                    "context" => array(
-                        "type" => "keyword"
-                    ),
+                    "attributes" => array("properties" => array(
+                        "context" => array(
+                            "type" => "keyword"
+                        )
+                    )),
                     "id" => array(
                         "type" => "keyword"
                     )
