@@ -197,20 +197,17 @@ function searchStats($request) {
 
         $mainFaction = getMainFactionFromOrganisationsArray($hit["_source"]["annotations"]["data"], $hit["_source"]["relationships"]["organisations"]["data"]);
 
-        if ($mainFaction) {
+        $normalizedDate = date("Y-m-d", strtotime($hit["_source"]["attributes"]["dateStart"]));
+        $resultInfo = array(
+            "id" => $hit["_source"]["id"],
+            "date" => $normalizedDate,
+            "faction" => $mainFaction["attributes"]["labelAlternative"][0],
+            "electoralPeriod" => $hit["_source"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"],
+            "sessionNumber" => $hit["_source"]["relationships"]["session"]["data"]["attributes"]["number"]
+        );
 
-            $normalizedDate = date("Y-m-d", strtotime($hit["_source"]["attributes"]["dateStart"]));
-            $resultInfo = array(
-                "id" => $hit["_source"]["id"],
-                "date" => $normalizedDate,
-                "faction" => $mainFaction["attributes"]["labelAlternative"][0],
-                "electoralPeriod" => $hit["_source"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"],
-                "sessionNumber" => $hit["_source"]["relationships"]["session"]["data"]["attributes"]["number"]
-            );
+        $stats["info"]["speechesPerFaction"][$mainFaction["attributes"]["labelAlternative"][0]]++;
 
-            $stats["info"]["speechesPerFaction"][$mainFaction["attributes"]["labelAlternative"][0]]++;
-
-        }
 
         $stats["results"][] = $resultInfo;
 
