@@ -226,6 +226,20 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
             //$return["data"]["relationships"]["annotations"]["data"] = array();
 
             $annotations = $dbp->getAll("SELECT * FROM ?n WHERE AnnotationMediaID=?s",$config["parliament"][$parliament]["sql"]["tbl"]["Annotation"],$item["MediaID"]);
+            /*
+             SELECT * FROM `annotation` WHERE AnnotationMediaID = "" ORDER BY CASE
+                WHEN AnnotationContext = 'main-speaker' THEN 1
+                WHEN AnnotationContext = 'president' THEN 2
+                WHEN AnnotationContext = 'vice-president' THEN 3
+                WHEN AnnotationType = 'main-faction' THEN 4
+                WHEN AnnotationType = 'person' THEN 5
+                WHEN AnnotationType = 'organisation' THEN 6
+                ELSE 7
+                end,
+                AnnotationContext ASC, AnnotationType ASC;
+             */
+            $annotations = annotationRawSortByMainspeaker($annotations);
+
             $tmpResouces = array();
             foreach ($annotations as $annotation) {
 
