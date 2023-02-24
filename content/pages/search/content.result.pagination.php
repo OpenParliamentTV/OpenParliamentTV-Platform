@@ -4,20 +4,13 @@ $numberOfPages = ceil($totalResults / 40);
 $currentPage = (isset($_REQUEST["page"]) && $_REQUEST["page"] != "") ? $_REQUEST["page"] : 1;
 $prevDisabledClass = ($currentPage == 1) ? "disabled" : "";
 $nextDisabledClass = ($currentPage == $numberOfPages) ? "disabled" : "";
-//$cleanParamStr = preg_replace("/&page=[0-9]+/m", "", ltrim($paramStr, '&'));
-parse_str(parse_url($paramStr, PHP_URL_QUERY), $url);
-
+$cleanParamStr = preg_replace("/&page=[0-9]+/m", "", ltrim($paramStr, '&'));
 if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
-
-    $pagePre = $url;
-    $pagePre["page"] = $url["page"]-1;
-    $pageNext = $url;
-    $pageNext["page"] = $url["page"]+1;
 ?>
 <nav aria-label="Paginierung" style="margin-top: 30px;">
 	<ul class="pagination justify-content-center">
 		<li class="page-item <?=$prevDisabledClass?>">
-			<a class="page-link" href='search?<?=http_build_query($pagePre) ?>' aria-label="Vorherige">
+			<a class="page-link" href='<?= "search".$cleanParamStr."&page=".($currentPage-1) ?>' aria-label="Vorherige">
 				<span aria-hidden="true">&laquo;</span>
 				<span class="sr-only"><?php echo L::previousPage; ?></span>
 			</a>
@@ -26,20 +19,15 @@ if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
 		$lastPageWasGap = false;
 		for ($i=1; $i <= $numberOfPages; $i++) { 
 			if ($i == 1) {
-
-			    $cleanParamStr = http_build_query($url);
-
 			?>
-				<li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='search?<?=$cleanParamStr ?>'><?=$i?></a></li>
+				<li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='<?= "search".$cleanParamStr ?>'><?=$i?></a></li>
 			<?php
 			}
 			else if ($i < 3 || 
 				($i >= $currentPage-2 && $i <= $currentPage+2) || 
 				$i > $numberOfPages-2 ) {
-                $url["page"] = $i;
-                $cleanParamStr = http_build_query($url);
-                ?>
-				<li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='search?<?=$cleanParamStr?>'><?=$i?></a></li>
+			?>
+				<li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='<?= "search".$cleanParamStr."&page=".$i ?>'><?=$i?></a></li>
 			<?php
 				$lastPageWasGap = false;
 			} elseif (!$lastPageWasGap) {
@@ -53,7 +41,7 @@ if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
 		}
 		?>
 		<li class="page-item <?=$nextDisabledClass?>">
-			<a class="page-link" href='search?<?= http_build_query($pageNext)?>' aria-label="Nächste">
+			<a class="page-link" href='<?= "search".$cleanParamStr."&page=".($currentPage+1) ?>' aria-label="Nächste">
 				<span aria-hidden="true">&raquo;</span>
 				<span class="sr-only"><?php echo L::nextPage; ?></span>
 			</a>
