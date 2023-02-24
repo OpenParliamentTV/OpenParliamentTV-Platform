@@ -574,7 +574,7 @@ function getSearchBody($request, $getAllResults) {
                                     "annotations.data.id" => $requestValue
                                 )),
                                 array("match_phrase" => array(
-                                    "annotations.data.context" => $request["context"]
+                                    "annotations.data.attributes.context" => $request["context"]
                                 ))
                             )))
                         )
@@ -590,7 +590,7 @@ function getSearchBody($request, $getAllResults) {
                                     "annotations.data.id" => $requestValue
                                 )),
                                 array("match" => array(
-                                    "annotations.data.context" => 'main-speaker'
+                                    "annotations.data.attributes.context" => 'main-speaker'
                                 ))
                             )))
                         )
