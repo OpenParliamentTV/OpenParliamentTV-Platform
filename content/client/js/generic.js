@@ -7,6 +7,14 @@ var updateAjax,
 		"FDP": "#feeb34",
 		"AfD": "#1a9fdd"
 	};
+	factionIDColors = {
+		"Q1826856": "#bc3475", //linke
+		"Q1007353": "#4a932b", //gruene
+		"Q1023134": "#000000", //cdu/csu
+		"Q2207512": "#df0b25", //spd
+		"Q1387991": "#feeb34", //fdp
+		"Q42575708": "#1a9fdd" //afd
+	};
 
 $(document).ready(function() {
 

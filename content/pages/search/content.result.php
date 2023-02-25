@@ -83,7 +83,8 @@ if (!$_REQUEST["a"] || count($_REQUEST) < 2 ||
 	$findsString = '';
 
 // ELSE FINISHES AT END OF FILE
-
+//echo "<pre style='color:#FFF'>";
+//print_r($result);
 
 if ($totalResults != 0) {
 ?>
@@ -140,6 +141,108 @@ if ($totalResults != 0) {
 		}
 		?>
 	</div>
+    <?php
+    //print_r($result);
+    ?>
+    <script type="text/javascript">
+
+        resultsAttributes = <?= json_encode($result["meta"]["attributes"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?>
+            //updateFactionChart(resultsAttributes["resultsPerFaction"]);
+        function updateTimelineViz() {
+            if (typeof resultsAttributes !== "object") {
+                return;
+            }
+            let highestSpeechCountPerDay = 0;
+
+            for (let day in resultsAttributes["days"]) {
+                if (resultsAttributes["days"][day]["doc_count"] > highestSpeechCountPerDay) {
+                    highestSpeechCountPerDay = resultsAttributes["days"][day]["doc_count"];
+                }
+            }
+            for (let day in resultsAttributes["days"]) {
+                let percentSpeechesPerDay = 100 * (resultsAttributes["days"][day]["doc_count"] / highestSpeechCountPerDay),
+                    oneDay = 24 * 60 * 60 * 1000,
+                    diffDays = Math.round(Math.abs((minDate - maxDate) / oneDay)),
+                    itemDate = new Date(day),
+                    daysSinceMinDate = Math.round(Math.abs((minDate - itemDate) / oneDay)),
+                    leftPercent = 100 * (daysSinceMinDate / diffDays);
+
+                let timelineVizItem = $('<div class="timelineVizItem" data-speech-date="'+ day +'" data-speech-count="'+ resultsAttributes["days"][day]["doc_count"] +'" style="height:'+ percentSpeechesPerDay +'%; left:'+ leftPercent +'%"></div>');
+
+                $('#timelineVizWrapper').append(timelineVizItem);
+            }
+
+        }
+
+        function updateFactionChart(speechesPerFaction) {
+
+            var factionData = {
+                datasets: [{
+                    data: [],
+                    backgroundColor: [],
+                    borderWidth: [],
+                }],
+                labels: []
+            };
+
+            if (speechesPerFaction && speechesPerFaction.length == 0) {
+                factionData.datasets[0].data.push(1);
+                factionData.labels.push(' ');
+                factionData.datasets[0].backgroundColor.push('#aaaaaa');
+                factionData.datasets[0].borderWidth.push(1);
+            } else {
+                for (var faction in speechesPerFaction) {
+                    if (speechesPerFaction.hasOwnProperty(faction)) {
+                        var factionColor = (factionIDColors[faction]) ? factionIDColors[faction] : "#aaaaaa";
+
+                        factionData.datasets[0].data.push(speechesPerFaction[faction]);
+                        factionData.labels.push(faction);
+                        factionData.datasets[0].backgroundColor.push(factionColor);
+                        factionData.datasets[0].borderWidth.push(1);
+                    }
+                }
+            }
+
+            if (!factionChart) {
+                var factionCtx = document.getElementById('factionChart').getContext('2d');
+                factionChart = new Chart(factionCtx, {
+                    type: 'doughnut',
+                    data: factionData,
+                    options: {
+                        responsive: true,
+                        aspectRatio: 1,
+                        legend: {
+                            display: false
+                        },
+                        tooltips: {
+                            enabled: false
+                        },
+                        cutoutPercentage: 75,
+                        animation: {
+                            animateRotate: true
+                        }
+                    }
+                });
+            } else {
+                //empty chart
+                factionChart.data.labels = [];
+                factionChart.data.datasets[0].data = [];
+                factionChart.data.datasets[0].backgroundColor = [];
+                // update chart
+                for (var i = 0; i <= factionData.datasets[0].data.length; i++) {
+                    factionChart.data.labels.push(factionData.labels[i]);
+                    factionChart.data.datasets[0].data.push(factionData.datasets[0].data[i]);
+                    factionChart.data.datasets[0].backgroundColor.push(factionData.datasets[0].backgroundColor[i]);
+                }
+                factionChart.update();
+            }
+
+        }
+        updateFactionChart(resultsAttributes["resultsPerFaction"]);
+        $('#timelineVizWrapper').empty();
+        updateTimelineViz();
+
+    </script>
 	<?php 
 	include_once('content.result.pagination.php');
 } else {
@@ -147,6 +250,7 @@ if ($totalResults != 0) {
 	<div class="filterSummary row">
 		<div class="col alert alert-info"><?php echo L::noRelevant; ?> <?php echo L::speechesFound; ?></div>
 	</div>
+
 <?php 
 }
 }

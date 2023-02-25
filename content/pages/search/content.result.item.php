@@ -37,9 +37,9 @@ $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedP
 			echo '<div class="resultSnippets">';
 		}
 		if ($snippets) {
-			foreach($snippets as $result) {
+			foreach($snippets as $snippet) {
 				?>
-				<a class="resultSnippet" href='media/<?= $result_item["id"]."?".$paramStr.'&t='.$result['data-start'] ?>' title="▶ Ausschnitt direkt abspielen"><?= $result['context'] ?></a>
+				<a class="resultSnippet" href='media/<?= $result_item["id"]."?".$paramStr.'&t='.$snippet['data-start'] ?>' title="▶ Ausschnitt direkt abspielen"><?= $snippet['context'] ?></a>
 				<?php
 			}
 		}
@@ -53,10 +53,10 @@ $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedP
 			?>
 			<span class="badge badge-primary badge-pill"><?=count($snippets)?></span>
 			<?php
-			foreach($snippets as $result) {
+			foreach($snippets as $snippet) {
 			
-					$leftPercent = 100 * ((float)$result["data-start"] / $result_item["attributes"]["duration"]);
-					$widthPercent  = 100 * (($result['data-end'] - $result['data-start']) / $result_item["attributes"]['duration']);
+					$leftPercent = 100 * ((float)$snippet["data-start"] / $result_item["attributes"]["duration"]);
+					$widthPercent  = 100 * (($snippet['data-end'] - $snippet['data-start']) / $result_item["attributes"]['duration']);
 				?>
 				<div class="hit" style="left: <?= $leftPercent ?>%; width: <?= $widthPercent ?>%;"></div>
 				<?php

@@ -436,7 +436,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
     require_once (__DIR__."/../../../modules/search/functions.php");
 
 
-    $allowedFields = ["parliament", "electoralPeriod", "electoralPeriodID", "sessionID", "sessionNumber", "agendaItemID", "context", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "abgeordnetenwatchID", "organisation", "organisationID", "documentID", "termID", "id", "procedureID", "q"];
+    $allowedFields = ["parliament", "electoralPeriod", "electoralPeriodID", "sessionID", "sessionNumber", "agendaItemID", "context", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "abgeordnetenwatchID", "organisation", "organisationID", "documentID", "sort", "termID", "id", "procedureID", "page","q"];
 
     $filteredParameters = array_filter(
         $parameter,
@@ -449,7 +449,8 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
     if (!empty($filteredParameters)) {
 
         try {
-            $search = searchSpeeches($parameter);
+            $search = searchSpeeches($filteredParameters);
+
             if (isset($search["hits"]["hits"])) {
                 foreach ($search["hits"]["hits"] as $hit) {
 
@@ -461,6 +462,18 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
                     $return["data"][] = $resultData;
 
                 }
+
+                $return["meta"]["attributes"]["speechFirstDateStr"] = $search["aggregations"]["dateFirst"]["value_as_string"];
+                $return["meta"]["attributes"]["speechFirstDateTimestamp"] = $search["aggregations"]["dateFirst"]["value"];
+                $return["meta"]["attributes"]["speechLastDateStr"] = $search["aggregations"]["dateLast"]["value_as_string"];
+                $return["meta"]["attributes"]["speechLastDateTimestamp"] = $search["aggregations"]["dateLast"]["value"];
+                foreach ($search["aggregations"]["types_count"]["factions"]["terms"]["buckets"] as $buckets) {
+                    $return["meta"]["attributes"]["resultsPerFaction"][$buckets["key"]] = $buckets["doc_count"];
+                }
+                foreach($search["aggregations"]["datesCount"]["buckets"] as $day) {
+                    $return["meta"]["attributes"]["days"][$day["key_as_string"]] = $day;
+                }
+
                 $return["meta"]["requestStatus"] = "success";
 
                 //TODO: Check if this makes sense here

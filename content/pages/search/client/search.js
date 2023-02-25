@@ -8,6 +8,8 @@ var factionChart = null,
 var selectedSuggestionIndex = null,
 	selectedSuggestionColumn = 'suggestionContainerText';
 
+let resultsAttributes;
+
 $(document).ready( function() {
 
 	$('.loadingIndicator').hide();
@@ -298,7 +300,7 @@ function updateContentsFromURL() {
 	$('#dateFrom').val((queryFrom) ? queryFrom : minDate.toISOString().slice(0,10));
 	$('#dateTo').val((queryTo) ? queryTo : maxDate.toISOString().slice(0,10));
 
-	updateStatsViz();
+	//updateStatsViz();
 
 	/* DATE FUNCTIONS END */
 
@@ -515,12 +517,14 @@ function updateStatsViz() {
 		requestPersonID = getQueryVariable('personID');
 	if ((requestQuery && requestQuery.length >= 2) || requestPersonID) {
 		getResultStats(function(data) {
-			updateFactionChart(data.info.speechesPerFaction);
-			updateTimeRangeChart(data.results);
+			//updateFactionChart(data.info.speechesPerFaction);
+			updateFactionChart(resultsAttributes["resultsPerFaction"]);
+			//updateTimeRangeChart(data.results);
+			updateTimelineViz();
 		});
 	} else {
 		updateFactionChart([]);
-		updateTimeRangeChart([]);
+		//updateTimeRangeChart([]);
 	}
 }
 
@@ -543,7 +547,7 @@ function updateFactionChart(speechesPerFaction) {
 	} else {
 		for (var faction in speechesPerFaction) {
 			if (speechesPerFaction.hasOwnProperty(faction)) {           
-				var factionColor = (factionColors[faction]) ? factionColors[faction] : "#aaaaaa";
+				var factionColor = (factionIDColors[faction]) ? factionIDColors[faction] : "#aaaaaa";
 
 				factionData.datasets[0].data.push(speechesPerFaction[faction]);
 				factionData.labels.push(faction);
@@ -589,8 +593,10 @@ function updateFactionChart(speechesPerFaction) {
 	
 }
 
+
+/*
 function updateTimeRangeChart(results) {
-	
+
 	var resultDates = [],
 		highestSpeechesPerDay = 0;
 
@@ -670,9 +676,9 @@ function updateTimeRangeChart(results) {
 		}
 		timeRangeChart.update();
 	}
-	*/
-}
 
+}
+*/
 function updateQuery() {
 	$('input[name="q"]').val(getInteractiveQueryValues('text'));
 	
@@ -736,7 +742,9 @@ function updateResultList() {
 		}
 		$('#speechListContainer .resultWrapper').html($(data));
 		$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
-		updateStatsViz(minDate, maxDate);
+		//updateStatsViz(minDate, maxDate);
+		//updateStatsViz();
+		//console.log(resultsAttributes);
 		$('.loadingIndicator').hide();
 		runCounterAnimation();
 	}).fail(function(err) {
@@ -745,7 +753,8 @@ function updateResultList() {
 }
 
 function getResultStats(statsCallback) {
-	if(statsAjax && statsAjax.readyState != 4){
+	statsCallback();
+	/*if(statsAjax && statsAjax.readyState != 4){
         statsAjax.abort();
     }
 	statsAjax = $.ajax({
@@ -755,7 +764,8 @@ function getResultStats(statsCallback) {
 		statsCallback(data.return);
 	}).fail(function(err) {
 		//console.log(err);
-	});
+	});*/
+
 }
 
 function getInteractiveQueryValues(queryType) {

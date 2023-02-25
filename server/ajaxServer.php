@@ -344,8 +344,6 @@ switch ($_REQUEST["a"]) {
 
     break;
 
-
-
     case "runCronUpdater":
 
         $auth = auth($_SESSION["userdata"]["id"], "updater", "run");
@@ -402,41 +400,41 @@ switch ($_REQUEST["a"]) {
 
 	break;
 
-/*
+
 	case "devAddTestuser":
+        /*
+                //TODO: Remove this function before deploy
 
-		//TODO: Remove this function before deploy
+                if ($config["mode"] == "dev") {
 
-		if ($config["mode"] == "dev") {
+                    require_once(__DIR__."/../modules/user-management/register.backend.sql.php");
 
-			require_once(__DIR__."/../modules/user-management/register.backend.sql.php");
-
-			$return[] = registerUser("admin@openparliament.tv","Admin!!11","DEV-Admin");
-			$return[] = registerUser("test@openparliament.tv","User!!11","DEV-Test User");
+                    $return[] = registerUser("admin@openparliament.tv","Admin!!11","DEV-Admin");
+                    $return[] = registerUser("test@openparliament.tv","User!!11","DEV-Test User");
 
 
-			if (($return[0]["success"] == "true" ) && ($return[1]["success"] == "true")) {
+                    if (($return[0]["success"] == "true" ) && ($return[1]["success"] == "true")) {
 
-				$opts = array(
-					'host'	=> $config["platform"]["sql"]["access"]["host"],
-					'user'	=> $config["platform"]["sql"]["access"]["user"],
-					'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-					'db'	=> $config["platform"]["sql"]["db"]
-				);
-				$db = new SafeMySQL($opts);
+                        $opts = array(
+                            'host'	=> $config["platform"]["sql"]["access"]["host"],
+                            'user'	=> $config["platform"]["sql"]["access"]["user"],
+                            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+                            'db'	=> $config["platform"]["sql"]["db"]
+                        );
+                        $db = new SafeMySQL($opts);
 
-				$db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserActive=?i, UserRole=?s WHERE UserID=?i",1,"admin",$return[0]["UserID"]);
-				$db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserActive=?i WHERE UserID=?i",1,$return[1]["UserID"]);
+                        $db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserActive=?i, UserRole=?s WHERE UserID=?i",1,"admin",$return[0]["UserID"]);
+                        $db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserActive=?i WHERE UserID=?i",1,$return[1]["UserID"]);
 
-				$return["success"] = "true";
-				$return["text"] = "User Added";
-			}
+                        $return["success"] = "true";
+                        $return["text"] = "User Added";
+                    }
 
-		}
-		//TODO: Response if registration is not allowed
+                }
+                //TODO: Response if registration is not allowed
+        */
+    break;
 
-	break;
-*/
 
 
 	case "login":
@@ -466,6 +464,7 @@ switch ($_REQUEST["a"]) {
 
 
 	case "stats":
+
 		require_once(__DIR__."/../modules/search/functions.php");
 		
 		$allowedParams = array_intersect_key($_REQUEST,array_flip(array("a","q","person","personID","context","party", "partyID","electoralPeriod", "electoralPeriodID","dateFrom","dateTo","gender","degree","abgeordnetenwatchID","faction","factionID","organisation","organisationID","speakerID","documentID", "agendaItemID","sessionNumber", "sessionID", "page", "sort", "parliament")));
@@ -473,6 +472,8 @@ switch ($_REQUEST["a"]) {
 		$return["success"] = "true";
 		$return["text"] = "searchresults";
 		$return["return"] = searchStats($allowedParams);
+		//$return["return"] = getAffectedFactionCounts($allowedParams);
+
 
 	break;
 	default:

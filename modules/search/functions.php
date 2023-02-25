@@ -91,11 +91,15 @@ function searchSpeeches($request) {
 		$results = $e->getMessage();
 	}
 
-	/*
-	echo '<pre>';
-	print_r($results); 
-	echo '</pre>';
-	*/
+    /*
+     * TODO: The result of what faction has how many speeches, how many speeches are there in general and is there are speeches without
+     * a faction is now present at $results["aggregations"]["types_count"] ...
+     *
+     *
+        echo '<pre style="color: #fff">';
+        print_r($results);
+        echo '</pre>';
+    */
 
 	$resultCnt = 0;
 	$findCnt = 0;
@@ -151,6 +155,8 @@ function searchSpeeches($request) {
 		}
 		
 	}
+
+
 
 	//$results->totalFinds = $findCnt;
 
@@ -227,6 +233,55 @@ function searchStats($request) {
 	
 
 	return $stats;
+
+
+}
+
+function getAffectedFactionCounts($request) {
+    global $ESClient;
+
+
+
+    $data = getSearchBody($request, true);
+
+    $data["aggs"]["types_count"]["nested"]["path"] = "annotations.data";
+    $data["aggs"]["types_count"]["aggs"]["factions"]["filter"]["bool"]["filter"]["term"]["annotations.data.attributes.context"] = "main-speaker-faction";
+    $data["aggs"]["types_count"]["aggs"]["factions"]["aggs"]["terms"]["terms"]["field"] = "annotations.data.id";
+    $data["aggs"]["types_count"]["aggs"]["factions"]["aggs"]["terms"]["terms"]["size"] = 20;
+    $data["aggs"]["dateFirst"]["min"]["field"] = "attributes.dateStart";
+    $data["aggs"]["dateLast"]["max"]["field"] = "attributes.dateEnd";
+
+    $data["aggs"]["datesCount"]["date_histogram"]["field"] = "attributes.dateStart";
+    $data["aggs"]["datesCount"]["date_histogram"]["calendar_interval"] = "day";
+    $data["aggs"]["datesCount"]["date_histogram"]["min_doc_count"] = 1;
+    $data["aggs"]["datesCount"]["date_histogram"]["format"] = "yyyy-MM-dd";
+    //echo json_encode($data);
+    //exit;
+    $searchParams = array("index" => "openparliamenttv_de", "body" => $data);
+
+    try {
+        $results = $ESClient->search($searchParams);
+    } catch(Exception $e) {
+        print_r($e->getMessage());
+        $results = null;
+    }
+
+    $stats = array("results" => array(), "info" => array(
+        "totalSpeeches" => $results["hits"]["total"]["value"],
+        "totalSpeechesWithFaction" => $results["aggregations"]["types_count"]["factions"]["doc_count"],
+        "speechesPerFaction" => array(),
+        "speechesPerGender" => array()
+    ));
+    $stats["info"]["speechFirstDateStr"] = $results["aggregations"]["dateFirst"]["value_as_string"];
+    $stats["info"]["speechFirstDateTimestamp"] = $results["aggregations"]["dateFirst"]["value"];
+    $stats["info"]["speechLastDateStr"] = $results["aggregations"]["dateLast"]["value_as_string"];
+    $stats["info"]["speechLastDateTimestamp"] = $results["aggregations"]["dateLast"]["value"];
+    foreach ($results["aggregations"]["types_count"]["factions"]["terms"]["buckets"] as $buckets) {
+        $stats["info"]["speechesPerFaction"][$buckets["key"]] = $buckets["doc_count"];
+    }
+
+
+    return $stats;
 
 
 }
@@ -745,7 +800,8 @@ function getSearchBody($request, $getAllResults) {
         $sort = array("_score");
     }
 
-    $maxFullResults = ($getAllResults === true) ? 3000 : 40;
+    $maxFullResults = ($getAllResults === true) ? 3000 : 120;
+    //$maxFullResults = 10000;
 
     if ((!$_REQUEST["a"] || count($request) < 2) && !$getAllResults) {
         $maxFullResults = 10;
@@ -754,7 +810,9 @@ function getSearchBody($request, $getAllResults) {
     $from = 0;
 
     if ($request["page"] && !$getAllResults) {
-        $from = (intval($request["page"])-1) * $maxFullResults;
+        //$from = (intval($request["page"])-1) * $maxFullResults;
+        //TODO: Pass Results Per Page here, so "40" is not hardcoded. $maxFullResults seems to have a different job
+        $from = (intval($request["page"])-1) * 40;
     }
 
     $data = array("from"=>$from, "size"=>$maxFullResults,
@@ -771,6 +829,18 @@ function getSearchBody($request, $getAllResults) {
     } else {
         $data["_source"] = ["id", "attributes.dateStart", "relationships", "annotations"];
     }
+
+    $data["aggs"]["types_count"]["nested"]["path"] = "annotations.data";
+    $data["aggs"]["types_count"]["aggs"]["factions"]["filter"]["bool"]["filter"]["term"]["annotations.data.attributes.context"] = "main-speaker-faction";
+    $data["aggs"]["types_count"]["aggs"]["factions"]["aggs"]["terms"]["terms"]["field"] = "annotations.data.id";
+    $data["aggs"]["types_count"]["aggs"]["factions"]["aggs"]["terms"]["terms"]["size"] = 20;
+    $data["aggs"]["dateFirst"]["min"]["field"] = "attributes.dateStart";
+    $data["aggs"]["dateLast"]["max"]["field"] = "attributes.dateEnd";
+
+    $data["aggs"]["datesCount"]["date_histogram"]["field"] = "attributes.dateStart";
+    $data["aggs"]["datesCount"]["date_histogram"]["calendar_interval"] = "day";
+    $data["aggs"]["datesCount"]["date_histogram"]["min_doc_count"] = 1;
+    $data["aggs"]["datesCount"]["date_histogram"]["format"] = "yyyy-MM-dd";
 
 
     /*echo '<pre>';
