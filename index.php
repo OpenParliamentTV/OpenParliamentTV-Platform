@@ -825,7 +825,8 @@ switch ($page) {
                 "root": "<?=$config["dir"]["root"]?>"
             },
             "display": {
-            	"ner": <?= json_encode($config["display"]["ner"]) ?>
+            	"ner": <?= json_encode($config["display"]["ner"]) ?>,
+            	"speechesPerPage": <?= json_encode($config["display"]["speechesPerPage"]) ?>
             }
         }
 

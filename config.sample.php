@@ -13,6 +13,12 @@ $config["dir"]["root"] = "";
 $config["display"]["ner"] = true;
 
 /**
+ * Speeches per page
+ * Number
+ */
+$config["display"]["speechesPerPage"] = 40;
+
+/**
  * Allow user to register
  * true or false
  */
