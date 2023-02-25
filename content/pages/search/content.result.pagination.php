@@ -1,6 +1,5 @@
 <?php
-$hitsPerPage = 40;
-$numberOfPages = ceil($totalResults / 40);
+$numberOfPages = ceil($totalResults / $config["display"]["speechesPerPage"]);
 $currentPage = (isset($_REQUEST["page"]) && $_REQUEST["page"] != "") ? $_REQUEST["page"] : 1;
 $prevDisabledClass = ($currentPage == 1) ? "disabled" : "";
 $nextDisabledClass = ($currentPage == $numberOfPages) ? "disabled" : "";

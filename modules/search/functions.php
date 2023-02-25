@@ -800,7 +800,7 @@ function getSearchBody($request, $getAllResults) {
         $sort = array("_score");
     }
 
-    $maxFullResults = ($getAllResults === true) ? 3000 : 120;
+    $maxFullResults = ($getAllResults === true) ? 10000 : $config["display"]["speechesPerPage"];
     //$maxFullResults = 10000;
 
     if ((!$_REQUEST["a"] || count($request) < 2) && !$getAllResults) {
@@ -810,9 +810,7 @@ function getSearchBody($request, $getAllResults) {
     $from = 0;
 
     if ($request["page"] && !$getAllResults) {
-        //$from = (intval($request["page"])-1) * $maxFullResults;
-        //TODO: Pass Results Per Page here, so "40" is not hardcoded. $maxFullResults seems to have a different job
-        $from = (intval($request["page"])-1) * 40;
+        $from = (intval($request["page"])-1) * $config["display"]["speechesPerPage"];
     }
 
     $data = array("from"=>$from, "size"=>$maxFullResults,
