@@ -130,7 +130,7 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
 
     foreach($annotations as $annotation) {
 
-        if (!$annotation["attributes"]["timeStart"]) {
+        if (!$annotation["attributes"]["timeStart"] || !$annotation["attributes"]["timeEnd"]) {
             continue;
         }
 
