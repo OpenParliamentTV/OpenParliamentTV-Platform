@@ -349,6 +349,8 @@ function searchAutocomplete($textQuery) {
 
 function getSearchBody($request, $getAllResults) {
 
+    global $config;
+
     $filter = array("must"=>array(), "should"=>array(), "must_not"=>array());
 
     //ONLY INCLUDE ALIGNED SPEECHES
