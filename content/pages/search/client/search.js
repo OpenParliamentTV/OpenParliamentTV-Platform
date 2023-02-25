@@ -300,7 +300,9 @@ function updateContentsFromURL() {
 	$('#dateFrom').val((queryFrom) ? queryFrom : minDate.toISOString().slice(0,10));
 	$('#dateTo').val((queryTo) ? queryTo : maxDate.toISOString().slice(0,10));
 
-	//updateStatsViz();
+	updateFactionChart();
+    $('#timelineVizWrapper').empty();
+    updateTimelineViz();	
 
 	/* DATE FUNCTIONS END */
 
@@ -512,173 +514,6 @@ function renderPeopleSuggestions(inputValue, data) {
 	}
 }
 
-function updateStatsViz() {
-	var requestQuery = getQueryVariable('q'),
-		requestPersonID = getQueryVariable('personID');
-	if ((requestQuery && requestQuery.length >= 2) || requestPersonID) {
-		getResultStats(function(data) {
-			//updateFactionChart(data.info.speechesPerFaction);
-			updateFactionChart(resultsAttributes["resultsPerFaction"]);
-			//updateTimeRangeChart(data.results);
-			updateTimelineViz();
-		});
-	} else {
-		updateFactionChart([]);
-		//updateTimeRangeChart([]);
-	}
-}
-
-function updateFactionChart(speechesPerFaction) {
-
-	var factionData = {
-	    datasets: [{
-	        data: [],
-	        backgroundColor: [],
-	        borderWidth: [],
-	    }],
-	    labels: []
-	};
-
-	if (speechesPerFaction && speechesPerFaction.length == 0) {
-		factionData.datasets[0].data.push(1);
-		factionData.labels.push(' ');
-		factionData.datasets[0].backgroundColor.push('#aaaaaa');
-		factionData.datasets[0].borderWidth.push(1);
-	} else {
-		for (var faction in speechesPerFaction) {
-			if (speechesPerFaction.hasOwnProperty(faction)) {           
-				var factionColor = (factionIDColors[faction]) ? factionIDColors[faction] : "#aaaaaa";
-
-				factionData.datasets[0].data.push(speechesPerFaction[faction]);
-				factionData.labels.push(faction);
-				factionData.datasets[0].backgroundColor.push(factionColor);
-				factionData.datasets[0].borderWidth.push(1);
-			}
-		}
-	}
-
-	if (!factionChart) {
-		var factionCtx = document.getElementById('factionChart').getContext('2d');
-		factionChart = new Chart(factionCtx, {
-			type: 'doughnut',
-			data: factionData,
-			options: {
-				responsive: true,
-				aspectRatio: 1,
-				legend: {
-					display: false
-				},
-				tooltips: {
-					enabled: false
-				},
-				cutoutPercentage: 75,
-				animation: {
-					animateRotate: true
-				}
-			}
-		});
-	} else {
-		//empty chart
-		factionChart.data.labels = [];
-		factionChart.data.datasets[0].data = [];
-		factionChart.data.datasets[0].backgroundColor = [];
-		// update chart
-		for (var i = 0; i <= factionData.datasets[0].data.length; i++) {
-			factionChart.data.labels.push(factionData.labels[i]);
-			factionChart.data.datasets[0].data.push(factionData.datasets[0].data[i]);
-			factionChart.data.datasets[0].backgroundColor.push(factionData.datasets[0].backgroundColor[i]);
-		}
-		factionChart.update();
-	}
-	
-}
-
-
-/*
-function updateTimeRangeChart(results) {
-
-	var resultDates = [],
-		highestSpeechesPerDay = 0;
-
-	$('#timelineVizWrapper').empty();
-
-	for (var i = 0; i < results.length; i++) {
-		
-		var currentDate = results[i]['date'];
-
-		if (resultDates[currentDate]) {
-			resultDates[currentDate]['count']++;
-			resultDates[currentDate]['speechIDs'].push(results[i]['id']);
-		} else {
-			resultDates[currentDate] = [];
-			resultDates[currentDate]['count'] = 1;
-			resultDates[currentDate]['speechIDs'] = [results[i]['id']];
-		}
-
-		if (resultDates[currentDate]['count'] > highestSpeechesPerDay) {
-			highestSpeechesPerDay = resultDates[currentDate]['count'];
-		}
-	}
-
-	for (var speechDate in resultDates) {
-		var percentSpeechesPerDay = 100 * (resultDates[speechDate]['count'] / highestSpeechesPerDay),
-			oneDay = 24 * 60 * 60 * 1000,
-			diffDays = Math.round(Math.abs((minDate - maxDate) / oneDay)),
-			itemDate = new Date(speechDate),
-			daysSinceMinDate = Math.round(Math.abs((minDate - itemDate) / oneDay)),
-			leftPercent = 100 * (daysSinceMinDate / diffDays);
-
-		var timelineVizItem = $('<div class="timelineVizItem" data-speech-date="'+ speechDate +'" data-speech-count="'+ resultDates[speechDate]['count'] +'" style="height:'+ percentSpeechesPerDay +'%; left:'+ leftPercent +'%"></div>');
-
-		$('#timelineVizWrapper').append(timelineVizItem);
-	}
-
-	/*
-	var timeRangeData = {
-	    datasets: [{
-	        data: [30, 10, 3]
-	    }],
-	    labels: []
-	};
-
-	for (var i=0; i < results; i++) {
-		timeRangeData.datasets[0].data.push(results[i]);
-		timeRangeData.labels.push(faction);
-	}
-
-	if (!timeRangeChart) {
-		var timeRangeCtx = document.getElementById('timeRangeChart').getContext('2d');
-		timeRangeChart = new Chart(timeRangeCtx, {
-			type: 'line',
-			data: timeRangeData,
-			options: {
-				responsive: true,
-				aspectRatio: 1,
-				legend: {
-					display: false
-				},
-				tooltips: {
-					enabled: true
-				},
-				animation: {
-					animateRotate: true
-				}
-			}
-		});
-	} else {
-		//empty chart
-		timeRangeChart.data.labels = [];
-		timeRangeChart.data.datasets[0].data = [];
-		// update chart
-		for (var i = 0; i <= timeRangeData.datasets[0].data.length; i++) {
-			timeRangeChart.data.labels.push(timeRangeData.labels[i]);
-			timeRangeChart.data.datasets[0].data.push(timeRangeData.datasets[0].data[i]);
-		}
-		timeRangeChart.update();
-	}
-
-}
-*/
 function updateQuery() {
 	$('input[name="q"]').val(getInteractiveQueryValues('text'));
 	
@@ -742,30 +577,16 @@ function updateResultList() {
 		}
 		$('#speechListContainer .resultWrapper').html($(data));
 		$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
-		//updateStatsViz(minDate, maxDate);
-		//updateStatsViz();
-		//console.log(resultsAttributes);
+		
+		updateFactionChart();
+        $('#timelineVizWrapper').empty();
+        updateTimelineViz();
+
 		$('.loadingIndicator').hide();
 		runCounterAnimation();
 	}).fail(function(err) {
 		//console.log(err);
 	});
-}
-
-function getResultStats(statsCallback) {
-	statsCallback();
-	/*if(statsAjax && statsAjax.readyState != 4){
-        statsAjax.abort();
-    }
-	statsAjax = $.ajax({
-		method: "GET",
-		url: "./server/ajaxServer.php?a=getMediaIDListFromSearchResult&"+ getSerializedForm()
-	}).done(function(data) {
-		statsCallback(data.return);
-	}).fail(function(err) {
-		//console.log(err);
-	});*/
-
 }
 
 function getInteractiveQueryValues(queryType) {
@@ -837,6 +658,103 @@ function initInteractiveQueryValues() {
 	} else if (queryString != '') {
 		addQueryItem('text', queryString);
 	}
+}
+
+function updateTimelineViz() {
+    if (typeof resultsAttributes !== "object") {
+        return;
+    }
+    let highestSpeechCountPerDay = 0;
+
+    for (let day in resultsAttributes["days"]) {
+        if (resultsAttributes["days"][day]["doc_count"] > highestSpeechCountPerDay) {
+            highestSpeechCountPerDay = resultsAttributes["days"][day]["doc_count"];
+        }
+    }
+    for (let day in resultsAttributes["days"]) {
+        let percentSpeechesPerDay = 100 * (resultsAttributes["days"][day]["doc_count"] / highestSpeechCountPerDay),
+            oneDay = 24 * 60 * 60 * 1000,
+            diffDays = Math.round(Math.abs((minDate - maxDate) / oneDay)),
+            itemDate = new Date(day),
+            daysSinceMinDate = Math.round(Math.abs((minDate - itemDate) / oneDay)),
+            leftPercent = 100 * (daysSinceMinDate / diffDays);
+
+        let timelineVizItem = $('<div class="timelineVizItem" data-speech-date="'+ day +'" data-speech-count="'+ resultsAttributes["days"][day]["doc_count"] +'" style="height:'+ percentSpeechesPerDay +'%; left:'+ leftPercent +'%"></div>');
+
+        $('#timelineVizWrapper').append(timelineVizItem);
+    }
+
+}
+
+function updateFactionChart() {
+
+    if (typeof resultsAttributes !== "object") {
+        return;
+    }
+
+    var speechesPerFaction = resultsAttributes["resultsPerFaction"];
+
+    var factionData = {
+        datasets: [{
+            data: [],
+            backgroundColor: [],
+            borderWidth: [],
+        }],
+        labels: []
+    };
+
+    if (speechesPerFaction && speechesPerFaction.length == 0) {
+        factionData.datasets[0].data.push(1);
+        factionData.labels.push(' ');
+        factionData.datasets[0].backgroundColor.push('#aaaaaa');
+        factionData.datasets[0].borderWidth.push(1);
+    } else {
+        for (var faction in speechesPerFaction) {
+            if (speechesPerFaction.hasOwnProperty(faction)) {
+                var factionColor = (factionIDColors[faction]) ? factionIDColors[faction] : "#aaaaaa";
+
+                factionData.datasets[0].data.push(speechesPerFaction[faction]);
+                factionData.labels.push(faction);
+                factionData.datasets[0].backgroundColor.push(factionColor);
+                factionData.datasets[0].borderWidth.push(1);
+            }
+        }
+    }
+
+    if (!factionChart) {
+        var factionCtx = document.getElementById('factionChart').getContext('2d');
+        factionChart = new Chart(factionCtx, {
+            type: 'doughnut',
+            data: factionData,
+            options: {
+                responsive: true,
+                aspectRatio: 1,
+                legend: {
+                    display: false
+                },
+                tooltips: {
+                    enabled: false
+                },
+                cutoutPercentage: 75,
+                animation: {
+                    animateRotate: true
+                }
+            }
+        });
+    } else {
+        //empty chart
+        factionChart.data.labels = [];
+        factionChart.data.datasets[0].data = [];
+        factionChart.data.datasets[0].backgroundColor = [];
+        // update chart
+        for (var i = 0; i <= factionData.datasets[0].data.length; i++) {
+            factionChart.data.labels.push(factionData.labels[i]);
+            factionChart.data.datasets[0].data.push(factionData.datasets[0].data[i]);
+            factionChart.data.datasets[0].backgroundColor.push(factionData.datasets[0].backgroundColor[i]);
+        }
+        factionChart.update();
+    }
+
 }
 
 function getSerializedForm() {
