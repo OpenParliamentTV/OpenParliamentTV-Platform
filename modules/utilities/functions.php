@@ -375,7 +375,8 @@ function isJson($string) {
 function executeAsyncShellCommand($cmd = null) {
 
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-        pclose(popen("start /B " . $cmd, "r"));
+        //pclose(popen("start /B " . $cmd, "r"));
+        pclose(popen('start /B cmd /C "'.$cmd.' >NUL 2>NUL"', 'r'));
     } else {
         exec("$cmd > /dev/null &");
     }
