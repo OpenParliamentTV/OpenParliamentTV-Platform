@@ -200,7 +200,7 @@ function getMediaIDListFromSearchResult($request) {
 
 	}
 	
-	return $stats;
+	return $return;
 
 
 }
