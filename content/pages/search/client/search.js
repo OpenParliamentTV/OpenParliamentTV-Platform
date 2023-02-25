@@ -759,7 +759,7 @@ function getResultStats(statsCallback) {
     }
 	statsAjax = $.ajax({
 		method: "GET",
-		url: "./server/ajaxServer.php?a=stats&"+ getSerializedForm()
+		url: "./server/ajaxServer.php?a=getMediaIDListFromSearchResult&"+ getSerializedForm()
 	}).done(function(data) {
 		statsCallback(data.return);
 	}).fail(function(err) {

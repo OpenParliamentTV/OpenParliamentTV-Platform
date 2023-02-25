@@ -463,7 +463,7 @@ switch ($_REQUEST["a"]) {
 
 
 
-	case "stats":
+	case "getMediaIDListFromSearchResult":
 
 		require_once(__DIR__."/../modules/search/functions.php");
 		
@@ -471,8 +471,7 @@ switch ($_REQUEST["a"]) {
 
 		$return["success"] = "true";
 		$return["text"] = "searchresults";
-		$return["return"] = searchStats($allowedParams);
-		//$return["return"] = getAffectedFactionCounts($allowedParams);
+		$return["return"] = getMediaIDListFromSearchResult($allowedParams);
 
 
 	break;

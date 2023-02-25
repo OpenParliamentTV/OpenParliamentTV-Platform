@@ -60,7 +60,7 @@ function getResultList(resultListCallback) {
 	}
 	resultListAjax = $.ajax({
 		method: "GET",
-		url: "../server/ajaxServer.php?a=stats"+ ajaxURLParams
+		url: "../server/ajaxServer.php?a=getMediaIDListFromSearchResult"+ ajaxURLParams
 	}).done(function(data) {
 		resultListCallback(data.return);
 	}).fail(function(err) {

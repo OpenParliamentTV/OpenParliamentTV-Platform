@@ -656,32 +656,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
             break;
 
-            case "autocomplete":
-
-                include_once(__DIR__."/modules/autocomplete.php");
-                
-                switch ($request["itemType"]) {
-
-                    case "text": 
-                        
-                        $item = fulltextAutocomplete($request["q"]);
-
-                        if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
-                    break;
-                }
-                
-
-                $return["links"]["self"] = htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"]);
-
-            break;
-
             default:
 
                 $errorarray["status"] = "422";

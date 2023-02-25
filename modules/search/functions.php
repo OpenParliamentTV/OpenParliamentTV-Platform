@@ -173,7 +173,7 @@ function searchSpeeches($request) {
 
 }
 
-function searchStats($request) {
+function getMediaIDListFromSearchResult($request) {
 
 	global $ESClient;
 
@@ -188,9 +188,7 @@ function searchStats($request) {
 		$results = null;
 	}
 
-	$stats = array("results" => array(), "info" => array(
-		"totalSpeeches" => $results["hits"]["total"]["value"]
-	));
+    $return = array();
 
     foreach ($results["hits"]["hits"] as $hit) {
 
@@ -198,115 +196,12 @@ function searchStats($request) {
             "id" => $hit["_source"]["id"]
         );
 
-        $stats["results"][] = $resultInfo;
+        $return["results"][] = $resultInfo;
 
 	}
 	
 	return $stats;
 
-
-}
-
-function getAffectedFactionCounts($request) {
-    global $ESClient;
-
-
-
-    $data = getSearchBody($request, true);
-
-    $data["aggs"]["types_count"]["nested"]["path"] = "annotations.data";
-    $data["aggs"]["types_count"]["aggs"]["factions"]["filter"]["bool"]["filter"]["term"]["annotations.data.attributes.context"] = "main-speaker-faction";
-    $data["aggs"]["types_count"]["aggs"]["factions"]["aggs"]["terms"]["terms"]["field"] = "annotations.data.id";
-    $data["aggs"]["types_count"]["aggs"]["factions"]["aggs"]["terms"]["terms"]["size"] = 20;
-    $data["aggs"]["dateFirst"]["min"]["field"] = "attributes.dateStart";
-    $data["aggs"]["dateLast"]["max"]["field"] = "attributes.dateEnd";
-
-    $data["aggs"]["datesCount"]["date_histogram"]["field"] = "attributes.dateStart";
-    $data["aggs"]["datesCount"]["date_histogram"]["calendar_interval"] = "day";
-    $data["aggs"]["datesCount"]["date_histogram"]["min_doc_count"] = 1;
-    $data["aggs"]["datesCount"]["date_histogram"]["format"] = "yyyy-MM-dd";
-    //echo json_encode($data);
-    //exit;
-    $searchParams = array("index" => "openparliamenttv_de", "body" => $data);
-
-    try {
-        $results = $ESClient->search($searchParams);
-    } catch(Exception $e) {
-        print_r($e->getMessage());
-        $results = null;
-    }
-
-    $stats = array("results" => array(), "info" => array(
-        "totalSpeeches" => $results["hits"]["total"]["value"],
-        "totalSpeechesWithFaction" => $results["aggregations"]["types_count"]["factions"]["doc_count"],
-        "speechesPerFaction" => array(),
-        "speechesPerGender" => array()
-    ));
-    $stats["info"]["speechFirstDateStr"] = $results["aggregations"]["dateFirst"]["value_as_string"];
-    $stats["info"]["speechFirstDateTimestamp"] = $results["aggregations"]["dateFirst"]["value"];
-    $stats["info"]["speechLastDateStr"] = $results["aggregations"]["dateLast"]["value_as_string"];
-    $stats["info"]["speechLastDateTimestamp"] = $results["aggregations"]["dateLast"]["value"];
-    foreach ($results["aggregations"]["types_count"]["factions"]["terms"]["buckets"] as $buckets) {
-        $stats["info"]["speechesPerFaction"][$buckets["key"]] = $buckets["doc_count"];
-    }
-
-
-    return $stats;
-
-
-}
-
-/**
- * @param string $textQuery
- * @return array
- */
-function searchAutocomplete($textQuery) {
-    
-    if (!isset($textQuery) || !strlen($textQuery) > 2 ) {
-    	return array();
-    }
-    
-    require_once(__DIR__.'/../../vendor/autoload.php');
-    require(__DIR__.'/../../config.php');
-
-    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
-
-    if ($config["ES"]["hosts"]) {
-        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
-    }
-    if ($config["ES"]["BasicAuthentication"]["user"]) {
-        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
-    }
-    if ($config["ES"]["SSL"]["pem"]) {
-        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
-    }
-
-    $ESClient = $ESClientBuilder->build();
-
-    $data = getAutocompleteSearchBody($textQuery);
-	
-	$searchParams = array("index" => "openparliamenttv_*", "body" => $data);
-	
-	try {
-		$results = $ESClient->search($searchParams);
-	} catch(Exception $e) {
-		//print_r($e->getMessage());
-		$results = null;
-	}
-
-	/*
-	echo '<pre>';
-	print_r($results); 
-	echo '</pre>';
-	*/
-
-	if ($results && isset($results["suggest"]["autosuggest"][0]["options"])) {
-		$return = $results["suggest"]["autosuggest"][0]["options"];
-	} else {
-		$return = array();
-	}
-
-	return $return;
 
 }
 
@@ -822,44 +717,6 @@ function getSearchBody($request, $getAllResults) {
     */
 
     return $data;
-}
-
-/*
- * @param string $text
- * @return array
- */
-function getAutocompleteSearchBody($text) {
-
-	$maxResults = 4;
-
-	$data = array(
-		"suggest" => array(
-			"text" => $text,
-			"autosuggest" => array(
-				"term" => array(
-					"field" => "attributes.textContents.textHTML.autocomplete",
-					"size" => $maxResults,
-					"sort" => "score",
-					"min_doc_freq" => 3,
-					"suggest_mode" => "always",
-					"min_word_length" => 3
-				)
-			)
-		)
-	);
-
-	return $data;
-}
-
-function addPartyIndicators($HTMLString) {
-	
-	/*
-	$HTMLString = preg_replace('/((SPD)|(CDU)|(CSU)|(FPD)|(AfD))/m', '<span class="partyIndicator" data-party="$1">$1</span>', $HTMLString);
-	$HTMLString = preg_replace('/((B&#xDC;NDNIS\s90\/DIE\sGR&#xDC;NEN)|(BÜNDNIS\s90\/DIE\sGRÜNEN)|(B&Uuml;NDNIS\s90\/DIE\sGR&Uuml;NEN))/m', '<span class="partyIndicator" data-party="DIE GRÜNEN">$1</span>', $HTMLString);
-	$HTMLString = preg_replace('/((DIE\sLINKE)|(LINKEN))/m', '<span class="partyIndicator" data-party="DIE LINKE">$1</span>', $HTMLString);
-	*/
-
-	return $HTMLString;
 }
 
 function DOMinnerHTML(DOMNode $element) { 
