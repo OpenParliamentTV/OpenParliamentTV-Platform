@@ -240,6 +240,7 @@ function personSearch($parameter, $db = false) {
     }
 
 
+
     if (array_key_exists("type", $filteredParameters) && (!in_array($filteredParameters["type"], array("memberOfParliament", "unknown")))) { //TODO: Docs & import
 
         $return["meta"]["requestStatus"] = "error";
@@ -357,6 +358,8 @@ function personSearch($parameter, $db = false) {
 
     }
 
+
+
     if (array_key_exists("factionID", $filteredParameters)) {
 
         if (is_array($filteredParameters["factionID"])) {
@@ -392,7 +395,6 @@ function personSearch($parameter, $db = false) {
         }
 
     }
-
 
 
 
@@ -495,7 +497,7 @@ function personSearch($parameter, $db = false) {
 
         if ($k == "name") {
 
-            $conditions[] = $db->parse("MATCH(p.PersonLabel, p.PersonFirstName, p.PersonLastName) AGAINST (?s IN BOOLEAN MODE)", "*".$para."*");
+            $conditions[] = $db->parse("MATCH(p.PersonLabel, p.PersonFirstName, p.PersonLastName) AGAINST (?s IN BOOLEAN MODE)", "*".str_replace("-", " ",$para)."*");
 
         }
 
@@ -658,8 +660,6 @@ function personSearch($parameter, $db = false) {
         }
 
         $query .= $outputLimit;
-
-
 
         $findings = $db->getAll($query);
 
