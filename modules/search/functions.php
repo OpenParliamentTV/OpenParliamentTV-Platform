@@ -188,50 +188,20 @@ function searchStats($request) {
 		$results = null;
 	}
 
-	$resultCnt = 0;
-	$findCnt = 0;
-
 	$stats = array("results" => array(), "info" => array(
-		"totalSpeeches" => $results["hits"]["total"]["value"],
-		"speechesPerFaction" => array(),
-		"speechesPerGender" => array()
+		"totalSpeeches" => $results["hits"]["total"]["value"]
 	));
 
     foreach ($results["hits"]["hits"] as $hit) {
 
-        //print_r($hit["_source"]["annotations"]["data"]);
-
-        $mainFaction = getMainFactionFromOrganisationsArray($hit["_source"]["annotations"]["data"], $hit["_source"]["relationships"]["organisations"]["data"]);
-
-        $normalizedDate = date("Y-m-d", strtotime($hit["_source"]["attributes"]["dateStart"]));
         $resultInfo = array(
-            "id" => $hit["_source"]["id"],
-            "date" => $normalizedDate,
-            "faction" => $mainFaction["attributes"]["labelAlternative"][0],
-            "electoralPeriod" => $hit["_source"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"],
-            "sessionNumber" => $hit["_source"]["relationships"]["session"]["data"]["attributes"]["number"]
+            "id" => $hit["_source"]["id"]
         );
-
-        $stats["info"]["speechesPerFaction"][$mainFaction["attributes"]["labelAlternative"][0]]++;
-
 
         $stats["results"][] = $resultInfo;
 
-
 	}
-
-	arsort($stats["info"]["speechesPerFaction"]);
-
-	//$results->totalFinds = $findCnt;
-
 	
-	/*
-	echo '<pre>';
-	print_r($results["hits"]["hits"][0]);
-	echo '</pre>';
-	*/
-	
-
 	return $stats;
 
 
