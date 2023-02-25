@@ -805,6 +805,8 @@ function getSearchBody($request, $getAllResults) {
     $maxFullResults = ($getAllResults === true) ? 10000 : $config["display"]["speechesPerPage"];
     //$maxFullResults = 10000;
 
+
+    //TODO: Check what this means and replace $_REQUEST with a function parameter if needed
     if ((!$_REQUEST["a"] || count($request) < 2) && !$getAllResults) {
         $maxFullResults = 10;
     }
@@ -827,7 +829,8 @@ function getSearchBody($request, $getAllResults) {
             "fields"=>array("attributes.textContents.textHTML"=>new \stdClass())
         );
     } else {
-        $data["_source"] = ["id", "attributes.dateStart", "relationships", "annotations"];
+        //$data["_source"] = ["id", "attributes.dateStart", "relationships", "annotations"];
+        $data["_source"] = ["id"];
     }
 
     $data["aggs"]["types_count"]["nested"]["path"] = "annotations.data";
