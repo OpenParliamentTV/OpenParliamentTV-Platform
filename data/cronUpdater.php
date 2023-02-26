@@ -68,7 +68,7 @@ if (is_cli()) {
      */
     if (file_exists(__DIR__."/cronUpdater.lock")) {
 
-        if ((time()-filemtime(__DIR__."/cronUpdater.lock")) >= ($config["time"]["warning"]*60)) {
+        if (((time()-filemtime(__DIR__."/cronUpdater.lock")) >= ($config["time"]["warning"]*60)) && (time()-filemtime(__DIR__."/cronUpdater.lock")) <= ($config["time"]["ignore"]*60)) {
 
             if (filter_var($config["cronContactMail"], FILTER_VALIDATE_EMAIL)) {
 
@@ -256,7 +256,7 @@ if (is_cli()) {
             try {
 
                 cliLog("start updateFilesFromGit");
-                updateFilesFromGit($meta["parliament"]);
+                updateFilesFromGit($parliament);
                 cliLog("end updateFilesFromGit");
 
             } catch (Exception $e) {
@@ -366,7 +366,7 @@ if (is_cli()) {
             }
 
             // Update all added media items to OpenSearch/ElasticSearch
-            $updatedItems = updateSearchIndex($meta["parliament"], $mediaItems);
+            $updatedItems = updateSearchIndex($parliament, $mediaItems);
 
             cliLog("OpenSearch for file " . $file . " updated " . $updatedItems . " media items.");
 

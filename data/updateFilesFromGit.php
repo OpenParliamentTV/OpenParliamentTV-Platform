@@ -50,15 +50,21 @@ function updateFilesFromGit($parliament = "DE") {
 
     if (!is_dir(__DIR__."/repos/".$parliament."/.git")) {
 
-        chdir($realpath);
-        shell_exec($config["bin"]["git"].' -C "'.$realpath.'" clone '.$config["parliament"][$parliament]["git"]["repository"].' .');
+        if (chdir($realpath)) {
+            shell_exec($config["bin"]["git"] . ' -C "' . $realpath . '" clone ' . $config["parliament"][$parliament]["git"]["repository"] . ' .');
+        }
 
     }
 
     shell_exec($config["bin"]["git"]." config --global --add safe.directory ".$realpath);
 
 
-    chdir($realpath);
+    if (!chdir($realpath)) {
+
+        throw new Exception('Could not change directory');
+
+
+    }
 
     //If files were deleted locally restore them first
 
