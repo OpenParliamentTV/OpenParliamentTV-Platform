@@ -134,6 +134,11 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
             continue;
         }
 
+        $entity = $annotation;
+        ob_start();
+        include __DIR__."/../../content/components/entity.preview.php";
+        $annotationHTML = ob_get_clean();
+
         if ($annotation["type"] == "person") {
             $tmpType = "people";
         } elseif ($annotation["type"] == "organisation") {
@@ -161,14 +166,14 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
                 $tmpItem["target"]["selector"]["confirmsTo"] = "http://www.w3.org/TR/media-frags/";
                 $tmpItem["target"]["selector"]["type"]      = "FragmentSelector";
                 $tmpItem["target"]["selector"]["value"]     = "t=".$annotation["attributes"]["timeStart"].",".$annotation["attributes"]["timeEnd"];
-                $tmpItem["body"]["type"]                    = "Text";
-                $tmpItem["body"]["frametrail:type"]         = "webpage";
+                $tmpItem["body"]["type"]                    = "TextualBody";
+                $tmpItem["body"]["frametrail:type"]         = "text";
                 $tmpItem["body"]["format"]                  = "text/html";
-                $tmpItem["body"]["value"]                   = $config["dir"]["root"]."/embed/entity/?type=".$annotation["type"]."&id=".$annotation["id"];
+                $tmpItem["body"]["value"]                   = "";
                 $tmpItem["body"]["frametrail:name"]         = $relationship["attributes"]["label"];
                 $tmpItem["body"]["frametrail:thumb"]        = $relationship["attributes"]["thumbnailURI"];
                 $tmpItem["body"]["frametrail:resourceId"]   = null;
-                $tmpItem["body"]["frametrail:attributes"]   = array();
+                $tmpItem["body"]["frametrail:attributes"]["text"] = htmlentities($annotationHTML);
                 array_push($return, $tmpItem);
                 break;
 
