@@ -13,6 +13,7 @@ $ESClient = Elasticsearch\ClientBuilder::create()
     ->build();
 */
 require_once(__DIR__.'/../../config.php');
+require_once(__DIR__."/../../api/v1/api.php");
 require_once(__DIR__.'/../utilities/functions.entities.php');
 
 $ESClientBuilder = Elasticsearch\ClientBuilder::create();
@@ -134,7 +135,12 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
             continue;
         }
 
-        $entity = $annotation;
+        $entity = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>$annotation["type"], 
+			"id"=>$annotation["id"]
+		]);
+
         ob_start();
         include __DIR__."/../../content/components/entity.preview.php";
         $annotationHTML = ob_get_clean();
@@ -151,6 +157,7 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
 
         foreach ($relationships[$tmpType]["data"] as $relationship) {
             if ($annotation["id"] == $relationship["id"]) {
+
                 $tmpItem = array();
                 $tmpItem["@context"][0]                     = "http://www.w3.org/ns/anno.jsonld";
                 $tmpItem["@context"][1]["frametrail"]       = "http://frametrail.org/ns/";
