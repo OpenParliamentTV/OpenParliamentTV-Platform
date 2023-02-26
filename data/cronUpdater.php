@@ -256,7 +256,7 @@ if (is_cli()) {
             try {
 
                 cliLog("start updateFilesFromGit");
-                updateFilesFromGit($meta["parliament"]);
+                updateFilesFromGit($parliament);
                 cliLog("end updateFilesFromGit");
 
             } catch (Exception $e) {
@@ -366,7 +366,7 @@ if (is_cli()) {
             }
 
             // Update all added media items to OpenSearch/ElasticSearch
-            $updatedItems = updateSearchIndex($meta["parliament"], $mediaItems);
+            $updatedItems = updateSearchIndex($parliament, $mediaItems);
 
             cliLog("OpenSearch for file " . $file . " updated " . $updatedItems . " media items.");
 
