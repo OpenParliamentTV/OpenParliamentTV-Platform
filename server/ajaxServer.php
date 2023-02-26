@@ -200,116 +200,27 @@ switch ($_REQUEST["a"]) {
 
         } else {
 
-            require_once (__DIR__."/../modules/utilities/safemysql.class.php");
-            require_once (__DIR__."/../api/v1/api.php");
-            //require_once (__DIR__."/../api/v1/modules/media.php");
-
-            if (!$db) {
-                try {
-
-                    $db = new SafeMySQL(array(
-                        'host'	=> $config["platform"]["sql"]["access"]["host"],
-                        'user'	=> $config["platform"]["sql"]["access"]["user"],
-                        'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-                        'db'	=> $config["platform"]["sql"]["db"]
-                    ));
-
-                } catch (exception $e) {
-
-                    $return["meta"]["requestStatus"] = "error";
-                    $return["errors"] = array();
-                    $errorarray["status"] = "503";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "Database connection error";
-                    $errorarray["detail"] = "Connecting to platform database failed";
-                    array_push($return["errors"], $errorarray);
-                    echo json_encode($return);
-                    exit;
-
-                }
-            }
-
-
-            if (!$dbp) {
-                try {
-
-                    $dbp = new SafeMySQL(array(
-                        'host'	=> $config["parliament"][$_REQUEST["parliament"]]["sql"]["access"]["host"],
-                        'user'	=> $config["parliament"][$_REQUEST["parliament"]]["sql"]["access"]["user"],
-                        'pass'	=> $config["parliament"][$_REQUEST["parliament"]]["sql"]["access"]["passwd"],
-                        'db'	=> $config["parliament"][$_REQUEST["parliament"]]["sql"]["db"]
-                    ));
-
-                } catch (exception $e) {
-
-                    $return["meta"]["requestStatus"] = "error";
-                    $return["errors"] = array();
-                    $errorarray["status"] = "503";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "Database connection error";
-                    $errorarray["detail"] = "Connecting to parliament database failed";
-                    array_push($return["errors"], $errorarray);
-                    echo json_encode($return);
-                    exit;
-
-                }
-            }
-
-            if ($_REQUEST["type"] == "all") {
-
-                $mediaIDs = $dbp->getAll("SELECT MediaID FROM ?n", $config["parliament"][$_REQUEST["parliament"]]["sql"]["tbl"]["Media"]);
-
-            } elseif ($_REQUEST["type"] == "specific") {
-
-                $mediaIDs = explode(",",$_REQUEST["mediaIDs"]);
-
-            }
-
-
-            $mediaItems = array();
-            require_once (__DIR__."/../data/updateSearchIndex.php");
-
-            foreach ($mediaIDs as $mediaID) {
-                $requestID = (is_array($mediaID) ? $mediaID["MediaID"] : $mediaID);
-                try {
-                    $tmpMedia = apiV1([
-                        "action" => "getItem",
-                        "itemType" => "media",
-                        "id" => $requestID
-                    ], $db, $dbp);
-                    array_push($mediaItems, $tmpMedia);
-
-                    if (count($mediaItems) == 30) {
-                        updateSearchIndex($_REQUEST["parliament"], $mediaItems, true);
-                        $mediaItems = array();
-                    }
-
-                } catch (Exception $e) {
-                    $errorarray["title"] = "Get Media failed";
-                    $errorarray["detail"] = $e->getMessage();
-                    array_push($return["errors"], $errorarray);
-                }
-            }
-
-            if (!empty($mediaItems)) {
-                updateSearchIndex($_REQUEST["parliament"], $mediaItems, true);
-            }
-
-
-
-            try {
-
-                //$updatedItems = updateSearchIndex($_REQUEST["parliament"], $mediaItems, true);
-                $return["success"] = "true";
-                $return["text"] = "Search Index Updated";
-
-            } catch (Exception $e) {
+            if (!array_key_exists($_REQUEST["parliament"], $config["parliament"])) {
 
                 $return["success"] = "false";
-                $return["text"] = "Failed: Search Index Update";
+                $return["text"] = "parliament parameter missing or false";
+                $return["code"] = "403";
+
+            } else {
+
+                require_once (__DIR__."/../modules/utilities/functions.php");
+
+                if ($_REQUEST["MediaIDs"]) {
+                    $ids = " --ids '".$_REQUEST["MediaIDs"]."'";
+                }
+
+                executeAsyncShellCommand($config["bin"]["php"]." ".realpath(__DIR__."/../data/cronUpdater.php")." --parliament '".$_REQUEST["parliament"]."' --justUpdateSearchIndex true".$ids);
+
+                $return["success"] = "true";
+                $return["text"] = "Process should have started";
+                $return["code"] = "200";
 
             }
-
 
 
 
