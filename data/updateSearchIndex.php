@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * @param string $parliament
+ * @param array $items // Array of media items coming from the API v1
+ * @param false $initIndex
+ * @return false|int
+ *
+ * adds or updates media items.
+ * if $initIndex = true the mapping for openSearch will be done first
+ *
+ */
 function updateSearchIndex($parliament, $items, $initIndex = false) {
 
     if (!is_array($items)) {
@@ -80,7 +90,10 @@ function updateSearchIndex($parliament, $items, $initIndex = false) {
 
 }
 
-
+/**
+ * @return array
+ * Helperfunction to setup the query for indexing and mapping an openSearch server
+ */
 function getSearchIndexParameter()
 {
     $data = array();
@@ -220,6 +233,13 @@ function getSearchIndexParameter()
     return $data;
 
 }
+
+/**
+ *
+ * Deletes the search index of $parliament
+ * and recreates the index mapping if $init = true
+ *
+ */
 function deleteSearchIndex($parliament, $init = false) {
 
     if (!$parliament) {
