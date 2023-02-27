@@ -23,7 +23,7 @@ function initShareQuote() {
 	processQuery();
 
 	const selectionShare = shareThis({
-		selector: "#OPTV_Player",
+		selector: "#proceedings",
 		sharers: [{
 			'render': function() {
 				return '<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#shareQuoteModal"><span class="icon-share"></span> '+ localizedLabels.shareQuote +'</button>'
