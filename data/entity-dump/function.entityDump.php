@@ -33,7 +33,7 @@ function getEntityDump($parameter, $db = false) {
     $response["meta"] = array();
     $response["data"] = array();
 
-    if (($parameter["type"] == "person") || ($parameter["type"] == "all")) {
+    if (($parameter["type"] == "person") || (($parameter["type"] == "all") && (!$parameter["exclude_person"]))) {
 
         $people = $db->getAll("SELECT PersonID as id, PersonLabel as label, PersonLabelAlternative as labelAlternative, PersonFirstName as firstname, PersonLastName as lastname, 'person' as 'type', PersonType as subType FROM ?n",$config["platform"]["sql"]["tbl"]["Person"]);
         //echo $db->parse("SELECT PersonID as id, PersonLabel as label, PersonLabelAlternative as labelAlternative, PersonFirstName as firstname, PersonLastName as lastname, 'person' as 'type' FROM ?n",$config["platform"]["sql"]["tbl"]["Person"]);
@@ -46,7 +46,7 @@ function getEntityDump($parameter, $db = false) {
 
     }
 
-    if (($parameter["type"] == "organisation") || ($parameter["type"] == "all")) {
+    if (($parameter["type"] == "organisation") || (($parameter["type"] == "all") && (!$parameter["exclude_organisation"]))) {
 
         $organisations = $db->getAll("SELECT OrganisationID as id, OrganisationLabel as label, OrganisationLabelAlternative as labelAlternative, 'organisation' as 'type', OrganisationType as subType FROM ?n",$config["platform"]["sql"]["tbl"]["Organisation"]);
 
@@ -65,7 +65,7 @@ function getEntityDump($parameter, $db = false) {
 
     }
 
-    if (($parameter["type"] == "term") || ($parameter["type"] == "all")) {
+    if (($parameter["type"] == "term") || (($parameter["type"] == "all") && (!$parameter["exclude_term"]))) {
 
         $terms = $db->getAll("SELECT TermWikidataID as id, TermLabel as label, TermLabelAlternative as labelAlternative, TermID as optvID, 'term' as 'type', TermType as subType FROM ?n",$config["platform"]["sql"]["tbl"]["Term"]);
 
@@ -84,7 +84,7 @@ function getEntityDump($parameter, $db = false) {
 
     }
 
-    if (($parameter["type"] == "document") || (($parameter["type"] == "all") && (!$parameter["wiki"]))) {
+    if (($parameter["type"] == "document") || (($parameter["type"] == "all") && (!$parameter["exclude_document"]))) {
 
         //TODO SELECT DocumentWikidataID as id, DocumentLabel as label, DocumentLabelAlternative as labelAlternative, DocumentID as optvID, 'document' as 'type', DocumentType as subType FROM document WHERE DocumentWikidataID LIKE "Q%";
         $documents = $db->getAll("SELECT DocumentWikidataID as id, DocumentLabel as label, DocumentLabelAlternative as labelAlternative, DocumentID as optvID, 'document' as 'type', DocumentType as subType FROM ?n",$config["platform"]["sql"]["tbl"]["Document"]);
