@@ -722,13 +722,14 @@ function getSearchBody($request, $getAllResults) {
     }
 
     $maxFullResults = ($getAllResults === true) ? 10000 : $config["display"]["speechesPerPage"];
-    //$maxFullResults = 10000;
 
 
     //TODO: Check what this means and replace $_REQUEST with a function parameter if needed
+    /*
     if ((!$_REQUEST["a"] || count($request) < 2) && !$getAllResults) {
         $maxFullResults = 10;
     }
+    */
 
     $from = 0;
 
