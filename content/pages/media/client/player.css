@@ -632,6 +632,7 @@ body.darkmode .playerContainer .playerProgress .ui-slider-range {
 
 .playerContainer .playerProgress .ui-slider-handle-circle {
 	margin-bottom: -24px !important;
+	left: -6px;
 }
 
 .hypervideoContainer .videoContainer .videoStartOverlay .playButtonBig {
