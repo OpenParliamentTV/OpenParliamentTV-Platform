@@ -278,7 +278,8 @@ function updatePlayer() {
 						"otherOrganisation", 
 						"government", 
 						"memberOfParliament", 
-						"document", 
+						"document",
+						"ngo",
 						"term"
 					],
 					"types": [],
