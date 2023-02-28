@@ -17,7 +17,7 @@ if ($entity["data"]["type"] == "organisation") {
 						</div>
 					</div>
 					<div class="col">
-						<h3><a href="<?= $config["dir"]["root"] ?>/<?= $entity["data"]["type"] ?>/<?= $entity["data"]["id"] ?>"><?= $entity["data"]["attributes"]["label"] ?></a></h3>
+						<h3 style="hyphens: auto; white-space: normal;"><a href="<?= $config["dir"]["root"] ?>/<?= $entity["data"]["type"] ?>/<?= $entity["data"]["id"] ?>"><?= $entity["data"]["attributes"]["label"] ?></a></h3>
 						<?php 
 						if (isset($entity["data"]["relationships"]["faction"]["data"]["id"])) {
 						?>
