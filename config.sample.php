@@ -1,6 +1,14 @@
 <?php
 
 /**
+ * Version Number 
+ * (mostly used for refreshing cached resources of previous version)
+ * Example: "1.5"
+ * String
+ */
+$config["version"] = "";
+
+/**
  * The URI to your Open Parliament TV instance
  * Example: https://de.openparliament.tv
  */
