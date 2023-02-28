@@ -26,7 +26,7 @@ include_once(__DIR__ . '/../../header.php'); ?>
 	</div>
 </main>
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/search/client/search.js"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/search/client/search.js?v=<?= $config["version"] ?>"></script>
 
 <?php
 }

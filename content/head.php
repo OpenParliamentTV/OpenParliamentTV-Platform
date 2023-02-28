@@ -22,20 +22,20 @@
 if ($page != 'media') {
 ?>
 
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css" media="all" />
-    <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/Chart.min.css" media="all" />
-    <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/frametrail-webfont.css" media="all" />
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css" media="all" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
+    <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/Chart.min.css?v=<?= $config["version"] ?>" media="all" />
+    <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/frametrail-webfont.css?v=<?= $config["version"] ?>" media="all" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 
 <?php
 } else {
 ?>
-	<link rel="stylesheet" type="text/css" href="<?= $config["dir"]["root"] ?>/content/client/FrameTrail.min.css">
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css" media="all" />
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/Chart.min.css" media="all" />
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css" media="all" />
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.css" media="all" />
-  <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/shareQuote.css" media="all" />
+	<link rel="stylesheet" type="text/css" href="<?= $config["dir"]["root"] ?>/content/client/FrameTrail.min.css?v=<?= $config["version"] ?>">
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/Chart.min.css?v=<?= $config["version"] ?>" media="all" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.css?v=<?= $config["version"] ?>" media="all" />
+  <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/shareQuote.css?v=<?= $config["version"] ?>" media="all" />
 <?php
 }
 ?>
@@ -43,7 +43,7 @@ if ($page != 'media') {
 <?php
 if ($pageType == 'admin' || $pageType == 'entity') {
 ?>
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap-table.min.css" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap-table.min.css?v=<?= $config["version"] ?>" />
 <?php
 }
 ?>
@@ -53,22 +53,22 @@ if ($pageType == 'admin' || $pageType == 'entity') {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 </script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery-ui.min.js"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.form.min.js"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/Chart.min.js"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery-3.4.1.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery-ui.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.form.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/Chart.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap.bundle.min.js?v=<?= $config["version"] ?>"></script>
 
 <?php
 if ($pageType == 'admin' || $pageType == 'entity') {
 ?>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table.min.js"></script>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-de-DE.js"></script>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-export.min.js"></script>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/tableExport.js"></script>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-multi-toggle.min.js"></script>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/shim.min.js"></script>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/xlsx.full.min.js"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table.min.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-de-DE.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-export.min.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/tableExport.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-multi-toggle.min.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/shim.min.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/xlsx.full.min.js?v=<?= $config["version"] ?>"></script>
 <?php
 }
 ?>

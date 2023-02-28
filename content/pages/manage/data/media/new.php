@@ -171,10 +171,10 @@ if ($_REQUEST["aTEST"]) {
 		</div>
 	</div>
 </main>
-<link rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/jquery.typeahead.min.css">
-<link rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/data/media/client/media.new.css">
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.typeahead.min.js"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/manage/data/media/client/media.new.js"></script>
+<link rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/jquery.typeahead.min.css?v=<?= $config["version"] ?>">
+<link rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/data/media/client/media.new.css?v=<?= $config["version"] ?>">
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.typeahead.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/manage/data/media/client/media.new.js?v=<?= $config["version"] ?>"></script>
 <?php
     include_once(__DIR__ . '/../../../../footer.php');
 

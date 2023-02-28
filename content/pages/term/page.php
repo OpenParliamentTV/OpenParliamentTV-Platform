@@ -74,7 +74,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 	</div>
 </main>
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/searchResults.js"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/searchResults.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
 	$(document).ready( function() {
 		updateMediaList("termID=<?= $apiResult["data"]["id"] ?>&sort=date-desc");

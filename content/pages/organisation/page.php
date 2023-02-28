@@ -75,7 +75,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 	</div>
 </main>
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/searchResults.js"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/searchResults.js?v=<?= $config["version"] ?>"></script>
 <?php 
 	$subType = ($apiResult["data"]["attributes"]["type"] == "faction" || 
 				$apiResult["data"]["attributes"]["type"] == "party") ? 

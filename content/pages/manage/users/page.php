@@ -99,7 +99,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		</div>
 	</div>
 </main>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/manage/users/client/users.overview.js"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/manage/users/client/users.overview.js?v=<?= $config["version"] ?>"></script>
 <?php
 include_once(__DIR__ . '/../../../footer.php');
 }
