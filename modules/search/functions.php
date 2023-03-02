@@ -581,7 +581,79 @@ function getSearchBody($request, $getAllResults) {
 
         } else if ($requestKey == "documentID") {
 
-            $filter["must"][] = array("match"=>array("relationships.documents.data.id" => $requestValue));
+            //$filter["must"][] = array("match"=>array("relationships.documents.data.id" => $requestValue));
+
+            if (is_array($requestValue)) {
+
+                foreach ($requestValue as $documentID) {
+
+                    if (isset($request["context"]) && strlen($request["context"]) > 2) {
+                        $filter["should"][] = array(
+                            "nested" => array(
+                                "path" => "annotations.data",
+                                "query" => array("bool" => array("must"=>array(
+                                    array("match" => array(
+                                        "annotations.data.id" => $documentID
+                                    )),
+                                    array("match_phrase" => array(
+                                        "annotations.data.attributes.context" => $request["context"]
+                                    ))
+                                )))
+                            )
+                        );
+
+                    } else {
+
+                        $filter["should"][] = array(
+                            "nested" => array(
+                                "path" => "annotations.data",
+                                "query" => array("bool" => array("must"=>array(
+                                    array("match" => array(
+                                        "annotations.data.id" => $documentID
+                                    ))
+                                )))
+                            )
+                        );
+
+                    }
+
+                }
+
+                $shouldCount++;
+
+            } else {
+
+                if (isset($request["context"]) && strlen($request["context"]) > 2) {
+                    $filter["must"][] = array(
+                        "nested" => array(
+                            "path" => "annotations.data",
+                            "query" => array("bool" => array("must"=>array(
+                                array("match" => array(
+                                    "annotations.data.id" => $requestValue
+                                )),
+                                array("match_phrase" => array(
+                                    "annotations.data.attributes.context" => $request["context"]
+                                ))
+                            )))
+                        )
+                    );
+
+                } else {
+
+                    $filter["must"][] = array(
+                        "nested" => array(
+                            "path" => "annotations.data",
+                            "query" => array("bool" => array("must"=>array(
+                                array("match" => array(
+                                    "annotations.data.id" => $requestValue
+                                ))
+                            )))
+                        )
+                    );
+
+                }
+
+            }
 
         } else if ($requestKey == "termID") {
 
