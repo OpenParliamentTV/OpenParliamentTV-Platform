@@ -37,7 +37,7 @@ if (!$_REQUEST["a"] || count($_REQUEST) < 2 ||
 			<ul>
 				<li><?php echo L::featureBullet1; ?></li>
 				<li><?php echo L::featureBullet2; ?></li>
-				<li><?php echo L::fromTime; ?> 2017 <?php echo L::until; ?> <?php echo L::today; ?>*</li>
+				<li><?php echo L::fromTime; ?> 2017 <?php echo L::until; ?> <?php echo L::today; ?></li>
 				<li><?php echo L::moreParliamentsSoon; ?> <br class="d-inline d-sm-none"/>(<a href='https://openparliament.tv'> <u><?php echo L::moreInfo; ?></u> </a>)</li>
 			</ul>
 			<!--
