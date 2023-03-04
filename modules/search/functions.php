@@ -395,13 +395,19 @@ function getSearchBody($request, $getAllResults) {
             
             if ($requestKey == "personID") {
                 $resourceType = "person";
-                $request["context"] = "main-speaker";
+                if(!isset($request["context"])) {
+                    $request["context"] = "main-speaker";
+                }
             } else if ($requestKey == "partyID") {
                 $resourceType = "organisation";
-                $request["context"] = "main-speaker-party";
+                if(!isset($request["context"])) {
+                    $request["context"] = "main-speaker-party";
+                }
             } else if ($requestKey == "factionID") {
                 $resourceType = "organisation";
-                $request["context"] = "main-speaker-faction";
+                if(!isset($request["context"])) {
+                    $request["context"] = "main-speaker-faction";
+                }
             } else {
                 $resourceType = str_replace("ID", "",$requestKey);
             }
