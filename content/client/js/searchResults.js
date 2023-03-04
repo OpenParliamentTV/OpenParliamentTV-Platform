@@ -5,6 +5,10 @@ function updateMediaList(query, targetSelector) {
 		var targetSelector = '#speechListContainer';
 	}
 
+	if ($(targetSelector).length == 0) {
+		return;
+	}
+
 	currentQueries[targetSelector] = query;
 
 	$(targetSelector +' .loadingIndicator').show();
@@ -15,7 +19,7 @@ function updateMediaList(query, targetSelector) {
 	}).done(function(data) {
 		$(targetSelector +' .resultWrapper').html($(data));
 		$(targetSelector +' .loadingIndicator').hide();
-		console.log(targetSelector);
+		//console.log(targetSelector);
 		$(targetSelector +' [name="sort"]').val((getQueryVariableFromString('sort', currentQueries[targetSelector])) ? getQueryVariableFromString('sort', currentQueries[targetSelector]) : 'relevance');
 		$(targetSelector +' .resultWrapper > nav a').each(function() {
 			var thisPage = getQueryVariableFromString('page', $(this).attr('href'));
