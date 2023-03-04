@@ -289,25 +289,9 @@ function getSearchBody($request, $getAllResults) {
 
     foreach ($request as $requestKey => $requestValue) {
 
-        /*
-        if ($requestKey != "a" &&
-            $requestKey != "q" &&
-            $requestKey != "name" &&
-            $requestKey != "timefrom" &&
-            $requestKey != "timeto" &&
-            $requestKey != "party" &&
-            $requestKey != "playresults" &&
-            $requestKey != "page" &&
-            $requestKey != "id" &&
-            $requestKey != "sort") {
-
-            if (strlen($requestValue) > 0) {
-                $filter["must"][] = array("match"=>array("meta.".$requestKey => $requestValue));
-            }
-        */
         if ($requestKey == "parliament" && strlen($requestValue) > 2) {
 
-            //???
+            //TODO
 
         } else if ($requestKey == "electoralPeriod" && strlen($requestValue) > 2) {
 
@@ -330,124 +314,25 @@ function getSearchBody($request, $getAllResults) {
             $agendaItemID = array_pop($agendaItemStringsplit);
             $filter["must"][] = array("match"=>array("relationships.agendaItem.data.id" => $agendaItemID));
 
-        } else if ($requestKey == "procedureID" && strlen($requestValue) >= 1) {
-
-            $filter["must"][] = array("match"=>array("relationships.documents.data.attributes.additionalInformation.procedureIDs" => $requestValue));
-
-        } else if ($requestKey == "dateFrom") {
-
-            $filter["must"][] = array("range"=>array("attributes.dateStart"=>array("gte"=>$requestValue)));
-
-        } else if ($requestKey == "dateTo") {
-
-            $filter["must"][] = array("range"=>array("attributes.dateStart"=>array("lte"=>$requestValue)));
-
         } else if ($requestKey == "party" || $requestKey == "faction") {
+            
+            // TODO: Filter by context from annotations context
+
             if (is_array($requestValue)) {
                 foreach ($requestValue as $partyOrFaction) {
 
-                    //TODO: Get mainSpeaker from people Array
-                    //TODO: people.data[0].attributes.party needs labelAlternative as well!
                     $filter["should"][] = array("match_phrase"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $partyOrFaction));
 
                 }
                 $shouldCount++;
             } else {
 
-                //TODO: Get mainSpeaker from people Array
-                //TODO: people.data[0].attributes.party needs labelAlternative as well!
                 $filter["must"][] = array("match"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $requestValue));
 
             }
-        } else if ($requestKey == "partyID") {
-            if (is_array($requestValue)) {
-                foreach ($requestValue as $partyID) {
-
-                    $filter["should"][] = array(
-                        "nested" => array(
-                            "path" => "annotations.data",
-                            "query" => array("bool" => array("must"=>array(
-                                array("match" => array(
-                                    "annotations.data.id" => $partyID
-                                )),
-                                array("match_phrase" => array(
-                                    "annotations.data.attributes.context" => 'main-speaker-party'
-                                ))
-                            )))
-                        )
-                    );
-
-                }
-
-                $shouldCount++;
-
-            } else {
-
-                $filter["must"][] = array(
-                    "nested" => array(
-                        "path" => "annotations.data",
-                        "query" => array("bool" => array("must"=>array(
-                            array("match" => array(
-                                "annotations.data.id" => $requestValue
-                            )),
-                            array("match_phrase" => array(
-                                "annotations.data.attributes.context" => 'main-speaker-party'
-                            ))
-                        )))
-                    )
-                );
-
-            }
-        } else if ($requestKey == "factionID") {
-            if (is_array($requestValue)) {
-                foreach ($requestValue as $factionID) {
-
-                    $filter["should"][] = array(
-                        "nested" => array(
-                            "path" => "annotations.data",
-                            "query" => array("bool" => array("must"=>array(
-                                array("match" => array(
-                                    "annotations.data.id" => $factionID
-                                )),
-                                array("match_phrase" => array(
-                                    "annotations.data.attributes.context" => 'main-speaker-faction'
-                                ))
-                            )))
-                        )
-                    );
-
-                }
-
-                $shouldCount++;
-
-            } else {
-
-                $filter["must"][] = array(
-                    "nested" => array(
-                        "path" => "annotations.data",
-                        "query" => array("bool" => array("must"=>array(
-                            array("match" => array(
-                                "annotations.data.id" => $requestValue
-                            )),
-                            array("match_phrase" => array(
-                                "annotations.data.attributes.context" => 'main-speaker-faction'
-                            ))
-                        )))
-                    )
-                );
-
-            }
-        } else if ($requestKey == "organisationID") {
-
-            $filter["should"][] = array("multi_match"=>array(
-                "query" => $requestValue,
-                "type" => "cross_fields",
-                "fields" => ["relationships.people.data.attributes.party.id", "relationships.people.data.attributes.faction.id"],
-                "operator" => "or"
-            ));
-            $shouldCount++;
-
         } else if ($requestKey == "abgeordnetenwatchID") {
+
+            // TODO: Filter by context from annotations context
 
             if (isset($request["context"]) && strlen($request["context"]) > 2) {
                 $filter["must"][] = array(
@@ -484,25 +369,46 @@ function getSearchBody($request, $getAllResults) {
 
         } else if ($requestKey == "person" && strlen($requestValue) > 1) {
 
+            // TODO: Filter by context from annotations context
+
             $filter["must"][] = array(
                 "nested" => array(
                     "path" => "annotations.data",
                     "query" => array("bool" => array("must"=>array(
                         array("match_phrase" => array(
-                            "annotations.data.label" => $requestValue
+                            "relationships.people.data.label" => $requestValue
                         )),
                         array("match" => array(
-                            "annotations.data.attributes.context" => 'main-speaker'
+                            "relationships.people.data.attributes.context" => 'main-speaker'
                         ))
                     )))
                 )
             );
 
-        } else if ($requestKey == "personID") {
+        } else if ( $requestKey == "personID" || 
+                    $requestKey == "organisationID" || 
+                    $requestKey == "documentID" || 
+                    $requestKey == "termID" || 
+                    $requestKey == "partyID" || 
+                    $requestKey == "factionID" ) {
+
+            
+            if ($requestKey == "personID") {
+                $resourceType = "person";
+                $request["context"] = "main-speaker";
+            } else if ($requestKey == "partyID") {
+                $resourceType = "organisation";
+                $request["context"] = "main-speaker-party";
+            } else if ($requestKey == "factionID") {
+                $resourceType = "organisation";
+                $request["context"] = "main-speaker-faction";
+            } else {
+                $resourceType = str_replace("ID", "",$requestKey);
+            }
 
             if (is_array($requestValue)) {
 
-                foreach ($requestValue as $personID) {
+                foreach ($requestValue as $entityID) {
 
                     if (isset($request["context"]) && strlen($request["context"]) > 2) {
                         $filter["should"][] = array(
@@ -510,7 +416,10 @@ function getSearchBody($request, $getAllResults) {
                                 "path" => "annotations.data",
                                 "query" => array("bool" => array("must"=>array(
                                     array("match" => array(
-                                        "annotations.data.id" => $personID
+                                        "annotations.data.id" => $entityID
+                                    )),
+                                    array("match" => array(
+                                        "annotations.data.type" => $resourceType
                                     )),
                                     array("match_phrase" => array(
                                         "annotations.data.attributes.context" => $request["context"]
@@ -526,10 +435,10 @@ function getSearchBody($request, $getAllResults) {
                                 "path" => "annotations.data",
                                 "query" => array("bool" => array("must"=>array(
                                     array("match" => array(
-                                        "annotations.data.id" => $personID
+                                        "annotations.data.id" => $entityID
                                     )),
                                     array("match" => array(
-                                        "annotations.data.attributes.context" => 'main-speaker'
+                                        "annotations.data.type" => $resourceType
                                     ))
                                 )))
                             )
@@ -551,6 +460,9 @@ function getSearchBody($request, $getAllResults) {
                                 array("match" => array(
                                     "annotations.data.id" => $requestValue
                                 )),
+                                array("match" => array(
+                                    "annotations.data.type" => $resourceType
+                                )),
                                 array("match_phrase" => array(
                                     "annotations.data.attributes.context" => $request["context"]
                                 ))
@@ -568,7 +480,7 @@ function getSearchBody($request, $getAllResults) {
                                     "annotations.data.id" => $requestValue
                                 )),
                                 array("match" => array(
-                                    "annotations.data.attributes.context" => 'main-speaker'
+                                    "annotations.data.type" => $resourceType
                                 ))
                             )))
                         )
@@ -578,89 +490,22 @@ function getSearchBody($request, $getAllResults) {
 
             }
 
+        } else if ($requestKey == "procedureID" && strlen($requestValue) >= 1) {
 
-        } else if ($requestKey == "documentID") {
-
-            //$filter["must"][] = array("match"=>array("relationships.documents.data.id" => $requestValue));
-
-            if (is_array($requestValue)) {
-
-                foreach ($requestValue as $documentID) {
-
-                    if (isset($request["context"]) && strlen($request["context"]) > 2) {
-                        $filter["should"][] = array(
-                            "nested" => array(
-                                "path" => "annotations.data",
-                                "query" => array("bool" => array("must"=>array(
-                                    array("match" => array(
-                                        "annotations.data.id" => $documentID
-                                    )),
-                                    array("match_phrase" => array(
-                                        "annotations.data.attributes.context" => $request["context"]
-                                    ))
-                                )))
-                            )
-                        );
-
-                    } else {
-
-                        $filter["should"][] = array(
-                            "nested" => array(
-                                "path" => "annotations.data",
-                                "query" => array("bool" => array("must"=>array(
-                                    array("match" => array(
-                                        "annotations.data.id" => $documentID
-                                    ))
-                                )))
-                            )
-                        );
-
-                    }
-
-                }
-
-                $shouldCount++;
-
-            } else {
-
-                if (isset($request["context"]) && strlen($request["context"]) > 2) {
-                    $filter["must"][] = array(
-                        "nested" => array(
-                            "path" => "annotations.data",
-                            "query" => array("bool" => array("must"=>array(
-                                array("match" => array(
-                                    "annotations.data.id" => $requestValue
-                                )),
-                                array("match_phrase" => array(
-                                    "annotations.data.attributes.context" => $request["context"]
-                                ))
-                            )))
-                        )
-                    );
-
-                } else {
-
-                    $filter["must"][] = array(
-                        "nested" => array(
-                            "path" => "annotations.data",
-                            "query" => array("bool" => array("must"=>array(
-                                array("match" => array(
-                                    "annotations.data.id" => $requestValue
-                                ))
-                            )))
-                        )
-                    );
-
-                }
-
-            }
-
-        } else if ($requestKey == "termID") {
-
-            $filter["must"][] = array("match"=>array("relationships.terms.data.id" => $requestValue));
+            $filter["must"][] = array("match"=>array("relationships.documents.data.attributes.additionalInformation.procedureIDs" => $requestValue));
 
         } else if ($requestKey == "id" && strlen($requestValue) > 3 && !$getAllResults) {
+            
             $filter["must"][] = array("match_phrase"=>array("id" => $requestValue));
+
+        } else if ($requestKey == "dateFrom") {
+
+            $filter["must"][] = array("range"=>array("attributes.dateStart"=>array("gte"=>$requestValue)));
+
+        } else if ($requestKey == "dateTo") {
+
+            $filter["must"][] = array("range"=>array("attributes.dateStart"=>array("lte"=>$requestValue)));
+
         }
     }
 
