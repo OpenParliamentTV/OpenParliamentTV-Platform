@@ -1,4 +1,5 @@
 <?php
+
 include_once(__DIR__ . '/../../../modules/utilities/auth.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
@@ -26,8 +27,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					</div>
 					<div class="col">
 						<?php 
-						if (isset($apiResult["data"]["attributes"]["additionalInformation"]["subType"])) { 
-							echo '<div>'.$apiResult["data"]["attributes"]["additionalInformation"]["subType"].' '.L::by.': '.$apiResult["data"]["attributes"]["additionalInformation"]["creator"][0].'</div>';
+						if (isset($apiResult["data"]["attributes"]["additionalInformation"]["subType"])) {
+						?> 
+						<div><?= $apiResult["data"]["attributes"]["additionalInformation"]["subType"] ?> <?php echo L::by ?>: <?=$apiResult["data"]["attributes"]["additionalInformation"]["creator"][0] ?></div>
+						<?php
 						}
 						?>
 						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
@@ -44,9 +47,15 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				<li class="nav-item">
 					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::relatedMedia ?></span></a>
 				</li>
+				<?php 
+				if ($config["display"]["ner"]) {
+				?>
 				<li class="nav-item">
 					<a class="nav-link" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?> (beta)</span></a>
 				</li>
+				<?php 
+				}
+				?>
 				<li class="nav-item ml-auto">
 					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
 				</li>
@@ -60,6 +69,9 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						</div>
 					</div>
 				</div>
+				<?php 
+				if ($config["display"]["ner"]) {
+				?>
 				<div class="tab-pane fade" id="ner" role="tabpanel" aria-labelledby="ner-tab">
 					<div id="nerListContainer">
 						<div class="resultWrapper"></div>
@@ -68,6 +80,9 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						</div>
 					</div>
 				</div>
+				<?php 
+				}
+				?>
 				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
 					<?php include_once(__DIR__ . '/../../components/entity.data.php'); ?>
 				</div>
@@ -79,8 +94,8 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/searchResults.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
 	$(document).ready( function() {
-		updateMediaList("documentID=<?= $apiResult["data"]["id"] ?>&context=proceedingsReference&sort=topic-asc");
-		updateMediaList("documentID=<?= $apiResult["data"]["id"] ?>&context=NER", "#nerListContainer");
+		updateMediaList("documentID=<?= $apiResult["data"]["id"] ?>&context=proceedingsReference&sort=date-desc");
+		updateMediaList("documentID=<?= $apiResult["data"]["id"] ?>&context=NER&sort=date-desc", "#nerListContainer");
 		$('#dataTable').bootstrapTable({
 			showToggle: false,
 			multiToggleDefaults: [],
