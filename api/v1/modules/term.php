@@ -159,7 +159,7 @@ function termGetDataObject($item = false, $db = false) {
 
     if ((is_array($item)) && $db) {
 
-        $return["meta"]["requestStatus"] = "success";
+        //$return["meta"]["requestStatus"] = "success";
         $return["type"] = "term";
         $return["id"] = $item["TermID"];
         $return["attributes"]["type"] = $item["TermType"];
