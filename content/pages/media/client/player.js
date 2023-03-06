@@ -20,7 +20,7 @@ $(document).ready( function() {
 	updateAutoplayState();
 
 	updatePlayer();
-	$('#shareQuoteModal').appendTo('body');
+	$('#shareQuoteModal, #nerModal').appendTo('body');
 
 	getResultList(function(data) {
 		resultList = data.results;
@@ -270,7 +270,7 @@ function updatePlayer() {
 			{
 				"type": "TimedContent",
 				"contentSize": "small",
-				"name": localizedLabels.automaticallyDetected + " (beta)",
+				"name": localizedLabels.automaticallyDetected + " <a class='alert ml-1 px-1 py-0 alert-warning' data-toggle='modal' data-target='#nerModal' href='#'><span class='icon-attention mr-1'></span><u>beta</u></a>",
 				"description": "",
 				"cssClass": "",
 				"collectionFilter": {

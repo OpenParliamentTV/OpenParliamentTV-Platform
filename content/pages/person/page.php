@@ -54,7 +54,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				if ($config["display"]["ner"]) {
 				?>
 				<li class="nav-item">
-					<a class="nav-link" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?> (beta)</span></a>
+					<a class="nav-link" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention mr-1"></span><u>beta</u></span></span></a>
 				</li>
 				<?php 
 				}
@@ -101,6 +101,19 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		</div>
 	</div>
 </main>
+<div class="modal fade" id="nerModal" tabindex="-1" role="dialog" aria-labelledby="nerModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nerModalTitle"><?php echo L::automaticallyDetected; ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"><?php echo L::messageAutomaticallyDetected; ?></div>
+        </div>
+    </div>
+</div>
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/searchResults.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">

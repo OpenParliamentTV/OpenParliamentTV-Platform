@@ -242,8 +242,7 @@ $nerPanel = '';
 if ($config["display"]["ner"]) {
     $nerPanel = 
     '<hr>
-    <div class="relationshipsCategoryHeader">'.L::automaticallyDetected.' (beta)</div>
-    <div class="alert px-1 py-0 alert-warning"><span class="icon-attention mr-1"></span>'.L::messageAutomaticallyDetected.'</div>
+    <div class="relationshipsCategoryHeader">'.L::automaticallyDetected.' <a class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal" href="#" style="font-weight: lighter;"><span class="icon-attention mr-1"></span><u>beta</u></a></div>
     <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">
         '.$relatedDocumentsHTMLNER.' '.$relatedPeopleHTMLNER.' '.$relatedOrganisationsHTMLNER.' '.$relatedDocumentsHTMLNER.'
     </div>';
@@ -385,6 +384,19 @@ $relatedContentsHTML = str_replace(array("\r","\n"), " ",$relatedContentsHTML);
     </div>
 </div>
 <div id="videoAttribution" class="copyrightInfo" style="display: none;"><span class="icon-info-circled"></span><span class="copyrightText"><?php echo L::source; ?>: <?= $speech["attributes"]["creator"] ?>, <?= $speech["attributes"]["license"] ?></span></div>
+<div class="modal fade" id="nerModal" tabindex="-1" role="dialog" aria-labelledby="nerModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nerModalTitle"><?php echo L::automaticallyDetected; ?></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body"><?php echo L::messageAutomaticallyDetected; ?></div>
+        </div>
+    </div>
+</div>
 <!--
 <div class="container mb-5">
     <?php //include_once('content.related.php'); ?>
