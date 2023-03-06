@@ -677,6 +677,15 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     white-space: normal;
 }
 
+.entityLinksContainer {
+    height: 100%;
+    border-left: 1px solid var(--border-color);
+}
+
+.entityLinksContainer img {
+    width: 30px;
+}
+
 .nav-tabs {
     border-bottom-color: var(--border-color);
 }
