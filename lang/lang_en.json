@@ -91,7 +91,7 @@
 	"messageAuthLoginRequiredTitle": "Login required",
 	"messageAuthNotPermittedDetail": "You are not allowed to access this page or carry out this action.",
 	"messageAuthNotPermittedTitle": "Not permitted",
-	"messageAutomaticallyDetected": "These people, organisations, documents and terms have been detected via Named Entity Recognition. They have not been checked.",
+	"messageAutomaticallyDetected": "These <b>people, organisations, laws and terms</b> have been detected via <b>Named Entity Recognition</b> in the fulltext of the proceedings. <br><br>This is a fully automated process which is currently being tested. <br><br><b>The detected entities have not been manually checked and can contain errors.</b>",
 	"messageErrorGeneric": "An error occured. Please try again.",
 	"messageErrorNoDatabaseConnectionDetail": "Connecting to database failed",
 	"messageErrorNoDatabaseConnectionTitle": "Database connection error",
