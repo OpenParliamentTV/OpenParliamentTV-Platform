@@ -383,7 +383,7 @@ $relatedContentsHTML = str_replace(array("\r","\n"), " ",$relatedContentsHTML);
         </div>
     </div>
 </div>
-<div id="videoAttribution" class="copyrightInfo" style="display: none;"><span class="icon-info-circled"></span><span class="copyrightText"><?php echo L::source; ?>: <?= $speech["attributes"]["creator"] ?>, <?= $speech["attributes"]["license"] ?></span></div>
+<div id="videoAttribution" class="copyrightInfo" style="display: none;"><span class="icon-info-circled"></span><span class="copyrightText"><?php echo L::source; ?>: <?= $speech["attributes"]["creator"] ?>, <?php echo html_entity_decode($speech["attributes"]["license"]); ?></span></div>
 <div class="modal fade" id="nerModal" tabindex="-1" role="dialog" aria-labelledby="nerModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
