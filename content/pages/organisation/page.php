@@ -18,7 +18,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 <main class="container-fluid subpage">
 	<div class="detailsHeader">
 		<div class="row" style="position: relative; z-index: 1">
-			<div class="col-12">
+			<div class="col-12 col-md-8 col-lg-9">
 				<div class="row align-items-center">
 					<div class="col flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
@@ -29,9 +29,12 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<h2><?= $apiResult["data"]["attributes"]["labelAlternative"][0] ?></h2>
 						<div><?= $apiResult["data"]["attributes"]["label"] ?></div>
 						<div><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
-						<a href="<?= $apiResult["data"]["attributes"]["websiteURI"] ?>"><?= $apiResult["data"]["attributes"]["websiteURI"] ?></a>
+						<div class="mt-1"><a href="<?= $apiResult["data"]["attributes"]["websiteURI"] ?>"><?= $apiResult["data"]["attributes"]["websiteURI"] ?></a></div>
 					</div>
 				</div>
+			</div>
+			<div class="col-12 col-md-4 col-lg-3">
+				<?php include_once(__DIR__ . '/../../components/entity.links.php'); ?>
 			</div>
 		</div>
 	</div>

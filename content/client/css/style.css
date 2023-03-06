@@ -190,6 +190,14 @@ header #navbarNavSettings .nav-item {
     color: var(--primary-bg-color) !important;
 }
 
+.nav-link .alert {
+    display: none;
+}
+
+.nav-link.active .alert {
+    display: inline;
+}
+
 footer {
     margin-top: 0px;
     padding: 10px 15px;
@@ -678,12 +686,24 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 }
 
 .entityLinksContainer {
-    height: 100%;
-    border-left: 1px solid var(--border-color);
+    
 }
 
 .entityLinksContainer img {
-    width: 30px;
+    height: 16px;
+    top: -1px;
+    position: relative;
+}
+
+body.darkmode .entityLinksContainer img, 
+.entityLinksContainer .btn:hover img, 
+.entityLinksContainer .btn:focus img {
+    filter: grayscale(1) invert(1) brightness(10) opacity(0.9) !important;
+}
+
+body.darkmode .entityLinksContainer .btn:hover img,
+body.darkmode .entityLinksContainer .btn:focus img {
+    filter: grayscale(1) invert(1) brightness(0) opacity(0.9) !important;
 }
 
 .nav-tabs {
