@@ -1434,6 +1434,11 @@ body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em
     object-position: top;
 }
 
+.entityPreview[data-type="organisation"] .rounded-circle img {
+    object-fit: contain;
+    object-position: center;
+}
+
 .thumbnailContainer .copyrightInfo,
 .detailsThumbnailContainer .copyrightInfo {
     top: auto;

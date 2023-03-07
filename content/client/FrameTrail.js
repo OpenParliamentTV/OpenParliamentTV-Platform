@@ -36292,7 +36292,9 @@ FrameTrail.defineType(
                     var thumbUrl = (this.resourceData.thumb ? FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.thumb)
                                     : FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.src) );
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="background-image:url('+ thumbUrl +');">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+                    
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="background-image:url('+ thumbUrl +');">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-picture"></span></div>'
                         + '                  </div>'
@@ -36454,7 +36456,9 @@ FrameTrail.defineType(
                     var thumbBackground = (this.resourceData.thumb ?
                             'background-image: url('+ FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.thumb) +');' : '' );
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+                    
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-location-2"></span></div>'
                         + '                  </div>'
@@ -36622,7 +36626,9 @@ FrameTrail.defineType(
                     var thumbBackground = (this.resourceData.thumb ?
                             'background-image: url('+ FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.thumb) +');' : '' );
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+                    
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-file-pdf"></span></div>'
                         + '                  </div>'
@@ -36765,7 +36771,9 @@ FrameTrail.defineType(
                     var thumbBackground = (this.resourceData.thumb ?
                             'background-image: url('+ FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.thumb) +');' : '' );
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+                    
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-volume-up"></span></div>'
                         + '                  </div>'
@@ -36980,7 +36988,9 @@ FrameTrail.defineType(
                     var thumbBackground = (this.resourceData.thumb ?
                             'background-image: url('+ FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.thumb) +');' : '' );
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+                    
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-play-1"></span></div>'
                         + '                  </div>'
@@ -37151,7 +37161,9 @@ FrameTrail.defineType(
                     var thumbBackground = (this.resourceData.thumb ?
                             'background-image: url('+ FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.thumb) +');' : '' );
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+                    
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-vimeo-squared"></span></div>'
                         + '                  </div>'
@@ -37317,7 +37329,9 @@ FrameTrail.defineType(
                     var thumbBackground = (this.resourceData.thumb ?
                             "background-image: url('"+ FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.thumb) +"');" : "" );
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+                    
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-window"></span></div>'
                         + '                  </div>'
@@ -37461,7 +37475,9 @@ FrameTrail.defineType(
                     var thumbBackground = (this.resourceData.thumb ?
                             'background-image: url('+ FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.thumb) +');' : '' );
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+                    
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-wikipedia-w"></span></div>'
                         + '                  </div>'
@@ -37608,7 +37624,9 @@ FrameTrail.defineType(
                     var thumbBackground = (this.resourceData.thumb ?
                             'background-image: url('+ FrameTrail.module('RouteNavigation').getResourceURL(this.resourceData.thumb) +');' : '' );
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+                    
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-resourceID="'+ trueID +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-youtube"></span></div>'
                         + '                  </div>'
@@ -37787,7 +37805,9 @@ FrameTrail.defineType(
                         thumbLabel = this.resourceData.name;
                     }
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-type="'+ this.resourceData.type +'" style="'+ thumbBackground +'">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-doc-text"></span></div>'
                         + '                  </div>'
@@ -38637,7 +38657,9 @@ FrameTrail.defineType(
 
                     var self = this;
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-type="'+ this.resourceData.type +'">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+                    
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-type="'+ this.resourceData.type +'">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-question-circle-o"></span></div>'
                         + '                  </div>'
@@ -39170,7 +39192,9 @@ FrameTrail.defineType(
                         child,
                         unescapedString;
 
-                    var thumbElement = $('<div class="resourceThumb" data-license-type="'+ this.resourceData.licenseType +'" data-type="'+ this.resourceData.type +'">'
+                    var tagList = (this.resourceData.tags ? this.resourceData.tags.join(' ') : '');
+                    
+                    var thumbElement = $('<div class="resourceThumb '+ tagList +'" data-license-type="'+ this.resourceData.licenseType +'" data-type="'+ this.resourceData.type +'">'
                         + '                  <div class="resourceOverlay">'
                         + '                      <div class="resourceIcon"><span class="icon-tag-1"></span></div>'
                         + '                  </div>'

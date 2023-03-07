@@ -559,7 +559,17 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 	right: 37px;
 }
 
-.resourceThumb .resourceOverlay {
+.resourceThumb .resourceOverlay .resourceIcon {
+	bottom: 14px !important;
+}
+
+.resourceThumb.term .resourceOverlay .resourceIcon .icon-doc-text::before {
+	content: '\e8b4';
+}
+
+.resourceThumb.person .resourceOverlay, 
+.resourceThumb.organisation .resourceOverlay, 
+.resourceThumb[style^="background-image"] .resourceOverlay {
 	display: none;
 }
 
