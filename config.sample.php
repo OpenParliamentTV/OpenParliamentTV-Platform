@@ -89,6 +89,12 @@ $config["bin"]["git"] = "git";
 $config["bin"]["php"] = "php";
 
 /**
+ * Additional Data Service of OPTV
+ */
+$config["ads"]["api"]["uri"] = "";
+$config["ads"]["api"]["key"] = "";
+
+/**
  * Platform Database (mariadb/MySQL) information
  */
 $config["platform"]["sql"]["access"]["host"] = "";

@@ -276,6 +276,28 @@ switch ($_REQUEST["a"]) {
 
     break;
 
+    case "runAdditionalDataService":
+
+        $auth = auth($_SESSION["userdata"]["id"], "additionalDataService", "run");
+
+        if ($auth["meta"]["requestStatus"] != "success") {
+
+            $return["success"] = "false";
+            $return["text"] = "Forbidden";
+            $return["code"] = "403";
+
+
+        } else {
+
+            require_once (__DIR__."/../modules/utilities/functions.php");
+            executeAsyncShellCommand($config["bin"]["php"]." ".realpath(__DIR__."/../data/cronAdditionalDataService.php")." --type ".$_REQUEST["type"]);
+            $return["success"] = "true";
+            $return["text"] = "additionalDataService";
+
+        }
+
+    break;
+
 
     case "searchPersonAtWikidata":
 

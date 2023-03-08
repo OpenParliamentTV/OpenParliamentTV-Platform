@@ -46,15 +46,26 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <!--Tabelle Media, <a href="../media/8757">Beispiel Link</a>, <a href="./data/media/8757">Manage / Edit Link</a>-->
                     <a href="./data/media/irregularities">Show irregularities</a>
                 </div>
-				<div class="tab-pane fade" id="people" role="tabpanel" aria-labelledby="people-tab">Tabelle Person, <a href="../person/8757">Beispiel Link</a>, <a href="./data/person/8757">Manage / Edit Link</a></div>
-				<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">Tabelle Document, <a href="../document/8757">Beispiel Link</a>, <a href="./data/document/8757">Manage / Edit Link</a></div>
+				<div class="tab-pane fade" id="people" role="tabpanel" aria-labelledby="people-tab">
+                    Tabelle Person, <a href="../person/8757">Beispiel Link</a>, <a href="./data/person/8757">Manage / Edit Link</a>
+                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="person">Run additionalDataService for person</button>
+                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="memberOfParliament">Run additionalDataService for memberOfParliament</button>
+                </div>
+				<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+                    Tabelle Document, <a href="../document/8757">Beispiel Link</a>, <a href="./data/document/8757">Manage / Edit Link</a>
+                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="legalDocument">Run additionalDataService for legalDocument</button>
+                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="officialDocument">Run additionalDataService for officialDocument</button>
+                </div>
 				<div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
-
+                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="organisation">Run additionalDataService for organisation</button>
 					Tabelle Organisation, <a href="../organisation/8757">Beispiel Link</a>, <a href="./data/organisation/8757">Manage / Edit Link</a>
 
 
 				</div>
-				<div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">Tabelle Term, <a href="../term/8757">Beispiel Link</a>, <a href="./data/term/8757">Manage / Edit Link</a></div>
+				<div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
+                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="term">Run additionalDataService for term</button>
+                    Tabelle Term, <a href="../term/8757">Beispiel Link</a>, <a href="./data/term/8757">Manage / Edit Link</a>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -78,6 +89,24 @@ if ($auth["meta"]["requestStatus"] != "success") {
             </div>
         </div>
     </div>
+    <div class="modal fade" id="successRunAdditionalDataService" tabindex="-1" role="dialog" aria-labelledby="successRunCronDialogLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successRunCronDialogLabel">Run ADS for <span class="adc-type"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    The additionalDataService for type <span class="adc-type"></span> should run now in background.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <script type="text/javascript">
     $(function() {
@@ -90,6 +119,22 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 success: function(ret) {
 
                     $('#successRunCronDialog').modal('show');
+
+                }
+            })
+        })
+
+        $(".container").on("click",".additionalDataServiceButton", function() {
+            $.ajax({
+                url:"<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
+                dataType:"json",
+                data:{"a":"runAdditionalDataService", "type": $(this).data("type")},
+                tmpType: $(this).data("type"),
+                method:"post",
+                success: function(ret) {
+                    //TODO: Check for success return parameter
+                    $(".adc-type").html(this.tmpType);
+                    $('#successRunAdditionalDataService').modal('show');
 
                 }
             })
