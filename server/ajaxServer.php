@@ -211,10 +211,10 @@ switch ($_REQUEST["a"]) {
                 require_once (__DIR__."/../modules/utilities/functions.php");
 
                 if ($_REQUEST["MediaIDs"]) {
-                    $ids = " --ids '".$_REQUEST["MediaIDs"]."'";
+                    $ids = " --ids ".$_REQUEST["MediaIDs"];
                 }
 
-                executeAsyncShellCommand($config["bin"]["php"]." ".realpath(__DIR__."/../data/cronUpdater.php")." --parliament '".$_REQUEST["parliament"]."' --justUpdateSearchIndex true".$ids);
+                executeAsyncShellCommand($config["bin"]["php"]." ".realpath(__DIR__."/../data/cronUpdater.php")." --parliament ".$_REQUEST["parliament"]." --justUpdateSearchIndex true".$ids);
 
                 $return["success"] = "true";
                 $return["text"] = "Process should have started";

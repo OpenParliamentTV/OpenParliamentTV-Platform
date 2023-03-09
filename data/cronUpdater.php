@@ -84,7 +84,7 @@ if (is_cli()) {
             unlink(realpath(__DIR__."/cronUpdater.lock"));
 
         } else {
-
+            logger("warn", "CronJob was blocked because its already running (for ".(time()-filemtime(__DIR__."/cronUpdater.lock"))." seconds)");
             cliLog("cronUpdater still running");
             exit;
 
@@ -103,7 +103,8 @@ if (is_cli()) {
     //cliLog(json_encode($input));
     //cliLog($input["parliament"]);
 
-    $parliament = ((isset($input["parliament"])) ? $input["parliament"] : "DE");
+
+    $parliament = ((!empty($input["parliament"])) ? $input["parliament"] : "DE");
 
     require_once(__DIR__ . "/../config.php");
     require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
@@ -131,6 +132,7 @@ if (is_cli()) {
         $errorarray["detail"] = "Connecting to platform database failed";
         array_push($return["errors"], $errorarray);
         echo json_encode($return);
+        logger("error", "connection to platform database failed. ".$e->getMessage());
         unlink(__DIR__."/cronUpdater.lock");
         exit;
 
@@ -154,6 +156,7 @@ if (is_cli()) {
         $errorarray["detail"] = "Connecting to parliament database failed";
         array_push($return["errors"], $errorarray);
         echo json_encode($return);
+        logger("error", "connection to parliament database failed: ".$e->getMessage());
         unlink(__DIR__."/cronUpdater.lock");
         exit;
 
@@ -195,6 +198,7 @@ if (is_cli()) {
 
         $mediaItems = array();
 
+        logger("info", "updating search index for ".count($ids)." items");
 
         foreach ($ids as $id) {
             $requestID = ((is_array($id)) ? $id["MediaID"] : $id);
