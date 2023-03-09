@@ -200,7 +200,12 @@ if (is_cli()) {
 
         logger("info", "updating search index for ".count($ids)." items");
 
+        $tmpCount = 0;
+
         foreach ($ids as $id) {
+
+            $tmpCount++;
+
             $requestID = ((is_array($id)) ? $id["MediaID"] : $id);
 
             try {
@@ -232,6 +237,8 @@ if (is_cli()) {
         }
 
         unlink(__DIR__."/cronUpdater.lock");
+
+        logger("info", "updating finished. Count: ".$tmpCount." items");
 
         exit;
 
