@@ -241,11 +241,9 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
              */
             $annotations = annotationRawSortByMainSpeaker($annotations);
 
-            $tmpResouces = array();
+            $tmpResources = array();
             foreach ($annotations as $annotation) {
 
-
-                //POSITION BEFORE CONTINUE
                 $annotationAttributes = array(
                     "timeStart" =>  $annotation["AnnotationTimeStart"],
                     "timeEnd" =>  $annotation["AnnotationTimeEnd"],
@@ -253,19 +251,13 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                     "additionalInformation" =>  json_decode($annotation["AnnotationAdditionalInformation"],true)
                 );
 
-                $return["data"]["annotations"]["data"][] = array(
-                    "type"      =>  $annotation["AnnotationType"],
-                    "id" =>  $annotation["AnnotationResourceID"],
-                    "attributes" => $annotationAttributes
-                );
-
                 $tmpAnnotationItem = array();
-                if (in_array($annotation["AnnotationResourceID"],$tmpResouces)) {
+                /*if (in_array($annotation["AnnotationResourceID"],$tmpResources)) {
                     continue;
                 }
-                array_push($tmpResouces,$annotation["AnnotationResourceID"]);
+                array_push($tmpResources,$annotation["AnnotationResourceID"]);
+                */
                 switch ($annotation["AnnotationType"]) {
-
 
 
                     case "document":
@@ -290,7 +282,17 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["attributes"]["sourceURI"] = $ditem["DocumentSourceURI"];
                         $tmpAnnotationItem["attributes"]["embedURI"] = $ditem["DocumentEmbedURI"];
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
-                        array_push($return["data"]["relationships"]["documents"]["data"], $tmpAnnotationItem);
+
+                        $annotationAttributes["additionalInformation"]["originID"] = (!empty($tmpAnnotationItem["attributes"]["additionalInformation"]["originID"]) ? $tmpAnnotationItem["attributes"]["additionalInformation"]["originID"] : array());
+                        //$annotationAttributes["additionalInformation"]["creator"] = (!empty($tmpAnnotationItem["attributes"]["additionalInformation"]["creator"]) ? $tmpAnnotationItem["attributes"]["additionalInformation"]["creator"] : array());
+                        $annotationAttributes["additionalInformation"]["procedureIDs"] = (!empty($tmpAnnotationItem["attributes"]["additionalInformation"]["procedureIDs"]) ? $tmpAnnotationItem["attributes"]["additionalInformation"]["procedureIDs"] : array());
+
+                        if (!in_array($annotation["AnnotationResourceID"],$tmpResources)) {
+
+                            array_push($tmpResources,$annotation["AnnotationResourceID"]);
+                            array_push($return["data"]["relationships"]["documents"]["data"], $tmpAnnotationItem);
+
+                        }
 
                     break;
 
@@ -316,7 +318,18 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
 
                         $tmpAnnotationItem["attributes"]["color"] = $ditem["OrganisationColor"];
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
-                        array_push($return["data"]["relationships"]["organisations"]["data"], $tmpAnnotationItem);
+
+
+                        $annotationAttributes["additionalInformation"]["fragDenStaatID"] = (!empty($tmpAnnotationItem["attributes"]["additionalInformation"]["fragDenStaatID"]) ? $tmpAnnotationItem["attributes"]["additionalInformation"]["fragDenStaatID"] : "");
+                        $annotationAttributes["additionalInformation"]["abgeordnetenwatchID"] = (!empty($tmpAnnotationItem["attributes"]["additionalInformation"]["abgeordnetenwatchID"]) ? $tmpAnnotationItem["attributes"]["additionalInformation"]["abgeordnetenwatchID"] : "");
+
+
+                        if (!in_array($annotation["AnnotationResourceID"],$tmpResources)) {
+
+                            array_push($tmpResources, $annotation["AnnotationResourceID"]);
+                            array_push($return["data"]["relationships"]["organisations"]["data"], $tmpAnnotationItem);
+
+                        }
 
                     break;
 
@@ -341,7 +354,15 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["attributes"]["additionalInformation"] = (is_array($termAdditionalinformation) ? $termAdditionalinformation : array());
 
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
-                        array_push($return["data"]["relationships"]["terms"]["data"], $tmpAnnotationItem);
+
+                        $annotationAttributes["additionalInformation"]["fragDenStaatID"] = (!empty($tmpAnnotationItem["attributes"]["additionalInformation"]["fragDenStaatID"]) ? $tmpAnnotationItem["attributes"]["additionalInformation"]["fragDenStaatID"] : "");
+                        $annotationAttributes["additionalInformation"]["abgeordnetenwatchID"] = (!empty($tmpAnnotationItem["attributes"]["additionalInformation"]["abgeordnetenwatchID"]) ? $tmpAnnotationItem["attributes"]["additionalInformation"]["abgeordnetenwatchID"] : "");
+
+                        if (!in_array($annotation["AnnotationResourceID"],$tmpResources)) {
+
+                            array_push($tmpResources, $annotation["AnnotationResourceID"]);
+                            array_push($return["data"]["relationships"]["terms"]["data"], $tmpAnnotationItem);
+                        }
 
                     break;
 
@@ -392,10 +413,29 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                         $tmpAnnotationItem["attributes"]["faction"]["label"] = $pitem["FactionLabel"];
                         $tmpAnnotationItem["attributes"]["faction"]["labelAlternative"] = json_decode($pitem["FactionLabelAlternative"]);
                         $tmpAnnotationItem["links"]["self"] = $config["dir"]["api"]."/".$tmpAnnotationItem["type"]."/".$tmpAnnotationItem["id"];
-                        array_push($return["data"]["relationships"]["people"]["data"], $tmpAnnotationItem);
+
+                        $annotationAttributes["additionalInformation"]["fragDenStaatID"] = (!empty($tmpAnnotationItem["attributes"]["additionalInformation"]["fragDenStaatID"]) ? $tmpAnnotationItem["attributes"]["additionalInformation"]["fragDenStaatID"] : "");
+                        $annotationAttributes["additionalInformation"]["abgeordnetenwatchID"] = (!empty($tmpAnnotationItem["attributes"]["additionalInformation"]["abgeordnetenwatchID"]) ? $tmpAnnotationItem["attributes"]["additionalInformation"]["abgeordnetenwatchID"] : "");
+                        $annotationAttributes["additionalInformation"]["originID"] = (!empty($pitem["PersonOriginID"]) ? $pitem["PersonOriginID"] : "");
+
+
+                        if (!in_array($annotation["AnnotationResourceID"],$tmpResources)) {
+
+                            array_push($tmpResources, $annotation["AnnotationResourceID"]);
+                            array_push($return["data"]["relationships"]["people"]["data"], $tmpAnnotationItem);
+
+                        }
 
                     break;
                 }
+
+
+
+                $return["data"]["annotations"]["data"][] = array(
+                    "type"      =>  $annotation["AnnotationType"],
+                    "id" =>  $annotation["AnnotationResourceID"],
+                    "attributes" => $annotationAttributes
+                );
 
 
             }
