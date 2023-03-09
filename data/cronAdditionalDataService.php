@@ -183,13 +183,13 @@ if (is_cli()) {
     } elseif ($input["type"] == "legalDocument") {
 
 
-        $items = $db->getAll("SELECT DocumentWikidataID AS id FROM ?n WHERE DocumentWikidataID IS NOT NULL",$config["platform"]["sql"]["tbl"]["Document"]);
+        $items = $db->getAll("SELECT DocumentWikidataID AS id FROM ?n WHERE DocumentType = 'legalDocument' AND DocumentWikidataID IS NOT NULL",$config["platform"]["sql"]["tbl"]["Document"]);
 
 
     } elseif ($input["type"] == "officialDocument") {
 
 
-        $items = $db->getAll("SELECT DocumentID AS id FROM ?n",$config["platform"]["sql"]["tbl"]["Document"]);
+        $items = $db->getAll("SELECT DocumentID AS id FROM ?n WHERE DocumentType = 'officialDocument'",$config["platform"]["sql"]["tbl"]["Document"]);
 
 
     }
