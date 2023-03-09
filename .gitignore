@@ -11,6 +11,9 @@ logs
 _logs/
 *.log
 
+# Lock files
+*.lock
+
 # Runtime data
 pids
 *.pid
