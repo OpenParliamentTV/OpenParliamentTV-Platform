@@ -624,6 +624,31 @@ switch ($page) {
 		include_once("./content/pages/manage/data/document/page.php");
 		$content = ob_get_clean();
 	break;
+	case "manage-data-entities":
+		$pageTitle = 'Manage Entities';
+		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => L::data,
+				'path' => '/manage/data'
+			],
+			[
+				'label' => '<span class="icon-pencil"></span>'
+			]
+		];
+		ob_start();
+		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
+			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
+			include_once("./content/pages/manage/data/entities/new.php");
+		} else {
+			include_once("./content/pages/manage/data/entities/page.php");
+		}
+		$content = ob_get_clean();
+	break;
 	case "manage-data-media":
 		$pageTitle = 'Manage Media';
 		$pageType = 'admin';
