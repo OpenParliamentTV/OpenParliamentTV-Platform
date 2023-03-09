@@ -330,20 +330,23 @@ function getSearchBody($request, $getAllResults) {
                 $filter["must"][] = array("match"=>array("relationships.people.data.attributes.".$requestKey.".label" => $requestValue));
 
             }
-        } else if ($requestKey == "abgeordnetenwatchID") {
+        } else if ( $requestKey == "abgeordnetenwatchID" || 
+                    $requestKey == "fragDenStaatID" ) {
 
-            // TODO: Filter by context from annotations context
+            if ($requestKey == "abgeordnetenwatchID" && !isset($request["context"])) {
+                    $request["context"] = "main-speaker";
+            }
 
             if (isset($request["context"]) && strlen($request["context"]) > 2) {
                 $filter["must"][] = array(
                     "nested" => array(
-                        "path" => "relationships.people.data",
+                        "path" => "annotations.data",
                         "query" => array("bool" => array("must"=>array(
                             array("match" => array(
-                                "relationships.people.data.attributes.additionalInformation.abgeordnetenwatchID" => $requestValue
+                                "annotations.data.attributes.additionalInformation.".$requestKey => $requestValue
                             )),
                             array("match_phrase" => array(
-                                "relationships.people.data.attributes.context" => $request["context"]
+                                "annotations.data.attributes.context" => $request["context"]
                             ))
                         )))
                     )
@@ -353,13 +356,13 @@ function getSearchBody($request, $getAllResults) {
 
                 $filter["must"][] = array(
                     "nested" => array(
-                        "path" => "relationships.people.data",
+                        "path" => "annotations.data",
                         "query" => array("bool" => array("must"=>array(
                             array("match" => array(
-                                "relationships.people.data.attributes.additionalInformation.abgeordnetenwatchID" => $requestValue
+                                "annotations.data.attributes.additionalInformation.".$requestKey => $requestValue
                             )),
                             array("match" => array(
-                                "relationships.people.data.attributes.context" => 'main-speaker'
+                                "annotations.data.attributes.context" => 'main-speaker'
                             ))
                         )))
                     )
@@ -498,6 +501,7 @@ function getSearchBody($request, $getAllResults) {
 
         } else if ($requestKey == "procedureID" && strlen($requestValue) >= 1) {
 
+            //TODO: Filter by annotation value 6 context
             $filter["must"][] = array("match"=>array("relationships.documents.data.attributes.additionalInformation.procedureIDs" => $requestValue));
 
         } else if ($requestKey == "id" && strlen($requestValue) > 3 && !$getAllResults) {

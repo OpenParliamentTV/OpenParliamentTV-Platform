@@ -436,7 +436,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
     require_once (__DIR__."/../../../modules/search/functions.php");
 
 
-    $allowedFields = ["parliament", "electoralPeriod", "electoralPeriodID", "sessionID", "sessionNumber", "agendaItemID", "context", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "abgeordnetenwatchID", "organisation", "organisationID", "documentID", "sort", "termID", "id", "procedureID", "page","q"];
+    $allowedFields = ["parliament", "electoralPeriod", "electoralPeriodID", "sessionID", "sessionNumber", "agendaItemID", "context", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "abgeordnetenwatchID", "fragDenStaatID", "organisation", "organisationID", "documentID", "sort", "termID", "id", "procedureID", "page","q"];
 
     $filteredParameters = array_filter(
         $parameter,

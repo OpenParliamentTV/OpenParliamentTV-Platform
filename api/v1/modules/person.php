@@ -213,7 +213,7 @@ function personSearch($parameter, $db = false) {
 
     }
 
-    $allowedFields = ["name", "type", "party", "partyID", "faction", "factionID", "organisationID", "degree", "gender", "originID", "abgeordnetenwatchID"];
+    $allowedFields = ["name", "type", "party", "partyID", "faction", "factionID", "organisationID", "degree", "gender", "originID", "abgeordnetenwatchID","fragDenStaatID"];
 
     $filteredParameters = array_filter(
         $parameter,
@@ -464,6 +464,17 @@ function personSearch($parameter, $db = false) {
 
     }
 
+    if (array_key_exists("fragDenStaatID", $filteredParameters) && (mb_strlen($filteredParameters["fragDenStaatID"], "UTF-8") < 1)) {
+
+        $return["meta"]["requestStatus"] = "error";
+        $errorarray["status"] = "400";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "fragDenStaatID not valid.";
+        $errorarray["detail"] = "fragDenStaatID too short."; //
+        $return["errors"][] = $errorarray;
+
+    }
+
 
     /************ VALIDATION END ************/
 
@@ -636,6 +647,12 @@ function personSearch($parameter, $db = false) {
         if ($k == "abgeordnetenwatchID") {
 
             $conditions[] = $db->parse("JSON_EXTRACT(p.PersonAdditionalInformation, '$.abgeordnetenwatchID') = ?s", $para);
+
+        }
+
+        if ($k == "fragDenStaatID") {
+
+            $conditions[] = $db->parse("JSON_EXTRACT(p.PersonAdditionalInformation, '$.fragDenStaatID') = ?s", $para);
 
         }
 
