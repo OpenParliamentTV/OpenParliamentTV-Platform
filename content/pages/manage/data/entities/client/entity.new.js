@@ -51,7 +51,6 @@ $(function() {
         }
     });
 
-
     $(".labelAlternativeAdd").on("click", function() {
         $(this).parent().find("div:first").append('<span style="position: relative">' +
             '<input type="text" class="form-control" name="labelAlternative[]">' +
@@ -61,12 +60,9 @@ $(function() {
     });
 
 
-
     $("body").on("click", ".labelAlternativeRemove", function() {
         $(this).parent().remove();
     });
-
-
 
     $(".socialMediaIDsAdd").on("click", function() {
         $(this).parent().find("div:first").append('<div style="position: relative" class="form-row">\n' +
@@ -81,8 +77,6 @@ $(function() {
             '                                        </button>\n' +
             '                                    </div>');
     });
-
-
 
     $("body").on("click", ".socialMediaIDsRemove", function() {
         $(this).parent().remove();
@@ -113,6 +107,33 @@ $(function() {
             $(tempItem).slideDown();
         });
 
+    });
+
+    $("#getAdditionalInfo").click(function(evt) {
+        
+        let entityType = $("select[name='entityType']").val();
+        let subType = $("select[name='type']").val();
+
+        let serviceType = entityType;
+        if (subType == "memberOfParliament" || subType == "officialDocument") {
+            serviceType == subType;
+        }
+
+        let wikidataID = $("input[name='id']").val();
+
+        $.ajax({
+            url:config.dir.root+"/server/ajaxServer.php",
+            data: {
+                "a": "entityGetFromAdditionalDataService",
+                "type": serviceType,
+                "wikidataID": wikidataID
+            },
+            success: function(result) {
+                
+                $("input[name='label']").val(result.data.label);
+                
+            }
+        });
 
     });
 

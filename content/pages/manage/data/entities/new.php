@@ -98,7 +98,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                </div>
 	                <div class="row">
 	                    <div class="col-12">
-	                    	<button class="btn btn-primary w-100 py-3" id="getAdditionalInfo"><span class="icon-magic"></span> Get data and auto-fill form fields</button>
+	                    	<button type="button" class="btn btn-primary w-100 py-3" id="getAdditionalInfo"><span class="icon-magic"></span> Get data and auto-fill form fields</button>
 	                    </div>
 	                </div>
 	                <hr class="my-4">
