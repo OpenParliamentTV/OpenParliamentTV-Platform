@@ -189,7 +189,7 @@ if (is_cli()) {
     } elseif ($input["type"] == "officialDocument") {
 
 
-        $items = $db->getAll("SELECT DocumentID AS id FROM ?n WHERE DocumentType = 'officialDocument'",$config["platform"]["sql"]["tbl"]["Document"]);
+        $items = $db->getAll("SELECT DocumentSourceURI as id FROM ?n WHERE DocumentType = 'officialDocument'",$config["platform"]["sql"]["tbl"]["Document"]);
 
 
     }

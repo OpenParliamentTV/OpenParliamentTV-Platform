@@ -59,10 +59,10 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
 
     if ($type == "officialDocument") {
 
-        $idLabelPlatform = "DocumentID";
-        $idLabelAPI = "id";
+        $idLabelPlatform = "DocumentSourceURI";
+        $idLabelAPI = "sourceURI";
         $table = $config["platform"]["sql"]["tbl"]["Document"];
-        $where = $db->parse("?n = ?i", $idLabelPlatform, $id);
+        $where = $db->parse("?n = ?s", $idLabelPlatform, $id);
 
     } elseif ($type == "legalDocument") {
 
