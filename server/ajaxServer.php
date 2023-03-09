@@ -188,6 +188,35 @@ switch ($_REQUEST["a"]) {
 
     break;
 
+    case "entityGetFromAdditionalDataService":
+
+        $auth = auth($_SESSION["userdata"]["id"], "additionalDataService", "getItem");
+
+        if ($auth["meta"]["requestStatus"] != "success") {
+
+            $return["success"] = "false";
+            $return["text"] = "Forbidden";
+            $return["code"] = "403";
+
+
+        } else {
+            require_once (__DIR__."/../modules/utilities/functions.php");
+            try {
+
+                $return = json_decode(file_get_contents($config["ads"]["api"]["uri"]."?key=".$config["ads"]["api"]["key"]."&type=".$_REQUEST["type"]."&wikidataID=".$_REQUEST["wikidataID"]),true);
+
+            } catch (Exception $e) {
+
+                $return["success"] = "false";
+                $return["text"] = "error:".$e->getMessage();
+
+
+            }
+
+        }
+
+    break;
+
     case "entityAddTest":
 
         $return["text"] = $_REQUEST;
