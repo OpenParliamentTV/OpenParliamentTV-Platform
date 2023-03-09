@@ -321,13 +321,13 @@ function getSearchBody($request, $getAllResults) {
             if (is_array($requestValue)) {
                 foreach ($requestValue as $partyOrFaction) {
 
-                    $filter["should"][] = array("match_phrase"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $partyOrFaction));
+                    $filter["should"][] = array("match_phrase"=>array("relationships.people.data.attributes.".$requestKey.".label" => $partyOrFaction));
 
                 }
                 $shouldCount++;
             } else {
 
-                $filter["must"][] = array("match"=>array("relationships.people.data.attributes.".$requestKey.".labelAlternative" => $requestValue));
+                $filter["must"][] = array("match"=>array("relationships.people.data.attributes.".$requestKey.".label" => $requestValue));
 
             }
         } else if ($requestKey == "abgeordnetenwatchID") {

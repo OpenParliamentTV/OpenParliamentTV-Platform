@@ -102,8 +102,14 @@ switch ($page) {
             include_once("./content/pages/404/page.php");
             $content = ob_get_clean();
         } else {
-            $pageTitle = '<span class="icon-doc-text"></span>' . $apiResult["data"]["attributes"]["labelAlternative"][0];
-            $pageDescription = L::speeches . ' ' . L::basedOn . ': ' . $apiResult["data"]["attributes"]["label"];
+            $pageTitle = '<span class="icon-doc-text"></span>' . $apiResult["data"]["attributes"]["label"];
+            
+            if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) {
+            	$pageDescription = L::speeches . ' ' . L::basedOn . ': ' . $apiResult["data"]["attributes"]["labelAlternative"][0];
+            } else {
+            	$pageDescription = L::speeches . ' ' . L::basedOn . ': ' . $apiResult["data"]["attributes"]["label"];
+            }
+            
             $pageType = 'entity';
             $pageBreadcrumbs = [
                 [
@@ -178,8 +184,14 @@ switch ($page) {
             include_once("./content/pages/404/page.php");
             $content = ob_get_clean();
         } else {
-            $pageTitle = '<span class="icon-bank"></span>' . $apiResult["data"]["attributes"]["labelAlternative"][0];
-            $pageDescription = L::speeches . ' ' . L::by . ': ' . $apiResult["data"]["attributes"]["label"];
+            $pageTitle = '<span class="icon-bank"></span>' . $apiResult["data"]["attributes"]["label"];
+            
+            if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) {
+            	$pageDescription = L::speeches . ' ' . L::by . ': ' . $apiResult["data"]["attributes"]["labelAlternative"][0];
+            } else {
+            	$pageDescription = L::speeches . ' ' . L::by . ': ' . $apiResult["data"]["attributes"]["label"];
+            }
+            
             $pageType = 'entity';
             $pageBreadcrumbs = [
                 [
@@ -261,6 +273,13 @@ switch ($page) {
             $content = ob_get_clean();
         } else {
             $pageTitle = '<span class="icon-tag-1"></span>' . $apiResult["data"]["attributes"]["label"];
+            
+            if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) {
+            	$pageDescription = L::speeches . ' ' . L::onTheSubject . ': ' . $apiResult["data"]["attributes"]["labelAlternative"][0];
+            } else {
+            	$pageDescription = L::speeches . ' ' . L::onTheSubject . ': ' . $apiResult["data"]["attributes"]["label"];
+            }
+
             $pageType = 'entity';
             $pageBreadcrumbs = [
                 [

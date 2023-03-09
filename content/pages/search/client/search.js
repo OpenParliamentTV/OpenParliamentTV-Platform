@@ -494,7 +494,7 @@ function renderPeopleSuggestions(inputValue, data) {
 			}
 
 			var suggestionItemPerson = '<span class="suggestionItemLabel">'+ highlightedLabel +'</span>',
-				suggestionItemFaction = (data[i].relationships.faction.data) ? '<span class="ml-2 partyIndicator" data-faction="'+ data[i].relationships.faction.data.attributes.labelAlternative +'">'+ data[i].relationships.faction.data.attributes.labelAlternative +'</span>' : '',
+				suggestionItemFaction = (data[i].relationships.faction.data) ? '<span class="ml-2 partyIndicator" data-faction="'+ data[i].relationships.faction.data.attributes.label +'">'+ data[i].relationships.faction.data.attributes.label +'</span>' : '',
 				suggestionItem = $('<div class="suggestionItem" data-type="person" data-item-id="'+ data[i].id +'">'+ suggestionItemPerson + suggestionItemFaction +'</div>');
 
 			suggestionItem.click(function(evt) {
@@ -637,7 +637,7 @@ function initInteractiveQueryValues() {
 			for (var i = personIDs.length - 1; i >= 0; i--) {
 				var label = personDataFromRequest[personIDs[i]].attributes.label;
 				if (personDataFromRequest[personIDs[i]].relationships.faction.data) {
-					var secondaryLabel = personDataFromRequest[personIDs[i]].relationships.faction.data.attributes.labelAlternative;
+					var secondaryLabel = personDataFromRequest[personIDs[i]].relationships.faction.data.attributes.label;
 					addQueryItem('person', label, secondaryLabel, personIDs[i]);
 				} else {
 					addQueryItem('person', label, false, personIDs[i]);

@@ -21,11 +21,19 @@ if ($entity["data"]["type"] == "organisation") {
 						<?php 
 						if (isset($entity["data"]["relationships"]["faction"]["data"]["id"])) {
 						?>
-							<a href="../organisation/<?= $entity["data"]["relationships"]["faction"]["data"]["id"] ?>" class="partyIndicator" data-faction="<?= $entity["data"]["relationships"]["faction"]["data"]["id"] ?>"><?= $entity["data"]["relationships"]["faction"]["data"]["attributes"]["labelAlternative"][0] ?></a>
+							<a href="../organisation/<?= $entity["data"]["relationships"]["faction"]["data"]["id"] ?>" class="partyIndicator" data-faction="<?= $entity["data"]["relationships"]["faction"]["data"]["id"] ?>"><?= $entity["data"]["relationships"]["faction"]["data"]["attributes"]["label"] ?></a>
+						<?php 
+						}
+						if ($entity["data"]["type"] != "person" && isset($entity["data"]["attributes"]["labelAlternative"][0])) { ?>
+							<div><?= $entity["data"]["attributes"]["labelAlternative"][0] ?></div>
+						<?php 
+						}
+						if (isset($entity["data"]["attributes"]["abstract"]) && $entity["data"]["attributes"]["abstract"] != "undefined") {
+						?>
+							<div><?= $entity["data"]["attributes"]["abstract"] ?></div>
 						<?php 
 						}
 						?>
-						<div><?= $entity["data"]["attributes"]["abstract"] ?></div>
 						<a class="d-block mt-1" target="_blank" href="<?= $entity["data"]["attributes"]["websiteURI"] ?>"><?= $entity["data"]["attributes"]["websiteURI"] ?></a>
 					</div>
 				</div>

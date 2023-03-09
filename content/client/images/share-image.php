@@ -8,8 +8,8 @@ if (isset($_REQUEST['t']) && isset($_REQUEST['f'])) {
 	$quote = getQuoteFromRequestParams($_REQUEST['t'], $_REQUEST['f'], $textContentsHTML);
 }
 $author = $mainSpeaker['attributes']['label'];
-if (isset($mainFaction['attributes']['labelAlternative'][0])) {
-	$authorSecondary = $mainFaction['attributes']['labelAlternative'][0].' | '.$formattedDate;
+if (isset($mainFaction['attributes']['label'])) {
+	$authorSecondary = $mainFaction['attributes']['label'].' | '.$formattedDate;
 } else {
 	$authorSecondary = $formattedDate;
 }

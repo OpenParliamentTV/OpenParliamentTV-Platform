@@ -44,8 +44,12 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						}
 						?>
 						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
-						<div><?= $apiResult["data"]["attributes"]["labelAlternative"][0] ?></div>
-						<div><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
+						<?php if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) { ?>
+							<div><?= $apiResult["data"]["attributes"]["labelAlternative"][0] ?></div>
+						<?php } ?>
+						<?php if (isset($apiResult["data"]["attributes"]["abstract"]) && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
+							<div><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
+						<?php } ?>
 						<div class="mt-1"><?php echo L::source ?>: <a target="_blank" href="<?= $apiResult["data"]["attributes"]["sourceURI"] ?>"><?= $apiResult["data"]["attributes"]["sourceURI"] ?></a></div>
 					</div>
 				</div>
