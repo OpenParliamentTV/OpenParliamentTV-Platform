@@ -17,9 +17,6 @@ $(function() {
         dataType: "json",
         success: function (ret) {
 
-            console.log(ret.text);
-            return;
-
             $("#entityAddReturn").empty();
             $("input, select, textarea").css("border", "");
 

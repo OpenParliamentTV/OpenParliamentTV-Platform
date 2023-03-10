@@ -217,12 +217,6 @@ switch ($_REQUEST["a"]) {
 
     break;
 
-    case "entityAddTest":
-
-        $return["text"] = $_REQUEST;
-
-    break;
-
     case "searchIndexUpdate":
 
         $auth = auth($_SESSION["userdata"]["id"], "searchIndex", "update");

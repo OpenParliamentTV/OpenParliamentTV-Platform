@@ -39,7 +39,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 <form id="entityAddForm" method="post">
 	                <div class="row">
 	                    <div class="col-12 col-lg-4">
-	                        <input name="a" value="entityAddTest" type="hidden">
+	                        <input name="a" value="entityAdd" type="hidden">
 	                        <input name="entitysuggestionid" value="" type="hidden">
 	                        <div class="form-group">
 	                            <label for="entityType">Entity Type</label>
