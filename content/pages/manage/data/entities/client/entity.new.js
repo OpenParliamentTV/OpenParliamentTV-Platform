@@ -1,5 +1,11 @@
 $(function() {
     
+    // Fill in wikidataID in case we got it in the url (eg. "?wikidataID=Q567")
+    let queryWikidataID = getQueryVariable('wikidataID');
+    if (queryWikidataID) {
+        $('input[name="id"]').val(queryWikidataID);
+    }
+
     $('#entityAddForm').ajaxForm({
         url: config.dir.root +"/server/ajaxServer.php",
         dataType: "json",
@@ -131,6 +137,41 @@ $(function() {
             success: function(result) {
                 
                 $("input[name='label']").val(result.data.label);
+                $("input[name='firstName']").val(result.data.firstName);
+                $("input[name='lastName']").val(result.data.lastName);
+                $("input[name='degree']").val(result.data.degree);
+                $("input[name='birthdate']").val(result.data.birthDate);
+                $("textarea[name='abstract']").val(result.data.abstract);
+                $("input[name='thumbnailuri']").val(result.data.thumbnailURI);
+                $("input[name='thumbnailcreator']").val(result.data.thumbnailCreator);
+                $("input[name='thumbnaillicense']").val(result.data.thumbnailLicense);
+                //$("input[name='sourceuri']").val(result.data.);
+                //$("input[name='embeduri']").val(result.data.);
+                $("input[name='websiteuri']").val(result.data.websiteURI);
+                //$("input[name='originid']").val(result.data.originID);
+                $("textarea[name='additionalinformation']").val(JSON.stringify(result.data.additionalInformation));
+
+                for (var i = result.data.labelAlternative.length - 1; i >= 0; i--) {
+                    $("button.labelAlternativeAdd").next("div").append('<span style="position: relative">' +
+                        '<input type="text" class="form-control" name="labelAlternative[]" value="'+ result.data.labelAlternative[i] +'">' +
+                        '<button class="labelAlternativeRemove btn" style="position: absolute;top:0px;right:0px;" type="button">' +
+                        '<span class="icon-cancel-circled"></span>' +
+                        '</button></span>');
+                }
+                
+                for (var i = result.data.socialMediaIDs.length - 1; i >= 0; i--) {
+                    $("button.socialMediaIDsAdd").next("div").append('<div style="position: relative" class="form-row">\n' +
+            '            <div class="col">' +
+            '               <input type="text" class="form-control" name="socialMediaIDsLabel[]" placeholder="Label (e.g. facebook)" value="'+ result.data.socialMediaIDs[i].label +'">' +
+            '            </div>\n' +
+            '            <div class="col">' +
+            '               <input type="text" class="form-control" name="socialMediaIDsValue[]" placeholder="Value (name)" value="'+ result.data.socialMediaIDs[i].id +'">\n' +
+            '            </div>\n' +
+            '            <button class="socialMediaIDsRemove btn" style="position: absolute;top:0px;right:0px;" type="button">\n' +
+            '                <span class="icon-cancel-circled"></span>\n' +
+            '            </button>\n' +
+            '        </div>');
+                }
                 
             }
         });

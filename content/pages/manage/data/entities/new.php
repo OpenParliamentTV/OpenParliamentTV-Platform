@@ -223,7 +223,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                            </select>
 	                        </div>
 	                        <div class="form-group form-dyncontent formItem formItemTypePerson">
-	                            <label for="socialMediaIDsLabel[]">Social Medias</label> <button class="socialMediaIDsAdd btn" type="button"><span class="icon-plus"></span></button>
+	                            <label for="socialMediaIDsLabel[]">Social Media Accounts</label> <button class="socialMediaIDsAdd btn" type="button"><span class="icon-plus"></span></button>
 	                            <div>
 	                            </div>
 	                        </div>
