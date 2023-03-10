@@ -348,6 +348,10 @@ hr {
     background-position: center center;
 }
 
+.break-lines {
+    white-space: normal;
+}
+
 /*
 .fancy-form .form-group {
     position: relative;

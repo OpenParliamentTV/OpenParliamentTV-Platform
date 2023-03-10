@@ -13,7 +13,16 @@ if ($entity["data"]["type"] == "organisation") {
 				<div class="row">
 					<div class="col flex-grow-0 detailsThumbnailContainer" style="width: 70px; height: 70px; flex-basis: 70px; overflow: visible;">
 						<div class="rounded-circle" style="top: 1px;">
-							<img src="<?= $entity["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute; object-fit: <?= $typeImageFit ?>;"/>
+							<?php if (isset($entity["data"]["attributes"]["thumbnailURI"]) || $entity["data"]["type"] == "person") { ?>
+								<img src="<?= $entity["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute; object-fit: <?= $typeImageFit ?>;"/>
+							<?php } else if ($entity["data"]["type"] == "document") { ?>
+								<span class="icon-doc-text" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+							<?php } else if ($entity["data"]["type"] == "organisation") { ?>
+								<span class="icon-bank" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+							<?php } else if ($entity["data"]["type"] == "term") { ?>
+								<span class="icon-tag-1" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+							<?php } ?>
+							
 						</div>
 					</div>
 					<div class="col">
@@ -30,7 +39,7 @@ if ($entity["data"]["type"] == "organisation") {
 						}
 						if (isset($entity["data"]["attributes"]["abstract"]) && $entity["data"]["attributes"]["abstract"] != "undefined") {
 						?>
-							<div><?= $entity["data"]["attributes"]["abstract"] ?></div>
+							<div class="mt-2"><?= $entity["data"]["attributes"]["abstract"] ?></div>
 						<?php 
 						}
 						?>
