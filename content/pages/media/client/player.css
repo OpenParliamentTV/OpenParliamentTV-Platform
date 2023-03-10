@@ -563,6 +563,11 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 	bottom: 14px !important;
 }
 
+.resourceThumb .resourceOverlay .resourceIcon > [class^="icon-"]::before {
+	color: #73747C !important;
+	text-shadow: none !important;
+}
+
 .resourceThumb.term .resourceOverlay .resourceIcon .icon-doc-text::before {
 	content: '\e8b4';
 }
@@ -600,6 +605,7 @@ body.darkmode .layoutArea[data-area="areaBottom"][data-size="small"] .collection
 	border-radius: 50%;
 	border: 1px solid var(--border-color);
 	background-position: center;
+	background-color: #f3f4f5;
 }
 
 .layoutArea[data-area="areaBottom"][data-size="small"] .collectionElement:not(.open):not(.active):hover .resourceThumb {

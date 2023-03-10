@@ -1426,7 +1426,17 @@ body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em
     position: relative;
     overflow: hidden;
     padding-bottom: 100%;
-    background: var(--secondary-bg-color);
+    background-color: #f3f4f5;
+}
+
+body.darkmode .detailsHeader .rounded-circle,
+body.darkmode .entityPreview .rounded-circle {
+    /*background-color: #303139;*/
+}
+
+.detailsHeader .rounded-circle > [class^="icon-"],
+.entityPreview .rounded-circle > [class^="icon-"] {
+    color: #73747C;
 }
 
 .detailsHeader .rounded-circle img,

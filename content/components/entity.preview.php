@@ -16,7 +16,7 @@ if ($entity["data"]["type"] == "organisation") {
 							<?php if ($entity["data"]["attributes"]["thumbnailURI"] || $entity["data"]["type"] == "person") { ?>
 								<img src="<?= $entity["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute; object-fit: <?= $typeImageFit ?>;"/>
 							<?php } else if ($entity["data"]["type"] == "document") { ?>
-								<span class="icon-doc-text" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+								<span class="icon-doc-text" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
 							<?php } else if ($entity["data"]["type"] == "organisation") { ?>
 								<span class="icon-bank" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
 							<?php } else if ($entity["data"]["type"] == "term") { ?>
