@@ -212,9 +212,6 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                                                     <div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"][0].'</div>
                                                     <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
                                                 </a>
-                                                <a class="entityButton" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
-                                                    <span class="btn btn-sm icon-file-pdf"></span>
-                                                </a>
                                             </div>
                                         </div>\n';
                     } else {
@@ -224,9 +221,6 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                                                     <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
                                                     <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
                                                     <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
-                                                </a>
-                                                <a class="btn btn-sm" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
-                                                    <span class="icon-file-pdf"></span>
                                                 </a>
                                             </div>
                                         </div>\n';
