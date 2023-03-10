@@ -6,6 +6,12 @@ $(function() {
         $('input[name="id"]').val(queryWikidataID);
     }
 
+    // Fill in entitySuggestionID in case we got it in the url
+    let queryEntitySuggestionID = getQueryVariable('entitySuggestionID');
+    if (queryEntitySuggestionID) {
+        $('input[name="entitysuggestionid"]').val(queryEntitySuggestionID);
+    }
+
     $('#entityAddForm').ajaxForm({
         url: config.dir.root +"/server/ajaxServer.php",
         dataType: "json",
@@ -118,11 +124,11 @@ $(function() {
     $("#getAdditionalInfo").click(function(evt) {
         
         let entityType = $("select[name='entityType']").val();
-        let subType = $("select[name='type']").val();
+        let subType = $("select[name='type']:not(:disabled)").val();
 
         let serviceType = entityType;
         if (subType == "memberOfParliament" || subType == "officialDocument") {
-            serviceType == subType;
+            serviceType = subType;
         }
 
         let wikidataID = $("input[name='id']").val();
@@ -151,6 +157,10 @@ $(function() {
                 //$("input[name='originid']").val(result.data.originID);
                 $("textarea[name='additionalinformation']").val(JSON.stringify(result.data.additionalInformation));
 
+                $("select[name='gender']").val(result.data.gender);
+                $("select[name='party']").val(result.data.partyID);
+                $("select[name='faction']").val(result.data.factionID);
+
                 for (var i = result.data.labelAlternative.length - 1; i >= 0; i--) {
                     $("button.labelAlternativeAdd").next("div").append('<span style="position: relative">' +
                         '<input type="text" class="form-control" name="labelAlternative[]" value="'+ result.data.labelAlternative[i] +'">' +
@@ -158,7 +168,7 @@ $(function() {
                         '<span class="icon-cancel-circled"></span>' +
                         '</button></span>');
                 }
-                
+
                 for (var i = result.data.socialMediaIDs.length - 1; i >= 0; i--) {
                     $("button.socialMediaIDsAdd").next("div").append('<div style="position: relative" class="form-row">\n' +
             '            <div class="col">' +

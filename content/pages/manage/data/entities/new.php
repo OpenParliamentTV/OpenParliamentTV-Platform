@@ -150,6 +150,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                                <option value="">..TODO..</option>
 	                                <option value="female">Female</option>
 	                                <option value="male">Male</option>
+	                                <option value="non-binary">Non-Binary</option>
 	                            </select>
 	                        </div>
 	                    </div>
@@ -205,8 +206,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                        </div>
 
 	                        <div class="form-group formItem formItemTypePerson">
-	                            <label for="party">Faction</label>
-	                            <select class="form-control" name="party">
+	                            <label for="faction">Faction</label>
+	                            <select class="form-control" name="faction">
 
 	                                <?php
 
@@ -222,7 +223,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 	                            </select>
 	                        </div>
-	                        <div class="form-group form-dyncontent formItem formItemTypePerson">
+	                        <div class="form-group form-dyncontent formItem formItemTypePerson formItemTypeOrganisation">
 	                            <label for="socialMediaIDsLabel[]">Social Media Accounts</label> <button class="socialMediaIDsAdd btn" type="button"><span class="icon-plus"></span></button>
 	                            <div>
 	                            </div>
