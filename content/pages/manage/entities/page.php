@@ -320,7 +320,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <td>".$entity["EntitysuggestionCount"]."</td>
                                         <td>
                                             <span class='entitysuggestiondetails icon-popup btn btn-outline-secondary btn-sm' data-id='".$entity["EntitysuggestionID"]."'></span>
-                                            <span class='entityaddform icon-plus btn btn-outline-secondary btn-sm' data-id='".$entity["EntitysuggestionID"]."'></span>
+                                            <a href='".$config["dir"]["root"]."/manage/data/entities/new?wikidataID=".$entity["EntitysuggestionExternalID"]."&entitySuggestionID=".$entity["EntitysuggestionID"]."' target='_blank' class='icon-plus btn btn-outline-secondary btn-sm' data-id='".$entity["EntitysuggestionID"]."'></a>
                                         </td>
                                 </tr>";
 

@@ -123,6 +123,8 @@ $(function() {
 
     $("#getAdditionalInfo").click(function(evt) {
         
+        resetForm();
+
         let entityType = $("select[name='entityType']").val();
         let subType = $("select[name='type']:not(:disabled)").val();
 
@@ -188,8 +190,6 @@ $(function() {
 
     });
 
-    $("select[name='entityType']").val("person").trigger("change");
-
     /*
     $("body").on("click", ".entityaddform", function() {
 
@@ -237,3 +237,8 @@ $(function() {
 
 
 });
+
+function resetForm() {
+    $('button.socialMediaIDsRemove, button.labelAlternativeRemove').parent().remove();
+    $('input[type="text"]:not([name="id"]), textarea, select:not([name="entityType"]):not([name="type"])').val('');
+}

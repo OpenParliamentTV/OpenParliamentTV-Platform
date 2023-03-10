@@ -42,8 +42,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                        <input name="a" value="entityAddTest" type="hidden">
 	                        <input name="entitysuggestionid" value="" type="hidden">
 	                        <div class="form-group">
-	                            <label for="entityType">Entity-Type</label>
+	                            <label for="entityType">Entity Type</label>
 	                            <select class="form-control" name="entityType">
+	                                <option value="" disabled selected>Choose Entity Type ..</option>
 	                                <option value="person">Person</option>
 	                                <option value="organisation">Organisation</option>
 	                                <option value="document">Document</option>
@@ -52,7 +53,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                        </div>
 	                    </div>
 	                    <div class="col-12 col-lg-4">
-	                        <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
+	                        <div class="form-group">
 	                            <label for="id">Wikidata ID</label>
 	                            <input type="text" class="form-control" name="id">
 	                        </div>
@@ -61,14 +62,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                        <div class="form-group formItem formItemTypeTerm">
 	                            <label for="type">Subtype</label>
 	                            <select class="form-control" name="type">
-	                                <option value="">..TODO..</option>
+	                                <option value="" disabled selected>Choose Subtype ..</option>
 	                                <option value="otherTerm">Other Term</option>
 	                            </select>
 	                        </div>
 	                        <div class="form-group formItem formItemTypeDocument">
 	                            <label for="type">Subtype</label>
 	                            <select class="form-control" name="type">
-	                                <option value="">..TODO..</option>
+	                                <option value="" disabled selected>Choose Subtype ..</option>
 	                                <option value="officialDocument">officialDocument</option>
 	                                <option value="legalDocument">legalDocument</option>
 	                                <option value="otherDocument">Other Document</option>
@@ -77,7 +78,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                        <div class="form-group formItem formItemTypePerson">
 	                            <label for="type">Subtype</label>
 	                            <select class="form-control" name="type">
-	                                <option value="">..TODO..</option>
+	                                <option value="" disabled selected>Choose Subtype ..</option>
 	                                <option value="memberOfParliament">Member Of Parliament</option>
 	                                <option value="person">Person</option>
 	                            </select>
@@ -85,7 +86,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                        <div class="form-group formItem formItemTypeOrganisation">
 	                            <label for="type">Subtype</label>
 	                            <select class="form-control" name="type">
-	                                <option value="">Please Select</option>
+	                                <option value="" disabled selected>Choose Subtype ..</option>
 	                                <option value="party">Party</option>
 	                                <option value="faction">Faction</option>
 	                                <option value="government">Government</option>
@@ -147,7 +148,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                        <div class="form-group formItem formItemTypePerson">
 	                            <label for="gender">Gender</label>
 	                            <select class="form-control" name="gender">
-	                                <option value="">..TODO..</option>
+	                                <option value="" disabled selected>Choose Gender ..</option>
 	                                <option value="female">Female</option>
 	                                <option value="male">Male</option>
 	                                <option value="non-binary">Non-Binary</option>
@@ -192,7 +193,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                        <div class="form-group formItem formItemTypePerson">
 	                            <label for="party">Party</label>
 	                            <select class="form-control" name="party">
-
+	                            	<option value="" disabled selected>Choose Party ..</option>
 	                                <?php
 
 	                                require_once (__DIR__."/../../../../../api/v1/modules/organisation.php");
@@ -208,7 +209,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                        <div class="form-group formItem formItemTypePerson">
 	                            <label for="faction">Faction</label>
 	                            <select class="form-control" name="faction">
-
+	                            	<option value="" disabled selected>Choose Faction ..</option>
 	                                <?php
 
 	                                require_once (__DIR__."/../../../../../api/v1/modules/organisation.php");
