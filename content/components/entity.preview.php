@@ -13,7 +13,7 @@ if ($entity["data"]["type"] == "organisation") {
 				<div class="row">
 					<div class="col flex-grow-0 detailsThumbnailContainer" style="width: 70px; height: 70px; flex-basis: 70px; overflow: visible;">
 						<div class="rounded-circle" style="top: 1px;">
-							<?php if (isset($entity["data"]["attributes"]["thumbnailURI"]) || $entity["data"]["type"] == "person") { ?>
+							<?php if ($entity["data"]["attributes"]["thumbnailURI"] || $entity["data"]["type"] == "person") { ?>
 								<img src="<?= $entity["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute; object-fit: <?= $typeImageFit ?>;"/>
 							<?php } else if ($entity["data"]["type"] == "document") { ?>
 								<span class="icon-doc-text" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
