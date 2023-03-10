@@ -1165,6 +1165,12 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
     }
     */
 
+    //TODO: As long as NER is mapping factions to wrong wids this is a hotfix
+    ob_start();
+    include(__DIR__."/../../../data/ner-matching.php");
+    $todoMapping = json_decode(ob_get_clean(),true);
+
+
     if (!$entityDump) {
 
         require_once (__DIR__."/../../../data/entity-dump/function.entityDump.php");
@@ -1206,6 +1212,14 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
 
                             if (!$entity["wid"]) {
                                 continue;
+                            }
+
+
+                            //TODO: As long as NER is mapping factions to wrong wids this is a hotfix
+                            if (array_key_exists($entity["wid"], $todoMapping)) {
+
+                                $entity["wid"] = $todoMapping[$entity["wid"]]["routing"];
+
                             }
 
                             if (!array_key_exists($entity["wid"],$entityDump["data"])) {

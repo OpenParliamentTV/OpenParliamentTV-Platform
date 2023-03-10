@@ -165,7 +165,7 @@ if (is_cli()) {
 
     } elseif ($input["type"] == "person") {
 
-        $items = $db->getAll("SELECT PersonID AS id FROM ?n",$config["platform"]["sql"]["tbl"]["Person"]);
+        $items = $db->getAll("SELECT PersonID AS id FROM ?n WHERE PersonType != 'memberOfParliament'",$config["platform"]["sql"]["tbl"]["Person"]);
 
 
     } elseif ($input["type"] == "organisation") {
