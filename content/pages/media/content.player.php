@@ -206,11 +206,18 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                         $relatedDocumentsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
                                             <div class="entityContainer">
                                                 <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
-                                                    <div class="entityType">'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div>
-                                                    <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                    <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
-                                                    <div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"][0].'</div>
-                                                    <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
+                                                    <div class="thumbnailContainer">
+                                                        <div class="rounded-circle">
+                                                            <span class="icon-doc-text" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="entityType">'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div>
+                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                        <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                        <div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"][0].'</div>
+                                                        <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
+                                                    </div>
                                                 </a>
                                             </div>
                                         </div>\n';
@@ -218,13 +225,88 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                         $relatedDocumentsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
                                             <div class="entityContainer">
                                                 <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
-                                                    <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                    <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
-                                                    <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
+                                                    <div class="thumbnailContainer">
+                                                        <div class="rounded-circle">
+                                                            <span class="icon-doc-text" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                        <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                        <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
+                                                    </div>
                                                 </a>
                                             </div>
                                         </div>\n';
                     }
+
+                }
+            }
+        }
+    }
+
+}
+
+$relatedTermsHTML = "";
+$relatedTermsHTMLNER = "";
+if (isset($speech["relationships"]["terms"]["data"]) && count($speech["relationships"]["terms"]["data"]) > 0) {
+
+    foreach ($speech["relationships"]["terms"]["data"] as $relationshipItem) {
+
+        $tmpTerms["NER"] = array();
+        $tmpTerms["default"] = array();
+
+        foreach ($speech["annotations"]["data"] as $annotation) {
+
+            if ($annotation["id"] == $relationshipItem["id"]) {
+
+                if ($annotation["attributes"]["context"] != "NER") {
+
+                    if (in_array($annotation["id"],$tmpTerms["default"])) {
+                        continue;
+                    }
+
+                    $tmpTerms["default"][] = $annotation["id"];
+                    $relatedTermsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="default">
+                                            <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
+                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
+                                                    <div class="thumbnailContainer">
+                                                        <div class="rounded-circle">
+                                                            <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                        <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                        <div><span class="icon-megaphone"></span></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>\n';
+
+                } else if ($config["display"]["ner"]) {
+
+                    if (in_array($annotation["id"],$tmpTerms["NER"])) {
+                        continue;
+                    }
+                    $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
+                    $tmpTerms["NER"][] = $annotation["id"];
+                    $relatedTermsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
+                                            <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
+                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
+                                                    <div class="thumbnailContainer">
+                                                        <div class="rounded-circle">
+                                                            <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
+                                                        <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                        <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>\n';
 
                 }
             }
@@ -240,7 +322,7 @@ if ($config["display"]["ner"]) {
     '<hr>
     <div class="relationshipsCategoryHeader">'.L::automaticallyDetected.' <a class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal" href="#" style="font-weight: lighter;"><span class="icon-attention mr-1"></span><u>beta</u></a></div>
     <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">
-        '.$relatedDocumentsHTMLNER.' '.$relatedPeopleHTMLNER.' '.$relatedOrganisationsHTMLNER.' '.$relatedDocumentsHTMLNER.'
+        '.$relatedPeopleHTMLNER.' '.$relatedOrganisationsHTMLNER.' '.$relatedDocumentsHTMLNER.' '.$relatedTermsHTMLNER.' 
     </div>';
 }
 
@@ -255,8 +337,6 @@ $relatedContentsHTML =
         <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">'.$relatedDocumentsHTML.'</div>
         '.$nerPanel.'
     </div>
-    <div class="tab-pane fade show" id="documents" role="tabpanel" aria-labelledby="documents-tab"></div>
-    <div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">[CONTENT]</div>
 </div>';
 
 $relatedContentsHTML = str_replace(array("\r","\n"), " ",$relatedContentsHTML);

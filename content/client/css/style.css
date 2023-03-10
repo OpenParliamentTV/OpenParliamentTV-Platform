@@ -651,6 +651,8 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 .relationshipsList .entityPreview[data-type="person"] .entityContainer .linkWrapper,
 .relationshipsList .entityPreview[data-type="organisation"] .entityContainer a, 
 .relationshipsList .entityPreview[data-type="organisation"] .entityContainer .linkWrapper,
+.relationshipsList .entityPreview[data-type="document"][data-context="NER"] .entityContainer a, 
+.relationshipsList .entityPreview[data-type="document"][data-context="NER"] .entityContainer .linkWrapper,
 .relationshipsList .entityPreview[data-type="term"] .entityContainer a, 
 .relationshipsList .entityPreview[data-type="term"] .entityContainer .linkWrapper {
     flex-direction: row;
@@ -1451,6 +1453,7 @@ body.darkmode .entityPreview .rounded-circle {
 .entityPreview[data-type="organisation"] .rounded-circle img {
     object-fit: contain;
     object-position: center;
+    transform: scale(0.7);
 }
 
 .thumbnailContainer .copyrightInfo,
