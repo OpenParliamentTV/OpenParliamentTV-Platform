@@ -126,7 +126,7 @@ $(function() {
         let subType = $("select[name='type']:not(:disabled)").val();
 
         let serviceType = entityType;
-        if (subType == "memberOfParliament" || subType == "officialDocument") {
+        if (subType == "memberOfParliament" || subType == "officialDocument" || subType == "legalDocument") {
             serviceType = subType;
         }
 
@@ -153,6 +153,7 @@ $(function() {
                 //$("input[name='sourceuri']").val(result.data.);
                 //$("input[name='embeduri']").val(result.data.);
                 $("input[name='websiteuri']").val(result.data.websiteURI);
+                $("input[name='sourceuri']").val(result.data.websiteURI);
                 //$("input[name='originid']").val(result.data.originID);
                 $("textarea[name='additionalinformation']").val(JSON.stringify(result.data.additionalInformation));
 
