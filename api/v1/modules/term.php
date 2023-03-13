@@ -390,10 +390,10 @@ function termAdd($item, $db = false) {
         $return["errors"][] = $errorarray;
     }
 
-    if ((!$item["label"]) || strlen($item["label"]) < 3) {
+    if ((!$item["label"]) || strlen($item["label"]) < 2) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
-        $errorarray["title"] = "Label is missing or < 3";
+        $errorarray["title"] = "Label is missing or < 2";
         $errorarray["label"] = "label";
         $errorarray["detail"] = "Required parameter of the request is missing";
         $return["errors"][] = $errorarray;
