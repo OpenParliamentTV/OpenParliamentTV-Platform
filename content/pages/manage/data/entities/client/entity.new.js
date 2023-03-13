@@ -160,7 +160,7 @@ $(function() {
                 $("select[name='party']").val(result.data.partyID);
                 $("select[name='faction']").val(result.data.factionID);
 
-                for (var i = result.data.labelAlternative.length - 1; i >= 0; i--) {
+                for (var i = 0; i < result.data.labelAlternative.length; i++) {
                     $("button.labelAlternativeAdd").next("div").append('<span style="position: relative">' +
                         '<input type="text" class="form-control" name="labelAlternative[]" value="'+ result.data.labelAlternative[i] +'">' +
                         '<button class="labelAlternativeRemove btn" style="position: absolute;top:0px;right:0px;" type="button">' +
