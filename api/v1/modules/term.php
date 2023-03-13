@@ -465,8 +465,8 @@ function termAdd($item, $db = false) {
                     "TermAdditionalInformation=?s",
 
                     $config["platform"]["sql"]["tbl"]["Term"],
-                    $item["type"],
                     $item["id"],
+                    $item["type"],
                     $item["label"],
                     (is_array($labelAlternative) ? json_encode($labelAlternative, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : "[".$item["labelAlternative"]."]"),
                     $item["abstract"],
