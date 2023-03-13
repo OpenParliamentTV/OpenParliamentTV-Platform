@@ -174,7 +174,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                            <label for="thumbnaillicense">Thumbnail License</label>
 	                            <input type="text" class="form-control" name="thumbnaillicense">
 	                        </div>
-	                        <div class="form-group formItem formItemTypeDocument formItemTypeTerm">
+	                        <div class="form-group formItem formItemTypeDocument">
 	                            <label for="sourceuri">Source URI</label>
 	                            <input type="text" class="form-control" name="sourceuri">
 	                        </div>
@@ -182,7 +182,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	                            <label for="embeduri">Embed URI</label>
 	                            <input type="text" class="form-control" name="embeduri">
 	                        </div>
-	                        <div class="form-group formItem formItemTypePerson formItemTypeOrganisation">
+	                        <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeTerm">
 	                            <label for="websiteuri">Website URI</label>
 	                            <input type="text" class="form-control" name="websiteuri">
 	                        </div>
