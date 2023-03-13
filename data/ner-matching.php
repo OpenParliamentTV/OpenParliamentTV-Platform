@@ -10,7 +10,7 @@ header('Content-Type: application/json');
  * Q2207512 - SPD
  * Q1387991 - FDP
  *
- *
+ * Q1241288 -> Q488589
  */
 ?>
 {
@@ -93,5 +93,9 @@ header('Content-Type: application/json');
     "Q1387996": {
         "description": "Swiss parliamentary group",
         "routing": "Q1387991"
+    },
+    "Q1241288": {
+        "description": "Allgemeines Wirtschaftsministerium auf Deutsches Ministerium",
+        "routing": "Q488589"
     }
 }
