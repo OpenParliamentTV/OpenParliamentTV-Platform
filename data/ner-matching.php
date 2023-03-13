@@ -97,5 +97,9 @@ header('Content-Type: application/json');
     "Q1241288": {
         "description": "Allgemeines Wirtschaftsministerium auf Deutsches Ministerium",
         "routing": "Q488589"
+    },
+    "Q1519799": {
+        "description": "Allgemeines Gesundheitsministerium auf Deutsches Ministerium",
+        "routing": "Q491566"
     }
 }
