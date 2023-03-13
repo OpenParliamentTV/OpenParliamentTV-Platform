@@ -150,10 +150,9 @@ $(function() {
                 $("input[name='thumbnailuri']").val(result.data.thumbnailURI);
                 $("input[name='thumbnailcreator']").val(result.data.thumbnailCreator);
                 $("input[name='thumbnaillicense']").val(result.data.thumbnailLicense);
-                //$("input[name='sourceuri']").val(result.data.);
-                //$("input[name='embeduri']").val(result.data.);
+                $("input[name='sourceuri']").val(result.data.sourceURI);
+                $("input[name='embeduri']").val(result.data.embedURI);
                 $("input[name='websiteuri']").val(result.data.websiteURI);
-                $("input[name='sourceuri']").val(result.data.websiteURI);
                 //$("input[name='originid']").val(result.data.originID);
                 $("textarea[name='additionalinformation']").val(JSON.stringify(result.data.additionalInformation));
 
