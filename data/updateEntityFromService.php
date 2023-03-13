@@ -80,7 +80,7 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
 
     } elseif ($type == "term") {
 
-        $idLabelPlatform = "TermWikidataID";
+        $idLabelPlatform = "TermID";
         $idLabelAPI = "wikidataID";
         $table = $config["platform"]["sql"]["tbl"]["Term"];
         $where = $db->parse("?n = ?s", $idLabelPlatform, $id);
@@ -178,7 +178,7 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
             "TermThumbnailURI"=>$apiItem["data"]["thumbnailURI"],
             "TermThumbnailCreator"=>$apiItem["data"]["thumbnailCreator"],
             "TermThumbnailLicense"=>$apiItem["data"]["thumbnailLicense"],
-            "TermSourceURI"=>$apiItem["data"]["websiteURI"],
+            "TermWebsiteURI"=>$apiItem["data"]["websiteURI"],
             "TermAdditionalInformation"=>json_encode($apiItem["data"]["additionalInformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
         );
     } elseif ($type == "person") {

@@ -337,13 +337,14 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
 
                     case "term":
 
-                        $ditem = $db->getRow("SELECT * FROM ?n WHERE TermID=?i LIMIT 1", $config["platform"]["sql"]["tbl"]["Term"], $annotation["AnnotationResourceID"]);
+                        $ditem = $db->getRow("SELECT * FROM ?n WHERE TermID=?s LIMIT 1", $config["platform"]["sql"]["tbl"]["Term"], $annotation["AnnotationResourceID"]);
                         $tmpAnnotationItem["type"] = "term";
                         $tmpAnnotationItem["id"] = $annotation["AnnotationResourceID"];
                         $tmpAnnotationItem["attributes"]["context"] = $annotation["AnnotationContext"];
                         $tmpAnnotationItem["attributes"]["type"] = $ditem["TermType"];
                         $tmpAnnotationItem["attributes"]["label"] = $ditem["TermLabel"];
                         $tmpAnnotationItem["attributes"]["labelAlternative"] = json_decode($ditem["TermLabelAlternative"]);
+                        $tmpAnnotationItem["attributes"]["websiteURI"] = $ditem["TermWebsiteURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailURI"] = $ditem["TermThumbnailURI"];
                         $tmpAnnotationItem["attributes"]["thumbnailCreator"] = $ditem["TermThumbnailCreator"];
                         $tmpAnnotationItem["attributes"]["thumbnailLicense"] = $ditem["TermThumbnailLicense"];

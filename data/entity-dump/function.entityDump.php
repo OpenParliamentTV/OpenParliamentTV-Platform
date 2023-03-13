@@ -67,7 +67,7 @@ function getEntityDump($parameter, $db = false) {
 
     if (($parameter["type"] == "term") || (($parameter["type"] == "all") && (!$parameter["exclude_term"]))) {
 
-        $terms = $db->getAll("SELECT TermWikidataID as id, TermLabel as label, TermLabelAlternative as labelAlternative, TermID as optvID, 'term' as 'type', TermType as subType FROM ?n",$config["platform"]["sql"]["tbl"]["Term"]);
+        $terms = $db->getAll("SELECT TermID as id, TermLabel as label, TermLabelAlternative as labelAlternative, 'term' as 'type', TermType as subType FROM ?n",$config["platform"]["sql"]["tbl"]["Term"]);
 
         foreach ($terms as $k=>$term) {
             if (isJson($term["labelAlternative"])) {
