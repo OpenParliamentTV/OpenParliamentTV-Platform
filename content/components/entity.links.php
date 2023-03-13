@@ -1,5 +1,5 @@
 <div class="entityLinksContainer d-flex flex-row flex-md-column mt-3 mt-md-0">
-	<?php if ($apiResult["data"]["type"] == "person" || $apiResult["data"]["type"] == "organisation") { ?>
+	<?php if ($apiResult["data"]["type"] == "person" || $apiResult["data"]["type"] == "organisation" || $apiResult["data"]["type"] == "term") { ?>
 		<div class="text-right">
 			<a class="btn btn-sm mr-2 mr-md-0 mb-0 mb-md-2" href="https://wikidata.org/wiki/<?= $apiResult["data"]["id"] ?>" target="_blank">
 				<span>Wikidata</span><img class="ml-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikidata-sm.png">
