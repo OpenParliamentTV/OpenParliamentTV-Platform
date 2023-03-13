@@ -408,7 +408,8 @@ function termAdd($item, $db = false) {
         $return["errors"][] = $errorarray;
     }
 
-    if ((!$item["sourceuri"]) || strlen($item["sourceuri"]) < 5) {
+    /*
+     if ((!$item["sourceuri"]) || strlen($item["sourceuri"]) < 5) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Source URI is missing or too short";
@@ -416,6 +417,7 @@ function termAdd($item, $db = false) {
         $errorarray["detail"] = "Required parameter of the request is missing";
         $return["errors"][] = $errorarray;
     }
+    */
 
     if ($return["errors"]) {
         $return["meta"]["requestStatus"] = "error";
