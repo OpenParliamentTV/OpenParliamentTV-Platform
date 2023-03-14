@@ -220,16 +220,6 @@ function getEntitySuggestionTable($id = "all", $limit = 0, $offset = 0, $search 
         $queryPart .= $db->parse("EntitysuggestionExternalID=?s",$id);
     }
 
-    /*if ($search) {
-        parse_str($search, $search);
-    }
-    if (gettype($search["subject"]) == "array") {
-
-        foreach ($search["subject"] as $subject) {
-            $queryPart .= $db->parse(" AND EntitysuggestionLabel LIKE %?s%", $subject);
-        }
-
-    }*/
 
     if (!empty($search)) {
 
@@ -254,7 +244,6 @@ function getEntitySuggestionTable($id = "all", $limit = 0, $offset = 0, $search 
 
         $return["total"] = $db->getOne("SELECT COUNT(EntitysuggestionID) as count FROM  " . $config["platform"]["sql"]["tbl"]["Entitysuggestion"]);
         $return["rows"] = $db->getAll("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount FROM " . $config["platform"]["sql"]["tbl"]["Entitysuggestion"]." WHERE ?p", $queryPart);
-        $return["tmp"] = $db->parse("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount FROM " . $config["platform"]["sql"]["tbl"]["Entitysuggestion"]." WHERE ?p", $queryPart);
 
     } else {
         $return = $db->getAll("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount FROM " . $config["platform"]["sql"]["tbl"]["Entitysuggestion"]." WHERE ?p", $queryPart);

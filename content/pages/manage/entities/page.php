@@ -109,9 +109,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
                             <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm" style="position: relative">
                                 <label for="label">Label</label>
                                 <input type="text" class="form-control" name="label">
-                                <!--<button class="btn" style="position: absolute;bottom:0px;right:0px;" type="button" id="searchPersonLabelBtn">
-                                    <span class="icon-search-1"></span>
-                                </button>-->
                             </div>
                             <div class="form-group formItem formItemTypePerson">
                                 <label for="firstName">First Name</label>
@@ -293,34 +290,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </tr>
                     </thead>
                     <tbody>
-                        <?php
-/*
-                        if (!$db) {
-                            $db = new SafeMySQL(array(
-                                'host'	=> $config["platform"]["sql"]["access"]["host"],
-                                'user'	=> $config["platform"]["sql"]["access"]["user"],
-                                'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-                                'db'	=> $config["platform"]["sql"]["db"]
-                            ));
-                        }
-
-                        $entitysuggestions = $db->getAll("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount, JSON_EXTRACT(EntitysuggestionContent,'$.type') as EntitysuggestionContentType FROM ?n;", $config["platform"]["sql"]["tbl"]["Entitysuggestion"]);
-
-                        foreach ($entitysuggestions as $entity) {
-                            echo "
-                                <tr>
-                                        <td>".$entity["EntitysuggestionType"]." ".($entity["EntitysuggestionContentType"] ? "<span class='font-italic'>(".$entity["EntitysuggestionContentType"].")</span>" : "")."</td>
-                                        <td>".$entity["EntitysuggestionLabel"]."</td>
-                                        <td>".$entity["EntitysuggestionExternalID"]."</td>
-                                        <td>".$entity["EntitysuggestionCount"]."</td>
-                                        <td>
-                                            <span class='entitysuggestiondetails icon-popup btn btn-outline-secondary btn-sm' data-id='".$entity["EntitysuggestionID"]."'></span>
-                                            <a href='".$config["dir"]["root"]."/manage/data/entities/new?wikidataID=".$entity["EntitysuggestionExternalID"]."&entitySuggestionID=".$entity["EntitysuggestionID"]."' target='_blank' class='icon-plus btn btn-outline-secondary btn-sm' data-id='".$entity["EntitysuggestionID"]."'></a>
-                                        </td>
-                                </tr>";
-
-                        } */
-                        ?>
                     </tbody>
                 </table><br><br><br>
             </div>
@@ -336,21 +305,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
     <script type="application/javascript">
         $(function() {
 
-            /*
-
-            $("#searchPersonLabelBtn").on("click",function() {
-                $.ajax({
-                    url:"<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
-                    dataType:"json",
-                    data:{"a":"searchPersonAtWikidata","label":$("#entityAddPersonForm input[name='label']").val()},
-                    method:"post",
-                    success: function(ret) {
-                        $("#searchPersonLabelReturn").html("<div class='col-12'></div>").show();
-                        $("#searchPersonLabelReturn div").jsonView(JSON.stringify(ret));
-                    }
-                })
-            });
-             */
 
             $(function() {
                 $('#entitiesTable').bootstrapTable({
