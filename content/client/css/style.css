@@ -706,7 +706,7 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     
 }
 
-.entityLinksContainer img {
+.detailsHeader .btn-sm img {
     height: 16px;
     top: -1px;
     position: relative;

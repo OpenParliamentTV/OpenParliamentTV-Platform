@@ -30,10 +30,15 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<?php if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) { ?>
 							<div class="less-opacity"><?= $apiResult["data"]["attributes"]["labelAlternative"][0] ?></div>
 						<?php } ?>
-						<?php if (isset($apiResult["data"]["attributes"]["abstract"]) && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
+						<?php if ($apiResult["data"]["attributes"]["abstract"] && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
 							<div class="mt-2"><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
+							<a class="btn btn-sm mr-2 mt-2" href="<?= $apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"] ?>" target="_blank">
+								<span><?php echo L::moreAt; ?> Wikipedia</span><img class="ml-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikipedia.svg">
+							</a>
 						<?php } ?>
+						<!--
 						<div class="mt-1"><a href="<?= $apiResult["data"]["attributes"]["websiteURI"] ?>"><?= $apiResult["data"]["attributes"]["websiteURI"] ?></a></div>
+						-->
 					</div>
 				</div>
 			</div>
