@@ -706,21 +706,40 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         break;
                         case "organisation":
 
-                        require_once(__DIR__ . "/modules/organisation.php");
+                            require_once(__DIR__ . "/modules/organisation.php");
 
-                        $item = organisationGetOverview("all", $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], true);
+                            $item = organisationGetOverview("all", $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], true);
 
-                        if ($item["meta"]["requestStatus"] == "success") {
+                            if ($item["meta"]["requestStatus"] == "success") {
 
-                            unset($return["errors"]);
+                                unset($return["errors"]);
 
-                        } else {
+                            } else {
 
-                            unset($return["data"]);
+                                unset($return["data"]);
 
-                        }
+                            }
 
-                        $return = array_replace_recursive($return, $item);
+                            $return = array_replace_recursive($return, $item);
+
+                        break;
+                        case "document":
+
+                            require_once(__DIR__ . "/modules/document.php");
+
+                            $item = documentGetOverview("all", $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], true);
+
+                            if ($item["meta"]["requestStatus"] == "success") {
+
+                                unset($return["errors"]);
+
+                            } else {
+
+                                unset($return["data"]);
+
+                            }
+
+                            $return = array_replace_recursive($return, $item);
 
                         break;
                 }
