@@ -151,8 +151,8 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
 
     } elseif ($type == "legalDocument") {
         $updateArray = array(
-            "DocumentLabel"=>$apiItem["data"]["label"],
-            "DocumentLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            //"DocumentLabel"=>$apiItem["data"]["label"],
+            //"DocumentLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             "DocumentAbstract"=>$apiItem["data"]["abstract"],
             "DocumentAdditionalInformation"=>json_encode($apiItem["data"]["additionalInformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
         );
@@ -160,8 +160,8 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
 
         //TODO: Color?
         $updateArray = array(
-            "OrganisationLabel"=>$apiItem["data"]["label"],
-            "OrganisationLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            //"OrganisationLabel"=>$apiItem["data"]["label"],
+            //"OrganisationLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             "OrganisationAbstract"=>$apiItem["data"]["abstract"],
             "OrganisationThumbnailURI"=>$apiItem["data"]["thumbnailURI"],
             "OrganisationThumbnailCreator"=>$apiItem["data"]["thumbnailCreator"],
@@ -172,8 +172,8 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
         );
     } elseif ($type == "term") {
         $updateArray = array(
-            "TermLabel"=>$apiItem["data"]["label"],
-            "TermLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            //"TermLabel"=>$apiItem["data"]["label"],
+            //"TermLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             "TermAbstract"=>$apiItem["data"]["abstract"],
             "TermThumbnailURI"=>$apiItem["data"]["thumbnailURI"],
             "TermThumbnailCreator"=>$apiItem["data"]["thumbnailCreator"],
