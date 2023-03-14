@@ -34,6 +34,9 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 							}
 							?>
 						</div>
+						<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
+						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?php echo L::source; ?>: <?php echo html_entity_decode($apiResult["data"]["attributes"]["thumbnailCreator"]); ?>, <?= $apiResult["data"]["attributes"]["thumbnailLicense"] ?></span></div>
+						<?php } ?>
 					</div>
 					<div class="col">
 						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
