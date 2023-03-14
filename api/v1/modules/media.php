@@ -1234,7 +1234,7 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
                                 $tmpAnnotation = array(
                                     "AnnotationMediaID" => $nextID,
                                     "AnnotationType" => $entityDump["data"][$entity["wid"]]["type"],
-                                    "AnnotationResourceID" => ((($entityDump["data"][$entity["wid"]]["type"] == "document") || ($entityDump["data"][$entity["wid"]]["type"] == "term")) ? $entityDump["data"][$entity["wid"]]["optvID"] : $entity["wid"]),
+                                    "AnnotationResourceID" => (($entityDump["data"][$entity["wid"]]["type"] == "document") ? $entityDump["data"][$entity["wid"]]["optvID"] : $entity["wid"]),
                                     "AnnotationContext" => (($entity["context"]) ? $entity["context"] : "NER"),  //TODO: Context?
                                     "AnnotationFrametrailType" => (($entity["frametrailType"]) ? $entity["frametrailType"] : "Annotation"), //TODO Type?
                                     "AnnotationTimeStart" => $sentence["timeStart"],
