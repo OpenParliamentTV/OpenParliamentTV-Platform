@@ -342,17 +342,25 @@ switch ($_REQUEST["a"]) {
         } else {
 
             require_once (__DIR__."/../data/updateEntityFromService.php");
-            //executeAsyncShellCommand($config["bin"]["php"]." ".realpath()." --type ".$_REQUEST["type"]);
 
-            foreach ($_REQUEST["ids"] as $k=>$id) {
+            try {
 
-                updateEntityFromService($_REQUEST["type"][$k], $id, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $_REQUEST["language"]);
-                //$return["foo"] = array($_REQUEST["type"][$k], $id, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $_REQUEST["language"]);
+                foreach ($_REQUEST["ids"] as $k=>$id) {
+
+                    updateEntityFromService($_REQUEST["type"][$k], $id, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $_REQUEST["language"]);
+
+                }
+
+                $return["success"] = "true";
+                $return["text"] = "Items updated: ".count($_REQUEST["ids"]);
+            } catch (Exception $e) {
+
+                $return["success"] = "false";
+                $return["text"] = "Error: ".$e->getMessage();
 
             }
 
-            $return["success"] = "true";
-            $return["text"] = "additionalDataService";
+
 
         }
 
