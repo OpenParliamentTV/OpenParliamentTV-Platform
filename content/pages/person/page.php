@@ -21,20 +21,29 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				<div class="row align-items-center">
 					<div class="col flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
-							<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute;">
+							<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
+								<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"]?>" alt="..." style="position: absolute;">
+							<?php } else { ?>
+								<span class="icon-torso" style="position: absolute;top: 48%;left: 50%;font-size: 70px;transform: translateX(-50%) translateY(-50%);"></span>
+							<?php } ?>
 						</div>
+						<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
 						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?php echo L::source; ?>: <?php echo html_entity_decode($apiResult["data"]["attributes"]["thumbnailCreator"]); ?>, <?= $apiResult["data"]["attributes"]["thumbnailLicense"] ?></span></div>
+						<?php } ?>
 					</div>
 					<div class="col">
-						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
 						<?php 
 						if (isset($apiResult["data"]["relationships"]["faction"]["data"]["id"])) {
 						?>
-							<a href="../organisation/<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>" class="partyIndicator" data-faction="<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["faction"]["data"]["attributes"]["label"] ?></a>
+							<h2><?= $apiResult["data"]["attributes"]["label"] ?><a href="../organisation/<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>" class="partyIndicator ml-2" data-faction="<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>" style="font-size: 14px;"><?= $apiResult["data"]["relationships"]["faction"]["data"]["attributes"]["label"] ?></a></h2>
+							
+						<?php 
+						} else {
+						?>
+							<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
 						<?php 
 						}
-						?>
-						<?php if (isset($apiResult["data"]["attributes"]["abstract"]) && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
+						if (isset($apiResult["data"]["attributes"]["abstract"]) && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
 							<div class="mt-2"><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
 						<?php } ?>
 						<div class="mt-1"><a target="_blank" href="<?= $apiResult["data"]["attributes"]["websiteURI"] ?>"><?= $apiResult["data"]["attributes"]["websiteURI"] ?></a></div>

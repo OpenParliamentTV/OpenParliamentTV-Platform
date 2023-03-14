@@ -421,11 +421,11 @@ function updateSuggestions() {
 	}
 }
 
-function addQueryItem(queryType, queryText, secondaryText, itemID) {
+function addQueryItem(queryType, queryText, secondaryText, itemID, factionID) {
 	var queryItem = $('<span class="queryItem" data-type="'+ queryType +'"><span class="queryText">'+ queryText +'</span></span>'),
 		queryDeleteItem = $('<span class="queryDeleteItem icon-cancel"></span>');
 	if (secondaryText) {
-		queryItem.append('<span class="ml-2 partyIndicator" data-faction="'+ secondaryText +'">'+ secondaryText +'</span>');
+		queryItem.append('<span class="ml-2 partyIndicator" data-faction="'+ factionID +'">'+ secondaryText +'</span>');
 	}
 	if (itemID) {
 		queryItem.attr('data-item-id', itemID);
@@ -494,14 +494,15 @@ function renderPeopleSuggestions(inputValue, data) {
 			}
 
 			var suggestionItemPerson = '<span class="suggestionItemLabel">'+ highlightedLabel +'</span>',
-				suggestionItemFaction = (data[i].relationships.faction.data) ? '<span class="ml-2 partyIndicator" data-faction="'+ data[i].relationships.faction.data.attributes.label +'">'+ data[i].relationships.faction.data.attributes.label +'</span>' : '',
+				suggestionItemFaction = (data[i].relationships.faction.data) ? '<span class="ml-2 partyIndicator" data-faction="'+ data[i].relationships.faction.data.id +'">'+ data[i].relationships.faction.data.attributes.label +'</span>' : '',
 				suggestionItem = $('<div class="suggestionItem" data-type="person" data-item-id="'+ data[i].id +'">'+ suggestionItemPerson + suggestionItemFaction +'</div>');
 
 			suggestionItem.click(function(evt) {
 				var textValue = $(this).children('.suggestionItemLabel').text(),
 					secondaryText = $(this).children('.partyIndicator').text(),
+					factionID = $(this).children('.partyIndicator').attr('data-faction'),
 					itemID = $(this).attr('data-item-id');
-				addQueryItem('person', textValue, secondaryText, itemID);
+				addQueryItem('person', textValue, secondaryText, itemID, factionID);
 				updateQuery();
 			});
 
@@ -638,7 +639,8 @@ function initInteractiveQueryValues() {
 				var label = personDataFromRequest[personIDs[i]].attributes.label;
 				if (personDataFromRequest[personIDs[i]].relationships.faction.data) {
 					var secondaryLabel = personDataFromRequest[personIDs[i]].relationships.faction.data.attributes.label;
-					addQueryItem('person', label, secondaryLabel, personIDs[i]);
+					var factionID = personDataFromRequest[personIDs[i]].relationships.faction.data.id;
+					addQueryItem('person', label, secondaryLabel, personIDs[i], factionID);
 				} else {
 					addQueryItem('person', label, false, personIDs[i]);
 				}

@@ -43,7 +43,7 @@ foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relati
                                                     </div>
                                                     <div>
                                                         <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines">'.$relationshipItem["attributes"]["faction"]["label"].'</div>
+                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["faction"]["label"].'</div>
                                                         <div><span class="icon-megaphone"></span>'.L('context'.$contextLabelIdentifier).'</div>
                                                     </div>
                                                 </a>
@@ -66,7 +66,7 @@ foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relati
                                                         </div>
                                                         <div>
                                                             <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                            <div class="break-lines">'.$relationshipItem["attributes"]["faction"]["label"].'</div>
+                                                            <div class="break-lines truncate lines">'.$relationshipItem["attributes"]["faction"]["label"].'</div>
                                                             <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</span></div>
                                                         </div>
                                                     </a>
@@ -108,7 +108,7 @@ if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["r
                                                     </div>
                                                     <div>
                                                         <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
                                                         <div><span class="icon-megaphone"></span></div>
                                                     </div>
                                                 </a>
@@ -132,7 +132,7 @@ if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["r
                                                     </div>
                                                     <div>
                                                         <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
                                                         <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
                                                     </div>
                                                 </a>
@@ -173,7 +173,7 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                                                 <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'" data-context="default">
                                                     <div class="entityType">'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div>
                                                     <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                    <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                    <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
                                                     <div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"][0].'</div>
                                                 </a>
                                                 <a class="entityButton" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
@@ -186,7 +186,7 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                                             <div class="entityContainer">
                                                 <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
                                                     <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                    <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                    <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
                                                 </a>
                                                 <a class="btn btn-sm" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
                                                     <span class="icon-file-pdf"></span>
@@ -214,7 +214,7 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                                                     <div>
                                                         <div class="entityType">'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div>
                                                         <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
                                                         <div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"][0].'</div>
                                                         <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
                                                     </div>
@@ -232,7 +232,7 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                                                     </div>
                                                     <div>
                                                         <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
                                                         <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
                                                     </div>
                                                 </a>
@@ -277,7 +277,7 @@ if (isset($speech["relationships"]["terms"]["data"]) && count($speech["relations
                                                     </div>
                                                     <div>
                                                         <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
                                                         <div><span class="icon-megaphone"></span></div>
                                                     </div>
                                                 </a>
@@ -301,7 +301,7 @@ if (isset($speech["relationships"]["terms"]["data"]) && count($speech["relations
                                                     </div>
                                                     <div>
                                                         <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
+                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
                                                         <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
                                                     </div>
                                                 </a>

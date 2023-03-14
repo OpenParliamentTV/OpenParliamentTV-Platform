@@ -568,12 +568,18 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 	text-shadow: none !important;
 }
 
+.resourceThumb.person .resourceOverlay .resourceIcon .icon-doc-text::before {
+	content: '\e8bd';
+}
+
+.resourceThumb.organisation .resourceOverlay .resourceIcon .icon-doc-text::before {
+	content: '\f19c';
+}
+
 .resourceThumb.term .resourceOverlay .resourceIcon .icon-doc-text::before {
 	content: '\e8b4';
 }
 
-.resourceThumb.person .resourceOverlay, 
-.resourceThumb.organisation .resourceOverlay, 
 .resourceThumb[style^="background-image"] .resourceOverlay {
 	display: none;
 }
@@ -688,7 +694,7 @@ body.darkmode .playerContainer .controls {
     }
 
     .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
-        width: 520px;
+        width: 700px;
     }
 }
 
@@ -698,7 +704,7 @@ body.darkmode .playerContainer .controls {
     }
 
     .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
-        width: 520px;
+        width: 660px;
     }
 }
 
@@ -708,7 +714,7 @@ body.darkmode .playerContainer .controls {
     }
 
     .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
-        width: 380px;
+        width: 620px;
     }
 }
 
@@ -718,7 +724,7 @@ body.darkmode .playerContainer .controls {
     }
 
     .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
-        width: 380px;
+        width: 580px;
     }
 }
 
@@ -728,7 +734,7 @@ body.darkmode .playerContainer .controls {
     }
 
     .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
-        width: 380px;
+        width: 540px;
     }
 }
 
@@ -738,7 +744,7 @@ body.darkmode .playerContainer .controls {
     }
 
     .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
-        width: 380px;
+        width: 500px;
     }
 }
 
@@ -748,7 +754,7 @@ body.darkmode .playerContainer .controls {
     }
 
     .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
-        width: 350px;
+        width: 460px;
     }
 }
 
@@ -758,7 +764,7 @@ body.darkmode .playerContainer .controls {
     }
 
     .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
-        width: 320px;
+        width: 400px;
     }
 }
 
@@ -768,6 +774,6 @@ body.darkmode .playerContainer .controls {
     }
 
     .areaBottomDetails .collectionElement, .areaTopDetails .collectionElement, .areaTopContainer[data-size="large"] .collectionElement, .areaBottomContainer[data-size="large"] .collectionElement {
-        width: 300px;
+        width: 320px;
     }
 }

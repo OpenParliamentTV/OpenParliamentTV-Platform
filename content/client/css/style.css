@@ -338,6 +338,17 @@ hr {
     border-top: 1px solid var(--border-color) !important;
 }
 
+.truncate-lines {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+}
+
+.less-opacity {
+    opacity: .8;
+}
+
 .langswitch {
     border: 1px solid #cfcfcf !important;
 }
@@ -953,6 +964,8 @@ body.ready > main {
 
 .partyIndicator[data-party="DIE LINKE"], 
 .partyIndicator[data-faction="DIE LINKE"],
+.partyIndicator[data-party="Die Linke"], 
+.partyIndicator[data-faction="Die Linke"],
 .partyIndicator[data-faction="Q1826856"] {
     background-color: #bc3475;
     border-color: #bc3475;

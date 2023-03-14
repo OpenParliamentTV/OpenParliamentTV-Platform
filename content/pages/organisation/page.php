@@ -28,7 +28,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<div class="col">
 						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
 						<?php if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) { ?>
-							<div><?= $apiResult["data"]["attributes"]["labelAlternative"][0] ?></div>
+							<div class="less-opacity"><?= $apiResult["data"]["attributes"]["labelAlternative"][0] ?></div>
 						<?php } ?>
 						<?php if (isset($apiResult["data"]["attributes"]["abstract"]) && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
 							<div class="mt-2"><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
