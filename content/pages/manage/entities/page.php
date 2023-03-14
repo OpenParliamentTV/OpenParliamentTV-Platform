@@ -282,24 +282,19 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <span class="d-none d-md-inline">Add Entity</span>
                 </button>
                 <table class="table table-striped table-hover"
-                       id="entitiesTable"
-                       data-toggle="table"
-                       data-sortable="true"
-                       data-pagination="true"
-                       data-search="true">
+                       id="entitiesTable">
 
                     <thead>
                     <tr>
-                        <th scope="col" data-sortable="true">Type</th>
                         <th scope="col" data-sortable="true">Label</th>
                         <th scope="col" data-sortable="true">ID</th>
                         <th scope="col" data-sortable="true">Count</th>
-                        <th scope="col" data-sortable="true">Action</th>
+                        <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                         <?php
-
+/*
                         if (!$db) {
                             $db = new SafeMySQL(array(
                                 'host'	=> $config["platform"]["sql"]["access"]["host"],
@@ -324,7 +319,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         </td>
                                 </tr>";
 
-                        }
+                        } */
                         ?>
                     </tbody>
                 </table><br><br><br>
@@ -356,6 +351,45 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 })
             });
              */
+
+            $(function() {
+                $('#entitiesTable').bootstrapTable({
+                    url: config["dir"]["root"] + "/server/ajaxServer.php?a=entitysuggestionGetTable",
+                    pagination: true,
+                    sidePagination: "server",
+                    dataField: "rows",
+                    totalField: "total",
+                    search: true,
+                    serverSort: true,
+                    columns: [
+                        {
+                            field: "EntitysuggestionLabel",
+                            title: "Label",
+                        },
+                        {
+                            field: "EntitysuggestionExternalID",
+                            title: "WikidataID",
+                            formatter: function(value, row) {
+
+                                return '<a href="https://www.wikidata.org/wiki/'+value+'" target="_blank">'+value+' </a>';
+
+                            }
+                        },
+                        {
+                            field: "EntitysuggestionCount",
+                            title: "Affected Sessions"
+                        },
+                        {
+                            field: "EntitysuggestionID",
+                            title: "Action",
+                            formatter: function(value, row) {
+                                return "<span class='entitysuggestiondetails icon-popup btn btn-outline-secondary btn-sm' data-id='"+value+"'></span>\n" +
+                                    "                                            <a href='"+config["dir"]["root"]+"/manage/data/entities/new?wikidataID="+row["EntitysuggestionExternalID"]+"&entitySuggestionID="+row["EntitysuggestionID"]+"' target='_blank' class='icon-plus btn btn-outline-secondary btn-sm' data-id='"+row["EntitysuggestionID"]+"'></a>"
+                            }
+                        }
+                    ]
+                });
+            });
 
 
             /**

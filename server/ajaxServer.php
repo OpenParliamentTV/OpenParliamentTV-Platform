@@ -93,6 +93,23 @@ switch ($_REQUEST["a"]) {
         }
 
     break;
+    case "entitysuggestionGetTable":
+
+        $auth = auth($_SESSION["userdata"]["id"], "entitysuggestion", "entitysuggestionGetTable");
+
+        if ($auth["meta"]["requestStatus"] != "success") {
+
+            $alertText = $auth["errors"][0]["detail"];
+            include_once (__DIR__."/../../../login/page.php");
+
+        } else {
+
+            require_once(__DIR__ . "/../modules/utilities/functions.entities.php");
+            echo json_encode(getEntitySuggestionTable("all", $_REQUEST["limit"], $_REQUEST["offset"], $_REQUEST["search"], $_REQUEST["sort"], $_REQUEST["order"], true), JSON_PRETTY_PRINT);
+            return;
+        }
+
+    break;
 
     case "entityAdd":
 

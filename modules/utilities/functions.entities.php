@@ -199,46 +199,50 @@ function getEntitySuggestion($id, $idType="internal", $type="", $db=false) {
 }
 
 
-function getEntitySuggestionsTable($limit = 0, $offset = 0, $sorted = false, $search = false, $getCount = false, $db = false) {
+function getEntitySuggestionTable($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
 
     global $config;
 
     if (!$db) {
-        try {
-
-            $db = new SafeMySQL(array(
-                'host'	=> $config["platform"]["sql"]["access"]["host"],
-                'user'	=> $config["platform"]["sql"]["access"]["user"],
-                'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-                'db'	=> $config["platform"]["sql"]["db"]
-            ));
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to platform database failed";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
+        $db = new SafeMySQL(array(
+            'host'	=> $config["platform"]["sql"]["access"]["host"],
+            'user'	=> $config["platform"]["sql"]["access"]["user"],
+            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+            'db'	=> $config["platform"]["sql"]["db"]
+        ));
     }
+
     $queryPart = "";
 
-    if ($search) {
-        parse_str($search, $search);
+    if ($id == "all") {
+        $queryPart .= "1";
+    } else {
+        $queryPart .= $db->parse("EntitysuggestionExternalID=?s",$id);
     }
 
+    /*if ($search) {
+        parse_str($search, $search);
+    }
     if (gettype($search["subject"]) == "array") {
 
         foreach ($search["subject"] as $subject) {
-            $queryPart .= $db->parse(" AND ConflictSubject=?s", $subject);
+            $queryPart .= $db->parse(" AND EntitysuggestionLabel LIKE %?s%", $subject);
         }
 
+    }*/
+
+    if (!empty($search)) {
+
+        $queryPart .= $db->parse(" AND (EntitysuggestionLabel LIKE ?s OR EntitysuggestionExternalID LIKE ?s)", "%".$search."%","%".$search."%");
+
     }
+
+    if (!empty($sort)) {
+
+        $queryPart .= $db->parse(" ORDER BY ?n ".$order, $sort);
+
+    }
+
 
     if ($limit != 0) {
 
@@ -246,7 +250,18 @@ function getEntitySuggestionsTable($limit = 0, $offset = 0, $sorted = false, $se
 
     }
 
-    $entitysuggestions = $db->getAll("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount, JSON_EXTRACT(EntitysuggestionContent,'$.type') as EntitysuggestionContentType FROM ?n;", $config["platform"]["sql"]["tbl"]["Entitysuggestion"]);
+    if ($getCount == true) {
+
+        $return["total"] = $db->getOne("SELECT COUNT(EntitysuggestionID) as count FROM  " . $config["platform"]["sql"]["tbl"]["Entitysuggestion"]);
+        $return["rows"] = $db->getAll("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount FROM " . $config["platform"]["sql"]["tbl"]["Entitysuggestion"]." WHERE ?p", $queryPart);
+        $return["tmp"] = $db->parse("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount FROM " . $config["platform"]["sql"]["tbl"]["Entitysuggestion"]." WHERE ?p", $queryPart);
+
+    } else {
+        $return = $db->getAll("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount FROM " . $config["platform"]["sql"]["tbl"]["Entitysuggestion"]." WHERE ?p", $queryPart);
+    }
+
+
+    return $return;
 
 }
 
