@@ -713,13 +713,13 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 }
 
 body.darkmode .entityLinksContainer img, 
-.entityLinksContainer .btn:hover img, 
-.entityLinksContainer .btn:focus img {
+.detailsHeader .btn:hover img, 
+.detailsHeader .btn:focus img {
     filter: grayscale(1) invert(1) brightness(10) opacity(0.9) !important;
 }
 
-body.darkmode .entityLinksContainer .btn:hover img,
-body.darkmode .entityLinksContainer .btn:focus img {
+body.darkmode .detailsHeader .btn:hover img,
+body.darkmode .detailsHeader .btn:focus img {
     filter: grayscale(1) invert(1) brightness(0) opacity(0.9) !important;
 }
 
