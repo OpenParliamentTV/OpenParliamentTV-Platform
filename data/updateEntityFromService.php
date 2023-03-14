@@ -154,6 +154,7 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
             //"DocumentLabel"=>$apiItem["data"]["label"],
             //"DocumentLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             "DocumentAbstract"=>$apiItem["data"]["abstract"],
+            "DocumentSourceURI"=>$apiItem["data"]["sourceURI"],
             "DocumentAdditionalInformation"=>json_encode($apiItem["data"]["additionalInformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
         );
     } elseif ($type == "organisation") {
