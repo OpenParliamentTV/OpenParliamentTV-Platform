@@ -682,6 +682,31 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
             break;
 
+            case "getOverview":
+                switch ($request["itemType"]) {
+
+                    case "person":
+
+                        require_once(__DIR__ . "/modules/person.php");
+
+                        $item = personGetOverview("all", $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], true);
+
+                        if ($item["meta"]["requestStatus"] == "success") {
+
+                            unset($return["errors"]);
+
+                        } else {
+
+                            unset($return["data"]);
+
+                        }
+
+                        $return = array_replace_recursive($return, $item);
+
+                        break;
+                }
+            break;
+
             default:
 
                 $errorarray["status"] = "422";

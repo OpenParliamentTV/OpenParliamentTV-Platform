@@ -50,6 +50,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <a href="./data/media/irregularities">Show irregularities</a>
                 </div>
 				<div class="tab-pane fade" id="people" role="tabpanel" aria-labelledby="people-tab">
+                    <a href="<?=$config["dir"]["root"]?>/manage/data/person/overview" target="_self">Overview</a><br><br>
                     Tabelle Person, <a href="../person/8757">Beispiel Link</a>, <a href="./data/person/8757">Manage / Edit Link</a>
                     <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="person">Run additionalDataService for person</button>
                     <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="memberOfParliament">Run additionalDataService for memberOfParliament</button>

@@ -306,43 +306,41 @@ if ($auth["meta"]["requestStatus"] != "success") {
         $(function() {
 
 
-            $(function() {
-                $('#entitiesTable').bootstrapTable({
-                    url: config["dir"]["root"] + "/server/ajaxServer.php?a=entitysuggestionGetTable",
-                    pagination: true,
-                    sidePagination: "server",
-                    dataField: "rows",
-                    totalField: "total",
-                    search: true,
-                    serverSort: true,
-                    columns: [
-                        {
-                            field: "EntitysuggestionLabel",
-                            title: "Label",
-                        },
-                        {
-                            field: "EntitysuggestionExternalID",
-                            title: "WikidataID",
-                            formatter: function(value, row) {
+            $('#entitiesTable').bootstrapTable({
+                url: config["dir"]["root"] + "/server/ajaxServer.php?a=entitysuggestionGetTable",
+                pagination: true,
+                sidePagination: "server",
+                dataField: "rows",
+                totalField: "total",
+                search: true,
+                serverSort: true,
+                columns: [
+                    {
+                        field: "EntitysuggestionLabel",
+                        title: "Label",
+                    },
+                    {
+                        field: "EntitysuggestionExternalID",
+                        title: "WikidataID",
+                        formatter: function(value, row) {
 
-                                return '<a href="https://www.wikidata.org/wiki/'+value+'" target="_blank">'+value+' </a>';
+                            return '<a href="https://www.wikidata.org/wiki/'+value+'" target="_blank">'+value+' </a>';
 
-                            }
-                        },
-                        {
-                            field: "EntitysuggestionCount",
-                            title: "Affected Sessions"
-                        },
-                        {
-                            field: "EntitysuggestionID",
-                            title: "Action",
-                            formatter: function(value, row) {
-                                return "<span class='entitysuggestiondetails icon-popup btn btn-outline-secondary btn-sm' data-id='"+value+"'></span>\n" +
-                                    "                                            <a href='"+config["dir"]["root"]+"/manage/data/entities/new?wikidataID="+row["EntitysuggestionExternalID"]+"&entitySuggestionID="+row["EntitysuggestionID"]+"' target='_blank' class='icon-plus btn btn-outline-secondary btn-sm' data-id='"+row["EntitysuggestionID"]+"'></a>"
-                            }
                         }
-                    ]
-                });
+                    },
+                    {
+                        field: "EntitysuggestionCount",
+                        title: "Affected Sessions"
+                    },
+                    {
+                        field: "EntitysuggestionID",
+                        title: "Action",
+                        formatter: function(value, row) {
+                            return "<span class='entitysuggestiondetails icon-popup btn btn-outline-secondary btn-sm' data-id='"+value+"'></span>\n" +
+                                "                                            <a href='"+config["dir"]["root"]+"/manage/data/entities/new?wikidataID="+row["EntitysuggestionExternalID"]+"&entitySuggestionID="+row["EntitysuggestionID"]+"' target='_blank' class='icon-plus btn btn-outline-secondary btn-sm' data-id='"+row["EntitysuggestionID"]+"'></a>"
+                        }
+                    }
+                ]
             });
 
 
