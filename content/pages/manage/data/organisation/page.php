@@ -54,6 +54,16 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         field: "OrganisationType",
                         title: "Type",
                         sortable: true
+                    },
+                    {
+                        field: "OrganisationID",
+                        title: "Type",
+                        sortable: true,
+                        formatter: function(value, row) {
+
+                            return "<a href='"+config["dir"]["root"]+"/manage/data/organisation/"+value+"' target='_blank' class='icon-pencil btn btn-outline-secondary btn-sm' data-id='"+value+"'></a>";
+
+                        }
                     }
                 ]
             });
