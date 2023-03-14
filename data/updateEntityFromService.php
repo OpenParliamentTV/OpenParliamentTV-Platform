@@ -5,13 +5,13 @@ require_once(__DIR__."/../modules/utilities/safemysql.class.php");
 
 function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de", $db = false) {
 
-    if (($id == "Q2415493") || ($id == "Q4316268")) {
+    /*if (($id == "Q2415493") || ($id == "Q4316268")) {
         //TODO: Add Blacklist
         $return["meta"]["requestStatus"] = "error";
         $return["errors"][] = array("info"=>"blacklisted");
         return $return;
 
-    }
+    }*/
 
     global $config;
 
