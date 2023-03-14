@@ -328,6 +328,37 @@ switch ($_REQUEST["a"]) {
     break;
 
 
+    case "runAdditionalDataServiceForSpecificEntities":
+
+        $auth = auth($_SESSION["userdata"]["id"], "additionalDataService", "runForSpecificEntities");
+
+        if ($auth["meta"]["requestStatus"] != "success") {
+
+            $return["success"] = "false";
+            $return["text"] = "Forbidden";
+            $return["code"] = "403";
+
+
+        } else {
+
+            require_once (__DIR__."/../data/updateEntityFromService.php");
+            //executeAsyncShellCommand($config["bin"]["php"]." ".realpath()." --type ".$_REQUEST["type"]);
+
+            foreach ($_REQUEST["ids"] as $k=>$id) {
+
+                updateEntityFromService($_REQUEST["type"][$k], $id, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $_REQUEST["language"]);
+                //$return["foo"] = array($_REQUEST["type"][$k], $id, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $_REQUEST["language"]);
+
+            }
+
+            $return["success"] = "true";
+            $return["text"] = "additionalDataService";
+
+        }
+
+    break;
+
+
     case "searchPersonAtWikidata":
 
         $auth = auth($_SESSION["userdata"]["id"], "searchWikipedia", "person");
