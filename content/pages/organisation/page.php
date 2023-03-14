@@ -50,45 +50,39 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 	<div class="row">
 		<div class="col-12">
 			<ul class="nav nav-tabs" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::relatedMedia ?></span></a>
-				</li>
-				<?php 
-				if ($config["display"]["ner"]) {
-				?>
-				<li class="nav-item">
-					<a class="nav-link" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention mr-1"></span><u>beta</u></span></span></a>
-				</li>
-				<?php 
-				}
-				?>
+				<?php if ($apiResult["data"]["attributes"]["type"] == "faction" || $apiResult["data"]["attributes"]["type"] == "party") { ?>
+					<li class="nav-item">
+						<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::relatedMedia ?></span></a>
+					</li>
+				<?php } else if ($config["display"]["ner"]) { ?>
+					<li class="nav-item">
+						<a class="nav-link active" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention mr-1"></span><u>beta</u></span></span></a>
+					</li>
+				<?php } ?>
 				<li class="nav-item ml-auto">
 					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
 				</li>
 			</ul>
 			<div class="tab-content">
-				<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
-					<div id="speechListContainer">
-						<div class="resultWrapper"></div>
-						<div class="loadingIndicator">
-							<div class="workingSpinner" style="position: fixed; top: 65%;"></div>
+				<?php if ($apiResult["data"]["attributes"]["type"] == "faction" || $apiResult["data"]["attributes"]["type"] == "party") { ?>
+					<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
+						<div id="speechListContainer">
+							<div class="resultWrapper"></div>
+							<div class="loadingIndicator">
+								<div class="workingSpinner" style="position: fixed; top: 65%;"></div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<?php 
-				if ($config["display"]["ner"]) {
-				?>
-				<div class="tab-pane fade" id="ner" role="tabpanel" aria-labelledby="ner-tab">
-					<div id="nerListContainer">
-						<div class="resultWrapper"></div>
-						<div class="loadingIndicator">
-							<div class="workingSpinner" style="position: fixed; top: 65%;"></div>
+				<?php } else if ($config["display"]["ner"]) { ?>
+					<div class="tab-pane fade show active" id="ner" role="tabpanel" aria-labelledby="ner-tab">
+						<div id="nerListContainer">
+							<div class="resultWrapper"></div>
+							<div class="loadingIndicator">
+								<div class="workingSpinner" style="position: fixed; top: 65%;"></div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<?php 
-				}
-				?>
+				<?php } ?>
 				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
 					<?php include_once(__DIR__ . '/../../components/entity.data.php'); ?>
 				</div>

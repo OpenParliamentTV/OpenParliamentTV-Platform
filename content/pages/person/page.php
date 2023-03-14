@@ -66,18 +66,16 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				<li class="nav-item">
 					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::speeches ?></span></a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="interventions-tab" data-toggle="tab" href="#interventions" role="tab" aria-controls="interventions" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::interjections ?></span></a>
-				</li>
-				<?php 
-				if ($config["display"]["ner"]) {
-				?>
-				<li class="nav-item">
-					<a class="nav-link" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention mr-1"></span><u>beta</u></span></span></a>
-				</li>
-				<?php 
-				}
-				?>
+				<?php if ($apiResult["data"]["attributes"]["type"] == "memberOfParliament") { ?>
+					<li class="nav-item">
+						<a class="nav-link" id="interventions-tab" data-toggle="tab" href="#interventions" role="tab" aria-controls="interventions" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::interjections ?></span></a>
+					</li>
+				<?php } ?>
+				<?php if ($config["display"]["ner"]) { ?>
+					<li class="nav-item">
+						<a class="nav-link" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention mr-1"></span><u>beta</u></span></span></a>
+					</li>
+				<?php } ?>
 				<li class="nav-item ml-auto">
 					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
 				</li>
