@@ -347,7 +347,7 @@ switch ($_REQUEST["a"]) {
 
                 foreach ($_REQUEST["ids"] as $k=>$id) {
 
-                    updateEntityFromService($_REQUEST["type"][$k], $id, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $_REQUEST["language"]);
+                    $return["return"][] = updateEntityFromService($_REQUEST["type"][$k], $id, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $_REQUEST["language"]);
 
                 }
 
