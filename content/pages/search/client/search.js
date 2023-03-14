@@ -409,7 +409,7 @@ function updateSuggestions() {
 
 	    suggestionsPeopleAjax = $.ajax({
 			method: "POST",
-			url: './api/v1/search/people?name='+ textValue
+			url: './api/v1/search/people?type=memberOfParliament&name='+ textValue
 		}).done(function(data) {
 			renderPeopleSuggestions(textValue, data.data);
 		}).fail(function(err) {
