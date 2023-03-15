@@ -33,13 +33,13 @@
 			<span class="icon-menu-1"></span><span class="labelShow"><?php echo L::filtersShow; ?></span><span class="labelCollapse"><?php echo L::filtersHide; ?></span><span class="icon-up-open-big"><span>
 		</button>
 		<div class="filterContainer collapse show d-md-block">
-			<div class="row row-cols-1 row-cols-xl-3">
-				<div class="col col-12 col-xl-9">
-					<div class="form-group">
-						<div class="chartContainer d-none d-lg-block">
+			<div class="row">
+				<div class="col col-12">
+					<div class="form-group d-flex">
+						<div class="chartContainer">
 							<canvas id="factionChart"></canvas>
 						</div>
-						<div class="checkboxList">
+						<div class="checkboxList flex-grow-1">
 							<label style="display: block;" for="edit-party"><b><?php echo L::faction; ?></b></label>
 							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q1023134">
 								<input id="edit-party-17362" name="factionID[]" value="Q1023134" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17362">CDU/CSU</label>
@@ -66,14 +66,6 @@
 						<div style="clear: both;"></div>
 					</div>
 				</div>
-				<!--
-				<div class="col col-12 col-sm-6 col-md-5 col-lg-4 col-xl-3">
-					<div class="form-group">
-						<label for="edit-keys"><b><?php echo L::name; ?></b></label>
-						<input class="form-control form-control-sm" placeholder="<?php echo L::enterName; ?>" id="edit-keys" name="person" value="" type="text">
-					</div>
-				</div>
-				-->
 			</div>
 			<hr>
 			<div class="rangeContainer">

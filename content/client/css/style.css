@@ -1268,9 +1268,11 @@ body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em
     height: 60px;
 }
 
-@media (max-width:768px) {
+@media (max-width:480px) {
     .filterContainer .chartContainer {
         margin-bottom: 10px;
+        width: 40px;
+        height: 40px;
     }
 }
 @media (min-width:992px) {
@@ -1310,6 +1312,20 @@ body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em
 
 .filterContainer .formCheckbox:hover, .filterContainer .formCheckbox label:hover {
     cursor: pointer;
+}
+
+@media (max-width:480px) {
+    .filterContainer .formCheckbox {
+        width: calc(50% - 5px);
+        margin-right: 10px;
+    }
+    .filterContainer .formCheckbox:nth-child(odd) {
+        margin-right: 0px;
+    }
+}
+
+.filterContainer .formCheckbox .custom-control-label {
+    width: 100%;
 }
 
 .rangeContainer {
