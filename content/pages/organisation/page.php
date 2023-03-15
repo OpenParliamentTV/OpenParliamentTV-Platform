@@ -57,14 +57,14 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 	<div class="row">
 		<div class="col-12">
 			<ul class="nav nav-tabs" role="tablist">
-				<?php if ($apiResult["data"]["attributes"]["type"] == "faction" || $apiResult["data"]["attributes"]["type"] == "party") { ?>
+				<?php if ($apiResult["data"]["attributes"]["type"] == "faction") { ?>
 					<li class="nav-item">
 						<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::relatedMedia ?></span></a>
 					</li>
 				<?php } ?>
 				<?php if ($config["display"]["ner"]) { ?>
 					<li class="nav-item">
-						<a class="nav-link <?= (($apiResult["data"]["attributes"]["type"] == "faction" || $apiResult["data"]["attributes"]["type"] == "party") ? "" : "active") ?>" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention mr-1"></span><u>beta</u></span></span></a>
+						<a class="nav-link <?= (($apiResult["data"]["attributes"]["type"] == "faction") ? "" : "active") ?>" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention mr-1"></span><u>beta</u></span></span></a>
 					</li>
 				<?php } ?>
 				<li class="nav-item ml-auto">
@@ -72,7 +72,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				</li>
 			</ul>
 			<div class="tab-content">
-				<?php if ($apiResult["data"]["attributes"]["type"] == "faction" || $apiResult["data"]["attributes"]["type"] == "party") { ?>
+				<?php if ($apiResult["data"]["attributes"]["type"] == "faction") { ?>
 					<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
 						<div id="speechListContainer">
 							<div class="resultWrapper"></div>
@@ -83,7 +83,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					</div>
 				<?php } ?>
 				<?php if ($config["display"]["ner"]) { ?>
-					<div class="tab-pane fade <?= (($apiResult["data"]["attributes"]["type"] == "faction" || $apiResult["data"]["attributes"]["type"] == "party") ? "" : "show active") ?>" id="ner" role="tabpanel" aria-labelledby="ner-tab">
+					<div class="tab-pane fade <?= (($apiResult["data"]["attributes"]["type"] == "faction") ? "" : "show active") ?>" id="ner" role="tabpanel" aria-labelledby="ner-tab">
 						<div id="nerListContainer">
 							<div class="resultWrapper"></div>
 							<div class="loadingIndicator">
