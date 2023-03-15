@@ -19,6 +19,7 @@ $relationshipsActiveClass = (isset($textContentsHTML)) ? '' : 'show active';
 
 $relatedPeopleHTML = "";
 $relatedPeopleHTMLNER = "";
+$tmpCount = 0;
 foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relationshipItem) {
     $tmpPeople["NER"] = array();
     $tmpPeople["speaker"] = array();
@@ -32,23 +33,12 @@ foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relati
                 }
                 $tmpPeople["speaker"][] = $annotation["id"];
                 $relationshipItem["attributes"]["context"] = $annotation["attributes"]["context"];
-                $contextLabelIdentifier = lcfirst(implode('', array_map('ucfirst', explode('-', $relationshipItem["attributes"]["context"]))));
-                $relatedPeopleHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="default">
-                                            <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
-                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
-                                                    <div class="thumbnailContainer">
-                                                        <div class="rounded-circle">
-                                                            <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["faction"]["label"].'</div>
-                                                        <div><span class="icon-megaphone"></span>'.L('context'.$contextLabelIdentifier).'</div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>\n';
+
+                ob_start();
+                include __DIR__."../../../components/entity.preview.small.php";
+                $entityHTML = ob_get_clean();
+
+                $relatedPeopleHTML .= $entityHTML;
 
             } else if ($config["display"]["ner"]) {
                 if (in_array($annotation["id"],$tmpPeople["NER"])) {
@@ -56,28 +46,18 @@ foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relati
                 }
                 $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
                 $tmpPeople["NER"][] = $annotation["id"];
-                $relatedPeopleHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
-                                                <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
-                                                    <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
-                                                        <div class="thumbnailContainer">
-                                                            <div class="rounded-circle">
-                                                                <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                            <div class="break-lines truncate lines">'.$relationshipItem["attributes"]["faction"]["label"].'</div>
-                                                            <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</span></div>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            </div>\n';
+
+                ob_start();
+                include __DIR__."../../../components/entity.preview.small.php";
+                $entityHTML = ob_get_clean();
+
+                $relatedPeopleHTMLNER .= $entityHTML;
             }
         }
     }
 }
 
-
+$tmpCount = 0;
 $relatedOrganisationsHTML = "";
 $relatedOrganisationsHTMLNER = "";
 if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["relationships"]["organisations"]["data"]) > 0) {
@@ -98,22 +78,12 @@ if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["r
                     }
 
                     $tmpOrganisations["default"][] = $annotation["id"];
-                    $relatedOrganisationsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="default">
-                                            <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
-                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
-                                                    <div class="thumbnailContainer">
-                                                        <div class="rounded-circle">
-                                                            <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
-                                                        <div><span class="icon-megaphone"></span></div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>\n';
+
+                    ob_start();
+                    include __DIR__."../../../components/entity.preview.small.php";
+                    $entityHTML = ob_get_clean();
+
+                    $relatedOrganisationsHTML .= $entityHTML;
 
                 } else if ($config["display"]["ner"]) {
 
@@ -122,22 +92,12 @@ if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["r
                     }
                     $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
                     $tmpOrganisations["NER"][] = $annotation["id"];
-                    $relatedOrganisationsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
-                                            <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
-                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
-                                                    <div class="thumbnailContainer">
-                                                        <div class="rounded-circle">
-                                                            <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
-                                                        <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>\n';
+
+                    ob_start();
+                    include __DIR__."../../../components/entity.preview.small.php";
+                    $entityHTML = ob_get_clean();
+
+                    $relatedOrganisationsHTMLNER .= $entityHTML;
 
                 }
             }
@@ -146,7 +106,7 @@ if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["r
 
 }
 
-
+$tmpCount = 0;
 $relatedDocumentsHTML = "";
 $relatedDocumentsHTMLNER = "";
 if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relationships"]["documents"]["data"]) > 0) {
@@ -167,33 +127,12 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                     }
 
                     $tmpDocuments["default"][] = $annotation["id"];
-                    if (isset($relationshipItem["attributes"]["additionalInformation"]["subType"])) {
-                        $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'">
-                                            <div class="entityContainer">
-                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'" data-context="default">
-                                                    <div class="entityType">'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div>
-                                                    <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                    <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
-                                                    <div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"][0].'</div>
-                                                </a>
-                                                <a class="entityButton" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
-                                                    <span class="btn btn-sm icon-file-pdf"></span>
-                                                </a>
-                                            </div>
-                                        </div>\n';
-                    } else {
-                        $relatedDocumentsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="default">
-                                            <div class="entityContainer">
-                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
-                                                    <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                    <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
-                                                </a>
-                                                <a class="btn btn-sm" href="'.$relationshipItem["attributes"]["sourceURI"].'" target="_blank">
-                                                    <span class="icon-file-pdf"></span>
-                                                </a>
-                                            </div>
-                                        </div>\n';
-                    }
+
+                    ob_start();
+                    include __DIR__."../../../components/entity.preview.small.php";
+                    $entityHTML = ob_get_clean();
+
+                    $relatedDocumentsHTML .= $entityHTML;
 
                 } else if ($config["display"]["ner"]) {
 
@@ -202,43 +141,12 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
                     }
                     $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
                     $tmpDocuments["NER"][] = $annotation["id"];
-                    if (isset($relationshipItem["attributes"]["additionalInformation"]["subType"])) {
-                        $relatedDocumentsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
-                                            <div class="entityContainer">
-                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
-                                                    <div class="thumbnailContainer">
-                                                        <div class="rounded-circle">
-                                                            <span class="icon-doc-text" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="entityType">'.$relationshipItem["attributes"]["additionalInformation"]["subType"].'</div>
-                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
-                                                        <div>'.L::by.': '.$relationshipItem["attributes"]["additionalInformation"]["creator"][0].'</div>
-                                                        <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>\n';
-                    } else {
-                        $relatedDocumentsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
-                                            <div class="entityContainer">
-                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
-                                                    <div class="thumbnailContainer">
-                                                        <div class="rounded-circle">
-                                                            <span class="icon-doc-text" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
-                                                        <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>\n';
-                    }
+
+                    ob_start();
+                    include __DIR__."../../../components/entity.preview.small.php";
+                    $entityHTML = ob_get_clean();
+
+                    $relatedDocumentsHTMLNER .= $entityHTML;
 
                 }
             }
@@ -247,6 +155,7 @@ if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relat
 
 }
 
+$tmpCount = 0;
 $relatedTermsHTML = "";
 $relatedTermsHTMLNER = "";
 if (isset($speech["relationships"]["terms"]["data"]) && count($speech["relationships"]["terms"]["data"]) > 0) {
@@ -267,22 +176,12 @@ if (isset($speech["relationships"]["terms"]["data"]) && count($speech["relations
                     }
 
                     $tmpTerms["default"][] = $annotation["id"];
-                    $relatedTermsHTML .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="default">
-                                            <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
-                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
-                                                    <div class="thumbnailContainer">
-                                                        <div class="rounded-circle">
-                                                            <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
-                                                        <div><span class="icon-megaphone"></span></div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>\n';
+
+                    ob_start();
+                    include __DIR__."../../../components/entity.preview.small.php";
+                    $entityHTML = ob_get_clean();
+
+                    $relatedTermsHTML .= $entityHTML;
 
                 } else if ($config["display"]["ner"]) {
 
@@ -291,22 +190,12 @@ if (isset($speech["relationships"]["terms"]["data"]) && count($speech["relations
                     }
                     $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
                     $tmpTerms["NER"][] = $annotation["id"];
-                    $relatedTermsHTMLNER .= '<div class="entityPreview col" data-type="'.$relationshipItem["type"].'" data-context="NER" data-appearance="'.$tmpCount.'">
-                                            <div class="entityContainer partyIndicator" data-faction="'.$relationshipItem["attributes"]["faction"]["id"].'">
-                                                <a href="'.$config["dir"]["root"].'/'.$relationshipItem["type"].'/'.$relationshipItem["id"].'">
-                                                    <div class="thumbnailContainer">
-                                                        <div class="rounded-circle">
-                                                            <img src="'.$relationshipItem["attributes"]["thumbnailURI"].'" alt="...">
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <div class="entityTitle">'.$relationshipItem["attributes"]["label"].'</div>
-                                                        <div class="break-lines truncate-lines">'.$relationshipItem["attributes"]["labelAlternative"][0].'</div>
-                                                        <div>'.L::found.': <span class="badge badge-pill badge-primary">'.$tmpCount.'</div>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>\n';
+
+                    ob_start();
+                    include __DIR__."../../../components/entity.preview.small.php";
+                    $entityHTML = ob_get_clean();
+
+                    $relatedTermsHTMLNER .= $entityHTML;
 
                 }
             }
@@ -393,21 +282,10 @@ $relatedContentsHTML = str_replace(array("\r","\n"), " ",$relatedContentsHTML);
                 <li class="nav-item">
                     <a class="nav-link <?= $relationshipsActiveClass ?>" id="relationships-tab" data-toggle="tab" href="#relationships" role="tab" aria-controls="relationships" aria-selected="true"><span class="tabTitle"><?php echo L::relationships; ?></span><span class="icon-flow-cascade"></span></a>
                 </li>
-                <!--
-                <li class="nav-item">
-                    <a class="nav-link" id="organisations-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="false"><span class="tabTitle">Organisations</span><span class="icon-bank"></span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="terms-tab" data-toggle="tab" href="#terms" role="tab" aria-controls="terms" aria-selected="false"><span class="tabTitle">Terms</span><span class="icon-tag-1"></span></a>
-                </li>
-                -->
             </ul>
         </div>
     </div>
     <div id="OPTV_Player"></div>
-    <!--
-    <div class="text-center" style="height: 35px;"><span class="icon-angle-double-down" style="font-size: 22px;"></span></div>
-    -->
 </div>
 <div id="shareQuoteModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
