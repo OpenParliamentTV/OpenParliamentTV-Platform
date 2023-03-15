@@ -871,7 +871,8 @@ switch ($page) {
             "display": {
             	"ner": <?= json_encode($config["display"]["ner"]) ?>,
             	"speechesPerPage": <?= json_encode($config["display"]["speechesPerPage"]) ?>
-            }
+            },
+            "isMobile": <?= json_encode($isMobile) ?>
         }
 
         const localizedLabels = <?= $langJSONString ?>;

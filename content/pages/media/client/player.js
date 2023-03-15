@@ -265,7 +265,7 @@ function updatePlayer() {
 
 	var areaBottomContents = [];
 
-	if (config.display.ner) {
+	if (config.display.ner && !config.isMobile) {
 		areaBottomContents = [
 			{
 				"type": "TimedContent",
