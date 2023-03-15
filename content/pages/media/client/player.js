@@ -277,10 +277,11 @@ function updatePlayer() {
 					"tags": [
 						"otherOrganisation", 
 						"government", 
-						"memberOfParliament", 
-						"legalDocument",
 						"ngo",
-						"otherTerm"
+						"company",
+						"person", 
+						"legalDocument",
+						"term"
 					],
 					"types": [],
 					"users": [],
