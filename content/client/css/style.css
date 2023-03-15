@@ -662,8 +662,8 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 .relationshipsList .entityPreview[data-type="person"] .entityContainer .linkWrapper,
 .relationshipsList .entityPreview[data-type="organisation"] .entityContainer a, 
 .relationshipsList .entityPreview[data-type="organisation"] .entityContainer .linkWrapper,
-.relationshipsList .entityPreview[data-type="document"][data-context="NER"] .entityContainer a, 
-.relationshipsList .entityPreview[data-type="document"][data-context="NER"] .entityContainer .linkWrapper,
+.relationshipsList .entityPreview[data-type="document"] .entityContainer a, 
+.relationshipsList .entityPreview[data-type="document"] .entityContainer .linkWrapper,
 .relationshipsList .entityPreview[data-type="term"] .entityContainer a, 
 .relationshipsList .entityPreview[data-type="term"] .entityContainer .linkWrapper {
     flex-direction: row;
