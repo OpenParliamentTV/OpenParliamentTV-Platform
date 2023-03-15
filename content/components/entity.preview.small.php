@@ -8,6 +8,7 @@ $contextLabelIdentifier = null;
 if (isset($entity["attributes"]["context"]) 
     && $entity["attributes"]["context"] != "NER"
     && $entity["attributes"]["context"] != "main-speaker-faction"
+    && $entity["attributes"]["context"] != "vice-president-faction"
     && $entity["attributes"]["context"] != "speaker-faction" 
     && $entity["attributes"]["context"] != "proceedingsReference") {
     $contextLabelIdentifier = lcfirst(implode('', array_map('ucfirst', explode('-', $entity["attributes"]["context"]))));
