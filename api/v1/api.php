@@ -742,6 +742,25 @@ function apiV1($request = false, $db = false, $dbp = false) {
                             $return = array_replace_recursive($return, $item);
 
                         break;
+                        case "term":
+
+                            require_once(__DIR__ . "/modules/term.php");
+
+                            $item = termGetOverview("all", $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], true);
+
+                            if ($item["meta"]["requestStatus"] == "success") {
+
+                                unset($return["errors"]);
+
+                            } else {
+
+                                unset($return["data"]);
+
+                            }
+
+                            $return = array_replace_recursive($return, $item);
+
+                        break;
                 }
             break;
 
