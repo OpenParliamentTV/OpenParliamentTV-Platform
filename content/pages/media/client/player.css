@@ -614,6 +614,14 @@ body.darkmode .layoutArea[data-area="areaBottom"][data-size="small"] .collection
 	background-color: #f3f4f5;
 }
 
+.layoutArea[data-area="areaBottom"][data-size="small"] .collectionElement .resourceThumb.person {
+	background-position: top;
+}
+
+.layoutArea[data-area="areaBottom"][data-size="small"] .collectionElement .resourceThumb.organisation {
+	background-size: contain;
+}
+
 .layoutArea[data-area="areaBottom"][data-size="small"] .collectionElement:not(.open):not(.active):hover .resourceThumb {
 	border-color: var(--primary-fg-color);
 }
