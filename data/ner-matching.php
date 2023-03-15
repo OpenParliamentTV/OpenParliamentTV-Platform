@@ -14,6 +14,34 @@ header('Content-Type: application/json');
  */
 ?>
 {
+    "Q49766": {
+        "description": "Die Grünen Partei to Faction",
+        "routing": "Q1007353"
+    },
+    "Q49764": {
+        "description": "Die Linke Partei to Faction",
+        "routing": "Q1826856"
+    },
+    "Q49768": {
+        "description": "SPD Partei to Faction",
+        "routing": "Q2207512"
+    },
+    "Q13124": {
+        "description": "FDP Partei to Faction",
+        "routing": "Q1387991"
+    },
+    "Q6721203": {
+        "description": "AfD Partei to Faction",
+        "routing": "Q42575708"
+    },
+    "Q49762": {
+        "description": "CDU Partei to Faction",
+        "routing": "Q1023134"
+    },
+    "Q49763": {
+        "description": "CSU Partei to Faction",
+        "routing": "Q1023134"
+    },
     "Q446007": {
         "description": "BÜNDNIS 90",
         "routing": "Q1007353"
