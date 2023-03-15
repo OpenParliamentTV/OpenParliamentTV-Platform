@@ -42,6 +42,7 @@
 		if ($_REQUEST["a"] == "media" && $isResult) {
 			$autoplayResultsClass = (boolval($_REQUEST['playresults'])) ? "active" : "";
 			$backParamStr = preg_replace('/(&playresults=[0-1])/', '', ltrim($paramStr, '&'));
+			$backParamStr = preg_replace('/(&context=[^&]+)/', '', $backParamStr);
 		?>
 			<div class="navbarCenterOptions">
 				<a href='<?= $config["dir"]["root"]."/search".$backParamStr ?>' class="btn btn-primary btn-sm"><span class="icon-left-open-big"></span><span class="icon-search"></span><span class="sr-only"><?php echo L::backToResults; ?></span></a>
