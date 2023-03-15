@@ -22,8 +22,15 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				<div class="row align-items-center">
 					<div class="col flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
-							<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute; top: 50%; transform: translateY(-50%) translateX(-50%);left: 50%;width: 80%;object-fit: contain;object-position: center;">
+							<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
+								<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"]?>" alt="..." style="position: absolute; top: 50%; transform: translateY(-50%) translateX(-50%);left: 50%;width: 80%;object-fit: contain;object-position: center;">
+							<?php } else { ?>
+								<span class="icon-bank" style="position: absolute;top: 48%;left: 50%;font-size: 70px;transform: translateX(-50%) translateY(-50%);"></span>
+							<?php } ?>
 						</div>
+						<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
+						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?php echo L::source; ?>: <?php echo html_entity_decode($apiResult["data"]["attributes"]["thumbnailCreator"]); ?>, <?= $apiResult["data"]["attributes"]["thumbnailLicense"] ?></span></div>
+						<?php } ?>
 					</div>
 					<div class="col">
 						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
@@ -54,9 +61,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<li class="nav-item">
 						<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::relatedMedia ?></span></a>
 					</li>
-				<?php } else if ($config["display"]["ner"]) { ?>
+				<?php } ?>
+				<?php if ($config["display"]["ner"]) { ?>
 					<li class="nav-item">
-						<a class="nav-link active" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention mr-1"></span><u>beta</u></span></span></a>
+						<a class="nav-link <?= (($apiResult["data"]["attributes"]["type"] == "faction" || $apiResult["data"]["attributes"]["type"] == "party") ? "" : "active") ?>" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention mr-1"></span><u>beta</u></span></span></a>
 					</li>
 				<?php } ?>
 				<li class="nav-item ml-auto">
@@ -73,8 +81,9 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 							</div>
 						</div>
 					</div>
-				<?php } else if ($config["display"]["ner"]) { ?>
-					<div class="tab-pane fade show active" id="ner" role="tabpanel" aria-labelledby="ner-tab">
+				<?php } ?>
+				<?php if ($config["display"]["ner"]) { ?>
+					<div class="tab-pane fade <?= (($apiResult["data"]["attributes"]["type"] == "faction" || $apiResult["data"]["attributes"]["type"] == "party") ? "" : "show active") ?>" id="ner" role="tabpanel" aria-labelledby="ner-tab">
 						<div id="nerListContainer">
 							<div class="resultWrapper"></div>
 							<div class="loadingIndicator">
