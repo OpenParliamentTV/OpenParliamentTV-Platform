@@ -30,6 +30,7 @@
 	"contextspeaker": "Interjection",
 	"contextspeakerFaction": "Faction",
 	"contextvicePresident": "Vice President",
+	"contextvicePresidentFaction": "Faction",
 	"dashboard": "Dashboard",
 	"data": "Data",
 	"dataPolicy": "Data Policy",
