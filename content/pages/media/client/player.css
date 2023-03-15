@@ -340,6 +340,10 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	background: transparent !important;
 }
 
+.layoutArea.closed .contentViewContainer {
+	overflow: hidden !important;
+}
+
 .layoutArea[data-area="areaLeft"], .hypervideoContainer {
 	background: var(--secondary-bg-color) !important;
 }
