@@ -499,4 +499,73 @@ function termAdd($item, $db = false) {
 
 }
 
+
+
+function termGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+
+    global $config;
+
+    if (!$db) {
+        $db = new SafeMySQL(array(
+            'host'	=> $config["platform"]["sql"]["access"]["host"],
+            'user'	=> $config["platform"]["sql"]["access"]["user"],
+            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+            'db'	=> $config["platform"]["sql"]["db"]
+        ));
+    }
+
+    $queryPart = "";
+
+    if ($id == "all") {
+        $queryPart .= "1";
+    } else {
+        $queryPart .= $db->parse("TermID=?s",$id);
+    }
+
+
+    if (!empty($search)) {
+
+        $queryPart .= $db->parse(" AND (TermLabel LIKE ?s OR TermLabelAlternative LIKE ?s)", "%".$search."%","%".$search."%");
+
+    }
+
+    if (!empty($sort)) {
+
+        $queryPart .= $db->parse(" ORDER BY ?n ".$order, $sort);
+
+    }
+
+
+    if ($limit != 0) {
+
+        $queryPart .= $db->parse(" LIMIT ?i, ?i",$offset,$limit);
+
+    }
+
+    if ($getCount == true) {
+
+        $return["total"] = $db->getOne("SELECT COUNT(TermID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Term"]);
+        $return["rows"] = $db->getAll("SELECT
+            TermID,
+             TermType,
+             TermLabel,
+             TermLabelAlternative
+             FROM ?n
+             WHERE ?p", $config["platform"]["sql"]["tbl"]["Term"], $queryPart);
+
+    } else {
+        $return = $db->getAll("SELECT
+            TermID,
+             TermType,
+             TermLabel,
+             TermLabelAlternative
+             FROM ?n
+             WHERE ?p", $config["platform"]["sql"]["tbl"]["Term"], $queryPart);
+    }
+
+
+    return $return;
+
+}
+
 ?>

@@ -490,4 +490,73 @@ function documentAdd($item, $db = false) {
 
 }
 
+function documentGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+
+    global $config;
+
+    if (!$db) {
+        $db = new SafeMySQL(array(
+            'host'	=> $config["platform"]["sql"]["access"]["host"],
+            'user'	=> $config["platform"]["sql"]["access"]["user"],
+            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
+            'db'	=> $config["platform"]["sql"]["db"]
+        ));
+    }
+
+    $queryPart = "";
+
+    if ($id == "all") {
+        $queryPart .= "1";
+    } else {
+        $queryPart .= $db->parse("DocumentID=?s",$id);
+    }
+
+
+    if (!empty($search)) {
+
+        $queryPart .= $db->parse(" AND (DocumentLabel LIKE ?s OR DocumentLabelAlternative LIKE ?s)", "%".$search."%","%".$search."%");
+
+    }
+
+    if (!empty($sort)) {
+
+        $queryPart .= $db->parse(" ORDER BY ?n ".$order, $sort);
+
+    }
+
+
+    if ($limit != 0) {
+
+        $queryPart .= $db->parse(" LIMIT ?i, ?i",$offset,$limit);
+
+    }
+
+    if ($getCount == true) {
+
+        $return["total"] = $db->getOne("SELECT COUNT(DocumentID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Document"]);
+        $return["rows"] = $db->getAll("SELECT
+            DocumentID,
+             DocumentType,
+             DocumentLabel,
+             DocumentLabelAlternative,
+             DocumentWikidataID
+             FROM ?n
+             WHERE ?p", $config["platform"]["sql"]["tbl"]["Document"], $queryPart);
+
+    } else {
+        $return = $db->getAll("SELECT
+            DocumentID,
+             DocumentType,
+             DocumentLabel,
+             DocumentLabelAlternative,
+             DocumentWikidataID
+             FROM ?n
+             WHERE ?p", $config["platform"]["sql"]["tbl"]["Document"], $queryPart);
+    }
+
+
+    return $return;
+
+}
+
 ?>
