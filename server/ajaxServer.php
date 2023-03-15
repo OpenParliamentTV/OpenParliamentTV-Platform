@@ -485,7 +485,7 @@ switch ($_REQUEST["a"]) {
 
 		require_once(__DIR__."/../modules/search/functions.php");
 		
-		$allowedParams = array_intersect_key($_REQUEST,array_flip(array("a","q","person","personID","context","party", "partyID","electoralPeriod", "electoralPeriodID","dateFrom","dateTo","gender","degree","abgeordnetenwatchID","fragDenStaatID","faction","factionID","organisation","organisationID","speakerID","documentID", "agendaItemID","sessionNumber", "sessionID", "page", "sort", "parliament")));
+		$allowedParams = array_intersect_key($_REQUEST,array_flip(array("a","q","person","personID","context","party", "partyID","electoralPeriod", "electoralPeriodID","dateFrom","dateTo","gender","degree","abgeordnetenwatchID","fragDenStaatID","faction","factionID","organisation","organisationID","speakerID","documentID", "agendaItemID","sessionNumber", "sessionID", "termID", "page", "sort", "parliament")));
 
 		$return["success"] = "true";
 		$return["text"] = "searchresults";
