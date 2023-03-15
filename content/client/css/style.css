@@ -1515,6 +1515,7 @@ body.darkmode .entityPreview .rounded-circle {
     border-radius: 4px;
     display: inline-block;
     text-decoration: none !important;
+    line-height: 14px;
 }
 
 #speechListContainer, #interventionListContainer {

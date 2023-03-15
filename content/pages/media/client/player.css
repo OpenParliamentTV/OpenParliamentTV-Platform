@@ -635,6 +635,43 @@ body.darkmode .layoutArea[data-area="areaBottom"][data-size="small"] .collection
 	display: block !important;
 }
 
+.resourceDetail .resourceOptions {
+	z-index: 11;
+	background: transparent;
+	bottom: auto;
+	top: 3px;
+	width: auto;
+	left: auto;
+	right: 6px;
+	padding: 0;
+	opacity: 1;
+	overflow: hidden;
+}
+
+.collectionElement.open .resourceDetail .resourceOptions {
+	display: block;
+}
+
+.resourceDetail .resourceOptions .resourceButtons .button {
+	border-color: var(--border-color);
+	width: 27px;
+	height: 27px;
+}
+
+.resourceDetail .resourceOptions .button span {
+	font-size: 23px;
+	line-height: 14px;
+	position: relative;
+	left: -7px;
+	top: -1px;
+}
+
+.resourceDetail .resourceOptions .button:focus {
+	color: var(--primary-bg-color);
+	outline: none;
+	box-shadow: none;
+}
+
 .playerContainer .overlayTimeline {
 	display: none;
 	height: 0px;
@@ -663,6 +700,10 @@ body.darkmode .playerContainer .playerProgress .ui-slider-range {
 .playerContainer .playerProgress .ui-slider-handle-circle {
 	margin-bottom: -24px !important;
 	left: -6px;
+}
+
+.hypervideoContainer .videoContainer .expandButton {
+	display: none !important;
 }
 
 .hypervideoContainer .videoContainer .videoStartOverlay .playButtonBig {
