@@ -49,7 +49,7 @@ if ($entity["type"] == "person") {
                     <div class="entityType"><?= $relationshipItem["attributes"]["additionalInformation"]["subType"] ?></div>
                 <?php } ?>
                 <div class="entityTitle"><?= $entity["attributes"]["label"] ?></div>
-                <div class="break-lines truncate lines"><?= $secondaryLabel ?></div>
+                <div class="break-lines truncate-lines"><?= $secondaryLabel ?></div>
                 <?php if ($entity["type"] == "document" && isset($relationshipItem["attributes"]["additionalInformation"]["creator"][0])) { ?>
                     <div><?= L::by ?>: <?= $relationshipItem["attributes"]["additionalInformation"]["creator"][0] ?></div>
                 <?php } ?>
