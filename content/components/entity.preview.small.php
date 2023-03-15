@@ -53,7 +53,7 @@ if ($entity["type"] == "person") {
                 <div class="entityTitle"><?= $entity["attributes"]["label"] ?></div>
                 <div class="break-lines truncate-lines"><?= $secondaryLabel ?></div>
                 <?php if ($entity["type"] == "document" && isset($relationshipItem["attributes"]["additionalInformation"]["creator"][0])) { ?>
-                    <div><?= L::by ?>: <?= $relationshipItem["attributes"]["additionalInformation"]["creator"][0] ?></div>
+                    <div class="text-truncate"><?= L::by ?>: <?= $relationshipItem["attributes"]["additionalInformation"]["creator"][0] ?></div>
                 <?php } ?>
                 <?php if ($contextLabelIdentifier) { ?>
                     <div><span class="icon-megaphone"></span><?= L('context'.$contextLabelIdentifier) ?></div>
