@@ -126,11 +126,19 @@ function getQuoteFromRequestParams($timings, $fragments, $transcriptHTML) {
 
 	$words = array();
 
-	foreach($htmlDOC->getElementsByTagName('span') as $spanElem) {
-        if (!empty($spanElem->getAttribute('data-start'))) {
-        	$words[] = $spanElem;
-        }
-    } 
+	
+	foreach($htmlDOC->getElementsByTagName('p') as $pElem) {
+		
+		// don't include comments in selection
+		if ($pElem->getAttribute('data-type') != "comment") {
+			foreach($pElem->getElementsByTagName('span') as $spanElem) {
+		        if (!empty($spanElem->getAttribute('data-start'))) {
+		        	$words[] = $spanElem;
+		        }
+		    } 
+		}
+
+	}
 
 	if ($start && $end) {
 		for ($i = 1; $i < count($words); $i++) {
