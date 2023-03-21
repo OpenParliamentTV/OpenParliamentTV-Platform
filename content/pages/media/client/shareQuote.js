@@ -65,7 +65,7 @@ function processQuery() {
 		suffix = null;
 	}
 
-	var words = document.querySelectorAll("[data-start]");
+	var words = document.querySelectorAll('p:not([data-type="comment"]) span[data-start]');
 
 	if (start && end) {
 		for (var i = 1; i < words.length; i++) {
