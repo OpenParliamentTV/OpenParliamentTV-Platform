@@ -320,7 +320,7 @@ switch ($page) {
 	break;
 	case "campaigns":
 		$pageTitle = L::campaigns;
-		$pageType = 'default';
+		$pageType = 'hidden';
 		$pageBreadcrumbs = [
 			[
 				'label' => $pageTitle
@@ -332,7 +332,7 @@ switch ($page) {
 	break;
 	case "campaigns-wortlaut":
 		$pageTitle = "WORTlaut";
-		$pageType = 'default';
+		$pageType = 'hidden';
 		$pageBreadcrumbs = [
 			[
 				'label' => L::campaigns,
