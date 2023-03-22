@@ -161,6 +161,8 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
 
         //TODO: Color?
         $updateArray = array(
+
+            //keep labels and labelAlternative disabled so that the regex at NEL does not break
             //"OrganisationLabel"=>$apiItem["data"]["label"],
             //"OrganisationLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             "OrganisationAbstract"=>$apiItem["data"]["abstract"],
