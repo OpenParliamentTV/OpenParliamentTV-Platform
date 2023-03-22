@@ -106,6 +106,14 @@ function auth($userID, $action, $entity, $db = false) {
             $return["meta"]["code"] = "200";
             return $return;
         }
+
+        if ($user["UserRole"] == "manager" && $action == "requestPage" && $entity == "hidden") {
+            $return["meta"]["requestStatus"] = "success";
+            $return["meta"]["detail"] = "User is manager - action was permitted";
+            $return["meta"]["code"] = "200";
+            return $return;
+        }
+
     }
 
 	switch ($action) {
