@@ -214,7 +214,7 @@ if ($config["display"]["ner"]) {
     </div>
     <div class="tab-pane fade" id="data" role="tabpanel" aria-labelledby="data-tab">
         <div class="alert alert-info" role="alert">
-            <div class="mb-1"><?php echo L::messageOpenData; ?>: <a href="<?= $config["dir"]["root"] ?>/api"><?= $config["dir"]["root"] ?>/api</a></div>
+            <div class="mb-1"><?php echo L::messageOpenData; ?>: <a class="text-reset" href="<?= $config["dir"]["root"] ?>/api"><?= $config["dir"]["root"] ?>/api</a></div>
         </div>
         <div class="input-group">
             <div class="input-group-prepend">
