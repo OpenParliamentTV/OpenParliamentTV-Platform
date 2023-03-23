@@ -780,8 +780,9 @@ body.darkmode .detailsHeader .btn:focus img {
     color: inherit;
 }
 
-.tab-content a:not(.btn) {
+.tab-content a:not(.btn, .nav-link, .page-link) {
     text-decoration: underline;
+    word-wrap: anywhere;
 }
 
 
