@@ -420,19 +420,17 @@ include_once(__DIR__ . '/../../header.php');
 							<hr>
 						</div>
 						<div class="tab-pane fade bg-white" id="terms" role="tabpanel" aria-labelledby="terms-tab">
-							<div class="alert alert-warning">Terms are not used yet, so you will get 0 results.</div>
-							<hr>
 							<h3>Endpoint</h3>
 							<code>/api/v1/search/terms?</code>
 							<hr>
 							<h3><?php echo L::example; ?> Request</h3>
-							<div>(<?php echo L::terms; ?> with label "Digitalisierung")</div>
+							<div>(<?php echo L::terms; ?> with label "digital")</div>
 							<div class="apiExampleContainer">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">URI</div>
                                     </div>
-                                    <input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/search/terms/?label=Digitalisierung">
+                                    <input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/search/terms/?label=digital">
                                     <div class="input-group-append">
                                         <button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
                                     </div>
@@ -550,14 +548,13 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 					<hr>
 					<h3><span class="icon-tag-1"></span> GET <?php echo L::term; ?></h3>
-					<p class="mb-2"><b><?php echo L::term; ?> IDs</b> are internal incremental IDs.</p>
-					<div class="alert alert-warning px-2 py-1 mb-2">Terms are not used yet, but this is how the URI would look like:</div>
+					<p class="mb-2"><b><?php echo L::term; ?> IDs</b> are <b>always a Wikidata ID</b>.</p>
 					<div class="apiExampleContainer">
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<div class="input-group-text">URI</div>
 							</div>
-							<input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/term/1">
+							<input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/term/Q4394526">
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
