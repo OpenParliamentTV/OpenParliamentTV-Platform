@@ -231,7 +231,7 @@ if ($config["display"]["ner"]) {
             <tbody>
                 <tr>
                     <td><?= L::source ?></td>
-                    <td><?= $speech["attributes"]["creator"] ?>, <?= $speech["attributes"]["license"] ?></td>
+                    <td><?= $speech["attributes"]["creator"] ?>, <?php echo html_entity_decode($speech["attributes"]["license"]); ?></td>
                 </tr>
                 <tr>
                     <td><?= L::citeAs ?></td>
