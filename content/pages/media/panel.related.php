@@ -241,12 +241,6 @@ if ($config["display"]["ner"]) {
                     <td><?= L::retrievedFrom ?></td>
                     <td><a href="<?= $speech["attributes"]["sourcePage"] ?>" target="_blank"><?= $speech["attributes"]["sourcePage"] ?></a></td>
                 </tr>
-                <?php if (isset($speech["attributes"]["textContents"][0]["sourceURI"])) { ?>
-                <tr>
-                    <td><?= L::source ?> <?= L::proceedings ?></td>
-                    <td><a href="<?= $speech["attributes"]["textContents"][0]["sourceURI"] ?>" target="_blank"><?= $speech["attributes"]["textContents"][0]["sourceURI"] ?></a></td>
-                </tr>
-                <?php } ?>
             </tbody>
         </table>
         <table class="table table-striped table-bordered">
