@@ -58,7 +58,7 @@ if ($entity["type"] == "person") {
                 <?php if ($contextLabelIdentifier) { ?>
                     <div><span class="icon-megaphone"></span><?= L('context'.$contextLabelIdentifier) ?></div>
                 <?php } ?>
-                <?php if ($countFound > 0) { ?>
+                <?php if ($countFound > 0 && isset($annotation["attributes"]["context"]) && $annotation["attributes"]["context"] == "NER") { ?>
                     <div><?= L::found ?>: <span class="badge badge-pill badge-primary"><?= $countFound ?></span></div>
                 <?php } ?>
             </div>
