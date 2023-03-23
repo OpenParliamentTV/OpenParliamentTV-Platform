@@ -11,224 +11,15 @@ require_once(__DIR__."/../../../modules/media/functions.php");
 require_once(__DIR__."/../../../modules/media/include.media.php");
 require_once(__DIR__."/../../../modules/utilities/textArrayConverters.php");
 
-$proceedingsPanel = (isset($textContentsHTML)) ? '<div class="tab-pane timebasedTab fade show active" id="proceedings" role="tabpanel" aria-labelledby="proceedings-tab">'.$textContentsHTML.'</div>' : '';
 $proceedingsTab = (isset($textContentsHTML)) ? '<li class="nav-item">
         <a class="nav-link active" id="proceedings-tab" data-toggle="tab" href="#proceedings" role="tab" aria-controls="proceedings" aria-selected="true"><span class="tabTitle">'.L::proceedings.'</span><span class="icon-doc-text-1"></span></a>
     </li>' : '';
 $relationshipsActiveClass = (isset($textContentsHTML)) ? '' : 'show active';
 
-$relatedPeopleHTML = "";
-$relatedPeopleHTMLNER = "";
-$tmpCount = 0;
-foreach ($speech["relationships"]["people"]["data"] as $relationshipKey=>$relationshipItem) {
-    $tmpPeople["NER"] = array();
-    $tmpPeople["speaker"] = array();
-    foreach ($speech["annotations"]["data"] as $annotation) {
-        if ($annotation["id"] == $relationshipItem["id"]) {
-            $speech["relationships"]["people"]["data"][$relationshipKey]["annotations"][] = $annotation;
-
-            if ($annotation["attributes"]["context"] != "NER") {
-                if (in_array($annotation["id"],$tmpPeople["speaker"])) {
-                    continue;
-                }
-                $tmpPeople["speaker"][] = $annotation["id"];
-                $relationshipItem["attributes"]["context"] = $annotation["attributes"]["context"];
-
-                ob_start();
-                include __DIR__."../../../components/entity.preview.small.php";
-                $entityHTML = ob_get_clean();
-
-                $relatedPeopleHTML .= $entityHTML;
-
-            } else if ($config["display"]["ner"]) {
-                if (in_array($annotation["id"],$tmpPeople["NER"])) {
-                    continue;
-                }
-                $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
-                $tmpPeople["NER"][] = $annotation["id"];
-
-                ob_start();
-                include __DIR__."../../../components/entity.preview.small.php";
-                $entityHTML = ob_get_clean();
-
-                $relatedPeopleHTMLNER .= $entityHTML;
-            }
-        }
-    }
-}
-
-$tmpCount = 0;
-$relatedOrganisationsHTML = "";
-$relatedOrganisationsHTMLNER = "";
-if (isset($speech["relationships"]["organisations"]["data"]) && count($speech["relationships"]["organisations"]["data"]) > 0) {
-
-    foreach ($speech["relationships"]["organisations"]["data"] as $relationshipItem) {
-
-        $tmpOrganisations["NER"] = array();
-        $tmpOrganisations["default"] = array();
-
-        foreach ($speech["annotations"]["data"] as $annotation) {
-
-            if ($annotation["id"] == $relationshipItem["id"]) {
-
-                if ($annotation["attributes"]["context"] != "NER") {
-
-                    if (in_array($annotation["id"],$tmpOrganisations["default"])) {
-                        continue;
-                    }
-
-                    $tmpOrganisations["default"][] = $annotation["id"];
-
-                    ob_start();
-                    include __DIR__."../../../components/entity.preview.small.php";
-                    $entityHTML = ob_get_clean();
-
-                    $relatedOrganisationsHTML .= $entityHTML;
-
-                } else if ($config["display"]["ner"]) {
-
-                    if (in_array($annotation["id"],$tmpOrganisations["NER"])) {
-                        continue;
-                    }
-                    $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
-                    $tmpOrganisations["NER"][] = $annotation["id"];
-
-                    ob_start();
-                    include __DIR__."../../../components/entity.preview.small.php";
-                    $entityHTML = ob_get_clean();
-
-                    $relatedOrganisationsHTMLNER .= $entityHTML;
-
-                }
-            }
-        }
-    }
-
-}
-
-$tmpCount = 0;
-$relatedDocumentsHTML = "";
-$relatedDocumentsHTMLNER = "";
-if (isset($speech["relationships"]["documents"]["data"]) && count($speech["relationships"]["documents"]["data"]) > 0) {
-
-    foreach ($speech["relationships"]["documents"]["data"] as $relationshipItem) {
-
-        $tmpDocuments["NER"] = array();
-        $tmpDocuments["default"] = array();
-
-        foreach ($speech["annotations"]["data"] as $annotation) {
-
-            if ($annotation["id"] == $relationshipItem["id"]) {
-
-                if ($annotation["attributes"]["context"] != "NER") {
-
-                    if (in_array($annotation["id"],$tmpDocuments["default"])) {
-                        continue;
-                    }
-
-                    $tmpDocuments["default"][] = $annotation["id"];
-
-                    ob_start();
-                    include __DIR__."../../../components/entity.preview.small.php";
-                    $entityHTML = ob_get_clean();
-
-                    $relatedDocumentsHTML .= $entityHTML;
-
-                } else if ($config["display"]["ner"]) {
-
-                    if (in_array($annotation["id"],$tmpDocuments["NER"])) {
-                        continue;
-                    }
-                    $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
-                    $tmpDocuments["NER"][] = $annotation["id"];
-
-                    ob_start();
-                    include __DIR__."../../../components/entity.preview.small.php";
-                    $entityHTML = ob_get_clean();
-
-                    $relatedDocumentsHTMLNER .= $entityHTML;
-
-                }
-            }
-        }
-    }
-
-}
-
-$tmpCount = 0;
-$relatedTermsHTML = "";
-$relatedTermsHTMLNER = "";
-if (isset($speech["relationships"]["terms"]["data"]) && count($speech["relationships"]["terms"]["data"]) > 0) {
-
-    foreach ($speech["relationships"]["terms"]["data"] as $relationshipItem) {
-
-        $tmpTerms["NER"] = array();
-        $tmpTerms["default"] = array();
-
-        foreach ($speech["annotations"]["data"] as $annotation) {
-
-            if ($annotation["id"] == $relationshipItem["id"]) {
-
-                if ($annotation["attributes"]["context"] != "NER") {
-
-                    if (in_array($annotation["id"],$tmpTerms["default"])) {
-                        continue;
-                    }
-
-                    $tmpTerms["default"][] = $annotation["id"];
-
-                    ob_start();
-                    include __DIR__."../../../components/entity.preview.small.php";
-                    $entityHTML = ob_get_clean();
-
-                    $relatedTermsHTML .= $entityHTML;
-
-                } else if ($config["display"]["ner"]) {
-
-                    if (in_array($annotation["id"],$tmpTerms["NER"])) {
-                        continue;
-                    }
-                    $tmpCount = countNERfrequency($speech["annotations"]["data"],$annotation["id"]);
-                    $tmpTerms["NER"][] = $annotation["id"];
-
-                    ob_start();
-                    include __DIR__."../../../components/entity.preview.small.php";
-                    $entityHTML = ob_get_clean();
-
-                    $relatedTermsHTMLNER .= $entityHTML;
-
-                }
-            }
-        }
-    }
-
-}
-
-$nerPanel = '';
-
-if ($config["display"]["ner"]) {
-    $nerPanel = 
-    '<hr>
-    <div class="relationshipsCategoryHeader">'.L::automaticallyDetected.' <a class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal" href="#" style="font-weight: lighter;"><span class="icon-attention mr-1"></span><u>beta</u></a></div>
-    <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">
-        '.$relatedPeopleHTMLNER.' '.$relatedOrganisationsHTMLNER.' '.$relatedDocumentsHTMLNER.' '.$relatedTermsHTMLNER.' 
-    </div>';
-}
-
-$relatedContentsHTML =
-'<div class="tab-content">
-    '.$proceedingsPanel.'
-    <div class="tab-pane fade show '.$relationshipsActiveClass.'" id="relationships" role="tabpanel" aria-labelledby="relationships-tab">
-        <div class="relationshipsCategoryHeader">'.L::personPlural.'</div>
-        <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">'.$relatedPeopleHTML.'</div>
-        <hr>
-        <div class="relationshipsCategoryHeader">'.L::documents.'</div>
-        <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">'.$relatedDocumentsHTML.'</div>
-        '.$nerPanel.'
-    </div>
-</div>';
-
-$relatedContentsHTML = str_replace(array("\r","\n"), " ",$relatedContentsHTML);
+ob_start();
+include "panel.related.php";
+$relatedContentsPanel = ob_get_clean();
+$relatedContentsHTML = str_replace(array("\r","\n"), " ",$relatedContentsPanel);
 
 ?>
 <script type="text/javascript">
@@ -281,6 +72,9 @@ $relatedContentsHTML = str_replace(array("\r","\n"), " ",$relatedContentsHTML);
                 <?= $proceedingsTab ?>
                 <li class="nav-item">
                     <a class="nav-link <?= $relationshipsActiveClass ?>" id="relationships-tab" data-toggle="tab" href="#relationships" role="tab" aria-controls="relationships" aria-selected="true"><span class="tabTitle"><?php echo L::relationships; ?></span><span class="icon-flow-cascade"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="tabTitle"><?php echo L::data; ?></span><span class="icon-download"></span></a>
                 </li>
             </ul>
         </div>
@@ -351,8 +145,3 @@ $relatedContentsHTML = str_replace(array("\r","\n"), " ",$relatedContentsHTML);
         </div>
     </div>
 </div>
-<!--
-<div class="container mb-5">
-    <?php //include_once('content.related.php'); ?>
-</div>
--->

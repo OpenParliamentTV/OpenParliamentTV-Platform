@@ -780,6 +780,10 @@ body.darkmode .detailsHeader .btn:focus img {
     color: inherit;
 }
 
+.tab-content a:not(.btn) {
+    text-decoration: underline;
+}
+
 
 .switch {
     position: relative;
