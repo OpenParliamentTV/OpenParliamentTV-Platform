@@ -20,6 +20,7 @@ ob_start();
 include "panel.related.php";
 $relatedContentsPanel = ob_get_clean();
 $relatedContentsHTML = str_replace(array("\r","\n"), " ",$relatedContentsPanel);
+$relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
 
 ?>
 <script type="text/javascript">
