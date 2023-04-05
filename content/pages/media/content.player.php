@@ -11,11 +11,6 @@ require_once(__DIR__."/../../../modules/media/functions.php");
 require_once(__DIR__."/../../../modules/media/include.media.php");
 require_once(__DIR__."/../../../modules/utilities/textArrayConverters.php");
 
-$proceedingsTab = (isset($textContentsHTML)) ? '<li class="nav-item">
-        <a class="nav-link active" id="proceedings-tab" data-toggle="tab" href="#proceedings" role="tab" aria-controls="proceedings" aria-selected="true"><span class="tabTitle">'.L::proceedings.'</span><span class="icon-doc-text-1"></span></a>
-    </li>' : '';
-$relationshipsActiveClass = (isset($textContentsHTML)) ? '' : 'show active';
-
 ob_start();
 include "panel.related.php";
 $relatedContentsPanel = ob_get_clean();
@@ -70,9 +65,11 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
         </div>
         <div class="playerTabs">
             <ul class="nav nav-tabs flex-nowrap" role="tablist">
-                <?= $proceedingsTab ?>
                 <li class="nav-item">
-                    <a class="nav-link <?= $relationshipsActiveClass ?>" id="relationships-tab" data-toggle="tab" href="#relationships" role="tab" aria-controls="relationships" aria-selected="true"><span class="tabTitle"><?php echo L::relationships; ?></span><span class="icon-flow-cascade"></span></a>
+                    <a class="nav-link active" id="proceedings-tab" data-toggle="tab" href="#proceedings" role="tab" aria-controls="proceedings" aria-selected="true"><span class="tabTitle"><?= L::proceedings ?></span><span class="icon-doc-text-1"></span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="relationships-tab" data-toggle="tab" href="#relationships" role="tab" aria-controls="relationships" aria-selected="true"><span class="tabTitle"><?php echo L::relationships; ?></span><span class="icon-flow-cascade"></span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="tabTitle"><?php echo L::data; ?></span><span class="icon-download"></span></a>

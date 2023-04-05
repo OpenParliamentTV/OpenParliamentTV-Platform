@@ -1,8 +1,6 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
-$proceedingsPanel = (isset($textContentsHTML)) ? '<div class="tab-pane timebasedTab fade show active" id="proceedings" role="tabpanel" aria-labelledby="proceedings-tab">'.$textContentsHTML.'</div>' : '';
-
 $relatedPeopleHTML = "";
 $relatedPeopleHTMLNER = "";
 $tmpCount = 0;
@@ -203,8 +201,18 @@ if ($config["display"]["ner"]) {
 
 ?>
 <div class="tab-content">
-    <?= $proceedingsPanel ?>
-    <div class="tab-pane fade <?= $relationshipsActiveClass ?>" id="relationships" role="tabpanel" aria-labelledby="relationships-tab">
+    <div class="tab-pane timebasedTab fade show active" id="proceedings" role="tabpanel" aria-labelledby="proceedings-tab">
+        <?php if (isset($textContentsHTML)) { ?>
+            <?= $textContentsHTML ?>
+        <?php } else { ?>
+            <div class="container h-100" style="user-select: none;">
+                <div class="row h-100 align-items-center text-center">
+                    <div class="col"><?= L::messageNoProceedings ?></div>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+    <div class="tab-pane fade" id="relationships" role="tabpanel" aria-labelledby="relationships-tab">
         <div class="relationshipsCategoryHeader"><?= L::personPlural ?></div>
         <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2"><?= $relatedPeopleHTML ?></div>
         <hr>

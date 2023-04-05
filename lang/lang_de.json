@@ -111,6 +111,7 @@
 	"messageLoginSuccessGeneric": "Anmeldung erfolgreich. Du wirst weitergeleitet...",
 	"messageLogoutSuccess": "Du wurdest erfolgreich abgemeldet.",
 	"messageMailGreetings": "Grüße",
+	"messageNoProceedings": "Zu diesem Redebeitrag liegt noch kein Text vor. Dies kann daran liegen, dass das Plenarprotokoll noch nicht veröffentlicht wurde oder die Videoaufzeichnung keinem eindeutigen Textabschnitt im Protokoll zugewiesen werden konnte.",
 	"messageOpenData": "Alle Daten auf Open Parliament TV können über unsere <b>Open Data API</b> abgefragt werden",
 	"messagePasswordNotIdentical": "Die zwei Passwörter stimmen nicht überein",
 	"messagePasswordResetCodeIncorrect": "Der Code um dein Passwort zurückzusetzen ist nicht korrekt.",

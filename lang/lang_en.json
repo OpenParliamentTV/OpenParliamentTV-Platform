@@ -111,6 +111,7 @@
 	"messageLoginSuccessGeneric": "Login successful. You will be redirected...",
 	"messageLogoutSuccess": "You have been logged out.",
 	"messageMailGreetings": "Regards",
+	"messageNoProceedings": "There is no text available for this speech. <br>This can be because the proceedings have not yet been published or no text segment could be assigned precisely enough to the video recording.",
 	"messageOpenData": "All data on Open Parliament TV can be requested via our <b>Open Data API</b>",
 	"messagePasswordNotIdentical": "The two passwords are not the same",
 	"messagePasswordResetCodeIncorrect": "The password reset code you provided is not correct.",
