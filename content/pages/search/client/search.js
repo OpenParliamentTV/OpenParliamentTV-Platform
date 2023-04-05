@@ -1,4 +1,4 @@
-var minDate = new Date('2017-10-01');
+var minDate = new Date('2013-10-01');
 var maxDate = new Date();
 var statsAjax,
 	suggestionsTextAjax,
