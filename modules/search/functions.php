@@ -284,6 +284,8 @@ function getSearchBody($request, $getAllResults) {
     $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungseröffnung"));
     $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungsende"));
 
+    //HIDE NON PUBLIC MEDIA
+    $filter["must_not"][] = array("match"=>array("attributes.public" => 0));
 
     $shouldCount = 0;
 

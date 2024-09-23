@@ -136,7 +136,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
 
         if ($item) {
 
-            if (($item["MediaPublic"] == 0) && ($_SESSION["userdata"]["role"] != "admin")) {
+            if (($item["MediaPublic"] == 0) && ($_SESSION["userdata"]["role"] != "admin") && (!is_cli())) {
 
                 $return["meta"]["requestStatus"] = "error";
                 $return["errors"] = array();
@@ -159,6 +159,9 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
             $return["data"]["attributes"]["parliament"] = $parliament;
             $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["attributes"]["order"] = (int)$item["MediaOrder"];
+            if ($item["MediaPublic"] == 0) {
+                $return["data"]["attributes"]["public"] = 0;
+            }
             $return["data"]["attributes"]["aligned"] = (($item["MediaAligned"] === "1") ? true : false);
             $return["data"]["attributes"]["timestamp"] = strtotime($item["MediaDateStart"]);
             $return["data"]["attributes"]["dateStart"] = $item["MediaDateStart"];

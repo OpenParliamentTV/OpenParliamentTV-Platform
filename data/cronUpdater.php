@@ -214,6 +214,7 @@ if (is_cli()) {
                     "itemType" => "media",
                     "id" => $requestID
                 ], $db, $dbp);
+                //logger("info", json_encode($tmpMedia));
 
                 array_push($mediaItems, $tmpMedia);
 
