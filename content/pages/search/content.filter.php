@@ -50,6 +50,9 @@
 							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q42575708">
 								<input id="edit-party-17364" name="factionID[]" value="Q42575708" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17364">AfD</label>
 							</div>
+							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q127785176">
+								<input id="edit-party-17365" name="factionID[]" value="Q127785176" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17365">BSW</label>
+							</div>
 							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q1387991">
 								<input id="edit-party-17363" name="factionID[]" value="Q1387991" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17363">FDP</label>
 							</div>
