@@ -87,14 +87,15 @@ function getConflicts($id = "all", $limit = 0, $offset = 0, $search = false, $ge
 
 	if ($limit != 0) {
 
-        $queryPart .= $dbPlatform->parse(" LIMIT ?i, ?i",$offset,$limit);
+        $queryPartLimit = $dbPlatform->parse(" LIMIT ?i, ?i",$offset,$limit);
 
     }
 
 	if ($getCount == true) {
 
-	    $return["total"] = $dbPlatform->getOne("SELECT COUNT(ConflictID) as count FROM  " . $config["platform"]["sql"]["tbl"]["Conflict"]);
-	    $return["rows"] = $dbPlatform->getAll("SELECT * FROM  " . $config["platform"]["sql"]["tbl"]["Conflict"]." WHERE ?p", $queryPart);
+	    $return["total"] = $dbPlatform->getOne("SELECT COUNT(ConflictID) as count FROM  " . $config["platform"]["sql"]["tbl"]["Conflict"]." WHERE ?p",$queryPart);
+	    $return["totalNotFiltered"] = $dbPlatform->getOne("SELECT COUNT(ConflictID) as count FROM  " . $config["platform"]["sql"]["tbl"]["Conflict"]);
+	    $return["rows"] = $dbPlatform->getAll("SELECT * FROM  " . $config["platform"]["sql"]["tbl"]["Conflict"]." WHERE ?p", $queryPart.$queryPartLimit);
 
     } else {
         $return = $dbPlatform->getAll("SELECT * FROM  " . $config["platform"]["sql"]["tbl"]["Conflict"]." WHERE ?p", $queryPart);
