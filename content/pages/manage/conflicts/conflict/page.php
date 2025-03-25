@@ -18,7 +18,7 @@ $("tbody tr.clickable").on("click", function() {
 */
 
 ?>
-<main class="container subpage">
+<main class="container-fluid subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 			<h2>Manage Detail Conflict</h2>

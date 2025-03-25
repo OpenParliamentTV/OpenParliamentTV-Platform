@@ -1,5 +1,6 @@
 {
 	"about": "Über das Projekt",
+	"administration": "Administration",
 	"additionalInformation": "Zusatzinformationen",
 	"agendaItem": "Tagesordnungspunkt",
 	"agendaItems": "Tagesordnungspunkte",
@@ -79,6 +80,7 @@
 	"login": "Anmelden",
 	"logout": "Abmelden",
 	"mailAddress": "E-Mail Adresse",
+	"manage": "Verwalten",
 	"manageConflicts": "Konflikte verwalten",
 	"manageData": "Daten verwalten",
 	"manageEntities": "Entitäten verwalten",
@@ -203,5 +205,6 @@
 	"versionNext": "Nächste Version",
 	"versionPrevious": "Vorherige Versionen",
 	"wildcardSearchBegin": "Begriff beginnt mit",
-	"wildcardSearchEnd": "Begriff endet mit"
+	"wildcardSearchEnd": "Begriff endet mit",
+	"userSettings": "Nutzer:innen-Einstellungen"
 }

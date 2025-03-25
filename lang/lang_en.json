@@ -1,5 +1,6 @@
 {
 	"about": "About the project",
+	"administration": "Administration",
 	"additionalInformation": "Additional Information",
 	"agendaItem": "Agenda Item",
 	"agendaItems": "Agenda Items",
@@ -198,10 +199,12 @@
 	"topic": "Topic",
 	"until": "until",
 	"user": "User",
+	"userSettings": "User Settings",
 	"users": "Users",
 	"versionCurrent": "Current Version",
 	"versionNext": "Next Version",
 	"versionPrevious": "Previous Versions",
 	"wildcardSearchBegin": "term begins with",
-	"wildcardSearchEnd": "term ends with"
+	"wildcardSearchEnd": "term ends with",
+	"manage": "Manage"
 }

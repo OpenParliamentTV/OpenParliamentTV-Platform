@@ -11,86 +11,88 @@ if ($auth["meta"]["requestStatus"] != "success") {
 } else {
 
     include_once(__DIR__ . '/../../../header.php');
-
-
 ?>
-<main class="container subpage">
-	<div class="row" style="position: relative; z-index: 1">
-		<div class="col-12">
-			<h2><?php echo L::manageData; ?></h2>
-			<div class="card mb-3">
-				<div class="card-body">
-					<a href="<?= $config["dir"]["root"] ?>/manage/data/media/new" class="btn btn-outline-success btn-sm mr-1">New Media Item</a>
-					<button type="button" id="runCronUpdater" class="btn btn-outline-success btn-sm mr-1">Run cronUpdater</button>
-				</div>
-			</div>
-			<ul class="nav nav-tabs" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true">Media</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="false">People</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">Documents</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="organisations-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="false">Organisations</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="terms-tab" data-toggle="tab" href="#terms" role="tab" aria-controls="terms" aria-selected="false">Terms</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" id="terms-tab" data-toggle="tab" href="#ads" role="tab" aria-controls="terms" aria-selected="false">Update from ADS</a>
-				</li>
-			</ul>
-			<div class="tab-content">
-				<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
-                    <!--Tabelle Media, <a href="../media/8757">Beispiel Link</a>, <a href="./data/media/8757">Manage / Edit Link</a>-->
-                    <a href="./data/media/irregularities">Show irregularities</a>
-                </div>
-				<div class="tab-pane fade" id="people" role="tabpanel" aria-labelledby="people-tab">
-                    <a href="<?=$config["dir"]["root"]?>/manage/data/person/overview" target="_self">Overview</a><br><br>
-                    Tabelle Person, <a href="../person/8757">Beispiel Link</a>, <a href="./data/person/8757">Manage / Edit Link</a>
-                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="person">Run additionalDataService for person</button>
-                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="memberOfParliament">Run additionalDataService for memberOfParliament</button>
-                </div>
-				<div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
-                    Tabelle Document, <a href="../document/8757">Beispiel Link</a>, <a href="./data/document/8757">Manage / Edit Link</a>
-                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="legalDocument">Run additionalDataService for legalDocument</button>
-                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="officialDocument">Run additionalDataService for officialDocument</button>
-                </div>
-				<div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
-                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="organisation">Run additionalDataService for organisation</button>
-					Tabelle Organisation, <a href="../organisation/8757">Beispiel Link</a>, <a href="./data/organisation/8757">Manage / Edit Link</a>
-
-
-				</div>
-				<div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
-                    <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="term">Run additionalDataService for term</button>
-                    Tabelle Term, <a href="../term/8757">Beispiel Link</a>, <a href="./data/term/8757">Manage / Edit Link</a>
-                </div>
-				<div class="tab-pane fade" id="ads" role="tabpanel" aria-labelledby="terms-tab">
-                    <form method="post" id="runAdditionalDataServiceForSpecificEntitiesForm">
-                        <input type="hidden" name="a" value="runAdditionalDataServiceForSpecificEntities">
-                        <div class="form-group formItem formItemTypePerson">
-                            <label for="party">Language</label>
-                            <select class="form-control" name="language">
-                                <option value="de"selected>German (de)</option>
-                            </select>
+<main class="container-fluid subpage">
+    <div class="row">
+        <div class="col-md-3 col-lg-2">
+            <?php include_once(__DIR__ . '/../sidebar.php'); ?>
+        </div>
+        <div class="col-md-9 col-lg-10" style="padding-top: 30px; padding-bottom: 30px;">
+            <div class="row" style="position: relative; z-index: 1">
+                <div class="col-12">
+                    <h2><?php echo L::manageData; ?></h2>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <a href="<?= $config["dir"]["root"] ?>/manage/data/media/new" class="btn btn-outline-success btn-sm mr-1">New Media Item</a>
+                            <button type="button" id="runCronUpdater" class="btn btn-outline-success btn-sm mr-1">Run cronUpdater</button>
                         </div>
-
-
-                        <div class="col-12">
-                            <button class="labelEntityADSadd btn" type="button"><span class="icon-plus"></span></button>
-                            <div></div>
-                        <div>
-                            <button class="btn btn-outline-primary" type="submit"><span class="icon-upload"></span> Run ADS for specific Entities</button>
-                    </form>
+                    </div>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true">Media</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="false">People</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">Documents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="organisations-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="false">Organisations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="terms-tab" data-toggle="tab" href="#terms" role="tab" aria-controls="terms" aria-selected="false">Terms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="terms-tab" data-toggle="tab" href="#ads" role="tab" aria-controls="terms" aria-selected="false">Update from ADS</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
+                            <!--Tabelle Media, <a href="../media/8757">Beispiel Link</a>, <a href="./data/media/8757">Manage / Edit Link</a>-->
+                            <a href="./data/media/irregularities">Show irregularities</a>
+                        </div>
+                        <div class="tab-pane fade" id="people" role="tabpanel" aria-labelledby="people-tab">
+                            <a href="<?=$config["dir"]["root"]?>/manage/data/person/overview" target="_self">Overview</a><br><br>
+                            Tabelle Person, <a href="../person/8757">Beispiel Link</a>, <a href="./data/person/8757">Manage / Edit Link</a>
+                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="person">Run additionalDataService for person</button>
+                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="memberOfParliament">Run additionalDataService for memberOfParliament</button>
+                        </div>
+                        <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+                            Tabelle Document, <a href="../document/8757">Beispiel Link</a>, <a href="./data/document/8757">Manage / Edit Link</a>
+                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="legalDocument">Run additionalDataService for legalDocument</button>
+                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="officialDocument">Run additionalDataService for officialDocument</button>
+                        </div>
+                        <div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
+                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="organisation">Run additionalDataService for organisation</button>
+                            Tabelle Organisation, <a href="../organisation/8757">Beispiel Link</a>, <a href="./data/organisation/8757">Manage / Edit Link</a>
+                        </div>
+                        <div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
+                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="term">Run additionalDataService for term</button>
+                            Tabelle Term, <a href="../term/8757">Beispiel Link</a>, <a href="./data/term/8757">Manage / Edit Link</a>
+                        </div>
+                        <div class="tab-pane fade" id="ads" role="tabpanel" aria-labelledby="terms-tab">
+                            <form method="post" id="runAdditionalDataServiceForSpecificEntitiesForm">
+                                <input type="hidden" name="a" value="runAdditionalDataServiceForSpecificEntities">
+                                <div class="form-group formItem formItemTypePerson">
+                                    <label for="party">Language</label>
+                                    <select class="form-control" name="language">
+                                        <option value="de"selected>German (de)</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <button class="labelEntityADSadd btn" type="button"><span class="icon-plus"></span></button>
+                                    <div></div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-outline-primary" type="submit"><span class="icon-upload"></span> Run ADS for specific Entities</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </main>
 
     <div class="modal fade" id="successRunCronDialog" tabindex="-1" role="dialog" aria-labelledby="successRunCronDialogLabel" aria-hidden="true">
@@ -139,9 +141,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 data:{"a":"runCronUpdater"},
                 method:"post",
                 success: function(ret) {
-
                     $('#successRunCronDialog').modal('show');
-
                 }
             })
         })
@@ -157,7 +157,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     //TODO: Check for success return parameter
                     $(".adc-type").html(this.tmpType);
                     $('#successRunAdditionalDataService').modal('show');
-
                 }
             })
         });
@@ -189,7 +188,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 '       <span class="icon-cancel-circled"></span>' +
                 '   </button>' +
                 '</div>');
-
         });
 
         $("#ads").on("click", ".buttonRemoveADSentity", function() {
@@ -203,7 +201,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 console.log(ret);
             }
         });
-
     })
 </script>
 <?php
