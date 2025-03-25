@@ -1,6 +1,6 @@
 body {
     --primary-bg-color: #fff;
-    --secondary-bg-color: #f3f4f5;
+    --secondary-bg-color: #f9fafb;
     --semi-transparent-bg-color: rgba(47, 50, 58, .8); 
     --primary-fg-color: #73747C; /* Texts Borders etc. */
     --secondary-fg-color: rgba(220, 220, 220, 1); /* Secondary Texts, Borders, Editable Panels etc. */
@@ -1142,6 +1142,10 @@ body.fixed .searchContainer {
     outline: none !important;
 }
 
+.searchContainer .searchInputContainer input#edit-query::placeholder {
+    opacity: .75;
+}
+
 .searchContainer .searchInputContainer .queryItem {
     position: relative;
     padding-right: 24px;
@@ -1462,7 +1466,7 @@ body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em
     position: relative;
     overflow: hidden;
     padding-bottom: 100%;
-    background-color: #f3f4f5;
+    background-color: #f9fafb;
 }
 
 body.darkmode .detailsHeader .rounded-circle,
