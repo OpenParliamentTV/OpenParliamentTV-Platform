@@ -316,7 +316,7 @@ a.alert:hover {
     color: #444444;
 }
 
-.subpage a:not(.btn, .nav-link, .page-link), footer a:not(.btn) {
+.subpage a:not(.btn, .nav-link, .page-link, .list-group-item), footer a:not(.btn) {
     text-decoration: underline;
 }
 
