@@ -694,7 +694,7 @@ body.darkmode .playerContainer .playerProgress {
 }
 
 .playerContainer .playerProgress .ui-slider-range {
-	background-color: rgba(235, 235, 234, 0.4);
+	background-color: rgba(220, 221, 219, 0.4);
 }
 
 body.darkmode .playerContainer .playerProgress .ui-slider-range {
