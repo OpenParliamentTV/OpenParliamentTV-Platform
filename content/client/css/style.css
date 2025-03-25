@@ -1020,6 +1020,13 @@ body.ready > main {
     border-color: #1a9fdd;
 }
 
+.partyIndicator[data-party="BSW"],
+.partyIndicator[data-faction="BSW"],
+.partyIndicator[data-faction="Q127785176"] {
+    background-color: #792150;
+    border-color: #792150;
+}
+
 #filterbar {
     margin-top: 45px;
     padding-top: 0px;

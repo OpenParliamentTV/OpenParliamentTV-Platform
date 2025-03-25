@@ -5,7 +5,8 @@ var updateAjax,
 		"CDU/CSU": "#000000",
 		"SPD": "#df0b25",
 		"FDP": "#feeb34",
-		"AfD": "#1a9fdd"
+		"AfD": "#1a9fdd",
+		"BSW": "#792150"
 	};
 	factionIDColors = {
 		"Q1826856": "#bc3475", //linke
@@ -13,7 +14,8 @@ var updateAjax,
 		"Q1023134": "#000000", //cdu/csu
 		"Q2207512": "#df0b25", //spd
 		"Q1387991": "#feeb34", //fdp
-		"Q42575708": "#1a9fdd" //afd
+		"Q42575708": "#1a9fdd", //afd
+		"Q127785176": "#792150" //bsw
 	};
 
 $(document).ready(function() {

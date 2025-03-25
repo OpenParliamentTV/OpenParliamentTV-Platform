@@ -41,23 +41,26 @@
 						</div>
 						<div class="checkboxList flex-grow-1">
 							<label style="display: block;" for="edit-party"><b><?php echo L::faction; ?></b></label>
+                            <div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q2207512">
+                                <input id="edit-party-16118" name="factionID[]" value="Q2207512" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16118">SPD</label>
+                            </div>
 							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q1023134">
 								<input id="edit-party-17362" name="factionID[]" value="Q1023134" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17362">CDU/CSU</label>
 							</div>
-							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q2207512">
-								<input id="edit-party-16118" name="factionID[]" value="Q2207512" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16118">SPD</label>
-							</div>
+                            <div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q1007353">
+                                <input id="edit-party-16122" name="factionID[]" value="Q1007353" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16122">DIE GRÜNEN</label>
+                            </div>
+                            <div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q1387991">
+                                <input id="edit-party-17363" name="factionID[]" value="Q1387991" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17363">FDP</label>
+                            </div>
 							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q42575708">
 								<input id="edit-party-17364" name="factionID[]" value="Q42575708" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17364">AfD</label>
 							</div>
-							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q1387991">
-								<input id="edit-party-17363" name="factionID[]" value="Q1387991" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17363">FDP</label>
-							</div>
-							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q1826856">
-								<input id="edit-party-16124" name="factionID[]" value="Q1826856" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16124">DIE LINKE</label>
-							</div>
-							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q1007353">
-								<input id="edit-party-16122" name="factionID[]" value="Q1007353" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16122">DIE GRÜNEN</label>
+                            <div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q1826856">
+                                <input id="edit-party-16124" name="factionID[]" value="Q1826856" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16124">DIE LINKE</label>
+                            </div>
+							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q127785176">
+								<input id="edit-party-17365" name="factionID[]" value="Q127785176" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-17365">BSW</label>
 							</div>
 							<div class="formCheckbox custom-control custom-checkbox partyIndicator mb-2 mb-lg-1" data-faction="Q4316268">
 								<input id="edit-party-16123" name="factionID[]" value="Q4316268" type="checkbox" class="custom-control-input"> <label class="custom-control-label" for="edit-party-16123">fraktionslos</label>
