@@ -1,5 +1,6 @@
 {
 	"about": "Über das Projekt",
+	"additionalInformation": "Zusatzinformationen",
 	"agendaItem": "Tagesordnungspunkt",
 	"agendaItems": "Tagesordnungspunkte",
 	"announcements": "Mitteilungen",
@@ -175,6 +176,7 @@
 	"settings": "Einstellungen",
 	"share": "Teilen",
 	"shareQuote": "Zitat teilen",
+	"shareQuotes": "Zitate teilen",
 	"shareQuoteMessageTheme": "Dieses Bild wird verwendet wenn du die URL auf sozialen Netzwerken teilst.",
 	"shareQuoteMessageURL": "URL kopieren um direkt auf dein Zitat zu verweisen",
 	"showAll": "Alle",

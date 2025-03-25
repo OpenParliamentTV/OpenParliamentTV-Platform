@@ -1,5 +1,6 @@
 {
 	"about": "About the project",
+	"additionalInformation": "Additional Information",
 	"agendaItem": "Agenda Item",
 	"agendaItems": "Agenda Items",
 	"announcements": "Announcements",
@@ -175,6 +176,7 @@
 	"settings": "Settings",
 	"share": "Share",
 	"shareQuote": "Share Quote",
+	"shareQuotes": "Share Quotes",
 	"shareQuoteMessageTheme": "This image will be shown when sharing the URL on social networks.",
 	"shareQuoteMessageURL": "Copy this URL to link directly to your quote",
 	"showAll": "All",
