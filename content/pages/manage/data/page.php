@@ -29,22 +29,22 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </div>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true">Media</a>
+                            <a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true">Media</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="false">People</a>
+                            <a class="nav-link" id="people-tab" data-bs-toggle="tab" data-bs-target="#people" role="tab" aria-controls="people" aria-selected="false">People</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="false">Documents</a>
+                            <a class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" role="tab" aria-controls="documents" aria-selected="false">Documents</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="organisations-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="false">Organisations</a>
+                            <a class="nav-link" id="organisations-tab" data-bs-toggle="tab" data-bs-target="#organisations" role="tab" aria-controls="organisations" aria-selected="false">Organisations</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="terms-tab" data-toggle="tab" href="#terms" role="tab" aria-controls="terms" aria-selected="false">Terms</a>
+                            <a class="nav-link" id="terms-tab" data-bs-toggle="tab" data-bs-target="#terms" role="tab" aria-controls="terms" aria-selected="false">Terms</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="terms-tab" data-toggle="tab" href="#ads" role="tab" aria-controls="terms" aria-selected="false">Update from ADS</a>
+                            <a class="nav-link" id="terms-tab" data-bs-toggle="tab" data-bs-target="#ads" role="tab" aria-controls="terms" aria-selected="false">Update from ADS</a>
                         </li>
                     </ul>
                     <div class="tab-content">

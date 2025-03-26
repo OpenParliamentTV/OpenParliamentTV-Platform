@@ -93,6 +93,7 @@ header .navbar {
 }
 
 header .navbar .navbar-text {
+    display: inline-block;
     color: var(--primary-fg-color);
     padding: 0.25rem 0.5rem;
     line-height: 20px;
@@ -308,6 +309,10 @@ main.container-fluid.subpage {
     }
 }
 
+a {
+    text-decoration: none;
+}
+
 a, a:hover {
     color: var(--primary-fg-color);
 }
@@ -351,6 +356,11 @@ hr {
 
 .langswitch {
     border: 1px solid #cfcfcf !important;
+}
+
+.rounded-pill {
+    background: var(--highlight-color);
+    color: var(--primary-bg-color);
 }
 
 .bg-color-image {
@@ -398,12 +408,21 @@ hr {
 }
 */
 
+.nav-link, .nav-link:hover {
+    cursor: pointer;
+    color: var(--primary-fg-color);
+}
+
+.nav-link.active {
+    cursor: default;
+}
+
 .form-control, 
-.custom-select, 
+.form-select, 
 .page-link, 
 .table,
 .form-control:focus, 
-.custom-select:focus, 
+.form-select:focus, 
 .card, 
 .nav-tabs .nav-item.show .nav-link, 
 .nav-tabs .nav-link.active,
@@ -419,7 +438,7 @@ textarea {
     font-size: 14px;
 }
 
-select {
+.form-select {
     background: var(--custom-select-bg-image) no-repeat 95% 50%;
     -moz-appearance: none;
     -webkit-appearance: none;
@@ -460,17 +479,17 @@ select {
     border-bottom-color: transparent;
 }
 
-.custom-control-input ~ .custom-control-label::before {
+.form-check-input ~ .form-check-label::before {
     border-color: var(--border-color);
     background-color: var(--primary-bg-color);
 }
 
-.custom-control-input:checked ~ .custom-control-label::before {
+.form-check-input:checked ~ .form-check-label::before {
     border-color: var(--primary-bg-color);
     background-color: var(--primary-fg-color);
 }
 
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+.form-check .form-check-input:checked ~ .form-check-label::after {
     background-image: var(--custom-checkbox-bg-image);
 }
 
@@ -479,7 +498,7 @@ select {
     opacity: .6;
 }
 
-.custom-select {
+.form-select {
     background-image: var(--custom-select-bg-image);
 }
 
@@ -572,13 +591,13 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     background: var(--primary-bg-color);
 }
 
-.modal-content .close {
+.modal-content .btn-close {
     color: var(--primary-fg-color);
     opacity: .8;
 }
 
-.modal-content .close:hover {
-    opacity:  1;
+.modal-content .btn-close:hover {
+    opacity: 1;
 }
 
 .text-muted {
@@ -958,7 +977,7 @@ body.ready > main {
     }
 }
 
-.custom-control-label::before {
+.form-check-label::before {
     top: .2rem;
 }
 
@@ -1705,8 +1724,7 @@ body.darkmode .resultItem .resultSnippets .resultSnippet:hover {
     content: '[...] ';
 }
 
-.resultItem .badge-pill {
-    background: var(--highlight-color);
+.resultItem .rounded-pill {
     position: absolute;
     right: 0px;
     top: -23px;

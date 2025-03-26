@@ -1,4 +1,3 @@
-
 <?php
 $typeImageFit = "cover";
 $typeImagePosition = "top";
@@ -34,7 +33,7 @@ if ($entity["data"]["type"] == "organisation") {
 						<?php 
 						if (isset($entity["data"]["relationships"]["faction"]["data"]["id"])) {
 						?>
-							<h3 class="mb-0" style="white-space: normal;"><a href="<?= $config["dir"]["root"] ?>/<?= $entity["data"]["type"] ?>/<?= $entity["data"]["id"] ?>"><?= $entity["data"]["attributes"]["label"] ?></a><a href="../organisation/<?= $entity["data"]["relationships"]["faction"]["data"]["id"] ?>" class="partyIndicator ml-2" data-faction="<?= $entity["data"]["relationships"]["faction"]["data"]["id"] ?>" style="font-size: 14px;"><?= $entity["data"]["relationships"]["faction"]["data"]["attributes"]["label"] ?></a></h3>
+							<h3 class="mb-0" style="white-space: normal;"><a href="<?= $config["dir"]["root"] ?>/<?= $entity["data"]["type"] ?>/<?= $entity["data"]["id"] ?>"><?= $entity["data"]["attributes"]["label"] ?></a><a href="../organisation/<?= $entity["data"]["relationships"]["faction"]["data"]["id"] ?>" class="partyIndicator ms-2" data-faction="<?= $entity["data"]["relationships"]["faction"]["data"]["id"] ?>" style="font-size: 14px;"><?= $entity["data"]["relationships"]["faction"]["data"]["attributes"]["label"] ?></a></h3>
 						<?php 
 						} else {
 						?>

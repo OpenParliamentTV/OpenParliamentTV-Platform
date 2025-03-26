@@ -67,7 +67,7 @@ if ($pageType == 'admin' || $pageType == 'entity') {
   <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-de-DE.js?v=<?= $config["version"] ?>"></script>
   <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-export.min.js?v=<?= $config["version"] ?>"></script>
   <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/tableExport.js?v=<?= $config["version"] ?>"></script>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-multi-toggle.min.js?v=<?= $config["version"] ?>"></script>
+  <!--<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-multi-toggle.min.js?v=<?= $config["version"] ?>"></script>-->
   <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/shim.min.js?v=<?= $config["version"] ?>"></script>
   <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/xlsx.full.min.js?v=<?= $config["version"] ?>"></script>
 <?php

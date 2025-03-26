@@ -21,37 +21,35 @@ include_once(__DIR__ . '/../../header.php');
 			<div class="alert bg-white"><?php echo L::messageOpenData; ?>. Es gibt im Moment weder ein Limit für Anfragen noch benötigst du einen API Key. Aber bitte melde dich bei uns wenn du vor hast, unser gesamtes Datenset zu kopieren. Anstatt Millionen von Anfragen an unsere API zu senden, kannst du einfach einen SQL Dump von uns bekommen.</div>
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="search-tab" data-toggle="tab" href="#search" role="tab" aria-controls="search" aria-selected="true"><span class="nav-item-label">Suche</span></a>
+					<a class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" role="tab" aria-controls="search" aria-selected="true"><span class="nav-item-label">Suche</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="entities-tab" data-toggle="tab" href="#entities" role="tab" aria-controls="entities" aria-selected="true"><span class="nav-item-label">Entitäten</span></a>
+					<a class="nav-link" id="entities-tab" data-bs-toggle="tab" data-bs-target="#entities" role="tab" aria-controls="entities" aria-selected="true"><span class="nav-item-label">Entitäten</span></a>
 				</li>
-				<!--
 				<li class="nav-item">
-					<a class="nav-link" id="other-tab" data-toggle="tab" href="#other" role="tab" aria-controls="other" aria-selected="true"><span class="nav-item-label">Other Endpoints</span></a>
+					<a class="nav-link" id="other-tab" data-bs-toggle="tab" data-bs-target="#other" role="tab" aria-controls="other" aria-selected="true"><span class="nav-item-label">Other Endpoints</span></a>
 				</li>
-				-->
 				<li class="nav-item">
-					<a class="nav-link" id="general-tab" data-toggle="tab" href="#general" role="tab" aria-controls="general" aria-selected="true"><span class="nav-item-label">Spezifikation v1.0</span></a>
+					<a class="nav-link" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" role="tab" aria-controls="general" aria-selected="true"><span class="nav-item-label">Spezifikation v1.0</span></a>
 				</li>
 			</ul>
 			<div class="tab-content">
 				<div class="tab-pane fade bg-white show active" id="search" role="tabpanel" aria-labelledby="search-tab">
 					<ul class="nav nav-tabs" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="nav-item-label"><span class="icon-hypervideo mr-1"></span> <?php echo L::speeches; ?></span></a>
+							<a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true"><span class="nav-item-label"><span class="icon-hypervideo mr-1"></span> <?php echo L::speeches; ?></span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="people-tab" data-toggle="tab" href="#people" role="tab" aria-controls="people" aria-selected="true"><span class="nav-item-label"><span class="icon-torso"></span> <?php echo L::personPlural; ?></span></a>
+							<a class="nav-link" id="people-tab" data-bs-toggle="tab" data-bs-target="#people" role="tab" aria-controls="people" aria-selected="true"><span class="nav-item-label"><span class="icon-torso"></span> <?php echo L::personPlural; ?></span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="organisations-tab" data-toggle="tab" href="#organisations" role="tab" aria-controls="organisations" aria-selected="true"><span class="nav-item-label"><span class="icon-bank"></span> <?php echo L::organisations; ?></span></a>
+							<a class="nav-link" id="organisations-tab" data-bs-toggle="tab" data-bs-target="#organisations" role="tab" aria-controls="organisations" aria-selected="true"><span class="nav-item-label"><span class="icon-bank"></span> <?php echo L::organisations; ?></span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents" role="tab" aria-controls="documents" aria-selected="true"><span class="nav-item-label"><span class="icon-doc-text"></span> <?php echo L::documents; ?></span></a>
+							<a class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" role="tab" aria-controls="documents" aria-selected="true"><span class="nav-item-label"><span class="icon-doc-text"></span> <?php echo L::documents; ?></span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="terms-tab" data-toggle="tab" href="#terms" role="tab" aria-controls="terms" aria-selected="true"><span class="nav-item-label"><span class="icon-tag-1"></span> <?php echo L::terms; ?></span></a>
+							<a class="nav-link" id="terms-tab" data-bs-toggle="tab" data-bs-target="#terms" role="tab" aria-controls="terms" aria-selected="true"><span class="nav-item-label"><span class="icon-tag-1"></span> <?php echo L::terms; ?></span></a>
 						</li>
 					</ul>
 					<div class="tab-content">
@@ -61,19 +59,15 @@ include_once(__DIR__ . '/../../header.php');
 							<hr>
 							<h3><?php echo L::example; ?>-Abfrage</h3>
 							<div>(<?php echo L::speeches; ?> der SPD Fraktion von 11.04.2018 bis heute, die den Text "Rente" enthalten)</div>
-                            <div class="apiExampleContainer">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">URI</div>
-                                    </div>
-                                    <input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/search/media/?q=Rente&factionID[]=Q2207512&dateFrom=2018-04-11">
-                                    <div class="input-group-append">
-                                        <button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-                                    </div>
-                                </div>
-                                <div class="apiResultContainer"></div>
-                            </div>
-                            <hr>
+							<div class="apiExampleContainer">
+								<div class="input-group">
+									<span class="input-group-text">URI</span>
+									<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11" readonly>
+									<button class="apiRequestButton btn btn-sm btn-outline-secondary input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+								</div>
+								<div class="apiResultContainer"></div>
+							</div>
+							<hr>
 							<h3>Parameter</h3>
 							<div class="table-responsive-lg">
 								<table class="table table-sm table-striped table-hover">
@@ -223,18 +217,14 @@ include_once(__DIR__ . '/../../header.php');
 							<h3><?php echo L::example; ?>-Abfrage</h3>
 							<div>(<?php echo L::personPlural; ?> aus der Partei "SPD" mit dem Namen "Michael")</div>
 							<div class="apiExampleContainer">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">URI</div>
-                                    </div>
-                                    <input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/search/people/?name=Michael&party=SPD">
-                                    <div class="input-group-append">
-                                        <button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-                                    </div>
-                                </div>
-                                <div class="apiResultContainer"></div>
-                            </div>
-                            <hr>
+								<div class="input-group">
+									<span class="input-group-text">URI</span>
+								<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/people?name=Michael&party=SPD" readonly>
+									<button class="apiRequestButton btn btn-sm btn-outline-secondary input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+								</div>
+								<div class="apiResultContainer"></div>
+							</div>
+							<hr>
 							<h3>Parameter</h3>
 							<div class="table-responsive-lg">
 								<table class="table table-sm table-striped table-hover">
@@ -318,7 +308,7 @@ include_once(__DIR__ . '/../../header.php');
 							</div>
 						</div>
 						<div class="tab-pane fade bg-white" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
-							<div class="alert alert-info">Bitte beachte dass im Open Parliament TV Datenmodell <b>Parteien</b> und <b>Fraktionen</b> genauso wie <b>Unternehmen</b> oder <b>NGOs</b> "Organisationen" sind. Diese können mit dem "type" Parameter <b>gefiltert</b> werden (z.B. type=faction oder type=party).</div>
+							<div class="alert alert-info">Bitte beachte dass im Open Parliament TV Datenmodell <b>Parteien</b> und <b>Fraktionen</b> genauso wie <b>Unternehmen</b> oder <b>NGOs</b> "Organisationen" sind. Diese können mit dem "type" Parameter <b>gefilteredt</b> werden (z.B. type=faction oder type=party).</div>
 							<hr>
 							<h3>Endpoint</h3>
 							<code>/api/v1/search/organisations?</code>
@@ -326,18 +316,14 @@ include_once(__DIR__ . '/../../header.php');
 							<h3><?php echo L::example; ?>-Abfrage</h3>
 							<div>(<?php echo L::organisations; ?> mit dem Namen "Linke")</div>
 							<div class="apiExampleContainer">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">URI</div>
-                                    </div>
-                                    <input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/search/organisations/?name=Linke">
-                                    <div class="input-group-append">
-                                        <button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-                                    </div>
-                                </div>
-                                <div class="apiResultContainer"></div>
-                            </div>
-                            <hr>
+								<div class="input-group">
+									<span class="input-group-text">URI</span>
+								<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/organisations?name=Linke" readonly>
+									<button class="apiRequestButton btn btn-sm btn-outline-secondary input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+								</div>
+								<div class="apiResultContainer"></div>
+							</div>
+							<hr>
 							<h3>Parameter</h3>
 							<table class="table table-sm table-striped table-hover">
 								<thead>
@@ -374,18 +360,14 @@ include_once(__DIR__ . '/../../header.php');
 							<h3><?php echo L::example; ?>-Abfrage</h3>
 							<div>(<?php echo L::documents; ?> mit dem Label "19/5412", gibt sowohl die "Drucksache 19/5412" zurück als auch Dokumente in denen "19/5412" in einem der Titel oder dem Abstract vorkommt)</div>
 							<div class="apiExampleContainer">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">URI</div>
-                                    </div>
-                                    <input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/search/documents/?label=19/5412">
-                                    <div class="input-group-append">
-                                        <button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-                                    </div>
-                                </div>
-                                <div class="apiResultContainer"></div>
-                            </div>
-                            <hr>
+								<div class="input-group">
+									<span class="input-group-text">URI</span>
+								<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/documents?label=19/5412" readonly>
+									<button class="apiRequestButton btn btn-sm btn-outline-secondary input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+								</div>
+								<div class="apiResultContainer"></div>
+							</div>
+							<hr>
 							<h3>Parameter</h3>
 							<table class="table table-sm table-striped table-hover">
 								<thead>
@@ -426,18 +408,14 @@ include_once(__DIR__ . '/../../header.php');
 							<h3><?php echo L::example; ?>-Abfrage</h3>
 							<div>(<?php echo L::terms; ?> mit dem Label "digital")</div>
 							<div class="apiExampleContainer">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">URI</div>
-                                    </div>
-                                    <input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/search/terms/?label=digital">
-                                    <div class="input-group-append">
-                                        <button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-                                    </div>
-                                </div>
-                                <div class="apiResultContainer"></div>
-                            </div>
-                            <hr>
+								<div class="input-group">
+									<span class="input-group-text">URI</span>
+									<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/terms?label=digital" readonly>
+									<button class="apiRequestButton btn btn-sm btn-outline-secondary input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+								</div>
+								<div class="apiResultContainer"></div>
+							</div>
+							<hr>
 							<h3>Parameter</h3>
 							<table class="table table-sm table-striped table-hover">
 								<thead>
@@ -485,13 +463,9 @@ include_once(__DIR__ . '/../../header.php');
 					<div class="mb-2"><b><?php echo L::example; ?></b>: <?php echo L::speech; ?></div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
-							<div class="input-group-prepend">
-								<div class="input-group-text">URI</div>
-							</div>
-							<input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/media/DE-0190061003">
-							<div class="input-group-append">
-								<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-							</div>
+							<span class="input-group-text">URI</span>
+						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003" readonly>
+							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -502,13 +476,9 @@ include_once(__DIR__ . '/../../header.php');
 					<div class="mb-2"><b><?php echo L::example; ?></b>: Angela Merkel (Wikidata ID Q567)</div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
-							<div class="input-group-prepend">
-								<div class="input-group-text">URI</div>
-							</div>
-							<input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/person/Q567">
-							<div class="input-group-append">
-								<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-							</div>
+							<span class="input-group-text">URI</span>
+						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/person/Q567" readonly>
+							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -519,13 +489,9 @@ include_once(__DIR__ . '/../../header.php');
 					<div class="mb-2"><b><?php echo L::example; ?></b>: <?php echo L::faction; ?> BÜNDNIS 90/DIE GRÜNEN (Wikidata ID Q1007353)</div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
-							<div class="input-group-prepend">
-								<div class="input-group-text">URI</div>
-							</div>
-							<input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/organisation/Q1007353">
-							<div class="input-group-append">
-								<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-							</div>
+							<span class="input-group-text">URI</span>
+						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/organisation/Q1007353" readonly>
+							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -536,28 +502,21 @@ include_once(__DIR__ . '/../../header.php');
 					<div class="mb-2"><b><?php echo L::example; ?></b>: Drucksache 19/1184</div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
-							<div class="input-group-prepend">
-								<div class="input-group-text">URI</div>
-							</div>
-							<input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/document/14">
-							<div class="input-group-append">
-								<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-							</div>
+							<span class="input-group-text">URI</span>
+						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/document/14" readonly>
+							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
 					<hr>
 					<h3><span class="icon-tag-1"></span> GET <?php echo L::term; ?></h3>
 					<p class="mb-2"><b><?php echo L::term; ?> IDs</b> sind <b>immer eine Wikidata ID</b>.</p>
+					<div><b>Endpoint</b>: <code>/api/v1/term/ID</code></div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
-							<div class="input-group-prepend">
-								<div class="input-group-text">URI</div>
-							</div>
-							<input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/term/Q4394526">
-							<div class="input-group-append">
-								<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-							</div>
+							<span class="input-group-text">URI</span>
+						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/term/Q4394526" readonly>
+							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -568,13 +527,9 @@ include_once(__DIR__ . '/../../header.php');
 					<div class="mb-2"><b><?php echo L::example; ?></b>: <?php echo L::electoralPeriod; ?> 19 des Deutschen Bundestages (ID: "DE-019")</div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
-							<div class="input-group-prepend">
-								<div class="input-group-text">URI</div>
-							</div>
-							<input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/electoralPeriod/DE-019">
-							<div class="input-group-append">
-								<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-							</div>
+							<span class="input-group-text">URI</span>
+						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/electoralPeriod/DE-019" readonly>
+							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -585,13 +540,9 @@ include_once(__DIR__ . '/../../header.php');
 					<div class="mb-2"><b><?php echo L::example; ?></b>: <?php echo L::session; ?> 61 in <?php echo L::electoralPeriod; ?> 19 des Deutschen Bundestages (ID: "DE-0190061")</div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
-							<div class="input-group-prepend">
-								<div class="input-group-text">URI</div>
-							</div>
-							<input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/session/DE-0190061">
-							<div class="input-group-append">
-								<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-							</div>
+							<span class="input-group-text">URI</span>
+						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/session/DE-0190061" readonly>
+							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -602,20 +553,14 @@ include_once(__DIR__ . '/../../header.php');
 					<div class="mb-2"><b><?php echo L::example; ?></b>: <?php echo L::agendaItem; ?> "Gesetzliche Rentenversicherung" in <?php echo L::session; ?> 61 in <?php echo L::electoralPeriod; ?> 19 des Deutschen Bundestages (ID: "DE-454")</div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
-							<div class="input-group-prepend">
-								<div class="input-group-text">URI</div>
-							</div>
-							<input readonly class="apiURI form-control" type="text" value="<?= $config["dir"]["root"] ?>/api/v1/agendaItem/DE-454">
-							<div class="input-group-append">
-								<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
-							</div>
+							<span class="input-group-text">URI</span>
+						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/agendaItem/DE-454" readonly>
+							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
 				</div>
-				<!--
 				<div class="tab-pane fade bg-white" id="other" role="tabpanel" aria-labelledby="other-tab"></div>
-				-->
 				<div class="tab-pane fade bg-white" id="general" role="tabpanel" aria-labelledby="general-tab">
 					<div class="alert alert-info">Die API Struktur basiert auf der <a href="https://jsonapi.org/format/">JSON:API Spezifikation</a>. Ob wir diesen Standard vollständig implementieren (auch für PATCH Anfragen / Daten-Updates) ist noch in der Diskussion. </div>
 					<hr>

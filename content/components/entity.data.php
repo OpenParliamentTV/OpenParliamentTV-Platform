@@ -3,13 +3,9 @@
 	<a href="<?= $config["dir"]["root"] ?>/api"><?= $config["dir"]["root"] ?>/api</a>
 </div>
 <div class="input-group">
-	<div class="input-group-prepend">
-		<div class="input-group-text">API URL</div>
-	</div>
+	<span class="input-group-text">API URL</span>
 	<input id="apiLink" class="form-control" type="text" value="<?= $apiResult["data"]["links"]["self"] ?>">
-	<div class="input-group-append">
-		<a href="<?= $apiResult["data"]["links"]["self"] ?>" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></a>
-	</div>
+	<a href="<?= $apiResult["data"]["links"]["self"] ?>" class="btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></a>
 </div>
 <hr>
 <div><b><?php echo L::dataTable; ?></b></div>

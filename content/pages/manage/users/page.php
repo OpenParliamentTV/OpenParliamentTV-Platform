@@ -34,7 +34,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </div>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="all-users-tab" data-toggle="tab" href="#all-users" role="tab" aria-controls="all-users" aria-selected="true">All Users</a>
+                            <a class="nav-link active" id="all-users-tab" data-bs-toggle="tab" data-bs-target="#all-users" role="tab" aria-controls="all-users" aria-selected="true">All Users</a>
                         </li>
                     </ul>
                     <div class="tab-content">

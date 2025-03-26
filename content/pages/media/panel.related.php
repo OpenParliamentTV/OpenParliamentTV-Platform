@@ -193,7 +193,7 @@ $nerPanel = '';
 if ($config["display"]["ner"]) {
     $nerPanel = 
     '<hr>
-    <div class="relationshipsCategoryHeader">'.L::automaticallyDetected.' <a class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal" href="#" style="font-weight: lighter;"><span class="icon-attention mr-1"></span><u>beta</u></a></div>
+    <div class="relationshipsCategoryHeader">'.L::automaticallyDetected.' <a class="alert ms-1 px-1 py-0 alert-warning" data-bs-toggle="modal" data-bs-target="#nerModal" href="#" style="font-weight: lighter;"><span class="icon-attention me-1"></span><u>beta</u></a></div>
     <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">
         '.$relatedPeopleHTMLNER.' '.$relatedOrganisationsHTMLNER.' '.$relatedDocumentsHTMLNER.' '.$relatedTermsHTMLNER.' 
     </div>';
@@ -201,7 +201,7 @@ if ($config["display"]["ner"]) {
 
 ?>
 <div class="tab-content">
-    <div class="tab-pane timebasedTab fade show active" id="proceedings" role="tabpanel" aria-labelledby="proceedings-tab">
+    <div class="tab-pane timebasedTab fade show active" id="proceedings" role="tabpanel">
         <?php if (isset($textContentsHTML)) { ?>
             <?= $textContentsHTML ?>
         <?php } else { ?>
@@ -212,7 +212,7 @@ if ($config["display"]["ner"]) {
             </div>
         <?php } ?>
     </div>
-    <div class="tab-pane fade" id="relationships" role="tabpanel" aria-labelledby="relationships-tab">
+    <div class="tab-pane fade" id="relationships" role="tabpanel">
         <div class="relationshipsCategoryHeader"><?= L::personPlural ?></div>
         <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2"><?= $relatedPeopleHTML ?></div>
         <hr>
@@ -220,18 +220,17 @@ if ($config["display"]["ner"]) {
         <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2"><?= $relatedDocumentsHTML ?></div>
         <?= $nerPanel ?>
     </div>
-    <div class="tab-pane fade" id="data" role="tabpanel" aria-labelledby="data-tab">
+    <div class="tab-pane fade" id="data" role="tabpanel">
         <div class="alert alert-info" role="alert">
             <div class="mb-1"><?php echo L::messageOpenData; ?>: <a class="text-reset" href="<?= $config["dir"]["root"] ?>/api"><?= $config["dir"]["root"] ?>/api</a></div>
         </div>
         <div class="input-group">
-            <div class="input-group-prepend">
-                <div class="input-group-text">API URL</div>
-            </div>
+            <span class="input-group-text">API URL</span>
             <input id="apiLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= $speech["links"]["self"] ?>">
-            <div class="input-group-append">
-                <a href="<?= $speech["links"]["self"] ?>" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></a>
-            </div>
+            <a href="<?= $speech["links"]["self"] ?>" target="_blank" class="btn btn-sm input-group-text">
+                <span class="icon-right-open-big"></span>
+                <span class="d-none d-md-inline"><?php echo L::showResult; ?></span>
+            </a>
         </div>
         <hr>
         <div class="relationshipsCategoryHeader"><?= L::data ?></div>

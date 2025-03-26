@@ -76,27 +76,31 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
         <div class="playerTabs">
             <ul class="nav nav-tabs flex-nowrap" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="proceedings-tab" data-toggle="tab" href="#proceedings" role="tab" aria-controls="proceedings" aria-selected="true"><span class="tabTitle"><?= L::proceedings ?></span><span class="icon-doc-text-1"></span></a>
+                    <a class="nav-link active" id="proceedings-tab" data-bs-toggle="tab" data-bs-target="#proceedings" role="tab" aria-controls="proceedings" aria-selected="true">
+                        <span class="tabTitle"><?= L::proceedings ?></span><span class="icon-doc-text-1"></span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="relationships-tab" data-toggle="tab" href="#relationships" role="tab" aria-controls="relationships" aria-selected="true"><span class="tabTitle"><?php echo L::relationships; ?></span><span class="icon-flow-cascade"></span></a>
+                    <a class="nav-link" id="relationships-tab" data-bs-toggle="tab" data-bs-target="#relationships" role="tab" aria-controls="relationships" aria-selected="true">
+                        <span class="tabTitle"><?php echo L::relationships; ?></span><span class="icon-flow-cascade"></span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="tabTitle"><?php echo L::data; ?></span><span class="icon-download"></span></a>
+                    <a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true">
+                        <span class="tabTitle"><?php echo L::data; ?></span><span class="icon-download"></span>
+                    </a>
                 </li>
             </ul>
         </div>
     </div>
     <div id="OPTV_Player"></div>
 </div>
-<div id="shareQuoteModal" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+<div id="shareQuoteModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title"><span class="icon-share"></span> <?php echo L::shareQuote; ?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-warning"><?php echo L::messageShareQuotePart1; ?> <b><?= $mainSpeaker['attributes']['label'] ?></b>? <?php echo L::messageShareQuotePart2; ?>!</div>
@@ -134,20 +138,18 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal"><?php echo L::close; ?></button>
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><?php echo L::close; ?></button>
             </div>
         </div>
     </div>
 </div>
 <div id="videoAttribution" class="copyrightInfo" style="display: none;"><span class="icon-info-circled"></span><span class="copyrightText"><?php echo L::source; ?>: <?= $speech["attributes"]["creator"] ?>, <?php echo html_entity_decode($speech["attributes"]["license"]); ?></span></div>
-<div class="modal fade" id="nerModal" tabindex="-1" role="dialog" aria-labelledby="nerModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="nerModal" tabindex="-1" aria-labelledby="nerModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="nerModalTitle"><?php echo L::automaticallyDetected; ?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body"><?php echo L::messageAutomaticallyDetected; ?></div>
         </div>
