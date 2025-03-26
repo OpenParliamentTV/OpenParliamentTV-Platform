@@ -62,7 +62,7 @@ include_once(__DIR__ . '/../../header.php');
 							<div class="apiExampleContainer">
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
-									<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11" readonly>
+									<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/media?q=Rente&factionID[]=Q2207512&dateFrom=2018-04-11" readonly>
 									<button class="apiRequestButton btn btn-sm btn-outline-secondary input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 								</div>
 								<div class="apiResultContainer"></div>
