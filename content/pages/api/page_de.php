@@ -37,7 +37,7 @@ include_once(__DIR__ . '/../../header.php');
 				<div class="tab-pane fade bg-white show active" id="search" role="tabpanel" aria-labelledby="search-tab">
 					<ul class="nav nav-tabs" role="tablist">
 						<li class="nav-item">
-							<a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true"><span class="nav-item-label"><span class="icon-hypervideo mr-1"></span> <?php echo L::speeches; ?></span></a>
+							<a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true"><span class="nav-item-label"><span class="icon-hypervideo me-1"></span> <?php echo L::speeches; ?></span></a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" id="people-tab" data-bs-toggle="tab" data-bs-target="#people" role="tab" aria-controls="people" aria-selected="true"><span class="nav-item-label"><span class="icon-torso"></span> <?php echo L::personPlural; ?></span></a>
@@ -457,7 +457,7 @@ include_once(__DIR__ . '/../../header.php');
 					  <a target="_blank" href="<?= $config["dir"]["root"] ?>/person/Q567"><?= $config["dir"]["root"] ?>/person/Q567</a><br>
 					  <a target="_blank" href="<?= $config["dir"]["root"] ?>/api/v1/person/Q567"><?= $config["dir"]["root"] ?>/api/v1/person/Q567</a></div>
 					<hr>
-					<h3><span class="icon-hypervideo mr-1"></span> GET <?php echo L::speech; ?></h3>
+					<h3><span class="icon-hypervideo me-1"></span> GET <?php echo L::speech; ?></h3>
 					<p class="mb-2"><b>Redebeitrag IDs</b> enthalten Informationen über das Parlament, die Wahlperiode und die Sitzung. Du solltest aber nicht versuchen, diese IDs zu erraten (z.B. basierend auf der Reihenfolge der Reden). Dies mag in manchen Fällen funktionieren, in vielen Fällen aber nicht. </p>
 					<div><b>Endpoint</b>: <code>/api/v1/media/ID</code></div>
 					<div class="mb-2"><b><?php echo L::example; ?></b>: <?php echo L::speech; ?></div>

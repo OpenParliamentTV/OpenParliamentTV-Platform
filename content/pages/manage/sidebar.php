@@ -8,7 +8,7 @@
         </div>
         <!-- Personal Settings -->
         <div class="mb-3">
-            <div class="sidebar-heading pl-3 mb-2"><small><?php echo L::personalSettings; ?></small></div>
+            <div class="sidebar-heading ps-3 mb-2"><small><?php echo L::personalSettings; ?></small></div>
             <a href="<?= $config["dir"]["root"] ?>/manage/notifications" class="list-group-item list-group-item-action border-0">
                 <i class="icon-bell"></i> <?php echo L::notifications; ?>
             </a>
@@ -19,7 +19,7 @@
         
         <!-- Administration -->
         <div class="mb-3">
-            <div class="sidebar-heading pl-3 mb-2"><small><?php echo L::administration; ?></small></div>
+            <div class="sidebar-heading ps-3 mb-2"><small><?php echo L::administration; ?></small></div>
             <a href="<?= $config["dir"]["root"] ?>/manage/conflicts" class="list-group-item list-group-item-action border-0">
                 <i class="icon-attention"></i> <?php echo L::manageConflicts; ?>
             </a>

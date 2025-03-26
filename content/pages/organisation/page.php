@@ -39,8 +39,8 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<?php } ?>
 						<?php if ($apiResult["data"]["attributes"]["abstract"] && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
 							<div class="mt-2"><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
-							<a class="btn btn-sm mr-2 mt-2" href="<?= $apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"] ?>" target="_blank">
-								<span><?php echo L::moreAt; ?> Wikipedia</span><img class="ml-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikipedia.svg">
+							<a class="btn btn-sm me-2 mt-2" href="<?= $apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"] ?>" target="_blank">
+								<span><?php echo L::moreAt; ?> Wikipedia</span><img class="ms-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikipedia.svg">
 							</a>
 						<?php } ?>
 						<!--
@@ -67,7 +67,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<a class="nav-link <?= (($apiResult["data"]["attributes"]["type"] == "faction") ? "" : "active") ?>" id="ner-tab" data-bs-toggle="tab" data-bs-target="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="badge rounded-pill"><?= $countFound ?></span></span></a>
 					</li>
 				<?php } ?>
-				<li class="nav-item ml-auto">
+				<li class="nav-item ms-auto">
 					<a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
 				</li>
 			</ul>

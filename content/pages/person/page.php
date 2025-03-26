@@ -35,7 +35,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<?php 
 						if (isset($apiResult["data"]["relationships"]["faction"]["data"]["id"])) {
 						?>
-							<h2><?= $apiResult["data"]["attributes"]["label"] ?><a href="../organisation/<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>" class="partyIndicator ml-2" data-faction="<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>" style="font-size: 14px;"><?= $apiResult["data"]["relationships"]["faction"]["data"]["attributes"]["label"] ?></a></h2>
+							<h2><?= $apiResult["data"]["attributes"]["label"] ?><a href="../organisation/<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>" class="partyIndicator ms-2" data-faction="<?= $apiResult["data"]["relationships"]["faction"]["data"]["id"] ?>" style="font-size: 14px;"><?= $apiResult["data"]["relationships"]["faction"]["data"]["attributes"]["label"] ?></a></h2>
 							
 						<?php 
 						} else {
@@ -45,8 +45,8 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						}
 						if ($apiResult["data"]["attributes"]["abstract"] && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
 							<div class="mt-2"><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
-							<a class="btn btn-sm mr-2 mt-2" href="<?= $apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"] ?>" target="_blank">
-								<span><?php echo L::moreAt; ?> Wikipedia</span><img class="ml-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikipedia.svg">
+							<a class="btn btn-sm me-2 mt-2" href="<?= $apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"] ?>" target="_blank">
+								<span><?php echo L::moreAt; ?> Wikipedia</span><img class="ms-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikipedia.svg">
 							</a>
 						<?php } ?>
 						<!--
@@ -73,10 +73,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				<?php } ?>
 				<?php if ($config["display"]["ner"]) { ?>
 					<li class="nav-item">
-						<a class="nav-link" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ml-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention mr-1"></span><u>beta</u></span></span></a>
+						<a class="nav-link" id="ner-tab" data-toggle="tab" href="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ms-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention me-1"></span><u>beta</u></span></span></a>
 					</li>
 				<?php } ?>
-				<li class="nav-item ml-auto">
+				<li class="nav-item ms-auto">
 					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
 				</li>
 			</ul>

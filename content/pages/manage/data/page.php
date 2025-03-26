@@ -23,8 +23,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <h2><?php echo L::manageData; ?></h2>
                     <div class="card mb-3">
                         <div class="card-body">
-                            <a href="<?= $config["dir"]["root"] ?>/manage/data/media/new" class="btn btn-outline-success btn-sm mr-1">New Media Item</a>
-                            <button type="button" id="runCronUpdater" class="btn btn-outline-success btn-sm mr-1">Run cronUpdater</button>
+                            <a href="<?= $config["dir"]["root"] ?>/manage/data/media/new" class="btn btn-outline-success btn-sm me-1">New Media Item</a>
+                            <button type="button" id="runCronUpdater" class="btn btn-outline-success btn-sm me-1">Run cronUpdater</button>
                         </div>
                     </div>
                     <ul class="nav nav-tabs" role="tablist">
@@ -55,20 +55,20 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         <div class="tab-pane fade" id="people" role="tabpanel" aria-labelledby="people-tab">
                             <a href="<?=$config["dir"]["root"]?>/manage/data/person/overview" target="_self">Overview</a><br><br>
                             Tabelle Person, <a href="../person/8757">Beispiel Link</a>, <a href="./data/person/8757">Manage / Edit Link</a>
-                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="person">Run additionalDataService for person</button>
-                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="memberOfParliament">Run additionalDataService for memberOfParliament</button>
+                            <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="person">Run additionalDataService for person</button>
+                            <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="memberOfParliament">Run additionalDataService for memberOfParliament</button>
                         </div>
                         <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
                             Tabelle Document, <a href="../document/8757">Beispiel Link</a>, <a href="./data/document/8757">Manage / Edit Link</a>
-                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="legalDocument">Run additionalDataService for legalDocument</button>
-                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="officialDocument">Run additionalDataService for officialDocument</button>
+                            <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="legalDocument">Run additionalDataService for legalDocument</button>
+                            <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="officialDocument">Run additionalDataService for officialDocument</button>
                         </div>
                         <div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
-                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="organisation">Run additionalDataService for organisation</button>
+                            <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="organisation">Run additionalDataService for organisation</button>
                             Tabelle Organisation, <a href="../organisation/8757">Beispiel Link</a>, <a href="./data/organisation/8757">Manage / Edit Link</a>
                         </div>
                         <div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
-                            <button type="button" class="btn btn-outline-success btn-sm mr-1 additionalDataServiceButton" data-type="term">Run additionalDataService for term</button>
+                            <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="term">Run additionalDataService for term</button>
                             Tabelle Term, <a href="../term/8757">Beispiel Link</a>, <a href="./data/term/8757">Manage / Edit Link</a>
                         </div>
                         <div class="tab-pane fade" id="ads" role="tabpanel" aria-labelledby="terms-tab">

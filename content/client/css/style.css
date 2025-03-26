@@ -1476,6 +1476,10 @@ body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em
     margin-bottom: 0px;
 }
 
+.detailsThumbnailContainer {
+    position: relative;
+}
+
 .detailsHeader .detailsThumbnailContainer {
     flex-basis: 130px;
     padding-right: 0px;

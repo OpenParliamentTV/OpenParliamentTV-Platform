@@ -350,12 +350,12 @@ function updateSuggestions() {
 		$('.searchSuggestionContainer').show();
 		
 		/*
-		var firstSuggestionItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">'+ textValue +'</span><span class="ml-2" style="opacity: .68;">[Enter]</span></div>');
+		var firstSuggestionItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">'+ textValue +'</span><span class="ms-2" style="opacity: .68;">[Enter]</span></div>');
 		$('#suggestionContainerText').append(firstSuggestionItem);
 		*/
 
 		if (textValue.indexOf(' ') != -1) {
-			var exactSuggestionItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">"'+ textValue +'"</span><span class="ml-2" style="opacity: .68;">('+ localizedLabels.exactMatch +')</span></div>');
+			var exactSuggestionItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">"'+ textValue +'"</span><span class="ms-2" style="opacity: .68;">('+ localizedLabels.exactMatch +')</span></div>');
 			
 			exactSuggestionItem.click(function(evt) {
 				var textValue = $(this).children('.suggestionItemLabel').text();
@@ -373,7 +373,7 @@ function updateSuggestions() {
 	    if (textValue.indexOf(' ') == -1) {
 	    	
 	    	if (textValue.indexOf('*') == -1) {
-		    	var wildcardSuggestionBeginItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">'+ textValue +'*</span><span class="ml-2" style="opacity: .68;">('+ localizedLabels.wildcardSearchBegin +')</span></div>');
+		    	var wildcardSuggestionBeginItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">'+ textValue +'*</span><span class="ms-2" style="opacity: .68;">('+ localizedLabels.wildcardSearchBegin +')</span></div>');
 				
 				wildcardSuggestionBeginItem.click(function(evt) {
 					var textValue = $(this).children('.suggestionItemLabel').text();
@@ -383,7 +383,7 @@ function updateSuggestions() {
 
 				$('#suggestionContainerText').append(wildcardSuggestionBeginItem);
 
-				var wildcardSuggestionEndItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">*'+ textValue.toLowerCase() +'</span><span class="ml-2" style="opacity: .68;">('+ localizedLabels.wildcardSearchEnd +')</span></div>');
+				var wildcardSuggestionEndItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">*'+ textValue.toLowerCase() +'</span><span class="ms-2" style="opacity: .68;">('+ localizedLabels.wildcardSearchEnd +')</span></div>');
 				
 				wildcardSuggestionEndItem.click(function(evt) {
 					var textValue = $(this).children('.suggestionItemLabel').text();
@@ -425,7 +425,7 @@ function addQueryItem(queryType, queryText, secondaryText, itemID, factionID) {
 	var queryItem = $('<span class="queryItem" data-type="'+ queryType +'"><span class="queryText">'+ queryText +'</span></span>'),
 		queryDeleteItem = $('<span class="queryDeleteItem icon-cancel"></span>');
 	if (secondaryText) {
-		queryItem.append('<span class="ml-2 partyIndicator" data-faction="'+ factionID +'">'+ secondaryText +'</span>');
+		queryItem.append('<span class="ms-2 partyIndicator" data-faction="'+ factionID +'">'+ secondaryText +'</span>');
 	}
 	if (itemID) {
 		queryItem.attr('data-item-id', itemID);
@@ -455,7 +455,7 @@ function addQueryItem(queryType, queryText, secondaryText, itemID, factionID) {
 function renderTextSuggestions(inputValue, data) {
 	for (var i = 0; i < data.length; i++) {
 		var suggestionItemText = '<span class="suggestionItemLabel">'+ data[i].text +'</span>',
-			suggestionItemFrequency = '<span class=" ml-2 badge badge-pill badge-primary">'+ data[i].freq +'</span>',
+			suggestionItemFrequency = '<span class=" ms-2 badge badge-pill badge-primary">'+ data[i].freq +'</span>',
 			suggestionItem = $('<div class="suggestionItem" data-type="text">'+ suggestionItemText /*+ suggestionItemFrequency*/ +'</div>');
 
 		suggestionItem.click(function(evt) {
@@ -494,7 +494,7 @@ function renderPeopleSuggestions(inputValue, data) {
 			}
 
 			var suggestionItemPerson = '<span class="suggestionItemLabel">'+ highlightedLabel +'</span>',
-				suggestionItemFaction = (data[i].relationships.faction.data) ? '<span class="ml-2 partyIndicator" data-faction="'+ data[i].relationships.faction.data.id +'">'+ data[i].relationships.faction.data.attributes.label +'</span>' : '',
+				suggestionItemFaction = (data[i].relationships.faction.data) ? '<span class="ms-2 partyIndicator" data-faction="'+ data[i].relationships.faction.data.id +'">'+ data[i].relationships.faction.data.attributes.label +'</span>' : '',
 				suggestionItem = $('<div class="suggestionItem" data-type="person" data-item-id="'+ data[i].id +'">'+ suggestionItemPerson + suggestionItemFaction +'</div>');
 
 			suggestionItem.click(function(evt) {
