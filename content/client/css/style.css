@@ -438,6 +438,7 @@ textarea {
     font-size: 14px;
 }
 
+/*
 .form-select {
     background: var(--custom-select-bg-image) no-repeat 95% 50%;
     -moz-appearance: none;
@@ -446,6 +447,7 @@ textarea {
     padding-right: 24px !important;
     background-size: 0.75rem;
 }
+*/
 
 .form-control:disabled, 
 .form-control[readonly] {
@@ -502,8 +504,9 @@ textarea {
     background-image: var(--custom-select-bg-image);
 }
 
-.table {
+.table, .table > :not(caption) > * > * {
     background-color: transparent;
+    color: inherit;
 }
 
 .table thead th {

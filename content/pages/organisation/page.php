@@ -64,7 +64,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				<?php } ?>
 				<?php if ($config["display"]["ner"]) { ?>
 					<li class="nav-item">
-						<a class="nav-link <?= (($apiResult["data"]["attributes"]["type"] == "faction") ? "" : "active") ?>" id="ner-tab" data-bs-toggle="tab" data-bs-target="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="badge rounded-pill"><?= $countFound ?></span></span></a>
+						<a class="nav-link <?= (($apiResult["data"]["attributes"]["type"] == "faction") ? "" : "active") ?>" id="ner-tab" data-bs-toggle="tab" data-bs-target="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?php echo L::automaticallyDetectedInSpeeches ?><span class="alert ms-1 px-1 py-0 alert-warning" data-toggle="modal" data-target="#nerModal"><span class="icon-attention me-1"></span><u>beta</u></span></span></a>
 					</li>
 				<?php } ?>
 				<li class="nav-item ms-auto">

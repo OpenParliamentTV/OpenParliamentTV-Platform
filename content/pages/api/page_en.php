@@ -63,7 +63,7 @@ include_once(__DIR__ . '/../../header.php');
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
 									<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/media?q=Rente&factionID[]=Q2207512&dateFrom=2018-04-11" readonly>
-									<button class="apiRequestButton btn btn-sm btn-outline-secondary input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 								</div>
 								<div class="apiResultContainer"></div>
 							</div>
@@ -220,7 +220,7 @@ include_once(__DIR__ . '/../../header.php');
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
 									<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/people?name=Michael&party=SPD" readonly>
-									<button class="apiRequestButton btn btn-sm btn-outline-secondary input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 								</div>
 								<div class="apiResultContainer"></div>
 							</div>
@@ -319,7 +319,7 @@ include_once(__DIR__ . '/../../header.php');
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
 									<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/organisations?name=Linke" readonly>
-									<button class="apiRequestButton btn btn-sm btn-outline-secondary input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 								</div>
 								<div class="apiResultContainer"></div>
 							</div>
@@ -363,7 +363,7 @@ include_once(__DIR__ . '/../../header.php');
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
 									<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/documents?label=19/5412" readonly>
-									<button class="apiRequestButton btn btn-sm btn-outline-secondary input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 								</div>
 								<div class="apiResultContainer"></div>
 							</div>
@@ -411,7 +411,7 @@ include_once(__DIR__ . '/../../header.php');
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
 									<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/search/terms?label=digital" readonly>
-									<button class="apiRequestButton btn btn-sm btn-outline-secondary input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 								</div>
 								<div class="apiResultContainer"></div>
 							</div>
@@ -465,7 +465,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
 							<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003" readonly>
-							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+							<button class="apiRequestButton btn btn-sm"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -478,7 +478,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
 						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/person/Q567" readonly>
-							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+							<button class="apiRequestButton btn btn-sm"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -491,7 +491,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
 						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/organisation/Q1007353" readonly>
-							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+							<button class="apiRequestButton btn btn-sm"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -504,7 +504,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
 							<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/document/14" readonly>
-							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+							<button class="apiRequestButton btn btn-sm"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -516,7 +516,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
 							<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/term/Q4394526" readonly>
-							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+							<button class="apiRequestButton btn btn-sm"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -529,7 +529,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
 						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/electoralPeriod/DE-019" readonly>
-							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+							<button class="apiRequestButton btn btn-sm"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -542,7 +542,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
 						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/session/DE-0190061" readonly>
-							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+							<button class="apiRequestButton btn btn-sm"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
@@ -555,7 +555,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
 						<input type="text" class="apiURI form-control" value="<?php echo $config["dir"]["root"]; ?>/api/v1/agendaItem/DE-454" readonly>
-							<button class="apiRequestButton btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
+							<button class="apiRequestButton btn btn-sm"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
