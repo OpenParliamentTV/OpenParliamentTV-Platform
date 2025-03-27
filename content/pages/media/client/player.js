@@ -270,7 +270,7 @@ function updatePlayer() {
 			{
 				"type": "TimedContent",
 				"contentSize": "small",
-				"name": localizedLabels.automaticallyDetected + " <a class='alert ms-1 px-1 py-0 alert-warning' data-toggle='modal' data-target='#nerModal' href='#'><span class='icon-attention me-1'></span><u>beta</u></a>",
+				"name": localizedLabels.automaticallyDetected + " <a class='alert ms-1 px-1 py-0 alert-warning' data-bs-toggle='modal' data-bs-target='#nerModal' href='#'><span class='icon-attention me-1'></span><u>beta</u></a>",
 				"description": "",
 				"cssClass": "",
 				"collectionFilter": {

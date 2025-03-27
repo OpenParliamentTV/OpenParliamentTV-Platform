@@ -98,15 +98,13 @@ if ($auth["meta"]["requestStatus"] != "success") {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="successRunCronDialogLabel">Run cronUpdater</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     The cronUpdater should run in background now
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Okay</button>
                 </div>
             </div>
         </div>
@@ -116,15 +114,13 @@ if ($auth["meta"]["requestStatus"] != "success") {
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="successRunCronDialogLabel">Run ADS for <span class="adc-type"></span></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     The additionalDataService for type <span class="adc-type"></span> should run now in background.
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Okay</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Okay</button>
                 </div>
             </div>
         </div>
