@@ -64,7 +64,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				}
 				?>
 				<li class="nav-item ms-auto">
-					<a class="nav-link" id="data-tab" data-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
+					<a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
 				</li>
 			</ul>
 			<div class="tab-content">

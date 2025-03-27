@@ -350,6 +350,10 @@ hr {
     overflow: hidden;
 }
 
+.small, small {
+    font-weight: 400;
+}
+
 .less-opacity {
     opacity: .8;
 }
@@ -408,7 +412,7 @@ hr {
 }
 */
 
-.nav-link, .nav-link:hover {
+.nav-link, .nav-link:hover, .nav-link:focus {
     cursor: pointer;
     color: var(--primary-fg-color);
 }
@@ -417,9 +421,20 @@ hr {
     cursor: default;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    background-color: var(--primary-fg-color);
-    color: var(--primary-bg-color);
+.nav-pills .nav-link {
+    border-left: 2px solid transparent;
+    border-radius: 0 0.375rem 0.375rem 0;
+}
+
+.nav-pills .nav-link:hover {
+    border-color: var(--primary-fg-color);
+}
+
+.nav-pills .nav-link.active {
+    background-color: var(--primary-bg-color);
+    color: var(--primary-fg-color);
+    border-color: var(--primary-fg-color);
+    box-shadow: 0px 0px 1px var(--primary-fg-color);
 }
 
 .form-control, 
