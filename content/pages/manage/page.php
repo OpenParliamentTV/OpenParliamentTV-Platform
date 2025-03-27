@@ -12,11 +12,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
     include_once(__DIR__ . '/../../header.php');
 ?>
 <main class="container-fluid subpage">
-    <div class="row">
-        <div class="col-md-3 col-lg-2">
-            <?php include_once(__DIR__ . '/sidebar.php'); ?>
-        </div>
-        <div class="col-md-9 col-lg-10" style="padding-top: 30px; padding-bottom: 30px;">
+    <div class="d-flex">
+        <?php include_once(__DIR__ . '/sidebar.php'); ?>
+        <div class="flex-grow-1" style="padding-top: 30px; padding-bottom: 30px;">
             <h2><?php echo L::personalSettings; ?></h2>
             <div class="row">
                 <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">

@@ -417,6 +417,11 @@ hr {
     cursor: default;
 }
 
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: var(--primary-fg-color);
+    color: var(--primary-bg-color);
+}
+
 .form-control, 
 .form-select, 
 .page-link, 
