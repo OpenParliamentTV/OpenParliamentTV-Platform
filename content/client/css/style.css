@@ -197,6 +197,7 @@ header #navbarNavSettings .nav-item {
 
 .nav-link.active .alert {
     display: inline;
+    cursor: pointer;
 }
 
 footer {
