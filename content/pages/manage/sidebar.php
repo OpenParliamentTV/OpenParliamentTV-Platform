@@ -17,7 +17,7 @@
 
     <!-- Personal Settings -->
     <div class="mb-0">
-        <div class="mb-2 ps-3 text-uppercase"><?php echo L::personalSettings; ?></div>
+        <div class="mb-2 ps-3 text-uppercase text-muted"><?php echo L::personalSettings; ?></div>
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
                 <a href="<?= $config["dir"]["root"] ?>/manage/notifications" 
@@ -37,17 +37,10 @@
     </div>
     <hr>
 
-    <!-- Administration -->
+    <!-- Contents -->
     <div class="mb-0">
-        <div class="mb-2 ps-3 text-uppercase"><?php echo L::administration; ?></div>
+        <div class="mb-2 ps-3 text-uppercase text-muted"><?php echo L::contents; ?></div>
         <ul class="nav nav-pills flex-column mb-auto">
-            <li class="nav-item">
-                <a href="<?= $config["dir"]["root"] ?>/manage/conflicts" 
-                   class="nav-link <?= ($page == "manage-conflicts") ? "active" : "" ?>">
-                    <i class="icon-attention me-2"></i>
-                    <?php echo L::manageConflicts; ?>
-                </a>
-            </li>
             <li class="nav-item">
                 <a href="<?= $config["dir"]["root"] ?>/manage/data" 
                    class="nav-link <?= ($page == "manage-data") ? "active" : "" ?>">
@@ -55,6 +48,28 @@
                     <?php echo L::manageData; ?>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="<?= $config["dir"]["root"] ?>/manage/media" 
+                   class="nav-link <?= ($page == "manage-media") ? "active" : "" ?>">
+                    <i class="icon-play me-2"></i>
+                    <?php echo L::manageMedia; ?>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $config["dir"]["root"] ?>/manage/entities" 
+                   class="nav-link <?= ($page == "manage-entities") ? "active" : "" ?>">
+                    <i class="icon-tag me-2"></i>
+                    <?php echo L::manageEntities; ?>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <hr>
+
+    <!-- Administration -->
+    <div class="mb-0">
+        <div class="mb-2 ps-3 text-uppercase text-muted"><?php echo L::administration; ?></div>
+        <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
                 <a href="<?= $config["dir"]["root"] ?>/manage/users" 
                    class="nav-link <?= ($page == "manage-users" && !isset($_REQUEST["id"])) ? "active" : "" ?>">
@@ -66,7 +81,14 @@
                 <a href="<?= $config["dir"]["root"] ?>/manage/import" 
                    class="nav-link <?= ($page == "manage-import") ? "active" : "" ?>">
                     <i class="icon-upload me-2"></i>
-                    <?php echo L::data; ?>-Import
+                    <?php echo L::importSettings; ?>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $config["dir"]["root"] ?>/manage/conflicts" 
+                   class="nav-link <?= ($page == "manage-conflicts") ? "active" : "" ?>">
+                    <i class="icon-attention me-2"></i>
+                    <?php echo L::manageConflicts; ?>
                 </a>
             </li>
             <li class="nav-item">
@@ -74,13 +96,6 @@
                    class="nav-link <?= ($page == "manage-config") ? "active" : "" ?>">
                     <i class="icon-cog me-2"></i>
                     <?php echo L::platformSettings; ?>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="<?= $config["dir"]["root"] ?>/manage/entities" 
-                   class="nav-link <?= ($page == "manage-entities") ? "active" : "" ?>">
-                    <i class="icon-th-list me-2"></i>
-                    <?php echo L::manageEntities; ?>
                 </a>
             </li>
             <li class="nav-item">

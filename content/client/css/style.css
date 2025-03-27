@@ -626,6 +626,8 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
 
 .text-muted {
     color: var(--primary-fg-color) !important;
+    text-shadow: 1px 1px 1px var(--primary-bg-color);
+    opacity: .8;
 }
 
 .copyrightInfo {
