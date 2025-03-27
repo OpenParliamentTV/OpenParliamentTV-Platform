@@ -535,7 +535,7 @@ switch ($page) {
 	case "manage-conflicts":
 		ob_start();
 		if (isset($_REQUEST["id"])) {
-			$pageTitle = 'Manage Conflict';
+			$pageTitle = L::manageConflicts;
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
@@ -543,7 +543,7 @@ switch ($page) {
 					'path' => '/manage'
 				],
 				[
-					'label' => L::conflicts,
+					'label' => L::manageConflicts,
 					'path' => '/manage/conflicts'
 				],
 				[
@@ -553,7 +553,7 @@ switch ($page) {
 			include_once("./content/pages/manage/conflicts/conflict/page.php");
 			$content = ob_get_clean();
 		} else {
-			$pageTitle = L::conflicts;
+			$pageTitle = L::manageConflicts;
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
@@ -589,7 +589,7 @@ switch ($page) {
 		}
 	break;
 	case "manage-data":
-		$pageTitle = L::data;
+		$pageTitle = L::manageData;
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
@@ -613,7 +613,7 @@ switch ($page) {
 				'path' => '/manage'
 			],
 			[
-				'label' => L::data,
+				'label' => L::manageData,
 				'path' => '/manage/data'
 			],
 			[
@@ -633,7 +633,7 @@ switch ($page) {
 				'path' => '/manage'
 			],
 			[
-				'label' => L::data,
+				'label' => L::manageData,
 				'path' => '/manage/data'
 			],
 			[
@@ -658,7 +658,7 @@ switch ($page) {
 				'path' => '/manage'
 			],
 			[
-				'label' => L::data,
+				'label' => L::manageData,
 				'path' => '/manage/data'
 			],
 			[
@@ -683,7 +683,7 @@ switch ($page) {
 				'path' => '/manage'
 			],
 			[
-				'label' => L::data,
+				'label' => L::manageData,
 				'path' => '/manage/data'
 			],
 			[
@@ -703,7 +703,7 @@ switch ($page) {
 				'path' => '/manage'
 			],
 			[
-				'label' => L::data,
+				'label' => L::manageData,
 				'path' => '/manage/data'
 			],
 			[
@@ -723,7 +723,7 @@ switch ($page) {
 				'path' => '/manage'
 			],
 			[
-				'label' => L::data,
+				'label' => L::manageData,
 				'path' => '/manage/data'
 			],
 			[
@@ -777,7 +777,7 @@ switch ($page) {
 					'path' => '/manage'
 				],
 				[
-					'label' => L::users,
+					'label' => L::manageUsers,
 					'path' => '/manage'
 				],
 				[
@@ -787,7 +787,7 @@ switch ($page) {
 			include_once("./content/pages/manage/users/user/page.php");
 			$content = ob_get_clean();
 		} else {
-			$pageTitle = L::users;
+			$pageTitle = L::manageUsers;
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
