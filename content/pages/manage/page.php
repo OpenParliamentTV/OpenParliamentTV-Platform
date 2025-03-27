@@ -14,7 +14,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 <main class="container-fluid subpage">
     <div class="d-flex">
         <?php include_once(__DIR__ . '/sidebar.php'); ?>
-        <div class="flex-grow-1" style="padding-top: 30px; padding-bottom: 30px;">
+        <div class="flex-grow-1 mt-1">
             <h2><?php echo L::personalSettings; ?></h2>
             <div class="row">
                 <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">

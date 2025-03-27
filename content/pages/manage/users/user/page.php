@@ -12,10 +12,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
     include_once(__DIR__ . '/../../../../header.php'); ?>
 
-<main class="container-fluid">
+<main class="container-fluid subpage">
     <div class="d-flex">
         <?php include_once(__DIR__ . '/../../sidebar.php'); ?>
-        <div class="flex-grow-1" style="padding-top: 30px; padding-bottom: 30px;">
+        <div class="flex-grow-1 mt-1">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
                     <h2>Manage Detail User</h2>
