@@ -310,6 +310,25 @@ main.container-fluid.subpage {
     }
 }
 
+.sticky-sidebar {
+    display: flex;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 1020;
+    width: 250px;
+    top: 60px;
+    height: calc(100vh - 90px);
+    overflow: auto;
+    flex-direction: column !important;
+    padding-top: 2px;
+    margin-right: 25px;
+}
+
+.sidebar-content {
+    max-width: calc(100% - 280px);
+    margin-top: .5rem !important;
+}
+
 a {
     text-decoration: none;
 }

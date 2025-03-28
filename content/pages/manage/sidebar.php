@@ -1,7 +1,7 @@
 <?php
 // Sidebar navigation for manage section
 ?>
-<div class="d-flex flex-shrink-0 flex-column pe-3 me-3 d-none d-md-flex">
+<aside class="sticky-sidebar">
     <div class="mb-0">
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
@@ -107,4 +107,4 @@
             </li>
         </ul>
     </div>
-</div>
+</aside>

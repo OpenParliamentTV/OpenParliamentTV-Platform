@@ -21,9 +21,9 @@ if ($_REQUEST["aTEST"]) {
 }
 ?>
 <main class="container-fluid subpage">
-    <div class="d-flex">
+    <div class="row">
         <?php include_once(__DIR__ . '/../../sidebar.php'); ?>
-        <div class="flex-grow-1 mt-1">
+        <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
                     <h2>Add New Media</h2>

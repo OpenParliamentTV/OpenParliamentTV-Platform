@@ -15,11 +15,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 ?>
 <main class="container-fluid subpage">
-    <div class="d-flex">
-        <div class="sidebarContainer">
-            <?php include_once(__DIR__ . '/../../sidebar.php'); ?>
-        </div>
-        <div class="col flex-grow-1 mt-1">
+    <div class="row">
+        <?php include_once(__DIR__ . '/../../sidebar.php'); ?>
+        <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
                     <h2>Manage Detail Media</h2>

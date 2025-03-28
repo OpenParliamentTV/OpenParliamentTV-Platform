@@ -735,7 +735,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "manage-import":
-		$pageTitle = L::data.'-Import';
+		$pageTitle = L::importSettings;
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
