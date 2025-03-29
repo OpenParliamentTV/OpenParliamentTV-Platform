@@ -52,6 +52,7 @@
 	"documentation": "Dokumentation",
 	"documents": "Dokumente",
 	"duration": "Dauer",
+	"edit": "Bearbeiten",
 	"electoralPeriod": "Wahlperiode",
 	"electoralPeriods": "Wahlperioden",
 	"electoralPeriodShort": "WP",
@@ -87,6 +88,7 @@
 	"manageData": "Daten verwalten",
 	"manageEntities": "Entitäten verwalten",
 	"manageMedia": "Medien verwalten",
+	"manageMediaNew": "Medien hinzufügen",
 	"manageNotifications": "Benachrichtigungen verwalten",
 	"manageUsers": "Nutzer:innen verwalten",
 	"mediaPartners": "Medienpartner",
@@ -207,6 +209,7 @@
 	"versionCurrent": "Aktuelle Version",
 	"versionNext": "Nächste Version",
 	"versionPrevious": "Vorherige Versionen",
+	"view": "Ansehen",
 	"wildcardSearchBegin": "Begriff beginnt mit",
 	"wildcardSearchEnd": "Begriff endet mit",
 	"userSettings": "Nutzer:innen-Einstellungen"

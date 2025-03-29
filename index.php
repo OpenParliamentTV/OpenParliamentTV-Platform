@@ -750,6 +750,22 @@ switch ($page) {
 		include_once("./content/pages/manage/import/page.php");
 		$content = ob_get_clean();
 	break;
+	case "manage-media":
+		$pageTitle = L::manageMedia;
+		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => $pageTitle,
+			]
+		];
+		ob_start();
+		include_once("./content/pages/manage/media/page.php");
+		$content = ob_get_clean();
+	break;
 	case "manage-notifications":
 		$pageTitle = L::notifications;
 		$pageType = 'admin';

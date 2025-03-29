@@ -52,6 +52,7 @@
 	"documentation": "Documentation",
 	"documents": "Documents",
 	"duration": "Duration",
+	"edit": "Edit",
 	"electoralPeriod": "Electoral Period",
 	"electoralPeriods": "Electoral Periods",
 	"electoralPeriodShort": "EP",
@@ -86,6 +87,7 @@
 	"manageData": "Manage Data",
 	"manageEntities": "Manage Entities",
 	"manageMedia": "Manage Media",
+	"manageMediaNew": "Add Media",
 	"manageNotifications": "Manage Notifications",
 	"manageUsers": "Manage Users",
 	"mediaPartners": "Media Partners",
@@ -207,6 +209,7 @@
 	"versionCurrent": "Current Version",
 	"versionNext": "Next Version",
 	"versionPrevious": "Previous Versions",
+	"view": "View",
 	"wildcardSearchBegin": "term begins with",
 	"wildcardSearchEnd": "term ends with",
 	"manage": "Manage"
