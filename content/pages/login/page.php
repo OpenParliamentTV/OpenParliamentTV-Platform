@@ -20,13 +20,13 @@
 			?>
 				<h2 class="mb-3"><?php echo L::login; ?></h2>
 				<form id="login-form">
-					<div class="form-group">
+					<div class="form-floating mb-3">
+						<input type="email" class="form-control" id="login-mail" name="mail" placeholder="<?php echo L::mailAddress; ?>">
 						<label for="login-mail"><?php echo L::mailAddress; ?></label>
-						<input type="email" class="form-control" id="login-mail" name="mail">
 					</div>
-					<div class="form-group">
+					<div class="form-floating mb-3">
+						<input type="password" class="form-control" id="login-password" name="password" placeholder="<?php echo L::password; ?>">
 						<label for="login-password"><?php echo L::password; ?></label>
-						<input type="password" class="form-control" id="login-password" name="password">
 					</div>
 					<button type="submit" class="btn btn-primary btn-sm"><?php echo L::login; ?></button>
 					<div id="login-response" class="alert mt-3"></div>
