@@ -46,30 +46,30 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
+                        <div class="tab-pane bg-white fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
                             <!--Tabelle Media, <a href="../media/8757">Beispiel Link</a>, <a href="./data/media/8757">Manage / Edit Link</a>-->
                             <a href="./data/media/irregularities">Show irregularities</a>
                         </div>
-                        <div class="tab-pane fade" id="people" role="tabpanel" aria-labelledby="people-tab">
+                        <div class="tab-pane bg-white fade" id="people" role="tabpanel" aria-labelledby="people-tab">
                             <a href="<?=$config["dir"]["root"]?>/manage/data/person/overview" target="_self">Overview</a><br><br>
                             Tabelle Person, <a href="../person/8757">Beispiel Link</a>, <a href="./data/person/8757">Manage / Edit Link</a>
                             <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="person">Run additionalDataService for person</button>
                             <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="memberOfParliament">Run additionalDataService for memberOfParliament</button>
                         </div>
-                        <div class="tab-pane fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+                        <div class="tab-pane bg-white fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
                             Tabelle Document, <a href="../document/8757">Beispiel Link</a>, <a href="./data/document/8757">Manage / Edit Link</a>
                             <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="legalDocument">Run additionalDataService for legalDocument</button>
                             <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="officialDocument">Run additionalDataService for officialDocument</button>
                         </div>
-                        <div class="tab-pane fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
+                        <div class="tab-pane bg-white fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
                             <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="organisation">Run additionalDataService for organisation</button>
                             Tabelle Organisation, <a href="../organisation/8757">Beispiel Link</a>, <a href="./data/organisation/8757">Manage / Edit Link</a>
                         </div>
-                        <div class="tab-pane fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
+                        <div class="tab-pane bg-white fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
                             <button type="button" class="btn btn-outline-success btn-sm me-1 additionalDataServiceButton" data-type="term">Run additionalDataService for term</button>
                             Tabelle Term, <a href="../term/8757">Beispiel Link</a>, <a href="./data/term/8757">Manage / Edit Link</a>
                         </div>
-                        <div class="tab-pane fade" id="ads" role="tabpanel" aria-labelledby="terms-tab">
+                        <div class="tab-pane bg-white fade" id="ads" role="tabpanel" aria-labelledby="terms-tab">
                             <form method="post" id="runAdditionalDataServiceForSpecificEntitiesForm">
                                 <input type="hidden" name="a" value="runAdditionalDataServiceForSpecificEntities">
                                 <div class="form-group formItem formItemTypePerson">

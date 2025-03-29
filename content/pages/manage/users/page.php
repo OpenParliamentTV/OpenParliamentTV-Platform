@@ -36,7 +36,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="all-users" role="tabpanel" aria-labelledby="all-users-tab">
+                        <div class="tab-pane bg-white fade show active" id="all-users" role="tabpanel" aria-labelledby="all-users-tab">
                             <table id="manageUsersOverviewTable" class="table">
                                 <thead>
                                     <tr>
