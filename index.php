@@ -550,7 +550,7 @@ switch ($page) {
 					'label' => '<span class="icon-pencil"></span>'
 				]
 			];
-			include_once("./content/pages/manage/conflicts/conflict/page.php");
+			include_once("./content/pages/manage/conflicts/conflict-detail/page.php");
 			$content = ob_get_clean();
 		} else {
 			$pageTitle = L::manageConflicts;
@@ -800,7 +800,7 @@ switch ($page) {
 					'label' => '<span class="icon-pencil"></span>',
 				]
 			];
-			include_once("./content/pages/manage/users/user/page.php");
+			include_once("./content/pages/manage/users/user-detail/page.php");
 			$content = ob_get_clean();
 		} else {
 			$pageTitle = L::manageUsers;

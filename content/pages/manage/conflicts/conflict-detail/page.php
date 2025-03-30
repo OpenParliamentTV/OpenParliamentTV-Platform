@@ -56,4 +56,4 @@ $("tbody tr.clickable").on("click", function() {
 </main>
 
 <?php include_once(__DIR__ . '/../../../footer.php'); ?>
-<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/conflicts/conflict/client/style.css?v=<?= $config["version"] ?>" media="all" />
+<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/conflicts/conflict-detail/client/style.css?v=<?= $config["version"] ?>" media="all" />
