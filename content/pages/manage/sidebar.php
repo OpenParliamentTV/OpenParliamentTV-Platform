@@ -27,8 +27,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?= $config["dir"]["root"] ?>/manage/users/MYUSERID" 
-                   class="nav-link <?= ($page == "manage-users" && isset($_REQUEST["id"])) ? "active" : "" ?>">
+                <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>" 
+                   class="nav-link <?= ($page == "manage-users" && isset($_REQUEST["id"]) && $_REQUEST["id"] == $_SESSION["userdata"]["id"]) ? "active" : "" ?>">
                     <i class="icon-user me-2"></i>
                     <?php echo L::userSettings; ?>
                 </a>
@@ -72,7 +72,7 @@
         <ul class="nav nav-pills flex-column mb-auto">
             <li class="nav-item">
                 <a href="<?= $config["dir"]["root"] ?>/manage/users" 
-                   class="nav-link <?= ($page == "manage-users" && !isset($_REQUEST["id"])) ? "active" : "" ?>">
+                   class="nav-link <?= ($page == "manage-users" && (!isset($_REQUEST["id"]) || $_REQUEST["id"] != $_SESSION["userdata"]["id"])) ? "active" : "" ?>">
                     <i class="icon-users me-2"></i>
                     <?php echo L::manageUsers; ?>
                 </a>
