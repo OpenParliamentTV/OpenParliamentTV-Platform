@@ -33,6 +33,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         <div class="tab-pane bg-white fade show active" id="all-media" role="tabpanel" aria-labelledby="all-media-tab">
                             <table id="manageMediaOverviewTable" 
                                    data-toggle="table" 
+                                   data-classes="table table-striped"
                                    data-search="true"
                                    data-pagination="true"
                                    data-page-size="25"
