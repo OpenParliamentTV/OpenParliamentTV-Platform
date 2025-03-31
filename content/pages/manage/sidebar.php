@@ -101,7 +101,7 @@
             <li class="nav-item">
                 <a href="<?= $config["dir"]["root"] ?>/manage/config" 
                    class="nav-link <?= ($page == "manage-config") ? "active" : "" ?>">
-                    <i class="icon-cog me-2"></i>
+                    <i class="icon-cogs me-2"></i>
                     <?php echo L::platformSettings; ?>
                 </a>
             </li>

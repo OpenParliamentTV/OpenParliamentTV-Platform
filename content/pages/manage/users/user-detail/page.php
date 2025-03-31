@@ -20,7 +20,24 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 <div class="col-12">
                     <h2>Manage Detail User</h2>
                     <div class="card mb-3">
-                        <div class="card-body">
+						<div class="card-body">
+    
+                        </div>
+					</div>
+					<ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-th-list"></span> <?php echo L::data; ?></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="people" aria-selected="false"><span class="icon-cog"></span> <?php echo L::settings; ?></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane bg-white fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
+							[USER DATA]
+                        </div>
+                        <div class="tab-pane bg-white fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+							[SETTINGS]
                         </div>
                     </div>
                 </div>
