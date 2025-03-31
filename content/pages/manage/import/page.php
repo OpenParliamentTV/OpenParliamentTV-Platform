@@ -16,7 +16,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 <main class="container-fluid subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
-			<h2><?php echo L::data; ?>-Import</h2>
+			<h2><?php echo L::manageImport; ?></h2>
 		</div>
 	</div>
 	<div class="row mt-5">
@@ -35,12 +35,12 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				echo '
 						</select>
 						<div class="form-group">
-							<label for="inputDir">Input Directory ('.count(array_diff(scandir(__DIR__.'/../../../../modules/import/input/'), array('..', '.'))).' Files)</label>
-							<input type="text" class="form-control" id="inputDir"  name="inputDir" value="'.realpath(__DIR__.'/../../../../modules/import/input/').'/">
+							<label for="inputDir">Input Directory ('.count(array_diff(scandir(__DIR__.'/../../../../data/input/'), array('..', '.'))).' Files)</label>
+							<input type="text" class="form-control" id="inputDir"  name="inputDir" value="'.realpath(__DIR__.'/../../../../data/input/').'/">
 					 	</div>
 						<div class="form-group">
 							<label for="doneDir">Done Directory</label>
-							<input type="text" class="form-control" id="doneDir" name="doneDir" value="'.realpath(__DIR__.'/../../../../modules/import/done/').'/">
+							<input type="text" class="form-control" id="doneDir" name="doneDir" value="'.realpath(__DIR__.'/../../../../data/done/').'/">
 					 	</div>
 					 	<button type="submit" class="btn btn-outline-primary">Start import</button>
 					</form>
