@@ -81,7 +81,7 @@
                 <a href="<?= $config["dir"]["root"] ?>/manage/import" 
                    class="nav-link <?= ($page == "manage-import") ? "active" : "" ?>">
                     <i class="icon-upload me-2"></i>
-                    <?php echo L::importSettings; ?>
+                    <?php echo L::manageImport; ?>
                 </a>
             </li>
             <li class="nav-item">
@@ -99,10 +99,10 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="<?= $config["dir"]["root"] ?>/manage/opensearch" 
-                   class="nav-link <?= ($page == "manage-opensearch") ? "active" : "" ?>">
+                <a href="<?= $config["dir"]["root"] ?>/manage/searchindex" 
+                   class="nav-link <?= ($page == "manage-searchindex") ? "active" : "" ?>">
                     <i class="icon-search me-2"></i>
-                    Search Index
+                    <?php echo L::manageSearchIndex; ?>
                 </a>
             </li>
         </ul>

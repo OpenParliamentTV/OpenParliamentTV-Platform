@@ -18,7 +18,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2>OpenSearch</h2>
+                    <h2><?php echo L::manageSearchIndex; ?></h2>
                     <div class="row">
                         <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
                             <span class="d-block p-4 bg-white text-center btn updateSearchIndex" href="" data-type="specific">Update specific Medias</span>
