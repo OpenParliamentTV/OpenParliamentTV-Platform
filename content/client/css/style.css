@@ -636,6 +636,10 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     display: inline;
 }
 
+.list-group-horizontal {
+    display: inline-flex;
+}
+
 .modal-content {
     background: var(--primary-bg-color);
 }

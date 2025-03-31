@@ -58,7 +58,7 @@
             <li class="nav-item">
                 <a href="<?= $config["dir"]["root"] ?>/manage/entities" 
                    class="nav-link <?= ($page == "manage-entities") ? "active" : "" ?>">
-                    <i class="icon-tag me-2"></i>
+                    <i class="icon-tags me-2"></i>
                     <?php echo L::manageEntities; ?>
                 </a>
             </li>
@@ -89,6 +89,13 @@
                    class="nav-link <?= ($page == "manage-conflicts") ? "active" : "" ?>">
                     <i class="icon-attention me-2"></i>
                     <?php echo L::manageConflicts; ?>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="<?= $config["dir"]["root"] ?>/manage/entity-suggestions" 
+                   class="nav-link <?= ($page == "manage-entity-suggestions") ? "active" : "" ?>">
+                    <i class="icon-lightbulb me-2"></i>
+                    <?php echo L::manageEntitySuggestions; ?>
                 </a>
             </li>
             <li class="nav-item">

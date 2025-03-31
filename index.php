@@ -570,6 +570,22 @@ switch ($page) {
 			$content = ob_get_clean();
 		}
 	break;
+	case "manage-entity-suggestions":
+		ob_start();
+		$pageTitle = L::manageEntitySuggestions;
+		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => $pageTitle
+			]
+		];
+		include_once("./content/pages/manage/entitySuggestions/page.php");
+		$content = ob_get_clean();
+	break;
 	case "manage-data":
 		$pageTitle = L::manageData;
 		$pageType = 'admin';
