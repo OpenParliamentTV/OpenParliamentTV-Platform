@@ -23,7 +23,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<h2><?php echo L::manageEntitySuggestions; ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
-						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#entityDetailsModal">Launch demo modal</button>
+							
 						</div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
@@ -33,45 +33,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="suggested-entities" role="tabpanel" aria-labelledby="suggested-entities-tab">
-							<div id="entitiesDetailsDiv" class="contentContainer" style="display: none">
-								<h3>Entity Suggestion Details</h3>
-								<button class="btn btn-sm input-group-text entitiesToggleDetailsAndTable float-right mb-3"><span class="icon-cancel"></span><span class="d-none d-md-inline">Back to table</span></button>
-								<table class="col-12 table-striped table-hover" id="entitiesDetails" data-toggle="table">
-									<thead>
-										<tr>
-											<th data-field="0">Label</th>
-											<th data-field="1">Value</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>External ID</td>
-											<td id="entitiesDetailsExternalID"></td>
-										</tr>
-										<tr>
-											<td>Label</td>
-											<td id="entitiesDetailsLabel"></td>
-										</tr>
-										<tr>
-											<td>NEL Type</td>
-											<td id="entitiesDetailsType"></td>
-										</tr>
-										<tr>
-											<td>Content</td>
-											<td id="entitiesDetailsContent"></td>
-										</tr>
-										<tr>
-											<td>Media Count</td>
-											<td id="entitiesDetailsMediaCount"></td>
-										</tr>
-										<tr>
-											<td>Was found in</td>
-											<td id="entitiesDetailsContext"></td>
-										</tr>
-									</tbody>
-								</table>
-								<button class="btn btn-sm input-group-text entitiesToggleDetailsAndTable float-right mt-3"><span class="icon-cancel"></span><span class="d-none d-md-inline">Back to table</span></button>
-							</div>
 							<div id="entitiesDiv" class="contentContainer">
 								<table id="entitiesTable"></table>
 							</div>
@@ -90,7 +51,42 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				...
+				<div id="entitiesDetailsDiv" class="contentContainer" style="display: none">
+					<table class="col-12 table-striped" id="entitiesDetails" data-toggle="table">
+						<thead>
+							<tr>
+								<th data-field="0">Label</th>
+								<th data-field="1">Value</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>External ID</td>
+								<td id="entitiesDetailsExternalID"></td>
+							</tr>
+							<tr>
+								<td>Label</td>
+								<td id="entitiesDetailsLabel"></td>
+							</tr>
+							<tr>
+								<td>NEL Type</td>
+								<td id="entitiesDetailsType"></td>
+							</tr>
+							<tr>
+								<td>Content</td>
+								<td id="entitiesDetailsContent"></td>
+							</tr>
+							<tr>
+								<td>Media Count</td>
+								<td id="entitiesDetailsMediaCount"></td>
+							</tr>
+							<tr>
+								<td>Was found in</td>
+								<td id="entitiesDetailsContext"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -195,7 +191,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					title: "Action",
 					sortable: false,
 					formatter: function(value, row) {
-						return "<div class='list-group list-group-horizontal'><span class='entitysuggestiondetails list-group-item list-group-item-action' title='<?php echo L::viewDetails; ?>' data-id='"+value+"'><span class='icon-eye'></span></span><a href='"+config["dir"]["root"]+"/manage/entities/new?wikidataID="+row["EntitysuggestionExternalID"]+"&entitySuggestionID="+row["EntitysuggestionID"]+"' target='_blank' class='list-group-item list-group-item-action' data-id='"+row["EntitysuggestionID"]+"'><span class='icon-plus'></span></a></div>"
+						return "<div class='list-group list-group-horizontal'><span class='entitysuggestiondetails list-group-item list-group-item-action' title='<?php echo L::viewDetails; ?>' data-id='"+value+"' data-bs-toggle='modal' data-bs-target='#entityDetailsModal'><span class='icon-eye'></span></span><a href='"+config["dir"]["root"]+"/manage/entities/new?wikidataID="+row["EntitysuggestionExternalID"]+"&entitySuggestionID="+row["EntitysuggestionID"]+"' target='_blank' class='list-group-item list-group-item-action' data-id='"+row["EntitysuggestionID"]+"'><span class='icon-plus'></span></a></div>"
 					}
 				}
 			]
@@ -222,28 +218,22 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						for (let item in ret["return"]["EntitysuggestionContext"]) {
 							$("#entitiesDetailsContext").append('<a href="<?=$config["dir"]["root"]?>/media/'+item+'" target="_blank">'+item+'</a><br>');
 						}
-						$(".contentContainer").not("#entitiesDetailsDiv").slideUp();
-						$("#entitiesDetailsDiv").slideDown();
+						$("#entitiesDetailsDiv").show();
 					}
 				}
 			});	
 
 		});
 
-		$(".entitiesToggleDetailsAndTable").on("click", function() {
-
-			$(".contentContainer").not("#entitiesDiv").slideUp();
-			$("#entitiesDiv").slideDown();
-
+		const entityDetailsModal = document.getElementById('entityDetailsModal')
+		entityDetailsModal.addEventListener('hidden.bs.modal', event => {
+			$("#entitiesDetailsDiv").hide();
 		});
 
 
 	})
 </script>
 <style type="text/css">
-	.formItem {
-		display: none;
-	}
 	#entitiesDetailsContent {
 		background: #fafafa;
 		color: #986801;
