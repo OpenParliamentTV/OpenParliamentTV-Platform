@@ -560,6 +560,10 @@ textarea {
     border-color: var(--border-color);
 }
 
+.table-striped > tbody > tr:nth-of-type(2n+1) > * {
+    box-shadow: none;
+}
+
 .table-striped tbody tr:nth-of-type(2n+1) {
     background-color: rgba(180,180,180,.05);
 }
