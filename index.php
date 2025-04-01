@@ -551,24 +551,156 @@ switch ($page) {
 		}
 	break;
 	case "manage-entities":
+		$pageTitle = L::manageEntities;
+		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => $pageTitle
+			]
+		];
 		ob_start();
-		if (isset($_REQUEST["id"])) {
-			//TODO
-		} else {
-			$pageTitle = L::manageEntities;
-			$pageType = 'admin';
-			$pageBreadcrumbs = [
+		include_once("./content/pages/manage/entities/page.php");
+		$content = ob_get_clean();
+	break;
+	case "manage-entities-document":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>"document", 
+			"id"=>$_REQUEST["id"]
+		]);
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = 'Manage Document Detail';
+            $pageType = 'admin';
+            $pageBreadcrumbs = [
 				[
 					'label' => L::dashboard,
 					'path' => '/manage'
 				],
 				[
-					'label' => $pageTitle
+					'label' => L::manageEntities,
+					'path' => '/manage/entities'
+				],
+				[
+					'label' => '<span class="icon-pencil"></span>'
 				]
 			];
-			include_once("./content/pages/manage/entities/page.php");
-			$content = ob_get_clean();
-		}
+            ob_start();
+            include_once("./content/pages/manage/entities/document-detail/page.php");
+            $content = ob_get_clean();
+        }
+	break;
+	case "manage-entities-organisation":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>"organisation", 
+			"id"=>$_REQUEST["id"]
+		]);
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = 'Manage Organisation Detail';
+            $pageType = 'admin';
+            $pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => L::manageEntities,
+					'path' => '/manage/entities'
+				],
+				[
+					'label' => '<span class="icon-pencil"></span>'
+				]
+			];
+            ob_start();
+            include_once("./content/pages/manage/entities/organisation-detail/page.php");
+            $content = ob_get_clean();
+        }
+	break;
+	case "manage-entities-person":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>"person", 
+			"id"=>$_REQUEST["id"]
+		]);
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = 'Manage Person Detail';
+            $pageType = 'admin';
+            $pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => L::manageEntities,
+					'path' => '/manage/entities'
+				],
+				[
+					'label' => '<span class="icon-pencil"></span>'
+				]
+			];
+            ob_start();
+            include_once("./content/pages/manage/entities/person-detail/page.php");
+            $content = ob_get_clean();
+        }
+	break;
+	case "manage-entities-term":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>"term", 
+			"id"=>$_REQUEST["id"]
+		]);
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = 'Manage Term Detail';
+            $pageType = 'admin';
+            $pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => L::manageEntities,
+					'path' => '/manage/entities'
+				],
+				[
+					'label' => '<span class="icon-pencil"></span>'
+				]
+			];
+            ob_start();
+            include_once("./content/pages/manage/entities/term-detail/page.php");
+            $content = ob_get_clean();
+        }
 	break;
 	case "manage-entity-suggestions":
 		ob_start();
@@ -600,26 +732,6 @@ switch ($page) {
 		];
 		ob_start();
 		include_once("./content/pages/manage/data/page.php");
-		$content = ob_get_clean();
-	break;
-	case "manage-data-document":
-		$pageTitle = 'Manage Document';
-		$pageType = 'admin';
-		$pageBreadcrumbs = [
-			[
-				'label' => L::dashboard,
-				'path' => '/manage'
-			],
-			[
-				'label' => L::manageData,
-				'path' => '/manage/data'
-			],
-			[
-				'label' => '<span class="icon-pencil"></span>'
-			]
-		];
-		ob_start();
-		include_once("./content/pages/manage/data/document/page.php");
 		$content = ob_get_clean();
 	break;
 	case "manage-data-entities":
@@ -670,66 +782,6 @@ switch ($page) {
 		} else {
 			include_once("./content/pages/manage/data/media/page.php");
 		}
-		$content = ob_get_clean();
-	break;
-	case "manage-data-organisation":
-		$pageTitle = 'Manage Organisation';
-		$pageType = 'admin';
-		$pageBreadcrumbs = [
-			[
-				'label' => L::dashboard,
-				'path' => '/manage'
-			],
-			[
-				'label' => L::manageData,
-				'path' => '/manage/data'
-			],
-			[
-				'label' => '<span class="icon-pencil"></span>'
-			]
-		];
-		ob_start();
-		include_once("./content/pages/manage/data/organisation/page.php");
-		$content = ob_get_clean();
-	break;
-	case "manage-data-person":
-		$pageTitle = 'Manage Person';
-		$pageType = 'admin';
-		$pageBreadcrumbs = [
-			[
-				'label' => L::dashboard,
-				'path' => '/manage'
-			],
-			[
-				'label' => L::manageData,
-				'path' => '/manage/data'
-			],
-			[
-				'label' => '<span class="icon-pencil"></span>'
-			]
-		];
-		ob_start();
-		include_once("./content/pages/manage/data/person/page.php");
-		$content = ob_get_clean();
-	break;
-	case "manage-data-term":
-		$pageTitle = 'Manage Term';
-		$pageType = 'admin';
-		$pageBreadcrumbs = [
-			[
-				'label' => L::dashboard,
-				'path' => '/manage'
-			],
-			[
-				'label' => L::manageData,
-				'path' => '/manage/data'
-			],
-			[
-				'label' => '<span class="icon-pencil"></span>'
-			]
-		];
-		ob_start();
-		include_once("./content/pages/manage/data/term/page.php");
 		$content = ob_get_clean();
 	break;
 	case "manage-import":

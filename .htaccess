@@ -24,7 +24,25 @@
 	########################################
 	#TODO
 	########################################
-	# Rewrite /manage/ urls
+	# Rewrite /manage/entities/ urls
+	########################################
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(manage)/(entities)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(manage)/(entities)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3 [QSA,L]
+	########################################
+	# Rewrite /import/ urls
+	########################################
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(manage)/(import)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(manage)/(import)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3 [QSA,L]
+	########################################
+	# Rewrite general /manage/ urls
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_FILENAME} !-f
