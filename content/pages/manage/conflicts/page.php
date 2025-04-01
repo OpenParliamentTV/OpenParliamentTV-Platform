@@ -22,7 +22,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				<div class="col-12">
 					<h2><?php echo L::manageConflicts; ?></h2>
 
-					<table class="table table-striped table-hover"
+					<table class="table table-striped"
 						   id="conflictsTableStats"
 						   data-toggle="table"
 						   data-sortable="true">
@@ -99,7 +99,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     ?>
 
 
-                    <table class="table table-striped table-hover"
+                    <table class="table table-striped"
 						   id="conflictsTable"
 						   data-toggle="table"
 						   data-search="true"
@@ -137,7 +137,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 } else {
 
                 ?>
-                    <table class="table table-striped table-hover" id="conflictsTable"></table>
+                    <table class="table table-striped" id="conflictsTable"></table>
                     <script type="application/javascript">
                         $(function() {
                             $('#conflictsTable').bootstrapTable({

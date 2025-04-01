@@ -5,11 +5,11 @@
 <div class="input-group">
 	<span class="input-group-text">API URL</span>
 	<input id="apiLink" class="form-control" type="text" value="<?= $apiResult["data"]["links"]["self"] ?>">
-	<a href="<?= $apiResult["data"]["links"]["self"] ?>" class="btn btn-sm btn-outline-secondary"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></a>
+	<a href="<?= $apiResult["data"]["links"]["self"] ?>" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?php echo L::showResult; ?></span></a>
 </div>
 <hr>
 <div><b><?php echo L::dataTable; ?></b></div>
-<table id="dataTable" class="table table-striped table-bordered">
+<table id="dataTable" class="table">
 	<thead>
 		<tr>
 			<th><?php echo L::dataTableKey; ?></th>

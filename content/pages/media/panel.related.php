@@ -225,7 +225,7 @@ if ($config["display"]["ner"]) {
             <div class="mb-1"><?php echo L::messageOpenData; ?>: <a class="text-reset" href="<?= $config["dir"]["root"] ?>/api"><?= $config["dir"]["root"] ?>/api</a></div>
         </div>
         <div class="input-group">
-            <span class="input-group-text">API URL</span>
+            <span class="input-group-text me-0">API URL</span>
             <input id="apiLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= $speech["links"]["self"] ?>">
             <a href="<?= $speech["links"]["self"] ?>" target="_blank" class="btn btn-sm input-group-text">
                 <span class="icon-right-open-big"></span>

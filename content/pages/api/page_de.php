@@ -70,7 +70,7 @@ include_once(__DIR__ . '/../../header.php');
 							<hr>
 							<h3>Parameter</h3>
 							<div class="table-responsive-lg">
-								<table class="table table-sm table-striped table-hover">
+								<table class="table table-sm table-striped">
 									<thead>
 										<tr>
 											<th>Parameter</th>
@@ -227,7 +227,7 @@ include_once(__DIR__ . '/../../header.php');
 							<hr>
 							<h3>Parameter</h3>
 							<div class="table-responsive-lg">
-								<table class="table table-sm table-striped table-hover">
+								<table class="table table-sm table-striped">
 									<thead>
 										<tr>
 											<th>Parameter</th>
@@ -325,7 +325,7 @@ include_once(__DIR__ . '/../../header.php');
 							</div>
 							<hr>
 							<h3>Parameter</h3>
-							<table class="table table-sm table-striped table-hover">
+							<table class="table table-sm table-striped">
 								<thead>
 									<tr>
 										<th>Parameter</th>
@@ -369,7 +369,7 @@ include_once(__DIR__ . '/../../header.php');
 							</div>
 							<hr>
 							<h3>Parameter</h3>
-							<table class="table table-sm table-striped table-hover">
+							<table class="table table-sm table-striped">
 								<thead>
 									<tr>
 										<th>Parameter</th>
@@ -417,7 +417,7 @@ include_once(__DIR__ . '/../../header.php');
 							</div>
 							<hr>
 							<h3>Parameter</h3>
-							<table class="table table-sm table-striped table-hover">
+							<table class="table table-sm table-striped">
 								<thead>
 									<tr>
 										<th>Parameter</th>

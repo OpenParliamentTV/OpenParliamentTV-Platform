@@ -95,6 +95,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 	$(document).ready( function() {
 		updateMediaList("electoralPeriodID=<?= $apiResult["data"]["id"] ?>&sort=date-asc");
 		$('#dataTable').bootstrapTable({
+			classes: 'table-striped table-bordered',
 			showToggle: false,
 			multiToggleDefaults: [],
 			search: true,
@@ -115,7 +116,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			},
 			sortName: false,
 			cardView: false,
-			locale: 'de-DE'
+			locale: '<?php echo $lang; ?>'
 		});
 	});
 </script>

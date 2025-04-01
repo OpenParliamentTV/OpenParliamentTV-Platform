@@ -122,6 +122,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		updateMediaList("organisationID=<?= $apiResult["data"]["id"] ?><?= $contextString ?>&sort=date-desc");
 		updateMediaList("organisationID=<?= $apiResult["data"]["id"] ?>&context=NER&sort=date-desc", "#nerListContainer");
 		$('#dataTable').bootstrapTable({
+			classes: 'table-striped table-bordered',
 			showToggle: false,
 			multiToggleDefaults: [],
 			search: true,
@@ -142,7 +143,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			},
 			sortName: false,
 			cardView: false,
-			locale: 'de-DE'
+			locale: '<?php echo $lang; ?>'
 		});
 	});
 </script>
