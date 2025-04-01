@@ -712,6 +712,10 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     opacity: .8;
 }
 
+body.darkmode .modal-content .btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
 .modal-content .btn-close:hover {
     opacity: 1;
 }
