@@ -21,7 +21,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <h2><?php echo L::platformSettings; ?></h2>
                     <div class="card mb-3">
 						<div class="card-body">
-							<a class="btn btn-outline-success btn-sm me-1"><span class="icon-plus"></span> Test Animated Button</a>
+                            
 						</div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
