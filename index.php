@@ -358,19 +358,6 @@ switch ($page) {
 		include_once("./content/pages/datapolicy/page_".$lang.".php");
 		$content = ob_get_clean();
 	break;
-	case "faq":
-		$pageTitle = 'FAQ';
-		$pageType = 'default';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		$schemaItemScopeString = ' itemscope itemtype="https://schema.org/FAQPage"';
-		ob_start();
-		include_once("./content/pages/faq/page_".$lang.".php");
-		$content = ob_get_clean();
-	break;
 	case "imprint":
 		$pageTitle = L::imprint;
 		$pageType = 'default';
@@ -409,18 +396,6 @@ switch ($page) {
 
 		ob_start();
 		include_once("./content/pages/logout/page.php");
-		$content = ob_get_clean();
-	break;
-	case "announcements":
-		$pageTitle = L::announcements;
-		$pageType = 'default';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/announcements/page_".$lang.".php");
 		$content = ob_get_clean();
 	break;
 	case "passwordReset":
@@ -469,18 +444,6 @@ switch ($page) {
 		];
 		ob_start();
 		include_once("./content/pages/registerconfirm/page.php");
-		$content = ob_get_clean();
-	break;
-	case "version":
-		$pageTitle = 'Version';
-		$pageType = 'default';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/version/page_".$lang.".php");
 		$content = ob_get_clean();
 	break;
 	/*********************************
