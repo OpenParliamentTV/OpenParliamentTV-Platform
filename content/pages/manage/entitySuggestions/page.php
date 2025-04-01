@@ -20,67 +20,85 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		<div class="sidebar-content">
 			<div class="row" style="position: relative; z-index: 1">
 				<div class="col-12 mainContainer">
-					<h2><?php echo L::manageEntities; ?></h2>
-					<div id="entitiesDetailsDiv" class="contentContainer" style="display: none">
-						<h3>Entity Suggestion Details</h3>
-						<button class="btn btn-sm input-group-text entitiesToggleDetailsAndTable float-right mb-3"><span class="icon-cancel"></span><span class="d-none d-md-inline">Back to table</span></button>
-						<table class="col-12 table-striped table-hover" id="entitiesDetails" data-toggle="table">
-							<thead>
-								<tr>
-									<th data-field="0">Label</th>
-									<th data-field="1">Value</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>External ID</td>
-									<td id="entitiesDetailsExternalID"></td>
-								</tr>
-								<tr>
-									<td>Label</td>
-									<td id="entitiesDetailsLabel"></td>
-								</tr>
-								<tr>
-									<td>NEL Type</td>
-									<td id="entitiesDetailsType"></td>
-								</tr>
-								<tr>
-									<td>Content</td>
-									<td id="entitiesDetailsContent"></td>
-								</tr>
-								<tr>
-									<td>Media Count</td>
-									<td id="entitiesDetailsMediaCount"></td>
-								</tr>
-								<tr>
-									<td>Was found in</td>
-									<td id="entitiesDetailsContext"></td>
-								</tr>
-							</tbody>
-						</table>
-						<button class="btn btn-sm input-group-text entitiesToggleDetailsAndTable float-right mt-3"><span class="icon-cancel"></span><span class="d-none d-md-inline">Back to table</span></button>
+					<h2><?php echo L::manageEntitySuggestions; ?></h2>
+					<div class="card mb-3">
+						<div class="card-body">
+						<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#entityDetailsModal">Launch demo modal</button>
+						</div>
 					</div>
-					<div id="entitiesDiv" class="contentContainer">
-						<h3>Entitysuggestions</h3>
-						<table class="table table-striped table-hover"
-							   id="entitiesTable">
-							<thead>
-							<tr>
-								<th scope="col" data-sortable="true">Label</th>
-								<th scope="col" data-sortable="true">ID</th>
-								<th scope="col" data-sortable="true">Count</th>
-								<th scope="col">Action</th>
-							</tr>
-							</thead>
-							<tbody>
-							</tbody>
-						</table><br><br><br>
+					<ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="suggested-entities-tab" data-bs-toggle="tab" data-bs-target="#suggested-entities" role="tab" aria-controls="suggested-entities" aria-selected="true"><span class="icon-lightbulb"></span> <?php echo L::suggestions; ?></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane bg-white fade show active" id="suggested-entities" role="tabpanel" aria-labelledby="suggested-entities-tab">
+							<div id="entitiesDetailsDiv" class="contentContainer" style="display: none">
+								<h3>Entity Suggestion Details</h3>
+								<button class="btn btn-sm input-group-text entitiesToggleDetailsAndTable float-right mb-3"><span class="icon-cancel"></span><span class="d-none d-md-inline">Back to table</span></button>
+								<table class="col-12 table-striped table-hover" id="entitiesDetails" data-toggle="table">
+									<thead>
+										<tr>
+											<th data-field="0">Label</th>
+											<th data-field="1">Value</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>External ID</td>
+											<td id="entitiesDetailsExternalID"></td>
+										</tr>
+										<tr>
+											<td>Label</td>
+											<td id="entitiesDetailsLabel"></td>
+										</tr>
+										<tr>
+											<td>NEL Type</td>
+											<td id="entitiesDetailsType"></td>
+										</tr>
+										<tr>
+											<td>Content</td>
+											<td id="entitiesDetailsContent"></td>
+										</tr>
+										<tr>
+											<td>Media Count</td>
+											<td id="entitiesDetailsMediaCount"></td>
+										</tr>
+										<tr>
+											<td>Was found in</td>
+											<td id="entitiesDetailsContext"></td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn btn-sm input-group-text entitiesToggleDetailsAndTable float-right mt-3"><span class="icon-cancel"></span><span class="d-none d-md-inline">Back to table</span></button>
+							</div>
+							<div id="entitiesDiv" class="contentContainer">
+								<table id="entitiesTable"></table>
+							</div>
+                        </div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </main>
+<div class="modal fade" id="entityDetailsModal" tabindex="-1" aria-labelledby="entityDetailsModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="entityDetailsModalLabel">Modal title</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				...
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/api/client/jquery.json-view.min.css?v=<?= $config["version"] ?>" media="all">
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/api/client/jquery.json-view.min.js?v=<?= $config["version"] ?>"></script>
@@ -92,6 +110,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 		$('#entitiesTable').bootstrapTable({
 			url: config["dir"]["root"] + "/server/ajaxServer.php?a=entitysuggestionGetTable",
+			classes: "table table-striped",
+			locale: "<?php echo $lang; ?>",
 			pagination: true,
 			sidePagination: "server",
 			dataField: "rows",
@@ -103,10 +123,12 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				{
 					field: "EntitysuggestionLabel",
 					title: "Label",
+					sortable: true
 				},
 				{
 					field: "EntitysuggestionExternalID",
 					title: "WikidataID",
+					sortable: true,
 					formatter: function(value, row) {
 
 						return '<a href="https://www.wikidata.org/wiki/'+value+'" target="_blank">'+value+' </a>';
@@ -115,14 +137,65 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "EntitysuggestionCount",
-					title: "Affected Sessions"
+					title: "Affected Sessions",
+					sortable: true
+				},
+				{
+					field: "EntitysuggestionContent",
+					title: "Score",
+					sortable: false,
+					formatter: function(value, row) {
+						
+						// Completely unnecessary, just having fun ;)
+
+						let valueJSON = JSON.parse(row["EntitysuggestionContent"]);
+						let score = valueJSON["score"];
+						let canvasId = 'score-chart-' + row.EntitysuggestionID;
+						
+						// Create canvas element
+						let canvas = `<div class="position-relative" style="width: 50px; height: 50px;"><canvas id="${canvasId}"></canvas><div class="chartCenterLabel">${(score * 100).toFixed(1)}%</div></div>`;
+						
+						// Initialize chart after a brief delay to ensure DOM element exists
+						setTimeout(() => {
+							const ctx = document.getElementById(canvasId);
+							new Chart(ctx, {
+								type: 'doughnut',
+								data: {
+									datasets: [{
+										data: [score, 1 - score],
+										backgroundColor: [
+											'rgba(46, 204, 113, 0.8)',
+											'rgba(220, 220, 220, 0.8)'
+										],
+										borderWidth: 0
+									}]
+								},
+								options: {
+									responsive: true,
+									aspectRatio: 1,
+									legend: {
+										display: false
+									},
+									tooltips: {
+										enabled: false
+									},
+									cutoutPercentage: 80,
+									animation: {
+										animateRotate: true
+									}
+								}
+							});
+						}, 50);
+						
+						return canvas;
+					}
 				},
 				{
 					field: "EntitysuggestionID",
 					title: "Action",
+					sortable: false,
 					formatter: function(value, row) {
-						return "<span class='entitysuggestiondetails icon-popup btn btn-outline-secondary btn-sm' data-id='"+value+"'></span>\n" +
-							"                                            <a href='"+config["dir"]["root"]+"/manage/data/entities/new?wikidataID="+row["EntitysuggestionExternalID"]+"&entitySuggestionID="+row["EntitysuggestionID"]+"' target='_blank' class='icon-plus btn btn-outline-secondary btn-sm' data-id='"+row["EntitysuggestionID"]+"'></a>"
+						return "<div class='list-group list-group-horizontal'><span class='entitysuggestiondetails list-group-item list-group-item-action' title='<?php echo L::viewDetails; ?>' data-id='"+value+"'><span class='icon-eye'></span></span><a href='"+config["dir"]["root"]+"/manage/entities/new?wikidataID="+row["EntitysuggestionExternalID"]+"&entitySuggestionID="+row["EntitysuggestionID"]+"' target='_blank' class='list-group-item list-group-item-action' data-id='"+row["EntitysuggestionID"]+"'><span class='icon-plus'></span></a></div>"
 					}
 				}
 			]
@@ -131,29 +204,30 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 		$(".mainContainer").on("click", ".entitysuggestiondetails",function() {
 
-					$.ajax({
-						url: config["dir"]["root"] + "/server/ajaxServer.php",
-						data: {"a":"entitysuggestionGet","id":$(this).data("id")},
-						success: function(ret) {
-							if (ret["success"] == "true") {
-								let wikiIDRegex = new RegExp("Q[0-9]+");
-								$("#entitiesDetailsExternalID").html((wikiIDRegex.test(ret["return"]["EntitysuggestionExternalID"]) ? '<a href="https://www.wikidata.org/wiki/'+ret["return"]["EntitysuggestionExternalID"]+'" target="_blank">'+ret["return"]["EntitysuggestionExternalID"]+'</a>' : ret["return"]["EntitysuggestionExternalID"]));
-								$("#entitiesDetailsLabel").html(ret["return"]["EntitysuggestionLabel"]);
-								$("#entitiesDetailsType").html(ret["return"]["EntitysuggestionType"]);
-								$("#entitiesDetailsMediaCount").html(Object.keys(ret["return"]["EntitysuggestionContext"]).length);
-								//$("#entitiesDetailsContent").html(ret["return"]["EntitysuggestionContent"]);
-								$("#entitiesDetailsContent").empty();
-								$("#entitiesDetailsContent").jsonView(ret["return"]["EntitysuggestionContent"]);
+			$.ajax({
+				url: config["dir"]["root"] + "/server/ajaxServer.php",
+				data: {"a":"entitysuggestionGet","id":$(this).data("id")},
+				success: function(ret) {
+					if (ret["success"] == "true") {
+						let wikiIDRegex = new RegExp("Q[0-9]+");
+						$("#entitiesDetailsExternalID").html((wikiIDRegex.test(ret["return"]["EntitysuggestionExternalID"]) ? '<a href="https://www.wikidata.org/wiki/'+ret["return"]["EntitysuggestionExternalID"]+'" target="_blank">'+ret["return"]["EntitysuggestionExternalID"]+'</a>' : ret["return"]["EntitysuggestionExternalID"]));
+						$("#entitiesDetailsLabel").html(ret["return"]["EntitysuggestionLabel"]);
+						$("#entitiesDetailsType").html(ret["return"]["EntitysuggestionType"]);
+						$("#entitiesDetailsMediaCount").html(Object.keys(ret["return"]["EntitysuggestionContext"]).length);
+						//$("#entitiesDetailsContent").html(ret["return"]["EntitysuggestionContent"]);
+						$("#entitiesDetailsContent").empty();
+						$("#entitiesDetailsContent").jsonView(ret["return"]["EntitysuggestionContent"]);
 
-								$("#entitiesDetailsContext").html("");
-								for (let item in ret["return"]["EntitysuggestionContext"]) {
-									$("#entitiesDetailsContext").append('<a href="<?=$config["dir"]["root"]?>/media/'+item+'" target="_blank">'+item+'</a><br>');
+						$("#entitiesDetailsContext").html("");
+						for (let item in ret["return"]["EntitysuggestionContext"]) {
+							$("#entitiesDetailsContext").append('<a href="<?=$config["dir"]["root"]?>/media/'+item+'" target="_blank">'+item+'</a><br>');
 						}
 						$(".contentContainer").not("#entitiesDetailsDiv").slideUp();
 						$("#entitiesDetailsDiv").slideDown();
 					}
 				}
-			})
+			});	
+
 		});
 
 		$(".entitiesToggleDetailsAndTable").on("click", function() {

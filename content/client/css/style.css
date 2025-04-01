@@ -560,6 +560,10 @@ textarea {
     border-color: var(--border-color);
 }
 
+.table-striped tbody tr:nth-of-type(2n+1) {
+    background-color: rgba(180,180,180,.05);
+}
+
 .table-hover tbody tr:hover {
     color: var(--primary-fg-color);
 }
@@ -581,22 +585,22 @@ textarea {
     font-size: 14px;
 }
 
-.btn.working {
+.btn.working, .list-group-item.working {
     position: relative;
     transition: padding-right .3s;
     padding-right: 38px;
     background: #f3f3f3;
     color: #acacac;
-    border-color: transparent;
+    border-color: var(--border-color);
     cursor: not-allowed;
     pointer-events: none;
 }
 
-body.darkmode .btn.working {
-    background: #5d5d5d;
+body.darkmode .btn.working, body.darkmode .list-group-item.working {
+    background: #575963;
 }
 
-.btn.working::after {
+.btn.working::after, .list-group-item.working::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -650,6 +654,7 @@ body.darkmode .btn.working {
     color: var(--primary-fg-color);
     border-color: var(--border-color);
     background: var(--primary-bg-color);
+    cursor: pointer;
 }
 
 .btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link):hover, 
@@ -926,6 +931,14 @@ body.darkmode .detailsHeader .btn:focus img {
     word-wrap: anywhere;
 }
 
+.chartCenterLabel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    font-weight: bolder;
+}
 
 .switch {
     position: relative;
