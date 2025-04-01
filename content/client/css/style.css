@@ -1060,8 +1060,8 @@ body.ready > main {
     background: -o-linear-gradient(left, var(--primary-fg-color) 10%, transparent 42%);
     background: -ms-linear-gradient(left, var(--primary-fg-color) 10%, transparent 42%);
     background: linear-gradient(to right, var(--primary-fg-color) 10%, transparent 42%);
-    -webkit-animation: loading 1.4s infinite linear;
-    animation: loading 1s infinite linear;
+    -webkit-animation: turn 1.4s infinite linear;
+    animation: turn 1s infinite linear;
     -webkit-transform: translateZ(0);
     -ms-transform: translateZ(0);
     transform: translateZ(0);
@@ -1094,7 +1094,7 @@ body.ready > main {
     right: 0;
 }
 
-@-webkit-keyframes loading {
+@-webkit-keyframes turn {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
@@ -1105,7 +1105,7 @@ body.ready > main {
     }
 }
 
-@keyframes loading {
+@keyframes turn {
     0% {
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
