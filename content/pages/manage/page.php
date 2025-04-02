@@ -15,47 +15,146 @@ if ($auth["meta"]["requestStatus"] != "success") {
     <div class="row">
         <?php include_once(__DIR__ . '/sidebar.php'); ?>
         <div class="sidebar-content">
-            <h2><?= L::personalSettings; ?></h2>
-            <div class="row">
-                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="./manage/notifications"><?= L::notifications; ?></a>
-                </div>
-                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="./manage/users/<?= $_SESSION["userdata"]["id"]; ?>"><?= L::userSettings; ?></a>
-                </div>
-            </div>
-            <hr>
-            <h2><?= L::administration; ?></h2>
-            <div class="row">
-                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="./manage/conflicts"><?= L::manageConflicts; ?></a>
-                </div>
-                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="./manage/users"><?= L::manageUsers; ?></a>
-                </div>
-                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="./manage/import"><?= L::manageImport; ?></a>
-                </div>
-                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="./manage/config"><?= L::platformSettings; ?></a>
-                </div>
-                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="./manage/entities"><?= L::manageEntities; ?></a>
-                </div>
-                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="./manage/opensearch"><?= L::manageSearchIndex; ?></a>
-                </div>
-            </div>
-            <hr>
-            <h2>DEBUG</h2>
-            <div class="row">
-                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="<?= $config["dir"]["root"]; ?>/server/ajaxServer.php?a=getMedia&v=1&p=bt&conflicts=true" target="_self">Show Media Data (v can be hash or id, p is just required if v is an ID)</a>
+            <div class="row" style="position: relative; z-index: 1">
+                    <div class="col-12">
+                        <h2><?= L::dashboard; ?></h2>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="text-uppercase text-muted mb-3">Status</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-xl-6 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="text-uppercase text-muted mb-3"><span class="icon-play"></span> Latest Media Updates</div>
+                                            <table id="latestUpdatesMedia" class="table table-striped my-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th><?= L::agendaItem; ?></th>
+                                                        <th><?= L::contextmainSpeaker; ?></th>
+                                                        <th>Last Changed</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-xl-6 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <div class="row g-3">
+                                            <div class="text-uppercase text-muted mb-3"><span class="icon-tags"></span> Latest Entity Updates</div>
+                                            <table id="latestUpdatesEntities" class="table table-striped my-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Type</th>
+                                                        <th>Name</th>
+                                                        <th>Last Changed</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="text-uppercase text-muted mb-3">DEBUG</div>
+                                <div class="row">
+                                    <div class="mt-2 mb-2 col-12 col-md-6 col-lg-3">
+                                        <a href="<?= $config["dir"]["root"]; ?>/server/ajaxServer.php?a=getMedia&v=1&p=bt&conflicts=true" target="_self" class="btn btn-outline-primary w-100 d-flex flex-column align-items-center py-3">Show Media Data (v can be hash or id, p is just required if v is an ID)</a>    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to format date
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleString('de');
+    }
+
+    // Function to fetch entities from API
+    async function fetchEntities(type) {
+        try {
+            const response = await fetch(`<?= $config["dir"]["root"]; ?>/api/v1/?action=getOverview&itemType=${type}&id=all&limit=10&offset=0&sort=${type.charAt(0).toUpperCase() + type.slice(1)}LastChanged&order=desc`);
+            const data = await response.json();
+            console.log(`API response for ${type}:`, data);
+            // The getOverview functions return the data directly without a meta structure
+            if (data && data.rows) {
+                const entities = data.rows.map(entity => ({
+                    id: entity[`${type.charAt(0).toUpperCase() + type.slice(1)}ID`],
+                    label: entity[`${type.charAt(0).toUpperCase() + type.slice(1)}Label`],
+                    type: type,
+                    lastChanged: entity[`${type.charAt(0).toUpperCase() + type.slice(1)}LastChanged`]
+                }));
+                console.log(`Processed entities for ${type}:`, entities);
+                return entities;
+            }
+            return [];
+        } catch (error) {
+            console.error(`Error fetching ${type}:`, error);
+            return [];
+        }
+    }
+
+    // Function to fetch and display latest entities
+    async function fetchLatestEntities() {
+        try {
+            // Fetch all entity types in parallel
+            const [persons, organisations, documents, terms] = await Promise.all([
+                fetchEntities('person'),
+                fetchEntities('organisation'),
+                fetchEntities('document'),
+                fetchEntities('term')
+            ]);
+
+            // Combine all entities
+            const allEntities = [...persons, ...organisations, ...documents, ...terms];
+
+            // Sort by lastChanged date
+            allEntities.sort((a, b) => new Date(b.lastChanged) - new Date(a.lastChanged));
+
+            // Take only the latest 5
+            const latestEntities = allEntities.slice(0, 5);
+
+            // Update the table body
+            const tbody = document.querySelector('#latestUpdatesEntities tbody');
+            tbody.innerHTML = latestEntities.map(entity => `
+                <tr>
+                    <td><span class="icon-type-${entity.type}"></span><span class="visually-hidden">${entity.type}</span></td>
+                    <td><a href="<?= $config["dir"]["root"]; ?>/${entity.type}/${entity.id}">${entity.label}</a></td>
+                    <td>${formatDate(entity.lastChanged)}</td>
+                </tr>
+            `).join('');
+        } catch (error) {
+            console.error('Error fetching latest entities:', error);
+        }
+    }
+
+    // Fetch latest entities when page loads
+    fetchLatestEntities();
+});
+</script>
+
 <?php
 }
 include_once(__DIR__ . '/../../footer.php');
