@@ -21,11 +21,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <a class="d-block p-4 bg-white text-center" href="./manage/notifications"><?php echo L::notifications; ?></a>
                 </div>
                 <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="./manage/users/MYUSERID">My User Settings</a>
+                    <a class="d-block p-4 bg-white text-center" href="./manage/users/<?= $_SESSION["userdata"]["id"] ?>"><?php echo L::userSettings; ?></a>
                 </div>
             </div>
             <hr>
-            <h2>Administration</h2>
+            <h2><?php echo L::administration; ?></h2>
             <div class="row">
                 <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
                     <a class="d-block p-4 bg-white text-center" href="./manage/conflicts"><?php echo L::manageConflicts; ?></a>
@@ -37,7 +37,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <a class="d-block p-4 bg-white text-center" href="./manage/users"><?php echo L::manageUsers; ?></a>
                 </div>
                 <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="./manage/import"><?php echo L::data; ?>-Import</a>
+                    <a class="d-block p-4 bg-white text-center" href="./manage/import"><?php echo L::manageImport; ?></a>
                 </div>
                 <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
                     <a class="d-block p-4 bg-white text-center" href="./manage/config"><?php echo L::platformSettings; ?></a>
@@ -46,7 +46,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <a class="d-block p-4 bg-white text-center" href="./manage/entities"><?php echo L::manageEntities; ?></a>
                 </div>
                 <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                    <a class="d-block p-4 bg-white text-center" href="./manage/opensearch">Search Index</a>
+                    <a class="d-block p-4 bg-white text-center" href="./manage/opensearch"><?php echo L::searchIndex; ?></a>
                 </div>
             </div>
             <hr>
