@@ -21,7 +21,7 @@
 							<div id="suggestionContainerText"></div>
 						</div>
 						<div class="col col-12 col-sm-6 col-lg-7">
-							<div style="font-weight: bolder;"><span class="icon-torso"></span><?= L::personPlural; ?></div>
+							<div style="font-weight: bolder;"><span class="icon-type-person"></span><?= L::personPlural; ?></div>
 							<hr class="my-1">
 							<div id="suggestionContainerPeople"></div>
 						</div>

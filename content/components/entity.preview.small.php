@@ -21,13 +21,13 @@ if ($entity["type"] == "person") {
 
 $entityIcon = "";
 if ($entity["type"] == "person") {
-    $entityIcon = "icon-torso";
+    $entityIcon = "icon-type-person";
 } else if ($entity["type"] == "organisation") {
-    $entityIcon = "icon-bank";
+    $entityIcon = "icon-type-organisation";
 } else if ($entity["type"] == "document") {
-    $entityIcon = "icon-doc-text";
+    $entityIcon = "icon-type-document";
 } else if ($entity["type"] == "term") {
-    $entityIcon = "icon-tag-1";
+    $entityIcon = "icon-type-term";
 }
 
 

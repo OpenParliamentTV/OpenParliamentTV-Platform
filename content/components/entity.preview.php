@@ -18,13 +18,13 @@ if ($entity["data"]["type"] == "organisation") {
 								<?php if ($entity["data"]["attributes"]["thumbnailURI"]) { ?>
 									<img src="<?= $entity["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute; object-fit: <?= $typeImageFit ?>; object-position: <?= $typeImagePosition ?>;"/>
 								<?php } else if ($entity["data"]["type"] == "person") { ?>
-									<span class="icon-torso" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+									<span class="icon-type-person" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
 								<?php } else if ($entity["data"]["type"] == "document") { ?>
-									<span class="icon-doc-text" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+									<span class="icon-type-document" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
 								<?php } else if ($entity["data"]["type"] == "organisation") { ?>
-									<span class="icon-bank" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+									<span class="icon-type-organisation" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
 								<?php } else if ($entity["data"]["type"] == "term") { ?>
-									<span class="icon-tag-1" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+									<span class="icon-type-term" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
 								<?php } ?>
 							</div>
 						</a>

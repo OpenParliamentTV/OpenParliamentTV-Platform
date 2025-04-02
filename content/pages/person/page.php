@@ -24,7 +24,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 							<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
 								<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"]?>" alt="..." style="position: absolute;">
 							<?php } else { ?>
-								<span class="icon-torso" style="position: absolute;top: 48%;left: 50%;font-size: 70px;transform: translateX(-50%) translateY(-50%);"></span>
+								<span class="icon-type-person" style="position: absolute;top: 48%;left: 50%;font-size: 70px;transform: translateX(-50%) translateY(-50%);"></span>
 							<?php } ?>
 						</div>
 						<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>

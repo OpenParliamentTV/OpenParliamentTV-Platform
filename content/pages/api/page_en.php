@@ -40,16 +40,16 @@ include_once(__DIR__ . '/../../header.php');
 							<a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true"><span class="nav-item-label"><span class="icon-hypervideo me-1"></span> <?= L::speeches; ?></span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="people-tab" data-bs-toggle="tab" data-bs-target="#people" role="tab" aria-controls="people" aria-selected="true"><span class="nav-item-label"><span class="icon-torso"></span> <?= L::personPlural; ?></span></a>
+							<a class="nav-link" id="people-tab" data-bs-toggle="tab" data-bs-target="#people" role="tab" aria-controls="people" aria-selected="true"><span class="nav-item-label"><span class="icon-type-person"></span> <?= L::personPlural; ?></span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="organisations-tab" data-bs-toggle="tab" data-bs-target="#organisations" role="tab" aria-controls="organisations" aria-selected="true"><span class="nav-item-label"><span class="icon-bank"></span> <?= L::organisations; ?></span></a>
+							<a class="nav-link" id="organisations-tab" data-bs-toggle="tab" data-bs-target="#organisations" role="tab" aria-controls="organisations" aria-selected="true"><span class="nav-item-label"><span class="icon-type-organisation"></span> <?= L::organisations; ?></span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" role="tab" aria-controls="documents" aria-selected="true"><span class="nav-item-label"><span class="icon-doc-text"></span> <?= L::documents; ?></span></a>
+							<a class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" role="tab" aria-controls="documents" aria-selected="true"><span class="nav-item-label"><span class="icon-type-document"></span> <?= L::documents; ?></span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="terms-tab" data-bs-toggle="tab" data-bs-target="#terms" role="tab" aria-controls="terms" aria-selected="true"><span class="nav-item-label"><span class="icon-tag-1"></span> <?= L::terms; ?></span></a>
+							<a class="nav-link" id="terms-tab" data-bs-toggle="tab" data-bs-target="#terms" role="tab" aria-controls="terms" aria-selected="true"><span class="nav-item-label"><span class="icon-type-term"></span> <?= L::terms; ?></span></a>
 						</li>
 					</ul>
 					<div class="tab-content">
@@ -470,7 +470,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="apiResultContainer"></div>
 					</div>
 					<hr>
-					<h3><span class="icon-torso"></span> GET <?= L::personSingular; ?></h3>
+					<h3><span class="icon-type-person"></span> GET <?= L::personSingular; ?></h3>
 					<p class="mb-2"><b>Person IDs</b> are <b>always a Wikidata ID</b>.</p>
 					<div><b>Endpoint</b>: <code>/api/v1/person/ID</code></div>
 					<div class="mb-2"><b><?= L::example; ?></b>: Angela Merkel (Wikidata ID Q567)</div>
@@ -483,7 +483,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="apiResultContainer"></div>
 					</div>
 					<hr>
-					<h3><span class="icon-bank"></span> GET <?= L::organisation; ?></h3>
+					<h3><span class="icon-type-organisation"></span> GET <?= L::organisation; ?></h3>
 					<p class="mb-2"><b><?= L::organisation; ?> IDs</b> are <b>always a Wikidata ID</b>.</p>
 					<div><b>Endpoint</b>: <code>/api/v1/organisation/ID</code></div>
 					<div class="mb-2"><b><?= L::example; ?></b>: <?= L::faction; ?> BÜNDNIS 90/DIE GRÜNEN (Wikidata ID Q1007353)</div>
@@ -496,7 +496,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="apiResultContainer"></div>
 					</div>
 					<hr>
-					<h3><span class="icon-doc-text"></span> GET <?= L::document; ?></h3>
+					<h3><span class="icon-type-document"></span> GET <?= L::document; ?></h3>
 					<p class="mb-2"><b><?= L::document; ?> IDs</b> are internal incremental IDs and contain no reference to the document numbers (like "Drucksache 19/1234"). The rationale for this is that documents can be official documents as well as law texts and potentially other types of documents, sometimes applying to a specific parliament, sometimes generic, sometimes having a Wikidata ID, sometimes not. If you want to get a document by its official document number, you can use the document search. </p>
 					<div><b>Endpoint</b>: <code>/api/v1/document/ID</code></div>
 					<div class="mb-2"><b><?= L::example; ?></b>: Drucksache 19/1184</div>
@@ -509,7 +509,7 @@ include_once(__DIR__ . '/../../header.php');
 						<div class="apiResultContainer"></div>
 					</div>
 					<hr>
-					<h3><span class="icon-tag-1"></span> GET <?= L::term; ?></h3>
+					<h3><span class="icon-type-term"></span> GET <?= L::term; ?></h3>
 					<p class="mb-2"><b><?= L::term; ?> IDs</b> are <b>always a Wikidata ID</b>.</p>
 					<div><b>Endpoint</b>: <code>/api/v1/term/ID</code></div>
 					<div class="apiExampleContainer">
