@@ -17,14 +17,10 @@ if ($entity["data"]["type"] == "organisation") {
 							<div class="rounded-circle" style="top: 1px;">
 								<?php if ($entity["data"]["attributes"]["thumbnailURI"]) { ?>
 									<img src="<?= $entity["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute; object-fit: <?= $typeImageFit ?>; object-position: <?= $typeImagePosition ?>;"/>
-								<?php } else if ($entity["data"]["type"] == "person") { ?>
-									<span class="icon-type-person" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
-								<?php } else if ($entity["data"]["type"] == "document") { ?>
-									<span class="icon-type-document" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
-								<?php } else if ($entity["data"]["type"] == "organisation") { ?>
-									<span class="icon-type-organisation" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
-								<?php } else if ($entity["data"]["type"] == "term") { ?>
-									<span class="icon-type-term" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+								<?php } else if ($entity["data"]["type"] == "person" || $entity["data"]["type"] == "document") { ?>
+									<span class="icon-type-<?= $entity["data"]["type"] ?>" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+								<?php } else if ($entity["data"]["type"] == "organisation" || $entity["data"]["type"] == "term") { ?>
+									<span class="icon-type-<?= $entity["data"]["type"] ?>" style="position: absolute;top: 50%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
 								<?php } ?>
 							</div>
 						</a>

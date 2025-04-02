@@ -19,18 +19,6 @@ if ($entity["type"] == "person") {
     $secondaryLabel = $entity["attributes"]["faction"]["label"];
 }
 
-$entityIcon = "";
-if ($entity["type"] == "person") {
-    $entityIcon = "icon-type-person";
-} else if ($entity["type"] == "organisation") {
-    $entityIcon = "icon-type-organisation";
-} else if ($entity["type"] == "document") {
-    $entityIcon = "icon-type-document";
-} else if ($entity["type"] == "term") {
-    $entityIcon = "icon-type-term";
-}
-
-
 ?>
 <div class="entityPreview col" data-type="<?= $entity["type"]?>">
     <div class="entityContainer partyIndicator" data-faction="<?= $entity["attributes"]["faction"]["id"] ?>">
@@ -41,7 +29,7 @@ if ($entity["type"] == "person") {
                         <?php if ($entity["attributes"]["thumbnailURI"]) { ?>
                             <img src="<?= $entity["attributes"]["thumbnailURI"] ?>" alt="..."/>
                         <?php } else { ?>
-                            <span class="<?= $entityIcon ?>" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+                            <span class="icon-type-<?= $entity["type"] ?>" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
                         <?php } ?>
                     </div>
                 </div>
