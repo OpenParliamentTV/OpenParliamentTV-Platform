@@ -522,7 +522,8 @@ function organisationGetOverview($id = "all", $limit = 0, $offset = 0, $search =
             OrganisationID,
              OrganisationType,
              OrganisationLabel,
-             OrganisationLabelAlternative
+             OrganisationLabelAlternative,
+             OrganisationLastChanged
              FROM ?n
              WHERE ?p", $config["platform"]["sql"]["tbl"]["Organisation"], $queryPart);
 
@@ -531,7 +532,8 @@ function organisationGetOverview($id = "all", $limit = 0, $offset = 0, $search =
             OrganisationID,
              OrganisationType,
              OrganisationLabel,
-             OrganisationLabelAlternative
+             OrganisationLabelAlternative,
+             OrganisationLastChanged
              FROM ?n
              WHERE ?p", $config["platform"]["sql"]["tbl"]["Organisation"], $queryPart);
     }

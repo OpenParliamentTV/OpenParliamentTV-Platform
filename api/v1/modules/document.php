@@ -539,7 +539,8 @@ function documentGetOverview($id = "all", $limit = 0, $offset = 0, $search = fal
              DocumentType,
              DocumentLabel,
              DocumentLabelAlternative,
-             DocumentWikidataID
+             DocumentWikidataID,
+             DocumentLastChanged
              FROM ?n
              WHERE ?p", $config["platform"]["sql"]["tbl"]["Document"], $queryPart);
 
@@ -549,7 +550,8 @@ function documentGetOverview($id = "all", $limit = 0, $offset = 0, $search = fal
              DocumentType,
              DocumentLabel,
              DocumentLabelAlternative,
-             DocumentWikidataID
+             DocumentWikidataID,
+             DocumentLastChanged
              FROM ?n
              WHERE ?p", $config["platform"]["sql"]["tbl"]["Document"], $queryPart);
     }

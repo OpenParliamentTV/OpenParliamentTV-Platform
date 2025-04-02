@@ -549,7 +549,8 @@ function termGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, 
             TermID,
              TermType,
              TermLabel,
-             TermLabelAlternative
+             TermLabelAlternative,
+             TermLastChanged
              FROM ?n
              WHERE ?p", $config["platform"]["sql"]["tbl"]["Term"], $queryPart);
 
@@ -558,7 +559,8 @@ function termGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, 
             TermID,
              TermType,
              TermLabel,
-             TermLabelAlternative
+             TermLabelAlternative,
+             TermLastChanged
              FROM ?n
              WHERE ?p", $config["platform"]["sql"]["tbl"]["Term"], $queryPart);
     }
