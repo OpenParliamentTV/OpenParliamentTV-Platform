@@ -94,7 +94,7 @@
 .icon-pin:before { content: '\e81b'; } /* '' */
 .icon-bookmark:before { content: '\e81c'; } /* '' */
 .icon-thumbs-up:before { content: '\e81d'; } /* '' */
-.icon-tag:before, .icon-type-term:before { content: '\e81e'; } /* '' */
+.icon-tag:before { content: '\e81e'; } /* '' */
 .icon-tags:before { content: '\e81f'; } /* '' */
 .icon-download:before { content: '\e820'; } /* '' */
 .icon-upload:before { content: '\e821'; } /* '' */
@@ -244,7 +244,7 @@
 .icon-edit-1:before { content: '\e8b1'; } /* '' */
 .icon-edit-circled:before { content: '\e8b2'; } /* '' */
 .icon-edit-alt:before { content: '\e8b3'; } /* '' */
-.icon-tag-1:before { content: '\e8b4'; } /* '' */
+.icon-tag-1:before, .icon-type-term:before { content: '\e8b4'; } /* '' */
 .icon-tags-1:before { content: '\e8b5'; } /* '' */
 .icon-comment-2:before { content: '\e8b6'; } /* '' */
 .icon-comment-alt:before { content: '\e8b7'; } /* '' */
