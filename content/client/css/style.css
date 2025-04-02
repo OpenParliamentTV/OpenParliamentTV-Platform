@@ -329,6 +329,24 @@ main.container-fluid.subpage {
     margin-top: .5rem !important;
 }
 
+@media (max-width:768px) {
+    .sticky-sidebar {
+        display: block;
+        position: relative;
+        width: 100%;
+        top: 0px;
+        height: auto;
+        overflow: visible;
+        flex-direction: row !important;
+        padding-top: 0px;
+        margin-right: 0px;
+    }
+
+    .sidebar-content {
+        max-width: 100%;
+    }
+}
+
 a {
     text-decoration: none;
 }
