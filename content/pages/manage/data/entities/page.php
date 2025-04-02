@@ -20,7 +20,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2><?php echo L::manageEntities; ?></h2>
+                    <h2><?= L::manageEntities; ?></h2>
                 </div>
             </div>
         </div>

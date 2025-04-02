@@ -49,8 +49,8 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
                     if (isset($result['data-start']) && isset($result['data-end'])) {
                         ?>
                             {
-                                'start': <?php echo (float)$result['data-start'] ?>,
-                                'end': <?php echo (float)$result['data-end']-0.3 ?>
+                                'start': <?= (float)$result['data-start'] ?>,
+                                'end': <?= (float)$result['data-end']-0.3 ?>
                             },
                         <?php 
                     }
@@ -67,7 +67,7 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
 <div class="mediaContainer">
     <div class="d-flex flex-column flex-md-row-reverse">
         <div class="playerTitle">
-            <div class="speechMeta"><?= $formattedDate ?> | <span class="d-none d-sm-inline"><?= $speech["attributes"]["parliamentLabel"] ?> / </span><a href="../electoralPeriod/<?= $speech["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $speech["relationships"]["electoralPeriod"]['data']['attributes']['number'] ?><span class="d-none d-xl-inline">. <?php echo L::electoralPeriodShort; ?></span></a> / <a href="../session/<?= $speech["relationships"]["session"]["data"]["id"] ?>"><span class="d-none d-xl-inline"><?php echo L::session; ?> </span><?= $speech["relationships"]["session"]['data']['attributes']['number'] ?></a> / <a href="../agendaItem/<?= $speech["attributes"]["parliament"]."-".$speech["relationships"]["agendaItem"]["data"]["id"] ?>"><?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"] ?></a></div>
+            <div class="speechMeta"><?= $formattedDate ?> | <span class="d-none d-sm-inline"><?= $speech["attributes"]["parliamentLabel"] ?> / </span><a href="../electoralPeriod/<?= $speech["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $speech["relationships"]["electoralPeriod"]['data']['attributes']['number'] ?><span class="d-none d-xl-inline">. <?= L::electoralPeriodShort; ?></span></a> / <a href="../session/<?= $speech["relationships"]["session"]["data"]["id"] ?>"><span class="d-none d-xl-inline"><?= L::session; ?> </span><?= $speech["relationships"]["session"]['data']['attributes']['number'] ?></a> / <a href="../agendaItem/<?= $speech["attributes"]["parliament"]."-".$speech["relationships"]["agendaItem"]["data"]["id"] ?>"><?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"] ?></a></div>
             <h3><a href="../person/<?= $mainSpeaker["id"] ?>"><?= $mainSpeaker['attributes']['label'] ?></a><?php 
                 if (isset($mainFaction['attributes']['label'])) {
                 ?><a href="../organisation/<?= $mainFaction["id"] ?>"><span class="partyIndicator" data-faction="<?= $mainFaction["id"] ?>"><?= $mainFaction["attributes"]["label"] ?></span></a><?php 
@@ -82,12 +82,12 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="relationships-tab" data-bs-toggle="tab" data-bs-target="#relationships" role="tab" aria-controls="relationships" aria-selected="true">
-                        <span class="tabTitle"><?php echo L::relationships; ?></span><span class="icon-flow-cascade"></span>
+                        <span class="tabTitle"><?= L::relationships; ?></span><span class="icon-flow-cascade"></span>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true">
-                        <span class="tabTitle"><?php echo L::data; ?></span><span class="icon-download"></span>
+                        <span class="tabTitle"><?= L::data; ?></span><span class="icon-download"></span>
                     </a>
                 </li>
             </ul>
@@ -99,19 +99,19 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><span class="icon-share"></span> <?php echo L::shareQuote; ?></h5>
+                <h5 class="modal-title"><span class="icon-share"></span> <?= L::shareQuote; ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-warning"><?php echo L::messageShareQuotePart1; ?> <b><?= $mainSpeaker['attributes']['label'] ?></b>? <?php echo L::messageShareQuotePart2; ?>!</div>
-                <label><b>1. <?php echo L::selectTheme; ?></b>:</label>
+                <div class="alert alert-warning"><?= L::messageShareQuotePart1; ?> <b><?= $mainSpeaker['attributes']['label'] ?></b>? <?= L::messageShareQuotePart2; ?>!</div>
+                <label><b>1. <?= L::selectTheme; ?></b>:</label>
                 <div class="row row-cols-2 mt-2">
                     <div class="col pe-2">
                         <div class="card sharePreview active" data-theme="l">
                             <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
-                                    <div class="cardTitle text-truncate"><?= $speechTitleShort ?> | <?php echo L::brand ?></div>
+                                    <div class="cardTitle text-truncate"><?= $speechTitleShort ?> | <?= L::brand ?></div>
                                     <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= L::speech.' '.L::onTheSubject.' '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' '.L::by.' '.$mainSpeaker['attributes']['label'].' ('.$speech["attributes"]["parliamentLabel"].', '.$formattedDate.')' ?></div>
                                 </div>
                                 <div class="overflow-hidden text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
@@ -123,7 +123,7 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
                             <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
-                                    <div class="cardTitle text-truncate"><?= $speechTitleShort ?> | <?php echo L::brand ?></div>
+                                    <div class="cardTitle text-truncate"><?= $speechTitleShort ?> | <?= L::brand ?></div>
                                     <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= L::speech.' '.L::onTheSubject.' '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' '.L::by.' '.$mainSpeaker['attributes']['label'].' ('.$speech["attributes"]["parliamentLabel"].', '.$formattedDate.')' ?></div>
                                 </div>
                                 <div class="overflow-hidden text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
@@ -131,27 +131,27 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
                         </div>
                     </div>
                 </div>
-                <small class="d-block mt-2 text-muted"><?php echo L::shareQuoteMessageTheme; ?></small>
+                <small class="d-block mt-2 text-muted"><?= L::shareQuoteMessageTheme; ?></small>
                 <div class="form-group mt-3">
-                    <label for="shareURL"><b>2. <?php echo L::shareQuoteMessageURL; ?></b>:</label>
+                    <label for="shareURL"><b>2. <?= L::shareQuoteMessageURL; ?></b>:</label>
                     <textarea id="shareURL" class="form-control mt-2" type="text" name="shareURL" rows=3></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><?php echo L::close; ?></button>
+                <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal"><?= L::close; ?></button>
             </div>
         </div>
     </div>
 </div>
-<div id="videoAttribution" class="copyrightInfo" style="display: none;"><span class="icon-info-circled"></span><span class="copyrightText"><?php echo L::source; ?>: <?= $speech["attributes"]["creator"] ?>, <?php echo html_entity_decode($speech["attributes"]["license"]); ?></span></div>
+<div id="videoAttribution" class="copyrightInfo" style="display: none;"><span class="icon-info-circled"></span><span class="copyrightText"><?= L::source; ?>: <?= $speech["attributes"]["creator"] ?>, <?= html_entity_decode($speech["attributes"]["license"]); ?></span></div>
 <div class="modal fade" id="nerModal" tabindex="-1" aria-labelledby="nerModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="nerModalTitle"><?php echo L::automaticallyDetected; ?></h5>
+                <h5 class="modal-title" id="nerModalTitle"><?= L::automaticallyDetected; ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body"><?php echo L::messageAutomaticallyDetected; ?></div>
+            <div class="modal-body"><?= L::messageAutomaticallyDetected; ?></div>
         </div>
     </div>
 </div>

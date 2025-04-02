@@ -222,14 +222,14 @@ if ($config["display"]["ner"]) {
     </div>
     <div class="tab-pane fade" id="data" role="tabpanel">
         <div class="alert alert-info" role="alert">
-            <div class="mb-1"><?php echo L::messageOpenData; ?>: <a class="text-reset" href="<?= $config["dir"]["root"] ?>/api"><?= $config["dir"]["root"] ?>/api</a></div>
+            <div class="mb-1"><?= L::messageOpenData; ?>: <a class="text-reset" href="<?= $config["dir"]["root"] ?>/api"><?= $config["dir"]["root"] ?>/api</a></div>
         </div>
         <div class="input-group">
             <span class="input-group-text me-0">API URL</span>
             <input id="apiLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= $speech["links"]["self"] ?>">
             <a href="<?= $speech["links"]["self"] ?>" target="_blank" class="btn btn-sm input-group-text">
                 <span class="icon-right-open-big"></span>
-                <span class="d-none d-md-inline"><?php echo L::showResult; ?></span>
+                <span class="d-none d-md-inline"><?= L::showResult; ?></span>
             </a>
         </div>
         <hr>
@@ -238,7 +238,7 @@ if ($config["display"]["ner"]) {
             <tbody>
                 <tr>
                     <td><?= L::source ?></td>
-                    <td><?= $speech["attributes"]["creator"] ?>, <?php echo html_entity_decode($speech["attributes"]["license"]); ?></td>
+                    <td><?= $speech["attributes"]["creator"] ?>, <?= html_entity_decode($speech["attributes"]["license"]); ?></td>
                 </tr>
                 <tr>
                     <td><?= L::citeAs ?></td>

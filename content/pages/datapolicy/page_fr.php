@@ -2,7 +2,7 @@
 <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
-		    <h2><?php echo L::dataPolicy; ?></h2>
+		    <h2><?= L::dataPolicy; ?></h2>
             <p>Le responsable du traitement des données est Joscha Jäger c/o Center for the Cultivation of Technology gemeinnützige GmbH, Aufgang 4, Gottschedstraße 4, 13357 Berlin. L'autorité de contrôle compétente est le <a href="https://www.datenschutz-berlin.de">Commissaire à la protection des données et à la liberté d'information de Berlin</a>.</p>
 			<p>La sécurité de vos données est notre priorité absolue. Nous prenons toutes les mesures possibles pour protéger vos données personnelles contre tout accès non autorisé. Nous respectons toutes les exigences du Règlement général sur la protection des données (RGPD) de l'UE, de la loi fédérale sur la protection des données (BDSG), de la loi sur les médias (TMG) et de toutes les autres réglementations sur la protection des données. Vous pouvez visiter notre site sans fournir d'informations personnelles.</p>
 			<p>Le site web OpenParliament.TV et les sous-domaines spécifiques aux parlements (par exemple de.openparliament.tv) vous permettent de regarder et de rechercher des débats parlementaires en combinaison avec les procès-verbaux pléniers et des informations supplémentaires.</p>

@@ -28,7 +28,7 @@ require_once(__DIR__.'/../config.php');
 require_once (__DIR__.'/v1/api.php');
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $lang; ?>" dir="ltr">
+<html lang="<?= $lang; ?>" dir="ltr">
 <head>
 	<?php require_once(__DIR__.'/../content/head.php'); ?>
     <script type="text/javascript">

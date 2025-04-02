@@ -20,7 +20,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		<div class="sidebar-content">
 			<div class="row" style="position: relative; z-index: 1">
 				<div class="col-12 mainContainer">
-					<h2><?php echo L::manageEntities; ?></h2>
+					<h2><?= L::manageEntities; ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
 							<a href="<?= $config["dir"]["root"] ?>/manage/entities/new" class="btn btn-outline-success btn-sm me-1"><span class="icon-plus"></span> New Entity</a>
@@ -28,16 +28,16 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="people-tab" data-bs-toggle="tab" data-bs-target="#people" role="tab" aria-controls="people" aria-selected="true"><span class="icon-torso"></span> <?php echo L::personPlural; ?></a>
+                            <a class="nav-link active" id="people-tab" data-bs-toggle="tab" data-bs-target="#people" role="tab" aria-controls="people" aria-selected="true"><span class="icon-torso"></span> <?= L::personPlural; ?></a>
                         </li>
 						<li class="nav-item">
-                            <a class="nav-link" id="organisations-tab" data-bs-toggle="tab" data-bs-target="#organisations" role="tab" aria-controls="organisations" aria-selected="false"><span class="icon-bank"></span> <?php echo L::organisations; ?></a>
+                            <a class="nav-link" id="organisations-tab" data-bs-toggle="tab" data-bs-target="#organisations" role="tab" aria-controls="organisations" aria-selected="false"><span class="icon-bank"></span> <?= L::organisations; ?></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="icon-doc-text"></span> <?php echo L::documents; ?></a>
+                            <a class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="icon-doc-text"></span> <?= L::documents; ?></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="terms-tab" data-bs-toggle="tab" data-bs-target="#terms" role="tab" aria-controls="terms" aria-selected="false"><span class="icon-tag"></span> <?php echo L::terms; ?></a>
+                            <a class="nav-link" id="terms-tab" data-bs-toggle="tab" data-bs-target="#terms" role="tab" aria-controls="terms" aria-selected="false"><span class="icon-tag"></span> <?= L::terms; ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -65,13 +65,13 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	$(function(){
 
 		function renderActionButtons(type, id) {
-			return '<div class="list-group list-group-horizontal"><a class="list-group-item list-group-item-action" title="<?php echo L::view; ?>" href="<?php echo $config["dir"]["root"]; ?>/person/' +id+ '" target="_blank"><span class="icon-eye"></span></a><a class="list-group-item list-group-item-action" title="<?php echo L::edit; ?>" href="<?php echo $config["dir"]["root"]; ?>/manage/entities/' +type+ '/' +id+ '"><span class="icon-pencil"></span></a></div>';
+			return '<div class="list-group list-group-horizontal"><a class="list-group-item list-group-item-action" title="<?= L::view; ?>" href="<?= $config["dir"]["root"]; ?>/person/' +id+ '" target="_blank"><span class="icon-eye"></span></a><a class="list-group-item list-group-item-action" title="<?= L::edit; ?>" href="<?= $config["dir"]["root"]; ?>/manage/entities/' +type+ '/' +id+ '"><span class="icon-pencil"></span></a></div>';
 		}
 		
 		$('#peopleTable').bootstrapTable({
 			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=person",
 			classes: "table table-striped",
-			locale: "<?php echo $lang; ?>",
+			locale: "<?= $lang; ?>",
 			pagination: true,
 			sidePagination: "server",
 			dataField: "rows",
@@ -131,7 +131,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		$('#organisationsTable').bootstrapTable({
 			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=organisation",
 			classes: "table table-striped",
-			locale: "<?php echo $lang; ?>",
+			locale: "<?= $lang; ?>",
 			pagination: true,
 			sidePagination: "server",
 			dataField: "rows",
@@ -179,7 +179,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		$('#documentsTable').bootstrapTable({
 			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=document",
 			classes: "table table-striped",
-			locale: "<?php echo $lang; ?>",
+			locale: "<?= $lang; ?>",
 			pagination: true,
 			sidePagination: "server",
 			dataField: "rows",
@@ -234,7 +234,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		$('#termsTable').bootstrapTable({
 			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=term",
 			classes: "table table-striped",
-			locale: "<?php echo $lang; ?>",
+			locale: "<?= $lang; ?>",
 			pagination: true,
 			sidePagination: "server",
 			dataField: "rows",

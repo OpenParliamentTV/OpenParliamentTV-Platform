@@ -18,10 +18,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2><?php echo L::manageMedia; ?></h2>
+                    <h2><?= L::manageMedia; ?></h2>
                     <div class="card mb-3">
                         <div class="card-body">
-                            <a href="<?= $config["dir"]["root"] ?>/manage/media/new" class="btn btn-outline-success btn-sm me-1"><span class="icon-plus"></span><?php echo L::manageMediaNew; ?></a>
+                            <a href="<?= $config["dir"]["root"] ?>/manage/media/new" class="btn btn-outline-success btn-sm me-1"><span class="icon-plus"></span><?= L::manageMediaNew; ?></a>
                         </div>
                     </div>
                     <ul class="nav nav-tabs" role="tablist">
@@ -40,7 +40,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                    data-sortable="true"
                                    data-show-export="true"
                                    data-export-types="['csv', 'excel', 'txt', 'json']"
-                                   data-locale="<?php echo $lang; ?>"
+                                   data-locale="<?= $lang; ?>"
                                    class="table">
                                 <thead>
                                     <tr>

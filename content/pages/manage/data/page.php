@@ -18,7 +18,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2><?php echo L::manageData; ?></h2>
+                    <h2><?= L::manageData; ?></h2>
                     <div class="card mb-3">
                         <div class="card-body">
                             <a href="<?= $config["dir"]["root"] ?>/manage/data/media/new" class="btn btn-outline-success btn-sm me-1">New Media Item</a>

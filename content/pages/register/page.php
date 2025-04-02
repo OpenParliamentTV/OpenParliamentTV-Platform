@@ -2,25 +2,25 @@
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
-			<h2 class="mb-3"><?php echo L::registerNewAccount; ?></h2>
+			<h2 class="mb-3"><?= L::registerNewAccount; ?></h2>
 			<form id="register-form">
 				<div class="form-group">
-					<label for="register-name"><?php echo L::name; ?></label>
+					<label for="register-name"><?= L::name; ?></label>
 					<input type="text" class="form-control" id="register-name" name="name">
 				</div>
 				<div class="form-group">
-					<label for="register-mail"><?php echo L::mailAddress; ?></label>
+					<label for="register-mail"><?= L::mailAddress; ?></label>
 					<input type="email" class="form-control" id="register-mail" name="mail">
 				</div>
 				<div class="form-group">
-					<label for="register-password"><?php echo L::password; ?></label>
+					<label for="register-password"><?= L::password; ?></label>
 					<input type="password" class="form-control" id="register-password" name="password">
 				</div>
 				<div class="form-group">
-					<label for="register-passwordCheck"><?php echo L::passwordConfirm; ?></label>
+					<label for="register-passwordCheck"><?= L::passwordConfirm; ?></label>
 					<input type="password" class="form-control" id="register-passwordCheck" name="passwordCheck">
 				</div>
-				<button type="submit" class="btn btn-primary btn-sm"><?php echo L::registerNewAccount; ?></button>
+				<button type="submit" class="btn btn-primary btn-sm"><?= L::registerNewAccount; ?></button>
 			</form>
 			<div id="register-response" class="alert mt-3"></div>
 		</div>

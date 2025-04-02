@@ -2,7 +2,7 @@
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
-			<h2 class="mb-3"><?php echo L::resetPassword; ?></h2>
+			<h2 class="mb-3"><?= L::resetPassword; ?></h2>
 			<?php
 			if ($_REQUEST["mail"]) {
 				include_once(__DIR__ . '/../../../modules/user-management/passwordreset.backend.sql.php');
@@ -42,14 +42,14 @@
 							<input type="hidden" name="id" value="<?= $response["UserID"] ?>">
 
 							<div class="form-group">
-								<label for="login-password"><?php echo L::newNeutral.' '.L::password; ?></label>
+								<label for="login-password"><?= L::newNeutral.' '.L::password; ?></label>
 								<input type="password" class="form-control" id="login-password" name="password">
 							</div>
 							<div class="form-group">
-								<label for="login-password-check"><?php echo L::newNeutral.' '.L::passwordConfirm; ?></label>
+								<label for="login-password-check"><?= L::newNeutral.' '.L::passwordConfirm; ?></label>
 								<input type="password" class="form-control" id="login-password" name="password-check">
 							</div>
-							<button type="submit" class="btn btn-primary btn-sm"><?php echo L::changePassword; ?></button>
+							<button type="submit" class="btn btn-primary btn-sm"><?= L::changePassword; ?></button>
 						</form>
 					<?php
 					} else {
@@ -106,10 +106,10 @@
 				<form id="resetpassword-mail-form" method="post">
 					<input type="hidden" name="a" value="passwordReset">
 					<div class="form-group">
-						<label for="login-mail"><?php echo L::mailAddress; ?></label>
+						<label for="login-mail"><?= L::mailAddress; ?></label>
 						<input type="email" class="form-control" id="resetpassword-mail" name="mail">
 					</div>
-					<button type="submit" class="btn btn-primary btn-sm"><?php echo L::resetPassword; ?></button>
+					<button type="submit" class="btn btn-primary btn-sm"><?= L::resetPassword; ?></button>
 				</form>
 			<?php
 			}

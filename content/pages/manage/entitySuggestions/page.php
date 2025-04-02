@@ -20,7 +20,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		<div class="sidebar-content">
 			<div class="row" style="position: relative; z-index: 1">
 				<div class="col-12 mainContainer">
-					<h2><?php echo L::manageEntitySuggestions; ?></h2>
+					<h2><?= L::manageEntitySuggestions; ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
 							
@@ -28,7 +28,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="suggested-entities-tab" data-bs-toggle="tab" data-bs-target="#suggested-entities" role="tab" aria-controls="suggested-entities" aria-selected="true"><span class="icon-lightbulb"></span> <?php echo L::suggestions; ?></a>
+                            <a class="nav-link active" id="suggested-entities-tab" data-bs-toggle="tab" data-bs-target="#suggested-entities" role="tab" aria-controls="suggested-entities" aria-selected="true"><span class="icon-lightbulb"></span> <?= L::suggestions; ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -107,7 +107,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		$('#entitiesTable').bootstrapTable({
 			url: config["dir"]["root"] + "/server/ajaxServer.php?a=entitysuggestionGetTable",
 			classes: "table table-striped",
-			locale: "<?php echo $lang; ?>",
+			locale: "<?= $lang; ?>",
 			pagination: true,
 			sidePagination: "server",
 			dataField: "rows",
@@ -191,7 +191,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					title: "Action",
 					sortable: false,
 					formatter: function(value, row) {
-						return "<div class='list-group list-group-horizontal'><span class='entitysuggestiondetails list-group-item list-group-item-action' title='<?php echo L::viewDetails; ?>' data-id='"+value+"' data-bs-toggle='modal' data-bs-target='#entityDetailsModal'><span class='icon-eye'></span></span><a href='"+config["dir"]["root"]+"/manage/entities/new?wikidataID="+row["EntitysuggestionExternalID"]+"&entitySuggestionID="+row["EntitysuggestionID"]+"' target='_blank' class='list-group-item list-group-item-action' data-id='"+row["EntitysuggestionID"]+"'><span class='icon-plus'></span></a></div>"
+						return "<div class='list-group list-group-horizontal'><span class='entitysuggestiondetails list-group-item list-group-item-action' title='<?= L::viewDetails; ?>' data-id='"+value+"' data-bs-toggle='modal' data-bs-target='#entityDetailsModal'><span class='icon-eye'></span></span><a href='"+config["dir"]["root"]+"/manage/entities/new?wikidataID="+row["EntitysuggestionExternalID"]+"&entitySuggestionID="+row["EntitysuggestionID"]+"' target='_blank' class='list-group-item list-group-item-action' data-id='"+row["EntitysuggestionID"]+"'><span class='icon-plus'></span></a></div>"
 					}
 				}
 			]

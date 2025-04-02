@@ -22,7 +22,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 <div class="row no-gutters">
 	<div id="selectParliament" class="col-6 col-sm-auto">
 		<select class="form-control form-control-sm" name="parliament">
-			<option value="all" <?php if (!isset($_REQUEST['parliament'])) { echo 'selected'; } ?>><?php echo L::showAll; ?> <?php echo L::parliaments; ?></option>
+			<option value="all" <?php if (!isset($_REQUEST['parliament'])) { echo 'selected'; } ?>><?= L::showAll; ?> <?= L::parliaments; ?></option>
 			<?php
 			foreach($config["parliament"] as $k=>$v) {
 				$selectedString = '';
@@ -45,7 +45,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	?>
 	<div id="selectElectoralPeriod" class="col-2 col-sm-auto">
 		<select class="form-control form-control-sm" name="electoralPeriod">
-			<option value="all" <?php if (!isset($_REQUEST['electoralPeriod'])) { echo 'selected'; } ?>><?php echo L::showAll; ?> <?php echo L::electoralPeriods; ?></option>
+			<option value="all" <?php if (!isset($_REQUEST['electoralPeriod'])) { echo 'selected'; } ?>><?= L::showAll; ?> <?= L::electoralPeriods; ?></option>
 			<?php
 			$selectedString = '';
 			if (isset($_REQUEST['electoralPeriod']) && $_REQUEST['electoralPeriod'] == '19') {
@@ -61,7 +61,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	?>
 	<div id="selectSession" class="col-4 col-sm-auto">
 		<select class="form-control form-control-sm" name="sessionNumber">
-			<option value="all" <?php if (!isset($_REQUEST['sessionNumber'])) { echo 'selected'; } ?>><?php echo L::showAll; ?> <?php echo L::sessions; ?></option>
+			<option value="all" <?php if (!isset($_REQUEST['sessionNumber'])) { echo 'selected'; } ?>><?= L::showAll; ?> <?= L::sessions; ?></option>
 			<?php
 			for ($i=1; $i <= 239; $i++) { 
 			 	$selectedString = '';

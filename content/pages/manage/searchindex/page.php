@@ -18,7 +18,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2><?php echo L::manageSearchIndex; ?></h2>
+                    <h2><?= L::manageSearchIndex; ?></h2>
                     <div class="card mb-3">
 						<div class="card-body">
 
@@ -29,7 +29,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                             <a class="nav-link active" id="status-tab" data-bs-toggle="tab" data-bs-target="#status" role="tab" aria-controls="people" aria-selected="true"><span class="icon-arrows-cw"></span> Status</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="people" aria-selected="false"><span class="icon-cog"></span> <?php echo L::settings; ?></a>
+                            <a class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="people" aria-selected="false"><span class="icon-cog"></span> <?= L::settings; ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">

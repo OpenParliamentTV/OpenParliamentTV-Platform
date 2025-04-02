@@ -905,7 +905,7 @@ switch ($page) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $lang; ?>" dir="ltr" <?= $schemaItemScopeString ?>>
+<html lang="<?= $lang; ?>" dir="ltr" <?= $schemaItemScopeString ?>>
 <head>
 	<?php require_once('content/head.php'); ?>
     <script type="text/javascript">

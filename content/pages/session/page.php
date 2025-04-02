@@ -28,8 +28,8 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					</div>
 					<div class="col">
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
-						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. <?php echo L::electoralPeriod ?></a></div>
-						<h2 class="mt-2"><?php echo L::session ?> <?= $apiResult["data"]["attributes"]["number"] ?></h2>
+						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. <?= L::electoralPeriod ?></a></div>
+						<h2 class="mt-2"><?= L::session ?> <?= $apiResult["data"]["attributes"]["number"] ?></h2>
 						<div><?php 
 							$startDateParts = explode("T", $apiResult["data"]["attributes"]["dateStart"]);
 							$endDateParts = explode("T", $apiResult["data"]["attributes"]["dateEnd"]);
@@ -48,13 +48,13 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		<div class="col-12">
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::relatedMedia ?></span></a>
+					<a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?= L::relatedMedia ?></span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="agendaItems-tab" data-bs-toggle="tab" data-bs-target="#agendaItems" role="tab" aria-controls="agendaItems" aria-selected="false"><span class="icon-list-numbered"></span><span class="nav-item-label"><?php echo L::agendaItems ?></span></a>
+					<a class="nav-link" id="agendaItems-tab" data-bs-toggle="tab" data-bs-target="#agendaItems" role="tab" aria-controls="agendaItems" aria-selected="false"><span class="icon-list-numbered"></span><span class="nav-item-label"><?= L::agendaItems ?></span></a>
 				</li>
 				<li class="nav-item ms-auto">
-					<a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
+					<a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?= L::data ?></span></a>
 				</li>
 			</ul>
 			<div class="tab-content">
@@ -118,7 +118,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			},
 			sortName: false,
 			cardView: false,
-			locale: '<?php echo $lang; ?>'
+			locale: '<?= $lang; ?>'
 		});
 	});
 </script>

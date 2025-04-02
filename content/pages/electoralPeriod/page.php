@@ -28,7 +28,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					</div>
 					<div class="col">
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
-						<h2><?= $apiResult["data"]["attributes"]["number"] ?>. <?php echo L::electoralPeriod ?></h2>
+						<h2><?= $apiResult["data"]["attributes"]["number"] ?>. <?= L::electoralPeriod ?></h2>
 						<div><?php 
 							if ($apiResult["data"]["attributes"]["dateStart"]) {
 								$formattedDateStart = date("d.m.Y", strtotime($apiResult["data"]["attributes"]["dateStart"]));
@@ -45,13 +45,13 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		<div class="col-12">
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?php echo L::relatedMedia ?></span></a>
+					<a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?= L::relatedMedia ?></span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="sessions-tab" data-bs-toggle="tab" data-bs-target="#sessions" role="tab" aria-controls="sessions" aria-selected="false"><span class="icon-group"></span><span class="nav-item-label"><?php echo L::sessions ?></span></a>
+					<a class="nav-link" id="sessions-tab" data-bs-toggle="tab" data-bs-target="#sessions" role="tab" aria-controls="sessions" aria-selected="false"><span class="icon-group"></span><span class="nav-item-label"><?= L::sessions ?></span></a>
 				</li>
 				<li class="nav-item ms-auto">
-					<a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?php echo L::data ?></span></a>
+					<a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?= L::data ?></span></a>
 				</li>
 			</ul>
 			<div class="tab-content">
@@ -73,7 +73,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 							<div class="entityContainer">
 								<a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$relationshipItem["data"]["id"] ?>">
 									<div><?= $formattedDateStart ?></div>
-									<div class="entityTitle"><?php echo L::session ?> <?= $relationshipItem["data"]["attributes"]["number"] ?></div>
+									<div class="entityTitle"><?= L::session ?> <?= $relationshipItem["data"]["attributes"]["number"] ?></div>
 								</a>
 							</div>
 						</div>
@@ -116,7 +116,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			},
 			sortName: false,
 			cardView: false,
-			locale: '<?php echo $lang; ?>'
+			locale: '<?= $lang; ?>'
 		});
 	});
 </script>

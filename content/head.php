@@ -79,7 +79,7 @@ if (isset($personDataFromRequest)) {
   // If set personDataFromRequest contains labels for personID values so we can display names
 ?>
   <script type="text/javascript">
-    var personDataFromRequest = JSON.parse('<?php echo json_encode($personDataFromRequest); ?>');
+    var personDataFromRequest = JSON.parse('<?= json_encode($personDataFromRequest); ?>');
   </script>
 <?php
 }
