@@ -70,11 +70,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         <div class="card mb-3">
                             <div class="card-body">
                                 <div class="text-uppercase text-muted mb-3">DEBUG</div>
-                                <div class="row">
-                                    <div class="mt-2 mb-2 col-12 col-md-6 col-lg-3">
-                                        <a href="<?= $config["dir"]["root"]; ?>/server/ajaxServer.php?a=getMedia&v=1&p=bt&conflicts=true" target="_self" class="btn btn-outline-primary w-100 d-flex flex-column align-items-center py-3">Show Media Data (v can be hash or id, p is just required if v is an ID)</a>    
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -97,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await fetch(`<?= $config["dir"]["root"]; ?>/api/v1/?action=getOverview&itemType=${type}&id=all&limit=10&offset=0&sort=${type.charAt(0).toUpperCase() + type.slice(1)}LastChanged&order=desc`);
             const data = await response.json();
-            console.log(`API response for ${type}:`, data);
+            //console.log(`API response for ${type}:`, data);
             // The getOverview functions return the data directly without a meta structure
             if (data && data.rows) {
                 const entities = data.rows.map(entity => ({
@@ -106,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     type: type,
                     lastChanged: entity[`${type.charAt(0).toUpperCase() + type.slice(1)}LastChanged`]
                 }));
-                console.log(`Processed entities for ${type}:`, entities);
+                //console.log(`Processed entities for ${type}:`, entities);
                 return entities;
             }
             return [];
