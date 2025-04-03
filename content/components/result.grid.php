@@ -4,7 +4,7 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
 
 
-include_once(__DIR__ . '/../../../modules/utilities/auth.php');
+include_once(__DIR__ . '/../../modules/utilities/auth.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", "results");
 
@@ -13,14 +13,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
 } else {
 
 if (!function_exists("L")) {
-	require_once(__DIR__."/../../../i18n.class.php");
-	$i18n = new i18n(__DIR__.'/../../../lang/lang_{LANGUAGE}.json', __DIR__.'/../../../langcache/', 'de');
+	require_once(__DIR__."/../../i18n.class.php");
+	$i18n = new i18n(__DIR__.'/../../lang/lang_{LANGUAGE}.json', __DIR__.'/../../langcache/', 'de');
 	$i18n->init();
 }
 
-require_once(__DIR__.'/../../../modules/utilities/functions.entities.php');
-require_once(__DIR__."/../../../modules/search/include.search.php");
-require_once(__DIR__."/../../../api/v1/api.php");
+require_once(__DIR__.'/../../modules/utilities/functions.entities.php');
+require_once(__DIR__."/../../modules/search/include.search.php");
+require_once(__DIR__."/../../api/v1/api.php");
 
 
 
@@ -137,7 +137,7 @@ if ($totalResults != 0) {
 				$highlightedName = str_replace($_REQUEST['person'], '<em>'.$_REQUEST['person'].'</em>', $highlightedName);
 			}
 
-			include 'content.result.item.php';
+			include 'result.grid.item.php';
 		}
 		?>
 	</div>
@@ -150,7 +150,7 @@ if ($totalResults != 0) {
 
     </script>
 	<?php 
-	include_once('content.result.pagination.php');
+	include_once('result.pagination.php');
 } else {
 	?>
 	<div class="filterSummary row">

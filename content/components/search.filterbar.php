@@ -15,7 +15,7 @@ $showSearchSuggestions = isset($showSearchSuggestions) ? $showSearchSuggestions 
         <div class="searchContainer">
             <?php if ($showParliamentFilter): ?>
             <div class="parliamentFilterContainer d-none">
-                <?php include_once(__DIR__ . '/../pages/search/content.filter.parliaments.php'); ?>
+                <?php include_once('search.filter.parliaments.php'); ?>
             </div>
             <?php endif; ?>
             

@@ -21,12 +21,12 @@ include_once(__DIR__ . '/../../header.php'); ?>
 	$showFactionChart = true;
 	$showDateRange = true;
 	$showSearchSuggestions = true;
-	include_once(__DIR__ . '/../../components/filterbar.php'); 
+	include_once(__DIR__ . '/../../components/search.filterbar.php'); 
 	?>
 	<div class="row m-0" style="position: relative; z-index: 1">
 		<div id="speechListContainer" class="col">
 			<div class="resultWrapper">
-				<?php include_once('content.result.php'); ?>
+				<?php include_once(__DIR__ . '/../../components/result.grid.php'); ?>
 			</div>
 			<div class="loadingIndicator">
 				<div class="workingSpinner" style="position: fixed; top: 65%;"></div>

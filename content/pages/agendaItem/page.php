@@ -48,9 +48,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			<div class="tab-content">
 				<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
 					<div id="speechListContainer">
-						<div class="resultWrapper">
-							<?php include_once('content.result.php'); ?>
-						</div>
+						<div class="resultWrapper"></div>
 						<div class="loadingIndicator">
 							<div class="workingSpinner" style="position: fixed; top: 65%;"></div>
 						</div>

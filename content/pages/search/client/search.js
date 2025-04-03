@@ -8,6 +8,9 @@ var factionChart = null,
 var selectedSuggestionIndex = null,
 	selectedSuggestionColumn = 'suggestionContainerText';
 
+// Check if we're in the media management context
+var isMediaManagement = window.location.pathname.includes('/manage/media');
+
 let resultsAttributes;
 
 $(document).ready( function() {
@@ -524,7 +527,9 @@ function updateQuery() {
 		$('#filterForm').append('<input type="hidden" name="personID[]" value="'+ peopleIDs[i] +'">');
 	}
 
-	history.pushState(null, "", "search?"+ getSerializedForm());
+	var targetPath = isMediaManagement ? 'media?' : 'search?';
+	
+	history.pushState(null, "", targetPath + getSerializedForm());
 	updateResultList();
 	if ($('input[name="q"]').val() != '' || peopleIDs.length != 0) {
 		if (peopleIDs.length != 0) {
@@ -561,9 +566,11 @@ function updateResultList() {
     	langString = 'lang=' + langParam + '&';
     }
 
+	var view = isMediaManagement ? 'table' : 'grid';
+
 	updateAjax = $.ajax({
 		method: "POST",
-		url: "./content/pages/search/content.result.php?a=search&queryOnly=1&" + langString + pageString + getSerializedForm()
+		url: config.dir.root + "/content/components/result."+view+".php?a=search&queryOnly=1&" + langString + pageString + getSerializedForm()
 	}).done(function(data) {
 		var requestQuery = getQueryVariable('q'),
 			requestPersonID = getQueryVariable('personID');
@@ -585,8 +592,35 @@ function updateResultList() {
 
 		$('.loadingIndicator').hide();
 		runCounterAnimation();
+
+		//TODO: fix this
+		if (isMediaManagement) {
+			$('#speechListContainer .resultWrapper > nav a').each(function() {
+				var thisPage = getQueryVariableFromString('page', $(this).attr('href'));
+				if (!thisPage) { thisPage = 1; }
+				$(this).attr('href', '#page='+ thisPage);
+			});
+			//updateListeners('#speechListContainer');
+		}
 	}).fail(function(err) {
 		//console.log(err);
+	});
+}
+
+function updateListeners(targetSelector) {
+	$(targetSelector +' .resultWrapper > nav a').click(function(evt) {
+		evt.stopPropagation();
+		evt.preventDefault();
+		var page = 1;
+		var pageParts = $(this).attr('href').split('#page=');
+		if (pageParts.length > 1) {
+			page = pageParts[1];
+		}
+		/*
+		currentQueries[targetSelector] = currentQueries[targetSelector].replace(/&page=[0-9]+/, '');
+		currentQueries[targetSelector] += '&page='+ page;
+		updateMediaList(currentQueries[targetSelector], targetSelector);
+		*/
 	});
 }
 
@@ -723,39 +757,42 @@ function updateFactionChart() {
         }
     }
 
-    if (!factionChart) {
-        var factionCtx = document.getElementById('factionChart').getContext('2d');
-        factionChart = new Chart(factionCtx, {
-            type: 'doughnut',
-            data: factionData,
-            options: {
-                responsive: true,
-                aspectRatio: 1,
-                legend: {
-                    display: false
-                },
-                tooltips: {
-                    enabled: false
-                },
-                cutoutPercentage: 75,
-                animation: {
-                    animateRotate: true
-                }
-            }
-        });
-    } else {
-        //empty chart
-        factionChart.data.labels = [];
-        factionChart.data.datasets[0].data = [];
-        factionChart.data.datasets[0].backgroundColor = [];
-        // update chart
-        for (var i = 0; i <= factionData.datasets[0].data.length; i++) {
-            factionChart.data.labels.push(factionData.labels[i]);
-            factionChart.data.datasets[0].data.push(factionData.datasets[0].data[i]);
-            factionChart.data.datasets[0].backgroundColor.push(factionData.datasets[0].backgroundColor[i]);
-        }
-        factionChart.update();
-    }
+    if ($('#factionChart').length !== 0) {
+		if (!factionChart) {
+        
+			var factionCtx = document.getElementById('factionChart').getContext('2d');
+			factionChart = new Chart(factionCtx, {
+				type: 'doughnut',
+				data: factionData,
+				options: {
+					responsive: true,
+					aspectRatio: 1,
+					legend: {
+						display: false
+					},
+					tooltips: {
+						enabled: false
+					},
+					cutoutPercentage: 75,
+					animation: {
+						animateRotate: true
+					}
+				}
+			});
+		} else {
+			//empty chart
+			factionChart.data.labels = [];
+			factionChart.data.datasets[0].data = [];
+			factionChart.data.datasets[0].backgroundColor = [];
+			// update chart
+			for (var i = 0; i <= factionData.datasets[0].data.length; i++) {
+				factionChart.data.labels.push(factionData.labels[i]);
+				factionChart.data.datasets[0].data.push(factionData.datasets[0].data[i]);
+				factionChart.data.datasets[0].backgroundColor.push(factionData.datasets[0].backgroundColor[i]);
+			}
+			factionChart.update();
+		}	
+	}
 
 }
 
@@ -810,7 +847,7 @@ function animateCountUp(el) {
 			el.innerHTML = currentCount;
 		}
 
-		// If we’ve reached our last frame, stop the animation
+		// If we've reached our last frame, stop the animation
 		if ( frame === totalFrames ) {
 			clearInterval( counter );
 		}

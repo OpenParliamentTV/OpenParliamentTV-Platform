@@ -132,3 +132,34 @@ function getQueryVariable(variable) {
 	return returnValues;
 }
 
+function getQueryVariableFromString(variable, queryString) {
+	var splitQuery = queryString.split('?');
+	var query = '';
+	if (splitQuery.length > 1) {
+		query = splitQuery[1];
+	} else {
+		query = queryString.replace('?', '')
+	}
+	
+	var vars = query.split("&"),
+		pair,
+		returnValues = null;
+	for (var i = 0; i < vars.length; i++) {
+		pair = vars[i].split("=");
+		
+		pair[0] = decodeURIComponent(pair[0]);
+		pair[1] = decodeURIComponent(pair[1]).replace(/\+/g, ' ');
+		
+		if (pair[0].indexOf('[]') != -1) {
+			if (pair[0].replace('[]', '') == variable) {
+				if (!returnValues) returnValues = [];
+				returnValues.push(pair[1]);
+			}
+		} else if (pair[0] == variable) {
+			returnValues = pair[1];
+		}
+	}
+
+	return returnValues;
+}
+
