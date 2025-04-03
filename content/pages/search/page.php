@@ -13,7 +13,16 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 include_once(__DIR__ . '/../../header.php'); ?>
 <main class="container-fluid">
-	<?php include_once('content.filter.php'); ?>
+	<?php 
+	// Include the filter bar component with all features enabled for search page
+	$showSearchBar = true;
+	$showParliamentFilter = false;
+	$showToggleButton = true;
+	$showFactionChart = true;
+	$showDateRange = true;
+	$showSearchSuggestions = true;
+	include_once(__DIR__ . '/../../components/filterbar.php'); 
+	?>
 	<div class="row m-0" style="position: relative; z-index: 1">
 		<div id="speechListContainer" class="col">
 			<div class="resultWrapper">
