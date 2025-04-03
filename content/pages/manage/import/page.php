@@ -32,9 +32,60 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						<li class="nav-item">
                             <a class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="people" aria-selected="false"><span class="icon-cog"></span> <?= L::settings; ?></a>
                         </li>
+						<li class="nav-item">
+                            <a class="nav-link" id="old-tab" data-bs-toggle="tab" data-bs-target="#old" role="tab" aria-controls="old" aria-selected="false">OLD THINGS TO REUSE</a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="status" role="tabpanel" aria-labelledby="status-tab">
+                            <div class="status-visualization p-4">
+                                <div class="row align-items-center justify-content-center position-relative">
+                                    <div class="connecting-line"></div>
+                                    <div class="col-4 text-center">
+                                        <div class="status-circle rounded-circle">
+                                            <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
+                                                <i class="icon-git-squared small"></i>
+                                                <h4 class="small mb-0">Data <br>Repository</h4>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+											<div>Last updated:</div>
+											<div id="lastCommitDate" class="fw-bolder">-</div>
+										</div>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <div class="status-circle rounded-circle">
+                                            <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
+                                                <i class="icon-database small"></i>
+                                                <h4 class="small mb-0">Platform <br>Database</h4>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+											<div>Last updated:</div>
+											<div id="lastDBDate" class="fw-bolder">-</div>
+										</div>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <div class="status-circle rounded-circle">
+                                            <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
+                                                <i class="icon-search small"></i>
+                                                <h4 class="small mb-0">Search <br>Index</h4>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+											<div>Last updated:</div>
+											<div id="lastSearchDate" class="fw-bolder">-</div>
+										</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+						<div class="tab-pane bg-white fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+							[SETTINGS]
+                        </div>
+						<div class="tab-pane bg-white fade" id="old" role="tabpanel" aria-labelledby="old-tab">
+							[OLD THINGS TO REUSE]
 							<?php
 							include_once(__DIR__."/../../../../config.php");
 							if ((!$_REQUEST["parliament"]) || (!array_key_exists($_REQUEST["parliament"],$config["parliament"]))) {
@@ -90,15 +141,60 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 							?>
                         </div>
-						<div class="tab-pane bg-white fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-							[SETTINGS]
-                        </div>
                     </div>
 				</div>
 			</div>
 		</div>
 	</div>
 </main>
+
+<style>
+	.status-circle {
+		width: 100px;
+		height: 100px;
+		margin: 0 auto;
+		position: relative;
+		transition: all 0.3s ease;
+		border: 2px solid var(--border-color);
+		background-color: var(--secondary-bg-color);
+		z-index: 2;
+		color: var(--primary-fg-color);
+	}
+	.connecting-line {
+		position: absolute;
+		top: 51px;
+		left: 50%;
+		transform: translateX(-50%);
+		width: calc(70%);
+		height: 2px;
+		background: var(--border-color);
+		z-index: 1;
+	}
+	.status-circle i {
+		font-size: 1.25rem;
+		margin-bottom: 4px;
+	}
+</style>
+
+<script>
+	fetch('https://api.github.com/repos/OpenParliamentTV/OpenParliamentTV-Data-DE/commits')
+		.then(response => response.json())
+		.then(data => {
+			const date = new Date(data[0].commit.author.date);
+			document.getElementById('lastCommitDate').textContent = 
+				date.toLocaleString('de');
+		});
+
+	fetch('<?= $config["dir"]["root"] ?>/api/v1/search/media?includeAll=true&sort=date-desc')
+		.then(response => response.json())
+		.then(data => {
+			if (data.data && data.data.length > 0) {
+				const date = new Date(data.data[0].attributes.lastChanged);
+				document.getElementById('lastSearchDate').textContent = 
+					date.toLocaleString('de');
+			}
+		});
+</script>
 <?php
     include_once(__DIR__ . '/../../../footer.php');
 
