@@ -272,20 +272,24 @@ function getSearchBody($request, $getAllResults) {
 
     $filter = array("must"=>array(), "should"=>array(), "must_not"=>array());
 
-    //ONLY INCLUDE ALIGNED SPEECHES
-    //$filter["must"][] = array("match"=>array("attributes.aligned" => true));
+    if(!$request["includeAll"] || $request["includeAll"] == false) {
 
-    // FILTER OUT FRAGESTUNDE ETC.
+        //ONLY INCLUDE ALIGNED SPEECHES
+        //$filter["must"][] = array("match"=>array("attributes.aligned" => true));
 
-    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Befragung"));
-    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Fragestunde"));
-    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Wahl der"));
-    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Wahl des"));
-    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungseröffnung"));
-    $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungsende"));
+        // FILTER OUT FRAGESTUNDE ETC.
 
-    //HIDE NON PUBLIC MEDIA
-    $filter["must_not"][] = array("match"=>array("attributes.public" => 0));
+        $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Befragung"));
+        $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Fragestunde"));
+        $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Wahl der"));
+        $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Wahl des"));
+        $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungseröffnung"));
+        $filter["must_not"][] = array("match_phrase"=>array("relationships.agendaItem.data.attributes.title" => "Sitzungsende"));
+
+        //HIDE NON PUBLIC MEDIA
+        $filter["must_not"][] = array("match"=>array("attributes.public" => 0));
+
+    }
 
     $shouldCount = 0;
 
