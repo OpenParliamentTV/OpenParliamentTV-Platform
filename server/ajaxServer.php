@@ -15,17 +15,16 @@ include_once(__DIR__ . '/../modules/utilities/auth.php');
 switch ($_REQUEST["a"]) {
 
     case "lang":
-
-        if ($_REQUEST["lang"] && array_key_exists($_REQUEST["lang"], $acceptLang)) {
-
+        if ($_REQUEST["lang"] && isset($acceptLang) && array_key_exists($_REQUEST["lang"], $acceptLang)) {
             $_SESSION["lang"] = $_REQUEST["lang"];
-
             $return["success"] = "true";
-            $return["text"] = "Language has been set";
+            $return["text"] = "Language has been set to " . $_REQUEST["lang"];
+            $return["return"] = $_REQUEST["lang"];
+        } else {
+            $return["success"] = "false";
+            $return["text"] = "Invalid language code";
             $return["return"] = "";
-
         }
-
     break;
 
 

@@ -22,17 +22,28 @@ $(document).ready(function() {
 
 	$(".langswitch").on("click",function(e) {
 		e.preventDefault();
+		var lang = $(this).data("lang");
 		$.ajax({
 			url:config["dir"]["root"]+"/server/ajaxServer.php",
 			data: {
 				a:"lang",
-				lang:$(this).data("lang")
+				lang:lang
 			},
 			method: "POST",
-			success: function() {
-				location.reload();
+			success: function(response) {
+				if (response.success === "true") {
+					// Force a complete page reload to ensure all language changes are applied
+					window.location.reload(true);
+				} else {
+					console.error("Language switch failed:", response.text);
+				}
+			},
+			error: function() {
+				console.error("Language switch request failed");
+				// Still reload the page as a fallback
+				window.location.reload(true);
 			}
-		})
+		});
 	});
 
 	$('#toggleDarkmode').click(function(evt) {

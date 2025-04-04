@@ -71,6 +71,7 @@
 						<div class="py-2 px-4"><?= L::chooseLanguage; ?>:</div>
 						<div class="btn-group-vertical d-block px-4 mb-3" role="group">
 							<?php
+							global $acceptLang;
 							foreach ($acceptLang as $tmpLangK=>$tmpLang) {
 								$tmpParams = array_merge(array(),$_REQUEST);
 								$tmpParams["lang"] = $tmpLang["short"];

@@ -2,15 +2,13 @@
 //error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 error_reporting(0);
 session_start();
-require_once(__DIR__.'/../i18n.class.php');
-$i18n = new i18n(__DIR__.'/../lang/lang_{LANGUAGE}.json', __DIR__.'/../langcache/', 'de');
-$i18n->init();
-$userLang = $i18n->getUserLangs();
-$acceptLang = ['de', 'en'];
-$langIntersection = array_values(array_intersect($userLang, $acceptLang));
-$lang = (count($langIntersection) > 0) ? $langIntersection[0] : 'de';
-// just used inside JS const
-$langJSONString = file_get_contents(__DIR__.'/../lang/lang_'.$lang.'.json');
+
+require_once(__DIR__.'/../config.php');
+require_once(__DIR__.'/../modules/utilities/language.php');
+
+// Language is automatically initialized by LanguageManager
+$lang = LanguageManager::getInstance()->getCurrentLang();
+$langJSONString = LanguageManager::getInstance()->getLangJSONString();
 
 $color_scheme = isset($_COOKIE["color_scheme"]) ? $_COOKIE["color_scheme"] : false;
 if ($color_scheme === false) $color_scheme = 'light';
@@ -24,7 +22,6 @@ $pageBreadcrumbs = [
 	]
 ];
 
-require_once(__DIR__.'/../config.php');
 require_once (__DIR__.'/v1/api.php');
 ?>
 <!DOCTYPE html>

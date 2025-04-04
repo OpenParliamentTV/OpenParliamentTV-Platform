@@ -10,11 +10,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
     echo "Not authorized";
 } else {
 
-	if (!function_exists("L")) {
-		require_once(__DIR__."/../../i18n.class.php");
-		$i18n = new i18n(__DIR__.'/../../lang/lang_{LANGUAGE}.json', __DIR__.'/../../langcache/', 'de');
-		$i18n->init();
-	}
+	// Language is automatically initialized by LanguageManager
+	require_once(__DIR__.'/../../modules/utilities/language.php');
 
 	require_once(__DIR__.'/../../modules/utilities/functions.entities.php');
 	require_once(__DIR__."/../../modules/search/include.search.php");

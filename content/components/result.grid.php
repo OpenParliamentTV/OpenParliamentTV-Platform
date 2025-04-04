@@ -13,9 +13,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
 } else {
 
 if (!function_exists("L")) {
-	require_once(__DIR__."/../../i18n.class.php");
-	$i18n = new i18n(__DIR__.'/../../lang/lang_{LANGUAGE}.json', __DIR__.'/../../langcache/', 'de');
-	$i18n->init();
+	require_once(__DIR__."/../../config.php");
+require_once(__DIR__."/../../modules/utilities/language.php");
+	// Language is automatically initialized by LanguageManager
+	
 }
 
 require_once(__DIR__.'/../../modules/utilities/functions.entities.php');
