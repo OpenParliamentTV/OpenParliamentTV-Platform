@@ -490,62 +490,57 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         ARRAY_FILTER_USE_KEY
     );
 
-    if (!empty($filteredParameters)) {
+    try {
+        $search = searchSpeeches($filteredParameters);
 
-        try {
-            $search = searchSpeeches($filteredParameters);
+        if (isset($search["hits"]["hits"])) {
+            foreach ($search["hits"]["hits"] as $hit) {
 
-            if (isset($search["hits"]["hits"])) {
-                foreach ($search["hits"]["hits"] as $hit) {
+                $resultData = $hit["_source"];
+                $resultData["_score"] = $hit["_score"];
+                $resultData["_highlight"] = $hit["highlight"];
+                $resultData["_finds"] = $hit["finds"];
 
-                    $resultData = $hit["_source"];
-                    $resultData["_score"] = $hit["_score"];
-                    $resultData["_highlight"] = $hit["highlight"];
-                    $resultData["_finds"] = $hit["finds"];
-
-                    $return["data"][] = $resultData;
-
-                }
-
-                $return["meta"]["attributes"]["speechFirstDateStr"] = $search["aggregations"]["dateFirst"]["value_as_string"];
-                $return["meta"]["attributes"]["speechFirstDateTimestamp"] = $search["aggregations"]["dateFirst"]["value"];
-                $return["meta"]["attributes"]["speechLastDateStr"] = $search["aggregations"]["dateLast"]["value_as_string"];
-                $return["meta"]["attributes"]["speechLastDateTimestamp"] = $search["aggregations"]["dateLast"]["value"];
-                foreach ($search["aggregations"]["types_count"]["factions"]["terms"]["buckets"] as $buckets) {
-                    $return["meta"]["attributes"]["resultsPerFaction"][$buckets["key"]] = $buckets["doc_count"];
-                }
-                foreach($search["aggregations"]["datesCount"]["buckets"] as $day) {
-                    $return["meta"]["attributes"]["days"][$day["key_as_string"]] = $day;
-                }
-
-                $return["meta"]["requestStatus"] = "success";
-
-                //TODO: Check if this makes sense here
-                $return["meta"]["results"]["count"] = ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0;
-                $return["meta"]["results"]["total"] = $search["hits"]["total"]["value"];
-
-            } else {
-
-                $return["meta"]["requestStatus"] = "error";
-                $return["errors"] = array();
-                $errorarray["status"] = "503";
-                $errorarray["code"] = "3";
-                $errorarray["title"] = "OpenSearch Error";
-                $errorarray["detail"] = json_encode($search);
-                array_push($return["errors"], $errorarray);
+                $return["data"][] = $resultData;
 
             }
 
-        } catch (Exception $e) {
+            $return["meta"]["attributes"]["speechFirstDateStr"] = $search["aggregations"]["dateFirst"]["value_as_string"];
+            $return["meta"]["attributes"]["speechFirstDateTimestamp"] = $search["aggregations"]["dateFirst"]["value"];
+            $return["meta"]["attributes"]["speechLastDateStr"] = $search["aggregations"]["dateLast"]["value_as_string"];
+            $return["meta"]["attributes"]["speechLastDateTimestamp"] = $search["aggregations"]["dateLast"]["value"];
+            foreach ($search["aggregations"]["types_count"]["factions"]["terms"]["buckets"] as $buckets) {
+                $return["meta"]["attributes"]["resultsPerFaction"][$buckets["key"]] = $buckets["doc_count"];
+            }
+            foreach($search["aggregations"]["datesCount"]["buckets"] as $day) {
+                $return["meta"]["attributes"]["days"][$day["key_as_string"]] = $day;
+            }
+
+            $return["meta"]["requestStatus"] = "success";
+
+            //TODO: Check if this makes sense here
+            $return["meta"]["results"]["count"] = ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0;
+            $return["meta"]["results"]["total"] = $search["hits"]["total"]["value"];
+
+        } else {
+
+            $return["meta"]["requestStatus"] = "error";
+            $return["errors"] = array();
+            $errorarray["status"] = "503";
+            $errorarray["code"] = "3";
+            $errorarray["title"] = "OpenSearch Error";
+            $errorarray["detail"] = json_encode($search);
+            array_push($return["errors"], $errorarray);
 
         }
-    } else {
+
+    } catch (Exception $e) {
         $return["meta"]["requestStatus"] = "error";
         $return["errors"] = array();
         $errorarray["status"] = "503";
         $errorarray["code"] = "3";
         $errorarray["title"] = "OpenSearch Error";
-        $errorarray["detail"] = "No valid parameter given";
+        $errorarray["detail"] = json_encode($search);
         array_push($return["errors"], $errorarray);
     }
 
