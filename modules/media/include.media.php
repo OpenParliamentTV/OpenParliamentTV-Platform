@@ -3,12 +3,7 @@
 	require_once(__DIR__."/../utilities/functions.entities.php");
 	require_once(__DIR__."/../../api/v1/api.php");
 
-	if (!function_exists("L")) {
-		require_once(__DIR__."/../../config.php");
-require_once(__DIR__."/../../modules/utilities/language.php");
-		// Language is automatically initialized by LanguageManager
-		
-	}
+    require_once(__DIR__."/../../modules/utilities/language.php");
 
 	$apiInput = $_REQUEST;
 	unset($apiInput["page"]);

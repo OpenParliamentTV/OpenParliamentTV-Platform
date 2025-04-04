@@ -5,7 +5,7 @@ session_start();
 require_once (__DIR__."/config.php");
 require_once(__DIR__."/modules/utilities/language.php");
 
-// Language is automatically initialized by LanguageManager
+// Initialize language
 $lang = LanguageManager::getInstance()->getCurrentLang();
 $langJSONString = LanguageManager::getInstance()->getLangJSONString();
 

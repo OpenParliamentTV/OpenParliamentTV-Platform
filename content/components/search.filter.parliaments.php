@@ -4,19 +4,13 @@ error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
 
 include_once(__DIR__ . '/../../../modules/utilities/auth.php');
+require_once(__DIR__."/../../../modules/utilities/language.php");
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", "results");
 
 if ($auth["meta"]["requestStatus"] != "success") {
     echo "Not authorized";
 } else {
-
-	if (!function_exists("L")) {
-		require_once(__DIR__."/../../../config.php");
-require_once(__DIR__."/../../../modules/utilities/language.php");
-		// Language is automatically initialized by LanguageManager
-		
-	}
 
 	// ELSE FINISHES AT END OF FILE
 ?>

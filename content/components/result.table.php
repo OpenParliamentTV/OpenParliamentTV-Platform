@@ -10,7 +10,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
     echo "Not authorized";
 } else {
 
-	// Language is automatically initialized by LanguageManager
 	require_once(__DIR__.'/../../modules/utilities/language.php');
 
 	require_once(__DIR__.'/../../modules/utilities/functions.entities.php');

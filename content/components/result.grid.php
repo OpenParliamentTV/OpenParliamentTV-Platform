@@ -12,12 +12,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     echo "Not authorized";
 } else {
 
-if (!function_exists("L")) {
-	require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/../../modules/utilities/language.php");
-	// Language is automatically initialized by LanguageManager
-	
-}
 
 require_once(__DIR__.'/../../modules/utilities/functions.entities.php');
 require_once(__DIR__."/../../modules/search/include.search.php");

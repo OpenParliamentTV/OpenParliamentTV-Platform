@@ -1,12 +1,7 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
 
-if (!function_exists("L")) {
-    require_once(__DIR__."/../../../config.php");
 require_once(__DIR__."/../../../modules/utilities/language.php");
-    // Language is automatically initialized by LanguageManager
-    
-}
 
 require_once(__DIR__."/../../../modules/media/functions.php");
 require_once(__DIR__."/../../../modules/media/include.media.php");
