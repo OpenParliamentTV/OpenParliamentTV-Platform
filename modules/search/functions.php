@@ -976,6 +976,10 @@ function determineSorting($request) {
             return ["attributes.duration" => "asc"];
         } else if ($request["sort"] == 'duration-desc') {
             return ["attributes.duration" => "desc"];
+        } else if ($request["sort"] == 'changed-asc') {
+            return ["attributes.lastChanged" => "asc"];
+        } else if ($request["sort"] == 'changed-desc') {
+            return ["attributes.lastChanged" => "desc"];
         }
     }
     
