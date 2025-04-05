@@ -382,4 +382,90 @@ function executeAsyncShellCommand($cmd = null) {
     }
 }
 
+/**
+ * Filters an array to only include keys that are in the allowed list.
+ * Can be used in two modes:
+ * 1. Direct key filtering (like array_intersect_key)
+ * 2. Case-sensitive key matching (like array_filter with in_array)
+ *
+ * @param array $data The input array to filter
+ * @param string $type The type of search (e.g. "media", "person", "organisation", "document", "term")
+ * @param bool $caseSensitive Whether to perform case-sensitive matching (default: true)
+ * @return array Filtered array containing only allowed fields
+ */
+function filterAllowedSearchParams($data, $type, $caseSensitive = false) {
+    
+    //TODO: Put this somewhere else
+    $allowedParams = [
+        "media" => [
+            "includeAll", 
+            "parliament", 
+            "electoralPeriod", 
+            "electoralPeriodID", 
+            "sessionID", 
+            "sessionNumber", 
+            "agendaItemID", 
+            "context", 
+            "dateFrom", 
+            "dateTo", 
+            "party", 
+            "partyID", 
+            "faction", 
+            "factionID", 
+            "person", 
+            "personID", 
+            "personOriginID", 
+            "abgeordnetenwatchID", 
+            "fragDenStaatID", 
+            "organisation", 
+            "organisationID", 
+            "documentID", 
+            "sort", 
+            "termID", 
+            "id", 
+            "procedureID", 
+            "page",
+            "q"
+        ],
+        "person" => [
+            "name", 
+            "type", 
+            "party", 
+            "partyID", 
+            "faction", 
+            "factionID", 
+            "organisationID", 
+            "degree", 
+            "gender", 
+            "originID", 
+            "abgeordnetenwatchID",
+            "fragDenStaatID"
+        ],
+        "organisation" => [
+            "name",
+            "type"
+        ],
+        "document" => [
+            "label", 
+            "type",
+            "wikidataID"
+        ],
+        "term" => [
+            "label",
+            "type",
+            "wikidataID"
+        ]
+    ];
+
+    if (!isset($allowedParams[$type])) {
+        return array();
+    }
+    if ($caseSensitive) {
+        return array_filter($data, function($key) use ($allowedParams, $type) {
+            return in_array($key, $allowedParams[$type]);
+        }, ARRAY_FILTER_USE_KEY);
+    }
+    return array_intersect_key($data, array_flip($allowedParams[$type]));
+}
+
 ?>

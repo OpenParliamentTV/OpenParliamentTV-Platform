@@ -479,16 +479,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
     require_once (__DIR__."/../../../modules/search/functions.php");
 
-
-    $allowedFields = ["includeAll", "parliament", "electoralPeriod", "electoralPeriodID", "sessionID", "sessionNumber", "agendaItemID", "context", "dateFrom", "dateTo", "party", "partyID", "faction", "factionID", "person", "personID", "personOriginID", "abgeordnetenwatchID", "fragDenStaatID", "organisation", "organisationID", "documentID", "sort", "termID", "id", "procedureID", "page","q"];
-
-    $filteredParameters = array_filter(
-        $parameter,
-        function ($key) use ($allowedFields) {
-            return in_array($key, $allowedFields);
-        },
-        ARRAY_FILTER_USE_KEY
-    );
+    $filteredParameters = filterAllowedSearchParams($parameter, 'media');
 
     try {
         $search = searchSpeeches($filteredParameters);

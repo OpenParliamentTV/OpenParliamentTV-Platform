@@ -147,18 +147,7 @@ function documentSearch($parameter, $db = false) {
 
     }
 
-    $allowedFields = ["label", "type", "wikidataID"];
-
-    $filteredParameters = array_filter(
-        $parameter,
-        function ($key) use ($allowedFields) {
-            return in_array($key, $allowedFields);
-        },
-        ARRAY_FILTER_USE_KEY
-    );
-
-
-
+    $filteredParameters = filterAllowedSearchParams($parameter, 'document');
 
     /************ VALIDATION START ************/
 

@@ -151,18 +151,7 @@ function organisationSearch($parameter, $db = false, $noLimit = false) {
 
     }
 
-    $allowedFields = ["name", "type"];
-
-    $filteredParameters = array_filter(
-        $parameter,
-        function ($key) use ($allowedFields) {
-            return in_array($key, $allowedFields);
-        },
-        ARRAY_FILTER_USE_KEY
-    );
-
-
-
+    $filteredParameters = filterAllowedSearchParams($parameter, 'organisation');
 
     /************ VALIDATION START ************/
 

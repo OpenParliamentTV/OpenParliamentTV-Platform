@@ -4,6 +4,7 @@ session_start();
 
 require_once (__DIR__."/config.php");
 require_once(__DIR__."/modules/utilities/language.php");
+require_once(__DIR__."/modules/utilities/functions.php");
 
 // Initialize language
 $lang = LanguageManager::getInstance()->getCurrentLang();
@@ -17,7 +18,7 @@ $isMobile = (preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberr
 
 
 $paramStr = "";
-$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","person","personID","context","party","partyID","faction","factionID","organisation","organisationID","electoralPeriod","electoralPeriodID","parliament","dateFrom","dateTo","gender","degree","abgeordnetenwatchID","fragDenStaatID","speakerID","sessionNumber","documentID","termID","playresults", "page", "sort")));
+$allowedParams = filterAllowedSearchParams($_REQUEST, 'media');
 $paramCount = 1;
 foreach ($allowedParams as $k=>$v) {
     if ($paramCount == 1) {

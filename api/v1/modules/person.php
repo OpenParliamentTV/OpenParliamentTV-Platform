@@ -213,18 +213,7 @@ function personSearch($parameter, $db = false) {
 
     }
 
-    $allowedFields = ["name", "type", "party", "partyID", "faction", "factionID", "organisationID", "degree", "gender", "originID", "abgeordnetenwatchID","fragDenStaatID"];
-
-    $filteredParameters = array_filter(
-        $parameter,
-        function ($key) use ($allowedFields) {
-            return in_array($key, $allowedFields);
-        },
-        ARRAY_FILTER_USE_KEY
-    );
-
-
-
+    $filteredParameters = filterAllowedSearchParams($parameter, 'person');
 
     /************ VALIDATION START ************/
 

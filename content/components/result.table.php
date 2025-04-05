@@ -83,7 +83,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<tbody>
 					<?php
 					$paramStr = "";
-					$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","person","personID","context","party","faction","factionID","parliament","electoralPeriod","electoralPeriodID","agendaItemID","dateFrom","dateTo","gender","degree","abgeordnetenwatchID","fragDenStaatID","organisation","organisationID","documentID","termID","sessionNumber","sessionID","page","sort")));
+					$allowedParams = filterAllowedSearchParams($_REQUEST, 'media');
 
 					$sortFactor = null;
 					$currentDate = null;

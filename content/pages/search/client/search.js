@@ -731,7 +731,6 @@ function updateTimelineViz() {
 
 function updateFactionChart() {
     if (typeof resultsAttributes !== "object") {
-        console.log("No results attributes available for faction chart");
         return;
     }
 
@@ -740,7 +739,6 @@ function updateFactionChart() {
     // Check if the chart container exists
     var chartContainer = document.getElementById('factionChart');
     if (!chartContainer) {
-        console.error("Chart container 'factionChart' not found");
         return;
     }
     

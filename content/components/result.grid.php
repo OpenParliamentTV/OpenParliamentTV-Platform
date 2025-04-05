@@ -102,7 +102,7 @@ if ($totalResults != 0) {
 	<div class="resultList row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 		<?php
 		$paramStr = "";
-		$allowedParams = array_intersect_key($_REQUEST,array_flip(array("q","name","person","personID","context","party","faction","factionID","parliament","electoralPeriod","electoralPeriodID","agendaItemID","dateFrom","dateTo","gender","degree","abgeordnetenwatchID","fragDenStaatID","organisation","organisationID","documentID","termID","sessionNumber","sessionID","page","sort")));
+		$allowedParams = filterAllowedSearchParams($_REQUEST, 'media');
 
 		$sortFactor = null;
 		$currentDate = null;
