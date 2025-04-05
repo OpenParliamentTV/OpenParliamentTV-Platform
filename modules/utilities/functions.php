@@ -393,69 +393,11 @@ function executeAsyncShellCommand($cmd = null) {
  * @param bool $caseSensitive Whether to perform case-sensitive matching (default: true)
  * @return array Filtered array containing only allowed fields
  */
-function filterAllowedSearchParams($data, $type, $caseSensitive = false) {
-    
-    //TODO: Put this somewhere else
-    $allowedParams = [
-        "media" => [
-            "includeAll", 
-            "parliament", 
-            "electoralPeriod", 
-            "electoralPeriodID", 
-            "sessionID", 
-            "sessionNumber", 
-            "agendaItemID", 
-            "context", 
-            "dateFrom", 
-            "dateTo", 
-            "party", 
-            "partyID", 
-            "faction", 
-            "factionID", 
-            "person", 
-            "personID", 
-            "personOriginID", 
-            "abgeordnetenwatchID", 
-            "fragDenStaatID", 
-            "organisation", 
-            "organisationID", 
-            "documentID", 
-            "sort", 
-            "termID", 
-            "id", 
-            "procedureID", 
-            "page",
-            "q"
-        ],
-        "person" => [
-            "name", 
-            "type", 
-            "party", 
-            "partyID", 
-            "faction", 
-            "factionID", 
-            "organisationID", 
-            "degree", 
-            "gender", 
-            "originID", 
-            "abgeordnetenwatchID",
-            "fragDenStaatID"
-        ],
-        "organisation" => [
-            "name",
-            "type"
-        ],
-        "document" => [
-            "label", 
-            "type",
-            "wikidataID"
-        ],
-        "term" => [
-            "label",
-            "type",
-            "wikidataID"
-        ]
-    ];
+function filterAllowedSearchParams($data, $type, $caseSensitive = true) {
+
+    global $config;
+
+    $allowedParams = $config["allowedSearchParams"];
 
     if (!isset($allowedParams[$type])) {
         return array();

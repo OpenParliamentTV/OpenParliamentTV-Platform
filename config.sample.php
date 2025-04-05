@@ -144,6 +144,70 @@ $config["parliament"]["DE"]["cache"]["wp"] = __DIR__."/data/wikidataDumps/DE";
 $config["ES"]["hosts"] = []; // E.g. ["https://@localhost:9200"]
 $config["ES"]["BasicAuthentication"]["user"] = "";
 $config["ES"]["BasicAuthentication"]["passwd"] = "";
-$config["ES"]["SSL"]["pem"] = "" // E.g. realpath(__DIR__."/../opensearch-root-ssl.pem");
+$config["ES"]["SSL"]["pem"] = ""; // E.g. realpath(__DIR__."/../opensearch-root-ssl.pem");
+
+/**
+ * Allowed parameters for the search endpoint
+ */
+$config["allowedSearchParams"] = [
+    "media" => [
+        "includeAll", 
+        "parliament", 
+        "electoralPeriod", 
+        "electoralPeriodID", 
+        "sessionID", 
+        "sessionNumber", 
+        "agendaItemID", 
+        "context", 
+        "dateFrom", 
+        "dateTo", 
+        "party", 
+        "partyID", 
+        "faction", 
+        "factionID", 
+        "person", 
+        "personID", 
+        "personOriginID", 
+        "abgeordnetenwatchID", 
+        "fragDenStaatID", 
+        "organisation", 
+        "organisationID", 
+        "documentID", 
+        "sort", 
+        "termID", 
+        "id", 
+        "procedureID", 
+        "page",
+        "q"
+    ],
+    "person" => [
+        "name", 
+        "type", 
+        "party", 
+        "partyID", 
+        "faction", 
+        "factionID", 
+        "organisationID", 
+        "degree", 
+        "gender", 
+        "originID", 
+        "abgeordnetenwatchID",
+        "fragDenStaatID"
+    ],
+    "organisation" => [
+        "name",
+        "type"
+    ],
+    "document" => [
+        "label", 
+        "type",
+        "wikidataID"
+    ],
+    "term" => [
+        "label",
+        "type",
+        "wikidataID"
+    ]
+];
 
 ?>
