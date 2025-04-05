@@ -58,7 +58,7 @@ $showSearchSuggestions = isset($showSearchSuggestions) ? $showSearchSuggestions 
                 <div class="col col-12">
                     <div class="form-group d-flex">
                         <?php if ($showFactionChart): ?>
-                        <div class="factionChartContainer">
+                        <div class="factionChartContainer flex-shrink-0">
                             <div id="factionChart"></div>
                         </div>
                         <?php endif; ?>
@@ -89,7 +89,6 @@ $showSearchSuggestions = isset($showSearchSuggestions) ? $showSearchSuggestions 
                                 <input id="edit-party-16123" name="factionID[]" value="Q4316268" type="checkbox" class="form-check-input"> <label class="form-check-label" for="edit-party-16123">fraktionslos</label>
                             </div>
                         </div>
-                        <div style="clear: both;"></div>
                     </div>
                 </div>
             </div>

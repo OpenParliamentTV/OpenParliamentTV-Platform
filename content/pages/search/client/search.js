@@ -32,6 +32,13 @@ $(document).ready( function() {
 
 	$(window).scroll();
 
+	// Add window resize event listener for responsive chart
+	$(window).resize(function() {
+		if (typeof resultsAttributes === "object") {
+			updateFactionChart();
+		}
+	});
+
 	window.onpopstate = function(event) {
 		updateContentsFromURL();
 	}
