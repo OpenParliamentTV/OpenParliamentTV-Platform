@@ -96,6 +96,8 @@ if ($totalResults != 0) {
 				<option value="topic-desc"><?= L::topic; ?> (<?= L::sortByDesc; ?>)</option>
 				<option value="date-asc"><?= L::date; ?> (<?= L::sortByAsc; ?>)</option>
 				<option value="date-desc"><?= L::date; ?> (<?= L::sortByDesc; ?>)</option>
+				<option value="duration-asc"><?= L::duration; ?> (<?= L::sortByDurationAsc; ?>)</option>
+				<option value="duration-desc"><?= L::duration; ?> (<?= L::sortByDurationDesc; ?>)</option>
 			</select>
 		</div>
 	</div>
@@ -108,24 +110,35 @@ if ($totalResults != 0) {
 		$currentDate = null;
 		$currentAgendaItem = null;
 		if (isset($_REQUEST["sort"]) && strlen($_REQUEST["sort"]) > 3) {
-			$sortFactor = (strpos($_REQUEST["sort"], 'date') !== false) ? 'date' : 'topic';
+			if (strpos($_REQUEST["sort"], 'date') !== false) {
+				$sortFactor = 'date';
+			} elseif (strpos($_REQUEST["sort"], 'duration') !== false) {
+				$sortFactor = 'duration';
+			} else {
+				$sortFactor = 'topic';
+			}
 		}
 		
 		foreach($result_items as $result_item) {
 			
-			$formattedDuration = gmdate("i:s", $result_item["attributes"]['duration']);
+			$duration = $result_item["attributes"]['duration'];
+			$formattedDuration = $duration >= 3600 ? 
+				gmdate("H:i:s", $duration) : 
+				gmdate("i:s", $duration);
 
 			$formattedDate = date("d.m.Y", strtotime($result_item["attributes"]["dateStart"]));
 			
 			$mainSpeaker = getMainSpeakerFromPeopleArray($result_item["annotations"]['data'], $result_item["relationships"]["people"]['data']);
 			$mainFaction = getMainFactionFromOrganisationsArray($result_item["annotations"]['data'], $result_item["relationships"]["organisations"]['data']);
 
-			if ($sortFactor == 'date' && $formattedDate != $currentDate) {
-				echo '<div class="sortDivider"><b>'.$formattedDate.'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
-				$currentDate = $formattedDate;
-			} elseif ($sortFactor == 'topic' && $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"] != $currentAgendaItem) {
+			if ($sortFactor == 'topic' && $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"] != $currentAgendaItem) {
 				echo '<div class="sortDivider"><b>'.$formattedDate.' - '.$result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"].'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
 				$currentAgendaItem = $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"];
+			} elseif ($sortFactor == 'date' && $formattedDate != $currentDate) {
+				//echo '<div class="sortDivider"><b>'.$formattedDate.'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
+				$currentDate = $formattedDate;
+			} elseif ($sortFactor == 'duration') {
+				// No divider needed for duration sorting as items are already sorted by duration
 			}
 
 			$highlightedName = $mainSpeaker['attributes']['label'];

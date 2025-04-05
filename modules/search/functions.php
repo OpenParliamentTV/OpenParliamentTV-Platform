@@ -972,6 +972,10 @@ function determineSorting($request) {
             return ["attributes.timestamp" => "asc"];
         } else if ($request["sort"] == 'date-desc' || $request["sort"] == 'topic-desc') {
             return ["attributes.timestamp" => "desc"];
+        } else if ($request["sort"] == 'duration-asc') {
+            return ["attributes.duration" => "asc"];
+        } else if ($request["sort"] == 'duration-desc') {
+            return ["attributes.duration" => "desc"];
         }
     }
     
