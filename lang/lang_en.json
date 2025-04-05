@@ -194,6 +194,8 @@
 	"sortBy": "Sort by",
 	"sortByAsc": "oldest first",
 	"sortByDesc": "newest first",
+	"sortByDurationAsc": "shortest first",
+	"sortByDurationDesc": "longest first",
 	"source": "Source",
 	"speech": "Speech",
 	"speeches": "Speeches",

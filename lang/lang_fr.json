@@ -194,6 +194,8 @@
 	"sortBy": "Trier par",
 	"sortByAsc": "plus ancien d'abord",
 	"sortByDesc": "plus récent d'abord",
+	"sortByDurationAsc": "plus court d'abord",
+	"sortByDurationDesc": "plus long d'abord",
 	"source": "Source",
 	"speech": "Discours",
 	"speeches": "Discours",

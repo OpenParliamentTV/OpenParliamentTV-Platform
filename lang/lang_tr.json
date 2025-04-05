@@ -194,6 +194,8 @@
 	"sortBy": "Sırala",
 	"sortByAsc": "en eskiden başla",
 	"sortByDesc": "en yeniden başla",
+	"sortByDurationAsc": "en kısa önce",
+	"sortByDurationDesc": "en uzun önce",
 	"source": "Kaynak",
 	"speech": "Konuşma",
 	"speeches": "Konuşmalar",
