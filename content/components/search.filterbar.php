@@ -58,8 +58,8 @@ $showSearchSuggestions = isset($showSearchSuggestions) ? $showSearchSuggestions 
                 <div class="col col-12">
                     <div class="form-group d-flex">
                         <?php if ($showFactionChart): ?>
-                        <div class="chartContainer">
-                            <canvas id="factionChart"></canvas>
+                        <div class="factionChartContainer">
+                            <div id="factionChart"></div>
                         </div>
                         <?php endif; ?>
                         <div class="checkboxList flex-grow-1">

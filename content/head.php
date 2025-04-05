@@ -23,7 +23,6 @@ if ($page != 'media') {
 ?>
 
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
-    <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/Chart.min.css?v=<?= $config["version"] ?>" media="all" />
     <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/frametrail-webfont.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 
@@ -32,7 +31,6 @@ if ($page != 'media') {
 ?>
 	<link rel="stylesheet" type="text/css" href="<?= $config["dir"]["root"] ?>/content/client/FrameTrail.min.css?v=<?= $config["version"] ?>">
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/Chart.min.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.css?v=<?= $config["version"] ?>" media="all" />
   <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/shareQuote.css?v=<?= $config["version"] ?>" media="all" />
@@ -57,7 +55,7 @@ if ($pageType == 'admin' || $pageType == 'entity') {
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery-ui.min.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.ui.touch-punch.min.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.form.min.js?v=<?= $config["version"] ?>"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/Chart.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/d3.min.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap.bundle.min.js?v=<?= $config["version"] ?>"></script>
 
 <?php
