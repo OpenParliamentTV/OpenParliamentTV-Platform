@@ -702,7 +702,7 @@ body.darkmode .btn.working, body.darkmode .list-group-item.working {
     border-color: #dee2e6;
 }
 
-main .btn[data-toggle="collapse"]:not(.collapsed) {
+main .btn[data-bs-toggle="collapse"]:not(.collapsed) {
     z-index: 2;
     position: relative;
     border-bottom-left-radius: 0;
@@ -710,19 +710,19 @@ main .btn[data-toggle="collapse"]:not(.collapsed) {
     border-bottom-color: transparent;
 }
 
-.btn[data-toggle="collapse"].collapsed .icon-up-open-big::before {
+.btn[data-bs-toggle="collapse"].collapsed .icon-up-open-big::before {
     content: '\e8f7';
 }
 
-.btn[data-toggle="collapse"].collapsed .icon-down-open-big::before {
+.btn[data-bs-toggle="collapse"].collapsed .icon-down-open-big::before {
     content: '\e8f6';
 }
 
-.btn[data-toggle="collapse"] .labelShow, .btn[data-toggle="collapse"].collapsed .labelCollapse {
+.btn[data-bs-toggle="collapse"] .labelShow, .btn[data-bs-toggle="collapse"].collapsed .labelCollapse {
     display: none;
 }
 
-.btn[data-toggle="collapse"].collapsed .labelShow {
+.btn[data-bs-toggle="collapse"].collapsed .labelShow {
     display: inline;
 }
 
