@@ -1240,8 +1240,8 @@ body.ready > main {
 @media (min-width: 1500px) {
     body.fixed #filterbar {
         left: auto;
-        padding: 0 15px 20px 15px;
-        max-width: calc(1500px - 30px);
+        padding: 0 calc(1.5rem * 0.5) 20px calc(1.5rem * 0.5);
+        max-width: calc(1500px - calc(1.5rem));
     }
 
     #filterbar.nosearch {
