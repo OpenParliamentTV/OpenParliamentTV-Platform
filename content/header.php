@@ -70,15 +70,21 @@
 						<div class="dropdown-divider"></div>
 						<div class="py-2 px-4"><?= L::chooseLanguage; ?>:</div>
 						<div class="btn-group-vertical d-block px-4 mb-3" role="group">
+							
 							<?php
 							global $acceptLang;
-							foreach ($acceptLang as $tmpLangK=>$tmpLang) {
-								$tmpParams = array_merge(array(),$_REQUEST);
-								$tmpParams["lang"] = $tmpLang["short"];
-								$linkChangeLanguage = "?".http_build_query($tmpParams);
-								echo "<a class='btn btn-sm langswitch".(($lang==$tmpLang["short"])?" active" : "")."' href='".$linkChangeLanguage."' target='_self' data-lang='".$tmpLang["short"]."'>".$tmpLang["name"]."</a>";
+							$queryString = parse_url($url, PHP_URL_QUERY);
+							$params = [];
+							if ($queryString) {
+							  parse_str($queryString, $params);
 							}
-							?>
+							unset($params['lang']); // Remove existing lang parameter if present
+							
+							foreach ($acceptLang as $thisLang) {
+								$params['lang'] = $thisLang["short"];
+								$langUrl = $urlWithoutParams . '?' . http_build_query($params);
+								echo "<a class='btn btn-sm langswitch".(($lang==$thisLang["short"])?" active" : "")."' href='".$langUrl."' target='_self' data-lang='".$thisLang["short"]."'>".$thisLang["name"]."</a>";
+							} ?>
 						</div>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item <?= ($page == "manage") ? "active" : "" ?><?= (!$_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/manage">Dashboard</a>
