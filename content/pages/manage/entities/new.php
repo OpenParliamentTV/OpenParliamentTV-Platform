@@ -1,18 +1,18 @@
 <?php
-include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
+include_once(__DIR__ . '/../../../../modules/utilities/auth.php');
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
 
 if ($auth["meta"]["requestStatus"] != "success") {
     $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../../../login/page.php");
+    include_once (__DIR__."/../../login/page.php");
 
 } else {
-    include_once(__DIR__ . '/../../../../header.php');
-    include_once(__DIR__ . '/../../../../../api/v1/api.php');
+    include_once(__DIR__ . '/../../../header.php');
+    include_once(__DIR__ . '/../../../../api/v1/api.php');
 ?>
 <main class="container-fluid subpage">
 	<div class="row">
-		<?php include_once(__DIR__ . '/../../sidebar.php'); ?>
+		<?php include_once(__DIR__ . '/../sidebar.php'); ?>
 		<div class="sidebar-content">
 			<div class="row" style="position: relative; z-index: 1">
 				<div class="col-12">
@@ -197,7 +197,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 										<select class="form-control" name="party">
 											<option value="" disabled selected>Choose Party ..</option>
 											<?php
-											require_once (__DIR__."/../../../../../api/v1/modules/organisation.php");
+											require_once (__DIR__."/../../../../api/v1/modules/organisation.php");
 											$partyie = organisationSearch(array("type"=>"party"));
 											foreach ($partyie["data"] as $party) {
 												echo '<option value="'.$party["id"].'">'.$party["attributes"]["label"].'</option>';
@@ -210,7 +210,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 										<select class="form-control" name="faction">
 											<option value="" disabled selected>Choose Faction ..</option>
 											<?php
-											require_once (__DIR__."/../../../../../api/v1/modules/organisation.php");
+											require_once (__DIR__."/../../../../api/v1/modules/organisation.php");
 											$factions = organisationSearch(array("type"=>"faction"));
 											foreach ($factions["data"] as $faction) {
 												echo '<option value="'.$faction["id"].'">'.$faction["attributes"]["label"].'</option>';
@@ -245,9 +245,213 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		</div>
 	</div>
 </main>
-<link rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/data/entities/client/entity.new.css?v=<?= $config["version"] ?>">
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/manage/data/entities/client/entity.new.js?v=<?= $config["version"] ?>"></script>
+
+<style>
+	.form-item {
+		display: none;
+	}
+</style>
+
+<script type="text/javascript">
+	$(function() {
+		
+		// Fill in wikidataID in case we got it in the url (eg. "?wikidataID=Q567")
+		let queryWikidataID = getQueryVariable('wikidataID');
+		if (queryWikidataID) {
+			$('input[name="id"]').val(queryWikidataID);
+		}
+
+		// Fill in entitySuggestionID in case we got it in the url
+		let queryEntitySuggestionID = getQueryVariable('entitySuggestionID');
+		if (queryEntitySuggestionID) {
+			$('input[name="entitysuggestionid"]').val(queryEntitySuggestionID);
+		}
+
+		$('#entityAddForm').ajaxForm({
+			url: config.dir.root +"/server/ajaxServer.php",
+			dataType: "json",
+			success: function (ret) {
+
+				$("#entityAddReturn").empty();
+				$("input, select, textarea").css("border", "");
+
+				if (ret["meta"]["requestStatus"] != "success") {
+					for (let error in ret["errors"]) {
+						$("#entityAddReturn").append('<div>' + ret["errors"][error]["title"] + '</div>');
+						if ("label" in ret["errors"][error]) {
+							$("[name='" + ret["errors"][error]["label"] + "']").css("border", "1px solid red");
+						}
+					}
+				} else {
+
+					$("#affectedSessions").empty();
+
+					$(".contentContainer").not("#entityAddSuccess").slideUp();
+					$("#entityAddSuccess").slideDown();
+
+					if ("EntitysuggestionItem" in ret) {
+						$("#reimportSessions").data("entitysuggestionid", ret["EntitysuggestionItem"]["EntitysuggestionItemID"]);
+						if (("sessions" in ret) && (Object.keys(ret["sessions"]).length > 0)) {
+							for (let parliament in ret["sessions"]) {
+								let sessioncontent = "";
+								for (let session in ret["sessions"][parliament]) {
+									sessioncontent += "<div class='sessionFilesDiv'>" + session + " | File exists: " + ret["sessions"][parliament][session]["fileExists"] + "<input type='hidden' name='files[" + parliament + "][]' class='reimportfile' value='" + session + "'>";
+								}
+								$("#affectedSessions").append("<div class='parlamentDiv><h4>Parlament " + parliament + "</h4>" + sessioncontent + "</div>");
+							}
+							$("#affectedSessions_true").show();
+							$("#affectedSessions_false").hide();
+						} else {
+							$("#affectedSessions_false").show();
+							$("#affectedSessions_true").hide();
+						}
+
+					} else {
+						$("#affectedSessions_false").show();
+						$("#affectedSessions_true").hide();
+					}
+
+				}
+			}
+		});
+
+		$(".labelAlternativeAdd").on("click", function() {
+			$(this).parent().find("div:first").append('<span style="position: relative">' +
+				'<input type="text" class="form-control" name="labelAlternative[]">' +
+				'<button class="labelAlternativeRemove btn" style="position: absolute;top:0px;right:0px;" type="button">' +
+				'<span class="icon-cancel-circled"></span>' +
+				'</button></span>');
+		});
+
+
+		$("body").on("click", ".labelAlternativeRemove", function() {
+			$(this).parent().remove();
+		});
+
+		$(".socialMediaIDsAdd").on("click", function() {
+			$(this).parent().find("div:first").append('<div style="position: relative" class="form-row">\n' +
+				'                                        <div class="col">' +
+				'                                           <input type="text" class="form-control" name="socialMediaIDsLabel[]" placeholder="Label (e.g. facebook)">' +
+				'                                        </div>\n' +
+				'                                        <div class="col">' +
+				'                                           <input type="text" class="form-control" name="socialMediaIDsValue[]" placeholder="Value (name)">\n' +
+				'                                        </div>\n' +
+				'                                        <button class="socialMediaIDsRemove btn" style="position: absolute;top:0px;right:0px;" type="button">\n' +
+				'                                            <span class="icon-cancel-circled"></span>\n' +
+				'                                        </button>\n' +
+				'                                    </div>');
+		});
+
+		$("body").on("click", ".socialMediaIDsRemove", function() {
+			$(this).parent().remove();
+		});
+
+		$("body").on("change", "select[name='entityType']", function() {
+			let tempItem = "";
+			switch ($(this).val()) {
+				case "organisation":
+					tempItem=".formItemTypeOrganisation";
+				break;
+				case "person":
+					tempItem=".formItemTypePerson";
+				break;
+				case "term":
+					tempItem=".formItemTypeTerm";
+				break;
+				case "document":
+					tempItem=".formItemTypeDocument";
+				break;
+				default:
+					tempItem=".not";
+				break;
+			}
+			$("#entityAddForm .formItem input, #entityAddForm .formItem textarea, #entityAddForm .formItem select").prop("disabled",true);
+			$(".formItem").slideUp(function() {
+				$(tempItem +" input, "+tempItem+" textarea, "+tempItem+" select").prop("disabled",false);
+				$(tempItem).slideDown();
+			});
+
+		});
+
+		$("#getAdditionalInfo").click(function(evt) {
+			
+			resetForm();
+
+			let entityType = $("select[name='entityType']").val();
+			let subType = $("select[name='type']:not(:disabled)").val();
+
+			let serviceType = entityType;
+			if (subType == "memberOfParliament" || subType == "officialDocument" || subType == "legalDocument") {
+				serviceType = subType;
+			}
+
+			let wikidataID = $("input[name='id']").val();
+
+			$.ajax({
+				url:config.dir.root+"/server/ajaxServer.php",
+				data: {
+					"a": "entityGetFromAdditionalDataService",
+					"type": serviceType,
+					"wikidataID": wikidataID
+				},
+				success: function(result) {
+					
+					$("input[name='label']").val(result.data.label);
+					$("input[name='firstName']").val(result.data.firstName);
+					$("input[name='lastName']").val(result.data.lastName);
+					$("input[name='degree']").val(result.data.degree);
+					$("input[name='birthdate']").val(result.data.birthDate);
+					$("textarea[name='abstract']").val(result.data.abstract);
+					$("input[name='thumbnailuri']").val(result.data.thumbnailURI);
+					$("input[name='thumbnailcreator']").val(result.data.thumbnailCreator);
+					$("input[name='thumbnaillicense']").val(result.data.thumbnailLicense);
+					$("input[name='sourceuri']").val(result.data.sourceURI);
+					$("input[name='embeduri']").val(result.data.embedURI);
+					$("input[name='websiteuri']").val(result.data.websiteURI);
+					//$("input[name='originid']").val(result.data.originID);
+					$("textarea[name='additionalinformation']").val(JSON.stringify(result.data.additionalInformation));
+
+					$("select[name='gender']").val(result.data.gender);
+					$("select[name='party']").val(result.data.partyID);
+					$("select[name='faction']").val(result.data.factionID);
+
+					for (var i = 0; i < result.data.labelAlternative.length; i++) {
+						$("button.labelAlternativeAdd").next("div").append('<span style="position: relative">' +
+							'<input type="text" class="form-control" name="labelAlternative[]" value="'+ result.data.labelAlternative[i] +'">' +
+							'<button class="labelAlternativeRemove btn" style="position: absolute;top:0px;right:0px;" type="button">' +
+							'<span class="icon-cancel-circled"></span>' +
+							'</button></span>');
+					}
+
+					for (var i = result.data.socialMediaIDs.length - 1; i >= 0; i--) {
+						$("button.socialMediaIDsAdd").next("div").append('<div style="position: relative" class="form-row">\n' +
+				'            <div class="col">' +
+				'               <input type="text" class="form-control" name="socialMediaIDsLabel[]" placeholder="Label (e.g. facebook)" value="'+ result.data.socialMediaIDs[i].label +'">' +
+				'            </div>\n' +
+				'            <div class="col">' +
+				'               <input type="text" class="form-control" name="socialMediaIDsValue[]" placeholder="Value (name)" value="'+ result.data.socialMediaIDs[i].id +'">\n' +
+				'            </div>\n' +
+				'            <button class="socialMediaIDsRemove btn" style="position: absolute;top:0px;right:0px;" type="button">\n' +
+				'                <span class="icon-cancel-circled"></span>\n' +
+				'            </button>\n' +
+				'        </div>');
+					}
+					
+				}
+			});
+
+		});
+
+
+	});
+
+	function resetForm() {
+		$('button.socialMediaIDsRemove, button.labelAlternativeRemove').parent().remove();
+		$('input[type="text"]:not([name="id"]), textarea, select:not([name="entityType"]):not([name="type"])').val('');
+	}
+</script>
+
 <?php
-    include_once(__DIR__ . '/../../../../footer.php');
+    include_once(__DIR__ . '/../../../footer.php');
 }
 ?>

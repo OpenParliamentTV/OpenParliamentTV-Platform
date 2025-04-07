@@ -42,15 +42,29 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="people" role="tabpanel" aria-labelledby="people-tab">
+							<div id="peopleToolbar">
+								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="person"><span class="icon-ccw"></span> Re-sync external data for all people</button>
+								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="memberOfParliament"><span class="icon-ccw"></span> Re-sync external data for all members of parliament</button>
+							</div>
 							<table id="peopleTable"></table>
                         </div>
 						<div class="tab-pane bg-white fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
+							<div id="organisationsToolbar">
+								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="organisation"><span class="icon-ccw"></span> Re-sync external data for all organisations</button>
+							</div>
 							<table id="organisationsTable"></table>
                         </div>
                         <div class="tab-pane bg-white fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
+							<div id="documentsToolbar">
+								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="legalDocument"><span class="icon-ccw"></span> Re-sync external data for all legal documents</button>
+								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="officialDocument"><span class="icon-ccw"></span> Re-sync external data for all official documents</button>
+							</div>
 							<table id="documentsTable"></table>
                         </div>
                         <div class="tab-pane bg-white fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
+							<div id="termsToolbar">
+								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="term"><span class="icon-ccw"></span> Re-sync external data for all terms</button>
+							</div>
 							<table id="termsTable"></table>
                         </div>
                     </div>
@@ -60,12 +74,44 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	</div>
 </main>
 
+<div class="modal fade" id="successRunAdditionalDataService" tabindex="-1" role="dialog" aria-labelledby="successRunCronDialogLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successRunCronDialogLabel">Run ADS for <span class="adc-type"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                The additionalDataService for type <span class="adc-type"></span> should run now in background.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
 
 	$(function(){
 
+		$("main").on("click",".additionalDataServiceButton", function() {
+            $.ajax({
+                url:"<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
+                dataType:"json",
+                data:{"a":"runAdditionalDataService", "type": $(this).data("type")},
+                tmpType: $(this).data("type"),
+                method:"post",
+                success: function(ret) {
+                    //TODO: Check for success return parameter
+                    $(".adc-type").html(this.tmpType);
+                    $('#successRunAdditionalDataService').modal('show');
+                }
+            })
+        });
+		
 		function renderActionButtons(type, id) {
-			return '<div class="list-group list-group-horizontal"><a class="list-group-item list-group-item-action" title="<?= L::view; ?>" href="<?= $config["dir"]["root"]; ?>/person/' +id+ '" target="_blank"><span class="icon-eye"></span></a><a class="list-group-item list-group-item-action" title="<?= L::edit; ?>" href="<?= $config["dir"]["root"]; ?>/manage/entities/' +type+ '/' +id+ '"><span class="icon-pencil"></span></a></div>';
+			return '<div class="list-group list-group-horizontal"><a class="list-group-item list-group-item-action" title="<?= L::view; ?>" href="<?= $config["dir"]["root"]; ?>/person/' +id+ '" target="_blank"><span class="icon-eye"></span></a><a class="list-group-item list-group-item-action" title="<?= L::edit; ?>" href="<?= $config["dir"]["root"]; ?>/manage/entities/' +type+ '/' +id+ '"><span class="icon-pencil"></span></a><a class="list-group-item list-group-item-action" title="API" href="<?= $config["dir"]["root"]; ?>/api/v1/' +type+ '/' +id+ '" target="_blank"><span class="icon-code"></span></a></div>';
 		}
 		
 		$('#peopleTable').bootstrapTable({
@@ -78,6 +124,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			totalField: "total",
 			search: true,
 			searchAlign: "left",
+			toolbar: "#peopleToolbar",
+			toolbarAlign: "right",
 			serverSort: true,
 			columns: [
 				{
@@ -138,6 +186,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			totalField: "total",
 			search: true,
 			searchAlign: "left",
+			toolbar: "#organisationsToolbar",
+			toolbarAlign: "right",
 			serverSort: true,
 			columns: [
 				{
@@ -186,6 +236,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			totalField: "total",
 			search: true,
 			searchAlign: "left",
+			toolbar: "#documentsToolbar",
+			toolbarAlign: "right",
 			serverSort: true,
 			columns: [
 				{
@@ -241,6 +293,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			totalField: "total",
 			search: true,
 			searchAlign: "left",
+			toolbar: "#termsToolbar",
+			toolbarAlign: "right",
 			serverSort: true,
 			columns: [
 				{

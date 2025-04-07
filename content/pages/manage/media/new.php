@@ -1,18 +1,18 @@
 <?php
-include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
+include_once(__DIR__ . '/../../../../modules/utilities/auth.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
 
 if ($auth["meta"]["requestStatus"] != "success") {
 
     $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../../../login/page.php");
+    include_once (__DIR__."/../../login/page.php");
 
 } else {
 
 
-require_once(__DIR__ . '/../../../../../config.php');
-include_once(__DIR__ . '/../../../../header.php');
+require_once(__DIR__ . '/../../../../config.php');
+include_once(__DIR__ . '/../../../header.php');
 
 if ($_REQUEST["aTEST"]) {
     echo "<pre>";
@@ -22,7 +22,7 @@ if ($_REQUEST["aTEST"]) {
 ?>
 <main class="container-fluid subpage">
     <div class="row">
-        <?php include_once(__DIR__ . '/../../sidebar.php'); ?>
+        <?php include_once(__DIR__ . '/../sidebar.php'); ?>
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
@@ -177,11 +177,11 @@ if ($_REQUEST["aTEST"]) {
     </div>
 </main>
 <link rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/jquery.typeahead.min.css?v=<?= $config["version"] ?>">
-<link rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/data/media/client/media.new.css?v=<?= $config["version"] ?>">
+<link rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/media/client/media.new.css?v=<?= $config["version"] ?>">
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.typeahead.min.js?v=<?= $config["version"] ?>"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/manage/data/media/client/media.new.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/manage/media/client/media.new.js?v=<?= $config["version"] ?>"></script>
 <?php
-    include_once(__DIR__ . '/../../../../footer.php');
+    include_once(__DIR__ . '/../../../footer.php');
 
 }
 ?>

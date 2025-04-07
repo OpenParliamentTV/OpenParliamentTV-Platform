@@ -654,6 +654,26 @@ switch ($page) {
             $content = ob_get_clean();
         }
 	break;
+	case "manage-entities-new":
+		$pageTitle = L::manageEntitySuggestions;
+		$pageType = 'admin';
+		$pageBreadcrumbs = [
+			[
+				'label' => L::dashboard,
+				'path' => '/manage'
+			],
+			[
+				'label' => L::manageEntities,
+				'path' => '/manage/entities'
+			],
+			[
+				'label' => '<span class="icon-plus"></span>'
+			]
+		];
+		ob_start();
+		include_once("./content/pages/manage/entities/new.php");
+		$content = ob_get_clean();
+	break;
 	case "manage-entity-suggestions":
 		ob_start();
 		$pageTitle = L::manageEntitySuggestions;
@@ -686,31 +706,6 @@ switch ($page) {
 		include_once("./content/pages/manage/data/page.php");
 		$content = ob_get_clean();
 	break;
-	case "manage-data-entities":
-		$pageTitle = 'Manage Entities';
-		$pageType = 'admin';
-		$pageBreadcrumbs = [
-			[
-				'label' => L::dashboard,
-				'path' => '/manage'
-			],
-			[
-				'label' => L::manageData,
-				'path' => '/manage/data'
-			],
-			[
-				'label' => '<span class="icon-pencil"></span>'
-			]
-		];
-		ob_start();
-		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
-			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
-			include_once("./content/pages/manage/data/entities/new.php");
-		} else {
-			include_once("./content/pages/manage/data/entities/page.php");
-		}
-		$content = ob_get_clean();
-	break;
 	case "manage-data-media":
 		$pageTitle = 'Manage Media';
 		$pageType = 'admin';
@@ -728,12 +723,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		if (isset($_REQUEST["id"]) && $_REQUEST["id"] == 'new') {
-			$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
-			include_once("./content/pages/manage/data/media/new.php");
-		} else {
-			include_once("./content/pages/manage/data/media/page.php");
-		}
+		include_once("./content/pages/manage/data/media/page.php");
 		$content = ob_get_clean();
 	break;
 	case "manage-import":
@@ -753,20 +743,45 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "manage-media":
-		$pageTitle = L::manageMedia;
-		$pageType = 'admin';
-		$pageBreadcrumbs = [
-			[
-				'label' => L::dashboard,
-				'path' => '/manage'
-			],
-			[
-				'label' => $pageTitle,
-			]
-		];
 		ob_start();
-		include_once("./content/pages/manage/media/page.php");
-		$content = ob_get_clean();
+		if (isset($_REQUEST["id"])) {
+			$pageTitle = '<span class="icon-pencil"></span>';
+			$pageType = 'admin';
+			$pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => L::manageMedia,
+					'path' => '/manage/media'
+				],
+				[
+					'label' => $pageTitle
+				]
+			];
+			if ($_REQUEST["id"] == 'new') {
+				$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
+				include_once("./content/pages/manage/media/new.php");
+			} else {
+				include_once("./content/pages/manage/media/media-detail/page.php");
+			}
+			$content = ob_get_clean();
+		} else {
+			$pageTitle = L::manageMedia;
+			$pageType = 'admin';
+			$pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => $pageTitle
+				]
+			];
+			include_once("./content/pages/manage/media/page.php");
+			$content = ob_get_clean();
+		}
 	break;
 	case "manage-notifications":
 		$pageTitle = L::notifications;

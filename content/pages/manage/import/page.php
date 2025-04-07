@@ -22,7 +22,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<h2><?= L::manageImport; ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
-    
+							<button type="button" id="runCronUpdater" class="btn btn-outline-success btn-sm me-1">Run cronUpdater</button>
                         </div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
@@ -148,6 +148,23 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	</div>
 </main>
 
+<div class="modal fade" id="successRunCronDialog" tabindex="-1" role="dialog" aria-labelledby="successRunCronDialogLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successRunCronDialogLabel">Run cronUpdater</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                The cronUpdater should run in background now
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Okay</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
 	.status-circle {
 		width: 100px;
@@ -176,24 +193,40 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	}
 </style>
 
-<script>
-	fetch('https://api.github.com/repos/OpenParliamentTV/OpenParliamentTV-Data-DE/commits')
-		.then(response => response.json())
-		.then(data => {
-			const date = new Date(data[0].commit.author.date);
-			document.getElementById('lastCommitDate').textContent = 
-				date.toLocaleString('de');
-		});
+<script type="text/javascript">
+	
+	$(function() {
+        
+		$("#runCronUpdater").on("click", function() {
+            $.ajax({
+                url:"<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
+                dataType:"json",
+                data:{"a":"runCronUpdater"},
+                method:"post",
+                success: function(ret) {
+                    $('#successRunCronDialog').modal('show');
+                }
+            })
+        });
 
-	fetch('<?= $config["dir"]["root"] ?>/api/v1/search/media?includeAll=true&sort=date-desc')
-		.then(response => response.json())
-		.then(data => {
-			if (data.data && data.data.length > 0) {
-				const date = new Date(data.data[0].attributes.lastChanged);
-				document.getElementById('lastSearchDate').textContent = 
+		fetch('https://api.github.com/repos/OpenParliamentTV/OpenParliamentTV-Data-DE/commits')
+			.then(response => response.json())
+			.then(data => {
+				const date = new Date(data[0].commit.author.date);
+				document.getElementById('lastCommitDate').textContent = 
 					date.toLocaleString('de');
-			}
-		});
+			});
+
+		fetch('<?= $config["dir"]["root"] ?>/api/v1/search/media?includeAll=true&sort=date-desc')
+			.then(response => response.json())
+			.then(data => {
+				if (data.data && data.data.length > 0) {
+					const date = new Date(data.data[0].attributes.lastChanged);
+					document.getElementById('lastSearchDate').textContent = 
+						date.toLocaleString('de');
+				}
+			});
+	});
 </script>
 <?php
     include_once(__DIR__ . '/../../../footer.php');
