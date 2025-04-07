@@ -2,11 +2,13 @@
 $description = strip_tags($pageDescription);
 $claimShortClean = strip_tags(L::claimShort);
 $url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$urlWithoutParams = strtok($url, '?');
 switch ($page) {
   case 'main':
     $title = L::brand.' | '.$claimShortClean;
     $image = $config["dir"]["root"].'/content/client/images/thumbnail.png';
     $ogType = 'website';
+    $canonicalUrl = $urlWithoutParams;
     break;
   case 'search': 
     if (count($_REQUEST) < 2 || (!$_REQUEST["q"] && !$_REQUEST["personID"])) {
@@ -15,6 +17,8 @@ switch ($page) {
       $title = strip_tags($pageTitle).' | '.L::brand;
     }
     $image = $config["dir"]["root"].'/content/client/images/thumbnail.png';
+    $ogType = 'website';
+    $canonicalUrl = $url;
     break;
   case 'media':
     $title = strip_tags($pageTitle).' | '.L::brand;
@@ -24,18 +28,20 @@ switch ($page) {
       $image = $config["dir"]["root"].'/content/client/images/thumbnail.png';
     }
     $ogType = 'video';
+    $canonicalUrl = $urlWithoutParams;
     break;
   default:
     $title = strip_tags($pageTitle).' | '.L::brand;
     $image = $config["dir"]["root"].'/content/client/images/thumbnail.png';
     $ogType = 'article';
+    $canonicalUrl = $urlWithoutParams;
     break;
 }
 ?>
 <title><?= $title ?></title>
 <meta name="description" content="<?= $description ?>">
 <meta property="og:title" content="<?= $title ?>" />
-<meta property="og:url" content="<?= $url ?>" />
+<meta property="og:url" content="<?= $canonicalUrl ?>" />
 <meta property="og:type" content="<?= $ogType ?>" />
 <meta property="og:image" content="<?= $image ?>" />
 <meta property="og:description" content="<?= $description ?>" />
@@ -45,3 +51,20 @@ switch ($page) {
 <meta name="twitter:title" content="<?= $title ?>">
 <meta name="twitter:description" content="<?= $description ?>">
 <meta name="twitter:image" content="<?= $image ?>">
+
+<link rel="canonical" href="<?= $canonicalUrl ?>">
+<?php
+global $acceptLang;
+$queryString = parse_url($url, PHP_URL_QUERY);
+$params = [];
+if ($queryString) {
+  parse_str($queryString, $params);
+}
+unset($params['lang']); // Remove existing lang parameter if present
+
+foreach ($acceptLang as $thisLang) {
+  $params['lang'] = $thisLang["short"];
+  $alternateUrl = $urlWithoutParams . '?' . http_build_query($params);
+  ?>
+<link rel='alternate' hreflang='<?= $thisLang["short"] ?>' href='<?= $alternateUrl ?>' />
+<?php } ?>
