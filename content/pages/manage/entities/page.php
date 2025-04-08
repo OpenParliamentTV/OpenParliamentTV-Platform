@@ -110,9 +110,98 @@ if ($auth["meta"]["requestStatus"] != "success") {
             })
         });
 		
-		function renderActionButtons(type, id) {
-			return '<div class="list-group list-group-horizontal"><a class="list-group-item list-group-item-action" title="<?= L::view; ?>" href="<?= $config["dir"]["root"]; ?>/person/' +id+ '" target="_blank"><span class="icon-eye"></span></a><a class="list-group-item list-group-item-action" title="<?= L::edit; ?>" href="<?= $config["dir"]["root"]; ?>/manage/entities/' +type+ '/' +id+ '"><span class="icon-pencil"></span></a><a class="list-group-item list-group-item-action" title="API" href="<?= $config["dir"]["root"]; ?>/api/v1/' +type+ '/' +id+ '" target="_blank"><span class="icon-code"></span></a></div>';
+		function renderActionButtons(id, type, subtype) {
+			const viewButton = '<a class="list-group-item list-group-item-action" ' +
+				'title="<?= L::view; ?>" ' +
+				'href="<?= $config["dir"]["root"]; ?>/person/' + id + '" ' +
+				'target="_blank">' +
+				'<span class="icon-eye"></span>' +
+				'</a>';
+			
+			const editButton = '<a class="list-group-item list-group-item-action" ' +
+				'title="<?= L::edit; ?>" ' +
+				'href="<?= $config["dir"]["root"]; ?>/manage/entities/' + type + '/' + id + '">' +
+				'<span class="icon-pencil"></span>' +
+				'</a>';
+			
+			const apiButton = '<a class="list-group-item list-group-item-action" ' +
+				'title="API" ' +
+				'href="<?= $config["dir"]["root"]; ?>/api/v1/' + type + '/' + id + '" ' +
+				'target="_blank">' +
+				'<span class="icon-code"></span>' +
+				'</a>';
+			
+			const adsButton = '<a class="list-group-item list-group-item-action ads-button" ' +
+				'title="Update from ADS" ' +
+				'data-type="' + type + '" ' +
+				'data-id="' + id + '" ' +
+				'data-subtype="' + subtype + '">' +
+				'<span class="icon-ccw"></span>' +
+				'</a>';
+			
+			// Combine all buttons in a horizontal list group
+			return '<div class="list-group list-group-horizontal">' +
+				viewButton +
+				editButton +
+				apiButton +
+				adsButton +
+				'</div>';
 		}
+		
+		// Add click handler for ADS buttons
+		$(document).on('click', '.ads-button', function() {
+			// Store reference to the clicked button
+			const $button = $(this);
+			
+			$button.removeClass("list-group-item-success");
+			$button.removeClass("list-group-item-danger");
+			$button.addClass("working");
+			
+			// Get entity information from button data attributes
+			const entityType = $button.data('type');
+			const entityId = $button.data('id');
+			const entitySubtype = $button.data('subtype');
+			
+			// Determine the correct type for the ADS service
+			// Some subtypes need to be used directly instead of the main type
+			let adsType = entityType;
+			if (entitySubtype === "memberOfParliament" || 
+				entitySubtype === "person" || 
+				entitySubtype === "legalDocument" || 
+				entitySubtype === "officialDocument") {
+				adsType = entitySubtype;
+			}
+
+			// Make AJAX call to update entity data
+			$.ajax({
+				url: "<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
+				dataType: "json",
+				data: {
+					"a": "runAdditionalDataServiceForSpecificEntities", 
+					"type": [adsType],
+					"ids": [entityId],
+					"language": "de"
+				},
+				method: "post",
+				success: function(response) {
+					$button.removeClass("working");
+					
+					// Check if the response indicates success
+					if (response.success === "true") {
+						$button.addClass("list-group-item-success");
+						console.log("ADS update successful: ", response);
+					} else {
+						$button.addClass("list-group-item-danger");
+						console.error("ADS update failed:", response);
+					}
+				},
+				error: function(xhr, status, error) {
+					$button.removeClass("working");
+					$button.addClass("list-group-item-danger");
+					console.error("AJAX error:", status, error);
+				}
+			});
+		});
 		
 		$('#peopleTable').bootstrapTable({
 			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=person",
@@ -169,7 +258,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: false,
 					formatter: function(value, row) {
 
-						return renderActionButtons("person", value);
+						return renderActionButtons(value, "person", row["PersonType"]);
 
 					}
 				}
@@ -219,7 +308,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: true,
 					formatter: function(value, row) {
 
-						return renderActionButtons("organisation", value);
+						return renderActionButtons(value, "organisation", row["OrganisationType"]);
 
 					}
 				}
@@ -276,7 +365,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: false,
 					formatter: function(value, row) {
 
-						return renderActionButtons("document", value);
+						return renderActionButtons(value, "document", row["DocumentType"]);
 
 					}
 				}
@@ -329,7 +418,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: false,
 					formatter: function(value, row) {
 
-						return renderActionButtons("term", value);
+						return renderActionButtons(value, "term", row["TermType"]);
 
 					}
 				}

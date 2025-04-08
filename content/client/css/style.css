@@ -671,11 +671,15 @@ body.darkmode .btn.working, body.darkmode .list-group-item.working {
 }
 
 .btn:not([class^='btn-outline-'], [class*='btn-outline-']),
-.btn.btn-outline-primary, 
-.list-group-item {
+.btn.btn-outline-primary {
     color: var(--primary-fg-color);
     border-color: var(--border-color);
     background: var(--primary-bg-color);
+    cursor: pointer;
+}
+ 
+.list-group-item {
+    color: var(--primary-fg-color);
     cursor: pointer;
 }
 
