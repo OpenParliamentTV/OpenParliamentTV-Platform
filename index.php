@@ -690,42 +690,6 @@ switch ($page) {
 		include_once("./content/pages/manage/entitySuggestions/page.php");
 		$content = ob_get_clean();
 	break;
-	case "manage-data":
-		$pageTitle = L::manageData;
-		$pageType = 'admin';
-		$pageBreadcrumbs = [
-			[
-				'label' => L::dashboard,
-				'path' => '/manage'
-			],
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/manage/data/page.php");
-		$content = ob_get_clean();
-	break;
-	case "manage-data-media":
-		$pageTitle = 'Manage Media';
-		$pageType = 'admin';
-		$pageBreadcrumbs = [
-			[
-				'label' => L::dashboard,
-				'path' => '/manage'
-			],
-			[
-				'label' => L::manageData,
-				'path' => '/manage/data'
-			],
-			[
-				'label' => '<span class="icon-pencil"></span>'
-			]
-		];
-		ob_start();
-		include_once("./content/pages/manage/data/media/page.php");
-		$content = ob_get_clean();
-	break;
 	case "manage-import":
 		$pageTitle = L::manageImport;
 		$pageType = 'admin';
