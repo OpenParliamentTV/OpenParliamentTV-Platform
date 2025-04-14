@@ -504,6 +504,22 @@ function processRequestParameters($request, &$filter) {
                     ]
                 ];
                 break;
+                
+            case "public":
+                $filter["must"][] = [
+                    "term" => [
+                        "attributes.public" => $requestValue
+                    ]
+                ];
+                break;
+                
+            case "aligned":
+                $filter["must"][] = [
+                    "term" => [
+                        "attributes.aligned" => $requestValue
+                    ]
+                ];
+                break;
         }
     }
     

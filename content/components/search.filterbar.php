@@ -6,6 +6,7 @@ $showToggleButton = isset($showToggleButton) ? $showToggleButton : true;
 $showFactionChart = isset($showFactionChart) ? $showFactionChart : true;
 $showDateRange = isset($showDateRange) ? $showDateRange : true;
 $showSearchSuggestions = isset($showSearchSuggestions) ? $showSearchSuggestions : false;
+$showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : false;
 ?>
 
 <div id="filterbar" class="col-12">
@@ -101,6 +102,37 @@ $showSearchSuggestions = isset($showSearchSuggestions) ? $showSearchSuggestions 
                 <div id="sliderRange"></div>
                 <input type="hidden" id="dateFrom" name="dateFrom"/>
                 <input type="hidden" id="dateTo" name="dateTo"/>
+            </div>
+            <?php endif; ?>
+            <?php if ($showAdvancedFilters): ?>
+            <hr>
+            <div class="row">
+                <div class="col-6 col-md-4 mb-3">
+                    <label for="public-filter" class="form-label">Public</label>
+                    <select class="form-select form-select-sm" id="public-filter" name="public">
+                        <option value="">Select...</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <div class="col-6 col-md-4 mb-3">
+                    <label for="aligned-filter" class="form-label">Aligned</label>
+                    <select class="form-select form-select-sm" id="aligned-filter" name="aligned">
+                        <option value="">Select...</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </select>
+                </div>
+                <div class="col-6 col-md-4 mb-3">
+                    <label for="number-of-texts-filter" class="form-label">Number of texts</label>
+                    <select class="form-select form-select-sm" id="number-of-texts" name="numberOfTexts">
+                        <option value="">Select...</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
             </div>
             <?php endif; ?>
         </div>

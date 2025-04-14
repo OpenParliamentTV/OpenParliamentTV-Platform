@@ -152,6 +152,9 @@ $config["ES"]["SSL"]["pem"] = ""; // E.g. realpath(__DIR__."/../opensearch-root-
 $config["allowedSearchParams"] = [
     "media" => [
         "includeAll", 
+        "numberOfTexts", 
+        "public", 
+        "aligned", 
         "parliament", 
         "electoralPeriod", 
         "electoralPeriodID", 
