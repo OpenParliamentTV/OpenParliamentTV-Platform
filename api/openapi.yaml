@@ -1,0 +1,1358 @@
+openapi: 3.0.0
+info:
+  title: Open Parliament TV API
+  version: '1.0'
+  description: |
+    API for accessing parliamentary data including speeches, documents, and related entities.
+    All data is available through the Open Data API without rate limits or API key requirements.
+  license:
+    name: ODC Open Database License (ODbL) v1.0
+    url: https://opendatacommons.org/licenses/odbl/1-0/
+
+servers:
+  - url: https://de.openparliament.tv/api/v1
+    description: Production server
+
+tags:
+  - name: Search
+    description: Endpoints for searching various entities
+  - name: Entities
+    description: Endpoints for retrieving specific entities by ID
+
+paths:
+  /search/media:
+    get:
+      tags:
+        - Search
+      summary: Search for media content (speeches)
+      description: Search for parliamentary speeches with various filters
+      parameters:
+        - name: q
+          in: query
+          description: Search query (minimum 3 characters)
+          required: false
+          schema:
+            type: string
+            minLength: 3
+        - name: parliament
+          in: query
+          description: Parliament identifier (minimum 2 characters)
+          required: false
+          schema:
+            type: string
+            minLength: 2
+        - name: electoralPeriod
+          in: query
+          description: Electoral period number
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: electoralPeriodID
+          in: query
+          description: Electoral period ID
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: sessionID
+          in: query
+          description: Session ID
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: sessionNumber
+          in: query
+          description: Session number
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: dateFrom
+          in: query
+          description: Start date in ISO format (e.g., "2017-10-28")
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          description: End date in ISO format (e.g., "2017-12-22")
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: party
+          in: query
+          description: Party name or array of party names
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                minLength: 1
+              - type: array
+                items:
+                  type: string
+                  minLength: 1
+        - name: partyID
+          in: query
+          description: Party Wikidata ID or array of IDs
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                minLength: 1
+              - type: array
+                items:
+                  type: string
+                  minLength: 1
+        - name: faction
+          in: query
+          description: Faction name or array of faction names
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                minLength: 1
+              - type: array
+                items:
+                  type: string
+                  minLength: 1
+        - name: factionID
+          in: query
+          description: Faction Wikidata ID or array of IDs
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                minLength: 1
+              - type: array
+                items:
+                  type: string
+                  minLength: 1
+        - name: person
+          in: query
+          description: Person name (minimum 3 characters)
+          required: false
+          schema:
+            type: string
+            minLength: 3
+        - name: personID
+          in: query
+          description: Person Wikidata ID
+          required: false
+          schema:
+            type: string
+            pattern: '^Q[0-9]+$'
+        - name: abgeordnetenwatchID
+          in: query
+          description: Abgeordnetenwatch ID
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: organisationID
+          in: query
+          description: Organisation Wikidata ID
+          required: false
+          schema:
+            type: string
+            pattern: '^Q[0-9]+$'
+        - name: context
+          in: query
+          description: Context search (minimum 3 characters)
+          required: false
+          schema:
+            type: string
+            minLength: 3
+        - name: agendaItemID
+          in: query
+          description: Agenda item ID
+          required: false
+          schema:
+            type: string
+            minLength: 2
+        - name: documentID
+          in: query
+          description: Document ID
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: termID
+          in: query
+          description: Term ID
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: id
+          in: query
+          description: Media ID
+          required: false
+          schema:
+            type: string
+            minLength: 4
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                  results:
+                    count: 25
+                    total: 128
+                    rangeStart: 51
+                    rangeEnd: 75
+                    maxScore: 4.7654785
+                data:
+                  - type: "media"
+                    id: "DE-198765837"
+                    attributes:
+                      title: "Rede von Angela Merkel zur Rentenreform"
+                      date: "2018-04-11"
+                      duration: 1200
+                    relationships:
+                      person:
+                        data:
+                          type: "person"
+                          id: "Q567"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11"
+                  first: "https://de.openparliament.tv/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11&page[number]=1&page[size]=25"
+                  prev: "https://de.openparliament.tv/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11&page[number]=2&page[size]=25"
+                  next: "https://de.openparliament.tv/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11&page[number]=4&page[size]=25"
+                  last: "https://de.openparliament.tv/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11&page[number]=13&page[size]=25"
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "error"
+                errors:
+                  - status: "422"
+                    code: "3"
+                    title: "Invalid Attribute"
+                    detail: "Search query must contain at least three characters."
+                links:
+                  self: "https://de.openparliament.tv/api/v1/search/media?q=Re"
+
+  /search/people:
+    get:
+      tags:
+        - Search
+      summary: Search for people
+      description: Search for people with various filters
+      parameters:
+        - name: name
+          in: query
+          description: Name to search for (minimum 3 characters)
+          required: false
+          schema:
+            type: string
+            minLength: 3
+        - name: type
+          in: query
+          description: Type of person
+          required: false
+          schema:
+            type: string
+            enum: [memberOfParliament, unknown]
+        - name: party
+          in: query
+          description: Party name or array of party names
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                minLength: 1
+              - type: array
+                items:
+                  type: string
+                  minLength: 1
+        - name: partyID
+          in: query
+          description: Party Wikidata ID or array of IDs
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                pattern: '^Q[0-9]+$'
+              - type: array
+                items:
+                  type: string
+                  pattern: '^Q[0-9]+$'
+        - name: faction
+          in: query
+          description: Faction name or array of faction names
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                minLength: 1
+              - type: array
+                items:
+                  type: string
+                  minLength: 1
+        - name: factionID
+          in: query
+          description: Faction Wikidata ID or array of IDs
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                pattern: '^Q[0-9]+$'
+              - type: array
+                items:
+                  type: string
+                  pattern: '^Q[0-9]+$'
+        - name: organisationID
+          in: query
+          description: Organisation Wikidata ID
+          required: false
+          schema:
+            type: string
+            pattern: '^Q[0-9]+$'
+        - name: degree
+          in: query
+          description: Academic degree
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: gender
+          in: query
+          description: Gender
+          required: false
+          schema:
+            type: string
+            enum: [male, female, nonbinary, bi, queer]
+        - name: originID
+          in: query
+          description: Origin ID
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: abgeordnetenwatchID
+          in: query
+          description: Abgeordnetenwatch ID
+          required: false
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                  results:
+                    count: 10
+                    total: 42
+                    rangeStart: 1
+                    rangeEnd: 10
+                    maxScore: 3.2456789
+                data:
+                  - type: "person"
+                    id: "Q567"
+                    attributes:
+                      label: "Angela Merkel"
+                      firstName: "Angela"
+                      lastName: "Merkel"
+                      gender: "female"
+                      party:
+                        label: "CDU"
+                        id: "Q49764"
+                    relationships:
+                      media:
+                        data:
+                          - type: "media"
+                            id: "DE-198765837"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD"
+                  first: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD&page[number]=1&page[size]=10"
+                  next: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD&page[number]=2&page[size]=10"
+                  last: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD&page[number]=5&page[size]=10"
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /search/organisations:
+    get:
+      tags:
+        - Search
+      summary: Search for organisations
+      description: Search for organisations with various filters
+      parameters:
+        - name: name
+          in: query
+          description: Name to search for (minimum 3 characters)
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                minLength: 3
+              - type: array
+                items:
+                  type: string
+                  minLength: 3
+        - name: type
+          in: query
+          description: Type of organisation
+          required: false
+          schema:
+            type: string
+            minLength: 2
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                  results:
+                    count: 5
+                    total: 5
+                    rangeStart: 1
+                    rangeEnd: 5
+                    maxScore: 2.3456789
+                data:
+                  - type: "organisation"
+                    id: "Q1007353"
+                    attributes:
+                      label: "BÜNDNIS 90/DIE GRÜNEN"
+                      labelAlternative: "Die Grünen"
+                      type: "faction"
+                    relationships:
+                      people:
+                        data:
+                          - type: "person"
+                            id: "Q12345"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/search/organisations?name=Linke"
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /search/documents:
+    get:
+      tags:
+        - Search
+      summary: Search for documents
+      description: Search for documents with various filters
+      parameters:
+        - name: label
+          in: query
+          description: Document label to search for (minimum 3 characters)
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                minLength: 3
+              - type: array
+                items:
+                  type: string
+                  minLength: 3
+        - name: type
+          in: query
+          description: Type of document
+          required: false
+          schema:
+            type: string
+            minLength: 2
+        - name: wikidataID
+          in: query
+          description: Wikidata ID
+          required: false
+          schema:
+            type: string
+            pattern: '^Q[0-9]+$'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                  results:
+                    count: 2
+                    total: 2
+                    rangeStart: 1
+                    rangeEnd: 2
+                    maxScore: 1.2345678
+                data:
+                  - type: "document"
+                    id: "201"
+                    attributes:
+                      label: "Drucksache 19/5412"
+                      type: "officialDocument"
+                    relationships:
+                      media:
+                        data:
+                          - type: "media"
+                            id: "DE-198765837"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/search/documents?label=19/5412"
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /search/terms:
+    get:
+      tags:
+        - Search
+      summary: Search for terms
+      description: Search for terms with various filters
+      parameters:
+        - name: label
+          in: query
+          description: Term label to search for (minimum 3 characters)
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                minLength: 3
+              - type: array
+                items:
+                  type: string
+                  minLength: 3
+        - name: wikidataID
+          in: query
+          description: Wikidata ID
+          required: false
+          schema:
+            type: string
+            pattern: '^Q[0-9]+$'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                  results:
+                    count: 3
+                    total: 3
+                    rangeStart: 1
+                    rangeEnd: 3
+                    maxScore: 1.1234567
+                data:
+                  - type: "term"
+                    id: "Q123456"
+                    attributes:
+                      label: "Rentenreform"
+                      abstract: "Gesetzliche Änderungen zur Reform der gesetzlichen Rentenversicherung"
+                    relationships:
+                      media:
+                        data:
+                          - type: "media"
+                            id: "DE-198765837"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/search/terms?label=Rente"
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /media/{id}:
+    get:
+      tags:
+        - Entities
+      summary: Get media by ID
+      description: Retrieve a specific media item by its ID
+      parameters:
+        - name: id
+          in: path
+          description: Media ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MediaResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                data:
+                  type: "media"
+                  id: "DE-198765837"
+                  attributes:
+                    title: "Rede von Angela Merkel zur Rentenreform"
+                    date: "2018-04-11"
+                    duration: 1200
+                    text: "Sehr geehrte Damen und Herren, heute debattieren wir über die Rentenreform..."
+                  relationships:
+                    person:
+                      data:
+                        type: "person"
+                        id: "Q567"
+                    documents:
+                      data:
+                        - type: "document"
+                          id: "201"
+                    terms:
+                      data:
+                        - type: "term"
+                          id: "Q123456"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/media/DE-198765837"
+        '404':
+          description: Media not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /person/{id}:
+    get:
+      tags:
+        - Entities
+      summary: Get person by ID
+      description: Retrieve a specific person by their Wikidata ID
+      parameters:
+        - name: id
+          in: path
+          description: Wikidata ID
+          required: true
+          schema:
+            type: string
+            pattern: '^Q[0-9]+$'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                data:
+                  type: "person"
+                  id: "Q567"
+                  attributes:
+                    label: "Angela Merkel"
+                    firstName: "Angela"
+                    lastName: "Merkel"
+                    gender: "female"
+                    party:
+                      label: "CDU"
+                      id: "Q49764"
+                    faction:
+                      label: "CDU/CSU"
+                  relationships:
+                    media:
+                      data:
+                        - type: "media"
+                          id: "DE-198765837"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/person/Q567"
+        '404':
+          description: Person not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /organisation/{id}:
+    get:
+      tags:
+        - Entities
+      summary: Get organisation by ID
+      description: Retrieve a specific organisation by its Wikidata ID
+      parameters:
+        - name: id
+          in: path
+          description: Wikidata ID
+          required: true
+          schema:
+            type: string
+            pattern: '^Q[0-9]+$'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganisationResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                data:
+                  type: "organisation"
+                  id: "Q1007353"
+                  attributes:
+                    label: "BÜNDNIS 90/DIE GRÜNEN"
+                    labelAlternative: "Die Grünen"
+                    type: "faction"
+                    abstract: "Bündnis 90/Die Grünen ist eine politische Partei in Deutschland."
+                  relationships:
+                    people:
+                      data:
+                        - type: "person"
+                          id: "Q12345"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/organisation/Q1007353"
+        '404':
+          description: Organisation not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /document/{id}:
+    get:
+      tags:
+        - Entities
+      summary: Get document by ID
+      description: Retrieve a specific document by its ID
+      parameters:
+        - name: id
+          in: path
+          description: Document ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                data:
+                  type: "document"
+                  id: "201"
+                  attributes:
+                    label: "Drucksache 19/5412"
+                    type: "officialDocument"
+                    abstract: "Gesetzentwurf zur Reform der gesetzlichen Rentenversicherung"
+                  relationships:
+                    media:
+                      data:
+                        - type: "media"
+                          id: "DE-198765837"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/document/201"
+        '404':
+          description: Document not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /term/{id}:
+    get:
+      tags:
+        - Entities
+      summary: Get term by ID
+      description: Retrieve a specific term by its Wikidata ID
+      parameters:
+        - name: id
+          in: path
+          description: Wikidata ID
+          required: true
+          schema:
+            type: string
+            pattern: '^Q[0-9]+$'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TermResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                data:
+                  type: "term"
+                  id: "Q123456"
+                  attributes:
+                    label: "Rentenreform"
+                    abstract: "Gesetzliche Änderungen zur Reform der gesetzlichen Rentenversicherung"
+                  relationships:
+                    media:
+                      data:
+                        - type: "media"
+                          id: "DE-198765837"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/term/Q123456"
+        '404':
+          description: Term not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /session/{id}:
+    get:
+      tags:
+        - Entities
+      summary: Get session by ID
+      description: Retrieve a specific parliamentary session by its ID
+      parameters:
+        - name: id
+          in: path
+          description: Session ID (format PARLIAMENT-ELECTORALPERIOD-SESSIONNUMBER)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                data:
+                  type: "session"
+                  id: "DE-0190061"
+                  attributes:
+                    number: "61"
+                    date: "2018-04-11"
+                    title: "61. Sitzung des Deutschen Bundestages"
+                  relationships:
+                    electoralPeriod:
+                      data:
+                        type: "electoralPeriod"
+                        id: "DE-019"
+                    media:
+                      data:
+                        - type: "media"
+                          id: "DE-198765837"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/session/DE-0190061"
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /electoralPeriod/{id}:
+    get:
+      tags:
+        - Entities
+      summary: Get electoral period by ID
+      description: Retrieve a specific electoral period by its ID
+      parameters:
+        - name: id
+          in: path
+          description: Electoral period ID (format PARLIAMENT-ELECTORALPERIOD)
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ElectoralPeriodResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                data:
+                  type: "electoralPeriod"
+                  id: "DE-019"
+                  attributes:
+                    number: "19"
+                    startDate: "2017-10-24"
+                    endDate: "2021-10-26"
+                    parliament: "DE"
+                  relationships:
+                    sessions:
+                      data:
+                        - type: "session"
+                          id: "DE-0190061"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/electoralPeriod/DE-019"
+        '404':
+          description: Electoral period not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /agendaItem/{id}:
+    get:
+      tags:
+        - Entities
+      summary: Get agenda item by ID
+      description: Retrieve a specific agenda item by its ID
+      parameters:
+        - name: id
+          in: path
+          description: Agenda item ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgendaItemResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                data:
+                  type: "agendaItem"
+                  id: "DE-454"
+                  attributes:
+                    title: "Gesetzliche Rentenversicherung"
+                    number: "4"
+                  relationships:
+                    session:
+                      data:
+                        type: "session"
+                        id: "DE-0190061"
+                    media:
+                      data:
+                        - type: "media"
+                          id: "DE-198765837"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/agendaItem/DE-454"
+        '404':
+          description: Agenda item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    SearchResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            api:
+              type: object
+              properties:
+                version:
+                  type: string
+                documentation:
+                  type: string
+                license:
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                    link:
+                      type: string
+            requestStatus:
+              type: string
+              enum: [success, error]
+            results:
+              type: object
+              properties:
+                count:
+                  type: integer
+                total:
+                  type: integer
+                rangeStart:
+                  type: integer
+                rangeEnd:
+                  type: integer
+                maxScore:
+                  type: number
+        data:
+          type: array
+          items:
+            type: object
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+            first:
+              type: string
+            prev:
+              type: string
+            next:
+              type: string
+            last:
+              type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            api:
+              type: object
+              properties:
+                version:
+                  type: string
+                documentation:
+                  type: string
+                license:
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                    link:
+                      type: string
+            requestStatus:
+              type: string
+              enum: [error]
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              meta:
+                type: object
+                properties:
+                  domSelector:
+                    type: string
+              status:
+                type: string
+              code:
+                type: string
+              title:
+                type: string
+              detail:
+                type: string
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+
+    MediaResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [media]
+            id:
+              type: string
+            attributes:
+              type: object
+            relationships:
+              type: object
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+
+    PersonResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [person]
+            id:
+              type: string
+            attributes:
+              type: object
+            relationships:
+              type: object
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+
+    OrganisationResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [organisation]
+            id:
+              type: string
+            attributes:
+              type: object
+            relationships:
+              type: object
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+
+    DocumentResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [document]
+            id:
+              type: string
+            attributes:
+              type: object
+            relationships:
+              type: object
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+
+    TermResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [term]
+            id:
+              type: string
+            attributes:
+              type: object
+            relationships:
+              type: object
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+
+    SessionResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [session]
+            id:
+              type: string
+            attributes:
+              type: object
+            relationships:
+              type: object
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+
+    ElectoralPeriodResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [electoralPeriod]
+            id:
+              type: string
+            attributes:
+              type: object
+            relationships:
+              type: object
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+
+    AgendaItemResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: object
+          properties:
+            type:
+              type: string
+              enum: [agendaItem]
+            id:
+              type: string
+            attributes:
+              type: object
+            relationships:
+              type: object
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+
+    Meta:
+      type: object
+      properties:
+        api:
+          type: object
+          properties:
+            version:
+              type: string
+            documentation:
+              type: string
+            license:
+              type: object
+              properties:
+                label:
+                  type: string
+                link:
+                  type: string
+        requestStatus:
+          type: string
+          enum: [success, error] 
