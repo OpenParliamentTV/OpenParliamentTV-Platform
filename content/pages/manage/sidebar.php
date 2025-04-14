@@ -73,8 +73,8 @@
                     <i class="icon-lightbulb me-2"></i>
                     <?= L::manageEntitySuggestions; ?>
                 </a>
-                <a href="<?= $config["dir"]["root"] ?>/manage/config" 
-                   class="dropdown-item <?= ($page == "manage-config") ? "active" : "" ?>">
+                <a href="<?= $config["dir"]["root"] ?>/manage/settings" 
+                   class="dropdown-item <?= ($page == "manage-settings") ? "active" : "" ?>">
                     <i class="icon-cogs me-2"></i>
                     <?= L::platformSettings; ?>
                 </a>
@@ -181,8 +181,8 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $config["dir"]["root"] ?>/manage/config" 
-                       class="nav-link <?= ($page == "manage-config") ? "active" : "" ?>">
+                    <a href="<?= $config["dir"]["root"] ?>/manage/settings" 
+                       class="nav-link <?= ($page == "manage-settings") ? "active" : "" ?>">
                         <i class="icon-cogs me-2"></i>
                         <?= L::platformSettings; ?>
                     </a>

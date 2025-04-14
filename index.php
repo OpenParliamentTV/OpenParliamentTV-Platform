@@ -450,7 +450,7 @@ switch ($page) {
 		include_once("./content/pages/manage/page.php");
 		$content = ob_get_clean();
 	break;
-	case "manage-config":
+	case "manage-settings":
 		$pageTitle = L::platformSettings;
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
@@ -463,7 +463,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		include_once("./content/pages/manage/config/page.php");
+		include_once("./content/pages/manage/settings/page.php");
 		$content = ob_get_clean();
 	break;
 	case "manage-conflicts":
