@@ -16,7 +16,7 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
 ?>
 <script type="text/javascript">
     currentMediaID = '<?= $speech["id"] ?>';
-    currentMediaTimestamp = '<?= $speech["attributes"]["timestamp"] ?>';
+    currentMediaTimestamp = '<?= $speech["attributes"]["dateStartTimestamp"] ?>';
     <?php // json_encode($speech, JSON_PRETTY_PRINT) ?>
 
     // TODO: Replace URL Quick Fix

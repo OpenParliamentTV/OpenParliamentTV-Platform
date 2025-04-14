@@ -352,7 +352,7 @@ function applyDefaultFilters(&$filter) {
     // Hide non-public media
     $filter["must_not"][] = [
         "match" => [
-            "attributes.public" => 0
+            "attributes.public" => false
         ]
     ];
 }
@@ -371,7 +371,8 @@ function processRequestParameters($request, &$filter) {
     $shouldCount = 0;
     
     foreach ($request as $requestKey => $requestValue) {
-        if (empty($requestValue)) {
+        // Skip empty values, but allow zero values
+        if ($requestValue === "" || $requestValue === null) {
             continue;
         }
         
@@ -519,6 +520,17 @@ function processRequestParameters($request, &$filter) {
                         "attributes.aligned" => $requestValue
                     ]
                 ];
+                break;
+                
+            case "numberOfTexts":
+                if (is_numeric($requestValue)) {
+                    // Use a simple term query for all values including zero
+                    $filter["must"][] = [
+                        "term" => [
+                            "attributes.textContentsCount" => intval($requestValue)
+                        ]
+                    ];
+                }
                 break;
         }
     }
@@ -985,17 +997,17 @@ function processExactMatches($exact_matches, &$query) {
 function determineSorting($request) {
     if (isset($request["sort"])) {
         if ($request["sort"] == 'date-asc' || $request["sort"] == 'topic-asc') {
-            return ["attributes.timestamp" => "asc"];
+            return ["attributes.dateStartTimestamp" => "asc"];
         } else if ($request["sort"] == 'date-desc' || $request["sort"] == 'topic-desc') {
-            return ["attributes.timestamp" => "desc"];
+            return ["attributes.dateStartTimestamp" => "desc"];
         } else if ($request["sort"] == 'duration-asc') {
             return ["attributes.duration" => "asc"];
         } else if ($request["sort"] == 'duration-desc') {
             return ["attributes.duration" => "desc"];
         } else if ($request["sort"] == 'changed-asc') {
-            return ["attributes.lastChanged" => "asc"];
+            return ["attributes.lastChangedTimestamp" => "asc"];
         } else if ($request["sort"] == 'changed-desc') {
-            return ["attributes.lastChanged" => "desc"];
+            return ["attributes.lastChangedTimestamp" => "desc"];
         }
     }
     

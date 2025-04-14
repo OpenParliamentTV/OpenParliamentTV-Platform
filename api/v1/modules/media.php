@@ -159,11 +159,9 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
             $return["data"]["attributes"]["parliament"] = $parliament;
             $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
             $return["data"]["attributes"]["order"] = (int)$item["MediaOrder"];
-            if ($item["MediaPublic"] == 0) {
-                $return["data"]["attributes"]["public"] = 0;
-            }
+            $return["data"]["attributes"]["public"] = (($item["MediaPublic"] === "1") ? true : false);
             $return["data"]["attributes"]["aligned"] = (($item["MediaAligned"] === "1") ? true : false);
-            $return["data"]["attributes"]["timestamp"] = strtotime($item["MediaDateStart"]);
+            $return["data"]["attributes"]["dateStartTimestamp"] = strtotime($item["MediaDateStart"]);
             $return["data"]["attributes"]["dateStart"] = $item["MediaDateStart"];
             $return["data"]["attributes"]["dateEnd"] = $item["MediaDateEnd"];
             $return["data"]["attributes"]["duration"] = (float)$item["MediaDuration"];
@@ -175,6 +173,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
             $return["data"]["attributes"]["thumbnailLicense"] = $item["MediaThumbnailLicense"];
             $return["data"]["attributes"]["additionalInformation"] = json_decode($item["MediaAdditionalInformation"],true);
             $return["data"]["attributes"]["lastChanged"] = $item["MediaLastChanged"];
+            $return["data"]["attributes"]["lastChangedTimestamp"] = strtotime($item["MediaLastChanged"]);
             $return["data"]["attributes"]["textContents"] = array();
 
             $itemTexts = $dbp->getAll("SELECT * FROM ?n WHERE TextMediaID=?s",$config["parliament"][$parliament]["sql"]["tbl"]["Text"], $id);
@@ -203,6 +202,8 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                 array_push($return["data"]["attributes"]["textContents"], $tmpTextItem);
 
             }
+
+            $return["data"]["attributes"]["textContentsCount"] = count($return["data"]["attributes"]["textContents"]);
 
             $return["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
 

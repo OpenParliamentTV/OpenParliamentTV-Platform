@@ -42,7 +42,7 @@ function getPrevDocument($currentDocumentTimestamp) {
 				"constant_score" => array(
 					"filter" => array(
 						"range" => array(
-							"attributes.timestamp" => array(
+							"attributes.dateStartTimestamp" => array(
 								"lt" => $currentDocumentTimestamp
 							)
 						)
@@ -50,7 +50,7 @@ function getPrevDocument($currentDocumentTimestamp) {
 				)
 			),
 			"sort" => array(
-				"attributes.timestamp" => array(
+				"attributes.dateStartTimestamp" => array(
 					"order" => "desc"
 				)
 			)
@@ -77,7 +77,7 @@ function getNextDocument($currentDocumentTimestamp) {
 				"constant_score" => array(
 					"filter" => array(
 						"range" => array(
-							"attributes.timestamp" => array(
+							"attributes.dateStartTimestamp" => array(
 								"gt" => $currentDocumentTimestamp
 							)
 						)
@@ -85,7 +85,7 @@ function getNextDocument($currentDocumentTimestamp) {
 				)
 			),
 			"sort" => array(
-				"attributes.timestamp" => array(
+				"attributes.dateStartTimestamp" => array(
 					"order" => "asc"
 				)
 			)

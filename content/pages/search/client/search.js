@@ -52,7 +52,7 @@ $(document).ready( function() {
 		}
 	});
 
-	$('[name="factionID[]"]').change(function() {
+	$('[name="factionID[]"], [name="numberOfTexts"], [name="aligned"], [name="public"]').change(function() {
 		updateQuery();
 	});
 
