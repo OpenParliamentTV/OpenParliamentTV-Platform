@@ -35,11 +35,6 @@
 
                 <!-- Contents -->
                 <div class="dropdown-header text-uppercase text-muted"><?= L::contents; ?></div>
-                <a href="<?= $config["dir"]["root"] ?>/manage/data" 
-                   class="dropdown-item <?= ($page == "manage-data") ? "active" : "" ?>">
-                    <i class="icon-database me-2"></i>
-                    <?= L::manageData; ?>
-                </a>
                 <a href="<?= $config["dir"]["root"] ?>/manage/media" 
                    class="dropdown-item <?= ($page == "manage-media") ? "active" : "" ?>">
                     <i class="icon-play me-2"></i>
@@ -49,6 +44,11 @@
                    class="dropdown-item <?= ($page == "manage-entities") ? "active" : "" ?>">
                     <i class="icon-tags me-2"></i>
                     <?= L::manageEntities; ?>
+                </a>
+                <a href="<?= $config["dir"]["root"] ?>/manage/structure" 
+                   class="dropdown-item <?= ($page == "manage-structure") ? "active" : "" ?>">
+                    <i class="icon-flow-cascade me-2"></i>
+                    <?= L::manageStructure; ?>
                 </a>
 
                 <!-- Administration -->
@@ -129,13 +129,6 @@
             <div class="mb-2 ps-3 text-uppercase text-muted"><?= L::contents; ?></div>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="<?= $config["dir"]["root"] ?>/manage/data" 
-                       class="nav-link <?= ($page == "manage-data") ? "active" : "" ?>">
-                        <i class="icon-database me-2"></i>
-                        <?= L::manageData; ?>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a href="<?= $config["dir"]["root"] ?>/manage/media" 
                        class="nav-link <?= ($page == "manage-media") ? "active" : "" ?>">
                         <i class="icon-play me-2"></i>
@@ -147,6 +140,13 @@
                        class="nav-link <?= ($page == "manage-entities") ? "active" : "" ?>">
                         <i class="icon-tags me-2"></i>
                         <?= L::manageEntities; ?>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= $config["dir"]["root"] ?>/manage/structure" 
+                       class="nav-link <?= ($page == "manage-structure") ? "active" : "" ?>">
+                        <i class="icon-flow-cascade me-2"></i>
+                        <?= L::manageStructure; ?>
                     </a>
                 </li>
             </ul>
