@@ -78,11 +78,6 @@
                     <i class="icon-cogs me-2"></i>
                     <?= L::platformSettings; ?>
                 </a>
-                <a href="<?= $config["dir"]["root"] ?>/manage/searchindex" 
-                   class="dropdown-item <?= ($page == "manage-searchindex") ? "active" : "" ?>">
-                    <i class="icon-search me-2"></i>
-                    <?= L::manageSearchIndex; ?>
-                </a>
             </div>
         </div>
     </div>
@@ -190,13 +185,6 @@
                        class="nav-link <?= ($page == "manage-config") ? "active" : "" ?>">
                         <i class="icon-cogs me-2"></i>
                         <?= L::platformSettings; ?>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="<?= $config["dir"]["root"] ?>/manage/searchindex" 
-                       class="nav-link <?= ($page == "manage-searchindex") ? "active" : "" ?>">
-                        <i class="icon-search me-2"></i>
-                        <?= L::manageSearchIndex; ?>
                     </a>
                 </li>
             </ul>

@@ -779,22 +779,6 @@ switch ($page) {
 		include_once("./content/pages/manage/structure/page.php");
 		$content = ob_get_clean();
 	break;
-	case "manage-searchindex":
-		$pageTitle = L::manageSearchIndex;
-		$pageType = 'admin';
-		$pageBreadcrumbs = [
-			[
-				'label' => L::dashboard,
-				'path' => '/manage'
-			],
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/manage/searchindex/page.php");
-		$content = ob_get_clean();
-	break;
 	case "manage-users":
 		ob_start();
 		if (isset($_REQUEST["id"])) {
