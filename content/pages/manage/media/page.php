@@ -39,6 +39,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 $showFactionChart = false;
                                 $showDateRange = true;
                                 $showSearchSuggestions = true;
+                                $showAdvancedFilters = true;
                                 include_once(__DIR__ . '/../../../components/search.filterbar.php'); 
                             ?>
                             <div id="speechListContainer" class="col">
@@ -65,6 +66,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     }
 </style>
 
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/search/client/search.js"></script>
 
 <?php

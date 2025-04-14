@@ -7,6 +7,7 @@ var factionChart = null,
 	timeRangeChart = null;
 var selectedSuggestionIndex = null,
 	selectedSuggestionColumn = 'suggestionContainerText';
+var timelineViz = null;
 
 // Check if we're in the media management context
 var isMediaManagement = window.location.pathname.includes('/manage/media');
@@ -574,10 +575,11 @@ function updateResultList() {
     }
 
 	var view = isMediaManagement ? 'table' : 'grid';
+	var includeAllString = isMediaManagement ? '&includeAll=true' : '';
 
 	updateAjax = $.ajax({
 		method: "POST",
-		url: config.dir.root + "/content/components/result."+view+".php?a=search&queryOnly=1&" + langString + pageString + getSerializedForm()
+		url: config.dir.root + "/content/components/result."+view+".php?a=search"+includeAllString+"&queryOnly=1&" + langString + pageString + getSerializedForm()
 	}).done(function(data) {
 		var requestQuery = getQueryVariable('q'),
 			requestPersonID = getQueryVariable('personID');
@@ -707,26 +709,31 @@ function updateTimelineViz() {
     if (typeof resultsAttributes !== "object") {
         return;
     }
-    let highestSpeechCountPerDay = 0;
-
+    
+    // Prepare data for the timeline
+    var timelineData = [];
     for (let day in resultsAttributes["days"]) {
-        if (resultsAttributes["days"][day]["doc_count"] > highestSpeechCountPerDay) {
-            highestSpeechCountPerDay = resultsAttributes["days"][day]["doc_count"];
-        }
+        timelineData.push({
+            date: day,
+            count: resultsAttributes["days"][day]["doc_count"],
+            originalData: {
+                date: day,
+                count: resultsAttributes["days"][day]["doc_count"]
+            }
+        });
     }
-    for (let day in resultsAttributes["days"]) {
-        let percentSpeechesPerDay = 100 * (resultsAttributes["days"][day]["doc_count"] / highestSpeechCountPerDay),
-            oneDay = 24 * 60 * 60 * 1000,
-            diffDays = Math.round(Math.abs((minDate - maxDate) / oneDay)),
-            itemDate = new Date(day),
-            daysSinceMinDate = Math.round(Math.abs((minDate - itemDate) / oneDay)),
-            leftPercent = 100 * (daysSinceMinDate / diffDays);
-
-        let timelineVizItem = $('<div class="timelineVizItem" data-speech-date="'+ day +'" data-speech-count="'+ resultsAttributes["days"][day]["doc_count"] +'" style="height:'+ percentSpeechesPerDay +'%; left:'+ leftPercent +'%"></div>');
-
-        $('#timelineVizWrapper').append(timelineVizItem);
+    
+    // Initialize or update the timeline visualization
+    if (!timelineViz) {
+        timelineViz = new TimelineViz({
+            container: 'timelineVizWrapper',
+            data: timelineData,
+            minDate: minDate,
+            maxDate: maxDate
+        });
+    } else {
+        timelineViz.update(timelineData, minDate, maxDate);
     }
-
 }
 
 function updateFactionChart() {
