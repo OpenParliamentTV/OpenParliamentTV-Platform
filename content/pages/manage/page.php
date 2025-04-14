@@ -36,8 +36,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             <table id="latestUpdatesMedia" class="table table-striped my-0">
                                                 <thead>
                                                     <tr>
-                                                        <th><?= L::agendaItem; ?></th>
                                                         <th><?= L::contextmainSpeaker; ?></th>
+                                                        <th><?= L::agendaItem; ?></th>
                                                         <th>Last Changed</th>
                                                     </tr>
                                                 </thead>
@@ -111,6 +111,43 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Function to fetch media from API
+    async function fetchLatestMedia() {
+        try {
+            const response = await fetch(`<?= $config["dir"]["root"]; ?>/api/v1/search/media/?limit=10&sort=changed-asc`);
+            const data = await response.json();
+            
+            if (data && data.data) {
+                const mediaItems = data.data.map(media => {
+                    // Extract agenda item title from relationships
+                    const agendaItemTitle = media.relationships?.agendaItem?.data?.attributes?.title || 'Untitled';
+                    
+                    // Extract main speaker from relationships
+                    const mainSpeaker = media.relationships?.people?.data?.[0]?.attributes?.label || 'Unknown';
+                    
+                    return {
+                        id: media.id,
+                        agendaItem: agendaItemTitle,
+                        speaker: mainSpeaker,
+                        lastChanged: media.attributes.lastChanged
+                    };
+                });
+                
+                // Update the table body
+                const tbody = document.querySelector('#latestUpdatesMedia tbody');
+                tbody.innerHTML = mediaItems.map(media => `
+                    <tr>
+                        <td>${media.speaker}</td>
+                        <td><a href="<?= $config["dir"]["root"]; ?>/media/${media.id}">${media.agendaItem}</a></td>
+                        <td>${formatDate(media.lastChanged)}</td>
+                    </tr>
+                `).join('');
+            }
+        } catch (error) {
+            console.error('Error fetching latest media:', error);
+        }
+    }
+
     // Function to fetch and display latest entities
     async function fetchLatestEntities() {
         try {
@@ -145,8 +182,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Fetch latest entities when page loads
+    // Fetch latest entities and media when page loads
     fetchLatestEntities();
+    fetchLatestMedia();
 });
 </script>
 
