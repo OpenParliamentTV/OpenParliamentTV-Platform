@@ -615,27 +615,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
             break;
 
-            case "mediaIrregularity":
-
-                //Internal function to find irregularities. Should not be allowed to called from public
-
-                require_once (__DIR__."/modules/media.php");
-
-                $item = mediaIrregularity($request["itemType"], $request["parliament"], $request["details"], $db, $dbp);
-
-                if ($item["meta"]["requestStatus"] == "success") {
-
-                    unset($return["errors"]);
-
-                } else {
-
-                    unset($return["data"]);
-
-                }
-
-                $return = array_replace_recursive($return, $item);
-            break;
-
             case "addMedia":
 
                 include_once(__DIR__."/modules/media.php");
