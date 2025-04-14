@@ -399,6 +399,12 @@ function filterAllowedSearchParams($data, $type, $caseSensitive = true) {
 
     $allowedParams = $config["allowedSearchParams"];
 
+    // Only allow includeAll and public for admin users
+    // TODO: check if this is the correct way to do this
+    if ($_SESSION["userdata"]["role"] != "admin") {
+        $allowedParams[$type] = array_diff($allowedParams[$type], ["includeAll", "public"]);
+    }
+
     if (!isset($allowedParams[$type])) {
         return array();
     }
