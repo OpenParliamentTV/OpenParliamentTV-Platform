@@ -56,6 +56,10 @@ $(document).ready( function() {
 		updateQuery();
 	});
 
+	$('[name="agendaItemTitle"]').keyup(function() {
+		updateQuery();
+	});
+
 	$('main').on('change', '[name="sort"]', function() {
 		updateQuery();
 	});
@@ -310,6 +314,8 @@ function updateContentsFromURL() {
 	
 	$('#dateFrom').val((queryFrom) ? queryFrom : minDate.toISOString().slice(0,10));
 	$('#dateTo').val((queryTo) ? queryTo : maxDate.toISOString().slice(0,10));
+
+	$('[name="agendaItemTitle"]').val(getQueryVariable('agendaItemTitle'));
 
 	updateFactionChart();
     $('#timelineVizWrapper').empty();

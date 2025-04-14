@@ -161,6 +161,7 @@ $config["allowedSearchParams"] = [
         "sessionID", 
         "sessionNumber", 
         "agendaItemID", 
+        "agendaItemTitle",
         "context", 
         "dateFrom", 
         "dateTo", 

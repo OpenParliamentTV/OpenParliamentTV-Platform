@@ -107,7 +107,11 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
             <?php if ($showAdvancedFilters): ?>
             <hr>
             <div class="row">
-                <div class="col-6 col-md-4 mb-3">
+                <div class="col-12 col-lg-6 mb-3">
+                    <label for="agendaItemTitle-filter" class="form-label">Agenda Item Title</label>
+                    <input type="text" class="form-control form-control-sm" id="agendaItemTitle-filter" name="agendaItemTitle">
+                </div>
+                <div class="col-6 col-lg-2 mb-3">
                     <label for="public-filter" class="form-label">Public</label>
                     <select class="form-select form-select-sm" id="public-filter" name="public">
                         <option value="">Select...</option>
@@ -115,7 +119,7 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
                         <option value="false">No</option>
                     </select>
                 </div>
-                <div class="col-6 col-md-4 mb-3">
+                <div class="col-6 col-lg-2 mb-3">
                     <label for="aligned-filter" class="form-label">Aligned</label>
                     <select class="form-select form-select-sm" id="aligned-filter" name="aligned">
                         <option value="">Select...</option>
@@ -123,8 +127,8 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
                         <option value="false">No</option>
                     </select>
                 </div>
-                <div class="col-6 col-md-4 mb-3">
-                    <label for="number-of-texts-filter" class="form-label">Number of texts</label>
+                <div class="col-6 col-lg-2 mb-3">
+                    <label for="number-of-texts-filter" class="form-label">Texts</label>
                     <select class="form-select form-select-sm" id="number-of-texts" name="numberOfTexts">
                         <option value="">Select...</option>
                         <option value="0">0</option>

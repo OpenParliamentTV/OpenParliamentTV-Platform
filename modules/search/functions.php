@@ -432,6 +432,35 @@ function processRequestParameters($request, &$filter) {
                     ];
                 }
                 break;
+            
+            case "agendaItemTitle":
+                if (strlen($requestValue) > 0) {
+                    // Create a should query to match either title or officialTitle
+                    $filter["must"][] = [
+                        "bool" => [
+                            "should" => [
+                                [
+                                    "wildcard" => [
+                                        "relationships.agendaItem.data.attributes.title" => [
+                                            "value" => "*" . strtolower($requestValue) . "*",
+                                            "case_insensitive" => true
+                                        ]
+                                    ]
+                                ],
+                                [
+                                    "wildcard" => [
+                                        "relationships.agendaItem.data.attributes.officialTitle" => [
+                                            "value" => "*" . strtolower($requestValue) . "*",
+                                            "case_insensitive" => true
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            "minimum_should_match" => 1
+                        ]
+                    ];
+                }
+                break;
                 
             case "party":
             case "faction":
