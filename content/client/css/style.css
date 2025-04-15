@@ -380,6 +380,7 @@ h1, h2 {
 
 hr {
     border-top: 1px solid var(--border-color) !important;
+    opacity: .9;
 }
 
 .truncate-lines {
@@ -1538,13 +1539,18 @@ body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em
     position: absolute;
     bottom: -15px;
     left: 0px;
+    z-index: 0;
+}
+
+.resultTimeline {
+    position: relative;
     width: 100%;
     height: 40px;
     background: transparent;
     pointer-events: none;
 }
 
-#timelineVizWrapper .timelineVizItem {
+.resultTimeline .timelineBar {
     position: absolute;
     bottom: 0px;
     min-height: 6px;
@@ -1553,6 +1559,26 @@ body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em
     margin-left: -2px;
     background: var(--primary-fg-color);
     opacity: .5;
+}
+
+.resultTimeline .timelineLine {
+    position: absolute;
+    bottom: 0px;
+    height: 2px;
+    width: 100%;
+    background: var(--border-color);
+}
+
+.resultTimeline .yearLabel {
+    font-size: 12px;
+}
+
+.resultTimeline .yearLine {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    width: 2px;
+    background: var(--border-color);
 }
 
 #sliderRange {

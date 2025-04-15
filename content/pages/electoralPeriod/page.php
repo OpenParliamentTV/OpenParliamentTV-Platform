@@ -39,6 +39,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					</div>
 				</div>
 			</div>
+			<div class="col-12">
+				<hr>
+				<div class="resultTimeline" data-filter-key="electoralPeriodID" data-filter-value="<?= $apiResult["data"]["id"] ?>"></div>
+			</div>
 		</div>
 	</div>
 	<div class="row">
@@ -91,8 +95,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 </main>
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/searchResults.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
 	$(document).ready( function() {
+		renderFilteredResultTimeline('.resultTimeline');
 		updateMediaList("electoralPeriodID=<?= $apiResult["data"]["id"] ?>&sort=date-asc");
 		$('#dataTable').bootstrapTable({
 			classes: 'table-striped table-bordered',

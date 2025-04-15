@@ -121,13 +121,17 @@
             .style("width", "100%")
             .style("height", "60%") 
             .style("position", "relative");
+            
+        // Add a horizontal line at the bottom of the timeline
+        timelineContainer.append("div")
+            .attr("class", "timelineLine")
         
         // Create the timeline bars
-        var bars = timelineContainer.selectAll(".timeline-bar")
+        var bars = timelineContainer.selectAll(".timelineBar")
             .data(processedData)
             .enter()
             .append("div")
-            .attr("class", "timelineVizItem")
+            .attr("class", "timelineBar")
             .attr("data-date", d => d.date)
             .attr("data-count", d => d.count)
             .style("position", "absolute")
@@ -169,11 +173,11 @@
         }
         
         // Add year labels
-        var yearLabels = labelsContainer.selectAll(".year-label")
+        var yearLabels = labelsContainer.selectAll(".yearLabel")
             .data(years)
             .enter()
             .append("div")
-            .attr("class", "year-label")
+            .attr("class", "yearLabel")
             .style("position", "absolute")
             .style("left", d => {
                 // Calculate position based on the first day of the year
@@ -187,7 +191,6 @@
             .style("top", "50%")
             .style("transform", "translateY(-50%)")
             .style("padding-left", "4px")
-            .style("font-size", "12px")
             .text(d => d)
             .style("display", (d, i) => i === 0 ? "none" : "block"); // Hide the first year label
         
@@ -225,17 +228,13 @@
             .style("pointer-events", "none"); // Make sure lines don't interfere with interactions
         
         // Add vertical lines for each year boundary
-        var yearLines = yearLinesContainer.selectAll(".year-line")
+        var yearLines = yearLinesContainer.selectAll(".yearLine")
             .data(yearBoundaries)
             .enter()
             .append("div")
-            .attr("class", "year-line")
+            .attr("class", "yearLine")
             .style("position", "absolute")
             .style("left", d => d.leftPercent + "%")
-            .style("top", "0")
-            .style("width", "2px")
-            .style("height", "100%")
-            .style("background-color", "rgba(0, 0, 0, 0.2)")
             .style("z-index", "1")
             .style("display", (d, i) => i === 0 ? "none" : "block"); // Hide the first year line
         
@@ -247,6 +246,143 @@
         }
     };
 
-    // Export the TimelineViz class to the global scope
+    // Expose the TimelineViz class to the global scope
     window.TimelineViz = TimelineViz;
+    
+    /**
+     * Renders a filtered result timeline based on the provided selector
+     * The element matching the selector must have data-filter-key and data-filter-value attributes
+     * 
+     * @param {string} selector - CSS selector for the container element
+     */
+    window.renderFilteredResultTimeline = function(selector) {
+        // Get the container element using the selector
+        var containerElement = document.querySelector(selector);
+        
+        if (!containerElement) {
+            console.error('Container element not found with selector: ' + selector);
+            return;
+        }
+        
+        // Get filter key and value from the container element's data attributes
+        var filterKey = containerElement.getAttribute('data-filter-key');
+        var filterValue = containerElement.getAttribute('data-filter-value');
+        
+        if (!filterKey || !filterValue) {
+            console.error('Container element is missing required data attributes: data-filter-key and data-filter-value');
+            return;
+        }
+        
+        // Initialize timeline visualization
+        var timelineViz = null;
+        var minDate = new Date('2013-10-01');
+        var maxDate = new Date();
+        
+        // Fetch data from the API
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', config.dir.root + '/api/v1/search/media/?' + filterKey + '=' + filterValue, true);
+        
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                
+                if (response && response.meta && response.meta.requestStatus === 'success') {
+                    // Process the data for the timeline
+                    var daysData = {};
+                    
+                    // Get days data from the appropriate location in the response
+                    if (response.meta && response.meta.attributes && response.meta.attributes.days) {
+                        daysData = response.meta.attributes.days;
+                    } else if (response.data && response.data.attributes && response.data.attributes.days) {
+                        daysData = response.data.attributes.days;
+                    } else if (response.data && response.data.days) {
+                        daysData = response.data.days;
+                    } else if (response.data && response.data.attributes && response.data.attributes.resultsPerDay) {
+                        daysData = response.data.attributes.resultsPerDay;
+                    } else if (response.data && Array.isArray(response.data)) {
+                        // Group media items by date
+                        var mediaByDate = {};
+                        
+                        for (var i = 0; i < response.data.length; i++) {
+                            var mediaItem = response.data[i];
+                            var date = '';
+                            
+                            // Extract date from the media item
+                            if (mediaItem.attributes && mediaItem.attributes.date) {
+                                date = mediaItem.attributes.date.split('T')[0]; // Get just the date part
+                            } else if (mediaItem.attributes && mediaItem.attributes.startDate) {
+                                date = mediaItem.attributes.startDate.split('T')[0]; // Get just the date part
+                            }
+                            
+                            if (date) {
+                                if (!mediaByDate[date]) {
+                                    mediaByDate[date] = 0;
+                                }
+                                mediaByDate[date]++;
+                            }
+                        }
+                        
+                        daysData = mediaByDate;
+                    }
+                    
+                    var timelineData = [];
+                    
+                    // Process each day's data
+                    for (var day in daysData) {
+                        var count = 0;
+                        
+                        // Handle different possible structures
+                        if (typeof daysData[day] === 'object' && daysData[day].doc_count !== undefined) {
+                            count = daysData[day].doc_count;
+                        } else if (typeof daysData[day] === 'number') {
+                            count = daysData[day];
+                        }
+                        
+                        // Format the date to ensure it can be parsed by JavaScript's Date constructor
+                        var formattedDate = day;
+                        if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) {
+                            // If the date is not in the expected format, try to convert it
+                            var dateParts = day.split(/[-T]/);
+                            if (dateParts.length >= 3) {
+                                formattedDate = dateParts[0] + '-' + dateParts[1] + '-' + dateParts[2];
+                            }
+                        }
+                        
+                        timelineData.push({
+                            date: formattedDate,
+                            count: count
+                        });
+                    }
+                    
+                    // Initialize the timeline visualization
+                    try {
+                        timelineViz = new TimelineViz({
+                            container: containerElement,
+                            data: timelineData,
+                            minDate: minDate,
+                            maxDate: maxDate
+                        });
+                    } catch (error) {
+                        console.error('Error initializing TimelineViz:', error);
+                    }
+                    
+                    // Hide the loading indicator if it exists
+                    var loadingIndicator = containerElement.querySelector('.loadingIndicator');
+                    if (loadingIndicator) {
+                        loadingIndicator.style.display = 'none';
+                    }
+                }
+            }
+        };
+        
+        xhr.onerror = function() {
+            console.error('Error fetching timeline data');
+            var loadingIndicator = containerElement.querySelector('.loadingIndicator');
+            if (loadingIndicator) {
+                loadingIndicator.style.display = 'none';
+            }
+        };
+        
+        xhr.send();
+    };
 })(); 

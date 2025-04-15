@@ -49,6 +49,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			<div class="col-12 col-md-4 col-lg-3">
 				<?php include_once(__DIR__ . '/../../components/entity.links.php'); ?>
 			</div>
+			<div class="col-12">
+				<hr>
+				<div class="resultTimeline" data-filter-key="termID" data-filter-value="<?= $apiResult["data"]["id"] ?>"></div>
+			</div>
 		</div>
 	</div>
 	<div class="row">
@@ -102,8 +106,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 </div>
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/searchResults.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
-	$(document).ready( function() {
+	document.addEventListener('DOMContentLoaded', function() {
+		renderFilteredResultTimeline('.resultTimeline');
 		updateMediaList("termID=<?= $apiResult["data"]["id"] ?>&context=NER&sort=date-desc", "#nerListContainer");
 	});
 </script>
