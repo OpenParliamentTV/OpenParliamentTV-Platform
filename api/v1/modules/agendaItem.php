@@ -144,4 +144,167 @@ function agendaItemGetByID($id = false) {
     }
 }
 
+/**
+ * Get an overview of agenda items
+ * 
+ * @param string $id AgendaItemID or "all"
+ * @param int $limit Limit the number of results
+ * @param int $offset Offset for pagination
+ * @param string $search Search term
+ * @param string $sort Sort field
+ * @param string $order Sort order (ASC or DESC)
+ * @param bool $getCount Whether to return the total count
+ * @param object $db Database connection
+ * @param string $electoralPeriodID Filter by electoral period ID
+ * @param string $sessionID Filter by session ID
+ * @return array
+ */
+function agendaItemGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false, $electoralPeriodID = false, $sessionID = false) {
+    global $config;
+    
+    // Get all parliaments
+    $parliaments = array_keys($config["parliament"]);
+    $allResults = array();
+    $totalCount = 0;
+    
+    foreach ($parliaments as $parliament) {
+        $opts = array(
+            'host' => $config["parliament"][$parliament]["sql"]["access"]["host"],
+            'user' => $config["parliament"][$parliament]["sql"]["access"]["user"],
+            'pass' => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
+            'db' => $config["parliament"][$parliament]["sql"]["db"]
+        );
+        
+        try {
+            $dbp = new SafeMySQL($opts);
+        } catch (exception $e) {
+            continue; // Skip this parliament if connection fails
+        }
+        
+        $queryPart = "";
+        
+        if ($id == "all") {
+            $queryPart .= "1";
+        } else {
+            $queryPart .= $dbp->parse("ai.AgendaItemID=?s", $id);
+        }
+        
+        if (!empty($search)) {
+            $queryPart .= $dbp->parse(" AND (ai.AgendaItemTitle LIKE ?s OR ai.AgendaItemOfficialTitle LIKE ?s)", "%".$search."%", "%".$search."%");
+        }
+        
+        if (!empty($electoralPeriodID)) {
+            $queryPart .= $dbp->parse(" AND sess.SessionElectoralPeriodID=?s", $electoralPeriodID);
+        }
+        
+        if (!empty($sessionID)) {
+            $queryPart .= $dbp->parse(" AND ai.AgendaItemSessionID=?s", $sessionID);
+        }
+        
+        if (!empty($sort)) {
+            $queryPart .= $dbp->parse(" ORDER BY ?n ".$order, $sort);
+        }
+        
+        if ($limit != 0) {
+            $queryPart .= $dbp->parse(" LIMIT ?i, ?i", $offset, $limit);
+        }
+        
+        try {
+            if ($getCount == true) {
+                $count = $dbp->getOne("SELECT COUNT(ai.AgendaItemID) as count 
+                    FROM ?n AS ai
+                    LEFT JOIN ?n AS sess
+                    ON ai.AgendaItemSessionID=sess.SessionID
+                    WHERE ?p", 
+                    $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+                    $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                    $queryPart);
+                $totalCount += $count;
+                
+                $results = $dbp->getAll("SELECT
+                    ai.AgendaItemID,
+                    ai.AgendaItemTitle,
+                    ai.AgendaItemOfficialTitle,
+                    ai.AgendaItemOrder,
+                    ai.AgendaItemSessionID,
+                    sess.SessionNumber,
+                    sess.SessionDateStart,
+                    sess.SessionDateEnd,
+                    sess.SessionElectoralPeriodID,
+                    ep.ElectoralPeriodNumber,
+                    ep.ElectoralPeriodDateStart,
+                    ep.ElectoralPeriodDateEnd
+                    FROM ?n AS ai
+                    LEFT JOIN ?n AS sess
+                    ON ai.AgendaItemSessionID=sess.SessionID
+                    LEFT JOIN ?n AS ep
+                    ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
+                    WHERE ?p", 
+                    $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+                    $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+                    $queryPart);
+                
+                foreach ($results as $result) {
+                    $result["AgendaItemLabel"] = $result["AgendaItemTitle"];
+                    $result["AgendaItemType"] = "agendaItem";
+                    $result["SessionLabel"] = "Session " . $result["SessionNumber"];
+                    $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
+                    $result["Parliament"] = $parliament;
+                    $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
+                    $allResults[] = $result;
+                }
+            } else {
+                $results = $dbp->getAll("SELECT
+                    ai.AgendaItemID,
+                    ai.AgendaItemTitle,
+                    ai.AgendaItemOfficialTitle,
+                    ai.AgendaItemOrder,
+                    ai.AgendaItemSessionID,
+                    sess.SessionNumber,
+                    sess.SessionDateStart,
+                    sess.SessionDateEnd,
+                    sess.SessionElectoralPeriodID,
+                    ep.ElectoralPeriodNumber,
+                    ep.ElectoralPeriodDateStart,
+                    ep.ElectoralPeriodDateEnd
+                    FROM ?n AS ai
+                    LEFT JOIN ?n AS sess
+                    ON ai.AgendaItemSessionID=sess.SessionID
+                    LEFT JOIN ?n AS ep
+                    ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
+                    WHERE ?p", 
+                    $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+                    $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+                    $queryPart);
+                
+                foreach ($results as $result) {
+                    $result["AgendaItemLabel"] = $result["AgendaItemTitle"];
+                    $result["AgendaItemType"] = "agendaItem";
+                    $result["SessionLabel"] = "Session " . $result["SessionNumber"];
+                    $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
+                    $result["Parliament"] = $parliament;
+                    $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
+                    $allResults[] = $result;
+                }
+            }
+        } catch (exception $e) {
+            // Skip this parliament if query fails
+            continue;
+        }
+    }
+    
+    $return = array();
+    
+    if ($getCount == true) {
+        $return["total"] = $totalCount;
+        $return["rows"] = $allResults;
+    } else {
+        $return = $allResults;
+    }
+    
+    return $return;
+}
+
 ?>

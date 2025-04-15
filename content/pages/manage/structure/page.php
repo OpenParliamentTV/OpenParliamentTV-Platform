@@ -21,7 +21,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <h2><?= L::manageStructure; ?></h2>
                     <div class="card mb-3">
 						<div class="card-body">
-							
+							<a href="<?= $config["dir"]["root"] ?>/manage/structure/electoralPeriods/new" class="btn btn-outline-success btn-sm me-1"><span class="icon-plus"></span> New Electoral Period</a>
+							<a href="<?= $config["dir"]["root"] ?>/manage/structure/sessions/new" class="btn btn-outline-success btn-sm me-1"><span class="icon-plus"></span> New Session</a>
+							<a href="<?= $config["dir"]["root"] ?>/manage/structure/agendaItems/new" class="btn btn-outline-success btn-sm me-1"><span class="icon-plus"></span> New Agenda Item</a>
 						</div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
@@ -37,13 +39,28 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="electoralPeriods" role="tabpanel" aria-labelledby="electoralPeriods-tab">
-							[Electoral Periods]
+							<div id="electoralPeriodsToolbar">
+							</div>
+							<table id="electoralPeriodsTable"></table>
                         </div>
                         <div class="tab-pane bg-white fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
-							[Sessions]
+							<div id="sessionsToolbar">
+								<select id="electoralPeriodFilter" class="form-select form-select-sm d-inline-block w-auto me-2">
+									<option value="">All Electoral Periods</option>
+								</select>
+							</div>
+							<table id="sessionsTable"></table>
                         </div>
                         <div class="tab-pane bg-white fade" id="agendaItems" role="tabpanel" aria-labelledby="agendaItems-tab">
-							[Agenda Items]
+							<div id="agendaItemsToolbar">
+								<select id="agendaItemsElectoralPeriodFilter" class="form-select form-select-sm d-inline-block w-auto me-2">
+									<option value="">All Electoral Periods</option>
+								</select>
+								<select id="agendaItemsSessionFilter" class="form-select form-select-sm d-inline-block w-auto me-2">
+									<option value="">All Sessions</option>
+								</select>
+							</div>
+							<table id="agendaItemsTable"></table>
                         </div>
                     </div>
                 </div>
@@ -51,6 +68,379 @@ if ($auth["meta"]["requestStatus"] != "success") {
         </div>
     </div>
 </main>
+
+<script type="text/javascript">
+
+	$(function(){
+		
+		function renderActionButtons(id, type, subtype) {
+			const viewButton = '<a class="list-group-item list-group-item-action" ' +
+				'title="<?= L::view; ?>" ' +
+				'href="<?= $config["dir"]["root"]; ?>/' + type + '/' + id + '" ' +
+				'target="_blank">' +
+				'<span class="icon-eye"></span>' +
+				'</a>';
+			
+			const editButton = '<a class="list-group-item list-group-item-action" ' +
+				'title="<?= L::edit; ?>" ' +
+				'href="<?= $config["dir"]["root"]; ?>/manage/structure/' + type + '/' + id + '">' +
+				'<span class="icon-pencil"></span>' +
+				'</a>';
+			
+			const apiButton = '<a class="list-group-item list-group-item-action" ' +
+				'title="API" ' +
+				'href="<?= $config["dir"]["root"]; ?>/api/v1/' + type + '/' + id + '" ' +
+				'target="_blank">' +
+				'<span class="icon-code"></span>' +
+				'</a>';
+			
+			// Combine all buttons in a horizontal list group
+			return '<div class="list-group list-group-horizontal">' +
+				viewButton +
+				editButton +
+				apiButton +
+				'</div>';
+		}
+		
+		$('#electoralPeriodsTable').bootstrapTable({
+			url: config["dir"]["root"] + "/api/v1/",
+			classes: "table table-striped",
+			locale: "<?= $lang; ?>",
+			pagination: true,
+			sidePagination: "server",
+			pageSize: 10,
+			pageList: [10, 25, 50, 100],
+			dataField: "data",
+			totalField: "total",
+			search: true,
+			searchAlign: "left",
+			toolbar: "#electoralPeriodsToolbar",
+			toolbarAlign: "right",
+			serverSort: true,
+			queryParams: function(params) {
+				// Create a new params object with only the necessary parameters
+				var queryParams = {
+					action: "getOverview",
+					itemType: "electoralPeriod",
+					getCount: true
+				};
+				
+				// Add search parameter if it exists
+				if (params.search) {
+					queryParams.search = params.search;
+				}
+				
+				// Add pagination parameters
+				var page = parseInt(params.page) || 1;
+				var pageSize = parseInt(params.pageSize) || 10;
+				queryParams.limit = pageSize;
+				queryParams.offset = (page - 1) * pageSize;
+				
+				// Add sort parameters if they exist
+				if (params.sort) {
+					queryParams.sort = params.sort;
+					queryParams.order = params.order;
+				}
+				
+				return queryParams;
+			},
+			responseHandler: function(res) {
+				// Return the response directly if it has the expected format
+				if (res && res.data && res.total !== undefined) {
+					return res;
+				}
+				
+				// Fallback for unexpected response format
+				return {
+					total: 0,
+					rows: []
+				};
+			},
+			columns: [
+				{
+					field: "ElectoralPeriodLabel",
+					title: "Name",
+					sortable: true
+				},
+				{
+					field: "ElectoralPeriodID",
+					title: "ID",
+					sortable: true
+				},
+				{
+					field: "ElectoralPeriodNumber",
+					title: "Number",
+					sortable: true
+				},
+				{
+					field: "ElectoralPeriodDateStart",
+					title: "Start Date",
+					sortable: true
+				},
+				{
+					field: "ElectoralPeriodDateEnd",
+					title: "End Date",
+					sortable: true
+				},
+				{
+					field: "ElectoralPeriodID",
+					title: "Actions",
+					sortable: false,
+					formatter: function(value, row) {
+						return renderActionButtons(value, "electoralPeriod", row["ElectoralPeriodType"]);
+					}
+				}
+			]
+		});
+
+		// Load electoral periods for both filters
+		$.ajax({
+			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=electoralPeriod",
+			method: "GET",
+			success: function(response) {
+				if (response.data) {
+					// Populate both electoral period filters
+					const filters = $("#electoralPeriodFilter, #agendaItemsElectoralPeriodFilter");
+					response.data.forEach(function(period) {
+						filters.append(`<option value="${period.ElectoralPeriodID}">${period.ElectoralPeriodLabel}</option>`);
+					});
+				}
+			}
+		});
+
+		// Initialize variables to store all data
+		var allSessionsData = [];
+		var allAgendaItemsData = [];
+		
+		// Function to load all sessions data
+		function loadAllSessionsData() {
+			$.ajax({
+				url: config["dir"]["root"] + "/api/v1/",
+				method: "GET",
+				data: {
+					action: "getOverview",
+					itemType: "session",
+					electoralPeriodID: $("#electoralPeriodFilter").val(),
+					getCount: true,
+					limit: 1000, // Load a large number to get all data
+					offset: 0
+				},
+				success: function(response) {
+					allSessionsData = response.data || [];
+					
+					// Initialize the table with all data
+					$('#sessionsTable').bootstrapTable('load', {
+						total: allSessionsData.length,
+						rows: allSessionsData
+					});
+				},
+				error: function(xhr, status, error) {
+					// Error handling without console log
+				}
+			});
+		}
+		
+		// Function to load all agenda items data
+		function loadAllAgendaItemsData() {
+			$.ajax({
+				url: config["dir"]["root"] + "/api/v1/",
+				method: "GET",
+				data: {
+					action: "getOverview",
+					itemType: "agendaItem",
+					electoralPeriodID: $("#agendaItemsElectoralPeriodFilter").val(),
+					sessionID: $("#agendaItemsSessionFilter").val(),
+					getCount: true,
+					limit: 1000, // Load a large number to get all data
+					offset: 0
+				},
+				success: function(response) {
+					allAgendaItemsData = response.data || [];
+					
+					// Initialize the table with all data
+					$('#agendaItemsTable').bootstrapTable('load', {
+						total: allAgendaItemsData.length,
+						rows: allAgendaItemsData
+					});
+				},
+				error: function(xhr, status, error) {
+					// Error handling without console log
+				}
+			});
+		}
+		
+		// Function to load sessions for the agenda items session filter
+		function loadSessionsForAgendaItemsFilter(electoralPeriodID) {
+			const sessionFilter = $("#agendaItemsSessionFilter");
+			
+			// Clear and disable session dropdown if no electoral period selected
+			if (!electoralPeriodID) {
+				sessionFilter.html('<option value="">All Sessions</option>').prop('disabled', true);
+				loadAllAgendaItemsData();
+				return;
+			}
+			
+			// Load sessions for the selected electoral period
+			$.ajax({
+				url: config["dir"]["root"] + "/api/v1/",
+				method: "GET",
+				data: {
+					action: "getOverview",
+					itemType: "session",
+					electoralPeriodID: electoralPeriodID,
+					getCount: true,
+					limit: 1000, // Load a large number to get all data
+					offset: 0
+				},
+				success: function(response) {
+					if (response.data) {
+						// Clear and update session dropdown
+						sessionFilter.html('<option value="">All Sessions</option>');
+						
+						response.data.forEach(function(session) {
+							sessionFilter.append(`<option value="${session.SessionID}">${session.SessionLabel}</option>`);
+						});
+						
+						sessionFilter.prop('disabled', false);
+					}
+					
+					// Load agenda items data after updating the session dropdown
+					loadAllAgendaItemsData();
+				},
+				error: function(xhr, status, error) {
+					// Error handling without console log
+				}
+			});
+		}
+		
+		$('#sessionsTable').bootstrapTable({
+			classes: "table table-striped",
+			locale: "<?= $lang; ?>",
+			pagination: true,
+			sidePagination: "client", // Change to client-side pagination
+			pageSize: 10,
+			pageList: [10, 25, 50, 100],
+			search: true,
+			searchAlign: "left",
+			toolbar: "#sessionsToolbar",
+			toolbarAlign: "right",
+			columns: [
+				{
+					field: "SessionLabel",
+					title: "Name",
+					sortable: true
+				},
+				{
+					field: "SessionID",
+					title: "ID",
+					sortable: true
+				},
+				{
+					field: "SessionNumber",
+					title: "Number",
+					sortable: true
+				},
+				{
+					field: "SessionDateStart",
+					title: "Start Date",
+					sortable: true
+				},
+				{
+					field: "SessionDateEnd",
+					title: "End Date",
+					sortable: true
+				},
+				{
+					field: "ElectoralPeriodLabel",
+					title: "Electoral Period",
+					sortable: true
+				},
+				{
+					field: "SessionID",
+					title: "Actions",
+					sortable: false,
+					formatter: function(value, row) {
+						return renderActionButtons(value, "session", row["SessionType"]);
+					}
+				}
+			]
+		});
+		
+		// Load all sessions data when the page loads
+		loadAllSessionsData();
+		
+		// Handle electoral period filter change for sessions
+		$("#electoralPeriodFilter").on("change", function() {
+			loadAllSessionsData();
+		});
+
+		$('#agendaItemsTable').bootstrapTable({
+			classes: "table table-striped",
+			locale: "<?= $lang; ?>",
+			pagination: true,
+			sidePagination: "client", // Change to client-side pagination
+			pageSize: 10,
+			pageList: [10, 25, 50, 100],
+			search: true,
+			searchAlign: "left",
+			toolbar: "#agendaItemsToolbar",
+			toolbarAlign: "right",
+			columns: [
+				{
+					field: "AgendaItemLabel",
+					title: "Name",
+					sortable: true
+				},
+				{
+					field: "AgendaItemID",
+					title: "ID",
+					sortable: true
+				},
+				{
+					field: "AgendaItemOrder",
+					title: "Order",
+					sortable: true
+				},
+				{
+					field: "SessionLabel",
+					title: "Session",
+					sortable: true
+				},
+				{
+					field: "ElectoralPeriodLabel",
+					title: "Electoral Period",
+					sortable: true
+				},
+				{
+					field: "AgendaItemID",
+					title: "Actions",
+					sortable: false,
+					formatter: function(value, row) {
+						//TODO: remove quick fix !!!
+                        var fixID = 'DE-'+value;
+                        return renderActionButtons(fixID, "agendaItem", row["AgendaItemType"]);
+					}
+				}
+			]
+		});
+		
+		// Load all agenda items data when the page loads
+		loadAllAgendaItemsData();
+		
+		// Handle electoral period filter change for agenda items
+		$("#agendaItemsElectoralPeriodFilter").on("change", function() {
+			const electoralPeriodID = $(this).val();
+			loadSessionsForAgendaItemsFilter(electoralPeriodID);
+		});
+		
+		// Handle session filter change for agenda items
+		$("#agendaItemsSessionFilter").on("change", function() {
+			loadAllAgendaItemsData();
+		});
+
+	})
+
+</script>
 <?php
     include_once(__DIR__ . '/../../../footer.php');
 

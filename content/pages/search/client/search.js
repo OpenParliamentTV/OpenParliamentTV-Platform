@@ -18,8 +18,9 @@ $(document).ready( function() {
 
 	$('.loadingIndicator').hide();
 
-	$(window).scroll(function(){
-		var scroll = $(window).scrollTop();
+	if (!isMediaManagement) {
+		$(window).scroll(function(){
+			var scroll = $(window).scrollTop();
 
 		if (scroll >= 10 && !$('body').hasClass('fixed') && !$('#filterbar').hasClass('nosearch')) {
 			$('#speechListContainer').css('margin-top', $('.filterContainer').height() + 150);
@@ -27,9 +28,18 @@ $(document).ready( function() {
 			
 		} else if (scroll < 10) {
 			$('body').removeClass('fixed');
-			$('#speechListContainer').css('margin-top', 0);
-		}
-	});
+				$('#speechListContainer').css('margin-top', 0);
+			}
+		});
+
+		$('body').on('click','#play-submit',function() {
+			var firstResult = $('.resultList').find('.resultItem').first();
+	
+			if (firstResult.length != 0) {
+				location.href = firstResult.children('.resultContent').children('a').eq(0).attr("href") + '&playresults=1';
+			}
+		});
+	}
 
 	$(window).scroll();
 
@@ -43,14 +53,6 @@ $(document).ready( function() {
 	window.onpopstate = function(event) {
 		updateContentsFromURL();
 	}
-
-	$('body').on('click','#play-submit',function() {
-		var firstResult = $('.resultList').find('.resultItem').first();
-
-		if (firstResult.length != 0) {
-			location.href = firstResult.children('.resultContent').children('a').eq(0).attr("href") + '&playresults=1';
-		}
-	});
 
 	$('[name="factionID[]"], [name="numberOfTexts"], [name="aligned"], [name="public"]').change(function() {
 		updateQuery();
@@ -609,6 +611,7 @@ function updateResultList() {
 		runCounterAnimation();
 
 		//TODO: fix this
+		/*
 		if (isMediaManagement) {
 			$('#speechListContainer .resultWrapper > nav a').each(function() {
 				var thisPage = getQueryVariableFromString('page', $(this).attr('href'));
@@ -617,6 +620,7 @@ function updateResultList() {
 			});
 			//updateListeners('#speechListContainer');
 		}
+		*/	
 	}).fail(function(err) {
 		//console.log(err);
 	});

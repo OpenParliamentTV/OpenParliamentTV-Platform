@@ -108,8 +108,8 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
             <hr>
             <div class="row">
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="agendaItemTitle-filter" class="form-label">Agenda Item Title</label>
-                    <input type="text" class="form-control form-control-sm" id="agendaItemTitle-filter" name="agendaItemTitle">
+                    <label for="agendaItemTitle-filter" class="form-label"><?= L::agendaItem; ?></label>
+                    <input type="text" class="form-control form-control-sm" id="agendaItemTitle-filter" name="agendaItemTitle" placeholder="<?= L::enterSearchTerm; ?>">
                 </div>
                 <div class="col-6 col-lg-2 mb-3">
                     <label for="public-filter" class="form-label">Public</label>

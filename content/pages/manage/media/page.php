@@ -30,7 +30,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane bg-white fade show active" id="all-media" role="tabpanel" aria-labelledby="all-media-tab">
+                        <div class="tab-pane bg-white px-0 fade show active" id="all-media" role="tabpanel" aria-labelledby="all-media-tab">
                             <?php 
                                 // Include the filter bar component with only the filter container
                                 $showSearchBar = false;

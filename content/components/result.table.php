@@ -52,7 +52,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				<option value="date-asc"><?= L::date; ?> (<?= L::sortByAsc; ?>)</option>
 				<option value="date-desc"><?= L::date; ?> (<?= L::sortByDesc; ?>)</option>
 				<option value="duration-asc"><?= L::duration; ?> (<?= L::sortByDurationAsc; ?>)</option>
-				<option value="duration-desc"><?= L::duration; ?> (<?= L::sortByDurationDesc; ?>)</option>
+				<?php if ($_SESSION["userdata"]["role"] == "admin") { ?>
+					<option value="changed-asc"><?= L::changeDate; ?> (<?= L::sortByAsc; ?>)</option>
+					<option value="changed-desc"><?= L::changeDate; ?> (<?= L::sortByDesc; ?>)</option>
+				<?php } ?>
 			</select>
 		</div>
 	</div>
@@ -72,10 +75,13 @@ if ($auth["meta"]["requestStatus"] != "success") {
 								<div class="th-inner"><?= L::agendaItem; ?></div>
 							</th>
 							<th>
-								<div class="th-inner">Main Speaker</div>
+								<div class="th-inner"><?= L::contextmainSpeaker; ?></div>
 							</th>
 							<th>
 								<div class="th-inner"><?= L::duration; ?></div>
+							</th>
+							<th>
+								<div class="th-inner"><?= L::changeDate; ?></div>
 							</th>
 							<?php if ($_SESSION["userdata"]["role"] == "admin") { ?>
 								<th>
@@ -119,16 +125,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						
 						$mainSpeaker = getMainSpeakerFromPeopleArray($result_item["annotations"]['data'], $result_item["relationships"]["people"]['data']);
 						$mainFaction = getMainFactionFromOrganisationsArray($result_item["annotations"]['data'], $result_item["relationships"]["organisations"]['data']);
-
-						if ($sortFactor == 'topic' && $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"] != $currentAgendaItem) {
-							echo '<div class="sortDivider"><b>'.$formattedDate.' - '.$result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"].'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
-							$currentAgendaItem = $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"];
-						} elseif ($sortFactor == 'date' && $formattedDate != $currentDate) {
-							echo '<div class="sortDivider"><b>'.$formattedDate.'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
-							$currentDate = $formattedDate;
-						} elseif ($sortFactor == 'duration') {
-							// No divider needed for duration sorting as items are already sorted by duration
-						}
 
 						$highlightedName = $mainSpeaker['attributes']['label'];
 						if (strlen($_REQUEST['person']) > 1) {

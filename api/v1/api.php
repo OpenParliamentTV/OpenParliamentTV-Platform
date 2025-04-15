@@ -662,84 +662,104 @@ function apiV1($request = false, $db = false, $dbp = false) {
             break;
 
             case "getOverview":
+                if (empty($request["itemType"])) {
+                    $return["meta"]["requestStatus"] = "error";
+                    $return["errors"] = array();
+                    $errorarray["status"] = "400";
+                    $errorarray["code"] = "1";
+                    $errorarray["title"] = "Missing parameter";
+                    $errorarray["detail"] = "Parameter 'itemType' is required";
+                    array_push($return["errors"], $errorarray);
+                    return $return;
+                }
+
+                if (empty($request["limit"])) {
+                    $request["limit"] = 10;
+                }
+
+                if (empty($request["offset"])) {
+                    $request["offset"] = 0;
+                }
+
+                if (empty($request["sort"])) {
+                    $request["sort"] = false;
+                }
+
+                if (empty($request["order"])) {
+                    $request["order"] = false;
+                }
+
+                if (empty($request["search"])) {
+                    $request["search"] = false;
+                }
+
+                // Set getCount to true by default for the getOverview action
+                if (!isset($request["getCount"])) {
+                    $request["getCount"] = true;
+                }
+
+                if (empty($request["id"])) {
+                    $request["id"] = "all";
+                }
+
                 switch ($request["itemType"]) {
-
                     case "person":
-
-                        require_once(__DIR__ . "/modules/person.php");
-
-                        $item = personGetOverview("all", $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], true);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-
-                            unset($return["errors"]);
-
-                        } else {
-
-                            unset($return["data"]);
-
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
+                        require_once (__DIR__."/modules/person.php");
+                        $result = personGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
                         break;
-                        case "organisation":
-
-                            require_once(__DIR__ . "/modules/organisation.php");
-
-                            $item = organisationGetOverview("all", $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], true);
-
-                            if ($item["meta"]["requestStatus"] == "success") {
-
-                                unset($return["errors"]);
-
-                            } else {
-
-                                unset($return["data"]);
-
-                            }
-
-                            $return = array_replace_recursive($return, $item);
-
+                    case "organisation":
+                        require_once (__DIR__."/modules/organisation.php");
+                        $result = organisationGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
                         break;
-                        case "document":
-
-                            require_once(__DIR__ . "/modules/document.php");
-
-                            $item = documentGetOverview("all", $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], true);
-
-                            if ($item["meta"]["requestStatus"] == "success") {
-
-                                unset($return["errors"]);
-
-                            } else {
-
-                                unset($return["data"]);
-
-                            }
-
-                            $return = array_replace_recursive($return, $item);
-
+                    case "document":
+                        require_once (__DIR__."/modules/document.php");
+                        $result = documentGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
                         break;
-                        case "term":
-
-                            require_once(__DIR__ . "/modules/term.php");
-
-                            $item = termGetOverview("all", $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], true);
-
-                            if ($item["meta"]["requestStatus"] == "success") {
-
-                                unset($return["errors"]);
-
-                            } else {
-
-                                unset($return["data"]);
-
-                            }
-
-                            $return = array_replace_recursive($return, $item);
-
+                    case "term":
+                        require_once (__DIR__."/modules/term.php");
+                        $result = termGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
                         break;
+                    case "electoralPeriod":
+                        require_once (__DIR__."/modules/electoralPeriod.php");
+                        $result = electoralPeriodGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
+                        break;
+                    case "session":
+                        require_once (__DIR__."/modules/session.php");
+                        $result = sessionGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"], false, $request["electoralPeriodID"]);
+                        break;
+                    case "agendaItem":
+                        require_once (__DIR__."/modules/agendaItem.php");
+                        $result = agendaItemGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"], false, $request["electoralPeriodID"], $request["sessionID"]);
+                        break;
+                    default:
+                        $return["meta"]["requestStatus"] = "error";
+                        $return["errors"] = array();
+                        $errorarray["status"] = "400";
+                        $errorarray["code"] = "1";
+                        $errorarray["title"] = "Invalid parameter";
+                        $errorarray["detail"] = "Parameter 'itemType' has an invalid value";
+                        array_push($return["errors"], $errorarray);
+                        return $return;
+                }
+
+                if ($result) {
+                    $return["meta"]["requestStatus"] = "success";
+                    
+                    // Check if the result has a total count
+                    if (isset($result["total"]) && isset($result["rows"])) {
+                        $return["total"] = $result["total"];
+                        $return["data"] = $result["rows"];
+                    } else {
+                        $return["data"] = $result;
+                    }
+                } else {
+                    $return["meta"]["requestStatus"] = "error";
+                    $return["errors"] = array();
+                    $errorarray["status"] = "500";
+                    $errorarray["code"] = "1";
+                    $errorarray["title"] = "Database error";
+                    $errorarray["detail"] = "Could not get overview";
+                    array_push($return["errors"], $errorarray);
                 }
             break;
 

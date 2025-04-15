@@ -144,4 +144,120 @@ function electoralPeriodGetByID($id = false) {
     }
 }
 
+/**
+ * Get an overview of electoral periods
+ * 
+ * @param string $id ElectoralPeriodID or "all"
+ * @param int $limit Limit the number of results
+ * @param int $offset Offset for pagination
+ * @param string $search Search term
+ * @param string $sort Sort field
+ * @param string $order Sort order (ASC or DESC)
+ * @param bool $getCount Whether to return the total count
+ * @param object $db Database connection
+ * @return array
+ */
+function electoralPeriodGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+    global $config;
+    
+    // Get all parliaments
+    $parliaments = array_keys($config["parliament"]);
+    $allResults = array();
+    $totalCount = 0;
+    
+    foreach ($parliaments as $parliament) {
+        $opts = array(
+            'host' => $config["parliament"][$parliament]["sql"]["access"]["host"],
+            'user' => $config["parliament"][$parliament]["sql"]["access"]["user"],
+            'pass' => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
+            'db' => $config["parliament"][$parliament]["sql"]["db"]
+        );
+        
+        try {
+            $dbp = new SafeMySQL($opts);
+        } catch (exception $e) {
+            continue; // Skip this parliament if connection fails
+        }
+        
+        $queryPart = "";
+        
+        if ($id == "all") {
+            $queryPart .= "1";
+        } else {
+            $queryPart .= $dbp->parse("ElectoralPeriodID=?s", $id);
+        }
+        
+        if (!empty($search)) {
+            $queryPart .= $dbp->parse(" AND (ElectoralPeriodNumber LIKE ?s)", "%".$search."%");
+        }
+        
+        if (!empty($sort)) {
+            $queryPart .= $dbp->parse(" ORDER BY ?n ".$order, $sort);
+        }
+        
+        if ($limit != 0) {
+            $queryPart .= $dbp->parse(" LIMIT ?i, ?i", $offset, $limit);
+        }
+        
+        try {
+            if ($getCount == true) {
+                $count = $dbp->getOne("SELECT COUNT(ElectoralPeriodID) as count FROM ?n WHERE ?p", 
+                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
+                    $queryPart);
+                $totalCount += $count;
+                
+                $results = $dbp->getAll("SELECT
+                    ElectoralPeriodID,
+                    ElectoralPeriodNumber,
+                    ElectoralPeriodDateStart,
+                    ElectoralPeriodDateEnd
+                    FROM ?n
+                    WHERE ?p", 
+                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
+                    $queryPart);
+                
+                foreach ($results as $result) {
+                    $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
+                    $result["ElectoralPeriodType"] = "electoralPeriod";
+                    $result["Parliament"] = $parliament;
+                    $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
+                    $allResults[] = $result;
+                }
+            } else {
+                $results = $dbp->getAll("SELECT
+                    ElectoralPeriodID,
+                    ElectoralPeriodNumber,
+                    ElectoralPeriodDateStart,
+                    ElectoralPeriodDateEnd
+                    FROM ?n
+                    WHERE ?p", 
+                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
+                    $queryPart);
+                
+                foreach ($results as $result) {
+                    $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
+                    $result["ElectoralPeriodType"] = "electoralPeriod";
+                    $result["Parliament"] = $parliament;
+                    $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
+                    $allResults[] = $result;
+                }
+            }
+        } catch (exception $e) {
+            // Skip this parliament if query fails
+            continue;
+        }
+    }
+    
+    $return = array();
+    
+    if ($getCount == true) {
+        $return["total"] = $totalCount;
+        $return["rows"] = $allResults;
+    } else {
+        $return = $allResults;
+    }
+    
+    return $return;
+}
+
 ?>
