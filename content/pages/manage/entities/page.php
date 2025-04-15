@@ -113,7 +113,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		function renderActionButtons(id, type, subtype) {
 			const viewButton = '<a class="list-group-item list-group-item-action" ' +
 				'title="<?= L::view; ?>" ' +
-				'href="<?= $config["dir"]["root"]; ?>/person/' + id + '" ' +
+				'href="<?= $config["dir"]["root"]; ?>/' + type + '/' + id + '" ' +
 				'target="_blank">' +
 				'<span class="icon-eye"></span>' +
 				'</a>';
