@@ -63,20 +63,28 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<thead>
 						<tr>
 							<th>
-								<div class="th-inner">ID</div>
+								<div class="th-inner"><?= L::session; ?></div>
 							</th>
 							<th>
-								<div class="th-inner">Date</div>
+								<div class="th-inner"><?= L::date; ?></div>
 							</th>
 							<th>
-								<div class="th-inner">Agenda Item</div>
+								<div class="th-inner"><?= L::agendaItem; ?></div>
 							</th>
 							<th>
 								<div class="th-inner">Main Speaker</div>
 							</th>
 							<th>
-								<div class="th-inner">Duration</div>
+								<div class="th-inner"><?= L::duration; ?></div>
 							</th>
+							<?php if ($_SESSION["userdata"]["role"] == "admin") { ?>
+								<th>
+									<div class="th-inner">Aligned</div>
+								</th>
+								<th>
+									<div class="th-inner">Public</div>
+								</th>
+							<?php } ?>
 							<th>
 								<div class="th-inner">Actions</div>
 							</th>

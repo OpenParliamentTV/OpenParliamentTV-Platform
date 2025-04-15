@@ -681,6 +681,7 @@ body.darkmode .btn.working, body.darkmode .list-group-item.working {
  
 .list-group-item {
     color: var(--primary-fg-color);
+    background-color: var(--primary-bg-color);
     cursor: pointer;
 }
 
