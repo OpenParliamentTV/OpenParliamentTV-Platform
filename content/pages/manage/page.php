@@ -94,8 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const data = await response.json();
             //console.log(`API response for ${type}:`, data);
             // The getOverview functions return the data directly without a meta structure
-            if (data && data.rows) {
-                const entities = data.rows.map(entity => ({
+            if (data && data.data) {
+                const entities = data.data.map(entity => ({
                     id: entity[`${type.charAt(0).toUpperCase() + type.slice(1)}ID`],
                     label: entity[`${type.charAt(0).toUpperCase() + type.slice(1)}Label`],
                     type: type,
