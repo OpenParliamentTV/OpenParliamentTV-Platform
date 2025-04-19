@@ -1054,11 +1054,17 @@ function determineSorting($request) {
  * @return array The pagination parameters
  */
 function calculatePagination($request, $getAllResults, $config) {
-    $maxFullResults = ($getAllResults === true) ? 10000 : $config["display"]["speechesPerPage"];
+    // Check if a limit parameter is set and use it to override the default
+    $pageSize = $config["display"]["speechesPerPage"];
+    if (isset($request["limit"]) && is_numeric($request["limit"]) && intval($request["limit"]) > 0) {
+        $pageSize = intval($request["limit"]);
+    }
+    
+    $maxFullResults = ($getAllResults === true) ? 10000 : $pageSize;
     $from = 0;
     
     if (isset($request["page"]) && !$getAllResults) {
-        $from = (intval($request["page"]) - 1) * $config["display"]["speechesPerPage"];
+        $from = (intval($request["page"]) - 1) * $pageSize;
     }
     
     return [

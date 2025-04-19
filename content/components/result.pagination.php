@@ -1,5 +1,11 @@
 <?php
-$numberOfPages = ceil($totalResults / $config["display"]["speechesPerPage"]);
+// Determine the page size based on the limit parameter or default config
+$pageSize = $config["display"]["speechesPerPage"];
+if (isset($_REQUEST["limit"]) && is_numeric($_REQUEST["limit"]) && intval($_REQUEST["limit"]) > 0) {
+    $pageSize = intval($_REQUEST["limit"]);
+}
+
+$numberOfPages = ceil($totalResults / $pageSize);
 $currentPage = (isset($_REQUEST["page"]) && $_REQUEST["page"] != "") ? $_REQUEST["page"] : 1;
 $prevDisabledClass = ($currentPage == 1) ? "disabled" : "";
 $nextDisabledClass = ($currentPage == $numberOfPages) ? "disabled" : "";

@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch media from API
     async function fetchLatestMedia() {
         try {
-            const response = await fetch(`<?= $config["dir"]["root"]; ?>/api/v1/search/media/?limit=10&sort=changed-desc`);
+            const response = await fetch(`<?= $config["dir"]["root"]; ?>/api/v1/search/media/?limit=5&sort=changed-desc`);
             const data = await response.json();
             
             if (data && data.data) {
