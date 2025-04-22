@@ -70,6 +70,11 @@ function searchSpeeches($request) {
 
     $data = getSearchBody($request, false);
 
+    // Debug output
+    if (isset($request["debug"]) && $request["debug"] == true) {
+        error_log("Full search body: " . json_encode($data, JSON_PRETTY_PRINT));
+    }
+
     // Add fragment settings to get all matches
     if (!$data["highlight"]) {
         $data["highlight"] = [];
@@ -85,8 +90,29 @@ function searchSpeeches($request) {
     
     try {
         $results = $ESClient->search($searchParams);
+        
+        // Debug output
+        if (isset($request["debug"]) && $request["debug"] == true) {
+            error_log("Search results: " . json_encode($results, JSON_PRETTY_PRINT));
+        }
     } catch(Exception $e) {
-        $results = $e->getMessage();
+        // Debug output
+        if (isset($request["debug"]) && $request["debug"] == true) {
+            error_log("Search error: " . $e->getMessage());
+        }
+        // Return a properly structured error response
+        return [
+            "hits" => [
+                "hits" => [],
+                "total" => ["value" => 0],
+                "totalHits" => 0
+            ],
+            "aggregations" => [
+                "term_hits" => [
+                    "buckets" => []
+                ]
+            ]
+        ];
     }
 
     $resultCnt = 0;
@@ -124,6 +150,13 @@ function searchSpeeches($request) {
                 }
             }
         }
+    }
+
+    // Add total hit count from aggregation
+    if (isset($results["aggregations"]["term_hits"]["hit_count"]["value"])) {
+        $results["hits"]["totalHits"] = $results["aggregations"]["term_hits"]["hit_count"]["value"];
+    } else {
+        $results["hits"]["totalHits"] = 0;
     }
 
     return $results;
@@ -272,6 +305,33 @@ function getSearchBody($request, $getAllResults) {
     
     // Add aggregations
     addAggregations($data);
+    
+    // Add terms aggregation for hit counting if there's a search query
+    if (isset($request["q"]) && strlen($request["q"]) >= 1) {
+        $searchTerm = $request["q"];
+        $data["aggs"]["term_hits"] = [
+            "filter" => [
+                "match" => [
+                    "attributes.textContents.textHTML" => $searchTerm
+                ]
+            ],
+            "aggs" => [
+                "hit_count" => [
+                    "scripted_metric" => [
+                        "init_script" => "state.hits = 0",
+                        "map_script" => "state.hits += _score",
+                        "combine_script" => "return state.hits",
+                        "reduce_script" => "double total = 0; for (s in states) { total += s } return total"
+                    ]
+                ]
+            ]
+        ];
+    }
+    
+    // Debug output
+    if (isset($request["debug"]) && $request["debug"] == true) {
+        error_log("Search body: " . json_encode($data, JSON_PRETTY_PRINT));
+    }
     
     return $data;
 }
@@ -848,121 +908,90 @@ function processTextQuery($request, &$query) {
     // Get fuzzy match (text without quotes)
     $fuzzy_match = preg_replace($quotationMarksRegex, '', $request["q"]);
     
-    // Determine bool condition
     $boolCondition = $request["id"] ? "should" : "must";
     $query["bool"][$boolCondition] = [];
     
-    // Add a should clause for title boosting
-    $query["bool"]["should"] = [];
-    
     // Process fuzzy match
     if (strlen($fuzzy_match) > 0) {
-        $query_array = preg_split("/(\s)/", $fuzzy_match);
+        processFuzzyMatch($fuzzy_match, $query, $boolCondition);
+    }
+    
+    // Process exact matches
+    if (!empty($exact_query_matches[0])) {
+        processExactMatches($exact_query_matches[0], $query);
+    }
+}
+
+/**
+ * Process fuzzy match
+ * 
+ * This function processes fuzzy matches and adds them to the query structure.
+ * 
+ * @param string $fuzzy_match The fuzzy match text
+ * @param array &$query The query array to modify
+ * @param string $boolCondition The bool condition
+ */
+function processFuzzyMatch($fuzzy_match, &$query, $boolCondition) {
+    $query_array = preg_split("/(\s)/", $fuzzy_match);
+    
+    foreach ($query_array as $query_item) {
+        if (empty($query_item)) {
+            continue;
+        }
         
-        foreach ($query_array as $query_item) {
-            if (empty($query_item)) {
-                continue;
-            }
-            
-            if (strpos($query_item, '*') !== false) {
-                // Wildcard query with boost for text content
-                $query["bool"][$boolCondition][] = [
-                    "wildcard" => [
-                        "attributes.textContents.textHTML" => [
-                            "value" => $query_item,
-                            "case_insensitive" => true,
-                            "boost" => 5.0,  // Higher boost for text content wildcard matches
-                            "rewrite" => "scoring_boolean"
-                        ]
+        if (strpos($query_item, '*') !== false) {
+            // Wildcard query
+            $query["bool"][$boolCondition][] = [
+                "wildcard" => [
+                    "attributes.textContents.textHTML" => [
+                        "value" => $query_item,
+                        "case_insensitive" => true,
+                        "boost" => 1.0,
+                        "rewrite" => "scoring_boolean"
                     ]
-                ];
-            } else {
-                // Regular match query with boost for text content
-                $query["bool"][$boolCondition][] = [
-                    "match" => [
-                        "attributes.textContents.textHTML" => [
-                            "query" => $query_item,
-                            "prefix_length" => 0,
-                            "boost" => 5.0  // Higher boost for text content matches
-                        ]
-                    ]
-                ];
-            }
-            
-            // Add very small boost for title match
-            $query["bool"]["should"][] = [
+                ]
+            ];
+        } else {
+            // Regular match
+            $query["bool"][$boolCondition][] = [
                 "match" => [
-                    "relationships.agendaItem.data.attributes.title" => [
+                    "attributes.textContents.textHTML" => [
                         "query" => $query_item,
-                        "boost" => 0.2  // Very small boost for title matches
+                        "operator" => "or"
                     ]
                 ]
             ];
         }
     }
-    
-    // Process exact matches
-    if (!empty($exact_query_matches[0])) {
-        foreach ($exact_query_matches[0] as $exact_match) {
-            $exact_match = preg_replace('/(["\'])/m', '', $exact_match);
-            
-            if (strpos($exact_match, '*') !== false) {
-                // Wildcard exact match
-                $exact_query_array = preg_split("/(\s)/", $exact_match);
-                
-                $span_near = [
-                    "clauses" => [],
-                    "slop" => 0,
-                    "in_order" => true,
-                    "boost" => 6.0  // Highest boost for exact text content matches
-                ];
-                
-                foreach ($exact_query_array as $exact_query_item) {
-                    if (empty($exact_query_item)) {
-                        continue;
-                    }
-                    
-                    if (strpos($exact_query_item, '*') !== false) {
-                        $span_near["clauses"][] = [
-                            "span_multi" => [
-                                "match" => [
-                                    "wildcard" => [
-                                        "attributes.textContents.textHTML" => [
-                                            "value" => $exact_query_item,
-                                            "case_insensitive" => true
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ];
-                    } else {
-                        $span_near["clauses"][] = [
-                            "span_term" => [
-                                "attributes.textContents.textHTML" => strtolower($exact_query_item)
-                            ]
-                        ];
-                    }
-                }
-                
-                $query["bool"]["must"][] = ["span_near" => $span_near];
-            } else {
-                // Regular exact match with boost for text content
-                $query["bool"]["must"][] = [
-                    "match_phrase" => [
-                        "attributes.textContents.textHTML" => [
-                            "query" => $exact_match,
-                            "boost" => 6.0  // Highest boost for exact text content matches
-                        ]
-                    ]
-                ];
-            }
-            
-            // Add very small boost for exact title match
-            $query["bool"]["should"][] = [
+}
+
+/**
+ * Process exact matches
+ * 
+ * This function processes exact matches and adds them to the query structure.
+ * 
+ * @param array $exact_query_matches The exact query matches
+ * @param array &$query The query array to modify
+ */
+function processExactMatches($exact_query_matches, &$query) {
+    foreach ($exact_query_matches as $exact_match) {
+        $exact_match = preg_replace('/(["\'])/m', '', $exact_match);
+        $exact_query_array = preg_split("/(\s)/", $exact_match);
+        
+        if (count($exact_query_array) > 1) {
+            // Phrase match for multiple words
+            $query["bool"]["must"][] = [
                 "match_phrase" => [
-                    "relationships.agendaItem.data.attributes.title" => [
+                    "attributes.textContents.textHTML" => $exact_match
+                ]
+            ];
+        } else {
+            // Single word exact match
+            $query["bool"]["must"][] = [
+                "match" => [
+                    "attributes.textContents.textHTML" => [
                         "query" => $exact_match,
-                        "boost" => 0.3  // Slightly higher but still very small boost for exact title matches
+                        "operator" => "and"
                     ]
                 ]
             ];

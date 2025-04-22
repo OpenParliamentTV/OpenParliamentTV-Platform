@@ -72,6 +72,7 @@
 	"fromTime": "from",
 	"fundedBy": "Funded by",
 	"hello": "Hello",
+	"hitsInSpeeches": "Found {hits} hits in {speeches} speeches",
 	"imageMaterial": "Pictures",
 	"import": "Import",
 	"imprint": "Imprint",

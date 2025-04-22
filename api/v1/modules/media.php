@@ -513,6 +513,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
             //TODO: Check if this makes sense here
             $return["meta"]["results"]["count"] = ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0;
             $return["meta"]["results"]["total"] = $search["hits"]["total"]["value"];
+            $return["meta"]["results"]["totalHits"] = $search["hits"]["totalHits"] ?? 0;
 
         } else {
 

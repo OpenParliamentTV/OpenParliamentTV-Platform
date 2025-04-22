@@ -24,7 +24,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	$result_items = $result["data"];
 
 	$totalResults = $result["meta"]["results"]["total"];
-
+	$totalHits = $result["meta"]["results"]["totalHits"] ?? 0;
+	
 	$totalResultString = $totalResults;
 
 	if ($totalResults >= 10000 ) {
@@ -32,6 +33,19 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	}
 
 	$findsString = '';
+	if (isset($_REQUEST["q"]) && !empty($_REQUEST["q"])) {
+		if ($totalHits > 0) {
+			$findsString = str_replace(
+				['{hits}', '{speeches}'],
+				['<strong>'.$totalHits.'</strong>', '<strong>'.$totalResultString.'</strong>'],
+				L::hitsInSpeeches
+			);
+		} else {
+			$findsString = '<strong>'.$totalResultString.'</strong> '.L::speechesFound;
+		}
+	} else {
+		$findsString = '<strong>'.$totalResultString.'</strong> '.L::speechesFound;
+	}
 
 	//echo "<pre style='color:#FFF'>";
 	//print_r($result);
@@ -40,7 +54,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	if ($totalResults != 0) {
 ?>
 	<div class="filterSummary row">
-		<div class="col-12 col-sm-6 mb-3 mb-sm-0 px-0 px-sm-2"><label class="col-form-label px-0 me-0 me-sm-1 col-12 col-sm-auto text-center text-sm-left"><?= $findsString ?><strong><?= $totalResultString ?></strong> <?= L::speechesFound; ?></label>
+		<div class="col-12 col-sm-6 mb-3 mb-sm-0 px-0 px-sm-2"><label class="col-form-label px-0 me-0 me-sm-1 col-12 col-sm-auto text-center text-sm-left"><?= $findsString ?></label>
 			<button type="button" id="play-submit" class="btn btn-sm btn-outline-primary col-12 col-sm-auto" style="background-color: var(--highlight-color); color: var(--primary-bg-color);"><?= L::autoplayAll; ?><span class="icon-play-1"></span></button>
 		</div>
 		<div class="col-12 col-sm-6 pr-0 pr-sm-2" style="text-align: right;">
