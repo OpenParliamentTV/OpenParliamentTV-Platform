@@ -54,12 +54,13 @@ $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedP
 			<span class="termFrequency badge badge-primary badge-pill"><?=count($snippets)?></span>
 			<?php
 			foreach($snippets as $snippet) {
-			
+				if ($result_item["attributes"]['duration'] > 0) {
 					$leftPercent = 100 * ((float)$snippet["data-start"] / $result_item["attributes"]["duration"]);
 					$widthPercent  = 100 * (($snippet['data-end'] - $snippet['data-start']) / $result_item["attributes"]['duration']);
-				?>
-				<div class="hit" style="left: <?= $leftPercent ?>%; width: <?= $widthPercent ?>%;"></div>
-				<?php
+					?>
+					<div class="hit" style="left: <?= $leftPercent ?>%; width: <?= $widthPercent ?>%;"></div>
+					<?php
+				}
 			}
 		}
 		
