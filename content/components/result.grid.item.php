@@ -16,7 +16,7 @@ $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedP
 			<div class="resultMeta">
 				<?php 
 				if (isset($mainFaction['attributes']['label'])) {
-					echo $highlightedName .' ('.$mainFaction['attributes']['label'].')';
+					echo $highlightedName .' <span class="partyIndicator partyIndicatorInline" data-faction="'.$mainFaction['id'].'">'.$mainFaction['attributes']['label'].'</span>';
 				} else {
 					echo $highlightedName;
 				}

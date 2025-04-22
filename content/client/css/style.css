@@ -1149,6 +1149,17 @@ body.ready > main {
     border-color: #aaaaaa;
 }
 
+.partyIndicatorInline {
+    font-size: 75%;
+    padding: 0px 3px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background-color: transparent !important;
+    top: -1px;
+    margin-left: 2px;
+    position: relative;
+}
+
 .partyIndicator[data-party="DIE LINKE"], 
 .partyIndicator[data-faction="DIE LINKE"],
 .partyIndicator[data-party="Die Linke"], 
