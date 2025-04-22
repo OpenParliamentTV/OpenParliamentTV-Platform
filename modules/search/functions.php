@@ -51,21 +51,8 @@ function getIndexCount() {
  * @return array The search results
  */
 function searchSpeeches($request) {
-    //print_r($request);
-
     require_once(__DIR__.'/../../vendor/autoload.php');
     require(__DIR__.'/../../config.php');
-
-    /*
-    if ($request["id"]) {
-        require_once(__DIR__.'/../utilities/functions.php');
-        $itemInfos = getInfosFromStringID($request["id"]);
-        $parliament = strtolower($itemInfos["parliament"]);
-    } else {
-        //TODO: How to seach in all indexes?
-        $parliament = "de";
-    }
-    */
 
     $ESClientBuilder = Elasticsearch\ClientBuilder::create();
 
@@ -81,102 +68,65 @@ function searchSpeeches($request) {
 
     $ESClient = $ESClientBuilder->build();
 
+    $data = getSearchBody($request, false);
 
-	$data = getSearchBody($request, false);
+    // Add fragment settings to get all matches
+    if (!$data["highlight"]) {
+        $data["highlight"] = [];
+    }
+    $data["highlight"]["number_of_fragments"] = 0;
+    $data["highlight"]["fields"]["attributes.textContents.textHTML"] = [
+        "number_of_fragments" => 0,
+        "pre_tags" => ["<em>"],
+        "post_tags" => ["</em>"]
+    ];
 
-	$searchParams = array("index" => "openparliamenttv_*", "body" => $data);
+    $searchParams = array("index" => "openparliamenttv_*", "body" => $data);
+    
+    try {
+        $results = $ESClient->search($searchParams);
+    } catch(Exception $e) {
+        $results = $e->getMessage();
+    }
 
-    //echo json_encode($searchParams, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-	
-	try {
-		//Example: $results = $ESClient->get(['index' => "openparliamenttv_*", 'id' => 'DE-BB-0070047001']);
+    $resultCnt = 0;
+    $findCnt = 0;
+    
+    if (strlen($request["q"]) >= 1) {
+        if (isset($results["hits"]["hits"])) {
+            foreach ($results["hits"]["hits"] as $hit) {
+                $resultCnt++;
+                $results["hits"]["hits"][$resultCnt-1]["finds"] = array();
 
-		$results = $ESClient->search($searchParams);
-		//print_r($results);
-	} catch(Exception $e) {
-		$results = $e->getMessage();
-	}
+                // Process all highlight sections
+                if (isset($hit["highlight"]["attributes.textContents.textHTML"])) {
+                    foreach ($hit["highlight"]["attributes.textContents.textHTML"] as $html) {
+                        if (strlen($html) > 1) {
+                            $dom = new DOMDocument();
+                            @$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
+                            $xPath = new DOMXPath($dom);
+                            $elems = $xPath->query("//em");
+                            
+                            foreach($elems as $elem) {
+                                $tmp["data-start"] = ($elem->parentNode->hasAttribute("data-start")) ? $elem->parentNode->getAttribute("data-start") : null;
+                                $tmp["data-end"] = ($elem->parentNode->hasAttribute("data-end")) ? $elem->parentNode->getAttribute("data-end") : null;
+                                $tmp["class"] = ($elem->parentNode->hasAttribute("class")) ? $elem->parentNode->getAttribute("class") : "";
+                                $tmp["context"] = DOMinnerHTML($elem->parentNode);
 
-    /*
-     * TODO: The result of what faction has how many speeches, how many speeches are there in general and is there are speeches without
-     * a faction is now present at $results["aggregations"]["types_count"] ...
-     *
-     *
-        echo '<pre style="color: #fff">';
-        print_r($results);
-        echo '</pre>';
-    */
+                                // Only add unique finds
+                                if (!in_array($tmp, $results["hits"]["hits"][$resultCnt-1]["finds"])) {
+                                    $results["hits"]["hits"][$resultCnt-1]["finds"][] = $tmp;
+                                    $findCnt++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
-	$resultCnt = 0;
-	$findCnt = 0;
-	
-	if (strlen($request["q"]) >= 1) {
-		if (isset($results["hits"]["hits"])) {
-			foreach ($results["hits"]["hits"] as $hit) {
-		
-				//if ($resultCnt >= $maxFullResults) { break; }
-				$resultCnt++;
-				$results["hits"]["hits"][$resultCnt-1]["finds"] = array();
-
-				$html = $hit["highlight"]["attributes.textContents.textHTML"][0];
-
-				if (strlen($html) > 1) {
-					$dom = new DOMDocument();
-					@$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
-					$xPath = new DOMXPath($dom);
-					//$elems = $xPath->query("//div[@class='rede']/*");
-					//$elems = $xPath->query("//div | //p/span");
-					$elems = $xPath->query("//em");
-					
-					/*
-					echo '<pre>';
-					print_r($html); 
-					echo '</pre>';
-					*/
-
-					foreach($elems as $k=>$elem) {
-
-						$tmp["data-start"] = ($elem->parentNode->hasAttribute("data-start")) ? $elem->parentNode->getAttribute("data-start") : null;
-						$tmp["data-end"] = ($elem->parentNode->hasAttribute("data-end")) ? $elem->parentNode->getAttribute("data-end") : null;
-						$tmp["class"] = ($elem->parentNode->hasAttribute("class")) ? $elem->parentNode->getAttribute("class") : "";
-						$tmp["context"] = DOMinnerHTML($elem->parentNode);
-
-						if (!in_array($tmp, $results["hits"]["hits"][$resultCnt-1]["finds"])) {
-							$results["hits"]["hits"][$resultCnt-1]["finds"][] = $tmp;
-							$findCnt++;
-						}
-						
-
-						/*
-						echo '<pre>';
-						print_r(DOMinnerHTML($elem->parentNode));
-						echo '</pre>';
-						*/
-						
-						
-					}
-				}
-
-			}
-		}
-		
-	}
-
-
-
-	//$results->totalFinds = $findCnt;
-
-	
-	/*
-	echo '<pre>';
-	print_r($results["hits"]["hits"][0]);
-	echo '</pre>';
-	*/
-	
-
-	return $results;
-
-
+    return $results;
 }
 
 /**
