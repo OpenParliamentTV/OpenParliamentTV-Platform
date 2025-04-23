@@ -120,12 +120,14 @@ function searchSpeeches($request) {
 
     $resultCnt = 0;
     $findCnt = 0;
+    $highlightCount = 0;
     
     if (strlen($request["q"]) >= 1) {
         if (isset($results["hits"]["hits"])) {
             foreach ($results["hits"]["hits"] as $hit) {
                 $resultCnt++;
                 $results["hits"]["hits"][$resultCnt-1]["finds"] = array();
+                $results["hits"]["hits"][$resultCnt-1]["highlight_count"] = 0;
 
                 // Process all highlight sections
                 if (isset($hit["highlight"]["attributes.textContents.textHTML"])) {
@@ -135,6 +137,8 @@ function searchSpeeches($request) {
                             @$dom->loadHTML('<?xml encoding="UTF-8">'.$html);
                             $xPath = new DOMXPath($dom);
                             $elems = $xPath->query("//em");
+                            $highlightCount = $elems->length;
+                            $results["hits"]["hits"][$resultCnt-1]["highlight_count"] += $highlightCount;
                             
                             foreach($elems as $elem) {
                                 $tmp["data-start"] = ($elem->parentNode->hasAttribute("data-start")) ? $elem->parentNode->getAttribute("data-start") : null;

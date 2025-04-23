@@ -51,7 +51,7 @@ $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedP
 
 		if ($snippets && $result_item["attributes"]['duration'] !== 0) {
 			?>
-			<span class="termFrequency badge badge-primary badge-pill"><?=count($snippets)?></span>
+			<span class="termFrequency badge badge-primary badge-pill"><?=$result_item["highlight_count"]?></span>
 			<?php
 			foreach($snippets as $snippet) {
 				if ($result_item["attributes"]['duration'] > 0) {

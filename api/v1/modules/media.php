@@ -492,6 +492,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
                 $resultData["_score"] = $hit["_score"];
                 $resultData["_highlight"] = $hit["highlight"];
                 $resultData["_finds"] = $hit["finds"];
+                $resultData["highlight_count"] = $hit["highlight_count"];
 
                 $return["data"][] = $resultData;
 
