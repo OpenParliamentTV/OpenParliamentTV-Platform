@@ -4,6 +4,9 @@ require_once(__DIR__.'/../../vendor/autoload.php');
 require_once(__DIR__.'/../../config.php');
 require_once(__DIR__ .'/../../modules/utilities/functions.entities.php');
 
+// Debug flag - set to 1 to enable debug logging
+$DEBUG_MODE = 0;
+
 $ESClientBuilder = Elasticsearch\ClientBuilder::create();
 
 if ($config["ES"]["hosts"]) {
@@ -71,7 +74,7 @@ function searchSpeeches($request) {
     $data = getSearchBody($request, false);
 
     // Debug output
-    if (isset($request["debug"]) && $request["debug"] == true) {
+    if ($GLOBALS['DEBUG_MODE']) {
         error_log("Full search body: " . json_encode($data, JSON_PRETTY_PRINT));
     }
 
@@ -92,12 +95,12 @@ function searchSpeeches($request) {
         $results = $ESClient->search($searchParams);
         
         // Debug output
-        if (isset($request["debug"]) && $request["debug"] == true) {
+        if ($GLOBALS['DEBUG_MODE']) {
             error_log("Search results: " . json_encode($results, JSON_PRETTY_PRINT));
         }
     } catch(Exception $e) {
         // Debug output
-        if (isset($request["debug"]) && $request["debug"] == true) {
+        if ($GLOBALS['DEBUG_MODE']) {
             error_log("Search error: " . $e->getMessage());
         }
         // Return a properly structured error response
@@ -150,13 +153,6 @@ function searchSpeeches($request) {
                 }
             }
         }
-    }
-
-    // Add total hit count from aggregation
-    if (isset($results["aggregations"]["term_hits"]["hit_count"]["value"])) {
-        $results["hits"]["totalHits"] = $results["aggregations"]["term_hits"]["hit_count"]["value"];
-    } else {
-        $results["hits"]["totalHits"] = 0;
     }
 
     return $results;
@@ -306,30 +302,8 @@ function getSearchBody($request, $getAllResults) {
     // Add aggregations
     addAggregations($data);
     
-    // Add terms aggregation for hit counting if there's a search query
-    if (isset($request["q"]) && strlen($request["q"]) >= 1) {
-        $searchTerm = $request["q"];
-        $data["aggs"]["term_hits"] = [
-            "filter" => [
-                "match" => [
-                    "attributes.textContents.textHTML" => $searchTerm
-                ]
-            ],
-            "aggs" => [
-                "hit_count" => [
-                    "scripted_metric" => [
-                        "init_script" => "state.hits = 0",
-                        "map_script" => "state.hits += _score",
-                        "combine_script" => "return state.hits",
-                        "reduce_script" => "double total = 0; for (s in states) { total += s } return total"
-                    ]
-                ]
-            ]
-        ];
-    }
-    
     // Debug output
-    if (isset($request["debug"]) && $request["debug"] == true) {
+    if ($GLOBALS['DEBUG_MODE']) {
         error_log("Search body: " . json_encode($data, JSON_PRETTY_PRINT));
     }
     
