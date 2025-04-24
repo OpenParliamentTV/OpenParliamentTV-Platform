@@ -1877,12 +1877,14 @@ body.darkmode .entityPreview .rounded-circle {
     font-style: normal;
 }
 
+/*
 .resultItem em + em {
     margin-left: -5px;
     padding-left: 3px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
 }
+*/
 
 .resultItem .resultDuration {
     position: absolute;
