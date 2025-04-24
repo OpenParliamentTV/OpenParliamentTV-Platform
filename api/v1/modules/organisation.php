@@ -486,9 +486,7 @@ function organisationGetOverview($id = "all", $limit = 0, $offset = 0, $search =
 
 
     if (!empty($search)) {
-
-        $queryPart .= $db->parse(" AND (OrganisationLabel LIKE ?s OR OrganisationLabelAlternative LIKE ?s)", "%".$search."%","%".$search."%");
-
+        $queryPart .= $db->parse(" AND (OrganisationLabel LIKE ?s OR OrganisationLabelAlternative LIKE ?s OR OrganisationID LIKE ?s)", "%".$search."%", "%".$search."%", "%".$search."%");
     }
 
     if (!empty($sort)) {

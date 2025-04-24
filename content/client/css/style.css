@@ -1874,7 +1874,7 @@ body.darkmode .entityPreview .rounded-circle {
     margin: 4px 0;
 }
 
-.resultItem em {
+.resultItem em, td em {
     background: var(--highlight-color);
     color: var(--primary-bg-color);
     padding: 0 2px;

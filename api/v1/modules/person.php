@@ -874,9 +874,7 @@ function personGetOverview($id = "all", $limit = 0, $offset = 0, $search = false
 
 
     if (!empty($search)) {
-
-        $queryPart .= $db->parse(" AND (PersonLabel LIKE ?s OR PersonLabelAlternative LIKE ?s)", "%".$search."%","%".$search."%");
-
+        $queryPart .= $db->parse(" AND (LOWER(PersonLabel) LIKE LOWER(?s) OR LOWER(PersonLabelAlternative) LIKE LOWER(?s) OR PersonID LIKE ?s)", "%".$search."%", "%".$search."%", "%".$search."%");
     }
 
     if (!empty($sort)) {

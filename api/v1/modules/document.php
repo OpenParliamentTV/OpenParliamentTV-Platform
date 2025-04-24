@@ -502,9 +502,7 @@ function documentGetOverview($id = "all", $limit = 0, $offset = 0, $search = fal
 
 
     if (!empty($search)) {
-
-        $queryPart .= $db->parse(" AND (DocumentLabel LIKE ?s OR DocumentLabelAlternative LIKE ?s)", "%".$search."%","%".$search."%");
-
+        $queryPart .= $db->parse(" AND (DocumentLabel LIKE ?s OR DocumentLabelAlternative LIKE ?s OR DocumentID LIKE ?s)", "%".$search."%", "%".$search."%", "%".$search."%");
     }
 
     if (!empty($sort)) {

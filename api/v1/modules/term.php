@@ -513,9 +513,7 @@ function termGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, 
 
 
     if (!empty($search)) {
-
-        $queryPart .= $db->parse(" AND (TermLabel LIKE ?s OR TermLabelAlternative LIKE ?s)", "%".$search."%","%".$search."%");
-
+        $queryPart .= $db->parse(" AND (TermLabel LIKE ?s OR TermLabelAlternative LIKE ?s OR TermID LIKE ?s)", "%".$search."%", "%".$search."%", "%".$search."%");
     }
 
     if (!empty($sort)) {
