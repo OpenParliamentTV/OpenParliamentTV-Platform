@@ -216,6 +216,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			toolbar: "#peopleToolbar",
 			toolbarAlign: "right",
 			serverSort: true,
+			sortName: "PersonLastChanged",
+			sortOrder: "desc",
 			queryParams: function(params) {
 				// Add search parameter to the query
 				if (params.search) {
@@ -309,6 +311,17 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: true
 				},
 				{
+					field: "PersonLastChanged",
+					title: "<?= L::lastChanged; ?>",
+					sortable: true,
+					formatter: function(value) {
+						if (value) {
+							return new Date(value).toLocaleString('de');
+						}
+						return "-";
+					}
+				},
+				{
 					field: "PersonID",
 					title: "<?= L::actions; ?>",
 					class: "minWidthColumn",
@@ -335,6 +348,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			toolbar: "#organisationsToolbar",
 			toolbarAlign: "right",
 			serverSort: true,
+			sortName: "OrganisationLastChanged",
+			sortOrder: "desc",
 			columns: [
 				{
 					field: "OrganisationLabel",
@@ -399,6 +414,17 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: true
 				},
 				{
+					field: "OrganisationLastChanged",
+					title: "<?= L::lastChanged; ?>",
+					sortable: true,
+					formatter: function(value) {
+						if (value) {
+							return new Date(value).toLocaleString('de');
+						}
+						return "-";
+					}
+				},
+				{
 					field: "OrganisationID",
 					title: "<?= L::actions; ?>",
 					class: "minWidthColumn",
@@ -425,6 +451,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			toolbar: "#documentsToolbar",
 			toolbarAlign: "right",
 			serverSort: true,
+			sortName: "DocumentLastChanged",
+			sortOrder: "desc",
 			columns: [
 				{
 					field: "DocumentLabel",
@@ -493,6 +521,17 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: true
 				},
 				{
+					field: "DocumentLastChanged",
+					title: "<?= L::lastChanged; ?>",
+					sortable: true,
+					formatter: function(value) {
+						if (value) {
+							return new Date(value).toLocaleString('de');
+						}
+						return "-";
+					}
+				},
+				{
 					field: "DocumentID",
 					title: "<?= L::actions; ?>",
 					class: "minWidthColumn",
@@ -519,6 +558,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			toolbar: "#termsToolbar",
 			toolbarAlign: "right",
 			serverSort: true,
+			sortName: "TermLastChanged",
+			sortOrder: "desc",
 			columns: [
 				{
 					field: "TermLabel",
@@ -581,6 +622,17 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					field: "TermType",
 					title: "<?= L::type; ?>",
 					sortable: true
+				},
+				{
+					field: "TermLastChanged",
+					title: "<?= L::lastChanged; ?>",
+					sortable: true,
+					formatter: function(value) {
+						if (value) {
+							return new Date(value).toLocaleString('de');
+						}
+						return "-";
+					}
 				},
 				{
 					field: "TermID",
