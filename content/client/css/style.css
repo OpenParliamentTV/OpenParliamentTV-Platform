@@ -591,6 +591,14 @@ textarea {
     color: var(--primary-fg-color);
 }
 
+table a {
+    text-decoration: none !important;
+}
+
+table tr:hover a {
+    text-decoration: underline !important;
+}
+
 table .minWidthColumn {
     white-space: nowrap; 
     width: 1%;

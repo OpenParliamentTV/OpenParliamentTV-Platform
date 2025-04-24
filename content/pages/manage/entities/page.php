@@ -204,7 +204,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		});
 		
 		// Helper function for formatting labels with alternatives
-		function formatLabelWithAlternatives(value, row, alternativeLabelField, idField, tableId) {
+		function formatLabelWithAlternatives(value, row, alternativeLabelField, idField, tableId, type) {
 			let tmpAltLabels = [];
 			let searchText = String(value); // Ensure value is a string
 
@@ -249,8 +249,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			}
 
 			// 5. Construct display HTML including alternative labels if they exist
+			let mainLabel = displayText;
+			if (row[idField]) {
+				mainLabel = `<a href="<?= $config["dir"]["root"]; ?>/${type}/${row[idField]}" target="_blank" class="fw-bolder">${displayText}</a>`;
+			} else {
+				mainLabel = `<span class="fw-bolder">${displayText}</span>`;
+			}
 			if (tmpAltLabels.length > 0) {
-				displayText += `<span class="less-opacity d-block">${altLabelsText}</span>`;
+				mainLabel += `<span class="less-opacity d-block">${altLabelsText}</span>`;
 			}
 
 			// 6. Add ID to searchText if it exists
@@ -260,7 +266,22 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 			// 7. Return final HTML, ensure searchText is properly escaped for the attribute
 			const escapedSearchText = searchText.replace(/"/g, '&quot;'); // Escape quotes for the HTML attribute
-			return `<span data-search="${escapedSearchText}">${displayText}</span>`;
+			return `<span data-search="${escapedSearchText}">${mainLabel}</span>`;
+		}
+		
+		// Helper function for formatting thumbnails
+		function formatThumbnail(value, row, idField, type, iconClass) {
+			const thumbnail = '<div class="thumbnailContainer"><div class="rounded-circle">' + 
+				(value ? 
+					'<img src="' + value + '" alt="..."/>' : 
+					`<span class="${iconClass}" style="position: absolute;top: 48%;left: 50%;font-size: 20px;transform: translateX(-50%) translateY(-50%);"></span>`
+				) + 
+				'</div></div>';
+			
+			if (row[idField]) {
+				return `<a href="<?= $config["dir"]["root"]; ?>/${type}/${row[idField]}" target="_blank">${thumbnail}</a>`;
+			}
+			return thumbnail;
 		}
 		
 		$('#peopleTable').bootstrapTable({
@@ -292,12 +313,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: false,
 					class: "minWidthColumn thumbnailColumn-person",
 					formatter: function(value, row) {
-						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
-							(value ? 
-								'<img src="' + value + '" alt="..."/>' : 
-								'<span class="icon-type-person" style="position: absolute;top: 48%;left: 50%;font-size: 20px;transform: translateX(-50%) translateY(-50%);"></span>'
-							) + 
-							'</div></div>';
+						return formatThumbnail(value, row, 'PersonID', 'person', 'icon-type-person');
 					}
 				},
 				{
@@ -305,7 +321,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					title: "<?= L::name; ?>",
 					sortable: true,
 					formatter: function(value, row) {
-						return formatLabelWithAlternatives(value, row, 'PersonLabelAlternative', 'PersonID', 'peopleTable');
+						return formatLabelWithAlternatives(value, row, 'PersonLabelAlternative', 'PersonID', 'peopleTable', 'person');
 					}
 				},
 				{
@@ -385,12 +401,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: false,
 					class: "minWidthColumn thumbnailColumn-organisation",
 					formatter: function(value, row) {
-						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
-							(value ? 
-								'<img src="' + value + '" alt="..."/>' : 
-								'<span class="icon-type-organisation" style="position: absolute;top: 48%;left: 50%;font-size: 20px;transform: translateX(-50%) translateY(-50%);"></span>'
-							) + 
-							'</div></div>';
+						return formatThumbnail(value, row, 'OrganisationID', 'organisation', 'icon-type-organisation');
 					}
 				},
 				{
@@ -398,7 +409,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					title: "<?= L::name; ?>",
 					sortable: true,
 					formatter: function(value, row) {
-						return formatLabelWithAlternatives(value, row, 'OrganisationLabelAlternative', 'OrganisationID', 'organisationsTable');
+						return formatLabelWithAlternatives(value, row, 'OrganisationLabelAlternative', 'OrganisationID', 'organisationsTable', 'organisation');
 					}
 				},
 				{
@@ -456,12 +467,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: false,
 					class: "minWidthColumn thumbnailColumn-document",
 					formatter: function(value, row) {
-						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
-							(value ? 
-								'<img src="' + value + '" alt="..."/>' : 
-								'<span class="icon-type-document" style="position: absolute;top: 48%;left: 50%;font-size: 20px;transform: translateX(-50%) translateY(-50%);"></span>'
-							) + 
-							'</div></div>';
+						return formatThumbnail(value, row, 'DocumentID', 'document', 'icon-type-document');
 					}
 				},
 				{
@@ -469,7 +475,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					title: "<?= L::title; ?>",
 					sortable: true,
 					formatter: function(value, row) {
-						return formatLabelWithAlternatives(value, row, 'DocumentLabelAlternative', 'DocumentID', 'documentsTable');
+						return formatLabelWithAlternatives(value, row, 'DocumentLabelAlternative', 'DocumentID', 'documentsTable', 'document');
 					}
 				},
 				{
@@ -531,12 +537,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: false,
 					class: "minWidthColumn thumbnailColumn-term",
 					formatter: function(value, row) {
-						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
-							(value ? 
-								'<img src="' + value + '" alt="..."/>' : 
-								'<span class="icon-type-term" style="position: absolute;top: 48%;left: 50%;font-size: 20px;transform: translateX(-50%) translateY(-50%);"></span>'
-							) + 
-							'</div></div>';
+						return formatThumbnail(value, row, 'TermID', 'term', 'icon-type-term');
 					}
 				},
 				{
@@ -544,7 +545,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					title: "<?= L::label; ?>",
 					sortable: true,
 					formatter: function(value, row) {
-						return formatLabelWithAlternatives(value, row, 'TermLabelAlternative', 'TermID', 'termsTable');
+						return formatLabelWithAlternatives(value, row, 'TermLabelAlternative', 'TermID', 'termsTable', 'term');
 					}
 				},
 				{
