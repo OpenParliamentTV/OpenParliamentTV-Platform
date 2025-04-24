@@ -823,15 +823,16 @@ body.darkmode .modal-content .btn-close {
     border-color: var(--primary-fg-color);
 }
 
-.relationshipsList .entityPreview .entityContainer .thumbnailContainer, 
-table .thumbnailContainer {
+.relationshipsList .entityPreview .entityContainer .thumbnailContainer {
     width: 60px;
     height: 60px;
     margin: 0 10px 0px 0;
 }
 
 table .thumbnailContainer {
-    margin-right: 0px;
+    width: 40px;
+    height: 40px;
+    margin: 0px;
 }
 
 .relationshipsList .entityPreview .entityContainer a, 
@@ -1168,6 +1169,7 @@ body.ready > main {
     top: -1px;
     margin-left: 2px;
     position: relative;
+    white-space: nowrap;
 }
 
 .partyIndicator[data-party="DIE LINKE"], 

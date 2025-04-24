@@ -235,7 +235,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
 							(value ? 
 								'<img src="' + value + '" alt="..."/>' : 
-								'<span class="icon-type-person" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>'
+								'<span class="icon-type-person" style="position: absolute;top: 48%;left: 50%;font-size: 20px;transform: translateX(-50%) translateY(-50%);"></span>'
 							) + 
 							'</div></div>';
 					}
@@ -369,7 +369,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
 							(value ? 
 								'<img src="' + value + '" alt="..."/>' : 
-								'<span class="icon-type-organisation" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>'
+								'<span class="icon-type-organisation" style="position: absolute;top: 48%;left: 50%;font-size: 20px;transform: translateX(-50%) translateY(-50%);"></span>'
 							) + 
 							'</div></div>';
 					}
@@ -481,7 +481,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
 							(value ? 
 								'<img src="' + value + '" alt="..."/>' : 
-								'<span class="icon-type-document" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>'
+								'<span class="icon-type-document" style="position: absolute;top: 48%;left: 50%;font-size: 20px;transform: translateX(-50%) translateY(-50%);"></span>'
 							) + 
 							'</div></div>';
 					}
@@ -597,7 +597,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
 							(value ? 
 								'<img src="' + value + '" alt="..."/>' : 
-								'<span class="icon-type-term" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>'
+								'<span class="icon-type-term" style="position: absolute;top: 48%;left: 50%;font-size: 20px;transform: translateX(-50%) translateY(-50%);"></span>'
 							) + 
 							'</div></div>';
 					}
