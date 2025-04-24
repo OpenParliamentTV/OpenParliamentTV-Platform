@@ -203,6 +203,66 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			});
 		});
 		
+		// Helper function for formatting labels with alternatives
+		function formatLabelWithAlternatives(value, row, alternativeLabelField, idField, tableId) {
+			let tmpAltLabels = [];
+			let searchText = String(value); // Ensure value is a string
+
+			// 1. Parse alternative labels
+			if (row[alternativeLabelField]) {
+				try {
+					let parsedAltLabels = JSON.parse(row[alternativeLabelField]);
+					if (Array.isArray(parsedAltLabels) && parsedAltLabels.length > 0) {
+						tmpAltLabels = parsedAltLabels.map(String); // Ensure alt labels are strings
+						searchText += ' ' + tmpAltLabels.join(' ');
+					}
+				} catch (e) { 
+					// If JSON parsing fails, just use the main label
+					console.warn(`Failed to parse alternative labels for ${idField} ${row[idField]}:`, row[alternativeLabelField], e);
+				}
+			}
+
+			// 2. Get search term
+			const $table = $(`#${tableId}`);
+			// Check if table and options exist before accessing searchText
+			let searchTerm = ($table.length && $table.data('bootstrap.table')) ? $table.bootstrapTable('getOptions').searchText : ''; 
+			let displayText = String(value); // Ensure value is a string
+			let altLabelsText = tmpAltLabels.join(', ');
+
+			// Helper for highlighting text safely
+			const highlight = (text, term) => {
+				if (!term || typeof text !== 'string') return text;
+				// Escape regex special characters in the search term
+				const escapedTerm = term.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+				const regex = new RegExp(escapedTerm, 'gi');
+				return text.replace(regex, match => `<em>${match}</em>`);
+			};
+
+			// 3. Highlight main label if search term matches
+			if (searchTerm && typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())) {
+				displayText = highlight(value, searchTerm);
+			}
+
+			// 4. Highlight alternative labels if search term matches
+			if (searchTerm && tmpAltLabels.some(label => typeof label === 'string' && label.toLowerCase().includes(searchTerm.toLowerCase()))) {
+				altLabelsText = highlight(altLabelsText, searchTerm);
+			}
+
+			// 5. Construct display HTML including alternative labels if they exist
+			if (tmpAltLabels.length > 0) {
+				displayText += `<span class="less-opacity d-block">${altLabelsText}</span>`;
+			}
+
+			// 6. Add ID to searchText if it exists
+			if (row[idField]) {
+				searchText += ' ' + row[idField];
+			}
+
+			// 7. Return final HTML, ensure searchText is properly escaped for the attribute
+			const escapedSearchText = searchText.replace(/"/g, '&quot;'); // Escape quotes for the HTML attribute
+			return `<span data-search="${escapedSearchText}">${displayText}</span>`;
+		}
+		
 		$('#peopleTable').bootstrapTable({
 			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=person",
 			classes: "table table-striped",
@@ -244,49 +304,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					field: "PersonLabel",
 					title: "<?= L::name; ?>",
 					sortable: true,
-					formatter: function(value, row, index) {
-						let tmpAltLabels = [];
-						let searchText = value;
-						if (row["PersonLabelAlternative"]) {
-							try {
-								let parsedAltLabels = JSON.parse(row["PersonLabelAlternative"]);
-								if (Array.isArray(parsedAltLabels) && parsedAltLabels.length > 0) {
-									tmpAltLabels = parsedAltLabels;
-									searchText += ' ' + parsedAltLabels.join(' ');
-								}
-							} catch (e) {
-								// If JSON parsing fails, just use the main label
-							}
-						}
-						
-						// Get the current search term
-						let searchTerm = $('#peopleTable').bootstrapTable('getOptions').searchText;
-						let displayText = value;
-						
-						// Only highlight if the search term matches the label or alternative labels
-						if (searchTerm && (value.toLowerCase().includes(searchTerm.toLowerCase()) || 
-							tmpAltLabels.some(label => label.toLowerCase().includes(searchTerm.toLowerCase())))) {
-							// Create a case-insensitive regex
-							let regex = new RegExp(searchTerm, 'gi');
-							// Replace matches with highlighted version, but only in the text content
-							displayText = displayText.replace(regex, match => `<em>${match}</em>`);
-						}
-						
-						if (tmpAltLabels.length > 0) {
-							let altLabelsText = tmpAltLabels.join(', ');
-							if (searchTerm && tmpAltLabels.some(label => label.toLowerCase().includes(searchTerm.toLowerCase()))) {
-								// Create a case-insensitive regex
-								let regex = new RegExp(searchTerm, 'gi');
-								// Replace matches with highlighted version, but only in the text content
-								altLabelsText = altLabelsText.replace(regex, match => `<em>${match}</em>`);
-							}
-							displayText += '<br><span class="less-opacity">' + altLabelsText + '</span>';
-						}
-						
-						// Add ID to searchable text but don't include it in the display
-						searchText += ' ' + row["PersonID"];
-						
-						return '<span data-search="' + searchText + '">' + displayText + '</span>';
+					formatter: function(value, row) {
+						return formatLabelWithAlternatives(value, row, 'PersonLabelAlternative', 'PersonID', 'peopleTable');
 					}
 				},
 				{
@@ -378,49 +397,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					field: "OrganisationLabel",
 					title: "<?= L::name; ?>",
 					sortable: true,
-					formatter: function(value, row, index) {
-						let tmpAltLabels = [];
-						let searchText = value;
-						if (row["OrganisationLabelAlternative"]) {
-							try {
-								let parsedAltLabels = JSON.parse(row["OrganisationLabelAlternative"]);
-								if (Array.isArray(parsedAltLabels) && parsedAltLabels.length > 0) {
-									tmpAltLabels = parsedAltLabels;
-									searchText += ' ' + parsedAltLabels.join(' ');
-								}
-							} catch (e) {
-								// If JSON parsing fails, just use the main label
-							}
-						}
-						
-						// Get the current search term
-						let searchTerm = $('#organisationsTable').bootstrapTable('getOptions').searchText;
-						let displayText = value;
-						
-						// Only highlight if the search term matches the label or alternative labels
-						if (searchTerm && (value.toLowerCase().includes(searchTerm.toLowerCase()) || 
-							tmpAltLabels.some(label => label.toLowerCase().includes(searchTerm.toLowerCase())))) {
-							// Create a case-insensitive regex
-							let regex = new RegExp(searchTerm, 'gi');
-							// Replace matches with highlighted version, but only in the text content
-							displayText = displayText.replace(regex, match => `<em>${match}</em>`);
-						}
-						
-						if (tmpAltLabels.length > 0) {
-							let altLabelsText = tmpAltLabels.join(', ');
-							if (searchTerm && tmpAltLabels.some(label => label.toLowerCase().includes(searchTerm.toLowerCase()))) {
-								// Create a case-insensitive regex
-								let regex = new RegExp(searchTerm, 'gi');
-								// Replace matches with highlighted version, but only in the text content
-								altLabelsText = altLabelsText.replace(regex, match => `<em>${match}</em>`);
-							}
-							displayText += '<br><span class="less-opacity">' + altLabelsText + '</span>';
-						}
-						
-						// Add ID to searchable text but don't include it in the display
-						searchText += ' ' + row["OrganisationID"];
-						
-						return '<span data-search="' + searchText + '">' + displayText + '</span>';
+					formatter: function(value, row) {
+						return formatLabelWithAlternatives(value, row, 'OrganisationLabelAlternative', 'OrganisationID', 'organisationsTable');
 					}
 				},
 				{
@@ -490,49 +468,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					field: "DocumentLabel",
 					title: "<?= L::title; ?>",
 					sortable: true,
-					formatter: function(value, row, index) {
-						let tmpAltLabels = [];
-						let searchText = value;
-						if (row["DocumentLabelAlternative"]) {
-							try {
-								let parsedAltLabels = JSON.parse(row["DocumentLabelAlternative"]);
-								if (Array.isArray(parsedAltLabels) && parsedAltLabels.length > 0) {
-									tmpAltLabels = parsedAltLabels;
-									searchText += ' ' + parsedAltLabels.join(' ');
-								}
-							} catch (e) {
-								// If JSON parsing fails, just use the main label
-							}
-						}
-						
-						// Get the current search term
-						let searchTerm = $('#documentsTable').bootstrapTable('getOptions').searchText;
-						let displayText = value;
-						
-						// Only highlight if the search term matches the label or alternative labels
-						if (searchTerm && (value.toLowerCase().includes(searchTerm.toLowerCase()) || 
-							tmpAltLabels.some(label => label.toLowerCase().includes(searchTerm.toLowerCase())))) {
-							// Create a case-insensitive regex
-							let regex = new RegExp(searchTerm, 'gi');
-							// Replace matches with highlighted version, but only in the text content
-							displayText = displayText.replace(regex, match => `<em>${match}</em>`);
-						}
-						
-						if (tmpAltLabels.length > 0) {
-							let altLabelsText = tmpAltLabels.join(', ');
-							if (searchTerm && tmpAltLabels.some(label => label.toLowerCase().includes(searchTerm.toLowerCase()))) {
-								// Create a case-insensitive regex
-								let regex = new RegExp(searchTerm, 'gi');
-								// Replace matches with highlighted version, but only in the text content
-								altLabelsText = altLabelsText.replace(regex, match => `<em>${match}</em>`);
-							}
-							displayText += '<br><span class="less-opacity">' + altLabelsText + '</span>';
-						}
-						
-						// Add ID to searchable text but don't include it in the display
-						searchText += ' ' + row["DocumentID"];
-						
-						return '<span data-search="' + searchText + '">' + displayText + '</span>';
+					formatter: function(value, row) {
+						return formatLabelWithAlternatives(value, row, 'DocumentLabelAlternative', 'DocumentID', 'documentsTable');
 					}
 				},
 				{
@@ -606,49 +543,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					field: "TermLabel",
 					title: "<?= L::label; ?>",
 					sortable: true,
-					formatter: function(value, row, index) {
-						let tmpAltLabels = [];
-						let searchText = value;
-						if (row["TermLabelAlternative"]) {
-							try {
-								let parsedAltLabels = JSON.parse(row["TermLabelAlternative"]);
-								if (Array.isArray(parsedAltLabels) && parsedAltLabels.length > 0) {
-									tmpAltLabels = parsedAltLabels;
-									searchText += ' ' + parsedAltLabels.join(' ');
-								}
-							} catch (e) {
-								// If JSON parsing fails, just use the main label
-							}
-						}
-						
-						// Get the current search term
-						let searchTerm = $('#termsTable').bootstrapTable('getOptions').searchText;
-						let displayText = value;
-						
-						// Only highlight if the search term matches the label or alternative labels
-						if (searchTerm && (value.toLowerCase().includes(searchTerm.toLowerCase()) || 
-							tmpAltLabels.some(label => label.toLowerCase().includes(searchTerm.toLowerCase())))) {
-							// Create a case-insensitive regex
-							let regex = new RegExp(searchTerm, 'gi');
-							// Replace matches with highlighted version, but only in the text content
-							displayText = displayText.replace(regex, match => `<em>${match}</em>`);
-						}
-						
-						if (tmpAltLabels.length > 0) {
-							let altLabelsText = tmpAltLabels.join(', ');
-							if (searchTerm && tmpAltLabels.some(label => label.toLowerCase().includes(searchTerm.toLowerCase()))) {
-								// Create a case-insensitive regex
-								let regex = new RegExp(searchTerm, 'gi');
-								// Replace matches with highlighted version, but only in the text content
-								altLabelsText = altLabelsText.replace(regex, match => `<em>${match}</em>`);
-							}
-							displayText += '<br><span class="less-opacity">' + altLabelsText + '</span>';
-						}
-						
-						// Add ID to searchable text but don't include it in the display
-						searchText += ' ' + row["TermID"];
-						
-						return '<span data-search="' + searchText + '">' + displayText + '</span>';
+					formatter: function(value, row) {
+						return formatLabelWithAlternatives(value, row, 'TermLabelAlternative', 'TermID', 'termsTable');
 					}
 				},
 				{
