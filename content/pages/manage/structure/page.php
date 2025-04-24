@@ -46,7 +46,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         <div class="tab-pane bg-white fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
 							<div id="sessionsToolbar">
 								<select id="electoralPeriodFilter" class="form-select form-select-sm d-inline-block w-auto me-2">
-									<option value="">All Electoral Periods</option>
+									<option value=""><?= L::all; ?> <?= L::electoralPeriods; ?></option>
 								</select>
 							</div>
 							<table id="sessionsTable"></table>
@@ -54,10 +54,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         <div class="tab-pane bg-white fade" id="agendaItems" role="tabpanel" aria-labelledby="agendaItems-tab">
 							<div id="agendaItemsToolbar">
 								<select id="agendaItemsElectoralPeriodFilter" class="form-select form-select-sm d-inline-block w-auto me-2">
-									<option value="">All Electoral Periods</option>
+									<option value=""><?= L::all; ?> <?= L::electoralPeriods; ?></option>
 								</select>
 								<select id="agendaItemsSessionFilter" class="form-select form-select-sm d-inline-block w-auto me-2">
-									<option value="">All Sessions</option>
+									<option value=""><?= L::all; ?> <?= L::sessions; ?></option>
 								</select>
 							</div>
 							<table id="agendaItemsTable"></table>
@@ -158,33 +158,29 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			},
 			columns: [
 				{
-					field: "ElectoralPeriodLabel",
-					title: "Name",
-					sortable: true
-				},
-				{
-					field: "ElectoralPeriodID",
-					title: "ID",
+					field: "Parliament",
+					title: "<?= L::parliament; ?>",
 					sortable: true
 				},
 				{
 					field: "ElectoralPeriodNumber",
-					title: "Number",
+					title: "<?= L::electoralPeriod; ?>",
 					sortable: true
 				},
 				{
 					field: "ElectoralPeriodDateStart",
-					title: "Start Date",
+					title: "<?= L::dateStart; ?>",
 					sortable: true
 				},
 				{
 					field: "ElectoralPeriodDateEnd",
-					title: "End Date",
+					title: "<?= L::dateEnd; ?>",
 					sortable: true
 				},
 				{
 					field: "ElectoralPeriodID",
-					title: "Actions",
+					title: "<?= L::actions; ?>",
+					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {
 						return renderActionButtons(value, "electoralPeriod", row["ElectoralPeriodType"]);
@@ -202,7 +198,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					// Populate both electoral period filters
 					const filters = $("#electoralPeriodFilter, #agendaItemsElectoralPeriodFilter");
 					response.data.forEach(function(period) {
-						filters.append(`<option value="${period.ElectoralPeriodID}">${period.ElectoralPeriodLabel}</option>`);
+						filters.append(`<option value="${period.ElectoralPeriodID}"><?= L::electoralPeriod; ?> ${period.ElectoralPeriodNumber}</option>`);
 					});
 				}
 			}
@@ -275,7 +271,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			
 			// Clear and disable session dropdown if no electoral period selected
 			if (!electoralPeriodID) {
-				sessionFilter.html('<option value="">All Sessions</option>').prop('disabled', true);
+				sessionFilter.html('<option value=""><?= L::all; ?> <?= L::sessions; ?></option>').prop('disabled', true);
 				loadAllAgendaItemsData();
 				return;
 			}
@@ -295,10 +291,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				success: function(response) {
 					if (response.data) {
 						// Clear and update session dropdown
-						sessionFilter.html('<option value="">All Sessions</option>');
+						sessionFilter.html('<option value=""><?= L::all; ?> <?= L::sessions; ?></option>');
 						
 						response.data.forEach(function(session) {
-							sessionFilter.append(`<option value="${session.SessionID}">${session.SessionLabel}</option>`);
+							sessionFilter.append(`<option value="${session.SessionID}"><?= L::session; ?> ${session.SessionNumber}</option>`);
 						});
 						
 						sessionFilter.prop('disabled', false);
@@ -326,38 +322,34 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			toolbarAlign: "right",
 			columns: [
 				{
-					field: "SessionLabel",
-					title: "Name",
+					field: "Parliament",
+					title: "<?= L::parliament; ?>",
 					sortable: true
 				},
 				{
-					field: "SessionID",
-					title: "ID",
+					field: "ElectoralPeriodNumber",
+					title: "<?= L::electoralPeriod; ?>",
 					sortable: true
 				},
 				{
 					field: "SessionNumber",
-					title: "Number",
+					title: "<?= L::session; ?>",
 					sortable: true
 				},
 				{
 					field: "SessionDateStart",
-					title: "Start Date",
+					title: "<?= L::dateStart; ?>",
 					sortable: true
 				},
 				{
 					field: "SessionDateEnd",
-					title: "End Date",
-					sortable: true
-				},
-				{
-					field: "ElectoralPeriodLabel",
-					title: "Electoral Period",
+					title: "<?= L::dateEnd; ?>",
 					sortable: true
 				},
 				{
 					field: "SessionID",
-					title: "Actions",
+					title: "<?= L::actions; ?>",
+					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {
 						return renderActionButtons(value, "session", row["SessionType"]);
@@ -387,33 +379,35 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			toolbarAlign: "right",
 			columns: [
 				{
-					field: "AgendaItemLabel",
-					title: "Name",
+					field: "Parliament",
+					title: "<?= L::parliament; ?>",
 					sortable: true
 				},
 				{
-					field: "AgendaItemID",
-					title: "ID",
+					field: "ElectoralPeriodNumber",
+					title: "<?= L::electoralPeriod; ?>",
+					sortable: true
+				},
+				{
+					field: "SessionNumber",
+					title: "<?= L::session; ?>",
+					sortable: true
+				},
+				{
+					field: "AgendaItemLabel",
+					title: "<?= L::agendaItem; ?>",
+					class: "w-100",
 					sortable: true
 				},
 				{
 					field: "AgendaItemOrder",
-					title: "Order",
-					sortable: true
-				},
-				{
-					field: "SessionLabel",
-					title: "Session",
-					sortable: true
-				},
-				{
-					field: "ElectoralPeriodLabel",
-					title: "Electoral Period",
+					title: "<?= L::order; ?>",
 					sortable: true
 				},
 				{
 					field: "AgendaItemID",
-					title: "Actions",
+					title: "<?= L::actions; ?>",
+					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {
 						//TODO: remove quick fix !!!
