@@ -95,7 +95,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 								<div class="th-inner"><?= L::duration; ?></div>
 							</th>
 							<th>
-								<div class="th-inner"><?= L::changeDate; ?></div>
+								<div class="th-inner"><?= L::lastChanged; ?></div>
 							</th>
 							<?php if ($_SESSION["userdata"]["role"] == "admin") { ?>
 								<th>
