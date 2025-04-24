@@ -899,6 +899,7 @@ function personGetOverview($id = "all", $limit = 0, $offset = 0, $search = false
             per.PersonID,
             per.PersonType,
             per.PersonLabel,
+            per.PersonLabelAlternative,
             per.PersonGender,
             per.PersonPartyOrganisationID,
             per.PersonFactionOrganisationID,

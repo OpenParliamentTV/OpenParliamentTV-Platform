@@ -219,37 +219,54 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			columns: [
 				{
 					field: "PersonLabel",
-					title: "Name",
-					sortable: true
+					title: "<?= L::name; ?>",
+					sortable: true,
+					formatter: function(value, row) {
+						let tmpAltLabels = [];
+						if (row["PersonLabelAlternative"]) {
+							try {
+								let parsedAltLabels = JSON.parse(row["PersonLabelAlternative"]);
+								if (Array.isArray(parsedAltLabels) && parsedAltLabels.length > 0) {
+									tmpAltLabels = parsedAltLabels;
+								}
+							} catch (e) {
+								// If JSON parsing fails, just use the main label
+							}
+						}
+						if (tmpAltLabels.length > 0) {
+							return value + '<br><span class="less-opacity">' + tmpAltLabels.join(', ') + '</span>';
+						}
+						return value;
+					}
 				},
 				{
 					field: "PersonID",
-					title: "ID",
-					sortable: true
-				},
-				{
-					field: "PersonGender",
-					title: "Gender",
-					sortable: true
+					title: "Wikidata ID",
+					sortable: true,
+					formatter: function(value, row) {
+						return "<a href='https://www.wikidata.org/wiki/"+value+"' target='_blank'>"+value+"</a>";
+					}
 				},
 				{
 					field: "PersonPartyOrganisationID",
-					title: "Party",
+					title: "<?= L::party; ?>",
 					sortable: true,
 					formatter: function(value, row) {
-
-						return row["PartyLabel"]+" ("+value+")"
-
+						if (!value || !row["PartyLabel"]) {
+							return "-";
+						}
+						return row["PartyLabel"]+" ("+value+")";
 					}
 				},
 				{
 					field: "PersonFactionOrganisationID",
-					title: "Party",
+					title: "<?= L::faction; ?>",
 					sortable: true,
 					formatter: function(value, row) {
-
-						return row["FactionLabel"]+" ("+value+")"
-
+						if (!value || !row["FactionLabel"]) {
+							return "-";
+						}
+						return row["FactionLabel"]+" ("+value+")";
 					}
 				},
 				{
@@ -282,21 +299,33 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			columns: [
 				{
 					field: "OrganisationLabel",
-					title: "Name",
+					title: "<?= L::name; ?>",
 					sortable: true,
 					formatter: function(value, row) {
-						let tmpAltLabel = "";
-						let tmpAltLabels = JSON.parse(row["OrganisationLabelAlternative"]);
-						if (Array.isArray(tmpAltLabels)) {
-							tmpAltLabel = ", "+tmpAltLabels[0];
+						let tmpAltLabels = [];
+						if (row["OrganisationLabelAlternative"]) {
+							try {
+								let parsedAltLabels = JSON.parse(row["OrganisationLabelAlternative"]);
+								if (Array.isArray(parsedAltLabels) && parsedAltLabels.length > 0) {
+									tmpAltLabels = parsedAltLabels;
+								}
+							} catch (e) {
+								// If JSON parsing fails, just use the main label
+							}
 						}
-						return value + tmpAltLabel;
+						if (tmpAltLabels.length > 0) {
+							return value + '<br><span class="less-opacity">' + tmpAltLabels.join(', ') + '</span>';
+						}
+						return value;
 					}
 				},
 				{
 					field: "OrganisationID",
-					title: "ID",
-					sortable: true
+					title: "Wikidata ID",
+					sortable: true,
+					formatter: function(value, row) {
+						return "<a href='https://www.wikidata.org/wiki/"+value+"' target='_blank'>"+value+"</a>";
+					}
 				},
 				{
 					field: "OrganisationType",
@@ -333,15 +362,24 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			columns: [
 				{
 					field: "DocumentLabel",
-					title: "Name",
+					title: "<?= L::title; ?>",
 					sortable: true,
 					formatter: function(value, row) {
-						let tmpAltLabel = "";
-						let tmpAltLabels = JSON.parse(row["DocumentLabelAlternative"]);
-						if (Array.isArray(tmpAltLabels)) {
-							tmpAltLabel = ", "+tmpAltLabels[0];
+						let tmpAltLabels = [];
+						if (row["DocumentLabelAlternative"]) {
+							try {
+								let parsedAltLabels = JSON.parse(row["DocumentLabelAlternative"]);
+								if (Array.isArray(parsedAltLabels) && parsedAltLabels.length > 0) {
+									tmpAltLabels = parsedAltLabels;
+								}
+							} catch (e) {
+								// If JSON parsing fails, just use the main label
+							}
 						}
-						return value + tmpAltLabel;
+						if (tmpAltLabels.length > 0) {
+							return value + '<br><span class="less-opacity">' + tmpAltLabels.join(', ') + '</span>';
+						}
+						return value;
 					}
 				},
 				{
@@ -391,23 +429,32 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			columns: [
 				{
 					field: "TermLabel",
-					title: "Name",
+					title: "<?= L::label; ?>",
 					sortable: true,
 					formatter: function(value, row) {
-						let tmpAltLabel = "";
-						let tmpAltLabels = JSON.parse(row["TermLabelAlternative"]);
-						if (Array.isArray(tmpAltLabels)) {
-							tmpAltLabel = ", "+tmpAltLabels[0];
+						let tmpAltLabels = [];
+						if (row["TermLabelAlternative"]) {
+							try {
+								let parsedAltLabels = JSON.parse(row["TermLabelAlternative"]);
+								if (Array.isArray(parsedAltLabels) && parsedAltLabels.length > 0) {
+									tmpAltLabels = parsedAltLabels;
+								}
+							} catch (e) {
+								// If JSON parsing fails, just use the main label
+							}
 						}
-						return value + tmpAltLabel;
+						if (tmpAltLabels.length > 0) {
+							return value + '<br><span class="less-opacity">' + tmpAltLabels.join(', ') + '</span>';
+						}
+						return value;
 					}
 				},
 				{
 					field: "TermID",
-					title: "ID",
+					title: "Wikidata ID",
 					sortable: true,
 					formatter: function(value, row) {
-						return "<a href='https://www.wikidata.org/wiki/"+value+"'>"+value+"</a>";
+						return "<a href='https://www.wikidata.org/wiki/"+value+"' target='_blank'>"+value+"</a>";
 					}
 				},
 				{
