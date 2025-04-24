@@ -902,6 +902,7 @@ function personGetOverview($id = "all", $limit = 0, $offset = 0, $search = false
             per.PersonPartyOrganisationID,
             per.PersonFactionOrganisationID,
             per.PersonLastChanged,
+            per.PersonThumbnailURI,
             party.OrganisationLabel as PartyLabel,
             faction.OrganisationLabel as FactionLabel
             FROM ?n AS per
@@ -937,10 +938,12 @@ function personGetOverview($id = "all", $limit = 0, $offset = 0, $search = false
             per.PersonID,
             per.PersonType,
             per.PersonLabel,
+            per.PersonLabelAlternative,
             per.PersonGender,
             per.PersonPartyOrganisationID,
             per.PersonFactionOrganisationID,
             per.PersonLastChanged,
+            per.PersonThumbnailURI,
             party.OrganisationLabel as PartyLabel,
             faction.OrganisationLabel as FactionLabel
             FROM ?n AS per

@@ -227,6 +227,20 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			},
 			columns: [
 				{
+					field: "PersonThumbnailURI",
+					title: "",
+					sortable: false,
+					class: "minWidthColumn thumbnailColumn-person",
+					formatter: function(value, row) {
+						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
+							(value ? 
+								'<img src="' + value + '" alt="..."/>' : 
+								'<span class="icon-type-person" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>'
+							) + 
+							'</div></div>';
+					}
+				},
+				{
 					field: "PersonLabel",
 					title: "<?= L::name; ?>",
 					sortable: true,
@@ -291,7 +305,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						if (!value || !row["PartyLabel"]) {
 							return "-";
 						}
-						return row["PartyLabel"]+" ("+value+")";
+						return "<span class='partyIndicator partyIndicatorInline' data-party='"+row["PartyLabel"]+"'>"+row["PartyLabel"]+"</span>";
 					}
 				},
 				{
@@ -302,13 +316,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						if (!value || !row["FactionLabel"]) {
 							return "-";
 						}
-						return row["FactionLabel"]+" ("+value+")";
+						return "<span class='partyIndicator partyIndicatorInline' data-faction='"+value+"'>"+row["FactionLabel"]+"</span>";
 					}
-				},
-				{
-					field: "PersonType",
-					title: "<?= L::type; ?>",
-					sortable: true
 				},
 				{
 					field: "PersonLastChanged",
@@ -351,6 +360,20 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			sortName: "OrganisationLastChanged",
 			sortOrder: "desc",
 			columns: [
+				{
+					field: "OrganisationThumbnailURI",
+					title: "",
+					sortable: false,
+					class: "minWidthColumn thumbnailColumn-organisation",
+					formatter: function(value, row) {
+						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
+							(value ? 
+								'<img src="' + value + '" alt="..."/>' : 
+								'<span class="icon-type-organisation" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>'
+							) + 
+							'</div></div>';
+					}
+				},
 				{
 					field: "OrganisationLabel",
 					title: "<?= L::name; ?>",
@@ -409,11 +432,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					}
 				},
 				{
-					field: "OrganisationType",
-					title: "<?= L::type; ?>",
-					sortable: true
-				},
-				{
 					field: "OrganisationLastChanged",
 					title: "<?= L::lastChanged; ?>",
 					sortable: true,
@@ -454,6 +472,20 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			sortName: "DocumentLastChanged",
 			sortOrder: "desc",
 			columns: [
+				{
+					field: "DocumentThumbnailURI",
+					title: "",
+					sortable: false,
+					class: "minWidthColumn thumbnailColumn-document",
+					formatter: function(value, row) {
+						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
+							(value ? 
+								'<img src="' + value + '" alt="..."/>' : 
+								'<span class="icon-type-document" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>'
+							) + 
+							'</div></div>';
+					}
+				},
 				{
 					field: "DocumentLabel",
 					title: "<?= L::title; ?>",
@@ -516,11 +548,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					}
 				},
 				{
-					field: "DocumentType",
-					title: "<?= L::type; ?>",
-					sortable: true
-				},
-				{
 					field: "DocumentLastChanged",
 					title: "<?= L::lastChanged; ?>",
 					sortable: true,
@@ -561,6 +588,20 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			sortName: "TermLastChanged",
 			sortOrder: "desc",
 			columns: [
+				{
+					field: "TermThumbnailURI",
+					title: "",
+					sortable: false,
+					class: "minWidthColumn thumbnailColumn-term",
+					formatter: function(value, row) {
+						return '<div class="thumbnailContainer"><div class="rounded-circle">' + 
+							(value ? 
+								'<img src="' + value + '" alt="..."/>' : 
+								'<span class="icon-type-term" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>'
+							) + 
+							'</div></div>';
+					}
+				},
 				{
 					field: "TermLabel",
 					title: "<?= L::label; ?>",
@@ -617,11 +658,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					formatter: function(value, row) {
 						return "<a href='https://www.wikidata.org/wiki/"+value+"' target='_blank'>"+value+"</a>";
 					}
-				},
-				{
-					field: "TermType",
-					title: "<?= L::type; ?>",
-					sortable: true
 				},
 				{
 					field: "TermLastChanged",

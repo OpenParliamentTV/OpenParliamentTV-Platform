@@ -823,10 +823,15 @@ body.darkmode .modal-content .btn-close {
     border-color: var(--primary-fg-color);
 }
 
-.relationshipsList .entityPreview .entityContainer .thumbnailContainer {
-    min-width: 60px;
+.relationshipsList .entityPreview .entityContainer .thumbnailContainer, 
+table .thumbnailContainer {
+    width: 60px;
     height: 60px;
     margin: 0 10px 0px 0;
+}
+
+table .thumbnailContainer {
+    margin-right: 0px;
 }
 
 .relationshipsList .entityPreview .entityContainer a, 
@@ -1697,25 +1702,33 @@ body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em
 }
 
 .detailsHeader .rounded-circle,
-.entityPreview .rounded-circle {
+.entityPreview .rounded-circle,
+table .rounded-circle {
     position: relative;
     overflow: hidden;
     padding-bottom: 100%;
     background-color: #f9fafb;
 }
 
+table .rounded-circle {
+    border: 1px solid var(--border-color);
+}
+
 body.darkmode .detailsHeader .rounded-circle,
-body.darkmode .entityPreview .rounded-circle {
+body.darkmode .entityPreview .rounded-circle,
+body.darkmode table .rounded-circle {
     /*background-color: #303139;*/
 }
 
 .detailsHeader .rounded-circle > [class^="icon-"],
-.entityPreview .rounded-circle > [class^="icon-"] {
+.entityPreview .rounded-circle > [class^="icon-"],
+table .rounded-circle > [class^="icon-"] {
     color: #73747C;
 }
 
 .detailsHeader .rounded-circle img,
-.entityPreview .rounded-circle img {
+.entityPreview .rounded-circle img,
+table .rounded-circle img {
     position: absolute;
     width: 100%;
     object-fit: cover;
@@ -1723,7 +1736,8 @@ body.darkmode .entityPreview .rounded-circle {
     object-position: top;
 }
 
-.entityPreview[data-type="organisation"] .rounded-circle img {
+.entityPreview[data-type="organisation"] .rounded-circle img,
+table td.thumbnailColumn-organisation .rounded-circle img {
     object-fit: contain;
     object-position: center;
     transform: scale(0.7);
