@@ -35,8 +35,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
             case "getItem":
 
-
-
                 switch ($request["itemType"]) {
 
                     case "organisation":
@@ -59,8 +57,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                         break;
 
-
-
                     case "document":
 
                         require_once (__DIR__."/modules/document.php");
@@ -80,8 +76,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         $return = array_replace_recursive($return, $item);
 
                         break;
-
-
 
                     case "term":
 
@@ -103,8 +97,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                         break;
 
-
-
                     case "person":
 
                         require_once (__DIR__."/modules/person.php");
@@ -124,8 +116,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         $return = array_replace_recursive($return, $item);
 
                         break;
-
-
 
                     case "media":
 
@@ -147,8 +137,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                     break;
 
-
-
                     case "session":
 
                         require_once (__DIR__."/modules/session.php");
@@ -168,8 +156,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         $return = array_replace_recursive($return, $item);
 
                     break;
-
-
 
                     case "agendaItem":
 
@@ -191,8 +177,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                     break;
 
-
-
                     case "electoralPeriod":
 
                         require_once (__DIR__."/modules/electoralPeriod.php");
@@ -212,8 +196,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         $return = array_replace_recursive($return, $item);
 
                     break;
-
-
 
                     default:
 
@@ -332,7 +314,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         $return["links"]["self"] = htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"]);
                     break;
                 }
-
 
                 if ($item) {
                     $return = array_replace_recursive($return, $item);
@@ -655,7 +636,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                     break;
                 }
-                
 
                 $return["links"]["self"] = htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"]);
 
@@ -763,6 +743,72 @@ function apiV1($request = false, $db = false, $dbp = false) {
                 }
             break;
 
+            case "statistics":
+
+                include_once(__DIR__."/modules/statistics.php");
+                
+                switch ($request["itemType"]) {
+
+                    case "general": 
+                        $item = statisticsGetGeneral($request);
+                        if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
+                            unset($return["errors"]);
+                        } else {
+                            unset($return["data"]);
+                        }
+                        $return = array_merge($return, $item);
+                        break;
+
+                    case "entity":
+                        $item = statisticsGetEntity($request);
+                        if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
+                            unset($return["errors"]);
+                        } else {
+                            unset($return["data"]);
+                        }
+                        $return = array_merge($return, $item);
+                        break;
+
+                    case "terms":
+                        $item = statisticsGetTerms($request);
+                        if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
+                            unset($return["errors"]);
+                        } else {
+                            unset($return["data"]);
+                        }
+                        $return = array_merge($return, $item);
+                        break;
+
+                    case "compare-terms":
+                        $item = statisticsCompareTerms($request);
+                        if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
+                            unset($return["errors"]);
+                        } else {
+                            unset($return["data"]);
+                        }
+                        $return = array_merge($return, $item);
+                        break;
+
+                    case "network":
+                        $item = statisticsGetNetwork($request);
+                        if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
+                            unset($return["errors"]);
+                        } else {
+                            unset($return["data"]);
+                        }
+                        $return = array_merge($return, $item);
+                        break;
+
+                    default:
+                        $errorarray["status"] = "422";
+                        $errorarray["code"] = "1";
+                        $errorarray["title"] = "Invalid statistics type";
+                        $errorarray["detail"] = "The requested statistics type is not supported";
+                        array_push($return["errors"], $errorarray);
+                        break;
+                }
+                break;
+
             default:
 
                 $errorarray["status"] = "422";
@@ -771,13 +817,9 @@ function apiV1($request = false, $db = false, $dbp = false) {
                 $errorarray["detail"] = "Required parameter (action) of the request is missing";
                 array_push($return["errors"], $errorarray);
 
-                break;
+            break;
 
         }
-
-
-
-
 
     }
 
