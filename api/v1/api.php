@@ -756,7 +756,7 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         } else {
                             unset($return["data"]);
                         }
-                        $return = array_merge($return, $item);
+                        $return = array_replace_recursive($return, $item);
                         break;
 
                     case "entity":
@@ -766,7 +766,7 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         } else {
                             unset($return["data"]);
                         }
-                        $return = array_merge($return, $item);
+                        $return = array_replace_recursive($return, $item);
                         break;
 
                     case "terms":
@@ -776,7 +776,7 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         } else {
                             unset($return["data"]);
                         }
-                        $return = array_merge($return, $item);
+                        $return = array_replace_recursive($return, $item);
                         break;
 
                     case "compare-terms":
@@ -786,7 +786,7 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         } else {
                             unset($return["data"]);
                         }
-                        $return = array_merge($return, $item);
+                        $return = array_replace_recursive($return, $item);
                         break;
 
                     case "network":
@@ -796,7 +796,7 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         } else {
                             unset($return["data"]);
                         }
-                        $return = array_merge($return, $item);
+                        $return = array_replace_recursive($return, $item);
                         break;
 
                     default:

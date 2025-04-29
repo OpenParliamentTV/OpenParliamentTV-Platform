@@ -4,6 +4,9 @@ require_once(__DIR__.'/../../vendor/autoload.php');
 require_once(__DIR__.'/../../config.php');
 require_once(__DIR__.'/../../modules/search/functions.php');
 
+// Debug flag - set to 1 to enable debug logging
+$DEBUG_MODE = 0;
+
 // Initialize OpenSearch client
 $ESClientBuilder = Elasticsearch\ClientBuilder::create();
 
@@ -25,7 +28,7 @@ $ESClient = $ESClientBuilder->build();
  * @return array Statistics about the dataset
  */
 function getGeneralStatistics() {
-    global $ESClient;
+    global $ESClient, $DEBUG_MODE;
     
     $query = [
         "size" => 0,
@@ -78,10 +81,18 @@ function getGeneralStatistics() {
             throw new Exception("No OpenSearch indices found matching 'openparliamenttv_*'");
         }
         
+        if ($DEBUG_MODE) {
+            error_log("General Statistics Query: " . json_encode($query, JSON_PRETTY_PRINT));
+        }
+        
         $results = $ESClient->search([
             "index" => "openparliamenttv_*",
             "body" => $query
         ]);
+        
+        if ($DEBUG_MODE) {
+            error_log("General Statistics Response: " . json_encode($results, JSON_PRETTY_PRINT));
+        }
         
         // Validate response structure
         if (!isset($results["aggregations"])) {
@@ -100,9 +111,11 @@ function getGeneralStatistics() {
         return $aggregations;
     } catch(Exception $e) {
         error_log("Statistics error: " . $e->getMessage());
-        error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
-        if (isset($results)) {
-            error_log("Response: " . json_encode($results, JSON_PRETTY_PRINT));
+        if ($DEBUG_MODE) {
+            error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
+            if (isset($results)) {
+                error_log("Response: " . json_encode($results, JSON_PRETTY_PRINT));
+            }
         }
         throw $e; // Re-throw to be handled by the API layer
     }
@@ -116,7 +129,7 @@ function getGeneralStatistics() {
  * @return array Statistics about the entity
  */
 function getEntityStatistics($entityType, $entityID) {
-    global $ESClient;
+    global $ESClient, $DEBUG_MODE;
     
     $query = [
         "size" => 0,
@@ -157,13 +170,25 @@ function getEntityStatistics($entityType, $entityID) {
     ];
     
     try {
+        if ($DEBUG_MODE) {
+            error_log("Entity Statistics Query: " . json_encode($query, JSON_PRETTY_PRINT));
+        }
+        
         $results = $ESClient->search([
             "index" => "openparliamenttv_*",
             "body" => $query
         ]);
+        
+        if ($DEBUG_MODE) {
+            error_log("Entity Statistics Response: " . json_encode($results, JSON_PRETTY_PRINT));
+        }
+        
         return $results["aggregations"];
     } catch(Exception $e) {
         error_log("Entity statistics error: " . $e->getMessage());
+        if ($DEBUG_MODE) {
+            error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
+        }
         return null;
     }
 }
@@ -174,7 +199,7 @@ function getEntityStatistics($entityType, $entityID) {
  * @return array Statistics about terms in the dataset
  */
 function getTermStatistics() {
-    global $ESClient;
+    global $ESClient, $DEBUG_MODE;
     
     $query = [
         "size" => 0,
@@ -223,10 +248,18 @@ function getTermStatistics() {
             throw new Exception("No OpenSearch indices found matching 'openparliamenttv_*'");
         }
         
+        if ($DEBUG_MODE) {
+            error_log("Term Statistics Query: " . json_encode($query, JSON_PRETTY_PRINT));
+        }
+        
         $results = $ESClient->search([
             "index" => "openparliamenttv_*",
             "body" => $query
         ]);
+        
+        if ($DEBUG_MODE) {
+            error_log("Term Statistics Response: " . json_encode($results, JSON_PRETTY_PRINT));
+        }
         
         if (!isset($results["aggregations"])) {
             throw new Exception("No aggregations found in search results");
@@ -235,9 +268,11 @@ function getTermStatistics() {
         return $results["aggregations"];
     } catch(Exception $e) {
         error_log("Term statistics error: " . $e->getMessage());
-        error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
-        if (isset($results)) {
-            error_log("Response: " . json_encode($results, JSON_PRETTY_PRINT));
+        if ($DEBUG_MODE) {
+            error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
+            if (isset($results)) {
+                error_log("Response: " . json_encode($results, JSON_PRETTY_PRINT));
+            }
         }
         throw new Exception("Failed to retrieve term statistics: " . $e->getMessage());
     }
@@ -251,7 +286,7 @@ function getTermStatistics() {
  * @return array Comparison statistics
  */
 function compareTermsStatistics($terms, $factions = []) {
-    global $ESClient;
+    global $ESClient, $DEBUG_MODE;
     
     $query = [
         "size" => 0,
@@ -299,13 +334,25 @@ function compareTermsStatistics($terms, $factions = []) {
     }
     
     try {
+        if ($DEBUG_MODE) {
+            error_log("Compare Terms Query: " . json_encode($query, JSON_PRETTY_PRINT));
+        }
+        
         $results = $ESClient->search([
             "index" => "openparliamenttv_*",
             "body" => $query
         ]);
+        
+        if ($DEBUG_MODE) {
+            error_log("Compare Terms Response: " . json_encode($results, JSON_PRETTY_PRINT));
+        }
+        
         return $results["aggregations"];
     } catch(Exception $e) {
         error_log("Term comparison error: " . $e->getMessage());
+        if ($DEBUG_MODE) {
+            error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
+        }
         return null;
     }
 }
@@ -318,7 +365,7 @@ function compareTermsStatistics($terms, $factions = []) {
  * @return array Network analysis statistics
  */
 function getNetworkAnalysis($entityID = null, $entityType = null) {
-    global $ESClient;
+    global $ESClient, $DEBUG_MODE;
     
     $query = [
         "size" => 0,
@@ -334,24 +381,30 @@ function getNetworkAnalysis($entityID = null, $entityType = null) {
                             "size" => 100
                         ],
                         "aggs" => [
-                            "related_entities" => [
-                                "nested" => [
-                                    "path" => "annotations.data"
-                                ],
+                            "co_occurring_entities" => [
+                                "reverse_nested" => new stdClass(),
                                 "aggs" => [
-                                    "filtered" => [
-                                        "filter" => [
-                                            "bool" => [
-                                                "must_not" => $entityID ? [
-                                                    ["term" => ["annotations.data.id" => $entityID]]
-                                                ] : []
-                                            ]
+                                    "related_entities" => [
+                                        "nested" => [
+                                            "path" => "annotations.data"
                                         ],
                                         "aggs" => [
-                                            "entity_connections" => [
-                                                "terms" => [
-                                                    "field" => "annotations.data.id",
-                                                    "size" => 50
+                                            "filtered" => [
+                                                "filter" => [
+                                                    "bool" => [
+                                                        "must_not" => $entityID ? [
+                                                            ["term" => ["annotations.data.id" => $entityID]]
+                                                        ] : []
+                                                    ]
+                                                ],
+                                                "aggs" => [
+                                                    "entity_connections" => [
+                                                        "terms" => [
+                                                            "field" => "annotations.data.id",
+                                                            "size" => 50,
+                                                            "min_doc_count" => 1
+                                                        ]
+                                                    ]
                                                 ]
                                             ]
                                         ]
@@ -382,14 +435,91 @@ function getNetworkAnalysis($entityID = null, $entityType = null) {
     }
     
     try {
+        // First check if the index exists
+        $indices = $ESClient->cat()->indices(['index' => 'openparliamenttv_*']);
+        if (empty($indices)) {
+            throw new Exception("No OpenSearch indices found matching 'openparliamenttv_*'");
+        }
+        
+        if ($DEBUG_MODE) {
+            error_log("Network Analysis Query: " . json_encode($query, JSON_PRETTY_PRINT));
+        }
+        
         $results = $ESClient->search([
             "index" => "openparliamenttv_*",
             "body" => $query
         ]);
-        return $results["aggregations"];
+        
+        if ($DEBUG_MODE) {
+            error_log("Network Analysis Response: " . json_encode($results, JSON_PRETTY_PRINT));
+        }
+        
+        // Validate response structure
+        if (!isset($results["aggregations"])) {
+            throw new Exception("Invalid OpenSearch response: missing aggregations");
+        }
+        
+        $aggregations = $results["aggregations"];
+        
+        // Validate required aggregations
+        if (!isset($aggregations["co_occurrences"])) {
+            throw new Exception("Invalid OpenSearch response: missing co_occurrences aggregation");
+        }
+        
+        // Process the results into nodes and edges
+        $nodes = [];
+        $edges = [];
+        
+        // Process nodes from entity_pairs
+        if (isset($aggregations["co_occurrences"]["entity_pairs"]["buckets"])) {
+            foreach ($aggregations["co_occurrences"]["entity_pairs"]["buckets"] as $bucket) {
+                $sourceId = $bucket["key"];
+                $nodes[] = [
+                    "id" => $sourceId,
+                    "type" => "entity"
+                ];
+                
+                // Process edges from entity_connections
+                if (isset($bucket["co_occurring_entities"]["related_entities"]["filtered"]["entity_connections"]["buckets"])) {
+                    foreach ($bucket["co_occurring_entities"]["related_entities"]["filtered"]["entity_connections"]["buckets"] as $connection) {
+                        $targetId = $connection["key"];
+                        $edges[] = [
+                            "source" => $sourceId,
+                            "target" => $targetId,
+                            "weight" => $connection["doc_count"]
+                        ];
+                    }
+                }
+            }
+        }
+        
+        $response = [
+            "data" => [
+                "type" => "statistics",
+                "id" => "network",
+                "attributes" => [
+                    "coOccurrence" => [
+                        "nodes" => $nodes,
+                        "edges" => $edges
+                    ]
+                ]
+            ]
+        ];
+        
+        if ($DEBUG_MODE) {
+            error_log("Processed Network Response: " . json_encode($response, JSON_PRETTY_PRINT));
+        }
+        
+        return $response;
     } catch(Exception $e) {
         error_log("Network analysis error: " . $e->getMessage());
-        return null;
+        if ($DEBUG_MODE) {
+            error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
+            if (isset($results)) {
+                error_log("Response: " . json_encode($results, JSON_PRETTY_PRINT));
+            }
+        }
+        throw new Exception("Failed to retrieve network analysis: " . $e->getMessage());
     }
 }
 

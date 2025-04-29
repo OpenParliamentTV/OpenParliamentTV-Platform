@@ -33,6 +33,9 @@ function statisticsGetGeneral($request) {
     global $config;
     
     $return = [
+        "meta" => [
+            "requestStatus" => "error"
+        ],
         "data" => [
             "type" => "statistics",
             "id" => "general",
@@ -96,8 +99,11 @@ function statisticsGetGeneral($request) {
             }, $stats["termFrequency"]["buckets"])
         ];
         
+        // Set success status
+        $return["meta"]["requestStatus"] = "success";
+        
     } catch (Exception $e) {
-        error_log("Statistics Error: " . $e->getMessage());
+        unset($return["data"]);
         $return["errors"] = [
             [
                 "status" => "500",
@@ -106,7 +112,6 @@ function statisticsGetGeneral($request) {
                 "detail" => $e->getMessage()
             ]
         ];
-        unset($return["data"]);
     }
     
     return $return;
@@ -122,6 +127,9 @@ function statisticsGetEntity($request) {
     global $config;
     
     $return = [
+        "meta" => [
+            "requestStatus" => "error"
+        ],
         "data" => [
             "type" => "statistics",
             "id" => "entity",
@@ -187,7 +195,11 @@ function statisticsGetEntity($request) {
         }
         $return["links"]["self"] .= "?" . http_build_query($params);
         
+        // Set success status
+        $return["meta"]["requestStatus"] = "success";
+        
     } catch (Exception $e) {
+        unset($return["data"]);
         $return["errors"] = [
             [
                 "status" => "500",
@@ -196,7 +208,6 @@ function statisticsGetEntity($request) {
                 "detail" => $e->getMessage()
             ]
         ];
-        unset($return["data"]);
     }
     
     return $return;
@@ -212,6 +223,9 @@ function statisticsGetTerms($request) {
     global $config;
     
     $return = [
+        "meta" => [
+            "requestStatus" => "error"
+        ],
         "data" => [
             "type" => "statistics",
             "id" => "terms",
@@ -255,7 +269,11 @@ function statisticsGetTerms($request) {
             }, $stats["trends"]["buckets"])
         ];
         
+        // Set success status
+        $return["meta"]["requestStatus"] = "success";
+        
     } catch (Exception $e) {
+        unset($return["data"]);
         $return["errors"] = [
             [
                 "status" => "500",
@@ -264,7 +282,6 @@ function statisticsGetTerms($request) {
                 "detail" => $e->getMessage()
             ]
         ];
-        unset($return["data"]);
     }
     
     return $return;
@@ -280,6 +297,9 @@ function statisticsCompareTerms($request) {
     global $config;
     
     $return = [
+        "meta" => [
+            "requestStatus" => "error"
+        ],
         "data" => [
             "type" => "statistics",
             "id" => "compare-terms",
@@ -338,7 +358,11 @@ function statisticsCompareTerms($request) {
         }
         $return["links"]["self"] .= "?" . http_build_query($params);
         
+        // Set success status
+        $return["meta"]["requestStatus"] = "success";
+        
     } catch (Exception $e) {
+        unset($return["data"]);
         $return["errors"] = [
             [
                 "status" => "500",
@@ -347,7 +371,6 @@ function statisticsCompareTerms($request) {
                 "detail" => $e->getMessage()
             ]
         ];
-        unset($return["data"]);
     }
     
     return $return;
@@ -363,6 +386,9 @@ function statisticsGetNetwork($request) {
     global $config;
     
     $return = [
+        "meta" => [
+            "requestStatus" => "error"
+        ],
         "data" => [
             "type" => "statistics",
             "id" => "network",
@@ -383,30 +409,21 @@ function statisticsGetNetwork($request) {
             throw new Exception("Failed to retrieve network analysis");
         }
         
-        // Process co-occurrence data
-        $return["data"]["attributes"]["coOccurrence"] = [
-            "nodes" => [],
-            "edges" => []
+        error_log("Network Analysis Stats: " . json_encode($stats, JSON_PRETTY_PRINT));
+        
+        // Use the processed data but preserve the self link
+        $return["data"] = $stats["data"];
+        $return["links"] = [
+            "self" => $config["dir"]["api"]."/statistics/network"
         ];
         
-        foreach ($stats["co_occurrences"]["entity_pairs"]["buckets"] as $bucket) {
-            $node = [
-                "id" => $bucket["key"],
-                "type" => "entity"
-            ];
-            $return["data"]["attributes"]["coOccurrence"]["nodes"][] = $node;
-            
-            foreach ($bucket["related_entities"]["filtered"]["entity_connections"]["buckets"] as $related) {
-                $edge = [
-                    "source" => $bucket["key"],
-                    "target" => $related["key"],
-                    "weight" => $related["doc_count"]
-                ];
-                $return["data"]["attributes"]["coOccurrence"]["edges"][] = $edge;
-            }
-        }
+        // Set success status
+        $return["meta"]["requestStatus"] = "success";
+        
+        error_log("Processed Network Response: " . json_encode($return, JSON_PRETTY_PRINT));
         
     } catch (Exception $e) {
+        unset($return["data"]);
         $return["errors"] = [
             [
                 "status" => "500",
@@ -415,7 +432,6 @@ function statisticsGetNetwork($request) {
                 "detail" => $e->getMessage()
             ]
         ];
-        unset($return["data"]);
     }
     
     return $return;
