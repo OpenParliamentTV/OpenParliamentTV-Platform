@@ -68,7 +68,7 @@ function statisticsGetGeneral($request) {
             "topSpeakers" => array_map(function($bucket) {
                 return [
                     "id" => $bucket["key"],
-                    "count" => $bucket["doc_count"]
+                    "speechCount" => $bucket["doc_count"]
                 ];
             }, $stats["speakers"]["filtered_speakers"]["top_speakers"]["buckets"])
         ];
@@ -94,8 +94,7 @@ function statisticsGetGeneral($request) {
             "topTerms" => array_map(function($bucket) {
                 return [
                     "term" => $bucket["key"],
-                    "documentCount" => $bucket["doc_count"],
-                    "totalOccurrences" => $bucket["total_occurrences"]["value"]
+                    "speechCount" => $bucket["doc_count"]
                 ];
             }, $stats["termFrequency"]["buckets"])
         ];
@@ -250,8 +249,7 @@ function statisticsGetTerms($request) {
             "topTerms" => array_map(function($bucket) {
                 return [
                     "term" => $bucket["key"],
-                    "documentCount" => $bucket["doc_count"],
-                    "totalOccurrences" => $bucket["total_occurrences"]["value"]
+                    "speechCount" => $bucket["doc_count"]
                 ];
             }, $stats["frequency"]["buckets"])
         ];
@@ -264,7 +262,7 @@ function statisticsGetTerms($request) {
                     "terms" => array_map(function($term) {
                         return [
                             "term" => $term["key"],
-                            "count" => $term["doc_count"]
+                            "speechCount" => $term["doc_count"]
                         ];
                     }, $bucket["terms"]["buckets"])
                 ];
@@ -331,7 +329,7 @@ function statisticsCompareTerms($request) {
                 "timeline" => array_map(function($bucket) {
                     return [
                         "date" => $bucket["key_as_string"],
-                        "count" => $bucket["doc_count"]
+                        "speechCount" => $bucket["doc_count"]
                     ];
                 }, $stats["term_comparison"]["buckets"][$term]["over_time"]["buckets"])
             ];
