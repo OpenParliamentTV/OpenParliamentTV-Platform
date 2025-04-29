@@ -215,4 +215,23 @@ $config["allowedSearchParams"] = [
     ]
 ];
 
+/**
+ * List of stopwords to exclude from term frequency statistics
+ */
+$config["excludedStopwords"] = [
+    "die", "der", "und", "in", "den", "das", "ist", "zu", "von", "mit", "sich", "des", "auf", "für", "im", "dem", 
+    "nicht", "ein", "eine", "als", "auch", "es", "an", "werden", "aus", "er", "hat", "dass", "sie", "nach", "wird", 
+    "bei", "einer", "um", "am", "sind", "noch", "wie", "einem", "über", "einen", "so", "zum", "war", "haben", "oder", 
+    "aber", "vor", "zur", "bis", "mehr", "durch", "man", "sein", "wurde", "sei", "wurden", "während", "hatte", 
+    "kann", "gegen", "vom", "können", "schon", "wenn", "habe", "seine", "mark", "ihre", "dann", "unter", "wir", "soll", 
+    "ich", "eines", "es", "jahr", "zwei", "jahren", "diese", "dieser", "wieder", "keine", "um", "und", "muss", "jahr", 
+    "zwei", "dabei", "beim", "wurde", "sowie", "nur", "ber", "dabei", "viele", "zwischen", "immer", "einmal", "etwa", 
+    "alle", "beiden", "dafür", "sollte", "seit", "wurden", "wurde", "etwas", "sagte", "sagt", "gibt", "folge", "große", 
+    "insbesondere", "ganz", "müssen", "selbst", "nun", "beifall", "cdu", "csu", "fdp", "grünen", "spd", "afd", "fdp", 
+    "linke", "fraktion", "fr", "sehr", "90", "abgeordneten", "kollegen", "bündnis", "dank", "uns", "hier", "b", "was", 
+    "gr", "jetzt", "vielen", "herr", "damit", "kolleginnen", "frau", "denn", "liebe", "diesem", "ja", "da", "linken", 
+    "ihnen", "dr", "meine", "dieses", "weil", "abg", "geht", "doch", "sagen", "sondern", "dazu", "diesen", "gerade", 
+    "mich", "präs", "mal", "kommen", "unsere", "also", "viel", "breg", "deshalb", "mir", "anderen", "will"
+];
+
 ?>

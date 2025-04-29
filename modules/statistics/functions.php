@@ -28,7 +28,7 @@ $ESClient = $ESClientBuilder->build();
  * @return array Statistics about the dataset
  */
 function getGeneralStatistics() {
-    global $ESClient, $DEBUG_MODE;
+    global $ESClient, $DEBUG_MODE, $config;
     
     $query = [
         "size" => 0,
@@ -68,7 +68,10 @@ function getGeneralStatistics() {
             "termFrequency" => [
                 "terms" => [
                     "field" => "attributes.textContents.textHTML",
-                    "size" => 20
+                    "size" => 20,
+                    "min_doc_count" => 1,
+                    "order" => ["_count" => "desc"],
+                    "exclude" => $config["excludedStopwords"]
                 ]
             ]
         ]
@@ -199,7 +202,7 @@ function getEntityStatistics($entityType, $entityID) {
  * @return array Statistics about terms in the dataset
  */
 function getTermStatistics() {
-    global $ESClient, $DEBUG_MODE;
+    global $ESClient, $DEBUG_MODE, $config;
     
     $query = [
         "size" => 0,
@@ -208,7 +211,9 @@ function getTermStatistics() {
                 "terms" => [
                     "field" => "attributes.textContents.textHTML",
                     "size" => 20,
-                    "min_doc_count" => 1
+                    "min_doc_count" => 1,
+                    "order" => ["_count" => "desc"],
+                    "exclude" => $config["excludedStopwords"]
                 ]
             ],
             "trends" => [
@@ -222,7 +227,9 @@ function getTermStatistics() {
                         "terms" => [
                             "field" => "attributes.textContents.textHTML",
                             "size" => 10,
-                            "min_doc_count" => 1
+                            "min_doc_count" => 1,
+                            "order" => ["_count" => "desc"],
+                            "exclude" => $config["excludedStopwords"]
                         ]
                     ]
                 ]
