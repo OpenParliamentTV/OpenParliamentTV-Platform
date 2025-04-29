@@ -98,8 +98,43 @@ function statisticsGetGeneral($request) {
                 ];
             }, $stats["wordFrequency"]["buckets"])
         ];
-        
-        // Process top entities statistics
+
+        // Process speaker mentions
+        if (!isset($stats["speakerMentions"])) {
+            throw new Exception("Invalid speaker mentions statistics format");
+        }
+
+        $return["data"]["attributes"]["speakerMentions"] = [
+            "total" => $stats["speakerMentions"]["filtered_speakers"]["doc_count"],
+            "topMentions" => array_map(function($bucket) {
+                return [
+                    "id" => $bucket["key"],
+                    "count" => $bucket["doc_count"]
+                ];
+            }, $stats["speakerMentions"]["filtered_speakers"]["topSpeakers"]["buckets"])
+        ];
+
+        // Process share of voice
+        if (!isset($stats["shareOfVoice"])) {
+            throw new Exception("Invalid share of voice statistics format");
+        }
+
+        $return["data"]["attributes"]["shareOfVoice"] = [
+            "parties" => array_map(function($bucket) {
+                return [
+                    "id" => $bucket["key"],
+                    "count" => $bucket["doc_count"]
+                ];
+            }, $stats["shareOfVoice"]["parties"]["topParties"]["buckets"]),
+            "factions" => array_map(function($bucket) {
+                return [
+                    "id" => $bucket["key"],
+                    "count" => $bucket["doc_count"]
+                ];
+            }, $stats["shareOfVoice"]["factions"]["topFactions"]["buckets"])
+        ];
+
+        // Process entities statistics
         if (!isset($stats["entities"])) {
             throw new Exception("Invalid entities statistics format");
         }
