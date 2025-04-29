@@ -65,13 +65,42 @@ function getGeneralStatistics() {
                     "field" => "attributes.duration"
                 ]
             ],
-            "termFrequency" => [
+            "wordFrequency" => [
                 "terms" => [
                     "field" => "attributes.textContents.textHTML",
                     "size" => 20,
                     "min_doc_count" => 1,
                     "order" => ["_count" => "desc"],
                     "exclude" => $config["excludedStopwords"]
+                ]
+            ],
+            "entities" => [
+                "nested" => [
+                    "path" => "annotations.data"
+                ],
+                "aggs" => [
+                    "entityTypes" => [
+                        "terms" => [
+                            "field" => "annotations.data.type.keyword",
+                            "size" => 5
+                        ],
+                        "aggs" => [
+                            "topEntities" => [
+                                "terms" => [
+                                    "field" => "annotations.data.id",
+                                    "size" => 10,
+                                    "order" => ["_count" => "desc"]
+                                ],
+                                "aggs" => [
+                                    "unique_documents" => [
+                                        "cardinality" => [
+                                            "field" => "_id"
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
                 ]
             ]
         ]
@@ -95,10 +124,10 @@ function getGeneralStatistics() {
         
         if ($DEBUG_MODE) {
             error_log("General Statistics Response: " . json_encode($results, JSON_PRETTY_PRINT));
-            if (isset($results["aggregations"]["termFrequency"]["buckets"])) {
-                error_log("Term Frequency Buckets: " . json_encode($results["aggregations"]["termFrequency"]["buckets"], JSON_PRETTY_PRINT));
-                foreach ($results["aggregations"]["termFrequency"]["buckets"] as $bucket) {
-                    error_log("Term: " . $bucket["key"] . ", Doc Count: " . $bucket["doc_count"]);
+            if (isset($results["aggregations"]["wordFrequency"]["buckets"])) {
+                error_log("Word Frequency Buckets: " . json_encode($results["aggregations"]["wordFrequency"]["buckets"], JSON_PRETTY_PRINT));
+                foreach ($results["aggregations"]["wordFrequency"]["buckets"] as $bucket) {
+                    error_log("Word: " . $bucket["key"] . ", Doc Count: " . $bucket["doc_count"]);
                 }
             }
         }
@@ -113,7 +142,7 @@ function getGeneralStatistics() {
         // Validate required aggregations
         if (!isset($aggregations["speakers"]) || 
             !isset($aggregations["speakingTime"]) || 
-            !isset($aggregations["termFrequency"])) {
+            !isset($aggregations["wordFrequency"])) {
             throw new Exception("Invalid OpenSearch response: missing required aggregations");
         }
         

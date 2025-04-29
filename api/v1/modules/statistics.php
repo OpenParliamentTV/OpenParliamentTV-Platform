@@ -84,20 +84,40 @@ function statisticsGetGeneral($request) {
             "unit" => "seconds"
         ];
         
-        // Process term frequency statistics
-        if (!isset($stats["termFrequency"])) {
-            throw new Exception("Invalid term frequency statistics format");
+        // Process word frequency statistics
+        if (!isset($stats["wordFrequency"])) {
+            throw new Exception("Invalid word frequency statistics format");
         }
         
-        $return["data"]["attributes"]["termFrequency"] = [
-            "total" => $stats["termFrequency"]["sum_other_doc_count"],
-            "topTerms" => array_map(function($bucket) {
+        $return["data"]["attributes"]["wordFrequency"] = [
+            "total" => $stats["wordFrequency"]["sum_other_doc_count"],
+            "topWords" => array_map(function($bucket) {
                 return [
-                    "term" => $bucket["key"],
+                    "word" => $bucket["key"],
                     "speechCount" => $bucket["doc_count"]
                 ];
-            }, $stats["termFrequency"]["buckets"])
+            }, $stats["wordFrequency"]["buckets"])
         ];
+        
+        // Process top entities statistics
+        if (!isset($stats["entities"])) {
+            throw new Exception("Invalid entities statistics format");
+        }
+
+        $return["data"]["attributes"]["entities"] = [];
+        foreach ($stats["entities"]["entityTypes"]["buckets"] as $typeBucket) {
+            $entityType = $typeBucket["key"];
+            $return["data"]["attributes"]["entities"][$entityType] = [
+                "total" => $typeBucket["doc_count"],
+                "topEntities" => array_map(function($bucket) {
+                    return [
+                        "id" => $bucket["key"],
+                        "totalCount" => $bucket["doc_count"],
+                        "speechCount" => $bucket["unique_documents"]["value"]
+                    ];
+                }, $typeBucket["topEntities"]["buckets"])
+            ];
+        }
         
         // Set success status
         $return["meta"]["requestStatus"] = "success";
