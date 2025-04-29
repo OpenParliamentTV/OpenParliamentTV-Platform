@@ -42,6 +42,11 @@ function getGeneralStatistics() {
                             ]
                         ],
                         "aggs" => [
+                            "unique_speakers" => [
+                                "cardinality" => [
+                                    "field" => "annotations.data.id"
+                                ]
+                            ],
                             "top_speakers" => [
                                 "terms" => [
                                     "field" => "annotations.data.id",
@@ -177,19 +182,33 @@ function getTermStatistics() {
             "frequency" => [
                 "terms" => [
                     "field" => "attributes.textContents.textHTML",
-                    "size" => 20
+                    "size" => 20,
+                    "min_doc_count" => 1
                 ]
             ],
             "trends" => [
                 "date_histogram" => [
                     "field" => "attributes.dateStart",
-                    "calendar_interval" => "day"
+                    "calendar_interval" => "day",
+                    "min_doc_count" => 0
                 ],
                 "aggs" => [
                     "terms" => [
                         "terms" => [
                             "field" => "attributes.textContents.textHTML",
-                            "size" => 10
+                            "size" => 10,
+                            "min_doc_count" => 1
+                        ]
+                    ]
+                ]
+            ]
+        ],
+        "query" => [
+            "bool" => [
+                "must" => [
+                    [
+                        "exists" => [
+                            "field" => "attributes.textContents.textHTML"
                         ]
                     ]
                 ]
@@ -198,14 +217,29 @@ function getTermStatistics() {
     ];
     
     try {
+        // First check if the index exists
+        $indices = $ESClient->cat()->indices(['index' => 'openparliamenttv_*']);
+        if (empty($indices)) {
+            throw new Exception("No OpenSearch indices found matching 'openparliamenttv_*'");
+        }
+        
         $results = $ESClient->search([
             "index" => "openparliamenttv_*",
             "body" => $query
         ]);
+        
+        if (!isset($results["aggregations"])) {
+            throw new Exception("No aggregations found in search results");
+        }
+        
         return $results["aggregations"];
     } catch(Exception $e) {
         error_log("Term statistics error: " . $e->getMessage());
-        return null;
+        error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
+        if (isset($results)) {
+            error_log("Response: " . json_encode($results, JSON_PRETTY_PRINT));
+        }
+        throw new Exception("Failed to retrieve term statistics: " . $e->getMessage());
     }
 }
 

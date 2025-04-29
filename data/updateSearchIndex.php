@@ -105,7 +105,12 @@ function getSearchIndexParameter()
                     "type" => "text",
                     "analyzer" => "html_analyzer",
                     "search_analyzer" => "standard",
+                    "fielddata" => true,
                     "fields" => array(
+                        "keyword" => array(
+                            "type" => "keyword",
+                            "ignore_above" => 256
+                        ),
                         "autocomplete" => array(
                             "analyzer" => "autocomplete_html_analyzer",
                             "type" => "text"

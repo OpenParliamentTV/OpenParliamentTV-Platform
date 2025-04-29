@@ -20,7 +20,16 @@
 	RewriteCond %{REQUEST_URI} (.+)/$
 	RewriteRule ^ %1 [L,R]
 	########################################
-	# URL Rewrites
+	# Statistics Rewrites
+	########################################
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(statistics)/(entity)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2&entityType=$3&entityID=$4 [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^(statistics)/(entity)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2&entityType=$3 [QSA,L]
+	########################################
+	# Generic URL Rewrites
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d

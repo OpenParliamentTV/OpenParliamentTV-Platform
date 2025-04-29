@@ -61,7 +61,7 @@ function statisticsGetGeneral($request) {
         }
         
         $return["data"]["attributes"]["speakers"] = [
-            "total" => $stats["speakers"]["filtered_speakers"]["doc_count"],
+            "total" => $stats["speakers"]["filtered_speakers"]["unique_speakers"]["value"],
             "topSpeakers" => array_map(function($bucket) {
                 return [
                     "id" => $bucket["key"],
@@ -78,7 +78,7 @@ function statisticsGetGeneral($request) {
         $return["data"]["attributes"]["speakingTime"] = [
             "total" => $stats["speakingTime"]["sum"],
             "average" => $stats["speakingTime"]["avg"],
-            "unit" => "minutes"
+            "unit" => "seconds"
         ];
         
         // Process term frequency statistics
@@ -149,6 +149,9 @@ function statisticsGetEntity($request) {
             "type" => $request["entityType"]
         ];
         
+        // Update self link with entity path
+        $return["links"]["self"] .= "/".$request["entityType"]."/".$request["entityID"];
+        
         // Process associations
         $return["data"]["attributes"]["associations"] = [
             "total" => $stats["associations"]["doc_count"],
@@ -170,6 +173,19 @@ function statisticsGetEntity($request) {
                 ];
             }, $stats["trends"]["buckets"])
         ];
+        
+        // Add request parameters to self link
+        $params = [
+            "entityType" => $request["entityType"],
+            "entityID" => $request["entityID"]
+        ];
+        if (!empty($request["terms"])) {
+            $params["terms"] = $request["terms"];
+        }
+        if (!empty($request["factions"])) {
+            $params["factions"] = $request["factions"];
+        }
+        $return["links"]["self"] .= "?" . http_build_query($params);
         
     } catch (Exception $e) {
         $return["errors"] = [
@@ -312,6 +328,15 @@ function statisticsCompareTerms($request) {
                 }
             }
         }
+        
+        // Add request parameters to self link
+        $params = [
+            "terms" => $request["terms"]
+        ];
+        if (!empty($factions)) {
+            $params["factions"] = $factions;
+        }
+        $return["links"]["self"] .= "?" . http_build_query($params);
         
     } catch (Exception $e) {
         $return["errors"] = [
