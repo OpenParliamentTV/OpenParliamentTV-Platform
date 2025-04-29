@@ -72,6 +72,13 @@ function getGeneralStatistics() {
                     "min_doc_count" => 1,
                     "order" => ["_count" => "desc"],
                     "exclude" => $config["excludedStopwords"]
+                ],
+                "aggs" => [
+                    "total_occurrences" => [
+                        "value_count" => [
+                            "field" => "attributes.textContents.textHTML"
+                        ]
+                    ]
                 ]
             ]
         ]
@@ -95,6 +102,12 @@ function getGeneralStatistics() {
         
         if ($DEBUG_MODE) {
             error_log("General Statistics Response: " . json_encode($results, JSON_PRETTY_PRINT));
+            if (isset($results["aggregations"]["termFrequency"]["buckets"])) {
+                error_log("Term Frequency Buckets: " . json_encode($results["aggregations"]["termFrequency"]["buckets"], JSON_PRETTY_PRINT));
+                foreach ($results["aggregations"]["termFrequency"]["buckets"] as $bucket) {
+                    error_log("Term: " . $bucket["key"] . ", Doc Count: " . $bucket["doc_count"] . ", Total Occurrences: " . ($bucket["total_occurrences"]["value"] ?? "N/A"));
+                }
+            }
         }
         
         // Validate response structure
@@ -214,6 +227,13 @@ function getTermStatistics() {
                     "min_doc_count" => 1,
                     "order" => ["_count" => "desc"],
                     "exclude" => $config["excludedStopwords"]
+                ],
+                "aggs" => [
+                    "total_occurrences" => [
+                        "value_count" => [
+                            "field" => "attributes.textContents.textHTML"
+                        ]
+                    ]
                 ]
             ],
             "trends" => [

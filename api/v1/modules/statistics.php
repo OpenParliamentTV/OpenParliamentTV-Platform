@@ -94,7 +94,8 @@ function statisticsGetGeneral($request) {
             "topTerms" => array_map(function($bucket) {
                 return [
                     "term" => $bucket["key"],
-                    "count" => $bucket["doc_count"]
+                    "documentCount" => $bucket["doc_count"],
+                    "totalOccurrences" => $bucket["total_occurrences"]["value"]
                 ];
             }, $stats["termFrequency"]["buckets"])
         ];
@@ -249,7 +250,8 @@ function statisticsGetTerms($request) {
             "topTerms" => array_map(function($bucket) {
                 return [
                     "term" => $bucket["key"],
-                    "count" => $bucket["doc_count"]
+                    "documentCount" => $bucket["doc_count"],
+                    "totalOccurrences" => $bucket["total_occurrences"]["value"]
                 ];
             }, $stats["frequency"]["buckets"])
         ];
