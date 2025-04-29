@@ -435,6 +435,18 @@ switch ($page) {
 		include_once("./content/pages/registerconfirm/page.php");
 		$content = ob_get_clean();
 	break;
+	case "statistics":
+		$pageTitle = 'Statistics';
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle
+			]
+		];
+		ob_start();
+		include_once("./content/pages/statistics/page.php");
+		$content = ob_get_clean();
+	break;
 	/*********************************
 	* USER-SPECIFIC / ADMINISTRATION
 	**********************************/
