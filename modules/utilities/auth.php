@@ -148,7 +148,8 @@ function auth($userID, $action, $entity, $db = false) {
             $whitelist = array(
                 "getItem",
                 "search",
-                "autocomplete"
+                "autocomplete",
+                "statistics"
             );
 
             if (in_array($entity, $whitelist)) {
