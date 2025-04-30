@@ -437,7 +437,7 @@ switch ($page) {
 	break;
 	case "statistics":
 		$pageTitle = 'Statistics';
-		$pageType = 'default';
+		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
 				'label' => $pageTitle
