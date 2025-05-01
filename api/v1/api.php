@@ -38,19 +38,14 @@ function apiV1($request = false, $db = false, $dbp = false) {
                 switch ($request["itemType"]) {
 
                     case "organisation":
-
+                        
                         require_once (__DIR__."/modules/organisation.php");
-
                         $item = organisationGetByID($request["id"]);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
                         $return = array_replace_recursive($return, $item);
@@ -60,17 +55,12 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     case "document":
 
                         require_once (__DIR__."/modules/document.php");
-
                         $item = documentGetByID($request["id"]);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
                         $return = array_replace_recursive($return, $item);
@@ -80,17 +70,12 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     case "term":
 
                         require_once (__DIR__."/modules/term.php");
-
                         $item = termGetByID($request["id"]);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
                         $return = array_replace_recursive($return, $item);
@@ -100,17 +85,12 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     case "person":
 
                         require_once (__DIR__."/modules/person.php");
-
                         $item = personGetByID($request["id"]);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
                         $return = array_replace_recursive($return, $item);
@@ -120,82 +100,62 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     case "media":
 
                         require_once (__DIR__."/modules/media.php");
-
                         $item = mediaGetByID($request["id"], $db, $dbp);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
                         $return = array_replace_recursive($return, $item);
 
-                    break;
+                        break;
 
                     case "session":
 
                         require_once (__DIR__."/modules/session.php");
-
                         $item = sessionGetByID($request["id"]);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
                         $return = array_replace_recursive($return, $item);
 
-                    break;
+                        break;
 
                     case "agendaItem":
 
                         require_once (__DIR__."/modules/agendaItem.php");
-
                         $item = agendaItemGetByID($request["id"]);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
                         $return = array_replace_recursive($return, $item);
 
-                    break;
+                        break;
 
                     case "electoralPeriod":
 
                         require_once (__DIR__."/modules/electoralPeriod.php");
-
                         $item = electoralPeriodGetByID($request["id"]);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
                         $return = array_replace_recursive($return, $item);
 
-                    break;
+                        break;
 
                     default:
 
@@ -205,9 +165,9 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         $errorarray["detail"] = "Required parameter (type) of the request is missing";
                         array_push($return["errors"], $errorarray);
 
-                    break;
+                        break;
                 }
-            break;
+                break;
 
             case "search":
 
@@ -216,92 +176,67 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     case "people":
 
                         require_once (__DIR__."/modules/person.php");
-
                         $item = personSearch($request);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
-                    break;
+                        break;
 
                     case "organisations":
 
                         require_once (__DIR__."/modules/organisation.php");
-
                         $item = organisationSearch($request);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
-                    break;
+                        break;
 
                     case "documents":
 
                         require_once (__DIR__."/modules/document.php");
-
                         $item = documentSearch($request);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
-                    break;
+                        break;
 
                     case "terms":
 
                         require_once (__DIR__."/modules/term.php");
-
                         $item = termSearch($request);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
-                    break;
+                        break;
 
                     case "media":
 
                         require_once (__DIR__."/modules/media.php");
-                        
                         $item = mediaSearch($request);
 
                         if ($item["meta"]["requestStatus"] == "success") {
-
                             unset($return["errors"]);
-
                         } else {
-
                             unset($return["data"]);
-
                         }
 
-                    break;
+                        break;
 
                     default:
 
@@ -312,14 +247,15 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         $errorarray["detail"] = "Required parameter of the request is missing";
                         array_push($return["errors"], $errorarray);
                         $return["links"]["self"] = htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"]);
-                    break;
+
+                        break;
                 }
 
                 if ($item) {
                     $return = array_replace_recursive($return, $item);
                 }
 
-            break;
+                break;
             
             case "wikidataService":
                 $return["data"] = array();
@@ -328,7 +264,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     case "person":
 
                         if ($request["str"]) {
-
 
                             foreach ($config["parliament"] as $p=>$v) {
                                 if (file_exists($v["cache"]["wp"]."/people.json")) {
@@ -425,10 +360,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
                                 array_push($return["errors"], $errorarray);
                             }
 
-
-
-
-
                         } else {
 
                             $return["meta"]["requestStatus"] = "error";
@@ -441,7 +372,8 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                         }
 
-                    break;
+                        break;
+
                     case "party":
 
                         if ($request["str"]) {
@@ -514,7 +446,7 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                         }
 
-                    break;
+                        break;
 
                     case "faction":
 
@@ -590,31 +522,26 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                         }
 
-                    break;
+                        break;
 
                 }
 
-            break;
+                break;
 
             case "addMedia":
 
                 include_once(__DIR__."/modules/media.php");
-
                 $item = mediaAdd($request);
 
                 if ($item["meta"]["requestStatus"] == "success") {
-
                     unset($return["errors"]);
-
                 } else {
-
                     unset($return["data"]);
-
                 }
 
                 $return = array_replace_recursive($return, $item);
 
-            break;
+                break;
 
             case "autocomplete":
 
@@ -634,15 +561,17 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                         $return = array_replace_recursive($return, $item);
 
-                    break;
+                        break;
                 }
 
                 $return["links"]["self"] = htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"]);
 
-            break;
+                break;
 
             case "getOverview":
+                
                 if (empty($request["itemType"])) {
+
                     $return["meta"]["requestStatus"] = "error";
                     $return["errors"] = array();
                     $errorarray["status"] = "400";
@@ -651,6 +580,7 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     $errorarray["detail"] = "Parameter 'itemType' is required";
                     array_push($return["errors"], $errorarray);
                     return $return;
+
                 }
 
                 if (empty($request["limit"])) {
@@ -684,34 +614,49 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                 switch ($request["itemType"]) {
                     case "person":
+                        
                         require_once (__DIR__."/modules/person.php");
                         $result = personGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
                         break;
+
                     case "organisation":
+                        
                         require_once (__DIR__."/modules/organisation.php");
                         $result = organisationGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
                         break;
+
                     case "document":
+                        
                         require_once (__DIR__."/modules/document.php");
                         $result = documentGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
                         break;
+
                     case "term":
+                        
                         require_once (__DIR__."/modules/term.php");
                         $result = termGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
                         break;
+
                     case "electoralPeriod":
+                        
                         require_once (__DIR__."/modules/electoralPeriod.php");
                         $result = electoralPeriodGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
                         break;
+
                     case "session":
+                        
                         require_once (__DIR__."/modules/session.php");
                         $result = sessionGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"], false, $request["electoralPeriodID"]);
                         break;
+
                     case "agendaItem":
+                        
                         require_once (__DIR__."/modules/agendaItem.php");
                         $result = agendaItemGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"], false, $request["electoralPeriodID"], $request["sessionID"]);
                         break;
+
                     default:
+                        
                         $return["meta"]["requestStatus"] = "error";
                         $return["errors"] = array();
                         $errorarray["status"] = "400";
@@ -720,9 +665,11 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         $errorarray["detail"] = "Parameter 'itemType' has an invalid value";
                         array_push($return["errors"], $errorarray);
                         return $return;
+
                 }
 
                 if ($result) {
+                    
                     $return["meta"]["requestStatus"] = "success";
                     
                     // Check if the result has a total count
@@ -732,7 +679,9 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     } else {
                         $return["data"] = $result;
                     }
+
                 } else {
+                    
                     $return["meta"]["requestStatus"] = "error";
                     $return["errors"] = array();
                     $errorarray["status"] = "500";
@@ -740,8 +689,9 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     $errorarray["title"] = "Database error";
                     $errorarray["detail"] = "Could not get overview";
                     array_push($return["errors"], $errorarray);
+                    return $return;
                 }
-            break;
+                break;
 
             case "statistics":
 
@@ -750,61 +700,82 @@ function apiV1($request = false, $db = false, $dbp = false) {
                 switch ($request["itemType"]) {
 
                     case "general": 
+                        
                         $item = statisticsGetGeneral($request);
+                        
                         if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
                             unset($return["errors"]);
                         } else {
                             unset($return["data"]);
                         }
                         $return = array_replace_recursive($return, $item);
+
                         break;
 
                     case "entity":
+                        
                         $item = statisticsGetEntity($request);
+                        
                         if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
                             unset($return["errors"]);
                         } else {
                             unset($return["data"]);
                         }
+
                         $return = array_replace_recursive($return, $item);
+                        
                         break;
 
                     case "terms":
+                        
                         $item = statisticsGetTerms($request);
+                        
                         if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
                             unset($return["errors"]);
                         } else {
                             unset($return["data"]);
                         }
+
                         $return = array_replace_recursive($return, $item);
+                        
                         break;
 
                     case "compare-terms":
+                        
                         $item = statisticsCompareTerms($request);
+                        
                         if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
                             unset($return["errors"]);
                         } else {
                             unset($return["data"]);
                         }
+
                         $return = array_replace_recursive($return, $item);
+                        
                         break;
 
                     case "network":
+                        
                         $item = statisticsGetNetwork($request);
+                        
                         if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
                             unset($return["errors"]);
                         } else {
                             unset($return["data"]);
                         }
+
                         $return = array_replace_recursive($return, $item);
+                        
                         break;
 
                     default:
+                        
                         $errorarray["status"] = "422";
                         $errorarray["code"] = "1";
                         $errorarray["title"] = "Invalid statistics type";
                         $errorarray["detail"] = "The requested statistics type is not supported";
                         array_push($return["errors"], $errorarray);
+                        
                         break;
                 }
                 break;
