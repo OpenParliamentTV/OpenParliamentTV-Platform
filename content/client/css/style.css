@@ -2,7 +2,7 @@ body {
     --primary-bg-color: #fff;
     --secondary-bg-color: #f9fafb;
     --semi-transparent-bg-color: rgba(47, 50, 58, .8); 
-    --primary-fg-color: #73747C; /* Texts Borders etc. */
+    --primary-fg-color: #535263; /* Texts Borders etc. */
     --secondary-fg-color: rgba(220, 220, 220, 1); /* Secondary Texts, Borders, Editable Panels etc. */
     --semi-transparent-fg-color: rgba(255, 255, 255, .3);
     --semi-transparent-fg-highlight-color: rgba(255, 255, 255, .4);
@@ -1934,7 +1934,7 @@ table td.thumbnailColumn-organisation .rounded-circle img {
     overflow: auto;
     line-height: 1.6em;
     font-size: 0.8em;
-    color: #999;
+    color: #777;
 }
 
 body.darkmode .resultSnippets {
@@ -1957,6 +1957,7 @@ body.darkmode .resultItem .resultSnippets .resultSnippet:hover {
 
 .resultItem .resultSnippets .resultSnippet:before {
     content: '[...] ';
+    opacity: .6;
 }
 
 .resultItem .rounded-pill {

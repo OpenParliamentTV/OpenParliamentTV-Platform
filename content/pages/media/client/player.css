@@ -62,7 +62,7 @@ body.darkmode .frametrail-body.inFullscreen {
 	--primary-bg-color: rgba(255, 255, 255, 1);
 	--secondary-bg-color: rgba(255, 255, 255, .6);
 	--semi-transparent-bg-color: rgba(255, 255, 255, .8);
-	--primary-fg-color: #73747C;
+	--primary-fg-color: #535263;
 	--secondary-fg-color: rgba(100, 100, 100, 1);
 	--semi-transparent-fg-color: rgba(80, 80, 80, .3);
 	--semi-transparent-fg-highlight-color: rgba(80, 80, 80, .4);
