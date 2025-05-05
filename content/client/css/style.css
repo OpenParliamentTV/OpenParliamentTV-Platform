@@ -113,7 +113,9 @@ header .dropdown-toggle::after {
 }
 
 header .dropdown-menu {
-    margin-top: 3px;
+    right: 3px !important;
+    margin-top: 6px !important;
+    border-top-right-radius: 0px !important;
 }
 
 .dropdown-item {
@@ -189,6 +191,8 @@ header #navbarNavSettings .nav-item {
     background: var(--primary-fg-color) !important;
     border-color: var(--primary-fg-color) !important;
     color: var(--primary-bg-color) !important;
+    border-bottom-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
 }
 
 .nav-link .alert {
