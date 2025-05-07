@@ -654,6 +654,12 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         require_once (__DIR__."/modules/agendaItem.php");
                         $result = agendaItemGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"], false, $request["electoralPeriodID"], $request["sessionID"]);
                         break;
+                    
+                    case "user":
+                    
+                        require_once (__DIR__."/modules/user.php");
+                        $result = userGetOverview($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
+                        break;
 
                     default:
                         
