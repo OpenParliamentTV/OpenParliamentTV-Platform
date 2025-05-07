@@ -149,7 +149,8 @@ function auth($userID, $action, $entity, $db = false) {
                 "getItem",
                 "search",
                 "autocomplete",
-                "statistics"
+                "statistics",
+                "user"
             );
 
             if (in_array($entity, $whitelist)) {
