@@ -37,65 +37,20 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="all-users" role="tabpanel" aria-labelledby="all-users-tab">
-                            <table id="manageUsersOverviewTable" class="table">
+                            <table id="usersTable">
                                 <thead>
                                     <tr>
-                                        <th>UserName</th>
-                                        <th>Mail</th>
-                                        <th>Role</th>
-                                        <th>Active</th>
-                                        <th>Blocked</th>
-                                        <th>Password</th>
-                                        <th>LastLogin</th>
+                                        <th data-field="UserID" data-visible="false">ID</th>
+                                        <th data-field="UserName" data-sortable="true">Username</th>
+                                        <th data-field="UserMail" data-sortable="true">Email</th>
+                                        <th data-field="UserRole" data-sortable="true">Role</th>
+                                        <th data-field="UserActive" data-sortable="true" data-formatter="activeFormatter">Active</th>
+                                        <th data-field="UserBlocked" data-sortable="true" data-formatter="blockedFormatter">Blocked</th>
+                                        <th data-field="UserLastLogin" data-sortable="true">Last Login</th>
+                                        <th data-field="UserRegisterDate" data-sortable="true">Register Date</th>
+                                        <th data-field="operate" data-formatter="operateFormatter" class="minWidthColumn">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                <?php
-
-                                    require_once(__DIR__."/../../../../modules/utilities/safemysql.class.php");
-
-                                    if (!$db) {
-                                        try {
-
-                                            $db = new SafeMySQL(array(
-                                                'host' => $config["platform"]["sql"]["access"]["host"],
-                                                'user' => $config["platform"]["sql"]["access"]["user"],
-                                                'pass' => $config["platform"]["sql"]["access"]["passwd"],
-                                                'db' => $config["platform"]["sql"]["db"]
-                                            ));
-
-                                        } catch (exception $e) {
-
-                                            $return["meta"]["requestStatus"] = "error";
-                                            $return["errors"] = array();
-                                            $errorarray["status"] = "503";
-                                            $errorarray["code"] = "1";
-                                            $errorarray["title"] = "Database connection error";
-                                            $errorarray["detail"] = "Connecting to platform database failed";
-                                            array_push($return["errors"], $errorarray);
-                                            return $return;
-
-                                        }
-                                    }
-
-                                    $users = $db->getAll("SELECT * FROM ?n",$config["platform"]["sql"]["tbl"]["User"]);
-
-                                    foreach ($users as $user) {
-
-                                        echo "<tr>
-                                                <td><input type='text' name='UserName' data-userid='".$user["UserID"]."' value='".$user["UserName"]."' class='userform-username form-control'></td>
-                                                <td><input type='text' name='UserMail' data-userid='".$user["UserID"]."' value='".$user["UserMail"]."' class='userform-usermail form-control'></td>
-                                                <td><input type='text' name='UserRole' data-userid='".$user["UserID"]."' value='".$user["UserRole"]."' class='userform-userrole form-control'></td>
-                                                <td><input type='checkbox' name='UserActive' data-userid='".$user["UserID"]."' class='userform-useractive form-control'".(($user["UserActive"]==1)?" checked":"")."></td>
-                                                <td><input type='checkbox' name='UserBlocked' data-userid='".$user["UserID"]."' class='userform-userblocked form-control'".(($user["UserBlocked"]==1)?" checked":"")."></td>
-                                                <td><input type='input' name='UserPassword' data-userid='".$user["UserID"]."' placeholder='aA-zZ, Special >8 Chars' class='userform-userpassword form-control'> </td>
-                                                <td>".$user["UserLastLogin"]."</td>
-                                            </tr>";
-
-                                    }
-
-                                ?>
-                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -104,7 +59,242 @@ if ($auth["meta"]["requestStatus"] != "success") {
         </div>
     </div>
 </main>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/manage/users/client/users.overview.js?v=<?= $config["version"] ?>"></script>
+
+<script type="text/javascript">
+$(function() {
+    // Define formatters and events before table initialization
+    var formatters = {
+        // Formatter for active status
+        activeFormatter: function(value, row, index) {
+            return '<div class="form-check form-switch">' +
+                   '<input class="form-check-input user-active-switch" type="checkbox" ' +
+                   'data-userid="' + row.UserID + '" ' +
+                   (value ? 'checked' : '') + '>' +
+                   '</div>';
+        },
+
+        // Formatter for blocked status
+        blockedFormatter: function(value, row, index) {
+            return '<div class="form-check form-switch">' +
+                   '<input class="form-check-input user-blocked-switch" type="checkbox" ' +
+                   'data-userid="' + row.UserID + '" ' +
+                   (value ? 'checked' : '') + '>' +
+                   '</div>';
+        },
+
+        // Formatter for role selection
+        roleFormatter: function(value, row, index) {
+            return '<select class="form-select form-select-sm user-role-select" ' +
+                   'data-userid="' + row.UserID + '">' +
+                   '<option value="user" ' + (value === 'user' ? 'selected' : '') + '>User</option>' +
+                   '<option value="admin" ' + (value === 'admin' ? 'selected' : '') + '>Admin</option>' +
+                   '</select>';
+        },
+
+        // Formatter for dates
+        dateFormatter: function(value) {
+            if (value) {
+                return new Date(value).toLocaleString('de');
+            }
+            return "-";
+        },
+
+        // Formatter for action buttons
+        operateFormatter: function(value, row, index) {
+            const viewButton = '<a class="list-group-item list-group-item-action" ' +
+                'title="<?= L::view; ?>" ' +
+                'href="<?= $config["dir"]["root"]; ?>/user/' + row.UserID + '" ' +
+                'target="_blank">' +
+                '<span class="icon-eye"></span>' +
+                '</a>';
+            
+            const editButton = '<a class="list-group-item list-group-item-action" ' +
+                'title="<?= L::edit; ?>" ' +
+                'href="<?= $config["dir"]["root"]; ?>/manage/users/' + row.UserID + '">' +
+                '<span class="icon-pencil"></span>' +
+                '</a>';
+            
+            const apiButton = '<a class="list-group-item list-group-item-action" ' +
+                'title="API" ' +
+                'href="<?= $config["dir"]["root"]; ?>/api/v1/?action=getItem&itemType=user&id=' + row.UserID + '" ' +
+                'target="_blank">' +
+                '<span class="icon-code"></span>' +
+                '</a>';
+            
+            // Combine all buttons in a horizontal list group
+            return '<div class="list-group list-group-horizontal">' +
+                viewButton +
+                editButton +
+                apiButton +
+                '</div>';
+        }
+    };
+
+    // Initialize Bootstrap Table
+    $('#usersTable').bootstrapTable({
+        url: '<?= $config["dir"]["root"] ?>/api/v1/?action=getOverview&itemType=user',
+        classes: "table table-striped",
+        locale: "<?= $lang; ?>",
+        search: true,
+        searchAlign: "left",
+        minimumCountColumns: 2,
+        pagination: true,
+        pageSize: 25,
+        pageList: [10, 25, 50, 100, 'all'],
+        sidePagination: 'server',
+        sortName: 'UserRegisterDate',
+        sortOrder: 'desc',
+        showFooter: false,
+        maintainSelected: true,
+        clickToSelect: true,
+        uniqueId: 'UserID',
+        columns: [
+            {field: 'UserID', visible: false},
+            {field: 'UserName', sortable: true, title: 'Username'},
+            {field: 'UserMail', sortable: true, title: 'Email'},
+            {field: 'UserRole', sortable: true, title: 'Role', formatter: formatters.roleFormatter},
+            {field: 'UserActive', sortable: true, title: 'Active', formatter: formatters.activeFormatter},
+            {field: 'UserBlocked', sortable: true, title: 'Blocked', formatter: formatters.blockedFormatter},
+            {field: 'UserLastLogin', sortable: true, title: 'Last Login', formatter: formatters.dateFormatter},
+            {field: 'UserRegisterDate', sortable: true, title: 'Register Date', formatter: formatters.dateFormatter},
+            {field: 'operate', title: 'Actions', formatter: formatters.operateFormatter, class: 'minWidthColumn'}
+        ],
+        queryParams: function(params) {
+            return {
+                limit: params.limit,
+                offset: params.offset,
+                sort: params.sort,
+                order: params.order,
+                search: params.search
+            };
+        },
+        responseHandler: function(res) {
+            if (!res || !res.data) {
+                console.error('Invalid response format:', res);
+                return {
+                    total: 0,
+                    rows: []
+                };
+            }
+            return {
+                total: res.total || 0,
+                rows: res.data
+            };
+        }
+    });
+
+    // Handle active status changes
+    $(document).on('change', '.user-active-switch', function() {
+        const userId = $(this).data('userid');
+        const isActive = $(this).prop('checked');
+        
+        $.ajax({
+            url: '<?= $config["dir"]["root"] ?>/api/v1/',
+            method: 'POST',
+            data: {
+                action: 'changeItem',
+                itemType: 'user',
+                id: userId,
+                UserActive: isActive ? 1 : 0
+            },
+            success: function(response) {
+                if (response.meta.requestStatus === 'success') {
+                    // Refresh the table after 500ms delay
+                    setTimeout(function() {
+                        $('#usersTable').bootstrapTable('refresh');
+                    }, 500);
+                } else {
+                    // Show error message and revert switch
+                    console.error('Failed to update user status:', response);
+                    alert(response.errors ? response.errors[0].detail : 'Failed to update user status');
+                    $(this).prop('checked', !isActive);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error updating user status:', error);
+                alert('Error updating user status: ' + error);
+                $(this).prop('checked', !isActive);
+            }
+        });
+    });
+
+    // Handle blocked status changes
+    $(document).on('change', '.user-blocked-switch', function() {
+        const userId = $(this).data('userid');
+        const isBlocked = $(this).prop('checked');
+        
+        $.ajax({
+            url: '<?= $config["dir"]["root"] ?>/api/v1/',
+            method: 'POST',
+            data: {
+                action: 'changeItem',
+                itemType: 'user',
+                id: userId,
+                UserBlocked: isBlocked ? 1 : 0
+            },
+            success: function(response) {
+                if (response.meta.requestStatus === 'success') {
+                    // Refresh the table after 500ms delay
+                    setTimeout(function() {
+                        $('#usersTable').bootstrapTable('refresh');
+                    }, 500);
+                } else {
+                    // Show error message and revert switch
+                    console.error('Failed to update user status:', response);
+                    alert(response.errors ? response.errors[0].detail : 'Failed to update user status');
+                    $(this).prop('checked', !isBlocked);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error updating user status:', error);
+                alert('Error updating user status: ' + error);
+                $(this).prop('checked', !isBlocked);
+            }
+        });
+    });
+
+    // Handle role changes
+    $(document).on('change', '.user-role-select', function() {
+        const userId = $(this).data('userid');
+        const newRole = $(this).val();
+        
+        $.ajax({
+            url: '<?= $config["dir"]["root"] ?>/api/v1/',
+            method: 'POST',
+            data: {
+                action: 'changeItem',
+                itemType: 'user',
+                id: userId,
+                UserRole: newRole
+            },
+            success: function(response) {
+                if (response.meta.requestStatus === 'success') {
+                    // Refresh the table after 500ms delay
+                    setTimeout(function() {
+                        $('#usersTable').bootstrapTable('refresh');
+                    }, 500);
+                } else {
+                    // Show error message and revert selection
+                    console.error('Failed to update user role:', response);
+                    alert(response.errors ? response.errors[0].detail : 'Failed to update user role');
+                    $(this).val($(this).data('original-value'));
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error updating user role:', error);
+                alert('Error updating user role: ' + error);
+                $(this).val($(this).data('original-value'));
+            }
+        });
+    });
+
+    // Store original value when focus
+    $(document).on('focus', '.user-role-select', function() {
+        $(this).data('original-value', $(this).val());
+    });
+});
+</script>
+
 <?php
 include_once(__DIR__ . '/../../../footer.php');
 }
