@@ -559,4 +559,96 @@ function termGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, 
 
 }
 
+function termChange($parameter) {
+    global $config;
+
+    if (!$parameter["id"]) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing request parameter";
+        $errorarray["detail"] = "Required parameter (id) is missing";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    try {
+        $db = new SafeMySQL(array(
+            'host'  => $config["platform"]["sql"]["access"]["host"],
+            'user'  => $config["platform"]["sql"]["access"]["user"],
+            'pass'  => $config["platform"]["sql"]["access"]["passwd"],
+            'db'    => $config["platform"]["sql"]["db"]
+        ));
+    } catch (exception $e) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "503";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Database connection error";
+        $errorarray["detail"] = "Connecting to platform database failed";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Check if term exists
+    $term = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Term"]." WHERE TermID=?s LIMIT 1", $parameter["id"]);
+    if (!$term) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "404";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Term not found";
+        $errorarray["detail"] = "Term with the given ID was not found in database";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Define allowed parameters
+    $allowedParams = array(
+        "TermType", "TermLabel", "TermLabelAlternative", "TermAbstract",
+        "TermThumbnailURI", "TermThumbnailCreator", "TermThumbnailLicense",
+        "TermWebsiteURI", "TermEmbedURI", "TermAdditionalInformation"
+    );
+
+    // Filter parameters
+    $params = $db->filterArray($parameter, $allowedParams);
+    $updateParams = array();
+
+    // Process each parameter
+    foreach ($params as $key => $value) {
+        if ($key === "TermLabelAlternative" || $key === "TermAdditionalInformation") {
+            // Handle JSON fields
+            if (is_array($value)) {
+                $updateParams[] = $db->parse("?n=?s", $key, json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            }
+        } else {
+            $updateParams[] = $db->parse("?n=?s", $key, $value);
+        }
+    }
+
+    if (empty($updateParams)) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "No parameters";
+        $errorarray["detail"] = "No valid parameters for updating term data were provided";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Add last changed timestamp
+    $updateParams[] = "TermLastChanged=CURRENT_TIMESTAMP()";
+
+    // Execute update
+    $db->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE TermID=?s", 
+        $config["platform"]["sql"]["tbl"]["Term"], 
+        $parameter["id"]
+    );
+
+    $return["meta"]["requestStatus"] = "success";
+    return $return;
+}
+
 ?>

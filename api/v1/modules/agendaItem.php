@@ -307,4 +307,104 @@ function agendaItemGetOverview($id = "all", $limit = 0, $offset = 0, $search = f
     return $return;
 }
 
+function agendaItemChange($parameter) {
+    global $config;
+
+    if (!$parameter["id"]) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing request parameter";
+        $errorarray["detail"] = "Required parameter (id) is missing";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Parse parliament from ID
+    $IDInfos = getInfosFromStringID($parameter["id"]);
+    if (!is_array($IDInfos) || !array_key_exists($IDInfos["parliament"], $config["parliament"])) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Invalid AgendaItemID";
+        $errorarray["detail"] = "AgendaItemID could not be associated with a parliament";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    $parliament = $IDInfos["parliament"];
+
+    try {
+        $dbp = new SafeMySQL(array(
+            'host'  => $config["parliament"][$parliament]["sql"]["access"]["host"],
+            'user'  => $config["parliament"][$parliament]["sql"]["access"]["user"],
+            'pass'  => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
+            'db'    => $config["parliament"][$parliament]["sql"]["db"]
+        ));
+    } catch (exception $e) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "503";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Database connection error";
+        $errorarray["detail"] = "Connecting to parliament database failed";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Check if agenda item exists
+    $agendaItem = $dbp->getRow("SELECT * FROM ".$config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"]." WHERE AgendaItemID=?s LIMIT 1", $IDInfos["id_part"]);
+    if (!$agendaItem) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "404";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "AgendaItem not found";
+        $errorarray["detail"] = "AgendaItem with the given ID was not found in database";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Define allowed parameters
+    $allowedParams = array(
+        "AgendaItemOfficialTitle", "AgendaItemTitle", "AgendaItemOrder", "AgendaItemSessionID"
+    );
+
+    // Filter parameters
+    $params = $dbp->filterArray($parameter, $allowedParams);
+    $updateParams = array();
+
+    // Process each parameter
+    foreach ($params as $key => $value) {
+        if ($key === "AgendaItemOrder") {
+            // Convert to integer
+            $updateParams[] = $dbp->parse("?n=?i", $key, (int)$value);
+        } else {
+            $updateParams[] = $dbp->parse("?n=?s", $key, $value);
+        }
+    }
+
+    if (empty($updateParams)) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "No parameters";
+        $errorarray["detail"] = "No valid parameters for updating agenda item data were provided";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Execute update
+    $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE AgendaItemID=?s", 
+        $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"], 
+        $IDInfos["id_part"]
+    );
+
+    $return["meta"]["requestStatus"] = "success";
+    return $return;
+}
+
 ?>

@@ -260,4 +260,104 @@ function electoralPeriodGetOverview($id = "all", $limit = 0, $offset = 0, $searc
     return $return;
 }
 
+function electoralPeriodChange($parameter) {
+    global $config;
+
+    if (!$parameter["id"]) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing request parameter";
+        $errorarray["detail"] = "Required parameter (id) is missing";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Parse parliament from ID
+    $IDInfos = getInfosFromStringID($parameter["id"]);
+    if (!is_array($IDInfos) || !array_key_exists($IDInfos["parliament"], $config["parliament"])) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Invalid ElectoralPeriodID";
+        $errorarray["detail"] = "ElectoralPeriodID could not be associated with a parliament";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    $parliament = $IDInfos["parliament"];
+
+    try {
+        $dbp = new SafeMySQL(array(
+            'host'  => $config["parliament"][$parliament]["sql"]["access"]["host"],
+            'user'  => $config["parliament"][$parliament]["sql"]["access"]["user"],
+            'pass'  => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
+            'db'    => $config["parliament"][$parliament]["sql"]["db"]
+        ));
+    } catch (exception $e) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "503";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Database connection error";
+        $errorarray["detail"] = "Connecting to parliament database failed";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Check if electoral period exists
+    $electoralPeriod = $dbp->getRow("SELECT * FROM ".$config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"]." WHERE ElectoralPeriodID=?s LIMIT 1", $IDInfos["id_part"]);
+    if (!$electoralPeriod) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "404";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "ElectoralPeriod not found";
+        $errorarray["detail"] = "ElectoralPeriod with the given ID was not found in database";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Define allowed parameters
+    $allowedParams = array(
+        "ElectoralPeriodNumber", "ElectoralPeriodDateStart", "ElectoralPeriodDateEnd"
+    );
+
+    // Filter parameters
+    $params = $dbp->filterArray($parameter, $allowedParams);
+    $updateParams = array();
+
+    // Process each parameter
+    foreach ($params as $key => $value) {
+        if ($key === "ElectoralPeriodNumber") {
+            // Convert to integer
+            $updateParams[] = $dbp->parse("?n=?i", $key, (int)$value);
+        } else {
+            $updateParams[] = $dbp->parse("?n=?s", $key, $value);
+        }
+    }
+
+    if (empty($updateParams)) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "No parameters";
+        $errorarray["detail"] = "No valid parameters for updating electoral period data were provided";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Execute update
+    $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE ElectoralPeriodID=?s", 
+        $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
+        $IDInfos["id_part"]
+    );
+
+    $return["meta"]["requestStatus"] = "success";
+    return $return;
+}
+
 ?>

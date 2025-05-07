@@ -1482,4 +1482,122 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
 
 }
 
+function mediaChange($parameter) {
+    global $config;
+
+    if (!$parameter["id"]) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing request parameter";
+        $errorarray["detail"] = "Required parameter (id) is missing";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Parse parliament from ID
+    $IDInfos = getInfosFromStringID($parameter["id"]);
+    if (!is_array($IDInfos) || !array_key_exists($IDInfos["parliament"], $config["parliament"])) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Invalid MediaID";
+        $errorarray["detail"] = "MediaID could not be associated with a parliament";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    $parliament = $IDInfos["parliament"];
+
+    try {
+        $dbp = new SafeMySQL(array(
+            'host'  => $config["parliament"][$parliament]["sql"]["access"]["host"],
+            'user'  => $config["parliament"][$parliament]["sql"]["access"]["user"],
+            'pass'  => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
+            'db'    => $config["parliament"][$parliament]["sql"]["db"]
+        ));
+    } catch (exception $e) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "503";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Database connection error";
+        $errorarray["detail"] = "Connecting to parliament database failed";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Check if media exists
+    $media = $dbp->getRow("SELECT * FROM ".$config["parliament"][$parliament]["sql"]["tbl"]["Media"]." WHERE MediaID=?s LIMIT 1", $parameter["id"]);
+    if (!$media) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "404";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Media not found";
+        $errorarray["detail"] = "Media with the given ID was not found in database";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Define allowed parameters
+    $allowedParams = array(
+        "MediaOriginID", "MediaOriginMediaID", "MediaCreator", "MediaLicense",
+        "MediaOrder", "MediaPublic", "MediaAligned", "MediaDateStart", "MediaDateEnd",
+        "MediaDuration", "MediaVideoFileURI", "MediaAudioFileURI", "MediaSourcePage",
+        "MediaThumbnailURI", "MediaThumbnailCreator", "MediaThumbnailLicense",
+        "MediaAdditionalInformation"
+    );
+
+    // Filter parameters
+    $params = $dbp->filterArray($parameter, $allowedParams);
+    $updateParams = array();
+
+    // Process each parameter
+    foreach ($params as $key => $value) {
+        if ($key === "MediaAdditionalInformation") {
+            // Handle JSON fields
+            if (is_array($value)) {
+                $updateParams[] = $dbp->parse("?n=?s", $key, json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            }
+        } else if ($key === "MediaPublic" || $key === "MediaAligned") {
+            // Convert boolean values to integers
+            $updateParams[] = $dbp->parse("?n=?i", $key, ($value === true || $value === "true" || $value === "1") ? 1 : 0);
+        } else if ($key === "MediaOrder") {
+            // Convert to integer
+            $updateParams[] = $dbp->parse("?n=?i", $key, (int)$value);
+        } else if ($key === "MediaDuration") {
+            // Convert to float
+            $updateParams[] = $dbp->parse("?n=?f", $key, (float)$value);
+        } else {
+            $updateParams[] = $dbp->parse("?n=?s", $key, $value);
+        }
+    }
+
+    if (empty($updateParams)) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "No parameters";
+        $errorarray["detail"] = "No valid parameters for updating media data were provided";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Add last changed timestamp
+    $updateParams[] = "MediaLastChanged=CURRENT_TIMESTAMP()";
+
+    // Execute update
+    $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE MediaID=?s", 
+        $config["parliament"][$parliament]["sql"]["tbl"]["Media"], 
+        $parameter["id"]
+    );
+
+    $return["meta"]["requestStatus"] = "success";
+    return $return;
+}
+
 ?>

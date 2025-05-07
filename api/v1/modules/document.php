@@ -548,4 +548,97 @@ function documentGetOverview($id = "all", $limit = 0, $offset = 0, $search = fal
 
 }
 
+function documentChange($parameter) {
+    global $config;
+
+    if (!$parameter["id"]) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Missing request parameter";
+        $errorarray["detail"] = "Required parameter (id) is missing";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    try {
+        $db = new SafeMySQL(array(
+            'host'  => $config["platform"]["sql"]["access"]["host"],
+            'user'  => $config["platform"]["sql"]["access"]["user"],
+            'pass'  => $config["platform"]["sql"]["access"]["passwd"],
+            'db'    => $config["platform"]["sql"]["db"]
+        ));
+    } catch (exception $e) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "503";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Database connection error";
+        $errorarray["detail"] = "Connecting to platform database failed";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Check if document exists
+    $document = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Document"]." WHERE DocumentID=?s LIMIT 1", $parameter["id"]);
+    if (!$document) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "404";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Document not found";
+        $errorarray["detail"] = "Document with the given ID was not found in database";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Define allowed parameters
+    $allowedParams = array(
+        "DocumentType", "DocumentWikidataID", "DocumentLabel", "DocumentLabelAlternative",
+        "DocumentAbstract", "DocumentThumbnailURI", "DocumentThumbnailCreator",
+        "DocumentThumbnailLicense", "DocumentSourceURI", "DocumentEmbedURI",
+        "DocumentAdditionalInformation"
+    );
+
+    // Filter parameters
+    $params = $db->filterArray($parameter, $allowedParams);
+    $updateParams = array();
+
+    // Process each parameter
+    foreach ($params as $key => $value) {
+        if ($key === "DocumentLabelAlternative" || $key === "DocumentAdditionalInformation") {
+            // Handle JSON fields
+            if (is_array($value)) {
+                $updateParams[] = $db->parse("?n=?s", $key, json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+            }
+        } else {
+            $updateParams[] = $db->parse("?n=?s", $key, $value);
+        }
+    }
+
+    if (empty($updateParams)) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "No parameters";
+        $errorarray["detail"] = "No valid parameters for updating document data were provided";
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    // Add last changed timestamp
+    $updateParams[] = "DocumentLastChanged=CURRENT_TIMESTAMP()";
+
+    // Execute update
+    $db->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE DocumentID=?s", 
+        $config["platform"]["sql"]["tbl"]["Document"], 
+        $parameter["id"]
+    );
+
+    $return["meta"]["requestStatus"] = "success";
+    return $return;
+}
+
 ?>
