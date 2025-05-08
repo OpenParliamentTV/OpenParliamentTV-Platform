@@ -922,12 +922,12 @@ function personGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = fa
                 ));
             }
 
-            foreach ($return["rows"] as $k=>$person) {
-                $return["rows"][$k]["annotationcount"] = 0;
+            foreach ($return["data"] as $k=>$person) {
+                $return["data"][$k]["annotationcount"] = 0;
                 foreach ($config["parliament"] as $parliamentShort=>$parliament) {
                     $tmpCnt = $dbp[$parliamentShort]->getOne("SELECT COUNT(AnnotationID) as cnt FROM `annotation` WHERE AnnotationResourceID = ?s AND AnnotationType=?s",$person["PersonID"],"person");
-                    //$return["rows"][$k]["annotationcount"] = $tmpCnt+$return["rows"][$k]["annotationcount"];
-                    $return["rows"][$k]["annotationcount"] += $tmpCnt;
+                    //$return["data"][$k]["annotationcount"] = $tmpCnt+$return["data"][$k]["annotationcount"];
+                    $return["data"][$k]["annotationcount"] += $tmpCnt;
                 }
             }*/
 
