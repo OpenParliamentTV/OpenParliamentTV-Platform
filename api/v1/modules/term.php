@@ -490,7 +490,7 @@ function termAdd($item, $db = false) {
 
 
 
-function termGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+function termGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
 
     global $config;
 

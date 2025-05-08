@@ -165,7 +165,7 @@ function sessionGetByID($id = false) {
  * @param string $electoralPeriodID Filter by electoral period ID
  * @return array
  */
-function sessionGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false, $electoralPeriodID = false) {
+function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false, $electoralPeriodID = false) {
     global $config;
     
     // Get all parliaments

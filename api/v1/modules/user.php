@@ -683,7 +683,7 @@ function userConfirmRegistration($parameter) {
     return $return;
 }
 
-function userGetOverview($id = "all", $limit = 10, $offset = 0, $search = false, $sort = false, $order = false, $getCount = true) {
+function userGetItemsFromDB($id = "all", $limit = 10, $offset = 0, $search = false, $sort = false, $order = false, $getCount = true) {
     global $config;
 
     $db = new SafeMySQL(array(

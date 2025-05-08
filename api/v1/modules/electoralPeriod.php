@@ -157,7 +157,7 @@ function electoralPeriodGetByID($id = false) {
  * @param object $db Database connection
  * @return array
  */
-function electoralPeriodGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
     global $config;
     
     // Get all parliaments

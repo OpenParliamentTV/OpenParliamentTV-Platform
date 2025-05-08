@@ -463,7 +463,7 @@ function organisationAdd($item, $db = false) {
 
 }
 
-function organisationGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+function organisationGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
 
     global $config;
 

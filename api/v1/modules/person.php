@@ -851,7 +851,7 @@ function personAdd($item, $db = false) {
 }
 
 
-function personGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+function personGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
 
     global $config;
 

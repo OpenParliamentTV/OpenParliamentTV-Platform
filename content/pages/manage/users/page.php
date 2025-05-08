@@ -114,25 +114,17 @@ $(function() {
                 '<span class="icon-pencil"></span>' +
                 '</a>';
             
-            const apiButton = '<a class="list-group-item list-group-item-action" ' +
-                'title="API" ' +
-                'href="<?= $config["dir"]["root"]; ?>/api/v1/?action=getItem&itemType=user&id=' + row.UserID + '" ' +
-                'target="_blank">' +
-                '<span class="icon-code"></span>' +
-                '</a>';
-            
-            // Combine all buttons in a horizontal list group
+            // Combine buttons in a horizontal list group
             return '<div class="list-group list-group-horizontal">' +
                 viewButton +
                 editButton +
-                apiButton +
                 '</div>';
         }
     };
 
     // Initialize Bootstrap Table
     $('#usersTable').bootstrapTable({
-        url: '<?= $config["dir"]["root"] ?>/api/v1/?action=getOverview&itemType=user',
+        url: '<?= $config["dir"]["root"] ?>/api/v1/?action=getItemsFromDB&itemType=user',
         classes: "table table-striped",
         locale: "<?= $lang; ?>",
         search: true,

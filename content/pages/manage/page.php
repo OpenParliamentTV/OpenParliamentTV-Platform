@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to fetch entities from API
     async function fetchEntities(type) {
         try {
-            const response = await fetch(`<?= $config["dir"]["root"]; ?>/api/v1/?action=getOverview&itemType=${type}&id=all&limit=10&offset=0&sort=${type.charAt(0).toUpperCase() + type.slice(1)}LastChanged&order=desc`);
+            const response = await fetch(`<?= $config["dir"]["root"]; ?>/api/v1/?action=getItemsFromDB&itemType=${type}&id=all&limit=10&offset=0&sort=${type.charAt(0).toUpperCase() + type.slice(1)}LastChanged&order=desc`);
             const data = await response.json();
             //console.log(`API response for ${type}:`, data);
             // The getOverview functions return the data directly without a meta structure

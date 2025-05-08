@@ -120,7 +120,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			queryParams: function(params) {
 				// Create a new params object with only the necessary parameters
 				var queryParams = {
-					action: "getOverview",
+					action: "getItemsFromDB",
 					itemType: "electoralPeriod",
 					getCount: true
 				};
@@ -191,7 +191,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 		// Load electoral periods for both filters
 		$.ajax({
-			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=electoralPeriod",
+			url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=electoralPeriod",
 			method: "GET",
 			success: function(response) {
 				if (response.data) {
@@ -214,7 +214,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				url: config["dir"]["root"] + "/api/v1/",
 				method: "GET",
 				data: {
-					action: "getOverview",
+					action: "getItemsFromDB",
 					itemType: "session",
 					electoralPeriodID: $("#electoralPeriodFilter").val(),
 					getCount: true,
@@ -239,17 +239,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		// Function to load all agenda items data
 		function loadAllAgendaItemsData() {
 			$.ajax({
-				url: config["dir"]["root"] + "/api/v1/",
+				url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=agendaItem&electoralPeriodID=" + $("#agendaItemsElectoralPeriodFilter").val() + "&sessionID=" + $("#agendaItemsSessionFilter").val() + "&getCount=true&limit=1000&offset=0",
 				method: "GET",
-				data: {
-					action: "getOverview",
-					itemType: "agendaItem",
-					electoralPeriodID: $("#agendaItemsElectoralPeriodFilter").val(),
-					sessionID: $("#agendaItemsSessionFilter").val(),
-					getCount: true,
-					limit: 1000, // Load a large number to get all data
-					offset: 0
-				},
 				success: function(response) {
 					allAgendaItemsData = response.data || [];
 					
@@ -278,16 +269,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			
 			// Load sessions for the selected electoral period
 			$.ajax({
-				url: config["dir"]["root"] + "/api/v1/",
+				url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=session&electoralPeriodID=" + electoralPeriodID + "&getCount=true&limit=1000&offset=0",
 				method: "GET",
-				data: {
-					action: "getOverview",
-					itemType: "session",
-					electoralPeriodID: electoralPeriodID,
-					getCount: true,
-					limit: 1000, // Load a large number to get all data
-					offset: 0
-				},
 				success: function(response) {
 					if (response.data) {
 						// Clear and update session dropdown

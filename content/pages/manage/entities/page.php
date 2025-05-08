@@ -285,7 +285,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		}
 		
 		$('#peopleTable').bootstrapTable({
-			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=person",
+			url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=person",
 			classes: "table table-striped",
 			locale: "<?= $lang; ?>",
 			pagination: true,
@@ -380,7 +380,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		});
 
 		$('#organisationsTable').bootstrapTable({
-			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=organisation",
+			url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=organisation",
 			classes: "table table-striped",
 			locale: "<?= $lang; ?>",
 			pagination: true,
@@ -446,7 +446,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		});
 
 		$('#documentsTable').bootstrapTable({
-			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=document",
+			url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=document",
 			classes: "table table-striped",
 			locale: "<?= $lang; ?>",
 			pagination: true,
@@ -516,7 +516,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		});
 
 		$('#termsTable').bootstrapTable({
-			url: config["dir"]["root"] + "/api/v1/?action=getOverview&itemType=term",
+			url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=term",
 			classes: "table table-striped",
 			locale: "<?= $lang; ?>",
 			pagination: true,

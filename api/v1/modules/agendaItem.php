@@ -159,7 +159,7 @@ function agendaItemGetByID($id = false) {
  * @param string $sessionID Filter by session ID
  * @return array
  */
-function agendaItemGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false, $electoralPeriodID = false, $sessionID = false) {
+function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false, $electoralPeriodID = false, $sessionID = false) {
     global $config;
     
     // Get all parliaments

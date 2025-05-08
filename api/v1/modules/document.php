@@ -479,7 +479,7 @@ function documentAdd($item, $db = false) {
 
 }
 
-function documentGetOverview($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+function documentGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
 
     global $config;
 
