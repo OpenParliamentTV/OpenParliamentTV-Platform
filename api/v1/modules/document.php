@@ -519,7 +519,7 @@ function documentGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = 
     }
 
     $return["total"] = $db->getOne("SELECT COUNT(DocumentID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Document"]);
-    $return["rows"] = $db->getAll("SELECT
+    $return["data"] = $db->getAll("SELECT
         DocumentID,
             DocumentType,
             DocumentLabel,

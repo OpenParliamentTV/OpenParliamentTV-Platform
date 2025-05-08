@@ -528,9 +528,9 @@ function termGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = fals
         $queryPart .= $db->parse(" LIMIT ?i, ?i",$offset,$limit);
 
     }
-    
+
     $return["total"] = $db->getOne("SELECT COUNT(TermID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Term"]);
-    $return["rows"] = $db->getAll("SELECT
+    $return["data"] = $db->getAll("SELECT
         TermID,
             TermType,
             TermLabel,

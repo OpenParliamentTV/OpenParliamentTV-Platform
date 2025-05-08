@@ -836,14 +836,8 @@ function apiV1($request = false, $db = false, $dbp = false) {
                 if ($result) {
                     
                     $return["meta"]["requestStatus"] = "success";
-                    
-                    // Check if the result has a total count
-                    if (isset($result["total"]) && isset($result["rows"])) {
-                        $return["total"] = $result["total"];
-                        $return["data"] = $result["rows"];
-                    } else {
-                        $return["data"] = $result;
-                    }
+                    $return["total"] = $result["total"];
+                    $return["data"] = $result["data"];
 
                     // Unset errors array for successful response
                     unset($return["errors"]);

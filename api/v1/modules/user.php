@@ -729,7 +729,7 @@ function userGetItemsFromDB($id = "all", $limit = 10, $offset = 0, $search = fal
         $row["UserActive"] = (bool)$row["UserActive"];
         $row["UserBlocked"] = (bool)$row["UserBlocked"];
     }
-    $return["rows"] = $rows;
+    $return["data"] = $rows;
 
     return $return;
 }

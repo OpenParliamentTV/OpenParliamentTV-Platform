@@ -889,9 +889,9 @@ function personGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = fa
         $queryPart .= $db->parse(" LIMIT ?i, ?i",$offset,$limit);
 
     }
-    
+
     $return["total"] = $db->getOne("SELECT COUNT(PersonID) as count FROM  ?n", $config["platform"]["sql"]["tbl"]["Person"]);
-    $return["rows"] = $db->getAll("SELECT
+    $return["data"] = $db->getAll("SELECT
         per.PersonID,
         per.PersonType,
         per.PersonLabel,

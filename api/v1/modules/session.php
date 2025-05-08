@@ -252,7 +252,7 @@ function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = f
     $return = array();
     
     $return["total"] = $totalCount;
-    $return["rows"] = $allResults;
+    $return["data"] = $allResults;
     
     return $return;
 }
