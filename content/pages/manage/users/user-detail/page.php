@@ -7,23 +7,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
     $alertText = $auth["errors"][0]["detail"];
     include_once (__DIR__."/../../../login/page.php");
 } else {
-    // Get user data
-    $apiResult = apiV1([
-        "action" => "getItemsFromDB",
-        "itemType" => "user",
-        "id" => $_REQUEST["id"]
-    ]);
+    $userData = $apiResult["data"];
+    $isAdmin = $_SESSION["userdata"]["role"] === "admin";
+    $isOwnProfile = $_SESSION["userdata"]["id"] == $_REQUEST["id"];
 
-    if ($apiResult["meta"]["requestStatus"] != "success") {
-        $alertText = $apiResult["errors"][0]["detail"];
-        include_once (__DIR__."/../../../login/page.php");
-    } else {
-        // getOverview returns data in rows array, we want the first (and only) item
-        $userData = $apiResult["data"][0];
-        $isAdmin = $_SESSION["userdata"]["role"] === "admin";
-        $isOwnProfile = $_SESSION["userdata"]["id"] == $_REQUEST["id"];
-
-        include_once(__DIR__ . '/../../../../header.php'); 
+    include_once(__DIR__ . '/../../../../header.php'); 
 ?>
 
 <main class="container-fluid subpage">
@@ -168,7 +156,6 @@ $(function() {
 </script>
 
 <?php
-        include_once(__DIR__ . '/../../../../footer.php');
-    }
+    include_once(__DIR__ . '/../../../../footer.php');
 }
 ?>

@@ -836,8 +836,14 @@ function apiV1($request = false, $db = false, $dbp = false) {
                 if ($result) {
                     
                     $return["meta"]["requestStatus"] = "success";
-                    $return["total"] = $result["total"];
-                    $return["data"] = $result["data"];
+                    
+                    // If ID is provided and not "all", return single object without total
+                    if ($request["id"] !== "all") {
+                        $return["data"] = $result["data"][0] ?? null;
+                    } else {
+                        $return["total"] = $result["total"];
+                        $return["data"] = $result["data"];
+                    }
 
                     // Unset errors array for successful response
                     unset($return["errors"]);

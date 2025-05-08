@@ -768,22 +768,35 @@ switch ($page) {
 	case "manage-users":
 		ob_start();
 		if (isset($_REQUEST["id"])) {
-			$pageTitle = 'Manage Detail User';
-			$pageType = 'admin';
-			$pageBreadcrumbs = [
-				[
-					'label' => L::dashboard,
-					'path' => '/manage'
-				],
-				[
-					'label' => L::manageUsers,
-					'path' => '/manage'
-				],
-				[
-					'label' => '<span class="icon-pencil"></span>',
-				]
-			];
-			include_once("./content/pages/manage/users/user-detail/page.php");
+			$apiResult = apiV1([
+				"action" => "getItemsFromDB",
+				"itemType" => "user",
+				"id" => $_REQUEST["id"]
+			]);
+
+			if ($apiResult["meta"]["requestStatus"] != "success") {
+				$pageTitle = '404 - '.L::messageErrorNotFound;
+				$pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+				$pageType = 'default';
+				include_once("./content/pages/404/page.php");
+			} else {
+				$pageTitle = 'Manage Detail User';
+				$pageType = 'admin';
+				$pageBreadcrumbs = [
+					[
+						'label' => L::dashboard,
+						'path' => '/manage'
+					],
+					[
+						'label' => L::manageUsers,
+						'path' => '/manage/users'
+					],
+					[
+						'label' => '<span class="icon-pencil"></span>',
+					]
+				];
+				include_once("./content/pages/manage/users/user-detail/page.php");
+			}
 			$content = ob_get_clean();
 		} else {
 			$pageTitle = L::manageUsers;
