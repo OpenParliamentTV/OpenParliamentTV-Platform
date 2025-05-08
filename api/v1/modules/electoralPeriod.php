@@ -153,11 +153,10 @@ function electoralPeriodGetByID($id = false) {
  * @param string $search Search term
  * @param string $sort Sort field
  * @param string $order Sort order (ASC or DESC)
- * @param bool $getCount Whether to return the total count
  * @param object $db Database connection
  * @return array
  */
-function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false) {
     global $config;
     
     // Get all parliaments
@@ -200,48 +199,30 @@ function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $se
         }
         
         try {
-            if ($getCount == true) {
-                $count = $dbp->getOne("SELECT COUNT(ElectoralPeriodID) as count FROM ?n WHERE ?p", 
-                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
-                    $queryPart);
-                $totalCount += $count;
-                
-                $results = $dbp->getAll("SELECT
-                    ElectoralPeriodID,
-                    ElectoralPeriodNumber,
-                    ElectoralPeriodDateStart,
-                    ElectoralPeriodDateEnd
-                    FROM ?n
-                    WHERE ?p", 
-                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
-                    $queryPart);
-                
-                foreach ($results as $result) {
-                    $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
-                    $result["ElectoralPeriodType"] = "electoralPeriod";
-                    $result["Parliament"] = $parliament;
-                    $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
-                    $allResults[] = $result;
-                }
-            } else {
-                $results = $dbp->getAll("SELECT
-                    ElectoralPeriodID,
-                    ElectoralPeriodNumber,
-                    ElectoralPeriodDateStart,
-                    ElectoralPeriodDateEnd
-                    FROM ?n
-                    WHERE ?p", 
-                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
-                    $queryPart);
-                
-                foreach ($results as $result) {
-                    $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
-                    $result["ElectoralPeriodType"] = "electoralPeriod";
-                    $result["Parliament"] = $parliament;
-                    $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
-                    $allResults[] = $result;
-                }
+            
+            $count = $dbp->getOne("SELECT COUNT(ElectoralPeriodID) as count FROM ?n WHERE ?p", 
+                $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
+                $queryPart);
+            $totalCount += $count;
+            
+            $results = $dbp->getAll("SELECT
+                ElectoralPeriodID,
+                ElectoralPeriodNumber,
+                ElectoralPeriodDateStart,
+                ElectoralPeriodDateEnd
+                FROM ?n
+                WHERE ?p", 
+                $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
+                $queryPart);
+            
+            foreach ($results as $result) {
+                $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
+                $result["ElectoralPeriodType"] = "electoralPeriod";
+                $result["Parliament"] = $parliament;
+                $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
+                $allResults[] = $result;
             }
+            
         } catch (exception $e) {
             // Skip this parliament if query fails
             continue;
@@ -250,12 +231,8 @@ function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $se
     
     $return = array();
     
-    if ($getCount == true) {
-        $return["total"] = $totalCount;
-        $return["rows"] = $allResults;
-    } else {
-        $return = $allResults;
-    }
+    $return["total"] = $totalCount;
+    $return["rows"] = $allResults;
     
     return $return;
 }

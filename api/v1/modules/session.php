@@ -160,12 +160,11 @@ function sessionGetByID($id = false) {
  * @param string $search Search term
  * @param string $sort Sort field
  * @param string $order Sort order (ASC or DESC)
- * @param bool $getCount Whether to return the total count
  * @param object $db Database connection
  * @param string $electoralPeriodID Filter by electoral period ID
  * @return array
  */
-function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false, $electoralPeriodID = false) {
+function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false, $electoralPeriodID = false) {
     global $config;
     
     // Get all parliaments
@@ -212,64 +211,38 @@ function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = f
         }
         
         try {
-            if ($getCount == true) {
-                $count = $dbp->getOne("SELECT COUNT(sess.SessionID) as count FROM ?n AS sess WHERE ?p", 
-                    $config["parliament"][$parliament]["sql"]["tbl"]["Session"], 
-                    $queryPart);
-                $totalCount += $count;
-                
-                $results = $dbp->getAll("SELECT
-                    sess.SessionID,
-                    sess.SessionNumber,
-                    sess.SessionDateStart,
-                    sess.SessionDateEnd,
-                    sess.SessionElectoralPeriodID,
-                    ep.ElectoralPeriodNumber,
-                    ep.ElectoralPeriodDateStart,
-                    ep.ElectoralPeriodDateEnd
-                    FROM ?n AS sess
-                    LEFT JOIN ?n AS ep
-                    ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
-                    WHERE ?p", 
-                    $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
-                    $queryPart);
-                
-                foreach ($results as $result) {
-                    $result["SessionLabel"] = "Session " . $result["SessionNumber"];
-                    $result["SessionType"] = "session";
-                    $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
-                    $result["Parliament"] = $parliament;
-                    $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
-                    $allResults[] = $result;
-                }
-            } else {
-                $results = $dbp->getAll("SELECT
-                    sess.SessionID,
-                    sess.SessionNumber,
-                    sess.SessionDateStart,
-                    sess.SessionDateEnd,
-                    sess.SessionElectoralPeriodID,
-                    ep.ElectoralPeriodNumber,
-                    ep.ElectoralPeriodDateStart,
-                    ep.ElectoralPeriodDateEnd
-                    FROM ?n AS sess
-                    LEFT JOIN ?n AS ep
-                    ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
-                    WHERE ?p", 
-                    $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
-                    $queryPart);
-                
-                foreach ($results as $result) {
-                    $result["SessionLabel"] = "Session " . $result["SessionNumber"];
-                    $result["SessionType"] = "session";
-                    $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
-                    $result["Parliament"] = $parliament;
-                    $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
-                    $allResults[] = $result;
-                }
+            
+            $count = $dbp->getOne("SELECT COUNT(sess.SessionID) as count FROM ?n AS sess WHERE ?p", 
+                $config["parliament"][$parliament]["sql"]["tbl"]["Session"], 
+                $queryPart);
+            $totalCount += $count;
+            
+            $results = $dbp->getAll("SELECT
+                sess.SessionID,
+                sess.SessionNumber,
+                sess.SessionDateStart,
+                sess.SessionDateEnd,
+                sess.SessionElectoralPeriodID,
+                ep.ElectoralPeriodNumber,
+                ep.ElectoralPeriodDateStart,
+                ep.ElectoralPeriodDateEnd
+                FROM ?n AS sess
+                LEFT JOIN ?n AS ep
+                ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
+                WHERE ?p", 
+                $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+                $queryPart);
+            
+            foreach ($results as $result) {
+                $result["SessionLabel"] = "Session " . $result["SessionNumber"];
+                $result["SessionType"] = "session";
+                $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
+                $result["Parliament"] = $parliament;
+                $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
+                $allResults[] = $result;
             }
+            
         } catch (exception $e) {
             // Skip this parliament if query fails
             continue;
@@ -278,12 +251,8 @@ function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = f
     
     $return = array();
     
-    if ($getCount == true) {
-        $return["total"] = $totalCount;
-        $return["rows"] = $allResults;
-    } else {
-        $return = $allResults;
-    }
+    $return["total"] = $totalCount;
+    $return["rows"] = $allResults;
     
     return $return;
 }

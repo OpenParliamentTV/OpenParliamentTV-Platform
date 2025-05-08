@@ -463,7 +463,7 @@ function organisationAdd($item, $db = false) {
 
 }
 
-function organisationGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+function organisationGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false) {
 
     global $config;
 
@@ -502,31 +502,16 @@ function organisationGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $searc
 
     }
 
-    if ($getCount == true) {
-
-        $return["total"] = $db->getOne("SELECT COUNT(OrganisationID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Organisation"]);
-        $return["rows"] = $db->getAll("SELECT
-            OrganisationID,
-             OrganisationType,
-             OrganisationLabel,
-             OrganisationLabelAlternative,
-             OrganisationLastChanged,
-             OrganisationThumbnailURI
-             FROM ?n
-             WHERE ?p", $config["platform"]["sql"]["tbl"]["Organisation"], $queryPart);
-
-    } else {
-        $return = $db->getAll("SELECT
-            OrganisationID,
-             OrganisationType,
-             OrganisationLabel,
-             OrganisationLabelAlternative,
-             OrganisationLastChanged,
-             OrganisationThumbnailURI
-             FROM ?n
-             WHERE ?p", $config["platform"]["sql"]["tbl"]["Organisation"], $queryPart);
-    }
-
+    $return["total"] = $db->getOne("SELECT COUNT(OrganisationID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Organisation"]);
+    $return["rows"] = $db->getAll("SELECT
+        OrganisationID,
+            OrganisationType,
+            OrganisationLabel,
+            OrganisationLabelAlternative,
+            OrganisationLastChanged,
+            OrganisationThumbnailURI
+            FROM ?n
+            WHERE ?p", $config["platform"]["sql"]["tbl"]["Organisation"], $queryPart);
 
     return $return;
 

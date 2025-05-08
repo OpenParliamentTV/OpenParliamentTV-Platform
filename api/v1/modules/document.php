@@ -479,7 +479,7 @@ function documentAdd($item, $db = false) {
 
 }
 
-function documentGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+function documentGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false) {
 
     global $config;
 
@@ -518,31 +518,16 @@ function documentGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = 
 
     }
 
-    if ($getCount == true) {
-
-        $return["total"] = $db->getOne("SELECT COUNT(DocumentID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Document"]);
-        $return["rows"] = $db->getAll("SELECT
-            DocumentID,
-             DocumentType,
-             DocumentLabel,
-             DocumentLabelAlternative,
-             DocumentWikidataID,
-             DocumentLastChanged
-             FROM ?n
-             WHERE ?p", $config["platform"]["sql"]["tbl"]["Document"], $queryPart);
-
-    } else {
-        $return = $db->getAll("SELECT
-            DocumentID,
-             DocumentType,
-             DocumentLabel,
-             DocumentLabelAlternative,
-             DocumentWikidataID,
-             DocumentLastChanged
-             FROM ?n
-             WHERE ?p", $config["platform"]["sql"]["tbl"]["Document"], $queryPart);
-    }
-
+    $return["total"] = $db->getOne("SELECT COUNT(DocumentID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Document"]);
+    $return["rows"] = $db->getAll("SELECT
+        DocumentID,
+            DocumentType,
+            DocumentLabel,
+            DocumentLabelAlternative,
+            DocumentWikidataID,
+            DocumentLastChanged
+            FROM ?n
+            WHERE ?p", $config["platform"]["sql"]["tbl"]["Document"], $queryPart);
 
     return $return;
 

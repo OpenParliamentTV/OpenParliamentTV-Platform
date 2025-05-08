@@ -851,7 +851,7 @@ function personAdd($item, $db = false) {
 }
 
 
-function personGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+function personGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false) {
 
     global $config;
 
@@ -889,70 +889,47 @@ function personGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = fa
         $queryPart .= $db->parse(" LIMIT ?i, ?i",$offset,$limit);
 
     }
+    
+    $return["total"] = $db->getOne("SELECT COUNT(PersonID) as count FROM  ?n", $config["platform"]["sql"]["tbl"]["Person"]);
+    $return["rows"] = $db->getAll("SELECT
+        per.PersonID,
+        per.PersonType,
+        per.PersonLabel,
+        per.PersonLabelAlternative,
+        per.PersonGender,
+        per.PersonPartyOrganisationID,
+        per.PersonFactionOrganisationID,
+        per.PersonLastChanged,
+        per.PersonThumbnailURI,
+        party.OrganisationLabel as PartyLabel,
+        faction.OrganisationLabel as FactionLabel
+        FROM ?n AS per
+        LEFT JOIN ?n as party
+            ON party.OrganisationID = per.PersonPartyOrganisationID
+        LEFT JOIN ?n as faction
+            ON faction.OrganisationID = per.PersonFactionOrganisationID WHERE ?p", $config["platform"]["sql"]["tbl"]["Person"], $config["platform"]["sql"]["tbl"]["Organisation"], $config["platform"]["sql"]["tbl"]["Organisation"], $queryPart);
+    /*
+        *
+        * To add annotation count uncomment. But be aware this will take some time
+        *
+        *
+            foreach ($config["parliament"] as $parliamentShort=>$parliament) {
+                $dbp[$parliamentShort] = new SafeMySQL(array(
+                    'host'	=> $config["parliament"][$parliamentShort]["sql"]["access"]["host"],
+                    'user'	=> $config["parliament"][$parliamentShort]["sql"]["access"]["user"],
+                    'pass'	=> $config["parliament"][$parliamentShort]["sql"]["access"]["passwd"],
+                    'db'	=> $config["parliament"][$parliamentShort]["sql"]["db"]
+                ));
+            }
 
-    if ($getCount == true) {
-
-        $return["total"] = $db->getOne("SELECT COUNT(PersonID) as count FROM  ?n", $config["platform"]["sql"]["tbl"]["Person"]);
-        $return["rows"] = $db->getAll("SELECT
-            per.PersonID,
-            per.PersonType,
-            per.PersonLabel,
-            per.PersonLabelAlternative,
-            per.PersonGender,
-            per.PersonPartyOrganisationID,
-            per.PersonFactionOrganisationID,
-            per.PersonLastChanged,
-            per.PersonThumbnailURI,
-            party.OrganisationLabel as PartyLabel,
-            faction.OrganisationLabel as FactionLabel
-            FROM ?n AS per
-            LEFT JOIN ?n as party
-                ON party.OrganisationID = per.PersonPartyOrganisationID
-            LEFT JOIN ?n as faction
-                ON faction.OrganisationID = per.PersonFactionOrganisationID WHERE ?p", $config["platform"]["sql"]["tbl"]["Person"], $config["platform"]["sql"]["tbl"]["Organisation"], $config["platform"]["sql"]["tbl"]["Organisation"], $queryPart);
-        /*
-         *
-         * To add annotation count uncomment. But be aware this will take some time
-         *
-         *
+            foreach ($return["rows"] as $k=>$person) {
+                $return["rows"][$k]["annotationcount"] = 0;
                 foreach ($config["parliament"] as $parliamentShort=>$parliament) {
-                    $dbp[$parliamentShort] = new SafeMySQL(array(
-                        'host'	=> $config["parliament"][$parliamentShort]["sql"]["access"]["host"],
-                        'user'	=> $config["parliament"][$parliamentShort]["sql"]["access"]["user"],
-                        'pass'	=> $config["parliament"][$parliamentShort]["sql"]["access"]["passwd"],
-                        'db'	=> $config["parliament"][$parliamentShort]["sql"]["db"]
-                    ));
+                    $tmpCnt = $dbp[$parliamentShort]->getOne("SELECT COUNT(AnnotationID) as cnt FROM `annotation` WHERE AnnotationResourceID = ?s AND AnnotationType=?s",$person["PersonID"],"person");
+                    //$return["rows"][$k]["annotationcount"] = $tmpCnt+$return["rows"][$k]["annotationcount"];
+                    $return["rows"][$k]["annotationcount"] += $tmpCnt;
                 }
-
-                foreach ($return["rows"] as $k=>$person) {
-                    $return["rows"][$k]["annotationcount"] = 0;
-                    foreach ($config["parliament"] as $parliamentShort=>$parliament) {
-                        $tmpCnt = $dbp[$parliamentShort]->getOne("SELECT COUNT(AnnotationID) as cnt FROM `annotation` WHERE AnnotationResourceID = ?s AND AnnotationType=?s",$person["PersonID"],"person");
-                        //$return["rows"][$k]["annotationcount"] = $tmpCnt+$return["rows"][$k]["annotationcount"];
-                        $return["rows"][$k]["annotationcount"] += $tmpCnt;
-                    }
-                }*/
-
-    } else {
-        $return = $db->getAll("SELECT
-            per.PersonID,
-            per.PersonType,
-            per.PersonLabel,
-            per.PersonLabelAlternative,
-            per.PersonGender,
-            per.PersonPartyOrganisationID,
-            per.PersonFactionOrganisationID,
-            per.PersonLastChanged,
-            per.PersonThumbnailURI,
-            party.OrganisationLabel as PartyLabel,
-            faction.OrganisationLabel as FactionLabel
-            FROM ?n AS per
-            LEFT JOIN ?n as party
-                ON party.OrganisationID = per.PersonPartyOrganisationID
-            LEFT JOIN ?n as faction
-                ON faction.OrganisationID = per.PersonFactionOrganisationID WHERE ?p; ", $config["platform"]["sql"]["tbl"]["Person"], $config["platform"]["sql"]["tbl"]["Organisation"], $config["platform"]["sql"]["tbl"]["Organisation"], $queryPart);
-
-    }
+            }*/
 
 
     return $return;

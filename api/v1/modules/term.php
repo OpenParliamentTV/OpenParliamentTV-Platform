@@ -490,7 +490,7 @@ function termAdd($item, $db = false) {
 
 
 
-function termGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
+function termGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false) {
 
     global $config;
 
@@ -528,31 +528,17 @@ function termGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = fals
         $queryPart .= $db->parse(" LIMIT ?i, ?i",$offset,$limit);
 
     }
-
-    if ($getCount == true) {
-
-        $return["total"] = $db->getOne("SELECT COUNT(TermID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Term"]);
-        $return["rows"] = $db->getAll("SELECT
-            TermID,
-             TermType,
-             TermLabel,
-             TermLabelAlternative,
-             TermLastChanged,
-             TermThumbnailURI
-             FROM ?n
-             WHERE ?p", $config["platform"]["sql"]["tbl"]["Term"], $queryPart);
-
-    } else {
-        $return = $db->getAll("SELECT
-            TermID,
-             TermType,
-             TermLabel,
-             TermLabelAlternative,
-             TermLastChanged,
-             TermThumbnailURI
-             FROM ?n
-             WHERE ?p", $config["platform"]["sql"]["tbl"]["Term"], $queryPart);
-    }
+    
+    $return["total"] = $db->getOne("SELECT COUNT(TermID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Term"]);
+    $return["rows"] = $db->getAll("SELECT
+        TermID,
+            TermType,
+            TermLabel,
+            TermLabelAlternative,
+            TermLastChanged,
+            TermThumbnailURI
+            FROM ?n
+            WHERE ?p", $config["platform"]["sql"]["tbl"]["Term"], $queryPart);
 
 
     return $return;

@@ -683,7 +683,7 @@ function userConfirmRegistration($parameter) {
     return $return;
 }
 
-function userGetItemsFromDB($id = "all", $limit = 10, $offset = 0, $search = false, $sort = false, $order = false, $getCount = true) {
+function userGetItemsFromDB($id = "all", $limit = 10, $offset = 0, $search = false, $sort = false, $order = false) {
     global $config;
 
     $db = new SafeMySQL(array(
@@ -719,30 +719,17 @@ function userGetItemsFromDB($id = "all", $limit = 10, $offset = 0, $search = fal
     $return = array();
     $return["meta"]["requestStatus"] = "success";
 
-    if ($getCount == true) {
-        $return["total"] = $db->getOne("SELECT COUNT(UserID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["User"]);
-        $rows = $db->getAll("SELECT UserID, UserName, UserMail, UserRole, UserActive, UserBlocked, UserLastLogin, UserRegisterDate FROM ?n WHERE ?p", 
-            $config["platform"]["sql"]["tbl"]["User"], 
-            $queryPart
-        );
-        // Convert integer values to booleans
-        foreach ($rows as &$row) {
-            $row["UserActive"] = (bool)$row["UserActive"];
-            $row["UserBlocked"] = (bool)$row["UserBlocked"];
-        }
-        $return["rows"] = $rows;
-    } else {
-        $rows = $db->getAll("SELECT UserID, UserName, UserMail, UserRole, UserActive, UserBlocked, UserLastLogin, UserRegisterDate FROM ?n WHERE ?p", 
-            $config["platform"]["sql"]["tbl"]["User"], 
-            $queryPart
-        );
-        // Convert integer values to booleans
-        foreach ($rows as &$row) {
-            $row["UserActive"] = (bool)$row["UserActive"];
-            $row["UserBlocked"] = (bool)$row["UserBlocked"];
-        }
-        $return = $rows;
+    $return["total"] = $db->getOne("SELECT COUNT(UserID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["User"]);
+    $rows = $db->getAll("SELECT UserID, UserName, UserMail, UserRole, UserActive, UserBlocked, UserLastLogin, UserRegisterDate FROM ?n WHERE ?p", 
+        $config["platform"]["sql"]["tbl"]["User"], 
+        $queryPart
+    );
+    // Convert integer values to booleans
+    foreach ($rows as &$row) {
+        $row["UserActive"] = (bool)$row["UserActive"];
+        $row["UserBlocked"] = (bool)$row["UserBlocked"];
     }
+    $return["rows"] = $rows;
 
     return $return;
 }

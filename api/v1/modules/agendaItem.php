@@ -153,13 +153,12 @@ function agendaItemGetByID($id = false) {
  * @param string $search Search term
  * @param string $sort Sort field
  * @param string $order Sort order (ASC or DESC)
- * @param bool $getCount Whether to return the total count
  * @param object $db Database connection
  * @param string $electoralPeriodID Filter by electoral period ID
  * @param string $sessionID Filter by session ID
  * @return array
  */
-function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false, $electoralPeriodID = false, $sessionID = false) {
+function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false, $electoralPeriodID = false, $sessionID = false) {
     global $config;
     
     // Get all parliaments
@@ -210,84 +209,48 @@ function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search 
         }
         
         try {
-            if ($getCount == true) {
-                $count = $dbp->getOne("SELECT COUNT(ai.AgendaItemID) as count 
-                    FROM ?n AS ai
-                    LEFT JOIN ?n AS sess
-                    ON ai.AgendaItemSessionID=sess.SessionID
-                    WHERE ?p", 
-                    $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
-                    $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                    $queryPart);
-                $totalCount += $count;
-                
-                $results = $dbp->getAll("SELECT
-                    ai.AgendaItemID,
-                    ai.AgendaItemTitle,
-                    ai.AgendaItemOfficialTitle,
-                    ai.AgendaItemOrder,
-                    ai.AgendaItemSessionID,
-                    sess.SessionNumber,
-                    sess.SessionDateStart,
-                    sess.SessionDateEnd,
-                    sess.SessionElectoralPeriodID,
-                    ep.ElectoralPeriodNumber,
-                    ep.ElectoralPeriodDateStart,
-                    ep.ElectoralPeriodDateEnd
-                    FROM ?n AS ai
-                    LEFT JOIN ?n AS sess
-                    ON ai.AgendaItemSessionID=sess.SessionID
-                    LEFT JOIN ?n AS ep
-                    ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
-                    WHERE ?p", 
-                    $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
-                    $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
-                    $queryPart);
-                
-                foreach ($results as $result) {
-                    $result["AgendaItemLabel"] = $result["AgendaItemTitle"];
-                    $result["AgendaItemType"] = "agendaItem";
-                    $result["SessionLabel"] = "Session " . $result["SessionNumber"];
-                    $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
-                    $result["Parliament"] = $parliament;
-                    $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
-                    $allResults[] = $result;
-                }
-            } else {
-                $results = $dbp->getAll("SELECT
-                    ai.AgendaItemID,
-                    ai.AgendaItemTitle,
-                    ai.AgendaItemOfficialTitle,
-                    ai.AgendaItemOrder,
-                    ai.AgendaItemSessionID,
-                    sess.SessionNumber,
-                    sess.SessionDateStart,
-                    sess.SessionDateEnd,
-                    sess.SessionElectoralPeriodID,
-                    ep.ElectoralPeriodNumber,
-                    ep.ElectoralPeriodDateStart,
-                    ep.ElectoralPeriodDateEnd
-                    FROM ?n AS ai
-                    LEFT JOIN ?n AS sess
-                    ON ai.AgendaItemSessionID=sess.SessionID
-                    LEFT JOIN ?n AS ep
-                    ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
-                    WHERE ?p", 
-                    $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
-                    $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
-                    $queryPart);
-                
-                foreach ($results as $result) {
-                    $result["AgendaItemLabel"] = $result["AgendaItemTitle"];
-                    $result["AgendaItemType"] = "agendaItem";
-                    $result["SessionLabel"] = "Session " . $result["SessionNumber"];
-                    $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
-                    $result["Parliament"] = $parliament;
-                    $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
-                    $allResults[] = $result;
-                }
+            $count = $dbp->getOne("SELECT COUNT(ai.AgendaItemID) as count 
+                FROM ?n AS ai
+                LEFT JOIN ?n AS sess
+                ON ai.AgendaItemSessionID=sess.SessionID
+                WHERE ?p", 
+                $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+                $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                $queryPart);
+            $totalCount += $count;
+            
+            $results = $dbp->getAll("SELECT
+                ai.AgendaItemID,
+                ai.AgendaItemTitle,
+                ai.AgendaItemOfficialTitle,
+                ai.AgendaItemOrder,
+                ai.AgendaItemSessionID,
+                sess.SessionNumber,
+                sess.SessionDateStart,
+                sess.SessionDateEnd,
+                sess.SessionElectoralPeriodID,
+                ep.ElectoralPeriodNumber,
+                ep.ElectoralPeriodDateStart,
+                ep.ElectoralPeriodDateEnd
+                FROM ?n AS ai
+                LEFT JOIN ?n AS sess
+                ON ai.AgendaItemSessionID=sess.SessionID
+                LEFT JOIN ?n AS ep
+                ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
+                WHERE ?p", 
+                $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+                $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+                $queryPart);
+            
+            foreach ($results as $result) {
+                $result["AgendaItemLabel"] = $result["AgendaItemTitle"];
+                $result["AgendaItemType"] = "agendaItem";
+                $result["SessionLabel"] = "Session " . $result["SessionNumber"];
+                $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
+                $result["Parliament"] = $parliament;
+                $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
+                $allResults[] = $result;
             }
         } catch (exception $e) {
             // Skip this parliament if query fails
@@ -297,12 +260,8 @@ function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search 
     
     $return = array();
     
-    if ($getCount == true) {
-        $return["total"] = $totalCount;
-        $return["rows"] = $allResults;
-    } else {
-        $return = $allResults;
-    }
+    $return["total"] = $totalCount;
+    $return["rows"] = $allResults;
     
     return $return;
 }

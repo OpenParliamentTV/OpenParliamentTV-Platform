@@ -766,11 +766,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     $request["search"] = false;
                 }
 
-                // Set getCount to true by default for the getOverview action
-                if (!isset($request["getCount"])) {
-                    $request["getCount"] = true;
-                }
-
                 if (empty($request["id"])) {
                     $request["id"] = "all";
                 }
@@ -780,49 +775,49 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     case "person":
                         
                         require_once (__DIR__."/modules/person.php");
-                        $result = personGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
+                        $result = personGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
                         break;
 
                     case "organisation":
                         
                         require_once (__DIR__."/modules/organisation.php");
-                        $result = organisationGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
+                        $result = organisationGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
                         break;
 
                     case "document":
                         
                         require_once (__DIR__."/modules/document.php");
-                        $result = documentGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
+                        $result = documentGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
                         break;
 
                     case "term":
                         
                         require_once (__DIR__."/modules/term.php");
-                        $result = termGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
+                        $result = termGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
                         break;
 
                     case "electoralPeriod":
                         
                         require_once (__DIR__."/modules/electoralPeriod.php");
-                        $result = electoralPeriodGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
+                        $result = electoralPeriodGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
                         break;
 
                     case "session":
                         
                         require_once (__DIR__."/modules/session.php");
-                        $result = sessionGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"], false, $request["electoralPeriodID"]);
+                        $result = sessionGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], false, $request["electoralPeriodID"]);
                         break;
 
                     case "agendaItem":
                         
                         require_once (__DIR__."/modules/agendaItem.php");
-                        $result = agendaItemGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"], false, $request["electoralPeriodID"], $request["sessionID"]);
+                        $result = agendaItemGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], false, $request["electoralPeriodID"], $request["sessionID"]);
                         break;
                     
                     case "user":
                     
                         require_once (__DIR__."/modules/user.php");
-                        $result = userGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], $request["getCount"]);
+                        $result = userGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
                         break;
 
                     default:

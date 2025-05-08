@@ -121,8 +121,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				// Create a new params object with only the necessary parameters
 				var queryParams = {
 					action: "getItemsFromDB",
-					itemType: "electoralPeriod",
-					getCount: true
+					itemType: "electoralPeriod"
 				};
 				
 				// Add search parameter if it exists
@@ -217,7 +216,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					action: "getItemsFromDB",
 					itemType: "session",
 					electoralPeriodID: $("#electoralPeriodFilter").val(),
-					getCount: true,
 					limit: 1000, // Load a large number to get all data
 					offset: 0
 				},
@@ -239,7 +237,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		// Function to load all agenda items data
 		function loadAllAgendaItemsData() {
 			$.ajax({
-				url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=agendaItem&electoralPeriodID=" + $("#agendaItemsElectoralPeriodFilter").val() + "&sessionID=" + $("#agendaItemsSessionFilter").val() + "&getCount=true&limit=1000&offset=0",
+				url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=agendaItem&electoralPeriodID=" + $("#agendaItemsElectoralPeriodFilter").val() + "&sessionID=" + $("#agendaItemsSessionFilter").val() + "&limit=1000&offset=0",
 				method: "GET",
 				success: function(response) {
 					allAgendaItemsData = response.data || [];
@@ -269,7 +267,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			
 			// Load sessions for the selected electoral period
 			$.ajax({
-				url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=session&electoralPeriodID=" + electoralPeriodID + "&getCount=true&limit=1000&offset=0",
+				url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=session&electoralPeriodID=" + electoralPeriodID + "&limit=1000&offset=0",
 				method: "GET",
 				success: function(response) {
 					if (response.data) {
