@@ -119,6 +119,7 @@
 	"messageAuthNotPermittedDetail": "Du hast keine Berechtigung diese Seite aufzurufen oder diese Aktion durchzuführen.",
 	"messageAuthNotPermittedTitle": "Nicht erlaubt",
 	"messageAutomaticallyDetected": "Diese <b>Personen, Organisationen, Gesetze und Begriffe</b> wurden durch ein sog. <b>Named Entity Recognition</b> Verfahren im Volltext der Plenarprotokolle erkannt. <br><br>Hierbei handelt es sich um ein vollständig automatisiertes Verfahren, welches sich noch in der Testphase befindet. <br><br><b>Die erkannten Entitäten wurden nicht manuell überprüft und können Fehler enthalten.</b>",
+	"messageErrorFieldRequired": "Dieses Feld ist erforderlich",
 	"messageErrorGeneric": "Ein Fehler ist aufgetreten. Bitte versuche es erneut.",
 	"messageErrorNoDatabaseConnectionDetail": "Verbindung zur Datenbank konnte nicht hergestellt werden",
 	"messageErrorNoDatabaseConnectionTitle": "Datenbank Verbindungsfehler",

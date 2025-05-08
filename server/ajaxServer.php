@@ -384,117 +384,33 @@ switch ($_REQUEST["a"]) {
 
 
     case "searchPersonAtWikidata":
-
         $auth = auth($_SESSION["userdata"]["id"], "searchWikipedia", "person");
 
         if ($auth["meta"]["requestStatus"] != "success") {
-
             $return["success"] = "false";
             $return["text"] = "Forbidden";
             $return["code"] = "403";
-
         } else {
-
             require_once (__DIR__."/../modules/utilities/functions.wikidata.php");
             $return["success"] = "true";
             $return["text"] = "searchresults";
             $return["return"] = searchPersonAtWikidata($_REQUEST["label"]);
-
         }
-
-        break;
-
-
-	case "registerUser":
-
-		if ($config["allow"]["register"]) {
-
-			require_once(__DIR__."/../modules/user-management/register.backend.sql.php");
-
-			$return = registerUser($_REQUEST["mail"],$_REQUEST["password"],$_REQUEST["passwordCheck"],$_REQUEST["name"]);
-
-		} //TODO: Response if registration is not allowed
-
-	break;
-
-
-	case "devAddTestuser":
-        /*
-                //TODO: Remove this function before deploy
-
-                if ($config["mode"] == "dev") {
-
-                    require_once(__DIR__."/../modules/user-management/register.backend.sql.php");
-
-                    $return[] = registerUser("admin@openparliament.tv","Admin!!11","DEV-Admin");
-                    $return[] = registerUser("test@openparliament.tv","User!!11","DEV-Test User");
-
-
-                    if (($return[0]["success"] == "true" ) && ($return[1]["success"] == "true")) {
-
-                        $opts = array(
-                            'host'	=> $config["platform"]["sql"]["access"]["host"],
-                            'user'	=> $config["platform"]["sql"]["access"]["user"],
-                            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-                            'db'	=> $config["platform"]["sql"]["db"]
-                        );
-                        $db = new SafeMySQL($opts);
-
-                        $db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserActive=?i, UserRole=?s WHERE UserID=?i",1,"admin",$return[0]["UserID"]);
-                        $db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserActive=?i WHERE UserID=?i",1,$return[1]["UserID"]);
-
-                        $return["success"] = "true";
-                        $return["text"] = "User Added";
-                    }
-
-                }
-                //TODO: Response if registration is not allowed
-        */
     break;
 
-
-
-	case "login":
-
-		if ($config["allow"]["login"]) {
-
-			//require_once(__DIR__."/../modules/user-management/login.backend.json.php");
-			require_once(__DIR__."/../modules/user-management/login.backend.sql.php");
-
-			$return = loginCheck($_REQUEST["mail"],$_REQUEST["password"]);
-
-		} //TODO: Response if login is not allowed
-
-	break;
-
-
-
-	case "logout":
-
-		require_once(__DIR__."/../modules/user-management/logout.backend.php");
-
-		$return = logout();
-
-
-	break;
-
-
-
-	case "getMediaIDListFromSearchResult":
-
-		require_once(__DIR__."/../modules/search/functions.php");
-		require_once(__DIR__."/../modules/utilities/functions.php");
-		
-		$allowedParams = filterAllowedSearchParams($_REQUEST, 'media');
+    case "getMediaIDListFromSearchResult":
+        require_once(__DIR__."/../modules/search/functions.php");
+        require_once(__DIR__."/../modules/utilities/functions.php");
         
-		$return["success"] = "true";
-		$return["text"] = "searchresults";
-		$return["return"] = getMediaIDListFromSearchResult($allowedParams);
+        $allowedParams = filterAllowedSearchParams($_REQUEST, 'media');
+        
+        $return["success"] = "true";
+        $return["text"] = "searchresults";
+        $return["return"] = getMediaIDListFromSearchResult($allowedParams);
+    break;
 
-
-	break;
-	default:
-	break;
+    default:
+    break;
 
 
 }

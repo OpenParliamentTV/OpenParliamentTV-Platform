@@ -76,6 +76,7 @@ function userChange($parameter) {
             $errorarray["code"] = "1";
             $errorarray["title"] = "Password too weak";
             $errorarray["detail"] = L::messagePasswordTooWeak;
+            $errorarray["meta"]["domSelector"] = "#register-password";
             array_push($return["errors"], $errorarray);
             return $return;
         }
@@ -153,7 +154,24 @@ function userLogin($parameter) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameters";
-        $errorarray["detail"] = L::messageErrorParameterMissingDetail;
+        $errorarray["detail"] = L::messageErrorFieldRequired;
+        if (!$parameter["UserMail"]) {
+            $errorarray["meta"]["domSelector"] = "#login-mail";
+        } else if (!$parameter["UserPassword"]) {
+            $errorarray["meta"]["domSelector"] = "#login-password";
+        }
+        array_push($return["errors"], $errorarray);
+        return $return;
+    }
+
+    if (!filter_var($parameter["UserMail"], FILTER_VALIDATE_EMAIL)) {
+        $return["meta"]["requestStatus"] = "error";
+        $return["errors"] = array();
+        $errorarray["status"] = "422";
+        $errorarray["code"] = "1";
+        $errorarray["title"] = "Invalid email";
+        $errorarray["detail"] = "Mail not valid"; // TODO i18n
+        $errorarray["meta"]["domSelector"] = "#login-mail";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -186,6 +204,7 @@ function userLogin($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Authentication failed";
         $errorarray["detail"] = L::messageAuthAccountNotFoundDetail;
+        $errorarray["meta"]["domSelector"] = "#login-mail";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -197,6 +216,7 @@ function userLogin($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Authentication failed";
         $errorarray["detail"] = L::messageLoginErrorPasswordNotCorrect;
+        $errorarray["meta"]["domSelector"] = "#login-password";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -267,7 +287,14 @@ function userRegister($parameter) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameters";
-        $errorarray["detail"] = L::messageErrorParameterMissingDetail;
+        $errorarray["detail"] = L::messageErrorFieldRequired;
+        if (!$parameter["UserName"]) {
+            $errorarray["meta"]["domSelector"] = "#register-name";
+        } else if (!$parameter["UserMail"]) {
+            $errorarray["meta"]["domSelector"] = "#register-mail";
+        } else if (!$parameter["UserPassword"]) {
+            $errorarray["meta"]["domSelector"] = "#register-password";
+        }
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -279,6 +306,7 @@ function userRegister($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Invalid email";
         $errorarray["detail"] = "Mail not valid"; // TODO i18n
+        $errorarray["meta"]["domSelector"] = "#register-mail";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -290,6 +318,7 @@ function userRegister($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Password too weak";
         $errorarray["detail"] = L::messagePasswordTooWeak;
+        $errorarray["meta"]["domSelector"] = "#register-password";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -404,7 +433,8 @@ function userPasswordResetRequest($parameter) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = L::messageErrorParameterMissingDetail;
+        $errorarray["detail"] = L::messageErrorFieldRequired;
+        $errorarray["meta"]["domSelector"] = "#reset-mail";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -415,7 +445,8 @@ function userPasswordResetRequest($parameter) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Invalid email";
-        $errorarray["detail"] = L::messageErrorParameterMissingDetail;
+        $errorarray["detail"] = "Mail not valid"; // TODO i18n
+        $errorarray["meta"]["domSelector"] = "#reset-mail";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -448,6 +479,7 @@ function userPasswordResetRequest($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Account not found";
         $errorarray["detail"] = L::messageAuthAccountNotFoundDetail;
+        $errorarray["meta"]["domSelector"] = "#reset-mail";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -456,12 +488,12 @@ function userPasswordResetRequest($parameter) {
     $db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserPasswordReset=?s WHERE UserID=?i LIMIT 1", $confirmationCode, $userdata["UserID"]);
 
     $passwordresetMailSubject = L::brand.': '.L::resetPassword;
-    $passwordresetMailVerifyLink = $config['dir']['root'].'/passwordReset?id='.$userdata['UserID'].'&c='.$confirmationCode;
+    $resetLink = $config["dir"]["root"] . "/password-reset?id=" . $userdata['UserID'] . "&code=" . $confirmationCode;
 
     $message = '<html><body>';
     $message .= '<p>'.L::hello.' '.$userdata["UserName"].',</p>';
     $message .= '<p>'.L::messagePasswordResetMailStart.'</p>';
-    $message .= '<p><a href="'.$passwordresetMailVerifyLink.'">'.$passwordresetMailVerifyLink.'</a></p>';
+    $message .= '<p><a href="'.$resetLink.'">'.$resetLink.'</a></p>';
     $message .= '<p>'.L::messagePasswordResetMailEnd.'</p>';
     $message .= '<p>'.L::messageMailGreetings.',<br>'.L::brand.'</p>';
     $message .= '</body></html>';
@@ -492,7 +524,10 @@ function userPasswordReset($parameter) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameters";
-        $errorarray["detail"] = L::messageErrorParameterMissingDetail;
+        $errorarray["detail"] = L::messageErrorFieldRequired;
+        if (!$parameter["NewPassword"]) {
+            $errorarray["meta"]["domSelector"] = "#reset-password";
+        }
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -504,6 +539,7 @@ function userPasswordReset($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Password too weak";
         $errorarray["detail"] = L::messagePasswordTooWeak;
+        $errorarray["meta"]["domSelector"] = "#reset-password";
         array_push($return["errors"], $errorarray);
         return $return;
     }

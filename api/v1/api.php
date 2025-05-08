@@ -20,6 +20,18 @@ function apiV1($request = false, $db = false, $dbp = false) {
     $return["meta"]["requestStatus"] = "error";
     $return["errors"] = array();
 
+    // Get request body if it exists
+    $requestBody = json_decode(file_get_contents('php://input'), true);
+    if ($requestBody) {
+        $request = array_merge($request ?: [], $requestBody);
+    }
+
+    // Get URL parameters
+    $urlParams = $_GET;
+    if ($urlParams) {
+        $request = array_merge($request ?: [], $urlParams);
+    }
+
     if ((!$request["action"]) || (!$request["itemType"])) {
 
         $errorarray["status"] = "422";
@@ -957,15 +969,15 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         $result = userLogout();
                         break;
 
-                    case "passwordReset":
+                    case "password-reset":
                         $result = userPasswordReset($request);
                         break;
 
-                    case "passwordResetRequest":
+                    case "password-reset-request":
                         $result = userPasswordResetRequest($request);
                         break;
 
-                    case "confirmRegistration":
+                    case "confirm-registration":
                         $result = userConfirmRegistration($request);
                         break;
                         

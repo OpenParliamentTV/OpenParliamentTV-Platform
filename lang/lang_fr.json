@@ -118,6 +118,7 @@
 	"messageAuthNotPermittedDetail": "Vous n'êtes pas autorisé à accéder à cette page ou à effectuer cette action.",
 	"messageAuthNotPermittedTitle": "Non autorisé",
 	"messageAutomaticallyDetected": "Ces <b>personnes, organisations, lois et termes</b> ont été détectés via la <b>Reconnaissance d'entités nommées</b> dans le texte intégral du procès-verbal. <br><br>Il s'agit d'un processus entièrement automatisé qui est actuellement en cours de test. <br><br><b>Les entités détectées n'ont pas été vérifiées manuellement et peuvent contenir des erreurs.</b>",
+	"messageErrorFieldRequired": "Ce champ est obligatoire",
 	"messageErrorGeneric": "Une erreur s'est produite. Veuillez réessayer.",
 	"messageErrorNoDatabaseConnectionDetail": "La connexion à la base de données a échoué",
 	"messageErrorNoDatabaseConnectionTitle": "Erreur de connexion à la base de données",

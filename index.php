@@ -379,15 +379,17 @@ switch ($page) {
 				'label' => $pageTitle
 			]
 		];
-        require_once(__DIR__."/modules/user-management/logout.backend.php");
-
-        logout();
-
+        
+        $apiResult = apiV1([
+            "action" => "user",
+            "itemType" => "logout"
+        ]);
+        
 		ob_start();
 		include_once("./content/pages/logout/page.php");
 		$content = ob_get_clean();
 	break;
-	case "passwordReset":
+	case "password-reset":
 		$pageTitle = L::resetPassword;
 		$pageType = 'default';
 		$pageBreadcrumbs = [

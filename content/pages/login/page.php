@@ -19,19 +19,21 @@
 
 			?>
 				<h2 class="mb-3"><?= L::login; ?></h2>
-				<form id="login-form">
+				<form id="login-form" class="needs-validation" novalidate>
 					<div class="form-floating mb-3">
-						<input type="email" class="form-control" id="login-mail" name="mail" placeholder="<?= L::mailAddress; ?>">
+						<input type="email" class="form-control" id="login-mail" name="mail" placeholder="<?= L::mailAddress; ?>" required>
 						<label for="login-mail"><?= L::mailAddress; ?></label>
+						<div class="invalid-feedback"></div>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="password" class="form-control" id="login-password" name="password" placeholder="<?= L::password; ?>">
+						<input type="password" class="form-control" id="login-password" name="password" placeholder="<?= L::password; ?>" required>
 						<label for="login-password"><?= L::password; ?></label>
+						<div class="invalid-feedback"></div>
 					</div>
 					<button type="submit" class="btn btn-primary btn-sm"><?= L::login; ?></button>
-					<div id="login-response" class="alert mt-3"></div>
+					<div id="login-response" class="alert mt-3" style="display: none;"></div>
 				</form>
-				<a href="passwordReset" target="_self"><?= L::passwordForgotQuestion; ?></a>
+				<a href="password-reset" target="_self"><?= L::passwordForgotQuestion; ?></a>
 			<?php
 			}
 			?>
@@ -39,4 +41,88 @@
 	</div>
 </main>
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/login/client/login.functions.js?v=<?= $config["version"] ?>"></script>
+<script>
+$(function() {
+    // Reset form validation state
+    function resetValidation() {
+        $("#login-form .is-invalid").removeClass("is-invalid");
+        $("#login-form .invalid-feedback").empty();
+    }
+
+    $("#login-form").on('submit', function(e) {
+        e.preventDefault();
+        resetValidation();
+        
+        const formData = {
+            UserMail: $("#login-mail").val(),
+            UserPassword: $("#login-password").val()
+        };
+
+        $.ajax({
+            url: config["dir"]["root"] + "/api/v1/user/login",
+            method: "POST",
+            data: JSON.stringify(formData),
+            contentType: "application/json",
+            success: function(response) {
+                if (response.meta.requestStatus === "success") {
+                    $("#login-response")
+                        .removeClass("alert-danger")
+                        .addClass("alert-success")
+                        .show()
+                        .text(response.data.message);
+                    
+                    // Reload page after successful login
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    // Handle validation errors
+                    response.errors.forEach(function(error) {
+                        if (error.meta && error.meta.domSelector) {
+                            const $field = $(error.meta.domSelector);
+                            $field.addClass("is-invalid");
+                            $field.siblings(".invalid-feedback").html(error.detail);
+                        } else {
+                            // Show general error in response div
+                            $("#login-response")
+                                .removeClass("alert-success")
+                                .addClass("alert-danger")
+                                .show()
+                                .html(error.detail);
+                        }
+                    });
+                }
+            },
+            error: function(xhr) {
+                let errorMessage = "There was an error while logging in. Please try again.";
+                if (xhr.responseJSON && xhr.responseJSON.errors && xhr.responseJSON.errors[0]) {
+                    errorMessage = xhr.responseJSON.errors[0].detail;
+                }
+                $("#login-response")
+                    .removeClass("alert-success")
+                    .addClass("alert-danger")
+                    .show()
+                    .html(errorMessage);
+            }
+        });
+    });
+
+    $(".button-logout").click(function() {
+        $.ajax({
+            url: config["dir"]["root"] + "/api/v1/user/logout",
+            method: "POST",
+            contentType: "application/json",
+            success: function(response) {
+                if (response.meta.requestStatus === "success") {
+                    location.reload();
+                } else {
+                    console.log("Error during logout:", response.errors[0].detail);
+                }
+            },
+            error: function() {
+                console.log("There was an error while logging out. Please try again.");
+            }
+        });
+    });
+});
+</script>
