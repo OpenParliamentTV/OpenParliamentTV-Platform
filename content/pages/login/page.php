@@ -30,7 +30,7 @@
 						<label for="login-password"><?= L::password; ?></label>
 						<div class="invalid-feedback"></div>
 					</div>
-					<button type="submit" class="w-100 btn btn-primary rounded-pill"><?= L::login; ?></button>
+					<button type="submit" class="w-100 btn btn-primary rounded-pill button-login"><?= L::login; ?></button>
 					<div id="login-response" class="alert mt-3" style="display: none;"></div>
 				</form>
 				<a href="password-reset" target="_self"><?= L::passwordForgotQuestion; ?></a>
@@ -52,6 +52,8 @@ $(function() {
     $("#login-form").on('submit', function(e) {
         e.preventDefault();
         resetValidation();
+
+		$(".button-login").addClass("working");
         
         const formData = {
             UserMail: $("#login-mail").val(),
@@ -91,6 +93,7 @@ $(function() {
                                 .html(error.detail);
                         }
                     });
+					$(".button-login").removeClass("working");
                 }
             },
             error: function(xhr) {
@@ -103,6 +106,7 @@ $(function() {
                     .addClass("alert-danger")
                     .show()
                     .html(errorMessage);
+				$(".button-login").removeClass("working");
             }
         });
     });

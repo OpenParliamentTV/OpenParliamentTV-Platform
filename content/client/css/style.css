@@ -624,19 +624,21 @@ table .minWidthColumn {
     font-size: 14px;
 }
 
-.btn.working, .list-group-item.working {
+.btn.working, .btn.working:hover, 
+.list-group-item.working, .list-group-item.working:hover {
     position: relative;
     transition: padding-right .3s;
     padding-right: 38px;
-    background: #f3f3f3;
+    background: #f3f3f3 !important;
     color: #acacac;
     border-color: var(--border-color);
     cursor: not-allowed;
     pointer-events: none;
 }
 
-body.darkmode .btn.working, body.darkmode .list-group-item.working {
-    background: #575963;
+body.darkmode .btn.working, body.darkmode .btn.working:hover, 
+body.darkmode .list-group-item.working, body.darkmode .list-group-item.working:hover {
+    background: #575963 !important;
 }
 
 .btn.working::after, .list-group-item.working::after {
@@ -701,11 +703,11 @@ body.darkmode .btn.working, body.darkmode .list-group-item.working {
     cursor: pointer;
 }
 
-.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link):hover, 
+.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link, .working):hover, 
 .list-group-item:hover,
-.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link):focus, 
+.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link, .working):focus, 
 .list-group-item:focus,
-.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link):not(.disabled).active,
+.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link, .working):not(.disabled).active,
 .list-group-item:not(.disabled).active,
 .btn.btn-outline-primary:hover, 
 .btn.btn-outline-primary:focus, 
