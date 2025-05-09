@@ -21,7 +21,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <h2><?= L::manageMedia; ?></h2>
                     <div class="card mb-3">
                         <div class="card-body">
-                            <a href="<?= $config["dir"]["root"] ?>/manage/media/new" class="btn btn-outline-success btn-sm me-1"><span class="icon-plus"></span><?= L::manageMediaNew; ?></a>
+                            <a href="<?= $config["dir"]["root"] ?>/manage/media/new" class="btn btn-outline-success rounded-pill btn-sm me-1"><span class="icon-plus"></span><?= L::manageMediaNew; ?></a>
                         </div>
                     </div>
                     <ul class="nav nav-tabs" role="tablist">

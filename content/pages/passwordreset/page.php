@@ -26,7 +26,7 @@
 							<label for="reset-password-check"><?= L::newNeutral.' '.L::passwordConfirm; ?></label>
 							<div class="invalid-feedback"></div>
 						</div>
-						<button type="submit" class="btn btn-primary btn-sm"><?= L::changePassword; ?></button>
+						<button type="submit" class="w-100 btn btn-primary rounded-pill"><?= L::changePassword; ?></button>
 						<div id="reset-response" class="alert mt-3" style="display: none;"></div>
 					</form>
 					<?php
@@ -39,7 +39,7 @@
 						<label for="reset-mail"><?= L::mailAddress; ?></label>
 						<div class="invalid-feedback"></div>
 					</div>
-					<button type="submit" class="btn btn-primary btn-sm"><?= L::resetPassword; ?></button>
+					<button type="submit" class="w-100 btn btn-primary rounded-pill"><?= L::resetPassword; ?></button>
 					<div id="reset-mail-response" class="alert mt-3" style="display: none;"></div>
 				</form>
 			<?php
@@ -144,7 +144,7 @@ $(function() {
                         .removeClass("alert-danger")
                         .addClass("alert-success")
                         .show()
-                        .html(response.data.message + '<br><a href="login" class="btn btn-primary btn-sm mt-3"><?= L::login; ?></a>');
+                        .html(response.data.message + '<br><a href="login" class="w-100 btn btn-primary rounded-pill mt-3"><?= L::login; ?></a>');
                     
                     // Clear form
                     $("#resetpassword-form")[0].reset();

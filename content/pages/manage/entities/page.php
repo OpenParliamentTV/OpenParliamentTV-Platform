@@ -23,7 +23,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<h2><?= L::manageEntities; ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
-							<a href="<?= $config["dir"]["root"] ?>/manage/entities/new" class="btn btn-outline-success btn-sm me-1"><span class="icon-plus"></span> New Entity</a>
+							<a href="<?= $config["dir"]["root"] ?>/manage/entities/new" class="btn btn-outline-success rounded-pill btn-sm me-1"><span class="icon-plus"></span> New Entity</a>
 						</div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
@@ -43,27 +43,27 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="people" role="tabpanel" aria-labelledby="people-tab">
 							<div id="peopleToolbar">
-								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="person"><span class="icon-ccw"></span> Re-sync external data for all people</button>
-								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="memberOfParliament"><span class="icon-ccw"></span> Re-sync external data for all members of parliament</button>
+								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="person"><span class="icon-ccw"></span> Re-sync external data for all people</button>
+								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="memberOfParliament"><span class="icon-ccw"></span> Re-sync external data for all members of parliament</button>
 							</div>
 							<table id="peopleTable"></table>
                         </div>
 						<div class="tab-pane bg-white fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
 							<div id="organisationsToolbar">
-								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="organisation"><span class="icon-ccw"></span> Re-sync external data for all organisations</button>
+								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="organisation"><span class="icon-ccw"></span> Re-sync external data for all organisations</button>
 							</div>
 							<table id="organisationsTable"></table>
                         </div>
                         <div class="tab-pane bg-white fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
 							<div id="documentsToolbar">
-								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="legalDocument"><span class="icon-ccw"></span> Re-sync external data for all legal documents</button>
-								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="officialDocument"><span class="icon-ccw"></span> Re-sync external data for all official documents</button>
+								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="legalDocument"><span class="icon-ccw"></span> Re-sync external data for all legal documents</button>
+								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="officialDocument"><span class="icon-ccw"></span> Re-sync external data for all official documents</button>
 							</div>
 							<table id="documentsTable"></table>
                         </div>
                         <div class="tab-pane bg-white fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
 							<div id="termsToolbar">
-								<button type="button" class="btn btn-outline-success btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="term"><span class="icon-ccw"></span> Re-sync external data for all terms</button>
+								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="term"><span class="icon-ccw"></span> Re-sync external data for all terms</button>
 							</div>
 							<table id="termsTable"></table>
                         </div>
@@ -85,7 +85,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 The additionalDataService for type <span class="adc-type"></span> should run now in background.
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>

@@ -406,7 +406,7 @@ hr {
     border: 1px solid #cfcfcf !important;
 }
 
-.rounded-pill {
+.badge.rounded-pill {
     background: var(--highlight-color);
     color: var(--primary-bg-color);
 }

@@ -89,8 +89,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
+				<button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary rounded-pill">Save changes</button>
 			</div>
 		</div>
 	</div>

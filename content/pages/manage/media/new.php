@@ -166,7 +166,7 @@ if ($_REQUEST["aTEST"]) {
                         </div>
                         <div class="row">
                             <div class="col-12 mb-4">
-                                <button type="submit" class="btn btn-outline-primary">Add Media</button>
+                                <button type="submit" class="btn btn-outline-primary rounded-pill">Add Media</button>
                             </div>
                         </div>
 

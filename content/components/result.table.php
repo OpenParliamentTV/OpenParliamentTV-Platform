@@ -55,7 +55,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 ?>
 	<div class="filterSummary row">
 		<div class="col-12 col-sm-6 mb-3 mb-sm-0 px-0 px-sm-2"><label class="col-form-label px-0 me-0 me-sm-1 col-12 col-sm-auto text-center text-sm-left"><?= $findsString ?></label>
-			<button type="button" id="play-submit" class="btn btn-sm btn-outline-primary col-12 col-sm-auto" style="background-color: var(--highlight-color); color: var(--primary-bg-color);"><?= L::autoplayAll; ?><span class="icon-play-1"></span></button>
+			<button type="button" id="play-submit" class="btn btn-sm btn-outline-primary rounded-pill col-12 col-sm-auto" style="background-color: var(--highlight-color); color: var(--primary-bg-color);"><?= L::autoplayAll; ?><span class="icon-play-1"></span></button>
 		</div>
 		<div class="col-12 col-sm-6 pr-0 pr-sm-2" style="text-align: right;">
 			<label class="col-form-label" for="sort"><?= L::sortBy; ?></label>

@@ -233,8 +233,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 									</div>
 									<div id="entityAddReturn"></div>
 									<div>
-										<button class="btn btn-outline-secondary" id="entityAddFormCancelBtn"><span class="icon-trash-empty"></span> Cancel</button>
-										<button class="btn btn-outline-primary" id="entityAddFormSubmitBtn" type="submit"><span class="icon-upload"></span> Add Entity</button>
+										<button class="btn btn-outline-secondary rounded-pill" id="entityAddFormCancelBtn"><span class="icon-trash-empty"></span> Cancel</button>
+										<button class="btn btn-outline-primary rounded-pill" id="entityAddFormSubmitBtn" type="submit"><span class="icon-upload"></span> Add Entity</button>
 									</div>
 								</div>
 							</div>

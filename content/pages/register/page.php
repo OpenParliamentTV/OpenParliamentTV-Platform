@@ -24,7 +24,7 @@
 					<label for="register-passwordCheck"><?= L::passwordConfirm; ?></label>
 					<div class="invalid-feedback"></div>
 				</div>
-				<button type="submit" class="btn btn-primary btn-sm"><?= L::registerNewAccount; ?></button>
+				<button type="submit" class="w-100 btn btn-primary rounded-pill"><?= L::registerNewAccount; ?></button>
 			</form>
 			<div id="register-response" class="alert mt-3" style="display: none;"></div>
 		</div>

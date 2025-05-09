@@ -94,8 +94,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
                                 <div class="row">
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-primary"><?= L::save; ?></button>
-                                        <a href="<?= $config["dir"]["root"]; ?>/manage/users" class="btn btn-secondary"><?= L::cancel; ?></a>
+                                        <button type="submit" class="btn btn-primary rounded-pill"><?= L::save; ?></button>
+                                        <a href="<?= $config["dir"]["root"]; ?>/manage/users" class="btn btn-secondary rounded-pill"><?= L::cancel; ?></a>
                                     </div>
                                 </div>
                             </form>

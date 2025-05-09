@@ -21,13 +21,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <h2><?= L::manageUsers; ?></h2>
                     <div class="card mb-3">
                         <div class="card-body">
-                            <a href="<?= $config["dir"]["root"] ?>/register" class="btn btn-outline-success btn-sm me-1">Register New User</a>
-                            <a href="#" class="btn btn-primary btn-sm me-1">Send Invite</a>
-                            <?php
-                            if ($config["mode"] == "dev") {
-                                echo '<a class="btn btn-primary btn-sm me-1" href="'.$config["dir"]["root"].'/server/ajaxServer.php?a=devAddTestuser" target="_blank">Auto-Add Test Users (admin@admin.com:Admin!!11 test@test.com:User!!11)</a>';
-                            }
-                            ?>
+                            <a href="<?= $config["dir"]["root"] ?>/register" class="btn btn-outline-success rounded-pill btn-sm me-1">Register New User</a>
+                            <a href="#" class="btn btn-primary rounded-pill btn-sm me-1">Send Invite</a>
                         </div>
                     </div>
                     <ul class="nav nav-tabs" role="tablist">

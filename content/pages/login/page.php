@@ -11,7 +11,7 @@
 			?>
 
 				<div class="alert alert-info">Angemeldet als:<br><b><?=$_SESSION["userdata"]["name"]?></b><br><?=$_SESSION["userdata"]["mail"]?></div>
-				<button type="button" class="button-logout btn btn-primary btn-sm"><?= L::logout; ?></button>
+				<button type="button" class="w-100 button-logout btn btn-primary rounded-pill"><?= L::logout; ?></button>
 
 			<?php
 
@@ -19,7 +19,7 @@
 
 			?>
 				<h2 class="mb-3"><?= L::login; ?></h2>
-				<form id="login-form" class="needs-validation" novalidate>
+				<form id="login-form" class="needs-validation mb-3" novalidate>
 					<div class="form-floating mb-3">
 						<input type="email" class="form-control" id="login-mail" name="mail" placeholder="<?= L::mailAddress; ?>" required>
 						<label for="login-mail"><?= L::mailAddress; ?></label>
@@ -30,7 +30,7 @@
 						<label for="login-password"><?= L::password; ?></label>
 						<div class="invalid-feedback"></div>
 					</div>
-					<button type="submit" class="btn btn-primary btn-sm"><?= L::login; ?></button>
+					<button type="submit" class="w-100 btn btn-primary rounded-pill"><?= L::login; ?></button>
 					<div id="login-response" class="alert mt-3" style="display: none;"></div>
 				</form>
 				<a href="password-reset" target="_self"><?= L::passwordForgotQuestion; ?></a>

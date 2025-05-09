@@ -22,7 +22,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<h2><?= L::manageImport; ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
-							<button type="button" id="runCronUpdater" class="btn btn-outline-success btn-sm me-1">Run cronUpdater</button>
+							<button type="button" id="runCronUpdater" class="btn btn-outline-success rounded-pill btn-sm me-1">Run cronUpdater</button>
                         </div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
@@ -88,13 +88,13 @@ if ($auth["meta"]["requestStatus"] != "success") {
 							[OLD THINGS TO REUSE]
 							<div class="row">
                                 <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                                    <span class="d-block p-4 bg-white text-center btn updateSearchIndex" href="" data-type="specific">Update specific Medias</span>
+                                    <span class="d-block p-4 bg-white text-center btn rounded-pill updateSearchIndex" href="" data-type="specific">Update specific Medias</span>
                                 </div>
                                 <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                                    <span class="d-block p-4 bg-white text-center btn updateSearchIndex" href="" data-type="all">Update whole Searchindex</span>
+                                    <span class="d-block p-4 bg-white text-center btn rounded-pill updateSearchIndex" href="" data-type="all">Update whole Searchindex</span>
                                 </div>
                                 <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                                    <span class="d-block p-4 bg-white text-center btn" id="deleteSearchIndex" href="">Delete whole Searchindex</span>
+                                    <span class="d-block p-4 bg-white text-center btn rounded-pill" id="deleteSearchIndex" href="">Delete whole Searchindex</span>
                                 </div>
                             </div>
 							<hr>
@@ -119,7 +119,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 											<label for="doneDir">Done Directory</label>
 											<input type="text" class="form-control" id="doneDir" name="doneDir" value="'.realpath(__DIR__.'/../../../../data/done/').'/">
 										</div>
-										<button type="submit" class="btn btn-outline-primary">Start import</button>
+										<button type="submit" class="btn btn-outline-primary rounded-pill">Start import</button>
 									</form>
 								';
 
@@ -171,7 +171,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 The cronUpdater should run in background now
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Okay</button>
+                <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
