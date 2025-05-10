@@ -174,3 +174,115 @@ function getQueryVariableFromString(variable, queryString) {
 	return returnValues;
 }
 
+// Generic password field functionality
+function initPasswordFields(options = {}) {
+    const defaults = {
+        passwordFieldId: 'password',
+        confirmFieldId: 'passwordConfirm',
+        strengthBarId: 'passwordStrength',
+        strengthTextId: 'passwordStrengthText',
+        matchTextId: 'passwordMatchText',
+        showPasswordBtnId: 'showPassword',
+        showPasswordConfirmBtnId: 'showPasswordConfirm',
+        minLength: 8
+    };
+
+    const settings = { ...defaults, ...options };
+    
+    const passwordInput = document.getElementById(settings.passwordFieldId);
+    const passwordConfirmInput = document.getElementById(settings.confirmFieldId);
+    const passwordStrength = document.getElementById(settings.strengthBarId);
+    const passwordStrengthText = document.getElementById(settings.strengthTextId);
+    const passwordMatchText = document.getElementById(settings.matchTextId);
+    const showPasswordBtn = document.getElementById(settings.showPasswordBtnId);
+    const showPasswordConfirmBtn = document.getElementById(settings.showPasswordConfirmBtnId);
+
+    if (!passwordInput || !passwordConfirmInput) return;
+
+    // Toggle password visibility
+    if (showPasswordBtn) {
+        showPasswordBtn.addEventListener('click', function() {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            this.querySelector('i').className = type === 'password' ? 'icon-eye' : 'icon-eye-off';
+        });
+    }
+
+    if (showPasswordConfirmBtn) {
+        showPasswordConfirmBtn.addEventListener('click', function() {
+            const type = passwordConfirmInput.type === 'password' ? 'text' : 'password';
+            passwordConfirmInput.type = type;
+            this.querySelector('i').className = type === 'password' ? 'icon-eye' : 'icon-eye-off';
+        });
+    }
+
+    // Check password strength
+    function checkPasswordStrength(password) {
+        if (!passwordStrength || !passwordStrengthText) return 0;
+
+        let strength = 0;
+        let feedback = [];
+        
+        if (password.length >= settings.minLength) strength += 20;
+        if (password.match(/[a-z]/)) strength += 20;
+        if (password.match(/[A-Z]/)) strength += 20;
+        if (password.match(/[0-9]/)) strength += 20;
+        if (password.match(/[^\w]/)) strength += 20;
+        
+        // Set progress bar color based on strength
+        if (strength <= 20) {
+            passwordStrength.className = 'progress-bar bg-danger';
+        } else if (strength <= 40) {
+            passwordStrength.className = 'progress-bar bg-warning';
+        } else if (strength <= 60) {
+            passwordStrength.className = 'progress-bar bg-info';
+        } else if (strength <= 80) {
+            passwordStrength.className = 'progress-bar bg-primary';
+        } else {
+            passwordStrength.className = 'progress-bar bg-success';
+        }
+        
+        passwordStrength.style.width = strength + '%';
+        
+        // Set feedback text
+        if (password.length < settings.minLength) feedback.push(localizedLabels.messagePasswordTooShort);
+        if (!password.match(/[a-z]/)) feedback.push(localizedLabels.messagePasswordNoLowercase);
+        if (!password.match(/[A-Z]/)) feedback.push(localizedLabels.messagePasswordNoUppercase);
+        if (!password.match(/[0-9]/)) feedback.push(localizedLabels.messagePasswordNoNumber);
+        if (!password.match(/[^\w]/)) feedback.push(localizedLabels.messagePasswordNoSpecial);
+        
+        passwordStrengthText.textContent = feedback.join(', ');
+        return strength === 100;
+    }
+
+    // Check password match
+    function checkPasswordMatch() {
+        if (!passwordMatchText) return true;
+
+        const match = passwordInput.value === passwordConfirmInput.value;
+        
+        if (passwordConfirmInput.value && !match) {
+            passwordMatchText.textContent = localizedLabels.messagePasswordNotIdentical;
+        } else {
+            passwordMatchText.textContent = '';
+        }
+        
+        return match;
+    }
+
+    // Add event listeners
+    passwordInput.addEventListener('input', function() {
+        checkPasswordStrength(this.value);
+        checkPasswordMatch();
+    });
+    
+    passwordConfirmInput.addEventListener('input', checkPasswordMatch);
+
+    // Return validation functions for external use
+    return {
+        checkPasswordStrength: () => checkPasswordStrength(passwordInput.value),
+        checkPasswordMatch,
+        isValid: () => checkPasswordStrength(passwordInput.value) && checkPasswordMatch()
+    };
+}
+

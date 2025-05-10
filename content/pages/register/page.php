@@ -14,17 +14,32 @@
 					<label for="register-mail"><?= L::mailAddress; ?></label>
 					<div class="invalid-feedback"></div>
 				</div>
-				<div class="form-floating mb-3">
-					<input type="password" class="form-control" id="register-password" name="password" placeholder="<?= L::password; ?>" required>
-					<label for="register-password"><?= L::password; ?></label>
+				<div class="mb-3">
+					<div class="input-group">
+						<input type="password" class="form-control" id="register-password" name="password" 
+							   minlength="8" autocomplete="new-password" placeholder="<?= L::password; ?>" required>
+						<button class="btn btn-outline-primary" type="button" id="showPassword">
+							<i class="icon-eye"></i>
+						</button>
+					</div>
 					<div class="invalid-feedback"></div>
 				</div>
-				<div class="form-floating mb-3">
-					<input type="password" class="form-control" id="register-passwordCheck" name="passwordCheck" placeholder="<?= L::passwordConfirm; ?>" required>
-					<label for="register-passwordCheck"><?= L::passwordConfirm; ?></label>
+				<div class="mb-3">
+					<div class="input-group">
+						<input type="password" class="form-control" id="register-passwordCheck" name="passwordCheck" 
+							   minlength="8" autocomplete="new-password" placeholder="<?= L::passwordConfirm; ?>" required>
+						<button class="btn btn-outline-primary" type="button" id="showPasswordConfirm">
+							<i class="icon-eye"></i>
+						</button>
+					</div>
 					<div class="invalid-feedback"></div>
 				</div>
-				<button type="submit" class="w-100 btn btn-primary rounded-pill"><?= L::registerNewAccount; ?></button>
+				<div class="progress mb-2" style="height: 5px;">
+					<div class="progress-bar" id="passwordStrength" role="progressbar" style="width: 0%"></div>
+				</div>
+				<div class="text-danger small" id="passwordStrengthText"></div>
+				<div class="text-danger small" id="passwordMatchText"></div>
+				<button type="submit" class="w-100 btn btn-primary rounded-pill mt-3"><?= L::registerNewAccount; ?></button>
 			</form>
 			<div id="register-response" class="alert mt-3" style="display: none;"></div>
 		</div>
@@ -33,6 +48,17 @@
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
 <script type="text/javascript">
 $(function() {
+    // Initialize password fields
+    const passwordFields = initPasswordFields({
+        passwordFieldId: 'register-password',
+        confirmFieldId: 'register-passwordCheck',
+        strengthBarId: 'passwordStrength',
+        strengthTextId: 'passwordStrengthText',
+        matchTextId: 'passwordMatchText',
+        showPasswordBtnId: 'showPassword',
+        showPasswordConfirmBtnId: 'showPasswordConfirm'
+    });
+
     // Reset form validation state
     function resetValidation() {
         $("#register-form .is-invalid").removeClass("is-invalid");
@@ -50,11 +76,20 @@ $(function() {
         };
 
         // Check if passwords match
-        if ($("#register-password").val() !== $("#register-passwordCheck").val()) {
+        if (!passwordFields.checkPasswordMatch()) {
             $("#register-passwordCheck")
                 .addClass("is-invalid")
                 .siblings(".invalid-feedback")
                 .text("<?= L::messagePasswordNotIdentical; ?>");
+            return;
+        }
+
+        // Check password strength
+        if (!passwordFields.checkPasswordStrength()) {
+            $("#register-password")
+                .addClass("is-invalid")
+                .siblings(".invalid-feedback")
+                .text("<?= L::messagePasswordTooWeak; ?>");
             return;
         }
 

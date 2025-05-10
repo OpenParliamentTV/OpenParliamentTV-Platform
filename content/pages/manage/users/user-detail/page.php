@@ -141,12 +141,17 @@ $(function() {
     const cancelButton = document.getElementById('cancelButton');
     const togglePasswordBtn = document.getElementById('togglePassword');
     const passwordFields = document.getElementById('passwordFields');
-    const showPasswordBtn = document.getElementById('showPassword');
-    const passwordInput = document.getElementById('UserPassword');
-    const passwordConfirmInput = document.getElementById('UserPasswordConfirm');
-    const passwordStrength = document.getElementById('passwordStrength');
-    const passwordStrengthText = document.getElementById('passwordStrengthText');
-    const passwordMatchText = document.getElementById('passwordMatchText');
+    
+    // Initialize password fields
+    const passwordValidation = initPasswordFields({
+        passwordFieldId: 'UserPassword',
+        confirmFieldId: 'UserPasswordConfirm',
+        strengthBarId: 'passwordStrength',
+        strengthTextId: 'passwordStrengthText',
+        matchTextId: 'passwordMatchText',
+        showPasswordBtnId: 'showPassword',
+        showPasswordConfirmBtnId: 'showPasswordConfirm'
+    });
     
     // Store initial form state
     const initialFormState = {
@@ -165,89 +170,14 @@ $(function() {
         
         if (isVisible) {
             // Clear password fields when hiding
-            passwordInput.value = '';
-            passwordConfirmInput.value = '';
-            passwordStrength.style.width = '0%';
-            passwordStrengthText.textContent = '';
-            passwordMatchText.textContent = '';
+            document.getElementById('UserPassword').value = '';
+            document.getElementById('UserPasswordConfirm').value = '';
+            document.getElementById('passwordStrength').style.width = '0%';
+            document.getElementById('passwordStrengthText').textContent = '';
+            document.getElementById('passwordMatchText').textContent = '';
             checkFormChanges();
         }
     });
-    
-    // Toggle password visibility
-    showPasswordBtn.addEventListener('click', function() {
-        const type = passwordInput.type === 'password' ? 'text' : 'password';
-        passwordInput.type = type;
-        showPasswordBtn.querySelector('i').className = type === 'password' ? 'icon-eye' : 'icon-eye-off';
-    });
-
-    document.getElementById('showPasswordConfirm').addEventListener('click', function() {
-        const type = passwordConfirmInput.type === 'password' ? 'text' : 'password';
-        passwordConfirmInput.type = type;
-        this.querySelector('i').className = type === 'password' ? 'icon-eye' : 'icon-eye-off';
-    });
-    
-    // Check password strength
-    function checkPasswordStrength(password) {
-        let strength = 0;
-        let feedback = [];
-        
-        if (password.length >= 8) strength += 20;
-        if (password.match(/[a-z]/)) strength += 20;
-        if (password.match(/[A-Z]/)) strength += 20;
-        if (password.match(/[0-9]/)) strength += 20;
-        if (password.match(/[^\w]/)) strength += 20;
-        
-        // Set progress bar color based on strength
-        if (strength <= 20) {
-            passwordStrength.className = 'progress-bar bg-danger';
-        } else if (strength <= 40) {
-            passwordStrength.className = 'progress-bar bg-warning';
-        } else if (strength <= 60) {
-            passwordStrength.className = 'progress-bar bg-info';
-        } else if (strength <= 80) {
-            passwordStrength.className = 'progress-bar bg-primary';
-        } else {
-            passwordStrength.className = 'progress-bar bg-success';
-        }
-        
-        passwordStrength.style.width = strength + '%';
-        
-        // Set feedback text
-        if (password.length < 8) feedback.push(localizedLabels.messagePasswordTooShort);
-        if (!password.match(/[a-z]/)) feedback.push(localizedLabels.messagePasswordNoLowercase);
-        if (!password.match(/[A-Z]/)) feedback.push(localizedLabels.messagePasswordNoUppercase);
-        if (!password.match(/[0-9]/)) feedback.push(localizedLabels.messagePasswordNoNumber);
-        if (!password.match(/[^\w]/)) feedback.push(localizedLabels.messagePasswordNoSpecial);
-        
-        passwordStrengthText.textContent = feedback.join(', ');
-        return strength === 100;
-    }
-    
-    // Add password validation listeners
-    passwordInput.addEventListener('input', function() {
-        checkPasswordStrength(this.value);
-        checkPasswordMatch();
-        checkFormChanges();
-    });
-    
-    passwordConfirmInput.addEventListener('input', function() {
-        checkPasswordMatch();
-        checkFormChanges();
-    });
-
-    // Check password match
-    function checkPasswordMatch() {
-        const match = passwordInput.value === passwordConfirmInput.value;
-        
-        if (passwordConfirmInput.value && !match) {
-            passwordMatchText.textContent = localizedLabels.messagePasswordNotIdentical;
-        } else {
-            passwordMatchText.textContent = '';
-        }
-        
-        return match;
-    }
     
     // Function to check if form has changed
     function checkFormChanges() {
@@ -256,7 +186,7 @@ $(function() {
             UserRole: form.UserRole.value,
             UserActive: form.UserActive.checked,
             UserBlocked: form.UserBlocked.checked,
-            UserPassword: passwordInput.value
+            UserPassword: document.getElementById('UserPassword').value
         };
         
         const hasChanges = Object.keys(initialFormState).some(key => {
@@ -280,9 +210,9 @@ $(function() {
         form.reset();
         passwordFields.style.display = 'none';
         togglePasswordBtn.innerHTML = '<span class="icon-pencil"></span><?= L::changePassword; ?>';
-        passwordStrength.style.width = '0%';
-        passwordStrengthText.textContent = '';
-        passwordMatchText.textContent = '';
+        document.getElementById('passwordStrength').style.width = '0%';
+        document.getElementById('passwordStrengthText').textContent = '';
+        document.getElementById('passwordMatchText').textContent = '';
         checkFormChanges();
     });
     
@@ -298,8 +228,16 @@ $(function() {
         
         // Validate password if it's being changed
         if (passwordFields.style.display !== 'none') {
-            if (!checkPasswordStrength(passwordInput.value)) {
+            if (!passwordValidation.checkPasswordStrength()) {
                 formMessage.textContent = '<?= L::messagePasswordTooWeak; ?>';
+                formMessage.className = 'alert alert-danger mb-3';
+                formMessage.style.display = 'block';
+                form.classList.add('was-validated');
+                return;
+            }
+            
+            if (!passwordValidation.checkPasswordMatch()) {
+                formMessage.textContent = '<?= L::messagePasswordNotIdentical; ?>';
                 formMessage.className = 'alert alert-danger mb-3';
                 formMessage.style.display = 'block';
                 form.classList.add('was-validated');
@@ -350,17 +288,17 @@ $(function() {
                             UserRole: form.UserRole.value,
                             UserActive: form.UserActive.checked,
                             UserBlocked: form.UserBlocked.checked,
-                            UserPassword: passwordInput.value
+                            UserPassword: document.getElementById('UserPassword').value
                         };
                         
                         // Hide password fields and reset them
                         passwordFields.style.display = 'none';
                         togglePasswordBtn.innerHTML = '<span class="icon-pencil"></span><?= L::changePassword; ?>';
-                        passwordInput.value = '';
-                        passwordConfirmInput.value = '';
-                        passwordStrength.style.width = '0%';
-                        passwordStrengthText.textContent = '';
-                        passwordMatchText.textContent = '';
+                        document.getElementById('UserPassword').value = '';
+                        document.getElementById('UserPasswordConfirm').value = '';
+                        document.getElementById('passwordStrength').style.width = '0%';
+                        document.getElementById('passwordStrengthText').textContent = '';
+                        document.getElementById('passwordMatchText').textContent = '';
                         
                         // Disable buttons since form is now in sync
                         saveButton.disabled = true;

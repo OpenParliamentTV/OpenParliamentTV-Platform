@@ -16,17 +16,32 @@
 						<input type="hidden" name="UserID" value="<?= $_REQUEST["id"] ?>">
 						<input type="hidden" name="ResetCode" value="<?= $_REQUEST["c"] ?>">
 						
-						<div class="form-floating mb-3">
-							<input type="password" class="form-control" id="reset-password" name="NewPassword" placeholder="<?= L::newNeutral.' '.L::password; ?>" required>
-							<label for="reset-password"><?= L::newNeutral.' '.L::password; ?></label>
+						<div class="mb-3">
+							<div class="input-group">
+								<input type="password" class="form-control" id="reset-password" name="NewPassword" 
+									   minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral.' '.L::password; ?>" required>
+								<button class="btn btn-outline-primary" type="button" id="showPassword">
+									<i class="icon-eye"></i>
+								</button>
+							</div>
 							<div class="invalid-feedback"></div>
 						</div>
-						<div class="form-floating mb-3">
-							<input type="password" class="form-control" id="reset-password-check" name="password-check" placeholder="<?= L::newNeutral.' '.L::passwordConfirm; ?>" required>
-							<label for="reset-password-check"><?= L::newNeutral.' '.L::passwordConfirm; ?></label>
+						<div class="mb-3">
+							<div class="input-group">
+								<input type="password" class="form-control" id="reset-password-check" name="password-check" 
+									   minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral.' '.L::passwordConfirm; ?>" required>
+								<button class="btn btn-outline-primary" type="button" id="showPasswordConfirm">
+									<i class="icon-eye"></i>
+								</button>
+							</div>
 							<div class="invalid-feedback"></div>
 						</div>
-						<button type="submit" class="w-100 btn btn-primary rounded-pill"><?= L::changePassword; ?></button>
+						<div class="progress mb-2" style="height: 5px;">
+							<div class="progress-bar" id="passwordStrength" role="progressbar" style="width: 0%"></div>
+						</div>
+						<div class="text-danger small" id="passwordStrengthText"></div>
+						<div class="text-danger small" id="passwordMatchText"></div>
+						<button type="submit" class="w-100 btn btn-primary rounded-pill mt-3"><?= L::changePassword; ?></button>
 						<div id="reset-response" class="alert mt-3" style="display: none;"></div>
 					</form>
 					<?php
@@ -51,6 +66,17 @@
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
 <script>
 $(function() {
+    // Initialize password fields if the reset form exists
+    const passwordFields = initPasswordFields({
+        passwordFieldId: 'reset-password',
+        confirmFieldId: 'reset-password-check',
+        strengthBarId: 'passwordStrength',
+        strengthTextId: 'passwordStrengthText',
+        matchTextId: 'passwordMatchText',
+        showPasswordBtnId: 'showPassword',
+        showPasswordConfirmBtnId: 'showPasswordConfirm'
+    });
+
     // Reset form validation state
     function resetValidation(formId) {
         $(formId + " .is-invalid").removeClass("is-invalid");
@@ -119,11 +145,20 @@ $(function() {
         resetValidation("#resetpassword-form");
         
         // Check if passwords match
-        if ($("#reset-password").val() !== $("#reset-password-check").val()) {
+        if (!passwordFields.checkPasswordMatch()) {
             $("#reset-password-check")
                 .addClass("is-invalid")
                 .siblings(".invalid-feedback")
                 .text("<?= L::messagePasswordNotIdentical; ?>");
+            return;
+        }
+
+        // Check password strength
+        if (!passwordFields.checkPasswordStrength()) {
+            $("#reset-password")
+                .addClass("is-invalid")
+                .siblings(".invalid-feedback")
+                .text("<?= L::messagePasswordTooWeak; ?>");
             return;
         }
 
