@@ -88,7 +88,7 @@ $(function() {
         formData.forEach((value, key) => data[key] = value);
 
         // Make API call
-        fetch('/api/v1/user/register', {
+        fetch('<?= $config["dir"]["root"] ?>/api/v1/user/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

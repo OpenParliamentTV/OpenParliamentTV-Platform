@@ -98,7 +98,7 @@ $(function() {
             formData.forEach((value, key) => data[key] = value);
 
             // Make API call
-            fetch('/api/v1/user/password-reset-request', {
+            fetch('<?= $config["dir"]["root"] ?>/api/v1/user/password-reset-request', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -185,7 +185,7 @@ $(function() {
                     document.getElementById('reset-response').innerHTML = '<div class="alert alert-success">' + response.data.message + '</div>';
                     // Redirect to login page after 2 seconds
                     setTimeout(() => {
-                        window.location.href = '/login';
+                        window.location.href = '<?= $config["dir"]["root"] ?>/login';
                     }, 2000);
                 } else {
                     // Handle validation errors

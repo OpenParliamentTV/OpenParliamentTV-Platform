@@ -61,7 +61,7 @@ $(function() {
         };
 
         $.ajax({
-            url: config["dir"]["root"] + "/api/v1/user/login",
+            url: "<?= $config["dir"]["root"] ?>/api/v1/user/login",
             method: "POST",
             data: JSON.stringify(formData),
             contentType: "application/json",
@@ -113,7 +113,7 @@ $(function() {
 
     $(".button-logout").click(function() {
         $.ajax({
-            url: config["dir"]["root"] + "/api/v1/user/logout",
+            url: "<?= $config["dir"]["root"] ?>/api/v1/user/logout",
             method: "POST",
             contentType: "application/json",
             success: function(response) {

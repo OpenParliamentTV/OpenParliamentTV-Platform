@@ -22,7 +22,18 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 <div class="col-12">
                     <h2><?= L::manageUsers; ?>: <?= htmlspecialchars($userData["UserName"]); ?></h2>
                     <div class="card mb-3">
-                        <div class="card-body">
+						<div class="card-body">
+                            
+						</div>
+					</div>
+					<ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-cog"></span> <?= L::data; ?></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane bg-white fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
+                            
                             <form id="userForm" class="needs-validation" novalidate>
                                 <input type="hidden" name="id" value="<?= htmlspecialchars($userData["UserID"]); ?>">
                                 
@@ -34,24 +45,13 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <div class="invalid-feedback">
                                             <?= L::messageErrorFieldRequired; ?>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="UserMail" class="form-label"><?= L::mailAddress; ?></label>
-                                        <input type="email" class="form-control" id="UserMail" 
-                                               value="<?= htmlspecialchars($userData["UserMail"]); ?>" readonly>
-                                    </div>
-                                </div>
-
-                                <?php if ($isAdmin || $isOwnProfile): ?>
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <div class="d-flex justify-content-between align-items-center mt-3 mb-3 mb-md-0">
                                             <label class="form-label mb-0"><?= L::password; ?></label>
                                             <button type="button" class="btn btn-outline-primary rounded-pill btn-sm" id="togglePassword">
                                                 <span class="icon-pencil"></span><?= L::changePassword; ?>
                                             </button>
                                         </div>
-                                        <div id="passwordFields" style="display: none;">
+                                        <div id="passwordFields" class="mt-3" style="display: none;">
                                             <div class="input-group mb-2">
                                                 <input type="password" class="form-control" id="UserPassword" name="UserPassword" 
                                                        minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral; ?> <?= L::password; ?>">
@@ -75,10 +75,26 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             <div class="text-danger small" id="passwordMatchText"></div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <table class="table m-0" style="border: 1px solid var(--border-color);">
+                                            <tr>
+                                                <td><?= L::mailAddress; ?>:</td>
+                                                <td><?= htmlspecialchars($userData["UserMail"]); ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?= L::lastLogin; ?>:</td>
+                                                <td><?= $userData["UserLastLogin"]; ?></td>
+                                            </tr>
+                                            <tr>
+                                                <td><?= L::registerDate; ?>:</td>
+                                                <td><?= $userData["UserRegisterDate"]; ?></td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
-                                <?php endif; ?>
 
                                 <?php if ($isAdmin): ?>
+                                <hr>
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="UserRole" class="form-label"><?= L::role; ?></label>
@@ -87,37 +103,28 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             <option value="admin" <?= $userData["UserRole"] === "admin" ? "selected" : ""; ?>><?= L::roleAdmin; ?></option>
                                         </select>
                                     </div>
-                                </div>
-
-                                <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="UserActive" name="UserActive" 
-                                                   <?= $userData["UserActive"] ? "checked" : ""; ?>>
-                                            <label class="form-check-label" for="UserActive"><?= L::active; ?></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="UserBlocked" name="UserBlocked" 
-                                                   <?= $userData["UserBlocked"] ? "checked" : ""; ?>>
-                                            <label class="form-check-label" for="UserBlocked"><?= L::blocked; ?></label>
+                                        <label class="form-label">Status</label>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="UserActive" name="UserActive" 
+                                                           <?= $userData["UserActive"] ? "checked" : ""; ?>>
+                                                    <label class="form-check-label" for="UserActive"><?= L::active; ?></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" id="UserBlocked" name="UserBlocked" 
+                                                           <?= $userData["UserBlocked"] ? "checked" : ""; ?>>
+                                                    <label class="form-check-label" for="UserBlocked"><?= L::blocked; ?></label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <?php endif; ?>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label class="form-label"><?= L::lastLogin; ?></label>
-                                        <input type="text" class="form-control" value="<?= $userData["UserLastLogin"]; ?>" readonly>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label class="form-label"><?= L::registerDate; ?></label>
-                                        <input type="text" class="form-control" value="<?= $userData["UserRegisterDate"]; ?>" readonly>
-                                    </div>
-                                </div>
-
+                                <hr>
                                 <!-- Message container -->
                                 <div id="formMessage" class="alert mb-3" style="display: none;"></div>
 
@@ -128,6 +135,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     </div>
                                 </div>
                             </form>
+
                         </div>
                     </div>
                 </div>
