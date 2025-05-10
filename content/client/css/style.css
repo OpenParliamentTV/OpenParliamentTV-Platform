@@ -332,7 +332,7 @@ main.container-fluid.subpage {
     margin-top: .5rem !important;
 }
 
-@media (max-width:768px) {
+@media (max-width:991px) {
     .sticky-sidebar {
         display: block;
         position: relative;

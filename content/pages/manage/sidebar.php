@@ -3,7 +3,7 @@
 ?>
 <aside class="sticky-sidebar">
     <!-- Mobile Navigation -->
-    <div class="d-md-none w-100 mb-3">
+    <div class="d-lg-none w-100 mb-3">
         <div class="dropdown w-100">
             <button class="btn btn-light w-100 text-start d-flex justify-content-between align-items-center" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <div>
@@ -83,7 +83,7 @@
     </div>
 
     <!-- Desktop Navigation -->
-    <div class="d-none d-md-block">
+    <div class="d-none d-lg-block">
         <div class="mb-0">
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
