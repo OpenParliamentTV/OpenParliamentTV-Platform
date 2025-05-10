@@ -51,12 +51,7 @@ $(function() {
     // Initialize password fields
     const passwordFields = initPasswordFields({
         passwordFieldId: 'register-password',
-        confirmFieldId: 'register-passwordCheck',
-        strengthBarId: 'passwordStrength',
-        strengthTextId: 'passwordStrengthText',
-        matchTextId: 'passwordMatchText',
-        showPasswordBtnId: 'showPassword',
-        showPasswordConfirmBtnId: 'showPasswordConfirm'
+        confirmFieldId: 'register-passwordCheck'
     });
 
     // Reset form validation state

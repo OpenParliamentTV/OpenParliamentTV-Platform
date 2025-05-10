@@ -145,12 +145,7 @@ $(function() {
     // Initialize password fields
     const passwordValidation = initPasswordFields({
         passwordFieldId: 'UserPassword',
-        confirmFieldId: 'UserPasswordConfirm',
-        strengthBarId: 'passwordStrength',
-        strengthTextId: 'passwordStrengthText',
-        matchTextId: 'passwordMatchText',
-        showPasswordBtnId: 'showPassword',
-        showPasswordConfirmBtnId: 'showPasswordConfirm'
+        confirmFieldId: 'UserPasswordConfirm'
     });
     
     // Store initial form state

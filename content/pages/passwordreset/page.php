@@ -69,12 +69,7 @@ $(function() {
     // Initialize password fields if the reset form exists
     const passwordFields = initPasswordFields({
         passwordFieldId: 'reset-password',
-        confirmFieldId: 'reset-password-check',
-        strengthBarId: 'passwordStrength',
-        strengthTextId: 'passwordStrengthText',
-        matchTextId: 'passwordMatchText',
-        showPasswordBtnId: 'showPassword',
-        showPasswordConfirmBtnId: 'showPasswordConfirm'
+        confirmFieldId: 'reset-password-check'
     });
 
     // Reset form validation state
