@@ -251,7 +251,7 @@ function initPasswordFields(options = {}) {
         if (!password.match(/[0-9]/)) feedback.push(localizedLabels.messagePasswordNoNumber);
         if (!password.match(/[^\w]/)) feedback.push(localizedLabels.messagePasswordNoSpecial);
         
-        passwordStrengthText.textContent = feedback.join(', ');
+        passwordStrengthText.innerHTML = feedback.join(', ');
         return strength === 100;
     }
 
@@ -262,9 +262,9 @@ function initPasswordFields(options = {}) {
         const match = passwordInput.value === passwordConfirmInput.value;
         
         if (passwordConfirmInput.value && !match) {
-            passwordMatchText.textContent = localizedLabels.messagePasswordNotIdentical;
+            passwordMatchText.innerHTML = localizedLabels.messagePasswordNotIdentical;
         } else {
-            passwordMatchText.textContent = '';
+            passwordMatchText.innerHTML = '';
         }
         
         return match;
