@@ -46,43 +46,64 @@ function userChange($parameter) {
 
     }
 
-
     if ($_SESSION["userdata"]["role"] == "admin") {
-
         $allowedParams = array("UserName", "UserPassword", "UserActive", "UserBlocked", "UserRole");
-
     } else {
-
         $allowedParams = array("UserName", "UserPassword");
-
     }
 
-
-    $params = $db->filterArray($parameter,$allowedParams);
-
+    $params = $db->filterArray($parameter, $allowedParams);
     $updateParams = array();
 
-    if ($params["UserName"]) {
-        $updateParams[] = $db->parse("UserName=?s", $params["UserName"]);
-    }
-
-    if ($params["UserPassword"]) {
-
-        if (passwordStrength($params["UserPassword"]) != true) {
-
+    // Only validate and update fields that are present in the request
+    if (array_key_exists("UserName", $params)) {
+        if (empty($params["UserName"])) {
             $return["meta"]["requestStatus"] = "error";
             $return["errors"] = array();
             $errorarray["status"] = "422";
             $errorarray["code"] = "1";
-            $errorarray["title"] = "Password too weak";
-            $errorarray["detail"] = L::messagePasswordTooWeak;
-            $errorarray["meta"]["domSelector"] = "#register-password";
+            $errorarray["title"] = "Missing required field";
+            $errorarray["detail"] = L::messageErrorFieldRequired;
+            $errorarray["meta"]["domSelector"] = "[name='UserName']";
             array_push($return["errors"], $errorarray);
             return $return;
         }
+        $updateParams[] = $db->parse("UserName=?s", $params["UserName"]);
+    }
 
-        $userdata = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserID = ?i LIMIT 1",$parameter["id"]);
-        $updateParams[] = $db->parse("UserPasswordHash=?s", hash("sha512", $userdata["UserPasswordPepper"].$params["UserPassword"].$config["salt"]));
+    if (array_key_exists("UserPassword", $params)) {
+        // Only validate password if both password fields are present (indicating a password change)
+        if (array_key_exists("UserPasswordConfirm", $parameter)) {
+            if (empty($params["UserPassword"])) {
+                $return["meta"]["requestStatus"] = "error";
+                $return["errors"] = array();
+                $errorarray["status"] = "422";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Missing required field";
+                $errorarray["detail"] = L::messageErrorFieldRequired;
+                $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
+                array_push($return["errors"], $errorarray);
+                return $return;
+            }
+
+            if (passwordStrength($params["UserPassword"]) != true) {
+                $return["meta"]["requestStatus"] = "error";
+                $return["errors"] = array();
+                $errorarray["status"] = "422";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Password too weak";
+                $errorarray["detail"] = L::messagePasswordTooWeak;
+                $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
+                array_push($return["errors"], $errorarray);
+                return $return;
+            }
+
+            $userdata = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserID = ?i LIMIT 1", $parameter["id"]);
+            $updateParams[] = $db->parse("UserPasswordHash=?s", hash("sha512", $userdata["UserPasswordPepper"].$params["UserPassword"].$config["salt"]));
+        } else {
+            // If only UserPassword is present without UserPasswordConfirm, remove it from params
+            unset($params["UserPassword"]);
+        }
     }
 
     if (array_key_exists("UserActive", $params)) {
@@ -93,7 +114,7 @@ function userChange($parameter) {
         $updateParams[] = $db->parse("UserBlocked=?i", $params["UserBlocked"] === true || $params["UserBlocked"] === "true" || $params["UserBlocked"] === "1" ? 1 : 0);
     }
 
-    if ($params["UserRole"]) {
+    if (array_key_exists("UserRole", $params)) {
         // Validate role
         $allowedRoles = array("user", "admin");
         if (!in_array($params["UserRole"], $allowedRoles)) {
@@ -103,19 +124,14 @@ function userChange($parameter) {
             $errorarray["code"] = "1";
             $errorarray["title"] = "Invalid role";
             $errorarray["detail"] = "Role must be either 'user' or 'admin'";
+            $errorarray["meta"]["domSelector"] = "[name='UserRole']";
             array_push($return["errors"], $errorarray);
             return $return;
         }
         $updateParams[] = $db->parse("UserRole=?s", $params["UserRole"]);
     }
 
-    if ($params) {
-
-        $userUpdateQuery = "UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE UserID = ?i";
-        $db->query($userUpdateQuery, $config["platform"]["sql"]["tbl"]["User"], $parameter["id"]);
-
-    } else {
-
+    if (empty($updateParams)) {
         $return["meta"]["requestStatus"] = "error";
         $return["errors"] = array();
         $errorarray["status"] = "422";
@@ -123,15 +139,14 @@ function userChange($parameter) {
         $errorarray["title"] = "No parameter";
         $errorarray["detail"] = "No parameter for changing userdata has been provided";
         array_push($return["errors"], $errorarray);
-
         return $return;
-
     }
 
+    $userUpdateQuery = "UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE UserID = ?i";
+    $db->query($userUpdateQuery, $config["platform"]["sql"]["tbl"]["User"], $parameter["id"]);
+
     $return["meta"]["requestStatus"] = "success";
-
     return $return;
-
 }
 
 function userLogin($parameter) {
@@ -156,9 +171,9 @@ function userLogin($parameter) {
         $errorarray["title"] = "Missing request parameters";
         $errorarray["detail"] = L::messageErrorFieldRequired;
         if (!$parameter["UserMail"]) {
-            $errorarray["meta"]["domSelector"] = "#login-mail";
+            $errorarray["meta"]["domSelector"] = "[name='UserMail']";
         } else if (!$parameter["UserPassword"]) {
-            $errorarray["meta"]["domSelector"] = "#login-password";
+            $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
         }
         array_push($return["errors"], $errorarray);
         return $return;
@@ -171,7 +186,7 @@ function userLogin($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Invalid email";
         $errorarray["detail"] = "Mail not valid"; // TODO i18n
-        $errorarray["meta"]["domSelector"] = "#login-mail";
+        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -204,7 +219,7 @@ function userLogin($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Authentication failed";
         $errorarray["detail"] = L::messageAuthAccountNotFoundDetail;
-        $errorarray["meta"]["domSelector"] = "#login-mail";
+        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -216,7 +231,7 @@ function userLogin($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Authentication failed";
         $errorarray["detail"] = L::messageLoginErrorPasswordNotCorrect;
-        $errorarray["meta"]["domSelector"] = "#login-password";
+        $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -289,11 +304,11 @@ function userRegister($parameter) {
         $errorarray["title"] = "Missing request parameters";
         $errorarray["detail"] = L::messageErrorFieldRequired;
         if (!$parameter["UserName"]) {
-            $errorarray["meta"]["domSelector"] = "#register-name";
+            $errorarray["meta"]["domSelector"] = "[name='UserName']";
         } else if (!$parameter["UserMail"]) {
-            $errorarray["meta"]["domSelector"] = "#register-mail";
+            $errorarray["meta"]["domSelector"] = "[name='UserMail']";
         } else if (!$parameter["UserPassword"]) {
-            $errorarray["meta"]["domSelector"] = "#register-password";
+            $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
         }
         array_push($return["errors"], $errorarray);
         return $return;
@@ -306,7 +321,7 @@ function userRegister($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Invalid email";
         $errorarray["detail"] = "Mail not valid"; // TODO i18n
-        $errorarray["meta"]["domSelector"] = "#register-mail";
+        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -318,7 +333,7 @@ function userRegister($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Password too weak";
         $errorarray["detail"] = L::messagePasswordTooWeak;
-        $errorarray["meta"]["domSelector"] = "#register-password";
+        $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -434,7 +449,7 @@ function userPasswordResetRequest($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameter";
         $errorarray["detail"] = L::messageErrorFieldRequired;
-        $errorarray["meta"]["domSelector"] = "#reset-mail";
+        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -446,7 +461,7 @@ function userPasswordResetRequest($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Invalid email";
         $errorarray["detail"] = "Mail not valid"; // TODO i18n
-        $errorarray["meta"]["domSelector"] = "#reset-mail";
+        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -479,7 +494,7 @@ function userPasswordResetRequest($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Account not found";
         $errorarray["detail"] = L::messageAuthAccountNotFoundDetail;
-        $errorarray["meta"]["domSelector"] = "#reset-mail";
+        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
         array_push($return["errors"], $errorarray);
         return $return;
     }
@@ -526,7 +541,7 @@ function userPasswordReset($parameter) {
         $errorarray["title"] = "Missing request parameters";
         $errorarray["detail"] = L::messageErrorFieldRequired;
         if (!$parameter["NewPassword"]) {
-            $errorarray["meta"]["domSelector"] = "#reset-password";
+            $errorarray["meta"]["domSelector"] = "[name='NewPassword']";
         }
         array_push($return["errors"], $errorarray);
         return $return;
@@ -539,7 +554,7 @@ function userPasswordReset($parameter) {
         $errorarray["code"] = "1";
         $errorarray["title"] = "Password too weak";
         $errorarray["detail"] = L::messagePasswordTooWeak;
-        $errorarray["meta"]["domSelector"] = "#reset-password";
+        $errorarray["meta"]["domSelector"] = "[name='NewPassword']";
         array_push($return["errors"], $errorarray);
         return $return;
     }

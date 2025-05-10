@@ -58,6 +58,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                                 <button class="btn btn-outline-primary" type="button" id="showPassword">
                                                     <i class="icon-eye"></i>
                                                 </button>
+                                                <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="input-group mb-2">
                                                 <input type="password" class="form-control" id="UserPasswordConfirm" name="UserPasswordConfirm" 
@@ -65,6 +66,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                                 <button class="btn btn-outline-primary" type="button" id="showPasswordConfirm">
                                                     <i class="icon-eye"></i>
                                                 </button>
+                                                <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="progress mb-2" style="height: 5px;">
                                                 <div class="progress-bar" id="passwordStrength" role="progressbar" style="width: 0%"></div>
@@ -215,121 +217,119 @@ $(function() {
         event.preventDefault();
         event.stopPropagation();
         
-        // Clear previous message
+        // Clear previous messages
         const formMessage = document.getElementById('formMessage');
         formMessage.style.display = 'none';
         formMessage.textContent = '';
         formMessage.className = 'alert mb-3';
         
-        // Validate password if it's being changed
+        // Clear all validation states
+        form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        form.querySelectorAll('.invalid-feedback').forEach(el => el.textContent = '');
+        
+        // Only validate password if it's being changed
         if (passwordFields.style.display !== 'none') {
             if (!passwordValidation.checkPasswordStrength()) {
-                formMessage.textContent = '<?= L::messagePasswordTooWeak; ?>';
-                formMessage.className = 'alert alert-danger mb-3';
-                formMessage.style.display = 'block';
-                form.classList.add('was-validated');
+                const passwordField = document.getElementById('UserPassword');
+                passwordField.classList.add('is-invalid');
+                passwordField.closest('.input-group').querySelector('.invalid-feedback').innerHTML = '<?= L::messagePasswordTooWeak; ?>';
                 return;
             }
             
             if (!passwordValidation.checkPasswordMatch()) {
-                formMessage.textContent = '<?= L::messagePasswordNotIdentical; ?>';
-                formMessage.className = 'alert alert-danger mb-3';
-                formMessage.style.display = 'block';
-                form.classList.add('was-validated');
+                const confirmField = document.getElementById('UserPasswordConfirm');
+                confirmField.classList.add('is-invalid');
+                confirmField.closest('.input-group').querySelector('.invalid-feedback').innerHTML = '<?= L::messagePasswordNotIdentical; ?>';
                 return;
             }
         }
-        
-        if (!form.checkValidity()) {
-            event.preventDefault();
-            event.stopPropagation();
-            form.classList.add('was-validated');
-        } else {
-            const formData = new FormData(form);
-            const data = {};
-            formData.forEach((value, key) => {
-                if (key === 'UserActive' || key === 'UserBlocked') {
-                    data[key] = value === 'on';
-                } else if (key === 'UserPasswordConfirm') {
-                    // Skip password confirmation field
-                    return;
-                } else {
-                    data[key] = value;
-                }
-            });
 
-            // Disable buttons during submission
-            saveButton.disabled = true;
-            cancelButton.disabled = true;
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((value, key) => {
+            if (key === 'UserActive' || key === 'UserBlocked') {
+                data[key] = value === 'on';
+            } else if (key === 'UserPasswordConfirm') {
+                // Skip password confirmation field
+                return;
+            } else {
+                data[key] = value;
+            }
+        });
 
-            $.ajax({
-                url: '<?= $config["dir"]["root"] ?>/api/v1/',
-                method: 'POST',
-                data: {
-                    action: 'changeItem',
-                    itemType: 'user',
-                    ...data
-                },
-                success: function(response) {
-                    if (response.meta.requestStatus === 'success') {
-                        // Show success message
-                        formMessage.textContent = '<?= L::messageEditSuccess; ?>';
-                        formMessage.className = 'alert alert-success mb-3';
-                        formMessage.style.display = 'block';
-                        
-                        // Update initial state to match current form state
-                        initialFormState = {
-                            UserName: form.UserName.value,
-                            UserRole: form.UserRole.value,
-                            UserActive: form.UserActive.checked,
-                            UserBlocked: form.UserBlocked.checked,
-                            UserPassword: document.getElementById('UserPassword').value
-                        };
-                        
-                        // Hide password fields and reset them
-                        passwordFields.style.display = 'none';
-                        togglePasswordBtn.innerHTML = '<span class="icon-pencil"></span><?= L::changePassword; ?>';
-                        document.getElementById('UserPassword').value = '';
-                        document.getElementById('UserPasswordConfirm').value = '';
-                        document.getElementById('passwordStrength').style.width = '0%';
-                        document.getElementById('passwordStrengthText').textContent = '';
-                        document.getElementById('passwordMatchText').textContent = '';
-                        
-                        // Disable buttons since form is now in sync
-                        saveButton.disabled = true;
-                        cancelButton.disabled = true;
-                        
-                        // Remove validation styling on success
-                        form.classList.remove('was-validated');
-                    } else {
-                        // Show error message
-                        formMessage.textContent = response.errors[0].detail;
-                        formMessage.className = 'alert alert-danger mb-3';
-                        formMessage.style.display = 'block';
-                        
-                        // Show validation styling on error
-                        form.classList.add('was-validated');
-                        
-                        // Re-enable buttons
-                        saveButton.disabled = false;
-                        cancelButton.disabled = false;
-                    }
-                },
-                error: function(xhr, status, error) {
-                    // Show error message
-                    formMessage.textContent = '<?= L::messageEditError; ?>: ' + error;
-                    formMessage.className = 'alert alert-danger mb-3';
+        // Disable buttons during submission
+        saveButton.disabled = true;
+        cancelButton.disabled = true;
+
+        $.ajax({
+            url: '<?= $config["dir"]["root"] ?>/api/v1/',
+            method: 'POST',
+            data: {
+                action: 'changeItem',
+                itemType: 'user',
+                ...data
+            },
+            success: function(response) {
+                if (response.meta.requestStatus === 'success') {
+                    // Show success message
+                    formMessage.textContent = '<?= L::messageEditSuccess; ?>';
+                    formMessage.className = 'alert alert-success mb-3';
                     formMessage.style.display = 'block';
                     
-                    // Show validation styling on error
-                    form.classList.add('was-validated');
+                    // Update initial state to match current form state
+                    initialFormState = {
+                        UserName: form.UserName.value,
+                        UserRole: form.UserRole.value,
+                        UserActive: form.UserActive.checked,
+                        UserBlocked: form.UserBlocked.checked,
+                        UserPassword: document.getElementById('UserPassword').value
+                    };
+                    
+                    // Hide password fields and reset them
+                    passwordFields.style.display = 'none';
+                    togglePasswordBtn.innerHTML = '<span class="icon-pencil"></span><?= L::changePassword; ?>';
+                    document.getElementById('UserPassword').value = '';
+                    document.getElementById('UserPasswordConfirm').value = '';
+                    document.getElementById('passwordStrength').style.width = '0%';
+                    document.getElementById('passwordStrengthText').textContent = '';
+                    document.getElementById('passwordMatchText').textContent = '';
+                    
+                    // Disable buttons since form is now in sync
+                    saveButton.disabled = true;
+                    cancelButton.disabled = true;
+                } else {
+                    // Handle validation errors
+                    response.errors.forEach(function(error) {
+                        if (error.meta && error.meta.domSelector) {
+                            const $field = $(error.meta.domSelector);
+                            $field.addClass('is-invalid');
+                            $field.siblings('.invalid-feedback').html(error.detail);
+                        } else {
+                            // Show general error in response div
+                            formMessage
+                                .removeClass('alert-success')
+                                .addClass('alert-danger')
+                                .show()
+                                .html(error.detail);
+                        }
+                    });
                     
                     // Re-enable buttons
                     saveButton.disabled = false;
                     cancelButton.disabled = false;
                 }
-            });
-        }
+            },
+            error: function(xhr, status, error) {
+                // Show error message
+                formMessage.textContent = '<?= L::messageEditError; ?>: ' + error;
+                formMessage.className = 'alert alert-danger mb-3';
+                formMessage.style.display = 'block';
+                
+                // Re-enable buttons
+                saveButton.disabled = false;
+                cancelButton.disabled = false;
+            }
+        });
     });
 });
 </script>

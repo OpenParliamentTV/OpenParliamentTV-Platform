@@ -5,18 +5,18 @@
 			<h2 class="mb-3"><?= L::registerNewAccount; ?></h2>
 			<form id="register-form" class="needs-validation" novalidate>
 				<div class="form-floating mb-3">
-					<input type="text" class="form-control" id="register-name" name="name" placeholder="<?= L::name; ?>" required>
+					<input type="text" class="form-control" id="register-name" name="UserName" placeholder="<?= L::name; ?>" required>
 					<label for="register-name"><?= L::name; ?></label>
 					<div class="invalid-feedback"></div>
 				</div>
 				<div class="form-floating mb-3">
-					<input type="email" class="form-control" id="register-mail" name="mail" placeholder="<?= L::mailAddress; ?>" required>
+					<input type="email" class="form-control" id="register-mail" name="UserMail" placeholder="<?= L::mailAddress; ?>" required>
 					<label for="register-mail"><?= L::mailAddress; ?></label>
 					<div class="invalid-feedback"></div>
 				</div>
 				<div class="mb-3">
 					<div class="input-group">
-						<input type="password" class="form-control" id="register-password" name="password" 
+						<input type="password" class="form-control" id="register-password" name="UserPassword" 
 							   minlength="8" autocomplete="new-password" placeholder="<?= L::password; ?>" required>
 						<button class="btn btn-outline-primary" type="button" id="showPassword">
 							<i class="icon-eye"></i>
@@ -26,7 +26,7 @@
 				</div>
 				<div class="mb-3">
 					<div class="input-group">
-						<input type="password" class="form-control" id="register-passwordCheck" name="passwordCheck" 
+						<input type="password" class="form-control" id="register-password-check" name="UserPasswordConfirm" 
 							   minlength="8" autocomplete="new-password" placeholder="<?= L::passwordConfirm; ?>" required>
 						<button class="btn btn-outline-primary" type="button" id="showPasswordConfirm">
 							<i class="icon-eye"></i>
@@ -49,89 +49,88 @@
 <script type="text/javascript">
 $(function() {
     // Initialize password fields
-    const passwordFields = initPasswordFields({
+    initPasswordFields({
         passwordFieldId: 'register-password',
-        confirmFieldId: 'register-passwordCheck'
+        confirmFieldId: 'register-password-check'
     });
 
-    // Reset form validation state
+    // Reset validation states
     function resetValidation() {
-        $("#register-form .is-invalid").removeClass("is-invalid");
-        $("#register-form .invalid-feedback").empty();
+        document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        document.querySelectorAll('.invalid-feedback').forEach(el => el.innerHTML = '');
+        document.getElementById('register-response').innerHTML = '';
     }
 
-    $("#register-form").on('submit', function(e) {
+    // Handle form submission
+    document.getElementById('register-form').addEventListener('submit', function(e) {
         e.preventDefault();
         resetValidation();
+
+        // Only check password strength if password is being changed
+        const password = document.getElementById('register-password').value;
+        const passwordConfirm = document.getElementById('register-password-check').value;
         
-        const formData = {
-            UserName: $("#register-name").val(),
-            UserMail: $("#register-mail").val(),
-            UserPassword: $("#register-password").val()
-        };
-
-        // Check if passwords match
-        if (!passwordFields.checkPasswordMatch()) {
-            $("#register-passwordCheck")
-                .addClass("is-invalid")
-                .siblings(".invalid-feedback")
-                .text("<?= L::messagePasswordNotIdentical; ?>");
+        if (password && !checkPasswordStrength(password)) {
+            document.getElementById('register-password').classList.add('is-invalid');
+            document.getElementById('register-password').nextElementSibling.innerHTML = L.messagePasswordTooWeak;
             return;
         }
 
-        // Check password strength
-        if (!passwordFields.checkPasswordStrength()) {
-            $("#register-password")
-                .addClass("is-invalid")
-                .siblings(".invalid-feedback")
-                .text("<?= L::messagePasswordTooWeak; ?>");
+        if (password && password !== passwordConfirm) {
+            document.getElementById('register-password-check').classList.add('is-invalid');
+            document.getElementById('register-password-check').nextElementSibling.innerHTML = L.messagePasswordNotIdentical;
             return;
         }
 
-        $.ajax({
-            url: config["dir"]["root"] + "/api/v1/user/register",
-            method: "POST",
-            data: JSON.stringify(formData),
-            contentType: "application/json",
-            success: function(response) {
-                if (response.meta.requestStatus === "success") {
-                    $("#register-response")
-                        .removeClass("alert-danger")
-                        .addClass("alert-success")
-                        .show()
-                        .text(response.data.message);
-                    
-                    // Clear form
-                    $("#register-form")[0].reset();
-                } else {
-                    // Handle validation errors
-                    response.errors.forEach(function(error) {
+        // Get form data
+        const formData = new FormData(this);
+        const data = {};
+        formData.forEach((value, key) => data[key] = value);
+
+        // Make API call
+        fetch('/api/v1/user/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(response => {
+            if (response.meta.requestStatus === 'success') {
+                // Show success message
+                document.getElementById('register-response').innerHTML = '<div class="alert alert-success">' + response.data.message + '</div>';
+                // Redirect to login page after 2 seconds
+                setTimeout(() => {
+                    window.location.href = '/login';
+                }, 2000);
+            } else {
+                // Handle validation errors
+                if (response.errors && response.errors.length > 0) {
+                    response.errors.forEach(error => {
                         if (error.meta && error.meta.domSelector) {
-                            const $field = $(error.meta.domSelector);
-                            $field.addClass("is-invalid");
-                            $field.siblings(".invalid-feedback").html(error.detail);
+                            const element = document.querySelector(error.meta.domSelector);
+                            if (element) {
+                                element.classList.add('is-invalid');
+                                // Find the invalid-feedback div within the same input-group or form-floating
+                                const feedbackElement = element.closest('.input-group, .form-floating')?.querySelector('.invalid-feedback');
+                                if (feedbackElement) {
+                                    feedbackElement.innerHTML = error.detail;
+                                }
+                            }
                         } else {
-                            // Show general error in response div
-                            $("#register-response")
-                                .removeClass("alert-success")
-                                .addClass("alert-danger")
-                                .show()
-                                .html(error.detail);
+                            // Show error message in response div if no specific field
+                            document.getElementById('register-response').innerHTML = '<div class="alert alert-danger">' + error.detail + '</div>';
                         }
                     });
+                } else {
+                    // Show general error message
+                    document.getElementById('register-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
                 }
-            },
-            error: function(xhr) {
-                let errorMessage = "There was an error while registering. Please try again.";
-                if (xhr.responseJSON && xhr.responseJSON.errors && xhr.responseJSON.errors[0]) {
-                    errorMessage = xhr.responseJSON.errors[0].detail;
-                }
-                $("#register-response")
-                    .removeClass("alert-success")
-                    .addClass("alert-danger")
-                    .show()
-                    .html(errorMessage);
             }
+        })
+        .catch(error => {
+            document.getElementById('register-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
         });
     });
 });

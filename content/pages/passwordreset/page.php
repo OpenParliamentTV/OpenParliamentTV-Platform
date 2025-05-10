@@ -28,7 +28,7 @@
 						</div>
 						<div class="mb-3">
 							<div class="input-group">
-								<input type="password" class="form-control" id="reset-password-check" name="password-check" 
+								<input type="password" class="form-control" id="reset-password-check" name="NewPasswordConfirm" 
 									   minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral.' '.L::passwordConfirm; ?>" required>
 								<button class="btn btn-outline-primary" type="button" id="showPasswordConfirm">
 									<i class="icon-eye"></i>
@@ -66,148 +66,156 @@
 <?php include_once(__DIR__ . '/../../footer.php'); ?>
 <script>
 $(function() {
-    // Initialize password fields if the reset form exists
-    const passwordFields = initPasswordFields({
-        passwordFieldId: 'reset-password',
-        confirmFieldId: 'reset-password-check'
-    });
-
-    // Reset form validation state
-    function resetValidation(formId) {
-        $(formId + " .is-invalid").removeClass("is-invalid");
-        $(formId + " .invalid-feedback").empty();
+    // Initialize password fields only if the reset password form exists
+    const resetPasswordForm = document.getElementById('resetpassword-form');
+    if (resetPasswordForm) {
+        initPasswordFields({
+            passwordFieldId: 'reset-password',
+            confirmFieldId: 'reset-password-check'
+        });
     }
 
-    // Handle password reset request form
-    $("#resetpassword-mail-form").on('submit', function(e) {
-        e.preventDefault();
-        resetValidation("#resetpassword-mail-form");
-        
-        const formData = {
-            UserMail: $("#reset-mail").val()
-        };
+    // Reset validation states
+    function resetValidation() {
+        document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+        document.querySelectorAll('.invalid-feedback').forEach(el => el.innerHTML = '');
+        const resetResponse = document.getElementById('reset-response');
+        const resetMailResponse = document.getElementById('reset-mail-response');
+        if (resetResponse) resetResponse.innerHTML = '';
+        if (resetMailResponse) resetMailResponse.innerHTML = '';
+    }
 
-        $.ajax({
-            url: config["dir"]["root"] + "/api/v1/user/password-reset-request",
-            method: "POST",
-            data: JSON.stringify(formData),
-            contentType: "application/json",
-            success: function(response) {
-                if (response.meta.requestStatus === "success") {
-                    $("#reset-mail-response")
-                        .removeClass("alert-danger")
-                        .addClass("alert-success")
-                        .show()
-                        .text(response.data.message);
-                    
-                    // Redirect to show success message
-                    window.location.href = window.location.pathname + "?mail=1";
+    // Handle password reset request form submission
+    const resetMailForm = document.getElementById('resetpassword-mail-form');
+    if (resetMailForm) {
+        resetMailForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            resetValidation();
+
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => data[key] = value);
+
+            // Make API call
+            fetch('/api/v1/user/password-reset-request', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(response => {
+                if (response.meta.requestStatus === 'success') {
+                    // Show success message
+                    document.getElementById('reset-mail-response').innerHTML = '<div class="alert alert-success">' + response.data.message + '</div>';
+                    // Hide form and show success message
+                    document.getElementById('resetpassword-mail-form').style.display = 'none';
                 } else {
                     // Handle validation errors
-                    response.errors.forEach(function(error) {
-                        if (error.meta && error.meta.domSelector) {
-                            const $field = $(error.meta.domSelector);
-                            $field.addClass("is-invalid");
-                            $field.siblings(".invalid-feedback").html(error.detail);
-                        } else {
-                            // Show general error in response div
-                            $("#reset-mail-response")
-                                .removeClass("alert-success")
-                                .addClass("alert-danger")
-                                .show()
-                                .html(error.detail);
-                        }
-                    });
+                    if (response.errors && response.errors.length > 0) {
+                        response.errors.forEach(error => {
+                            if (error.meta && error.meta.domSelector) {
+                                const element = document.querySelector(error.meta.domSelector);
+                                if (element) {
+                                    element.classList.add('is-invalid');
+                                    // Find the invalid-feedback div within the same input-group or form-floating
+                                    const feedbackElement = element.closest('.input-group, .form-floating')?.querySelector('.invalid-feedback');
+                                    if (feedbackElement) {
+                                        feedbackElement.innerHTML = error.detail;
+                                    }
+                                }
+                            } else {
+                                // Show error message in response div if no specific field
+                                document.getElementById('reset-mail-response').innerHTML = '<div class="alert alert-danger">' + error.detail + '</div>';
+                            }
+                        });
+                    } else {
+                        // Show general error message
+                        document.getElementById('reset-mail-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
+                    }
                 }
-            },
-            error: function(xhr) {
-                let errorMessage = "There was an error while processing your request. Please try again.";
-                if (xhr.responseJSON && xhr.responseJSON.errors && xhr.responseJSON.errors[0]) {
-                    errorMessage = xhr.responseJSON.errors[0].detail;
-                }
-                $("#reset-mail-response")
-                    .removeClass("alert-success")
-                    .addClass("alert-danger")
-                    .show()
-                    .html(errorMessage);
-            }
+            })
+            .catch(error => {
+                document.getElementById('reset-mail-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
+            });
         });
-    });
+    }
 
-    // Handle password reset form
-    $("#resetpassword-form").on('submit', function(e) {
-        e.preventDefault();
-        resetValidation("#resetpassword-form");
-        
-        // Check if passwords match
-        if (!passwordFields.checkPasswordMatch()) {
-            $("#reset-password-check")
-                .addClass("is-invalid")
-                .siblings(".invalid-feedback")
-                .text("<?= L::messagePasswordNotIdentical; ?>");
-            return;
-        }
+    // Handle password reset form submission
+    if (resetPasswordForm) {
+        resetPasswordForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            resetValidation();
 
-        // Check password strength
-        if (!passwordFields.checkPasswordStrength()) {
-            $("#reset-password")
-                .addClass("is-invalid")
-                .siblings(".invalid-feedback")
-                .text("<?= L::messagePasswordTooWeak; ?>");
-            return;
-        }
+            // Only check password strength if password is being changed
+            const password = document.getElementById('reset-password').value;
+            const passwordConfirm = document.getElementById('reset-password-check').value;
+            
+            if (password && !checkPasswordStrength(password)) {
+                document.getElementById('reset-password').classList.add('is-invalid');
+                document.getElementById('reset-password').nextElementSibling.innerHTML = L.messagePasswordTooWeak;
+                return;
+            }
 
-        const formData = {
-            UserID: $("input[name='UserID']").val(),
-            ResetCode: $("input[name='ResetCode']").val(),
-            NewPassword: $("#reset-password").val()
-        };
+            if (password && password !== passwordConfirm) {
+                document.getElementById('reset-password-check').classList.add('is-invalid');
+                document.getElementById('reset-password-check').nextElementSibling.innerHTML = L.messagePasswordNotIdentical;
+                return;
+            }
 
-        $.ajax({
-            url: config["dir"]["root"] + "/api/v1/user/password-reset",
-            method: "POST",
-            data: JSON.stringify(formData),
-            contentType: "application/json",
-            success: function(response) {
-                if (response.meta.requestStatus === "success") {
-                    $("#reset-response")
-                        .removeClass("alert-danger")
-                        .addClass("alert-success")
-                        .show()
-                        .html(response.data.message + '<br><a href="login" class="w-100 btn btn-primary rounded-pill mt-3"><?= L::login; ?></a>');
-                    
-                    // Clear form
-                    $("#resetpassword-form")[0].reset();
+            // Get form data
+            const formData = new FormData(this);
+            const data = {};
+            formData.forEach((value, key) => data[key] = value);
+
+            // Make API call
+            fetch('/api/v1/user/password-reset', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(response => {
+                if (response.meta.requestStatus === 'success') {
+                    // Show success message
+                    document.getElementById('reset-response').innerHTML = '<div class="alert alert-success">' + response.data.message + '</div>';
+                    // Redirect to login page after 2 seconds
+                    setTimeout(() => {
+                        window.location.href = '/login';
+                    }, 2000);
                 } else {
                     // Handle validation errors
-                    response.errors.forEach(function(error) {
-                        if (error.meta && error.meta.domSelector) {
-                            const $field = $(error.meta.domSelector);
-                            $field.addClass("is-invalid");
-                            $field.siblings(".invalid-feedback").html(error.detail);
-                        } else {
-                            // Show general error in response div
-                            $("#reset-response")
-                                .removeClass("alert-success")
-                                .addClass("alert-danger")
-                                .show()
-                                .html(error.detail);
-                        }
-                    });
+                    if (response.errors && response.errors.length > 0) {
+                        response.errors.forEach(error => {
+                            if (error.meta && error.meta.domSelector) {
+                                const element = document.querySelector(error.meta.domSelector);
+                                if (element) {
+                                    element.classList.add('is-invalid');
+                                    // Find the invalid-feedback div within the same input-group or form-floating
+                                    const feedbackElement = element.closest('.input-group, .form-floating')?.querySelector('.invalid-feedback');
+                                    if (feedbackElement) {
+                                        feedbackElement.innerHTML = error.detail;
+                                    }
+                                }
+                            } else {
+                                // Show error message in response div if no specific field
+                                document.getElementById('reset-response').innerHTML = '<div class="alert alert-danger">' + error.detail + '</div>';
+                            }
+                        });
+                    } else {
+                        // Show general error message
+                        document.getElementById('reset-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
+                    }
                 }
-            },
-            error: function(xhr) {
-                let errorMessage = "There was an error while resetting your password. Please try again.";
-                if (xhr.responseJSON && xhr.responseJSON.errors && xhr.responseJSON.errors[0]) {
-                    errorMessage = xhr.responseJSON.errors[0].detail;
-                }
-                $("#reset-response")
-                    .removeClass("alert-success")
-                    .addClass("alert-danger")
-                    .show()
-                    .html(errorMessage);
-            }
+            })
+            .catch(error => {
+                document.getElementById('reset-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
+            });
         });
-    });
+    }
 });
 </script>

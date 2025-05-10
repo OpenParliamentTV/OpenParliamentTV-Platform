@@ -21,12 +21,12 @@
 				<h2 class="mb-3"><?= L::login; ?></h2>
 				<form id="login-form" class="needs-validation mb-3" novalidate>
 					<div class="form-floating mb-3">
-						<input type="email" class="form-control" id="login-mail" name="mail" placeholder="<?= L::mailAddress; ?>" required>
+						<input type="email" class="form-control" id="login-mail" name="UserMail" placeholder="<?= L::mailAddress; ?>" required>
 						<label for="login-mail"><?= L::mailAddress; ?></label>
 						<div class="invalid-feedback"></div>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="password" class="form-control" id="login-password" name="password" placeholder="<?= L::password; ?>" required>
+						<input type="password" class="form-control" id="login-password" name="UserPassword" placeholder="<?= L::password; ?>" required>
 						<label for="login-password"><?= L::password; ?></label>
 						<div class="invalid-feedback"></div>
 					</div>
