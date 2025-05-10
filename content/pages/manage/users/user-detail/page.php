@@ -51,7 +51,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                                 <span class="icon-pencil"></span><?= L::changePassword; ?>
                                             </button>
                                         </div>
-                                        <div id="passwordFields" class="mt-3" style="display: none;">
+                                        <div id="passwordFields" class="mt-3 mb-4 mb-md-0" style="display: none;">
                                             <div class="input-group mb-2">
                                                 <input type="password" class="form-control" id="UserPassword" name="UserPassword" 
                                                        minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral; ?> <?= L::password; ?>">
@@ -76,7 +76,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <table class="table m-0" style="border: 1px solid var(--border-color);">
+                                        <table class="table mb-2 mb-md-0" style="border: 1px solid var(--border-color);">
                                             <tr>
                                                 <td><?= L::mailAddress; ?>:</td>
                                                 <td><?= htmlspecialchars($userData["UserMail"]); ?></td>
@@ -103,7 +103,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             <option value="admin" <?= $userData["UserRole"] === "admin" ? "selected" : ""; ?>><?= L::roleAdmin; ?></option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 mt-3 mt-md-0">
                                         <label class="form-label">Status</label>
                                         <div class="row">
                                             <div class="col-6">
@@ -130,8 +130,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
                                 <div class="row">
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-primary rounded-pill" id="saveButton" disabled><span class="icon-ok"></span> <?= L::save; ?></button>
-                                        <button type="button" class="btn btn-primary rounded-pill" id="cancelButton" disabled><span class="icon-cancel"></span> <?= L::cancel; ?></button>
+                                        <div class="row g-2">
+                                            <div class="col-6 col-sm-auto">
+                                                <button type="submit" class="btn btn-primary rounded-pill w-100" id="saveButton" disabled><span class="icon-ok"></span> <?= L::save; ?></button>
+                                            </div>
+                                            <div class="col-6 col-sm-auto">
+                                                <button type="button" class="btn btn-primary rounded-pill w-100" id="cancelButton" disabled><span class="icon-cancel"></span> <?= L::cancel; ?></button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
