@@ -234,6 +234,29 @@ function apiV1($request = false, $db = false, $dbp = false) {
             // Private API endpoints (authentication required)
             // =============================================
 
+            case "addItem":
+                switch ($request["itemType"]) {
+                    case "media":
+                        require_once (__DIR__."/modules/media.php");
+                        $item = mediaAdd($request);
+                        break;
+                    default:
+                        $errorarray["status"] = "422";
+                        $errorarray["code"] = "1";
+                        $errorarray["title"] = "Missing request parameter";
+                        $errorarray["detail"] = "Required parameter (type) of the request is missing";
+                        array_push($return["errors"], $errorarray);
+                        break;
+                }
+
+                if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
+                    unset($return["errors"]);
+                } else {
+                    unset($return["data"]);
+                }
+                $return = array_replace_recursive($return, $item);
+                break;
+
             case "changeItem":
                 switch ($request["itemType"]) {
                     case "organisation":
