@@ -484,7 +484,7 @@ $(function() {
     $("#mediaAddForm").ajaxForm({
         type:"POST",
         data:{
-          action:"addMedia",
+          action:"addItem",
           itemType:"media"
         },
         url: config["dir"]["root"]+"/api/v1/index.php",
