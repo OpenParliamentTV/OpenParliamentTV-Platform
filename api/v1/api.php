@@ -312,17 +312,6 @@ function apiV1($request = false, $db = false, $dbp = false) {
                 $return = array_replace_recursive($return, $item);
                 break;
 
-            case "addMedia":
-                include_once(__DIR__."/modules/media.php");
-                $item = mediaAdd($request);
-                if ($item["meta"]["requestStatus"] == "success") {
-                    unset($return["errors"]);
-                } else {
-                    unset($return["data"]);
-                }
-                $return = array_replace_recursive($return, $item);
-                break;
-
             case "getItemsFromDB":
                 if (empty($request["itemType"])) {
                     $return["meta"]["requestStatus"] = "error";

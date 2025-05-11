@@ -321,8 +321,8 @@ if (is_cli()) {
 
             foreach ($json["data"] as $spKey => $media) {
 
-                $media["action"] = "addMedia";
-                $media["itemType"] = "addMedia";
+                $media["action"] = "addItem";
+                $media["itemType"] = "media";
                 $media["meta"] = $json["meta"];
 
                 try {
