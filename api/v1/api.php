@@ -44,937 +44,173 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
         switch ($request["action"]) {
 
+            // =============================================
+            // Public API endpoints (no authentication required)
+            // =============================================
+
             case "getItem":
-
                 switch ($request["itemType"]) {
-
                     case "organisation":
-                        
                         require_once (__DIR__."/modules/organisation.php");
                         $item = organisationGetByID($request["id"]);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
                         break;
-
                     case "document":
-
                         require_once (__DIR__."/modules/document.php");
                         $item = documentGetByID($request["id"]);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
                         break;
-
                     case "term":
-
                         require_once (__DIR__."/modules/term.php");
                         $item = termGetByID($request["id"]);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
                         break;
-
                     case "person":
-
                         require_once (__DIR__."/modules/person.php");
                         $item = personGetByID($request["id"]);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
                         break;
-
                     case "media":
-
                         require_once (__DIR__."/modules/media.php");
                         $item = mediaGetByID($request["id"], $db, $dbp);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
                         break;
-
                     case "session":
-
                         require_once (__DIR__."/modules/session.php");
                         $item = sessionGetByID($request["id"]);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
                         break;
-
                     case "agendaItem":
-
                         require_once (__DIR__."/modules/agendaItem.php");
                         $item = agendaItemGetByID($request["id"]);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
                         break;
-
                     case "electoralPeriod":
-
                         require_once (__DIR__."/modules/electoralPeriod.php");
                         $item = electoralPeriodGetByID($request["id"]);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
                         break;
-
                     default:
-
                         $errorarray["status"] = "422";
                         $errorarray["code"] = "1";
                         $errorarray["title"] = "Missing request parameter";
                         $errorarray["detail"] = "Required parameter (type) of the request is missing";
                         array_push($return["errors"], $errorarray);
-
                         break;
                 }
-                break;
 
-            case "changeItem":
-
-                switch ($request["itemType"]) {
-
-                    case "organisation":
-                        
-                        require_once (__DIR__."/modules/organisation.php");
-                        $item = organisationChange($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
-                        break;
-
-                    case "document":
-
-                        require_once (__DIR__."/modules/document.php");
-                        $item = documentChange($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
-                        break;
-
-                    case "term":
-
-                        require_once (__DIR__."/modules/term.php");
-                        $item = termChange($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
-                        break;
-
-                    case "person":
-
-                        require_once (__DIR__."/modules/person.php");
-                        $item = personChange($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
-                        break;
-
-                    case "media":
-
-                        require_once (__DIR__."/modules/media.php");
-                        $item = mediaChange($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
-                        break;
-
-                    case "session":
-
-                        require_once (__DIR__."/modules/session.php");
-                        $item = sessionChange($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
-                        break;
-
-                    case "agendaItem":
-
-                        require_once (__DIR__."/modules/agendaItem.php");
-                        $item = agendaItemChange($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
-                        break;
-
-                    case "electoralPeriod":
-
-                        require_once (__DIR__."/modules/electoralPeriod.php");
-                        $item = electoralPeriodChange($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
-                        break;
-
-                    case "user":
-
-                        require_once (__DIR__."/modules/user.php");
-                        $item = userChange($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-
-                        break;
-
-                    default:
-
-                        $errorarray["status"] = "422";
-                        $errorarray["code"] = "1";
-                        $errorarray["title"] = "Missing request parameter";
-                        $errorarray["detail"] = "Required parameter (type) of the request is missing";
-                        array_push($return["errors"], $errorarray);
-
-                        break;
+                if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
+                    unset($return["errors"]);
+                } else {
+                    unset($return["data"]);
                 }
+                $return = array_replace_recursive($return, $item);
                 break;
 
             case "search":
-
                 switch ($request["itemType"]) {
-
                     case "people":
-
                         require_once (__DIR__."/modules/person.php");
                         $item = personSearch($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
                         break;
-
                     case "organisations":
-
                         require_once (__DIR__."/modules/organisation.php");
                         $item = organisationSearch($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
                         break;
-
                     case "documents":
-
                         require_once (__DIR__."/modules/document.php");
                         $item = documentSearch($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
                         break;
-
                     case "terms":
-
                         require_once (__DIR__."/modules/term.php");
                         $item = termSearch($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
                         break;
-
                     case "media":
-
                         require_once (__DIR__."/modules/media.php");
                         $item = mediaSearch($request);
-
-                        if ($item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
                         break;
-
                     default:
-
-                        //Wrong $itemType
                         $errorarray["status"] = "422";
                         $errorarray["code"] = "2";
                         $errorarray["title"] = "Missing request parameter";
                         $errorarray["detail"] = "Required parameter of the request is missing";
                         array_push($return["errors"], $errorarray);
                         $return["links"]["self"] = htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"]);
-
                         break;
                 }
 
-                if ($item) {
-                    $return = array_replace_recursive($return, $item);
-                }
-
-                break;
-            
-            case "wikidataService":
-                $return["data"] = array();
-                switch ($request["itemType"]) {
-
-                    case "person":
-
-                        if ($request["str"]) {
-
-                            foreach ($config["parliament"] as $p=>$v) {
-                                if (file_exists($v["cache"]["wp"]."/people.json")) {
-                                    $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]."/people.json"),true);
-                                }
-
-                            }
-
-                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
-
-                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
-                                //$request["str"] = preg_replace("/\xa0/",".*", $request["str"]);
-
-                                $tmpType = "label";
-
-                            } else {
-
-                                $tmpType = "id";
-
-                            }
-
-                            foreach ($dump as $p=>$d) {
-
-                                foreach ($d as $k => $v) {
-                                    $success = false;
-
-                                    if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v[$tmpType]))) {
-                                        $success = true;
-                                    } else if (isset($v["altLabel"])) {
-                                        if (is_string($v["altLabel"])) {
-                                            if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v["altLabel"]))) {
-                                                $success = true;
-                                            }
-                                        } else if (is_array($v["altLabel"])) {
-                                            foreach ($v["altLabel"] as $altLabel) {
-                                                if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($altLabel))) {
-                                                    $success = true;
-                                                    break;
-                                                }
-                                            }
-                                        }
-
-                                    }
-
-                                    if ($success) {
-
-                                        $return["meta"]["requestStatus"] = "success";
-
-                                        //FIX URL and Arrays in Party and Faction
-                                        if (gettype($v["party"]) == "array") {
-
-                                            $v["party-original-array"] = $v["party"];
-                                            $v["party"] = $v["party"][0];
-
-                                        }
-
-                                        if (preg_match("/www\.wiki/", $v["party"])) {
-                                            $v["party-original-URL"] = $v["party"];
-                                            $tmpArray = explode("/", $v["party"]);
-                                            $v["party"] = array_pop($tmpArray);
-
-                                            $v["partyLabelAlternative"] = apiV1(["action" => "wikidataService", "itemType" => "party", "str" => $v["party"]])["data"][0]["labelAlternative"];
-                                        }
-
-                                        if (gettype($v["faction"]) == "array") {
-                                            $v["faction-original-array"] = $v["faction"];
-                                            $v["faction"] = $v["faction"][0];
-                                        }
-
-                                        if (preg_match("/www\.wiki/", $v["faction"])) {
-                                            $v["faction-original-URL"] = $v["faction"];
-                                            $tmpArray = explode("/", $v["faction"]);
-                                            $v["faction"] = array_pop($tmpArray);
-                                        }
-
-                                        $v["parliament"] = $p;
-
-                                        $return["data"][] = $v;
-                                    }
-
-                                }
-
-                            }
-                            if (count($return["data"]) > 0) {
-                                return $return;
-                            } else {
-                                // No Result found.
-                                $return["meta"]["requestStatus"] = "error";
-                                $return["errors"] = array();
-                                $errorarray["status"] = "404";
-                                $errorarray["code"] = "1";
-                                $errorarray["title"] = "No results";
-                                $errorarray["detail"] = "Person not found in dump";
-                                array_push($return["errors"], $errorarray);
-                            }
-
-                        } else {
-
-                            $return["meta"]["requestStatus"] = "error";
-                            $return["errors"] = array();
-                            $errorarray["status"] = "503";
-                            $errorarray["code"] = "1";
-                            $errorarray["title"] = "Missing Parameter str";
-                            $errorarray["detail"] = "missing parameter str";
-                            array_push($return["errors"], $errorarray);
-
-                        }
-
-                        break;
-
-                    case "party":
-
-                        if ($request["str"]) {
-
-                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/parties.json"),true);
-                            /*
-                            foreach ($config["parliament"] as $p=>$v) {
-                                $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["parties"]),true);
-                            }
-                            */
-
-                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
-
-                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
-                                //$request["str"] = preg_replace("/\xa0/",".*", $request["str"]);
-                                $request["str"] = preg_replace("/\//","\\/", $request["str"]);
-
-                                $tmpType = "label";
-
-                            } else {
-
-                                $tmpType = "id";
-
-                            }
-
-                            $return["data"] = [];
-
-                            //foreach ($dump as $p=>$d) {
-
-                                foreach ($dump as $k => $v) {
-
-
-                                    if ((preg_match("/" . $request["str"] . "/i", $v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/" . $request["str"] . "/i", $v["labelAlternative"])))) {
-
-                                        $return["meta"]["requestStatus"] = "success";
-
-                                        $return["data"][] = $v;
-
-
-                                    }
-
-                                }
-
-                            //}
-
-                            if (count($return["data"]) > 0) {
-                                return $return;
-                            } else {
-                                // No Result found.
-
-                                $return["meta"]["requestStatus"] = "error";
-                                $return["errors"] = array();
-                                $errorarray["status"] = "404";
-                                $errorarray["code"] = "1";
-                                $errorarray["title"] = "No results";
-                                $errorarray["detail"] = "Party not found in dump";
-                                array_push($return["errors"], $errorarray);
-                            }
-
-
-                        } else {
-
-                            $return["meta"]["requestStatus"] = "error";
-                            $return["errors"] = array();
-                            $errorarray["status"] = "503";
-                            $errorarray["code"] = "1";
-                            $errorarray["title"] = "Missing Parameter str";
-                            $errorarray["detail"] = "missing parameter str";
-                            array_push($return["errors"], $errorarray);
-
-                        }
-
-                        break;
-
-                    case "faction":
-
-                        if ($request["str"]) {
-
-                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/factions.json"),true);
-                            /*foreach ($config["parliament"] as $p=>$v) {
-                                $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]["factions"]),true);
-                            }*/
-
-                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
-
-                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
-                                $request["str"] = preg_replace("/\//","\\/", $request["str"]);
-
-
-                                $tmpType = "label";
-
-                            } else {
-
-                                $tmpType = "id";
-
-                            }
-
-                            $return["data"] = [];
-
-                            //foreach ($dump as $p=>$d) {
-
-                                foreach ($dump as $k => $v) {
-
-                                    if (
-                                        (preg_match("/" . $request["str"] . "/i", $v[$tmpType]))
-                                        || (
-                                            (($tmpType == "label") && (gettype($v["labelAlternative"]) == "string"))
-                                            && (preg_match("/" . $request["str"] . "/i", $v["labelAlternative"]))
-                                        )
-                                    ) {
-
-                                        $return["meta"]["requestStatus"] = "success";
-
-                                        $return["data"][] = $v;
-
-
-                                    }
-
-                                }
-                            //}
-
-                            if (count($return["data"]) > 0) {
-                                return $return;
-                            } else {
-                                // No Result found.
-
-                                $return["meta"]["requestStatus"] = "error";
-                                $return["errors"] = array();
-                                $errorarray["status"] = "404";
-                                $errorarray["code"] = "1";
-                                $errorarray["title"] = "No results";
-                                $errorarray["detail"] = "Faction not found in dump";
-                                array_push($return["errors"], $errorarray);
-                            }
-
-
-                        } else {
-
-                            $return["meta"]["requestStatus"] = "error";
-                            $return["errors"] = array();
-                            $errorarray["status"] = "503";
-                            $errorarray["code"] = "1";
-                            $errorarray["title"] = "Missing Parameter str";
-                            $errorarray["detail"] = "missing parameter str";
-                            array_push($return["errors"], $errorarray);
-
-                        }
-
-                        break;
-
-                }
-
-                break;
-
-            case "addMedia":
-
-                include_once(__DIR__."/modules/media.php");
-                $item = mediaAdd($request);
-
-                if ($item["meta"]["requestStatus"] == "success") {
+                if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
                     unset($return["errors"]);
                 } else {
                     unset($return["data"]);
                 }
-
                 $return = array_replace_recursive($return, $item);
-
                 break;
 
             case "autocomplete":
-
                 include_once(__DIR__."/modules/autocomplete.php");
-                
                 switch ($request["itemType"]) {
-
                     case "text": 
-                        
                         $item = fulltextAutocomplete($request["q"]);
-
                         if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
                             unset($return["errors"]);
                         } else {
                             unset($return["data"]);
                         }
-
                         $return = array_replace_recursive($return, $item);
-
                         break;
                 }
-
                 $return["links"]["self"] = htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"]);
-
-                break;
-
-            case "getItemsFromDB":
-                
-                if (empty($request["itemType"])) {
-
-                    $return["meta"]["requestStatus"] = "error";
-                    $return["errors"] = array();
-                    $errorarray["status"] = "400";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "Missing parameter";
-                    $errorarray["detail"] = "Parameter 'itemType' is required";
-                    array_push($return["errors"], $errorarray);
-                    return $return;
-
-                }
-
-                if (empty($request["limit"])) {
-                    $request["limit"] = 10;
-                }
-
-                if (empty($request["offset"])) {
-                    $request["offset"] = 0;
-                }
-
-                if (empty($request["sort"])) {
-                    $request["sort"] = false;
-                }
-
-                if (empty($request["order"])) {
-                    $request["order"] = false;
-                }
-
-                if (empty($request["search"])) {
-                    $request["search"] = false;
-                }
-
-                if (empty($request["id"])) {
-                    $request["id"] = "all";
-                }
-
-                switch ($request["itemType"]) {
-                    
-                    case "person":
-                        
-                        require_once (__DIR__."/modules/person.php");
-                        $result = personGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
-                        break;
-
-                    case "organisation":
-                        
-                        require_once (__DIR__."/modules/organisation.php");
-                        $result = organisationGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
-                        break;
-
-                    case "document":
-                        
-                        require_once (__DIR__."/modules/document.php");
-                        $result = documentGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
-                        break;
-
-                    case "term":
-                        
-                        require_once (__DIR__."/modules/term.php");
-                        $result = termGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
-                        break;
-
-                    case "electoralPeriod":
-                        
-                        require_once (__DIR__."/modules/electoralPeriod.php");
-                        $result = electoralPeriodGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
-                        break;
-
-                    case "session":
-                        
-                        require_once (__DIR__."/modules/session.php");
-                        $result = sessionGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], false, $request["electoralPeriodID"]);
-                        break;
-
-                    case "agendaItem":
-                        
-                        require_once (__DIR__."/modules/agendaItem.php");
-                        $result = agendaItemGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], false, $request["electoralPeriodID"], $request["sessionID"]);
-                        break;
-                    
-                    case "user":
-                    
-                        require_once (__DIR__."/modules/user.php");
-                        $result = userGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
-                        break;
-
-                    default:
-                        
-                        $return["meta"]["requestStatus"] = "error";
-                        $return["errors"] = array();
-                        $errorarray["status"] = "400";
-                        $errorarray["code"] = "1";
-                        $errorarray["title"] = "Invalid parameter";
-                        $errorarray["detail"] = "Parameter 'itemType' has an invalid value";
-                        array_push($return["errors"], $errorarray);
-                        return $return;
-
-                }
-
-                if ($result) {
-                    
-                    $return["meta"]["requestStatus"] = "success";
-                    
-                    // If ID is provided and not "all", return single object without total
-                    if ($request["id"] !== "all") {
-                        $return["data"] = $result["data"][0] ?? null;
-                    } else {
-                        $return["total"] = $result["total"];
-                        $return["data"] = $result["data"];
-                    }
-
-                    // Unset errors array for successful response
-                    unset($return["errors"]);
-
-                } else {
-                    
-                    $return["meta"]["requestStatus"] = "error";
-                    $return["errors"] = array();
-                    $errorarray["status"] = "500";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "Database error";
-                    $errorarray["detail"] = "Could not get overview";
-                    array_push($return["errors"], $errorarray);
-                    return $return;
-                }
                 break;
 
             case "statistics":
-
                 include_once(__DIR__."/modules/statistics.php");
-                
                 switch ($request["itemType"]) {
-
                     case "general": 
-                        
                         $item = statisticsGetGeneral($request);
-                        
-                        if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-                        $return = array_replace_recursive($return, $item);
-
                         break;
-
                     case "entity":
-                        
                         $item = statisticsGetEntity($request);
-                        
-                        if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-                        
                         break;
-
                     case "terms":
-                        
                         $item = statisticsGetTerms($request);
-                        
-                        if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-                        
                         break;
-
                     case "compare-terms":
-                        
                         $item = statisticsCompareTerms($request);
-                        
-                        if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-                        
                         break;
-
                     case "network":
-                        
                         $item = statisticsGetNetwork($request);
-                        
-                        if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
-                            unset($return["errors"]);
-                        } else {
-                            unset($return["data"]);
-                        }
-
-                        $return = array_replace_recursive($return, $item);
-                        
                         break;
-
                     default:
-                        
                         $errorarray["status"] = "422";
                         $errorarray["code"] = "1";
                         $errorarray["title"] = "Invalid statistics type";
                         $errorarray["detail"] = "The requested statistics type is not supported";
                         array_push($return["errors"], $errorarray);
-                        
                         break;
                 }
+                
+                if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
+                    unset($return["errors"]);
+                } else {
+                    unset($return["data"]);
+                }
+                $return = array_replace_recursive($return, $item);
                 break;
 
             case "user":
                 require_once (__DIR__."/modules/user.php");
-                
                 switch ($request["itemType"]) {
                     case "login":
                         $result = userLogin($request);
                         break;
-                        
                     case "register":
                         $result = userRegister($request);
                         break;
-                        
                     case "logout":
                         $result = userLogout();
                         break;
-
                     case "password-reset":
                         $result = userPasswordReset($request);
                         break;
-
                     case "password-reset-request":
                         $result = userPasswordResetRequest($request);
                         break;
-
                     case "confirm-registration":
                         $result = userConfirmRegistration($request);
                         break;
-                        
                     default:
                         $errorarray["status"] = "422";
                         $errorarray["code"] = "1";
@@ -994,16 +230,365 @@ function apiV1($request = false, $db = false, $dbp = false) {
                 }
                 break;
 
-            default:
+            // =============================================
+            // Private API endpoints (authentication required)
+            // =============================================
 
+            case "changeItem":
+                switch ($request["itemType"]) {
+                    case "organisation":
+                        require_once (__DIR__."/modules/organisation.php");
+                        $item = organisationChange($request);
+                        break;
+                    case "document":
+                        require_once (__DIR__."/modules/document.php");
+                        $item = documentChange($request);
+                        break;
+                    case "term":
+                        require_once (__DIR__."/modules/term.php");
+                        $item = termChange($request);
+                        break;
+                    case "person":
+                        require_once (__DIR__."/modules/person.php");
+                        $item = personChange($request);
+                        break;
+                    case "media":
+                        require_once (__DIR__."/modules/media.php");
+                        $item = mediaChange($request);
+                        break;
+                    case "session":
+                        require_once (__DIR__."/modules/session.php");
+                        $item = sessionChange($request);
+                        break;
+                    case "agendaItem":
+                        require_once (__DIR__."/modules/agendaItem.php");
+                        $item = agendaItemChange($request);
+                        break;
+                    case "electoralPeriod":
+                        require_once (__DIR__."/modules/electoralPeriod.php");
+                        $item = electoralPeriodChange($request);
+                        break;
+                    case "user":
+                        require_once (__DIR__."/modules/user.php");
+                        $item = userChange($request);
+                        break;
+                    default:
+                        $errorarray["status"] = "422";
+                        $errorarray["code"] = "1";
+                        $errorarray["title"] = "Missing request parameter";
+                        $errorarray["detail"] = "Required parameter (type) of the request is missing";
+                        array_push($return["errors"], $errorarray);
+                        break;
+                }
+
+                if ($item["meta"]["requestStatus"] == "success") {
+                    unset($return["errors"]);
+                } else {
+                    unset($return["data"]);
+                }
+                $return = array_replace_recursive($return, $item);
+                break;
+
+            case "addMedia":
+                include_once(__DIR__."/modules/media.php");
+                $item = mediaAdd($request);
+                if ($item["meta"]["requestStatus"] == "success") {
+                    unset($return["errors"]);
+                } else {
+                    unset($return["data"]);
+                }
+                $return = array_replace_recursive($return, $item);
+                break;
+
+            case "getItemsFromDB":
+                if (empty($request["itemType"])) {
+                    $return["meta"]["requestStatus"] = "error";
+                    $return["errors"] = array();
+                    $errorarray["status"] = "400";
+                    $errorarray["code"] = "1";
+                    $errorarray["title"] = "Missing parameter";
+                    $errorarray["detail"] = "Parameter 'itemType' is required";
+                    array_push($return["errors"], $errorarray);
+                    return $return;
+                }
+
+                if (empty($request["limit"])) {
+                    $request["limit"] = 10;
+                }
+                if (empty($request["offset"])) {
+                    $request["offset"] = 0;
+                }
+                if (empty($request["sort"])) {
+                    $request["sort"] = false;
+                }
+                if (empty($request["order"])) {
+                    $request["order"] = false;
+                }
+                if (empty($request["search"])) {
+                    $request["search"] = false;
+                }
+                if (empty($request["id"])) {
+                    $request["id"] = "all";
+                }
+
+                switch ($request["itemType"]) {
+                    case "person":
+                        require_once (__DIR__."/modules/person.php");
+                        $result = personGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        break;
+                    case "organisation":
+                        require_once (__DIR__."/modules/organisation.php");
+                        $result = organisationGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        break;
+                    case "document":
+                        require_once (__DIR__."/modules/document.php");
+                        $result = documentGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        break;
+                    case "term":
+                        require_once (__DIR__."/modules/term.php");
+                        $result = termGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        break;
+                    case "electoralPeriod":
+                        require_once (__DIR__."/modules/electoralPeriod.php");
+                        $result = electoralPeriodGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        break;
+                    case "session":
+                        require_once (__DIR__."/modules/session.php");
+                        $result = sessionGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], false, $request["electoralPeriodID"]);
+                        break;
+                    case "agendaItem":
+                        require_once (__DIR__."/modules/agendaItem.php");
+                        $result = agendaItemGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], false, $request["electoralPeriodID"], $request["sessionID"]);
+                        break;
+                    case "user":
+                        require_once (__DIR__."/modules/user.php");
+                        $result = userGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        break;
+                    default:
+                        $return["meta"]["requestStatus"] = "error";
+                        $return["errors"] = array();
+                        $errorarray["status"] = "400";
+                        $errorarray["code"] = "1";
+                        $errorarray["title"] = "Invalid parameter";
+                        $errorarray["detail"] = "Parameter 'itemType' has an invalid value";
+                        array_push($return["errors"], $errorarray);
+                        return $return;
+                }
+
+                if ($result) {
+                    $return["meta"]["requestStatus"] = "success";
+                    if ($request["id"] !== "all") {
+                        $return["data"] = $result["data"][0] ?? null;
+                    } else {
+                        $return["total"] = $result["total"];
+                        $return["data"] = $result["data"];
+                    }
+                    unset($return["errors"]);
+                } else {
+                    $return["meta"]["requestStatus"] = "error";
+                    $return["errors"] = array();
+                    $errorarray["status"] = "500";
+                    $errorarray["code"] = "1";
+                    $errorarray["title"] = "Database error";
+                    $errorarray["detail"] = "Could not get overview";
+                    array_push($return["errors"], $errorarray);
+                    return $return;
+                }
+                break;
+
+            case "wikidataService":
+                $return["data"] = array();
+                switch ($request["itemType"]) {
+                    case "person":
+                        if ($request["str"]) {
+                            foreach ($config["parliament"] as $p=>$v) {
+                                if (file_exists($v["cache"]["wp"]."/people.json")) {
+                                    $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]."/people.json"),true);
+                                }
+                            }
+
+                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
+                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
+                                $tmpType = "label";
+                            } else {
+                                $tmpType = "id";
+                            }
+
+                            foreach ($dump as $p=>$d) {
+                                foreach ($d as $k => $v) {
+                                    $success = false;
+
+                                    if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v[$tmpType]))) {
+                                        $success = true;
+                                    } else if (isset($v["altLabel"])) {
+                                        if (is_string($v["altLabel"])) {
+                                            if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v["altLabel"]))) {
+                                                $success = true;
+                                            }
+                                        } else if (is_array($v["altLabel"])) {
+                                            foreach ($v["altLabel"] as $altLabel) {
+                                                if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($altLabel))) {
+                                                    $success = true;
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    if ($success) {
+                                        $return["meta"]["requestStatus"] = "success";
+
+                                        if (gettype($v["party"]) == "array") {
+                                            $v["party-original-array"] = $v["party"];
+                                            $v["party"] = $v["party"][0];
+                                        }
+
+                                        if (preg_match("/www\.wiki/", $v["party"])) {
+                                            $v["party-original-URL"] = $v["party"];
+                                            $tmpArray = explode("/", $v["party"]);
+                                            $v["party"] = array_pop($tmpArray);
+                                            $v["partyLabelAlternative"] = apiV1(["action" => "wikidataService", "itemType" => "party", "str" => $v["party"]])["data"][0]["labelAlternative"];
+                                        }
+
+                                        if (gettype($v["faction"]) == "array") {
+                                            $v["faction-original-array"] = $v["faction"];
+                                            $v["faction"] = $v["faction"][0];
+                                        }
+
+                                        if (preg_match("/www\.wiki/", $v["faction"])) {
+                                            $v["faction-original-URL"] = $v["faction"];
+                                            $tmpArray = explode("/", $v["faction"]);
+                                            $v["faction"] = array_pop($tmpArray);
+                                        }
+
+                                        $v["parliament"] = $p;
+                                        $return["data"][] = $v;
+                                    }
+                                }
+                            }
+                            if (count($return["data"]) > 0) {
+                                return $return;
+                            } else {
+                                $return["meta"]["requestStatus"] = "error";
+                                $return["errors"] = array();
+                                $errorarray["status"] = "404";
+                                $errorarray["code"] = "1";
+                                $errorarray["title"] = "No results";
+                                $errorarray["detail"] = "Person not found in dump";
+                                array_push($return["errors"], $errorarray);
+                            }
+                        } else {
+                            $return["meta"]["requestStatus"] = "error";
+                            $return["errors"] = array();
+                            $errorarray["status"] = "503";
+                            $errorarray["code"] = "1";
+                            $errorarray["title"] = "Missing Parameter str";
+                            $errorarray["detail"] = "missing parameter str";
+                            array_push($return["errors"], $errorarray);
+                        }
+                        break;
+
+                    case "party":
+                        if ($request["str"]) {
+                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/parties.json"),true);
+
+                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
+                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
+                                $request["str"] = preg_replace("/\//","\\/", $request["str"]);
+                                $tmpType = "label";
+                            } else {
+                                $tmpType = "id";
+                            }
+
+                            $return["data"] = [];
+
+                            foreach ($dump as $k => $v) {
+                                if ((preg_match("/" . $request["str"] . "/i", $v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/" . $request["str"] . "/i", $v["labelAlternative"])))) {
+                                    $return["meta"]["requestStatus"] = "success";
+                                    $return["data"][] = $v;
+                                }
+                            }
+
+                            if (count($return["data"]) > 0) {
+                                return $return;
+                            } else {
+                                $return["meta"]["requestStatus"] = "error";
+                                $return["errors"] = array();
+                                $errorarray["status"] = "404";
+                                $errorarray["code"] = "1";
+                                $errorarray["title"] = "No results";
+                                $errorarray["detail"] = "Party not found in dump";
+                                array_push($return["errors"], $errorarray);
+                            }
+                        } else {
+                            $return["meta"]["requestStatus"] = "error";
+                            $return["errors"] = array();
+                            $errorarray["status"] = "503";
+                            $errorarray["code"] = "1";
+                            $errorarray["title"] = "Missing Parameter str";
+                            $errorarray["detail"] = "missing parameter str";
+                            array_push($return["errors"], $errorarray);
+                        }
+                        break;
+
+                    case "faction":
+                        if ($request["str"]) {
+                            $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/factions.json"),true);
+
+                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
+                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
+                                $request["str"] = preg_replace("/\//","\\/", $request["str"]);
+                                $tmpType = "label";
+                            } else {
+                                $tmpType = "id";
+                            }
+
+                            $return["data"] = [];
+
+                            foreach ($dump as $k => $v) {
+                                if (
+                                    (preg_match("/" . $request["str"] . "/i", $v[$tmpType]))
+                                    || (
+                                        (($tmpType == "label") && (gettype($v["labelAlternative"]) == "string"))
+                                        && (preg_match("/" . $request["str"] . "/i", $v["labelAlternative"]))
+                                    )
+                                ) {
+                                    $return["meta"]["requestStatus"] = "success";
+                                    $return["data"][] = $v;
+                                }
+                            }
+
+                            if (count($return["data"]) > 0) {
+                                return $return;
+                            } else {
+                                $return["meta"]["requestStatus"] = "error";
+                                $return["errors"] = array();
+                                $errorarray["status"] = "404";
+                                $errorarray["code"] = "1";
+                                $errorarray["title"] = "No results";
+                                $errorarray["detail"] = "Faction not found in dump";
+                                array_push($return["errors"], $errorarray);
+                            }
+                        } else {
+                            $return["meta"]["requestStatus"] = "error";
+                            $return["errors"] = array();
+                            $errorarray["status"] = "503";
+                            $errorarray["code"] = "1";
+                            $errorarray["title"] = "Missing Parameter str";
+                            $errorarray["detail"] = "missing parameter str";
+                            array_push($return["errors"], $errorarray);
+                        }
+                        break;
+                }
+                break;
+
+            default:
                 $errorarray["status"] = "422";
                 $errorarray["code"] = "1";
                 $errorarray["title"] = "Missing request parameter";
                 $errorarray["detail"] = "Required parameter (action) of the request is missing";
                 array_push($return["errors"], $errorarray);
-
-            break;
-
+                break;
         }
 
     }
