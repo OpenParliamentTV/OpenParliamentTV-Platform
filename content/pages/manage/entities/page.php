@@ -367,7 +367,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "PersonID",
-					title: "<?= L::actions; ?>",
+					title: "",
 					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {
@@ -433,7 +433,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "OrganisationID",
-					title: "<?= L::actions; ?>",
+					title: "",
 					class: "minWidthColumn",
 					sortable: true,
 					formatter: function(value, row) {
@@ -503,7 +503,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "DocumentID",
-					title: "<?= L::actions; ?>",
+					title: "",
 					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {
@@ -569,7 +569,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "TermID",
-					title: "<?= L::actions; ?>",
+					title: "",
 					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {

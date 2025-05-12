@@ -178,7 +178,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "ElectoralPeriodID",
-					title: "<?= L::actions; ?>",
+					title: "",
 					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {
@@ -329,7 +329,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "SessionID",
-					title: "<?= L::actions; ?>",
+					title: "",
 					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {
@@ -387,7 +387,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "AgendaItemID",
-					title: "<?= L::actions; ?>",
+					title: "",
 					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {

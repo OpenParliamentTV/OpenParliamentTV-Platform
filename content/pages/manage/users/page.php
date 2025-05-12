@@ -43,7 +43,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <th data-field="UserBlocked" data-sortable="true" data-formatter="blockedFormatter">Blocked</th>
                                         <th data-field="UserLastLogin" data-sortable="true">Last Login</th>
                                         <th data-field="UserRegisterDate" data-sortable="true">Register Date</th>
-                                        <th data-field="operate" data-formatter="operateFormatter" class="minWidthColumn">Actions</th>
+                                        <th data-field="operate" data-formatter="operateFormatter" class="minWidthColumn"></th>
                                     </tr>
                                 </thead>
                             </table>
@@ -137,7 +137,7 @@ $(function() {
             {field: 'UserBlocked', sortable: true, title: 'Blocked', formatter: formatters.blockedFormatter},
             {field: 'UserLastLogin', sortable: true, title: 'Last Login', formatter: formatters.dateFormatter},
             {field: 'UserRegisterDate', sortable: true, title: 'Register Date', formatter: formatters.dateFormatter},
-            {field: 'operate', title: 'Actions', formatter: formatters.operateFormatter, class: 'minWidthColumn'}
+            {field: 'operate', title: '', formatter: formatters.operateFormatter, class: 'minWidthColumn'}
         ],
         queryParams: function(params) {
             return {

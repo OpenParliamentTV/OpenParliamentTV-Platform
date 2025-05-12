@@ -106,7 +106,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 								</th>
 							<?php } ?>
 							<th>
-								<div class="th-inner">Actions</div>
+								<div class="th-inner"></div>
 							</th>
 						</tr>
 					</thead>
