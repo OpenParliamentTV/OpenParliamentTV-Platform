@@ -753,6 +753,108 @@ switch ($page) {
 		include_once("./content/pages/manage/structure/page.php");
 		$content = ob_get_clean();
 	break;
+	case "manage-structure-electoralPeriod":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>"electoralPeriod", 
+			"id"=>$_REQUEST["id"]
+		]);
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = 'Manage Electoral Period Detail';
+            $pageType = 'admin';
+            $pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => L::manageStructure,
+					'path' => '/manage/structure'
+				],
+				[
+					'label' => '<span class="icon-pencil"></span>'
+				]
+			];
+            ob_start();
+            include_once("./content/pages/manage/structure/electoralPeriod-detail/page.php");
+            $content = ob_get_clean();
+        }
+	break;
+	case "manage-structure-session":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>"session", 
+			"id"=>$_REQUEST["id"]
+		]);
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = 'Manage Session Detail';
+            $pageType = 'admin';
+            $pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => L::manageStructure,
+					'path' => '/manage/structure'
+				],
+				[
+					'label' => '<span class="icon-pencil"></span>'
+				]
+			];
+            ob_start();
+            include_once("./content/pages/manage/structure/session-detail/page.php");
+            $content = ob_get_clean();
+        }
+	break;
+	case "manage-structure-agendaItem":
+		$apiResult = apiV1([
+			"action"=>"getItem", 
+			"itemType"=>"agendaItem", 
+			"id"=>$_REQUEST["id"]
+		]);
+        if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
+            $pageTitle = '404 - '.L::messageErrorNotFound;
+            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageType = 'default';
+            ob_start();
+            include_once("./content/pages/404/page.php");
+            $content = ob_get_clean();
+        } else {
+            $pageTitle = 'Manage Agenda Item Detail';
+            $pageType = 'admin';
+            $pageBreadcrumbs = [
+				[
+					'label' => L::dashboard,
+					'path' => '/manage'
+				],
+				[
+					'label' => L::manageStructure,
+					'path' => '/manage/structure'
+				],
+				[
+					'label' => '<span class="icon-pencil"></span>'
+				]
+			];
+            ob_start();
+            include_once("./content/pages/manage/structure/agendaItem-detail/page.php");
+            $content = ob_get_clean();
+        }
+	break;
 	case "manage-users":
 		ob_start();
 		if (isset($_REQUEST["id"])) {
