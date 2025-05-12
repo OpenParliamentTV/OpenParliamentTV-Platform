@@ -280,18 +280,6 @@ switch ($page) {
             $content = ob_get_clean();
         }
 	break;
-	case "user":
-		$pageTitle = 'Detail User';
-		$pageType = 'entity';
-		$pageBreadcrumbs = [
-			[
-				'label' => $pageTitle
-			]
-		];
-		ob_start();
-		include_once("./content/pages/user/page.php");
-		$content = ob_get_clean();
-	break;
 	/*********************************
 	* OTHER PAGES 
 	**********************************/

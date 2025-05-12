@@ -96,12 +96,6 @@ $(function() {
 
         // Formatter for action buttons
         operateFormatter: function(value, row, index) {
-            const viewButton = '<a class="list-group-item list-group-item-action" ' +
-                'title="<?= L::view; ?>" ' +
-                'href="<?= $config["dir"]["root"]; ?>/user/' + row.UserID + '" ' +
-                'target="_blank">' +
-                '<span class="icon-eye"></span>' +
-                '</a>';
             
             const editButton = '<a class="list-group-item list-group-item-action" ' +
                 'title="<?= L::edit; ?>" ' +
@@ -111,7 +105,6 @@ $(function() {
             
             // Combine buttons in a horizontal list group
             return '<div class="list-group list-group-horizontal">' +
-                viewButton +
                 editButton +
                 '</div>';
         }
