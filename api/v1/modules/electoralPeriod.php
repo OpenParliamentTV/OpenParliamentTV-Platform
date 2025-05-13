@@ -216,7 +216,9 @@ function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $se
                 $queryPart);
             
             foreach ($results as $result) {
-                $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
+                // Use the string ID directly
+                $result["id"] = $result["ElectoralPeriodID"];
+                $result["ElectoralPeriodNumber"] = $result["ElectoralPeriodNumber"];
                 $result["ElectoralPeriodType"] = "electoralPeriod";
                 $result["Parliament"] = $parliament;
                 $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
@@ -237,12 +239,14 @@ function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $se
     return $return;
 }
 
-function electoralPeriodChange($parameter) {
+function electoralPeriodChange($params) {
     global $config;
+    $return = array();
+    $return["meta"]["requestStatus"] = "error";
+    $return["errors"] = array();
 
-    if (!$parameter["id"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
+    // Check if ID is provided
+    if (!isset($params["id"])) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameter";
@@ -251,11 +255,9 @@ function electoralPeriodChange($parameter) {
         return $return;
     }
 
-    // Parse parliament from ID
-    $IDInfos = getInfosFromStringID($parameter["id"]);
-    if (!is_array($IDInfos) || !array_key_exists($IDInfos["parliament"], $config["parliament"])) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
+    // Get parliament from ID
+    $parliament = getInfosFromStringID($params["id"])["parliament"];
+    if (!isset($config["parliament"][$parliament])) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Invalid ElectoralPeriodID";
@@ -264,61 +266,78 @@ function electoralPeriodChange($parameter) {
         return $return;
     }
 
-    $parliament = $IDInfos["parliament"];
-
-    try {
-        $dbp = new SafeMySQL(array(
-            'host'  => $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user'  => $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass'  => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db'    => $config["parliament"][$parliament]["sql"]["db"]
-        ));
-    } catch (exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to parliament database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
-    }
-
-    // Check if electoral period exists
-    $electoralPeriod = $dbp->getRow("SELECT * FROM ".$config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"]." WHERE ElectoralPeriodID=?s LIMIT 1", $IDInfos["id_part"]);
-    if (!$electoralPeriod) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
+    // Get electoral period using electoralPeriodGetItemsFromDB
+    $electoralPeriod = electoralPeriodGetItemsFromDB($params["id"]);
+    if (empty($electoralPeriod["data"])) {
         $errorarray["status"] = "404";
         $errorarray["code"] = "1";
-        $errorarray["title"] = "ElectoralPeriod not found";
-        $errorarray["detail"] = "ElectoralPeriod with the given ID was not found in database";
+        $errorarray["title"] = "Electoral Period not found";
+        $errorarray["detail"] = "Electoral period with the given ID was not found in database";
         array_push($return["errors"], $errorarray);
         return $return;
     }
+    $electoralPeriod = $electoralPeriod["data"][0]; // Get the first (and only) result
 
     // Define allowed parameters
     $allowedParams = array(
-        "ElectoralPeriodNumber", "ElectoralPeriodDateStart", "ElectoralPeriodDateEnd"
+        "ElectoralPeriodNumber",
+        "ElectoralPeriodDateStart",
+        "ElectoralPeriodDateEnd"
     );
 
     // Filter parameters
-    $params = $dbp->filterArray($parameter, $allowedParams);
+    $dbp = new SafeMySQL($config["parliament"][$parliament]["sql"]);
+    $params = $dbp->filterArray($params, $allowedParams);
     $updateParams = array();
 
     // Process each parameter
     foreach ($params as $key => $value) {
+        // Validate ElectoralPeriodNumber
         if ($key === "ElectoralPeriodNumber") {
-            // Convert to integer
-            $updateParams[] = $dbp->parse("?n=?i", $key, (int)$value);
-        } else {
+            if (!is_numeric($value) || (int)$value <= 0) {
+                $errorarray["status"] = "422";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Invalid Electoral Period Number";
+                $errorarray["detail"] = "Electoral Period Number must be a positive number";
+                $errorarray["meta"]["domSelector"] = "[name='ElectoralPeriodNumber']";
+                array_push($return["errors"], $errorarray);
+                return $return;
+            }
+
+            // Check for uniqueness within parliament
+            $existing = $dbp->getRow("SELECT ElectoralPeriodID FROM ?n WHERE ElectoralPeriodNumber = ?i AND ElectoralPeriodID != ?s",
+                $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+                (int)$value,
+                $electoralPeriod["ElectoralPeriodID"]
+            );
+            if ($existing) {
+                $errorarray["status"] = "422";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Duplicate Electoral Period Number";
+                $errorarray["detail"] = "An electoral period with this number already exists in this parliament";
+                $errorarray["meta"]["domSelector"] = "[name='ElectoralPeriodNumber']";
+                array_push($return["errors"], $errorarray);
+                return $return;
+            }
+            $updateParams[] = $dbp->parse("ElectoralPeriodNumber=?i", (int)$value);
+        }
+
+        // Validate dates
+        if ($key === "ElectoralPeriodDateStart" || $key === "ElectoralPeriodDateEnd") {
+            if (!empty($value) && !strtotime($value)) {
+                $errorarray["status"] = "422";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Invalid Date Format";
+                $errorarray["detail"] = "The date format is invalid";
+                $errorarray["meta"]["domSelector"] = "[name='".$key."']";
+                array_push($return["errors"], $errorarray);
+                return $return;
+            }
             $updateParams[] = $dbp->parse("?n=?s", $key, $value);
         }
     }
 
     if (empty($updateParams)) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "No parameters";
@@ -327,13 +346,36 @@ function electoralPeriodChange($parameter) {
         return $return;
     }
 
+    // Validate date range if both dates are provided
+    if (!empty($params["ElectoralPeriodDateStart"]) && !empty($params["ElectoralPeriodDateEnd"])) {
+        $startDate = strtotime($params["ElectoralPeriodDateStart"]);
+        $endDate = strtotime($params["ElectoralPeriodDateEnd"]);
+        if ($startDate > $endDate) {
+            $errorarray["status"] = "422";
+            $errorarray["code"] = "1";
+            $errorarray["title"] = "Invalid Date Range";
+            $errorarray["detail"] = "Start date must be before end date";
+            $errorarray["meta"]["domSelector"] = "[name='ElectoralPeriodDateStart']";
+            array_push($return["errors"], $errorarray);
+            return $return;
+        }
+    }
+
     // Execute update
-    $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE ElectoralPeriodID=?s", 
-        $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
-        $IDInfos["id_part"]
+    $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE ElectoralPeriodID=?s",
+        $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+        $electoralPeriod["ElectoralPeriodID"]
     );
 
-    $return["meta"]["requestStatus"] = "success";
+    // Return success
+    $return = array(
+        "meta" => array(
+            "requestStatus" => "success"
+        ),
+        "data" => array(
+            "message" => "Electoral period updated successfully"
+        )
+    );
     return $return;
 }
 
