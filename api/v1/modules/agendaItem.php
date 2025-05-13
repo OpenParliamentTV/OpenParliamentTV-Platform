@@ -166,6 +166,22 @@ function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search 
     $allResults = array();
     $totalCount = 0;
     
+    // If ID is not "all", get parliament and numeric ID using getInfosFromStringID
+    $targetParliament = null;
+    $numericID = $id;
+    if ($id !== "all") {
+        $IDInfos = getInfosFromStringID($id);
+        if (is_array($IDInfos) && array_key_exists($IDInfos["parliament"], $config["parliament"])) {
+            $targetParliament = $IDInfos["parliament"];
+            $numericID = intval($IDInfos["id_part"]); // Convert to integer
+        }
+    }
+    
+    // If we have a target parliament, only search in that one
+    if ($targetParliament) {
+        $parliaments = array($targetParliament);
+    }
+    
     foreach ($parliaments as $parliament) {
         $opts = array(
             'host' => $config["parliament"][$parliament]["sql"]["access"]["host"],
@@ -185,7 +201,7 @@ function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search 
         if ($id == "all") {
             $queryPart .= "1";
         } else {
-            $queryPart .= $dbp->parse("ai.AgendaItemID=?s", $id);
+            $queryPart .= $dbp->parse("ai.AgendaItemID=?i", $numericID); // Use ?i for integer
         }
         
         if (!empty($search)) {
@@ -244,12 +260,11 @@ function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search 
                 $queryPart);
             
             foreach ($results as $result) {
-                $result["AgendaItemLabel"] = $result["AgendaItemTitle"];
-                $result["AgendaItemType"] = "agendaItem";
-                $result["SessionLabel"] = "Session " . $result["SessionNumber"];
-                $result["ElectoralPeriodLabel"] = "Electoral Period " . $result["ElectoralPeriodNumber"];
+                // Add parliament prefix to ID
+                $result["id"] = $parliament . "-" . str_pad($result["AgendaItemID"], 3, "0", STR_PAD_LEFT);
+                $result["type"] = "agendaItem";
                 $result["Parliament"] = $parliament;
-                $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
+                $result["AgendaItemLabel"] = $result["AgendaItemTitle"] ?: $result["AgendaItemOfficialTitle"];
                 $allResults[] = $result;
             }
         } catch (exception $e) {
@@ -266,12 +281,14 @@ function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search 
     return $return;
 }
 
-function agendaItemChange($parameter) {
+function agendaItemChange($params) {
     global $config;
+    $return = array();
+    $return["meta"]["requestStatus"] = "error";
+    $return["errors"] = array();
 
-    if (!$parameter["id"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
+    // Check if ID is provided
+    if (!isset($params["id"])) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Missing request parameter";
@@ -280,11 +297,9 @@ function agendaItemChange($parameter) {
         return $return;
     }
 
-    // Parse parliament from ID
-    $IDInfos = getInfosFromStringID($parameter["id"]);
-    if (!is_array($IDInfos) || !array_key_exists($IDInfos["parliament"], $config["parliament"])) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
+    // Get parliament from ID
+    $parliament = getInfosFromStringID($params["id"])["parliament"];
+    if (!isset($config["parliament"][$parliament])) {
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "Invalid AgendaItemID";
@@ -293,61 +308,93 @@ function agendaItemChange($parameter) {
         return $return;
     }
 
-    $parliament = $IDInfos["parliament"];
-
-    try {
-        $dbp = new SafeMySQL(array(
-            'host'  => $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user'  => $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass'  => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db'    => $config["parliament"][$parliament]["sql"]["db"]
-        ));
-    } catch (exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to parliament database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
-    }
-
-    // Check if agenda item exists
-    $agendaItem = $dbp->getRow("SELECT * FROM ".$config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"]." WHERE AgendaItemID=?s LIMIT 1", $IDInfos["id_part"]);
-    if (!$agendaItem) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
+    // Get agenda item using agendaItemGetItemsFromDB
+    $agendaItem = agendaItemGetItemsFromDB($params["id"]);
+    if (empty($agendaItem["data"])) {
         $errorarray["status"] = "404";
         $errorarray["code"] = "1";
-        $errorarray["title"] = "AgendaItem not found";
-        $errorarray["detail"] = "AgendaItem with the given ID was not found in database";
+        $errorarray["title"] = "Agenda Item not found";
+        $errorarray["detail"] = "Agenda item with the given ID was not found in database";
         array_push($return["errors"], $errorarray);
         return $return;
     }
+    $agendaItem = $agendaItem["data"][0]; // Get the first (and only) result
 
     // Define allowed parameters
     $allowedParams = array(
-        "AgendaItemOfficialTitle", "AgendaItemTitle", "AgendaItemOrder", "AgendaItemSessionID"
+        "AgendaItemTitle",
+        "AgendaItemOfficialTitle",
+        "AgendaItemOrder",
+        "AgendaItemSessionID"
     );
 
     // Filter parameters
-    $params = $dbp->filterArray($parameter, $allowedParams);
+    $dbp = new SafeMySQL($config["parliament"][$parliament]["sql"]);
+    $params = $dbp->filterArray($params, $allowedParams);
     $updateParams = array();
 
     // Process each parameter
     foreach ($params as $key => $value) {
+        // Validate AgendaItemOrder
         if ($key === "AgendaItemOrder") {
-            // Convert to integer
-            $updateParams[] = $dbp->parse("?n=?i", $key, (int)$value);
-        } else {
+            if ($value === "") {
+                // Allow empty value to set NULL in database
+                $updateParams[] = $dbp->parse("AgendaItemOrder=NULL");
+            } else if (!is_numeric($value) || (int)$value <= 0) {
+                $errorarray["status"] = "422";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Invalid Agenda Item Order";
+                $errorarray["detail"] = "Agenda Item Order must be a positive number or empty";
+                $errorarray["meta"]["domSelector"] = "[name='AgendaItemOrder']";
+                array_push($return["errors"], $errorarray);
+                return $return;
+            } else {
+                // Check for uniqueness within session
+                $sessionID = isset($params["AgendaItemSessionID"]) ? $params["AgendaItemSessionID"] : $agendaItem["AgendaItemSessionID"];
+                $existing = $dbp->getRow("SELECT AgendaItemID FROM ?n WHERE AgendaItemOrder = ?i AND AgendaItemSessionID = ?s AND AgendaItemID != ?i",
+                    $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+                    (int)$value,
+                    $sessionID,
+                    $agendaItem["AgendaItemID"]
+                );
+                if ($existing) {
+                    $errorarray["status"] = "422";
+                    $errorarray["code"] = "1";
+                    $errorarray["title"] = "Duplicate Agenda Item Order";
+                    $errorarray["detail"] = "An agenda item with this order already exists in this session";
+                    $errorarray["meta"]["domSelector"] = "[name='AgendaItemOrder']";
+                    array_push($return["errors"], $errorarray);
+                    return $return;
+                }
+                $updateParams[] = $dbp->parse("AgendaItemOrder=?i", (int)$value);
+            }
+        }
+
+        // Validate session reference
+        if ($key === "AgendaItemSessionID") {
+            $session = $dbp->getRow("SELECT SessionID FROM ?n WHERE SessionID = ?s",
+                $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                $value
+            );
+            if (!$session) {
+                $errorarray["status"] = "422";
+                $errorarray["code"] = "1";
+                $errorarray["title"] = "Invalid Session";
+                $errorarray["detail"] = "The specified session does not exist";
+                $errorarray["meta"]["domSelector"] = "[name='AgendaItemSessionID']";
+                array_push($return["errors"], $errorarray);
+                return $return;
+            }
+            $updateParams[] = $dbp->parse("AgendaItemSessionID=?s", $value);
+        }
+
+        // Handle text fields
+        if ($key === "AgendaItemTitle" || $key === "AgendaItemOfficialTitle") {
             $updateParams[] = $dbp->parse("?n=?s", $key, $value);
         }
     }
 
     if (empty($updateParams)) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
         $errorarray["title"] = "No parameters";
@@ -357,12 +404,16 @@ function agendaItemChange($parameter) {
     }
 
     // Execute update
-    $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE AgendaItemID=?s", 
-        $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"], 
-        $IDInfos["id_part"]
+    $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE AgendaItemID=?i",
+        $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+        $agendaItem["AgendaItemID"]
     );
 
+    // Return success
     $return["meta"]["requestStatus"] = "success";
+    $return["data"] = array(
+        "message" => "Agenda item updated successfully"
+    );
     return $return;
 }
 
