@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+error_reporting(E_ALL ^ E_WARNING);
 session_start();
 
 require_once (__DIR__."/config.php");
@@ -750,7 +750,7 @@ switch ($page) {
 	break;
 	case "manage-structure-electoralPeriod":
 		$apiResult = apiV1([
-			"action"=>"getItem", 
+			"action"=>"getItemsFromDB", 
 			"itemType"=>"electoralPeriod", 
 			"id"=>$_REQUEST["id"]
 		]);
@@ -784,7 +784,7 @@ switch ($page) {
 	break;
 	case "manage-structure-session":
 		$apiResult = apiV1([
-			"action"=>"getItem", 
+			"action"=>"getItemsFromDB", 
 			"itemType"=>"session", 
 			"id"=>$_REQUEST["id"]
 		]);
@@ -818,7 +818,7 @@ switch ($page) {
 	break;
 	case "manage-structure-agendaItem":
 		$apiResult = apiV1([
-			"action"=>"getItem", 
+			"action"=>"getItemsFromDB", 
 			"itemType"=>"agendaItem", 
 			"id"=>$_REQUEST["id"]
 		]);
