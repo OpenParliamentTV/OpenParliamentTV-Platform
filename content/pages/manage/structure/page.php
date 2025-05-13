@@ -20,11 +20,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 <div class="col-12">
                     <h2><?= L::manageStructure; ?></h2>
                     <div class="card mb-3">
-						<div class="card-body">
-							<a href="<?= $config["dir"]["root"] ?>/manage/structure/electoralPeriod/new" class="btn btn-outline-success rounded-pill btn-sm me-1"><span class="icon-plus"></span> New Electoral Period</a>
-							<a href="<?= $config["dir"]["root"] ?>/manage/structure/session/new" class="btn btn-outline-success rounded-pill btn-sm me-1"><span class="icon-plus"></span> New Session</a>
-							<a href="<?= $config["dir"]["root"] ?>/manage/structure/agendaItem/new" class="btn btn-outline-success rounded-pill btn-sm me-1"><span class="icon-plus"></span> New Agenda Item</a>
-						</div>
+						<div class="card-body"></div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
