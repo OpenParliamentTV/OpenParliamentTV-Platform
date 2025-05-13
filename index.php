@@ -698,12 +698,7 @@ switch ($page) {
 					'label' => $pageTitle
 				]
 			];
-			if ($_REQUEST["id"] == 'new') {
-				$pageBreadcrumbs[count($pageBreadcrumbs) - 1]['label'] = '<span class="icon-plus"></span>';
-				include_once("./content/pages/manage/media/new.php");
-			} else {
-				include_once("./content/pages/manage/media/media-detail/page.php");
-			}
+			include_once("./content/pages/manage/media/media-detail/page.php");
 			$content = ob_get_clean();
 		} else {
 			$pageTitle = L::manageMedia;
