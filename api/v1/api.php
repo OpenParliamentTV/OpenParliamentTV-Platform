@@ -8,7 +8,7 @@ require_once ("config.php");
 require_once (__DIR__."/../../modules/utilities/functions.php");
 require_once (__DIR__."/../../modules/utilities/safemysql.class.php");
 
-function apiV1($request = false, $db = false, $dbp = false) {
+function apiV1($request_param = false, $db = false, $dbp = false) {
 
     global $config;
 
@@ -19,19 +19,28 @@ function apiV1($request = false, $db = false, $dbp = false) {
     $return["meta"]["requestStatus"] = "error";
     $return["errors"] = array();
 
-    // Get request body if it exists
+    // New request handling logic:
+    $final_request = []; 
+
+    // Get request body if it exists and merge
     $requestBody = json_decode(file_get_contents('php://input'), true);
     if ($requestBody) {
-        $request = array_merge($request ?: [], $requestBody);
+        $final_request = array_merge($final_request, $requestBody);
     }
 
-    // Get URL parameters
+    // Get URL parameters and merge
     $urlParams = $_GET;
     if ($urlParams) {
-        $request = array_merge($request ?: [], $urlParams);
+        $final_request = array_merge($final_request, $urlParams);
     }
 
-    if ((!$request["action"]) || (!$request["itemType"])) {
+    // Merge the explicitly passed $request_param, giving it precedence
+    if ($request_param) {
+        $final_request = array_merge($final_request, $request_param);
+    }
+    // End of new request handling logic
+
+    if ((!$final_request["action"]) || (!$final_request["itemType"])) {
 
         $errorarray["status"] = "422";
         $errorarray["code"] = "1";
@@ -42,45 +51,45 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
     } else {
 
-        switch ($request["action"]) {
+        switch ($final_request["action"]) {
 
             // =============================================
             // Public API endpoints (no authentication required)
             // =============================================
 
             case "getItem":
-                switch ($request["itemType"]) {
+                switch ($final_request["itemType"]) {
                     case "organisation":
                         require_once (__DIR__."/modules/organisation.php");
-                        $item = organisationGetByID($request["id"]);
+                        $item = organisationGetByID($final_request["id"]);
                         break;
                     case "document":
                         require_once (__DIR__."/modules/document.php");
-                        $item = documentGetByID($request["id"]);
+                        $item = documentGetByID($final_request["id"]);
                         break;
                     case "term":
                         require_once (__DIR__."/modules/term.php");
-                        $item = termGetByID($request["id"]);
+                        $item = termGetByID($final_request["id"]);
                         break;
                     case "person":
                         require_once (__DIR__."/modules/person.php");
-                        $item = personGetByID($request["id"]);
+                        $item = personGetByID($final_request["id"]);
                         break;
                     case "media":
                         require_once (__DIR__."/modules/media.php");
-                        $item = mediaGetByID($request["id"], $db, $dbp);
+                        $item = mediaGetByID($final_request["id"], $db, $dbp);
                         break;
                     case "session":
                         require_once (__DIR__."/modules/session.php");
-                        $item = sessionGetByID($request["id"]);
+                        $item = sessionGetByID($final_request["id"]);
                         break;
                     case "agendaItem":
                         require_once (__DIR__."/modules/agendaItem.php");
-                        $item = agendaItemGetByID($request["id"]);
+                        $item = agendaItemGetByID($final_request["id"]);
                         break;
                     case "electoralPeriod":
                         require_once (__DIR__."/modules/electoralPeriod.php");
-                        $item = electoralPeriodGetByID($request["id"]);
+                        $item = electoralPeriodGetByID($final_request["id"]);
                         break;
                     default:
                         $errorarray["status"] = "422";
@@ -100,26 +109,26 @@ function apiV1($request = false, $db = false, $dbp = false) {
                 break;
 
             case "search":
-                switch ($request["itemType"]) {
+                switch ($final_request["itemType"]) {
                     case "people":
                         require_once (__DIR__."/modules/person.php");
-                        $item = personSearch($request);
+                        $item = personSearch($final_request);
                         break;
                     case "organisations":
                         require_once (__DIR__."/modules/organisation.php");
-                        $item = organisationSearch($request);
+                        $item = organisationSearch($final_request);
                         break;
                     case "documents":
                         require_once (__DIR__."/modules/document.php");
-                        $item = documentSearch($request);
+                        $item = documentSearch($final_request);
                         break;
                     case "terms":
                         require_once (__DIR__."/modules/term.php");
-                        $item = termSearch($request);
+                        $item = termSearch($final_request);
                         break;
                     case "media":
                         require_once (__DIR__."/modules/media.php");
-                        $item = mediaSearch($request);
+                        $item = mediaSearch($final_request);
                         break;
                     default:
                         $errorarray["status"] = "422";
@@ -141,9 +150,9 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
             case "autocomplete":
                 include_once(__DIR__."/modules/autocomplete.php");
-                switch ($request["itemType"]) {
+                switch ($final_request["itemType"]) {
                     case "text": 
-                        $item = fulltextAutocomplete($request["q"]);
+                        $item = fulltextAutocomplete($final_request["q"]);
                         if (isset($item["meta"]["requestStatus"]) && $item["meta"]["requestStatus"] == "success") {
                             unset($return["errors"]);
                         } else {
@@ -157,21 +166,21 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
             case "statistics":
                 include_once(__DIR__."/modules/statistics.php");
-                switch ($request["itemType"]) {
+                switch ($final_request["itemType"]) {
                     case "general": 
-                        $item = statisticsGetGeneral($request);
+                        $item = statisticsGetGeneral($final_request);
                         break;
                     case "entity":
-                        $item = statisticsGetEntity($request);
+                        $item = statisticsGetEntity($final_request);
                         break;
                     case "terms":
-                        $item = statisticsGetTerms($request);
+                        $item = statisticsGetTerms($final_request);
                         break;
                     case "compare-terms":
-                        $item = statisticsCompareTerms($request);
+                        $item = statisticsCompareTerms($final_request);
                         break;
                     case "network":
-                        $item = statisticsGetNetwork($request);
+                        $item = statisticsGetNetwork($final_request);
                         break;
                     default:
                         $errorarray["status"] = "422";
@@ -192,24 +201,24 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
             case "user":
                 require_once (__DIR__."/modules/user.php");
-                switch ($request["itemType"]) {
+                switch ($final_request["itemType"]) {
                     case "login":
-                        $result = userLogin($request);
+                        $result = userLogin($final_request);
                         break;
                     case "register":
-                        $result = userRegister($request);
+                        $result = userRegister($final_request);
                         break;
                     case "logout":
                         $result = userLogout();
                         break;
                     case "password-reset":
-                        $result = userPasswordReset($request);
+                        $result = userPasswordReset($final_request);
                         break;
                     case "password-reset-request":
-                        $result = userPasswordResetRequest($request);
+                        $result = userPasswordResetRequest($final_request);
                         break;
                     case "confirm-registration":
-                        $result = userConfirmRegistration($request);
+                        $result = userConfirmRegistration($final_request);
                         break;
                     default:
                         $errorarray["status"] = "422";
@@ -235,10 +244,10 @@ function apiV1($request = false, $db = false, $dbp = false) {
             // =============================================
 
             case "addItem":
-                switch ($request["itemType"]) {
+                switch ($final_request["itemType"]) {
                     case "media":
                         require_once (__DIR__."/modules/media.php");
-                        $item = mediaAdd($request);
+                        $item = mediaAdd($final_request);
                         break;
                     default:
                         $errorarray["status"] = "422";
@@ -258,42 +267,42 @@ function apiV1($request = false, $db = false, $dbp = false) {
                 break;
 
             case "changeItem":
-                switch ($request["itemType"]) {
+                switch ($final_request["itemType"]) {
                     case "organisation":
                         require_once (__DIR__."/modules/organisation.php");
-                        $item = organisationChange($request);
+                        $item = organisationChange($final_request);
                         break;
                     case "document":
                         require_once (__DIR__."/modules/document.php");
-                        $item = documentChange($request);
+                        $item = documentChange($final_request);
                         break;
                     case "term":
                         require_once (__DIR__."/modules/term.php");
-                        $item = termChange($request);
+                        $item = termChange($final_request);
                         break;
                     case "person":
                         require_once (__DIR__."/modules/person.php");
-                        $item = personChange($request);
+                        $item = personChange($final_request);
                         break;
                     case "media":
                         require_once (__DIR__."/modules/media.php");
-                        $item = mediaChange($request);
+                        $item = mediaChange($final_request);
                         break;
                     case "session":
                         require_once (__DIR__."/modules/session.php");
-                        $item = sessionChange($request);
+                        $item = sessionChange($final_request);
                         break;
                     case "agendaItem":
                         require_once (__DIR__."/modules/agendaItem.php");
-                        $item = agendaItemChange($request);
+                        $item = agendaItemChange($final_request);
                         break;
                     case "electoralPeriod":
                         require_once (__DIR__."/modules/electoralPeriod.php");
-                        $item = electoralPeriodChange($request);
+                        $item = electoralPeriodChange($final_request);
                         break;
                     case "user":
                         require_once (__DIR__."/modules/user.php");
-                        $item = userChange($request);
+                        $item = userChange($final_request);
                         break;
                     default:
                         $errorarray["status"] = "422";
@@ -313,7 +322,7 @@ function apiV1($request = false, $db = false, $dbp = false) {
                 break;
 
             case "getItemsFromDB":
-                if (empty($request["itemType"])) {
+                if (empty($final_request["itemType"])) {
                     $return["meta"]["requestStatus"] = "error";
                     $return["errors"] = array();
                     $errorarray["status"] = "400";
@@ -324,57 +333,57 @@ function apiV1($request = false, $db = false, $dbp = false) {
                     return $return;
                 }
 
-                if (empty($request["limit"])) {
-                    $request["limit"] = 10;
+                if (empty($final_request["limit"])) {
+                    $final_request["limit"] = 10;
                 }
-                if (empty($request["offset"])) {
-                    $request["offset"] = 0;
+                if (empty($final_request["offset"])) {
+                    $final_request["offset"] = 0;
                 }
-                if (empty($request["sort"])) {
-                    $request["sort"] = false;
+                if (empty($final_request["sort"])) {
+                    $final_request["sort"] = false;
                 }
-                if (empty($request["order"])) {
-                    $request["order"] = false;
+                if (empty($final_request["order"])) {
+                    $final_request["order"] = false;
                 }
-                if (empty($request["search"])) {
-                    $request["search"] = false;
+                if (empty($final_request["search"])) {
+                    $final_request["search"] = false;
                 }
-                if (empty($request["id"])) {
-                    $request["id"] = "all";
+                if (empty($final_request["id"])) {
+                    $final_request["id"] = "all";
                 }
 
-                switch ($request["itemType"]) {
+                switch ($final_request["itemType"]) {
                     case "person":
                         require_once (__DIR__."/modules/person.php");
-                        $result = personGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        $result = personGetItemsFromDB($final_request["id"], $final_request["limit"], $final_request["offset"], $final_request["search"], $final_request["sort"], $final_request["order"]);
                         break;
                     case "organisation":
                         require_once (__DIR__."/modules/organisation.php");
-                        $result = organisationGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        $result = organisationGetItemsFromDB($final_request["id"], $final_request["limit"], $final_request["offset"], $final_request["search"], $final_request["sort"], $final_request["order"]);
                         break;
                     case "document":
                         require_once (__DIR__."/modules/document.php");
-                        $result = documentGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        $result = documentGetItemsFromDB($final_request["id"], $final_request["limit"], $final_request["offset"], $final_request["search"], $final_request["sort"], $final_request["order"]);
                         break;
                     case "term":
                         require_once (__DIR__."/modules/term.php");
-                        $result = termGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        $result = termGetItemsFromDB($final_request["id"], $final_request["limit"], $final_request["offset"], $final_request["search"], $final_request["sort"], $final_request["order"]);
                         break;
                     case "electoralPeriod":
                         require_once (__DIR__."/modules/electoralPeriod.php");
-                        $result = electoralPeriodGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        $result = electoralPeriodGetItemsFromDB($final_request["id"], $final_request["limit"], $final_request["offset"], $final_request["search"], $final_request["sort"], $final_request["order"]);
                         break;
                     case "session":
                         require_once (__DIR__."/modules/session.php");
-                        $result = sessionGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], false, $request["electoralPeriodID"]);
+                        $result = sessionGetItemsFromDB($final_request["id"], $final_request["limit"], $final_request["offset"], $final_request["search"], $final_request["sort"], $final_request["order"], false, $final_request["electoralPeriodID"]);
                         break;
                     case "agendaItem":
                         require_once (__DIR__."/modules/agendaItem.php");
-                        $result = agendaItemGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"], false, $request["electoralPeriodID"], $request["sessionID"]);
+                        $result = agendaItemGetItemsFromDB($final_request["id"], $final_request["limit"], $final_request["offset"], $final_request["search"], $final_request["sort"], $final_request["order"], false, $final_request["electoralPeriodID"], $final_request["sessionID"]);
                         break;
                     case "user":
                         require_once (__DIR__."/modules/user.php");
-                        $result = userGetItemsFromDB($request["id"], $request["limit"], $request["offset"], $request["search"], $request["sort"], $request["order"]);
+                        $result = userGetItemsFromDB($final_request["id"], $final_request["limit"], $final_request["offset"], $final_request["search"], $final_request["sort"], $final_request["order"]);
                         break;
                     default:
                         $return["meta"]["requestStatus"] = "error";
@@ -389,7 +398,7 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                 if ($result) {
                     $return["meta"]["requestStatus"] = "success";
-                    if ($request["id"] !== "all") {
+                    if ($final_request["id"] !== "all") {
                         $return["data"] = $result["data"][0] ?? null;
                     } else {
                         $return["total"] = $result["total"];
@@ -410,17 +419,17 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
             case "wikidataService":
                 $return["data"] = array();
-                switch ($request["itemType"]) {
+                switch ($final_request["itemType"]) {
                     case "person":
-                        if ($request["str"]) {
+                        if ($final_request["str"]) {
                             foreach ($config["parliament"] as $p=>$v) {
                                 if (file_exists($v["cache"]["wp"]."/people.json")) {
                                     $dump[$p] = json_decode(file_get_contents($v["cache"]["wp"]."/people.json"),true);
                                 }
                             }
 
-                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
-                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
+                            if (!preg_match("/(Q|P)\d+/i", $final_request["str"])) {
+                                $final_request["str"] = preg_replace("/\s/u",".*", $final_request["str"]);
                                 $tmpType = "label";
                             } else {
                                 $tmpType = "id";
@@ -430,16 +439,16 @@ function apiV1($request = false, $db = false, $dbp = false) {
                                 foreach ($d as $k => $v) {
                                     $success = false;
 
-                                    if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v[$tmpType]))) {
+                                    if (preg_match("/" . convertAccentsAndSpecialToNormal($final_request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v[$tmpType]))) {
                                         $success = true;
                                     } else if (isset($v["altLabel"])) {
                                         if (is_string($v["altLabel"])) {
-                                            if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v["altLabel"]))) {
+                                            if (preg_match("/" . convertAccentsAndSpecialToNormal($final_request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v["altLabel"]))) {
                                                 $success = true;
                                             }
                                         } else if (is_array($v["altLabel"])) {
                                             foreach ($v["altLabel"] as $altLabel) {
-                                                if (preg_match("/" . convertAccentsAndSpecialToNormal($request["str"]) . "/ui", convertAccentsAndSpecialToNormal($altLabel))) {
+                                                if (preg_match("/" . convertAccentsAndSpecialToNormal($final_request["str"]) . "/ui", convertAccentsAndSpecialToNormal($altLabel))) {
                                                     $success = true;
                                                     break;
                                                 }
@@ -501,12 +510,12 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         break;
 
                     case "party":
-                        if ($request["str"]) {
+                        if ($final_request["str"]) {
                             $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/parties.json"),true);
 
-                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
-                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
-                                $request["str"] = preg_replace("/\//","\\/", $request["str"]);
+                            if (!preg_match("/(Q|P)\d+/i", $final_request["str"])) {
+                                $final_request["str"] = preg_replace("/\s/u",".*", $final_request["str"]);
+                                $final_request["str"] = preg_replace("/\//","\\/", $final_request["str"]);
                                 $tmpType = "label";
                             } else {
                                 $tmpType = "id";
@@ -515,7 +524,7 @@ function apiV1($request = false, $db = false, $dbp = false) {
                             $return["data"] = [];
 
                             foreach ($dump as $k => $v) {
-                                if ((preg_match("/" . $request["str"] . "/i", $v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/" . $request["str"] . "/i", $v["labelAlternative"])))) {
+                                if ((preg_match("/" . $final_request["str"] . "/i", $v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/" . $final_request["str"] . "/i", $v["labelAlternative"])))) {
                                     $return["meta"]["requestStatus"] = "success";
                                     $return["data"][] = $v;
                                 }
@@ -544,12 +553,12 @@ function apiV1($request = false, $db = false, $dbp = false) {
                         break;
 
                     case "faction":
-                        if ($request["str"]) {
+                        if ($final_request["str"]) {
                             $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/factions.json"),true);
 
-                            if (!preg_match("/(Q|P)\d+/i", $request["str"])) {
-                                $request["str"] = preg_replace("/\s/u",".*", $request["str"]);
-                                $request["str"] = preg_replace("/\//","\\/", $request["str"]);
+                            if (!preg_match("/(Q|P)\d+/i", $final_request["str"])) {
+                                $final_request["str"] = preg_replace("/\s/u",".*", $final_request["str"]);
+                                $final_request["str"] = preg_replace("/\//","\\/", $final_request["str"]);
                                 $tmpType = "label";
                             } else {
                                 $tmpType = "id";
@@ -559,10 +568,10 @@ function apiV1($request = false, $db = false, $dbp = false) {
 
                             foreach ($dump as $k => $v) {
                                 if (
-                                    (preg_match("/" . $request["str"] . "/i", $v[$tmpType]))
+                                    (preg_match("/" . $final_request["str"] . "/i", $v[$tmpType]))
                                     || (
                                         (($tmpType == "label") && (gettype($v["labelAlternative"]) == "string"))
-                                        && (preg_match("/" . $request["str"] . "/i", $v["labelAlternative"]))
+                                        && (preg_match("/" . $final_request["str"] . "/i", $v["labelAlternative"]))
                                     )
                                 ) {
                                     $return["meta"]["requestStatus"] = "success";
