@@ -35,7 +35,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
                             <form id="agendaItemForm" class="needs-validation" novalidate>
-                                <input type="hidden" name="id" value="<?= htmlspecialchars($agendaItemData["id"]); ?>">
+                                <input type="hidden" name="id" value="<?= htmlspecialchars($agendaItemData["AgendaItemID"]); ?>">
                                 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
@@ -50,7 +50,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <table class="table mt-3 mt-md-0 mb-2 mb-md-0" style="border: 1px solid var(--border-color);">
                                             <tr>
                                                 <td>ID:</td>
-                                                <td><?= htmlspecialchars($agendaItemData["id"]); ?></td>
+                                                <td><?= htmlspecialchars($agendaItemData["AgendaItemID"]); ?></td>
                                             </tr>
                                             <tr>
                                                 <td><?= L::session; ?>:</td>
