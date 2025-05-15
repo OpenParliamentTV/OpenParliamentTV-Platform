@@ -1,3 +1,5 @@
+<?php
+?>
 <header>
 	<!--<div class="text-center alert m-0 px-1 py-0 alert-info" style="font-size: 14px;">* <span class="icon-attention mr-1"></span><a href="<?= $config["dir"]["root"] ?>/announcements" style="color: inherit; text-decoration: underline;"><?= L::messageAnnouncementCurrentState; ?></a></div>-->
 	<nav class="navbar justify-content-between navbar-light">
@@ -72,7 +74,16 @@
 						<div class="btn-group-vertical d-block px-4 mb-3" role="group">
 							
 							<?php
-							global $acceptLang;
+							global $acceptLang, $url, $urlWithoutParams;
+							
+							if (!isset($url)) {
+								$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+							}
+							
+							if (!isset($urlWithoutParams)) {
+								$urlWithoutParams = strtok($_SERVER["REQUEST_URI"], '?');
+							}
+							
 							$queryString = parse_url($url, PHP_URL_QUERY);
 							$params = [];
 							if ($queryString) {
