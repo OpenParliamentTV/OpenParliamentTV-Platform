@@ -4,6 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../../modules/utilities/functions.api.php");
 
 
 
@@ -13,70 +14,40 @@ require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
  * @return array
  */
 function documentGetByID($id = false) {
-
     global $config;
 
     if (!$id) {
+        return createApiErrorMissingParameter('id');
+    }
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        array_push($return["errors"], $errorarray);
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
+    }
 
-        return $return;
-
-    } else {
-
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
+    try {
+        $item = $db->getRow("SELECT * FROM ?n WHERE DocumentID=?i",
+            $config["platform"]["sql"]["tbl"]["Document"],
+            (int)$id
         );
 
-
-        try {
-
-            $db = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed #1";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
-        $item = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Document"]." WHERE DocumentID=?s",$id);
-
         if ($item) {
-
-            $return["meta"]["requestStatus"] = "success";
-            $documentDataObj["data"] = documentGetDataObject($item, $db);
-            $return = array_replace_recursive($return, $documentDataObj);
-
+            $documentData = documentGetDataObject($item, $db);
+            if (!$documentData) {
+                return createApiErrorResponse(
+                    500,
+                    1,
+                    "messageErrorDataTransformationTitle",
+                    "messageErrorDataTransformationDetail"
+                );
+            }
+            return createApiSuccessResponse($documentData);
         } else {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "404";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Document not found";
-            $errorarray["detail"] = "Document with the given ID was not found in database";
-            array_push($return["errors"], $errorarray);
-
+            return createApiErrorNotFound('document');
         }
 
-        return $return;
-
+    } catch (exception $e) {
+        return createApiErrorDatabaseConnection();
     }
 }
 
@@ -114,468 +85,328 @@ function documentGetDataObject($item = false, $db = false) {
 }
 
 function documentSearch($parameter, $db = false) {
-
     global $config;
 
     $outputLimit = 25;
 
-    if (!$db) {
-
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        );
-
-        try {
-
-            $db = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed #2";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
     }
 
     $filteredParameters = filterAllowedSearchParams($parameter, 'document');
 
-    /************ VALIDATION START ************/
-
-    if (array_key_exists("label", $filteredParameters)) {
-
+    // Validate label parameter
+    if (isset($filteredParameters["label"])) {
         if (is_array($filteredParameters["label"])) {
-
             foreach ($filteredParameters["label"] as $tmpNameID) {
-
                 if (mb_strlen($tmpNameID, "UTF-8") < 3) {
-
-                    $return["meta"]["requestStatus"] = "error";
-                    $errorarray["status"] = "400";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "label too short";
-                    $errorarray["detail"] = "Searching for label needs at least 3 characters.";
-                    $return["errors"][] = $errorarray;
-
+                    return createApiErrorResponse(
+                        400,
+                        1,
+                        "messageErrorSearchLabelTooShortTitle",
+                        "messageErrorSearchLabelTooShortDetail",
+                        ["minLength" => 3]
+                    );
                 }
-
             }
-
-        } else {
-
-            if (mb_strlen($filteredParameters["label"], "UTF-8") < 3) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $errorarray["status"] = "400";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "label too short";
-                $errorarray["detail"] = "Searching for label needs at least 3 characters.";
-                $return["errors"][] = $errorarray;
-
-            }
+        } else if (mb_strlen($filteredParameters["label"], "UTF-8") < 3) {
+            return createApiErrorResponse(
+                400,
+                1,
+                "messageErrorSearchLabelTooShortTitle",
+                "messageErrorSearchLabelTooShortDetail",
+                ["minLength" => 3]
+            );
         }
     }
 
-
-
-    if (array_key_exists("type", $filteredParameters) && (mb_strlen($filteredParameters["type"], "UTF-8") < 2)) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "2";
-        $errorarray["title"] = "type too short";
-        $errorarray["detail"] = "Searching for type needs at least 2 characters.";
-        $return["errors"][] = $errorarray;
-
+    // Validate type parameter
+    if (isset($filteredParameters["type"]) && mb_strlen($filteredParameters["type"], "UTF-8") < 2) {
+        return createApiErrorResponse(
+            400,
+            2,
+            "messageErrorSearchTypeTooShortTitle",
+            "messageErrorSearchTypeTooShortDetail",
+            ["minLength" => 2]
+        );
     }
 
-
-
-    if (array_key_exists("wikidataID", $filteredParameters) && (!preg_match("/(Q|P)\d+/i", $filteredParameters["wikidataID"]))) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "2";
-        $errorarray["title"] = "wrong wikidataID";
-        $errorarray["detail"] = "wikidataID doesn't match the pattern.";
-        $return["errors"][] = $errorarray;
-
+    // Validate wikidataID parameter
+    if (isset($filteredParameters["wikidataID"])) {
+        if (!validateWikidataID($filteredParameters["wikidataID"])) {
+            return createApiErrorInvalidID("Wikidata");
+        }
     }
 
+    try {
+        $query = "SELECT * FROM ?n";
+        $conditions = [];
 
-    /************ VALIDATION END ************/
-
-
-
-
-
-    if ($return["meta"]["requestStatus"] == "error") {
-
-        return $return;
-
-    }
-
-    $query = "SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Document"];
-
-    $conditions = array();
-
-    foreach ($filteredParameters as $k=>$para) {
-        if ($k == "label") {
-            if (is_array($para)) {
-
-                $tmpStringArray = array();
-
-                foreach ($para as $tmppara) {
-
-                    $tmpStringArray[] = $db->parse("((MATCH(DocumentLabel, DocumentLabelAlternative, DocumentAbstract) AGAINST (?s IN BOOLEAN MODE)) OR (DocumentLabel LIKE ?s))", "*".$tmppara."*", "%".$tmppara."%");
+        foreach ($filteredParameters as $k => $para) {
+            if ($k == "label") {
+                if (is_array($para)) {
+                    $tmpStringArray = array_map(function($tmppara) use ($db) {
+                        return $db->parse("((MATCH(DocumentLabel, DocumentLabelAlternative, DocumentAbstract) AGAINST (?s IN BOOLEAN MODE)) OR (DocumentLabel LIKE ?s))", 
+                            "*".$tmppara."*", 
+                            "%".$tmppara."%"
+                        );
+                    }, $para);
+                    $conditions[] = "(" . implode(" OR ", $tmpStringArray) . ")";
+                } else {
+                    $conditions[] = $db->parse("(MATCH(DocumentLabel, DocumentLabelAlternative, DocumentAbstract) AGAINST (?s IN BOOLEAN MODE) OR (DocumentLabel LIKE ?s))", 
+                        "*".$para."*", 
+                        "%".$para."%"
+                    );
                 }
+            }
 
-                $tmpStringArray = " (" . implode(" OR ", $tmpStringArray) . ")";
-                $conditions[] = $tmpStringArray;
+            if ($k == "type") {
+                $conditions[] = $db->parse("DocumentType = ?s", $para);
+            }
 
-            } else {
-
-                $conditions[] = $db->parse("(MATCH(DocumentLabel, DocumentLabelAlternative, DocumentAbstract) AGAINST (?s IN BOOLEAN MODE) OR (DocumentLabel LIKE ?s))", "*".$para."*", "%".$para."%");
-
+            if ($k == "wikidataID") {
+                $conditions[] = $db->parse("DocumentWikidataID = ?s", $para);
             }
         }
 
-        if ($k == "type") {
-
-            $conditions[] = $db->parse("DocumentType = ?s", $para);
-
+        if (empty($conditions)) {
+            return createApiErrorResponse(
+                404,
+                1,
+                "messageErrorParameterMissingTitle",
+                "messageErrorNotEnoughSearchParametersDetail"
+            );
         }
 
-        if ($k == "wikidataID") {
+        $query = $db->parse("?p WHERE ?p", $query, implode(" AND ", $conditions));
+        $totalCount = count($db->getAll($query));
 
-            $conditions[] = $db->parse("DocumentWikidataID = ?s", $para);
-
-        }
-
-    }
-
-
-    if (count($conditions) > 0) {
-
-        $query .= " WHERE ".implode(" AND ",$conditions);
-
-        $totalCount = $db->getAll($query);
-
-        $query .= " LIMIT ";
-
-        if ($parameter["page"]) {
-
-            $query .= ($parameter["page"]-1)*$outputLimit.",";
-
-        } else {
-
-            $parameter["page"] = 1;
-
-        }
-
-        $query .= $outputLimit;
-
-
+        $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
+        $query .= $db->parse(" LIMIT ?i, ?i", ($page-1)*$outputLimit, $outputLimit);
+        
         $findings = $db->getAll($query);
 
-        $return["meta"]["requestStatus"] = "success";
-        $return["meta"]["page"] = $parameter["page"];
-        $return["meta"]["pageTotal"] = ceil(count($totalCount)/$outputLimit);
-
-        if (!$return["data"]) {
-            $return["data"] = array();
-        }
-
-        foreach ($findings as $finding) {
-
-            $itemObj = documentGetDataObject($finding,$db);
+        $data = array_map(function($finding) use ($db) {
+            $itemObj = documentGetDataObject($finding, $db);
             unset($itemObj["meta"]);
-            array_push($return["data"], $itemObj);
-        }
+            return $itemObj;
+        }, $findings);
 
-    } else {
+        return createApiSuccessResponse(
+            $data,
+            [
+                "requestStatus" => "success",
+                "page" => $page,
+                "pageTotal" => ceil($totalCount/$outputLimit)
+            ],
+            [
+                "self" => $config["dir"]["api"]."/search/documents?".getURLParameterFromArray($filteredParameters)
+            ]
+        );
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Not enough parameters";
-        $errorarray["detail"] = "Not enough parameters";
-        array_push($return["errors"], $errorarray);
-
+    } catch (exception $e) {
+        return createApiErrorResponse(
+            422,
+            2,
+            "messageErrorDatabaseGeneric",
+            $e->getMessage()
+        );
     }
-
-    if (!array_key_exists("data", $return)) {
-        $return["data"] = array();
-    }
-
-
-    $return["links"]["self"] = $config["dir"]["api"]."/search/documents?".getURLParameterFromArray($filteredParameters);
-
-    return $return;
-
-
-
 }
 
 
 function documentAdd($item, $db = false) {
-
     global $config;
 
-    if (!$db) {
+    // Validate required fields
+    $requiredFields = [
+        'type' => 'Type',
+        'label' => 'Label',
+        'abstract' => 'Abstract',
+        'sourceuri' => 'Source URI'
+    ];
 
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
+    foreach ($requiredFields as $field => $label) {
+        $validation = validateApiRequired($item[$field], $field);
+        if ($validation !== true) {
+            return $validation;
+        }
+    }
+
+    // Additional validation
+    if (strlen($item["label"]) < 3) {
+        return createApiErrorInvalidLength("label", 3);
+    }
+
+    if (strlen($item["abstract"]) < 5) {
+        return createApiErrorInvalidLength("abstract", 5);
+    }
+
+    if (strlen($item["sourceuri"]) < 5) {
+        return createApiErrorInvalidLength("sourceuri", 5);
+    }
+
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
+    }
+
+    // Check for existing document
+    $conditions = ["DocumentSourceURI=?s"];
+    $params = [$item["sourceuri"]];
+    
+    if (isset($item["id"])) {
+        $conditions[] = "DocumentWikidataID=?s";
+        $params[] = $item["id"];
+    }
+
+    $itemTmp = $db->getRow(
+        "SELECT DocumentID FROM ?n WHERE " . implode(" OR ", $conditions),
+        array_merge([$config["platform"]["sql"]["tbl"]["Document"]], $params)
+    );
+
+    if ($itemTmp) {
+        return createApiErrorResponse(409, 1, "messageErrorItemExists", "messageErrorItemExists", ["item" => "Document"]);
+    }
+
+    try {
+        // Process alternative labels
+        $labelAlternative = [];
+        if (is_array($item["labelAlternative"])) {
+            foreach ($item["labelAlternative"] as $v) {
+                if ($v) {
+                    $labelAlternative[] = $v;
+                }
+            }
+        }
+
+        // Insert document
+        $db->query("INSERT INTO ?n SET ?u",
+            $config["platform"]["sql"]["tbl"]["Document"],
+            array(
+                "DocumentType" => $item["type"],
+                "DocumentWikidataID" => $item["id"],
+                "DocumentLabel" => $item["label"],
+                "DocumentLabelAlternative" => (is_array($labelAlternative) ? 
+                    json_encode($labelAlternative, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : 
+                    "[".$item["labelAlternative"]."]"),
+                "DocumentAbstract" => $item["abstract"],
+                "DocumentThumbnailURI" => $item["thumbnailuri"],
+                "DocumentThumbnailCreator" => $item["thumbnailcreator"],
+                "DocumentThumbnailLicense" => $item["thumbnaillicense"],
+                "DocumentSourceURI" => $item["sourceuri"],
+                "DocumentEmbedURI" => $item["embeduri"],
+                "DocumentAdditionalInformation" => (is_array($item["additionalinformation"]) ? 
+                    json_encode($item["additionalinformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : 
+                    $item["additionalinformation"])
+            )
         );
 
-        try {
+        return createApiSuccessResponse(null, ["itemID" => $db->insertId()]);
 
-            $db = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "2";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to platform database failed";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
+    } catch (exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
     }
-
-    if (!$item["type"]) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Type is missing";
-        $errorarray["label"] = "type";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if ((!$item["label"]) || strlen($item["label"]) < 3) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Label is missing or <3";
-        $errorarray["label"] = "label";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if ((!$item["abstract"]) || strlen($item["abstract"]) < 5) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Abstract is missing or <5";
-        $errorarray["label"] = "abstract";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if ((!$item["sourceuri"]) || strlen($item["sourceuri"]) < 5) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Source URI is missing or too short";
-        $errorarray["label"] = "sourceuri";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if ($return["errors"]) {
-        $return["meta"]["requestStatus"] = "error";
-        return $return;
-    } else {
-
-        if ($item["id"]) {
-            $wikicondition = $db->parse(" OR DocumentWikidataID=?s",$item["id"]);
-        }
-
-        $itemTmp = $db->getRow("SELECT DocumentID FROM ?n WHERE DocumentSourceURI=?s".$wikicondition,$config["platform"]["sql"]["tbl"]["Document"],$item["sourceuri"]);
-
-        if ($itemTmp) {
-            $return["meta"]["requestStatus"] = "error";
-            $errorarray["status"] = "422"; //todo
-            $errorarray["code"] = "2";
-            $errorarray["title"] = "An item with same WikidataID or SourceURI already exists in Database";
-            $errorarray["label"] = "error_info";
-            $errorarray["detail"] = "Item already exists in Database";
-            $return["errors"][] = $errorarray;
-            return $return;
-
-        } else {
-
-            try {
-
-                $labelAlternative = array();
-                if (is_array($item["labelAlternative"])) {
-                    foreach ($item["labelAlternative"] as $v) {
-                        if ($v) {
-                            $labelAlternative[] = $v;
-                        }
-                    }
-                }
-
-
-                $db->query("INSERT INTO ?n SET ".
-                    "DocumentType=?s, ".
-                    "DocumentWikidataID=?s, ".
-                    "DocumentLabel=?s, ".
-                    "DocumentLabelAlternative=?s, ".
-                    "DocumentAbstract=?s, ".
-                    "DocumentThumbnailURI=?s, ".
-                    "DocumentThumbnailCreator=?s, ".
-                    "DocumentThumbnailLicense=?s, ".
-                    "DocumentSourceURI=?s, ".
-                    "DocumentEmbedURI=?s, ".
-                    "DocumentAdditionalInformation=?s",
-
-                    $config["platform"]["sql"]["tbl"]["Document"],
-                    $item["type"],
-                    $item["id"],
-                    $item["label"],
-                    (is_array($labelAlternative) ? json_encode($labelAlternative,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : "[".$item["labelAlternative"]."]"),
-                    $item["abstract"],
-                    $item["thumbnailuri"],
-                    $item["thumbnailcreator"],
-                    $item["thumbnaillicense"],
-                    $item["sourceuri"],
-                    $item["embeduri"],
-                    (is_array($item["additionalinformation"]) ? json_encode($item["additionalinformation"],JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["additionalinformation"])
-                );
-                $return["meta"]["requestStatus"] = "success";
-                $return["meta"]["itemID"] = $db->insertId();
-
-            } catch (exception $e) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $errorarray["status"] = "422"; //todo
-                $errorarray["code"] = "2";
-                $errorarray["title"] = "Add to database failed";
-                $errorarray["label"] = "error_info";
-                $errorarray["detail"] = $e->getMessage();
-                $return["errors"][] = $errorarray;
-
-            }
-
-        }
-    }
-
-    return $return;
-
 }
 
-function documentGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false) {
-
+function documentGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false) {
     global $config;
-
-    if (!$db) {
-        $db = new SafeMySQL(array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        ));
+    
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return array(
+            "total" => 0,
+            "data" => array()
+        );
     }
-
-    $queryPart = "";
-
-    if ($id == "all") {
-        $queryPart .= "1";
-    } else {
-        $queryPart .= $db->parse("DocumentID=?s",$id);
-    }
-
-
-    if (!empty($search)) {
-        $queryPart .= $db->parse(" AND (DocumentLabel LIKE ?s OR DocumentLabelAlternative LIKE ?s OR DocumentID LIKE ?s)", "%".$search."%", "%".$search."%", "%".$search."%");
-    }
-
-    if (!empty($sort)) {
-
-        $queryPart .= $db->parse(" ORDER BY ?n ".$order, $sort);
-
-    }
-
-
-    if ($limit != 0) {
-
-        $queryPart .= $db->parse(" LIMIT ?i, ?i",$offset,$limit);
-
-    }
-
-    $return["total"] = $db->getOne("SELECT COUNT(DocumentID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Document"]);
-    $return["data"] = $db->getAll("SELECT
-        DocumentID,
+    
+    try {
+        // Build query conditions
+        $conditions = [];
+        
+        if ($id === "all") {
+            $conditions[] = "1";
+        } else {
+            $conditions[] = $db->parse("DocumentID=?i", (int)$id);
+        }
+        
+        if (!empty($search)) {
+            $conditions[] = $db->parse("(DocumentLabel LIKE ?s OR DocumentLabelAlternative LIKE ?s OR DocumentID LIKE ?s)", 
+                "%".$search."%", 
+                "%".$search."%",
+                "%".$search."%"
+            );
+        }
+        
+        $whereClause = implode(" AND ", $conditions);
+        
+        // Get total count
+        $totalCount = $db->getOne("SELECT COUNT(DocumentID) as count FROM ?n WHERE ?p",
+            $config["platform"]["sql"]["tbl"]["Document"],
+            $whereClause
+        );
+        
+        // Add sorting
+        if (!empty($sort)) {
+            $whereClause .= $db->parse(" ORDER BY ?n ".$order, $sort);
+        }
+        
+        // Add pagination
+        if ($limit > 0) {
+            $whereClause .= $db->parse(" LIMIT ?i, ?i", $offset, $limit);
+        }
+        
+        // Get results
+        $items = $db->getAll("SELECT
+            DocumentID,
             DocumentType,
             DocumentLabel,
             DocumentLabelAlternative,
             DocumentWikidataID,
             DocumentLastChanged
-            FROM ?n
-            WHERE ?p", $config["platform"]["sql"]["tbl"]["Document"], $queryPart);
-
-    return $return;
-
+            FROM ?n 
+            WHERE ?p",
+            $config["platform"]["sql"]["tbl"]["Document"],
+            $whereClause
+        );
+        
+        return array(
+            "total" => (int)$totalCount,
+            "data" => $items
+        );
+        
+    } catch (exception $e) {
+        error_log("Error in documentGetItemsFromDB: " . $e->getMessage());
+        return array(
+            "total" => 0,
+            "data" => array()
+        );
+    }
 }
 
 function documentChange($parameter) {
     global $config;
 
     if (!$parameter["id"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter (id) is missing";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorMissingParameter('id');
     }
 
-    try {
-        $db = new SafeMySQL(array(
-            'host'  => $config["platform"]["sql"]["access"]["host"],
-            'user'  => $config["platform"]["sql"]["access"]["user"],
-            'pass'  => $config["platform"]["sql"]["access"]["passwd"],
-            'db'    => $config["platform"]["sql"]["db"]
-        ));
-    } catch (exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    $numericDocID = (int)$parameter["id"]; // Convert to int
+
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
     }
 
     // Check if document exists
-    $document = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Document"]." WHERE DocumentID=?s LIMIT 1", $parameter["id"]);
+    $document = $db->getRow("SELECT * FROM ?n WHERE DocumentID=?i", 
+        $config["platform"]["sql"]["tbl"]["Document"], 
+        $numericDocID
+    );
+    
     if (!$document) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Document not found";
-        $errorarray["detail"] = "Document with the given ID was not found in database";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorNotFound("Document");
     }
 
     // Define allowed parameters
@@ -603,27 +434,42 @@ function documentChange($parameter) {
     }
 
     if (empty($updateParams)) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "No parameters";
-        $errorarray["detail"] = "No valid parameters for updating document data were provided";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageErrorParameterMissingTitle",
+            "messageErrorNoParameters"
+        );
     }
 
     // Add last changed timestamp
     $updateParams[] = "DocumentLastChanged=CURRENT_TIMESTAMP()";
 
-    // Execute update
-    $db->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE DocumentID=?s", 
-        $config["platform"]["sql"]["tbl"]["Document"], 
-        $parameter["id"]
-    );
+    try {
+        // Execute update
+        $result = $db->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE DocumentID=?i",
+            $config["platform"]["sql"]["tbl"]["Document"],
+            $numericDocID
+        );
 
-    $return["meta"]["requestStatus"] = "success";
-    return $return;
+        if ($result) {
+            return createApiSuccessResponse();
+        } else {
+            return createApiErrorResponse(
+                503,
+                1,
+                "messageErrorDatabaseGeneric",
+                "messageErrorUpdateNoRowsAffected"
+            );
+        }
+    } catch (exception $e) {
+        return createApiErrorResponse(
+            503,
+            1,
+            "messageErrorDatabaseGeneric",
+            "Error updating document data: " . $e->getMessage()
+        );
+    }
 }
 
 ?>

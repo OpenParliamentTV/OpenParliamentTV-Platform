@@ -5,6 +5,7 @@ require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/textArrayConverters.php");
 require_once (__DIR__."/../../../modules/statistics/functions.php");
+require_once (__DIR__."/../../../modules/utilities/functions.api.php");
 
 // Initialize OpenSearch client if not already initialized
 if (!isset($GLOBALS['ESClient'])) {
@@ -32,144 +33,139 @@ if (!isset($GLOBALS['ESClient'])) {
 function statisticsGetGeneral($request) {
     global $config;
     
-    $return = [
-        "meta" => [
-            "requestStatus" => "error"
-        ],
-        "data" => [
-            "type" => "statistics",
-            "id" => "general",
-            "attributes" => []
-        ],
-        "links" => [
-            "self" => $config["dir"]["api"]."/statistics/general"
-        ]
-    ];
-    
     try {
         // Check if OpenSearch client is available
         if (!isset($GLOBALS['ESClient'])) {
-            throw new Exception("OpenSearch client not initialized");
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorStatisticsTitle",
+                "messageErrorOpenSearchClientInitFailed"
+            );
         }
         
         $stats = getGeneralStatistics();
         
         if ($stats === null) {
-            throw new Exception("Failed to retrieve statistics from OpenSearch");
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorStatisticsTitle",
+                "messageErrorOpenSearchQueryFailed"
+            );
         }
         
         // Process speaker statistics
         if (!isset($stats["speakers"]["filtered_speakers"])) {
-            throw new Exception("Invalid speaker statistics format");
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorStatisticsTitle",
+                "messageErrorInvalidStatsFormatSpeaker"
+            );
         }
-        
-        $return["data"]["attributes"]["speakers"] = [
-            "total" => $stats["speakers"]["filtered_speakers"]["unique_speakers"]["value"],
-            "topSpeakers" => array_map(function($bucket) {
-                return [
-                    "id" => $bucket["key"],
-                    "speechCount" => $bucket["doc_count"]
-                ];
-            }, $stats["speakers"]["filtered_speakers"]["top_speakers"]["buckets"])
+
+        $data = [
+            "type" => "statistics",
+            "id" => "general",
+            "attributes" => [
+                "speakers" => [
+                    "total" => $stats["speakers"]["filtered_speakers"]["unique_speakers"]["value"],
+                    "topSpeakers" => array_map(function($bucket) {
+                        return [
+                            "id" => $bucket["key"],
+                            "speechCount" => $bucket["doc_count"]
+                        ];
+                    }, $stats["speakers"]["filtered_speakers"]["top_speakers"]["buckets"])
+                ]
+            ]
         ];
         
         // Process speaking time statistics
-        if (!isset($stats["speakingTime"])) {
-            throw new Exception("Invalid speaking time statistics format");
-        }
-        
-        $return["data"]["attributes"]["speakingTime"] = [
-            "total" => $stats["speakingTime"]["sum"],
-            "average" => $stats["speakingTime"]["avg"],
-            "unit" => "seconds"
-        ];
-        
-        // Process word frequency statistics
-        if (!isset($stats["wordFrequency"])) {
-            throw new Exception("Invalid word frequency statistics format");
-        }
-        
-        $return["data"]["attributes"]["wordFrequency"] = [
-            "total" => $stats["wordFrequency"]["sum_other_doc_count"],
-            "topWords" => array_map(function($bucket) {
-                return [
-                    "word" => $bucket["key"],
-                    "speechCount" => $bucket["doc_count"]
-                ];
-            }, $stats["wordFrequency"]["buckets"])
-        ];
-
-        // Process speaker mentions
-        if (!isset($stats["speakerMentions"])) {
-            throw new Exception("Invalid speaker mentions statistics format");
-        }
-
-        $return["data"]["attributes"]["speakerMentions"] = [
-            "total" => $stats["speakerMentions"]["filtered_speakers"]["doc_count"],
-            "topMentions" => array_map(function($bucket) {
-                return [
-                    "id" => $bucket["key"],
-                    "count" => $bucket["doc_count"]
-                ];
-            }, $stats["speakerMentions"]["filtered_speakers"]["topSpeakers"]["buckets"])
-        ];
-
-        // Process share of voice
-        if (!isset($stats["shareOfVoice"])) {
-            throw new Exception("Invalid share of voice statistics format");
-        }
-
-        $return["data"]["attributes"]["shareOfVoice"] = [
-            "parties" => array_map(function($bucket) {
-                return [
-                    "id" => $bucket["key"],
-                    "count" => $bucket["doc_count"]
-                ];
-            }, $stats["shareOfVoice"]["parties"]["topParties"]["buckets"]),
-            "factions" => array_map(function($bucket) {
-                return [
-                    "id" => $bucket["key"],
-                    "count" => $bucket["doc_count"]
-                ];
-            }, $stats["shareOfVoice"]["factions"]["topFactions"]["buckets"])
-        ];
-
-        // Process entities statistics
-        if (!isset($stats["entities"])) {
-            throw new Exception("Invalid entities statistics format");
-        }
-
-        $return["data"]["attributes"]["entities"] = [];
-        foreach ($stats["entities"]["entityTypes"]["buckets"] as $typeBucket) {
-            $entityType = $typeBucket["key"];
-            $return["data"]["attributes"]["entities"][$entityType] = [
-                "total" => $typeBucket["doc_count"],
-                "topEntities" => array_map(function($bucket) {
-                    return [
-                        "id" => $bucket["key"],
-                        "totalCount" => $bucket["doc_count"],
-                        "speechCount" => $bucket["unique_documents"]["value"]
-                    ];
-                }, $typeBucket["topEntities"]["buckets"])
+        if (isset($stats["speakingTime"])) {
+            $data["attributes"]["speakingTime"] = [
+                "total" => $stats["speakingTime"]["sum"],
+                "average" => $stats["speakingTime"]["avg"],
+                "unit" => "seconds"
             ];
         }
         
-        // Set success status
-        $return["meta"]["requestStatus"] = "success";
+        // Process word frequency statistics
+        if (isset($stats["wordFrequency"])) {
+            $data["attributes"]["wordFrequency"] = [
+                "total" => $stats["wordFrequency"]["sum_other_doc_count"],
+                "topWords" => array_map(function($bucket) {
+                    return [
+                        "word" => $bucket["key"],
+                        "speechCount" => $bucket["doc_count"]
+                    ];
+                }, $stats["wordFrequency"]["buckets"])
+            ];
+        }
+
+        // Process speaker mentions
+        if (isset($stats["speakerMentions"])) {
+            $data["attributes"]["speakerMentions"] = [
+                "total" => $stats["speakerMentions"]["filtered_speakers"]["doc_count"],
+                "topMentions" => array_map(function($bucket) {
+                    return [
+                        "id" => $bucket["key"],
+                        "count" => $bucket["doc_count"]
+                    ];
+                }, $stats["speakerMentions"]["filtered_speakers"]["topSpeakers"]["buckets"])
+            ];
+        }
+
+        // Process share of voice
+        if (isset($stats["shareOfVoice"])) {
+            $data["attributes"]["shareOfVoice"] = [
+                "parties" => array_map(function($bucket) {
+                    return [
+                        "id" => $bucket["key"],
+                        "count" => $bucket["doc_count"]
+                    ];
+                }, $stats["shareOfVoice"]["parties"]["topParties"]["buckets"]),
+                "factions" => array_map(function($bucket) {
+                    return [
+                        "id" => $bucket["key"],
+                        "count" => $bucket["doc_count"]
+                    ];
+                }, $stats["shareOfVoice"]["factions"]["topFactions"]["buckets"])
+            ];
+        }
+
+        // Process entities statistics
+        if (isset($stats["entities"])) {
+            $data["attributes"]["entities"] = [];
+            foreach ($stats["entities"]["entityTypes"]["buckets"] as $typeBucket) {
+                $entityType = $typeBucket["key"];
+                $data["attributes"]["entities"][$entityType] = [
+                    "total" => $typeBucket["doc_count"],
+                    "topEntities" => array_map(function($bucket) {
+                        return [
+                            "id" => $bucket["key"],
+                            "totalCount" => $bucket["doc_count"],
+                            "speechCount" => $bucket["unique_documents"]["value"]
+                        ];
+                    }, $typeBucket["topEntities"]["buckets"])
+                ];
+            }
+        }
+
+        return createApiSuccessResponse($data, [
+            "links" => [
+                "self" => $config["dir"]["api"]."/statistics/general"
+            ]
+        ]);
         
     } catch (Exception $e) {
-        unset($return["data"]);
-        $return["errors"] = [
-            [
-                "status" => "500",
-                "code" => "1",
-                "title" => "Statistics Error",
-                "detail" => $e->getMessage()
-            ]
-        ];
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorStatisticsTitle",
+            $e->getMessage()
+        );
     }
-    
-    return $return;
 }
 
 /**
@@ -181,63 +177,59 @@ function statisticsGetGeneral($request) {
 function statisticsGetEntity($request) {
     global $config;
     
-    $return = [
-        "meta" => [
-            "requestStatus" => "error"
-        ],
-        "data" => [
-            "type" => "statistics",
-            "id" => "entity",
-            "attributes" => []
-        ],
-        "links" => [
-            "self" => $config["dir"]["api"]."/statistics/entity"
-        ]
-    ];
-    
     try {
         if (empty($request["entityType"]) || empty($request["entityID"])) {
-            throw new Exception("Missing required parameters: entityType and entityID");
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorParameterMissingTitle",
+                "messageErrorMissingParametersDetail",
+                ["parameters" => "entityType and entityID"]
+            );
         }
         
         $stats = getEntityStatistics($request["entityType"], $request["entityID"]);
         
         if ($stats === null) {
-            throw new Exception("Failed to retrieve entity statistics");
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorEntityStatsTitle",
+                "messageErrorEntityStatsQueryFailed"
+            );
         }
         
-        // Process entity information
-        $return["data"]["attributes"]["entity"] = [
-            "id" => $request["entityID"],
-            "type" => $request["entityType"]
+        // Build data structure
+        $data = [
+            "type" => "statistics",
+            "id" => "entity",
+            "attributes" => [
+                "entity" => [
+                    "id" => $request["entityID"],
+                    "type" => $request["entityType"]
+                ],
+                "associations" => [
+                    "total" => $stats["associations"]["doc_count"],
+                    "topSpeakers" => array_map(function($bucket) {
+                        return [
+                            "id" => $bucket["key"],
+                            "count" => $bucket["doc_count"]
+                        ];
+                    }, $stats["associations"]["top_speakers"]["buckets"])
+                ],
+                "trends" => [
+                    "total" => $stats["trends"]["buckets"][count($stats["trends"]["buckets"])-1]["doc_count"],
+                    "timeline" => array_map(function($bucket) {
+                        return [
+                            "date" => $bucket["key_as_string"],
+                            "count" => $bucket["doc_count"]
+                        ];
+                    }, $stats["trends"]["buckets"])
+                ]
+            ]
         ];
         
-        // Update self link with entity path
-        $return["links"]["self"] .= "/".$request["entityType"]."/".$request["entityID"];
-        
-        // Process associations
-        $return["data"]["attributes"]["associations"] = [
-            "total" => $stats["associations"]["doc_count"],
-            "topSpeakers" => array_map(function($bucket) {
-                return [
-                    "id" => $bucket["key"],
-                    "count" => $bucket["doc_count"]
-                ];
-            }, $stats["associations"]["top_speakers"]["buckets"])
-        ];
-        
-        // Process trends
-        $return["data"]["attributes"]["trends"] = [
-            "total" => $stats["trends"]["buckets"][count($stats["trends"]["buckets"])-1]["doc_count"],
-            "timeline" => array_map(function($bucket) {
-                return [
-                    "date" => $bucket["key_as_string"],
-                    "count" => $bucket["doc_count"]
-                ];
-            }, $stats["trends"]["buckets"])
-        ];
-        
-        // Add request parameters to self link
+        // Build self link with parameters
         $params = [
             "entityType" => $request["entityType"],
             "entityID" => $request["entityID"]
@@ -248,24 +240,22 @@ function statisticsGetEntity($request) {
         if (!empty($request["factions"])) {
             $params["factions"] = $request["factions"];
         }
-        $return["links"]["self"] .= "?" . http_build_query($params);
         
-        // Set success status
-        $return["meta"]["requestStatus"] = "success";
+        $selfLink = $config["dir"]["api"]."/statistics/entity/".$request["entityType"]."/".$request["entityID"]
+                 . "?" . http_build_query($params);
+        
+        return createApiSuccessResponse($data, [
+            "links" => ["self" => $selfLink]
+        ]);
         
     } catch (Exception $e) {
-        unset($return["data"]);
-        $return["errors"] = [
-            [
-                "status" => "500",
-                "code" => "1",
-                "title" => "Entity Statistics Error",
-                "detail" => $e->getMessage()
-            ]
-        ];
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorEntityStatsTitle",
+            $e->getMessage()
+        );
     }
-    
-    return $return;
 }
 
 /**
@@ -277,69 +267,61 @@ function statisticsGetEntity($request) {
 function statisticsGetTerms($request) {
     global $config;
     
-    $return = [
-        "meta" => [
-            "requestStatus" => "error"
-        ],
-        "data" => [
-            "type" => "statistics",
-            "id" => "terms",
-            "attributes" => []
-        ],
-        "links" => [
-            "self" => $config["dir"]["api"]."/statistics/terms"
-        ]
-    ];
-    
     try {
         $stats = getTermStatistics();
         
         if ($stats === null) {
-            throw new Exception("Failed to retrieve term statistics");
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorTermStatsTitle",
+                "messageErrorTermStatsQueryFailed"
+            );
         }
         
-        // Process frequency statistics
-        $return["data"]["attributes"]["frequency"] = [
-            "total" => $stats["frequency"]["sum_other_doc_count"],
-            "topTerms" => array_map(function($bucket) {
-                return [
-                    "term" => $bucket["key"],
-                    "speechCount" => $bucket["doc_count"]
-                ];
-            }, $stats["frequency"]["buckets"])
-        ];
-        
-        // Process trends
-        $return["data"]["attributes"]["trends"] = [
-            "timeline" => array_map(function($bucket) {
-                return [
-                    "date" => $bucket["key_as_string"],
-                    "terms" => array_map(function($term) {
+        $data = [
+            "type" => "statistics",
+            "id" => "terms",
+            "attributes" => [
+                "frequency" => [
+                    "total" => $stats["frequency"]["sum_other_doc_count"],
+                    "topTerms" => array_map(function($bucket) {
                         return [
-                            "term" => $term["key"],
-                            "speechCount" => $term["doc_count"]
+                            "term" => $bucket["key"],
+                            "speechCount" => $bucket["doc_count"]
                         ];
-                    }, $bucket["terms"]["buckets"])
-                ];
-            }, $stats["trends"]["buckets"])
-        ];
-        
-        // Set success status
-        $return["meta"]["requestStatus"] = "success";
-        
-    } catch (Exception $e) {
-        unset($return["data"]);
-        $return["errors"] = [
-            [
-                "status" => "500",
-                "code" => "1",
-                "title" => "Term Statistics Error",
-                "detail" => $e->getMessage()
+                    }, $stats["frequency"]["buckets"])
+                ],
+                "trends" => [
+                    "timeline" => array_map(function($bucket) {
+                        return [
+                            "date" => $bucket["key_as_string"],
+                            "terms" => array_map(function($term) {
+                                return [
+                                    "term" => $term["key"],
+                                    "speechCount" => $term["doc_count"]
+                                ];
+                            }, $bucket["terms"]["buckets"])
+                        ];
+                    }, $stats["trends"]["buckets"])
+                ]
             ]
         ];
+        
+        return createApiSuccessResponse($data, [
+            "links" => [
+                "self" => $config["dir"]["api"]."/statistics/terms"
+            ]
+        ]);
+        
+    } catch (Exception $e) {
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorTermStatsTitle",
+            $e->getMessage()
+        );
     }
-    
-    return $return;
 }
 
 /**
@@ -351,84 +333,81 @@ function statisticsGetTerms($request) {
 function statisticsCompareTerms($request) {
     global $config;
     
-    $return = [
-        "meta" => [
-            "requestStatus" => "error"
-        ],
-        "data" => [
-            "type" => "statistics",
-            "id" => "compare-terms",
-            "attributes" => []
-        ],
-        "links" => [
-            "self" => $config["dir"]["api"]."/statistics/compare-terms"
-        ]
-    ];
-    
     try {
         if (empty($request["terms"]) || !is_array($request["terms"])) {
-            throw new Exception("Missing required parameter: terms array");
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorParameterMissingTitle",
+                "messageErrorMissingParametersDetail",
+                ["parameters" => "terms array"]
+            );
         }
         
         $factions = isset($request["factions"]) ? $request["factions"] : [];
         $stats = compareTermsStatistics($request["terms"], $factions);
         
         if ($stats === null) {
-            throw new Exception("Failed to retrieve term comparison statistics");
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorTermCompareStatsTitle",
+                "messageErrorTermCompareStatsQueryFailed"
+            );
         }
         
-        // Process terms comparison
-        $return["data"]["attributes"]["terms"] = array_map(function($term) use ($stats) {
-            return [
-                "term" => $term,
-                "timeline" => array_map(function($bucket) {
+        $data = [
+            "type" => "statistics",
+            "id" => "compare-terms",
+            "attributes" => [
+                "terms" => array_map(function($term) use ($stats) {
                     return [
-                        "date" => $bucket["key_as_string"],
-                        "speechCount" => $bucket["doc_count"]
+                        "term" => $term,
+                        "timeline" => array_map(function($bucket) {
+                            return [
+                                "date" => $bucket["key_as_string"],
+                                "speechCount" => $bucket["doc_count"]
+                            ];
+                        }, $stats["term_comparison"]["buckets"][$term]["over_time"]["buckets"])
                     ];
-                }, $stats["term_comparison"]["buckets"][$term]["over_time"]["buckets"])
-            ];
-        }, $request["terms"]);
+                }, $request["terms"])
+            ]
+        ];
         
         // Process factions if provided
         if (!empty($factions)) {
-            $return["data"]["attributes"]["factions"] = [];
+            $data["attributes"]["factions"] = [];
             foreach ($factions as $faction) {
-                $return["data"]["attributes"]["factions"][$faction] = [];
+                $data["attributes"]["factions"][$faction] = [];
                 foreach ($request["terms"] as $term) {
-                    $return["data"]["attributes"]["factions"][$faction][$term] = [];
+                    $data["attributes"]["factions"][$faction][$term] = [];
                     foreach ($stats["term_comparison"]["buckets"][$term]["over_time"]["buckets"] as $bucket) {
-                        $return["data"]["attributes"]["factions"][$faction][$term][$bucket["key_as_string"]] = $bucket["doc_count"];
+                        $data["attributes"]["factions"][$faction][$term][$bucket["key_as_string"]] = $bucket["doc_count"];
                     }
                 }
             }
         }
         
-        // Add request parameters to self link
-        $params = [
-            "terms" => $request["terms"]
-        ];
+        // Build self link with parameters
+        $params = ["terms" => $request["terms"]];
         if (!empty($factions)) {
             $params["factions"] = $factions;
         }
-        $return["links"]["self"] .= "?" . http_build_query($params);
         
-        // Set success status
-        $return["meta"]["requestStatus"] = "success";
+        return createApiSuccessResponse($data, [
+            "links" => [
+                "self" => $config["dir"]["api"]."/statistics/compare-terms?" . http_build_query($params)
+            ]
+        ]);
         
     } catch (Exception $e) {
-        unset($return["data"]);
-        $return["errors"] = [
-            [
-                "status" => "500",
-                "code" => "1",
-                "title" => "Term Comparison Error",
-                "detail" => $e->getMessage()
-            ]
-        ];
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorTermCompareStatsTitle",
+            $e->getMessage()
+        );
     }
-    
-    return $return;
 }
 
 /**
@@ -440,20 +419,6 @@ function statisticsCompareTerms($request) {
 function statisticsGetNetwork($request) {
     global $config;
     
-    $return = [
-        "meta" => [
-            "requestStatus" => "error"
-        ],
-        "data" => [
-            "type" => "statistics",
-            "id" => "network",
-            "attributes" => []
-        ],
-        "links" => [
-            "self" => $config["dir"]["api"]."/statistics/network"
-        ]
-    ];
-    
     try {
         $entityID = isset($request["entityID"]) ? $request["entityID"] : null;
         $entityType = isset($request["entityType"]) ? $request["entityType"] : null;
@@ -461,35 +426,33 @@ function statisticsGetNetwork($request) {
         $stats = getNetworkAnalysis($entityID, $entityType);
         
         if ($stats === null) {
-            throw new Exception("Failed to retrieve network analysis");
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorNetworkStatsTitle",
+                "messageErrorNetworkStatsQueryFailed"
+            );
         }
         
         error_log("Network Analysis Stats: " . json_encode($stats, JSON_PRETTY_PRINT));
         
         // Use the processed data but preserve the self link
-        $return["data"] = $stats["data"];
-        $return["links"] = [
-            "self" => $config["dir"]["api"]."/statistics/network"
-        ];
+        $data = $stats["data"];
         
-        // Set success status
-        $return["meta"]["requestStatus"] = "success";
-        
-        error_log("Processed Network Response: " . json_encode($return, JSON_PRETTY_PRINT));
+        return createApiSuccessResponse($data, [
+            "links" => [
+                "self" => $config["dir"]["api"]."/statistics/network"
+            ]
+        ]);
         
     } catch (Exception $e) {
-        unset($return["data"]);
-        $return["errors"] = [
-            [
-                "status" => "500",
-                "code" => "1",
-                "title" => "Network Analysis Error",
-                "detail" => $e->getMessage()
-            ]
-        ];
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorNetworkStatsTitle",
+            $e->getMessage()
+        );
     }
-    
-    return $return;
 }
 
 ?>

@@ -4,149 +4,123 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../../modules/utilities/functions.api.php");
 
 /**
  * @param string $id SessionID
  * @return array
  */
 function sessionGetByID($id = false) {
-
     global $config;
 
-    $IDInfos = getInfosFromStringID($id);
-
-    if (is_array($IDInfos) && ($IDInfos["type"] == "session")) {
-
-        $parliament = $IDInfos["parliament"];
-        $parliamentLabel = $config["parliament"][$parliament]["label"];
-        $sessionNumericID = $IDInfos["id_part"];
-
-    } else {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "500";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "ID Error";
-        $errorarray["detail"] = "Could not parse SessionID";
-        array_push($return["errors"], $errorarray);
-        return $return;
-
+    if (!$id) {
+        return createApiErrorMissingParameter('id');
     }
 
-    if (!array_key_exists($parliament,$config["parliament"])) {
+    $idInfo = getInfosFromStringID($id);
+    if (!$idInfo || $idInfo["type"] !== "session") {
+        return createApiErrorInvalidFormat('id', 'session');
+    }
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid SessionID";
-        $errorarray["detail"] = "SessionID could not be associated with a parliament";
-        array_push($return["errors"], $errorarray);
+    $parliament = $idInfo["parliament"];
+    if (!$parliament || !isset($config["parliament"][$parliament])) {
+        return createApiErrorInvalidID("Session");
+    }
 
-        return $return;
+    $parliamentLabel = $config["parliament"][$parliament]["label"];
 
-    } else {
+    $db = getApiDatabaseConnection('parliament', $parliament);
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
+    }
 
-        $opts = array(
-            'host'	=> $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user'	=> $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass'	=> $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db'	=> $config["parliament"][$parliament]["sql"]["db"]
+    try {
+        $item = $db->getRow("SELECT
+                            sess.*,
+                            ep.*
+                          FROM ?n AS sess
+                          LEFT JOIN ?n as ep
+                          ON
+                            sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
+                          WHERE sess.SessionID=?s",
+                            $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                            $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+                            $id);
+
+        if (!$item) {
+            return createApiErrorNotFound("Session");
+        }
+
+        $sessionNumericPartForAgendaLookup = $idInfo["id_part"];
+        $agendaItems = $db->getAll("SELECT * FROM ?n WHERE AgendaItemSessionID=?s",
+            $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+            $id // Use the full session ID string
         );
 
-        try {
+        $sessionData = [
+            "type" => "session",
+            "id" => $id,
+            "attributes" => [
+                "number" => (int)$item["SessionNumber"],
+                "dateStart" => $item["SessionDateStart"],
+                "dateEnd" => $item["SessionDateEnd"],
+                "parliament" => $parliament,
+                "parliamentLabel" => $parliamentLabel
+            ],
+            "links" => [
+                "self" => $config["dir"]["api"]."/session/".$id
+            ],
+            "relationships" => [
+                "media" => [
+                    "links" => [
+                        "self" => $config["dir"]["api"]."/search/media?sessionID=".$id
+                    ]
+                ],
+                "electoralPeriod" => [
+                    "data" => [
+                        "type" => "electoralPeriod",
+                        "id" => $item["ElectoralPeriodID"],
+                        "attributes" => [
+                            "number" => $item["ElectoralPeriodNumber"],
+                            "dateStart" => $item["ElectoralPeriodDateStart"],
+                            "dateEnd" => $item["ElectoralPeriodDateEnd"]
+                        ]
+                    ],
+                    "links" => [
+                        "self" => $config["dir"]["api"]."/electoralPeriod/".$item["ElectoralPeriodID"]
+                    ]
+                ]
+            ]
+        ];
 
-            $dbp = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to parliament database failed";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
+        if ($agendaItems) {
+            $sessionData["relationships"]["agendaItems"] = [
+                "data" => array_map(function($agendaItem) use ($config, $parliament) {
+                    // Harmonize AgendaItemID construction with agendaItem.php (use "-")
+                    $fullAgendaItemID = $parliament . "-" . $agendaItem["AgendaItemID"];
+                    return [
+                        "type" => "agendaItem",
+                        "id" => $fullAgendaItemID,
+                        "attributes" => [
+                            "officialTitle" => $agendaItem["AgendaItemOfficialTitle"],
+                            "title" => $agendaItem["AgendaItemTitle"],
+                            "order" => $agendaItem["AgendaItemOrder"]
+                        ],
+                        "links" => [
+                            "self" => $config["dir"]["api"]."/agendaItem/".$fullAgendaItemID
+                        ]
+                    ];
+                }, $agendaItems),
+                "links" => [
+                    "self" => $config["dir"]["api"]."/search/agendaItem?sessionID=".$id
+                ]
+            ];
         }
 
-        try {
+        return createApiSuccessResponse($sessionData);
 
-            $item = $dbp->getRow("SELECT
-                                    sess.*,
-                                    ep.*
-                                  FROM ?n AS sess
-                                  LEFT JOIN ?n as ep
-                                  ON
-                                    sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
-                                  WHERE SessionID=?i",
-                                    $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                                    $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
-                                    (int)$sessionNumericID);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database error";
-            $errorarray["detail"] = "Database request failed.";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
-        if ($item) {
-
-            $agendaItems = $dbp->getAll("SELECT * FROM ?n WHERE AgendaItemSessionID=?i",
-                $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
-                (int)$sessionNumericID);
-
-            $return["meta"]["requestStatus"] = "success";
-            $return["data"]["type"] = "session";
-            $return["data"]["id"] = $id; // Use the original composite ID
-            $return["data"]["attributes"]["number"] = (int)$item["SessionNumber"];
-            $return["data"]["attributes"]["dateStart"] = $item["SessionDateStart"];
-            $return["data"]["attributes"]["dateEnd"] = $item["SessionDateEnd"];
-            $return["data"]["attributes"]["parliament"] = $parliament;
-            $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
-            $return["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
-            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?sessionID=".$return["data"]["id"];
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["type"] = "electoralPeriod";
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["id"] = $item["ElectoralPeriodID"];
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] = $item["ElectoralPeriodNumber"];
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["dateStart"] = $item["ElectoralPeriodDateStart"];
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["dateEnd"] = $item["ElectoralPeriodDateEnd"];
-            $return["data"]["relationships"]["electoralPeriod"]["links"]["self"] = $config["dir"]["api"]."/electoralPeriod/".$item["ElectoralPeriodID"];
-            foreach ($agendaItems as $agendaItem) {
-                $tmpItem = array();
-                $tmpItem["data"]["type"] = "agendaItem";
-                $tmpItem["data"]["id"] = $agendaItem["AgendaItemID"];
-                $tmpItem["data"]["attributes"]["officialTitle"] = $agendaItem["AgendaItemOfficialTitle"];
-                $tmpItem["data"]["attributes"]["title"] = $agendaItem["AgendaItemTitle"];
-                $tmpItem["data"]["attributes"]["order"] = $agendaItem["AgendaItemOrder"];
-                $tmpItem["data"]["links"]["self"] = $config["dir"]["api"]."/agendaItem/".$agendaItem["AgendaItemID"];
-                $return["data"]["relationships"]["agendaItems"]["data"][] = $tmpItem;
-            }
-            $return["data"]["relationships"]["agendaItems"]["links"]["self"] = $config["dir"]["api"]."/search/agendaItem?sessionID=".$return["data"]["id"];
-
-        } else {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "404";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Session not found";
-            $errorarray["detail"] = "Session with the given ID was not found in database";
-            array_push($return["errors"], $errorarray);
-
-        }
-
-        return $return;
-
+    } catch (exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
     }
 }
 
@@ -161,62 +135,73 @@ function sessionGetByID($id = false) {
  * @param string $order Sort order (ASC or DESC)
  * @param object $db Database connection
  * @param string $electoralPeriodID Filter by electoral period ID
- * @return array
+ * @return array Raw data array with 'total' count and 'data' results
  */
 function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false, $electoralPeriodID = false) {
     global $config;
     
-    // Get all parliaments
-    $parliaments = array_keys($config["parliament"]);
     $allResults = array();
     $totalCount = 0;
     
+    $targetParliament = null;
+    if ($id !== "all") {
+        $idInfo = getInfosFromStringID($id); // Used for $targetParliament
+        if (!$idInfo || !isset($config["parliament"][$idInfo["parliament"]])) {
+            return [
+                "total" => 0,
+                "data" => []
+            ];
+        }
+        $targetParliament = $idInfo["parliament"];
+    }
+    
+    $parliaments = $targetParliament ? array($targetParliament) : array_keys($config["parliament"]);
+    
     foreach ($parliaments as $parliament) {
-        $opts = array(
-            'host' => $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user' => $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass' => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db' => $config["parliament"][$parliament]["sql"]["db"]
-        );
+        $db_connection = getApiDatabaseConnection('parliament', $parliament); // Renamed to avoid conflict with $db param
+        if (!is_object($db_connection)) {
+            continue; 
+        }
         
         try {
-            $dbp = new SafeMySQL($opts);
-        } catch (exception $e) {
-            continue; // Skip this parliament if connection fails
-        }
-        
-        $queryPart = "";
-        
-        if ($id == "all") {
-            $queryPart .= "1";
-        } else {
-            $queryPart .= $dbp->parse("sess.SessionID=?s", $id);
-        }
-        
-        if (!empty($search)) {
-            $queryPart .= $dbp->parse(" AND (sess.SessionNumber LIKE ?s)", "%".$search."%");
-        }
+            $conditions = [];
+            $query_params = [];
 
-        if (!empty($electoralPeriodID)) {
-            $queryPart .= $dbp->parse(" AND sess.SessionElectoralPeriodID=?s", $electoralPeriodID);
-        }
-        
-        if (!empty($sort)) {
-            $queryPart .= $dbp->parse(" ORDER BY ?n ".$order, $sort);
-        }
-        
-        if ($limit != 0) {
-            $queryPart .= $dbp->parse(" LIMIT ?i, ?i", $offset, $limit);
-        }
-        
-        try {
+            if ($id === "all") {
+                $conditions[] = "1";
+            } else {
+                if ($parliament === $targetParliament) {
+                    $conditions[] = "sess.SessionID=?s"; // Query Session.SessionID as string
+                    $query_params[] = $id; // Use full $id string
+                } else {
+                    continue; 
+                }
+            }
             
-            $count = $dbp->getOne("SELECT COUNT(sess.SessionID) as count FROM ?n AS sess WHERE ?p", 
-                $config["parliament"][$parliament]["sql"]["tbl"]["Session"], 
-                $queryPart);
-            $totalCount += $count;
+            if (!empty($search)) {
+                $conditions[] = "(sess.SessionNumber LIKE ?s)";
+                $query_params[] = "%" . $search . "%";
+            }
+
+            if (!empty($electoralPeriodID)) {
+                $conditions[] = "sess.SessionElectoralPeriodID=?s"; // Query as string
+                $query_params[] = $electoralPeriodID;
+            }
             
-            $results = $dbp->getAll("SELECT
+            $whereClauseSQL = implode(" AND ", $conditions);
+            
+            $countQueryBase = "SELECT COUNT(sess.SessionID) as count FROM ?n AS sess";
+            $current_query_params_for_count = [$config["parliament"][$parliament]["sql"]["tbl"]["Session"]];
+            if (!empty($whereClauseSQL) && $whereClauseSQL !== "1") {
+                $countQuery = $countQueryBase . " WHERE " . $whereClauseSQL;
+                $current_query_params_for_count = array_merge($current_query_params_for_count, $query_params);
+            } else {
+                $countQuery = $countQueryBase;
+            }
+            $parliamentCount = $db_connection->getOne($countQuery, ...$current_query_params_for_count);
+            $totalCount += (int)$parliamentCount;
+
+            $itemsQuerySQL = "SELECT
                 sess.SessionID,
                 sess.SessionNumber,
                 sess.SessionDateStart,
@@ -226,202 +211,174 @@ function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = f
                 ep.ElectoralPeriodDateStart,
                 ep.ElectoralPeriodDateEnd
                 FROM ?n AS sess
-                LEFT JOIN ?n AS ep
-                ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
-                WHERE ?p", 
-                $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
-                $queryPart);
+                LEFT JOIN ?n as ep
+                    ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID";
             
-            foreach ($results as $result) {
-                // Use the string ID directly
-                $result["id"] = $result["SessionID"];
-                $result["SessionNumber"] = $result["SessionNumber"];
-                $result["SessionType"] = "session";
-                $result["ElectoralPeriodNumber"] = $result["ElectoralPeriodNumber"];
-                $result["Parliament"] = $parliament;
-                $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
-                $allResults[] = $result;
+            $current_query_params_for_items = [
+                $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"]
+            ];
+
+            if (!empty($whereClauseSQL) && $whereClauseSQL !== "1") {
+                $itemsQuerySQL .= " WHERE " . $whereClauseSQL;
+                $current_query_params_for_items = array_merge($current_query_params_for_items, $query_params);
+            }
+
+            if (!empty($sort)) {
+                $itemsQuerySQL .= " ORDER BY ?n " . ($order === 'DESC' ? 'DESC' : 'ASC');
+                $current_query_params_for_items[] = $sort; 
+            }
+            
+            if ($limit != 0) { // Use $limit from function params, not hardcoded
+                $itemsQuerySQL .= " LIMIT ?i, ?i";
+                $current_query_params_for_items[] = $offset;
+                $current_query_params_for_items[] = $limit;
+            }
+            
+            $items = $db_connection->getAll($itemsQuerySQL, ...$current_query_params_for_items);
+            
+            foreach ($items as $item) {
+                $allResults[] = [
+                    "SessionID" => $item["SessionID"], // Use SessionID from DB as is (it's full string)
+                    "SessionNumber" => $item["SessionNumber"],
+                    "SessionDateStart" => $item["SessionDateStart"],
+                    "SessionDateEnd" => $item["SessionDateEnd"],
+                    "SessionElectoralPeriodID" => $item["SessionElectoralPeriodID"], // Use as is (full string)
+                    "ElectoralPeriodNumber" => $item["ElectoralPeriodNumber"],
+                    "ElectoralPeriodDateStart" => $item["ElectoralPeriodDateStart"],
+                    "ElectoralPeriodDateEnd" => $item["ElectoralPeriodDateEnd"],
+                    "Parliament" => $parliament,
+                    "ParliamentLabel" => $config["parliament"][$parliament]["label"]
+                ];
             }
             
         } catch (exception $e) {
-            // Skip this parliament if query fails
-            continue;
+            error_log("Error in sessionGetItemsFromDB for parliament $parliament: " . $e->getMessage());
+            continue; 
         }
     }
     
-    $return = array();
-    
-    $return["total"] = $totalCount;
-    $return["data"] = $allResults;
-    
-    return $return;
+    return [
+        "total" => $totalCount,
+        "data" => $allResults
+    ];
 }
 
 function sessionChange($params) {
     global $config;
-    $return = array();
-    $return["meta"]["requestStatus"] = "error";
-    $return["errors"] = array();
 
-    // Check if ID is provided
     if (!isset($params["id"])) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter (id) is missing";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorMissingParameter("id");
     }
 
-    // Get parliament from ID
-    $parliament = getInfosFromStringID($params["id"])["parliament"];
-    if (!isset($config["parliament"][$parliament])) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid SessionID";
-        $errorarray["detail"] = "SessionID could not be associated with a parliament";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    $idInfo = getInfosFromStringID($params["id"]); // Still useful for $parliament and $idInfo["id_part"] if needed for SessionNumber context
+    if (!$idInfo || $idInfo["type"] !== "session") {
+        return createApiErrorInvalidFormat('id', 'session');
     }
 
-    // Get session using sessionGetItemsFromDB
-    $session = sessionGetItemsFromDB($params["id"]);
-    if (empty($session["data"])) {
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Session not found";
-        $errorarray["detail"] = "Session with the given ID was not found in database";
-        array_push($return["errors"], $errorarray);
-        return $return;
-    }
-    $session = $session["data"][0]; // Get the first (and only) result
-
-    // Define allowed parameters
-    $allowedParams = array(
-        "SessionNumber",
-        "SessionDateStart",
-        "SessionDateEnd",
-        "SessionElectoralPeriodID"
-    );
-
-    // Filter parameters
-    $dbp = new SafeMySQL($config["parliament"][$parliament]["sql"]);
-    $params = $dbp->filterArray($params, $allowedParams);
-    $updateParams = array();
-
-    // Process each parameter
-    foreach ($params as $key => $value) {
-        // Validate SessionNumber
-        if ($key === "SessionNumber") {
-            if (!is_numeric($value) || (int)$value <= 0) {
-                $errorarray["status"] = "422";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Invalid Session Number";
-                $errorarray["detail"] = "Session Number must be a positive number";
-                $errorarray["meta"]["domSelector"] = "[name='SessionNumber']";
-                array_push($return["errors"], $errorarray);
-                return $return;
-            }
-
-            // Check for uniqueness within electoral period
-            $electoralPeriodID = isset($params["SessionElectoralPeriodID"]) ? $params["SessionElectoralPeriodID"] : $session["SessionElectoralPeriodID"];
-            // Extract numeric part from electoral period ID
-            $electoralPeriodNumericID = getInfosFromStringID($electoralPeriodID)["id_part"];
-            
-            $existing = $dbp->getRow("SELECT SessionID FROM ?n WHERE SessionNumber = ?i AND SessionElectoralPeriodID = ?i AND SessionID != ?s",
-                $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                (int)$value,
-                (int)$electoralPeriodNumericID,
-                $params["id"]
-            );
-            if ($existing) {
-                $errorarray["status"] = "422";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Duplicate Session Number";
-                $errorarray["detail"] = "A session with this number already exists in this electoral period";
-                $errorarray["meta"]["domSelector"] = "[name='SessionNumber']";
-                array_push($return["errors"], $errorarray);
-                return $return;
-            }
-            $updateParams[] = $dbp->parse("SessionNumber=?i", (int)$value);
-        }
-
-        // Validate dates
-        if ($key === "SessionDateStart" || $key === "SessionDateEnd") {
-            if (!empty($value) && !strtotime($value)) {
-                $errorarray["status"] = "422";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Invalid Date Format";
-                $errorarray["detail"] = "The date format is invalid";
-                $errorarray["meta"]["domSelector"] = "[name='".$key."']";
-                array_push($return["errors"], $errorarray);
-                return $return;
-            }
-            $updateParams[] = $dbp->parse("?n=?s", $key, $value);
-        }
-
-        // Validate electoral period reference
-        if ($key === "SessionElectoralPeriodID") {
-            // Extract numeric part from electoral period ID
-            $electoralPeriodNumericID = getInfosFromStringID($value)["id_part"];
-            $electoralPeriod = $dbp->getRow("SELECT ElectoralPeriodID FROM ?n WHERE ElectoralPeriodID = ?i",
-                $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
-                (int)$electoralPeriodNumericID
-            );
-            if (!$electoralPeriod) {
-                $errorarray["status"] = "422";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Invalid Electoral Period";
-                $errorarray["detail"] = "The specified electoral period does not exist";
-                $errorarray["meta"]["domSelector"] = "[name='SessionElectoralPeriodID']";
-                array_push($return["errors"], $errorarray);
-                return $return;
-            }
-            $updateParams[] = $dbp->parse("SessionElectoralPeriodID=?i", (int)$electoralPeriodNumericID);
-        }
+    $parliament = $idInfo["parliament"];
+    if (!$parliament || !isset($config["parliament"][$parliament])) {
+        return createApiErrorInvalidID("Session");
     }
 
-    if (empty($updateParams)) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "No parameters";
-        $errorarray["detail"] = "No valid parameters for updating session data were provided";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    $db = getApiDatabaseConnection('parliament', $parliament);
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
     }
 
-    // Validate date range if both dates are provided
-    if (!empty($params["SessionDateStart"]) && !empty($params["SessionDateEnd"])) {
-        $startDate = strtotime($params["SessionDateStart"]);
-        $endDate = strtotime($params["SessionDateEnd"]);
-        if ($startDate > $endDate) {
-            $errorarray["status"] = "422";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Invalid Date Range";
-            $errorarray["detail"] = "Start date must be before end date";
-            $errorarray["meta"]["domSelector"] = "[name='SessionDateStart']";
-            array_push($return["errors"], $errorarray);
-            return $return;
-        }
-    }
-
-    // Execute update
-    $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE SessionID=?s",
+    // Get the session to validate it exists. Query Session.SessionID as string.
+    $session = $db->getRow("SELECT * FROM ?n WHERE SessionID = ?s", 
         $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-        $session["SessionID"]
+        $params["id"] // Use full $params["id"] string
     );
+    if (!$session) {
+        return createApiErrorNotFound("Session");
+    }
 
-    // Return success
-    $return = array(
-        "meta" => array(
-            "requestStatus" => "success"
-        ),
-        "data" => array(
-            "message" => "Session updated successfully"
-        )
-    );
-    return $return;
+    $updates = [];
+    $values = [];
+
+    if (isset($params['SessionNumber'])) {
+        $numberValidation = validateApiNumber($params['SessionNumber'], 'SessionNumber');
+        if ($numberValidation !== true) {
+            return $numberValidation;
+        }
+
+        // Check for duplicates within the same electoral period. SessionID is string.
+        // SessionID in DB is full string. $session['SessionElectoralPeriodID'] is full string.
+        $existing = $db->getRow(
+            "SELECT SessionID FROM ?n WHERE SessionNumber = ?i AND SessionElectoralPeriodID = ?s AND SessionID != ?s",
+            $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+            (int)$params['SessionNumber'],
+            $session['SessionElectoralPeriodID'], // This is the full string EP ID from the fetched session
+            $params['id'] // Use full $params["id"] string for comparison
+        );
+        if ($existing) {
+            return createApiErrorDuplicate('session', 'number');
+        }
+
+        $updates[] = "SessionNumber = ?i";
+        $values[] = (int)$params['SessionNumber'];
+    }
+
+    if (isset($params['SessionDateStart']) || isset($params['SessionDateEnd'])) {
+        $startDate = isset($params['SessionDateStart']) ? $params['SessionDateStart'] : $session['SessionDateStart'];
+        $endDate = isset($params['SessionDateEnd']) ? $params['SessionDateEnd'] : $session['SessionDateEnd'];
+
+        $dateValidation = validateApiDateRange($startDate, $endDate, 'SessionDateStart');
+        if ($dateValidation !== true) {
+            return $dateValidation;
+        }
+
+        if (isset($params['SessionDateStart'])) {
+            $updates[] = "SessionDateStart = ?s";
+            $values[] = $params['SessionDateStart'];
+        }
+        if (isset($params['SessionDateEnd'])) {
+            $updates[] = "SessionDateEnd = ?s";
+            $values[] = $params['SessionDateEnd'];
+        }
+    }
+
+    if (isset($params['SessionElectoralPeriodID'])) {
+        // $params['SessionElectoralPeriodID'] is expected to be a full string ID
+        $epInfo = getInfosFromStringID($params['SessionElectoralPeriodID']);
+        if (!$epInfo || $epInfo["type"] !== "electoralPeriod" || $epInfo["parliament"] !== $parliament) {
+            return createApiErrorInvalidFormat('SessionElectoralPeriodID', 'electoralPeriod');
+        }
+
+        $epExists = $db->getOne(
+            "SELECT 1 FROM ?n WHERE ElectoralPeriodID = ?s", // ElectoralPeriodID is string
+            $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+            $params['SessionElectoralPeriodID'] // Use full string ID
+        );
+        if (!$epExists) {
+            return createApiErrorNotFound("ElectoralPeriod");
+        }
+
+        $updates[] = "SessionElectoralPeriodID = ?s"; // Store full string ID
+        $values[] = $params['SessionElectoralPeriodID'];
+    }
+
+    if (empty($updates)) {
+        return createApiErrorNoParameters();
+    }
+
+    // Update query: WHERE SessionID = ?s using full string $params["id"]
+    $query = "UPDATE ?n SET " . implode(", ", $updates) . " WHERE SessionID = ?s";
+    array_unshift($values, $config["parliament"][$parliament]["sql"]["tbl"]["Session"]);
+    $values[] = $params["id"]; // Use full $params["id"] for the WHERE clause
+
+    try {
+        $result = $db->query($query, ...$values);
+        if (!$result) {
+            return createApiErrorDatabaseError("Failed to update session");
+        }
+
+        return createApiSuccessResponse(null, ["message" => "Session updated successfully"]);
+    } catch (exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
+    }
 }
 
 ?>

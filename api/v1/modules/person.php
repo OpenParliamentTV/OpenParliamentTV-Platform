@@ -4,6 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../../modules/utilities/functions.api.php");
 
 
 
@@ -12,74 +13,35 @@ require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
  * @return array
  */
 function personGetByID($id = false, $db = false) {
-
     global $config;
 
     if (!$id) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        array_push($return["errors"], $errorarray);
-
-        return $return;
-
-    } else {
-
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        );
-
-        if (!$db) {
-            try {
-
-                $db = new SafeMySQL($opts);
-
-            } catch (exception $e) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $return["errors"] = array();
-                $errorarray["status"] = "503";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Database connection error";
-                $errorarray["detail"] = "Connecting to platform database failed";
-                array_push($return["errors"], $errorarray);
-                return $return;
-
-            }
-        }
-
-        $item = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Person"]." WHERE PersonID=?s",$id);
-
-        if ($item) {
-
-            $return["meta"]["requestStatus"] = "success";
-            $personDataObj["data"] = personGetDataObject($item, $db);
-            $return = array_replace_recursive($return, $personDataObj);
-
-
-        } else {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "404";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Person not found";
-            $errorarray["detail"] = "Person with the given ID was not found in database";
-            array_push($return["errors"], $errorarray);
-
-        }
-
-        return $return;
-
+        return createApiErrorMissingParameter('id');
     }
 
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
+    }
+
+    try {
+        $item = $db->getRow("SELECT * FROM ?n WHERE PersonID=?s",
+            $config["platform"]["sql"]["tbl"]["Person"],
+            $id
+        );
+
+        if ($item) {
+            $personDataObject = personGetDataObject($item, $db);
+            if (!$personDataObject) {
+                return createApiErrorResponse(500, 1, "messageErrorDataTransformationTitle", "messageErrorDataTransformationDetail");
+            }
+            return createApiSuccessResponse($personDataObject);
+        } else {
+            return createApiErrorNotFound('person');
+        }
+    } catch (exception $e) {
+        return createApiErrorDatabaseConnection();
+    }
 }
 
 function personGetDataObject($item = false, $db = false) {
@@ -180,688 +142,385 @@ function personGetDataObject($item = false, $db = false) {
 }
 
 function personSearch($parameter, $db = false) {
-
     global $config;
 
     $outputLimit = 25;
 
-    if (!$db) {
-
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        );
-
-        try {
-
-            $db = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to platform database failed";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
     }
 
     $filteredParameters = filterAllowedSearchParams($parameter, 'person');
 
-    /************ VALIDATION START ************/
-
-    if (array_key_exists("name", $filteredParameters) && (mb_strlen($filteredParameters["name"], "UTF-8")< 3)) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Name too short";
-        $errorarray["detail"] = "Searching for name needs at least 3 characters."; //  due to database limitations
-        $return["errors"][] = $errorarray;
-
+    // Validate name length
+    if (array_key_exists("name", $filteredParameters)) {
+        if (mb_strlen($filteredParameters["name"], "UTF-8") < 3) {
+            return createApiErrorInvalidLength('name', 3);
+        }
     }
 
-
-
-    if (array_key_exists("type", $filteredParameters) && (!in_array($filteredParameters["type"], array("memberOfParliament", "unknown")))) { //TODO: Docs & import
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "type invalid";
-        $errorarray["detail"] = "type needs to be 'memberOfParliament' or 'unknown'"; // TODO: Define what types exist
-        $return["errors"][] = $errorarray;
-
+    // Validate type
+    if (array_key_exists("type", $filteredParameters)) {
+        if (!in_array($filteredParameters["type"], array("memberOfParliament", "unknown"))) {
+            return createApiErrorResponse(
+                422, 
+                2, 
+                "messageErrorInvalidValueTitle", 
+                "messageErrorInvalidFormatDetail", 
+                ["field" => "type", "expected" => "memberOfParliament or unknown"]
+            );
+        }
     }
 
-
-
+    // Validate party
     if (array_key_exists("party", $filteredParameters)) {
-
         if (is_array($filteredParameters["party"])) {
-
             foreach ($filteredParameters["party"] as $tmpParty) {
                 if (mb_strlen($tmpParty, "UTF-8") < 1) {
-                    $return["meta"]["requestStatus"] = "error";
-                    $errorarray["status"] = "400";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "Party input too short";
-                    $errorarray["detail"] = "Searching for party needs at least 1 character.";
-                    $return["errors"][] = $errorarray;
+                    return createApiErrorInvalidLength('party', 1);
                 }
             }
-
-        } else {
-
-            if (mb_strlen($filteredParameters["party"], "UTF-8") < 1) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $errorarray["status"] = "400";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Party input too short";
-                $errorarray["detail"] = "Searching for party needs at least 1 character.";
-                $return["errors"][] = $errorarray;
-
-            }
-
+        } else if (mb_strlen($filteredParameters["party"], "UTF-8") < 1) {
+            return createApiErrorInvalidLength('party', 1);
         }
-
     }
 
-
-
+    // Validate partyID
     if (array_key_exists("partyID", $filteredParameters)) {
-
-        if (is_array($filteredParameters["party"])) {
-
-            foreach ($filteredParameters["party"] as $tmpPartyID) {
-
-                if (!preg_match("/(Q|P)\d+/i", $tmpPartyID)) {
-
-                    $return["meta"]["requestStatus"] = "error";
-                    $errorarray["status"] = "400";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "Wrong partyID";
-                    $errorarray["detail"] = "partyID doesn't match the pattern.";
-                    $return["errors"][] = $errorarray;
-
+        if (is_array($filteredParameters["partyID"])) {
+            foreach ($filteredParameters["partyID"] as $tmpPartyID) {
+                if (!validateWikidataID($tmpPartyID)) {
+                    return createApiErrorInvalidID("Party");
                 }
-
             }
-
-        } else {
-
-            if (!preg_match("/(Q|P)\d+/i", $filteredParameters["partyID"])) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $errorarray["status"] = "400";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Wrong partyID";
-                $errorarray["detail"] = "partyID doesn't match the pattern.";
-                $return["errors"][] = $errorarray;
-
-            }
-
+        } else if (!validateWikidataID($filteredParameters["partyID"])) {
+            return createApiErrorInvalidID("Party");
         }
-
     }
 
-
-
+    // Validate faction
     if (array_key_exists("faction", $filteredParameters)) {
-
         if (is_array($filteredParameters["faction"])) {
-
-            foreach ($filteredParameters["faction"] as $tmpParty) {
-                if (mb_strlen($tmpParty, "UTF-8") < 1) {
-                    $return["meta"]["requestStatus"] = "error";
-                    $errorarray["status"] = "400";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "Faction too short";
-                    $errorarray["detail"] = "Searching for faction needs at least 1 character.";
-                    $return["errors"][] = $errorarray;
+            foreach ($filteredParameters["faction"] as $tmpFaction) {
+                if (mb_strlen($tmpFaction, "UTF-8") < 1) {
+                    return createApiErrorInvalidLength('faction', 1);
                 }
             }
-
-        } else {
-
-            if (mb_strlen($filteredParameters["faction"], "UTF-8") < 1) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $errorarray["status"] = "400";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "faction too short";
-                $errorarray["detail"] = "Searching for faction needs at least 1 character.";
-                $return["errors"][] = $errorarray;
-
-            }
-
+        } else if (mb_strlen($filteredParameters["faction"], "UTF-8") < 1) {
+            return createApiErrorInvalidLength('faction', 1);
         }
-
     }
 
-
-
+    // Validate factionID
     if (array_key_exists("factionID", $filteredParameters)) {
-
         if (is_array($filteredParameters["factionID"])) {
-
             foreach ($filteredParameters["factionID"] as $tmpFactionID) {
-
-                if (!preg_match("/(Q|P)\d+/i", $tmpFactionID)) {
-
-                    $return["meta"]["requestStatus"] = "error";
-                    $errorarray["status"] = "400";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "Wrong factionID";
-                    $errorarray["detail"] = "factionID doesn't match the pattern.";
-                    $return["errors"][] = $errorarray;
-
+                if (!validateWikidataID($tmpFactionID)) {
+                    return createApiErrorInvalidID("Faction");
                 }
-
             }
-
-        } else {
-
-            if (!preg_match("/(Q|P)\d+/i", $filteredParameters["factionID"])) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $errorarray["status"] = "400";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Wrong factionID";
-                $errorarray["detail"] = "factionID doesn't match the pattern.";
-                $return["errors"][] = $errorarray;
-
-            }
-
+        } else if (!validateWikidataID($filteredParameters["factionID"])) {
+            return createApiErrorInvalidID("Faction");
         }
-
     }
 
-
-
+    // Validate organisationID
     if (array_key_exists("organisationID", $filteredParameters)) {
-
-        if (!preg_match("/(Q|P)\d+/i", $filteredParameters["organisationID"])) {
-            $return["meta"]["requestStatus"] = "error";
-            $errorarray["status"] = "400";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Wrong organisationID";
-            $errorarray["detail"] = "organisationID doesn't match the pattern.";
-            $return["errors"][] = $errorarray;
+        if (!validateWikidataID($filteredParameters["organisationID"])) {
+            return createApiErrorInvalidID("Organisation");
         }
-
     }
 
-
-
-    if (array_key_exists("degree", $filteredParameters) && (mb_strlen($filteredParameters["degree"], "UTF-8") < 1))  {
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "degree too short";
-        $errorarray["detail"] = "Searching for degree needs at least 1 character.";
-        $return["errors"][] = $errorarray;
-
+    // Validate degree
+    if (array_key_exists("degree", $filteredParameters) && mb_strlen($filteredParameters["degree"], "UTF-8") < 1) {
+        return createApiErrorInvalidLength('degree', 1);
     }
 
-
-
-    //TODO: Gender to $config
-    if (array_key_exists("gender", $filteredParameters) && (!in_array($filteredParameters["gender"], array("male", "female", "nonbinary")))) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "gender not valid.";
-        $errorarray["detail"] = "Searching for gender had invalid value.";
-        $return["errors"][] = $errorarray;
-
+    // Validate gender
+    if (array_key_exists("gender", $filteredParameters)) {
+        if (!in_array($filteredParameters["gender"], array("male", "female", "nonbinary"))) {
+            return createApiErrorResponse(
+                422, 
+                3, 
+                "messageErrorInvalidValueTitle", 
+                "messageErrorInvalidFormatDetail", 
+                ["field" => "gender", "expected" => "male, female, or nonbinary"]
+            );
+        }
     }
 
-
-
-    if (array_key_exists("originID", $filteredParameters) && (mb_strlen($filteredParameters["originID"], "UTF-8") < 1)) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "originID not valid.";
-        $errorarray["detail"] = "originID too short."; //
-        $return["errors"][] = $errorarray;
-
+    // Validate originID
+    if (array_key_exists("originID", $filteredParameters) && mb_strlen($filteredParameters["originID"], "UTF-8") < 1) {
+        return createApiErrorInvalidLength('originID', 1);
     }
 
-
-
-    if (array_key_exists("abgeordnetenwatchID", $filteredParameters) && (mb_strlen($filteredParameters["abgeordnetenwatchID"], "UTF-8") < 1)) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "abgeordnetenwatchID not valid.";
-        $errorarray["detail"] = "abgeordnetenwatchID too short."; //
-        $return["errors"][] = $errorarray;
-
+    // Validate abgeordnetenwatchID
+    if (array_key_exists("abgeordnetenwatchID", $filteredParameters) && mb_strlen($filteredParameters["abgeordnetenwatchID"], "UTF-8") < 1) {
+        return createApiErrorInvalidLength('abgeordnetenwatchID', 1);
     }
 
-    if (array_key_exists("fragDenStaatID", $filteredParameters) && (mb_strlen($filteredParameters["fragDenStaatID"], "UTF-8") < 1)) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "fragDenStaatID not valid.";
-        $errorarray["detail"] = "fragDenStaatID too short."; //
-        $return["errors"][] = $errorarray;
-
+    // Validate fragDenStaatID
+    if (array_key_exists("fragDenStaatID", $filteredParameters) && mb_strlen($filteredParameters["fragDenStaatID"], "UTF-8") < 1) {
+        return createApiErrorInvalidLength('fragDenStaatID', 1);
     }
 
-
-    /************ VALIDATION END ************/
-
-
-
-
-    if ($return["meta"]["requestStatus"] == "error") {
-
-        return $return;
-
-    }
-
-
-
-    $query = "SELECT            p.*,
+    try {
+        $query = "SELECT            p.*,
                                 op.OrganisationID as PartyID,
                                 op.OrganisationLabel as PartyLabel,
                                 ofr.OrganisationID as FactionID,
                                 ofr.OrganisationLabel as FactionLabel
-                            FROM ".$config["platform"]["sql"]["tbl"]["Person"]." AS p
-                            LEFT JOIN ".$config["platform"]["sql"]["tbl"]["Organisation"]." as op 
+                            FROM ?n AS p
+                            LEFT JOIN ?n as op 
                                 ON op.OrganisationID = p.PersonPartyOrganisationID
-                            LEFT JOIN ".$config["platform"]["sql"]["tbl"]["Organisation"]." as ofr 
+                            LEFT JOIN ?n as ofr 
                                 ON ofr.OrganisationID = p.PersonFactionOrganisationID";
 
-    $conditions = array();
+        $conditions = array();
 
-    foreach ($filteredParameters as $k=>$para) {
-
-
-
-        if ($k == "name") {
-
-            $conditions[] = $db->parse("MATCH(p.PersonLabel, p.PersonFirstName, p.PersonLastName) AGAINST (?s IN BOOLEAN MODE)", "*".str_replace("-", " ",$para)."*");
-
-        }
-
-        if ($k == "type") {
-
-            $conditions[] = $db->parse("PersonType = ?s", $para);
-
-        }
-
-
-        if ($k == "party") {
-            if (is_array($para)) {
-
-                $tmpStringArray = array();
-
-                foreach ($para as $tmppara) {
-
-                    $tmpStringArray[] = $db->parse("(op.OrganisationLabel LIKE ?s OR op.OrganisationLabelAlternative LIKE ?s)", "%".$tmppara."%", "%".$tmppara."%");
-
-                }
-
-                $tmpStringArray  = " (".implode(" OR ",$tmpStringArray).")";
-                $conditions[] = $tmpStringArray;
-
-            } else {
-
-                $conditions[] = $db->parse("(op.OrganisationLabel LIKE ?s OR op.OrganisationLabelAlternative LIKE ?s)", "%".$para."%", "%".$para."%");
-
+        foreach ($filteredParameters as $k=>$para) {
+            if ($k == "name") {
+                $conditions[] = $db->parse("MATCH(p.PersonLabel, p.PersonFirstName, p.PersonLastName) AGAINST (?s IN BOOLEAN MODE)", "*".str_replace("-", " ",$para)."*");
+            }
+            if ($k == "type") {
+                $conditions[] = $db->parse("PersonType = ?s", $para);
             }
 
-        }
-
-
-        if ($k == "partyID") {
-
-            if (is_array($para)) {
-
-                $tmpStringArray = array();
-
-                foreach ($para as $tmppara) {
-
-                    $tmpStringArray[] = $db->parse("op.OrganisationID = ?s", $tmppara);
-
+            if ($k == "party") {
+                if (is_array($para)) {
+                    $tmpStringArray = array_map(function($tmppara) use ($db) {
+                        return $db->parse("(op.OrganisationLabel LIKE ?s OR op.OrganisationLabelAlternative LIKE ?s)", 
+                            "%".$tmppara."%", 
+                            "%".$tmppara."%"
+                        );
+                    }, $para);
+                    $conditions[] = "(" . implode(" OR ", $tmpStringArray) . ")";
+                } else {
+                    $conditions[] = $db->parse("(op.OrganisationLabel LIKE ?s OR op.OrganisationLabelAlternative LIKE ?s)", 
+                        "%".$para."%", 
+                        "%".$para."%"
+                    );
                 }
-
-                $tmpStringArray  = " (".implode(" OR ",$tmpStringArray).")";
-                $conditions[] = $tmpStringArray;
-
-            } else {
-
-                $conditions[] = $db->parse("op.OrganisationID = ?s", $para);
-
             }
 
-        }
-
-
-        if ($k == "faction") {
-
-            if (is_array($para)) {
-
-                $tmpStringArray = array();
-
-                foreach ($para as $tmppara) {
-
-                    $tmpStringArray[] = $db->parse("(ofr.OrganisationLabel LIKE ?s OR ofr.OrganisationLabelAlternative LIKE ?s)", "%".$tmppara."%", "%".$tmppara."%");
-
+            if ($k == "partyID") {
+                if (is_array($para)) {
+                    $tmpStringArray = array_map(function($tmppara) use ($db) {
+                        return $db->parse("op.OrganisationID = ?s", $tmppara);
+                    }, $para);
+                    $conditions[] = "(" . implode(" OR ", $tmpStringArray) . ")";
+                } else {
+                    $conditions[] = $db->parse("op.OrganisationID = ?s", $para);
                 }
-
-                $tmpStringArray  = " (".implode(" OR ",$tmpStringArray).")";
-                $conditions[] = $tmpStringArray;
-
-            } else {
-
-                $conditions[] = $db->parse("(ofr.OrganisationLabel LIKE ?s OR ofr.OrganisationLabelAlternative LIKE ?s)", "%".$para."%", "%".$para."%");
-
             }
 
-        }
-
-
-
-        if ($k == "factionID") {
-
-            if (is_array($para)) {
-
-                $tmpStringArray = array();
-
-                foreach ($para as $tmppara) {
-
-                    $tmpStringArray[] = $db->parse("p.PersonFactionOrganisationID = ?s", $tmppara);
-
+            if ($k == "faction") {
+                if (is_array($para)) {
+                    $tmpStringArray = array_map(function($tmppara) use ($db) {
+                        return $db->parse("(ofr.OrganisationLabel LIKE ?s OR ofr.OrganisationLabelAlternative LIKE ?s)", 
+                            "%".$tmppara."%", 
+                            "%".$tmppara."%"
+                        );
+                    }, $para);
+                    $conditions[] = "(" . implode(" OR ", $tmpStringArray) . ")";
+                } else {
+                    $conditions[] = $db->parse("(ofr.OrganisationLabel LIKE ?s OR ofr.OrganisationLabelAlternative LIKE ?s)", 
+                        "%".$para."%", 
+                        "%".$para."%"
+                    );
                 }
-
-                $tmpStringArray  = " (".implode(" OR ",$tmpStringArray).")";
-                $conditions[] = $tmpStringArray;
-
-            } else {
-
-                $conditions[] = $db->parse("p.PersonFactionOrganisationID = ?s", $para);
-
             }
 
+            if ($k == "factionID") {
+                if (is_array($para)) {
+                    $tmpStringArray = array_map(function($tmppara) use ($db) {
+                        return $db->parse("p.PersonFactionOrganisationID = ?s", $tmppara);
+                    }, $para);
+                    $conditions[] = "(" . implode(" OR ", $tmpStringArray) . ")";
+                } else {
+                    $conditions[] = $db->parse("p.PersonFactionOrganisationID = ?s", $para);
+                }
+            }
+
+            if ($k == "organisationID") {
+                $conditions[] = $db->parse("(p.PersonFactionOrganisationID = ?s OR p.PersonPartyOrganisationID=?s)", 
+                    $para, 
+                    $para
+                );
+            }
+
+            if ($k == "degree") {
+                $conditions[] = $db->parse("PersonDegree LIKE ?s", "%".$para."%");
+            }
+
+            if ($k == "gender") {
+                $conditions[] = $db->parse("PersonGender LIKE ?s", $para);
+            }
+
+            if ($k == "originID") {
+                $conditions[] = $db->parse("PersonOriginID = ?s", $para);
+            }
+
+            if ($k == "abgeordnetenwatchID") {
+                $conditions[] = $db->parse("JSON_EXTRACT(p.PersonAdditionalInformation, '$.abgeordnetenwatchID') = ?s", $para);
+            }
+
+            if ($k == "fragDenStaatID") {
+                $conditions[] = $db->parse("JSON_EXTRACT(p.PersonAdditionalInformation, '$.fragDenStaatID') = ?s", $para);
+            }
         }
 
+        if (count($conditions) > 0) {
+            $query .= " WHERE ".implode(" AND ",$conditions);
 
+            $totalCount = $db->getAll($query, 
+                $config["platform"]["sql"]["tbl"]["Person"],
+                $config["platform"]["sql"]["tbl"]["Organisation"],
+                $config["platform"]["sql"]["tbl"]["Organisation"]
+            );
 
-        if ($k == "organisationID") {
+            $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
+            $query .= $db->parse(" LIMIT ?i, ?i", ($page-1)*$outputLimit, $outputLimit);
 
-            $conditions[] = $db->parse("(p.PersonFactionOrganisationID = ?s OR p.PersonPartyOrganisationID=?s)", $para, $para);
+            $findings = $db->getAll($query,
+                $config["platform"]["sql"]["tbl"]["Person"],
+                $config["platform"]["sql"]["tbl"]["Organisation"],
+                $config["platform"]["sql"]["tbl"]["Organisation"]
+            );
 
-        }
-
-
-        if ($k == "degree") {
-
-            $conditions[] = $db->parse("PersonDegree LIKE ?s", "%".$para."%");
-
-        }
-
-
-        if ($k == "gender") {
-
-            $conditions[] = $db->parse("PersonGender LIKE ?s", $para);
-
-        }
-
-
-        if ($k == "originID") {
-
-            $conditions[] = $db->parse("PersonOriginID = ?s", $para);
-
-        }
-
-
-        if ($k == "abgeordnetenwatchID") {
-
-            $conditions[] = $db->parse("JSON_EXTRACT(p.PersonAdditionalInformation, '$.abgeordnetenwatchID') = ?s", $para);
-
-        }
-
-        if ($k == "fragDenStaatID") {
-
-            $conditions[] = $db->parse("JSON_EXTRACT(p.PersonAdditionalInformation, '$.fragDenStaatID') = ?s", $para);
-
-        }
-
-    }
-
-    if (count($conditions) > 0) {
-
-        $query .= " WHERE ".implode(" AND ",$conditions);
-
-        $totalCount = $db->getAll($query);
-
-        $query .= " LIMIT ";
-
-        if ($parameter["page"]) {
-
-            $query .= ($parameter["page"]-1)*$outputLimit.",";
+            return createApiSuccessResponse(
+                array_map(function($finding) use ($db) {
+                    return personGetDataObject($finding, $db);
+                }, $findings),
+                [
+                    "page" => $page,
+                    "pageTotal" => ceil(count($totalCount)/$outputLimit)
+                ],
+                [
+                    "self" => $config["dir"]["api"]."/search/people?".getURLParameterFromArray($filteredParameters)
+                ]
+            );
 
         } else {
-
-            $parameter["page"] = 1;
-
+            return createApiErrorResponse(
+                404,
+                1,
+                "messageErrorParameterMissingTitle",
+                "messageErrorNotEnoughSearchParametersDetail"
+            );
         }
 
-        $query .= $outputLimit;
-
-        $findings = $db->getAll($query);
-
-        $return["meta"]["requestStatus"] = "success";
-        $return["meta"]["page"] = $parameter["page"];
-        $return["meta"]["pageTotal"] = ceil(count($totalCount)/$outputLimit);
-
-        if (!$return["data"]) {
-            $return["data"] = array();
-        }
-        
-        foreach ($findings as $finding) {
-            array_push($return["data"],personGetDataObject($finding,$db));
-        }
-
-    } else {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Not enough parameters";
-        $errorarray["detail"] = "Not enough parameters"; //TODO: Description
-        array_push($return["errors"], $errorarray);
-
+    } catch (exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
     }
-
-    if (!array_key_exists("data", $return)) {
-        $return["data"] = array();
-    }
-
-
-    $return["links"]["self"] = $config["dir"]["api"]."/search/people?".getURLParameterFromArray($filteredParameters);
-
-    return $return;
-
 }
 
 function personAdd($item, $db = false) {
-
     global $config;
 
-    if (!$db) {
+    // Validate required fields
+    $requiredFields = [
+        'type' => 'Type',
+        'label' => 'Label',
+        'abstract' => 'Abstract'
+    ];
 
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
+    foreach ($requiredFields as $field => $label) {
+        $validation = validateApiRequired($item[$field], $field);
+        if ($validation !== true) {
+            return $validation;
+        }
+    }
+
+    // Additional validation
+    if (strlen($item["label"]) < 2) {
+        return createApiErrorInvalidLength('label', 2);
+    }
+
+    if (strlen($item["abstract"]) < 5) {
+        return createApiErrorInvalidLength('abstract', 5);
+    }
+
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
+    }
+
+    try {
+        $itemTmp = $db->getRow("SELECT PersonID FROM ?n WHERE PersonID=?s",
+            $config["platform"]["sql"]["tbl"]["Person"],
+            $item["id"]
         );
 
-        try {
-
-            $db = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to platform database failed";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
-    }
-
-    if ((!$item["id"]) || (!preg_match("/(Q|P)\d+/i", $item["id"]))) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "ID seems to be wrong or missing";
-        $errorarray["label"] = "id";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if ((!$item["label"]) || (strlen($item["label"]) < 3)) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Label seems to be too short or missing";
-        $errorarray["label"] = "label";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if ((!$item["type"]) || (strlen($item["type"]) < 3)) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Type seems to be too short or missing";
-        $errorarray["label"] = "type";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if ($return["errors"]) {
-        $return["meta"]["requestStatus"] = "error";
-        return $return;
-    } else {
-
-        $itemTmp = $db->getRow("SELECT PersonID FROM ".$config["platform"]["sql"]["tbl"]["Person"]." WHERE PersonID=?s",$item["id"]);
-
         if ($itemTmp) {
-            $return["meta"]["requestStatus"] = "error";
-            $errorarray["status"] = "422"; //todo
-            $errorarray["code"] = "2";
-            $errorarray["title"] = "Item with ID already exists in Database";
-            $errorarray["label"] = "error_info";
-            $errorarray["detail"] = "Item already exists in Database";
-            $return["errors"][] = $errorarray;
-            return $return;
-
-        } else {
-
-            try {
-
-                $socialMedia = array();
-                if ($item["socialMediaIDsLabel"]) {
-                    foreach ($item["socialMediaIDsLabel"] as $k=>$v) {
-                        //just add when both is not empty
-                        if ($v && $item["socialMediaIDsValue"][$k]) {
-                            $socialMedia[] = array("label" => $v, "id" => $item["socialMediaIDsValue"][$k]);
-                        }
-                    }
-                }
-
-                $labelAlternative = array();
-                if (is_array($item["labelAlternative"])) {
-                    foreach ($item["labelAlternative"] as $v) {
-                        if ($v) {
-                            $labelAlternative[] = $v;
-                        }
-                    }
-                }
-
-                $tmpNewPerson = array(
-                    "PersonID" => $item["id"],
-                    "PersonType" => $item["type"],
-                    "PersonLabel" => $item["label"],
-                    "PersonLabelAlternative" => (is_array($labelAlternative) ? json_encode($labelAlternative,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : "[".$item["labelAlternative"]."]"),
-                    "PersonFirstName"=>$item["firstname"],
-                    "PersonLastName"=>$item["lastname"],
-                    "PersonDegree"=>$item["degree"],
-                    "PersonBirthDate" => date('Y-m-d', strtotime($item["birthdate"])),
-                    "PersonGender" => $item["gender"],
-                    "PersonAbstract" => $item["abstract"],
-                    "PersonThumbnailURI" => $item["thumbnailuri"],
-                    "PersonThumbnailCreator" => $item["thumbnailcreator"],
-                    "PersonThumbnailLicense" => $item["thumbnaillicense"],
-                    "PersonEmbedURI" => $item["embeduri"],
-                    "PersonWebsiteURI" => ($item["websiteuri"] ? $item["websiteuri"] : ""),
-                    "PersonOriginID" => $item["originid"],
-                    "PersonPartyOrganisationID" => $item["party"],
-                    "PersonFactionOrganisationID" => $item["faction"],
-                    "PersonSocialMediaIDs" => json_encode($socialMedia, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-                    "PersonAdditionalInformation" => $item["additionalinformation"]
-                );
-
-                $db->query("INSERT INTO ?n SET ?u",$config["platform"]["sql"]["tbl"]["Person"],$tmpNewPerson);
-
-                $return["meta"]["requestStatus"] = "success";
-                $return["meta"]["itemID"] = $db->insertId();
-
-            } catch (exception $e) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $errorarray["status"] = "422"; //todo
-                $errorarray["code"] = "2";
-                $errorarray["title"] = "Add to database failed";
-                $errorarray["label"] = "error_info";
-                $errorarray["detail"] = $e->getMessage();
-                $return["errors"][] = $errorarray;
-
-            }
-
+            return createApiErrorDuplicate('person', 'ID');
         }
+
+        // Process social media and alternative labels
+        $socialMedia = [];
+        if ($item["socialMediaIDsLabel"]) {
+            foreach ($item["socialMediaIDsLabel"] as $k=>$v) {
+                if ($v && $item["socialMediaIDsValue"][$k]) {
+                    $socialMedia[] = ["label" => $v, "id" => $item["socialMediaIDsValue"][$k]];
+                }
+            }
+        }
+
+        $labelAlternative = [];
+        if (is_array($item["labelAlternative"])) {
+            $labelAlternative = array_filter($item["labelAlternative"]);
+        }
+
+        $tmpNewPerson = array(
+            "PersonID" => $item["id"],
+            "PersonType" => $item["type"],
+            "PersonLabel" => $item["label"],
+            "PersonLabelAlternative" => (is_array($labelAlternative) ? 
+                json_encode($labelAlternative, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : 
+                "[".$item["labelAlternative"]."]"),
+            "PersonFirstName" => $item["firstname"],
+            "PersonLastName" => $item["lastname"],
+            "PersonDegree" => $item["degree"],
+            "PersonBirthDate" => date('Y-m-d', strtotime($item["birthdate"])),
+            "PersonGender" => $item["gender"],
+            "PersonAbstract" => $item["abstract"],
+            "PersonThumbnailURI" => $item["thumbnailuri"],
+            "PersonThumbnailCreator" => $item["thumbnailcreator"],
+            "PersonThumbnailLicense" => $item["thumbnaillicense"],
+            "PersonEmbedURI" => $item["embeduri"],
+            "PersonWebsiteURI" => ($item["websiteuri"] ? $item["websiteuri"] : ""),
+            "PersonOriginID" => $item["originid"],
+            "PersonPartyOrganisationID" => $item["party"],
+            "PersonFactionOrganisationID" => $item["faction"],
+            "PersonSocialMediaIDs" => json_encode($socialMedia, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            "PersonAdditionalInformation" => $item["additionalinformation"]
+        );
+
+        $db->query("INSERT INTO ?n SET ?u",
+            $config["platform"]["sql"]["tbl"]["Person"],
+            $tmpNewPerson
+        );
+
+        return createApiSuccessResponse(null, ["itemID" => $db->insertId()]);
+
+    } catch (exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
     }
-
-    return $return;
-
 }
 
 
 function personGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false) {
-
     global $config;
 
     if (!$db) {
-        $db = new SafeMySQL(array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        ));
+        $db = getApiDatabaseConnection('platform');
+        if (!is_object($db)) {
+            return array(
+                "total" => 0,
+                "data" => array()
+            );
+        }
     }
 
     $queryPart = "";
@@ -940,45 +599,22 @@ function personChange($parameter) {
     global $config;
 
     if (!$parameter["id"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter (id) is missing";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorMissingParameter("id");
     }
 
-    try {
-        $db = new SafeMySQL(array(
-            'host'  => $config["platform"]["sql"]["access"]["host"],
-            'user'  => $config["platform"]["sql"]["access"]["user"],
-            'pass'  => $config["platform"]["sql"]["access"]["passwd"],
-            'db'    => $config["platform"]["sql"]["db"]
-        ));
-    } catch (exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
     }
 
     // Check if person exists
-    $person = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Person"]." WHERE PersonID=?s LIMIT 1", $parameter["id"]);
+    $person = $db->getRow("SELECT * FROM ?n WHERE PersonID=?s LIMIT 1", 
+        $config["platform"]["sql"]["tbl"]["Person"], 
+        $parameter["id"]
+    );
+    
     if (!$person) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Person not found";
-        $errorarray["detail"] = "Person with the given ID was not found in database";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorNotFound("Person");
     }
 
     // Define allowed parameters
@@ -1008,27 +644,36 @@ function personChange($parameter) {
     }
 
     if (empty($updateParams)) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "No parameters";
-        $errorarray["detail"] = "No valid parameters for updating person data were provided";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageErrorParameterMissingTitle",
+            "messageErrorNoValidFieldsToUpdateDetail"
+        );
     }
 
     // Add last changed timestamp
     $updateParams[] = "PersonLastChanged=CURRENT_TIMESTAMP()";
 
-    // Execute update
-    $db->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE PersonID=?s", 
-        $config["platform"]["sql"]["tbl"]["Person"], 
-        $parameter["id"]
-    );
+    try {
+        // Execute update
+        $db->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE PersonID=?s", 
+            $config["platform"]["sql"]["tbl"]["Person"], 
+            $parameter["id"]
+        );
 
-    $return["meta"]["requestStatus"] = "success";
-    return $return;
+        return createApiSuccessResponse();
+    } catch (exception $e) {
+        return createApiErrorResponse(
+            503,
+            1,
+            "messageErrorDatabaseGeneric",
+            "messageErrorPersonUpdateFailedDetail",
+            ["exception_message" => $e->getMessage()]
+        );
+    }
 }
 
 ?>
+
+

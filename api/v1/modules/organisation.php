@@ -4,80 +4,81 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../../modules/utilities/functions.api.php");
 
 /**
  * @param string $id String of OrganisationID (= WikidataID)
- * @return array
+ * @return array Original format: ["meta"]["requestStatus"] and ["data"] or ["errors"]
  */
-function organisationGetByID($id = false, $db = false) {
-
+function organisationGetByID($id = false) {
     global $config;
 
+    if (!$id || !preg_match("/(Q|P)\d+/i", $id)) {
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageErrorParameterMissingTitle",
+            "messageErrorMissingOrInvalidIDDetail",
+            ["parameter" => "id"]
+        );
+    }
 
-    if (!preg_match("/(Q|P)\d+/i", $id)) {
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
+    }
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        array_push($return["errors"], $errorarray);
+    try {
+        $item = $db->getRow("SELECT * FROM ?n WHERE OrganisationID=?s",
+            $config["platform"]["sql"]["tbl"]["Organisation"],
+            $id
+        );
 
-        return $return;
-
-    } else {
-
-        if (!$db) {
-
-            $opts = array(
-                'host'	=> $config["platform"]["sql"]["access"]["host"],
-                'user'	=> $config["platform"]["sql"]["access"]["user"],
-                'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-                'db'	=> $config["platform"]["sql"]["db"]
-            );
-
-            try {
-
-                $db = new SafeMySQL($opts);
-
-            } catch (exception $e) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $return["errors"] = array();
-                $errorarray["status"] = "503";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Database connection error";
-                $errorarray["detail"] = "Connecting to platform database failed";
-                array_push($return["errors"], $errorarray);
-                return $return;
-
-            }
-
+        if (!$item) {
+            return createApiErrorNotFound("Organisation");
         }
 
-        $item = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Organisation"]." WHERE OrganisationID=?s",$id);
+        $data = [
+            "type" => "organisation",
+            "id" => $item["OrganisationID"],
+            "attributes" => [
+                "type" => $item["OrganisationType"],
+                "label" => $item["OrganisationLabel"],
+                "labelAlternative" => json_decode($item["OrganisationLabelAlternative"], true),
+                "abstract" => $item["OrganisationAbstract"],
+                "thumbnailURI" => $item["OrganisationThumbnailURI"],
+                "thumbnailCreator" => $item["OrganisationThumbnailCreator"],
+                "thumbnailLicense" => $item["OrganisationThumbnailLicense"],
+                "embedURI" => $item["OrganisationEmbedURI"],
+                "websiteURI" => $item["OrganisationWebsiteURI"],
+                "socialMediaIDs" => json_decode($item["OrganisationSocialMediaIDs"], true),
+                "color" => $item["OrganisationColor"],
+                "additionalInformation" => json_decode($item["OrganisationAdditionalInformation"], true),
+                "lastChanged" => $item["OrganisationLastChanged"]
+            ]
+        ];
 
-        if ($item) {
+        $links = [
+            "self" => $config["dir"]["api"]."/".$data["type"]."/".$data["id"]
+        ];
 
-            $return["meta"]["requestStatus"] = "success";
-            $organisationDataObj["data"] = organisationGetDataObject($item, $db);
-            $return = array_replace_recursive($return, $organisationDataObj);
+        $relationships = [
+            "media" => [
+                "links" => [
+                    "self" => $config["dir"]["api"]."/"."search/media?organisationID=".$data["id"]
+                ]
+            ],
+            "people" => [
+                "links" => [
+                    "self" => $config["dir"]["api"]."/"."search/people?organisationID=".$data["id"]
+                ]
+            ]
+        ];
 
-        } else {
+        return createApiSuccessResponse($data, null, $links, $relationships);
 
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "404";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Organisation not found";
-            $errorarray["detail"] = "Organisation with the given ID was not found in database";
-            array_push($return["errors"], $errorarray);
-
-        }
-
-        return $return;
-
+    } catch (exception $e) {
+        return createApiErrorDatabaseError();
     }
 }
 
@@ -116,450 +117,334 @@ function organisationGetDataObject($item = false, $db = false) {
 
 }
 
-function organisationSearch($parameter, $db = false, $noLimit = false) {
-
+/**
+ * Search for organisations with various filters
+ * 
+ * @param array $parameter Search parameters
+ * @param bool $noLimit Whether to remove result limit (max 10000)
+ * @return array Original format: ["meta"]["requestStatus"], ["data"] array, and ["meta"]["page"], ["meta"]["pageTotal"]
+ */
+function organisationSearch($parameter, $noLimit = false) {
     global $config;
 
-    //TODO: Write real no limit logic
-    $outputLimit = ($noLimit ? 10000 :25);
-
-    if (!$db) {
-
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        );
-
-        try {
-
-            $db = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to platform database failed";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
+    $outputLimit = ($noLimit ? 10000 : 25);
+    
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
     }
 
     $filteredParameters = filterAllowedSearchParams($parameter, 'organisation');
 
-    /************ VALIDATION START ************/
-
-    if (array_key_exists("name", $filteredParameters)) {
-
+    // Validate name parameter
+    if (isset($filteredParameters["name"])) {
         if (is_array($filteredParameters["name"])) {
-
-            foreach ($filteredParameters["name"] as $tmpNameID) {
-
-                if (mb_strlen($tmpNameID, "UTF-8") < 3) {
-
-                    $return["meta"]["requestStatus"] = "error";
-                    $errorarray["status"] = "400";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "name too short";
-                    $errorarray["detail"] = "Searching for name needs at least 3 characters.";
-                    $return["errors"][] = $errorarray;
-
+            foreach ($filteredParameters["name"] as $tmpName) {
+                if (mb_strlen($tmpName, "UTF-8") < 3) {
+                    return createApiErrorResponse(
+                        400,
+                        1,
+                        "messageErrorSearchLabelTooShortTitle",
+                        "messageErrorSearchLabelTooShortDetail",
+                        ["minLength" => 3]
+                    );
                 }
-
             }
-
-        } else {
-
-            if (mb_strlen($filteredParameters["name"], "UTF-8") < 3) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $errorarray["status"] = "400";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "name too short";
-                $errorarray["detail"] = "Searching for name needs at least 3 characters.";
-                $return["errors"][] = $errorarray;
-
-            }
+        } else if (mb_strlen($filteredParameters["name"], "UTF-8") < 3) {
+            return createApiErrorResponse(
+                400,
+                1,
+                "messageErrorSearchLabelTooShortTitle",
+                "messageErrorSearchLabelTooShortDetail",
+                ["minLength" => 3]
+            );
         }
-    }
-
-
-
-    if (array_key_exists("type", $filteredParameters) && (mb_strlen($filteredParameters["type"], "UTF-8") < 2)) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "2";
-        $errorarray["title"] = "type too short";
-        $errorarray["detail"] = "Searching for type needs at least 2 characters."; //  due to database limitations
-        $return["errors"][] = $errorarray;
-
-    }
-
-
-    /************ VALIDATION END ************/
-
-
-
-
-
-    if ($return["meta"]["requestStatus"] == "error") {
-
-        return $return;
-
-    }
-
-    $query = "SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Organisation"];
-
-    $conditions = array();
-
-    foreach ($filteredParameters as $k=>$para) {
-        if ($k == "name") {
-            if (is_array($para)) {
-
-                $tmpStringArray = array();
-
-                foreach ($para as $tmppara) {
-
-                    $tmpStringArray[] = $db->parse("((MATCH(OrganisationLabel, OrganisationLabelAlternative, OrganisationAbstract) AGAINST (?s IN BOOLEAN MODE)) OR (OrganisationLabel LIKE ?s))", "*". $tmppara ."*", "%".$tmppara."%");
-
-                }
-
-                $tmpStringArray = " (" . implode(" OR ", $tmpStringArray) . ")";
-                $conditions[] = $tmpStringArray;
-
-            } else {
-
-                $conditions[] = $db->parse("((MATCH(OrganisationLabel, OrganisationLabelAlternative, OrganisationAbstract) AGAINST (?s IN BOOLEAN MODE)) OR (OrganisationLabel LIKE ?s))", "*". $para."*", "%". $para."%");
-
-            }
-        }
-
-        if ($k == "type") {
-
-            $conditions[] = $db->parse("OrganisationType = ?s", $para);
-
-        }
-
-    }
-
-
-    if (count($conditions) > 0) {
-
-        $query .= " WHERE ".implode(" AND ",$conditions);
-
-        $totalCount = $db->getAll($query);
-
-        $query .= " LIMIT ";
-
-        if ($parameter["page"]) {
-
-            $query .= ($parameter["page"]-1)*$outputLimit.",";
-
-        } else {
-
-            $parameter["page"] = 1;
-
-        }
-
-        $query .= $outputLimit;
-
-
-        $findings = $db->getAll($query);
-
-        $return["meta"]["requestStatus"] = "success";
-        $return["meta"]["page"] = $parameter["page"];
-        $return["meta"]["pageTotal"] = ceil(count($totalCount)/$outputLimit);
-
-        if (!$return["data"]) {
-            $return["data"] = array();
-        }
-
-        foreach ($findings as $finding) {
-
-            array_push($return["data"], organisationGetDataObject($finding,$db));
-        }
-
-    } else {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Not enough parameters";
-        $errorarray["detail"] = "Not enough parameters";
-        array_push($return["errors"], $errorarray);
-
-    }
-
-    if (!array_key_exists("data", $return)) {
-        $return["data"] = array();
-    }
-
-
-    $return["links"]["self"] = $config["dir"]["api"]."/search/organisations?".getURLParameterFromArray($filteredParameters);
-
-    return $return;
-
-
-
-}
-
-function organisationAdd($item, $db = false) {
-
-    global $config;
-
-    if (!$db) {
-
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        );
-
-        try {
-
-            $db = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "2";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to platform database failed";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
-    }
-
-    if ((!$item["id"]) || (!preg_match("/(Q|P)\d+/i", $item["id"]))) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "ID seems to be wrong or missing";
-        $errorarray["label"] = "id";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if (!$item["type"]) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Type is missing";
-        $errorarray["label"] = "type";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if (!$item["label"]) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Label is missing";
-        $errorarray["label"] = "label";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if ($return["errors"]) {
-        $return["meta"]["requestStatus"] = "error";
-        return $return;
-    } else {
-
-        $itemTmp = $db->getRow("SELECT OrganisationID FROM ".$config["platform"]["sql"]["tbl"]["Organisation"]." WHERE OrganisationID=?s",$item["id"]);
-
-        if ($itemTmp) {
-            $return["meta"]["requestStatus"] = "error";
-            $errorarray["status"] = "422"; //todo
-            $errorarray["code"] = "2";
-            $errorarray["title"] = "Item with ID already exists in Database";
-            $errorarray["label"] = "error_info";
-            $errorarray["detail"] = "Item already exists in Database";
-            $return["errors"][] = $errorarray;
-            return $return;
-
-        } else {
-
-            try {
-
-                $socialMedia = array();
-                if ($item["socialMediaIDsLabel"]) {
-                    foreach ($item["socialMediaIDsLabel"] as $k=>$v) {
-                        //just add when both is not empty
-                        if ($v && $item["socialMediaIDsValue"][$k]) {
-                            $socialMedia[] = array("label" => $v, "id" => $item["socialMediaIDsValue"][$k]);
-                        }
-                    }
-                }
-
-                $labelAlternative = array();
-                if (is_array($item["labelAlternative"])) {
-                    foreach ($item["labelAlternative"] as $v) {
-                        if ($v) {
-                            $labelAlternative[] = $v;
-                        }
-                    }
-                }
-
-
-                $db->query("INSERT INTO ?n SET ".
-                                    "OrganisationID=?s, ".
-                                    "OrganisationType=?s, ".
-                                    "OrganisationLabel=?s, ".
-                                    "OrganisationLabelAlternative=?s, ".
-                                    "OrganisationAbstract=?s, ".
-                                    "OrganisationThumbnailURI=?s, ".
-                                    "OrganisationThumbnailCreator=?s, ".
-                                    "OrganisationThumbnailLicense=?s, ".
-                                    "OrganisationEmbedURI=?s, ".
-                                    "OrganisationWebsiteURI=?s, ".
-                                    "OrganisationSocialMediaIDs=?s, ".
-                                    "OrganisationColor=?s, ".
-                                    "OrganisationAdditionalInformation=?s",
-
-                                    $config["platform"]["sql"]["tbl"]["Organisation"],
-                                    $item["id"],
-                                    $item["type"],
-                                    $item["label"],
-                                    (is_array($labelAlternative) ? json_encode($labelAlternative, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : "[".$item["labelAlternative"]."]"),
-                                    $item["abstract"],
-                                    $item["thumbnailuri"],
-                                    $item["thumbnailcreator"],
-                                    $item["thumbnaillicense"],
-                                    $item["embeduri"],
-                                    $item["websiteuri"],
-                                    json_encode($socialMedia),
-                                    $item["color"],
-                                    (is_array($item["additionalinformation"]) ? json_encode($item["additionalinformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["additionalinformation"])
-                );
-                $return["meta"]["requestStatus"] = "success";
-                $return["meta"]["itemID"] = $db->insertId();
-
-            } catch (exception $e) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $errorarray["status"] = "422"; //todo
-                $errorarray["code"] = "2";
-                $errorarray["title"] = "Add to database failed";
-                $errorarray["label"] = "error_info";
-                $errorarray["detail"] = $e->getMessage();
-                $return["errors"][] = $errorarray;
-
-            }
-
-        }
-    }
-
-    return $return;
-
-}
-
-function organisationGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false) {
-
-    global $config;
-
-    if (!$db) {
-        $db = new SafeMySQL(array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        ));
-    }
-
-    $queryPart = "";
-
-    if ($id == "all") {
-        $queryPart .= "1";
-    } else {
-        $queryPart .= $db->parse("OrganisationID=?s",$id);
-    }
-
-
-    if (!empty($search)) {
-        $queryPart .= $db->parse(" AND (OrganisationLabel LIKE ?s OR OrganisationLabelAlternative LIKE ?s OR OrganisationID LIKE ?s)", "%".$search."%", "%".$search."%", "%".$search."%");
-    }
-
-    if (!empty($sort)) {
-
-        $queryPart .= $db->parse(" ORDER BY ?n ".$order, $sort);
-
-    }
-
-
-    if ($limit != 0) {
-
-        $queryPart .= $db->parse(" LIMIT ?i, ?i",$offset,$limit);
-
-    }
-
-    $return["total"] = $db->getOne("SELECT COUNT(OrganisationID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Organisation"]);
-    $return["data"] = $db->getAll("SELECT
-        OrganisationID,
-            OrganisationType,
-            OrganisationLabel,
-            OrganisationLabelAlternative,
-            OrganisationLastChanged,
-            OrganisationThumbnailURI
-            FROM ?n
-            WHERE ?p", $config["platform"]["sql"]["tbl"]["Organisation"], $queryPart);
-
-    return $return;
-
-}
-
-function organisationChange($parameter) {
-    global $config;
-
-    if (!$parameter["id"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter (id) is missing";
-        array_push($return["errors"], $errorarray);
-        return $return;
     }
 
     try {
-        $db = new SafeMySQL(array(
-            'host'  => $config["platform"]["sql"]["access"]["host"],
-            'user'  => $config["platform"]["sql"]["access"]["user"],
-            'pass'  => $config["platform"]["sql"]["access"]["passwd"],
-            'db'    => $config["platform"]["sql"]["db"]
-        ));
+        // Build base query
+        $query = "SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Organisation"];
+        $conditions = ["1"];
+
+        // Add search conditions
+        if (isset($filteredParameters["name"])) {
+            if (is_array($filteredParameters["name"])) {
+                $nameConditions = [];
+                foreach ($filteredParameters["name"] as $name) {
+                    $nameConditions[] = "LOWER(OrganisationLabel) LIKE LOWER('%" . $db->escape($name) . "%')";
+                }
+                $conditions[] = "(" . implode(" OR ", $nameConditions) . ")";
+            } else {
+                $conditions[] = "LOWER(OrganisationLabel) LIKE LOWER('%" . $db->escape($filteredParameters["name"]) . "%')";
+            }
+        }
+
+        if (isset($filteredParameters["type"])) {
+            if (is_array($filteredParameters["type"])) {
+                $typeConditions = [];
+                foreach ($filteredParameters["type"] as $type) {
+                    $typeConditions[] = "OrganisationType = '" . $db->escape($type) . "'";
+                }
+                $conditions[] = "(" . implode(" OR ", $typeConditions) . ")";
+            } else {
+                $conditions[] = "OrganisationType = '" . $db->escape($filteredParameters["type"]) . "'";
+            }
+        }
+
+        // Build final query
+        $query = $db->parse("?p WHERE ?p", $query, implode(" AND ", $conditions));
+        
+        // Get total count
+        $totalCount = count($db->getAll($query));
+        
+        // Add pagination
+        $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
+        $offset = ($page - 1) * $outputLimit;
+        $query .= $db->parse(" LIMIT ?i, ?i", $offset, $outputLimit);
+
+        // Execute search
+        $findings = $db->getAll($query);
+        
+        // Format results
+        $data = array_map(function($finding) use ($db) {
+            return organisationGetDataObject($finding, $db);
+        }, $findings);
+
+        $links = [
+            "self" => $config["dir"]["api"]."/search/organisations?".getURLParameterFromArray($filteredParameters)
+        ];
+
+        return createApiSuccessResponse(
+            $data,
+            [
+                "page" => $page,
+                "pageTotal" => ceil($totalCount / $outputLimit)
+            ],
+            $links
+        );
+
     } catch (exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorDatabaseError($e->getMessage());
+    }
+}
+
+/**
+ * Add a new organisation to the database
+ * 
+ * @param array $item Organisation data including ID, type, label, and other attributes
+ * @return array Response with original format: ["meta"]["requestStatus"] and ["meta"]["itemID"] or ["errors"]
+ */
+function organisationAdd($item) {
+    global $config;
+
+    // Validate required fields
+    if ((!$item["id"]) || (!preg_match("/(Q|P)\d+/i", $item["id"]))) {
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageErrorParameterMissingTitle",
+            "messageErrorMissingOrInvalidIDDetail",
+            ["parameter" => "id"],
+            "id"
+        );
+    }
+
+    if (!$item["type"]) {
+        return createApiErrorMissingParameter('type', 'type');
+    }
+
+    if (!$item["label"]) {
+        return createApiErrorMissingParameter('label', 'label');
+    }
+
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
+    }
+
+    // Check if organisation already exists
+    $itemTmp = $db->getRow("SELECT OrganisationID FROM ?n WHERE OrganisationID=?s",
+        $config["platform"]["sql"]["tbl"]["Organisation"],
+        $item["id"]
+    );
+
+    if ($itemTmp) {
+        return createApiErrorDuplicate("Organisation", "error_info");
+    }
+
+    try {
+        // Process social media IDs
+        $socialMedia = array();
+        if ($item["socialMediaIDsLabel"]) {
+            foreach ($item["socialMediaIDsLabel"] as $k => $v) {
+                if ($v && $item["socialMediaIDsValue"][$k]) {
+                    $socialMedia[] = array("label" => $v, "id" => $item["socialMediaIDsValue"][$k]);
+                }
+            }
+        }
+
+        // Process alternative labels
+        $labelAlternative = array();
+        if (is_array($item["labelAlternative"])) {
+            foreach ($item["labelAlternative"] as $v) {
+                if ($v) {
+                    $labelAlternative[] = $v;
+                }
+            }
+        }
+
+        // Insert organisation
+        $db->query("INSERT INTO ?n SET ?u",
+            $config["platform"]["sql"]["tbl"]["Organisation"],
+            array(
+                "OrganisationID" => $item["id"],
+                "OrganisationType" => $item["type"],
+                "OrganisationLabel" => $item["label"],
+                "OrganisationLabelAlternative" => (is_array($labelAlternative) ? 
+                    json_encode($labelAlternative, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : 
+                    "[".$item["labelAlternative"]."]"),
+                "OrganisationAbstract" => $item["abstract"],
+                "OrganisationThumbnailURI" => $item["thumbnailuri"],
+                "OrganisationThumbnailCreator" => $item["thumbnailcreator"],
+                "OrganisationThumbnailLicense" => $item["thumbnaillicense"],
+                "OrganisationEmbedURI" => $item["embeduri"],
+                "OrganisationWebsiteURI" => $item["websiteuri"],
+                "OrganisationSocialMediaIDs" => json_encode($socialMedia),
+                "OrganisationColor" => $item["color"],
+                "OrganisationAdditionalInformation" => (is_array($item["additionalinformation"]) ? 
+                    json_encode($item["additionalinformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : 
+                    $item["additionalinformation"])
+            )
+        );
+
+        return createApiSuccessResponse(null, ["itemID" => $db->insertId()]);
+
+    } catch (exception $e) {
+        return createApiErrorResponse(
+            422,
+            2,
+            "messageErrorDatabaseGeneric",
+            "messageErrorOrganisationAddFailedDetail",
+            ["exception_message" => $e->getMessage()],
+            "error_info"
+        );
+    }
+}
+
+/**
+ * Get an overview of organisations
+ * 
+ * @param string $id OrganisationID (Wikidata ID) or "all"
+ * @param int $limit Limit the number of results
+ * @param int $offset Offset for pagination
+ * @param string $search Search term
+ * @param string $sort Sort field
+ * @param string $order Sort order (ASC or DESC)
+ * @param string $type Filter by organisation type
+ * @return array Raw data array with 'total' count and 'data' results
+ */
+function organisationGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $type = false) {
+    global $config;
+    
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return array(
+            "total" => 0,
+            "data" => array()
+        );
+    }
+    
+    try {
+        // Build query conditions
+        $conditions = [];
+        
+        if ($id === "all") {
+            $conditions[] = "1";
+        } else {
+            if (!preg_match("/(Q|P)\d+/i", $id)) {
+                return array(
+                    "total" => 0,
+                    "data" => array()
+                );
+            }
+            $conditions[] = $db->parse("OrganisationID=?s", $id);
+        }
+        
+        if (!empty($search)) {
+            $conditions[] = $db->parse("(OrganisationLabel LIKE ?s OR OrganisationLabelAlternative LIKE ?s)", 
+                "%".$search."%", 
+                "%".$search."%"
+            );
+        }
+        
+        if (!empty($type)) {
+            $conditions[] = $db->parse("OrganisationType=?s", $type);
+        }
+        
+        $whereClause = implode(" AND ", $conditions);
+        
+        // Get total count
+        $totalCount = $db->getOne("SELECT COUNT(*) 
+                                  FROM ?n 
+                                  WHERE ?p",
+                                  $config["platform"]["sql"]["tbl"]["Organisation"],
+                                  $whereClause);
+        
+        // Add sorting
+        if (!empty($sort)) {
+            $whereClause .= $db->parse(" ORDER BY ?n ".$order, $sort);
+        }
+        
+        // Add pagination
+        if ($limit > 0) {
+            $whereClause .= $db->parse(" LIMIT ?i, ?i", $offset, $limit);
+        }
+        
+        // Get results
+        $items = $db->getAll("SELECT *
+                             FROM ?n 
+                             WHERE ?p",
+                             $config["platform"]["sql"]["tbl"]["Organisation"],
+                             $whereClause);
+        
+        return array(
+            "total" => (int)$totalCount,
+            "data" => $items
+        );
+        
+    } catch (exception $e) {
+        return array(
+            "total" => 0,
+            "data" => array()
+        );
+    }
+}
+
+/**
+ * Update an organisation's information
+ * 
+ * @param array $parameter Update parameters including organisation ID and fields to update
+ * @return array API response in JSON:API format
+ */
+function organisationChange($parameter) {
+    global $config;
+
+    if (!isset($parameter["id"])) {
+        return createApiErrorMissingParameter("id");
+    }
+
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
     }
 
     // Check if organisation exists
-    $organisation = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Organisation"]." WHERE OrganisationID=?s LIMIT 1", $parameter["id"]);
+    $organisation = $db->getRow("SELECT * FROM ?n WHERE OrganisationID=?s LIMIT 1", 
+        $config["platform"]["sql"]["tbl"]["Organisation"],
+        $parameter["id"]
+    );
     if (!$organisation) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Organisation not found";
-        $errorarray["detail"] = "Organisation with the given ID was not found in database";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorNotFound("Organisation");
     }
 
     // Define allowed parameters
@@ -574,39 +459,55 @@ function organisationChange($parameter) {
     $params = $db->filterArray($parameter, $allowedParams);
     $updateParams = array();
 
-    // Process each parameter
-    foreach ($params as $key => $value) {
-        if ($key === "OrganisationLabelAlternative" || $key === "OrganisationSocialMediaIDs" || $key === "OrganisationAdditionalInformation") {
-            // Handle JSON fields
-            if (is_array($value)) {
-                $updateParams[] = $db->parse("?n=?s", $key, json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
+    try {
+        // Process each parameter
+        foreach ($params as $key => $value) {
+            if ($key === "OrganisationLabelAlternative" || 
+                $key === "OrganisationSocialMediaIDs" || 
+                $key === "OrganisationAdditionalInformation") {
+                // Handle JSON fields
+                if (is_array($value)) {
+                    $updateParams[] = $db->parse("?n=?s", 
+                        $key, 
+                        json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+                    );
+                }
+            } else {
+                $updateParams[] = $db->parse("?n=?s", $key, $value);
             }
-        } else {
-            $updateParams[] = $db->parse("?n=?s", $key, $value);
         }
+
+        if (empty($updateParams)) {
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorParameterMissingTitle",
+                "messageErrorNoValidFieldsToUpdateDetail"
+            );
+        }
+
+        // Add last changed timestamp
+        $updateParams[] = "OrganisationLastChanged=CURRENT_TIMESTAMP()";
+
+        // Execute update
+        $result = $db->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE OrganisationID=?s", 
+            $config["platform"]["sql"]["tbl"]["Organisation"], 
+            $parameter["id"]
+        );
+
+        if (!$result) {
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorDatabaseGeneric",
+                "messageErrorOrganisationUpdateFailedDetail"
+            );
+        }
+
+        return createApiSuccessResponse(null, ["message" => "Organisation updated successfully"]);
+
+    } catch (exception $e) {
+        return createApiErrorDatabaseError();
     }
-
-    if (empty($updateParams)) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "No parameters";
-        $errorarray["detail"] = "No valid parameters for updating organisation data were provided";
-        array_push($return["errors"], $errorarray);
-        return $return;
-    }
-
-    // Add last changed timestamp
-    $updateParams[] = "OrganisationLastChanged=CURRENT_TIMESTAMP()";
-
-    // Execute update
-    $db->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE OrganisationID=?s", 
-        $config["platform"]["sql"]["tbl"]["Organisation"], 
-        $parameter["id"]
-    );
-
-    $return["meta"]["requestStatus"] = "success";
-    return $return;
 }
 ?>

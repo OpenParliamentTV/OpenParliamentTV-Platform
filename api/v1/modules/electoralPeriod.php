@@ -4,143 +4,121 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../../modules/utilities/functions.api.php");
 
 /**
  * @param string $id ElectoralPeriodID
  * @return array
  */
 function electoralPeriodGetByID($id = false) {
-
     global $config;
 
-    $IDInfos = getInfosFromStringID($id);
-
-    if (is_array($IDInfos) && ($IDInfos["type"] == "electoralPeriod")) {
-
-        $parliament = $IDInfos["parliament"];
-        $parliamentLabel = $config["parliament"][$parliament]["label"];
-
-    } else {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "500";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "ID Error";
-        $errorarray["detail"] = "Could not parse ElectoralPeriodID";
-        array_push($return["errors"], $errorarray);
-        return $return;
-
+    // Parse and validate ID
+    $idInfo = getInfosFromStringID($id);
+    if (!$idInfo || $idInfo["type"] !== "electoralPeriod") {
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageErrorIDParseError",
+            "messageErrorIDParseError",
+            ["type" => "ElectoralPeriod"]
+        );
     }
 
-    if (!array_key_exists($parliament,$config["parliament"])) {
+    // Validate parliament
+    $parliament = $idInfo["parliament"];
+    if (!isset($config["parliament"][$parliament])) {
+        return createApiErrorInvalidID("ElectoralPeriod");
+    }
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid ElectoralPeriodID";
-        $errorarray["detail"] = "ElectoralPeriodID could not be associated with a parliament";
-        array_push($return["errors"], $errorarray);
+    $parliamentLabel = $config["parliament"][$parliament]["label"];
 
-        return $return;
-        
+    // Get database connection
+    $db = getApiDatabaseConnection('parliament', $parliament);
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
+    }
 
-    } else {
-
-
-        $opts = array(
-            'host'	=> $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user'	=> $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass'	=> $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db'	=> $config["parliament"][$parliament]["sql"]["db"]
+    try {
+        // Get electoral period data
+        $item = $db->getRow("SELECT * FROM ?n WHERE ElectoralPeriodID=?s", 
+            $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
+            $id
         );
 
-        try {
-
-            $dbp = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to parliament database failed #1";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
+        if (!$item) {
+            return createApiErrorNotFound("ElectoralPeriod");
         }
 
-        try {
+        // Get associated sessions
+        $sessionItems = $db->getAll("SELECT sess.*, COUNT(ai.AgendaItemID) AS AgendaItemCount
+            FROM ?n AS sess 
+            LEFT JOIN ?n as ai
+                ON ai.AgendaItemSessionID=sess.SessionID
+            WHERE SessionElectoralPeriodID=?s
+            GROUP BY sess.SessionID",
+            $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+            $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+            $id
+        );
 
-            $item = $dbp->getRow("SELECT * FROM ?n WHERE ElectoralPeriodID=?s", $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], $id);
+        // Build response data
+        $data = [
+            "type" => "electoralPeriod",
+            "id" => $item["ElectoralPeriodID"],
+            "attributes" => [
+                "number" => (int)$item["ElectoralPeriodNumber"],
+                "dateStart" => $item["ElectoralPeriodDateStart"],
+                "dateEnd" => $item["ElectoralPeriodDateEnd"],
+                "parliament" => $parliament,
+                "parliamentLabel" => $parliamentLabel
+            ],
+            "links" => [
+                "self" => $config["dir"]["api"]."/electoralPeriod/".$item["ElectoralPeriodID"]
+            ],
+            "relationships" => [
+                "media" => [
+                    "links" => [
+                        "self" => $config["dir"]["api"]."/search/media?electoralPeriodID=".$item["ElectoralPeriodID"]
+                    ]
+                ],
+                "sessions" => [
+                    "data" => [],
+                    "links" => [
+                        "self" => $config["dir"]["api"]."/search/session?electoralPeriodID=".$item["ElectoralPeriodID"]
+                    ]
+                ]
+            ]
+        ];
 
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database error";
-            $errorarray["detail"] = "Database error #2";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
+        // Add session data
+        foreach ($sessionItems as $sessionItem) {
+            $data["relationships"]["sessions"]["data"][] = [
+                "data" => [
+                    "type" => "session",
+                    "id" => $sessionItem["SessionID"],
+                    "attributes" => [
+                        "dateStart" => $sessionItem["SessionDateStart"],
+                        "dateEnd" => $sessionItem["SessionDateEnd"],
+                        "number" => $sessionItem["SessionNumber"],
+                        "agendaItemCount" => $sessionItem["AgendaItemCount"]
+                    ],
+                    "links" => [
+                        "self" => $config["dir"]["api"]."/session/".$sessionItem["SessionID"]
+                    ]
+                ]
+            ];
         }
 
-        if ($item) {
+        return createApiSuccessResponse($data);
 
-
-            $sessionItems = $dbp->getAll("SELECT sess.*, COUNT(ai.AgendaItemID) AS AgendaItemCount
-                                            FROM ?n AS sess 
-                                            LEFT JOIN ?n as ai
-                                                ON ai.AgendaItemSessionID=sess.SessionID
-                                            WHERE SessionElectoralPeriodID=?s
-                                            GROUP BY sess.SessionID",
-                                            $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                                            $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
-                                            $id);
-
-            $return["meta"]["requestStatus"] = "success";
-            $return["data"]["type"] = "electoralPeriod";
-            $return["data"]["id"] = $item["ElectoralPeriodID"];
-            $return["data"]["attributes"]["number"] = (int)$item["ElectoralPeriodNumber"];
-            $return["data"]["attributes"]["dateStart"] = $item["ElectoralPeriodDateStart"];
-            $return["data"]["attributes"]["dateEnd"] = $item["ElectoralPeriodDateEnd"];
-            $return["data"]["attributes"]["parliament"] = $parliament;
-            $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
-            $return["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
-            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/"."search/media?electoralPeriodID=".$return["data"]["id"];
-            foreach ($sessionItems as $sessionItem) {
-                $tmpItem = array();
-                $tmpItem["data"]["type"] = "session";
-                $tmpItem["data"]["id"] = $sessionItem["SessionID"];
-                $tmpItem["data"]["attributes"]["dateStart"] = $sessionItem["SessionDateStart"];
-                $tmpItem["data"]["attributes"]["dateEnd"] = $sessionItem["SessionDateEnd"];
-                $tmpItem["data"]["attributes"]["number"] = $sessionItem["SessionNumber"];
-                $tmpItem["data"]["attributes"]["agendaItemCount"] = $sessionItem["AgendaItemCount"];
-                $tmpItem["data"]["links"]["self"] = $config["dir"]["api"]."/session/".$sessionItem["SessionID"];
-                $return["data"]["relationships"]["sessions"]["data"][] = $tmpItem;
-            }
-            $return["data"]["relationships"]["sessions"]["links"]["self"] = $config["dir"]["api"]."/search/session?electoralPeriodID=".$return["data"]["id"];
-
-
-        } else {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "404";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "ElectoralPeriod not found";
-            $errorarray["detail"] = "ElectoralPeriod with the given ID was not found in database"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-
-        }
-
-        return $return;
-
+    } catch (exception $e) {
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorDatabaseGeneric",
+            "messageErrorDatabaseRequest"
+        );
     }
 }
 
@@ -154,196 +132,217 @@ function electoralPeriodGetByID($id = false) {
  * @param string $sort Sort field
  * @param string $order Sort order (ASC or DESC)
  * @param object $db Database connection
- * @return array
+ * @return array Raw data array with 'total' count and 'data' results
  */
 function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false) {
     global $config;
     
-    // Get all parliaments
-    $parliaments = array_keys($config["parliament"]);
-    $allResults = array();
+    $allResults = [];
     $totalCount = 0;
     
+    $targetParliament = null;
+    if ($id !== "all") {
+        $idInfo = getInfosFromStringID($id);
+        if (!$idInfo || !isset($config["parliament"][$idInfo["parliament"]])) {
+            return [
+                "total" => 0,
+                "data" => []
+            ];
+        }
+        $targetParliament = $idInfo["parliament"];
+    }
+    
+    $parliaments = $targetParliament ? [$targetParliament] : array_keys($config["parliament"]);
+    
     foreach ($parliaments as $parliament) {
-        $opts = array(
-            'host' => $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user' => $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass' => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db' => $config["parliament"][$parliament]["sql"]["db"]
-        );
-        
-        try {
-            $dbp = new SafeMySQL($opts);
-        } catch (exception $e) {
-            continue; // Skip this parliament if connection fails
-        }
-        
-        $queryPart = "";
-        
-        if ($id == "all") {
-            $queryPart .= "1";
-        } else {
-            $queryPart .= $dbp->parse("ElectoralPeriodID=?s", $id);
-        }
-        
-        if (!empty($search)) {
-            $queryPart .= $dbp->parse(" AND (ElectoralPeriodNumber LIKE ?s)", "%".$search."%");
-        }
-        
-        if (!empty($sort)) {
-            $queryPart .= $dbp->parse(" ORDER BY ?n ".$order, $sort);
-        }
-        
-        if ($limit != 0) {
-            $queryPart .= $dbp->parse(" LIMIT ?i, ?i", $offset, $limit);
+        $db_connection = getApiDatabaseConnection('parliament', $parliament);
+        if (!is_object($db_connection)) {
+            continue; 
         }
         
         try {
+            $conditions = [];
+            $query_params = [];
             
-            $count = $dbp->getOne("SELECT COUNT(ElectoralPeriodID) as count FROM ?n WHERE ?p", 
-                $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
-                $queryPart);
-            $totalCount += $count;
+            if ($id === "all") {
+                $conditions[] = "1";
+            } else {
+                if ($parliament === $targetParliament) {
+                    $conditions[] = "ElectoralPeriodID=?s";
+                    $query_params[] = $id;
+                } else {
+                    continue;
+                }
+            }
             
-            $results = $dbp->getAll("SELECT
-                ElectoralPeriodID,
-                ElectoralPeriodNumber,
-                ElectoralPeriodDateStart,
-                ElectoralPeriodDateEnd
-                FROM ?n
-                WHERE ?p", 
-                $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
-                $queryPart);
+            if (!empty($search)) {
+                $conditions[] = "(ElectoralPeriodNumber LIKE ?s)";
+                $query_params[] = "%" . $search . "%";
+            }
+            
+            $whereClauseSQL = implode(" AND ", $conditions);
+            
+            $countQueryBase = "SELECT COUNT(ElectoralPeriodID) as count FROM ?n";
+            $current_query_params_for_count = [$config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"]];
+            if(!empty($whereClauseSQL) && $whereClauseSQL !== "1"){
+                $countQuery = $countQueryBase . " WHERE " . $whereClauseSQL;
+                $current_query_params_for_count = array_merge($current_query_params_for_count, $query_params);
+            } else {
+                $countQuery = $countQueryBase;
+            }
+            $count = $db_connection->getOne($countQuery, ...$current_query_params_for_count);
+            $totalCount += (int)$count;
+
+            $itemsQuerySQL = "SELECT ElectoralPeriodID, ElectoralPeriodNumber, ElectoralPeriodDateStart, ElectoralPeriodDateEnd FROM ?n";
+            $current_query_params_for_items = [$config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"]];
+            if(!empty($whereClauseSQL) && $whereClauseSQL !== "1"){
+                $itemsQuerySQL .= " WHERE " . $whereClauseSQL;
+                $current_query_params_for_items = array_merge($current_query_params_for_items, $query_params);
+            }
+            
+            if (!empty($sort)) {
+                $allowedSortFields = ["ElectoralPeriodNumber", "ElectoralPeriodDateStart", "ElectoralPeriodDateEnd"];
+                if (in_array($sort, $allowedSortFields)) {
+                    $orderSafe = strtoupper($order) === "DESC" ? "DESC" : "ASC";
+                    $itemsQuerySQL .= " ORDER BY ?n " . $orderSafe;
+                    $current_query_params_for_items[] = $sort;
+                }
+            }
+            
+            if ($limit != 0) {
+                $itemsQuerySQL .= " LIMIT ?i, ?i";
+                $current_query_params_for_items[] = $offset;
+                $current_query_params_for_items[] = $limit;
+            }
+            
+            $results = $db_connection->getAll($itemsQuerySQL, ...$current_query_params_for_items);
             
             foreach ($results as $result) {
-                // Use the string ID directly
                 $result["id"] = $result["ElectoralPeriodID"];
-                $result["ElectoralPeriodNumber"] = $result["ElectoralPeriodNumber"];
-                $result["ElectoralPeriodType"] = "electoralPeriod";
+                $result["ElectoralPeriodNumber"] = (int)$result["ElectoralPeriodNumber"];
                 $result["Parliament"] = $parliament;
                 $result["ParliamentLabel"] = $config["parliament"][$parliament]["label"];
                 $allResults[] = $result;
             }
             
         } catch (exception $e) {
-            // Skip this parliament if query fails
+            error_log("Error in electoralPeriodGetItemsFromDB for parliament {$parliament}: " . $e->getMessage());
             continue;
         }
     }
     
-    $return = array();
-    
-    $return["total"] = $totalCount;
-    $return["data"] = $allResults;
-    
-    return $return;
+    return [
+        "total" => $totalCount,
+        "data" => $allResults
+    ];
 }
 
 function electoralPeriodChange($params) {
     global $config;
-    $return = array();
-    $return["meta"]["requestStatus"] = "error";
-    $return["errors"] = array();
 
     // Check if ID is provided
     if (!isset($params["id"])) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter (id) is missing";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorMissingParameter("id");
     }
 
     // Get parliament from ID
-    $parliament = getInfosFromStringID($params["id"])["parliament"];
-    if (!isset($config["parliament"][$parliament])) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid ElectoralPeriodID";
-        $errorarray["detail"] = "ElectoralPeriodID could not be associated with a parliament";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    $idInfo = getInfosFromStringID($params["id"]);
+    if (!$idInfo || $idInfo["type"] !== "electoralPeriod") {
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageErrorIDParseError",
+            "messageErrorIDParseError",
+            ["type" => "ElectoralPeriod"]
+        );
     }
 
-    // Get electoral period using electoralPeriodGetItemsFromDB
+    $parliament = $idInfo["parliament"];
+    if (!isset($config["parliament"][$parliament])) {
+        return createApiErrorInvalidID("ElectoralPeriod");
+    }
+
+    // Get database connection
+    $db = getApiDatabaseConnection('parliament', $parliament);
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
+    }
+
+    // Get electoral period
     $electoralPeriod = electoralPeriodGetItemsFromDB($params["id"]);
     if (empty($electoralPeriod["data"])) {
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Electoral Period not found";
-        $errorarray["detail"] = "Electoral period with the given ID was not found in database";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorNotFound("ElectoralPeriod");
     }
     $electoralPeriod = $electoralPeriod["data"][0]; // Get the first (and only) result
 
     // Define allowed parameters
-    $allowedParams = array(
+    $allowedParams = [
         "ElectoralPeriodNumber",
         "ElectoralPeriodDateStart",
         "ElectoralPeriodDateEnd"
-    );
+    ];
 
     // Filter parameters
-    $dbp = new SafeMySQL($config["parliament"][$parliament]["sql"]);
-    $params = $dbp->filterArray($params, $allowedParams);
-    $updateParams = array();
+    $params = $db->filterArray($params, $allowedParams);
+    $updateParams = [];
 
     // Process each parameter
     foreach ($params as $key => $value) {
         // Validate ElectoralPeriodNumber
         if ($key === "ElectoralPeriodNumber") {
             if (!is_numeric($value) || (int)$value <= 0) {
-                $errorarray["status"] = "422";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Invalid Electoral Period Number";
-                $errorarray["detail"] = "Electoral Period Number must be a positive number";
-                $errorarray["meta"]["domSelector"] = "[name='ElectoralPeriodNumber']";
-                array_push($return["errors"], $errorarray);
-                return $return;
+                return createApiErrorResponse(
+                    422,
+                    1,
+                    "messageErrorInvalidNumber",
+                    "messageErrorInvalidNumber",
+                    [],
+                    "[name='ElectoralPeriodNumber']"
+                );
             }
 
             // Check for uniqueness within parliament
-            $existing = $dbp->getRow("SELECT ElectoralPeriodID FROM ?n WHERE ElectoralPeriodNumber = ?i AND ElectoralPeriodID != ?s",
+            $existing = $db->getRow("SELECT ElectoralPeriodID FROM ?n WHERE ElectoralPeriodNumber = ?i AND ElectoralPeriodID != ?s",
                 $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
                 (int)$value,
                 $electoralPeriod["ElectoralPeriodID"]
             );
             if ($existing) {
-                $errorarray["status"] = "422";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Duplicate Electoral Period Number";
-                $errorarray["detail"] = "An electoral period with this number already exists in this parliament";
-                $errorarray["meta"]["domSelector"] = "[name='ElectoralPeriodNumber']";
-                array_push($return["errors"], $errorarray);
-                return $return;
+                return createApiErrorResponse(
+                    422,
+                    1,
+                    "messageDuplicateNumber",
+                    "messageElectoralPeriodNumberExists",
+                    [],
+                    "[name='ElectoralPeriodNumber']"
+                );
             }
-            $updateParams[] = $dbp->parse("ElectoralPeriodNumber=?i", (int)$value);
+            $updateParams[] = $db->parse("ElectoralPeriodNumber=?i", (int)$value);
         }
 
         // Validate dates
         if ($key === "ElectoralPeriodDateStart" || $key === "ElectoralPeriodDateEnd") {
             if (!empty($value) && !strtotime($value)) {
-                $errorarray["status"] = "422";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Invalid Date Format";
-                $errorarray["detail"] = "The date format is invalid";
-                $errorarray["meta"]["domSelector"] = "[name='".$key."']";
-                array_push($return["errors"], $errorarray);
-                return $return;
+                return createApiErrorResponse(
+                    422,
+                    1,
+                    "messageInvalidDate",
+                    "messageInvalidDateFormat",
+                    [],
+                    "[name='".$key."']"
+                );
             }
-            $updateParams[] = $dbp->parse("?n=?s", $key, $value);
+            $updateParams[] = $db->parse("?n=?s", $key, $value);
         }
     }
 
     if (empty($updateParams)) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "No parameters";
-        $errorarray["detail"] = "No valid parameters for updating electoral period data were provided";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageNoParameter",
+            "messageNoParameterForElectoralPeriodChange"
+        );
     }
 
     // Validate date range if both dates are provided
@@ -351,32 +350,168 @@ function electoralPeriodChange($params) {
         $startDate = strtotime($params["ElectoralPeriodDateStart"]);
         $endDate = strtotime($params["ElectoralPeriodDateEnd"]);
         if ($startDate > $endDate) {
-            $errorarray["status"] = "422";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Invalid Date Range";
-            $errorarray["detail"] = "Start date must be before end date";
-            $errorarray["meta"]["domSelector"] = "[name='ElectoralPeriodDateStart']";
-            array_push($return["errors"], $errorarray);
-            return $return;
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageInvalidDateRange",
+                "messageStartDateMustBeBeforeEndDate",
+                [],
+                "[name='ElectoralPeriodDateStart']"
+            );
         }
     }
 
-    // Execute update
-    $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE ElectoralPeriodID=?s",
-        $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
-        $electoralPeriod["ElectoralPeriodID"]
-    );
+    try {
+        // Execute update
+        $db->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE ElectoralPeriodID=?s",
+            $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+            $electoralPeriod["ElectoralPeriodID"]
+        );
 
-    // Return success
-    $return = array(
-        "meta" => array(
-            "requestStatus" => "success"
-        ),
-        "data" => array(
-            "message" => "Electoral period updated successfully"
-        )
+        return createApiSuccessResponse(
+            ["message" => "Electoral period updated successfully"]
+        );
+    } catch (exception $e) {
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorDatabaseGeneric",
+            "messageErrorDatabaseRequest"
+        );
+    }
+}
+
+function getElectoralPeriod($id) {
+    $idInfo = getInfosFromStringID($id);
+    
+    if (!$idInfo || $idInfo["type"] !== "electoralPeriod") {
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageErrorIDParseError",
+            "messageErrorIDParseError",
+            ["type" => "ElectoralPeriod"]
+        );
+    }
+
+    $parliament = $idInfo["parliament"];
+    if (!$parliament) {
+        return createApiErrorInvalidID("ElectoralPeriod");
+    }
+
+    $db = getApiDatabaseConnection('parliament', $parliament);
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
+    }
+
+    $result = $db->getRow("SELECT * FROM electoral_periods WHERE id = ?s", $id);
+    if (!$result) {
+        return createApiErrorNotFound("ElectoralPeriod");
+    }
+
+    return createApiSuccessResponse($result);
+}
+
+function updateElectoralPeriod($id, $params) {
+    if (empty($id)) {
+        return createApiErrorMissingParameter("id");
+    }
+
+    $idInfo = getInfosFromStringID($id);
+    if (!$idInfo || $idInfo["type"] !== "electoralPeriod") {
+        return createApiErrorInvalidID("ElectoralPeriod");
+    }
+
+    $parliament = $idInfo["parliament"];
+    if (!$parliament || !isset($config["parliament"][$parliament])) {
+        return createApiErrorInvalidID("ElectoralPeriod");
+    }
+
+    $db = getApiDatabaseConnection('parliament', $parliament);
+    if (!is_object($db)) {
+        return $db; 
+    }
+
+    $electoralPeriodTable = $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"];
+    $result = $db->getRow("SELECT * FROM ?n WHERE ElectoralPeriodID = ?s", $electoralPeriodTable, $id);
+    if (!$result) {
+        return createApiErrorNotFound("ElectoralPeriod");
+    }
+
+    $updates = [];
+    $values = [];
+
+    if (isset($params['number'])) {
+        $numberValidation = validateApiNumber($params['number'], 'number');
+        if ($numberValidation !== true) {
+            return $numberValidation;
+        }
+
+        $existing = $db->getRow(
+            "SELECT ElectoralPeriodID FROM ?n WHERE ElectoralPeriodNumber = ?i AND ElectoralPeriodID != ?s",
+            $electoralPeriodTable,
+            (int)$params['number'],
+            $id
+        );
+        if ($existing) {
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorDuplicateNumber",
+                "messageErrorDuplicateNumber",
+                ["type" => "electoral period"]
+            );
+        }
+
+        $updates[] = "ElectoralPeriodNumber = ?i";
+        $values[] = (int)$params['number'];
+    }
+
+    if (isset($params['dateStart']) || isset($params['dateEnd'])) {
+        $startDate = isset($params['dateStart']) ? $params['dateStart'] : $result['ElectoralPeriodDateStart'];
+        $endDate = isset($params['dateEnd']) ? $params['dateEnd'] : $result['ElectoralPeriodDateEnd'];
+
+        $dateValidation = validateApiDateRange($startDate, $endDate);
+        if ($dateValidation !== true) {
+            return $dateValidation;
+        }
+
+        if (isset($params['dateStart'])) {
+            $updates[] = "ElectoralPeriodDateStart = ?s";
+            $values[] = $params['dateStart'];
+        }
+        if (isset($params['dateEnd'])) {
+            $updates[] = "ElectoralPeriodDateEnd = ?s";
+            $values[] = $params['dateEnd'];
+        }
+    }
+
+    if (empty($updates)) {
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageErrorNoParameters",
+            "messageErrorNoParameters"
+        );
+    }
+
+    $query = "UPDATE ?n SET " . implode(", ", $updates) . " WHERE ElectoralPeriodID = ?s";
+    array_unshift($values, $electoralPeriodTable);
+    $values[] = $id;
+
+    $update_result = $db->query($query, ...$values);
+    if (!$update_result) {
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorDatabaseGeneric",
+            "messageErrorDatabaseRequest"
+        );
+    }
+
+    return createApiSuccessResponse(
+        ["message" => "Electoral period updated successfully"]
     );
-    return $return;
 }
 
 ?>

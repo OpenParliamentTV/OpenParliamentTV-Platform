@@ -5,261 +5,212 @@ require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once(__DIR__."/../../../modules/utilities/language.php");
+require_once (__DIR__."/../../../modules/utilities/functions.api.php");
 
 function userChange($parameter) {
-
     global $config;
 
-    if (!$parameter["id"]) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter (id) is missing";
-        array_push($return["errors"], $errorarray);
-
-        return $return;
-
+    // Validate required ID
+    if (empty($parameter["id"])) {
+        return createApiErrorMissingParameter("id");
     }
 
-    try {
-
-        $db = new SafeMySQL(array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        ));
-
-    } catch (exception $e) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
-
+    // Get database connection
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
     }
 
+    // Define allowed parameters based on user role
     if ($_SESSION["userdata"]["role"] == "admin") {
-        $allowedParams = array("UserName", "UserPassword", "UserActive", "UserBlocked", "UserRole");
+        $allowedParams = ["UserName", "UserPassword", "UserActive", "UserBlocked", "UserRole"];
     } else {
-        $allowedParams = array("UserName", "UserPassword");
+        $allowedParams = ["UserName", "UserPassword"];
     }
 
     $params = $db->filterArray($parameter, $allowedParams);
-    $updateParams = array();
+    $updateParams = [];
 
-    // Only validate and update fields that are present in the request
+    // Process UserName
     if (array_key_exists("UserName", $params)) {
         if (empty($params["UserName"])) {
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "422";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Missing required field";
-            $errorarray["detail"] = L::messageErrorFieldRequired;
-            $errorarray["meta"]["domSelector"] = "[name='UserName']";
-            array_push($return["errors"], $errorarray);
-            return $return;
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorFieldRequiredTitle",
+                "messageErrorFieldRequiredDetail",
+                ["field" => "UserName"],
+                "[name='UserName']"
+            );
         }
         $updateParams[] = $db->parse("UserName=?s", $params["UserName"]);
     }
 
+    // Process Password
     if (array_key_exists("UserPassword", $params)) {
-        // Only validate password if both password fields are present (indicating a password change)
+        // Only validate password if both password fields are present
         if (array_key_exists("UserPasswordConfirm", $parameter)) {
             if (empty($params["UserPassword"])) {
-                $return["meta"]["requestStatus"] = "error";
-                $return["errors"] = array();
-                $errorarray["status"] = "422";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Missing required field";
-                $errorarray["detail"] = L::messageErrorFieldRequired;
-                $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
-                array_push($return["errors"], $errorarray);
-                return $return;
+                return createApiErrorResponse(
+                    422,
+                    1,
+                    "messageErrorFieldRequiredTitle",
+                    "messageErrorFieldRequiredDetail",
+                    ["field" => "UserPassword"],
+                    "[name='UserPassword']"
+                );
             }
 
-            if (passwordStrength($params["UserPassword"]) != true) {
-                $return["meta"]["requestStatus"] = "error";
-                $return["errors"] = array();
-                $errorarray["status"] = "422";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Password too weak";
-                $errorarray["detail"] = L::messagePasswordTooWeak;
-                $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
-                array_push($return["errors"], $errorarray);
-                return $return;
+            $passwordValidation = validateApiPassword($params["UserPassword"], "UserPassword");
+            if ($passwordValidation !== true) {
+                return $passwordValidation;
             }
 
-            $userdata = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserID = ?i LIMIT 1", $parameter["id"]);
-            $updateParams[] = $db->parse("UserPasswordHash=?s", hash("sha512", $userdata["UserPasswordPepper"].$params["UserPassword"].$config["salt"]));
+            $userdata = $db->getRow("SELECT * FROM ?n WHERE UserID = ?i LIMIT 1", 
+                $config["platform"]["sql"]["tbl"]["User"], 
+                $parameter["id"]
+            );
+            $updateParams[] = $db->parse("UserPasswordHash=?s", 
+                hash("sha512", $userdata["UserPasswordPepper"].$params["UserPassword"].$config["salt"])
+            );
         } else {
-            // If only UserPassword is present without UserPasswordConfirm, remove it from params
+            // If only UserPassword is present without UserPasswordConfirm, remove it
             unset($params["UserPassword"]);
         }
     }
 
+    // Process boolean fields
     if (array_key_exists("UserActive", $params)) {
-        $updateParams[] = $db->parse("UserActive=?i", $params["UserActive"] === true || $params["UserActive"] === "true" || $params["UserActive"] === "1" ? 1 : 0);
+        $updateParams[] = $db->parse("UserActive=?i", 
+            $params["UserActive"] === true || $params["UserActive"] === "true" || $params["UserActive"] === "1" ? 1 : 0
+        );
     }
 
     if (array_key_exists("UserBlocked", $params)) {
-        $updateParams[] = $db->parse("UserBlocked=?i", $params["UserBlocked"] === true || $params["UserBlocked"] === "true" || $params["UserBlocked"] === "1" ? 1 : 0);
+        $updateParams[] = $db->parse("UserBlocked=?i", 
+            $params["UserBlocked"] === true || $params["UserBlocked"] === "true" || $params["UserBlocked"] === "1" ? 1 : 0
+        );
     }
 
+    // Process UserRole
     if (array_key_exists("UserRole", $params)) {
-        // Validate role
-        $allowedRoles = array("user", "admin");
+        $allowedRoles = ["user", "admin"];
         if (!in_array($params["UserRole"], $allowedRoles)) {
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "422";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Invalid role";
-            $errorarray["detail"] = "Role must be either 'user' or 'admin'";
-            $errorarray["meta"]["domSelector"] = "[name='UserRole']";
-            array_push($return["errors"], $errorarray);
-            return $return;
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorInvalidRoleTitle",
+                "messageErrorInvalidRoleDetail",
+                [],
+                "[name='UserRole']"
+            );
         }
         $updateParams[] = $db->parse("UserRole=?s", $params["UserRole"]);
     }
 
+    // Validate that we have something to update
     if (empty($updateParams)) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "No parameter";
-        $errorarray["detail"] = "No parameter for changing userdata has been provided";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageErrorParameterMissingTitle",
+            "messageErrorNoValidFieldsToUpdateDetail"
+        );
     }
 
+    // Update user
     $userUpdateQuery = "UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE UserID = ?i";
     $db->query($userUpdateQuery, $config["platform"]["sql"]["tbl"]["User"], $parameter["id"]);
 
-    $return["meta"]["requestStatus"] = "success";
-    return $return;
+    return createApiSuccessResponse();
 }
 
 function userLogin($parameter) {
     global $config;
 
     if (!$config["allow"]["login"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "403";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Login not allowed";
-        $errorarray["detail"] = "Login functionality is currently disabled";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            403,
+            1,
+            "messageErrorLoginNotAllowedTitle",
+            "messageErrorLoginNotAllowedDetail"
+        );
     }
 
-    if (!$parameter["UserMail"] || !$parameter["UserPassword"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameters";
-        $errorarray["detail"] = L::messageErrorFieldRequired;
-        if (!$parameter["UserMail"]) {
-            $errorarray["meta"]["domSelector"] = "[name='UserMail']";
-        } else if (!$parameter["UserPassword"]) {
-            $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
+    // Validate required fields
+    $requiredFields = ["UserMail", "UserPassword"];
+    foreach ($requiredFields as $field) {
+        if (empty($parameter[$field])) {
+            return createApiErrorMissingParameter($field);
         }
-        array_push($return["errors"], $errorarray);
-        return $return;
     }
 
-    if (!filter_var($parameter["UserMail"], FILTER_VALIDATE_EMAIL)) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid email";
-        $errorarray["detail"] = "Mail not valid"; // TODO i18n
-        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Validate email format
+    $emailValidation = validateApiEmail($parameter["UserMail"], "UserMail");
+    if ($emailValidation !== true) {
+        return $emailValidation;
     }
 
-    try {
-        $db = new SafeMySQL(array(
-            'host'  => $config["platform"]["sql"]["access"]["host"],
-            'user'  => $config["platform"]["sql"]["access"]["user"],
-            'pass'  => $config["platform"]["sql"]["access"]["passwd"],
-            'db'    => $config["platform"]["sql"]["db"]
-        ));
-    } catch (exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Get database connection
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
     }
 
+    // Check if user exists
     $mail = strtolower($parameter["UserMail"]);
-    $userdata = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserMail = ?s LIMIT 1", $mail);
+    $userdata = $db->getRow("SELECT * FROM ?n WHERE UserMail = ?s LIMIT 1", 
+        $config["platform"]["sql"]["tbl"]["User"], 
+        $mail
+    );
 
     if (!$userdata) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "401";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Authentication failed";
-        $errorarray["detail"] = L::messageAuthAccountNotFoundDetail;
-        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            401,
+            1,
+            "messageAuthAccountNotFoundTitle",
+            "messageAuthAccountNotFoundDetail",
+            [],
+            "[name='UserMail']"
+        );
     }
 
+    // Validate password
     if ($userdata["UserPasswordHash"] != hash("sha512", $userdata["UserPasswordPepper"].$parameter["UserPassword"].$config["salt"])) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "401";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Authentication failed";
-        $errorarray["detail"] = L::messageLoginErrorPasswordNotCorrect;
-        $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            401,
+            1,
+            "messageAuthPasswordIncorrectTitle",
+            "messageLoginErrorPasswordNotCorrect",
+            [],
+            "[name='UserPassword']"
+        );
     }
 
+    // Check account status
     if (!$userdata["UserActive"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "403";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Account inactive";
-        $errorarray["detail"] = L::messageAuthAccountNotActiveDetail;
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            403,
+            1,
+            "messageAuthAccountNotActiveTitle",
+            "messageAuthAccountNotActiveDetail"
+        );
     }
 
     if ($userdata["UserBlocked"] == 1) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "403";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Account blocked";
-        $errorarray["detail"] = L::messageAuthAccountBlockedDetail;
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            403,
+            1,
+            "messageAuthAccountBlockedTitle",
+            "messageAuthAccountBlockedDetail"
+        );
     }
 
     // Update last login timestamp
-    $db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserLastLogin=current_timestamp() WHERE UserID=?i LIMIT 1", $userdata["UserID"]);
+    $db->query("UPDATE ?n SET UserLastLogin=current_timestamp() WHERE UserID=?i LIMIT 1", 
+        $config["platform"]["sql"]["tbl"]["User"],
+        $userdata["UserID"]
+    );
 
     // Set session data
     $_SESSION["login"] = 1;
@@ -268,112 +219,77 @@ function userLogin($parameter) {
     $_SESSION["userdata"]["id"] = $userdata["UserID"];
     $_SESSION["userdata"]["role"] = $userdata["UserRole"];
 
-    $return["meta"]["requestStatus"] = "success";
-    $return["data"] = array(
+    return createApiSuccessResponse([
         "message" => L::messageLoginSuccessGeneric,
-        "user" => array(
+        "user" => [
             "id" => $userdata["UserID"],
             "name" => $userdata["UserName"],
             "mail" => $userdata["UserMail"],
             "role" => $userdata["UserRole"]
-        )
-    );
-
-    return $return;
+        ]
+    ]);
 }
 
 function userRegister($parameter) {
     global $config;
 
     if (!$config["allow"]["register"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "403";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Registration not allowed";
-        $errorarray["detail"] = "Registration functionality is currently disabled";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            403,
+            1,
+            "messageErrorRegistrationNotAllowedTitle",
+            "messageErrorRegistrationNotAllowedDetail"
+        );
     }
 
-    if (!$parameter["UserMail"] || !$parameter["UserPassword"] || !$parameter["UserName"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameters";
-        $errorarray["detail"] = L::messageErrorFieldRequired;
-        if (!$parameter["UserName"]) {
-            $errorarray["meta"]["domSelector"] = "[name='UserName']";
-        } else if (!$parameter["UserMail"]) {
-            $errorarray["meta"]["domSelector"] = "[name='UserMail']";
-        } else if (!$parameter["UserPassword"]) {
-            $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
+    // Validate required fields
+    $requiredFields = ["UserMail", "UserPassword", "UserName"];
+    foreach ($requiredFields as $field) {
+        if (empty($parameter[$field])) {
+            return createApiErrorMissingParameter($field);
         }
-        array_push($return["errors"], $errorarray);
-        return $return;
     }
 
-    if (!filter_var($parameter["UserMail"], FILTER_VALIDATE_EMAIL)) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid email";
-        $errorarray["detail"] = "Mail not valid"; // TODO i18n
-        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Validate email format
+    $emailValidation = validateApiEmail($parameter["UserMail"], "UserMail");
+    if ($emailValidation !== true) {
+        return $emailValidation;
     }
 
-    if (passwordStrength($parameter["UserPassword"]) != true) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Password too weak";
-        $errorarray["detail"] = L::messagePasswordTooWeak;
-        $errorarray["meta"]["domSelector"] = "[name='UserPassword']";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Validate password strength
+    $passwordValidation = validateApiPassword($parameter["UserPassword"], "UserPassword");
+    if ($passwordValidation !== true) {
+        return $passwordValidation;
     }
 
-    try {
-        $db = new SafeMySQL(array(
-            'host'  => $config["platform"]["sql"]["access"]["host"],
-            'user'  => $config["platform"]["sql"]["access"]["user"],
-            'pass'  => $config["platform"]["sql"]["access"]["passwd"],
-            'db'    => $config["platform"]["sql"]["db"]
-        ));
-    } catch (exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Get database connection
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
     }
 
+    // Check if email already exists
     $mail = strtolower($parameter["UserMail"]);
-    $userdata = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserMail = ?s LIMIT 1", $mail);
+    $userdata = $db->getRow("SELECT * FROM ?n WHERE UserMail = ?s LIMIT 1", 
+        $config["platform"]["sql"]["tbl"]["User"], 
+        $mail
+    );
 
     if ($userdata) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "409";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Account exists";
-        $errorarray["detail"] = L::messageAccountWithMailAlreadyExists;
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            409,
+            1,
+            "messageErrorAccountExistsTitle",
+            "messageAccountWithMailAlreadyExists"
+        );
     }
 
+    // Generate security tokens
     $pepper = bin2hex(random_bytes(9));
     $confirmationCode = bin2hex(random_bytes(10));
 
-    $db->query("INSERT INTO ".$config["platform"]["sql"]["tbl"]["User"]." SET
+    // Insert new user
+    $db->query("INSERT INTO ?n SET
         UserName=?s,
         UserMail=?s,
         UserPasswordHash=?s,
@@ -381,6 +297,7 @@ function userRegister($parameter) {
         UserRole=?s,
         UserActive=?i,
         UserRegisterConfirmation=?s",
+        $config["platform"]["sql"]["tbl"]["User"],
         $parameter["UserName"],
         $mail,
         hash("sha512", $pepper.$parameter["UserPassword"].$config["salt"]),
@@ -413,17 +330,14 @@ function userRegister($parameter) {
 
     mail($parameter["UserName"].' <'.$mail.'>', $registrationMailSubject, $message, $header);
 
-    $return["meta"]["requestStatus"] = "success";
-    $return["data"] = array(
+    return createApiSuccessResponse([
         "message" => L::messageRegisterSuccess,
-        "user" => array(
+        "user" => [
             "id" => $userID,
             "name" => $parameter["UserName"],
             "mail" => $mail
-        )
-    );
-
-    return $return;
+        ]
+    ]);
 }
 
 function userLogout() {
@@ -431,77 +345,58 @@ function userLogout() {
     session_unset();
     session_destroy();
     
-    $return["meta"]["requestStatus"] = "success";
-    $return["data"] = array(
+    return createApiSuccessResponse([
         "message" => "Successfully logged out"
-    );
-    
-    return $return;
+    ]);
 }
 
 function userPasswordResetRequest($parameter) {
     global $config;
 
-    if (!$parameter["UserMail"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = L::messageErrorFieldRequired;
-        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Validate required fields
+    if (empty($parameter["UserMail"])) {
+        return createApiErrorMissingParameter("UserMail");
     }
 
-    if (!filter_var($parameter["UserMail"], FILTER_VALIDATE_EMAIL)) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid email";
-        $errorarray["detail"] = "Mail not valid"; // TODO i18n
-        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Validate email format
+    $emailValidation = validateApiEmail($parameter["UserMail"], "UserMail");
+    if ($emailValidation !== true) {
+        return $emailValidation;
     }
 
-    try {
-        $db = new SafeMySQL(array(
-            'host'  => $config["platform"]["sql"]["access"]["host"],
-            'user'  => $config["platform"]["sql"]["access"]["user"],
-            'pass'  => $config["platform"]["sql"]["access"]["passwd"],
-            'db'    => $config["platform"]["sql"]["db"]
-        ));
-    } catch (exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Get database connection
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
     }
 
+    // Check if user exists
     $mail = strtolower($parameter["UserMail"]);
-    $userdata = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserMail = ?s LIMIT 1", $mail);
+    $userdata = $db->getRow("SELECT * FROM ?n WHERE UserMail = ?s LIMIT 1", 
+        $config["platform"]["sql"]["tbl"]["User"], 
+        $mail
+    );
 
     if (!$userdata) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Account not found";
-        $errorarray["detail"] = L::messageAuthAccountNotFoundDetail;
-        $errorarray["meta"]["domSelector"] = "[name='UserMail']";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            404,
+            1,
+            "messageAuthAccountNotFoundTitle",
+            "messageAuthAccountNotFoundDetail",
+            [],
+            "[name='UserMail']"
+        );
     }
 
+    // Generate and save reset code
     $confirmationCode = bin2hex(random_bytes(10));
-    $db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserPasswordReset=?s WHERE UserID=?i LIMIT 1", $confirmationCode, $userdata["UserID"]);
+    $db->query("UPDATE ?n SET UserPasswordReset=?s WHERE UserID=?i LIMIT 1", 
+        $config["platform"]["sql"]["tbl"]["User"],
+        $confirmationCode, 
+        $userdata["UserID"]
+    );
 
+    // Send reset email
     $passwordresetMailSubject = L::brand.': '.L::resetPassword;
     $resetLink = $config["dir"]["root"] . "/password-reset?id=" . $userdata['UserID'] . "&code=" . $confirmationCode;
 
@@ -522,192 +417,141 @@ function userPasswordResetRequest($parameter) {
 
     mail($userdata["UserName"].' <'.$mail.'>', $passwordresetMailSubject, $message, $header);
 
-    $return["meta"]["requestStatus"] = "success";
-    $return["data"] = array(
+    return createApiSuccessResponse([
         "message" => L::messagePasswordResetMailSent
-    );
-
-    return $return;
+    ]);
 }
 
 function userPasswordReset($parameter) {
     global $config;
 
-    if (!$parameter["UserID"] || !$parameter["ResetCode"] || !$parameter["NewPassword"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameters";
-        $errorarray["detail"] = L::messageErrorFieldRequired;
-        if (!$parameter["NewPassword"]) {
-            $errorarray["meta"]["domSelector"] = "[name='NewPassword']";
+    // Validate required fields
+    $requiredFields = ["UserID", "ResetCode", "NewPassword"];
+    foreach ($requiredFields as $field) {
+        if (empty($parameter[$field])) {
+            return createApiErrorMissingParameter($field);
         }
-        array_push($return["errors"], $errorarray);
-        return $return;
     }
 
-    if (passwordStrength($parameter["NewPassword"]) != true) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Password too weak";
-        $errorarray["detail"] = L::messagePasswordTooWeak;
-        $errorarray["meta"]["domSelector"] = "[name='NewPassword']";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Validate password strength
+    $passwordValidation = validateApiPassword($parameter["NewPassword"], "NewPassword");
+    if ($passwordValidation !== true) {
+        return $passwordValidation;
     }
 
-    try {
-        $db = new SafeMySQL(array(
-            'host'  => $config["platform"]["sql"]["access"]["host"],
-            'user'  => $config["platform"]["sql"]["access"]["user"],
-            'pass'  => $config["platform"]["sql"]["access"]["passwd"],
-            'db'    => $config["platform"]["sql"]["db"]
-        ));
-    } catch (exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Get database connection
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
     }
 
-    $userdata = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserID = ?i LIMIT 1", $parameter["UserID"]);
+    // Check if user exists
+    $userdata = $db->getRow("SELECT * FROM ?n WHERE UserID = ?i LIMIT 1", 
+        $config["platform"]["sql"]["tbl"]["User"],
+        $parameter["UserID"]
+    );
 
     if (!$userdata) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Account not found";
-        $errorarray["detail"] = L::messageAuthAccountNotFoundDetail;
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorNotFound("User");
     }
 
+    // Validate reset code
     if ($userdata["UserPasswordReset"] != $parameter["ResetCode"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid reset code";
-        $errorarray["detail"] = L::messagePasswordResetCodeIncorrect;
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            400,
+            1,
+            "messageErrorInvalidResetCodeTitle",
+            "messagePasswordResetCodeIncorrect"
+        );
     }
 
+    // Generate new password hash and clear reset code
     $pepper = bin2hex(random_bytes(9));
-    $db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET 
+    $db->query("UPDATE ?n SET 
         UserPasswordHash=?s, 
         UserPasswordReset=?i, 
         UserPasswordPepper=?s 
         WHERE UserID=?i", 
-        hash("sha512", $pepper.$parameter["NewPassword"].$config["salt"]), 
-        0, 
-        $pepper, 
+        $config["platform"]["sql"]["tbl"]["User"],
+        hash("sha512", $pepper.$parameter["NewPassword"].$config["salt"]),
+        0,
+        $pepper,
         $parameter["UserID"]
     );
 
-    $return["meta"]["requestStatus"] = "success";
-    $return["data"] = array(
+    return createApiSuccessResponse([
         "message" => L::messagePasswordResetSuccess
-    );
-
-    return $return;
+    ]);
 }
 
 function userConfirmRegistration($parameter) {
     global $config;
 
-    if (!$parameter["UserID"] || !$parameter["ConfirmationCode"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameters";
-        $errorarray["detail"] = L::messageErrorParameterMissingDetail;
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Validate required fields
+    $requiredFields = ["UserID", "ConfirmationCode"];
+    foreach ($requiredFields as $field) {
+        if (empty($parameter[$field])) {
+            return createApiErrorMissingParameter($field);
+        }
     }
 
-    try {
-        $db = new SafeMySQL(array(
-            'host'  => $config["platform"]["sql"]["access"]["host"],
-            'user'  => $config["platform"]["sql"]["access"]["user"],
-            'pass'  => $config["platform"]["sql"]["access"]["passwd"],
-            'db'    => $config["platform"]["sql"]["db"]
-        ));
-    } catch (exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    // Get database connection
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
     }
 
-    $userdata = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["User"]." WHERE UserID = ?i LIMIT 1", $parameter["UserID"]);
-
-    if (!$userdata) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Account not found";
-        $errorarray["detail"] = L::messageErrorGeneric;
-        array_push($return["errors"], $errorarray);
-        return $return;
-    }
-
-    if ($userdata["UserBlocked"] == 1) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "403";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Account blocked";
-        $errorarray["detail"] = L::messageAuthAccountBlockedDetail;
-        array_push($return["errors"], $errorarray);
-        return $return;
-    }
-
-    if ($userdata["UserRegisterConfirmation"] != $parameter["ConfirmationCode"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid confirmation code";
-        $errorarray["detail"] = L::messageRegisterWrongConfirmationCode;
-        array_push($return["errors"], $errorarray);
-        return $return;
-    }
-
-    $db->query("UPDATE ".$config["platform"]["sql"]["tbl"]["User"]." SET UserActive=1, UserRegisterConfirmation=1 WHERE UserID=?i LIMIT 1", $userdata["UserID"]);
-
-    $return["meta"]["requestStatus"] = "success";
-    $return["data"] = array(
-        "message" => L::messageAccountActivationSuccess
+    // Check if user exists
+    $userdata = $db->getRow("SELECT * FROM ?n WHERE UserID = ?i LIMIT 1", 
+        $config["platform"]["sql"]["tbl"]["User"],
+        $parameter["UserID"]
     );
 
-    return $return;
+    if (!$userdata) {
+        return createApiErrorNotFound("User");
+    }
+
+    // Check if account is blocked
+    if ($userdata["UserBlocked"] == 1) {
+        return createApiErrorResponse(
+            403,
+            1,
+            "messageAuthAccountBlockedTitle",
+            "messageAuthAccountBlockedDetail"
+        );
+    }
+
+    // Validate confirmation code
+    if ($userdata["UserRegisterConfirmation"] != $parameter["ConfirmationCode"]) {
+        return createApiErrorResponse(
+            400,
+            1,
+            "messageErrorInvalidConfirmationCodeTitle",
+            "messageRegisterWrongConfirmationCode"
+        );
+    }
+
+    // Activate account
+    $db->query("UPDATE ?n SET UserActive=1, UserRegisterConfirmation=1 WHERE UserID=?i LIMIT 1", 
+        $config["platform"]["sql"]["tbl"]["User"],
+        $userdata["UserID"]
+    );
+
+    return createApiSuccessResponse([
+        "message" => L::messageAccountActivationSuccess
+    ]);
 }
 
 function userGetItemsFromDB($id = "all", $limit = 10, $offset = 0, $search = false, $sort = false, $order = false) {
     global $config;
 
-    $db = new SafeMySQL(array(
-        'host'  => $config["platform"]["sql"]["access"]["host"],
-        'user'  => $config["platform"]["sql"]["access"]["user"],
-        'pass'  => $config["platform"]["sql"]["access"]["passwd"],
-        'db'    => $config["platform"]["sql"]["db"]
-    ));
+    // Get database connection
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
+    }
 
+    // Build query conditions
     $queryPart = "";
 
     if ($id == "all") {
@@ -716,37 +560,55 @@ function userGetItemsFromDB($id = "all", $limit = 10, $offset = 0, $search = fal
         $queryPart .= $db->parse("UserID=?i", $id);
     }
 
+    // Add search condition if provided
     if (!empty($search)) {
-        $queryPart .= $db->parse(" AND (LOWER(UserName) LIKE LOWER(?s) OR LOWER(UserMail) LIKE LOWER(?s))", "%".$search."%", "%".$search."%");
+        $queryPart .= $db->parse(" AND (LOWER(UserName) LIKE LOWER(?s) OR LOWER(UserMail) LIKE LOWER(?s))", 
+            "%".$search."%", 
+            "%".$search."%"
+        );
     }
 
+    // Add sorting if provided
     if (!empty($sort)) {
-        $allowedSortFields = array("UserName", "UserMail", "UserRole", "UserActive", "UserBlocked", "UserLastLogin", "UserRegisterDate");
+        $allowedSortFields = ["UserName", "UserMail", "UserRole", "UserActive", "UserBlocked", "UserLastLogin", "UserRegisterDate"];
         if (in_array($sort, $allowedSortFields)) {
             $queryPart .= $db->parse(" ORDER BY ?n ".$order, $sort);
         }
     }
 
+    // Add pagination
     if ($limit != 0) {
         $queryPart .= $db->parse(" LIMIT ?i, ?i", $offset, $limit);
     }
 
-    $return = array();
-    $return["meta"]["requestStatus"] = "success";
+    // Get total count
+    $total = $db->getOne("SELECT COUNT(UserID) as count FROM ?n", 
+        $config["platform"]["sql"]["tbl"]["User"]
+    );
 
-    $return["total"] = $db->getOne("SELECT COUNT(UserID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["User"]);
-    $rows = $db->getAll("SELECT UserID, UserName, UserMail, UserRole, UserActive, UserBlocked, UserLastLogin, UserRegisterDate FROM ?n WHERE ?p", 
+    // Get user data
+    $rows = $db->getAll("SELECT 
+        UserID, UserName, UserMail, UserRole, UserActive, 
+        UserBlocked, UserLastLogin, UserRegisterDate 
+        FROM ?n WHERE ?p", 
         $config["platform"]["sql"]["tbl"]["User"], 
         $queryPart
     );
+
     // Convert integer values to booleans
     foreach ($rows as &$row) {
         $row["UserActive"] = (bool)$row["UserActive"];
         $row["UserBlocked"] = (bool)$row["UserBlocked"];
     }
-    $return["data"] = $rows;
 
-    return $return;
+    // Return in old format with total at root level
+    return [
+        "meta" => [
+            "requestStatus" => "success"
+        ],
+        "total" => $total,
+        "data" => $rows
+    ];
 }
 
 ?>

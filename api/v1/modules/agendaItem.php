@@ -4,143 +4,109 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../../modules/utilities/functions.api.php");
 
 /**
  * @param string $id AgendaID
  * @return array
  */
 function agendaItemGetByID($id = false) {
-
     global $config;
 
-    $IDInfos = getInfosFromStringID($id);
-
-    if (is_array($IDInfos)) {
-
-        $parliament = $IDInfos["parliament"];
-        $parliamentLabel = $config["parliament"][$parliament]["label"];
-
-    } else {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "500";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "ID Error";
-        $errorarray["detail"] = "Could not parse AgendaItemID";
-        array_push($return["errors"], $errorarray);
-        return $return;
-
+    if (!$id) {
+        return createApiErrorMissingParameter('id');
     }
 
-    if (!array_key_exists($parliament,$config["parliament"])) {
+    $idInfo = getInfosFromStringID($id);
+    if (!$idInfo) {
+        return createApiErrorInvalidFormat('id', 'agendaItem');
+    }
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid MediaID";
-        $errorarray["detail"] = "AgendaItemID could not be associated with a parliament";
-        array_push($return["errors"], $errorarray);
+    $parliament = $idInfo["parliament"];
+    if (!$parliament || !isset($config["parliament"][$parliament])) {
+        return createApiErrorInvalidID("AgendaItem");
+    }
 
-        return $return;
+    $parliamentLabel = $config["parliament"][$parliament]["label"];
 
-    } else {
+    $db = getApiDatabaseConnection('parliament', $parliament);
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
+    }
 
+    try {
+        $item = $db->getRow("SELECT ai.*,
+                                   sess.*,
+                                   ep.*
+                            FROM ?n AS ai
+                            LEFT JOIN ?n AS sess
+                                ON ai.AgendaItemSessionID=sess.SessionID
+                            LEFT JOIN ?n AS ep
+                                ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
+                            WHERE AgendaItemID=?i",
+                            $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+                            $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
+                            $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+                            $idInfo["id_part"]);
 
-        $opts = array(
-            'host'	=> $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user'	=> $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass'	=> $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db'	=> $config["parliament"][$parliament]["sql"]["db"]
-        );
-
-        try {
-
-            $dbp = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to parliament database failed";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
+        if (!$item) {
+            return createApiErrorNotFound("AgendaItem");
         }
 
-        try {
+        $agendaItemData = [
+            "type" => "agendaItem",
+            "id" => $parliament."-".$item["AgendaItemID"], // Preserve special ID format
+            "attributes" => [
+                "officialTitle" => $item["AgendaItemOfficialTitle"],
+                "title" => $item["AgendaItemTitle"],
+                "order" => (int)$item["AgendaItemOrder"],
+                "parliament" => $parliament,
+                "parliamentLabel" => $parliamentLabel
+            ],
+            "links" => [
+                "self" => $config["dir"]["api"]."/agendaItem/".$parliament."-".$item["AgendaItemID"]
+            ],
+            "relationships" => [
+                "media" => [
+                    "links" => [
+                        "self" => $config["dir"]["api"]."/search/media?agendaItemID=".$parliament."-".$item["AgendaItemID"]
+                    ]
+                ],
+                "session" => [
+                    "data" => [
+                        "type" => "session",
+                        "id" => $item["SessionID"],
+                        "attributes" => [
+                            "number" => $item["SessionNumber"],
+                            "dateStart" => $item["SessionDateStart"],
+                            "dateEnd" => $item["SessionDateEnd"]
+                        ]
+                    ],
+                    "links" => [
+                        "self" => $config["dir"]["api"]."/session/".$item["SessionID"]
+                    ]
+                ],
+                "electoralPeriod" => [
+                    "data" => [
+                        "type" => "electoralPeriod",
+                        "id" => $item["ElectoralPeriodID"],
+                        "attributes" => [
+                            "number" => $item["ElectoralPeriodNumber"],
+                            "dateStart" => $item["ElectoralPeriodDateStart"],
+                            "dateEnd" => $item["ElectoralPeriodDateEnd"]
+                        ]
+                    ],
+                    "links" => [
+                        "self" => $config["dir"]["api"]."/electoralPeriod/".$item["ElectoralPeriodID"]
+                    ]
+                ]
+            ]
+        ];
 
-            $item = $dbp->getRow("SELECT ai.*,
-                                         sess.*,
-                                         ep.*
-                                         FROM ?n AS ai
-                                         LEFT JOIN ?n AS sess
-                                            ON ai.AgendaItemSessionID=sess.SessionID
-                                         LEFT JOIN ?n AS ep
-                                            ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
-                                         WHERE AgendaItemID=?s",
-                                         $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
-                                         $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                                         $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
-                                         $IDInfos["id_part"]);
+        return createApiSuccessResponse($agendaItemData);
 
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database error";
-            $errorarray["detail"] = "Database error #1";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
-        if ($item) {
-
-            $return["meta"]["requestStatus"] = "success";
-            $return["data"]["type"] = "agendaItem";
-            $return["data"]["id"] = $parliament."-".$item["AgendaItemID"];
-            $return["data"]["attributes"]["officialTitle"] = $item["AgendaItemOfficialTitle"];
-            $return["data"]["attributes"]["title"] = $item["AgendaItemTitle"];
-            $return["data"]["attributes"]["order"] = (int)$item["AgendaItemOrder"];
-            $return["data"]["attributes"]["parliament"] = $parliament;
-            $return["data"]["attributes"]["parliamentLabel"] = $parliamentLabel;
-            $return["data"]["links"]["self"] = $config["dir"]["api"]."/".$return["data"]["type"]."/".$return["data"]["id"];
-            $return["data"]["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?agendaItemID=".$return["data"]["id"];
-            $return["data"]["relationships"]["session"]["data"]["type"] = "session";
-            $return["data"]["relationships"]["session"]["data"]["id"] = $item["SessionID"];
-            $return["data"]["relationships"]["session"]["data"]["attributes"]["number"] = $item["SessionNumber"];
-            $return["data"]["relationships"]["session"]["data"]["attributes"]["dateStart"] = $item["SessionDateStart"];
-            $return["data"]["relationships"]["session"]["data"]["attributes"]["dateEnd"] = $item["SessionDateEnd"];
-            $return["data"]["relationships"]["session"]["links"]["self"] = $config["dir"]["api"]."/session/".$item["SessionID"];
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["type"] = "electoralPeriod";
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["id"] = $item["ElectoralPeriodID"];
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] = $item["ElectoralPeriodNumber"];
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["dateStart"] = $item["ElectoralPeriodDateStart"];
-            $return["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["dateEnd"] = $item["ElectoralPeriodDateEnd"];
-            $return["data"]["relationships"]["electoralPeriod"]["links"]["self"] = $config["dir"]["api"]."/electoralPeriod/".$item["ElectoralPeriodID"];
-
-
-        } else {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "404";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "AgendaItem not found";
-            $errorarray["detail"] = "AgendaItem with the given ID was not found in database";
-            array_push($return["errors"], $errorarray);
-
-        }
-
-        return $return;
-
+    } catch (exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
     }
 }
 
@@ -156,86 +122,87 @@ function agendaItemGetByID($id = false) {
  * @param object $db Database connection
  * @param string $electoralPeriodID Filter by electoral period ID
  * @param string $sessionID Filter by session ID
- * @return array
+ * @return array Raw data array with 'total' count and 'data' results
  */
 function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false, $electoralPeriodID = false, $sessionID = false) {
     global $config;
     
-    // Get all parliaments
-    $parliaments = array_keys($config["parliament"]);
-    $allResults = array();
+    $allResults = [];
     $totalCount = 0;
     
     // If ID is not "all", get parliament and numeric ID using getInfosFromStringID
     $targetParliament = null;
     $numericID = $id;
     if ($id !== "all") {
-        $IDInfos = getInfosFromStringID($id);
-        if (is_array($IDInfos) && array_key_exists($IDInfos["parliament"], $config["parliament"])) {
-            $targetParliament = $IDInfos["parliament"];
-            $numericID = intval($IDInfos["id_part"]); // Convert to integer
+        $idInfo = getInfosFromStringID($id);
+        if (!$idInfo || !isset($config["parliament"][$idInfo["parliament"]])) {
+            return [
+                "total" => 0,
+                "data" => []
+            ];
         }
+        $targetParliament = $idInfo["parliament"];
+        $numericID = (int)$idInfo["id_part"]; // Convert to integer
     }
     
-    // If we have a target parliament, only search in that one
-    if ($targetParliament) {
-        $parliaments = array($targetParliament);
-    }
+    // Get parliaments to search in
+    $parliaments = $targetParliament ? [$targetParliament] : array_keys($config["parliament"]);
     
     foreach ($parliaments as $parliament) {
-        $opts = array(
-            'host' => $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user' => $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass' => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db' => $config["parliament"][$parliament]["sql"]["db"]
-        );
-        
-        try {
-            $dbp = new SafeMySQL($opts);
-        } catch (exception $e) {
+        $db = getApiDatabaseConnection('parliament', $parliament);
+        if (!is_object($db)) {
             continue; // Skip this parliament if connection fails
         }
         
-        $queryPart = "";
-        
-        if ($id == "all") {
-            $queryPart .= "1";
-        } else {
-            $queryPart .= $dbp->parse("ai.AgendaItemID=?i", $numericID); // Use ?i for integer
-        }
-        
-        if (!empty($search)) {
-            $queryPart .= $dbp->parse(" AND (ai.AgendaItemTitle LIKE ?s OR ai.AgendaItemOfficialTitle LIKE ?s)", "%".$search."%", "%".$search."%");
-        }
-        
-        if (!empty($electoralPeriodID)) {
-            $queryPart .= $dbp->parse(" AND sess.SessionElectoralPeriodID=?s", $electoralPeriodID);
-        }
-        
-        if (!empty($sessionID)) {
-            $queryPart .= $dbp->parse(" AND ai.AgendaItemSessionID=?s", $sessionID);
-        }
-        
-        if (!empty($sort)) {
-            $queryPart .= $dbp->parse(" ORDER BY ?n ".$order, $sort);
-        }
-        
-        if ($limit != 0) {
-            $queryPart .= $dbp->parse(" LIMIT ?i, ?i", $offset, $limit);
-        }
-        
         try {
-            $count = $dbp->getOne("SELECT COUNT(ai.AgendaItemID) as count 
-                FROM ?n AS ai
-                LEFT JOIN ?n AS sess
-                ON ai.AgendaItemSessionID=sess.SessionID
-                WHERE ?p", 
+            // Build query conditions
+            $conditions = [];
+            
+            if ($id === "all") {
+                $conditions[] = "1";
+            } else {
+                $conditions[] = $db->parse("ai.AgendaItemID=?i", $numericID);
+            }
+            
+            if (!empty($search)) {
+                $conditions[] = $db->parse("(ai.AgendaItemTitle LIKE ?s OR ai.AgendaItemOfficialTitle LIKE ?s)", 
+                    "%".$search."%", 
+                    "%".$search."%"
+                );
+            }
+            
+            if (!empty($electoralPeriodID)) {
+                $conditions[] = $db->parse("sess.SessionElectoralPeriodID=?s", $electoralPeriodID);
+            }
+            
+            if (!empty($sessionID)) {
+                // Revert to using the full string sessionID for comparison, assuming ai.AgendaItemSessionID is a full string ID.
+                $conditions[] = $db->parse("ai.AgendaItemSessionID=?s", $sessionID);
+            }
+            
+            $whereClause = implode(" AND ", $conditions);
+            
+            // Add sorting
+            if (!empty($sort)) {
+                $whereClause .= $db->parse(" ORDER BY ?n ".$order, $sort);
+            }
+            
+            // Add pagination
+            if ($limit != 0) {
+                $whereClause .= $db->parse(" LIMIT ?i, ?i", $offset, $limit);
+            }
+            
+            // Get total count for this parliament
+            $parliamentCount = $db->getOne("SELECT COUNT(ai.AgendaItemID) as count FROM ?n AS ai LEFT JOIN ?n AS sess ON ai.AgendaItemSessionID=sess.SessionID LEFT JOIN ?n AS ep ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID WHERE ?p",
                 $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
                 $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                $queryPart);
-            $totalCount += $count;
+                $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
+                implode(" AND ", $conditions) // Use the same conditions for count
+            );
+            $totalCount += (int)$parliamentCount;
             
-            $results = $dbp->getAll("SELECT
+            // Get results for this parliament
+            $items = $db->getAll("SELECT
                 ai.AgendaItemID,
                 ai.AgendaItemTitle,
                 ai.AgendaItemOfficialTitle,
@@ -244,81 +211,82 @@ function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search 
                 sess.SessionNumber,
                 sess.SessionDateStart,
                 sess.SessionDateEnd,
-                sess.SessionElectoralPeriodID,
+                ep.ElectoralPeriodID,
                 ep.ElectoralPeriodNumber,
                 ep.ElectoralPeriodDateStart,
                 ep.ElectoralPeriodDateEnd
                 FROM ?n AS ai
                 LEFT JOIN ?n AS sess
-                ON ai.AgendaItemSessionID=sess.SessionID
+                    ON ai.AgendaItemSessionID=sess.SessionID
                 LEFT JOIN ?n AS ep
-                ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
-                WHERE ?p", 
+                    ON sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
+                WHERE ?p",
                 $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
                 $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
                 $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
-                $queryPart);
+                $whereClause
+            );
             
-            foreach ($results as $result) {
-                // Add parliament prefix to ID
-                $result["id"] = $parliament . "-" . str_pad($result["AgendaItemID"], 3, "0", STR_PAD_LEFT);
-                $result["type"] = "agendaItem";
-                $result["Parliament"] = $parliament;
-                $result["AgendaItemLabel"] = $result["AgendaItemTitle"] ?: $result["AgendaItemOfficialTitle"];
-                $allResults[] = $result;
+            // Transform results to include parliament info
+            foreach ($items as $item) {
+                $fullAgendaItemID = $parliament . "-" . $item["AgendaItemID"];
+                $allResults[] = [
+                    "AgendaItemID" => $fullAgendaItemID,
+                    "AgendaItemTitle" => $item["AgendaItemTitle"],
+                    "AgendaItemOfficialTitle" => $item["AgendaItemOfficialTitle"],
+                    "AgendaItemOrder" => $item["AgendaItemOrder"] === null ? "" : (int)$item["AgendaItemOrder"],
+                    "AgendaItemSessionID" => $item["AgendaItemSessionID"],
+                    "SessionNumber" => $item["SessionNumber"],
+                    "SessionDateStart" => $item["SessionDateStart"],
+                    "SessionDateEnd" => $item["SessionDateEnd"],
+                    "ElectoralPeriodID" => $item["ElectoralPeriodID"],
+                    "ElectoralPeriodNumber" => $item["ElectoralPeriodNumber"],
+                    "ElectoralPeriodDateStart" => $item["ElectoralPeriodDateStart"],
+                    "ElectoralPeriodDateEnd" => $item["ElectoralPeriodDateEnd"],
+                    "Parliament" => $parliament,
+                    "ParliamentLabel" => $config["parliament"][$parliament]["label"]
+                ];
             }
+            
         } catch (exception $e) {
-            // Skip this parliament if query fails
-            continue;
+            error_log("Error in agendaItemGetItemsFromDB for parliament $parliament: " . $e->getMessage());
+            continue; // Skip this parliament on error
         }
     }
     
-    $return = array();
-    
-    $return["total"] = $totalCount;
-    $return["data"] = $allResults;
-    
-    return $return;
+    return [
+        "total" => $totalCount,
+        "data" => $allResults
+    ];
 }
 
 function agendaItemChange($params) {
     global $config;
-    $return = array();
-    $return["meta"]["requestStatus"] = "error";
-    $return["errors"] = array();
 
-    // Check if ID is provided
     if (!isset($params["id"])) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter (id) is missing";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorMissingParameter("id");
     }
 
-    // Get parliament from ID
-    $parliament = getInfosFromStringID($params["id"])["parliament"];
-    if (!isset($config["parliament"][$parliament])) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Invalid AgendaItemID";
-        $errorarray["detail"] = "AgendaItemID could not be associated with a parliament";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    $idInfo = getInfosFromStringID($params["id"]);
+    if (!$idInfo || !isset($config["parliament"][$idInfo["parliament"]])) {
+        return createApiErrorInvalidID("AgendaItem");
     }
 
-    // Get agenda item using agendaItemGetItemsFromDB
-    $agendaItem = agendaItemGetItemsFromDB($params["id"]);
-    if (empty($agendaItem["data"])) {
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Agenda Item not found";
-        $errorarray["detail"] = "Agenda item with the given ID was not found in database";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    $parliament = $idInfo["parliament"];
+    $db = getApiDatabaseConnection('parliament', $parliament);
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
     }
-    $agendaItem = $agendaItem["data"][0]; // Get the first (and only) result
+
+    // Get the numeric part of the agenda item ID for database operations
+    $numericAgendaItemID = (int)$idInfo["id_part"];
+
+    // Get current agenda item data to check existence and for default values
+    $agendaItemDataResult = agendaItemGetItemsFromDB($params["id"]);
+    if (empty($agendaItemDataResult["data"])) {
+        return createApiErrorNotFound("AgendaItem");
+    }
+    $currentAgendaItem = $agendaItemDataResult["data"][0]; // Get the first (and only) result
 
     // Define allowed parameters
     $allowedParams = array(
@@ -329,8 +297,7 @@ function agendaItemChange($params) {
     );
 
     // Filter parameters
-    $dbp = new SafeMySQL($config["parliament"][$parliament]["sql"]);
-    $params = $dbp->filterArray($params, $allowedParams);
+    $params = $db->filterArray($params, $allowedParams);
     $updateParams = array();
 
     // Process each parameter
@@ -339,82 +306,100 @@ function agendaItemChange($params) {
         if ($key === "AgendaItemOrder") {
             if ($value === "") {
                 // Allow empty value to set NULL in database
-                $updateParams[] = $dbp->parse("AgendaItemOrder=NULL");
+                $updateParams[] = $db->parse("AgendaItemOrder=NULL");
             } else if (!is_numeric($value) || (int)$value <= 0) {
-                $errorarray["status"] = "422";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Invalid Agenda Item Order";
-                $errorarray["detail"] = "Agenda Item Order must be a positive number or empty";
-                $errorarray["meta"]["domSelector"] = "[name='AgendaItemOrder']";
-                array_push($return["errors"], $errorarray);
-                return $return;
+                return createApiErrorResponse(
+                    422,
+                    1,
+                    "messageErrorInvalidNumber",
+                    "messageErrorInvalidNumber",
+                    ["type" => "AgendaItem"],
+                    "[name='AgendaItemOrder']"
+                );
             } else {
                 // Check for uniqueness within session
-                $sessionID = isset($params["AgendaItemSessionID"]) ? $params["AgendaItemSessionID"] : $agendaItem["AgendaItemSessionID"];
-                $existing = $dbp->getRow("SELECT AgendaItemID FROM ?n WHERE AgendaItemOrder = ?i AND AgendaItemSessionID = ?s AND AgendaItemID != ?i",
+                $sessionID = isset($params["AgendaItemSessionID"]) ? $params["AgendaItemSessionID"] : $currentAgendaItem["AgendaItemSessionID"];
+                $existing = $db->getRow("SELECT AgendaItemID FROM ?n WHERE AgendaItemOrder = ?i AND AgendaItemSessionID = ?s AND AgendaItemID != ?i",
                     $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
                     (int)$value,
                     $sessionID,
-                    $agendaItem["AgendaItemID"]
+                    $numericAgendaItemID // Use numeric ID for comparison
                 );
                 if ($existing) {
-                    $errorarray["status"] = "422";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "Duplicate Agenda Item Order";
-                    $errorarray["detail"] = "An agenda item with this order already exists in this session";
-                    $errorarray["meta"]["domSelector"] = "[name='AgendaItemOrder']";
-                    array_push($return["errors"], $errorarray);
-                    return $return;
+                    return createApiErrorResponse(
+                        422,
+                        1,
+                        "messageErrorDuplicateNumber",
+                        "messageErrorDuplicateNumber",
+                        ["type" => "AgendaItem"],
+                        "[name='AgendaItemOrder']"
+                    );
                 }
-                $updateParams[] = $dbp->parse("AgendaItemOrder=?i", (int)$value);
+                $updateParams[] = $db->parse("AgendaItemOrder=?i", (int)$value);
             }
         }
 
         // Validate session reference
         if ($key === "AgendaItemSessionID") {
-            $session = $dbp->getRow("SELECT SessionID FROM ?n WHERE SessionID = ?s",
+            $session = $db->getRow("SELECT SessionID FROM ?n WHERE SessionID = ?s",
                 $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
                 $value
             );
             if (!$session) {
-                $errorarray["status"] = "422";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "Invalid Session";
-                $errorarray["detail"] = "The specified session does not exist";
-                $errorarray["meta"]["domSelector"] = "[name='AgendaItemSessionID']";
-                array_push($return["errors"], $errorarray);
-                return $return;
+                return createApiErrorResponse(
+                    422,
+                    1,
+                    "messageErrorInvalidSession",
+                    "messageErrorInvalidSession",
+                    null,
+                    "[name='AgendaItemSessionID']"
+                );
             }
-            $updateParams[] = $dbp->parse("AgendaItemSessionID=?s", $value);
+            $updateParams[] = $db->parse("AgendaItemSessionID=?s", $value);
         }
 
         // Handle text fields
         if ($key === "AgendaItemTitle" || $key === "AgendaItemOfficialTitle") {
-            $updateParams[] = $dbp->parse("?n=?s", $key, $value);
+            $updateParams[] = $db->parse("?n=?s", $key, $value);
         }
     }
 
     if (empty($updateParams)) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "No parameters";
-        $errorarray["detail"] = "No valid parameters for updating agenda item data were provided";
-        array_push($return["errors"], $errorarray);
-        return $return;
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageErrorNoParameters",
+            "messageErrorNoParameters"
+        );
     }
 
-    // Execute update
-    $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE AgendaItemID=?i",
-        $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
-        $agendaItem["AgendaItemID"]
-    );
+    try {
+        // Execute update
+        $result = $db->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE AgendaItemID=?i",
+            $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
+            $numericAgendaItemID // Use numeric ID for the WHERE clause
+        );
 
-    // Return success
-    $return["meta"]["requestStatus"] = "success";
-    $return["data"] = array(
-        "message" => "Agenda item updated successfully"
-    );
-    return $return;
+        if (!$result) {
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorDatabaseGeneric",
+                "messageErrorDatabaseRequest"
+            );
+        }
+
+        return createApiSuccessResponse([
+            "message" => "Agenda item updated successfully"
+        ]);
+    } catch (exception $e) {
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorDatabaseGeneric",
+            "messageErrorDatabaseRequest"
+        );
+    }
 }
 
 ?>

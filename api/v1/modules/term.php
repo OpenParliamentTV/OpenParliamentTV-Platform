@@ -4,6 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../../modules/utilities/functions.api.php");
 
 
 
@@ -13,628 +14,712 @@ require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
  * @return array
  */
 function termGetByID($id = false) {
-
     global $config;
 
     if (!$id) {
+        return createApiErrorMissingParameter('id');
+    }
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter of the request are missing"; //TODO: Description
-        array_push($return["errors"], $errorarray);
+    // Validate ID format (Q or P followed by numbers)
+    if (!preg_match("/(Q|P)\d+/i", $id)) {
+        return createApiErrorInvalidID('term');
+    }
 
-        return $return;
+    $db = getApiDatabaseConnection();
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
+    }
 
-    } else {
-
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
+    try {
+        $item = $db->getRow("SELECT * FROM ?n WHERE TermID=?s",
+            $config["platform"]["sql"]["tbl"]["Term"],
+            $id
         );
 
-
-        try {
-
-            $db = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-            return $return;
-
+        if (!$item) {
+            return createApiErrorNotFound('term');
         }
 
-        $item = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Term"]." WHERE TermID=?s",$id);
-
-        if ($item) {
-
-            $return["meta"]["requestStatus"] = "success";
-            $termDataObj["data"] = termGetDataObject($item, $db);
-            $return = array_replace_recursive($return, $termDataObj);
-
-        } else {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "404";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Term not found";
-            $errorarray["detail"] = "Term with the given ID was not found in database"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-
+        // termGetDataObject already returns the correct structure for the 'data' field
+        $termDataObject = termGetDataObject($item, $db);
+        if (!$termDataObject) { // Add a check in case termGetDataObject fails
+            return createApiErrorResponse(500, 1, "messageErrorDataTransformationTitle", "messageErrorDataTransformationDetail");
         }
+        return createApiSuccessResponse($termDataObject);
 
-        return $return;
-
+    } catch (exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
     }
 }
 
 
 function termGetDataObject($item = false, $db = false) {
-
     global $config;
 
-    if ((is_array($item)) && $db) {
-
-        //$return["meta"]["requestStatus"] = "success";
-        $return["type"] = "term";
-        $return["id"] = $item["TermID"];
-        $return["attributes"]["type"] = $item["TermType"];
-        $return["attributes"]["label"] = $item["TermLabel"];
-        $return["attributes"]["labelAlternative"] = json_decode($item["TermLabelAlternative"],true);
-        $return["attributes"]["abstract"] = $item["TermAbstract"];
-        $return["attributes"]["thumbnailURI"] = $item["TermThumbnailURI"];
-        $return["attributes"]["thumbnailCreator"] = $item["TermThumbnailCreator"];
-        $return["attributes"]["thumbnailLicense"] = $item["TermThumbnailLicense"];
-        $return["attributes"]["websiteURI"] = $item["TermWebsiteURI"];
-        $return["attributes"]["embedURI"] = $item["TermEmbedURI"];
-        $return["attributes"]["additionalInformation"] = json_decode($item["TermAdditionalInformation"],true);
-        $return["attributes"]["lastChanged"] = $item["TermLastChanged"];
-        $return["links"]["self"] = $config["dir"]["api"]."/".$return["type"]."/".$return["id"];
-        $return["relationships"]["media"]["links"]["self"] = ""; //TODO: Link - "self"?
-
-    } else {
-
-        $return = false;
-
+    if (!is_array($item) || !$db || !is_object($db)) {
+        return false;
     }
 
-    return $return;
+    try {
+        // Safely decode JSON fields with fallback to empty arrays
+        $labelAlternative = json_decode($item["TermLabelAlternative"], true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $labelAlternative = [];
+        }
+
+        $additionalInfo = json_decode($item["TermAdditionalInformation"], true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            $additionalInfo = [];
+        }
+
+        return [
+            "type" => "term",
+            "id" => $item["TermID"],
+            "attributes" => [
+                "type" => $item["TermType"],
+                "label" => $item["TermLabel"],
+                "labelAlternative" => $labelAlternative,
+                "abstract" => $item["TermAbstract"],
+                "thumbnailURI" => $item["TermThumbnailURI"],
+                "thumbnailCreator" => $item["TermThumbnailCreator"],
+                "thumbnailLicense" => $item["TermThumbnailLicense"],
+                "websiteURI" => $item["TermWebsiteURI"],
+                "embedURI" => $item["TermEmbedURI"],
+                "additionalInformation" => $additionalInfo,
+                "lastChanged" => $item["TermLastChanged"]
+            ],
+            "links" => [
+                "self" => $config["dir"]["api"]."/term/".$item["TermID"]
+            ],
+            "relationships" => [
+                "media" => [
+                    "links" => [
+                        "self" => $config["dir"]["api"]."/search/media?termID=".$item["TermID"]
+                    ]
+                ]
+            ]
+        ];
+
+    } catch (Exception $e) {
+        error_log("Error in termGetDataObject: " . $e->getMessage());
+        return false;
+    }
 }
 
 
 function termSearch($parameter, $db = false) {
-
     global $config;
-
     $outputLimit = 25;
 
     if (!$db) {
+        $db = getApiDatabaseConnection();
+        if (!is_object($db)) {
+            return createApiErrorDatabaseConnection();
+        }
+    }
 
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
+    // Validate and sanitize parameters
+    $filteredParameters = filterAllowedSearchParams($parameter, 'term');
+    
+    // Validate label parameter
+    if (isset($filteredParameters["label"])) {
+        if (is_array($filteredParameters["label"])) {
+            foreach ($filteredParameters["label"] as $label) {
+                if (mb_strlen($label, "UTF-8") < 3) {
+                    return createApiErrorResponse(
+                        422,
+                        1,
+                        "messageErrorInvalidLengthTitle",
+                        "messageErrorInvalidLengthDetailMin",
+                        ["field" => "label", "minLength" => 3],
+                        "[name='label']"
+                    );
+                }
+            }
+        } else if (mb_strlen($filteredParameters["label"], "UTF-8") < 3) {
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorInvalidLengthTitle",
+                "messageErrorInvalidLengthDetailMin",
+                ["field" => "label", "minLength" => 3],
+                "[name='label']"
+            );
+        }
+    }
+
+    // Validate type parameter
+    if (isset($filteredParameters["type"]) && mb_strlen($filteredParameters["type"], "UTF-8") < 2) {
+        return createApiErrorResponse(
+            422,
+            2,
+            "messageErrorInvalidLengthTitle",
+            "messageErrorInvalidLengthDetailMin",
+            ["field" => "type", "minLength" => 2],
+            "[name='type']"
+        );
+    }
+
+    // Validate wikidataID parameter
+    if (isset($filteredParameters["wikidataID"]) && !preg_match("/(Q|P)\d+/i", $filteredParameters["wikidataID"])) {
+        return createApiErrorInvalidID('term');
+    }
+
+    // Validate page parameter
+    $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
+    if ($page < 1) {
+        return createApiErrorResponse(
+            422,
+            4,
+            "messageErrorInvalidValueTitle",
+            "messageErrorPageNumberMustBePositiveDetail",
+            ["field" => "page"],
+            "[name='page']"
+        );
+    }
+
+    try {
+        $query = "SELECT * FROM ?n";
+        $conditions = [];
+        $params = [$config["platform"]["sql"]["tbl"]["Term"]];
+
+        // Build search conditions
+        if (isset($filteredParameters["label"])) {
+            if (is_array($filteredParameters["label"])) {
+                $labelConditions = [];
+                foreach ($filteredParameters["label"] as $label) {
+                    $labelConditions[] = "(MATCH(TermLabel, TermLabelAlternative, TermAbstract) AGAINST (?s IN BOOLEAN MODE) OR TermLabel LIKE ?s)";
+                    $params[] = "*" . $label . "*";
+                    $params[] = "%" . $label . "%";
+                }
+                $conditions[] = "(" . implode(" OR ", $labelConditions) . ")";
+            } else {
+                $conditions[] = "(MATCH(TermLabel, TermLabelAlternative, TermAbstract) AGAINST (?s IN BOOLEAN MODE) OR TermLabel LIKE ?s)";
+                $params[] = "*" . $filteredParameters["label"] . "*";
+                $params[] = "%" . $filteredParameters["label"] . "%";
+            }
+        }
+
+        if (isset($filteredParameters["type"])) {
+            $conditions[] = "TermType = ?s";
+            $params[] = $filteredParameters["type"];
+        }
+
+        if (isset($filteredParameters["wikidataID"])) {
+            $conditions[] = "TermID = ?s";
+            $params[] = $filteredParameters["wikidataID"];
+        }
+
+        // Add WHERE clause if conditions exist
+        if (!empty($conditions)) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
+        } else {
+            return createApiErrorMissingParameter();
+        }
+
+        // Get total count for pagination
+        $totalCount = count($db->getAll($query, ...$params));
+        $totalPages = ceil($totalCount / $outputLimit);
+
+        // Add pagination
+        $query .= " LIMIT ?i, ?i";
+        $params[] = ($page - 1) * $outputLimit;
+        $params[] = $outputLimit;
+
+        // Execute final query
+        $findings = $db->getAll($query, ...$params);
+
+        // Build response with exact same format as before
+        return createApiSuccessResponse(
+            array_map(function($item) use ($db) {
+                return termGetDataObject($item, $db);
+            }, $findings),
+            [
+                "page" => $page,
+                "pageTotal" => ceil($totalCount / $outputLimit)
+            ],
+            [
+                "self" => $config["dir"]["api"]."/search/terms?".getURLParameterFromArray($filteredParameters)
+            ]
         );
 
-        try {
-
-            $db = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to database failed"; //TODO: Description
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-
+    } catch (exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
     }
-
-    $filteredParameters = filterAllowedSearchParams($parameter, 'term');
-
-    /************ VALIDATION START ************/
-
-    if (array_key_exists("label", $filteredParameters)) {
-
-        if (is_array($filteredParameters["label"])) {
-
-            foreach ($filteredParameters["label"] as $tmpNameID) {
-
-                if (mb_strlen($tmpNameID, "UTF-8") < 3) {
-
-                    $return["meta"]["requestStatus"] = "error";
-                    $errorarray["status"] = "400";
-                    $errorarray["code"] = "1";
-                    $errorarray["title"] = "label too short";
-                    $errorarray["detail"] = "Searching for label needs at least 3 characters."; //  TODO: Description
-                    $return["errors"][] = $errorarray;
-
-                }
-
-            }
-
-        } else {
-
-            if (mb_strlen($filteredParameters["label"], "UTF-8") < 3) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $errorarray["status"] = "400";
-                $errorarray["code"] = "1";
-                $errorarray["title"] = "name too short";
-                $errorarray["detail"] = "Searching for label needs at least 3 characters."; //  TODO: Description
-                $return["errors"][] = $errorarray;
-
-            }
-        }
-    }
-
-
-
-    if (array_key_exists("type", $filteredParameters) && (mb_strlen($filteredParameters["type"], "UTF-8") < 2)) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "2";
-        $errorarray["title"] = "type too short";
-        $errorarray["detail"] = "Searching for type needs at least 2 characters."; //  TODO: Description
-        $return["errors"][] = $errorarray;
-
-    }
-
-
-
-    if (array_key_exists("wikidataID", $filteredParameters) && (!preg_match("/(Q|P)\d+/i", $filteredParameters["wikidataID"]))) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $errorarray["status"] = "400";
-        $errorarray["code"] = "2";
-        $errorarray["title"] = "wrong wikidataID";
-        $errorarray["detail"] = "wikidataID doesn't match the pattern."; //  TODO: Description
-        $return["errors"][] = $errorarray;
-
-    }
-
-
-    /************ VALIDATION END ************/
-
-
-
-
-
-    if ($return["meta"]["requestStatus"] == "error") {
-
-        return $return;
-
-    }
-
-    $query = "SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Term"];
-
-    $conditions = array();
-
-    foreach ($filteredParameters as $k=>$para) {
-        if ($k == "label") {
-            if (is_array($para)) {
-
-                $tmpStringArray = array();
-
-                foreach ($para as $tmppara) {
-
-                    $tmpStringArray[] = $db->parse("((MATCH(TermLabel, TermLabelAlternative, TermAbstract) AGAINST (?s IN BOOLEAN MODE)) OR (TermLabel LIKE ?s))", "*" . $tmppara . "*", "%" . $tmppara . "%");
-                }
-
-                $tmpStringArray = " (" . implode(" OR ", $tmpStringArray) . ")";
-                $conditions[] = $tmpStringArray;
-
-            } else {
-
-                $conditions[] = $db->parse("(MATCH(TermLabel, TermLabelAlternative, TermAbstract) AGAINST (?s IN BOOLEAN MODE) OR (TermLabel LIKE ?s))", "*" . $para . "*", "%" . $para . "%");
-
-            }
-        }
-
-        if ($k == "type") {
-
-            $conditions[] = $db->parse("TermType = ?s", $para);
-
-        }
-
-        if ($k == "wikidataID") {
-
-            $conditions[] = $db->parse("TermID = ?s", $para);
-
-        }
-
-    }
-
-
-    if (count($conditions) > 0) {
-
-        $query .= " WHERE ".implode(" AND ",$conditions);
-
-
-        $totalCount = $db->getAll($query);
-
-        $query .= " LIMIT ";
-
-        if ($parameter["page"]) {
-
-            $query .= ($parameter["page"]-1)*$outputLimit.",";
-
-        } else {
-
-            $parameter["page"] = 1;
-
-        }
-
-        $query .= $outputLimit;
-
-
-        //echo $db->parse($query);
-        $findings = $db->getAll($query);
-
-        $return["meta"]["requestStatus"] = "success";
-        $return["meta"]["page"] = $parameter["page"];
-        $return["meta"]["pageTotal"] = ceil(count($totalCount)/$outputLimit);
-
-        if (!$return["data"]) {
-            $return["data"] = array();
-        }
-
-        foreach ($findings as $finding) {
-            //print_r($finding);
-            array_push($return["data"], TermGetDataObject($finding,$db));
-        }
-
-    } else {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Not enough parameters";
-        $errorarray["detail"] = "Not enough parameters"; //TODO: Description
-        array_push($return["errors"], $errorarray);
-
-    }
-
-    if (!array_key_exists("data", $return)) {
-        $return["data"] = array();
-    }
-
-
-    $return["links"]["self"] = $config["dir"]["api"]."/search/terms?".getURLParameterFromArray($filteredParameters);
-
-    return $return;
-
-
-
 }
 
 
 function termAdd($item, $db = false) {
-
     global $config;
 
-    if (!$db) {
+    // Validate required fields
+    $requiredFields = ['id', 'type', 'label', 'abstract'];
+    foreach ($requiredFields as $field) {
+        if (empty($item[$field])) {
+            return createApiErrorMissingParameter($field);
+        }
+    }
 
-        $opts = array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
+    // Validate ID format
+    if (!preg_match("/(Q|P)\d+/i", $item["id"])) {
+        return createApiErrorInvalidID('term');
+    }
+
+    // Get database connection if not provided
+    if (!$db) {
+        $db = getApiDatabaseConnection();
+        if (!is_object($db)) {
+            return createApiErrorDatabaseConnection();
+        }
+    }
+
+    // Check if term already exists
+    try {
+        $existing = $db->getRow("SELECT TermID FROM ?n WHERE TermID = ?s",
+            $config["platform"]["sql"]["tbl"]["Term"],
+            $item["id"]
+        );
+        if ($existing) {
+            return createApiErrorDuplicate("term");
+        }
+    } catch (Exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
+    }
+
+    // Validate field lengths
+    $lengthValidations = [
+        ["field" => "label", "min" => 2, "max" => 255],
+        ["field" => "abstract", "min" => 5, "max" => 2000],
+        ["field" => "type", "min" => 2, "max" => 50]
+    ];
+
+    foreach ($lengthValidations as $validation) {
+        $length = mb_strlen($item[$validation["field"]], "UTF-8");
+        if ($length < $validation["min"] || $length > $validation["max"]) {
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorInvalidLengthTitle",
+                "messageErrorInvalidLengthDetailMinMax",
+                [
+                    "field" => $validation["field"],
+                    "minLength" => $validation["min"],
+                    "maxLength" => $validation["max"]
+                ],
+                "[name='{$validation["field"]}']"
+            );
+        }
+    }
+
+    // Validate and process optional fields
+    $labelAlternative = [];
+    if (!empty($item["labelAlternative"])) {
+        if (!is_array($item["labelAlternative"])) {
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorInvalidFormatTitle",
+                "messageErrorInvalidFormatDetail",
+                ["field" => "labelAlternative", "expected" => "array"],
+                "[name='labelAlternative']"
+            );
+        }
+        $labelAlternative = array_filter($item["labelAlternative"], 'strlen');
+    }
+
+    $additionalInfo = [];
+    if (!empty($item["additionalInformation"])) {
+        if (!is_array($item["additionalInformation"])) {
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorInvalidFormatTitle",
+                "messageErrorInvalidFormatDetail",
+                ["field" => "additionalInformation", "expected" => "array"],
+                "[name='additionalInformation']"
+            );
+        }
+        $additionalInfo = $item["additionalInformation"];
+    }
+
+    // Validate URLs if provided
+    $urlFields = ['thumbnailURI', 'websiteURI', 'embedURI'];
+    foreach ($urlFields as $field) {
+        if (!empty($item[$field])) {
+            $urlValidation = filter_var($item[$field], FILTER_VALIDATE_URL);
+            if (!$urlValidation) {
+                return createApiErrorResponse(
+                    422,
+                    1,
+                    "messageErrorInvalidURLTitle",
+                    "messageErrorInvalidURLDetail",
+                    ["field" => $field],
+                    "[name='$field']"
+                );
+            }
+        }
+    }
+
+    try {
+        // Prepare data for insertion
+        $data = [
+            "TermID" => $item["id"],
+            "TermType" => $item["type"],
+            "TermLabel" => $item["label"],
+            "TermLabelAlternative" => json_encode($labelAlternative),
+            "TermAbstract" => $item["abstract"],
+            "TermThumbnailURI" => $item["thumbnailURI"] ?? null,
+            "TermThumbnailCreator" => $item["thumbnailCreator"] ?? null,
+            "TermThumbnailLicense" => $item["thumbnailLicense"] ?? null,
+            "TermWebsiteURI" => $item["websiteURI"] ?? null,
+            "TermEmbedURI" => $item["embedURI"] ?? null,
+            "TermAdditionalInformation" => json_encode($additionalInfo),
+            "TermLastChanged" => date("Y-m-d H:i:s")
+        ];
+
+        // Insert term
+        $result = $db->query("INSERT INTO ?n SET ?u",
+            $config["platform"]["sql"]["tbl"]["Term"],
+            $data
         );
 
-        try {
-
-            $db = new SafeMySQL($opts);
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "2";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to platform database failed";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
+        if (!$result) {
+            return createApiErrorResponse(500, 1, "messageErrorDatabaseGeneric", "messageErrorTermInsertFailedDetail");
         }
 
+        // Return success response with itemID
+        return createApiSuccessResponse(null, [
+            "itemID" => $item["id"]
+        ]);
+
+    } catch (Exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
     }
-
-    if (!$item["type"]) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Type is missing";
-        $errorarray["label"] = "type";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if ((!$item["id"]) || (!preg_match("/(Q|P)\d+/i", $item["id"]))) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "ID seems to be wrong or missing";
-        $errorarray["label"] = "id";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if ((!$item["label"]) || strlen($item["label"]) < 2) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Label is missing or < 2";
-        $errorarray["label"] = "label";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    if ((!$item["abstract"]) || strlen($item["abstract"]) < 5) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Abstract is missing or <5";
-        $errorarray["label"] = "abstract";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-
-    /*
-     if ((!$item["sourceuri"]) || strlen($item["sourceuri"]) < 5) {
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Source URI is missing or too short";
-        $errorarray["label"] = "sourceuri";
-        $errorarray["detail"] = "Required parameter of the request is missing";
-        $return["errors"][] = $errorarray;
-    }
-    */
-
-    if ($return["errors"]) {
-        $return["meta"]["requestStatus"] = "error";
-        return $return;
-    } else {
-
-
-        $itemTmp = $db->getRow("SELECT TermID FROM ?n WHERE TermID=?s",$config["platform"]["sql"]["tbl"]["Term"],$item["id"]);
-
-        if ($itemTmp) {
-            $return["meta"]["requestStatus"] = "error";
-            $errorarray["status"] = "422"; //todo
-            $errorarray["code"] = "2";
-            $errorarray["title"] = "An item with same (Wikidata)ID already exists in Database";
-            $errorarray["label"] = "error_info";
-            $errorarray["detail"] = "Item already exists in Database";
-            $return["errors"][] = $errorarray;
-            return $return;
-
-        } else {
-
-            try {
-
-                $labelAlternative = array();
-                if (is_array($item["labelAlternative"])) {
-                    foreach ($item["labelAlternative"] as $v) {
-                        if ($v) {
-                            $labelAlternative[] = $v;
-                        }
-                    }
-                }
-
-
-                $db->query("INSERT INTO ?n SET ".
-                    "TermID=?s, ".
-                    "TermType=?s, ".
-                    "TermLabel=?s, ".
-                    "TermLabelAlternative=?s, ".
-                    "TermAbstract=?s, ".
-                    "TermThumbnailURI=?s, ".
-                    "TermThumbnailCreator=?s, ".
-                    "TermThumbnailLicense=?s, ".
-                    "TermWebsiteURI=?s, ".
-                    "TermEmbedURI=?s, ".
-                    "TermAdditionalInformation=?s",
-
-                    $config["platform"]["sql"]["tbl"]["Term"],
-                    $item["id"],
-                    $item["type"],
-                    $item["label"],
-                    (is_array($labelAlternative) ? json_encode($labelAlternative, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : "[".$item["labelAlternative"]."]"),
-                    $item["abstract"],
-                    $item["thumbnailuri"],
-                    $item["thumbnailcreator"],
-                    $item["thumbnaillicense"],
-                    $item["websiteuri"],
-                    $item["embeduri"],
-                    (is_array($item["additionalinformation"]) ? json_encode($item["additionalinformation"],JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : $item["additionalinformation"])
-                );
-                $return["meta"]["requestStatus"] = "success";
-                $return["meta"]["itemID"] = $db->insertId();
-
-            } catch (exception $e) {
-
-                $return["meta"]["requestStatus"] = "error";
-                $errorarray["status"] = "422"; //todo
-                $errorarray["code"] = "2";
-                $errorarray["title"] = "Add to database failed";
-                $errorarray["label"] = "error_info";
-                $errorarray["detail"] = $e->getMessage();
-                $return["errors"][] = $errorarray;
-
-            }
-
-        }
-    }
-
-    return $return;
-
 }
 
 
 
+/**
+ * Get an overview of terms from the database
+ * 
+ * @param string $id TermID or "all"
+ * @param int $limit Maximum number of results to return
+ * @param int $offset Offset for pagination
+ * @param string|array $search Search term(s)
+ * @param string $sort Sort field
+ * @param string $order Sort order (ASC or DESC)
+ * @param object $db Database connection
+ * @return array Raw data array with 'total' count and 'data' results
+ */
 function termGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $db = false) {
-
     global $config;
 
+    // Validate database connection
     if (!$db) {
-        $db = new SafeMySQL(array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        ));
+        $db = getApiDatabaseConnection();
+        if (!is_object($db)) {
+            return [
+                "total" => 0,
+                "data" => []
+            ];
+        }
     }
 
-    $queryPart = "";
+    try {
+        // Base query for counting
+        $baseQuery = "SELECT * FROM ?n";
+        $params = [$config["platform"]["sql"]["tbl"]["Term"]];
+        $conditions = [];
 
-    if ($id == "all") {
-        $queryPart .= "1";
-    } else {
-        $queryPart .= $db->parse("TermID=?s",$id);
-    }
+        // Handle ID filtering
+        if ($id !== "all") {
+            if (!preg_match("/(Q|P)\d+/i", $id)) {
+                return createApiErrorInvalidID('term');
+            }
+            $conditions[] = "TermID = ?s";
+            $params[] = $id;
+        }
 
+        // Handle search
+        if ($search) {
+            if (is_array($search)) {
+                $searchConditions = [];
+                foreach ($search as $term) {
+                    if (mb_strlen($term, "UTF-8") >= 3) {
+                        $searchConditions[] = "(MATCH(TermLabel, TermLabelAlternative, TermAbstract) AGAINST (?s IN BOOLEAN MODE) OR TermLabel LIKE ?s)";
+                        $params[] = "*" . $term . "*";
+                        $params[] = "%" . $term . "%";
+                    }
+                }
+                if (!empty($searchConditions)) {
+                    $conditions[] = "(" . implode(" OR ", $searchConditions) . ")";
+                }
+            } else if (mb_strlen($search, "UTF-8") >= 3) {
+                $conditions[] = "(MATCH(TermLabel, TermLabelAlternative, TermAbstract) AGAINST (?s IN BOOLEAN MODE) OR TermLabel LIKE ?s)";
+                $params[] = "*" . $search . "*";
+                $params[] = "%" . $search . "%";
+            }
+        }
 
-    if (!empty($search)) {
-        $queryPart .= $db->parse(" AND (TermLabel LIKE ?s OR TermLabelAlternative LIKE ?s OR TermID LIKE ?s)", "%".$search."%", "%".$search."%", "%".$search."%");
-    }
+        // Add WHERE clause if conditions exist
+        $whereClause = "";
+        if (!empty($conditions)) {
+            $whereClause = " WHERE " . implode(" AND ", $conditions);
+        }
 
-    if (!empty($sort)) {
+        // Get total count
+        $countQuery = $baseQuery . $whereClause;
+        $totalCount = count($db->getAll($countQuery, ...$params));
 
-        $queryPart .= $db->parse(" ORDER BY ?n ".$order, $sort);
-
-    }
-
-
-    if ($limit != 0) {
-
-        $queryPart .= $db->parse(" LIMIT ?i, ?i",$offset,$limit);
-
-    }
-
-    $return["total"] = $db->getOne("SELECT COUNT(TermID) as count FROM ?n", $config["platform"]["sql"]["tbl"]["Term"]);
-    $return["data"] = $db->getAll("SELECT
-        TermID,
+        // Construct the main query with selected fields
+        $mainQuery = "SELECT 
+            TermID,
             TermType,
             TermLabel,
             TermLabelAlternative,
-            TermLastChanged,
-            TermThumbnailURI
-            FROM ?n
-            WHERE ?p", $config["platform"]["sql"]["tbl"]["Term"], $queryPart);
+            TermAbstract,
+            TermThumbnailURI,
+            TermThumbnailCreator,
+            TermThumbnailLicense,
+            TermWebsiteURI,
+            TermEmbedURI,
+            TermAdditionalInformation,
+            TermLastChanged
+            FROM ?n" . $whereClause;
 
+        // Add sorting
+        if ($sort) {
+            $order = strtoupper($order) === 'DESC' ? 'DESC' : 'ASC';
+            $mainQuery .= " ORDER BY ?n " . $order;
+            $params[] = $sort;
+        }
 
-    return $return;
+        // Add pagination if limit is set
+        if ($limit > 0) {
+            $mainQuery .= " LIMIT ?i, ?i";
+            $params[] = $offset;
+            $params[] = $limit;
+        }
 
+        // Execute main query
+        $items = $db->getAll($mainQuery, ...$params);
+
+        // Process items to ensure proper JSON encoding of certain fields
+        foreach ($items as &$item) {
+            // Ensure TermLabelAlternative is properly JSON encoded
+            if (isset($item['TermLabelAlternative'])) {
+                $labelAlt = json_decode($item['TermLabelAlternative'], true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $item['TermLabelAlternative'] = json_encode($labelAlt);
+                }
+            }
+            
+            // Ensure TermAdditionalInformation is properly JSON encoded
+            if (isset($item['TermAdditionalInformation'])) {
+                $addInfo = json_decode($item['TermAdditionalInformation'], true);
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $item['TermAdditionalInformation'] = json_encode($addInfo);
+                }
+            }
+        }
+
+        return [
+            "total" => $totalCount,
+            "data" => $items
+        ];
+
+    } catch (Exception $e) {
+        error_log("Error in termGetItemsFromDB: " . $e->getMessage());
+        return [
+            "total" => 0,
+            "data" => []
+        ];
+    }
 }
 
 function termChange($parameter) {
     global $config;
 
-    if (!$parameter["id"]) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Missing request parameter";
-        $errorarray["detail"] = "Required parameter (id) is missing";
-        array_push($return["errors"], $errorarray);
-        return $return;
+    if (!isset($parameter["id"])) {
+        return createApiErrorMissingParameter("id");
+    }
+
+    // Validate ID format
+    if (!preg_match("/(Q|P)\d+/i", $parameter["id"])) {
+        return createApiErrorInvalidID("term");
+    }
+
+    $db = getApiDatabaseConnection();
+    if (!is_object($db)) {
+        return createApiErrorDatabaseConnection();
     }
 
     try {
-        $db = new SafeMySQL(array(
-            'host'  => $config["platform"]["sql"]["access"]["host"],
-            'user'  => $config["platform"]["sql"]["access"]["user"],
-            'pass'  => $config["platform"]["sql"]["access"]["passwd"],
-            'db'    => $config["platform"]["sql"]["db"]
-        ));
-    } catch (exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        return $return;
-    }
+        // Check if term exists
+        $existingTerm = $db->getRow("SELECT * FROM ?n WHERE TermID = ?s",
+            $config["platform"]["sql"]["tbl"]["Term"],
+            $parameter["id"]
+        );
 
-    // Check if term exists
-    $term = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Term"]." WHERE TermID=?s LIMIT 1", $parameter["id"]);
-    if (!$term) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "404";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Term not found";
-        $errorarray["detail"] = "Term with the given ID was not found in database";
-        array_push($return["errors"], $errorarray);
-        return $return;
-    }
-
-    // Define allowed parameters
-    $allowedParams = array(
-        "TermType", "TermLabel", "TermLabelAlternative", "TermAbstract",
-        "TermThumbnailURI", "TermThumbnailCreator", "TermThumbnailLicense",
-        "TermWebsiteURI", "TermEmbedURI", "TermAdditionalInformation"
-    );
-
-    // Filter parameters
-    $params = $db->filterArray($parameter, $allowedParams);
-    $updateParams = array();
-
-    // Process each parameter
-    foreach ($params as $key => $value) {
-        if ($key === "TermLabelAlternative" || $key === "TermAdditionalInformation") {
-            // Handle JSON fields
-            if (is_array($value)) {
-                $updateParams[] = $db->parse("?n=?s", $key, json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-            }
-        } else {
-            $updateParams[] = $db->parse("?n=?s", $key, $value);
+        if (!$existingTerm) {
+            return createApiErrorNotFound("term");
         }
+
+        // Define allowed fields and their validation rules
+        $allowedFields = [
+            "type" => [
+                "min" => 2,
+                "max" => 50,
+                "required" => true
+            ],
+            "label" => [
+                "min" => 2,
+                "max" => 255,
+                "required" => true
+            ],
+            "abstract" => [
+                "min" => 5,
+                "max" => 2000,
+                "required" => true
+            ],
+            "labelAlternative" => [
+                "type" => "array",
+                "required" => false
+            ],
+            "thumbnailURI" => [
+                "type" => "url",
+                "required" => false
+            ],
+            "thumbnailCreator" => [
+                "max" => 255,
+                "required" => false
+            ],
+            "thumbnailLicense" => [
+                "max" => 255,
+                "required" => false
+            ],
+            "websiteURI" => [
+                "type" => "url",
+                "required" => false
+            ],
+            "embedURI" => [
+                "type" => "url",
+                "required" => false
+            ],
+            "additionalInformation" => [
+                "type" => "array",
+                "required" => false
+            ]
+        ];
+
+        // Filter and validate parameters
+        $updateData = [];
+        foreach ($allowedFields as $field => $rules) {
+            $dbField = "Term" . ucfirst($field);
+            
+            if (isset($parameter[$field])) {
+                // Validate required fields
+                if ($rules["required"] && (trim($parameter[$field]) === "")) {
+                    return createApiErrorResponse(
+                        422,
+                        1,
+                        "messageErrorFieldRequiredTitle",
+                        "messageErrorFieldRequiredDetail",
+                        ["field" => $field],
+                        "[name='$field']"
+                    );
+                }
+
+                // Validate string lengths
+                if (isset($rules["min"]) && mb_strlen($parameter[$field], "UTF-8") < $rules["min"]) {
+                    return createApiErrorResponse(
+                        422,
+                        1,
+                        "messageErrorInvalidLengthTitle",
+                        "messageErrorInvalidLengthDetailMin",
+                        ["field" => $field, "minLength" => $rules["min"]],
+                        "[name='$field']"
+                    );
+                }
+
+                if (isset($rules["max"]) && mb_strlen($parameter[$field], "UTF-8") > $rules["max"]) {
+                    return createApiErrorResponse(
+                        422,
+                        1,
+                        "messageErrorInvalidLengthTitle",
+                        "messageErrorInvalidLengthDetailMax",
+                        ["field" => $field, "maxLength" => $rules["max"]],
+                        "[name='$field']"
+                    );
+                }
+
+                // Validate arrays
+                if (isset($rules["type"]) && $rules["type"] === "array") {
+                    if (!is_array($parameter[$field])) {
+                        return createApiErrorResponse(
+                            422,
+                            1,
+                            "messageErrorInvalidFormatTitle",
+                            "messageErrorInvalidFormatDetail",
+                            ["field" => $field, "expected" => "array"],
+                            "[name='$field']"
+                        );
+                    }
+                    $updateData[$dbField] = json_encode($parameter[$field], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                }
+                // Validate URLs
+                else if (isset($rules["type"]) && $rules["type"] === "url") {
+                    if ($parameter[$field] !== "" && !filter_var($parameter[$field], FILTER_VALIDATE_URL)) {
+                        return createApiErrorResponse(
+                            422,
+                            1,
+                            "messageErrorInvalidURLTitle",
+                            "messageErrorInvalidURLDetail",
+                            ["field" => $field],
+                            "[name='$field']"
+                        );
+                    }
+                    $updateData[$dbField] = $parameter[$field] ?: null;
+                }
+                // Regular fields
+                else {
+                    $updateData[$dbField] = $parameter[$field];
+                }
+            }
+        }
+
+        // If no valid fields to update
+        if (empty($updateData)) {
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorParameterMissingTitle",
+                "messageErrorNoValidFieldsToUpdateDetail"
+            );
+        }
+
+        // Add last changed timestamp
+        $updateData["TermLastChanged"] = date("Y-m-d H:i:s");
+
+        // Update term
+        $result = $db->query("UPDATE ?n SET ?u WHERE TermID = ?s",
+            $config["platform"]["sql"]["tbl"]["Term"],
+            $updateData,
+            $parameter["id"]
+        );
+
+        if (!$result) {
+            return createApiErrorResponse(500, 1, "messageErrorDatabaseGeneric", "messageErrorTermUpdateFailedDetail");
+        }
+
+        // Return success response with id
+        return createApiSuccessResponse(null, [
+            "id" => $parameter["id"]
+        ]);
+
+    } catch (Exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
     }
-
-    if (empty($updateParams)) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "422";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "No parameters";
-        $errorarray["detail"] = "No valid parameters for updating term data were provided";
-        array_push($return["errors"], $errorarray);
-        return $return;
-    }
-
-    // Add last changed timestamp
-    $updateParams[] = "TermLastChanged=CURRENT_TIMESTAMP()";
-
-    // Execute update
-    $db->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE TermID=?s", 
-        $config["platform"]["sql"]["tbl"]["Term"], 
-        $parameter["id"]
-    );
-
-    $return["meta"]["requestStatus"] = "success";
-    return $return;
 }
 
 ?>
