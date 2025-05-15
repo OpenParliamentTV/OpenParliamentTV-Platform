@@ -366,11 +366,12 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
         ]
     ];
 
-    $links = [
+    // Move links and relationships into the data object
+    $data["links"] = [
         "self" => $config["dir"]["api"]."/media/".$item["MediaID"]
     ];
 
-    $relationships = [
+    $data["relationships"] = [
         "electoralPeriod" => [
             "data" => [
                 "type" => "electoralPeriod",
@@ -471,7 +472,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                     $tmpAnnotationItem = processDocumentAnnotation($annotation, $db, $config);
                     if ($tmpAnnotationItem) {
                         array_push($tmpResources, $annotation["AnnotationResourceID"]);
-                        array_push($relationships["documents"]["data"], $tmpAnnotationItem);
+                        array_push($data["relationships"]["documents"]["data"], $tmpAnnotationItem);
                     }
                 }
                 break;
@@ -481,7 +482,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                     $tmpAnnotationItem = processOrganisationAnnotation($annotation, $db, $config);
                     if ($tmpAnnotationItem) {
                         array_push($tmpResources, $annotation["AnnotationResourceID"]);
-                        array_push($relationships["organisations"]["data"], $tmpAnnotationItem);
+                        array_push($data["relationships"]["organisations"]["data"], $tmpAnnotationItem);
                     }
                 }
                 break;
@@ -491,7 +492,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                     $tmpAnnotationItem = processTermAnnotation($annotation, $db, $config);
                     if ($tmpAnnotationItem) {
                         array_push($tmpResources, $annotation["AnnotationResourceID"]);
-                        array_push($relationships["terms"]["data"], $tmpAnnotationItem);
+                        array_push($data["relationships"]["terms"]["data"], $tmpAnnotationItem);
                     }
                 }
                 break;
@@ -501,7 +502,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
                     $tmpAnnotationItem = processPersonAnnotation($annotation, $db, $config);
                     if ($tmpAnnotationItem) {
                         array_push($tmpResources, $annotation["AnnotationResourceID"]);
-                        array_push($relationships["people"]["data"], $tmpAnnotationItem);
+                        array_push($data["relationships"]["people"]["data"], $tmpAnnotationItem);
                     }
                 }
                 break;
@@ -514,13 +515,13 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
         ];
     }
 
-    // Add relationship links
-    $relationships["documents"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$data["id"]."&type=document";
-    $relationships["organisations"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$data["id"]."&type=organisation";
-    $relationships["terms"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$data["id"]."&type=term";
-    $relationships["people"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$data["id"]."&type=person";
+    // Add relationship links (these are for the collections, should remain in data.relationships.documents.links etc)
+    $data["relationships"]["documents"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$data["id"]."&type=document";
+    $data["relationships"]["organisations"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$data["id"]."&type=organisation";
+    $data["relationships"]["terms"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$data["id"]."&type=term";
+    $data["relationships"]["people"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$data["id"]."&type=person";
 
-    return createApiSuccessResponse($data, null, $links, $relationships);
+    return createApiSuccessResponse($data, null, null, null);
 }
 
 /**

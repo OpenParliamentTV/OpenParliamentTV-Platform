@@ -58,11 +58,12 @@ function organisationGetByID($id = false) {
             ]
         ];
 
-        $links = [
+        // Add links and relationships directly to the $data array
+        $data["links"] = [
             "self" => $config["dir"]["api"]."/".$data["type"]."/".$data["id"]
         ];
 
-        $relationships = [
+        $data["relationships"] = [
             "media" => [
                 "links" => [
                     "self" => $config["dir"]["api"]."/"."search/media?organisationID=".$data["id"]
@@ -75,7 +76,7 @@ function organisationGetByID($id = false) {
             ]
         ];
 
-        return createApiSuccessResponse($data, null, $links, $relationships);
+        return createApiSuccessResponse($data, null, null, null);
 
     } catch (exception $e) {
         return createApiErrorDatabaseError();
