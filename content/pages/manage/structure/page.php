@@ -371,7 +371,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: true
 				},
 				{
-					field: "AgendaItemLabel",
+					field: "AgendaItemTitle",
 					title: "<?= L::agendaItem; ?>",
 					class: "w-100",
 					sortable: true
@@ -387,9 +387,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {
-						//TODO: remove quick fix !!!
-                        var fixID = 'DE-'+value;
-                        return renderActionButtons(fixID, "agendaItem", row["AgendaItemType"]);
+						return renderActionButtons(value, "agendaItem", row["AgendaItemType"]);
 					}
 				}
 			]
