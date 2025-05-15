@@ -100,7 +100,7 @@ function sessionGetByID($id = false) {
                     $fullAgendaItemID = $parliament . "-" . $agendaItem["AgendaItemID"];
                     return [
                         "type" => "agendaItem",
-                        "id" => $fullAgendaItemID,
+                        "id" => $agendaItem["AgendaItemID"],
                         "attributes" => [
                             "officialTitle" => $agendaItem["AgendaItemOfficialTitle"],
                             "title" => $agendaItem["AgendaItemTitle"],
