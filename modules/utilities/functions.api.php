@@ -17,14 +17,12 @@
  * @return array
  */
 function createApiErrorResponse($status, $code, $messageKey, $detailKey, $params = [], $domSelector = null, $additionalMeta = []) {
-    global $L;
-    
     $return["meta"]["requestStatus"] = "error";
     $return["errors"] = array();
     
     // Get message from language file or use key as fallback
-    $title = isset($L[$messageKey]) ? $L[$messageKey] : $messageKey;
-    $detail = isset($L[$detailKey]) ? $L[$detailKey] : $detailKey;
+    $title = defined('L::' . $messageKey) ? L($messageKey) : $messageKey;
+    $detail = defined('L::' . $detailKey) ? L($detailKey) : $detailKey;
     
     // Replace parameters in messages
     foreach ($params as $key => $value) {
@@ -63,6 +61,11 @@ function createApiErrorResponse($status, $code, $messageKey, $detailKey, $params
  * @return array
  */
 function createApiSuccessResponse($data = null, $meta = [], $links = null, $relationships = null) {
+    // Ensure $meta is an array before merging
+    if (!is_array($meta)) {
+        $meta = [];
+    }
+
     $return = [
         "meta" => array_merge(
             ["requestStatus" => "success"],
@@ -74,10 +77,18 @@ function createApiSuccessResponse($data = null, $meta = [], $links = null, $rela
         $return["data"] = $data;
     }
 
+    // Ensure $links is an array if it's not null, otherwise keep it null
+    if ($links !== null && !is_array($links)) {
+        $links = []; // Or handle as an error, but empty array is safer for now
+    }
     if ($links !== null) {
         $return["links"] = $links;
     }
 
+    // Ensure $relationships is an array if it's not null, otherwise keep it null
+    if ($relationships !== null && !is_array($relationships)) {
+        $relationships = []; // Or handle as an error, but empty array is safer for now
+    }
     if ($relationships !== null) {
         $return["relationships"] = $relationships;
     }
@@ -129,6 +140,41 @@ function createApiErrorInvalidID($type) {
         "messageErrorInvalidID",
         "messageErrorInvalidID",
         ["type" => ucfirst($type)]
+    );
+}
+
+function createApiErrorInvalidFormat($field, $expectedType) {
+    return createApiErrorResponse(
+        422, 
+        1,   
+        "messageErrorIDParseError",
+        "messageErrorIDParseError",
+        ["field" => $field, "expectedType" => ucfirst($expectedType)], 
+        $field ? "[name='".$field."']" : null 
+    );
+}
+
+function createApiErrorInvalidLength($field, $minLength, $domSelectorField = null) {
+    // If domSelectorField is not provided, use the field name itself for the selector.
+    $selector = $domSelectorField ? $domSelectorField : $field;
+    return createApiErrorResponse(
+        422, // Unprocessable Entity
+        1,   // Consistent error code
+        "messageErrorInvalidLengthTitle",
+        "messageErrorInvalidLengthDetailMin",
+        ["field" => ucfirst($field), "minLength" => $minLength], // Capitalize field for display
+        $selector ? "[name='".$selector."']" : null
+    );
+}
+
+function createApiErrorDatabaseError($detailMessage = null) {
+    // Use a generic title, and the provided detail message.
+    // If no detail message is provided, use a generic detail key.
+    return createApiErrorResponse(
+        500, // Internal Server Error or 503 Service Unavailable are common for DB errors
+        1,   // Consistent error code
+        "messageErrorDatabaseGeneric", // Generic title
+        $detailMessage ? $detailMessage : "messageErrorDatabaseRequest" // Specific detail or generic fallback
     );
 }
 
