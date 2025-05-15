@@ -73,9 +73,9 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					?>
 						<div class="entityPreview col" data-type="<?= $relationshipItem["type"] ?>">
 							<div class="entityContainer">
-								<a href="<?= $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$apiResult["data"]["attributes"]["parliament"]."-".$relationshipItem["data"]["id"] ?>">
-									<div><?= $relationshipItem["data"]["attributes"]["officialTitle"] ?></div>
-									<div class="entityTitle"><?= $relationshipItem["data"]["attributes"]["title"] ?></div>
+								<a href="<?= $config["dir"]["root"]."/".$relationshipItem["type"]."/".$apiResult["data"]["attributes"]["parliament"]."-".$relationshipItem["id"] ?>">
+									<div><?= $relationshipItem["attributes"]["officialTitle"] ?></div>
+									<div class="entityTitle"><?= $relationshipItem["attributes"]["title"] ?></div>
 								</a>
 							</div>
 						</div>
