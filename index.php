@@ -629,7 +629,7 @@ switch ($page) {
         }
 	break;
 	case "manage-entities-new":
-		$pageTitle = L::manageEntitySuggestions;
+		$pageTitle = L::manageEntitiesNew;
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
