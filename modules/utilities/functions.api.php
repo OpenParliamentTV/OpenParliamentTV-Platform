@@ -321,4 +321,27 @@ function validateApiNumber($value, $field, $min = 1) {
         );
     }
     return true;
+}
+
+/**
+ * Merges a module response with the base API metadata
+ * @param array $moduleResponse Response from a module
+ * @param array $config Configuration array
+ * @return array Complete API response with metadata
+ */
+function createApiResponse($moduleResponse, $config) {
+    $baseResponse = [
+        "meta" => [
+            "api" => [
+                "version" => 1,
+                "documentation" => $config["dir"]["root"]."/api",
+                "license" => [
+                    "label" => "ODC Open Database License (ODbL) v1.0",
+                    "link" => "https://opendatacommons.org/licenses/odbl/1-0/"
+                ]
+            ]
+        ]
+    ];
+    
+    return array_replace_recursive($baseResponse, $moduleResponse);
 } 
