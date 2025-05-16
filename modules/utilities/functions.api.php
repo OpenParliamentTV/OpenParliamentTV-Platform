@@ -326,10 +326,11 @@ function validateApiNumber($value, $field, $min = 1) {
 /**
  * Merges a module response with the base API metadata
  * @param array $moduleResponse Response from a module
- * @param array $config Configuration array
  * @return array Complete API response with metadata
  */
-function createApiResponse($moduleResponse, $config) {
+function createApiResponse($moduleResponse) {
+    global $config;
+    
     $baseResponse = [
         "meta" => [
             "api" => [

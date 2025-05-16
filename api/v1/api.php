@@ -11,30 +11,16 @@ require_once (__DIR__."/../../modules/utilities/safemysql.class.php");
 function apiV1($request_param = false, $db = false, $dbp = false) {
     global $config;
 
-    // New request handling logic:
-    $final_request = []; 
-
-    // Get request body if it exists and merge
-    $requestBody = json_decode(file_get_contents('php://input'), true);
-    if ($requestBody) {
-        $final_request = array_merge($final_request, $requestBody);
-    }
-
-    // Get URL parameters and merge
-    $urlParams = $_GET;
-    if ($urlParams) {
-        $final_request = array_merge($final_request, $urlParams);
-    }
-
-    // Merge the explicitly passed $request_param, giving it precedence
-    if ($request_param) {
-        $final_request = array_merge($final_request, $request_param);
-    }
+    // Merge all request sources with proper precedence
+    $final_request = array_merge(
+        json_decode(file_get_contents('php://input'), true) ?: [],
+        $_GET,
+        $request_param ?: []
+    );
 
     if ((!$final_request["action"]) || (!$final_request["itemType"])) {
         return createApiResponse(
-            createApiErrorMissingParameter("action"),
-            $config
+            createApiErrorMissingParameter("action")
         );
     }
 
@@ -49,39 +35,38 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "organisation":
                     require_once (__DIR__."/modules/organisation.php");
                     $item = organisationGetByID($final_request["id"]);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "document":
                     require_once (__DIR__."/modules/document.php");
                     $item = documentGetByID($final_request["id"]);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "term":
                     require_once (__DIR__."/modules/term.php");
                     $item = termGetByID($final_request["id"]);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "person":
                     require_once (__DIR__."/modules/person.php");
                     $item = personGetByID($final_request["id"]);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "media":
                     require_once (__DIR__."/modules/media.php");
                     $item = mediaGetByID($final_request["id"], $db, $dbp);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "session":
                     require_once (__DIR__."/modules/session.php");
                     $item = sessionGetByID($final_request["id"]);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "agendaItem":
                     require_once (__DIR__."/modules/agendaItem.php");
                     $item = agendaItemGetByID($final_request["id"]);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "electoralPeriod":
                     require_once (__DIR__."/modules/electoralPeriod.php");
                     $item = electoralPeriodGetByID($final_request["id"]);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 default:
                     return createApiResponse(
-                        createApiErrorMissingParameter("type"),
-                        $config
+                        createApiErrorMissingParameter("type")
                     );
             }
             break;
@@ -91,27 +76,26 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "people":
                     require_once (__DIR__."/modules/person.php");
                     $item = personSearch($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "organisations":
                     require_once (__DIR__."/modules/organisation.php");
                     $item = organisationSearch($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "documents":
                     require_once (__DIR__."/modules/document.php");
                     $item = documentSearch($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "terms":
                     require_once (__DIR__."/modules/term.php");
                     $item = termSearch($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "media":
                     require_once (__DIR__."/modules/media.php");
                     $item = mediaSearch($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 default:
                     return createApiResponse(
-                        createApiErrorMissingParameter("type"),
-                        $config
+                        createApiErrorMissingParameter("type")
                     );
             }
             break;
@@ -122,14 +106,15 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "text": 
                     $item = fulltextAutocomplete($final_request["q"]);
                     return createApiResponse(
-                        $item,
-                        $config,
-                        ["links" => ["self" => htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"])]]
+                        createApiSuccessResponse(
+                            $item["data"],
+                            $item["meta"],
+                            ["self" => htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"])]
+                        )
                     );
                 default:
                     return createApiResponse(
-                        createApiErrorMissingParameter("type"),
-                        $config
+                        createApiErrorMissingParameter("type")
                     );
             }
             break;
@@ -139,23 +124,22 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             switch ($final_request["itemType"]) {
                 case "general": 
                     $item = statisticsGetGeneral($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "entity":
                     $item = statisticsGetEntity($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "terms":
                     $item = statisticsGetTerms($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "compare-terms":
                     $item = statisticsCompareTerms($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "network":
                     $item = statisticsGetNetwork($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 default:
                     return createApiResponse(
-                        createApiErrorInvalidParameter("type"),
-                        $config
+                        createApiErrorInvalidParameter("type")
                     );
             }
             break;
@@ -165,26 +149,25 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             switch ($final_request["itemType"]) {
                 case "login":
                     $result = userLogin($final_request);
-                    return createApiResponse($result, $config);
+                    return createApiResponse($result);
                 case "register":
                     $result = userRegister($final_request);
-                    return createApiResponse($result, $config);
+                    return createApiResponse($result);
                 case "logout":
                     $result = userLogout();
-                    return createApiResponse($result, $config);
+                    return createApiResponse($result);
                 case "password-reset":
                     $result = userPasswordReset($final_request);
-                    return createApiResponse($result, $config);
+                    return createApiResponse($result);
                 case "password-reset-request":
                     $result = userPasswordResetRequest($final_request);
-                    return createApiResponse($result, $config);
+                    return createApiResponse($result);
                 case "confirm-registration":
                     $result = userConfirmRegistration($final_request);
-                    return createApiResponse($result, $config);
+                    return createApiResponse($result);
                 default:
                     return createApiResponse(
-                        createApiErrorInvalidParameter("action"),
-                        $config
+                        createApiErrorInvalidParameter("action")
                     );
             }
             break;
@@ -198,11 +181,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "media":
                     require_once (__DIR__."/modules/media.php");
                     $item = mediaAdd($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 default:
                     return createApiResponse(
-                        createApiErrorMissingParameter("type"),
-                        $config
+                        createApiErrorMissingParameter("type")
                     );
             }
             break;
@@ -212,43 +194,42 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "organisation":
                     require_once (__DIR__."/modules/organisation.php");
                     $item = organisationChange($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "document":
                     require_once (__DIR__."/modules/document.php");
                     $item = documentChange($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "term":
                     require_once (__DIR__."/modules/term.php");
                     $item = termChange($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "person":
                     require_once (__DIR__."/modules/person.php");
                     $item = personChange($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "media":
                     require_once (__DIR__."/modules/media.php");
                     $item = mediaChange($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "session":
                     require_once (__DIR__."/modules/session.php");
                     $item = sessionChange($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "agendaItem":
                     require_once (__DIR__."/modules/agendaItem.php");
                     $item = agendaItemChange($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "electoralPeriod":
                     require_once (__DIR__."/modules/electoralPeriod.php");
                     $item = electoralPeriodChange($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 case "user":
                     require_once (__DIR__."/modules/user.php");
                     $item = userChange($final_request);
-                    return createApiResponse($item, $config);
+                    return createApiResponse($item);
                 default:
                     return createApiResponse(
-                        createApiErrorMissingParameter("type"),
-                        $config
+                        createApiErrorMissingParameter("type")
                     );
             }
             break;
@@ -256,29 +237,20 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
         case "getItemsFromDB":
             if (empty($final_request["itemType"])) {
                 return createApiResponse(
-                    createApiErrorMissingParameter("itemType"),
-                    $config
+                    createApiErrorMissingParameter("itemType")
                 );
             }
 
-            if (empty($final_request["limit"])) {
-                $final_request["limit"] = 10;
-            }
-            if (empty($final_request["offset"])) {
-                $final_request["offset"] = 0;
-            }
-            if (empty($final_request["sort"])) {
-                $final_request["sort"] = false;
-            }
-            if (empty($final_request["order"])) {
-                $final_request["order"] = false;
-            }
-            if (empty($final_request["search"])) {
-                $final_request["search"] = false;
-            }
-            if (empty($final_request["id"])) {
-                $final_request["id"] = "all";
-            }
+            // Set default values for optional parameters
+            $defaults = [
+                "limit" => 10,
+                "offset" => 0,
+                "sort" => false,
+                "order" => false,
+                "search" => false,
+                "id" => "all"
+            ];
+            $final_request = array_merge($defaults, $final_request);
 
             switch ($final_request["itemType"]) {
                 case "person":
@@ -315,24 +287,23 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     break;
                 default:
                     return createApiResponse(
-                        createApiErrorInvalidParameter("itemType"),
-                        $config
+                        createApiErrorInvalidParameter("itemType")
                     );
             }
 
             if ($result) {
-                $response = [
-                    "meta" => ["requestStatus" => "success"],
-                    "data" => $final_request["id"] !== "all" ? ($result["data"][0] ?? null) : $result["data"]
-                ];
-                if ($final_request["id"] === "all") {
-                    $response["total"] = $result["total"];
-                }
-                return createApiResponse($response, $config);
+                return createApiResponse(
+                    createApiSuccessResponse(
+                        $final_request["id"] !== "all" ? ($result["data"][0] ?? null) : $result["data"],
+                        ["requestStatus" => "success"],
+                        null,
+                        null,
+                        $final_request["id"] === "all" ? ["total" => $result["total"]] : null
+                    )
+                );
             } else {
                 return createApiResponse(
-                    createApiErrorDatabaseError(),
-                    $config
+                    createApiErrorDatabaseError()
                 );
             }
             break;
@@ -340,8 +311,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
         case "wikidataService":
             if (empty($final_request["str"])) {
                 return createApiResponse(
-                    createApiErrorMissingParameter("str"),
-                    $config
+                    createApiErrorMissingParameter("str")
                 );
             }
 
@@ -363,49 +333,8 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
 
                     foreach ($dump as $p=>$d) {
                         foreach ($d as $k => $v) {
-                            $success = false;
-
-                            if (preg_match("/" . convertAccentsAndSpecialToNormal($final_request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v[$tmpType]))) {
-                                $success = true;
-                            } else if (isset($v["altLabel"])) {
-                                if (is_string($v["altLabel"])) {
-                                    if (preg_match("/" . convertAccentsAndSpecialToNormal($final_request["str"]) . "/ui", convertAccentsAndSpecialToNormal($v["altLabel"]))) {
-                                        $success = true;
-                                    }
-                                } else if (is_array($v["altLabel"])) {
-                                    foreach ($v["altLabel"] as $altLabel) {
-                                        if (preg_match("/" . convertAccentsAndSpecialToNormal($final_request["str"]) . "/ui", convertAccentsAndSpecialToNormal($altLabel))) {
-                                            $success = true;
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-
-                            if ($success) {
-                                if (gettype($v["party"]) == "array") {
-                                    $v["party-original-array"] = $v["party"];
-                                    $v["party"] = $v["party"][0];
-                                }
-
-                                if (preg_match("/www\.wiki/", $v["party"])) {
-                                    $v["party-original-URL"] = $v["party"];
-                                    $tmpArray = explode("/", $v["party"]);
-                                    $v["party"] = array_pop($tmpArray);
-                                    $v["partyLabelAlternative"] = apiV1(["action" => "wikidataService", "itemType" => "party", "str" => $v["party"]])["data"][0]["labelAlternative"];
-                                }
-
-                                if (gettype($v["faction"]) == "array") {
-                                    $v["faction-original-array"] = $v["faction"];
-                                    $v["faction"] = $v["faction"][0];
-                                }
-
-                                if (preg_match("/www\.wiki/", $v["faction"])) {
-                                    $v["faction-original-URL"] = $v["faction"];
-                                    $tmpArray = explode("/", $v["faction"]);
-                                    $v["faction"] = array_pop($tmpArray);
-                                }
-
+                            if (matchesWikidataItem($v, $final_request["str"], $tmpType)) {
+                                $v = processWikidataPartyAndFaction($v);
                                 $v["parliament"] = $p;
                                 $response["data"][] = $v;
                             }
@@ -413,91 +342,130 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     }
                     if (count($response["data"]) > 0) {
                         $response["meta"]["requestStatus"] = "success";
-                        return createApiResponse($response, $config);
+                        return createApiResponse($response);
                     } else {
                         return createApiResponse(
-                            createApiErrorNotFound("Person"),
-                            $config
+                            createApiErrorNotFound("Person")
                         );
                     }
                     break;
 
                 case "party":
                     $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/parties.json"),true);
-
-                    if (!preg_match("/(Q|P)\d+/i", $final_request["str"])) {
-                        $final_request["str"] = preg_replace("/\s/u",".*", $final_request["str"]);
-                        $final_request["str"] = preg_replace("/\//","\\/", $final_request["str"]);
-                        $tmpType = "label";
-                    } else {
-                        $tmpType = "id";
-                    }
-
-                    foreach ($dump as $k => $v) {
-                        if ((preg_match("/" . $final_request["str"] . "/i", $v[$tmpType])) || ((($tmpType == "label") && (gettype($v["labelAlternative"]) == "string")) && (preg_match("/" . $final_request["str"] . "/i", $v["labelAlternative"])))) {
-                            $response["data"][] = $v;
-                        }
-                    }
-
+                    $response["data"] = filterWikidataItems($dump, $final_request["str"]);
+                    
                     if (count($response["data"]) > 0) {
                         $response["meta"]["requestStatus"] = "success";
-                        return createApiResponse($response, $config);
+                        return createApiResponse($response);
                     } else {
                         return createApiResponse(
-                            createApiErrorNotFound("Party"),
-                            $config
+                            createApiErrorNotFound("Party")
                         );
                     }
                     break;
 
                 case "faction":
                     $dump = json_decode(file_get_contents(__DIR__."/../../data/wikidataDumps/factions.json"),true);
-
-                    if (!preg_match("/(Q|P)\d+/i", $final_request["str"])) {
-                        $final_request["str"] = preg_replace("/\s/u",".*", $final_request["str"]);
-                        $final_request["str"] = preg_replace("/\//","\\/", $final_request["str"]);
-                        $tmpType = "label";
-                    } else {
-                        $tmpType = "id";
-                    }
-
-                    foreach ($dump as $k => $v) {
-                        if (
-                            (preg_match("/" . $final_request["str"] . "/i", $v[$tmpType]))
-                            || (
-                                (($tmpType == "label") && (gettype($v["labelAlternative"]) == "string"))
-                                && (preg_match("/" . $final_request["str"] . "/i", $v["labelAlternative"]))
-                            )
-                        ) {
-                            $response["data"][] = $v;
-                        }
-                    }
-
+                    $response["data"] = filterWikidataItems($dump, $final_request["str"]);
+                    
                     if (count($response["data"]) > 0) {
                         $response["meta"]["requestStatus"] = "success";
-                        return createApiResponse($response, $config);
+                        return createApiResponse($response);
                     } else {
                         return createApiResponse(
-                            createApiErrorNotFound("Faction"),
-                            $config
+                            createApiErrorNotFound("Faction")
                         );
                     }
                     break;
 
                 default:
                     return createApiResponse(
-                        createApiErrorInvalidParameter("type"),
-                        $config
+                        createApiErrorInvalidParameter("type")
                     );
             }
             break;
 
         default:
             return createApiResponse(
-                createApiErrorMissingParameter("action"),
-                $config
+                createApiErrorMissingParameter("action")
             );
     }
+}
+
+/**
+ * Helper function to check if a Wikidata item matches the search string
+ */
+function matchesWikidataItem($item, $searchStr, $type) {
+    if (preg_match("/" . convertAccentsAndSpecialToNormal($searchStr) . "/ui", convertAccentsAndSpecialToNormal($item[$type]))) {
+        return true;
+    }
+    
+    if (isset($item["altLabel"])) {
+        if (is_string($item["altLabel"])) {
+            return preg_match("/" . convertAccentsAndSpecialToNormal($searchStr) . "/ui", convertAccentsAndSpecialToNormal($item["altLabel"]));
+        } else if (is_array($item["altLabel"])) {
+            foreach ($item["altLabel"] as $altLabel) {
+                if (preg_match("/" . convertAccentsAndSpecialToNormal($searchStr) . "/ui", convertAccentsAndSpecialToNormal($altLabel))) {
+                    return true;
+                }
+            }
+        }
+    }
+    
+    return false;
+}
+
+/**
+ * Helper function to process party and faction data in Wikidata items
+ */
+function processWikidataPartyAndFaction($item) {
+    // Process party
+    if (gettype($item["party"]) == "array") {
+        $item["party-original-array"] = $item["party"];
+        $item["party"] = $item["party"][0];
+    }
+    if (preg_match("/www\.wiki/", $item["party"])) {
+        $item["party-original-URL"] = $item["party"];
+        $tmpArray = explode("/", $item["party"]);
+        $item["party"] = array_pop($tmpArray);
+        $item["partyLabelAlternative"] = apiV1(["action" => "wikidataService", "itemType" => "party", "str" => $item["party"]])["data"][0]["labelAlternative"];
+    }
+
+    // Process faction
+    if (gettype($item["faction"]) == "array") {
+        $item["faction-original-array"] = $item["faction"];
+        $item["faction"] = $item["faction"][0];
+    }
+    if (preg_match("/www\.wiki/", $item["faction"])) {
+        $item["faction-original-URL"] = $item["faction"];
+        $tmpArray = explode("/", $item["faction"]);
+        $item["faction"] = array_pop($tmpArray);
+    }
+
+    return $item;
+}
+
+/**
+ * Helper function to filter Wikidata items based on search string
+ */
+function filterWikidataItems($items, $searchStr) {
+    if (!preg_match("/(Q|P)\d+/i", $searchStr)) {
+        $searchStr = preg_replace("/\s/u",".*", $searchStr);
+        $searchStr = preg_replace("/\//","\\/", $searchStr);
+        $type = "label";
+    } else {
+        $type = "id";
+    }
+
+    $results = [];
+    foreach ($items as $k => $v) {
+        if ((preg_match("/" . $searchStr . "/i", $v[$type])) || 
+            ((($type == "label") && (gettype($v["labelAlternative"]) == "string")) && 
+            (preg_match("/" . $searchStr . "/i", $v["labelAlternative"])))) {
+            $results[] = $v;
+        }
+    }
+    return $results;
 }
 
 ?>
