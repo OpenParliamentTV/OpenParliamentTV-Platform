@@ -178,6 +178,17 @@ function createApiErrorDatabaseError($detailMessage = null) {
     );
 }
 
+function createApiErrorDuplicate($type, $field = null) {
+    return createApiErrorResponse(
+        409, // Conflict
+        1,
+        "messageErrorDuplicateNumber",
+        "messageErrorDuplicateNumber",
+        ["type" => ucfirst($type)],
+        $field ? "[name='".$field."']" : null
+    );
+}
+
 /**
  * Database connection with standardized error handling
  */
