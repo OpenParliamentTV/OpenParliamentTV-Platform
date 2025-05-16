@@ -308,14 +308,7 @@ function electoralPeriodChange($params) {
                 $electoralPeriod["ElectoralPeriodID"]
             );
             if ($existing) {
-                return createApiErrorResponse(
-                    422,
-                    1,
-                    "messageDuplicateNumber",
-                    "messageElectoralPeriodNumberExists",
-                    [],
-                    "[name='ElectoralPeriodNumber']"
-                );
+                return createApiErrorDuplicate('electoral period', 'ElectoralPeriodNumber');
             }
             $updateParams[] = $db->parse("ElectoralPeriodNumber=?i", (int)$value);
         }
@@ -454,13 +447,7 @@ function updateElectoralPeriod($id, $params) {
             $id
         );
         if ($existing) {
-            return createApiErrorResponse(
-                422,
-                1,
-                "messageErrorDuplicateNumber",
-                "messageErrorDuplicateNumber",
-                ["type" => "electoral period"]
-            );
+            return createApiErrorDuplicate('electoral period', 'ElectoralPeriodNumber');
         }
 
         $updates[] = "ElectoralPeriodNumber = ?i";

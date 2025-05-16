@@ -326,14 +326,7 @@ function agendaItemChange($params) {
                     $numericAgendaItemID // Use numeric ID for comparison
                 );
                 if ($existing) {
-                    return createApiErrorResponse(
-                        422,
-                        1,
-                        "messageErrorDuplicateNumber",
-                        "messageErrorDuplicateNumber",
-                        ["type" => "AgendaItem"],
-                        "[name='AgendaItemOrder']"
-                    );
+                    return createApiErrorDuplicate('agenda item', 'AgendaItemOrder');
                 }
                 $updateParams[] = $db->parse("AgendaItemOrder=?i", (int)$value);
             }
