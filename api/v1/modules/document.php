@@ -140,7 +140,7 @@ function documentSearch($parameter, $db = false) {
     }
 
     try {
-        $query = "SELECT * FROM ?n";
+        $query = "SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Document"];
         $conditions = [];
 
         foreach ($filteredParameters as $k => $para) {
@@ -179,7 +179,7 @@ function documentSearch($parameter, $db = false) {
             );
         }
 
-        $query = $db->parse("?p WHERE ?p", $query, implode(" AND ", $conditions));
+        $query .= " WHERE " . implode(" AND ", $conditions);
         $totalCount = count($db->getAll($query));
 
         $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
