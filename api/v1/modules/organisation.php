@@ -172,11 +172,11 @@ function organisationSearch($parameter, $noLimit = false) {
             if (is_array($filteredParameters["name"])) {
                 $nameConditions = [];
                 foreach ($filteredParameters["name"] as $name) {
-                    $nameConditions[] = "LOWER(OrganisationLabel) LIKE LOWER('%" . $db->escape($name) . "%')";
+                    $nameConditions[] = $db->parse("LOWER(OrganisationLabel) LIKE LOWER(?s)", "%" . $name . "%");
                 }
                 $conditions[] = "(" . implode(" OR ", $nameConditions) . ")";
             } else {
-                $conditions[] = "LOWER(OrganisationLabel) LIKE LOWER('%" . $db->escape($filteredParameters["name"]) . "%')";
+                $conditions[] = $db->parse("LOWER(OrganisationLabel) LIKE LOWER(?s)", "%" . $filteredParameters["name"] . "%");
             }
         }
 
@@ -184,11 +184,11 @@ function organisationSearch($parameter, $noLimit = false) {
             if (is_array($filteredParameters["type"])) {
                 $typeConditions = [];
                 foreach ($filteredParameters["type"] as $type) {
-                    $typeConditions[] = "OrganisationType = '" . $db->escape($type) . "'";
+                    $typeConditions[] = $db->parse("OrganisationType = ?s", $type);
                 }
                 $conditions[] = "(" . implode(" OR ", $typeConditions) . ")";
             } else {
-                $conditions[] = "OrganisationType = '" . $db->escape($filteredParameters["type"]) . "'";
+                $conditions[] = $db->parse("OrganisationType = ?s", $filteredParameters["type"]);
             }
         }
 
