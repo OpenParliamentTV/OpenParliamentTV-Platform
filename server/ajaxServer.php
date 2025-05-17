@@ -382,22 +382,6 @@ switch ($_REQUEST["a"]) {
 
     break;
 
-
-    case "searchPersonAtWikidata":
-        $auth = auth($_SESSION["userdata"]["id"], "searchWikipedia", "person");
-
-        if ($auth["meta"]["requestStatus"] != "success") {
-            $return["success"] = "false";
-            $return["text"] = "Forbidden";
-            $return["code"] = "403";
-        } else {
-            require_once (__DIR__."/../modules/utilities/functions.wikidata.php");
-            $return["success"] = "true";
-            $return["text"] = "searchresults";
-            $return["return"] = searchPersonAtWikidata($_REQUEST["label"]);
-        }
-    break;
-
     case "getMediaIDListFromSearchResult":
         require_once(__DIR__."/../modules/search/functions.php");
         require_once(__DIR__."/../modules/utilities/functions.php");
