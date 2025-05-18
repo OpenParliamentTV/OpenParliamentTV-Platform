@@ -308,6 +308,22 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             }
             break;
 
+        case "index":
+            require_once (__DIR__."/modules/searchIndex.php");
+            switch ($api_request["itemType"]) {
+                case "update":
+                    $result = searchIndexUpdate($api_request);
+                    return createApiResponse($result);
+                case "delete":
+                    $result = searchIndexDelete($api_request);
+                    return createApiResponse($result);
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
         default:
             return createApiResponse(
                 createApiErrorMissingParameter("action")
