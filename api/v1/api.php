@@ -7,6 +7,7 @@ require_once (__DIR__."/../../config.php");
 require_once ("config.php");
 require_once (__DIR__."/../../modules/utilities/functions.php");
 require_once (__DIR__."/../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../modules/utilities/functions.api.php");
 
 function apiV1($request_param = false, $db = false, $dbp = false) {
     global $config;
@@ -314,8 +315,11 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "update":
                     $result = searchIndexUpdate($api_request);
                     return createApiResponse($result);
+                case "full-update":
+                    $result = searchIndexTriggerFullUpdate($api_request);
+                    return createApiResponse($result);
                 case "delete":
-                    $result = searchIndexDelete($api_request);
+                    $result = searchIndexDelete($api_request); 
                     return createApiResponse($result);
                 default:
                     return createApiResponse(

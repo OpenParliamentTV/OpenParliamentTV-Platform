@@ -110,7 +110,7 @@ if (is_cli()) {
     require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
     require_once(__DIR__ . "/../modules/utilities/functions.conflicts.php");
     require_once(__DIR__ . "/../api/v1/api.php");
-    require_once(__DIR__ . "/../api/v1/modules/media.php");
+    require_once(__DIR__ . "/../api/v1/modules/searchIndex.php");
 
 
     try {
@@ -194,8 +194,6 @@ if (is_cli()) {
 
         //cliLog(json_encode($ids));
 
-        require_once (__DIR__."/../data/updateSearchIndex.php");
-
         $mediaItems = array();
 
         logger("info", "updating search index for ".count($ids)." items");
@@ -219,8 +217,18 @@ if (is_cli()) {
                 array_push($mediaItems, $tmpMedia);
 
                 if (count($mediaItems) == 30) {
-                    updateSearchIndex($parliament, $mediaItems, true);
-
+                    $updateRequest = [
+                        "parliament" => $parliament,
+                        "items" => $mediaItems,
+                        "initIndex" => true
+                    ];
+                    $updateResult = searchIndexUpdate($updateRequest);
+                    
+                    if (isset($updateResult["errors"])) {
+                        logger("error", "Search index update batch failed: ".json_encode($updateResult["errors"]));
+                    } else {
+                        logger("info", "Search index update batch successful: ".json_encode($updateResult));
+                    }
                     $mediaItems = array();
                 }
 
@@ -233,7 +241,17 @@ if (is_cli()) {
 
         if (!empty($mediaItems)) {
 
-            updateSearchIndex($parliament, $mediaItems, true);
+            $updateRequest = [
+                "parliament" => $parliament,
+                "items" => $mediaItems,
+                "initIndex" => true
+            ];
+            $updateResult = searchIndexUpdate($updateRequest);
+            if (isset($updateResult["errors"])) {
+                logger("error", "Search index update final batch failed: ".json_encode($updateResult["errors"]));
+            } else {
+                logger("info", "Search index update final batch successful: ".json_encode($updateResult));
+            }
 
         }
 
@@ -258,7 +276,6 @@ if (is_cli()) {
 
         }
 
-        require_once(__DIR__ . "/updateSearchIndex.php");
         require_once(__DIR__ . "/updateFilesFromGit.php");
         require_once(__DIR__ . "/entity-dump/function.entityDump.php");
 
@@ -378,7 +395,19 @@ if (is_cli()) {
             }
 
             // Update all added media items to OpenSearch/ElasticSearch
-            $updatedItems = updateSearchIndex($parliament, $mediaItems);
+            $updateRequest = [
+                "parliament" => $parliament,
+                "items" => $mediaItems,
+                "initIndex" => false
+            ];
+            $updateResult = searchIndexUpdate($updateRequest);
+            $updatedItems = 0;
+            if (isset($updateResult["data"]["updated"])) {
+                $updatedItems = $updateResult["data"]["updated"];
+            }
+            if (isset($updateResult["errors"])) {
+                logger("error", "Search index update for file ".$file." failed: ".json_encode($updateResult["errors"]));
+            }
 
             cliLog("OpenSearch for file " . $file . " updated " . $updatedItems . " media items.");
 

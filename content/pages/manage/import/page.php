@@ -222,42 +222,71 @@ if ($auth["meta"]["requestStatus"] != "success") {
         });
 
 		$(".updateSearchIndex").on("click", function() {
+			const parliament = "DE";
+
 			if ($(this).data("type") == "specific") {
-				//TODO popup with parliaments and textarea for comma separated list of MediaIDs
+				const mediaIDs = "DE-0190062070,DE-0190077128";
 
 				$.ajax({
-					url: config["dir"]["root"] + "/server/ajaxServer.php",
+					url: "<?= $config["dir"]["root"] ?>/api/v1/index/update",
 					method:"POST",
-					data: {"a":"searchIndexUpdate","type":"specific","parliament":"DE","mediaIDs":"DE-0190062070,DE-0190077128"},
+					dataType: "json",
+					data: {
+                        "parliament": parliament,
+                        "mediaIDs": mediaIDs,
+                        "initIndex": false
+                    },
 					success: function(ret) {
-						console.log(ret);
-					}
+						console.log("Update specific Medias response:", ret);
+                        alert( (ret.meta && ret.meta.requestStatus === "success") ? "Specific medias update triggered: " + (ret.data ? ret.data.updated + " updated." : "") : "Error: " + (ret.errors ? ret.errors[0].detail : "Unknown error") );
+					},
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("Update specific Medias error:", textStatus, errorThrown, jqXHR.responseText);
+                        alert("AJAX Error updating specific medias: " + textStatus);
+                    }
 				})
 
 			} else if ($(this).data("type") == "all") {
-				//TODO Popup with parliaments
-				//TODO Waitingscreen until response (will take some time)
 				$.ajax({
-					url: config["dir"]["root"] + "/server/ajaxServer.php",
+					url: "<?= $config["dir"]["root"] ?>/api/v1/index/full-update",
 					method:"POST",
-					data: {"a":"searchIndexUpdate","type":"all","parliament":"DE"},
+					dataType: "json",
+					data: {
+                        "parliament": parliament
+                    },
 					success: function(ret) {
-						console.log(ret);
-					}
+						console.log("Update whole Searchindex response:", ret);
+                        alert( (ret.meta && ret.meta.requestStatus === "success") ? (ret.data ? ret.data.message : "Full search index update process started.") : "Error: " + (ret.errors ? ret.errors[0].detail : "Unknown error") );
+					},
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("Update whole Searchindex error:", textStatus, errorThrown, jqXHR.responseText);
+                        alert("AJAX Error updating whole search index: " + textStatus);
+                    }
 				})
 			}
 
 		});
 
 		$("#deleteSearchIndex").on("click", function() {
-			//TODO Dialog with parliament and if index should be re-initialized (true) or nor (false)
+			const parliament = "DE";
+            const initAfterDelete = true;
+
 			$.ajax({
-				url: config["dir"]["root"] + "/server/ajaxServer.php",
+				url: "<?= $config["dir"]["root"] ?>/api/v1/index/delete",
 				method:"POST",
-				data: {"a":"searchIndexDelete","parliament":"DE","init":"true"},
+				dataType: "json",
+				data: {
+                    "parliament": parliament,
+                    "init": initAfterDelete
+                },
 				success: function(ret) {
-					console.log(ret);
-				}
+					console.log("Delete whole Searchindex response:", ret);
+                    alert( (ret.meta && ret.meta.requestStatus === "success") ? "Search index deletion triggered." : "Error: " + (ret.errors ? ret.errors[0].detail : "Unknown error") );
+				},
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error("Delete whole Searchindex error:", textStatus, errorThrown, jqXHR.responseText);
+                    alert("AJAX Error deleting search index: " + textStatus);
+                }
 			})
 		})
 
