@@ -133,12 +133,6 @@ $config["parliament"]["DE"]["git"]["repository"] = ""; //e.g. https://github.com
 $config["parliament"]["DE"]["ES"]["index"] = "de"; // openparliamenttv_THIS
 
 /**
- * Path to the wikidata dumps. See Docs for more informations
- */
-$config["parliament"]["DE"]["cache"]["wp"] = __DIR__."/data/wikidataDumps/DE";
-
-
-/**
  * Configuration for the ElasticSearch or OpenSearch server
  */
 $config["ES"]["hosts"] = []; // E.g. ["https://@localhost:9200"]
