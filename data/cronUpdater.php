@@ -227,7 +227,7 @@ if (is_cli()) {
                     if (isset($updateResult["errors"])) {
                         logger("error", "Search index update batch failed: ".json_encode($updateResult["errors"]));
                     } else {
-                        logger("info", "Search index update batch successful: ".json_encode($updateResult));
+                        //logger("info", "Search index update batch successful: ".json_encode($updateResult));
                     }
                     $mediaItems = array();
                 }
@@ -250,7 +250,7 @@ if (is_cli()) {
             if (isset($updateResult["errors"])) {
                 logger("error", "Search index update final batch failed: ".json_encode($updateResult["errors"]));
             } else {
-                logger("info", "Search index update final batch successful: ".json_encode($updateResult));
+                //logger("info", "Search index update final batch successful: ".json_encode($updateResult));
             }
 
         }
