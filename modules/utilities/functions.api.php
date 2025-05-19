@@ -240,6 +240,34 @@ function getApiDatabaseConnection($type = 'platform', $parliament = null) {
 }
 
 /**
+ * Prepares and returns the Elasticsearch client.
+ *
+ * @return \Elasticsearch\Client|array Error response array
+ */
+function getApiOpenSearchClient() {
+    global $config;
+    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
+
+    if (!empty($config["ES"]["hosts"])) {
+        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+    }
+    if (!empty($config["ES"]["BasicAuthentication"]["user"]) && isset($config["ES"]["BasicAuthentication"]["passwd"])) {
+        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"], $config["ES"]["BasicAuthentication"]["passwd"]);
+    }
+    if (!empty($config["ES"]["SSL"]["pem"])) {
+        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
+    }
+    
+    try {
+        return $ESClientBuilder->build();
+    } catch (Exception $e) {
+        // Log error
+        error_log("Elasticsearch ClientBuilder failed: " . $e->getMessage());
+        return createApiErrorResponse(500, 'ES_CLIENT_ERROR', 'messageErrorESClient', 'Elasticsearch client initialization failed: ' . $e->getMessage());
+    }
+}
+
+/**
  * Common validation functions
  */
 function validateApiRequired($value, $field) {

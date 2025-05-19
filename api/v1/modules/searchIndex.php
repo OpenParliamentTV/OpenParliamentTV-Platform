@@ -6,40 +6,10 @@ require_once (__DIR__."/../../../vendor/autoload.php"); // For Elasticsearch
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 
 /**
- * Prepares and returns the Elasticsearch client.
- *
- * @return \Elasticsearch\Client|array Error response array
- */
-function getESClient() {
-    global $config;
-    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
-
-    if (!empty($config["ES"]["hosts"])) {
-        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
-    }
-    if (!empty($config["ES"]["BasicAuthentication"]["user"]) && isset($config["ES"]["BasicAuthentication"]["passwd"])) {
-        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"], $config["ES"]["BasicAuthentication"]["passwd"]);
-    }
-    if (!empty($config["ES"]["SSL"]["pem"])) {
-        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
-    }
-    
-    try {
-        return $ESClientBuilder->build();
-    } catch (Exception $e) {
-        // Log error
-        error_log("Elasticsearch ClientBuilder failed: " . $e->getMessage());
-        return createApiErrorResponse(500, 'ES_CLIENT_ERROR', 'messageErrorESClient', 'Elasticsearch client initialization failed: ' . $e->getMessage());
-    }
-}
-
-/**
  * @return array
  * Helperfunction to setup the query for indexing and mapping an openSearch server
  */
 function getSearchIndexParameterBody() {
-    // This function is taken directly from data/updateSearchIndex.php
-    // Ensure any necessary $config variables used here are available globally or passed.
     $data = array();
 
     $data["mappings"] = array("properties" => array(
@@ -260,9 +230,9 @@ function searchIndexUpdate($api_request) {
         return createApiSuccessResponse(["updated" => 0, "message" => "No items to update after processing inputs."]);
     }
 
-    $ESClient = getESClient();
+    $ESClient = getApiOpenSearchClient();
     if (!($ESClient instanceof \Elasticsearch\Client)) {
-        // It's an error array returned by getESClient due to a build failure
+        // It's an error array returned by getApiOpenSearchClient due to a build failure
         return $ESClient;
     }
 
@@ -375,9 +345,9 @@ function searchIndexDelete($api_request) {
          return createApiErrorInvalidParameter("parliament", "Specified parliament has no ES index configured.");
     }
 
-    $ESClient = getESClient();
+    $ESClient = getApiOpenSearchClient();
     if (!($ESClient instanceof \Elasticsearch\Client)) {
-        // It's an error array returned by getESClient due to a build failure
+        // It's an error array returned by getApiOpenSearchClient due to a build failure
         return $ESClient;
     }
 
