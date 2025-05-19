@@ -58,9 +58,10 @@ function createApiErrorResponse($status, $code, $messageKey, $detailKey, $params
  * @param array $meta Additional metadata
  * @param array $links Links to be included at root level
  * @param array $relationships Relationships to be included at root level
+ * @param array $total Total number of items
  * @return array
  */
-function createApiSuccessResponse($data = null, $meta = [], $links = null, $relationships = null) {
+function createApiSuccessResponse($data = null, $meta = [], $links = null, $relationships = null, $total = null) {
     // Ensure $meta is an array before merging
     if (!is_array($meta)) {
         $meta = [];
@@ -91,6 +92,10 @@ function createApiSuccessResponse($data = null, $meta = [], $links = null, $rela
     }
     if ($relationships !== null) {
         $return["relationships"] = $relationships;
+    }
+
+    if ($total !== null) {
+        $return["total"] = $total;
     }
     
     return $return;

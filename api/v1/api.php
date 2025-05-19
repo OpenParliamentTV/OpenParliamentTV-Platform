@@ -299,7 +299,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                         ["requestStatus" => "success"],
                         null,
                         null,
-                        $api_request["id"] === "all" ? ["total" => $result["total"]] : null
+                        $api_request["id"] === "all" ? $result["total"] : null
                     )
                 );
             } else {
