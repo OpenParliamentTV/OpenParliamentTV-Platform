@@ -19,9 +19,15 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
         $request_param ?: []
     );
 
-    if ((!$api_request["action"]) || (!$api_request["itemType"])) {
+    if (empty($api_request["action"])) {
         return createApiResponse(
             createApiErrorMissingParameter("action")
+        );
+    }
+
+    if (empty($api_request["itemType"])) {
+        return createApiResponse(
+            createApiErrorMissingParameter("itemType")
         );
     }
 
@@ -67,7 +73,20 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     return createApiResponse($item);
                 default:
                     return createApiResponse(
-                        createApiErrorMissingParameter("type")
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
+        case "status":
+            require_once (__DIR__."/modules/status.php");
+            switch ($api_request["itemType"]) {
+                case "all":
+                    $statusInfo = getStatus($api_request);
+                    return createApiResponse($statusInfo);
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -96,7 +115,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     return createApiResponse($item);
                 default:
                     return createApiResponse(
-                        createApiErrorMissingParameter("type")
+                        createApiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -115,7 +134,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     );
                 default:
                     return createApiResponse(
-                        createApiErrorMissingParameter("type")
+                        createApiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -140,7 +159,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     return createApiResponse($item);
                 default:
                     return createApiResponse(
-                        createApiErrorInvalidParameter("type")
+                        createApiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -168,7 +187,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     return createApiResponse($result);
                 default:
                     return createApiResponse(
-                        createApiErrorInvalidParameter("action")
+                        createApiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -185,7 +204,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     return createApiResponse($item);
                 default:
                     return createApiResponse(
-                        createApiErrorMissingParameter("type")
+                        createApiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -230,18 +249,13 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     return createApiResponse($item);
                 default:
                     return createApiResponse(
-                        createApiErrorMissingParameter("type")
+                        createApiErrorInvalidParameter("itemType")
                     );
             }
             break;
 
         case "getItemsFromDB":
-            if (empty($api_request["itemType"])) {
-                return createApiResponse(
-                    createApiErrorMissingParameter("itemType")
-                );
-            }
-
+            
             // Set default values for optional parameters
             $defaults = [
                 "limit" => 10,
@@ -330,9 +344,14 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
 
         default:
             return createApiResponse(
-                createApiErrorMissingParameter("action")
+                createApiErrorInvalidParameter("action")
             );
     }
-}
 
-?>
+    // Fallback for unknown actions or itemTypes handled by createApiErrorInvalidParameter
+    if (!isset($return)) {
+        $return = createApiErrorInvalidParameter("action or itemType");
+    }
+
+    return $return;
+}
