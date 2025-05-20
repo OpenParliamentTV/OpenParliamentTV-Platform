@@ -168,7 +168,18 @@ function createApiErrorInvalidLength($field, $minLength, $domSelectorField = nul
         "messageErrorInvalidLengthTitle",
         "messageErrorInvalidLengthDetailMin",
         ["field" => ucfirst($field), "minLength" => $minLength], // Capitalize field for display
-        $selector ? "[name='".$selector."']" : null
+        $selector ? "[name=".$selector."]" : null
+    );
+}
+
+function createApiErrorInvalidParameter($paramName, $detailMessageKey = null, $detailParams = []) {
+    return createApiErrorResponse(
+        422, // Unprocessable Entity or 400 Bad Request
+        1,   // Consistent error code
+        "messageErrorInvalidParameter", 
+        $detailMessageKey ?: "messageErrorInvalidParameter", 
+        array_merge(["param" => $paramName], $detailParams), 
+        "[name=".$paramName."]" // Optional: DOM selector for the field
     );
 }
 
@@ -377,5 +388,6 @@ function createApiResponse($moduleResponse) {
         ]
     ];
     
-    return array_replace_recursive($baseResponse, $moduleResponse);
+    $result = array_replace_recursive($baseResponse, $moduleResponse);
+    return $result;
 } 
