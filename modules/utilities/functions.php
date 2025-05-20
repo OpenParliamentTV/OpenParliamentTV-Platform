@@ -416,4 +416,43 @@ function filterAllowedSearchParams($data, $type, $caseSensitive = true) {
     return array_intersect_key($data, array_flip($allowedParams[$type]));
 }
 
+/**
+ * Makes an external HTTP GET request.
+ *
+ * @param string $url The URL to request.
+ * @param array $options Context options for stream_context_create (e.g., user_agent, timeout).
+ *                       Default user_agent is 'OpenParliamentTV-Platform-HTTPClient'.
+ *                       Default timeout is 5 seconds.
+ * @return string|false The response body as a string, or false on failure.
+ */
+function makeHttpRequest($url, $options = []) {
+    $defaultOptions = [
+        'http' => [
+            'user_agent' => 'OpenParliamentTV-Platform-HTTPClient',
+            'timeout' => 5,
+            'method' => 'GET' // Default to GET
+        ]
+    ];
+
+    // Merge provided options with defaults, allowing user_agent and timeout to be overridden
+    if (isset($options['http']['user_agent'])) {
+        $defaultOptions['http']['user_agent'] = $options['http']['user_agent'];
+    }
+    if (isset($options['http']['timeout'])) {
+        $defaultOptions['http']['timeout'] = $options['http']['timeout'];
+    }
+    // Allow other http options to be passed through
+    $contextOptions = array_replace_recursive($defaultOptions, $options);
+
+    $context = stream_context_create($contextOptions);
+    $response = @file_get_contents($url, false, $context);
+
+    if ($response === false) {
+        // You might want to log an error here
+        // error_log("HTTP request to $url failed. Error: " . ($http_response_header[0] ?? 'Unknown error'));
+    }
+
+    return $response;
+}
+
 ?>
