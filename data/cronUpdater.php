@@ -53,7 +53,9 @@ function cliLog($message) {
     $message = date("Y.m.d H:i:s:u") . " - ". $message.PHP_EOL;
     print($message);
     flush();
-    ob_flush();
+    if (ob_get_level() > 0) {
+        ob_flush();
+    }
 }
 
 
@@ -315,6 +317,7 @@ if (is_cli()) {
             }
 
             cliLog("start processing file: " . $file);
+            //logger("info", "start processing file: " . $file);
 
             try {
 
