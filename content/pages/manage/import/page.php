@@ -38,10 +38,18 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="status" role="tabpanel" aria-labelledby="status-tab">
-                            <div class="status-visualization p-4">
-                                <div class="row align-items-center justify-content-center position-relative">
+                            <div class="status-visualization p-4 position-relative">
+                                <div class="row align-items-start justify-content-center position-relative">
                                     <div class="connecting-line"></div>
-                                    <div class="col-4 text-center">
+                                    <div class="col-4 text-center status-item status-item-dummy-1">
+                                        <div class="status-circle rounded-circle">
+                                            <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
+                                                <i class="icon-bank small"></i>
+                                                <h4 class="small mb-0">Parliament <br>Sources</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4 text-center status-item status-item-repository-remote">
                                         <div class="status-circle rounded-circle">
                                             <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
                                                 <i class="icon-git-squared small"></i>
@@ -51,9 +59,28 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <div class="mt-3">
 											<div>Last updated:</div>
 											<div id="lastCommitDate" class="fw-bolder">-</div>
+											<div class="small">Sessions: <span id="repoRemoteSessions">-</span></div>
+											<div class="small mt-1 d-none">Location: <span id="repoLocation">-</span></div>
 										</div>
                                     </div>
-                                    <div class="col-4 text-center">
+                                    <div class="col-4 text-center status-item status-item-repository-local">
+                                        <div class="status-circle rounded-circle">
+                                            <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
+                                                <i class="icon-git-squared small"></i>
+                                                <h4 class="small mb-0">Local <br>Repository</h4>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 bg-white" style="z-index: 3;position: relative;">
+											<div>Last updated:</div>
+											<div id="repoLocalUpdate" class="fw-bolder">-</div>
+											<div class="small">Sessions: <span id="repoLocalSessions">-</span></div>
+										</div>
+                                    </div>
+                                </div>
+
+                                <div class="row align-items-start justify-content-start position-relative flex-row-reverse mt-5">
+                                    <div class="connecting-line connecting-line-short"></div>
+                                    <div class="col-4 text-center status-item status-item-database">
                                         <div class="status-circle rounded-circle">
                                             <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
                                                 <i class="icon-database small"></i>
@@ -63,9 +90,12 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <div class="mt-3">
 											<div>Last updated:</div>
 											<div id="lastDBDate" class="fw-bolder">-</div>
+											<div class="small mt-1">Last Speech: <span id="dbLastSpeechDate">-</span></div>
+											<div class="small">Sessions: <span id="dbSessions">-</span></div>
+											<div class="small">Speeches: <span id="dbSpeeches">-</span></div>
 										</div>
                                     </div>
-                                    <div class="col-4 text-center">
+                                    <div class="col-4 text-center status-item status-item-search">
                                         <div class="status-circle rounded-circle">
                                             <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
                                                 <i class="icon-search small"></i>
@@ -75,9 +105,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <div class="mt-3">
 											<div>Last updated:</div>
 											<div id="lastSearchDate" class="fw-bolder">-</div>
+											<div class="small mt-1">Last Speech: <span id="searchLastSpeechDate">-</span></div>
+											<div class="small">Speeches: <span id="searchSpeeches">-</span></div>
 										</div>
                                     </div>
                                 </div>
+                                
+                                <div class="connecting-line-vertical-snake"></div>
+
                             </div>
                             
                         </div>
@@ -194,11 +229,30 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		top: 51px;
 		left: 50%;
 		transform: translateX(-50%);
-		width: calc(70%);
+		width: calc(100% * 2 / 3);
 		height: 2px;
 		background: var(--border-color);
 		z-index: 1;
 	}
+	.connecting-line-short {
+		width: calc(100% / 3);
+		left: calc(100% * 2 / 3);
+		transform: translateX(-50%);
+		position: absolute;
+		top: 51px;
+		height: 2px;
+		background: var(--border-color);
+		z-index: 1;
+	}
+	.connecting-line-vertical-snake {
+        position: absolute;
+        width: 2px;
+        background-color: var(--border-color);
+        z-index: 1;
+        right: calc(100% / 6 + 6px);
+        top: 124px;
+        height: 150px; 
+    }
 	.status-circle i {
 		font-size: 1.25rem;
 		margin-bottom: 4px;
@@ -290,22 +344,76 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			})
 		})
 
-		fetch('https://api.github.com/repos/OpenParliamentTV/OpenParliamentTV-Data-DE/commits')
+		fetch('<?= $config["dir"]["root"] ?>/api/v1/status/all')
 			.then(response => response.json())
 			.then(data => {
-				const date = new Date(data[0].commit.author.date);
-				document.getElementById('lastCommitDate').textContent = 
-					date.toLocaleString('de');
-			});
+				if (data.meta && data.meta.requestStatus === "success" && data.data && data.data.parliaments && data.data.parliaments.length > 0) {
+					const parliamentData = data.data.parliaments[0]; // Assuming first parliament
 
-		fetch('<?= $config["dir"]["root"] ?>/api/v1/search/media?includeAll=true&sort=date-desc')
-			.then(response => response.json())
-			.then(data => {
-				if (data.data && data.data.length > 0) {
-					const date = new Date(data.data[0].attributes.lastChanged);
-					document.getElementById('lastSearchDate').textContent = 
-						date.toLocaleString('de');
+					// Helper to format date or return placeholder
+					const formatDate = (dateString) => {
+						if (!dateString) return '-';
+						try {
+							return new Date(dateString).toLocaleString('de');
+						} catch (e) {
+							return '-';
+						}
+					};
+					
+					const el = (id) => document.getElementById(id);
+					const setText = (id, text) => {
+						if (el(id)) el(id).textContent = text || '-';
+					};
+
+					// Update Repository Info
+					if (parliamentData.repository) {
+						setText('lastCommitDate', formatDate(parliamentData.repository.remote?.lastUpdated));
+						setText('repoLocation', parliamentData.repository.location);
+						setText('repoRemoteSessions', parliamentData.repository.remote?.numberOfSessions);
+						setText('repoLocalUpdate', formatDate(parliamentData.repository.local?.lastUpdated));
+						setText('repoLocalSessions', parliamentData.repository.local?.numberOfSessions);
+					} else {
+						setText('lastCommitDate', 'N/A');
+						setText('repoLocation', 'N/A');
+						setText('repoRemoteSessions', 'N/A');
+						setText('repoLocalUpdate', 'N/A');
+						setText('repoLocalSessions', 'N/A');
+					}
+
+					// Update Database Info
+					if (parliamentData.database) {
+						setText('lastDBDate', formatDate(parliamentData.database.lastUpdated));
+						setText('dbLastSpeechDate', formatDate(parliamentData.database.lastSpeechDate));
+						setText('dbSessions', parliamentData.database.numberOfSessions);
+						setText('dbSpeeches', parliamentData.database.numberOfSpeeches);
+					} else {
+						setText('lastDBDate', 'N/A');
+						setText('dbLastSpeechDate', 'N/A');
+						setText('dbSessions', 'N/A');
+						setText('dbSpeeches', 'N/A');
+					}
+
+					// Update Search Index Info
+					if (parliamentData.index) {
+						setText('lastSearchDate', formatDate(parliamentData.index.lastUpdated));
+						setText('searchLastSpeechDate', formatDate(parliamentData.index.lastSpeechDate));
+						setText('searchSpeeches', parliamentData.index.numberOfSpeeches);
+					} else {
+						setText('lastSearchDate', 'N/A');
+						setText('searchLastSpeechDate', 'N/A');
+						setText('searchSpeeches', 'N/A');
+					}
+
+				} else {
+					console.error("Error fetching status data or data is not in expected format:", data.errors || "Unknown error or no parliament data");
+					const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbLastSpeechDate', 'dbSessions', 'dbSpeeches', 'lastSearchDate', 'searchLastSpeechDate', 'searchSpeeches'];
+					idsToReset.forEach(id => setText(id, 'Error'));
 				}
+			})
+			.catch(error => {
+				console.error("Failed to fetch status:", error);
+				const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbLastSpeechDate', 'dbSessions', 'dbSpeeches', 'lastSearchDate', 'searchLastSpeechDate', 'searchSpeeches'];
+				idsToReset.forEach(id => document.getElementById(id) ? document.getElementById(id).textContent = 'Error' : null);
 			});
 	});
 </script>
