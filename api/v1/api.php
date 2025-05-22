@@ -314,7 +314,8 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     break;
                 case "entitySuggestion":
                     require_once (__DIR__."/modules/entitySuggestion.php");
-                    $result = entitySuggestionGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"]);
+                    $idType = $api_request["idType"] ?? "external"; // Read idType, default to external
+                    $result = entitySuggestionGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], $idType);
                     break;
                 default:
                     return createApiResponse(

@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/safemysql.class.php");
-require_once(__DIR__."/functions.conflicts.php");
+require_once(__DIR__."/functions.api.php");
 
 function flattenEntityJSON($array, $prefix = '') {
     $flat = array();
@@ -153,104 +153,6 @@ function reportEntitySuggestion($entitysuggestionExternalID, $entitysuggestionTy
 
     }
     return true;
-
-}
-
-function getEntitySuggestion($id, $idType="internal", $type="", $db=false) {
-
-    global $config;
-
-    if (!$db) {
-        try {
-
-            $db = new SafeMySQL(array(
-                'host'	=> $config["platform"]["sql"]["access"]["host"],
-                'user'	=> $config["platform"]["sql"]["access"]["user"],
-                'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-                'db'	=> $config["platform"]["sql"]["db"]
-            ));
-
-        } catch (exception $e) {
-
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to platform database failed";
-            array_push($return["errors"], $errorarray);
-            return $return;
-
-        }
-    }
-    if ($idType == "internal") {
-        $item = $db->getRow("SELECT * FROM ?n WHERE EntitysuggestionID = ?i", $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $id);
-    } elseif ($idType == "external") {
-        if ($type) {
-            $conditionType = $db->parse(" AND EntitysuggestionType=?s", $type);
-        }
-        $item = $db->getRow("SELECT * FROM ?n WHERE EntitysuggestionExternalID = ?s".$conditionType, $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $id);
-    }
-
-    $item["EntitysuggestionContext"] = json_decode($item["EntitysuggestionContext"],true);
-
-    return $item;
-
-}
-
-
-function getEntitySuggestionTable($id = "all", $limit = 0, $offset = 0, $search = false, $sort = false, $order = false, $getCount = false, $db = false) {
-
-    global $config;
-
-    if (!$db) {
-        $db = new SafeMySQL(array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        ));
-    }
-
-    $queryPart = "";
-
-    if ($id == "all") {
-        $queryPart .= "1";
-    } else {
-        $queryPart .= $db->parse("EntitysuggestionExternalID=?s",$id);
-    }
-
-
-    if (!empty($search)) {
-
-        $queryPart .= $db->parse(" AND (EntitysuggestionLabel LIKE ?s OR EntitysuggestionExternalID LIKE ?s)", "%".$search."%","%".$search."%");
-
-    }
-
-    if (!empty($sort)) {
-
-        $queryPart .= $db->parse(" ORDER BY ?n ".$order, $sort);
-
-    }
-
-
-    if ($limit != 0) {
-
-        $queryPart .= $db->parse(" LIMIT ?i, ?i",$offset,$limit);
-
-    }
-
-    if ($getCount == true) {
-
-        $return["total"] = $db->getOne("SELECT COUNT(EntitysuggestionID) as count FROM  " . $config["platform"]["sql"]["tbl"]["Entitysuggestion"]);
-        $return["rows"] = $db->getAll("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount FROM " . $config["platform"]["sql"]["tbl"]["Entitysuggestion"]." WHERE ?p", $queryPart);
-
-    } else {
-        $return = $db->getAll("SELECT *, JSON_LENGTH(EntitysuggestionContext) as EntitysuggestionCount FROM " . $config["platform"]["sql"]["tbl"]["Entitysuggestion"]." WHERE ?p", $queryPart);
-    }
-
-
-    return $return;
 
 }
 

@@ -105,20 +105,32 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	$(function() {
 
 		$('#entitiesTable').bootstrapTable({
-			url: config["dir"]["root"] + "/server/ajaxServer.php?a=entitysuggestionGetTable",
+			url: config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=entitySuggestion",
 			classes: "table table-striped",
 			locale: "<?= $lang; ?>",
 			pagination: true,
 			sidePagination: "server",
-			dataField: "rows",
+			dataField: "data",
 			totalField: "total",
 			search: true,
 			searchAlign: "left",
 			serverSort: true,
+			sortName: "EntitysuggestionCount",
+			sortOrder: "desc",
+			queryParams: function(params) {
+				var apiParams = {};
+				apiParams.limit = params.limit || params.pageSize;
+				apiParams.offset = params.offset || (params.pageNumber - 1) * (params.limit || params.pageSize);
+				apiParams.search = params.search || params.searchText;
+				apiParams.sort = params.sort || params.sortName;
+				apiParams.order = params.order || params.sortOrder;
+				return apiParams;
+			},
 			columns: [
 				{
 					field: "EntitysuggestionLabel",
 					title: "Label",
+					class: "w-100",
 					sortable: true
 				},
 				{
@@ -137,58 +149,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					sortable: true
 				},
 				{
-					field: "EntitysuggestionContent",
-					title: "Score",
-					sortable: false,
-					formatter: function(value, row) {
-						
-						// Completely unnecessary, just having fun ;)
-
-						let valueJSON = JSON.parse(row["EntitysuggestionContent"]);
-						let score = valueJSON["score"];
-						let canvasId = 'score-chart-' + row.EntitysuggestionID;
-						
-						// Create canvas element
-						let canvas = `<div class="position-relative" style="width: 50px; height: 50px;"><canvas id="${canvasId}"></canvas><div class="chartCenterLabel">${(score * 100).toFixed(1)}%</div></div>`;
-						
-						// Initialize chart after a brief delay to ensure DOM element exists
-						setTimeout(() => {
-							const ctx = document.getElementById(canvasId);
-							new Chart(ctx, {
-								type: 'doughnut',
-								data: {
-									datasets: [{
-										data: [score, 1 - score],
-										backgroundColor: [
-											'rgba(46, 204, 113, 0.8)',
-											'rgba(220, 220, 220, 0.8)'
-										],
-										borderWidth: 0
-									}]
-								},
-								options: {
-									responsive: true,
-									aspectRatio: 1,
-									legend: {
-										display: false
-									},
-									tooltips: {
-										enabled: false
-									},
-									cutoutPercentage: 80,
-									animation: {
-										animateRotate: true
-									}
-								}
-							});
-						}, 50);
-						
-						return canvas;
-					}
-				},
-				{
 					field: "EntitysuggestionID",
 					title: "Action",
+					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {
 						return "<div class='list-group list-group-horizontal'><span class='entitysuggestiondetails list-group-item list-group-item-action' title='<?= L::viewDetails; ?>' data-id='"+value+"' data-bs-toggle='modal' data-bs-target='#entityDetailsModal'><span class='icon-eye'></span></span><a href='"+config["dir"]["root"]+"/manage/entities/new?wikidataID="+row["EntitysuggestionExternalID"]+"&entitySuggestionID="+row["EntitysuggestionID"]+"' target='_blank' class='list-group-item list-group-item-action' data-id='"+row["EntitysuggestionID"]+"'><span class='icon-plus'></span></a></div>"
@@ -201,25 +164,37 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		$(".mainContainer").on("click", ".entitysuggestiondetails",function() {
 
 			$.ajax({
-				url: config["dir"]["root"] + "/server/ajaxServer.php",
-				data: {"a":"entitysuggestionGet","id":$(this).data("id")},
+				url: config["dir"]["root"] + "/api/v1/",
+				data: {
+					"action":"getItemsFromDB", 
+					"itemType":"entitySuggestion", 
+					"id":$(this).data("id"), 
+					"idType": "internal"
+				},
 				success: function(ret) {
-					if (ret["success"] == "true") {
+					if (ret && ret.data && ret.meta && ret.meta.requestStatus === "success") {
+						let entityData = ret.data;
 						let wikiIDRegex = new RegExp("Q[0-9]+");
-						$("#entitiesDetailsExternalID").html((wikiIDRegex.test(ret["return"]["EntitysuggestionExternalID"]) ? '<a href="https://www.wikidata.org/wiki/'+ret["return"]["EntitysuggestionExternalID"]+'" target="_blank">'+ret["return"]["EntitysuggestionExternalID"]+'</a>' : ret["return"]["EntitysuggestionExternalID"]));
-						$("#entitiesDetailsLabel").html(ret["return"]["EntitysuggestionLabel"]);
-						$("#entitiesDetailsType").html(ret["return"]["EntitysuggestionType"]);
-						$("#entitiesDetailsMediaCount").html(Object.keys(ret["return"]["EntitysuggestionContext"]).length);
-						//$("#entitiesDetailsContent").html(ret["return"]["EntitysuggestionContent"]);
+						$("#entitiesDetailsExternalID").html((wikiIDRegex.test(entityData.EntitysuggestionExternalID) ? '<a href="https://www.wikidata.org/wiki/'+entityData.EntitysuggestionExternalID+'" target="_blank">'+entityData.EntitysuggestionExternalID+'</a>' : entityData.EntitysuggestionExternalID));
+						$("#entitiesDetailsLabel").html(entityData.EntitysuggestionLabel);
+						$("#entitiesDetailsType").html(entityData.EntitysuggestionType);
+						$("#entitiesDetailsMediaCount").html(Object.keys(entityData.EntitysuggestionContext).length);
 						$("#entitiesDetailsContent").empty();
-						$("#entitiesDetailsContent").jsonView(ret["return"]["EntitysuggestionContent"]);
+						$("#entitiesDetailsContent").jsonView(entityData.EntitysuggestionContent);
 
 						$("#entitiesDetailsContext").html("");
-						for (let item in ret["return"]["EntitysuggestionContext"]) {
+						for (let item in entityData.EntitysuggestionContext) {
 							$("#entitiesDetailsContext").append('<a href="<?=$config["dir"]["root"]?>/media/'+item+'" target="_blank">'+item+'</a><br>');
 						}
 						$("#entitiesDetailsDiv").show();
+					} else {
+						console.error("Error fetching entity suggestion details:", ret);
+						alert("Could not load entity details.");
 					}
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.error("AJAX error fetching entity suggestion details:", textStatus, errorThrown);
+					alert("An error occurred while fetching entity details.");
 				}
 			});	
 

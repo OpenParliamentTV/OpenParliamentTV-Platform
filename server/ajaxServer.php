@@ -11,6 +11,7 @@ $return["return"] = "";
 
 require_once (__DIR__."/../config.php");
 include_once(__DIR__ . '/../modules/utilities/auth.php');
+require_once (__DIR__."/../api/v1/api.php");
 
 switch ($_REQUEST["a"]) {
 
@@ -53,43 +54,6 @@ switch ($_REQUEST["a"]) {
 
     break;
 
-    case "entitysuggestionGet":
-
-        $auth = auth($_SESSION["userdata"]["id"], "entitysuggestion", "get");
-
-        if ($auth["meta"]["requestStatus"] != "success") {
-
-            //TODO: response
-            //$alertText = $auth["errors"][0]["detail"];
-            //include_once (__DIR__."/../../../login/page.php");
-
-        } else {
-            $return["success"] = "true";
-            $return["text"] = "Get entity suggestion";
-            require_once(__DIR__ . "/../modules/utilities/functions.entities.php");
-            $return["return"] = getEntitySuggestion($_REQUEST["id"]);
-
-        }
-
-    break;
-    case "entitysuggestionGetTable":
-
-        $auth = auth($_SESSION["userdata"]["id"], "entitysuggestion", "entitysuggestionGetTable");
-
-        if ($auth["meta"]["requestStatus"] != "success") {
-
-            $alertText = $auth["errors"][0]["detail"];
-            include_once (__DIR__."/../../../login/page.php");
-
-        } else {
-
-            require_once(__DIR__ . "/../modules/utilities/functions.entities.php");
-            echo json_encode(getEntitySuggestionTable("all", $_REQUEST["limit"], $_REQUEST["offset"], $_REQUEST["search"], $_REQUEST["sort"], $_REQUEST["order"], true), JSON_PRETTY_PRINT);
-            return;
-        }
-
-    break;
-
     case "entityAdd":
 
         $auth = auth($_SESSION["userdata"]["id"], "entity", "add");
@@ -107,11 +71,20 @@ switch ($_REQUEST["a"]) {
                     require_once(__DIR__."/../api/v1/modules/organisation.php");
                     $return = organisationAdd($_REQUEST);
 
-                    //TODO Transfer $return["meta"]["requestStatus"] = success/error to $return["success"] = true/false - also in frontend
-                    //$return["success"] = "true";
                     $return["text"] = "Entity added";
-                    require_once (__DIR__."/../modules/utilities/functions.entities.php");
-                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external");
+                    $apiResponse = apiV1([
+                        "action" => "getItemsFromDB",
+                        "itemType" => "entitySuggestion",
+                        "id" => $_REQUEST["id"],
+                        "idType" => "external"
+                    ]);
+                    if (isset($apiResponse["data"]) && isset($apiResponse["meta"]["requestStatus"]) && $apiResponse["meta"]["requestStatus"] == "success") {
+                        $return["EntitysuggestionItem"] = $apiResponse["data"];
+                    } else {
+                        $return["EntitysuggestionItem"] = null;
+                        error_log("API call to get entitySuggestion (external ID: ".$_REQUEST["id"].") failed for organisation. Response: ".json_encode($apiResponse));
+                    }
+
                     if ($return["EntitysuggestionItem"]) {
                         $return["sessions"] = array();
                         foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
@@ -125,11 +98,20 @@ switch ($_REQUEST["a"]) {
                     require_once(__DIR__."/../api/v1/modules/person.php");
                     $return = personAdd($_REQUEST);
 
-                    //TODO Transfer $return["meta"]["requestStatus"] = success/error to $return["success"] = true/false - also in frontend
-                    //$return["success"] = "true";
                     $return["text"] = "Entity added";
-                    require_once (__DIR__."/../modules/utilities/functions.entities.php");
-                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external");
+                    $apiResponse = apiV1([
+                        "action" => "getItemsFromDB",
+                        "itemType" => "entitySuggestion",
+                        "id" => $_REQUEST["id"],
+                        "idType" => "external"
+                    ]);
+                    if (isset($apiResponse["data"]) && isset($apiResponse["meta"]["requestStatus"]) && $apiResponse["meta"]["requestStatus"] == "success") {
+                        $return["EntitysuggestionItem"] = $apiResponse["data"];
+                    } else {
+                        $return["EntitysuggestionItem"] = null;
+                        error_log("API call to get entitySuggestion (external ID: ".$_REQUEST["id"].") failed for person. Response: ".json_encode($apiResponse));
+                    }
+
                     if ($return["EntitysuggestionItem"]) {
                         $return["sessions"] = array();
                         foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
@@ -143,11 +125,20 @@ switch ($_REQUEST["a"]) {
                     require_once(__DIR__."/../api/v1/modules/document.php");
                     $return = documentAdd($_REQUEST);
 
-                    //TODO Transfer $return["meta"]["requestStatus"] = success/error to $return["success"] = true/false - also in frontend
-                    //$return["success"] = "true";
                     $return["text"] = "Entity added";
-                    require_once (__DIR__."/../modules/utilities/functions.entities.php");
-                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external"); //TODO: MISC LOC or anything else
+                    $apiResponse = apiV1([
+                        "action" => "getItemsFromDB",
+                        "itemType" => "entitySuggestion",
+                        "id" => $_REQUEST["id"],
+                        "idType" => "external"
+                    ]);
+                    if (isset($apiResponse["data"]) && isset($apiResponse["meta"]["requestStatus"]) && $apiResponse["meta"]["requestStatus"] == "success") {
+                        $return["EntitysuggestionItem"] = $apiResponse["data"];
+                    } else {
+                        $return["EntitysuggestionItem"] = null;
+                        error_log("API call to get entitySuggestion (external ID: ".$_REQUEST["id"].") failed for document. Response: ".json_encode($apiResponse));
+                    }
+                    
                     if ($return["EntitysuggestionItem"]) {
                         $return["sessions"] = array();
                         foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
@@ -161,11 +152,20 @@ switch ($_REQUEST["a"]) {
                     require_once(__DIR__."/../api/v1/modules/term.php");
                     $return = termAdd($_REQUEST);
 
-                    //TODO Transfer $return["meta"]["requestStatus"] = success/error to $return["success"] = true/false - also in frontend
-                    //$return["success"] = "true";
                     $return["text"] = "Entity added";
-                    require_once (__DIR__."/../modules/utilities/functions.entities.php");
-                    $return["EntitysuggestionItem"] = getEntitySuggestion($_REQUEST["id"],"external"); //TODO: MISC LOC or anything else
+                    $apiResponse = apiV1([
+                        "action" => "getItemsFromDB",
+                        "itemType" => "entitySuggestion",
+                        "id" => $_REQUEST["id"],
+                        "idType" => "external"
+                    ]);
+                    if (isset($apiResponse["data"]) && isset($apiResponse["meta"]["requestStatus"]) && $apiResponse["meta"]["requestStatus"] == "success") {
+                        $return["EntitysuggestionItem"] = $apiResponse["data"];
+                    } else {
+                        $return["EntitysuggestionItem"] = null;
+                        error_log("API call to get entitySuggestion (external ID: ".$_REQUEST["id"].") failed for term. Response: ".json_encode($apiResponse));
+                    }
+
                     if ($return["EntitysuggestionItem"]) {
                         $return["sessions"] = array();
                         foreach ($return["EntitysuggestionItem"]["EntitysuggestionContext"] as $item) {
