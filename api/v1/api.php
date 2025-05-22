@@ -200,7 +200,11 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             switch ($api_request["itemType"]) {
                 case "media":
                     require_once (__DIR__."/modules/media.php");
-                    $item = mediaAdd($api_request);
+                    $item = mediaAdd($api_request, $db, $dbp);
+                    return createApiResponse($item);
+                case "conflict":
+                    require_once (__DIR__."/modules/conflict.php");
+                    $item = conflictAdd($api_request, $db);
                     return createApiResponse($item);
                 default:
                     return createApiResponse(
@@ -256,8 +260,8 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
 
         case "getItemsFromDB":
             
-            // Set default values for optional parameters
-            $defaults = [
+            // Set default values for common optional parameters
+            $common_defaults = [
                 "limit" => 10,
                 "offset" => 0,
                 "sort" => false,
@@ -265,7 +269,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 "search" => false,
                 "id" => "all"
             ];
-            $api_request = array_merge($defaults, $api_request);
+            $api_request = array_merge($common_defaults, $api_request);
 
             switch ($api_request["itemType"]) {
                 case "person":
@@ -299,6 +303,18 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "user":
                     require_once (__DIR__."/modules/user.php");
                     $result = userGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"]);
+                    break;
+                case "conflict": 
+                    require_once (__DIR__."/modules/conflict.php");
+                    // Handle conflict-specific parameters
+                    $includeResolved = $api_request["includeResolved"] ?? false;
+                    $getStats = $api_request["getStats"] ?? false;
+                    $result = conflictGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], $includeResolved, $getStats
+                    );
+                    break;
+                case "entitySuggestion":
+                    require_once (__DIR__."/modules/entitySuggestion.php");
+                    $result = entitySuggestionGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"]);
                     break;
                 default:
                     return createApiResponse(

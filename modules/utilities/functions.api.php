@@ -390,4 +390,52 @@ function createApiResponse($moduleResponse) {
     
     $result = array_replace_recursive($baseResponse, $moduleResponse);
     return $result;
-} 
+}
+
+/**
+ * Helper function to report a conflict via the internal API.
+ *
+ * @param string $entity
+ * @param string $subject
+ * @param string $identifier
+ * @param string $rival
+ * @param string $description
+ * @param object|false $dbPlatform 
+ * @return array The API response from apiV1 or an error structure.
+ */
+function reportConflict($entity, $subject, $identifier = "", $rival = "", $description = "", $dbPlatform = false /* Kept for signature compatibility */) {
+    global $config; // apiV1 might use it, or config within api.php scope
+
+    // Ensure the main API file is loaded if apiV1 is not universally available.
+    // This might already be handled by the calling script's autoloader or includes.
+    // If apiV1 is in the global scope already, this require might not be strictly necessary
+    // but it's safer to ensure it's available.
+    require_once (__DIR__."/../../api/v1/api.php"); 
+
+    $request_params = [
+        'action' => 'addItem',
+        'itemType' => 'conflict',
+        'ConflictEntity' => $entity,
+        'ConflictSubject' => $subject,
+        'ConflictIdentifier' => $identifier,
+        'ConflictRival' => $rival,
+        'ConflictDescription' => $description
+    ];
+
+    try {
+        $response = apiV1($request_params, $dbPlatform);
+        return $response;
+    } catch (Exception $e) {
+        // Fallback error reporting if calling apiV1 itself throws an exception
+        error_log("Exception in reportConflict (API helper) when calling apiV1: " . $e->getMessage());
+        return createApiErrorResponse(
+            500, 
+            'HELPER_API_CALL_FAILED', 
+            'messageErrorApiCallFailedTitle',
+            'messageErrorApiCallFailedDetail',
+            ['details' => $e->getMessage()]
+        );
+    }
+}
+
+?> 

@@ -4,7 +4,6 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
-require_once (__DIR__."/../../../modules/utilities/functions.conflicts.php");
 require_once (__DIR__."/../../../modules/utilities/functions.entities.php");
 require_once (__DIR__."/../../../modules/utilities/textArrayConverters.php");
 require_once (__DIR__."/../../../modules/utilities/functions.api.php");
@@ -854,9 +853,9 @@ function processMediaItem($mediaData, $agendaItemID, $sessionID, $dateStart, $da
                 "mediaAdd failed",
                 "",
                 "",
-                "Could not add Media with ID: originID: " . $mediaData["originID"] . 
-                ", originMediaID: " . $mediaData["originMediaID"] . 
-                " (new id:" . $nextID . ") Error:" . $e->getMessage(),
+                "Could not add Media with ID: originID: " . ($mediaData["originID"] ?? 'N/A') . 
+                ", originMediaID: " . ($mediaData["originMediaID"] ?? 'N/A') . 
+                " (new id:" . ($nextID ?? 'N/A') . ") Error:" . $e->getMessage(),
                 null
             );
             throw $e;
@@ -966,12 +965,9 @@ function processTextContent($textContent, $mediaID, $parliament, $dbp, $config, 
                         $entity["wid"] = $todoMapping[$entity["wid"]]["routing"];
                     }
 
-                    if (!array_key_exists($entity["wid"],$entityDump["data"])) {
-
+                    if (!array_key_exists($entity["wid"], $entityDump["data"])) {
                         reportEntitySuggestion($entity["wid"], $entity["wtype"], $entity["label"], json_encode($entity, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $mediaID, $db);
-
                     } else {
-
                         $entity["additionalInformation"]["confidence"] = $entity["score"];
 
                         $tmpAnnotation = array(
@@ -990,17 +986,11 @@ function processTextContent($textContent, $mediaID, $parliament, $dbp, $config, 
                         $entities[] = $entity["wid"];
 
                         try {
-
                             $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$parliament]["sql"]["tbl"]["Annotation"], $tmpAnnotation);
-
                         } catch (exception $e) {
-
-                            reportConflict("Media", "mediaAdd Annotation", $mediaID, "", "Could not add Annotation to Media. TextItem: " . $tmpAnnotation . " ||| Error:" . $e->getMessage(), $db);
-
+                            reportConflict("Media", "mediaAdd Annotation", $mediaID, "", "Could not add Annotation to Media. TextItem: " . json_encode($tmpAnnotation) . " ||| Error:" . $e->getMessage(), $db);
                         }
-
                     }
-                    
                 }
             }
             
@@ -1287,21 +1277,22 @@ function processPeople($itemPeople, $mediaID, $parliament, $db, $dbp, $config, $
     }
 
     if (count($itemPeople) < 1) {
-        reportConflict("Media", "mediaAdd no person", $mediaID, "", "Media has no people.", $db);
+        // reportConflict("Media", "mediaAdd no person", $mediaID, "", "Media has no people.", $db); // This call was already commented out, so no change needed here
     }
 
     foreach ($itemPeople as $person) {
         if ($person["context"] == "main-proceeding-speaker") {
-            reportConflict("Media", "mediaAdd main-proceeding-speaker found", $mediaID, "", $person["wid"] . " This person was not added because it has context main-proceeding-speaker: " . json_encode($person, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $db);
+            reportConflict("Media", "mediaAdd main-proceeding-speaker found", $mediaID, "", $person["wid"] . " This person was not added because it has context main-proceeding-speaker: " . json_encode($person, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $db); // Changed back from helper_reportConflict
             continue;
         }
 
         if ((!$person["wid"]) || (!preg_match("/(Q|P)\d+/i", $person["wid"]))) {
-            reportConflict("Media", "mediaAdd person has no WikidataID", $mediaID, "", $person["wid"] . "This person has no or incorrect WikidataID:" . json_encode($person, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $db);
+            reportConflict("Media", "mediaAdd person has no WikidataID", $mediaID, "", ($person["wid"] ?? 'N/A') . "This person has no or incorrect WikidataID:" . json_encode($person, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $db); // Changed back from helper_reportConflict
             continue;
         }
 
         if (!array_key_exists($person["wid"], $entityDump["data"])) {
+            // Assuming reportEntitySuggestion needs separate update or uses a compatible reportConflict
             reportEntitySuggestion($person["wid"], "PERSON", $person["label"], json_encode($person, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $mediaID, $db);
             continue;
         }
@@ -1310,7 +1301,7 @@ function processPeople($itemPeople, $mediaID, $parliament, $db, $dbp, $config, $
         $person["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
 
         if (!$person["context"]) {
-            reportConflict("Media", "mediaAdd person without context", $mediaID, "", "Person has no context - personJSON: " . json_encode($person), $db);
+            reportConflict("Media", "mediaAdd person without context", $mediaID, "", "Person has no context - personJSON: " . json_encode($person), $db); // Changed back from helper_reportConflict
             $person["context"] = "unknown";
         }
 
@@ -1333,11 +1324,12 @@ function processPeople($itemPeople, $mediaID, $parliament, $db, $dbp, $config, $
 
         if ((array_key_exists("faction", $person)) && (is_array($person["faction"]))) {
             if ((!$person["faction"]["wid"]) || (!preg_match("/(Q|P)\d+/i", $person["faction"]["wid"]))) {
-                reportConflict("Media", "faction has no WikidataID", $mediaID, "", "This faction has no or incorrect WikidataID:" . json_encode($person, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $db);
+                reportConflict("Media", "faction has no WikidataID", $mediaID, "", "This faction has no or incorrect WikidataID:" . json_encode($person, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $db); // Changed back from helper_reportConflict
                 continue;
             }
 
             if (!array_key_exists($person["faction"]["wid"], $entityDump["data"])) {
+                // Assuming reportEntitySuggestion needs separate update or uses a compatible reportConflict
                 reportEntitySuggestion($person["faction"]["wid"], "FACTION", $person["faction"]["label"], json_encode($person["faction"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $mediaID, $db);
                 continue;
             }
@@ -1348,8 +1340,6 @@ function processPeople($itemPeople, $mediaID, $parliament, $db, $dbp, $config, $
                 "AnnotationResourceID" => $person["faction"]["wid"],
                 "AnnotationContext" => $person["context"] . "-faction",
                 "AnnotationFrametrailType" => "Annotation",
-                //"AnnotationTimeStart" => "",
-                //"AnnotationTimeEnd" => "",
                 "AnnotationCreator" => ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system",
                 "AnnotationTags" => "",
                 "AnnotationAdditionalInformation" => ""

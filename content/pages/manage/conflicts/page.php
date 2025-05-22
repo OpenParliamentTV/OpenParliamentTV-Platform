@@ -11,7 +11,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
 } else {
 
     include_once(__DIR__ . '/../../../header.php');
-
+    // Ensure API functions and the apiV1 dispatcher are available for programmatic call
+    require_once(__DIR__ . '/../../../../modules/utilities/functions.api.php');
+    require_once(__DIR__ . '/../../../../api/v1/api.php');
 
 ?>
 <main class="container-fluid subpage">
@@ -36,30 +38,32 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						<tbody>
 
 					<?php
-                    include_once(__DIR__."/../../../../modules/utilities/functions.conflicts.php");
+                    // Call the API to get conflict statistics
+                    $statsResponse = apiV1([
+                        'action' => 'getItemsFromDB',
+                        'itemType' => 'conflict',
+                        'getStats' => true,
+                        'includeResolved' => false // Or true if you want stats for all conflicts
+                    ]);
 
-					//TODO Auth
-
-                    if (!$db) {
-                        $db = new SafeMySQL(array(
-                            'host'	=> $config["platform"]["sql"]["access"]["host"],
-                            'user'	=> $config["platform"]["sql"]["access"]["user"],
-                            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-                            'db'	=> $config["platform"]["sql"]["db"]
-                        ));
-                    }
-
-                    $conflictsStats = $db->getAll("SELECT `ConflictSubject`, COUNT(`ConflictID`) as ConflictCount FROM ?n WHERE 1 GROUP BY `ConflictSubject`", $config["platform"]["sql"]["tbl"]["Conflict"]);
                     $conflictsStatsOverall = 0;
-					foreach ($conflictsStats as $conflictStat) {
-                        $conflictsStatsOverall += $conflictStat["ConflictCount"];
-						echo "
-							<tr>
-									<td><a href='?search[subject][]=".$conflictStat["ConflictSubject"]."'>".$conflictStat["ConflictSubject"]."</a></td>
-									<td>".$conflictStat["ConflictCount"]."</td>
-							</tr>";
-
-					}
+                    if (isset($statsResponse['meta']['requestStatus']) && $statsResponse['meta']['requestStatus'] == 'success' && isset($statsResponse['data'])) {
+                        foreach ($statsResponse['data'] as $conflictStat) {
+                            $conflictsStatsOverall += $conflictStat["ConflictCount"];
+                            echo "
+                            <tr>
+                                <td><a href='?search[subject][]=".htmlspecialchars($conflictStat["ConflictSubject"], ENT_QUOTES, 'UTF-8')."'>".htmlspecialchars($conflictStat["ConflictSubject"], ENT_QUOTES, 'UTF-8')."</a></td>
+                                <td>".htmlspecialchars($conflictStat["ConflictCount"], ENT_QUOTES, 'UTF-8')."</td>
+                            </tr>";
+                        }
+                    } else {
+                        // Handle error or display a message if stats could not be fetched
+                        echo "<tr><td colspan='2'>Could not load conflict statistics.</td></tr>";
+                        if (isset($statsResponse['errors'])) {
+                            // Optionally log or display more detailed error information
+                            // error_log(json_encode($statsResponse['errors']));
+                        }
+                    }
                     echo "
                     <tr>
                         <td>Total</td>
@@ -70,88 +74,45 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					</table><br><br><br>
 
                     <?php
-                    //TODO Auth
-
-                    $pagination = "server"; // "client" or anything else for server/ajax
-
-                    if ($pagination == "client") {
-
-                    //$conflicts = getConflicts("all"); // If we want to do pagination at client side
-                    $conflicts = getConflicts("all",10,0); // If we want to do pagination at server side
-                    //print_r($conflicts);
-                    $tableConflictsBody = "";
-                    foreach ($conflicts as $k=>$conflict) {
-
-                        $tableConflictsBody .= "
-							<tr data-conflictid='".$conflict["ConflictID"]."' data-conflictidentifier='".$conflict["ConflictIdentifier"]."' data-conflictrival='".$conflict["ConflictRival"]."' class='clickable' style='cursor:pointer;'>
-									<td>".$conflict["ConflictID"]."</td>
-									<td>".$conflict["ConflictEntity"]."</td>
-									<td>".$conflict["ConflictIdentifier"]."</td>
-									<td>".$conflict["ConflictRival"]."</td>
-									<td>".$conflict["ConflictSubject"]."</td>
-									<td>".$conflict["ConflictDescription"]."</td>
-									<td>".$conflict["ConflictDate"]."</td>
-									<td>".$conflict["ConflictResolved"]."</td>
-							</tr>";
-
-                    }
-
+                    // Server-side pagination is now the only option for the main table
                     ?>
-
-
-                    <table class="table table-striped"
-						   id="conflictsTable"
-						   data-toggle="table"
-						   data-search="true"
-						   data-sortable="true"
-						   data-pagination="true"
-						   data-show-extended-pagination="true"
-						   data-show-columns="true">
-
-						<thead>
-						<tr>
-							<th scope="col" data-visible="false">ID</th>
-							<th scope="col">Entity</th>
-							<th scope="col">Identifier</th>
-							<th scope="col">Rival</th>
-							<th scope="col">Subject</th>
-							<th scope="col" data-visible="false">Description</th>
-							<th scope="col">Date</th>
-							<th scope="col">Resolved</th>
-						</tr>
-						</thead>
-						<tbody>
-
-				        <?=$tableConflictsBody?>
-
-
-					</tbody>
-				</table>
-				<script type="application/javascript">
-					$("#conflictsTable").on("click", "tr.clickable", function() {
-						window.location = window.location+"/"+$(this).data("conflictid");
-					});
-				</script>
-                <?php
-
-                } else {
-
-                ?>
                     <table class="table table-striped" id="conflictsTable"></table>
                     <script type="application/javascript">
                         $(function() {
+                            let apiUrl = config["dir"]["root"] + "/api/v1/?action=getItemsFromDB&itemType=conflict";
+                            const searchParams = new URLSearchParams(window.location.search);
+                            if (searchParams.has('search[subject][]')) {
+                                let subjectSearch = searchParams.getAll('search[subject][]');
+                                if(subjectSearch.length > 0) {
+                                    apiUrl += "&search=" + encodeURIComponent(subjectSearch[0]); // Changed from searchString to search to match API param
+                                }
+                            }
+
                             $('#conflictsTable').bootstrapTable({
-                                url: config["dir"]["root"] + "/server/ajaxServer.php?a=conflictsTable<?=(($_REQUEST["search"]["subject"]) ? "&search=".http_build_query($_REQUEST["search"]) : "")?>",
+                                url: apiUrl,
                                 pagination: true,
                                 sidePagination: "server",
+                                dataField: "data", 
+                                totalField: "total", 
+                                queryParams: function (params) {
+                                    var apiParams = {};
+                                    apiParams.limit = params.limit;
+                                    apiParams.offset = params.offset;
+                                    if (params.search) {
+                                        apiParams.search = params.search; // Ensure this matches the API's expected search parameter name
+                                    }
+                                    if (params.sort) {
+                                        apiParams.sort = params.sort;
+                                        apiParams.order = params.order;
+                                    }
+                                    return apiParams;
+                                },
                                 columns: [
                                     {
                                         field: "ConflictID",
                                         title: "ID",
                                         formatter: function(value, row) {
-
                                             return '<div data-id="'+row["ConflictID"]+'" class="conflictsDetailToggle">'+value+' <i class="icon-right-open-big"> </i></div>';
-
                                         }
                                     },
                                     {
@@ -174,9 +135,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         field: "ConflictDescription",
                                         title: "Description",
                                         formatter: function(value, row) {
-
                                             return '<div id="conflicts-detail-'+row["ConflictID"]+'" class="conflictsDetail">'+value+'</div>';
-
                                         }
                                     },
                                     {
@@ -207,13 +166,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         }
                     </style>
 
-
-                <?php
-                }
-
-
-                ?>
-
+				</div>
 			</div>
 		</div>
 	</div>
