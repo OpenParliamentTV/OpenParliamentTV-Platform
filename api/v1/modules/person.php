@@ -416,95 +416,88 @@ function personSearch($parameter, $db = false) {
     }
 }
 
-function personAdd($item, $db = false) {
+function personAdd($api_request, $db = false, $dbp = false /* dbp is not used here directly, but might be by augment */) {
     global $config;
 
-    // Validate required fields
-    $requiredFields = [
-        'type' => 'Type',
-        'label' => 'Label',
-        'abstract' => 'Abstract'
-    ];
-
-    foreach ($requiredFields as $field => $label) {
-        $validation = validateApiRequired($item[$field], $field);
-        if ($validation !== true) {
-            return $validation;
-        }
+    // Parameter validation
+    if (empty($api_request["id"])) {
+        return createApiErrorMissingParameter("id");
     }
-
-    // Additional validation
-    if (strlen($item["label"]) < 2) {
-        return createApiErrorInvalidLength('label', 2);
+    if (!validateWikidataID($api_request["id"])) {
+        return createApiErrorInvalidID("Wikidata");
     }
-
-    if (strlen($item["abstract"]) < 5) {
-        return createApiErrorInvalidLength('abstract', 5);
+    if (empty($api_request["type"])) {
+        return createApiErrorMissingParameter("type");
+    }
+    if (!in_array($api_request["type"], array("memberOfParliament", "person"))) {
+        return createApiErrorInvalidParameter("type", "messageErrorInvalidValueDetail", ["value" => $api_request["type"], "expected" => "memberOfParliament or person"]);
+    }
+    if (empty($api_request["label"])) {
+        return createApiErrorMissingParameter("label");
     }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return $db; // Return error from getApiDatabaseConnection
     }
 
+    // Check for duplicates
+    $existingPerson = $db->getOne("SELECT PersonID FROM ?n WHERE PersonID = ?s", $config["platform"]["sql"]["tbl"]["Person"], $api_request["id"]);
+    if ($existingPerson) {
+        return createApiErrorDuplicate("Person", "id");
+    }
+    
+    $labelAlternative = !empty($api_request["labelAlternative"]) && is_array($api_request["labelAlternative"]) ? json_encode($api_request["labelAlternative"]) : json_encode([]);
+    $socialMediaIDs = !empty($api_request["socialMediaIDs"]) && is_array($api_request["socialMediaIDs"]) ? json_encode($api_request["socialMediaIDs"]) : json_encode([]);
+    $additionalInformation = !empty($api_request["additionalinformation"]) ? json_encode(json_decode($api_request["additionalinformation"],true)) : json_encode([]);
+
+    $birthDateFormatted = null;
+    if (!empty($api_request["birthdate"])) {
+        $date = new DateTime($api_request["birthdate"]);
+        $birthDateFormatted = $date->format('Y-m-d');
+    }
+
+    $sql = "INSERT INTO ?n SET PersonID=?s, PersonType=?s, PersonLabel=?s, PersonLabelAlternative=?s, PersonFirstName=?s, PersonLastName=?s, PersonDegree=?s, PersonBirthDate=?s, PersonGender=?s, PersonAbstract=?s, PersonThumbnailURI=?s, PersonThumbnailCreator=?s, PersonThumbnailLicense=?s, PersonEmbedURI=?s, PersonWebsiteURI=?s, PersonOriginID=?s, PersonPartyOrganisationID=?s, PersonFactionOrganisationID=?s, PersonSocialMediaIDs=?s, PersonAdditionalInformation=?s, PersonLastChanged=NOW()";
+    
     try {
-        $itemTmp = $db->getRow("SELECT PersonID FROM ?n WHERE PersonID=?s",
+        $db->query($sql,
             $config["platform"]["sql"]["tbl"]["Person"],
-            $item["id"]
+            $api_request["id"],
+            $api_request["type"],
+            $api_request["label"],
+            $labelAlternative,
+            $api_request["firstName"] ?? null,
+            $api_request["lastName"] ?? null,
+            $api_request["degree"] ?? null,
+            $birthDateFormatted,
+            $api_request["gender"] ?? null,
+            $api_request["abstract"] ?? null,
+            $api_request["thumbnailuri"] ?? null,
+            $api_request["thumbnailcreator"] ?? null,
+            $api_request["thumbnaillicense"] ?? null,
+            $api_request["embeduri"] ?? null,
+            $api_request["websiteuri"] ?? null,
+            $api_request["originid"] ?? null,
+            $api_request["party"] ?? null,
+            $api_request["faction"] ?? null,
+            $socialMediaIDs,
+            $additionalInformation
         );
 
-        if ($itemTmp) {
-            return createApiErrorDuplicate('person', 'ID');
+        $personID = $api_request["id"]; // ID is the wikidata ID provided
+        $personData = personGetByID($personID, $db); // Fetch the newly created person data
+
+        if (isset($personData["meta"]["requestStatus"]) && $personData["meta"]["requestStatus"] == "success") {
+            // Augment with entity suggestion details if applicable
+            $finalResponse = augmentResponseWithEntitySuggestionDetails($personData, $api_request, $db);
+            return $finalResponse;
+        } else {
+            // personGetByID failed, or returned an error structure
+            return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Person"]);
         }
 
-        // Process social media and alternative labels
-        $socialMedia = [];
-        if ($item["socialMediaIDsLabel"]) {
-            foreach ($item["socialMediaIDsLabel"] as $k=>$v) {
-                if ($v && $item["socialMediaIDsValue"][$k]) {
-                    $socialMedia[] = ["label" => $v, "id" => $item["socialMediaIDsValue"][$k]];
-                }
-            }
-        }
-
-        $labelAlternative = [];
-        if (is_array($item["labelAlternative"])) {
-            $labelAlternative = array_filter($item["labelAlternative"]);
-        }
-
-        $tmpNewPerson = array(
-            "PersonID" => $item["id"],
-            "PersonType" => $item["type"],
-            "PersonLabel" => $item["label"],
-            "PersonLabelAlternative" => (is_array($labelAlternative) ? 
-                json_encode($labelAlternative, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : 
-                "[".$item["labelAlternative"]."]"),
-            "PersonFirstName" => $item["firstname"],
-            "PersonLastName" => $item["lastname"],
-            "PersonDegree" => $item["degree"],
-            "PersonBirthDate" => date('Y-m-d', strtotime($item["birthdate"])),
-            "PersonGender" => $item["gender"],
-            "PersonAbstract" => $item["abstract"],
-            "PersonThumbnailURI" => $item["thumbnailuri"],
-            "PersonThumbnailCreator" => $item["thumbnailcreator"],
-            "PersonThumbnailLicense" => $item["thumbnaillicense"],
-            "PersonEmbedURI" => $item["embeduri"],
-            "PersonWebsiteURI" => ($item["websiteuri"] ? $item["websiteuri"] : ""),
-            "PersonOriginID" => $item["originid"],
-            "PersonPartyOrganisationID" => $item["party"],
-            "PersonFactionOrganisationID" => $item["faction"],
-            "PersonSocialMediaIDs" => json_encode($socialMedia, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-            "PersonAdditionalInformation" => $item["additionalinformation"]
-        );
-
-        $db->query("INSERT INTO ?n SET ?u",
-            $config["platform"]["sql"]["tbl"]["Person"],
-            $tmpNewPerson
-        );
-
-        return createApiSuccessResponse(null, ["itemID" => $db->insertId()]);
-
-    } catch (exception $e) {
+    } catch (Exception $e) {
+        error_log("Error in personAdd: " . $e->getMessage());
         return createApiErrorDatabaseError($e->getMessage());
     }
 }

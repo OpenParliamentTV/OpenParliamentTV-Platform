@@ -41,11 +41,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						<form id="entityAddForm" method="post">
 							<div class="row">
 								<div class="col-12 col-lg-4">
-									<input name="a" value="entityAdd" type="hidden">
-									<input name="entitysuggestionid" value="" type="hidden">
+									<input name="action" value="addItem" type="hidden">
+									<input name="sourceEntitySuggestionExternalID" value="" type="hidden">
 									<div class="form-group">
-										<label for="entityType">Entity Type</label>
-										<select class="form-control" name="entityType">
+										<label for="itemType">Entity Type</label>
+										<select class="form-control" name="itemType">
 											<option value="" disabled selected>Choose Entity Type ..</option>
 											<option value="person">Person</option>
 											<option value="organisation">Organisation</option>
@@ -264,11 +264,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		// Fill in entitySuggestionID in case we got it in the url
 		let queryEntitySuggestionID = getQueryVariable('entitySuggestionID');
 		if (queryEntitySuggestionID) {
-			$('input[name="entitysuggestionid"]').val(queryEntitySuggestionID);
+			$('input[name="sourceEntitySuggestionExternalID"]').val(queryEntitySuggestionID);
 		}
 
 		$('#entityAddForm').ajaxForm({
-			url: config.dir.root +"/server/ajaxServer.php",
+			url: config.dir.root +"/api/v1/",
 			dataType: "json",
 			success: function (ret) {
 
@@ -289,13 +289,13 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					$(".contentContainer").not("#entityAddSuccess").slideUp();
 					$("#entityAddSuccess").slideDown();
 
-					if ("EntitysuggestionItem" in ret) {
-						$("#reimportSessions").data("entitysuggestionid", ret["EntitysuggestionItem"]["EntitysuggestionItemID"]);
-						if (("sessions" in ret) && (Object.keys(ret["sessions"]).length > 0)) {
-							for (let parliament in ret["sessions"]) {
+					if (ret.meta && "EntitysuggestionItem" in ret.meta) {
+						$("#reimportSessions").data("entitysuggestionid", ret.meta.EntitysuggestionItem["EntitysuggestionItemID"]);
+						if (ret.meta && "affectedSessions" in ret.meta && (Object.keys(ret.meta.affectedSessions).length > 0)) {
+							for (let parliament in ret.meta.affectedSessions) {
 								let sessioncontent = "";
-								for (let session in ret["sessions"][parliament]) {
-									sessioncontent += "<div class='sessionFilesDiv'>" + session + " | File exists: " + ret["sessions"][parliament][session]["fileExists"] + "<input type='hidden' name='files[" + parliament + "][]' class='reimportfile' value='" + session + "'>";
+								for (let session in ret.meta.affectedSessions[parliament]) {
+									sessioncontent += "<div class='sessionFilesDiv'>" + session + " | File exists: " + ret.meta.affectedSessions[parliament][session]["fileExists"] + "<input type='hidden' name='files[" + parliament + "][]' class='reimportfile' value='" + session + "'>";
 								}
 								$("#affectedSessions").append("<div class='parlamentDiv><h4>Parlament " + parliament + "</h4>" + sessioncontent + "</div>");
 							}
@@ -346,7 +346,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			$(this).parent().remove();
 		});
 
-		$("body").on("change", "select[name='entityType']", function() {
+		$("body").on("change", "select[name='itemType']", function() {
 			let tempItem = "";
 			switch ($(this).val()) {
 				case "organisation":
@@ -377,7 +377,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			
 			resetForm();
 
-			let entityType = $("select[name='entityType']").val();
+			let entityType = $("select[name='itemType']").val();
 			let subType = $("select[name='type']:not(:disabled)").val();
 
 			let serviceType = entityType;
@@ -447,7 +447,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 	function resetForm() {
 		$('button.socialMediaIDsRemove, button.labelAlternativeRemove').parent().remove();
-		$('input[type="text"]:not([name="id"]), textarea, select:not([name="entityType"]):not([name="type"])').val('');
+		$('input[type="text"]:not([name="id"]), textarea, select:not([name="itemType"]):not([name="type"])').val('');
 	}
 </script>
 

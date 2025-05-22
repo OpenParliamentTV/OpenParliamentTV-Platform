@@ -216,96 +216,78 @@ function documentSearch($parameter, $db = false) {
 }
 
 
-function documentAdd($item, $db = false) {
+function documentAdd($api_request, $db = false, $dbp = false /* dbp not used */) {
     global $config;
 
-    // Validate required fields
-    $requiredFields = [
-        'type' => 'Type',
-        'label' => 'Label',
-        'abstract' => 'Abstract',
-        'sourceuri' => 'Source URI'
-    ];
-
-    foreach ($requiredFields as $field => $label) {
-        $validation = validateApiRequired($item[$field], $field);
-        if ($validation !== true) {
-            return $validation;
-        }
+    // Parameter validation
+    if (empty($api_request["id"])) {
+        // DocumentID is auto-increment, but we need a wikidata ID for entity linking if provided
+        // However, the main ID for documents in the DB is DocumentID (auto-increment)
+        // If sourceEntitySuggestionExternalID is present, it implies a wikidata ID was the source
+        // For now, we will not enforce 'id' (meaning wikidata ID) for documents as it's optional in the table
     }
-
-    // Additional validation
-    if (strlen($item["label"]) < 3) {
-        return createApiErrorInvalidLength("label", 3);
+    if (!empty($api_request["id"]) && !validateWikidataID($api_request["id"])) {
+        return createApiErrorInvalidID("Wikidata (optional)");
     }
-
-    if (strlen($item["abstract"]) < 5) {
-        return createApiErrorInvalidLength("abstract", 5);
+    if (empty($api_request["type"])) {
+        return createApiErrorMissingParameter("type");
     }
-
-    if (strlen($item["sourceuri"]) < 5) {
-        return createApiErrorInvalidLength("sourceuri", 5);
+    // Add specific validation for document types if necessary
+    if (empty($api_request["label"])) {
+        return createApiErrorMissingParameter("label");
+    }
+    if (empty($api_request["sourceuri"])) {
+        return createApiErrorMissingParameter("sourceuri");
     }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return $db; // Return error from getApiDatabaseConnection
     }
 
-    // Check for existing document
-    $conditions = ["DocumentSourceURI=?s"];
-    $params = [$item["sourceuri"]];
-    
-    if (isset($item["id"])) {
-        $conditions[] = "DocumentWikidataID=?s";
-        $params[] = $item["id"];
-    }
+    // Unlike person/org, DocumentID is auto-increment. WikidataID is optional.
+    // We don't check for duplicates based on wikidataID for documents in the same way.
+    // Duplicates might be based on label or sourceuri, but that logic is not present here yet.
 
-    $itemTmp = $db->getRow(
-        "SELECT DocumentID FROM ?n WHERE " . implode(" OR ", $conditions),
-        array_merge([$config["platform"]["sql"]["tbl"]["Document"]], $params)
-    );
+    $labelAlternative = !empty($api_request["labelAlternative"]) && is_array($api_request["labelAlternative"]) ? json_encode($api_request["labelAlternative"]) : json_encode([]);
+    $additionalInformation = !empty($api_request["additionalinformation"]) ? json_encode(json_decode($api_request["additionalinformation"],true)) : json_encode([]);
 
-    if ($itemTmp) {
-        return createApiErrorResponse(409, 1, "messageErrorItemExists", "messageErrorItemExists", ["item" => "Document"]);
-    }
+    $sql = "INSERT INTO ?n SET DocumentWikidataID=?s, DocumentType=?s, DocumentLabel=?s, DocumentLabelAlternative=?s, DocumentAbstract=?s, DocumentThumbnailURI=?s, DocumentThumbnailCreator=?s, DocumentThumbnailLicense=?s, DocumentSourceURI=?s, DocumentEmbedURI=?s, DocumentAdditionalInformation=?s, DocumentLastChanged=NOW()";
 
     try {
-        // Process alternative labels
-        $labelAlternative = [];
-        if (is_array($item["labelAlternative"])) {
-            foreach ($item["labelAlternative"] as $v) {
-                if ($v) {
-                    $labelAlternative[] = $v;
-                }
-            }
-        }
-
-        // Insert document
-        $db->query("INSERT INTO ?n SET ?u",
+        $db->query($sql,
             $config["platform"]["sql"]["tbl"]["Document"],
-            array(
-                "DocumentType" => $item["type"],
-                "DocumentWikidataID" => $item["id"],
-                "DocumentLabel" => $item["label"],
-                "DocumentLabelAlternative" => (is_array($labelAlternative) ? 
-                    json_encode($labelAlternative, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : 
-                    "[".$item["labelAlternative"]."]"),
-                "DocumentAbstract" => $item["abstract"],
-                "DocumentThumbnailURI" => $item["thumbnailuri"],
-                "DocumentThumbnailCreator" => $item["thumbnailcreator"],
-                "DocumentThumbnailLicense" => $item["thumbnaillicense"],
-                "DocumentSourceURI" => $item["sourceuri"],
-                "DocumentEmbedURI" => $item["embeduri"],
-                "DocumentAdditionalInformation" => (is_array($item["additionalinformation"]) ? 
-                    json_encode($item["additionalinformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : 
-                    $item["additionalinformation"])
-            )
+            $api_request["id"] ?? null, // wikidataID, can be null
+            $api_request["type"],
+            $api_request["label"],
+            $labelAlternative,
+            $api_request["abstract"] ?? null,
+            $api_request["thumbnailuri"] ?? null,
+            $api_request["thumbnailcreator"] ?? null,
+            $api_request["thumbnaillicense"] ?? null,
+            $api_request["sourceuri"],
+            $api_request["embeduri"] ?? null,
+            $additionalInformation
         );
 
-        return createApiSuccessResponse(null, ["itemID" => $db->insertId()]);
+        $documentID = $db->insertId(); // Get the auto-incremented DocumentID
+        if (!$documentID) {
+            return createApiErrorDatabaseError("Failed to retrieve last insert ID for Document.");
+        }
 
-    } catch (exception $e) {
+        $documentData = documentGetByID($documentID); // Fetch newly created document by its internal ID
+
+        if (isset($documentData["meta"]["requestStatus"]) && $documentData["meta"]["requestStatus"] == "success") {
+             // Augment with entity suggestion details if applicable
+            // The platform DB connection is already $db from getApiDatabaseConnection
+            $finalResponse = augmentResponseWithEntitySuggestionDetails($documentData, $api_request, $db);
+            return $finalResponse;
+        } else {
+            return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Document"]);
+        }
+
+    } catch (Exception $e) {
+        error_log("Error in documentAdd: " . $e->getMessage());
         return createApiErrorDatabaseError($e->getMessage());
     }
 }

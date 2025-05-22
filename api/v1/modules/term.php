@@ -249,150 +249,69 @@ function termSearch($parameter, $db = false) {
 }
 
 
-function termAdd($item, $db = false) {
+function termAdd($api_request, $db = false, $dbp = false /* dbp not used here */) {
     global $config;
 
-    // Validate required fields
-    $requiredFields = ['id', 'type', 'label', 'abstract'];
-    foreach ($requiredFields as $field) {
-        if (empty($item[$field])) {
-            return createApiErrorMissingParameter($field);
-        }
+    // Parameter validation
+    if (empty($api_request["id"])) {
+        return createApiErrorMissingParameter("id");
+    }
+    if (!validateWikidataID($api_request["id"])) {
+        return createApiErrorInvalidID("Wikidata");
+    }
+    if (empty($api_request["type"])) {
+        return createApiErrorMissingParameter("type");
+    }
+    // Add specific validation for term types if necessary
+    if (empty($api_request["label"])) {
+        return createApiErrorMissingParameter("label");
     }
 
-    // Validate ID format
-    if (!preg_match("/(Q|P)\d+/i", $item["id"])) {
-        return createApiErrorInvalidID('term');
-    }
-
-    // Get database connection if not provided
-    if (!$db) {
-        $db = getApiDatabaseConnection();
-        if (!is_object($db)) {
-            return createApiErrorDatabaseConnection();
-        }
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return $db; // Return error from getApiDatabaseConnection
     }
 
     // Check if term already exists
-    try {
-        $existing = $db->getRow("SELECT TermID FROM ?n WHERE TermID = ?s",
-            $config["platform"]["sql"]["tbl"]["Term"],
-            $item["id"]
-        );
-        if ($existing) {
-            return createApiErrorDuplicate("term");
-        }
-    } catch (Exception $e) {
-        return createApiErrorDatabaseError($e->getMessage());
+    $existingTerm = $db->getOne("SELECT TermID FROM ?n WHERE TermID = ?s", $config["platform"]["sql"]["tbl"]["Term"], $api_request["id"]);
+    if ($existingTerm) {
+        return createApiErrorDuplicate("Term", "id");
     }
 
-    // Validate field lengths
-    $lengthValidations = [
-        ["field" => "label", "min" => 2, "max" => 255],
-        ["field" => "abstract", "min" => 5, "max" => 2000],
-        ["field" => "type", "min" => 2, "max" => 50]
-    ];
+    $labelAlternative = !empty($api_request["labelAlternative"]) && is_array($api_request["labelAlternative"]) ? json_encode($api_request["labelAlternative"]) : json_encode([]);
+    $additionalInformation = !empty($api_request["additionalinformation"]) ? json_encode(json_decode($api_request["additionalinformation"],true)) : json_encode([]);
 
-    foreach ($lengthValidations as $validation) {
-        $length = mb_strlen($item[$validation["field"]], "UTF-8");
-        if ($length < $validation["min"] || $length > $validation["max"]) {
-            return createApiErrorResponse(
-                422,
-                1,
-                "messageErrorInvalidLengthTitle",
-                "messageErrorInvalidLengthDetailMinMax",
-                [
-                    "field" => $validation["field"],
-                    "minLength" => $validation["min"],
-                    "maxLength" => $validation["max"]
-                ],
-                "[name='{$validation["field"]}']"
-            );
-        }
-    }
-
-    // Validate and process optional fields
-    $labelAlternative = [];
-    if (!empty($item["labelAlternative"])) {
-        if (!is_array($item["labelAlternative"])) {
-            return createApiErrorResponse(
-                422,
-                1,
-                "messageErrorInvalidFormatTitle",
-                "messageErrorInvalidFormatDetail",
-                ["field" => "labelAlternative", "expected" => "array"],
-                "[name='labelAlternative']"
-            );
-        }
-        $labelAlternative = array_filter($item["labelAlternative"], 'strlen');
-    }
-
-    $additionalInfo = [];
-    if (!empty($item["additionalInformation"])) {
-        if (!is_array($item["additionalInformation"])) {
-            return createApiErrorResponse(
-                422,
-                1,
-                "messageErrorInvalidFormatTitle",
-                "messageErrorInvalidFormatDetail",
-                ["field" => "additionalInformation", "expected" => "array"],
-                "[name='additionalInformation']"
-            );
-        }
-        $additionalInfo = $item["additionalInformation"];
-    }
-
-    // Validate URLs if provided
-    $urlFields = ['thumbnailURI', 'websiteURI', 'embedURI'];
-    foreach ($urlFields as $field) {
-        if (!empty($item[$field])) {
-            $urlValidation = filter_var($item[$field], FILTER_VALIDATE_URL);
-            if (!$urlValidation) {
-                return createApiErrorResponse(
-                    422,
-                    1,
-                    "messageErrorInvalidURLTitle",
-                    "messageErrorInvalidURLDetail",
-                    ["field" => $field],
-                    "[name='$field']"
-                );
-            }
-        }
-    }
+    $sql = "INSERT INTO ?n SET TermID=?s, TermType=?s, TermLabel=?s, TermLabelAlternative=?s, TermAbstract=?s, TermThumbnailURI=?s, TermThumbnailCreator=?s, TermThumbnailLicense=?s, TermWebsiteURI=?s, TermEmbedURI=?s, TermAdditionalInformation=?s, TermLastChanged=NOW()";
 
     try {
-        // Prepare data for insertion
-        $data = [
-            "TermID" => $item["id"],
-            "TermType" => $item["type"],
-            "TermLabel" => $item["label"],
-            "TermLabelAlternative" => json_encode($labelAlternative),
-            "TermAbstract" => $item["abstract"],
-            "TermThumbnailURI" => $item["thumbnailURI"] ?? null,
-            "TermThumbnailCreator" => $item["thumbnailCreator"] ?? null,
-            "TermThumbnailLicense" => $item["thumbnailLicense"] ?? null,
-            "TermWebsiteURI" => $item["websiteURI"] ?? null,
-            "TermEmbedURI" => $item["embedURI"] ?? null,
-            "TermAdditionalInformation" => json_encode($additionalInfo),
-            "TermLastChanged" => date("Y-m-d H:i:s")
-        ];
-
-        // Insert term
-        $result = $db->query("INSERT INTO ?n SET ?u",
+        $db->query($sql,
             $config["platform"]["sql"]["tbl"]["Term"],
-            $data
+            $api_request["id"],
+            $api_request["type"],
+            $api_request["label"],
+            $labelAlternative,
+            $api_request["abstract"] ?? null,
+            $api_request["thumbnailuri"] ?? null,
+            $api_request["thumbnailcreator"] ?? null,
+            $api_request["thumbnaillicense"] ?? null,
+            $api_request["websiteuri"] ?? null,
+            $api_request["embeduri"] ?? null,
+            $additionalInformation
         );
 
-        if (!$result) {
-            return createApiErrorResponse(500, 1, "messageErrorDatabaseGeneric", "messageErrorTermInsertFailedDetail");
+        $termID = $api_request["id"]; // TermID is the wikidata ID provided
+        $termData = termGetByID($termID); // Fetch newly created term
+
+        if (isset($termData["meta"]["requestStatus"]) && $termData["meta"]["requestStatus"] == "success") {
+            // Augment with entity suggestion details if applicable
+            $finalResponse = augmentResponseWithEntitySuggestionDetails($termData, $api_request, $db);
+            return $finalResponse;
+        } else {
+            return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Term"]);
         }
 
-        // Return success response with itemID
-        return createApiSuccessResponse(null, [
-            "itemID" => $item["id"]
-        ]);
-
     } catch (Exception $e) {
+        error_log("Error in termAdd: " . $e->getMessage());
         return createApiErrorDatabaseError($e->getMessage());
     }
 }

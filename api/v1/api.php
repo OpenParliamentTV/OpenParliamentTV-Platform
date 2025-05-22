@@ -200,16 +200,34 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             switch ($api_request["itemType"]) {
                 case "media":
                     require_once (__DIR__."/modules/media.php");
-                    $item = mediaAdd($api_request, $db, $dbp);
-                    return createApiResponse($item);
+                    $addResponse = mediaAdd($api_request, $db, $dbp);
+                    return createApiResponse($addResponse);
                 case "conflict":
                     require_once (__DIR__."/modules/conflict.php");
-                    $item = conflictAdd($api_request, $db);
-                    return createApiResponse($item);
-                case "entitySuggestion":
+                    $addResponse = conflictAdd($api_request, $db);
+                    return createApiResponse($addResponse);
+                case "entitySuggestion": 
                     require_once (__DIR__."/modules/entitySuggestion.php");
-                    $item = entitySuggestionAdd($api_request, $db);
-                    return createApiResponse($item);
+                    $addResponse = entitySuggestionAdd($api_request, $db);
+                    return createApiResponse($addResponse);
+
+                case "person":
+                    require_once (__DIR__."/modules/person.php");
+                    $addResponse = personAdd($api_request, $db, $dbp);
+                    return createApiResponse($addResponse);
+                case "organisation":
+                    require_once (__DIR__."/modules/organisation.php");
+                    $addResponse = organisationAdd($api_request, $db, $dbp);
+                    return createApiResponse($addResponse);
+                case "document":
+                    require_once (__DIR__."/modules/document.php");
+                    $addResponse = documentAdd($api_request, $db, $dbp);
+                    return createApiResponse($addResponse);
+                case "term":
+                    require_once (__DIR__."/modules/term.php");
+                    $addResponse = termAdd($api_request, $db, $dbp);
+                    return createApiResponse($addResponse);
+
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")

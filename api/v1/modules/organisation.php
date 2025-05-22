@@ -235,100 +235,72 @@ function organisationSearch($parameter, $noLimit = false) {
  * @param array $item Organisation data including ID, type, label, and other attributes
  * @return array Response with original format: ["meta"]["requestStatus"] and ["meta"]["itemID"] or ["errors"]
  */
-function organisationAdd($item) {
+function organisationAdd($api_request, $db = false, $dbp = false /* dbp is not used here directly */) {
     global $config;
 
     // Validate required fields
-    if ((!$item["id"]) || (!preg_match("/(Q|P)\d+/i", $item["id"]))) {
-        return createApiErrorResponse(
-            422,
-            1,
-            "messageErrorParameterMissingTitle",
-            "messageErrorMissingOrInvalidIDDetail",
-            ["parameter" => "id"],
-            "id"
-        );
+    if (empty($api_request["id"])) {
+        return createApiErrorMissingParameter("id");
     }
-
-    if (!$item["type"]) {
-        return createApiErrorMissingParameter('type', 'type');
+    if (!validateWikidataID($api_request["id"])) {
+        return createApiErrorInvalidID("Wikidata");
     }
-
-    if (!$item["label"]) {
-        return createApiErrorMissingParameter('label', 'label');
+    if (empty($api_request["type"])) {
+        return createApiErrorMissingParameter("type");
+    }
+    // Add more specific type validation if needed, e.g., against a list of allowed types
+    if (empty($api_request["label"])) {
+        return createApiErrorMissingParameter("label");
     }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return $db; // Return error from getApiDatabaseConnection
     }
 
     // Check if organisation already exists
-    $itemTmp = $db->getRow("SELECT OrganisationID FROM ?n WHERE OrganisationID=?s",
-        $config["platform"]["sql"]["tbl"]["Organisation"],
-        $item["id"]
-    );
-
-    if ($itemTmp) {
-        return createApiErrorDuplicate("Organisation", "error_info");
+    $existingOrganisation = $db->getOne("SELECT OrganisationID FROM ?n WHERE OrganisationID = ?s", $config["platform"]["sql"]["tbl"]["Organisation"], $api_request["id"]);
+    if ($existingOrganisation) {
+        return createApiErrorDuplicate("Organisation", "id");
     }
 
+    $labelAlternative = !empty($api_request["labelAlternative"]) && is_array($api_request["labelAlternative"]) ? json_encode($api_request["labelAlternative"]) : json_encode([]);
+    $socialMediaIDs = !empty($api_request["socialMediaIDs"]) && is_array($api_request["socialMediaIDs"]) ? json_encode($api_request["socialMediaIDs"]) : json_encode([]);
+    $additionalInformation = !empty($api_request["additionalinformation"]) ? json_encode(json_decode($api_request["additionalinformation"],true)) : json_encode([]);
+
+    $sql = "INSERT INTO ?n SET OrganisationID=?s, OrganisationType=?s, OrganisationLabel=?s, OrganisationLabelAlternative=?s, OrganisationAbstract=?s, OrganisationThumbnailURI=?s, OrganisationThumbnailCreator=?s, OrganisationThumbnailLicense=?s, OrganisationEmbedURI=?s, OrganisationWebsiteURI=?s, OrganisationSocialMediaIDs=?s, OrganisationColor=?s, OrganisationAdditionalInformation=?s, OrganisationLastChanged=NOW()";
+
     try {
-        // Process social media IDs
-        $socialMedia = array();
-        if ($item["socialMediaIDsLabel"]) {
-            foreach ($item["socialMediaIDsLabel"] as $k => $v) {
-                if ($v && $item["socialMediaIDsValue"][$k]) {
-                    $socialMedia[] = array("label" => $v, "id" => $item["socialMediaIDsValue"][$k]);
-                }
-            }
-        }
-
-        // Process alternative labels
-        $labelAlternative = array();
-        if (is_array($item["labelAlternative"])) {
-            foreach ($item["labelAlternative"] as $v) {
-                if ($v) {
-                    $labelAlternative[] = $v;
-                }
-            }
-        }
-
-        // Insert organisation
-        $db->query("INSERT INTO ?n SET ?u",
+        $db->query($sql,
             $config["platform"]["sql"]["tbl"]["Organisation"],
-            array(
-                "OrganisationID" => $item["id"],
-                "OrganisationType" => $item["type"],
-                "OrganisationLabel" => $item["label"],
-                "OrganisationLabelAlternative" => (is_array($labelAlternative) ? 
-                    json_encode($labelAlternative, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : 
-                    "[".$item["labelAlternative"]."]"),
-                "OrganisationAbstract" => $item["abstract"],
-                "OrganisationThumbnailURI" => $item["thumbnailuri"],
-                "OrganisationThumbnailCreator" => $item["thumbnailcreator"],
-                "OrganisationThumbnailLicense" => $item["thumbnaillicense"],
-                "OrganisationEmbedURI" => $item["embeduri"],
-                "OrganisationWebsiteURI" => $item["websiteuri"],
-                "OrganisationSocialMediaIDs" => json_encode($socialMedia),
-                "OrganisationColor" => $item["color"],
-                "OrganisationAdditionalInformation" => (is_array($item["additionalinformation"]) ? 
-                    json_encode($item["additionalinformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) : 
-                    $item["additionalinformation"])
-            )
+            $api_request["id"],
+            $api_request["type"],
+            $api_request["label"],
+            $labelAlternative,
+            $api_request["abstract"] ?? null,
+            $api_request["thumbnailuri"] ?? null,
+            $api_request["thumbnailcreator"] ?? null,
+            $api_request["thumbnaillicense"] ?? null,
+            $api_request["embeduri"] ?? null,
+            $api_request["websiteuri"] ?? null,
+            $socialMediaIDs,
+            $api_request["color"] ?? null,
+            $additionalInformation
         );
 
-        return createApiSuccessResponse(null, ["itemID" => $db->insertId()]);
+        $organisationID = $api_request["id"];
+        $organisationData = organisationGetByID($organisationID); // Fetch newly created organisation
 
-    } catch (exception $e) {
-        return createApiErrorResponse(
-            422,
-            2,
-            "messageErrorDatabaseGeneric",
-            "messageErrorOrganisationAddFailedDetail",
-            ["exception_message" => $e->getMessage()],
-            "error_info"
-        );
+        if (isset($organisationData["meta"]["requestStatus"]) && $organisationData["meta"]["requestStatus"] == "success") {
+            $finalResponse = augmentResponseWithEntitySuggestionDetails($organisationData, $api_request, $db);
+            return $finalResponse;
+        } else {
+            return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Organisation"]);
+        }
+
+    } catch (Exception $e) {
+        error_log("Error in organisationAdd: " . $e->getMessage());
+        return createApiErrorDatabaseError($e->getMessage());
     }
 }
 

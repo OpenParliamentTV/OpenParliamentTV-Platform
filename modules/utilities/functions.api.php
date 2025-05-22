@@ -482,4 +482,77 @@ function reportEntitySuggestion($entitysuggestionExternalID, $entitysuggestionTy
     }
 }
 
+/**
+ * Augments an API response with EntitysuggestionItem and related sessions data
+ * if a sourceEntitySuggestionExternalID is provided in the request.
+ *
+ * @param array $currentResponse The response array to augment.
+ * @param array $apiRequest The original API request parameters.
+ * @param mixed $platformDb The platform database connection.
+ * @return array The augmented response array.
+ */
+function augmentResponseWithEntitySuggestionDetails($currentResponse, $apiRequest, $platformDb) {
+    global $config; // For apiV1, getInfosFromStringID, and file path construction
+
+    // Initialize affectedSessions in meta
+    if (!isset($currentResponse["meta"])) {
+        $currentResponse["meta"] = [];
+    }
+    $currentResponse["meta"]["affectedSessions"] = [];
+
+    if (isset($currentResponse["meta"]["requestStatus"]) && $currentResponse["meta"]["requestStatus"] == "success") {
+        // Assuming sourceEntitySuggestionExternalID from the request is actually an INTERNAL ID
+        $sourceSuggestionID = $apiRequest['sourceEntitySuggestionExternalID'] ?? null; 
+
+        if ($sourceSuggestionID) {
+            require_once (__DIR__."/../../api/v1/api.php");
+
+            $suggestionApiResponse = apiV1([
+                "action" => "getItemsFromDB",
+                "itemType" => "entitySuggestion",
+                "id" => $sourceSuggestionID,
+                "idType" => "internal" // Using INTERNAL ID type for lookup
+            ], $platformDb);
+
+            if (isset($suggestionApiResponse["data"]) && isset($suggestionApiResponse["meta"]["requestStatus"]) && $suggestionApiResponse["meta"]["requestStatus"] == "success") {
+                $entitySuggestionItem = $suggestionApiResponse["data"];
+                $currentResponse["meta"]["EntitysuggestionItem"] = $entitySuggestionItem;
+
+                if (isset($entitySuggestionItem["EntitysuggestionContext"]) && is_array($entitySuggestionItem["EntitysuggestionContext"])) {
+                    $sessionsArray = [];
+                    foreach ($entitySuggestionItem["EntitysuggestionContext"] as $contextKey => $contextValue) {
+                        $itemInfos = getInfosFromStringID($contextKey);
+                        if ($itemInfos) {
+                            $parliament = trim($itemInfos["parliament"]);
+                            $electoralPeriod = trim(substr($itemInfos["electoralPeriodNumber"], 1));
+                            $sessionNum = trim(substr($itemInfos["sessionNumber"], 1));
+                            
+                            $tmpFileName = $electoralPeriod . $sessionNum . "-session.json";
+                            
+                            $basePath = $config["dir"]["root"]; 
+
+                            $parentDirString = $basePath . "/data/repos/" . $parliament . "/processed";
+                            $filePath = $parentDirString . "/" . $tmpFileName;
+                            
+                            clearstatcache(true, $filePath);
+                            
+                            $realFilePath = realpath($filePath);
+
+                            if ($realFilePath) {
+                                $sessionsArray[$parliament][$tmpFileName]["fileExists"] = is_file($realFilePath);
+                            } else {
+                                $sessionsArray[$parliament][$tmpFileName]["fileExists"] = false; 
+                            }
+                        }
+                    }
+                    if (!empty($sessionsArray)) {
+                        $currentResponse["meta"]["affectedSessions"] = $sessionsArray;
+                    }
+                }
+            }
+        }
+    }
+    return $currentResponse;
+}
+
 ?> 

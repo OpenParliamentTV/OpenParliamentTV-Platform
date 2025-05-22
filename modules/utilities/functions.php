@@ -455,4 +455,18 @@ function makeHttpRequest($url, $options = []) {
     return $response;
 }
 
+/**
+ * Validates a Wikidata ID.
+ * A Wikidata ID starts with 'Q' or 'P' followed by digits.
+ * @param string $id The ID to validate.
+ * @return bool True if valid, false otherwise.
+ */
+function validateWikidataID($id) {
+    if (empty($id)) {
+        return false;
+    }
+    // Matches Q<digits> or P<digits>
+    return (bool) preg_match('/^(Q|P)\d+$/i', $id);
+}
+
 ?>
