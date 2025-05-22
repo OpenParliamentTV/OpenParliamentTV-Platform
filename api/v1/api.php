@@ -381,6 +381,20 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             }
             break;
 
+        case "import":
+            switch ($api_request["itemType"]) {
+                case "reimport-sessions":
+                    require_once (__DIR__."/modules/entitySuggestion.php");
+                    $result = entitySuggestionReimportSessions($api_request, $db);
+                    return createApiResponse($result);
+                    break;
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType", "Invalid itemType for import action.")
+                    );
+            }
+            break;
+
         default:
             return createApiResponse(
                 createApiErrorInvalidParameter("action")

@@ -27,7 +27,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 									Do you want to re-import these sessions?<br>
 									<form id="reimportSessionForm" method="post">
 										<div id="affectedSessions"></div>
-										<button class="btn btn-sm input-group-text entitiesToggleDetailsAndTable mb-3" id="reimportSessionsButton">
+										<button type="button" class="btn btn-sm input-group-text entitiesToggleDetailsAndTable mb-3" id="reimportSessionsButton">
 											<span class="icon-plus"></span>
 											<span class="d-none d-md-inline">Yes</span>
 										</button>
@@ -42,7 +42,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 							<div class="row">
 								<div class="col-12 col-lg-4">
 									<input name="action" value="addItem" type="hidden">
-									<input name="sourceEntitySuggestionExternalID" value="" type="hidden">
+									<input name="sourceEntitySuggestionID" value="" type="hidden">
 									<div class="form-group">
 										<label for="itemType">Entity Type</label>
 										<select class="form-control" name="itemType">
@@ -264,7 +264,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		// Fill in entitySuggestionID in case we got it in the url
 		let queryEntitySuggestionID = getQueryVariable('entitySuggestionID');
 		if (queryEntitySuggestionID) {
-			$('input[name="sourceEntitySuggestionExternalID"]').val(queryEntitySuggestionID);
+			$('input[name="sourceEntitySuggestionID"]').val(queryEntitySuggestionID);
 		}
 
 		$('#entityAddForm').ajaxForm({
@@ -289,15 +289,17 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					$(".contentContainer").not("#entityAddSuccess").slideUp();
 					$("#entityAddSuccess").slideDown();
 
-					if (ret.meta && "EntitysuggestionItem" in ret.meta) {
-						$("#reimportSessions").data("entitysuggestionid", ret.meta.EntitysuggestionItem["EntitysuggestionItemID"]);
+					if (ret.meta && "EntitysuggestionItem" in ret.meta && ret.meta.EntitysuggestionItem && typeof ret.meta.EntitysuggestionItem === 'object' && ret.meta.EntitysuggestionItem.EntitysuggestionID) {
+                        // Store EntitysuggestionID on the form for later use by the reimport button
+                        $("#reimportSessionForm").data("entitysuggestionid", ret.meta.EntitysuggestionItem.EntitysuggestionID);
+
 						if (ret.meta && "affectedSessions" in ret.meta && (Object.keys(ret.meta.affectedSessions).length > 0)) {
 							for (let parliament in ret.meta.affectedSessions) {
 								let sessioncontent = "";
 								for (let session in ret.meta.affectedSessions[parliament]) {
 									sessioncontent += "<div class='sessionFilesDiv'>" + session + " | File exists: " + ret.meta.affectedSessions[parliament][session]["fileExists"] + "<input type='hidden' name='files[" + parliament + "][]' class='reimportfile' value='" + session + "'>";
 								}
-								$("#affectedSessions").append("<div class='parlamentDiv><h4>Parlament " + parliament + "</h4>" + sessioncontent + "</div>");
+								$("#affectedSessions").append("<div class='parlamentDiv'><h4>Parlament " + parliament + "</h4>" + sessioncontent + "</div>");
 							}
 							$("#affectedSessions_true").show();
 							$("#affectedSessions_false").hide();
@@ -315,6 +317,54 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			}
 		});
 
+        // Click handler for the reimport sessions button
+        $("body").on("click", "#reimportSessionsButton", function() {
+            let entitySuggestionID = $("#reimportSessionForm").data("entitysuggestionid");
+            
+            // Serialize the form to get the files data correctly structured for PHP
+            let filesData = $("#reimportSessionForm").serialize(); 
+            // filesData will be a string like: files%5BDE%5D%5B%5D=21006-session.json&files%5BAT%5D%5B%5D=another.json
+
+            let apiPayload = {
+                action: "import",
+                itemType: "reimport-sessions",
+                EntitysuggestionID: entitySuggestionID 
+                // The filesData string will be appended or sent as part of the POST body by jQuery
+            };
+            
+            // Combine apiPayload with filesData string for the AJAX data field
+            let payloadString = $.param(apiPayload) + "&" + filesData;
+
+            $.ajax({
+                url: config.dir.root + "/api/v1/",
+                type: "POST",
+                dataType: "json",
+                data: payloadString, // Send as a query string, jQuery will handle content type
+                success: function(response) {
+                    let message = "Reimport process finished.";
+                    if (response.meta && response.meta.requestStatus === "success") {
+                        if (response.meta.summary) {
+                            message = response.meta.summary;
+                        } else if (response.data && response.data.copied && response.data.failed && response.data.skipped) {
+                            message = response.data.copied.length + " file(s) re-imported, " + 
+                                      response.data.failed.length + " failed, " + 
+                                      response.data.skipped.length + " skipped.";
+                        }
+                        alert("Reimport successful: " + message);
+                    } else {
+                        message = "Reimport failed.";
+                        if (response.errors && response.errors.length > 0) {
+                            message += " " + response.errors[0].title + (response.errors[0].detail ? (": " + response.errors[0].detail) : "");
+                        }
+                        alert(message);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert("An error occurred during reimport: " + textStatus + " - " + errorThrown);
+                }
+            });
+        });
+
 		$(".labelAlternativeAdd").on("click", function() {
 			$(this).parent().find("div:first").append('<span style="position: relative">' +
 				'<input type="text" class="form-control" name="labelAlternative[]">' +
@@ -322,7 +372,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				'<span class="icon-cancel-circled"></span>' +
 				'</button></span>');
 		});
-
 
 		$("body").on("click", ".labelAlternativeRemove", function() {
 			$(this).parent().remove();

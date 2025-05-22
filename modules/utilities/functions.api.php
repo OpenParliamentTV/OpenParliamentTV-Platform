@@ -452,8 +452,7 @@ function reportConflict($entity, $subject, $identifier = "", $rival = "", $descr
 function reportEntitySuggestion($entitysuggestionExternalID, $entitysuggestionType, $entitysuggestionLabel, $entitysuggestionContent, $entitysuggestionContext, $dbPlatform = false) {
     global $config; // apiV1 might use it, or config within api.php scope
 
-    // Ensure the main API file is loaded. This should typically be handled
-    // by the calling script or autoloader, but for safety:
+    // just for safety:
     require_once (__DIR__."/../../api/v1/api.php"); 
 
     $request_params = [
@@ -484,7 +483,7 @@ function reportEntitySuggestion($entitysuggestionExternalID, $entitysuggestionTy
 
 /**
  * Augments an API response with EntitysuggestionItem and related sessions data
- * if a sourceEntitySuggestionExternalID is provided in the request.
+ * if a sourceEntitySuggestionID is provided in the request.
  *
  * @param array $currentResponse The response array to augment.
  * @param array $apiRequest The original API request parameters.
@@ -501,52 +500,95 @@ function augmentResponseWithEntitySuggestionDetails($currentResponse, $apiReques
     $currentResponse["meta"]["affectedSessions"] = [];
 
     if (isset($currentResponse["meta"]["requestStatus"]) && $currentResponse["meta"]["requestStatus"] == "success") {
-        // Assuming sourceEntitySuggestionExternalID from the request is actually an INTERNAL ID
-        $sourceSuggestionID = $apiRequest['sourceEntitySuggestionExternalID'] ?? null; 
+        $idForLookup = null;
+        $idTypeForLookup = null;
 
-        if ($sourceSuggestionID) {
+        // Case 1: Explicit sourceEntitySuggestionID (internal ID) is provided
+        if (isset($apiRequest['sourceEntitySuggestionID']) && !empty($apiRequest['sourceEntitySuggestionID'])) {
+            $idForLookup = $apiRequest['sourceEntitySuggestionID'];
+            $idTypeForLookup = "internal";
+        } 
+        // Case 2: No explicit suggestion ID, try to find by ID of the newly created entity
+        else if (isset($currentResponse["data"]) && is_array($currentResponse["data"]) && isset($apiRequest['itemType'])) {
+            $itemType = $apiRequest['itemType'];
+            $entityData = $currentResponse["data"]; // This is the data of the newly created entity
+            
+            $lookupValue = null;
+
+            switch ($itemType) {
+                case 'person':
+                case 'organisation':
+                case 'term':
+                    if (isset($entityData['id']) && !empty($entityData['id'])) {
+                        $lookupValue = $entityData['id'];
+                    }
+                    break;
+                case 'document':
+                    // Document uses wikidataID from its attributes
+                    if (isset($entityData['attributes']['wikidataID']) && !empty($entityData['attributes']['wikidataID'])) {
+                        $lookupValue = $entityData['attributes']['wikidataID'];
+                    }
+                    break;
+            }
+
+            if ($lookupValue) { // If we found a value to lookup
+                $idForLookup = $lookupValue;
+                $idTypeForLookup = "external"; // Match against EntitysuggestionExternalID
+            }
+        }
+
+        if ($idForLookup && $idTypeForLookup) {
             require_once (__DIR__."/../../api/v1/api.php");
 
             $suggestionApiResponse = apiV1([
                 "action" => "getItemsFromDB",
                 "itemType" => "entitySuggestion",
-                "id" => $sourceSuggestionID,
-                "idType" => "internal" // Using INTERNAL ID type for lookup
+                "id" => $idForLookup,
+                "idType" => $idTypeForLookup
             ], $platformDb);
 
             if (isset($suggestionApiResponse["data"]) && isset($suggestionApiResponse["meta"]["requestStatus"]) && $suggestionApiResponse["meta"]["requestStatus"] == "success") {
                 $entitySuggestionItem = $suggestionApiResponse["data"];
-                $currentResponse["meta"]["EntitysuggestionItem"] = $entitySuggestionItem;
+                
+                if (!empty($entitySuggestionItem) && (is_object($entitySuggestionItem) || is_array($entitySuggestionItem) && count($entitySuggestionItem) > 0) ) {
+                    
+                    if (is_array($entitySuggestionItem) && isset($entitySuggestionItem[0])) {
+                         $entitySuggestionItem = $entitySuggestionItem[0]; // Take the first item if it's an array
+                    }
 
-                if (isset($entitySuggestionItem["EntitysuggestionContext"]) && is_array($entitySuggestionItem["EntitysuggestionContext"])) {
-                    $sessionsArray = [];
-                    foreach ($entitySuggestionItem["EntitysuggestionContext"] as $contextKey => $contextValue) {
-                        $itemInfos = getInfosFromStringID($contextKey);
-                        if ($itemInfos) {
-                            $parliament = trim($itemInfos["parliament"]);
-                            $electoralPeriod = trim(substr($itemInfos["electoralPeriodNumber"], 1));
-                            $sessionNum = trim(substr($itemInfos["sessionNumber"], 1));
-                            
-                            $tmpFileName = $electoralPeriod . $sessionNum . "-session.json";
-                            
-                            $basePath = $config["dir"]["root"]; 
+                    $currentResponse["meta"]["EntitysuggestionItem"] = $entitySuggestionItem;
 
-                            $parentDirString = $basePath . "/data/repos/" . $parliament . "/processed";
-                            $filePath = $parentDirString . "/" . $tmpFileName;
-                            
-                            clearstatcache(true, $filePath);
-                            
-                            $realFilePath = realpath($filePath);
+                    if (isset($entitySuggestionItem["EntitysuggestionContext"]) && is_array($entitySuggestionItem["EntitysuggestionContext"])) {
+                        $sessionsArray = [];
+                        foreach ($entitySuggestionItem["EntitysuggestionContext"] as $contextKey => $contextValue) {
+                            $itemInfos = getInfosFromStringID($contextKey);
+                            if ($itemInfos) {
+                                $parliament = trim($itemInfos["parliament"]);
+                                $electoralPeriod = trim(substr($itemInfos["electoralPeriodNumber"], 1));
+                                $sessionNum = trim(substr($itemInfos["sessionNumber"], 1));
+                                
+                                $tmpFileName = $electoralPeriod . $sessionNum . "-session.json";
+                                
+                                // Use realpath with __DIR__ to get the correct file system base path
+                                $basePath = realpath(__DIR__ . "/../../"); 
 
-                            if ($realFilePath) {
-                                $sessionsArray[$parliament][$tmpFileName]["fileExists"] = is_file($realFilePath);
-                            } else {
-                                $sessionsArray[$parliament][$tmpFileName]["fileExists"] = false; 
+                                $parentDirString = $basePath . "/data/repos/" . $parliament . "/processed";
+                                $filePath = $parentDirString . "/" . $tmpFileName;
+                                
+                                clearstatcache(true, $filePath);
+                                
+                                $realFilePath = realpath($filePath);
+
+                                if ($realFilePath) {
+                                    $sessionsArray[$parliament][$tmpFileName]["fileExists"] = is_file($realFilePath);
+                                } else {
+                                    $sessionsArray[$parliament][$tmpFileName]["fileExists"] = false; 
+                                }
                             }
                         }
-                    }
-                    if (!empty($sessionsArray)) {
-                        $currentResponse["meta"]["affectedSessions"] = $sessionsArray;
+                        if (!empty($sessionsArray)) {
+                            $currentResponse["meta"]["affectedSessions"] = $sessionsArray;
+                        }
                     }
                 }
             }

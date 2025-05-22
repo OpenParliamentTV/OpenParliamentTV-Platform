@@ -145,7 +145,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "EntitysuggestionCount",
-					title: "Affected Sessions",
+					title: "Affected Speeches",
 					sortable: true
 				},
 				{

@@ -196,4 +196,77 @@ function entitySuggestionAdd($api_request, $db = false) {
     }
 }
 
+/**
+ * Reimports specified session files for an entity suggestion.
+ *
+ * @param array $request_params An array containing:
+ *                              - files (array, required): An associative array where keys are parliament codes
+ *                                and values are arrays of session filenames to re-import.
+ *                                e.g., ["DE" => ["21001-session.json", "21002-session.json"]]
+ * @param object|false $db Optional platform database connection object.
+ * @return array Standard API response array.
+ */
+function entitySuggestionReimportSessions($request_params, $db = false) {
+    global $config; 
+    
+    if (empty($request_params['files']) || !is_array($request_params['files'])) {
+        return createApiErrorMissingParameter('files');
+    }
+
+    $filesToReimport = $request_params['files'];
+    $results = [
+        'copied' => [],
+        'failed' => [],
+        'skipped' => []
+    ];
+    $projectRoot = realpath(__DIR__ . "/../../../"); // project_root
+
+    if (!$projectRoot) {
+        error_log("Critical error: Project root could not be determined in entitySuggestionReimportSessions.");
+        return createApiErrorResponse(500, 'PROJECT_ROOT_ERROR', 'messageErrorInternal', 'Could not determine project root directory.');
+    }
+
+    foreach ($filesToReimport as $parliament => $sessionFiles) {
+        if (!is_array($sessionFiles)) {
+            $results['failed'][] = ['parliament' => $parliament, 'file' => 'N/A', 'reason' => 'Invalid file list format for parliament.'];
+            continue;
+        }
+        foreach ($sessionFiles as $file) {
+            $sourcePath = $projectRoot . "/data/repos/" . $parliament . "/processed/" . $file;
+            $destinationPath = $projectRoot . "/data/input/" . $file;
+
+            if (!is_file($sourcePath)) {
+                $results['skipped'][] = ['parliament' => $parliament, 'file' => $file, 'reason' => 'Source file not found or is not a file.'];
+                error_log("Reimport: Source file not found or not a file: " . $sourcePath);
+                continue;
+            }
+            if (!is_readable($sourcePath)) {
+                $results['failed'][] = ['parliament' => $parliament, 'file' => $file, 'reason' => 'Source file not readable.'];
+                error_log("Reimport: Source file not readable: " . $sourcePath);
+                continue;
+            }
+
+            // Ensure destination directory exists or can be created (though /data/input/ should exist)
+            $destinationDir = dirname($destinationPath);
+            if (!is_dir($destinationDir)) {
+                // Attempt to create if it doesn't exist, though this should ideally already be set up.
+                if (!mkdir($destinationDir, 0775, true)) {
+                    $results['failed'][] = ['parliament' => $parliament, 'file' => $file, 'reason' => 'Destination directory does not exist and could not be created.'];
+                    error_log("Reimport: Destination directory could not be created: " . $destinationDir);
+                    continue;
+                }
+            }
+
+            if (copy($sourcePath, $destinationPath)) {
+                $results['copied'][] = ['parliament' => $parliament, 'file' => $file, 'source' => $sourcePath, 'destination' => $destinationPath];
+            } else {
+                $results['failed'][] = ['parliament' => $parliament, 'file' => $file, 'reason' => 'Copy operation failed.'];
+                error_log("Reimport: Failed to copy " . $sourcePath . " to " . $destinationPath);
+            }
+        }
+    }
+
+    return createApiSuccessResponse($results, ['summary' => count($results['copied']) . ' file(s) re-imported, ' . count($results['failed']) . ' failed, ' . count($results['skipped']) . ' skipped.']);
+}
+
 ?> 

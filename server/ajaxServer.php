@@ -28,32 +28,6 @@ switch ($_REQUEST["a"]) {
         }
     break;
 
-    case "reimportSessions":
-
-        $auth = auth($_SESSION["userdata"]["id"], "entitysuggestion", "get");
-
-        if ($auth["meta"]["requestStatus"] != "success") {
-
-            //TODO: response
-            //$alertText = $auth["errors"][0]["detail"];
-            //include_once (__DIR__."/../../../login/page.php");
-
-        } else {
-
-            $return["success"] = "true";
-            $return["text"] = "Reimport Sessions";
-
-            require_once (__DIR__."/../modules/utilities/functions.php");
-            foreach($_REQUEST["files"] as $parliament=>$files) {
-                foreach ($files as $file) {
-                    copy(__DIR__."/../data/repos/".$parliament."/processed/".$file,__DIR__."/../data/input/".$file);
-                }
-            }
-
-        }
-
-    break;
-
     case "entityGetFromAdditionalDataService":
 
         $auth = auth($_SESSION["userdata"]["id"], "additionalDataService", "getItem");
