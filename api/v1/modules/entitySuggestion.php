@@ -103,4 +103,97 @@ function entitySuggestionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $s
     }
 }
 
+/**
+ * Adds or updates an entity suggestion in the database.
+ *
+ * @param array $api_request An array containing the entity suggestion data:
+ *                           - EntitysuggestionExternalID (string, required if no conflict to report)
+ *                           - EntitysuggestionType (string, required)
+ *                           - EntitysuggestionLabel (string, required)
+ *                           - EntitysuggestionContent (string, required, JSON string)
+ *                           - EntitysuggestionContext (string, required, key for context array)
+ * @param object|false $db Optional database connection object.
+ * @return array Standard API response array.
+ */
+function entitySuggestionAdd($api_request, $db = false) {
+    global $config;
+
+    // Validate required parameters
+    $requiredFields = ['EntitysuggestionType', 'EntitysuggestionLabel', 'EntitysuggestionContent', 'EntitysuggestionContext'];
+    foreach ($requiredFields as $field) {
+        if (empty($api_request[$field])) {
+            return createApiErrorMissingParameter($field);
+        }
+    }
+
+    $entitysuggestionExternalID = $api_request['EntitysuggestionExternalID'] ?? null;
+    $entitysuggestionType = $api_request['EntitysuggestionType'];
+    $entitysuggestionLabel = $api_request['EntitysuggestionLabel'];
+    $entitysuggestionContent = $api_request['EntitysuggestionContent']; // Expected to be a JSON string from the client or other modules
+    $singleContextEntry = $api_request['EntitysuggestionContext']; // This is the single context string to add
+
+    if (!$db) {
+        $db = getApiDatabaseConnection('platform');
+        if (isset($db["errors"])) { // getApiDatabaseConnection returns an error array on failure
+            return $db; 
+        }
+    }
+
+    if (empty($entitysuggestionExternalID)) {
+        $reportArray = [
+            "type" => $entitysuggestionType,
+            "label" => $entitysuggestionLabel,
+            "content" => $entitysuggestionContent,
+            "context" => $singleContextEntry // Original function passed the single context here
+        ];
+        return reportConflict(
+            "Entitysuggestion", 
+            "Suggestion had no ID", 
+            "", 
+            "", 
+            json_encode($reportArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            $db // Pass the DB connection to reportConflict helper which then passes to apiV1
+        );
+    }
+
+    try {
+        $exists = $db->getRow("SELECT * FROM ?n WHERE EntitysuggestionExternalID = ?s", $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $entitysuggestionExternalID);
+
+        if ($exists) {
+            $currentContextArray = json_decode($exists["EntitysuggestionContext"], true);
+            if (json_last_error() !== JSON_ERROR_NONE) { // Handle cases where existing context might be malformed
+                $currentContextArray = []; // Default to empty array if decode fails
+                error_log("Malformed JSON in EntitysuggestionContext for EntitysuggestionExternalID: " . $entitysuggestionExternalID);
+            }
+            $currentContextArray[$singleContextEntry] = $singleContextEntry; // Add/update the specific context
+            $newContextJson = json_encode($currentContextArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+            $db->query("UPDATE ?n SET EntitysuggestionContext = ?s WHERE EntitysuggestionID = ?i", $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $newContextJson, $exists["EntitysuggestionID"]);
+            return createApiSuccessResponse(["EntitysuggestionID" => $exists["EntitysuggestionID"], "status" => "updated"]);
+        } else {
+            $newContextArray = [$singleContextEntry => $singleContextEntry];
+            $newContextJson = json_encode($newContextArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+            $db->query("INSERT INTO ?n SET
+                                EntitysuggestionExternalID = ?s,
+                                EntitysuggestionType = ?s,
+                                EntitysuggestionLabel = ?s,
+                                EntitysuggestionContent = ?s,
+                                EntitysuggestionContext = ?s",
+                $config["platform"]["sql"]["tbl"]["Entitysuggestion"],
+                $entitysuggestionExternalID,
+                $entitysuggestionType,
+                $entitysuggestionLabel,
+                $entitysuggestionContent, // Store EntitysuggestionContent as is (JSON string)
+                $newContextJson);
+            
+            $insertedId = $db->insertId();
+            return createApiSuccessResponse(["EntitysuggestionID" => $insertedId, "status" => "created"]);
+        }
+    } catch (Exception $e) {
+        error_log("Error in entitySuggestionAdd: " . $e->getMessage());
+        return createApiErrorDatabaseError($e->getMessage());
+    }
+}
+
 ?> 

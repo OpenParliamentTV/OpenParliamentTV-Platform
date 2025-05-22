@@ -438,4 +438,48 @@ function reportConflict($entity, $subject, $identifier = "", $rival = "", $descr
     }
 }
 
+/**
+ * Helper function to report an entity suggestion via the internal API.
+ *
+ * @param string $entitysuggestionExternalID
+ * @param string $entitysuggestionType
+ * @param string $entitysuggestionLabel
+ * @param string $entitysuggestionContent (JSON string)
+ * @param string $entitysuggestionContext (The single context string to add)
+ * @param object|false $dbPlatform Optional platform DB connection.
+ * @return array The API response from apiV1 or an error structure.
+ */
+function reportEntitySuggestion($entitysuggestionExternalID, $entitysuggestionType, $entitysuggestionLabel, $entitysuggestionContent, $entitysuggestionContext, $dbPlatform = false) {
+    global $config; // apiV1 might use it, or config within api.php scope
+
+    // Ensure the main API file is loaded. This should typically be handled
+    // by the calling script or autoloader, but for safety:
+    require_once (__DIR__."/../../api/v1/api.php"); 
+
+    $request_params = [
+        'action' => 'addItem',
+        'itemType' => 'entitySuggestion',
+        'EntitysuggestionExternalID' => $entitysuggestionExternalID,
+        'EntitysuggestionType' => $entitysuggestionType,
+        'EntitysuggestionLabel' => $entitysuggestionLabel,
+        'EntitysuggestionContent' => $entitysuggestionContent, // Should be a JSON string
+        'EntitysuggestionContext' => $entitysuggestionContext // The single context entry
+    ];
+
+    try {
+        // Pass $dbPlatform as the second argument to apiV1, which corresponds to the platform $db connection in apiV1
+        $response = apiV1($request_params, $dbPlatform);
+        return $response;
+    } catch (Exception $e) {
+        error_log("Exception in reportEntitySuggestion (API helper) when calling apiV1: " . $e->getMessage());
+        return createApiErrorResponse(
+            500, 
+            'HELPER_API_CALL_FAILED', 
+            'messageErrorApiCallFailedTitle',
+            'messageErrorApiCallFailedDetail',
+            ['details' => $e->getMessage()]
+        );
+    }
+}
+
 ?> 

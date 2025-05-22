@@ -206,6 +206,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/conflict.php");
                     $item = conflictAdd($api_request, $db);
                     return createApiResponse($item);
+                case "entitySuggestion":
+                    require_once (__DIR__."/modules/entitySuggestion.php");
+                    $item = entitySuggestionAdd($api_request, $db);
+                    return createApiResponse($item);
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
