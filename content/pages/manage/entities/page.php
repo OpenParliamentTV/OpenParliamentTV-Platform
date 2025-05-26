@@ -23,7 +23,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<h2><?= L::manageEntities; ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
-							<a href="<?= $config["dir"]["root"] ?>/manage/entities/new" class="btn btn-outline-success rounded-pill btn-sm me-1"><span class="icon-plus"></span> New Entity</a>
+							<button type="button" id="openAddEntityModalBtn" class="btn btn-outline-success rounded-pill btn-sm me-1" data-bs-toggle="modal" data-bs-target="#addEntityModal"><span class="icon-plus"></span> New Entity</button>
 						</div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
@@ -73,6 +73,36 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		</div>
 	</div>
 </main>
+
+<!-- Modal for Adding New Entity -->
+<div class="modal fade" id="addEntityModal" tabindex="-1" aria-labelledby="addEntityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEntityModalLabel">Add New Entity</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Content will be loaded here by AJAX -->
+                <div class="text-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row w-100">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-secondary rounded-pill w-100" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-primary rounded-pill w-100" id="modalAddEntitySubmitBtnEntitiesPage" disabled>Add Entity</button> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="successRunAdditionalDataService" tabindex="-1" role="dialog" aria-labelledby="successRunCronDialogLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -581,6 +611,72 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			]
 		});
 
+        // JavaScript for Add Entity Modal
+        const addEntityModal = document.getElementById('addEntityModal');
+        if (addEntityModal) {
+            addEntityModal.addEventListener('show.bs.modal', function (event) {
+                const modalBody = addEntityModal.querySelector('.modal-body');
+                modalBody.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+                
+                const componentUrl = '<?= $config["dir"]["root"] ?>/content/components/entity.form.php';
+                const button = event.relatedTarget; // Button that triggered the modal (if any)
+
+                // Data to be set as attributes on the loaded form
+                // For entities/page.php, these are typically not set when clicking the main "New Entity" button
+                const wikidataIdFromButton = button && button.dataset.wikidataId ? button.dataset.wikidataId : null;
+                const entitySuggestionIdFromButton = button && button.dataset.entitySuggestionId ? button.dataset.entitySuggestionId : null;
+
+                $(modalBody).load(componentUrl, function(response, status, xhr) {
+                    if (status == "error") {
+                        modalBody.innerHTML = "Error loading entity form: " + xhr.status + " " + xhr.statusText;
+                    } else {
+                        const $theForm = $(modalBody).find('#entityAddForm');
+                        if (wikidataIdFromButton) {
+                            $theForm.data('wikidata-id', wikidataIdFromButton);
+                        }
+                        if (entitySuggestionIdFromButton) {
+                            $theForm.data('entity-suggestion-id', entitySuggestionIdFromButton);
+                        }
+
+                        const $formInternalSubmitBtn = $theForm.find('#entityAddFormSubmitBtn');
+                        const $modalSubmitBtn = $('#modalAddEntitySubmitBtnEntitiesPage'); 
+                        
+                        $modalSubmitBtn.prop('disabled', $formInternalSubmitBtn.prop('disabled'));
+
+                        const observer = new MutationObserver(function(mutations) {
+                            mutations.forEach(function(mutation) {
+                                if (mutation.attributeName === "disabled") {
+                                    $modalSubmitBtn.prop('disabled', $formInternalSubmitBtn.prop('disabled'));
+                                }
+                            });
+                        });
+                        if($formInternalSubmitBtn.length){
+                           observer.observe($formInternalSubmitBtn[0], { attributes: true });
+                        }
+                        $(addEntityModal).data('observer', observer);
+                    }
+                });
+            });
+
+            addEntityModal.addEventListener('hidden.bs.modal', function (event) {
+                const observer = $(addEntityModal).data('observer');
+                if (observer) {
+                    observer.disconnect();
+                    $(addEntityModal).removeData('observer');
+                }
+                const modalBody = addEntityModal.querySelector('.modal-body');
+                modalBody.innerHTML = ''; 
+                $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true); 
+            });
+
+            // Handle click on modal's Add Entity button for this page
+            $('body').on('click', '#modalAddEntitySubmitBtnEntitiesPage', function() { 
+                const $form = $('#addEntityModal .modal-body #entityAddForm');
+                if ($form.length) {
+                    $form.submit();
+                }
+            });
+        }
 
 	})
 

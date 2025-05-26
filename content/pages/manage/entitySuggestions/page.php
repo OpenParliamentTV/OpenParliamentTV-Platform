@@ -96,6 +96,36 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	</div>
 </div>
 
+<!-- Modal for Adding New Entity -->
+<div class="modal fade" id="addEntityModal" tabindex="-1" aria-labelledby="addEntityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEntityModalLabel">Add New Entity from Suggestion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Content will be loaded here by AJAX -->
+                <div class="text-center">
+                    <div class="spinner-border" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row w-100">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-secondary rounded-pill w-100" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-primary rounded-pill w-100" id="modalAddEntitySubmitBtn" disabled>Add Entity</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/api/client/jquery.json-view.min.css?v=<?= $config["version"] ?>" media="all">
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/api/client/jquery.json-view.min.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/api/client/highlight.min.js?v=<?= $config["version"] ?>"></script>
@@ -154,7 +184,13 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {
-						return "<div class='list-group list-group-horizontal'><span class='entitysuggestiondetails list-group-item list-group-item-action' title='<?= L::viewDetails; ?>' data-id='"+value+"' data-bs-toggle='modal' data-bs-target='#entityDetailsModal'><span class='icon-eye'></span></span><a href='"+config["dir"]["root"]+"/manage/entities/new?wikidataID="+row["EntitysuggestionExternalID"]+"&entitySuggestionID="+row["EntitysuggestionID"]+"' target='_blank' class='list-group-item list-group-item-action' data-id='"+row["EntitysuggestionID"]+"'><span class='icon-plus'></span></a></div>"
+                        let viewDetailsButton = "<span class='entitysuggestiondetails list-group-item list-group-item-action' title='<?= L::viewDetails; ?>' data-id='"+value+"' data-bs-toggle='modal' data-bs-target='#entityDetailsModal'><span class='icon-eye'></span></span>";
+                        let addEntityButton = "<button type='button' class='list-group-item list-group-item-action' title='Add Entity' " +
+                                              "data-bs-toggle='modal' data-bs-target='#addEntityModal' " +
+                                              "data-wikidata-id='" + row["EntitysuggestionExternalID"] + "' " +
+                                              "data-entity-suggestion-id='" + row["EntitysuggestionID"] + "'>" +
+                                              "<span class='icon-plus'></span></button>";
+						return "<div class='list-group list-group-horizontal'>" + viewDetailsButton + addEntityButton + "</div>";
 					}
 				}
 			]
@@ -205,6 +241,85 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			$("#entitiesDetailsDiv").hide();
 		});
 
+        // JavaScript for Add Entity Modal
+        const addEntityModal = document.getElementById('addEntityModal');
+        if (addEntityModal) {
+            addEntityModal.addEventListener('show.bs.modal', function (event) {
+                const modalBody = addEntityModal.querySelector('.modal-body');
+                modalBody.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+                
+                const componentUrl = '<?= $config["dir"]["root"] ?>/content/components/entity.form.php';
+                const button = event.relatedTarget;
+                
+                // Data to be set as attributes on the loaded form
+                const wikidataIdFromButton = button && button.dataset.wikidataId ? button.dataset.wikidataId : null;
+                const entitySuggestionIdFromButton = button && button.dataset.entitySuggestionId ? button.dataset.entitySuggestionId : null;
+
+                $(modalBody).load(componentUrl, function(response, status, xhr) {
+                    if (status == "error") {
+                        modalBody.innerHTML = "Error loading entity form: " + xhr.status + " " + xhr.statusText;
+                    } else {
+                        // Initialize the form with the data, if available
+                        // The form itself will handle these via its data attributes upon initialization
+                        const $theForm = $(modalBody).find('#entityAddForm');
+                        if (wikidataIdFromButton) {
+                            $theForm.data('wikidata-id', wikidataIdFromButton);
+                        }
+                        if (entitySuggestionIdFromButton) {
+                            $theForm.data('entity-suggestion-id', entitySuggestionIdFromButton);
+                        }
+                        // Manually trigger initialization if needed, though the form script should run on load
+                        // if (typeof $theForm.formComponent === 'function') { 
+                        //    $theForm.formComponent(); 
+                        // }
+
+                        // Logic to enable/disable modal's submit button based on the form's internal submit button
+                        const $formInternalSubmitBtn = $theForm.find('#entityAddFormSubmitBtn');
+                        const $modalSubmitBtn = $('#modalAddEntitySubmitBtn');
+                        
+                        // Initial state
+                        $modalSubmitBtn.prop('disabled', $formInternalSubmitBtn.prop('disabled'));
+
+                        // Use a MutationObserver to watch for changes in the form's submit button's disabled state
+                        const observer = new MutationObserver(function(mutations) {
+                            mutations.forEach(function(mutation) {
+                                if (mutation.attributeName === "disabled") {
+                                    $modalSubmitBtn.prop('disabled', $formInternalSubmitBtn.prop('disabled'));
+                                }
+                            });
+                        });
+                        if($formInternalSubmitBtn.length) {
+                           observer.observe($formInternalSubmitBtn[0], { attributes: true });
+                        }
+                        
+                        // Store observer on modal to disconnect when hidden
+                        $(addEntityModal).data('observer', observer);
+                    }
+                });
+            });
+
+            addEntityModal.addEventListener('hidden.bs.modal', function (event) {
+                // Clean up: disconnect observer if it exists
+                const observer = $(addEntityModal).data('observer');
+                if (observer) {
+                    observer.disconnect();
+                    $(addEntityModal).removeData('observer');
+                }
+                // Clear the modal body to ensure fresh load next time
+                const modalBody = addEntityModal.querySelector('.modal-body');
+                modalBody.innerHTML = ''; 
+                // Reset modal submit button state
+                $('#modalAddEntitySubmitBtn').prop('disabled', true);
+            });
+
+            // Handle click on modal's Add Entity button
+            $('body').on('click', '#modalAddEntitySubmitBtn', function() {
+                const $form = $('#addEntityModal .modal-body #entityAddForm');
+                if ($form.length) {
+                    $form.submit(); // Trigger the form submission
+                }
+            });
+        }
 
 	})
 </script>

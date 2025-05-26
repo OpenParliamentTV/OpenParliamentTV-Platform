@@ -628,26 +628,6 @@ switch ($page) {
             $content = ob_get_clean();
         }
 	break;
-	case "manage-entities-new":
-		$pageTitle = L::manageEntitiesNew;
-		$pageType = 'admin';
-		$pageBreadcrumbs = [
-			[
-				'label' => L::dashboard,
-				'path' => '/manage'
-			],
-			[
-				'label' => L::manageEntities,
-				'path' => '/manage/entities'
-			],
-			[
-				'label' => '<span class="icon-plus"></span>'
-			]
-		];
-		ob_start();
-		include_once("./content/pages/manage/entities/new.php");
-		$content = ob_get_clean();
-	break;
 	case "manage-entity-suggestions":
 		ob_start();
 		$pageTitle = L::manageEntitySuggestions;
