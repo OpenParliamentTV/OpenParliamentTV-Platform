@@ -4,6 +4,7 @@
 //TODO: Check if fine to access this without auth check. But should be fine since all API actions are then checked anyway. 
 
 require_once(__DIR__ . '/../../api/v1/api.php'); 
+require_once(__DIR__."/../../modules/utilities/language.php");
 
 ?>
 <div id="entityAddSuccess" style="display:none;" class="pb-5 contentContainer">
@@ -127,19 +128,21 @@ require_once(__DIR__ . '/../../api/v1/api.php');
         
         <div class="row">
             <div class="col-12">
-                <div id="getAdditionalInfoError" class="alert alert-danger" style="display: none; margin-bottom: 10px;"></div>
-                <button type="button" class="btn btn-primary w-100 py-3" id="getAdditionalInfo" disabled><span class="icon-magic"></span> Get data and auto-fill form fields</button>
+                <div id="getAdditionalInfoError" class="alert alert-danger d-none mb-3"></div>
+                <div id="entityPreviewContainer" class="p-2 border rounded d-none position-relative" style="min-height: 100px;">
+                    <div class="loadingIndicator d-none">
+                        <div class="workingSpinner"></div>
+                    </div>
+                </div>
             </div>
         </div>
-        <hr class="my-4">
         <div class="row">
             <div class="col-12">
-                <div class="alert alert-warning text-center">No manual editing below this line</div>
-                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm" style="position: relative">
+                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm d-none" style="position: relative">
                     <label for="label">Label</label>
                     <input type="text" class="form-control" name="label">
                 </div>
-                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
+                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm d-none">
                     <label for="labelAlternative[]">Alternative Labels</label> <button class="labelAlternativeAdd btn" type="button"><span class="icon-plus"></span></button>
                     <div>
                     </div>
@@ -148,13 +151,13 @@ require_once(__DIR__ . '/../../api/v1/api.php');
         </div>
         <div class="row">
             <div class="col-12 col-lg-6">
-                <div class="form-group formItem formItemTypePerson">
+                <div class="form-group formItem formItemTypePerson d-none">
                     <label for="firstName">First Name</label>
                     <input type="text" class="form-control" name="firstName">
                 </div>
             </div>
             <div class="col-12 col-lg-6">
-                <div class="form-group formItem formItemTypePerson">
+                <div class="form-group formItem formItemTypePerson d-none">
                     <label for="lastName">Last Name</label>
                     <input type="text" class="form-control" name="lastName">
                 </div>
@@ -162,19 +165,19 @@ require_once(__DIR__ . '/../../api/v1/api.php');
         </div>
         <div class="row">
             <div class="col-12 col-lg-4">
-                <div class="form-group formItem formItemTypePerson">
+                <div class="form-group formItem formItemTypePerson d-none">
                     <label for="degree">Degree</label>
                     <input type="text" class="form-control" name="degree">
                 </div>
             </div>
             <div class="col-12 col-lg-4">
-                <div class="form-group formItem formItemTypePerson">
+                <div class="form-group formItem formItemTypePerson d-none">
                     <label for="birthdate">Date Of Birth</label>
                     <input type="text" class="form-control" name="birthdate" placeholder="YYYY-MM-DD">
                 </div>
             </div>
             <div class="col-12 col-lg-4">
-                <div class="form-group formItem formItemTypePerson">
+                <div class="form-group formItem formItemTypePerson d-none">
                     <label for="gender">Gender</label>
                     <select class="form-select" name="gender">
                         <option value="" disabled selected>Choose Gender ..</option>
@@ -187,83 +190,83 @@ require_once(__DIR__ . '/../../api/v1/api.php');
         </div>
         <div class="row">
             <div class="col-12">
-                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
+                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm d-none">
                     <label for="abstract">Abstract</label>
                     <textarea class="form-control" name="abstract"></textarea>
                 </div>
-                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
+                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm d-none">
                     <label for="thumbnailuri">Thumbnail URI</label>
                     <input type="text" class="form-control" name="thumbnailuri">
                 </div>
-                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
+                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm d-none">
                     <label for="thumbnailcreator">Thumbnail Creator</label>
                     <input type="text" class="form-control" name="thumbnailcreator">
                 </div>
-                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
+                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm d-none">
                     <label for="thumbnaillicense">Thumbnail License</label>
                     <input type="text" class="form-control" name="thumbnaillicense">
                 </div>
-                <div class="form-group formItem formItemTypeDocument">
+                <div class="form-group formItem formItemTypeDocument d-none">
                     <label for="sourceuri">Source URI</label>
                     <input type="text" class="form-control" name="sourceuri">
                 </div>
-                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
+                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm d-none">
                     <label for="embeduri">Embed URI</label>
                     <input type="text" class="form-control" name="embeduri">
                 </div>
-                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeTerm">
+                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeTerm d-none">
                     <label for="websiteuri">Website URI</label>
                     <input type="text" class="form-control" name="websiteuri">
                 </div>
-                <div class="form-group formItem formItemTypePerson">
+                <div class="form-group formItem formItemTypePerson d-none">
                     <label for="originid">Original ID</label>
                     <input type="text" class="form-control" name="originid">
                 </div>
-                <div class="form-group formItem formItemTypePerson">
-                    <label for="party">Party</label>
-                    <select class="form-select" name="party">
-                        <option value="" disabled selected>Choose Party ..</option>
-                        <?php
-                        // This require_once might be better at the top of the file if other PHP logic needs it.
-                        require_once (__DIR__."/../../api/v1/modules/organisation.php");
-                        $partyie = organisationSearch(array("type"=>"party"));
-                        foreach ($partyie["data"] as $party) {
-                            echo '<option value="'.$party["id"].'">'.$party["attributes"]["label"].'</option>';
-                        }
-                        ?>
-                    </select>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <div class="form-group formItem formItemTypePerson d-none">
+                            <label for="party">Party</label>
+                            <select class="form-select" name="party">
+                                <option value="" disabled selected>Choose Party ..</option>
+                                <?php
+                                require_once (__DIR__."/../../api/v1/modules/organisation.php");
+                                $partyie = organisationSearch(array("type"=>"party"));
+                                foreach ($partyie["data"] as $party) {
+                                    echo '<option value="'.$party["id"].'">'.$party["attributes"]["label"].'</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="form-group formItem formItemTypePerson d-none">
+                            <label for="faction">Faction</label>
+                            <select class="form-select" name="faction">
+                                <option value="" disabled selected>Choose Faction ..</option>
+                                <?php
+                                $factionie = organisationSearch(array("type"=>"faction"));
+                                foreach ($factionie["data"] as $faction) {
+                                    echo '<option value="'.$faction["id"].'">'.$faction["attributes"]["label"].'</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group formItem formItemTypePerson">
-                    <label for="faction">Faction</label>
-                    <select class="form-select" name="faction">
-                        <option value="" disabled selected>Choose Faction ..</option>
-                        <?php
-                        // This require_once might be better at the top of the file if other PHP logic needs it.
-                        // require_once (__DIR__."/../../api/v1/modules/organisation.php");
-                        $factionie = organisationSearch(array("type"=>"faction"));
-                        foreach ($factionie["data"] as $key => $value) {
-                            echo "<option value=\"".$value["OrganisationID"] ."\">" . $value["OrganisationLabel"] . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="form-group form-dyncontent formItem formItemTypePerson formItemTypeOrganisation">
+                <div class="form-group form-dyncontent formItem formItemTypePerson formItemTypeOrganisation d-none">
                     <label for="socialMediaIDsLabel[]">Social Media Accounts</label> <button class="socialMediaIDsAdd btn" type="button"><span class="icon-plus"></span></button>
                     <div>
                     </div>
                 </div>
-                <div class="form-group formItem formItemTypeOrganisation">
+                <div class="form-group formItem formItemTypeOrganisation d-none">
                     <label for="color">Color</label>
                     <input type="text" class="form-control" name="color">
                 </div>
-                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm">
+                <div class="form-group formItem formItemTypePerson formItemTypeOrganisation formItemTypeDocument formItemTypeTerm d-none">
                     <label for="additionalinformation">Additional Information (JSON)</label>
                     <textarea class="form-control" name="additionalinformation" placeholder='{"abgeordnetenwatchID":""}'></textarea>
                 </div>
-                <div id="entityAddReturn"></div>
-                <div>
-                    <button class="btn btn-outline-primary rounded-pill" id="entityAddFormSubmitBtn" type="submit" disabled style="display: none;"><span class="icon-upload"></span> Add Entity</button>
-                </div>
+                <div id="entityAddReturn" class="alert d-none mt-3 mb-0"></div>
             </div>
         </div>
     </form>
@@ -290,12 +293,12 @@ require_once(__DIR__ . '/../../api/v1/api.php');
         if (!$form.length) {
             return; 
         }
-        const $getAdditionalInfoBtn = $form.find("#getAdditionalInfo");
         const $getAdditionalInfoError = $form.find("#getAdditionalInfoError");
-        const $submitBtn = $form.find("#entityAddFormSubmitBtn");
+        const $previewContainer = $form.find("#entityPreviewContainer");
+        const $loadingIndicator = $previewContainer.find(".loadingIndicator");
 
         // --- Functions scoped to this form instance ---
-        function updateGetAdditionalInfoButtonState() {
+        function fetchAdditionalInfo() {
             const wikidataID = $form.find('input[name="id"]').val().trim();
             const entityType = $form.find("input[name='itemType']:checked").val();
             let subType = "";
@@ -318,11 +321,123 @@ require_once(__DIR__ . '/../../api/v1/api.php');
             }
             
             if (wikidataID && entityType && subType) {
-                $getAdditionalInfoBtn.prop("disabled", false);
+                $getAdditionalInfoError.addClass('d-none').empty();
+                $previewContainer.removeClass('d-none');
+                $loadingIndicator.removeClass('d-none');
+                $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+
+                let serviceType = entityType;
+                if (subType == "memberOfParliament" || subType == "officialDocument" || subType == "legalDocument") {
+                    serviceType = subType;
+                }
+
+                $.ajax({
+                    url: config.dir.root+"/server/ajaxServer.php", 
+                    data: {
+                        "a": "entityGetFromAdditionalDataService",
+                        "type": serviceType,
+                        "wikidataID": wikidataID
+                    },
+                    dataType: "json",
+                    complete: function() {
+                        $loadingIndicator.addClass('d-none');
+                    },
+                    success: function(result) {
+                        if (result && result.data) { 
+                            // Enable the button when we have valid data
+                            $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', false);
+
+                            // Transform the data into the format expected by entity.preview.ads.php
+                            const entityData = {
+                                data: {
+                                    type: entityType,
+                                    id: wikidataID,
+                                    attributes: result.data
+                                }
+                            };
+
+                            // Load the preview component
+                            $loadingIndicator.removeClass('d-none');
+                            $.ajax({
+                                url: config.dir.root + '/content/components/entity.preview.ads.php',
+                                method: 'POST',
+                                data: { entity: JSON.stringify(entityData) },
+                                success: function(html) {
+                                    $previewContainer.html(html);
+                                    $previewContainer.append($loadingIndicator);
+                                },
+                                complete: function() {
+                                    $loadingIndicator.addClass('d-none');
+                                }
+                            });
+
+                            // Continue with the existing form field population
+                            if (result.data.label) $form.find('input[name="label"]').val(result.data.label);
+                            if (result.data.firstName) $form.find('input[name="firstName"]').val(result.data.firstName);
+                            if (result.data.lastName) $form.find('input[name="lastName"]').val(result.data.lastName);
+                            if (result.data.degree) $form.find('input[name="degree"]').val(result.data.degree);
+                            if (result.data.birthDate) $form.find('input[name="birthdate"]').val(result.data.birthDate);
+                            if (result.data.abstract) $form.find('textarea[name="abstract"]').val(result.data.abstract);
+                            if (result.data.thumbnailURI) $form.find('input[name="thumbnailuri"]').val(result.data.thumbnailURI);
+                            if (result.data.thumbnailCreator) $form.find('input[name="thumbnailcreator"]').val(result.data.thumbnailCreator);
+                            if (result.data.thumbnailLicense) $form.find('input[name="thumbnaillicense"]').val(result.data.thumbnailLicense);
+                            if (result.data.sourceURI) $form.find('input[name="sourceuri"]').val(result.data.sourceURI); 
+                            if (result.data.embedURI) $form.find('input[name="embeduri"]').val(result.data.embedURI);
+                            if (result.data.websiteURI) $form.find('input[name="websiteuri"]').val(result.data.websiteURI);
+                            if (result.data.additionalInformation) $form.find('textarea[name="additionalinformation"]').val(JSON.stringify(result.data.additionalInformation));
+
+                            if (result.data.gender) $form.find('select[name="gender"]').val(result.data.gender);
+                            if (result.data.partyID) $form.find('select[name="party"]').val(result.data.partyID);
+                            if (result.data.factionID) $form.find('select[name="faction"]').val(result.data.factionID);
+
+                            $form.find('button.labelAlternativeAdd').parent().find("div:first").empty();
+                            if (result.data.labelAlternative && Array.isArray(result.data.labelAlternative)) {
+                                for (var i = 0; i < result.data.labelAlternative.length; i++) {
+                                    $form.find('button.labelAlternativeAdd').parent().find("div:first").append('<span style="position: relative">' +
+                                        '<input type="text" class="form-control" name="labelAlternative[]" value="'+ result.data.labelAlternative[i] +'"/>' +
+                                        '<button class="labelAlternativeRemove btn" style="position: absolute;top:0px;right:0px;" type="button">' +
+                                        '<span class="icon-cancel-circled"></span>' +
+                                        '</button></span>');
+                                }
+                            }
+                            
+                            $form.find('button.socialMediaIDsAdd').parent().find("div:first").empty();
+                            if (result.data.socialMediaIDs && Array.isArray(result.data.socialMediaIDs)) {
+                                for (var i = 0; i < result.data.socialMediaIDs.length; i++) { 
+                                    $form.find('button.socialMediaIDsAdd').parent().find("div:first").append('<div style="position: relative" class="form-row">\n' +
+                            '            <div class="col">' +
+                            '               <input type="text" class="form-control" name="socialMediaIDsLabel[]" placeholder="Label (e.g. facebook)" value="'+ result.data.socialMediaIDs[i].label +'"/>' +
+                            '            </div>\n' +
+                            '            <div class="col">' +
+                            '               <input type="text" class="form-control" name="socialMediaIDsValue[]" placeholder="Value (name)" value="'+ result.data.socialMediaIDs[i].id +'"/>\n' +
+                            '            </div>\n' +
+                            '            <button class="socialMediaIDsRemove btn" style="position: absolute;top:0px;right:0px;" type="button">\n' +
+                            '                <span class="icon-cancel-circled"></span>\n' +
+                            '            </button>\n' +
+                            '        </div>');
+                                }
+                            }
+                        } else if (result && result.text) { 
+                            $getAdditionalInfoError.text("Could not fetch additional data: " + result.text).removeClass('d-none');
+                            $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+                        } else {
+                            $getAdditionalInfoError.text("Could not fetch additional data. Response was unexpected.").removeClass('d-none');
+                            $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        $getAdditionalInfoError.text("Error fetching additional data: " + textStatus + " - " + errorThrown).removeClass('d-none');
+                        $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+                    }
+                });
             } else {
-                $getAdditionalInfoBtn.prop("disabled", true);
+                $previewContainer.addClass('d-none');
+                $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
             }
         }
+
+        // Initial button state
+        $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
 
         function initializeFormDisplay() {
             // Determine the selected entity type from radio buttons
@@ -333,12 +448,18 @@ require_once(__DIR__ . '/../../api/v1/api.php');
 
             let tempItem = ".not"; // CSS class selector for specific form items
 
+            // Hide all form items below warning line
+            $form.find(".formItem").addClass("d-none");
+
             if (selectedType) {
                 // Show the corresponding subtype container and enable its select
                 switch (selectedType) {
                     case "person":
                         $("#subtypeContainerPerson").show().find("select").prop("disabled", false);
                         tempItem = ".formItemTypePerson";
+                        // Show only party and faction selects for person type
+                        $form.find("select[name='party']").closest(".formItem").removeClass("d-none");
+                        $form.find("select[name='faction']").closest(".formItem").removeClass("d-none");
                         break;
                     case "organisation":
                         $("#subtypeContainerOrganisation").show().find("select").prop("disabled", false);
@@ -355,26 +476,61 @@ require_once(__DIR__ . '/../../api/v1/api.php');
                 }
             }
 
-            // General form item visibility based on selectedType
-            $form.find(".formItem").hide().find("input, textarea, select").prop("disabled", true);
+            // Only enable/disable inputs, don't change visibility
+            $form.find(".formItem").find("input, textarea, select").prop("disabled", true);
 
             if (selectedType) {
-                // Show common items
+                // Enable common items
                 const $commonItems = $form.find(".formItemTypePerson.formItemTypeOrganisation.formItemTypeDocument.formItemTypeTerm");
-                $commonItems.show().find("input, textarea, select").prop("disabled", false);
+                $commonItems.find("input, textarea, select").prop("disabled", false);
                 
-                // Show type-specific items
+                // Enable type-specific items
                 const $specificItems = $form.find(tempItem);
-                $specificItems.show().find("input, textarea, select").prop("disabled", false);
-                
-                // Ensure only the active subtype select (handled above by enabling only one) is considered for submission.
-                // The old logic for disabling other subtype selects by name 'type' is now handled by the subtype container logic.
-            } else {
-                 // If no type is selected, ensure all specific and common form items are hidden and disabled.
-                 $form.find(".formItem[class*='formItemType']").hide().find("input, textarea, select").prop("disabled",true);
+                $specificItems.find("input, textarea, select").prop("disabled", false);
             }
-            updateGetAdditionalInfoButtonState(); // Check button state on init/change
+            
+            fetchAdditionalInfo(); // Add this line to trigger preview fetch when type changes
         }
+
+        // Listen for changes on radio buttons for itemType
+        $form.find("input[name='itemType']").on("change", function() {
+            initializeFormDisplay(); 
+        });
+
+        // Listen for changes on relevant fields to update preview
+        $form.find('input[name="id"], #typePerson, #typeOrganisation, #typeDocument, #typeTerm').on("change keyup", function() {
+            fetchAdditionalInfo();
+        });
+
+        // Also enable button when form is valid
+        $form.on('change keyup', 'input, select, textarea', function() {
+            const wikidataID = $form.find('input[name="id"]').val().trim();
+            const entityType = $form.find("input[name='itemType']:checked").val();
+            let subType = "";
+
+            if (entityType) {
+                switch (entityType) {
+                    case "person":
+                        subType = $form.find("#typePerson:not(:disabled)").val();
+                        break;
+                    case "organisation":
+                        subType = $form.find("#typeOrganisation:not(:disabled)").val();
+                        break;
+                    case "document":
+                        subType = $form.find("#typeDocument:not(:disabled)").val();
+                        break;
+                    case "term":
+                        subType = $form.find("#typeTerm:not(:disabled)").val();
+                        break;
+                }
+            }
+
+            if (wikidataID && entityType && subType) {
+                $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', false);
+            } else {
+                $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+            }
+        });
 
         function resetForm() {
             // Uncheck radio buttons
@@ -392,10 +548,8 @@ require_once(__DIR__ . '/../../api/v1/api.php');
             
             // Call initializeFormDisplay to reset visibility based on no type selected (hides subtype containers)
             initializeFormDisplay(); 
-            $form.find("#entityAddReturn").empty();
-            $getAdditionalInfoBtn.removeClass('btn-success').prop('disabled', true); // Reset button state
-            $getAdditionalInfoError.hide().empty(); // Hide error message
-            $submitBtn.prop('disabled', true); // Disable submit button
+            $form.find("#entityAddReturn").empty().addClass('d-none');
+            $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
         }
 
         // --- Initialization logic for this instance ---
@@ -417,10 +571,11 @@ require_once(__DIR__ . '/../../api/v1/api.php');
 			dataType: "json",
 			success: function (ret) {
 
-				$("#entityAddReturn").empty();
+				$("#entityAddReturn").empty().addClass('d-none');
 				$("#entityAddForm input, #entityAddForm select, #entityAddForm textarea").css("border", ""); 
 
 				if (ret["meta"]["requestStatus"] != "success") {
+                    $("#entityAddReturn").removeClass('d-none alert-success').addClass('alert-danger');
 					for (let error in ret["errors"]) {
 						$("#entityAddReturn").append('<div>' + ret["errors"][error]["title"] + '</div>');
                         if (ret["errors"][error]["meta"] && ret["errors"][error]["meta"]["domSelector"]) {
@@ -430,6 +585,8 @@ require_once(__DIR__ . '/../../api/v1/api.php');
 						}
 					}
 				} else {
+                    $("#entityAddReturn").removeClass('d-none alert-danger').addClass('alert-success');
+                    $("#entityAddReturn").text("Entity successfully added");
 
 					$("#affectedSessions").empty();
 
@@ -536,132 +693,6 @@ require_once(__DIR__ . '/../../api/v1/api.php');
 
 		$("body").on("click", ".socialMediaIDsRemove", function() {
 			$(this).parent().remove();
-		});
-
-        // Listen for changes on relevant fields to update button state
-        $form.find('input[name="id"], input[name="itemType"], #typePerson, #typeOrganisation, #typeDocument, #typeTerm').on("change keyup", function() {
-            updateGetAdditionalInfoButtonState();
-            // If user changes criteria, reset success state of getAdditionalInfoBtn and disable submit
-            $getAdditionalInfoBtn.removeClass('btn-success');
-            $submitBtn.prop('disabled', true);
-        });
-
-		// Listen for changes on radio buttons for itemType
-		$form.find("input[name='itemType']").on("change", function() {
-            initializeFormDisplay(); 
-		});
-
-		$form.find("#getAdditionalInfo").click(function(evt) {
-			
-            $getAdditionalInfoBtn.addClass('working').removeClass('btn-success').prop('disabled', true);
-            $getAdditionalInfoError.hide().empty();
-            $submitBtn.prop('disabled', true); // Keep submit disabled until success
-
-			// resetForm(); // Decided against full reset, user might want to keep Wikidata ID
-
-			// Get entityType from the checked radio button
-			let entityType = $form.find("input[name='itemType']:checked").val();
-			// Get subType from the currently visible and enabled select within its container
-            let subType = "";
-            if (entityType === "person") {
-                subType = $form.find("#typePerson:not(:disabled)").val();
-            } else if (entityType === "organisation") {
-                subType = $form.find("#typeOrganisation:not(:disabled)").val();
-            } else if (entityType === "document") {
-                subType = $form.find("#typeDocument:not(:disabled)").val();
-            } else if (entityType === "term") {
-                subType = $form.find("#typeTerm:not(:disabled)").val();
-            }
-
-			let serviceType = entityType;
-			if (subType == "memberOfParliament" || subType == "officialDocument" || subType == "legalDocument") {
-                serviceType = subType;
-			}
-
-			let wikidataID = $form.find('input[name="id"]').val();
-
-            if (!entityType) { alert("Please select an Entity Type first."); return; }
-            // Subtype is optional for fetching additional info, but Wikidata ID is mandatory
-            if (!wikidataID) { alert("Please enter a Wikidata ID first."); return; }
-
-
-			$.ajax({
-				url:config.dir.root+"/server/ajaxServer.php", 
-				data: {
-					"a": "entityGetFromAdditionalDataService",
-					"type": serviceType,
-					"wikidataID": wikidataID
-				},
-                dataType: "json", 
-                complete: function() {
-                    $getAdditionalInfoBtn.removeClass('working');
-                    // Re-enable button based on current form validity, in case user wants to try again after fixing input
-                    updateGetAdditionalInfoButtonState(); 
-                },
-				success: function(result) {
-					if (result && result.data) { 
-                        $getAdditionalInfoBtn.addClass('btn-success');
-                        $submitBtn.prop('disabled', false); // Enable submit on success
-
-                        if (result.data.label) $form.find('input[name="label"]').val(result.data.label);
-                        if (result.data.firstName) $form.find('input[name="firstName"]').val(result.data.firstName);
-                        if (result.data.lastName) $form.find('input[name="lastName"]').val(result.data.lastName);
-                        if (result.data.degree) $form.find('input[name="degree"]').val(result.data.degree);
-                        if (result.data.birthDate) $form.find('input[name="birthdate"]').val(result.data.birthDate);
-                        if (result.data.abstract) $form.find('textarea[name="abstract"]').val(result.data.abstract);
-                        if (result.data.thumbnailURI) $form.find('input[name="thumbnailuri"]').val(result.data.thumbnailURI);
-                        if (result.data.thumbnailCreator) $form.find('input[name="thumbnailcreator"]').val(result.data.thumbnailCreator);
-                        if (result.data.thumbnailLicense) $form.find('input[name="thumbnaillicense"]').val(result.data.thumbnailLicense);
-                        if (result.data.sourceURI) $form.find('input[name="sourceuri"]').val(result.data.sourceURI); 
-                        if (result.data.embedURI) $form.find('input[name="embeduri"]').val(result.data.embedURI);
-                        if (result.data.websiteURI) $form.find('input[name="websiteuri"]').val(result.data.websiteURI);
-                        if (result.data.additionalInformation) $form.find('textarea[name="additionalinformation"]').val(JSON.stringify(result.data.additionalInformation));
-
-                        if (result.data.gender) $form.find('select[name="gender"]').val(result.data.gender);
-                        if (result.data.partyID) $form.find('select[name="party"]').val(result.data.partyID);
-                        if (result.data.factionID) $form.find('select[name="faction"]').val(result.data.factionID);
-
-                        $form.find('button.labelAlternativeAdd').parent().find("div:first").empty();
-                        if (result.data.labelAlternative && Array.isArray(result.data.labelAlternative)) {
-                            for (var i = 0; i < result.data.labelAlternative.length; i++) {
-                                $form.find('button.labelAlternativeAdd').parent().find("div:first").append('<span style="position: relative">' +
-                                    '<input type="text" class="form-control" name="labelAlternative[]" value="'+ result.data.labelAlternative[i] +'"/>' +
-                                    '<button class="labelAlternativeRemove btn" style="position: absolute;top:0px;right:0px;" type="button">' +
-                                    '<span class="icon-cancel-circled"></span>' +
-                                    '</button></span>');
-                            }
-                        }
-                        
-                        $form.find('button.socialMediaIDsAdd').parent().find("div:first").empty();
-                        if (result.data.socialMediaIDs && Array.isArray(result.data.socialMediaIDs)) {
-                            for (var i = 0; i < result.data.socialMediaIDs.length; i++) { 
-                                $form.find('button.socialMediaIDsAdd').parent().find("div:first").append('<div style="position: relative" class="form-row">\n' +
-                        '            <div class="col">' +
-                        '               <input type="text" class="form-control" name="socialMediaIDsLabel[]" placeholder="Label (e.g. facebook)" value="'+ result.data.socialMediaIDs[i].label +'"/>' +
-                        '            </div>\n' +
-                        '            <div class="col">' +
-                        '               <input type="text" class="form-control" name="socialMediaIDsValue[]" placeholder="Value (name)" value="'+ result.data.socialMediaIDs[i].id +'"/>\n' +
-                        '            </div>\n' +
-                        '            <button class="socialMediaIDsRemove btn" style="position: absolute;top:0px;right:0px;" type="button">\n' +
-                        '                <span class="icon-cancel-circled"></span>\n' +
-                        '            </button>\n' +
-                        '        </div>');
-                            }
-                        }
-                    } else if (result && result.text) { 
-                         $getAdditionalInfoError.text("Could not fetch additional data: " + result.text).show();
-                         $getAdditionalInfoBtn.removeClass('btn-success'); // Ensure not success
-                    } else {
-                        $getAdditionalInfoError.text("Could not fetch additional data. Response was unexpected.").show();
-                        $getAdditionalInfoBtn.removeClass('btn-success'); // Ensure not success
-                    }
-				},
-                error: function(jqXHR, textStatus, errorThrown) {
-                    $getAdditionalInfoError.text("Error fetching additional data: " + textStatus + " - " + errorThrown).show();
-                    $getAdditionalInfoBtn.removeClass('btn-success'); // Ensure not success
-                }
-			});
-
 		});
 
 	});
