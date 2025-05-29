@@ -344,7 +344,6 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     },
                     success: function(result) {
                         if (result && result.data) { 
-                            // Enable the button when we have valid data
                             $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', false);
 
                             // Transform the data into the format expected by entity.preview.ads.php
@@ -371,51 +370,70 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                                 }
                             });
 
-                            // Continue with the existing form field population
-                            if (result.data.label) $form.find('input[name="label"]').val(result.data.label);
-                            if (result.data.firstName) $form.find('input[name="firstName"]').val(result.data.firstName);
-                            if (result.data.lastName) $form.find('input[name="lastName"]').val(result.data.lastName);
-                            if (result.data.degree) $form.find('input[name="degree"]').val(result.data.degree);
-                            if (result.data.birthDate) $form.find('input[name="birthdate"]').val(result.data.birthDate);
-                            if (result.data.abstract) $form.find('textarea[name="abstract"]').val(result.data.abstract);
-                            if (result.data.thumbnailURI) $form.find('input[name="thumbnailuri"]').val(result.data.thumbnailURI);
-                            if (result.data.thumbnailCreator) $form.find('input[name="thumbnailcreator"]').val(result.data.thumbnailCreator);
-                            if (result.data.thumbnailLicense) $form.find('input[name="thumbnaillicense"]').val(result.data.thumbnailLicense);
-                            if (result.data.sourceURI) $form.find('input[name="sourceuri"]').val(result.data.sourceURI); 
-                            if (result.data.embedURI) $form.find('input[name="embeduri"]').val(result.data.embedURI);
-                            if (result.data.websiteURI) $form.find('input[name="websiteuri"]').val(result.data.websiteURI);
-                            if (result.data.additionalInformation) $form.find('textarea[name="additionalinformation"]').val(JSON.stringify(result.data.additionalInformation));
+                            // Populate form fields
+                            const fieldMappings = {
+                                'label': 'label',
+                                'firstName': 'firstName',
+                                'lastName': 'lastName',
+                                'degree': 'degree',
+                                'birthdate': 'birthDate',
+                                'abstract': 'abstract',
+                                'thumbnailuri': 'thumbnailURI',
+                                'thumbnailcreator': 'thumbnailCreator',
+                                'thumbnaillicense': 'thumbnailLicense',
+                                'sourceuri': 'sourceURI',
+                                'embeduri': 'embedURI',
+                                'websiteuri': 'websiteURI',
+                                'additionalinformation': 'additionalInformation'
+                            };
 
+                            Object.entries(fieldMappings).forEach(([formField, dataField]) => {
+                                if (result.data[dataField]) {
+                                    if (formField === 'additionalinformation') {
+                                        $form.find(`textarea[name="${formField}"]`).val(JSON.stringify(result.data[dataField]));
+                                    } else {
+                                        $form.find(`input[name="${formField}"], textarea[name="${formField}"]`).val(result.data[dataField]);
+                                    }
+                                }
+                            });
+
+                            // Handle select fields
                             if (result.data.gender) $form.find('select[name="gender"]').val(result.data.gender);
                             if (result.data.partyID) $form.find('select[name="party"]').val(result.data.partyID);
                             if (result.data.factionID) $form.find('select[name="faction"]').val(result.data.factionID);
 
+                            // Handle alternative labels
                             $form.find('button.labelAlternativeAdd').parent().find("div:first").empty();
                             if (result.data.labelAlternative && Array.isArray(result.data.labelAlternative)) {
-                                for (var i = 0; i < result.data.labelAlternative.length; i++) {
-                                    $form.find('button.labelAlternativeAdd').parent().find("div:first").append('<span style="position: relative">' +
-                                        '<input type="text" class="form-control" name="labelAlternative[]" value="'+ result.data.labelAlternative[i] +'"/>' +
+                                result.data.labelAlternative.forEach(label => {
+                                    $form.find('button.labelAlternativeAdd').parent().find("div:first").append(
+                                        '<span style="position: relative">' +
+                                        '<input type="text" class="form-control" name="labelAlternative[]" value="'+ label +'"/>' +
                                         '<button class="labelAlternativeRemove btn" style="position: absolute;top:0px;right:0px;" type="button">' +
                                         '<span class="icon-cancel-circled"></span>' +
-                                        '</button></span>');
-                                }
+                                        '</button></span>'
+                                    );
+                                });
                             }
                             
+                            // Handle social media IDs
                             $form.find('button.socialMediaIDsAdd').parent().find("div:first").empty();
                             if (result.data.socialMediaIDs && Array.isArray(result.data.socialMediaIDs)) {
-                                for (var i = 0; i < result.data.socialMediaIDs.length; i++) { 
-                                    $form.find('button.socialMediaIDsAdd').parent().find("div:first").append('<div style="position: relative" class="form-row">\n' +
-                            '            <div class="col">' +
-                            '               <input type="text" class="form-control" name="socialMediaIDsLabel[]" placeholder="Label (e.g. facebook)" value="'+ result.data.socialMediaIDs[i].label +'"/>' +
-                            '            </div>\n' +
-                            '            <div class="col">' +
-                            '               <input type="text" class="form-control" name="socialMediaIDsValue[]" placeholder="Value (name)" value="'+ result.data.socialMediaIDs[i].id +'"/>\n' +
-                            '            </div>\n' +
-                            '            <button class="socialMediaIDsRemove btn" style="position: absolute;top:0px;right:0px;" type="button">\n' +
-                            '                <span class="icon-cancel-circled"></span>\n' +
-                            '            </button>\n' +
-                            '        </div>');
-                                }
+                                result.data.socialMediaIDs.forEach(socialMedia => {
+                                    $form.find('button.socialMediaIDsAdd').parent().find("div:first").append(
+                                        '<div style="position: relative" class="form-row">' +
+                                        '<div class="col">' +
+                                        '<input type="text" class="form-control" name="socialMediaIDsLabel[]" placeholder="Label (e.g. facebook)" value="'+ socialMedia.label +'"/>' +
+                                        '</div>' +
+                                        '<div class="col">' +
+                                        '<input type="text" class="form-control" name="socialMediaIDsValue[]" placeholder="Value (name)" value="'+ socialMedia.id +'"/>' +
+                                        '</div>' +
+                                        '<button class="socialMediaIDsRemove btn" style="position: absolute;top:0px;right:0px;" type="button">' +
+                                        '<span class="icon-cancel-circled"></span>' +
+                                        '</button>' +
+                                        '</div>'
+                                    );
+                                });
                             }
                         } else if (result && result.text) { 
                             $getAdditionalInfoError.text("Could not fetch additional data: " + result.text).removeClass('d-none');
@@ -525,11 +543,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                 }
             }
 
-            if (wikidataID && entityType && subType) {
-                $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', false);
-            } else {
-                $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
-            }
+            $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', !(wikidataID && entityType && subType));
         });
 
         function resetForm() {
