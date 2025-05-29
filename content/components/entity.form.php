@@ -324,7 +324,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                 $getAdditionalInfoError.addClass('d-none').empty();
                 $previewContainer.removeClass('d-none');
                 $loadingIndicator.removeClass('d-none');
-                $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+                $('#modalAddEntitySubmitBtn').prop('disabled', true);
 
                 let serviceType = entityType;
                 if (subType == "memberOfParliament" || subType == "officialDocument" || subType == "legalDocument") {
@@ -344,7 +344,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     },
                     success: function(result) {
                         if (result && result.data) { 
-                            $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', false);
+                            $('#modalAddEntitySubmitBtn').prop('disabled', false);
 
                             // Transform the data into the format expected by entity.preview.ads.php
                             const entityData = {
@@ -437,25 +437,25 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                             }
                         } else if (result && result.text) { 
                             $getAdditionalInfoError.text("Could not fetch additional data: " + result.text).removeClass('d-none');
-                            $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+                            $('#modalAddEntitySubmitBtn').prop('disabled', true);
                         } else {
                             $getAdditionalInfoError.text("Could not fetch additional data. Response was unexpected.").removeClass('d-none');
-                            $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+                            $('#modalAddEntitySubmitBtn').prop('disabled', true);
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         $getAdditionalInfoError.text("Error fetching additional data: " + textStatus + " - " + errorThrown).removeClass('d-none');
-                        $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+                        $('#modalAddEntitySubmitBtn').prop('disabled', true);
                     }
                 });
             } else {
                 $previewContainer.addClass('d-none');
-                $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+                $('#modalAddEntitySubmitBtn').prop('disabled', true);
             }
         }
 
         // Initial button state
-        $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+        $('#modalAddEntitySubmitBtn').prop('disabled', true);
 
         function initializeFormDisplay() {
             // Determine the selected entity type from radio buttons
@@ -543,7 +543,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                 }
             }
 
-            $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', !(wikidataID && entityType && subType));
+            $('#modalAddEntitySubmitBtn').prop('disabled', !(wikidataID && entityType && subType));
         });
 
         function resetForm() {
@@ -563,7 +563,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             // Call initializeFormDisplay to reset visibility based on no type selected (hides subtype containers)
             initializeFormDisplay(); 
             $form.find("#entityAddReturn").empty().addClass('d-none');
-            $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true);
+            $('#modalAddEntitySubmitBtn').prop('disabled', true);
         }
 
         // --- Initialization logic for this instance ---

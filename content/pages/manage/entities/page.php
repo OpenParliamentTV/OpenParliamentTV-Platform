@@ -96,7 +96,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         <button type="button" class="btn btn-secondary rounded-pill w-100" data-bs-dismiss="modal">Cancel</button>
                     </div>
                     <div class="col-6">
-                        <button type="button" class="btn btn-primary rounded-pill w-100" id="modalAddEntitySubmitBtnEntitiesPage" disabled>Add Entity</button> 
+                        <button type="button" class="btn btn-primary rounded-pill w-100" id="modalAddEntitySubmitBtn" disabled>Add Entity</button>
                     </div>
                 </div>
             </div>
@@ -639,7 +639,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         }
 
                         const $formInternalSubmitBtn = $theForm.find('#entityAddFormSubmitBtn');
-                        const $modalSubmitBtn = $('#modalAddEntitySubmitBtnEntitiesPage'); 
+                        const $modalSubmitBtn = $('#modalAddEntitySubmitBtn'); 
                         
                         $modalSubmitBtn.prop('disabled', $formInternalSubmitBtn.prop('disabled'));
 
@@ -666,11 +666,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 }
                 const modalBody = addEntityModal.querySelector('.modal-body');
                 modalBody.innerHTML = ''; 
-                $('#modalAddEntitySubmitBtnEntitiesPage').prop('disabled', true); 
+                $('#modalAddEntitySubmitBtn').prop('disabled', true); 
             });
 
             // Handle click on modal's Add Entity button for this page
-            $('body').on('click', '#modalAddEntitySubmitBtnEntitiesPage', function() { 
+            $('body').on('click', '#modalAddEntitySubmitBtn', function() { 
                 const $form = $('#addEntityModal .modal-body #entityAddForm');
                 if ($form.length) {
                     $form.submit();
