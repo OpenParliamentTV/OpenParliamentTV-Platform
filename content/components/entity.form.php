@@ -704,9 +704,6 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             }
 		});
 
-        // Remove the old reimport button click handler since we now handle it during form submission
-        $("body").off("click", "#reimportSessionsButton");
-
 		$(".labelAlternativeAdd").on("click", function() {
 			$(this).parent().find("div:first").append('<span style="position: relative">' +
 				'<input type="text" class="form-control" name="labelAlternative[]">' +
