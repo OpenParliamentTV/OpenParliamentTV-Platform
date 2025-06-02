@@ -210,7 +210,6 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/entitySuggestion.php");
                     $addResponse = entitySuggestionAdd($api_request, $db);
                     return createApiResponse($addResponse);
-
                 case "person":
                     require_once (__DIR__."/modules/person.php");
                     $addResponse = personAdd($api_request, $db, $dbp);
@@ -227,7 +226,6 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/term.php");
                     $addResponse = termAdd($api_request, $db, $dbp);
                     return createApiResponse($addResponse);
-
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
@@ -276,6 +274,19 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+        
+        case "deleteItem":
+            switch ($api_request["itemType"]) {
+                case "entitySuggestion":
+                    require_once (__DIR__."/modules/entitySuggestion.php");
+                    $deleteResponse = entitySuggestionDelete($api_request["EntitysuggestionID"] ?? null, $db);
+                    return createApiResponse($deleteResponse);
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType", "Invalid itemType for deleteItem action.")
                     );
             }
             break;
