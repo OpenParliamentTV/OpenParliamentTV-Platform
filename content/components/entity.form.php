@@ -7,26 +7,6 @@ require_once(__DIR__ . '/../../api/v1/api.php');
 require_once(__DIR__."/../../modules/utilities/language.php");
 
 ?>
-<div id="entityAddSuccess" style="display:none;" class="pb-5 contentContainer">
-    <h3>Entity successfully added</h3>
-    <div class="row">
-        <div class="col-12">
-            Entity has been added.<br>
-            <div id="affectedSessions_false">There seem to be no sessions affected.</div>
-            <div id="affectedSessions_true">
-                Do you want to re-import these sessions?<br>
-                <form id="reimportSessionForm" method="post">
-                    <div id="affectedSessions"></div>
-                    <button type="button" class="btn btn-sm input-group-text entitiesToggleDetailsAndTable mb-3" id="reimportSessionsButton">
-                        <span class="icon-plus"></span>
-                        <span class="d-none d-md-inline">Yes</span>
-                    </button>
-                    TODO: Checkbox to remove EntitySuggestion
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 <div id="entityAddDiv" class="contentContainer">
     <form id="entityAddForm" method="post">
         <input name="action" value="addItem" type="hidden">
@@ -222,6 +202,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     <label for="originid">Original ID</label>
                     <input type="text" class="form-control" name="originid">
                 </div>
+                <div id="formHintPartyFaction" class="formHint alert alert-warning d-none mt-3 mb-0">Please select a party and faction for this person</div>
                 <div class="row mt-3">
                     <div class="col-6">
                         <div class="form-group formItem formItemTypePerson d-none">
@@ -266,6 +247,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     <label for="additionalinformation">Additional Information (JSON)</label>
                     <textarea class="form-control" name="additionalinformation" placeholder='{"abgeordnetenwatchID":""}'></textarea>
                 </div>
+                <div id="affectedSessionsContainer"></div>
                 <div id="entityAddReturn" class="alert d-none mt-3 mb-0"></div>
             </div>
         </div>
@@ -402,6 +384,61 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                             if (result.data.partyID) $form.find('select[name="party"]').val(result.data.partyID);
                             if (result.data.factionID) $form.find('select[name="faction"]').val(result.data.factionID);
 
+                            // Show/hide party and faction selects based on preview data
+                            if (result.data.type === "person" || result.data.type === "memberOfParliament") {
+                                $form.find("select[name='party']").closest(".formItem").removeClass("d-none");
+                                $form.find("select[name='faction']").closest(".formItem").removeClass("d-none");
+                                $form.find(".formHint#formHintPartyFaction").removeClass("d-none");
+                            } else {
+                                $form.find("select[name='party']").closest(".formItem").addClass("d-none");
+                                $form.find("select[name='faction']").closest(".formItem").addClass("d-none");
+                                $form.find(".formHint#formHintPartyFaction").addClass("d-none");
+                            }
+
+                            // Check for affected sessions using the API endpoint
+                            $.ajax({
+                                url: config.dir.root + "/api/v1/",
+                                data: {
+                                    action: "getItemsFromDB",
+                                    itemType: "entitySuggestion",
+                                    id: wikidataID,
+                                    idType: "external"
+                                },
+                                dataType: "json",
+                                success: function(sessionsResult) {
+                                    const $container = $("#affectedSessionsContainer");
+                                    $container.empty(); // Clear previous content
+
+                                    let speechCount = 0;
+                                    if (sessionsResult && sessionsResult.data) {
+                                        // Prioritize EntitysuggestionCount if available
+                                        if (typeof sessionsResult.data.EntitysuggestionCount !== 'undefined') {
+                                            speechCount = parseInt(sessionsResult.data.EntitysuggestionCount, 10);
+                                        } 
+                                        // Fallback to context length if EntitysuggestionCount is not present (should be rare if count is maintained)
+                                        else if (sessionsResult.data.EntitysuggestionContext) {
+                                            const context = sessionsResult.data.EntitysuggestionContext;
+                                            speechCount = Object.keys(context).length;
+                                        }
+                                    }
+
+                                    if (speechCount > 0) {
+                                        let html = '<div class="mt-3">';
+                                        html += '  <div class="form-check mb-2">';
+                                        html += '    <input class="form-check-input" type="checkbox" id="reimportSessionsCheckbox" checked>';
+                                        html += '    <label class="form-check-label" for="reimportSessionsCheckbox">Re-import affected sessions (' + speechCount + ' speeches)</label>';
+                                        html += '  </div>';
+                                        html += '</div>';
+                                        $container.html(html);
+                                    } else {
+                                        $container.html('<div class="mt-3 text-muted">No sessions will be affected.</div>');
+                                    }
+                                },
+                                error: function() {
+                                    $("#affectedSessionsContainer").html('<div class="mt-3 text-danger">Error checking affected sessions.</div>');
+                                }
+                            });
+
                             // Handle alternative labels
                             $form.find('button.labelAlternativeAdd').parent().find("div:first").empty();
                             if (result.data.labelAlternative && Array.isArray(result.data.labelAlternative)) {
@@ -466,8 +503,9 @@ require_once(__DIR__."/../../modules/utilities/language.php");
 
             let tempItem = ".not"; // CSS class selector for specific form items
 
-            // Hide all form items below warning line
+            // Hide all form items
             $form.find(".formItem").addClass("d-none");
+            $form.find(".formHint").addClass("d-none");            
 
             if (selectedType) {
                 // Show the corresponding subtype container and enable its select
@@ -475,9 +513,6 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     case "person":
                         $("#subtypeContainerPerson").show().find("select").prop("disabled", false);
                         tempItem = ".formItemTypePerson";
-                        // Show only party and faction selects for person type
-                        $form.find("select[name='party']").closest(".formItem").removeClass("d-none");
-                        $form.find("select[name='faction']").closest(".formItem").removeClass("d-none");
                         break;
                     case "organisation":
                         $("#subtypeContainerOrganisation").show().find("select").prop("disabled", false);
@@ -583,100 +618,94 @@ require_once(__DIR__."/../../modules/utilities/language.php");
 		$form.ajaxForm({
 			url: config.dir.root +"/api/v1/",
 			dataType: "json",
+            beforeSubmit: function(formData, jqForm, options) {
+                // Add reimportAffectedSessions to the form data
+                const reimportCheckbox = $("#reimportSessionsCheckbox");
+                let reimportAffectedSessions = false;
+                if (reimportCheckbox.length > 0 && reimportCheckbox.is(":checked")) {
+                    reimportAffectedSessions = true;
+                }
+                formData.push({ name: "reimportAffectedSessions", value: reimportAffectedSessions });
+                // sourceEntitySuggestionID is already part of the form as a hidden input
+            },
 			success: function (ret) {
-
-				$("#entityAddReturn").empty().addClass('d-none');
+				$("#entityAddReturn").empty().addClass('d-none alert-success alert-danger'); // Reset classes
 				$("#entityAddForm input, #entityAddForm select, #entityAddForm textarea").css("border", ""); 
 
-				if (ret["meta"]["requestStatus"] != "success") {
-                    $("#entityAddReturn").removeClass('d-none alert-success').addClass('alert-danger');
-					for (let error in ret["errors"]) {
-						$("#entityAddReturn").append('<div>' + ret["errors"][error]["title"] + '</div>');
-                        if (ret["errors"][error]["meta"] && ret["errors"][error]["meta"]["domSelector"]) {
-                            $(ret["errors"][error]["meta"]["domSelector"]).css("border", "1px solid red");
-                        } else if ("label" in ret["errors"][error]) { 
-							$("[name='" + ret["errors"][error]["label"] + "']").css("border", "1px solid red");
-						}
-					}
-				} else {
-                    $("#entityAddReturn").removeClass('d-none alert-danger').addClass('alert-success');
-                    $("#entityAddReturn").text("Entity successfully added");
+				if (ret && ret.meta && ret.meta.requestStatus === "success") {
+                    resetForm(); 
+                    // Assuming the modal has an ID like 'addEntityModal'. Please adjust if different.
+                    // It's better to get the modal ID from a data attribute on the form or a known parent.
+                    // For now, using a common pattern.
+                    const $modal = $form.closest('.modal');
+                    if ($modal.length) {
+                        $modal.modal('hide');
+                    }
 
-					$("#affectedSessions").empty();
-
-                    $("#entityAddDiv").slideUp(); 
-					$("#entityAddSuccess").slideDown(); 
-
-					if (ret.meta && "EntitysuggestionItem" in ret.meta && ret.meta.EntitysuggestionItem && typeof ret.meta.EntitysuggestionItem === 'object' && ret.meta.EntitysuggestionItem.EntitysuggestionID) {
-                        $("#reimportSessionForm").data("entitysuggestionid", ret.meta.EntitysuggestionItem.EntitysuggestionID);
-
-						if (ret.meta && "affectedSessions" in ret.meta && (Object.keys(ret.meta.affectedSessions).length > 0)) {
-							for (let parliament in ret.meta.affectedSessions) {
-								let sessioncontent = "";
-								for (let session in ret.meta.affectedSessions[parliament]) {
-									sessioncontent += "<div class='sessionFilesDiv'>" + session + " | File exists: " + ret.meta.affectedSessions[parliament][session]["fileExists"] + "<input type='hidden' name='files[" + parliament + "][]' class='reimportfile' value='" + session + "'>";
-								}
-                                $("#entityAddSuccess #affectedSessions").append("<div class='parlamentDiv'><h4>Parlament " + parliament + "</h4>" + sessioncontent + "</div>");
-							}
-							$("#entityAddSuccess #affectedSessions_true").show();
-							$("#entityAddSuccess #affectedSessions_false").hide();
-						} else {
-							$("#entityAddSuccess #affectedSessions_false").show();
-							$("#entityAddSuccess #affectedSessions_true").hide();
-						}
-
-					} else {
-						$("#entityAddSuccess #affectedSessions_false").show();
-						$("#entityAddSuccess #affectedSessions_true").hide();
-					}
+                    // Refresh all Bootstrap tables on the page
+                    // This selector might need to be more specific if there are tables you don't want to refresh
+                    if (typeof $ !== 'undefined' && $.fn.bootstrapTable) {
+                        $('.bootstrap-table .table').bootstrapTable('refresh');
+                    }
                     
+                    // Optionally, display a short success toast/notification if desired, instead of the old div
+                    // Example using a hypothetical toast function:
+                    // showToast("Success", "Entity added and sessions processed successfully.", "success");
 
-				}
-			}
+				} else {
+                    // Handle errors (partial or full)
+                    $("#entityAddReturn").removeClass('d-none alert-success').addClass('alert-danger');
+                    let errorMessages = [];
+
+                    if (ret && ret.errors && Array.isArray(ret.errors)) {
+                        ret.errors.forEach(function(error) {
+                            let message = error.title;
+                            if (error.detail) {
+                                message += ": " + error.detail;
+                            }
+                            errorMessages.push('<div>' + message + '</div>');
+                            if (error.meta && error.meta.domSelector) {
+                                $(error.meta.domSelector).css("border", "1px solid red");
+                            } else if (error.label) { 
+                                $("[name='" + error.label + "']").css("border", "1px solid red");
+                            }
+                        });
+                    } else {
+                        // Generic error if the structure is not as expected
+                        errorMessages.push('<div>An unexpected error occurred. Please try again.</div>');
+                    }
+
+                    // Add messages from meta if they provide more context
+                    if (ret && ret.meta) {
+                        if (ret.meta.entityAddStatus === 'error') {
+                             errorMessages.push("<div>Error adding the entity.</div>");
+                        }
+                        if (ret.meta.reimportStatus === 'error') {
+                            errorMessages.push("<div>Error re-importing affected sessions: " + (ret.meta.reimportSummary || "Please check logs.") + "</div>");
+                        }
+                        if (ret.meta.suggestionDeleteStatus === 'error') {
+                            errorMessages.push("<div>Note: Entity was added, but failed to automatically remove the original suggestion.</div>");
+                        }
+                    }
+                    
+                    if (errorMessages.length > 0) {
+                        $("#entityAddReturn").html(errorMessages.join("")).removeClass("d-none");
+                    } else {
+                        // Fallback if no specific messages were generated but it's an error
+                        $("#entityAddReturn").html("<div>An unknown error occurred.</div>").removeClass("d-none");
+                    }
+                }
+			},
+            error: function(jqXHR, textStatus, errorThrown) {
+                // Handle AJAX call failure
+                $("#entityAddReturn").empty().addClass('d-none alert-success alert-danger'); // Reset classes
+                $("#entityAddReturn").removeClass('d-none alert-success').addClass('alert-danger');
+                $("#entityAddReturn").html("<div>Communication error with the server: " + textStatus + " - " + errorThrown + "</div>").removeClass("d-none");
+            }
 		});
 
-        
-        $("body").on("click", "#reimportSessionsButton", function() { 
-            let entitySuggestionID = $("#reimportSessionForm").data("entitysuggestionid");
-            let filesData = $("#reimportSessionForm").serialize(); 
-
-            let apiPayload = {
-                action: "import",
-                itemType: "reimport-sessions",
-                EntitysuggestionID: entitySuggestionID 
-            };
-            
-            let payloadString = $.param(apiPayload) + "&" + filesData;
-
-            $.ajax({
-                url: config.dir.root + "/api/v1/",
-                type: "POST",
-                dataType: "json",
-                data: payloadString,
-                success: function(response) {
-                    let message = "Reimport process finished.";
-                    if (response.meta && response.meta.requestStatus === "success") {
-                        if (response.meta.summary) {
-                            message = response.meta.summary;
-                        } else if (response.data && response.data.copied && response.data.failed && response.data.skipped) {
-                            message = response.data.copied.length + " file(s) re-imported, " + 
-                                      response.data.failed.length + " failed, " + 
-                                      response.data.skipped.length + " skipped.";
-                        }
-                        alert("Reimport successful: " + message);
-                    } else {
-                        message = "Reimport failed.";
-                        if (response.errors && response.errors.length > 0) {
-                            message += " " + response.errors[0].title + (response.errors[0].detail ? (": " + response.errors[0].detail) : "");
-                        }
-                        alert(message);
-                    }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert("An error occurred during reimport: " + textStatus + " - " + errorThrown);
-                }
-            });
-        });
+        // Remove the old reimport button click handler since we now handle it during form submission
+        $("body").off("click", "#reimportSessionsButton");
 
 		$(".labelAlternativeAdd").on("click", function() {
 			$(this).parent().find("div:first").append('<span style="position: relative">' +

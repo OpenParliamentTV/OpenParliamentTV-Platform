@@ -416,8 +416,12 @@ function personSearch($parameter, $db = false) {
     }
 }
 
-function personAdd($api_request, $db = false, $dbp = false /* dbp is not used here directly, but might be by augment */) {
+function personAdd($api_request, $db = false, $dbp = false) {
     global $config;
+
+    // Extract reimportAffectedSessions and sourceEntitySuggestionID from $api_request
+    $reimportAffectedSessions = isset($api_request['reimportAffectedSessions']) ? (bool)$api_request['reimportAffectedSessions'] : false;
+    $sourceEntitySuggestionID = $api_request['sourceEntitySuggestionID'] ?? null;
 
     // Parameter validation
     if (empty($api_request["id"])) {
@@ -484,21 +488,101 @@ function personAdd($api_request, $db = false, $dbp = false /* dbp is not used he
             $additionalInformation
         );
 
-        $personID = $api_request["id"]; // ID is the wikidata ID provided
-        $personData = personGetByID($personID, $db); // Fetch the newly created person data
+        $personID = $api_request["id"];
+        $personDataResponse = personGetByID($personID, $db);
 
-        if (isset($personData["meta"]["requestStatus"]) && $personData["meta"]["requestStatus"] == "success") {
-            // Augment with entity suggestion details if applicable
-            $finalResponse = augmentResponseWithEntitySuggestionDetails($personData, $api_request, $db);
-            return $finalResponse;
+        $finalMeta = [];
+        $finalData = null;
+
+        if (isset($personDataResponse["meta"]["requestStatus"]) && $personDataResponse["meta"]["requestStatus"] == "success") {
+            $finalMeta['entityAddStatus'] = 'success';
+            $finalData = $personDataResponse["data"];
+
+            $actualSuggestionInternalIDToProcess = $sourceEntitySuggestionID;
+
+            // If no internal suggestion ID was passed from the form, but reimport is flagged
+            // and we have the external wikidata ID, try to find an existing suggestion.
+            if (empty($actualSuggestionInternalIDToProcess) && $reimportAffectedSessions && !empty($api_request['id'])) {
+                $lookupResponse = apiV1([
+                    "action" => "getItemsFromDB",
+                    "itemType" => "entitySuggestion",
+                    "id" => $api_request['id'], // This is the external Wikidata ID of the person being added
+                    "idType" => "external",
+                    "limit" => 1 // We only need one if it exists
+                ], $db);
+
+                if (isset($lookupResponse["meta"]["requestStatus"]) && $lookupResponse["meta"]["requestStatus"] == "success" && !empty($lookupResponse["data"])) {
+                    $foundSuggestion = $lookupResponse["data"];
+                    if (isset($foundSuggestion['EntitysuggestionID'])) {
+                        $actualSuggestionInternalIDToProcess = $foundSuggestion['EntitysuggestionID'];
+                    }
+                }
+            }
+            
+            // Now call post-processing with the resolved internal suggestion ID (if any) and the reimport flag
+            $postProcessingDetails = handleEntitySuggestionPostProcessing($reimportAffectedSessions, $actualSuggestionInternalIDToProcess, $db);
+            
+            $finalMeta['reimportStatus'] = $postProcessingDetails['reimportStatus'];
+            $finalMeta['reimportSummary'] = $postProcessingDetails['reimportSummary'];
+            $finalMeta['affectedSessions'] = $postProcessingDetails['affectedSessions'];
+            $finalMeta['affectedSpeeches'] = $postProcessingDetails['affectedSpeeches'];
+            $finalMeta['suggestionDeleteStatus'] = $postProcessingDetails['suggestionDeleteStatus'];
+
+            // Determine overall request status
+            if ($finalMeta['entityAddStatus'] === 'success' && 
+                $postProcessingDetails['reimportStatus'] === 'success' && 
+                $postProcessingDetails['suggestionDeleteStatus'] !== 'error') { // Suggestion delete error doesn't fail the whole request
+                $finalMeta['requestStatus'] = 'success';
+            } else {
+                $finalMeta['requestStatus'] = 'error';
+                 // If any critical part failed, ensure an error is logged or an error response is formed
+                if ($postProcessingDetails['reimportStatus'] === 'error') {
+                    // Construct a more specific error if reimport failed
+                     return createApiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Person"]);
+                }
+            }
+
         } else {
             // personGetByID failed, or returned an error structure
+            $finalMeta['entityAddStatus'] = 'error';
+            $finalMeta['reimportStatus'] = 'not_attempted';
+            $finalMeta['suggestionDeleteStatus'] = 'not_attempted';
+            $finalMeta['requestStatus'] = 'error';
+            // Return the error from personGetByID or a generic one if it's not an API error structure
+            if (isset($personDataResponse["errors"])) {
+                return $personDataResponse; // It's already an API error response
+            }
             return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Person"]);
         }
+        
+        // If requestStatus is error, but we have some meta, form an error response
+        if ($finalMeta['requestStatus'] === 'error') {
+            // You might want to pick a primary error to report. 
+            // For now, let's assume if entityAddStatus is error, that's primary.
+            // If reimport failed critically, we returned earlier.
+            // If suggestion delete failed, it's an error in meta but not blocking overall success for entity add.
+            $errorTitle = "messageErrorPartialSuccessTitle";
+            $errorDetail = "messageErrorPartialSuccessDetail";
+            if($finalMeta['entityAddStatus'] === 'error'){
+                 $errorTitle = "messageErrorItemCreationRetrievalFailedTitle";
+                 $errorDetail = "messageErrorItemCreationRetrievalFailedDetail";
+            }
+            // This error construction needs refinement based on which error to prioritize if multiple steps fail.
+            return createApiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Person"], null, $finalMeta);
+        }
+
+        return createApiSuccessResponse($finalData, $finalMeta);
 
     } catch (Exception $e) {
         error_log("Error in personAdd: " . $e->getMessage());
-        return createApiErrorDatabaseError($e->getMessage());
+        // Construct meta for error response
+        $errorMeta = [
+            'requestStatus' => 'error',
+            'entityAddStatus' => 'error',
+            'reimportStatus' => 'not_attempted',
+            'suggestionDeleteStatus' => 'not_attempted'
+        ];
+        return createApiErrorDatabaseError($e->getMessage(), $errorMeta); // Pass meta to be included in error
     }
 }
 

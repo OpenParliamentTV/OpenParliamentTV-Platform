@@ -269,4 +269,51 @@ function entitySuggestionReimportSessions($request_params, $db = false) {
     return createApiSuccessResponse($results, ['summary' => count($results['copied']) . ' file(s) re-imported, ' . count($results['failed']) . ' failed, ' . count($results['skipped']) . ' skipped.']);
 }
 
+/**
+ * Deletes an entity suggestion from the database.
+ *
+ * @param int $entitySuggestionID The internal ID of the entity suggestion to delete.
+ * @param object|false $db Optional database connection object.
+ * @return array Standard API response array.
+ */
+function entitySuggestionDelete($entitySuggestionID, $db = false) {
+    global $config;
+
+    if (empty($entitySuggestionID)) {
+        return createApiErrorMissingParameter('EntitysuggestionID');
+    }
+
+    if (!$db) {
+        $db = getApiDatabaseConnection('platform');
+        if (isset($db["errors"])) { // getApiDatabaseConnection returns an error array on failure
+            return $db;
+        }
+    }
+
+    try {
+        // Check if the suggestion exists before attempting to delete
+        $exists = $db->getOne("SELECT EntitysuggestionID FROM ?n WHERE EntitysuggestionID = ?i", $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $entitySuggestionID);
+
+        if (!$exists) {
+            return createApiErrorNotFound('EntitySuggestion');
+        }
+
+        $db->query("DELETE FROM ?n WHERE EntitysuggestionID = ?i", $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $entitySuggestionID);
+        
+        // Check if the row was actually deleted
+        $stillExists = $db->getOne("SELECT EntitysuggestionID FROM ?n WHERE EntitysuggestionID = ?i", $config["platform"]["sql"]["tbl"]["Entitysuggestion"], $entitySuggestionID);
+        if ($stillExists) {
+            // This case should ideally not happen if the query was successful and no error was thrown
+            error_log("Error in entitySuggestionDelete: Failed to delete EntitysuggestionID: " . $entitySuggestionID . " despite no DB exception.");
+            return createApiErrorResponse(500, 1, "messageErrorItemDeletionFailedTitle", "messageErrorItemDeletionFailedDetail", ["itemType" => "EntitySuggestion"]);
+        }
+
+        return createApiSuccessResponse(["EntitysuggestionID" => $entitySuggestionID, "status" => "deleted"]);
+
+    } catch (Exception $e) {
+        error_log("Error in entitySuggestionDelete: " . $e->getMessage());
+        return createApiErrorDatabaseError($e->getMessage());
+    }
+}
+
 ?> 

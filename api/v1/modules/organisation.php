@@ -235,8 +235,12 @@ function organisationSearch($parameter, $noLimit = false) {
  * @param array $item Organisation data including ID, type, label, and other attributes
  * @return array Response with original format: ["meta"]["requestStatus"] and ["meta"]["itemID"] or ["errors"]
  */
-function organisationAdd($api_request, $db = false, $dbp = false /* dbp is not used here directly */) {
+function organisationAdd($api_request, $db = false, $dbp = false) {
     global $config;
+
+    // Extract reimportAffectedSessions and sourceEntitySuggestionID from $api_request
+    $reimportAffectedSessions = isset($api_request['reimportAffectedSessions']) ? (bool)$api_request['reimportAffectedSessions'] : false;
+    $sourceEntitySuggestionID = $api_request['sourceEntitySuggestionID'] ?? null;
 
     // Validate required fields
     if (empty($api_request["id"])) {
@@ -289,18 +293,85 @@ function organisationAdd($api_request, $db = false, $dbp = false /* dbp is not u
         );
 
         $organisationID = $api_request["id"];
-        $organisationData = organisationGetByID($organisationID); // Fetch newly created organisation
+        $organisationDataResponse = organisationGetByID($organisationID, $db);
 
-        if (isset($organisationData["meta"]["requestStatus"]) && $organisationData["meta"]["requestStatus"] == "success") {
-            $finalResponse = augmentResponseWithEntitySuggestionDetails($organisationData, $api_request, $db);
-            return $finalResponse;
+        $finalMeta = [];
+        $finalData = null;
+
+        if (isset($organisationDataResponse["meta"]["requestStatus"]) && $organisationDataResponse["meta"]["requestStatus"] == "success") {
+            $finalMeta['entityAddStatus'] = 'success';
+            $finalData = $organisationDataResponse["data"];
+
+            $actualSuggestionInternalIDToProcess = $sourceEntitySuggestionID;
+
+            if (empty($actualSuggestionInternalIDToProcess) && $reimportAffectedSessions && !empty($api_request['id'])) {
+                $lookupResponse = apiV1([
+                    "action" => "getItemsFromDB",
+                    "itemType" => "entitySuggestion",
+                    "id" => $api_request['id'], 
+                    "idType" => "external",
+                    "limit" => 1 
+                ], $db);
+
+                if (isset($lookupResponse["meta"]["requestStatus"]) && $lookupResponse["meta"]["requestStatus"] == "success" && !empty($lookupResponse["data"])) {
+                    $foundSuggestion = $lookupResponse["data"];
+                    if (isset($foundSuggestion['EntitysuggestionID'])) {
+                        $actualSuggestionInternalIDToProcess = $foundSuggestion['EntitysuggestionID'];
+                    }
+                }
+            }
+            
+            $postProcessingDetails = handleEntitySuggestionPostProcessing($reimportAffectedSessions, $actualSuggestionInternalIDToProcess, $db);
+            
+            $finalMeta['reimportStatus'] = $postProcessingDetails['reimportStatus'];
+            $finalMeta['reimportSummary'] = $postProcessingDetails['reimportSummary'];
+            $finalMeta['affectedSessions'] = $postProcessingDetails['affectedSessions'];
+            $finalMeta['affectedSpeeches'] = $postProcessingDetails['affectedSpeeches'];
+            $finalMeta['suggestionDeleteStatus'] = $postProcessingDetails['suggestionDeleteStatus'];
+
+            if ($finalMeta['entityAddStatus'] === 'success' && 
+                $postProcessingDetails['reimportStatus'] === 'success' && 
+                $postProcessingDetails['suggestionDeleteStatus'] !== 'error') {
+                $finalMeta['requestStatus'] = 'success';
+            } else {
+                $finalMeta['requestStatus'] = 'error';
+                if ($postProcessingDetails['reimportStatus'] === 'error') {
+                    return createApiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Organisation"]);
+                }
+            }
+
         } else {
+            $finalMeta['entityAddStatus'] = 'error';
+            $finalMeta['reimportStatus'] = 'not_attempted';
+            $finalMeta['suggestionDeleteStatus'] = 'not_attempted';
+            $finalMeta['requestStatus'] = 'error';
+            if (isset($organisationDataResponse["errors"])) {
+                return $organisationDataResponse;
+            }
             return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Organisation"]);
         }
+        
+        if ($finalMeta['requestStatus'] === 'error') {
+            $errorTitle = "messageErrorPartialSuccessTitle";
+            $errorDetail = "messageErrorPartialSuccessDetail";
+            if($finalMeta['entityAddStatus'] === 'error'){
+                 $errorTitle = "messageErrorItemCreationRetrievalFailedTitle";
+                 $errorDetail = "messageErrorItemCreationRetrievalFailedDetail";
+            }
+            return createApiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Organisation"], null, $finalMeta);
+        }
+
+        return createApiSuccessResponse($finalData, $finalMeta);
 
     } catch (Exception $e) {
         error_log("Error in organisationAdd: " . $e->getMessage());
-        return createApiErrorDatabaseError($e->getMessage());
+        $errorMeta = [
+            'requestStatus' => 'error',
+            'entityAddStatus' => 'error',
+            'reimportStatus' => 'not_attempted',
+            'suggestionDeleteStatus' => 'not_attempted'
+        ];
+        return createApiErrorDatabaseError($e->getMessage(), $errorMeta);
     }
 }
 

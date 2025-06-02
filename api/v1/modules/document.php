@@ -216,8 +216,12 @@ function documentSearch($parameter, $db = false) {
 }
 
 
-function documentAdd($api_request, $db = false, $dbp = false /* dbp not used */) {
+function documentAdd($api_request, $db = false, $dbp = false) {
     global $config;
+
+    // Extract reimportAffectedSessions and sourceEntitySuggestionID from $api_request
+    $reimportAffectedSessions = isset($api_request['reimportAffectedSessions']) ? (bool)$api_request['reimportAffectedSessions'] : false;
+    $sourceEntitySuggestionID = $api_request['sourceEntitySuggestionID'] ?? null;
 
     // Parameter validation
     if (empty($api_request["id"])) {
@@ -257,7 +261,7 @@ function documentAdd($api_request, $db = false, $dbp = false /* dbp not used */)
     try {
         $db->query($sql,
             $config["platform"]["sql"]["tbl"]["Document"],
-            $api_request["id"] ?? null, // wikidataID, can be null
+            $api_request["id"] ?? null, // DocumentWikidataID is optional
             $api_request["type"],
             $api_request["label"],
             $labelAlternative,
@@ -271,24 +275,88 @@ function documentAdd($api_request, $db = false, $dbp = false /* dbp not used */)
         );
 
         $documentID = $db->insertId(); // Get the auto-incremented DocumentID
-        if (!$documentID) {
-            return createApiErrorDatabaseError("Failed to retrieve last insert ID for Document.");
-        }
+        $documentDataResponse = documentGetByID($documentID, $db);
 
-        $documentData = documentGetByID($documentID); // Fetch newly created document by its internal ID
+        $finalMeta = [];
+        $finalData = null;
 
-        if (isset($documentData["meta"]["requestStatus"]) && $documentData["meta"]["requestStatus"] == "success") {
-             // Augment with entity suggestion details if applicable
-            // The platform DB connection is already $db from getApiDatabaseConnection
-            $finalResponse = augmentResponseWithEntitySuggestionDetails($documentData, $api_request, $db);
-            return $finalResponse;
+        if (isset($documentDataResponse["meta"]["requestStatus"]) && $documentDataResponse["meta"]["requestStatus"] == "success") {
+            $finalMeta['entityAddStatus'] = 'success';
+            $finalData = $documentDataResponse["data"];
+
+            $actualSuggestionInternalIDToProcess = $sourceEntitySuggestionID;
+            
+            // For documents, the $api_request['id'] is the DocumentWikidataID (optional), which acts as the external ID for suggestions.
+            $lookupExternalId = $api_request['id'] ?? null; 
+
+            if (empty($actualSuggestionInternalIDToProcess) && $reimportAffectedSessions && !empty($lookupExternalId)) {
+                $lookupResponse = apiV1([
+                    "action" => "getItemsFromDB",
+                    "itemType" => "entitySuggestion",
+                    "id" => $lookupExternalId, // Use DocumentWikidataID for lookup
+                    "idType" => "external",
+                    "limit" => 1
+                ], $db);
+
+                if (isset($lookupResponse["meta"]["requestStatus"]) && $lookupResponse["meta"]["requestStatus"] == "success" && !empty($lookupResponse["data"])) {
+                    $foundSuggestion = $lookupResponse["data"];
+                    if (isset($foundSuggestion['EntitysuggestionID'])) {
+                        $actualSuggestionInternalIDToProcess = $foundSuggestion['EntitysuggestionID'];
+                    }
+                }
+            }
+            
+            $postProcessingDetails = handleEntitySuggestionPostProcessing($reimportAffectedSessions, $actualSuggestionInternalIDToProcess, $db);
+            
+            $finalMeta['reimportStatus'] = $postProcessingDetails['reimportStatus'];
+            $finalMeta['reimportSummary'] = $postProcessingDetails['reimportSummary'];
+            $finalMeta['affectedSessions'] = $postProcessingDetails['affectedSessions'];
+            $finalMeta['affectedSpeeches'] = $postProcessingDetails['affectedSpeeches'];
+            $finalMeta['suggestionDeleteStatus'] = $postProcessingDetails['suggestionDeleteStatus'];
+
+            if ($finalMeta['entityAddStatus'] === 'success' && 
+                $postProcessingDetails['reimportStatus'] === 'success' && 
+                $postProcessingDetails['suggestionDeleteStatus'] !== 'error') {
+                $finalMeta['requestStatus'] = 'success';
+            } else {
+                $finalMeta['requestStatus'] = 'error';
+                if ($postProcessingDetails['reimportStatus'] === 'error') {
+                    return createApiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Document"]);
+                }
+            }
+
         } else {
+            $finalMeta['entityAddStatus'] = 'error';
+            $finalMeta['reimportStatus'] = 'not_attempted';
+            $finalMeta['suggestionDeleteStatus'] = 'not_attempted';
+            $finalMeta['requestStatus'] = 'error';
+            if (isset($documentDataResponse["errors"])) {
+                return $documentDataResponse;
+            }
             return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Document"]);
         }
+        
+        if ($finalMeta['requestStatus'] === 'error') {
+            $errorTitle = "messageErrorPartialSuccessTitle";
+            $errorDetail = "messageErrorPartialSuccessDetail";
+            if($finalMeta['entityAddStatus'] === 'error'){
+                 $errorTitle = "messageErrorItemCreationRetrievalFailedTitle";
+                 $errorDetail = "messageErrorItemCreationRetrievalFailedDetail";
+            }
+            return createApiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Document"], null, $finalMeta);
+        }
+
+        return createApiSuccessResponse($finalData, $finalMeta);
 
     } catch (Exception $e) {
         error_log("Error in documentAdd: " . $e->getMessage());
-        return createApiErrorDatabaseError($e->getMessage());
+        $errorMeta = [
+            'requestStatus' => 'error',
+            'entityAddStatus' => 'error',
+            'reimportStatus' => 'not_attempted',
+            'suggestionDeleteStatus' => 'not_attempted'
+        ];
+        return createApiErrorDatabaseError($e->getMessage(), $errorMeta);
     }
 }
 

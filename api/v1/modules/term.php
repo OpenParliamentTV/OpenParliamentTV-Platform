@@ -249,8 +249,12 @@ function termSearch($parameter, $db = false) {
 }
 
 
-function termAdd($api_request, $db = false, $dbp = false /* dbp not used here */) {
+function termAdd($api_request, $db = false, $dbp = false) {
     global $config;
+
+    // Extract reimportAffectedSessions and sourceEntitySuggestionID from $api_request
+    $reimportAffectedSessions = isset($api_request['reimportAffectedSessions']) ? (bool)$api_request['reimportAffectedSessions'] : false;
+    $sourceEntitySuggestionID = $api_request['sourceEntitySuggestionID'] ?? null;
 
     // Parameter validation
     if (empty($api_request["id"])) {
@@ -300,19 +304,85 @@ function termAdd($api_request, $db = false, $dbp = false /* dbp not used here */
         );
 
         $termID = $api_request["id"]; // TermID is the wikidata ID provided
-        $termData = termGetByID($termID); // Fetch newly created term
+        $termDataResponse = termGetByID($termID, $db);
 
-        if (isset($termData["meta"]["requestStatus"]) && $termData["meta"]["requestStatus"] == "success") {
-            // Augment with entity suggestion details if applicable
-            $finalResponse = augmentResponseWithEntitySuggestionDetails($termData, $api_request, $db);
-            return $finalResponse;
+        $finalMeta = [];
+        $finalData = null;
+
+        if (isset($termDataResponse["meta"]["requestStatus"]) && $termDataResponse["meta"]["requestStatus"] == "success") {
+            $finalMeta['entityAddStatus'] = 'success';
+            $finalData = $termDataResponse["data"];
+
+            $actualSuggestionInternalIDToProcess = $sourceEntitySuggestionID;
+
+            if (empty($actualSuggestionInternalIDToProcess) && $reimportAffectedSessions && !empty($api_request['id'])) {
+                $lookupResponse = apiV1([
+                    "action" => "getItemsFromDB",
+                    "itemType" => "entitySuggestion",
+                    "id" => $api_request['id'], 
+                    "idType" => "external",
+                    "limit" => 1 
+                ], $db);
+
+                if (isset($lookupResponse["meta"]["requestStatus"]) && $lookupResponse["meta"]["requestStatus"] == "success" && !empty($lookupResponse["data"])) {
+                    $foundSuggestion = $lookupResponse["data"];
+                    if (isset($foundSuggestion['EntitysuggestionID'])) {
+                        $actualSuggestionInternalIDToProcess = $foundSuggestion['EntitysuggestionID'];
+                    }
+                }
+            }
+            
+            $postProcessingDetails = handleEntitySuggestionPostProcessing($reimportAffectedSessions, $actualSuggestionInternalIDToProcess, $db);
+            
+            $finalMeta['reimportStatus'] = $postProcessingDetails['reimportStatus'];
+            $finalMeta['reimportSummary'] = $postProcessingDetails['reimportSummary'];
+            $finalMeta['affectedSessions'] = $postProcessingDetails['affectedSessions'];
+            $finalMeta['affectedSpeeches'] = $postProcessingDetails['affectedSpeeches'];
+            $finalMeta['suggestionDeleteStatus'] = $postProcessingDetails['suggestionDeleteStatus'];
+
+            if ($finalMeta['entityAddStatus'] === 'success' && 
+                $postProcessingDetails['reimportStatus'] === 'success' && 
+                $postProcessingDetails['suggestionDeleteStatus'] !== 'error') {
+                $finalMeta['requestStatus'] = 'success';
+            } else {
+                $finalMeta['requestStatus'] = 'error';
+                if ($postProcessingDetails['reimportStatus'] === 'error') {
+                    return createApiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Term"]);
+                }
+            }
+
         } else {
+            $finalMeta['entityAddStatus'] = 'error';
+            $finalMeta['reimportStatus'] = 'not_attempted';
+            $finalMeta['suggestionDeleteStatus'] = 'not_attempted';
+            $finalMeta['requestStatus'] = 'error';
+            if (isset($termDataResponse["errors"])) {
+                return $termDataResponse;
+            }
             return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Term"]);
         }
+        
+        if ($finalMeta['requestStatus'] === 'error') {
+            $errorTitle = "messageErrorPartialSuccessTitle";
+            $errorDetail = "messageErrorPartialSuccessDetail";
+            if($finalMeta['entityAddStatus'] === 'error'){
+                 $errorTitle = "messageErrorItemCreationRetrievalFailedTitle";
+                 $errorDetail = "messageErrorItemCreationRetrievalFailedDetail";
+            }
+            return createApiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Term"], null, $finalMeta);
+        }
+
+        return createApiSuccessResponse($finalData, $finalMeta);
 
     } catch (Exception $e) {
         error_log("Error in termAdd: " . $e->getMessage());
-        return createApiErrorDatabaseError($e->getMessage());
+        $errorMeta = [
+            'requestStatus' => 'error',
+            'entityAddStatus' => 'error',
+            'reimportStatus' => 'not_attempted',
+            'suggestionDeleteStatus' => 'not_attempted'
+        ];
+        return createApiErrorDatabaseError($e->getMessage(), $errorMeta);
     }
 }
 
