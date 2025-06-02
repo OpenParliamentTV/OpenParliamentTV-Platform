@@ -258,10 +258,10 @@ function entitySuggestionReimportSessions($request_params, $db = false) {
             }
 
             if (copy($sourcePath, $destinationPath)) {
-                $results['copied'][] = ['parliament' => $parliament, 'file' => $file, 'source' => $sourcePath, 'destination' => $destinationPath];
+                $results['copied'][] = ['parliament' => $parliament, 'file' => $file];
             } else {
                 $results['failed'][] = ['parliament' => $parliament, 'file' => $file, 'reason' => 'Copy operation failed.'];
-                error_log("Reimport: Failed to copy " . $sourcePath . " to " . $destinationPath);
+                error_log("Reimport: Failed to copy file '" . $file . "' for parliament '" . $parliament . "'.");
             }
         }
     }
