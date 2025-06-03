@@ -151,7 +151,8 @@ function auth($userID, $action, $entity, $db = false) {
                 "autocomplete",
                 "statistics",
                 "user",
-                "status"
+                "status",
+                "lang"
             );
 
             if (in_array($entity, $whitelist)) {
