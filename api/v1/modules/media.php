@@ -1577,6 +1577,36 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
             );
         }
 
+        // Handle fields=id for returning only IDs
+        if (isset($filteredParameters['fields']) && $filteredParameters['fields'] === 'id') {
+            $idList = [];
+            if (is_array($search["hits"]["hits"])) {
+                foreach ($search["hits"]["hits"] as $hit) {
+                    if (isset($hit["_source"]["id"])) {
+                        $idList[] = ["type" => "media", "id" => $hit["_source"]["id"]];
+                    }
+                }
+            }
+            // Prepare meta for ID list response
+            $metaForIds = [
+                "requestStatus" => "success",
+                "results" => [
+                    "count" => count($idList),
+                    "total" => $search["hits"]["total"]["value"] ?? 0,
+                ]
+            ];
+            // Prepare links for ID list response
+            $linksForIds = [
+                "self" => $config["dir"]["api"]."/search/media?".getURLParameterFromArray($filteredParameters)
+            ];
+            return createApiSuccessResponse(
+                $idList,
+                $metaForIds,
+                $linksForIds
+            );
+        }
+
+        // This is the path for full search results
         $return = [
             "data" => [],
             "meta" => [
@@ -1586,8 +1616,8 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
                     "speechFirstDateTimestamp" => $search["aggregations"]["dateFirst"]["value"],
                     "speechLastDateStr" => $search["aggregations"]["dateLast"]["value_as_string"],
                     "speechLastDateTimestamp" => $search["aggregations"]["dateLast"]["value"],
-                    "resultsPerFaction" => [],
-                    "days" => []
+                    "resultsPerFaction" => [], // Placeholder
+                    "days" => []             // Placeholder
                 ],
                 "results" => [
                     "count" => ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0,
@@ -1600,7 +1630,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
             ]
         ];
 
-        // Process search hits
+        // Process search hits into $return["data"]
         foreach ($search["hits"]["hits"] as $hit) {
             $resultData = $hit["_source"];
             $resultData["_score"] = $hit["_score"];
@@ -1611,36 +1641,24 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
             $return["data"][] = $resultData;
         }
 
-        // Process aggregations
-        foreach ($search["aggregations"]["types_count"]["factions"]["terms"]["buckets"] as $buckets) {
-            $return["meta"]["attributes"]["resultsPerFaction"][$buckets["key"]] = $buckets["doc_count"];
+        // Process aggregations into $return["meta"]["attributes"]
+        if (isset($search["aggregations"]["types_count"]["factions"]["terms"]["buckets"])) {
+            foreach ($search["aggregations"]["types_count"]["factions"]["terms"]["buckets"] as $buckets) {
+                $return["meta"]["attributes"]["resultsPerFaction"][$buckets["key"]] = $buckets["doc_count"];
+            }
         }
 
-        foreach($search["aggregations"]["datesCount"]["buckets"] as $day) {
-            $return["meta"]["attributes"]["days"][$day["key_as_string"]] = $day;
+        if (isset($search["aggregations"]["datesCount"]["buckets"])) {
+            foreach($search["aggregations"]["datesCount"]["buckets"] as $day) {
+                $return["meta"]["attributes"]["days"][$day["key_as_string"]] = $day;
+            }
         }
-
+        
+        // Now $return["meta"] and $return["links"] are fully populated
         return createApiSuccessResponse(
             $return["data"],
-            [
-                "requestStatus" => "success",
-                "attributes" => [
-                    "speechFirstDateStr" => $search["aggregations"]["dateFirst"]["value_as_string"],
-                    "speechFirstDateTimestamp" => $search["aggregations"]["dateFirst"]["value"],
-                    "speechLastDateStr" => $search["aggregations"]["dateLast"]["value_as_string"],
-                    "speechLastDateTimestamp" => $search["aggregations"]["dateLast"]["value"],
-                    "resultsPerFaction" => $return["meta"]["attributes"]["resultsPerFaction"],
-                    "days" => $return["meta"]["attributes"]["days"]
-                ],
-                "results" => [
-                    "count" => ((gettype($search["hits"]["hits"]) == "array") || (gettype($search["hits"]["hits"]) == "object")) ? count($search["hits"]["hits"]) : 0,
-                    "total" => $search["hits"]["total"]["value"],
-                    "totalHits" => $search["hits"]["totalHits"] ?? 0
-                ]
-            ],
-            [
-                "self" => $config["dir"]["api"]."/search/media?".getURLParameterFromArray($filteredParameters)
-            ]
+            $return["meta"],
+            $return["links"]
         );
 
     } catch (Exception $e) {

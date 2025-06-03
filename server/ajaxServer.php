@@ -139,17 +139,6 @@ switch ($_REQUEST["a"]) {
 
     break;
 
-    case "getMediaIDListFromSearchResult":
-        require_once(__DIR__."/../modules/search/functions.php");
-        require_once(__DIR__."/../modules/utilities/functions.php");
-        
-        $allowedParams = filterAllowedSearchParams($_REQUEST, 'media');
-        
-        $return["success"] = "true";
-        $return["text"] = "searchresults";
-        $return["return"] = getMediaIDListFromSearchResult($allowedParams);
-    break;
-
     default:
     break;
 

@@ -56,15 +56,26 @@ function getResultList(resultListCallback) {
 	var resultURLParts = window.location.search.split('?'),
 		ajaxURLParams = '';
 	if (resultURLParts[1]) {
-		ajaxURLParams += '&'+ resultURLParts[1];
+		ajaxURLParams += '&' + resultURLParts[1]; // Ensure leading & for subsequent params
 	}
+
+	var apiUrl = config.dir.root + "/api/v1/search/media?fields=id" + ajaxURLParams;
+
 	resultListAjax = $.ajax({
 		method: "GET",
-		url: "../server/ajaxServer.php?a=getMediaIDListFromSearchResult"+ ajaxURLParams
-	}).done(function(data) {
-		resultListCallback(data.return);
+		url: apiUrl
+	}).done(function(apiResponse) {
+		// The callback expects an object like { results: [ {id:"val1"}, ... ] }
+		// The API response has the array of items in apiResponse.data
+		if (apiResponse && apiResponse.data) {
+			resultListCallback({ results: apiResponse.data });
+		} else {
+			console.error("Error fetching or parsing media ID list from API:", apiResponse);
+			resultListCallback({ results: [] }); // Provide empty list to prevent further errors
+		}
 	}).fail(function(err) {
-		console.log(err);
+		console.error("Failed to get media ID list:", err);
+		resultListCallback({ results: [] }); // Provide empty list on failure
 	});
 }
 
@@ -204,7 +215,7 @@ function updatePlayer() {
 					"selector": {
 						"conformsTo": "http://www.w3.org/TR/media-frags/",
 						"type": "FragmentSelector",
-						"value": "t="+ playerData.finds[i].end +""
+						"value": "t="+ playerData.finds[i+1].start +""
 					}
 				},
 				"body": {
