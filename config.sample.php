@@ -177,7 +177,8 @@ $config["allowedSearchParams"] = [
         "sessionID", 
         "sessionNumber", 
         "sort", 
-        "termID"
+        "termID",
+        "fields"
     ],
     "person" => [
         "abgeordnetenwatchID",
