@@ -912,7 +912,7 @@ switch ($page) {
 
 			if (count($_REQUEST) < 2 || (!$_REQUEST["q"] && !$_REQUEST["personID"])) {
 				$pageTitle .= L::search;
-			} elseif ($_REQUEST["parliament"] && strlen($_REQUEST["parliament"]) >= 2) {
+			} elseif (isset($_REQUEST["parliament"]) && $_REQUEST["parliament"] && strlen($_REQUEST["parliament"]) >= 2) {
 				$pageTitle .= ' - '.L::speeches.' - '.$config["parliament"][$_REQUEST["parliament"]]["label"];
 			} else {
 				$pageTitle .= ' - '.L::speeches;

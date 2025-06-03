@@ -284,7 +284,7 @@ function getSearchBody($request, $getAllResults) {
     ];
     
     // Apply default filters if not including all results
-    if (!$request["includeAll"] || $request["includeAll"] == false) {
+    if (!isset($request["includeAll"]) || $request["includeAll"] == false) {
         applyDefaultFilters($filter);
     }
     
@@ -886,7 +886,7 @@ function processTextQuery($request, &$query) {
     // Get fuzzy match (text without quotes)
     $fuzzy_match = preg_replace($quotationMarksRegex, '', $request["q"]);
     
-    $boolCondition = $request["id"] ? "should" : "must";
+    $boolCondition = isset($request["id"]) ? "should" : "must";
     $query["bool"][$boolCondition] = [];
     
     // Process fuzzy match

@@ -135,7 +135,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 							<hr>
 							<?php
 							include_once(__DIR__."/../../../../config.php");
-							if ((!$_REQUEST["parliament"]) || (!array_key_exists($_REQUEST["parliament"],$config["parliament"]))) {
+							if ((!isset($_REQUEST["parliament"])) || (!array_key_exists($_REQUEST["parliament"],$config["parliament"]))) {
 
 								echo '
 									<form action="" method="post">

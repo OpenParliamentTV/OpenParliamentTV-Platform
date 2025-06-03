@@ -19,6 +19,9 @@
 <!-- End Icons -->
 
 <?php
+if (!isset($page)) {
+    $page = ''; // Initialize $page if not set
+}
 if ($page != 'media') {
 ?>
 

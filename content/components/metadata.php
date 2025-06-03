@@ -1,4 +1,7 @@
 <?php 
+if (!isset($page)) {
+    $page = ''; // Initialize $page if not set
+}
 $description = strip_tags($pageDescription);
 $claimShortClean = strip_tags(L::claimShort);
 $url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];

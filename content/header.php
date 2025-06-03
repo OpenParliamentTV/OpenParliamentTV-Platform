@@ -1,4 +1,7 @@
 <?php
+if (!isset($page)) {
+	$page = ''; // Initialize $page if not set
+}
 ?>
 <header>
 	<!--<div class="text-center alert m-0 px-1 py-0 alert-info" style="font-size: 14px;">* <span class="icon-attention mr-1"></span><a href="<?= $config["dir"]["root"] ?>/announcements" style="color: inherit; text-decoration: underline;"><?= L::messageAnnouncementCurrentState; ?></a></div>-->
@@ -42,8 +45,8 @@
 			</div>
 			
 			<?php
-			if ($_REQUEST["a"] == "media" && $isResult) {
-				$autoplayResultsClass = (boolval($_REQUEST['playresults'])) ? "active" : "";
+			if (isset($_REQUEST["a"]) && $_REQUEST["a"] == "media" && isset($isResult) && $isResult) {
+				$autoplayResultsClass = (isset($_REQUEST['playresults']) && boolval($_REQUEST['playresults'])) ? "active" : "";
 				$backParamStr = preg_replace('/(&playresults=[0-1])/', '', ltrim($paramStr, '&'));
 				$backParamStr = preg_replace('/(&context=[^&]+)/', '', $backParamStr);
 			?>
