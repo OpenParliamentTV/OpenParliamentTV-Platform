@@ -180,20 +180,18 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		
 		// Add click handler for ADS buttons
 		$(document).on('click', '.ads-button', function() {
-			// Store reference to the clicked button
 			const $button = $(this);
+			const $row = $button.closest('tr'); 
+            const $table = $row.closest('table');
+            const tableId = $table.attr('id');
 			
-			$button.removeClass("list-group-item-success");
-			$button.removeClass("list-group-item-danger");
+			$button.removeClass("list-group-item-success list-group-item-danger");
 			$button.addClass("working");
 			
-			// Get entity information from button data attributes
 			const entityType = $button.data('type');
 			const entityId = $button.data('id');
 			const entitySubtype = $button.data('subtype');
 			
-			// Determine the correct type for the ADS service
-			// Some subtypes need to be used directly instead of the main type
 			let adsType = entityType;
 			if (entitySubtype === "memberOfParliament" || 
 				entitySubtype === "person" || 
@@ -216,19 +214,26 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				success: function(response) {
 					$button.removeClass("working");
 					
-					// Check if the response indicates success
-					if (response.success === "true") {
-						$button.addClass("list-group-item-success");
-						console.log("ADS update successful: ", response);
+					if (response.success === "true" || response.success === true) {
+                        if (tableId && entityId) {
+                            $table.one('load-success.bs.table post-body.bs.table', function (e) {
+                                $table.off('load-success.bs.table post-body.bs.table'); 
+                                animateBootstrapTableRow(tableId, entityId, 'success', 2000)
+                                    .catch(error => {
+                                        console.error('[ADS Update] Error during success animation:', error);
+                                    });
+                            });
+                            $table.bootstrapTable('refresh');
+                        } else {
+                            console.error("[ADS Update] Missing tableId or entityId for success animation.");
+                        }
 					} else {
-						$button.addClass("list-group-item-danger");
 						console.error("ADS update failed:", response);
 					}
 				},
 				error: function(xhr, status, error) {
 					$button.removeClass("working");
-					$button.addClass("list-group-item-danger");
-					console.error("AJAX error:", status, error);
+					console.error("ADS update AJAX error:", status, error);
 				}
 			});
 		});
@@ -329,6 +334,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			serverSort: true,
 			sortName: "PersonLastChanged",
 			sortOrder: "desc",
+			uniqueId: "PersonID",
 			queryParams: function(params) {
 				// Add search parameter to the query
 				if (params.search) {
@@ -424,6 +430,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			serverSort: true,
 			sortName: "OrganisationLastChanged",
 			sortOrder: "desc",
+			uniqueId: "OrganisationID",
 			columns: [
 				{
 					field: "OrganisationThumbnailURI",
@@ -490,6 +497,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			serverSort: true,
 			sortName: "DocumentLastChanged",
 			sortOrder: "desc",
+			uniqueId: "DocumentID",
 			columns: [
 				{
 					field: "DocumentThumbnailURI",
@@ -560,6 +568,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			serverSort: true,
 			sortName: "TermLastChanged",
 			sortOrder: "desc",
+			uniqueId: "TermID",
 			columns: [
 				{
 					field: "TermThumbnailURI",

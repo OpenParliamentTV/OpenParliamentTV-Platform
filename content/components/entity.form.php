@@ -629,29 +629,106 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                 // sourceEntitySuggestionID is already part of the form as a hidden input
             },
 			success: function (ret) {
-				$("#entityAddReturn").empty().addClass('d-none alert-success alert-danger'); // Reset classes
+				// console.log('[Form AJAX Success Callback] Raw response (ret):', JSON.parse(JSON.stringify(ret))); // DEBUG REMOVED
+                $("#entityAddReturn").empty().addClass('d-none alert-success alert-danger');
 				$("#entityAddForm input, #entityAddForm select, #entityAddForm textarea").css("border", ""); 
 
 				if (ret && ret.meta && ret.meta.requestStatus === "success") {
+                    const submittedSourceSuggestionID = $form.find('input[name="sourceEntitySuggestionID"]').val();
+                    // Check if sourceEntitySuggestionIDUsed is present in meta and true, otherwise fallback to checking the form field
+                    const wasFromSuggestion = (ret.meta.sourceEntitySuggestionIDUsed === true || ret.meta.sourceEntitySuggestionIDUsed === 'true') 
+                                              || (!ret.meta.hasOwnProperty('sourceEntitySuggestionIDUsed') && submittedSourceSuggestionID && submittedSourceSuggestionID !== "");
+
                     resetForm(); 
-                    // Assuming the modal has an ID like 'addEntityModal'. Please adjust if different.
-                    // It's better to get the modal ID from a data attribute on the form or a known parent.
-                    // For now, using a common pattern.
                     const $modal = $form.closest('.modal');
                     if ($modal.length) {
                         $modal.modal('hide');
                     }
 
-                    // Refresh all Bootstrap tables on the page
-                    // This selector might need to be more specific if there are tables you don't want to refresh
-                    if (typeof $ !== 'undefined' && $.fn.bootstrapTable) {
-                        $('.bootstrap-table .table').bootstrapTable('refresh');
-                    }
-                    
-                    // Optionally, display a short success toast/notification if desired, instead of the old div
-                    // Example using a hypothetical toast function:
-                    // showToast("Success", "Entity added and sessions processed successfully.", "success");
+                    if (wasFromSuggestion) {
+                        // Action originated from a suggestion (typically on entitySuggestions/page.php)
+                        // The primary visual feedback on this page is deleting the suggestion row.
+                        const suggestionIdToAnimate = ret.meta.sourceEntitySuggestionIDUsed || submittedSourceSuggestionID;
+                        
+                        if (suggestionIdToAnimate) {
+                            animateBootstrapTableRow('entitiesTable', suggestionIdToAnimate, 'delete', 1000)
+                                .then(() => {
+                                    // console.log('Delete animation for suggestion ' + suggestionIdToAnimate + ' complete.');
+                                    // After suggestion is removed by animation (which includes removeByUniqueId),
+                                    // refresh all tables on the page to ensure overall consistency.
+                                    if (typeof $ !== 'undefined' && $.fn.bootstrapTable) {
+                                        $('.bootstrap-table .table').bootstrapTable('refresh');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error during suggestion delete animation:', error);
+                                    // Fallback: Still refresh all tables.
+                                    if (typeof $ !== 'undefined' && $.fn.bootstrapTable) {
+                                        $('.bootstrap-table .table').bootstrapTable('refresh');
+                                    }
+                                });
+                        } else {
+                             console.warn('Source suggestion ID not found for deletion animation.');
+                             // Fallback: Refresh all tables if ID is missing.
+                             if (typeof $ !== 'undefined' && $.fn.bootstrapTable) {
+                                $('.bootstrap-table .table').bootstrapTable('refresh');
+                            }
+                        }
+                    } else {
+                        // Direct add action (typically on entities/page.php)
+                        try {
+                            // console.log('[Form Success] Direct Add: Entering direct add block. Response data:', ret.data); // DEBUG REMOVED
+                            const newItemId = ret.data.id; 
+                            const itemType = ret.data.type;  
+                            let targetTableId = null;
 
+                            // console.log('[Form Success] Direct Add: newItemId:', newItemId, 'itemType:', itemType); // DEBUG REMOVED
+
+                            switch (itemType) {
+                                case 'person': targetTableId = 'peopleTable'; break;
+                                case 'organisation': targetTableId = 'organisationsTable'; break;
+                                case 'document': targetTableId = 'documentsTable'; break;
+                                case 'term': targetTableId = 'termsTable'; break;
+                            }
+                            // console.log('[Form Success] Direct Add: Determined targetTableId:', targetTableId); // DEBUG REMOVED
+
+                            if (targetTableId && newItemId) {
+                                const $targetTable = $('#' + targetTableId);
+                                if ($targetTable.length) {
+                                    // console.log('[Form Success] Direct Add: Target table found:', targetTableId, 'New Item ID:', newItemId); // DEBUG REMOVED
+                                    $targetTable.one('load-success.bs.table post-body.bs.table', function (e) {
+                                        // console.log('[Form Success] Direct Add: Table event fired:', e.type, 'for table:', targetTableId, 'Searching for ID:', newItemId); // DEBUG REMOVED
+                                        $targetTable.off('load-success.bs.table post-body.bs.table'); 
+                                        animateBootstrapTableRow(targetTableId, newItemId, 'success', 2000)
+                                            .then(() => {
+                                                // console.log('[Form Success] Direct Add: Success animation PROMISE RESOLVED for new entity', newItemId, 'on table', targetTableId); // DEBUG REMOVED
+                                            })
+                                            .catch(error => {
+                                                console.error('[Form Success] Direct Add: Error during new entity success animation:', error);
+                                            });
+                                    });
+                                    // console.log('[Form Success] Direct Add: Refreshing table:', targetTableId); // DEBUG REMOVED
+                                    $targetTable.bootstrapTable('refresh');
+                                } else {
+                                    console.warn('[Form Success] Direct Add: Target table ' + targetTableId + ' not found for success animation.');
+                                    if (typeof $ !== 'undefined' && $.fn.bootstrapTable) {
+                                        $('.bootstrap-table .table').bootstrapTable('refresh');
+                                    }
+                                }
+                            } else {
+                                console.warn('[Form Success] Direct Add: Target table ID or new item ID was null/undefined. newItemId:', newItemId, 'targetTableId:', targetTableId);
+                                if (typeof $ !== 'undefined' && $.fn.bootstrapTable) {
+                                    $('.bootstrap-table .table').bootstrapTable('refresh');
+                                }
+                            }
+                        } catch (e) {
+                            console.error('[Form Success] Direct Add: Error in direct add block:', e);
+                            // Fallback refresh just in case
+                            if (typeof $ !== 'undefined' && $.fn.bootstrapTable) {
+                                $('.bootstrap-table .table').bootstrapTable('refresh');
+                            }
+                        }
+                    }
 				} else {
                     // Handle errors (partial or full)
                     $("#entityAddReturn").removeClass('d-none alert-success').addClass('alert-danger');

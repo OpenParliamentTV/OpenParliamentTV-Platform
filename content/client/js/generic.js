@@ -286,3 +286,54 @@ function initPasswordFields(options = {}) {
     };
 }
 
+/**
+ * Applies a CSS animation to a Bootstrap Table row and returns a Promise.
+ * Assumes the table has a uniqueIdField set and rows have a 'data-item-id' attribute.
+ * 
+ * @param {string} tableId The ID of the <table> element.
+ * @param {string|number} itemId The unique ID of the item/row to animate.
+ * @param {'success'|'delete'} animationType The type of animation.
+ * @param {number} animationDuration The duration of the CSS animation in milliseconds.
+ * @returns {Promise<void>} A promise that resolves when the animation is considered complete.
+ */
+function animateBootstrapTableRow(tableId, itemId, animationType, animationDuration) {
+    return new Promise((resolve, reject) => {
+        const $table = $('#' + tableId);
+        if (!$table.length) {
+            console.error(`animateBootstrapTableRow: Table with ID '${tableId}' not found.`);
+            reject(`Table not found: ${tableId}`);
+            return;
+        }
+
+        // Find the row using data-uniqueid, which Bootstrap Table adds if uniqueId option is set.
+        const $row = $table.find('tr[data-uniqueid="' + itemId + '"]');
+
+        if (!$row.length) {
+            console.warn(`animateBootstrapTableRow: Row with item ID '${itemId}' not found in table '${tableId}'. It might have been removed or not yet loaded.`);
+            // Resolve immediately if row isn't found, as there's nothing to animate.
+            // This can happen if a delete animation is rapidly followed by a table refresh.
+            resolve(); 
+            return;
+        }
+
+        if (animationType === 'success') {
+            $row.addClass('row-action-success');
+            setTimeout(() => {
+                $row.removeClass('row-action-success'); // Clean up class for potential re-animation
+                resolve();
+            }, animationDuration);
+        } else if (animationType === 'delete') {
+            $row.addClass('row-action-delete');
+            setTimeout(() => {
+                // It's important that the table's uniqueId option is set correctly for removeByUniqueId to work.
+                // This removeByUniqueId will trigger internal table refresh/re-rendering.
+                $table.bootstrapTable('removeByUniqueId', itemId); 
+                resolve();
+            }, animationDuration);
+        } else {
+            console.error(`animateBootstrapTableRow: Unknown animationType '${animationType}'.`);
+            reject(`Unknown animationType: ${animationType}`);
+        }
+    });
+}
+

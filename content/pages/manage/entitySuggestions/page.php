@@ -147,6 +147,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			serverSort: true,
 			sortName: "EntitysuggestionCount",
 			sortOrder: "desc",
+			uniqueId: "EntitysuggestionID",
 			queryParams: function(params) {
 				var apiParams = {};
 				apiParams.limit = params.limit || params.pageSize;
