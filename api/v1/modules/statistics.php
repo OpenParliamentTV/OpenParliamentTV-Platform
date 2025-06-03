@@ -152,10 +152,8 @@ function statisticsGetGeneral($request) {
             }
         }
 
-        return createApiSuccessResponse($data, [
-            "links" => [
-                "self" => $config["dir"]["api"]."/statistics/general"
-            ]
+        return createApiSuccessResponse($data, [], [
+            "self" => $config["dir"]["api"]."/statistics/general"
         ]);
         
     } catch (Exception $e) {
@@ -308,10 +306,8 @@ function statisticsGetTerms($request) {
             ]
         ];
         
-        return createApiSuccessResponse($data, [
-            "links" => [
-                "self" => $config["dir"]["api"]."/statistics/terms"
-            ]
+        return createApiSuccessResponse($data, [], [
+            "self" => $config["dir"]["api"]."/statistics/terms"
         ]);
         
     } catch (Exception $e) {
@@ -434,15 +430,11 @@ function statisticsGetNetwork($request) {
             );
         }
         
-        error_log("Network Analysis Stats: " . json_encode($stats, JSON_PRETTY_PRINT));
-        
         // Use the processed data but preserve the self link
         $data = $stats["data"];
         
-        return createApiSuccessResponse($data, [
-            "links" => [
-                "self" => $config["dir"]["api"]."/statistics/network"
-            ]
+        return createApiSuccessResponse($data, [], [
+            "self" => $config["dir"]["api"]."/statistics/network"
         ]);
         
     } catch (Exception $e) {
