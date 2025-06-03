@@ -957,7 +957,7 @@ switch ($page) {
         //TODO: Move API to root $config and add it to JS Object
     </script>
 </head>
-<body class='<?= $color_scheme."mode" ?> <?= (($_SESSION["login"]) ? "login" : "") ?>'>
+<body class='<?= $color_scheme."mode" ?> <?= (!empty($_SESSION["login"]) ? "login" : "") ?>'>
 	<div class="mainLoadingIndicator">
 		<div class="workingSpinner" style="position: fixed; top: 50%;"></div>
 	</div>

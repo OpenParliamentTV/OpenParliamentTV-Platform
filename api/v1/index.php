@@ -10,7 +10,8 @@ header('Content-Type: application/json');
 
 
 include_once(__DIR__ . '/../../modules/utilities/auth.php');
-$auth = auth($_SESSION["userdata"]["id"], "apiV1", $_REQUEST["action"]);
+$userId = isset($_SESSION["userdata"]["id"]) ? $_SESSION["userdata"]["id"] : null;
+$auth = auth($userId, "apiV1", $_REQUEST["action"]);
 
 if ($auth["meta"]["requestStatus"] != "success") {
 

@@ -1,4 +1,7 @@
 <?php include_once(__DIR__ . '/../../header.php'); ?>
+<?php
+$alertText = $alertText ?? null;
+?>
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
@@ -6,7 +9,7 @@
             if ($alertText) {
                 echo '<div class="alert alert-info" role="alert">'.$alertText.'</div>';
             }
-			if ($_SESSION["login"] == 1) {
+			if (!empty($_SESSION["login"]) && $_SESSION["login"] == 1) {
 
 			?>
 

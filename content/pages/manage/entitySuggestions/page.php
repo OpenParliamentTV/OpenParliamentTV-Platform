@@ -1,7 +1,8 @@
 <?php
 include_once(__DIR__ . '/../../../../modules/utilities/auth.php');
 
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
+$userId = isset($_SESSION["userdata"]["id"]) ? $_SESSION["userdata"]["id"] : null;
+$auth = auth($userId, "requestPage", $pageType);
 
 if ($auth["meta"]["requestStatus"] != "success") {
 

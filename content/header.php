@@ -101,12 +101,12 @@ if (!isset($page)) {
 							} ?>
 						</div>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item <?= ($page == "manage") ? "active" : "" ?><?= (!$_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/manage">Dashboard</a>
+						<a class="dropdown-item <?= ($page == "manage") ? "active" : "" ?><?= (empty($_SESSION["login"])) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/manage">Dashboard</a>
 						<!--
-						<a class="dropdown-item <?= ($page == "login") ? "active" : "" ?><?= ($_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/login"><?= L::login; ?> <span class="icon-login"></span></a>
-						<a class="dropdown-item <?= ($page == "register") ? "active" : "" ?><?= ($_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/register"><?= L::registerNewAccount; ?></a>
+						<a class="dropdown-item <?= ($page == "login") ? "active" : "" ?><?= (isset($_SESSION["login"]) && $_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/login"><?= L::login; ?> <span class="icon-login"></span></a>
+						<a class="dropdown-item <?= ($page == "register") ? "active" : "" ?><?= (isset($_SESSION["login"]) && $_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/register"><?= L::registerNewAccount; ?></a>
 						-->
-						<a class="dropdown-item <?= ($page == "logout") ? "active" : "" ?><?= (!$_SESSION["login"]) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/logout"><?= L::logout; ?> <span class="icon-logout"></span></a>
+						<a class="dropdown-item <?= ($page == "logout") ? "active" : "" ?><?= (empty($_SESSION["login"])) ? " d-none" : "" ?>" href="<?= $config["dir"]["root"] ?>/logout"><?= L::logout; ?> <span class="icon-logout"></span></a>
 						<!--<div class="dropdown-divider"></div>-->
 						<a class="dropdown-item <?= ($page == "about") ? "active" : "" ?>" href="<?= $config["dir"]["root"] ?>/about"><?= L::about; ?></a>
 						<div class="dropdown-divider"></div>
