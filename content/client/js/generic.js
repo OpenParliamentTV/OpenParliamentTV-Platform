@@ -24,24 +24,38 @@ $(document).ready(function() {
 		e.preventDefault();
 		var lang = $(this).data("lang");
 		$.ajax({
-			url:config["dir"]["root"]+"/server/ajaxServer.php",
+			url:config["dir"]["root"]+"/api/v1/lang/set",
 			data: {
-				a:"lang",
 				lang:lang
 			},
 			method: "POST",
 			success: function(response) {
-				if (response.success === "true") {
+				// Check the new response structure from api.php
+				if (response && response.meta && response.meta.requestStatus === "success") {
 					// Force a complete page reload to ensure all language changes are applied
 					window.location.reload(true);
 				} else {
-					console.error("Language switch failed:", response.text);
+					// Log the error message from the API if available
+					let errorMessage = "Unknown error";
+					if (response && response.errors && response.errors.length > 0 && response.errors[0].detail) {
+						errorMessage = response.errors[0].detail;
+					} else if (response && response.meta && response.meta.message) {
+						errorMessage = response.meta.message;
+					}
+					console.error("Language switch failed:", errorMessage, response);
 				}
 			},
-			error: function() {
-				console.error("Language switch request failed");
-				// Still reload the page as a fallback
-				window.location.reload(true);
+			error: function(jqXHR, textStatus, errorThrown) {
+				let responseJSON = jqXHR.responseJSON;
+				let errorMessage = textStatus + (errorThrown ? ", " + errorThrown : "");
+				if (responseJSON && responseJSON.errors && responseJSON.errors.length > 0 && responseJSON.errors[0].detail) {
+					errorMessage = responseJSON.errors[0].detail;
+				} else if (responseJSON && responseJSON.meta && responseJSON.meta.message) {
+					errorMessage = responseJSON.meta.message;
+				}
+				console.error("Language switch request failed:", errorMessage, jqXHR);
+				// Still reload the page as a fallback, or handle more gracefully
+				// window.location.reload(true); // Consider if this is still desired on AJAX error
 			}
 		});
 	});
@@ -72,7 +86,10 @@ $(document).ready(function() {
 });
 
 function updateLinkTransitions() {
-	$('a[href^="/"], a[href^="./"], a[href^="../"], a[href^="'+ config.dir.root +'"]').not('a[target="_blank"]').click(function(evt) {
+	$('a[href^="/"], a[href^="./"], a[href^="../"], a[href^="'+ config.dir.root +'"]')
+	.not('a[target="_blank"]')
+	.not('.langswitch')
+	.click(function(evt) {
 		if (evt.shiftKey || evt.ctrlKey || evt.altKey || evt.metaKey) {
 			// click with meta key down
 		} else {

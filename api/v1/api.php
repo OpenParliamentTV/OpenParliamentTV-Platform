@@ -13,10 +13,15 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
     global $config;
 
     // Merge all request sources with proper precedence
+    $input_data = json_decode(file_get_contents('php://input'), true) ?: [];
+    // If $input_data is empty (json_decode failed or empty JSON body),
+    // and $_POST is not empty, use $_POST. Otherwise, $input_data (could be from JSON or empty).
+    $body_params = empty($input_data) && !empty($_POST) ? $_POST : $input_data;
+
     $api_request = array_merge(
-        json_decode(file_get_contents('php://input'), true) ?: [],
-        $_GET,
-        $request_param ?: []
+        $_GET,                // GET parameters first
+        $body_params,         // Then POST/JSON body parameters
+        $request_param ?: []  // Finally, parameters from server-side routing (e.g., from URL path), taking precedence
     );
 
     if (empty($api_request["action"])) {
@@ -185,6 +190,30 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "confirm-registration":
                     $result = userConfirmRegistration($api_request);
                     return createApiResponse($result);
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
+        case "lang":
+            global $acceptLang; 
+            switch ($api_request["itemType"]) {
+                case "set":
+                    if (!empty($api_request["lang"]) && isset($acceptLang) && array_key_exists($api_request["lang"], $acceptLang)) {
+                        $_SESSION["lang"] = $api_request["lang"];
+                        return createApiResponse(
+                            createApiSuccessResponse(
+                                $api_request["lang"],
+                                ["requestStatus" => "success", "message" => "Language has been set to " . $api_request["lang"]]
+                            )
+                        );
+                    } else {
+                        return createApiResponse(
+                            createApiErrorInvalidParameter("lang", "Invalid language code")
+                        );
+                    }
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
