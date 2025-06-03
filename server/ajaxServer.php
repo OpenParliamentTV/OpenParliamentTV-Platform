@@ -44,27 +44,6 @@ switch ($_REQUEST["a"]) {
 
     break;
 
-    case "runCronUpdater":
-
-        $auth = auth($_SESSION["userdata"]["id"], "updater", "run");
-
-        if ($auth["meta"]["requestStatus"] != "success") {
-
-            $return["success"] = "false";
-            $return["text"] = "Forbidden";
-            $return["code"] = "403";
-
-
-        } else {
-            require_once (__DIR__."/../modules/utilities/functions.php");
-            executeAsyncShellCommand($config["bin"]["php"]." ".realpath(__DIR__."/../data/cronUpdater.php"));
-            $return["success"] = "true";
-            $return["text"] = "cronUpdater";
-
-        }
-
-    break;
-
     case "runAdditionalDataService":
 
         $auth = auth($_SESSION["userdata"]["id"], "additionalDataService", "run");

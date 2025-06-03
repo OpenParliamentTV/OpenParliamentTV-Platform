@@ -259,7 +259,7 @@ if (is_cli()) {
 
         unlink(__DIR__."/cronUpdater.lock");
 
-        logger("info", "updating finished. Count: ".$tmpCount." items");
+        logger("info", "cronUpdater finished: Search index update complete. Count: " . $tmpCount . " items");
 
         exit;
 
@@ -303,6 +303,7 @@ if (is_cli()) {
         if (count(array_diff($inputFiles, array('..', '.'))) < 1) {
 
             // No files to import
+            logger("info", "cronUpdater finished: No input files to process.");
             unlink(__DIR__."/cronUpdater.lock");
             exit;
         }
@@ -418,11 +419,13 @@ if (is_cli()) {
 
         cliLog("Update complete.");
 
+        logger("info", "cronUpdater finished: File processing complete.");
         unlink(__DIR__."/cronUpdater.lock");
         exit;
 
     }
 
+    logger("info", "cronUpdater finished.");
     unlink(__DIR__."/cronUpdater.lock");
 }
 

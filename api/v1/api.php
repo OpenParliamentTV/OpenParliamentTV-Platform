@@ -14,9 +14,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
 
     // Merge all request sources with proper precedence
     $api_request = array_merge(
-        json_decode(file_get_contents('php://input'), true) ?: [],
-        $_GET,
-        $request_param ?: []
+        $_GET,                                                      // Lowest precedence
+        $_POST,                                                     // Overwrites GET if keys clash
+        json_decode(file_get_contents('php://input'), true) ?: [],   // Overwrites POST if keys clash (usually one or the other is empty)
+        $request_param ?: []                                        // Highest precedence, for internal calls
     );
 
     if (empty($api_request["action"])) {
@@ -422,7 +423,14 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/entitySuggestion.php");
                     $result = entitySuggestionReimportSessions($api_request, $db);
                     return createApiResponse($result);
-                    break;
+                case "run":
+                    require_once (__DIR__."/modules/import.php");
+                    $result = importRunCronUpdater($api_request);
+                    return createApiResponse($result);
+                case "status":
+                    require_once (__DIR__."/modules/import.php");
+                    $result = importGetCronUpdaterStatus();
+                    return createApiResponse($result);
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType", "Invalid itemType for import action.")

@@ -265,14 +265,29 @@ if ($auth["meta"]["requestStatus"] != "success") {
         
 		$("#runCronUpdater").on("click", function() {
             $.ajax({
-                url:"<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
-                dataType:"json",
-                data:{"a":"runCronUpdater"},
-                method:"post",
-                success: function(ret) {
-                    $('#successRunCronDialog').modal('show');
+                url: "<?= $config["dir"]["root"] ?>/api/v1/import/run",
+                dataType: "json",
+                data: {
+                    "action": "import",
+                    "itemType": "run"
+                },
+                method: "post",
+                success: function(response) {
+                    if (response.meta.requestStatus === "success") {
+                        $('#successRunCronDialog').modal('show');
+                    } else {
+                        // Handle error case
+                        let errorMessage = "Failed to start CronUpdater";
+                        if (response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors[0].detail || response.errors[0].title;
+                        }
+                        alert(errorMessage);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert("Error: " + error);
                 }
-            })
+            });
         });
 
 		$(".updateSearchIndex").on("click", function() {

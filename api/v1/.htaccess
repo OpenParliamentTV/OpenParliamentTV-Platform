@@ -33,7 +33,7 @@
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(search|autocomplete|statistics|user|index|status|lang)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2 [QSA,L]
+	RewriteRule ^(search|autocomplete|statistics|user|index|status|lang|import)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2 [QSA,L]
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(status)/? index.php?action=$1&itemType=all [QSA,L]
