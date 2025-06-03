@@ -13,15 +13,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
     global $config;
 
     // Merge all request sources with proper precedence
-    $input_data = json_decode(file_get_contents('php://input'), true) ?: [];
-    // If $input_data is empty (json_decode failed or empty JSON body),
-    // and $_POST is not empty, use $_POST. Otherwise, $input_data (could be from JSON or empty).
-    $body_params = empty($input_data) && !empty($_POST) ? $_POST : $input_data;
-
     $api_request = array_merge(
-        $_GET,                // GET parameters first
-        $body_params,         // Then POST/JSON body parameters
-        $request_param ?: []  // Finally, parameters from server-side routing (e.g., from URL path), taking precedence
+        json_decode(file_get_contents('php://input'), true) ?: [],
+        $_GET,
+        $request_param ?: []
     );
 
     if (empty($api_request["action"])) {
