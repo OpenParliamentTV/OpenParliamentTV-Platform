@@ -216,14 +216,16 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					
 					if (response.success === "true" || response.success === true) {
                         if (tableId && entityId) {
-                            $table.one('load-success.bs.table post-body.bs.table', function (e) {
+                            $table.one('load-success.bs.table post-body.bs.table', function (e, data) { 
                                 $table.off('load-success.bs.table post-body.bs.table'); 
+                                
                                 animateBootstrapTableRow(tableId, entityId, 'success', 2000)
-                                    .catch(error => {
-                                        console.error('[ADS Update] Error during success animation:', error);
-                                    });
                             });
-                            $table.bootstrapTable('refresh');
+                            // Trigger the table refresh to show updated data
+                            // Add a cache-busting parameter to the URL for refresh
+                            let currentUrl = $table.bootstrapTable('getOptions').url;
+                            let cacheBustUrl = currentUrl + (currentUrl.indexOf('?') > -1 ? '&' : '?') + 't=' + new Date().getTime();
+                            $table.bootstrapTable('refresh', { url: cacheBustUrl });
                         } else {
                             console.error("[ADS Update] Missing tableId or entityId for success animation.");
                         }
