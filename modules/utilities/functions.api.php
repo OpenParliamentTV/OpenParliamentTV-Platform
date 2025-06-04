@@ -567,7 +567,6 @@ function handleEntitySuggestionPostProcessing($reimportAffectedSessionsFlag, $so
         $reimportResponse = apiV1([
             "action" => "import",
             "itemType" => "reimport-sessions",
-            "EntitysuggestionID" => $sourceEntitySuggestionID, 
             "files" => $filesToReimport
         ], $db);
 

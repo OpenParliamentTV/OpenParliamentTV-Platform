@@ -418,17 +418,15 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             break;
 
         case "import":
+            require_once (__DIR__."/modules/import.php");
             switch ($api_request["itemType"]) {
                 case "reimport-sessions":
-                    require_once (__DIR__."/modules/entitySuggestion.php");
-                    $result = entitySuggestionReimportSessions($api_request, $db);
+                    $result = reimportSessions($api_request, $db);
                     return createApiResponse($result);
                 case "run":
-                    require_once (__DIR__."/modules/import.php");
                     $result = importRunCronUpdater($api_request);
                     return createApiResponse($result);
                 case "status":
-                    require_once (__DIR__."/modules/import.php");
                     $result = importGetCronUpdaterStatus();
                     return createApiResponse($result);
                 default:
