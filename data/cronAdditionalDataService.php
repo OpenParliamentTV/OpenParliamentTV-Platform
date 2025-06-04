@@ -54,6 +54,7 @@ function cliLog($message) {
  */
 if (is_cli()) {
 
+    $startTime = microtime(true); // Record start time
 
     /**
      * Check if lock file exists and checks its age
@@ -105,8 +106,7 @@ if (is_cli()) {
 
     require_once(__DIR__ . "/../config.php");
     require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
-    require_once(__DIR__ . "/../modules/utilities/functions.conflicts.php");
-    require_once(__DIR__ . "/updateEntityFromService.php");
+    require_once(__DIR__ . "/../api/v1/modules/externalData.php");
 
 
 
@@ -219,6 +219,9 @@ if (is_cli()) {
     }
 
     logger("info",$itemsUpdated." items of type ".$input["type"]." has been updated");
+    $endTime = microtime(true);
+    $executionTime = round($endTime - $startTime, 2);
+    logger("info", " cronAdditionalDataService for type ".$input["type"]." finished. Total execution time: ".$executionTime." seconds.");
     unlink(__DIR__."/cronAdditionalDataService.lock");
     exit;
 

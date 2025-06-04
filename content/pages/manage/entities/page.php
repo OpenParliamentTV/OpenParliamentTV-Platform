@@ -115,6 +115,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                 The additionalDataService for type <span class="adc-type"></span> should run now in background.
             </div>
             <div class="modal-footer">
+                <button type="button" id="checkAdcStatusBtn" class="btn btn-info rounded-pill me-auto" style="display: none;">Check Status</button> 
                 <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">Okay</button>
             </div>
         </div>
@@ -127,15 +128,38 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 		$("main").on("click",".additionalDataServiceButton", function() {
             $.ajax({
-                url:"<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
+                url:"<?= $config["dir"]["root"] ?>/api/v1/",
                 dataType:"json",
-                data:{"a":"runAdditionalDataService", "type": $(this).data("type")},
+                data:{
+                    "action":"externalData",
+                    "itemType": "full-update",
+                    "type": $(this).data("type")
+                },
                 tmpType: $(this).data("type"),
                 method:"post",
-                success: function(ret) {
-                    //TODO: Check for success return parameter
-                    $(".adc-type").html(this.tmpType);
-                    $('#successRunAdditionalDataService').modal('show');
+                success: function(response) {
+                    if (response && response.meta && response.meta.requestStatus === "success") {
+                        $(".adc-type").html(this.tmpType);
+                        $('#successRunAdditionalDataService').modal('show');
+                        $('#checkAdcStatusBtn').data('type', this.tmpType).show().prop('disabled', false);
+                    } else if (response && response.meta && response.meta.code === "FULL_UPDATE_ALREADY_RUNNING") {
+                        $(".adc-type").html(this.tmpType);
+                        let detailMessage = (response.errors && response.errors.length > 0 && response.errors[0].detail) ? response.errors[0].detail : "Please try again later or check the status.";
+                        $('#successRunAdditionalDataService .modal-body').html('<p>The full update process for type <strong>' + this.tmpType + '</strong> is already running.</p><p>' + detailMessage + '</p><p>You can check its progress below.</p>');
+                        $('#successRunAdditionalDataService').modal('show');
+                        $('#checkAdcStatusBtn').data('type', this.tmpType).show().prop('disabled', false);
+                    } else {
+                        console.error("API call failed for full-update:", response);
+                        let errorMessage = "An error occurred.";
+                        if (response && response.errors && response.errors.length > 0) {
+                            errorMessage = response.errors[0].detail || response.errors[0].title || "Unknown API error.";
+                        }
+                        alert(errorMessage);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX error for full-update:", status, error);
+                    alert("A network error occurred. Please try again.");
                 }
             })
         });
@@ -202,10 +226,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 			// Make AJAX call to update entity data
 			$.ajax({
-				url: "<?= $config["dir"]["root"] ?>/server/ajaxServer.php",
+				url: "<?= $config["dir"]["root"] ?>/api/v1/",
 				dataType: "json",
 				data: {
-					"a": "runAdditionalDataServiceForSpecificEntities", 
+					"action":"externalData",
+					"itemType": "update-entities",
 					"type": [adsType],
 					"ids": [entityId],
 					"language": "de"
@@ -214,7 +239,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				success: function(response) {
 					$button.removeClass("working");
 					
-					if (response.success === "true" || response.success === true) {
+					if (response && response.meta && response.meta.requestStatus === "success") {
                         if (tableId && entityId) {
                             $table.one('load-success.bs.table post-body.bs.table', function (e, data) { 
                                 $table.off('load-success.bs.table post-body.bs.table'); 
@@ -230,15 +255,91 @@ if ($auth["meta"]["requestStatus"] != "success") {
                             console.error("[ADS Update] Missing tableId or entityId for success animation.");
                         }
 					} else {
-						console.error("ADS update failed:", response);
+						console.error("API ADS update failed:", response);
+                        let errorMessage = "ADS update failed.";
+                        if (response && response.errors && response.errors.length > 0) {
+                            // Safely access error details
+                            let firstError = response.errors[0];
+                            if (typeof firstError === 'string') {
+                                errorMessage = firstError;
+                            } else if (firstError && (firstError.detail || firstError.title || firstError.info)) {
+                                errorMessage = firstError.detail || firstError.title || firstError.info;
+                            } else if (response.meta && response.meta.message) {
+                                errorMessage = response.meta.message;
+                            }
+                        } else if (response && response.meta && response.meta.message) {
+                            errorMessage = response.meta.message;
+                        }
+                        alert(errorMessage);
 					}
 				},
 				error: function(xhr, status, error) {
 					$button.removeClass("working");
 					console.error("ADS update AJAX error:", status, error);
+                    alert("A network error occurred while updating. Please try again.");
 				}
 			});
 		});
+		
+		// New button click handler for checking ADC status
+		$(document).on("click", "#checkAdcStatusBtn", function() {
+			const $statusBtn = $(this);
+			const entityType = $statusBtn.data("type");
+			
+			$statusBtn.prop("disabled", true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Checking...');
+
+			$.ajax({
+				url: "<?= $config["dir"]["root"] ?>/api/v1/",
+				dataType: "json",
+				data: {
+					"action": "externalData",
+					"itemType": "status",
+					"type": entityType
+				},
+				method: "post",
+				success: function(response) {
+					$statusBtn.prop("disabled", false).html('Check Status');
+					let statusHtml = '<p>Could not retrieve status or process not running.</p>'; // Default message
+					if (response && response.meta && response.meta.requestStatus === 'success' && response.data) {
+						const statusData = response.data;
+						statusHtml = '<h5>Status for: ' + (statusData.requestedType || 'N/A') + '</h5>';
+						statusHtml += '<p><strong>Currently Running:</strong> ' + (statusData.isRunning ? 'Yes, since ' + statusData.runningSince + ' (' + statusData.runningForSeconds + 's ago)' : 'No') + '</p>';
+						statusHtml += '<p><strong>Summary:</strong> ' + statusData.summary + '</p>';
+						if (statusData.lastLogEntries && statusData.lastLogEntries.length > 0) {
+							statusHtml += '<h6>Last Log Entries:</h6><ul class="list-unstyled small">';
+							statusData.lastLogEntries.forEach(entry => {
+								statusHtml += '<li>' + escapeHtml(entry) + '</li>'; // escapeHtml to prevent XSS
+							});
+							statusHtml += '</ul>';
+						}
+					} else {
+						statusHtml = '<p>Error retrieving status: ' + (response.errors ? response.errors[0].detail : 'Unknown error') + '</p>';
+					}
+					// Update the modal body
+					$('#successRunAdditionalDataService .modal-body').html(statusHtml);
+					if (!$('#successRunAdditionalDataService').hasClass('show')) {
+						$('#successRunAdditionalDataService').modal('show'); // Show modal if not already visible
+					}
+				},
+				error: function(xhr, status, error) {
+					$statusBtn.prop("disabled", false).html('Check Status');
+					$('#successRunAdditionalDataService .modal-body').html('<p>AJAX error while checking status: ' + status + ' - ' + error + '</p>');
+					if (!$('#successRunAdditionalDataService').hasClass('show')) {
+						$('#successRunAdditionalDataService').modal('show');
+					}
+				}
+			});
+		});
+
+		// Helper function to escape HTML (important for displaying log data)
+		function escapeHtml(unsafe) {
+			return unsafe
+				 .replace(/&/g, "&amp;")
+				 .replace(/</g, "&lt;")
+				 .replace(/>/g, "&gt;")
+				 .replace(/"/g, "&quot;")
+				 .replace(/'/g, "&#039;");
+		}
 		
 		// Helper function for formatting labels with alternatives
 		function formatLabelWithAlternatives(value, row, alternativeLabelField, idField, tableId, type) {

@@ -436,6 +436,28 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             }
             break;
 
+        case "externalData": 
+            require_once (__DIR__."/modules/externalData.php");
+            switch ($api_request["itemType"]) {
+                case "get-info": 
+                    $result = externalDataGetInfo($api_request);
+                    return createApiResponse($result);
+                case "update-entities": 
+                    $result = externalDataUpdateEntities($api_request);
+                    return createApiResponse($result);
+                case "full-update": 
+                    $result = externalDataTriggerFullUpdate($api_request);
+                    return createApiResponse($result);
+                case "status": 
+                    $result = externalDataGetFullUpdateStatus($api_request);
+                    return createApiResponse($result);
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType", "Invalid itemType for externalData action.")
+                    );
+            }
+            break;
+
         default:
             return createApiResponse(
                 createApiErrorInvalidParameter("action")

@@ -314,9 +314,10 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                 }
 
                 $.ajax({
-                    url: config.dir.root+"/server/ajaxServer.php", 
+                    url: config.dir.root+"/api/v1/",
                     data: {
-                        "a": "entityGetFromAdditionalDataService",
+                        "action": "externalData",
+                        "itemType": "get-info",
                         "type": serviceType,
                         "wikidataID": wikidataID
                     },
@@ -324,8 +325,8 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     complete: function() {
                         $loadingIndicator.addClass('d-none');
                     },
-                    success: function(result) {
-                        if (result && result.data) { 
+                    success: function(response) {
+                        if (response && response.meta && response.meta.requestStatus === 'success' && response.data) { 
                             $('#modalAddEntitySubmitBtn').prop('disabled', false);
 
                             // Transform the data into the format expected by entity.preview.ads.php
@@ -333,7 +334,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                                 data: {
                                     type: entityType,
                                     id: wikidataID,
-                                    attributes: result.data
+                                    attributes: response.data
                                 }
                             };
 
@@ -370,22 +371,22 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                             };
 
                             Object.entries(fieldMappings).forEach(([formField, dataField]) => {
-                                if (result.data[dataField]) {
+                                if (response.data[dataField]) {
                                     if (formField === 'additionalinformation') {
-                                        $form.find(`textarea[name="${formField}"]`).val(JSON.stringify(result.data[dataField]));
+                                        $form.find(`textarea[name="${formField}"]`).val(JSON.stringify(response.data[dataField]));
                                     } else {
-                                        $form.find(`input[name="${formField}"], textarea[name="${formField}"]`).val(result.data[dataField]);
+                                        $form.find(`input[name="${formField}"], textarea[name="${formField}"]`).val(response.data[dataField]);
                                     }
                                 }
                             });
 
                             // Handle select fields
-                            if (result.data.gender) $form.find('select[name="gender"]').val(result.data.gender);
-                            if (result.data.partyID) $form.find('select[name="party"]').val(result.data.partyID);
-                            if (result.data.factionID) $form.find('select[name="faction"]').val(result.data.factionID);
+                            if (response.data.gender) $form.find('select[name="gender"]').val(response.data.gender);
+                            if (response.data.partyID) $form.find('select[name="party"]').val(response.data.partyID);
+                            if (response.data.factionID) $form.find('select[name="faction"]').val(response.data.factionID);
 
                             // Show/hide party and faction selects based on preview data
-                            if (result.data.type === "person" || result.data.type === "memberOfParliament") {
+                            if (response.data.type === "person" || response.data.type === "memberOfParliament") {
                                 $form.find("select[name='party']").closest(".formItem").removeClass("d-none");
                                 $form.find("select[name='faction']").closest(".formItem").removeClass("d-none");
                                 $form.find(".formHint#formHintPartyFaction").removeClass("d-none");
@@ -441,8 +442,8 @@ require_once(__DIR__."/../../modules/utilities/language.php");
 
                             // Handle alternative labels
                             $form.find('button.labelAlternativeAdd').parent().find("div:first").empty();
-                            if (result.data.labelAlternative && Array.isArray(result.data.labelAlternative)) {
-                                result.data.labelAlternative.forEach(label => {
+                            if (response.data.labelAlternative && Array.isArray(response.data.labelAlternative)) {
+                                response.data.labelAlternative.forEach(label => {
                                     $form.find('button.labelAlternativeAdd').parent().find("div:first").append(
                                         '<span style="position: relative">' +
                                         '<input type="text" class="form-control" name="labelAlternative[]" value="'+ label +'"/>' +
@@ -455,8 +456,8 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                             
                             // Handle social media IDs
                             $form.find('button.socialMediaIDsAdd').parent().find("div:first").empty();
-                            if (result.data.socialMediaIDs && Array.isArray(result.data.socialMediaIDs)) {
-                                result.data.socialMediaIDs.forEach(socialMedia => {
+                            if (response.data.socialMediaIDs && Array.isArray(response.data.socialMediaIDs)) {
+                                response.data.socialMediaIDs.forEach(socialMedia => {
                                     $form.find('button.socialMediaIDsAdd').parent().find("div:first").append(
                                         '<div style="position: relative" class="form-row">' +
                                         '<div class="col">' +
@@ -472,8 +473,12 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                                     );
                                 });
                             }
-                        } else if (result && result.text) { 
-                            $getAdditionalInfoError.text("Could not fetch additional data: " + result.text).removeClass('d-none');
+                        } else if (response && response.meta && response.meta.message) { 
+                            $getAdditionalInfoError.text("Could not fetch additional data: " + response.meta.message).removeClass('d-none');
+                            $('#modalAddEntitySubmitBtn').prop('disabled', true);
+                        } else if (response && response.errors && response.errors.length > 0) {
+                            let errorDetail = response.errors[0].detail || response.errors[0].title || "Unknown error.";
+                            $getAdditionalInfoError.text("Could not fetch additional data: " + errorDetail).removeClass('d-none');
                             $('#modalAddEntitySubmitBtn').prop('disabled', true);
                         } else {
                             $getAdditionalInfoError.text("Could not fetch additional data. Response was unexpected.").removeClass('d-none');
