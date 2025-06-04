@@ -302,7 +302,6 @@ function externalDataGetInfo($api_request) {
     }
 }
 
-// Corresponds to runAdditionalDataService
 function externalDataTriggerFullUpdate($api_request) {
     global $config;
 
