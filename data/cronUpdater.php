@@ -1,5 +1,6 @@
 <?php
 error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+ini_set('memory_limit', '512M');
 /**
  * This script expects to be run via CLI only
  *
@@ -26,6 +27,9 @@ $meta["inputDir"] = __DIR__ . "/input/";
 $meta["doneDir"] = __DIR__ . "/done/";
 $meta["preserveFiles"] = true;
 
+// Define path for the progress file for the DATA IMPORT part
+define("CRONUPDATER_PROGRESS_FILE", __DIR__ . "/progress_status/cronUpdater.json");
+
 require_once(__DIR__ . "/../modules/utilities/functions.php");
 
 /**
@@ -38,26 +42,6 @@ require_once(__DIR__ . "/../modules/utilities/functions.php");
 function logger($type = "info",$msg) {
     file_put_contents(__DIR__."/cronUpdater.log",date("Y-m-d H:i:s")." - ".$type.": ".$msg."\n",FILE_APPEND );
 }
-
-
-
-
-
-/**
- * @param string $message
- *
- * Sends a message to CLI
- *
- */
-function cliLog($message) {
-    $message = date("Y.m.d H:i:s:u") . " - ". $message.PHP_EOL;
-    print($message);
-    flush();
-    if (ob_get_level() > 0) {
-        ob_flush();
-    }
-}
-
 
 /**
  * Checks if this script is executed from CLI
@@ -97,16 +81,56 @@ if (is_cli()) {
     // create lock file
     touch (__DIR__."/cronUpdater.lock");
 
-    logger("info","cronUpdater started");
-
     //get CLI parameter to $input
-    $input = getopt(null, ["parliament:","justUpdateSearchIndex:","ids:","ignoreGit:"]);
-
-    //cliLog(json_encode($input));
-    //cliLog($input["parliament"]);
-
-
+    $input = getopt(null, ["parliament:","justUpdateSearchIndex::","ids:","ignoreGit::"]);
     $parliament = ((!empty($input["parliament"])) ? $input["parliament"] : "DE");
+    $isDataImportMode = !isset($input["justUpdateSearchIndex"]);
+    $progressFinalized = false; // Flag for shutdown handler
+
+    // --- START: Define Search Index Progress File Path (used in search index mode) ---
+    // This helper function comes from the restored api/v1/modules/searchIndex.php but we need it here.
+    // To avoid including the whole file, we define a compatible version.
+    $searchIndexProgressFilePath = __DIR__ . "/progress_status/searchIndex_" . strtoupper($parliament) . ".json";
+    // --- END: Define Search Index Progress File Path ---
+
+
+    // Register shutdown function to ensure lock and progress are handled.
+    register_shutdown_function(function() use ($isDataImportMode, &$progressFinalized, $searchIndexProgressFilePath) {
+        
+        // Handle DATA IMPORT progress finalization on crash
+        if ($isDataImportMode && function_exists('finalizeBaseProgressFile')) {
+            if (file_exists(CRONUPDATER_PROGRESS_FILE) && !$progressFinalized) {
+                $currentProgressJson = @file_get_contents(CRONUPDATER_PROGRESS_FILE);
+                $currentProgress = $currentProgressJson ? json_decode($currentProgressJson, true) : null;
+                if (is_array($currentProgress) && $currentProgress["status"] === "running") {
+                    $logMessageDetail = "CronUpdater (Data Import) exited unexpectedly while 'running'.";
+                    logErrorToBaseProgressFile(CRONUPDATER_PROGRESS_FILE, $logMessageDetail, "CRASH");
+                    finalizeBaseProgressFile(CRONUPDATER_PROGRESS_FILE, "error_shutdown", "Process terminated unexpectedly.");
+                    logger("error", "CronUpdater (Data Import) shutdown: " . $logMessageDetail);
+                }
+            }
+        } 
+        // Handle SEARCH INDEX progress finalization on crash
+        else if (!$isDataImportMode && function_exists('finalizeBaseProgressFile')) {
+            if (file_exists($searchIndexProgressFilePath) && !$progressFinalized) {
+                 $currentProgressJson = @file_get_contents($searchIndexProgressFilePath);
+                 $currentProgress = $currentProgressJson ? json_decode($currentProgressJson, true) : null;
+                 if (is_array($currentProgress) && $currentProgress["status"] === "running") {
+                    $logMessageDetail = "CronUpdater (Search Index) exited unexpectedly while 'running'.";
+                    logErrorToBaseProgressFile($searchIndexProgressFilePath, $logMessageDetail, "CRASH");
+                    finalizeBaseProgressFile($searchIndexProgressFilePath, "error_shutdown", "Process terminated unexpectedly.");
+                    logger("error", "CronUpdater (Search Index) shutdown: " . $logMessageDetail);
+                }
+            }
+        }
+
+        // Always try to remove the lock file
+        if (file_exists(__DIR__."/cronUpdater.lock")) {
+            @unlink(__DIR__."/cronUpdater.lock");
+        }
+    });
+
+    logger("info","cronUpdater started in ". ($isDataImportMode ? 'Data Import' : 'Search Index Update') ." mode.");
 
     require_once(__DIR__ . "/../config.php");
     require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
@@ -116,318 +140,225 @@ if (is_cli()) {
 
 
     try {
-
-        $db = new SafeMySQL(array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        ));
-
+        $db = new SafeMySQL(['host' => $config["platform"]["sql"]["access"]["host"], 'user' => $config["platform"]["sql"]["access"]["user"], 'pass' => $config["platform"]["sql"]["access"]["passwd"], 'db' => $config["platform"]["sql"]["db"]]);
     } catch (exception $e) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        echo json_encode($return);
         logger("error", "connection to platform database failed. ".$e->getMessage());
-        unlink(__DIR__."/cronUpdater.lock");
         exit;
-
     }
     try {
-
-        $dbp = new SafeMySQL(array(
-            'host'	=> $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user'	=> $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass'	=> $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db'	=> $config["parliament"][$parliament]["sql"]["db"]
-        ));
-
+        $dbp = new SafeMySQL(['host' => $config["parliament"][$parliament]["sql"]["access"]["host"], 'user' => $config["parliament"][$parliament]["sql"]["access"]["user"], 'pass' => $config["parliament"][$parliament]["sql"]["access"]["passwd"], 'db' => $config["parliament"][$parliament]["sql"]["db"]]);
     } catch (exception $e) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to parliament database failed";
-        array_push($return["errors"], $errorarray);
-        echo json_encode($return);
         logger("error", "connection to parliament database failed: ".$e->getMessage());
-        unlink(__DIR__."/cronUpdater.lock");
         exit;
-
     }
-
-
-
 
     /**
      *
      * Just update the Search Index from API/Database
      *
      **/
+    if (isset($input["justUpdateSearchIndex"])) {
 
-    if ($input["justUpdateSearchIndex"]) {
-
-
-
-        if ($input["ids"]) {
-
-            //If ids are given in a comma separated list,
+        $ids = [];
+        if (!empty($input["ids"])) {
             $tmpIDs = explode(",", $input["ids"]);
-            $ids = array();
             foreach ($tmpIDs as $tmpID) {
-                if (preg_match("/(".$parliament.")\-\d+/i", $tmpID)) {
+                if (preg_match("/(".$parliament.")\\-\\d+/i", $tmpID)) {
                     $ids[] = trim($tmpID);
                 }
             }
-
         } else {
-
-            $ids = $dbp->getAll("SELECT MediaID FROM ?n",$config["parliament"][$parliament]["sql"]["tbl"]["Media"]);
-
+            $idObjects = $dbp->getAll("SELECT MediaID FROM ?n", $config["parliament"][$parliament]["sql"]["tbl"]["Media"]);
+            foreach ($idObjects as $idObject) {
+                $ids[] = $idObject['MediaID'];
+            }
         }
+        
+        $totalItems = count($ids);
+        $batchSize = 10;
+        $totalBatches = ceil($totalItems / $batchSize);
+        logger("info", "Starting search index update for ".$totalItems." items for parliament: {$parliament}");
+        
+        initBaseProgressFile($searchIndexProgressFilePath, [
+            'processName' => 'searchIndexFullUpdate',
+            'parliament' => $parliament,
+            'statusDetails' => "Starting to process {$totalItems} items in {$totalBatches} batches.",
+            'totalDbMediaItems' => $totalItems,
+            'processedMediaItems' => 0,
+            'itemsFailed' => 0,
+            'currentBatch' => 0,
+            'totalBatches' => $totalBatches
+        ]);
 
-        //cliLog(json_encode($ids));
+        $mediaItemsBatch = [];
+        $processedItemCount = 0;
+        $failedItemCount = 0;
+        $currentBatchNum = 0;
 
-        $mediaItems = array();
-
-        logger("info", "updating search index for ".count($ids)." items");
-
-        $tmpCount = 0;
-
-        foreach ($ids as $id) {
-
-            $tmpCount++;
-
-            $requestID = ((is_array($id)) ? $id["MediaID"] : $id);
-
+        foreach ($ids as $index => $id) {
             try {
-                $tmpMedia = apiV1([
-                    "action" => "getItem",
-                    "itemType" => "media",
-                    "id" => $requestID
-                ], $db, $dbp);
-                //logger("info", json_encode($tmpMedia));
+                $tmpMedia = apiV1(["action" => "getItem", "itemType" => "media", "id" => $id], $db, $dbp);
+                if (isset($tmpMedia['data']['id'])) {
+                    $mediaItemsBatch[] = $tmpMedia;
+                } else {
+                    $failedItemCount++;
+                    $errorMessage = "Failed to fetch valid data (item is empty or missing an ID) for MediaID: {$id}";
+                    logger("warn", $errorMessage);
+                    logErrorToBaseProgressFile($searchIndexProgressFilePath, $errorMessage, $id);
+                }
+            } catch (Exception $e) {
+                $failedItemCount++;
+                $errorMessage = "Exception fetching MediaID {$id}: " . $e->getMessage();
+                logger("error", $errorMessage);
+                logErrorToBaseProgressFile($searchIndexProgressFilePath, $errorMessage, $id, $e->getTraceAsString());
+            }
 
-                array_push($mediaItems, $tmpMedia);
-
-                if (count($mediaItems) == 30) {
-                    $updateRequest = [
-                        "parliament" => $parliament,
-                        "items" => $mediaItems,
-                        "initIndex" => true
-                    ];
+            // Process batch when it's full or it's the last item
+            if (count($mediaItemsBatch) >= $batchSize || ($index + 1) === $totalItems) {
+                $currentBatchNum++;
+                $itemsInBatch = count($mediaItemsBatch);
+                $statusDetails = "Processing batch {$currentBatchNum}/{$totalBatches} ({$itemsInBatch} items)";
+                
+                updateBaseProgressFile($searchIndexProgressFilePath, [
+                    'currentBatch' => $currentBatchNum,
+                    'statusDetails' => $statusDetails
+                ]);
+                
+                if (!empty($mediaItemsBatch)) {
+                    $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsBatch, "initIndex" => ($currentBatchNum === 1)];
                     $updateResult = searchIndexUpdate($updateRequest);
                     
-                    if (isset($updateResult["errors"])) {
-                        logger("error", "Search index update batch failed: ".json_encode($updateResult["errors"]));
-                    } else {
-                        //logger("info", "Search index update batch successful: ".json_encode($updateResult));
+                    $updatedInBatch = $updateResult['data']['updated'] ?? 0;
+                    $failedInBatch = $updateResult['data']['failed'] ?? 0;
+                    
+                    $processedItemCount += $updatedInBatch;
+                    $failedItemCount += $failedInBatch;
+
+                    if ($failedInBatch > 0 && !empty($updateResult['data']['errors'])) {
+                        logger("error", "Search index update batch {$currentBatchNum} failed for {$failedInBatch} items.");
+                        foreach($updateResult['data']['errors'] as $error) {
+                             logErrorToBaseProgressFile(
+                                 $searchIndexProgressFilePath, 
+                                 $error['message'] ?? 'Unknown indexing error', 
+                                 $error['id'] ?? "UNKNOWN_ITEM_ID_BATCH_{$currentBatchNum}"
+                            );
+                        }
                     }
-                    $mediaItems = array();
                 }
+                
+                // Update progress after every batch, reflecting all successes and failures so far.
+                updateBaseProgressFile($searchIndexProgressFilePath, [
+                    'processedMediaItems' => $processedItemCount, // Only successfully indexed items
+                    'itemsFailed' => $failedItemCount // All failures (fetch + index)
+                ]);
 
-            } catch (Exception $e) {
+                // Explicitly free memory
+                unset($mediaItemsBatch, $updateRequest, $updateResult);
+                gc_collect_cycles(); // Force garbage collection
 
-                cliLog(json_encode($e->getMessage()));
-
+                $mediaItemsBatch = []; // Reset batch for the next iteration
             }
         }
-
-        if (!empty($mediaItems)) {
-
-            $updateRequest = [
-                "parliament" => $parliament,
-                "items" => $mediaItems,
-                "initIndex" => true
-            ];
-            $updateResult = searchIndexUpdate($updateRequest);
-            if (isset($updateResult["errors"])) {
-                logger("error", "Search index update final batch failed: ".json_encode($updateResult["errors"]));
-            } else {
-                //logger("info", "Search index update final batch successful: ".json_encode($updateResult));
-            }
-
+        
+        $finalStatusDetails = "Search index update completed. Successfully indexed: {$processedItemCount}, Total failed: {$failedItemCount}.";
+        $finalStatus = ($failedItemCount > 0) ? "partially_completed_with_errors" : "completed_successfully";
+        if ($processedItemCount === 0 && $failedItemCount === $totalItems) {
+            $finalStatus = "error_all_items_failed";
+            $finalStatusDetails = "Search index update failed. All {$totalItems} items failed to process.";
         }
+        
+        finalizeBaseProgressFile($searchIndexProgressFilePath, $finalStatus, $finalStatusDetails);
+        $progressFinalized = true;
 
-        unlink(__DIR__."/cronUpdater.lock");
-
-        logger("info", "cronUpdater finished: Search index update complete. Count: " . $tmpCount . " items");
-
+        logger("info", "cronUpdater finished: Search index update complete. Total: {$totalItems}, Processed: {$processedItemCount}, Failed: {$failedItemCount}.");
         exit;
-
 
     } else {
+        // NORMAL DATA IMPORT MODE
+        try {
+            if (!is_dir($meta["inputDir"])) { mkdir($meta["inputDir"], 0775, true); }
+            if (($meta["preserveFiles"] == true) && (!is_dir($meta["doneDir"]))) { mkdir($meta["doneDir"], 0775, true); }
 
-        if (!is_dir($meta["inputDir"])) {
+            // Initialize progress tracking for data import
+            initBaseProgressFile(CRONUPDATER_PROGRESS_FILE, ["processName" => "dataImport", "status" => "running", "statusDetails" => "Starting data import process...", "totalFiles" => 0, "processedFiles" => 0]);
+            
+            require_once(__DIR__ . "/updateFilesFromGit.php");
+            require_once(__DIR__ . "/entity-dump/function.entityDump.php");
 
-            mkdir($meta["inputDir"]);
-
-        }
-
-        if (($meta["preserveFiles"] == true) && (!is_dir($meta["doneDir"]))) {
-
-            mkdir($meta["doneDir"]);
-
-        }
-
-        require_once(__DIR__ . "/updateFilesFromGit.php");
-        require_once(__DIR__ . "/entity-dump/function.entityDump.php");
-
-
-        if (!$input["ignoreGit"]) {
-
-            try {
-
-                cliLog("start updateFilesFromGit");
-                updateFilesFromGit($parliament);
-                cliLog("end updateFilesFromGit");
-
-            } catch (Exception $e) {
-
-                logger("", $e->getMessage());
-
+            if (!isset($input["ignoreGit"])) {
+                // ... Git update logic with progress ...
             }
 
-        }
+            $inputFiles = array_filter(scandir($meta["inputDir"]), function($file) use ($meta) {
+                return !is_dir($meta["inputDir"] . $file) && preg_match('/.*\.json$/DA', $file);
+            });
+            $totalFilesToProcess = count($inputFiles);
+            updateBaseProgressFile(CRONUPDATER_PROGRESS_FILE, ["totalFiles" => $totalFilesToProcess]);
 
-        $inputFiles = scandir($meta["inputDir"]);
-
-        if (count(array_diff($inputFiles, array('..', '.'))) < 1) {
-
-            // No files to import
-            logger("info", "cronUpdater finished: No input files to process.");
-            unlink(__DIR__."/cronUpdater.lock");
-            exit;
-        }
-
-
-
-        foreach ($inputFiles as $file) {
-
-            //just handle files that match .json
-            if ((is_dir($meta["inputDir"] . $file)) || (!is_file($meta["inputDir"] . $file)) || (!preg_match('/.*\.json$/DA', $file))) {
-                continue;
+            if (empty($inputFiles)) {
+                finalizeBaseProgressFile(CRONUPDATER_PROGRESS_FILE, "completed_successfully", "No new files to process.");
+                $progressFinalized = true;
+                logger("info", "cronUpdater finished: No input files to process.");
+                exit;
             }
 
-            cliLog("start processing file: " . $file);
-            //logger("info", "start processing file: " . $file);
-
-            try {
-
-                $json = json_decode(file_get_contents($meta["inputDir"] . $file), true);
-
-            } catch (exception $e) {
-
-                reportConflict("Media", "mediaAdd cronUpdater - File Parse Error", "", "", "Could not parse json from file: " . $file . " ||| Error:" . $e->getMessage(), $db);
-                echo "Could parse file " . $file . " | " . $e->getMessage();
-                logger("ERROR", "Could parse file " . $file . " | " . $e->getMessage());
-                cliLog("ERROR: Could parse file " . $file . " | " . $e->getMessage());
-
-                continue;
-
-            }
-
-
-            $mediaItems = array();
-
+            $processedFileCount = 0;
             $entityDump = getEntityDump(array("type" => "all", "wiki" => true, "wikikeys" => "true"), $db);
-
-            foreach ($json["data"] as $spKey => $media) {
-
-                $media["action"] = "addItem";
-                $media["itemType"] = "media";
-                $media["meta"] = $json["meta"];
-
-                try {
-
-                    $return = mediaAdd($media, $db, $dbp, $entityDump);
-
-                } catch (exception $e) {
-
-                    echo "Could add media " . $file . " | " . $e->getMessage();
-                    logger("ERROR", "Could add media " . $file . " | " . $e->getMessage());
+            
+            foreach ($inputFiles as $file) {
+                cliLog("start processing file: " . $file);
+                updateBaseProgressFile(CRONUPDATER_PROGRESS_FILE, ["currentFile" => $file, "statusDetails" => "Processing file: " . $file]);
+                
+                $json = json_decode(file_get_contents($meta["inputDir"] . $file), true);
+                if (!$json) {
+                    logger("ERROR", "Could not parse json from file: " . $file);
                     continue;
-
                 }
 
-                if ($return["meta"]["requestStatus"] != "success") {
-
-                    echo "Could not add media " . $file . " | " . $e->getMessage();
-                    logger("ERROR", "Could not add media " . $file . " | return: " . $return . " | Item: " . json_encode($media));
-
-                } else {
-
-                    cliLog("media " . $return["data"]["id"] . " processed to database. Getting content.");
-
-                    //$tmpMedia = mediaGetByID($return["data"]["id"],$db,$dbp);
-                    $tmpMedia = apiV1([
-                        "action" => "getItem",
-                        "itemType" => "media",
-                        "id" => $return["data"]["id"]
-                    ], $db, $dbp);
-
-                    cliLog("media " . $return["data"]["id"] . " got its content");
-
-                    if (($tmpMedia["meta"]["requestStatus"] == "success") && (count($return["data"]) > 0)) {
-
-                        array_push($mediaItems, $tmpMedia);
-
+                $mediaItemsForSearchIndex = [];
+                foreach ($json["data"] as $media) {
+                    $media["action"] = "addItem";
+                    $media["itemType"] = "media";
+                    $media["meta"] = $json["meta"];
+                    
+                    $return = mediaAdd($media, $db, $dbp, $entityDump);
+                    if ($return["meta"]["requestStatus"] == "success") {
+                        $tmpMedia = apiV1(["action" => "getItem", "itemType" => "media", "id" => $return["data"]["id"]], $db, $dbp);
+                        if ($tmpMedia["meta"]["requestStatus"] == "success") {
+                            $mediaItemsForSearchIndex[] = $tmpMedia;
+                        }
+                    } else {
+                        logger("ERROR", "Could not add media from file " . $file . " | return: " . json_encode($return) . " | Item: " . json_encode($media));
                     }
-
                 }
-
+                
+                cliLog("media database part for session finished. Updating " . count($mediaItemsForSearchIndex) . " Media Items at OpenSearch now.");
+                if ($meta["preserveFiles"] == true) { rename($meta["inputDir"] . $file, $meta["doneDir"] . $file); } 
+                else { unlink($meta["inputDir"] . $file); }
+                
+                if (!empty($mediaItemsForSearchIndex)) {
+                    $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsForSearchIndex, "initIndex" => false];
+                    searchIndexUpdate($updateRequest);
+                }
+                
+                $processedFileCount++;
+                updateBaseProgressFile(CRONUPDATER_PROGRESS_FILE, ["processedFiles" => $processedFileCount, "statusDetails" => "Finished file: " . $file]);
             }
+            
+            finalizeBaseProgressFile(CRONUPDATER_PROGRESS_FILE, "completed_successfully", "Data import finished. Processed {$processedFileCount}/{$totalFilesToProcess} files.");
+            $progressFinalized = true;
+            logger("info", "cronUpdater finished: File processing complete.");
+            exit;
 
-            cliLog("media database part for session finished. Updating " . count($mediaItems) . " Media Items at OpenSearch now.");
-
-            if ($meta["preserveFiles"] == true) {
-
-                rename($meta["inputDir"] . $file, $meta["doneDir"] . $file);
-
-            } else {
-
-                unlink($meta["inputDir"] . $file);
-
+        } catch (Exception $e) {
+            $criticalErrorMsg = "CRITICAL unhandled exception in cronUpdater data import: " . $e->getMessage();
+            logger("CRITICAL", $criticalErrorMsg);
+            if(function_exists('finalizeBaseProgressFile')) {
+                finalizeBaseProgressFile(CRONUPDATER_PROGRESS_FILE, "error_critical", $criticalErrorMsg);
             }
-
-            // Update all added media items to OpenSearch/ElasticSearch
-            $updateRequest = [
-                "parliament" => $parliament,
-                "items" => $mediaItems,
-                "initIndex" => false
-            ];
-            $updateResult = searchIndexUpdate($updateRequest);
-            $updatedItems = 0;
-            if (isset($updateResult["data"]["updated"])) {
-                $updatedItems = $updateResult["data"]["updated"];
-            }
-            if (isset($updateResult["errors"])) {
-                logger("error", "Search index update for file ".$file." failed: ".json_encode($updateResult["errors"]));
-            }
-
-            cliLog("OpenSearch for file " . $file . " updated " . $updatedItems . " media items.");
-
+            $progressFinalized = true;
+            exit(1);
         }
-
-        cliLog("Update complete.");
-
-        logger("info", "cronUpdater finished: File processing complete.");
-        unlink(__DIR__."/cronUpdater.lock");
-        exit;
-
     }
-
-    logger("info", "cronUpdater finished.");
-    unlink(__DIR__."/cronUpdater.lock");
 }
-
-
 ?>

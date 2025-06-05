@@ -87,109 +87,108 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 </div>
                             </div>
                             <hr>
-							<div class="row">
+							<div class="row" id="data-import-progress-section">
 								<div class="col-12">
 									<div class="d-flex justify-content-between">
 										<div class="fw-bolder">Data Import</div>
-										<div>0 / 250</div>
+										<div id="data-import-items-text" class="small">Idle</div>
 									</div>
-									<div class="progress my-3" role="progressbar" aria-label="Data Import" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
+									<div class="progress my-1" role="progressbar" aria-label="Data Import Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+										<div id="data-import-progress-bar" class="progress-bar" style="width: 0%"></div>
 									</div>
-									<button type="button" id="runCronUpdater" class="btn btn-outline-success rounded-pill btn-sm me-1">Run cronUpdater</button>
+                                    <div id="data-import-status-text" class="small text-muted mb-2">Status: Idle</div>
+                                    <div id="data-import-current-file-text" class="small text-muted mb-2">File: N/A</div>
+									<button type="button" id="btn-trigger-data-import" class="btn btn-outline-primary rounded-pill btn-sm me-1">Start Full Data Import</button>
+                                    <div id="data-import-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
 								</div>
 							</div>
 							<hr>
-							<div class="row">
+							<div class="row" id="search-index-progress-section-DE" data-parliament-code="DE">
 								<div class="col-12">
 									<div class="d-flex justify-content-between">
-										<div class="fw-bolder">Search Index</div>
-										<div>0 / 250</div>
+										<div class="fw-bolder">Search Index (DE)</div> 
+										<div id="search-index-DE-items-text" class="small">Idle</div>
 									</div>
-									<div class="progress my-3" role="progressbar" aria-label="Update Search Index" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
+									<div class="progress my-1" role="progressbar" aria-label="Search Index DE Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+										<div id="search-index-DE-progress-bar" class="progress-bar" style="width: 0%"></div>
 									</div>
-									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Search Index</button>
-									<button type="button" class="btn btn-outline-danger rounded-pill btn-sm me-1">Delete Search Index</button>
+                                    <div id="search-index-DE-status-text" class="small text-muted mb-2">Status: Idle</div>
+									<button type="button" id="btn-trigger-search-index-refresh-DE" class="btn btn-outline-primary rounded-pill btn-sm me-1" data-parliament-code="DE">Refresh Full Index (DE)</button>
+									<button type="button" id="btn-trigger-search-index-delete-DE" class="btn btn-outline-danger rounded-pill btn-sm me-1" data-parliament-code="DE">Delete Index (DE)</button>
+                                    <div id="search-index-DE-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
 								</div>
 							</div>
                         </div>
-						<div class="tab-pane bg-white fade" id="external" role="tabpanel" aria-labelledby="external-tab">
+						<div class="tab-pane bg-white fade p-3" id="external" role="tabpanel" aria-labelledby="external-tab">
+                            <!-- Main ADS Progress Display -->
+                            <div class="row mb-3" id="ads-overall-progress-section">
+                                <div class="col-12">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="fw-bolder">Overall Additional Data Service Status</div>
+                                        <div id="ads-overall-items-text" class="small">Idle</div>
+                                    </div>
+                                    <div class="progress my-1" role="progressbar" aria-label="Overall ADS Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                        <div id="ads-overall-progress-bar" class="progress-bar" style="width: 0%"></div>
+                                    </div>
+                                    <div id="ads-overall-status-text" class="small text-muted mb-2">Status: Idle</div>
+                                    <div id="ads-overall-active-type-text" class="small text-muted mb-2">Current Task: N/A</div>
+                                    <div id="ads-overall-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
+                                </div>
+                            </div>
+                            <hr class="mb-4">
+
+                            <!-- Entity Specific Triggers -->
 							<div class="row">
 								<div class="col-12">
-									<div class="d-flex justify-content-between">
+									<div class="d-flex justify-content-between align-items-center">
 										<div class="fw-bolder"><span class="icon-type-person"></span> People</div>
-										<div>0 / 250</div>
+										<button type="button" id="btn-trigger-ads-person" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="person">Refresh Data for People</button>
 									</div>
-									<div class="progress my-3" role="progressbar" aria-label="Additional Data People" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
-									</div>
-									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for People</button>
 								</div>
 							</div>
 							<hr>
 							<div class="row">
 								<div class="col-12">
-									<div class="d-flex justify-content-between">
+									<div class="d-flex justify-content-between align-items-center">
 										<div class="fw-bolder"><span class="icon-type-person"></span> Members of Parliament</div>
-										<div>0 / 250</div>
+										<button type="button" id="btn-trigger-ads-memberOfParliament" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="memberOfParliament">Refresh Data for MoPs</button>
 									</div>
-									<div class="progress my-3" role="progressbar" aria-label="Additional Data Members of Parliament" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
-									</div>
-									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for Members of Parliament</button>
 								</div>
 							</div>
 							<hr>
 							<div class="row">
 								<div class="col-12">
-									<div class="d-flex justify-content-between">
+									<div class="d-flex justify-content-between align-items-center">
 										<div class="fw-bolder"><span class="icon-type-organisation"></span> Organisations</div>
-										<div>0 / 250</div>
+										<button type="button" id="btn-trigger-ads-organisation" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="organisation">Refresh Data for Organisations</button>
 									</div>
-									<div class="progress my-3" role="progressbar" aria-label="Additional Data Organisations" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>	
-									</div>
-									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for Organisations</button>
 								</div>
 							</div>
 							<hr>
-							<div class="row">
+                            <div class="row">
 								<div class="col-12">
-									<div class="d-flex justify-content-between">
+									<div class="d-flex justify-content-between align-items-center">
 										<div class="fw-bolder"><span class="icon-type-document"></span> Legal Documents</div>
-										<div>0 / 250</div>
+										<button type="button" id="btn-trigger-ads-legalDocument" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="legalDocument">Refresh Data for Legal Documents</button>
 									</div>
-									<div class="progress my-3" role="progressbar" aria-label="Additional Data Legal Documents" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
-									</div>
-									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for Legal Documents</button>
 								</div>
 							</div>
 							<hr>
 							<div class="row">
 								<div class="col-12">
-									<div class="d-flex justify-content-between">
+									<div class="d-flex justify-content-between align-items-center">
 										<div class="fw-bolder"><span class="icon-type-document"></span> Official Documents</div>
-										<div>0 / 250</div>
+										<button type="button" id="btn-trigger-ads-officialDocument" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="officialDocument">Refresh Data for Official Documents</button>
 									</div>
-									<div class="progress my-3" role="progressbar" aria-label="Additional Data Official Documents" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">	
-										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
-									</div>
-									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for Official Documents</button>
 								</div>
 							</div>
 							<hr>
 							<div class="row">
 								<div class="col-12">
-									<div class="d-flex justify-content-between">
+									<div class="d-flex justify-content-between align-items-center">
 										<div class="fw-bolder"><span class="icon-type-term"></span> Terms</div>
-										<div>0 / 250</div>
+										<button type="button" id="btn-trigger-ads-term" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="term">Refresh Data for Terms</button>
 									</div>
-									<div class="progress my-3" role="progressbar" aria-label="Additional Data Terms" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
-									</div>
-									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for Terms</button>
 								</div>
 							</div>
                         </div>
@@ -317,160 +316,477 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	}
 </style>
 
-<script type="text/javascript">
-	
-	$(function() {
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const API_BASE_URL = '<?= $config["dir"]["root"]; ?>/api/v1'; 
+    const POLLING_INTERVAL = 5000; // 5 seconds
+
+    // --- Generic Helper Functions ---
+    function getApiUrl(action, itemType, params = {}) {
+        const url = `${API_BASE_URL}/?action=${action}&itemType=${itemType}`;
+        const queryParams = new URLSearchParams(params).toString();
+        return queryParams ? `${url}&${queryParams}` : url;
+    }
+
+    async function apiCall(url, method = 'GET', body = null) {
+        try {
+            const options = { method };
+            if (body && (method === 'POST' || method === 'PUT')) {
+                options.headers = { 'Content-Type': 'application/json' };
+                options.body = JSON.stringify(body);
+            }
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                let errorData;
+                try {
+                    errorData = await response.json();
+                } catch (e) {
+                    errorData = { errors: [{ detail: `HTTP error ${response.status} - ${response.statusText}` }] };
+                }
+                console.error('API call failed:', url, errorData);
+                return { success: false, data: null, errors: errorData.errors || [{detail: 'Unknown API error'}] };
+            }
+            const data = await response.json();
+            return { 
+                success: true, 
+                data: data.data !== undefined ? data.data : data, 
+                meta: data.meta, 
+                errors: data.errors 
+            };
+        } catch (error) {
+            console.error('Network or other error during API call:', url, error);
+            return { success: false, data: null, errors: [{ detail: error.message || 'Network error' }] };
+        }
+    }
+
+    function updateElementText(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    }
+
+    function updateProgressBar(barId, percentage, currentStatus) {
+        const bar = document.getElementById(barId);
+        if (bar) {
+            percentage = parseFloat(percentage) || 0;
+            bar.style.width = percentage + '%';
+            bar.textContent = '';
+
+            // Clear all contextual classes first
+            bar.classList.remove('bg-success', 'bg-primary', 'bg-danger', 'progress-bar-animated', 'progress-bar-striped');
+
+            const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors'];
+            if (errorStates.includes(currentStatus)) {
+                bar.classList.add('bg-danger');
+            } else if (currentStatus === 'running') {
+                bar.classList.add('bg-primary', 'progress-bar-animated', 'progress-bar-striped');
+            } else if (percentage >= 100) { // Completed or idle but 100%
+                bar.classList.add('bg-success');
+            } else if (percentage > 0) { // Idle with some progress, or any other non-error/non-running state with progress
+                bar.classList.add('bg-primary');
+            }
+            // If currentStatus is idle and percentage is 0, no specific color class is added here (default progress bar appearance)
+        }
+    }
+    
+    function setButtonText(buttonId, textContent) {
+        const btn = document.getElementById(buttonId);
+        if (btn) {
+            const icon = btn.querySelector('i, span[class^="icon-"]');
+            if (icon) {
+                let currentTextNode = null;
+                for (let i = 0; i < btn.childNodes.length; i++) {
+                    if (btn.childNodes[i].nodeType === Node.TEXT_NODE && btn.childNodes[i].textContent.trim() !== '') {
+                        currentTextNode = btn.childNodes[i];
+                        break;
+                    }
+                }
+                if (currentTextNode) {
+                    currentTextNode.textContent = ' ' + textContent; // Add space after icon
+                } else {
+                    btn.appendChild(document.createTextNode(' ' + textContent));
+                }
+            } else {
+                btn.textContent = textContent;
+            }
+        }
+    }
+
+    function toggleButton(buttonId, disabledState, textContent = null) {
+        const btn = document.getElementById(buttonId);
+        if (btn) {
+            btn.disabled = disabledState;
+            if (textContent) {
+                setButtonText(buttonId, textContent);
+            }
+        }
+    }
+
+    function showError(displayId, messages) {
+        const el = document.getElementById(displayId);
+        if (el) {
+            el.innerHTML = ''; 
+            let messageContent = null;
+            if (Array.isArray(messages) && messages.length > 0) {
+                const ul = document.createElement('ul');
+                ul.className = 'list-unstyled mb-0';
+                messages.forEach(err => {
+                    const li = document.createElement('li');
+                    li.textContent = err.detail || err.title || 'An unspecified error occurred.';
+                    ul.appendChild(li);
+                });
+                messageContent = ul;
+            } else if (typeof messages === 'string' && messages.trim().length > 0) {
+                 messageContent = document.createTextNode(messages);
+            } else if (messages && typeof messages.detail === 'string') { // Handle single error object
+                messageContent = document.createTextNode(messages.detail);
+            }
+
+            if (messageContent) {
+                el.appendChild(messageContent);
+                el.classList.remove('d-none');
+            } else {
+                 el.classList.add('d-none'); 
+            }
+        }
+    }
+
+    function clearError(displayId) {
+        showError(displayId, null); // Call showError with null to hide it
+    }
+
+    // --- Data Import Specific Functions ---
+    const dataImportElems = {
+        section: 'data-import-progress-section',
+        progressBar: 'data-import-progress-bar',
+        statusText: 'data-import-status-text',
+        itemsText: 'data-import-items-text',
+        currentFileText: 'data-import-current-file-text',
+        errorDisplay: 'data-import-error-display',
+        triggerButton: 'btn-trigger-data-import',
+        originalButtonText: 'Start Full Data Import' 
+    };
+
+    async function fetchDataImportStatus() {
+        const url = getApiUrl('import', 'status');
+        const result = await apiCall(url);
+        if (result.success && result.data) {
+            updateDataImportUI(result.data);
+        } else {
+            console.warn("Failed to fetch data import status:", result.errors);
+            updateDataImportUI({ status: 'error', statusDetails: 'Status fetch failed', percentage: 0, errors: result.errors || [{detail: 'Connection error while fetching status.'}] });
+        }
+    }
+
+    function updateDataImportUI(statusData) {
+        const { status, percentage = 0, statusDetails = 'N/A', totalFiles = 0, processedFiles = 0, currentFile = 'N/A', errors = [] } = statusData;
         
-		$("#runCronUpdater").on("click", function() {
-            $.ajax({
-                url: "<?= $config["dir"]["root"] ?>/api/v1/import/run",
-                dataType: "json",
-                method: "post",
-                success: function(response) {
-                    if (response.meta.requestStatus === "success") {
-                        $('#successRunCronDialog').modal('show');
-                    } else {
-                        // Handle error case
-                        let errorMessage = "Failed to start CronUpdater";
-                        if (response.errors && response.errors.length > 0) {
-                            errorMessage = response.errors[0].detail || response.errors[0].title;
+        updateProgressBar(dataImportElems.progressBar, percentage, status);
+        updateElementText(dataImportElems.statusText, `Status: ${statusDetails}`);
+        updateElementText(dataImportElems.itemsText, `Files: ${processedFiles} / ${totalFiles}`);
+        updateElementText(dataImportElems.currentFileText, `Current: ${currentFile || 'N/A'}`);
+
+        if (status === 'running') {
+            toggleButton(dataImportElems.triggerButton, true, 'Importing...');
+            clearError(dataImportElems.errorDisplay);
+        } else {
+            toggleButton(dataImportElems.triggerButton, false, dataImportElems.originalButtonText);
+            if (status === 'error') {
+                const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred during data import.'}]);
+                showError(dataImportElems.errorDisplay, errorMessages);
+            } else { // completed, idle, or other non-running, non-error status
+                clearError(dataImportElems.errorDisplay);
+            }
+        }
+    }
+
+    async function triggerDataImport() {
+        toggleButton(dataImportElems.triggerButton, true, 'Starting...');
+        clearError(dataImportElems.errorDisplay);
+        const url = getApiUrl('import', 'run');
+        const result = await apiCall(url, 'POST'); 
+
+        if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && typeof result.data.message === 'string') {
+            updateElementText(dataImportElems.statusText, `Status: ${result.data.message || 'Import triggered, waiting for progress...'}`);
+            setTimeout(fetchDataImportStatus, 1000); 
+        } else {
+            showError(dataImportElems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: 'Failed to trigger data import.'}]);
+            toggleButton(dataImportElems.triggerButton, false, dataImportElems.originalButtonText); 
+        }
+    }
+
+    // --- Search Index Specific Functions (Dynamic based on HTML) ---
+    function initializeSearchIndexSections() {
+        const sections = document.querySelectorAll('[id^="search-index-progress-section-"]');
+        sections.forEach(section => {
+            const parliamentCode = section.dataset.parliamentCode;
+            if (!parliamentCode) {
+                console.warn('Search index section found without data-parliament-code:', section.id);
+                return;
+            }
+
+            const elems = {
+                progressBar: `search-index-${parliamentCode}-progress-bar`,
+                statusText: `search-index-${parliamentCode}-status-text`,
+                itemsText: `search-index-${parliamentCode}-items-text`,
+                errorDisplay: `search-index-${parliamentCode}-error-display`,
+                refreshButton: `btn-trigger-search-index-refresh-${parliamentCode}`,
+                deleteButton: `btn-trigger-search-index-delete-${parliamentCode}`,
+                parliamentCode: parliamentCode,
+                originalRefreshBtnText: `Refresh Full Index (${parliamentCode})`,
+                originalDeleteBtnText: `Delete Index (${parliamentCode})`
+            };
+
+            async function fetchStatus() {
+                const url = getApiUrl('index', 'status', { parliament: elems.parliamentCode });
+                const result = await apiCall(url);
+                if (result.success && result.data) {
+                    updateUI(result.data);
+                } else {
+                    console.warn(`Failed to fetch search index status for ${elems.parliamentCode}:`, result.errors);
+                    updateUI({ status: 'error', statusDetails: 'Status fetch failed', percentage: 0, errors: result.errors || [{detail: 'Connection error while fetching status.'}] });
+                }
+            }
+
+            function updateUI(statusData) {
+                const {
+                    status,
+                    statusDetails = 'N/A',
+                    totalDbMediaItems = 0,
+                    processedMediaItems = 0,
+                    errors = []
+                } = statusData;
+
+                const percentage = totalDbMediaItems > 0 ? (processedMediaItems / totalDbMediaItems) * 100 : 0;
+
+                updateProgressBar(elems.progressBar, percentage, status);
+                updateElementText(elems.statusText, `Status: ${statusDetails}`);
+                updateElementText(elems.itemsText, `Speeches: ${processedMediaItems} / ${totalDbMediaItems}`);
+
+                if (status === 'running') {
+                    toggleButton(elems.refreshButton, true, 'Refreshing...');
+                    toggleButton(elems.deleteButton, true, 'Processing...');
+                    clearError(elems.errorDisplay);
+                } else {
+                    toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
+                    toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
+                    if (status === 'error') {
+                        const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred.'}]);
+                        showError(elems.errorDisplay, errorMessages);
+                    } else { // completed, idle
+                        clearError(elems.errorDisplay);
+                        if (status === 'deleted') { // Special case for after delete
+                             updateElementText(elems.itemsText, 'Index Deleted');
                         }
-                        alert(errorMessage);
                     }
-                },
-                error: function(xhr, status, error) {
-                    alert("Error: " + error);
                 }
-            });
+            }
+
+            async function triggerRefresh() {
+                toggleButton(elems.refreshButton, true, 'Starting Refresh...');
+                toggleButton(elems.deleteButton, true); // Disable delete during refresh
+                clearError(elems.errorDisplay);
+                const url = getApiUrl('index', 'full-update', { parliament: elems.parliamentCode });
+                const result = await apiCall(url, 'POST');
+
+                if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && typeof result.data.message === 'string') {
+                    updateElementText(elems.statusText, `Status: ${result.data.message || 'Search index refresh triggered.'}`);
+                    setTimeout(fetchStatus, 1000);
+                } else {
+                    showError(elems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: 'Failed to trigger search index refresh.'}]);
+                    toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
+                    toggleButton(elems.deleteButton, false); // Re-enable delete on failure
+                }
+            }
+        
+            async function triggerDelete() {
+                if (!confirm(`Are you sure you want to delete the search index for parliament ${elems.parliamentCode}? This action cannot be undone.`)) {
+                    return;
+                }
+                toggleButton(elems.deleteButton, true, 'Deleting...');
+                toggleButton(elems.refreshButton, true); // Disable refresh during delete
+                clearError(elems.errorDisplay);
+                const url = getApiUrl('index', 'delete', { parliament: elems.parliamentCode, init: true }); 
+                const result = await apiCall(url, 'POST');
+
+                if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && result.data.deleted === true) {
+                    updateElementText(elems.statusText, `Status: ${result.data.message || 'Search index deleted successfully.'}`);
+                    updateProgressBar(elems.progressBar, 0, 'idle'); // Reset progress bar to idle and 0%
+                    updateUI({status: 'deleted', percentage: 0, statusDetails: result.data.message || 'Index deleted'});// Update UI to reflect deletion
+                    setTimeout(fetchStatus, 1000); 
+                } else {
+                    showError(elems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: 'Failed to delete search index.'}]);
+                    toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
+                    toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
+                }
+            }
+
+            const refreshBtn = document.getElementById(elems.refreshButton);
+            if (refreshBtn) refreshBtn.addEventListener('click', triggerRefresh);
+            
+            const deleteBtn = document.getElementById(elems.deleteButton);
+            if (deleteBtn) deleteBtn.addEventListener('click', triggerDelete);
+
+            fetchStatus();
+            setInterval(fetchStatus, POLLING_INTERVAL);
         });
+    }
 
-		$(".updateSearchIndex").on("click", function() {
-			const parliament = "DE";
+    // --- Additional Data Services (ADS) Specific Functions ---
+    const adsElems = {
+        progressBar: 'ads-overall-progress-bar',
+        statusText: 'ads-overall-status-text',
+        itemsText: 'ads-overall-items-text',
+        activeTypeText: 'ads-overall-active-type-text',
+        errorDisplay: 'ads-overall-error-display',
+        triggerButtons: document.querySelectorAll('.ads-trigger-btn')
+    };
 
-			if ($(this).data("type") == "specific") {
-				const mediaIDs = "DE-0190062070,DE-0190077128";
+    function getAdsButtonOriginalText(btn) {
+        let entityTypeDisplay = btn.dataset.entityType;
+        if (entityTypeDisplay === 'memberOfParliament') entityTypeDisplay = 'MoPs';
+        else if (entityTypeDisplay) entityTypeDisplay = entityTypeDisplay.charAt(0).toUpperCase() + entityTypeDisplay.slice(1) + ('s' !== entityTypeDisplay.slice(-1) ? 's' : '');
+        else entityTypeDisplay = 'All Entities';
+        return `Refresh Data for ${entityTypeDisplay}`;
+    }
 
-				$.ajax({
-					url: "<?= $config["dir"]["root"] ?>/api/v1/index/update",
-					method:"POST",
-					dataType: "json",
-					data: {
-                        "parliament": parliament,
-                        "mediaIDs": mediaIDs,
-                        "initIndex": false
-                    },
-					success: function(ret) {
-						console.log("Update specific Medias response:", ret);
-                        alert( (ret.meta && ret.meta.requestStatus === "success") ? "Specific medias update triggered: " + (ret.data ? ret.data.updated + " updated." : "") : "Error: " + (ret.errors ? ret.errors[0].detail : "Unknown error") );
-					},
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error("Update specific Medias error:", textStatus, errorThrown, jqXHR.responseText);
-                        alert("AJAX Error updating specific medias: " + textStatus);
-                    }
-				})
+    async function fetchAdsStatus() {
+        const url = getApiUrl('externalData', 'status');
+        const result = await apiCall(url);
+        if (result.success && result.data) {
+            updateAdsUI(result.data);
+        } else {
+            console.warn("Failed to fetch ADS status:", result.errors);
+            updateAdsUI({ status: 'error', statusDetails: 'Status fetch failed', percentage: 0, errors: result.errors || [{detail: 'Connection error while fetching status.'}] });
+        }
+    }
 
-			} else if ($(this).data("type") == "all") {
-				$.ajax({
-					url: "<?= $config["dir"]["root"] ?>/api/v1/index/full-update",
-					method:"POST",
-					dataType: "json",
-					data: {
-                        "parliament": parliament
-                    },
-					success: function(ret) {
-						console.log("Update whole Searchindex response:", ret);
-                        alert( (ret.meta && ret.meta.requestStatus === "success") ? (ret.data ? ret.data.message : "Full search index update process started.") : "Error: " + (ret.errors ? ret.errors[0].detail : "Unknown error") );
-					},
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error("Update whole Searchindex error:", textStatus, errorThrown, jqXHR.responseText);
-                        alert("AJAX Error updating whole search index: " + textStatus);
-                    }
-				})
-			}
+    function updateAdsUI(statusData) {
+        const { status, percentage = 0, statusDetails = 'N/A', entityType = 'all', currentItem = 'N/A', totalItems = 0, processedItems = 0, errors = [] } = statusData;
 
-		});
+        updateProgressBar(adsElems.progressBar, percentage, status);
+        updateElementText(adsElems.statusText, `Status: ${statusDetails}`);
+        updateElementText(adsElems.activeTypeText, `Current Task: ${entityType || 'Overall'} - ${currentItem || 'N/A'}`);
+        updateElementText(adsElems.itemsText, `Items: ${processedItems} / ${totalItems}`);
+        
+        if (status === 'running') {
+            adsElems.triggerButtons.forEach(btn => {
+                toggleButton(btn.id, true, `${btn.dataset.entityType} (Running)`);
+            });
+            clearError(adsElems.errorDisplay);
+        } else {
+            adsElems.triggerButtons.forEach(btn => {
+                toggleButton(btn.id, false, getAdsButtonOriginalText(btn));
+            });
+            if (status === 'error') {
+                const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred.'}]);
+                showError(adsElems.errorDisplay, errorMessages);
+            } else { // completed, idle
+                clearError(adsElems.errorDisplay);
+            }
+        }
+    }
+    
+    async function triggerAdsUpdate(entityType = 'all') { 
+        adsElems.triggerButtons.forEach(btn => {
+            toggleButton(btn.id, true, `${btn.dataset.entityType} (Starting)`);
+        });
+        clearError(adsElems.errorDisplay);
+        const params = entityType && entityType.toLowerCase() !== 'all' ? { type: entityType } : {};
+        const url = getApiUrl('externalData', 'full-update', params);
+        const result = await apiCall(url, 'POST');
 
-		$("#deleteSearchIndex").on("click", function() {
-			const parliament = "DE";
-            const initAfterDelete = true;
+        if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && typeof result.data.message === 'string') {
+            updateElementText(adsElems.statusText, `Status: ${result.data.message || `ADS update for ${entityType} triggered.`}`);
+            setTimeout(fetchAdsStatus, 1000);
+        } else {
+            showError(adsElems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: `Failed to trigger ADS update for ${entityType}.`}]);
+            adsElems.triggerButtons.forEach(btn => {
+                toggleButton(btn.id, false, getAdsButtonOriginalText(btn));
+            });
+        }
+    }
 
-			$.ajax({
-				url: "<?= $config["dir"]["root"] ?>/api/v1/index/delete",
-				method:"POST",
-				dataType: "json",
-				data: {
-                    "parliament": parliament,
-                    "init": initAfterDelete
-                },
-				success: function(ret) {
-					console.log("Delete whole Searchindex response:", ret);
-                    alert( (ret.meta && ret.meta.requestStatus === "success") ? "Search index deletion triggered." : "Error: " + (ret.errors ? ret.errors[0].detail : "Unknown error") );
-				},
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error("Delete whole Searchindex error:", textStatus, errorThrown, jqXHR.responseText);
-                    alert("AJAX Error deleting search index: " + textStatus);
+    // --- Overall Status Display Functions ---
+    function fetchOverallStatus() {
+        const url = `${API_BASE_URL}/status/all`;
+        
+        const formatDate = (dateString) => {
+            if (!dateString) return '-';
+            try {
+                // Use a specific locale and options for consistent formatting
+                return new Date(dateString).toLocaleString('de-DE', {
+                    year: 'numeric', month: '2-digit', day: '2-digit',
+                    hour: '2-digit', minute: '2-digit', second: '2-digit'
+                });
+            } catch (e) {
+                console.error("Error formatting date:", dateString, e);
+                return '-';
+            }
+        };
+
+        apiCall(url).then(result => {
+            if (result.success && result.data && result.data.parliaments && result.data.parliaments.length > 0) {
+                const parliamentData = result.data.parliaments[0]; // Assuming first parliament for now
+
+                // Update Repository Info
+                if (parliamentData.repository) {
+                    updateElementText('lastCommitDate', formatDate(parliamentData.repository.remote?.lastUpdated));
+                    updateElementText('repoLocation', parliamentData.repository.location);
+                    updateElementText('repoRemoteSessions', parliamentData.repository.remote?.numberOfSessions);
+                    updateElementText('repoLocalUpdate', formatDate(parliamentData.repository.local?.lastUpdated));
+                    updateElementText('repoLocalSessions', parliamentData.repository.local?.numberOfSessions);
+                } else {
+                    ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions'].forEach(id => updateElementText(id, 'N/A'));
                 }
-			})
-		})
 
-		fetch('<?= $config["dir"]["root"] ?>/api/v1/status/all')
-			.then(response => response.json())
-			.then(data => {
-				if (data.meta && data.meta.requestStatus === "success" && data.data && data.data.parliaments && data.data.parliaments.length > 0) {
-					const parliamentData = data.data.parliaments[0]; // Assuming first parliament
+                // Update Database Info
+                if (parliamentData.database) {
+                    updateElementText('lastDBDate', formatDate(parliamentData.database.lastUpdated));
+                    updateElementText('dbSessions', parliamentData.database.numberOfSessions);
+                } else {
+                    ['lastDBDate', 'dbSessions'].forEach(id => updateElementText(id, 'N/A'));
+                }
 
-					// Helper to format date or return placeholder
-					const formatDate = (dateString) => {
-						if (!dateString) return '-';
-						try {
-							return new Date(dateString).toLocaleString('de');
-						} catch (e) {
-							return '-';
-						}
-					};
-					
-					const el = (id) => document.getElementById(id);
-					const setText = (id, text) => {
-						if (el(id)) el(id).textContent = text || '-';
-					};
+            } else {
+                console.error("Error fetching status data or data is not in expected format:", result.errors || "Unknown error or no parliament data");
+                const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbSessions'];
+                idsToReset.forEach(id => updateElementText(id, 'Error'));
+            }
+        });
+    }
 
-					// Update Repository Info
-					if (parliamentData.repository) {
-						setText('lastCommitDate', formatDate(parliamentData.repository.remote?.lastUpdated));
-						setText('repoLocation', parliamentData.repository.location);
-						setText('repoRemoteSessions', parliamentData.repository.remote?.numberOfSessions);
-						setText('repoLocalUpdate', formatDate(parliamentData.repository.local?.lastUpdated));
-						setText('repoLocalSessions', parliamentData.repository.local?.numberOfSessions);
-					} else {
-						setText('lastCommitDate', 'N/A');
-						setText('repoLocation', 'N/A');
-						setText('repoRemoteSessions', 'N/A');
-						setText('repoLocalUpdate', 'N/A');
-						setText('repoLocalSessions', 'N/A');
-					}
+    // --- Initialization ---
+    function initPage() {
+        // Data Import
+        const triggerDataImportBtn = document.getElementById(dataImportElems.triggerButton);
+        if (triggerDataImportBtn) {
+            triggerDataImportBtn.addEventListener('click', triggerDataImport);
+            setButtonText(dataImportElems.triggerButton, dataImportElems.originalButtonText);
+        }
+        fetchDataImportStatus(); 
+        setInterval(fetchDataImportStatus, POLLING_INTERVAL);
 
-					// Update Database Info
-					if (parliamentData.database) {
-						setText('lastDBDate', formatDate(parliamentData.database.lastUpdated));
-						setText('dbSessions', parliamentData.database.numberOfSessions);
-					} else {
-						setText('lastDBDate', 'N/A');
-						setText('dbSessions', 'N/A');
-					}
+        // Search Index Sections 
+        initializeSearchIndexSections();
+        
+        // Additional Data Services (ADS)
+        adsElems.triggerButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                triggerAdsUpdate(this.dataset.entityType);
+            });
+            setButtonText(btn.id, getAdsButtonOriginalText(btn));
+        });
+        fetchAdsStatus();
+        setInterval(fetchAdsStatus, POLLING_INTERVAL);
 
-				} else {
-					console.error("Error fetching status data or data is not in expected format:", data.errors || "Unknown error or no parliament data");
-					const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbSessions'];
-					idsToReset.forEach(id => setText(id, 'Error'));
-				}
-			})
-			.catch(error => {
-				console.error("Failed to fetch status:", error);
-				const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbSessions'];
-				idsToReset.forEach(id => document.getElementById(id) ? document.getElementById(id).textContent = 'Error' : null);
-			});
-	});
+        // Fetch overall status for repository/DB info
+        fetchOverallStatus();
+    }
+
+    initPage();
+});
 </script>
+
 <?php
     include_once(__DIR__ . '/../../../footer.php');
 

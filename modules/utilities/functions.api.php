@@ -482,6 +482,21 @@ function reportEntitySuggestion($entitysuggestionExternalID, $entitysuggestionTy
 }
 
 /**
+ * Sends a formatted message to the command line interface (CLI).
+ * Prepends the message with a timestamp.
+ *
+ * @param string $message The message to be logged to the CLI.
+ */
+function cliLog($message) {
+    $message = date("Y.m.d H:i:s:u") . " - ". $message.PHP_EOL;
+    print($message);
+    flush();
+    if (ob_get_level() > 0) {
+        ob_flush();
+    }
+}
+
+/**
  * Handles post-processing for entity suggestions after an entity has been added.
  * This includes re-importing affected sessions and deleting the original suggestion.
  *

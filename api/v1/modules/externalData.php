@@ -352,91 +352,65 @@ function externalDataTriggerFullUpdate($api_request) {
     return createApiSuccessResponse(null, ["message" => "Full update process for type '".$api_request["type"]."' initiated."]);
 }
 
-function externalDataGetFullUpdateStatus($api_request) {
+/**
+ * Gets the current status of the cronAdditionalDataService by reading its progress file.
+ * 
+ * @param array $api_request (Not directly used by this function for now, but part of API structure)
+ * @return array Response with status information from the cronAdditionalDataService.json file.
+ */
+function externalDataGetFullUpdateStatus($api_request = []) { // Added default for api_request
     global $config;
 
-    // Temporary debug log - REMOVING
-    // error_log("[externalDataGetFullUpdateStatus] Received api_request[type]: " . ($api_request['type'] ?? 'NOT SET'));
+    $progressFilePath = __DIR__ . "/../../../data/progress_status/cronAdditionalDataService.json";
 
-    $lockFile = __DIR__ . "/../../../data/cronAdditionalDataService.lock";
-    $logFile = __DIR__ . "/../../../data/cronAdditionalDataService.log";
-    $requestedType = $api_request['type'] ?? null;
+    if (!file_exists($progressFilePath)) {
+        // Default status if progress file doesn't exist
+        $defaultStatus = [
+            "processName" => "additionalDataService",
+            "activeType" => null,
+            "status" => "idle",
+            "statusDetails" => "No active or recent ADS process found.",
+            "startTime" => null,
+            "endTime" => null,
+            "totalItems" => 0, // For the current or last activeType
+            "processedItems" => 0, // For the current or last activeType
+            "errors" => [],
+            "lastSuccessfullyProcessedId" => null,
+            "lastActivityTime" => null // It's good practice to have this, even if not explicitly in ADS progress file yet
+        ];
+        return createApiSuccessResponse($defaultStatus, ["message" => "ADS progress file not found, returning default idle status."]);
+    }
 
-    $status = [
-        "requestedType" => $requestedType,
-        "isRunning" => false,
-        "runningSince" => null,
-        "runningForSeconds" => null,
-        "lockFileExists" => false,
-        "logFileExists" => file_exists($logFile),
-        "lastLogEntries" => [],
-        "summary" => "No information available yet or log file not found."
+    $progressJson = @file_get_contents($progressFilePath);
+    if ($progressJson === false) {
+        return createApiErrorResponse(500, 'PROGRESS_FILE_READ_ERROR', "Could not read the ADS progress file.", "File exists at {$progressFilePath} but is unreadable.");
+    }
+
+    $progressData = json_decode($progressJson, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return createApiErrorResponse(500, 'PROGRESS_FILE_CORRUPT', "ADS progress file is corrupt or not valid JSON.", "JSON decode error: " . json_last_error_msg() . " in file {$progressFilePath}");
+    }
+    
+    // Ensure all expected keys from the defaultStatus are present
+    $defaultKeysTemplate = [
+        "processName" => "additionalDataService", "activeType" => null, "status" => "unknown", "statusDetails" => "",
+        "startTime" => null, "endTime" => null, "totalItems" => 0, "processedItems" => 0,
+        "errors" => [], "lastSuccessfullyProcessedId" => null, "lastActivityTime" => date('c') // Set current time if not in file
     ];
-
-    if (file_exists($lockFile)) {
-        $status["isRunning"] = true;
-        $status["lockFileExists"] = true;
-        $status["runningSince"] = date("Y-m-d H:i:s", filemtime($lockFile));
-        $status["runningForSeconds"] = time() - filemtime($lockFile);
+    
+    // If lastActivityTime is not in the loaded data, set it to filemtime or current time.
+    if (!isset($progressData["lastActivityTime"])) {
+        $progressData["lastActivityTime"] = date('c', filemtime($progressFilePath));
     }
 
-    if ($status["logFileExists"]) {
-        $logContent = file_get_contents($logFile);
-        if ($logContent === false) {
-            $status["summary"] = "Error reading log file.";
-            return createApiError("Could not read log file for status.", "LOG_READ_ERROR", $status);
-        }
-        $logLines = explode("\n", trim($logContent));
-        $relevantLogEntries = [];
-        $maxLogEntries = 20; // Show last N entries
+    $progressData = array_merge($defaultKeysTemplate, $progressData);
 
-        // Filter for type if provided, otherwise general log entries
-        foreach (array_reverse($logLines) as $line) {
-            if (empty($line)) continue;
-            if ($requestedType && stripos($line, "type ".$requestedType) === false && stripos($line, $requestedType) === false) {
-                 // If type is requested, skip lines not mentioning the type (basic filter)
-                 // This might need refinement based on exact log format
-            } else {
-                $relevantLogEntries[] = $line;
-            }
-            if (count($relevantLogEntries) >= $maxLogEntries && !$requestedType) break; // General log limit
-            if (count($relevantLogEntries) >= $maxLogEntries && $requestedType && stripos($line, "type ".$requestedType) !== false) break; // Type specific log limit
-        }
-        $status["lastLogEntries"] = array_reverse($relevantLogEntries);
-
-        // Try to find summary info
-        $lastStarted = null; $lastFinished = null; $lastUpdatedCount = null; $lastError = null;
-        foreach (array_reverse($logLines) as $line) { // Full log scan for summaries
-            if (empty($line)) continue;
-            $isRelevantToType = !$requestedType || (stripos($line, "type ".$requestedType) !== false || stripos($line, $requestedType) !== false);
-
-            if ($isRelevantToType) {
-                if (stripos($line, "cronAdditionalDataService started for") !== false && !$lastStarted) $lastStarted = $line;
-                if (stripos($line, "items of type") !== false && stripos($line, "has been updated") !== false && !$lastUpdatedCount) $lastUpdatedCount = $line;
-                if (stripos($line, "finished. Total execution time:") !== false && !$lastFinished) $lastFinished = $line;
-                if (stripos($line, "error") !== false && !$lastError) $lastError = $line; // Capture first recent error
-            }
-        }
-        
-        $summaryParts = [];
-        if ($status["isRunning"]) {
-            $summaryParts[] = "Process is currently RUNNING for type '" . ($requestedType ?: "any") . "' since " . $status["runningSince"] . " (". $status["runningForSeconds"]."s).";
-        }
-        if ($lastStarted) $summaryParts[] = "Last start: [" . substr($lastStarted, 0, 19) . "] " . trim(substr($lastStarted, 21));
-        if ($lastUpdatedCount) $summaryParts[] = "Last update count: [" . substr($lastUpdatedCount, 0, 19) . "] " . trim(substr($lastUpdatedCount, 21));
-        if ($lastFinished) $summaryParts[] = "Last finish: [" . substr($lastFinished, 0, 19) . "] " . trim(substr($lastFinished, 21));
-        if ($lastError && (!$lastFinished || strtotime(substr($lastError,0,19)) > strtotime(substr($lastFinished,0,19)))) {
-             $summaryParts[] = "Last notable error: [" . substr($lastError, 0, 19) . "] " . trim(substr($lastError, 21));
-        }
-        if (!empty($summaryParts)) {
-            $status["summary"] = implode(" | ", $summaryParts);
-        } else if (!$status["isRunning"]) {
-            $status["summary"] = "No recent activity found for type '" . ($requestedType ?: "any") . "' in logs.";
-        }
-
-    }
-
-    return createApiSuccessResponse($status, ["message" => "Full update status retrieved."]);
+    return createApiSuccessResponse(
+        $progressData,
+        [
+            "message" => "ADS status retrieved successfully from progress file."
+        ]
+    );
 }
 
 function externalDataUpdateEntities($api_request) {

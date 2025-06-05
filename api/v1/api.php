@@ -410,6 +410,9 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "delete":
                     $result = searchIndexDelete($api_request); 
                     return createApiResponse($result);
+                case "status":
+                    $result = searchIndexGetStatus($api_request);
+                    return createApiResponse($result);
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")

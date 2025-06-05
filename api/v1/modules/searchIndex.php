@@ -153,234 +153,251 @@ function getSearchIndexParameterBody() {
 /**
  * Adds or updates media items in the search index.
  *
- * @param array $api_request Expected keys: "parliament", "items" (array of media items), "initIndex" (boolean, optional)
- *                             Alternatively, "mediaIDs" (comma-separated string or array)
+ * @param array $api_request Expected keys: "parliament", "items" (array of full media item API responses), "initIndex" (boolean, optional)
  * @return array API response
  */
 function searchIndexUpdate($api_request) {
     global $config;
-    // api.php is needed for apiV1 call; media.php is then included by api.php if itemType=media
-    require_once (__DIR__."/../api.php");      
 
-    set_time_limit(0);
-    ini_set('memory_limit', '500M'); 
-    date_default_timezone_set('CET'); 
+    $parliament = $api_request['parliament'] ?? null;
+    $items = $api_request['items'] ?? []; // Array of media items to update/add
+    $initIndex = $api_request['initIndex'] ?? false; // If true, tries to create index with mapping
 
-    if (empty($api_request["parliament"])) {
-        return createApiErrorMissingParameter("parliament");
+    if (empty($parliament)) {
+        return createApiErrorMissingParameter('parliament');
     }
-    $parliament = $api_request["parliament"];
-    if (!isset($config["parliament"][$parliament]["ES"]["index"])) {
-         return createApiErrorInvalidParameter("parliament", "Specified parliament has no ES index configured.");
+    if (!isset($config['parliament'][$parliament])) {
+        return createApiErrorInvalidParameter('parliament', "Invalid parliament specified: {$parliament}");
     }
-    if (!isset($config["parliament"][$parliament]["sql"])){
-        return createApiErrorInvalidParameter("parliament", "Specified parliament has no SQL configuration.");
+     if (empty($items)) {
+        return createApiSuccessResponse(['updated' => 0, 'failed' => 0, 'errors' => []], ['message' => 'No items provided to index.']);
     }
 
-    $items = [];
-    $db = null;
-    $dbp = null;
+    $indexName = "openparliamenttv_" . ($config['parliament'][$parliament]['ES']['index'] ?? $parliament);
+    $openSearchClient = getApiOpenSearchClient();
 
-    if (isset($api_request["items"]) && is_array($api_request["items"])) {
-        $items = $api_request["items"];
-    } elseif (!empty($api_request["mediaIDs"])) {
-        if (!isset($config["parliament"][$parliament]["sql"])){
-            return createApiErrorInvalidParameter("parliament", "Specified parliament has no SQL configuration for fetching by mediaID.");
-        }
-        
-        // Get platform DB
-        $db = getApiDatabaseConnection('platform');
-        if (!($db instanceof SafeMySQL)) {
-            // $db is an error array, return it directly
-            return $db; 
-        }
-
-        // Get parliament DB
-        $dbp = getApiDatabaseConnection('parliament', $parliament);
-        if (!($dbp instanceof SafeMySQL)) {
-            // $dbp is an error array, return it directly
-            return $dbp;
-        }
-        
-        $mediaIdList = [];
-        $rawMediaIDs = is_array($api_request["mediaIDs"]) ? $api_request["mediaIDs"] : explode(",", $api_request["mediaIDs"]);
-        foreach ($rawMediaIDs as $tmpID) {
-            if (preg_match("/(".$parliament.")\-\d+/i", trim($tmpID))) {
-                $mediaIdList[] = trim($tmpID);
-            }
-        }
-
-        if (empty($mediaIdList)) {
-            return createApiSuccessResponse(["updated" => 0, "message" => "No valid media IDs provided to update."]);
-        }
-
-        foreach ($mediaIdList as $mediaID) {
-            $mediaData = apiV1(["action" => "getItem", "itemType" => "media", "id" => $mediaID], $db, $dbp);
-            if (isset($mediaData["data"])) {
-                $items[] = $mediaData; 
-            } else {
-                error_log("Failed to fetch media item $mediaID for indexing: " . json_encode($mediaData));
-            }
-        }
-    } else {
-        return createApiErrorMissingParameter("items or mediaIDs");
+    if (!$openSearchClient || (is_array($openSearchClient) && isset($openSearchClient["errors"]))) {
+        return createApiErrorResponse(500, 'OPENSEARCH_CONNECTION_ERROR', 'messageErrorOpenSearchConnection', 'messageErrorOpenSearchConnection', ['parliament' => $parliament]);
     }
-
-    if (empty($items)) {
-        return createApiSuccessResponse(["updated" => 0, "message" => "No items to update after processing inputs."]);
-    }
-
-    $ESClient = getApiOpenSearchClient();
-    if (!($ESClient instanceof \Elasticsearch\Client)) {
-        // It's an error array returned by getApiOpenSearchClient due to a build failure
-        return $ESClient;
-    }
-
-    $initIndex = !empty($api_request["initIndex"]);
 
     if ($initIndex) {
-        $indexName = "openparliamenttv_" . strtolower($config["parliament"][$parliament]["ES"]["index"]);
-        $indexParams = [
-            "index" => $indexName,
-            "body" => getSearchIndexParameterBody()
-        ];
         try {
-            if (!$ESClient->indices()->exists(['index' => $indexName])) {
-                $ESClient->indices()->create($indexParams);
+            if (!$openSearchClient->indices()->exists(['index' => $indexName])) {
+                $params = [
+                    'index' => $indexName,
+                    'body' => getSearchIndexParameterBody() // Mapping and settings
+                ];
+                $openSearchClient->indices()->create($params);
             }
         } catch (Exception $e) {
-            error_log("ES Index Creation Error for $indexName: " . $e->getMessage());
+            // Fail silently on index creation if it already exists, but log other errors.
+            if (strpos($e->getMessage(), 'resource_already_exists_exception') === false) {
+                 return createApiErrorResponse(500, 'INDEX_CREATION_FAILURE', 'messageErrorIndexCreation', 'messageErrorIndexCreation', ['indexName' => $indexName, 'error' => $e->getMessage()]);
+            }
         }
     }
 
+    $params = ['body' => []];
+    $errorsEncountered = [];
     $updatedCount = 0;
-    $errors = [];
-    
-    foreach ($items as $item) {
-        if (!isset($item["data"]["id"]) || !isset($item["data"])) {
-            $errors[] = ["message" => "Item missing data.id or data.", "item_snippet" => substr(json_encode($item), 0, 100)];
-            continue;
-        }
-        
-        $docParams = [
-            "index" => "openparliamenttv_" . strtolower($config["parliament"][$parliament]["ES"]["index"]),
-            "id" => $item["data"]["id"],
-            "body" => $item["data"]
-        ];
+    $failedCount = 0;
 
-        try {
-            $ESClient->index($docParams);
-            $updatedCount++;
-        } catch (Exception $e) {
-            error_log("ES Indexing Error for item ID ".$item["data"]["id"].": " . $e->getMessage());
-            $errors[] = ["id" => $item["data"]["id"], "error" => $e->getMessage()];
+    for ($i = 0; $i < count($items); $i++) {
+        $tmpItem = $items[$i];
+        if (isset($tmpItem["data"]["id"])) {
+            $params['body'][] = [
+                'index' => [
+                    '_index' => $indexName,
+                    '_id'    => $tmpItem["data"]["id"]
+                ]
+            ];
+            $params['body'][] = $tmpItem["data"];
+        } else {
+            $failedCount++;
+            $errorsEncountered[] = ['type' => 'item_missing_id', 'message' => 'Item at index ' . $i . ' is missing a data.id field.'];
         }
     }
-    
-    if (!empty($errors)) {
-        return createApiErrorResponse(500, 'ES_INDEXING_PARTIAL_FAIL', 'Some items failed to index', 'Partial failure during indexing.', [], null, ['updated' => $updatedCount, 'failures' => count($errors), 'failure_details' => $errors]);
+
+    if (empty($params['body'])) {
+         return createApiSuccessResponse(['updated' => 0, 'failed' => $failedCount, 'errors' => $errorsEncountered], ['message' => 'No valid items to index after filtering.']);
     }
 
-    return createApiSuccessResponse(["updated" => $updatedCount, "message" => "Search index updated successfully."]);
-}
-
-/**
- * Triggers an asynchronous full update of the search index for a given parliament by running cronUpdater.php.
- *
- * @param array $api_request Expected keys: "parliament"
- * @return array API response
- */
-function searchIndexTriggerFullUpdate($api_request) {
-    global $config;
-    // functions.php (for executeAsyncShellCommand) should be available globally if included by api.php or cronUpdater.php
-    // However, to be safe, ensure it's loaded if this module might be called in a context where it isn't.
-    // For now, we rely on api.php having included ../../modules/utilities/functions.php
-
-    if (empty($api_request["parliament"])) {
-        return createApiErrorMissingParameter("parliament (for triggerFullIndexUpdate task)");
-    }
-    $parliament = $api_request["parliament"];
-
-    if (!isset($config["parliament"][$parliament])) {
-        return createApiErrorInvalidParameter("parliament", "Invalid parliament specified for full index update.");
-    }
-    if (empty($config["bin"]["php"])) {
-        return createApiErrorResponse(500, 'CONFIG_ERROR', 'PHP binary path not configured.', 'PHP binary path (config[bin][php]) is not set.');
-    }
-
-    $cronUpdaterPath = realpath(__DIR__ . "/../../../data/cronUpdater.php");
-    if (!$cronUpdaterPath) {
-        return createApiErrorResponse(500, 'FILE_NOT_FOUND', 'cronUpdater.php not found.', 'The cronUpdater.php script could not be located.');
-    }
-
-    $command = $config["bin"]["php"] . " " . $cronUpdaterPath . " --parliament " . escapeshellarg($parliament) . " --justUpdateSearchIndex true";
-    
     try {
-        executeAsyncShellCommand($command); // Assumes executeAsyncShellCommand is globally available
-        return createApiSuccessResponse(["message" => "Full search index update process initiated for parliament: $parliament."]);
+        $responses = $openSearchClient->bulk($params);
+
+        if (isset($responses['errors']) && $responses['errors'] === true) {
+            foreach ($responses['items'] as $idx => $responseItem) {
+                if (isset($responseItem['index']['error'])) {
+                    $failedId = $responseItem['index']['_id'];
+                    $errorDetail = $responseItem['index']['error']['type'] . ": " . $responseItem['index']['error']['reason'];
+                    $errorsEncountered[] = ['type' => 'indexing_item', 'id' => $failedId, 'message' => $errorDetail];
+                    $failedCount++;
+                } else {
+                    $updatedCount++;
+                }
+            }
+        } else {
+            $updatedCount = count($responses['items'] ?? []);
+        }
+
     } catch (Exception $e) {
-        error_log("Failed to execute async shell command for cronUpdater from searchIndexTriggerFullUpdate: " . $e->getMessage());
-        return createApiErrorResponse(500, 'ASYNC_EXEC_FAIL', 'Failed to start update process', $e->getMessage());
+        return createApiErrorResponse(500, 'BULK_API_EXCEPTION', 'messageErrorBulkOperation', 'messageErrorBulkOperation', ['error' => $e->getMessage()]);
     }
+    
+    $finalMessage = "Search index update completed. Updated: {$updatedCount}, Failed: {$failedCount}.";
+    return createApiSuccessResponse(
+        ['updated' => $updatedCount, 'failed' => $failedCount, 'errors' => $errorsEncountered],
+        ['message' => $finalMessage]
+    );
 }
 
 /**
- * Deletes the search index of a parliament and optionally recreates the mapping.
+ * Deletes items from the search index, or the entire index.
  *
- * @param array $api_request Expected keys: "parliament", "init" (boolean, optional, default false)
- * @return array API response
+ * @param array $api_request Expected keys: "parliament", "id" (optional, item ID or "*" for all)
+ * @return array Status array
  */
 function searchIndexDelete($api_request) {
     global $config;
 
-    set_time_limit(0);
-    ini_set('memory_limit', '500M');
-    date_default_timezone_set('CET');
+    $parliament = $api_request['parliament'] ?? null;
 
-    if (empty($api_request["parliament"])) {
-        return createApiErrorMissingParameter("parliament");
+    if (empty($parliament)) {
+        return createApiErrorMissingParameter('parliament');
     }
-    $parliament = $api_request["parliament"];
-     if (!isset($config["parliament"][$parliament]["ES"]["index"])) {
-         return createApiErrorInvalidParameter("parliament", "Specified parliament has no ES index configured.");
+    if (!isset($config['parliament'][$parliament])) {
+        return createApiErrorInvalidParameter('parliament', "Invalid parliament specified: {$parliament}");
     }
 
-    $ESClient = getApiOpenSearchClient();
-    if (!($ESClient instanceof \Elasticsearch\Client)) {
-        // It's an error array returned by getApiOpenSearchClient due to a build failure
-        return $ESClient;
-    }
+    $indexName = "openparliamenttv_" . ($config['parliament'][$parliament]['ES']['index'] ?? $parliament);
+    $openSearchClient = getApiOpenSearchClient();
 
-    $indexName = "openparliamenttv_" . strtolower($config["parliament"][$parliament]["ES"]["index"]);
+    if (!$openSearchClient || (is_array($openSearchClient) && isset($openSearchClient["errors"]))) {
+        return createApiErrorResponse(500, 'OPENSEARCH_CONNECTION_ERROR', 'messageErrorOpenSearchConnection', 'messageErrorOpenSearchConnection', ['parliament' => $parliament]);
+    }
 
     try {
-        if ($ESClient->indices()->exists(['index' => $indexName])) {
-            $ESClient->indices()->delete(["index" => $indexName]);
+        if ($openSearchClient->indices()->exists(['index' => $indexName])) {
+            $response = $openSearchClient->indices()->delete(['index' => $indexName]);
+            if (isset($response['acknowledged']) && $response['acknowledged'] === true) {
+                return createApiSuccessResponse(['deleted' => true], ['message' => "Search index {$indexName} deleted successfully."]);
+            } else {
+                 return createApiErrorResponse(500, 'DELETE_FAILED_NOT_ACKNOWLEDGED', 'messageErrorIndexDelete', 'messageErrorIndexDeleteNotAcknowledged', ['indexName' => $indexName]);
+            }
         } else {
-            // If index doesn't exist, it's a success in terms of the desired state (it's gone).
-            return createApiSuccessResponse(["message" => "Index $indexName does not exist. No action taken."]);
+            return createApiSuccessResponse(['deleted' => 'already_deleted_or_not_exists'], ['message' => "Search index {$indexName} does not exist. Nothing to delete."]);
         }
     } catch (Exception $e) {
-        error_log("ES Index Deletion Error for $indexName: " . $e->getMessage());
-        return createApiErrorResponse(500, 'ES_INDEX_DELETE_ERROR', 'ES Index Deletion Error', $e->getMessage());
-    }
-
-    $init = !empty($api_request["init"]); 
-
-    if ($init) {
-        $indexParams = [
-            "index" => $indexName,
-            "body" => getSearchIndexParameterBody()
-        ];
-        try {
-            $ESClient->indices()->create($indexParams);
-        } catch (Exception $e) {
-            error_log("ES Index Re-Creation Error for $indexName: " . $e->getMessage());
-            return createApiErrorResponse(500, 'ES_INDEX_RECREATE_ERROR', 'ES Index Re-Creation Error after delete', $e->getMessage());
+        if ($e instanceof \Elasticsearch\Common\Exceptions\Missing404Exception || (method_exists($e, 'getCode') && $e->getCode() == 404)) {
+            return createApiSuccessResponse(['deleted' => 'already_deleted_or_not_exists'], ['message' => "Search index {$indexName} does not exist (404)."]);
         }
+        return createApiErrorResponse(500, 'DELETE_EXCEPTION', 'messageErrorIndexDelete', 'messageErrorIndexDeleteException', ['indexName' => $indexName, 'error' => $e->getMessage()]);
+    }
+}
+
+/**
+ * Generates the file path for the search index progress file.
+ * This is a helper function used by other functions that need to interact with the progress file.
+ * @param string $parliamentCode The parliament code (e.g., "DE").
+ * @return string Full path to the progress file.
+ */
+function getSearchIndexProgressFilePath($parliamentCode) {
+    if (empty($parliamentCode)) {
+        return __DIR__ . "/../../../data/progress_status/searchIndex_unknown.json";
+    }
+    return __DIR__ . "/../../../data/progress_status/searchIndex_" . strtoupper($parliamentCode) . ".json";
+}
+
+/**
+ * Retrieves the current status of a search index update process for a given parliament.
+ * Reads the progress from the corresponding JSON file.
+ *
+ * @param array $api_request Expected key: "parliament"
+ * @return array API response containing the progress status or an error.
+ */
+function searchIndexGetStatus($api_request) {
+    global $config;
+
+    if (empty($api_request["parliament"])) {
+        return createApiErrorMissingParameter("parliament (for searchIndexGetStatus)");
+    }
+    $parliament = strtoupper(trim($api_request["parliament"]));
+
+    if (!isset($config["parliament"][$parliament])) {
+        return createApiErrorInvalidParameter("parliament", "Invalid parliament specified for status check: {$parliament}");
     }
 
-    return createApiSuccessResponse(["message" => "Search index $indexName deleted" . ($init ? " and re-initialized." : ".")]);
+    $progressFilePath = getSearchIndexProgressFilePath($parliament);
+
+    if (!file_exists($progressFilePath)) {
+        // If no progress file exists, assume idle or not yet started.
+        $defaultStatus = [
+            "processName" => "searchIndexFullUpdate",
+            "parliament" => $parliament,
+            "status" => "idle",
+            "statusDetails" => "No active or recent update process found for this parliament."
+        ];
+        return createApiSuccessResponse($defaultStatus, ["message" => "No progress file found, returning default idle status."]);
+    }
+
+    $progressJson = @file_get_contents($progressFilePath);
+    if ($progressJson === false) {
+        return createApiErrorResponse(500, 'PROGRESS_FILE_READ_ERROR', 'messageErrorProgressFileRead', 'messageErrorProgressFileRead', ['parliament' => $parliament]);
+    }
+
+    $progressData = json_decode($progressJson, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return createApiErrorResponse(500, 'PROGRESS_FILE_CORRUPT', 'messageErrorProgressFileCorrupt', 'messageErrorProgressFileCorrupt', ['parliament' => $parliament]);
+    }
+
+    return createApiSuccessResponse($progressData);
+}
+
+/**
+ * Triggers an asynchronous background process to perform a full search index update.
+ *
+ * @param array $api_request Expected key: "parliament"
+ * @return array API response indicating success or failure in triggering the process.
+ */
+function searchIndexTriggerFullUpdate($api_request) {
+    global $config;
+
+    if (empty($api_request["parliament"])) {
+        return createApiErrorMissingParameter("parliament (for triggerFullIndexUpdate task)");
+    }
+    $parliament = strtoupper(trim($api_request["parliament"]));
+
+    if (!isset($config["parliament"][$parliament])) {
+        return createApiErrorInvalidParameter("parliament", "Invalid parliament specified: {$parliament}");
+    }
+    if (empty($config["bin"]["php"])) {
+        return createApiErrorResponse(500, 'CONFIG_ERROR', 'messageErrorConfig', 'messageErrorConfigPHPNotFound');
+    }
+
+    // --- Start: Delete index before rebuilding ---
+    $deleteResult = searchIndexDelete($api_request);
+
+    // If the deletion resulted in an error, stop and return that error.
+    if (isset($deleteResult['errors']) || (isset($deleteResult['meta']['requestStatus']) && $deleteResult['meta']['requestStatus'] !== 'success')) {
+        return $deleteResult;
+    }
+    // --- End: Delete index ---
+
+    // This script now triggers the original, reliable cronUpdater.php in search index mode.
+    $cliScriptPath = realpath(__DIR__ . "/../../../data/cronUpdater.php");
+    if (!$cliScriptPath) {
+        return createApiErrorResponse(500, 'SCRIPT_NOT_FOUND', 'messageErrorScriptNotFound', 'messageErrorScriptNotFoundCronUpdater');
+    }
+
+    // Command to execute the background script for a full index rebuild
+    $command = $config["bin"]["php"] . " " . escapeshellarg($cliScriptPath) . " --justUpdateSearchIndex --parliament=" . escapeshellarg($parliament);
+    
+    try {
+        executeAsyncShellCommand($command);
+        return createApiSuccessResponse(["message" => "Full search index update process initiated for parliament: {$parliament}."]);
+    } catch (Exception $e) {
+        return createApiErrorResponse(500, 'ASYNC_EXEC_FAIL', 'messageErrorAsyncExec', 'messageErrorAsyncExec', ['error' => $e->getMessage()]);
+    }
 }
 
 ?> 

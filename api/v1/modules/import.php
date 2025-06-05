@@ -44,11 +44,10 @@ function importRunCronUpdater($request) {
         return createApiSuccessResponse(
             [
                 "running" => true,
-                "startedAt" => date("Y-m-d H:i:s")
-            ],
-            [
+                "startedAt" => date("Y-m-d H:i:s"),
                 "message" => "CronUpdater started successfully"
-            ]
+            ],
+            []
         );
     } catch (Exception $e) {
         return createApiErrorResponse(
@@ -62,66 +61,74 @@ function importRunCronUpdater($request) {
 }
 
 /**
- * Gets the current status of the cronUpdater
+ * Gets the current status of the cronUpdater by reading its progress file.
  * 
- * @return array Response with status information
+ * @return array Response with status information from the cronUpdater.json file.
  */
 function importGetCronUpdaterStatus() {
     global $config;
     
-    $lockFile = __DIR__ . "/../../../data/cronUpdater.lock";
-    $logFile = __DIR__ . "/../../../data/cronUpdater.log";
-    
-    $status = [
-        "running" => false,
-        "lastRun" => null,
-        "lastError" => null
-    ];
-    
-    // Check if currently running
-    if (file_exists($lockFile)) {
-        $status["running"] = true;
-        $status["runningSince"] = date("Y-m-d H:i:s", filemtime($lockFile));
-        $status["runningFor"] = time() - filemtime($lockFile) . " seconds";
-    }
-    
-    // Get last run info from log file
-    if (file_exists($logFile)) {
-        $logContent = file_get_contents($logFile);
-        $logLines = explode("\n", $logContent);
-        
-        // Find last start and end entries
-        $lastStart = null;
-        $lastEnd = null;
-        $lastError = null;
-        
-        foreach (array_reverse($logLines) as $line) {
-            if (empty($line)) continue; // Skip empty lines
+    $progressFilePath = __DIR__ . "/../../../data/progress_status/cronUpdater.json";
 
-            if (strpos($line, "started") !== false && !$lastStart) {
-                $lastStart = $line;
-            }
-            if (strpos($line, "finished") !== false && !$lastEnd) {
-                $lastEnd = $line;
-            }
-            if (strpos($line, "ERROR") !== false && !$lastError) {
-                $lastError = $line;
-            }
-            if ($lastStart && $lastEnd && $lastError) break;
-        }
-        
-        if ($lastStart) {
-            $status["lastRun"] = $lastEnd ? $lastEnd : $lastStart;
-        }
-        if ($lastError) {
-            $status["lastError"] = $lastError;
-        }
+    if (!file_exists($progressFilePath)) {
+        // Default status if progress file doesn't exist (e.g., never run or cleaned up)
+        $defaultStatus = [
+            "processName" => "cronUpdater",
+            "status" => "idle",
+            "statusDetails" => "No active or recent import process found.",
+            "startTime" => null,
+            "endTime" => null,
+            "totalFiles" => 0,
+            "processedFiles" => 0,
+            "currentFile" => null,
+            "errors" => [],
+            "lastActivityTime" => null,
+            // Include other fields from cronUpdater.json with default/null values
+            "totalDataObjects" => 0,
+            "processedDataObjects" => 0,
+            "totalMediaObjects" => 0,
+            "processedMediaObjects" => 0,
+            "lastSuccessfullyProcessedFile" => null,
+            "currentFileProgress" => [
+                "totalDataObjectsInFile" => 0,
+                "processedDataObjectsInFile" => 0,
+                "totalMediaObjectsInFile" => 0,
+                "processedMediaObjectsInFile" => 0
+            ]
+        ];
+        return createApiSuccessResponse($defaultStatus, ["message" => "CronUpdater progress file not found, returning default idle status."]);
     }
+
+    $progressJson = @file_get_contents($progressFilePath);
+    if ($progressJson === false) {
+        return createApiErrorResponse(500, 'PROGRESS_FILE_READ_ERROR', "Could not read the CronUpdater progress file.", "File exists at {$progressFilePath} but is unreadable.");
+    }
+
+    $progressData = json_decode($progressJson, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return createApiErrorResponse(500, 'PROGRESS_FILE_CORRUPT', "CronUpdater progress file is corrupt or not valid JSON.", "JSON decode error: " . json_last_error_msg() . " in file {$progressFilePath}");
+    }
+
+    // Ensure all expected keys from the defaultStatus are present to prevent frontend errors
+    // This merges the loaded data over the defaults, so any missing keys in the file get a default value.
+    $defaultKeysTemplate = [
+        "processName" => "cronUpdater", "status" => "unknown", "statusDetails" => "",
+        "startTime" => null, "endTime" => null, "totalFiles" => 0, "processedFiles" => 0,
+        "currentFile" => null, "errors" => [], "lastActivityTime" => null,
+        "totalDataObjects" => 0, "processedDataObjects" => 0, "totalMediaObjects" => 0,
+        "processedMediaObjects" => 0, "lastSuccessfullyProcessedFile" => null,
+        "currentFileProgress" => [
+            "totalDataObjectsInFile" => 0, "processedDataObjectsInFile" => 0,
+            "totalMediaObjectsInFile" => 0, "processedMediaObjectsInFile" => 0
+        ]
+    ];
+    $progressData = array_merge($defaultKeysTemplate, $progressData);
+
     
     return createApiSuccessResponse(
-        $status,
+        $progressData,
         [
-            "message" => "CronUpdater status retrieved successfully"
+            "message" => "CronUpdater status retrieved successfully from progress file."
         ]
     );
 } 
