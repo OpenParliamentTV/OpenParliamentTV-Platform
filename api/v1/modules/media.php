@@ -845,7 +845,7 @@ function processMediaItem($mediaData, $agendaItemID, $sessionID, $dateStart, $da
                 $mediaData["thumbnailURI"],
                 $mediaData["thumbnailCreator"],
                 $mediaData["thumbnailLicense"],
-                json_encode($mediaData["additionalInformation"])
+                json_encode($mediaData["additionalInformation"] ?? [])
             );
         } catch (Exception $e) {
             reportConflict(
@@ -878,7 +878,7 @@ function processMediaItem($mediaData, $agendaItemID, $sessionID, $dateStart, $da
             ["MediaThumbnailURI", $mediaData["thumbnailURI"]],
             ["MediaThumbnailCreator", $mediaData["thumbnailCreator"]],
             ["MediaThumbnailLicense", $mediaData["thumbnailLicense"]],
-            ["MediaAdditionalInformation", json_encode($mediaData["additionalInformation"])]
+            ["MediaAdditionalInformation", json_encode($mediaData["additionalInformation"] ?? [])]
         ];
 
         foreach ($updateFields as [$field, $value]) {
