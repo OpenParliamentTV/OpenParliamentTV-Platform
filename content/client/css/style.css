@@ -781,6 +781,16 @@ body.darkmode .modal-content .btn-close {
     opacity: .8;
 }
 
+.progress {
+    height: 8px;
+    background-color: var(--secondary-bg-color);
+    border: 1px solid var(--border-color);
+}
+
+.progress .progress-bar {
+    background-color: var(--primary-fg-color);
+}
+
 .copyrightInfo {
     position: absolute;
     top: 0px;

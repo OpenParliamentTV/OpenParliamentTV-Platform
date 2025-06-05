@@ -22,33 +22,28 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<h2><?= L::manageImport; ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
-							<button type="button" id="runCronUpdater" class="btn btn-outline-success rounded-pill btn-sm me-1">Run cronUpdater</button>
+							
                         </div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="status-tab" data-bs-toggle="tab" data-bs-target="#status" role="tab" aria-controls="status" aria-selected="true"><span class="icon-arrows-cw"></span> Status</a>
+                            <a class="nav-link active" id="parliaments-tab" data-bs-toggle="tab" data-bs-target="#parliaments" role="tab" aria-controls="parliaments" aria-selected="true"><span class="icon-bank"></span> Parliaments</a>
                         </li>
 						<li class="nav-item">
-                            <a class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="people" aria-selected="false"><span class="icon-cog"></span> <?= L::settings; ?></a>
+                            <a class="nav-link" id="external-tab" data-bs-toggle="tab" data-bs-target="#external" role="tab" aria-controls="external" aria-selected="false"><span class="icon-tags"></span> Entity Data</a>
+                        </li>
+						<li class="nav-item">
+                            <a class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="settings" aria-selected="false"><span class="icon-cog"></span> Settings</a>
                         </li>
 						<li class="nav-item">
                             <a class="nav-link" id="old-tab" data-bs-toggle="tab" data-bs-target="#old" role="tab" aria-controls="old" aria-selected="false">OLD THINGS TO REUSE</a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane bg-white fade show active" id="status" role="tabpanel" aria-labelledby="status-tab">
+                        <div class="tab-pane bg-white fade show active" id="parliaments" role="tabpanel" aria-labelledby="parliaments-tab">
                             <div class="status-visualization p-4 position-relative">
                                 <div class="row align-items-start justify-content-center position-relative">
                                     <div class="connecting-line"></div>
-                                    <div class="col-4 text-center status-item status-item-dummy-1">
-                                        <div class="status-circle rounded-circle">
-                                            <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
-                                                <i class="icon-bank small"></i>
-                                                <h4 class="small mb-0">Parliament <br>Sources</h4>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-4 text-center status-item status-item-repository-remote">
                                         <div class="status-circle rounded-circle">
                                             <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
@@ -76,11 +71,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 											<div class="small">Sessions: <span id="repoLocalSessions">-</span></div>
 										</div>
                                     </div>
-                                </div>
-
-                                <div class="row align-items-start justify-content-start position-relative flex-row-reverse mt-5">
-                                    <div class="connecting-line connecting-line-short"></div>
-                                    <div class="col-4 text-center status-item status-item-database">
+									<div class="col-4 text-center status-item status-item-database">
                                         <div class="status-circle rounded-circle">
                                             <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
                                                 <i class="icon-database small"></i>
@@ -90,31 +81,117 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <div class="mt-3">
 											<div>Last updated:</div>
 											<div id="lastDBDate" class="fw-bolder">-</div>
-											<div class="small mt-1">Last Speech: <span id="dbLastSpeechDate">-</span></div>
 											<div class="small">Sessions: <span id="dbSessions">-</span></div>
-											<div class="small">Speeches: <span id="dbSpeeches">-</span></div>
-										</div>
-                                    </div>
-                                    <div class="col-4 text-center status-item status-item-search">
-                                        <div class="status-circle rounded-circle">
-                                            <div class="circle-content position-absolute top-50 start-50 translate-middle text-center p-2">
-                                                <i class="icon-search small"></i>
-                                                <h4 class="small mb-0">Search <br>Index</h4>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3">
-											<div>Last updated:</div>
-											<div id="lastSearchDate" class="fw-bolder">-</div>
-											<div class="small mt-1">Last Speech: <span id="searchLastSpeechDate">-</span></div>
-											<div class="small">Speeches: <span id="searchSpeeches">-</span></div>
 										</div>
                                     </div>
                                 </div>
-                                
-                                <div class="connecting-line-vertical-snake"></div>
-
                             </div>
-                            
+                            <hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="d-flex justify-content-between">
+										<div class="fw-bolder">Data Import</div>
+										<div>0 / 250</div>
+									</div>
+									<div class="progress my-3" role="progressbar" aria-label="Data Import" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
+									</div>
+									<button type="button" id="runCronUpdater" class="btn btn-outline-success rounded-pill btn-sm me-1">Run cronUpdater</button>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="d-flex justify-content-between">
+										<div class="fw-bolder">Search Index</div>
+										<div>0 / 250</div>
+									</div>
+									<div class="progress my-3" role="progressbar" aria-label="Update Search Index" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
+									</div>
+									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Search Index</button>
+									<button type="button" class="btn btn-outline-danger rounded-pill btn-sm me-1">Delete Search Index</button>
+								</div>
+							</div>
+                        </div>
+						<div class="tab-pane bg-white fade" id="external" role="tabpanel" aria-labelledby="external-tab">
+							<div class="row">
+								<div class="col-12">
+									<div class="d-flex justify-content-between">
+										<div class="fw-bolder"><span class="icon-type-person"></span> People</div>
+										<div>0 / 250</div>
+									</div>
+									<div class="progress my-3" role="progressbar" aria-label="Additional Data People" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
+									</div>
+									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for People</button>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="d-flex justify-content-between">
+										<div class="fw-bolder"><span class="icon-type-person"></span> Members of Parliament</div>
+										<div>0 / 250</div>
+									</div>
+									<div class="progress my-3" role="progressbar" aria-label="Additional Data Members of Parliament" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
+									</div>
+									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for Members of Parliament</button>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="d-flex justify-content-between">
+										<div class="fw-bolder"><span class="icon-type-organisation"></span> Organisations</div>
+										<div>0 / 250</div>
+									</div>
+									<div class="progress my-3" role="progressbar" aria-label="Additional Data Organisations" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>	
+									</div>
+									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for Organisations</button>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="d-flex justify-content-between">
+										<div class="fw-bolder"><span class="icon-type-document"></span> Legal Documents</div>
+										<div>0 / 250</div>
+									</div>
+									<div class="progress my-3" role="progressbar" aria-label="Additional Data Legal Documents" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
+									</div>
+									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for Legal Documents</button>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="d-flex justify-content-between">
+										<div class="fw-bolder"><span class="icon-type-document"></span> Official Documents</div>
+										<div>0 / 250</div>
+									</div>
+									<div class="progress my-3" role="progressbar" aria-label="Additional Data Official Documents" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">	
+										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
+									</div>
+									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for Official Documents</button>
+								</div>
+							</div>
+							<hr>
+							<div class="row">
+								<div class="col-12">
+									<div class="d-flex justify-content-between">
+										<div class="fw-bolder"><span class="icon-type-term"></span> Terms</div>
+										<div>0 / 250</div>
+									</div>
+									<div class="progress my-3" role="progressbar" aria-label="Additional Data Terms" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
+										<div class="progress-bar progress-bar-striped progress-bar-animated bg-success" style="width: 75%"></div>
+									</div>
+									<button type="button" class="btn btn-outline-success rounded-pill btn-sm me-1">Refresh Additional Data for Terms</button>
+								</div>
+							</div>
                         </div>
 						<div class="tab-pane bg-white fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
 							[SETTINGS]
@@ -234,25 +311,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		background: var(--border-color);
 		z-index: 1;
 	}
-	.connecting-line-short {
-		width: calc(100% / 3);
-		left: calc(100% * 2 / 3);
-		transform: translateX(-50%);
-		position: absolute;
-		top: 51px;
-		height: 2px;
-		background: var(--border-color);
-		z-index: 1;
-	}
-	.connecting-line-vertical-snake {
-        position: absolute;
-        width: 2px;
-        background-color: var(--border-color);
-        z-index: 1;
-        right: calc(100% / 6 + 6px);
-        top: 124px;
-        height: 150px; 
-    }
 	.status-circle i {
 		font-size: 1.25rem;
 		margin-bottom: 4px;
@@ -267,10 +325,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
             $.ajax({
                 url: "<?= $config["dir"]["root"] ?>/api/v1/import/run",
                 dataType: "json",
-                data: {
-                    "action": "import",
-                    "itemType": "run"
-                },
                 method: "post",
                 success: function(response) {
                     if (response.meta.requestStatus === "success") {
@@ -398,36 +452,21 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					// Update Database Info
 					if (parliamentData.database) {
 						setText('lastDBDate', formatDate(parliamentData.database.lastUpdated));
-						setText('dbLastSpeechDate', formatDate(parliamentData.database.lastSpeechDate));
 						setText('dbSessions', parliamentData.database.numberOfSessions);
-						setText('dbSpeeches', parliamentData.database.numberOfSpeeches);
 					} else {
 						setText('lastDBDate', 'N/A');
-						setText('dbLastSpeechDate', 'N/A');
 						setText('dbSessions', 'N/A');
-						setText('dbSpeeches', 'N/A');
-					}
-
-					// Update Search Index Info
-					if (parliamentData.index) {
-						setText('lastSearchDate', formatDate(parliamentData.index.lastUpdated));
-						setText('searchLastSpeechDate', formatDate(parliamentData.index.lastSpeechDate));
-						setText('searchSpeeches', parliamentData.index.numberOfSpeeches);
-					} else {
-						setText('lastSearchDate', 'N/A');
-						setText('searchLastSpeechDate', 'N/A');
-						setText('searchSpeeches', 'N/A');
 					}
 
 				} else {
 					console.error("Error fetching status data or data is not in expected format:", data.errors || "Unknown error or no parliament data");
-					const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbLastSpeechDate', 'dbSessions', 'dbSpeeches', 'lastSearchDate', 'searchLastSpeechDate', 'searchSpeeches'];
+					const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbSessions'];
 					idsToReset.forEach(id => setText(id, 'Error'));
 				}
 			})
 			.catch(error => {
 				console.error("Failed to fetch status:", error);
-				const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbLastSpeechDate', 'dbSessions', 'dbSpeeches', 'lastSearchDate', 'searchLastSpeechDate', 'searchSpeeches'];
+				const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbSessions'];
 				idsToReset.forEach(id => document.getElementById(id) ? document.getElementById(id).textContent = 'Error' : null);
 			});
 	});
