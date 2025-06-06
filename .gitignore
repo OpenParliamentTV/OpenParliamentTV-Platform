@@ -33,8 +33,9 @@ composer.phar
 /vendor/
 temp
 
-# Language Cache
+# Cache
 langcache/*.php
+api/v1/cache/*.json
 
 # Data
 data/import-error-log.txt
