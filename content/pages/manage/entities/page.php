@@ -42,29 +42,19 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="people" role="tabpanel" aria-labelledby="people-tab">
-							<div id="peopleToolbar">
-								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="person"><span class="icon-ccw"></span> Re-sync external data for all people</button>
-								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="memberOfParliament"><span class="icon-ccw"></span> Re-sync external data for all members of parliament</button>
-							</div>
+							<div id="peopleToolbar"></div>
 							<table id="peopleTable"></table>
                         </div>
 						<div class="tab-pane bg-white fade" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
-							<div id="organisationsToolbar">
-								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="organisation"><span class="icon-ccw"></span> Re-sync external data for all organisations</button>
-							</div>
+							<div id="organisationsToolbar"></div>
 							<table id="organisationsTable"></table>
                         </div>
                         <div class="tab-pane bg-white fade" id="documents" role="tabpanel" aria-labelledby="documents-tab">
-							<div id="documentsToolbar">
-								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="legalDocument"><span class="icon-ccw"></span> Re-sync external data for all legal documents</button>
-								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="officialDocument"><span class="icon-ccw"></span> Re-sync external data for all official documents</button>
-							</div>
+							<div id="documentsToolbar"></div>
 							<table id="documentsTable"></table>
                         </div>
                         <div class="tab-pane bg-white fade" id="terms" role="tabpanel" aria-labelledby="terms-tab">
-							<div id="termsToolbar">
-								<button type="button" class="btn btn-outline-success rounded-pill btn-sm ms-1 mb-1 additionalDataServiceButton" data-type="term"><span class="icon-ccw"></span> Re-sync external data for all terms</button>
-							</div>
+							<div id="termsToolbar"></div>
 							<table id="termsTable"></table>
                         </div>
                     </div>
@@ -104,65 +94,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
     </div>
 </div>
 
-<div class="modal fade" id="successRunAdditionalDataService" tabindex="-1" role="dialog" aria-labelledby="successRunCronDialogLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="successRunCronDialogLabel">Run ADS for <span class="adc-type"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                The additionalDataService for type <span class="adc-type"></span> should run now in background.
-            </div>
-            <div class="modal-footer">
-                <button type="button" id="checkAdcStatusBtn" class="btn btn-info rounded-pill me-auto" style="display: none;">Check Status</button> 
-                <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">Okay</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <script type="text/javascript">
 
 	$(function(){
-
-		$("main").on("click",".additionalDataServiceButton", function() {
-            $.ajax({
-                url:"<?= $config["dir"]["root"] ?>/api/v1/",
-                dataType:"json",
-                data:{
-                    "action":"externalData",
-                    "itemType": "full-update",
-                    "type": $(this).data("type")
-                },
-                tmpType: $(this).data("type"),
-                method:"post",
-                success: function(response) {
-                    if (response && response.meta && response.meta.requestStatus === "success") {
-                        $(".adc-type").html(this.tmpType);
-                        $('#successRunAdditionalDataService').modal('show');
-                        $('#checkAdcStatusBtn').data('type', this.tmpType).show().prop('disabled', false);
-                    } else if (response && response.meta && response.meta.code === "FULL_UPDATE_ALREADY_RUNNING") {
-                        $(".adc-type").html(this.tmpType);
-                        let detailMessage = (response.errors && response.errors.length > 0 && response.errors[0].detail) ? response.errors[0].detail : "Please try again later or check the status.";
-                        $('#successRunAdditionalDataService .modal-body').html('<p>The full update process for type <strong>' + this.tmpType + '</strong> is already running.</p><p>' + detailMessage + '</p><p>You can check its progress below.</p>');
-                        $('#successRunAdditionalDataService').modal('show');
-                        $('#checkAdcStatusBtn').data('type', this.tmpType).show().prop('disabled', false);
-                    } else {
-                        console.error("API call failed for full-update:", response);
-                        let errorMessage = "An error occurred.";
-                        if (response && response.errors && response.errors.length > 0) {
-                            errorMessage = response.errors[0].detail || response.errors[0].title || "Unknown API error.";
-                        }
-                        alert(errorMessage);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("AJAX error for full-update:", status, error);
-                    alert("A network error occurred. Please try again.");
-                }
-            })
-        });
 		
 		function renderActionButtons(id, type, subtype) {
 			const viewButton = '<a class="list-group-item list-group-item-action" ' +
@@ -170,12 +104,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				'href="<?= $config["dir"]["root"]; ?>/' + type + '/' + id + '" ' +
 				'target="_blank">' +
 				'<span class="icon-eye"></span>' +
-				'</a>';
-			
-			const editButton = '<a class="list-group-item list-group-item-action" ' +
-				'title="<?= L::edit; ?>" ' +
-				'href="<?= $config["dir"]["root"]; ?>/manage/entities/' + type + '/' + id + '">' +
-				'<span class="icon-pencil"></span>' +
 				'</a>';
 			
 			const apiButton = '<a class="list-group-item list-group-item-action" ' +
@@ -196,7 +124,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			// Combine all buttons in a horizontal list group
 			return '<div class="list-group list-group-horizontal">' +
 				viewButton +
-				editButton +
 				apiButton +
 				adsButton +
 				'</div>';
@@ -280,67 +207,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				}
 			});
 		});
-		
-		// New button click handler for checking ADC status
-		$(document).on("click", "#checkAdcStatusBtn", function() {
-			const $statusBtn = $(this);
-			const entityType = $statusBtn.data("type");
-			
-			$statusBtn.prop("disabled", true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Checking...');
 
-			$.ajax({
-				url: "<?= $config["dir"]["root"] ?>/api/v1/",
-				dataType: "json",
-				data: {
-					"action": "externalData",
-					"itemType": "status",
-					"type": entityType
-				},
-				method: "post",
-				success: function(response) {
-					$statusBtn.prop("disabled", false).html('Check Status');
-					let statusHtml = '<p>Could not retrieve status or process not running.</p>'; // Default message
-					if (response && response.meta && response.meta.requestStatus === 'success' && response.data) {
-						const statusData = response.data;
-						statusHtml = '<h5>Status for: ' + (statusData.requestedType || 'N/A') + '</h5>';
-						statusHtml += '<p><strong>Currently Running:</strong> ' + (statusData.isRunning ? 'Yes, since ' + statusData.runningSince + ' (' + statusData.runningForSeconds + 's ago)' : 'No') + '</p>';
-						statusHtml += '<p><strong>Summary:</strong> ' + statusData.summary + '</p>';
-						if (statusData.lastLogEntries && statusData.lastLogEntries.length > 0) {
-							statusHtml += '<h6>Last Log Entries:</h6><ul class="list-unstyled small">';
-							statusData.lastLogEntries.forEach(entry => {
-								statusHtml += '<li>' + escapeHtml(entry) + '</li>'; // escapeHtml to prevent XSS
-							});
-							statusHtml += '</ul>';
-						}
-					} else {
-						statusHtml = '<p>Error retrieving status: ' + (response.errors ? response.errors[0].detail : 'Unknown error') + '</p>';
-					}
-					// Update the modal body
-					$('#successRunAdditionalDataService .modal-body').html(statusHtml);
-					if (!$('#successRunAdditionalDataService').hasClass('show')) {
-						$('#successRunAdditionalDataService').modal('show'); // Show modal if not already visible
-					}
-				},
-				error: function(xhr, status, error) {
-					$statusBtn.prop("disabled", false).html('Check Status');
-					$('#successRunAdditionalDataService .modal-body').html('<p>AJAX error while checking status: ' + status + ' - ' + error + '</p>');
-					if (!$('#successRunAdditionalDataService').hasClass('show')) {
-						$('#successRunAdditionalDataService').modal('show');
-					}
-				}
-			});
-		});
-
-		// Helper function to escape HTML (important for displaying log data)
-		function escapeHtml(unsafe) {
-			return unsafe
-				 .replace(/&/g, "&amp;")
-				 .replace(/</g, "&lt;")
-				 .replace(/>/g, "&gt;")
-				 .replace(/"/g, "&quot;")
-				 .replace(/'/g, "&#039;");
-		}
-		
 		// Helper function for formatting labels with alternatives
 		function formatLabelWithAlternatives(value, row, alternativeLabelField, idField, tableId, type) {
 			let tmpAltLabels = [];
