@@ -52,14 +52,44 @@ function getLocalRepoStatus($parliamentCode) {
 }
 
 function getRemoteRepoDetails($repoUrl) {
-    $details = [
+    // Define cache settings
+    $cacheDir = __DIR__ . '/../cache/';
+    $cacheLifetime = 600; // 10 minutes in seconds
+
+    // Default response structure
+    $defaultDetails = [
         "lastUpdated" => null,
         "numberOfSessions" => 0
     ];
 
     if (empty($repoUrl) || !preg_match("~github\.com/([^/]+)/([^/.]+)(\.git)?~", $repoUrl, $matches)) {
-        return $details;
+        return $defaultDetails;
     }
+    
+    $cacheKey = md5($repoUrl) . '.json';
+    $cacheFile = $cacheDir . $cacheKey;
+
+    // Create cache directory if it doesn't exist
+    if (!is_dir($cacheDir)) {
+        // Use @ to suppress warnings if the directory already exists due to a race condition.
+        @mkdir($cacheDir, 0775, true);
+    }
+
+    // Try to get data from cache
+    if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheLifetime)) {
+        $cachedData = @file_get_contents($cacheFile);
+        if ($cachedData !== false) {
+            $decodedData = json_decode($cachedData, true);
+            // Ensure the cached data is a valid array, otherwise proceed to fetch.
+            if (is_array($decodedData)) {
+                return $decodedData;
+            }
+        }
+    }
+
+    // If cache is invalid or missing, fetch from GitHub API
+    $details = $defaultDetails;
+
     $owner = $matches[1];
     $repo = $matches[2];
 
@@ -88,6 +118,12 @@ function getRemoteRepoDetails($repoUrl) {
             $details["numberOfSessions"] = count($sessionFiles);
         }
     }
+
+    // Save the fresh data to the cache file only if we got a valid response
+    if ($details["lastUpdated"] !== null) { // A successful commit fetch is a good indicator
+        @file_put_contents($cacheFile, json_encode($details));
+    }
+    
     return $details;
 }
 
