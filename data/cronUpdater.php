@@ -28,7 +28,7 @@ $meta["doneDir"] = __DIR__ . "/done/";
 $meta["preserveFiles"] = true;
 
 // Define path for the progress file for the DATA IMPORT part
-define("CRONUPDATER_PROGRESS_FILE", __DIR__ . "/progress_status/cronUpdater.json");
+define("CRONUPDATER_PROGRESS_FILE", __DIR__ . "/progress/cronUpdater.json");
 
 require_once(__DIR__ . "/../modules/utilities/functions.php");
 
@@ -90,7 +90,7 @@ if (is_cli()) {
     // --- START: Define Search Index Progress File Path (used in search index mode) ---
     // This helper function comes from the restored api/v1/modules/searchIndex.php but we need it here.
     // To avoid including the whole file, we define a compatible version.
-    $searchIndexProgressFilePath = __DIR__ . "/progress_status/searchIndex_" . strtoupper($parliament) . ".json";
+    $searchIndexProgressFilePath = __DIR__ . "/progress/searchIndex_" . strtoupper($parliament) . ".json";
     // --- END: Define Search Index Progress File Path ---
 
 

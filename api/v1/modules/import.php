@@ -68,7 +68,7 @@ function importRunCronUpdater($request) {
 function importGetCronUpdaterStatus() {
     global $config;
     
-    $progressFilePath = __DIR__ . "/../../../data/progress_status/cronUpdater.json";
+    $progressFilePath = __DIR__ . "/../../../data/progress/cronUpdater.json";
 
     if (!file_exists($progressFilePath)) {
         // Default status if progress file doesn't exist (e.g., never run or cleaned up)

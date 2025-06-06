@@ -303,9 +303,9 @@ function searchIndexDelete($api_request) {
  */
 function getSearchIndexProgressFilePath($parliamentCode) {
     if (empty($parliamentCode)) {
-        return __DIR__ . "/../../../data/progress_status/searchIndex_unknown.json";
+        return __DIR__ . "/../../../data/progress/searchIndex_unknown.json";
     }
-    return __DIR__ . "/../../../data/progress_status/searchIndex_" . strtoupper($parliamentCode) . ".json";
+    return __DIR__ . "/../../../data/progress/searchIndex_" . strtoupper($parliamentCode) . ".json";
 }
 
 /**

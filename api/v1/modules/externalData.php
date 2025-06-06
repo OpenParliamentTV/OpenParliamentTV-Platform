@@ -361,7 +361,7 @@ function externalDataTriggerFullUpdate($api_request) {
 function externalDataGetFullUpdateStatus($api_request = []) { // Added default for api_request
     global $config;
 
-    $progressFilePath = __DIR__ . "/../../../data/progress_status/cronAdditionalDataService.json";
+    $progressFilePath = __DIR__ . "/../../../data/progress/cronAdditionalDataService.json";
 
     if (!file_exists($progressFilePath)) {
         // Default status if progress file doesn't exist

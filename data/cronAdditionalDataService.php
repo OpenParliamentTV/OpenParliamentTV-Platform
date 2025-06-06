@@ -18,7 +18,7 @@ $config["time"]["ignore"] = 90; //minutes
 $config["cronContactMail"] = ""; //minutes
 
 // Define path for the progress file
-define("CRON_ADS_PROGRESS_FILE", __DIR__ . "/progress_status/cronAdditionalDataService.json");
+define("CRON_ADS_PROGRESS_FILE", __DIR__ . "/progress/cronAdditionalDataService.json");
 
 require_once(__DIR__ . "/../modules/utilities/functions.php");
 require_once(__DIR__ . "/../modules/utilities/functions.api.php");
@@ -97,7 +97,7 @@ if (is_cli()) {
     register_shutdown_function(function() use (&$progressFinalized) {
         // Define CRON_ADS_PROGRESS_FILE inside shutdown if not already defined globally.
         if (!defined('CRON_ADS_PROGRESS_FILE')) {
-            define("CRON_ADS_PROGRESS_FILE", __DIR__ . "/progress_status/cronAdditionalDataService.json");
+            define("CRON_ADS_PROGRESS_FILE", __DIR__ . "/progress/cronAdditionalDataService.json");
         }
 
         $lockFile = __DIR__."/cronAdditionalDataService.lock";
