@@ -279,8 +279,27 @@ if (is_cli()) {
             if (!is_dir($meta["inputDir"])) { mkdir($meta["inputDir"], 0775, true); }
             if (($meta["preserveFiles"] == true) && (!is_dir($meta["doneDir"]))) { mkdir($meta["doneDir"], 0775, true); }
 
+            // Preserve the last successfully processed file name across runs.
+            $lastSuccess = null;
+            if (file_exists(CRONUPDATER_PROGRESS_FILE)) {
+                $previousProgressJson = @file_get_contents(CRONUPDATER_PROGRESS_FILE);
+                if ($previousProgressJson) {
+                    $previousProgress = json_decode($previousProgressJson, true);
+                    if (isset($previousProgress['lastSuccessfullyProcessedFile'])) {
+                        $lastSuccess = $previousProgress['lastSuccessfullyProcessedFile'];
+                    }
+                }
+            }
+
             // Initialize progress tracking for data import
-            initBaseProgressFile(CRONUPDATER_PROGRESS_FILE, ["processName" => "dataImport", "status" => "running", "statusDetails" => "Starting data import process...", "totalFiles" => 0, "processedFiles" => 0]);
+            initBaseProgressFile(CRONUPDATER_PROGRESS_FILE, [
+                "processName" => "dataImport", 
+                "status" => "running", 
+                "statusDetails" => "Starting data import process...", 
+                "totalFiles" => 0, 
+                "processedFiles" => 0,
+                "lastSuccessfullyProcessedFile" => $lastSuccess // Carry over the last success
+            ]);
             
             // By default, sync from Git. The --ignoreGit flag prevents this.
             if (!isset($input["ignoreGit"])) {
@@ -346,10 +365,16 @@ if (is_cli()) {
                 }
                 
                 $processedFileCount++;
-                updateBaseProgressFile(CRONUPDATER_PROGRESS_FILE, ["processedFiles" => $processedFileCount, "statusDetails" => "Finished file: " . $file]);
+                updateBaseProgressFile(CRONUPDATER_PROGRESS_FILE, [
+                    "processedFiles" => $processedFileCount, 
+                    "statusDetails" => "Finished file: " . $file,
+                    "lastSuccessfullyProcessedFile" => $file
+                ]);
             }
             
+            // When finalizing, clear the currentFile since nothing is actively being processed.
             finalizeBaseProgressFile(CRONUPDATER_PROGRESS_FILE, "completed_successfully", "Data import finished. Processed {$processedFileCount}/{$totalFilesToProcess} files.");
+            updateBaseProgressFile(CRONUPDATER_PROGRESS_FILE, ["currentFile" => null]);
             $progressFinalized = true;
             logger("info", "cronUpdater finished: File processing complete.");
             exit;

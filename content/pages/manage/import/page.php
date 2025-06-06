@@ -262,6 +262,20 @@ document.addEventListener('DOMContentLoaded', function() {
         importStatus: {}
     };
 
+    const formatDate = (dateString) => {
+        if (!dateString) return '-';
+        try {
+            // Use a specific locale and options for consistent formatting
+            return new Date(dateString).toLocaleString('de-DE', {
+                year: 'numeric', month: '2-digit', day: '2-digit',
+                hour: '2-digit', minute: '2-digit', second: '2-digit'
+            });
+        } catch (e) {
+            console.error("Error formatting date:", dateString, e);
+            return '-';
+        }
+    };
+
     // --- Generic Helper Functions ---
     function getApiUrl(action, itemType, params = {}) {
         const url = `${API_BASE_URL}/?action=${action}&itemType=${itemType}`;
@@ -421,27 +435,27 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateDataImportUI() {
-        const { status, statusDetails = 'N/A', totalFiles = 0, processedFiles = 0, currentFile = 'N/A', errors = [] } = appState.importStatus;
+        const { status, statusDetails = 'N/A', totalFiles = 0, processedFiles = 0, currentFile = 'N/A', lastSuccessfullyProcessedFile = null, lastActivityTime = null, errors = [] } = appState.importStatus;
         
-        // 1. Calculate percentage client-side for progress bar
         const percentage = totalFiles > 0 ? (processedFiles / totalFiles) * 100 : 0;
-
         let finalStatusDetails = statusDetails;
         let finalItemsText = `Files: ${processedFiles} / ${totalFiles}`;
-
         const isNotRunning = status !== 'running';
+        const lastRunDate = formatDate(lastActivityTime);
 
-        // Display out-of-sync message if needed
         if (isNotRunning && appState.repo.isOutOfSync()) {
             const diff = appState.repo.getOutOfSyncCount();
             const plural = diff > 1 ? 's' : '';
             finalStatusDetails = `Repository is out of sync. ${diff} new session file${plural} available.`;
             finalItemsText = `Pending Sync: ${diff} session${plural}`;
-            updateElementText(dataImportElems.currentFileText, 'Current: N/A');
-        } else {
-            // 2. Adjust file label based on running state
-            const fileLabel = isNotRunning ? 'Last file:' : 'Current:';
-            updateElementText(dataImportElems.currentFileText, `${fileLabel} ${currentFile || 'N/A'}`);
+            const fileToShow = lastSuccessfullyProcessedFile || 'N/A';
+            updateElementText(dataImportElems.currentFileText, `Last run: ${lastRunDate} | Last sync: ${fileToShow}`);
+        } else if (isNotRunning) {
+            // Handles idle, completed, error, etc.
+            const fileToShow = lastSuccessfullyProcessedFile || 'N/A';
+            updateElementText(dataImportElems.currentFileText, `Last run: ${lastRunDate} | Last file: ${fileToShow}`);
+        } else { // status === 'running'
+            updateElementText(dataImportElems.currentFileText, `Current: ${currentFile || 'N/A'}`);
         }
 
         updateProgressBar(dataImportElems.progressBar, percentage, status);
@@ -683,20 +697,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function fetchOverallStatus() {
         const url = `${API_BASE_URL}/status/all`;
         
-					const formatDate = (dateString) => {
-						if (!dateString) return '-';
-						try {
-                // Use a specific locale and options for consistent formatting
-                return new Date(dateString).toLocaleString('de-DE', {
-                    year: 'numeric', month: '2-digit', day: '2-digit',
-                    hour: '2-digit', minute: '2-digit', second: '2-digit'
-                });
-						} catch (e) {
-                console.error("Error formatting date:", dateString, e);
-							return '-';
-						}
-					};
-					
         apiCall(url).then(result => {
             if (result.success && result.data && result.data.parliaments && result.data.parliaments.length > 0) {
                 const parliamentData = result.data.parliaments[0]; // Assuming first parliament for now
