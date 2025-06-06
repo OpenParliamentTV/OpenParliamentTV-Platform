@@ -134,7 +134,8 @@ function entitySuggestionAdd($api_request, $db = false) {
 
     if (!$db) {
         $db = getApiDatabaseConnection('platform');
-        if (isset($db["errors"])) { // getApiDatabaseConnection returns an error array on failure
+        // On failure, getApiDatabaseConnection returns an error array. On success, it's an object.
+        if (is_array($db) && isset($db["errors"])) {
             return $db; 
         }
     }
@@ -212,7 +213,8 @@ function entitySuggestionDelete($entitySuggestionID, $db = false) {
 
     if (!$db) {
         $db = getApiDatabaseConnection('platform');
-        if (isset($db["errors"])) { // getApiDatabaseConnection returns an error array on failure
+        // On failure, getApiDatabaseConnection returns an error array. On success, it's an object.
+        if (is_array($db) && isset($db["errors"])) {
             return $db;
         }
     }
