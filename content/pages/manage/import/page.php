@@ -161,7 +161,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 								</div>
 							</div>
 							<hr>
-                            <div class="row">
+							<div class="row">
 								<div class="col-12">
 									<div class="d-flex justify-content-between align-items-center">
 										<div class="fw-bolder"><span class="icon-type-document"></span> Legal Documents</div>
@@ -441,7 +441,107 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // --- Search Index Specific Functions (Dynamic based on HTML) ---
+    // --- Search Index Specific Functions (Refactored for Reusability) ---
+    function getSearchIndexElements(parliamentCode) {
+        return {
+            progressBar: `search-index-${parliamentCode}-progress-bar`,
+            statusText: `search-index-${parliamentCode}-status-text`,
+            itemsText: `search-index-${parliamentCode}-items-text`,
+            errorDisplay: `search-index-${parliamentCode}-error-display`,
+            refreshButton: `btn-trigger-search-index-refresh-${parliamentCode}`,
+            deleteButton: `btn-trigger-search-index-delete-${parliamentCode}`,
+            originalRefreshBtnText: `Refresh Full Index (${parliamentCode})`,
+            originalDeleteBtnText: `Delete Index (${parliamentCode})`
+        };
+    }
+
+    function updateSearchIndexUI(parliamentCode, statusData) {
+        const elems = getSearchIndexElements(parliamentCode);
+        const {
+            status,
+            statusDetails = 'N/A',
+            totalDbMediaItems = 0,
+            processedMediaItems = 0,
+            errors = []
+        } = statusData;
+
+        const percentage = totalDbMediaItems > 0 ? (processedMediaItems / totalDbMediaItems) * 100 : 0;
+
+        updateProgressBar(elems.progressBar, percentage, status);
+        updateElementText(elems.statusText, `Status: ${statusDetails}`);
+        updateElementText(elems.itemsText, `Speeches: ${processedMediaItems} / ${totalDbMediaItems}`);
+
+        if (status === 'running') {
+            toggleButton(elems.refreshButton, true, 'Refreshing...');
+            toggleButton(elems.deleteButton, true, 'Processing...');
+            clearError(elems.errorDisplay);
+        } else {
+            toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
+            toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
+            if (status === 'error') {
+                const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred.'}]);
+                showError(elems.errorDisplay, errorMessages);
+            } else { // completed, idle
+                clearError(elems.errorDisplay);
+                if (status === 'deleted') { // Special case for after delete
+                    updateElementText(elems.itemsText, 'Index Deleted');
+                }
+            }
+        }
+    }
+
+    async function fetchSearchIndexStatus(parliamentCode) {
+        const url = getApiUrl('index', 'status', { parliament: parliamentCode });
+        const result = await apiCall(url);
+        if (result.success && result.data) {
+            updateSearchIndexUI(parliamentCode, result.data);
+        } else {
+            console.warn(`Failed to fetch search index status for ${parliamentCode}:`, result.errors);
+            updateSearchIndexUI(parliamentCode, { status: 'error', statusDetails: 'Status fetch failed', errors: result.errors || [{detail: 'Connection error while fetching status.'}] });
+        }
+    }
+
+    async function triggerSearchIndexRefresh(parliamentCode) {
+        const elems = getSearchIndexElements(parliamentCode);
+        toggleButton(elems.refreshButton, true, 'Starting Refresh...');
+        toggleButton(elems.deleteButton, true); // Disable delete during refresh
+        clearError(elems.errorDisplay);
+        const url = getApiUrl('index', 'full-update', { parliament: parliamentCode });
+        const result = await apiCall(url, 'POST');
+
+        if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && typeof result.data.message === 'string') {
+            updateElementText(elems.statusText, `Status: ${result.data.message || 'Search index refresh triggered.'}`);
+            setTimeout(() => fetchSearchIndexStatus(parliamentCode), 1000);
+        } else {
+            showError(elems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: 'Failed to trigger search index refresh.'}]);
+            toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
+            toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
+        }
+    }
+
+    async function triggerSearchIndexDelete(parliamentCode) {
+        if (!confirm(`Are you sure you want to delete the search index for parliament ${parliamentCode}? This action cannot be undone.`)) {
+            return;
+        }
+        const elems = getSearchIndexElements(parliamentCode);
+        toggleButton(elems.deleteButton, true, 'Deleting...');
+        toggleButton(elems.refreshButton, true); // Disable refresh during delete
+        clearError(elems.errorDisplay);
+        const url = getApiUrl('index', 'delete', { parliament: parliamentCode, init: true }); 
+        const result = await apiCall(url, 'POST');
+
+        if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && result.data.deleted === true) {
+            updateElementText(elems.statusText, `Status: ${result.data.message || 'Search index deleted successfully.'}`);
+            updateProgressBar(elems.progressBar, 0, 'idle'); // Reset progress bar to idle and 0%
+            updateSearchIndexUI(parliamentCode, {status: 'deleted', statusDetails: result.data.message || 'Index deleted'});
+            setTimeout(() => fetchSearchIndexStatus(parliamentCode), 1000); 
+        } else {
+            showError(elems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: 'Failed to delete search index.'}]);
+            toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
+            toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
+        }
+    }
+
     function initializeSearchIndexSections() {
         const sections = document.querySelectorAll('[id^="search-index-progress-section-"]');
         sections.forEach(section => {
@@ -450,111 +550,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.warn('Search index section found without data-parliament-code:', section.id);
                 return;
             }
-
-            const elems = {
-                progressBar: `search-index-${parliamentCode}-progress-bar`,
-                statusText: `search-index-${parliamentCode}-status-text`,
-                itemsText: `search-index-${parliamentCode}-items-text`,
-                errorDisplay: `search-index-${parliamentCode}-error-display`,
-                refreshButton: `btn-trigger-search-index-refresh-${parliamentCode}`,
-                deleteButton: `btn-trigger-search-index-delete-${parliamentCode}`,
-                parliamentCode: parliamentCode,
-                originalRefreshBtnText: `Refresh Full Index (${parliamentCode})`,
-                originalDeleteBtnText: `Delete Index (${parliamentCode})`
-            };
-
-            async function fetchStatus() {
-                const url = getApiUrl('index', 'status', { parliament: elems.parliamentCode });
-                const result = await apiCall(url);
-                if (result.success && result.data) {
-                    updateUI(result.data);
-                } else {
-                    console.warn(`Failed to fetch search index status for ${elems.parliamentCode}:`, result.errors);
-                    updateUI({ status: 'error', statusDetails: 'Status fetch failed', percentage: 0, errors: result.errors || [{detail: 'Connection error while fetching status.'}] });
-                }
-            }
-
-            function updateUI(statusData) {
-                const {
-                    status,
-                    statusDetails = 'N/A',
-                    totalDbMediaItems = 0,
-                    processedMediaItems = 0,
-                    errors = []
-                } = statusData;
-
-                const percentage = totalDbMediaItems > 0 ? (processedMediaItems / totalDbMediaItems) * 100 : 0;
-
-                updateProgressBar(elems.progressBar, percentage, status);
-                updateElementText(elems.statusText, `Status: ${statusDetails}`);
-                updateElementText(elems.itemsText, `Speeches: ${processedMediaItems} / ${totalDbMediaItems}`);
-
-                if (status === 'running') {
-                    toggleButton(elems.refreshButton, true, 'Refreshing...');
-                    toggleButton(elems.deleteButton, true, 'Processing...');
-                    clearError(elems.errorDisplay);
-                } else {
-                    toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
-                    toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
-                    if (status === 'error') {
-                        const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred.'}]);
-                        showError(elems.errorDisplay, errorMessages);
-                    } else { // completed, idle
-                        clearError(elems.errorDisplay);
-                        if (status === 'deleted') { // Special case for after delete
-                             updateElementText(elems.itemsText, 'Index Deleted');
-                        }
-                    }
-                }
-            }
-
-            async function triggerRefresh() {
-                toggleButton(elems.refreshButton, true, 'Starting Refresh...');
-                toggleButton(elems.deleteButton, true); // Disable delete during refresh
-                clearError(elems.errorDisplay);
-                const url = getApiUrl('index', 'full-update', { parliament: elems.parliamentCode });
-                const result = await apiCall(url, 'POST');
-
-                if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && typeof result.data.message === 'string') {
-                    updateElementText(elems.statusText, `Status: ${result.data.message || 'Search index refresh triggered.'}`);
-                    setTimeout(fetchStatus, 1000);
-                } else {
-                    showError(elems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: 'Failed to trigger search index refresh.'}]);
-                    toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
-                    toggleButton(elems.deleteButton, false); // Re-enable delete on failure
-                }
-            }
-        
-            async function triggerDelete() {
-                if (!confirm(`Are you sure you want to delete the search index for parliament ${elems.parliamentCode}? This action cannot be undone.`)) {
-                    return;
-                }
-                toggleButton(elems.deleteButton, true, 'Deleting...');
-                toggleButton(elems.refreshButton, true); // Disable refresh during delete
-                clearError(elems.errorDisplay);
-                const url = getApiUrl('index', 'delete', { parliament: elems.parliamentCode, init: true }); 
-                const result = await apiCall(url, 'POST');
-
-                if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && result.data.deleted === true) {
-                    updateElementText(elems.statusText, `Status: ${result.data.message || 'Search index deleted successfully.'}`);
-                    updateProgressBar(elems.progressBar, 0, 'idle'); // Reset progress bar to idle and 0%
-                    updateUI({status: 'deleted', percentage: 0, statusDetails: result.data.message || 'Index deleted'});// Update UI to reflect deletion
-                    setTimeout(fetchStatus, 1000); 
-                } else {
-                    showError(elems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: 'Failed to delete search index.'}]);
-                    toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
-                    toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
-                }
-            }
+            
+            const elems = getSearchIndexElements(parliamentCode);
 
             const refreshBtn = document.getElementById(elems.refreshButton);
-            if (refreshBtn) refreshBtn.addEventListener('click', triggerRefresh);
+            if (refreshBtn) refreshBtn.addEventListener('click', () => triggerSearchIndexRefresh(parliamentCode));
             
             const deleteBtn = document.getElementById(elems.deleteButton);
-            if (deleteBtn) deleteBtn.addEventListener('click', triggerDelete);
+            if (deleteBtn) deleteBtn.addEventListener('click', () => triggerSearchIndexDelete(parliamentCode));
 
-            fetchStatus();
-            setInterval(fetchStatus, POLLING_INTERVAL);
+            fetchSearchIndexStatus(parliamentCode);
+            setInterval(() => fetchSearchIndexStatus(parliamentCode), POLLING_INTERVAL);
         });
     }
 
@@ -639,46 +645,46 @@ document.addEventListener('DOMContentLoaded', function() {
     function fetchOverallStatus() {
         const url = `${API_BASE_URL}/status/all`;
         
-        const formatDate = (dateString) => {
-            if (!dateString) return '-';
-            try {
+					const formatDate = (dateString) => {
+						if (!dateString) return '-';
+						try {
                 // Use a specific locale and options for consistent formatting
                 return new Date(dateString).toLocaleString('de-DE', {
                     year: 'numeric', month: '2-digit', day: '2-digit',
                     hour: '2-digit', minute: '2-digit', second: '2-digit'
                 });
-            } catch (e) {
+						} catch (e) {
                 console.error("Error formatting date:", dateString, e);
-                return '-';
-            }
-        };
-
+							return '-';
+						}
+					};
+					
         apiCall(url).then(result => {
             if (result.success && result.data && result.data.parliaments && result.data.parliaments.length > 0) {
                 const parliamentData = result.data.parliaments[0]; // Assuming first parliament for now
 
-                // Update Repository Info
-                if (parliamentData.repository) {
+					// Update Repository Info
+					if (parliamentData.repository) {
                     updateElementText('lastCommitDate', formatDate(parliamentData.repository.remote?.lastUpdated));
                     updateElementText('repoLocation', parliamentData.repository.location);
                     updateElementText('repoRemoteSessions', parliamentData.repository.remote?.numberOfSessions);
                     updateElementText('repoLocalUpdate', formatDate(parliamentData.repository.local?.lastUpdated));
                     updateElementText('repoLocalSessions', parliamentData.repository.local?.numberOfSessions);
-                } else {
+					} else {
                     ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions'].forEach(id => updateElementText(id, 'N/A'));
-                }
+					}
 
-                // Update Database Info
-                if (parliamentData.database) {
+					// Update Database Info
+					if (parliamentData.database) {
                     updateElementText('lastDBDate', formatDate(parliamentData.database.lastUpdated));
                     updateElementText('dbSessions', parliamentData.database.numberOfSessions);
-                } else {
+					} else {
                     ['lastDBDate', 'dbSessions'].forEach(id => updateElementText(id, 'N/A'));
-                }
+					}
 
-            } else {
+				} else {
                 console.error("Error fetching status data or data is not in expected format:", result.errors || "Unknown error or no parliament data");
-                const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbSessions'];
+					const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbSessions'];
                 idsToReset.forEach(id => updateElementText(id, 'Error'));
             }
         });
@@ -713,7 +719,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     initPage();
-});
+	});
 </script>
 
 <?php
