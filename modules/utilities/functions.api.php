@@ -26,8 +26,10 @@ function createApiErrorResponse($status, $code, $messageKey, $detailKey, $params
     
     // Replace parameters in messages
     foreach ($params as $key => $value) {
-        $title = str_replace("{".$key."}", $value, $title);
-        $detail = str_replace("{".$key."}", $value, $detail);
+        if (!is_array($value)) {
+            $title = str_replace("{".$key."}", $value, $title);
+            $detail = str_replace("{".$key."}", $value, $detail);
+        }
     }
     
     $errorarray = [

@@ -1,7 +1,8 @@
 <?php
 include_once(__DIR__ . '/../../../../modules/utilities/auth.php');
 
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
+$userId = $_SESSION['userdata']['id'] ?? null;
+$auth = auth($userId, "requestPage", $pageType);
 
 if ($auth["meta"]["requestStatus"] != "success") {
 
@@ -21,9 +22,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				<div class="col-12">
 					<h2><?= L::manageImport; ?></h2>
 					<div class="card mb-3">
-						<div class="card-body">
-							
-                        </div>
+						<div class="card-body"></div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
@@ -34,9 +33,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         </li>
 						<li class="nav-item">
                             <a class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="settings" aria-selected="false"><span class="icon-cog"></span> Settings</a>
-                        </li>
-						<li class="nav-item">
-                            <a class="nav-link" id="old-tab" data-bs-toggle="tab" data-bs-target="#old" role="tab" aria-controls="old" aria-selected="false">OLD THINGS TO REUSE</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -195,75 +191,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						<div class="tab-pane bg-white fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
 							[SETTINGS]
                         </div>
-						<div class="tab-pane bg-white fade" id="old" role="tabpanel" aria-labelledby="old-tab">
-							[OLD THINGS TO REUSE]
-							<div class="row">
-                                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                                    <span class="d-block p-4 bg-white text-center btn rounded-pill updateSearchIndex" href="" data-type="specific">Update specific Medias</span>
-                                </div>
-                                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                                    <span class="d-block p-4 bg-white text-center btn rounded-pill updateSearchIndex" href="" data-type="all">Update whole Searchindex</span>
-                                </div>
-                                <div class="mt-2 mb-2 col-6 col-md-4 col-lg-3">
-                                    <span class="d-block p-4 bg-white text-center btn rounded-pill" id="deleteSearchIndex" href="">Delete whole Searchindex</span>
-                                </div>
-                            </div>
-							<hr>
-							<?php
-							include_once(__DIR__."/../../../../config.php");
-							if ((!isset($_REQUEST["parliament"])) || (!array_key_exists($_REQUEST["parliament"],$config["parliament"]))) {
-
-								echo '
-									<form action="" method="post">
-										<!--<input type="hidden" name="a" value="import">-->
-										<select class="form-select mb-4" name="parliament">';
-										foreach($config["parliament"] as $k=>$v) {
-											echo '<option value="'.$k.'">'.$v["label"].'</option>';
-										}
-								echo '
-										</select>
-										<div class="form-group">
-											<label for="inputDir">Input Directory ('.count(array_diff(scandir(__DIR__.'/../../../../data/input/'), array('..', '.'))).' Files)</label>
-											<input type="text" class="form-control" id="inputDir"  name="inputDir" value="'.realpath(__DIR__.'/../../../../data/input/').'/">
-										</div>
-										<div class="form-group">
-											<label for="doneDir">Done Directory</label>
-											<input type="text" class="form-control" id="doneDir" name="doneDir" value="'.realpath(__DIR__.'/../../../../data/done/').'/">
-										</div>
-										<button type="submit" class="btn btn-outline-primary rounded-pill">Start import</button>
-									</form>
-								';
-
-							} else {
-								echo "<pre>";
-								print_r($_REQUEST);
-								echo "</pre>";
-
-								/*require_once(__DIR__."/../../../../modules/import/functions.json2sql.php");
-								ob_implicit_flush(true);
-								ob_end_flush();
-								$status = importParliamentSpeechJSONtoSQL($_REQUEST["inputDir"],$_REQUEST["doneDir"],$_REQUEST["parliament"]);
-								*/
-								include_once(__DIR__."/../../../../modules/import/functions.import.php");
-								ob_implicit_flush(true);
-								ob_end_flush();
-								$meta["preserveFiles"] = true;
-								$meta["inputDir"] = $_REQUEST["inputDir"];
-								$meta["doneDir"] = $_REQUEST["doneDir"];
-								$status = importParliamentMedia("jsonfiles",$_REQUEST["parliament"],$meta);
-								//$status = importParliamentMedia($_REQUEST["inputDir"],$_REQUEST["doneDir"],$_REQUEST["parliament"]);
-
-								if (is_array($status)) {
-									echo "<pre>";
-									print_r($status);
-									echo "</pre>";
-								}
-
-
-							}
-
-							?>
-                        </div>
                     </div>
 				</div>
 			</div>
@@ -374,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Clear all contextual classes first
             bar.classList.remove('bg-success', 'bg-primary', 'bg-danger', 'progress-bar-animated', 'progress-bar-striped');
 
-            const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors'];
+            const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
             if (errorStates.includes(currentStatus)) {
                 bar.classList.add('bg-danger');
             } else if (currentStatus === 'running') {
@@ -661,11 +588,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateAdsUI(statusData) {
-        const { status, percentage = 0, statusDetails = 'N/A', entityType = 'all', currentItem = 'N/A', totalItems = 0, processedItems = 0, errors = [] } = statusData;
+        const { status, statusDetails = 'N/A', activeType = null, totalItems = 0, processedItems = 0, errors = [] } = statusData;
+
+        const percentage = totalItems > 0 ? (processedItems / totalItems) * 100 : 0;
 
         updateProgressBar(adsElems.progressBar, percentage, status);
         updateElementText(adsElems.statusText, `Status: ${statusDetails}`);
-        updateElementText(adsElems.activeTypeText, `Current Task: ${entityType || 'Overall'} - ${currentItem || 'N/A'}`);
+        updateElementText(adsElems.activeTypeText, `Current Task: ${activeType || 'N/A'}`);
         updateElementText(adsElems.itemsText, `Items: ${processedItems} / ${totalItems}`);
         
         if (status === 'running') {

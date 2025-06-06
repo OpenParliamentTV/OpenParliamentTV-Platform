@@ -34,23 +34,6 @@ function logger($type = "info",$msg) {
     file_put_contents(__DIR__."/cronAdditionalDataService.log",date("Y-m-d H:i:s")." - ".$type.": ".$msg."\n",FILE_APPEND );
 }
 
-
-
-
-
-/**
- * @param string $message
- *
- * Sends a message to CLI
- *
- */
-function cliLog($message) {
-    $message = date("Y.m.d H:i:s:u") . " - ". $message.PHP_EOL;
-    print($message);
-    flush();
-    ob_flush();
-}
-
 /**
  * Checks if this script is executed from CLI
  */
@@ -80,7 +63,6 @@ if (is_cli()) {
 
         } else {
             logger("warn", "Did not run the CronJob because its already running (for ".(time()-filemtime(__DIR__."/cronAdditionalDataService.lock"))." seconds now).");
-            cliLog("cronAdditionalDataService still running");
             exit;
 
         }
@@ -181,54 +163,23 @@ if (is_cli()) {
     require_once(__DIR__ . "/../config.php");
     require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
     require_once(__DIR__ . "/../api/v1/modules/externalData.php");
+    require_once(__DIR__ . "/../api/v1/api.php");
 
-
-
-    try {
-
-        $db = new SafeMySQL(array(
-            'host'	=> $config["platform"]["sql"]["access"]["host"],
-            'user'	=> $config["platform"]["sql"]["access"]["user"],
-            'pass'	=> $config["platform"]["sql"]["access"]["passwd"],
-            'db'	=> $config["platform"]["sql"]["db"]
-        ));
-
-    } catch (exception $e) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to platform database failed";
-        array_push($return["errors"], $errorarray);
-        echo json_encode($return);
-        unlink(__DIR__."/cronAdditionalDataService.lock");
-        exit;
-
+    // Use helper function to get database connections
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        // The helper returns an error array on failure
+        $errorMessage = $db['errors'][0]['detail'] ?? 'Platform database connection failed.';
+        logger("error", "[ADS] CRITICAL: " . $errorMessage);
+        exit; // Shutdown function will handle lock file and progress status
     }
-    try {
 
-        $dbp = new SafeMySQL(array(
-            'host'	=> $config["parliament"][$parliament]["sql"]["access"]["host"],
-            'user'	=> $config["parliament"][$parliament]["sql"]["access"]["user"],
-            'pass'	=> $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-            'db'	=> $config["parliament"][$parliament]["sql"]["db"]
-        ));
-
-    } catch (exception $e) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"] = array();
-        $errorarray["status"] = "503";
-        $errorarray["code"] = "1";
-        $errorarray["title"] = "Database connection error";
-        $errorarray["detail"] = "Connecting to parliament database failed";
-        array_push($return["errors"], $errorarray);
-        echo json_encode($return);
-        unlink(__DIR__."/cronAdditionalDataService.lock");
-        exit;
-
+    $dbp = getApiDatabaseConnection('parliament', $parliament);
+    if (!is_object($dbp)) {
+        // The helper returns an error array on failure
+        $errorMessage = $dbp['errors'][0]['detail'] ?? "Parliament database connection failed for {$parliament}.";
+        logger("error", "[ADS] CRITICAL: " . $errorMessage);
+        exit; // Shutdown function will handle lock file and progress status
     }
 
     // [START OF NEW ENTITY PROCESSING LOGIC - MOVED HERE]
@@ -292,26 +243,24 @@ if (is_cli()) {
             logger("info", "[ADS] Attempting to get total count for type: {$type}");
             // Determine total items for this type for progress reporting
             try {
-                // Ensure $dbp is the parliament-specific DB connection
-                // Table names should come from $config for robustness
+                // Table names for entities should come from the PLATFORM config
                 $tableName = '';
                 switch ($type) {
                     case "person":
-                        $tableName = $config["parliament"][$parliament]["sql"]["tbl"]["Person"] ?? 'person';
-                        $totalItemsThisType = $dbp->getOne("SELECT COUNT(*) FROM ?n", $tableName);
+                        $tableName = $config["platform"]["sql"]["tbl"]["Person"] ?? 'person';
+                        $totalItemsThisType = $db->getOne("SELECT COUNT(*) FROM ?n", $tableName);
                         break;
                     case "organisation":
-                        $tableName = $config["parliament"][$parliament]["sql"]["tbl"]["Organisation"] ?? 'organisation';
-                        $totalItemsThisType = $dbp->getOne("SELECT COUNT(*) FROM ?n", $tableName);
+                        $tableName = $config["platform"]["sql"]["tbl"]["Organisation"] ?? 'organisation';
+                        $totalItemsThisType = $db->getOne("SELECT COUNT(*) FROM ?n", $tableName);
                         break;
                     case "document": // Assuming 'document' refers to a general document table for ADS
-                        $tableName = $config["parliament"][$parliament]["sql"]["tbl"]["Document"] ?? 'document';
-                        // Add specific conditions if ADS processes only certain document sub-types
-                        $totalItemsThisType = $dbp->getOne("SELECT COUNT(*) FROM ?n", $tableName);
+                        $tableName = $config["platform"]["sql"]["tbl"]["Document"] ?? 'document';
+                        $totalItemsThisType = $db->getOne("SELECT COUNT(*) FROM ?n", $tableName);
                         break;
                     case "term":
-                        $tableName = $config["parliament"][$parliament]["sql"]["tbl"]["Term"] ?? 'term';
-                        $totalItemsThisType = $dbp->getOne("SELECT COUNT(*) FROM ?n", $tableName);
+                        $tableName = $config["platform"]["sql"]["tbl"]["Term"] ?? 'term';
+                        $totalItemsThisType = $db->getOne("SELECT COUNT(*) FROM ?n", $tableName);
                         break;
                     default:
                         logger("warn", "[ADS] Unknown entity type '{$type}' encountered when trying to get count. Skipping count.");
@@ -366,29 +315,27 @@ if (is_cli()) {
                     $currentBatchIds = [];
                     try {
                         $tableName = '';
-                        // Assuming standard ID columns like PersonID, OrganisationID, DocumentID, TermID or a generic 'id'
-                        // These should align with what externalData.php expects for entityId
+                        // These queries should also use the PLATFORM config and PLATFORM DB ($db)
                         switch ($type) {
                             case "person":
-                                $tableName = $config["parliament"][$parliament]["sql"]["tbl"]["Person"] ?? 'person';
-                                $idColumn = $config["parliament"][$parliament]["sql"]["idcol"]["Person"] ?? 'PersonID';
-                                $items = $dbp->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
+                                $tableName = $config["platform"]["sql"]["tbl"]["Person"] ?? 'person';
+                                $idColumn = $config["platform"]["sql"]["idcol"]["Person"] ?? 'PersonID';
+                                $items = $db->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
                                 break;
                             case "organisation":
-                                $tableName = $config["parliament"][$parliament]["sql"]["tbl"]["Organisation"] ?? 'organisation';
-                                $idColumn = $config["parliament"][$parliament]["sql"]["idcol"]["Organisation"] ?? 'OrganisationID';
-                                $items = $dbp->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
+                                $tableName = $config["platform"]["sql"]["tbl"]["Organisation"] ?? 'organisation';
+                                $idColumn = $config["platform"]["sql"]["idcol"]["Organisation"] ?? 'OrganisationID';
+                                $items = $db->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
                                 break;
                             case "document":
-                                $tableName = $config["parliament"][$parliament]["sql"]["tbl"]["Document"] ?? 'document';
-                                $idColumn = $config["parliament"][$parliament]["sql"]["idcol"]["Document"] ?? 'DocumentID';
-                                // Potentially add WHERE clauses if only certain documents are processed by ADS
-                                $items = $dbp->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
+                                $tableName = $config["platform"]["sql"]["tbl"]["Document"] ?? 'document';
+                                $idColumn = $config["platform"]["sql"]["idcol"]["Document"] ?? 'DocumentID';
+                                $items = $db->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
                                 break;
                             case "term":
-                                $tableName = $config["parliament"][$parliament]["sql"]["tbl"]["Term"] ?? 'term';
-                                $idColumn = $config["parliament"][$parliament]["sql"]["idcol"]["Term"] ?? 'TermID';
-                                $items = $dbp->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
+                                $tableName = $config["platform"]["sql"]["tbl"]["Term"] ?? 'term';
+                                $idColumn = $config["platform"]["sql"]["idcol"]["Term"] ?? 'TermID';
+                                $items = $db->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
                                 break;
                             default:
                                 logger("warn", "[ADS] Unknown entity type '{$type}' for fetching batch. Batch fetch skipped.");
@@ -417,20 +364,32 @@ if (is_cli()) {
     foreach ($items as $item) {
                         $itemId = $item["id"]; // id is now consistently 'id' due to "AS id" in queries
                         $apiCallParams = [
-                            "action" => "externalData",   // Correct API action for ADS
-                            "itemType" => "update-entities", // Correct itemType for ADS update
-                            "entityType" => $type,
-                            "entityId" => $itemId,
-                            "parliament" => $parliament // Pass parliament context if needed by externalData.php
+                            "action" => "externalData",
+                            "itemType" => "update-entities", // Corrected itemType
+                            "ids" => [$itemId], // Pass as an array
+                            "type" => [$type], // Pass as an array
+                            "parliament" => $parliament
                         ];
                         
                         try {
-                            // apiV1 is included from api.php which should be required by this script
                             // $db is platform, $dbp is parliament specific
                             $response = apiV1($apiCallParams, $db, $dbp); 
                             
                             if (!isset($response["meta"]["requestStatus"]) || $response["meta"]["requestStatus"] !== "success") {
-                                $apiErrorMsg = "[ADS] API error updating {$type} ID {$itemId}: " . ($response["errors"][0]["detail"] ?? json_encode($response["errors"] ?? 'Unknown API error'));
+                                $errorDetail = "Unknown API error"; // Default
+                                if (!empty($response["errors"])) {
+                                    $firstError = $response["errors"][0];
+                                    $errorTitle = $firstError["title"] ?? 'Untitled Error';
+                                    
+                                    // Check for nested details from createApiErrorResponse
+                                    if (!empty($firstError["meta"]["details"])) {
+                                        $errorDetail = "{$errorTitle} - Details: " . json_encode($firstError["meta"]["details"]);
+                                    } else {
+                                        $errorDetail = $firstError["detail"] ?? json_encode($firstError);
+                                    }
+                                }
+
+                                $apiErrorMsg = "[ADS] API error updating {$type} ID {$itemId}: " . $errorDetail;
                                 logger("error", $apiErrorMsg);
                                 if (function_exists('logErrorToBaseProgressFile')) logErrorToBaseProgressFile(CRON_ADS_PROGRESS_FILE, $apiErrorMsg, $itemId, ["type" => $type]);
                                 $overallErrorsEncountered = true;

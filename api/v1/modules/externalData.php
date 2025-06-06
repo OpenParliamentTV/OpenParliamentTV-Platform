@@ -343,13 +343,13 @@ function externalDataTriggerFullUpdate($api_request) {
     $scriptPath = realpath(__DIR__."/../../../data/cronAdditionalDataService.php");
     if ($scriptPath === false) {
         error_log("API externalDataTriggerFullUpdate: Failed to resolve realpath for cronAdditionalDataService.php", 0, $logFile);
-        return createApiError("Server configuration error: Script path not found.", "SCRIPT_PATH_ERROR");
+        return createApiErrorResponse(500, "SCRIPT_PATH_ERROR", "Server configuration error: Script path not found.", "The system could not find the necessary script to run the update process.");
     }
 
     $command = $config["bin"]["php"]." ".$scriptPath." --type ".$api_request["type"];
     executeAsyncShellCommand($command);
     
-    return createApiSuccessResponse(null, ["message" => "Full update process for type '".$api_request["type"]."' initiated."]);
+    return createApiSuccessResponse(["message" => "Full update process for type '".$api_request["type"]."' initiated."]);
 }
 
 /**
@@ -423,7 +423,7 @@ function externalDataUpdateEntities($api_request) {
         return createApiErrorMissingParameter("type (array)");
     }
     if (count($api_request["ids"]) !== count($api_request["type"])) {
-        return createApiErrorInvalidParameter("ids and type arrays must have the same number of elements.");
+        return createApiErrorResponse(400, "INVALID_PARAMETER", "ids and type arrays must have the same number of elements.");
     }
     
     $language = $api_request["language"] ?? "de";
@@ -450,7 +450,7 @@ function externalDataUpdateEntities($api_request) {
     if (!empty($errors)) {
         // If there were any errors, return a mixed success/error response or just an error if all failed
         if ($successCount == 0) {
-            return createApiError("All entity updates failed.", "ENTITY_UPDATE_FAILED", ["details" => $errors]);
+            return createApiErrorResponse(500, "ENTITY_UPDATE_FAILED", "All entity updates failed.", null, [], null, ["details" => $errors]);
         }
         // Partial success
         return createApiSuccessResponse(
