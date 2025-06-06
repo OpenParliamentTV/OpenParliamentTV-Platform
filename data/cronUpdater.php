@@ -282,12 +282,16 @@ if (is_cli()) {
             // Initialize progress tracking for data import
             initBaseProgressFile(CRONUPDATER_PROGRESS_FILE, ["processName" => "dataImport", "status" => "running", "statusDetails" => "Starting data import process...", "totalFiles" => 0, "processedFiles" => 0]);
             
-            require_once(__DIR__ . "/updateFilesFromGit.php");
-            require_once(__DIR__ . "/entity-dump/function.entityDump.php");
-
+            // By default, sync from Git. The --ignoreGit flag prevents this.
             if (!isset($input["ignoreGit"])) {
-                // ... Git update logic with progress ...
+                logger("info", "Running Git repository sync.");
+                require_once(__DIR__ . "/updateFilesFromGit.php");
+                updateFilesFromGit($parliament);
+            } else {
+                logger("info", "Skipping Git repository sync due to --ignoreGit flag.");
             }
+            
+            require_once(__DIR__ . "/entity-dump/function.entityDump.php");
 
             $inputFiles = array_filter(scandir($meta["inputDir"]), function($file) use ($meta) {
                 return !is_dir($meta["inputDir"] . $file) && preg_match('/.*\.json$/DA', $file);

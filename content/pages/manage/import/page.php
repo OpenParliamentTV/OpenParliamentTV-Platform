@@ -248,6 +248,20 @@ document.addEventListener('DOMContentLoaded', function() {
     const API_BASE_URL = '<?= $config["dir"]["root"]; ?>/api/v1'; 
     const POLLING_INTERVAL = 5000; // 5 seconds
 
+    const appState = {
+        repo: {
+            remoteSessions: 0,
+            localSessions: 0,
+            isOutOfSync: function() {
+                return this.remoteSessions > this.localSessions;
+            },
+            getOutOfSyncCount: function() {
+                return this.isOutOfSync() ? this.remoteSessions - this.localSessions : 0;
+            }
+        },
+        importStatus: {}
+    };
+
     // --- Generic Helper Functions ---
     function getApiUrl(action, itemType, params = {}) {
         const url = `${API_BASE_URL}/?action=${action}&itemType=${itemType}`;
@@ -397,30 +411,54 @@ document.addEventListener('DOMContentLoaded', function() {
         const url = getApiUrl('import', 'status');
         const result = await apiCall(url);
         if (result.success && result.data) {
-            updateDataImportUI(result.data);
+            appState.importStatus = result.data;
+            updateDataImportUI();
         } else {
             console.warn("Failed to fetch data import status:", result.errors);
-            updateDataImportUI({ status: 'error', statusDetails: 'Status fetch failed', percentage: 0, errors: result.errors || [{detail: 'Connection error while fetching status.'}] });
+            appState.importStatus = { status: 'error', statusDetails: 'Status fetch failed', percentage: 0, errors: result.errors || [{detail: 'Connection error while fetching status.'}] };
+            updateDataImportUI();
         }
     }
 
-    function updateDataImportUI(statusData) {
-        const { status, percentage = 0, statusDetails = 'N/A', totalFiles = 0, processedFiles = 0, currentFile = 'N/A', errors = [] } = statusData;
+    function updateDataImportUI() {
+        const { status, statusDetails = 'N/A', totalFiles = 0, processedFiles = 0, currentFile = 'N/A', errors = [] } = appState.importStatus;
         
+        // 1. Calculate percentage client-side for progress bar
+        const percentage = totalFiles > 0 ? (processedFiles / totalFiles) * 100 : 0;
+
+        let finalStatusDetails = statusDetails;
+        let finalItemsText = `Files: ${processedFiles} / ${totalFiles}`;
+
+        const isNotRunning = status !== 'running';
+
+        // Display out-of-sync message if needed
+        if (isNotRunning && appState.repo.isOutOfSync()) {
+            const diff = appState.repo.getOutOfSyncCount();
+            const plural = diff > 1 ? 's' : '';
+            finalStatusDetails = `Repository is out of sync. ${diff} new session file${plural} available.`;
+            finalItemsText = `Pending Sync: ${diff} session${plural}`;
+            updateElementText(dataImportElems.currentFileText, 'Current: N/A');
+        } else {
+            // 2. Adjust file label based on running state
+            const fileLabel = isNotRunning ? 'Last file:' : 'Current:';
+            updateElementText(dataImportElems.currentFileText, `${fileLabel} ${currentFile || 'N/A'}`);
+        }
+
         updateProgressBar(dataImportElems.progressBar, percentage, status);
-        updateElementText(dataImportElems.statusText, `Status: ${statusDetails}`);
-        updateElementText(dataImportElems.itemsText, `Files: ${processedFiles} / ${totalFiles}`);
-        updateElementText(dataImportElems.currentFileText, `Current: ${currentFile || 'N/A'}`);
+        updateElementText(dataImportElems.statusText, `Status: ${finalStatusDetails}`);
+        updateElementText(dataImportElems.itemsText, finalItemsText);
 
         if (status === 'running') {
             toggleButton(dataImportElems.triggerButton, true, 'Importing...');
             clearError(dataImportElems.errorDisplay);
         } else {
             toggleButton(dataImportElems.triggerButton, false, dataImportElems.originalButtonText);
-            if (status === 'error') {
+            
+            const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
+            if (errorStates.includes(status) && !appState.repo.isOutOfSync()) {
                 const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred during data import.'}]);
                 showError(dataImportElems.errorDisplay, errorMessages);
-            } else { // completed, idle, or other non-running, non-error status
+            } else { // completed, idle, or out-of-sync
                 clearError(dataImportElems.errorDisplay);
             }
         }
@@ -670,6 +708,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateElementText('repoRemoteSessions', parliamentData.repository.remote?.numberOfSessions);
                     updateElementText('repoLocalUpdate', formatDate(parliamentData.repository.local?.lastUpdated));
                     updateElementText('repoLocalSessions', parliamentData.repository.local?.numberOfSessions);
+                    
+                    appState.repo.remoteSessions = parseInt(parliamentData.repository.remote?.numberOfSessions, 10) || 0;
+                    appState.repo.localSessions = parseInt(parliamentData.repository.local?.numberOfSessions, 10) || 0;
+                    
+                    updateDataImportUI();
+
 					} else {
                     ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions'].forEach(id => updateElementText(id, 'N/A'));
 					}
@@ -716,6 +760,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Fetch overall status for repository/DB info
         fetchOverallStatus();
+        setInterval(fetchOverallStatus, POLLING_INTERVAL);
     }
 
     initPage();
