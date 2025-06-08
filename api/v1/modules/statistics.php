@@ -447,4 +447,47 @@ function statisticsGetNetwork($request) {
     }
 }
 
+function statisticsGetEntityCounts($request) {
+    global $config;
+
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) {
+        return createApiErrorResponse(503, 1, "Database connection error", "Connecting to platform database failed");
+    }
+
+    $counts = [
+        'person' => ['total' => 0, 'subtypes' => []],
+        'organisation' => ['total' => 0, 'subtypes' => []],
+        'document' => ['total' => 0, 'subtypes' => []],
+        'term' => ['total' => 0, 'subtypes' => []],
+    ];
+
+    try {
+        // Person
+        $personTable = $config["platform"]["sql"]["tbl"]["Person"];
+        $counts['person']['total'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n", $personTable);
+        $counts['person']['subtypes']['person'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE PersonType = 'person' OR PersonType IS NULL", $personTable);
+        $counts['person']['subtypes']['memberOfParliament'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE PersonType = 'memberOfParliament'", $personTable);
+
+        // Organisation
+        $orgTable = $config["platform"]["sql"]["tbl"]["Organisation"];
+        $counts['organisation']['total'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n", $orgTable);
+
+        // Document
+        $docTable = $config["platform"]["sql"]["tbl"]["Document"];
+        $counts['document']['total'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n", $docTable);
+        $counts['document']['subtypes']['legalDocument'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE DocumentType = 'legalDocument'", $docTable);
+        $counts['document']['subtypes']['officialDocument'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE DocumentType = 'officialDocument'", $docTable);
+        
+        // Term
+        $termTable = $config["platform"]["sql"]["tbl"]["Term"];
+        $counts['term']['total'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n", $termTable);
+
+    } catch (Exception $e) {
+        return createApiErrorResponse(500, 1, "Database query error", $e->getMessage());
+    }
+
+    return createApiSuccessResponse($counts);
+}
+
 ?>
