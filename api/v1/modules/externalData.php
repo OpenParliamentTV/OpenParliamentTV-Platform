@@ -362,22 +362,29 @@ function externalDataGetFullUpdateStatus($api_request = []) { // Added default f
     global $config;
 
     $progressFilePath = __DIR__ . "/../../../data/progress/cronAdditionalDataService.json";
+    
+    $entityTypes = ["person", "memberOfParliament", "organisation", "legalDocument", "officialDocument", "term"];
+    $defaultStatus = [
+        "globalStatus" => "idle",
+        "activeType" => null,
+        "types" => []
+    ];
 
-    if (!file_exists($progressFilePath)) {
-        // Default status if progress file doesn't exist
-        $defaultStatus = [
-            "processName" => "additionalDataService",
-            "activeType" => null,
+    foreach ($entityTypes as $type) {
+        $defaultStatus["types"][$type] = [
             "status" => "idle",
-            "statusDetails" => "No active or recent ADS process found.",
+            "statusDetails" => "No active or recent process found.",
             "startTime" => null,
             "endTime" => null,
-            "totalItems" => 0, // For the current or last activeType
-            "processedItems" => 0, // For the current or last activeType
+            "totalItems" => 0,
+            "processedItems" => 0,
             "errors" => [],
             "lastSuccessfullyProcessedId" => null,
-            "lastActivityTime" => null // It's good practice to have this, even if not explicitly in ADS progress file yet
+            "lastActivityTime" => null
         ];
+    }
+
+    if (!file_exists($progressFilePath)) {
         return createApiSuccessResponse($defaultStatus, ["message" => "ADS progress file not found, returning default idle status."]);
     }
 
@@ -388,28 +395,35 @@ function externalDataGetFullUpdateStatus($api_request = []) { // Added default f
 
     $progressData = json_decode($progressJson, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
-        return createApiErrorResponse(500, 'PROGRESS_FILE_CORRUPT', "ADS progress file is corrupt or not valid JSON.", "JSON decode error: " . json_last_error_msg() . " in file {$progressFilePath}");
+        $error_message = "ADS progress file is corrupt or not valid JSON. JSON decode error: " . json_last_error_msg() . " in file {$progressFilePath}";
+        // If file is corrupt, we still return the default structure but with an error message
+        $defaultStatus['globalStatus'] = 'error';
+        foreach ($entityTypes as $type) {
+            $defaultStatus['types'][$type]['status'] = 'error';
+            $defaultStatus['types'][$type]['statusDetails'] = 'Progress file is corrupt.';
+        }
+        return createApiSuccessResponse($defaultStatus, ["message" => $error_message]);
     }
     
-    // Ensure all expected keys from the defaultStatus are present
-    $defaultKeysTemplate = [
-        "processName" => "additionalDataService", "activeType" => null, "status" => "unknown", "statusDetails" => "",
-        "startTime" => null, "endTime" => null, "totalItems" => 0, "processedItems" => 0,
-        "errors" => [], "lastSuccessfullyProcessedId" => null, "lastActivityTime" => date('c') // Set current time if not in file
-    ];
-    
-    // If lastActivityTime is not in the loaded data, set it to filemtime or current time.
-    if (!isset($progressData["lastActivityTime"])) {
-        $progressData["lastActivityTime"] = date('c', filemtime($progressFilePath));
+    // Merge loaded data with default structure to ensure all keys exist
+    $response_data = $defaultStatus;
+    if (isset($progressData['globalStatus'])) {
+        $response_data['globalStatus'] = $progressData['globalStatus'];
     }
-
-    $progressData = array_merge($defaultKeysTemplate, $progressData);
+    if (isset($progressData['activeType'])) {
+        $response_data['activeType'] = $progressData['activeType'];
+    }
+    if (isset($progressData['types']) && is_array($progressData['types'])) {
+        foreach ($entityTypes as $type) {
+            if (isset($progressData['types'][$type])) {
+                $response_data['types'][$type] = array_merge($defaultStatus['types'][$type], $progressData['types'][$type]);
+            }
+        }
+    }
 
     return createApiSuccessResponse(
-        $progressData,
-        [
-            "message" => "ADS status retrieved successfully from progress file."
-        ]
+        $response_data,
+        ["message" => "ADS status retrieved successfully."]
     );
 }
 

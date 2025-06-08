@@ -34,6 +34,69 @@ function logger($type = "info",$msg) {
     file_put_contents(__DIR__."/cronAdditionalDataService.log",date("Y-m-d H:i:s")." - ".$type.": ".$msg."\n",FILE_APPEND );
 }
 
+function _ads_get_progress_data() {
+    $entityTypes = ["person", "memberOfParliament", "organisation", "legalDocument", "officialDocument", "term"];
+    $defaultStatus = [
+        "globalStatus" => "idle",
+        "activeType" => null,
+        "types" => []
+    ];
+
+    $defaultTypeStatus = [
+        "status" => "idle",
+        "statusDetails" => "Awaiting process.",
+        "startTime" => null,
+        "endTime" => null,
+        "totalItems" => 0,
+        "processedItems" => 0,
+        "errors" => [],
+        "lastSuccessfullyProcessedId" => null,
+        "lastActivityTime" => null
+    ];
+
+    foreach ($entityTypes as $type) {
+        $defaultStatus["types"][$type] = $defaultTypeStatus;
+    }
+
+    if (!file_exists(CRON_ADS_PROGRESS_FILE)) {
+        return $defaultStatus;
+    }
+
+    $progressJson = @file_get_contents(CRON_ADS_PROGRESS_FILE);
+    if ($progressJson === false) {
+        logger('error', 'Could not read progress file ' . CRON_ADS_PROGRESS_FILE);
+        return $defaultStatus; // Return default if unreadable
+    }
+
+    $savedProgress = json_decode($progressJson, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        logger('error', 'Could not decode progress file JSON: ' . json_last_error_msg());
+        return $defaultStatus; // Return default if corrupt
+    }
+
+    // Build a new, clean progress structure
+    $newProgress = [
+        "globalStatus" => $savedProgress['globalStatus'] ?? 'idle',
+        "activeType" => $savedProgress['activeType'] ?? null,
+        "types" => []
+    ];
+
+    // Deep merge types, ensuring no old top-level keys are carried over
+    foreach ($entityTypes as $type) {
+        $newProgress["types"][$type] = array_merge($defaultTypeStatus, $savedProgress['types'][$type] ?? []);
+    }
+
+    return $newProgress;
+}
+
+function _ads_save_progress_data($data) {
+    if (!is_dir(dirname(CRON_ADS_PROGRESS_FILE))) {
+        mkdir(dirname(CRON_ADS_PROGRESS_FILE), 0775, true);
+    }
+    @file_put_contents(CRON_ADS_PROGRESS_FILE, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+}
+
+
 /**
  * Checks if this script is executed from CLI
  */
@@ -83,37 +146,31 @@ if (is_cli()) {
         }
 
         $lockFile = __DIR__."/cronAdditionalDataService.lock";
-
-        // Check if helper functions exist before calling them, as a safeguard. Now checking for Base versions.
-        if (function_exists('finalizeBaseProgressFile') && function_exists('logErrorToBaseProgressFile')) {
-            if (!$progressFinalized && file_exists(CRON_ADS_PROGRESS_FILE)) {
-                $currentProgressJson = @file_get_contents(CRON_ADS_PROGRESS_FILE);
-                if ($currentProgressJson !== false) {
-                    $currentProgress = json_decode($currentProgressJson, true);
-                    if (is_array($currentProgress) && isset($currentProgress["status"]) && $currentProgress["status"] === "running") {
-                        $activeType = $currentProgress["activeType"] ?? 'unknown_type';
-                        logErrorToBaseProgressFile(CRON_ADS_PROGRESS_FILE, "AdditionalDataService cron exited unexpectedly or crashed while processing: " . $activeType, $currentProgress["lastSuccessfullyProcessedId"] ?? null);
-                        finalizeBaseProgressFile(CRON_ADS_PROGRESS_FILE, "error_final", "Process terminated unexpectedly during active task: " . $activeType);
-                        logger("error", "[ADS] Shutdown: Process was in 'running' state for type '{$activeType}'. Marked as 'error_final'.");
-                    }
-                } else {
-                    logger("error", "[ADS] Shutdown: Could not read ADS progress file to check status.");
+        
+        if (!$progressFinalized) {
+            $progress = _ads_get_progress_data();
+            if ($progress['globalStatus'] === 'running') {
+                $activeType = $progress['activeType'] ?? 'unknown_type';
+                
+                $progress['globalStatus'] = 'error';
+                $progress['activeType'] = null;
+                
+                if (isset($progress['types'][$activeType])) {
+                    $progress['types'][$activeType]['status'] = 'error_final';
+                    $progress['types'][$activeType]['statusDetails'] = 'Process terminated unexpectedly.';
+                    $progress['types'][$activeType]['endTime'] = date('c');
+                    $progress['types'][$activeType]['lastActivityTime'] = date('c');
+                    $error_log_entry = [
+                        "timestamp" => date('c'),
+                        "message" => "Process terminated unexpectedly during active task: " . $activeType,
+                        "itemId" => $progress['types'][$activeType]['lastSuccessfullyProcessedId'] ?? null
+                    ];
+                    $progress['types'][$activeType]['errors'][] = $error_log_entry;
                 }
-            } else if (!$progressFinalized) { // File doesn't exist or error before init
-                $details = "Process terminated unexpectedly before or during initialization, or progress file was missing.";
-                // Attempt to create a final error state file if possible
-                $initialErrorData = [
-                    'processName' => 'additionalDataService',
-                    'activeType' => 'unknown_pre_init_crash',
-                    'statusDetails' => $details
-                    // other relevant fields from ADS structure can be added with null/0
-                ];
-                if(function_exists('initBaseProgressFile')) initBaseProgressFile(CRON_ADS_PROGRESS_FILE, $initialErrorData);
-                finalizeBaseProgressFile(CRON_ADS_PROGRESS_FILE, "error_early_crash", $details);
-                logger("error", "[ADS] Shutdown: Progress not finalized. ADS process possibly exited before full initialization or after progress file deletion. Marked as error.");
+                
+                _ads_save_progress_data($progress);
+                logger("error", "[ADS] Shutdown: Process was in 'running' state for type '{$activeType}'. Marked as 'error_final'.");
             }
-        } else {
-            logger("error", "[ADS] Shutdown: Base helper functions for progress reporting not available. Cannot update ADS progress file status.");
         }
 
         // Always try to remove the lock file
@@ -127,22 +184,10 @@ if (is_cli()) {
     });
 
     logger("info","[ADS] cronAdditionalDataService started");
-
-    // Initial ADS progress data structure
-    $adsInitialProgressData = [
-        "processName" => "additionalDataService",
-        "activeType" => null, // Will be set when a specific type starts processing
-        "statusDetails" => "Service idle, awaiting tasks.",
-        "totalItems" => 0,
-        "processedItems" => 0,
-        "lastSuccessfullyProcessedId" => null
-    ];
-
-    if (function_exists('initBaseProgressFile')) {
-        initBaseProgressFile(CRON_ADS_PROGRESS_FILE, $adsInitialProgressData);
-    } else {
-        logger("error", "[ADS] initBaseProgressFile function not available at start.");
-    }
+    
+    // Initialize progress file
+    $progress = _ads_get_progress_data();
+    _ads_save_progress_data($progress);
 
     //get CLI parameter to $input
     $input = getopt(null, ["type:","ids:"]);
@@ -150,6 +195,9 @@ if (is_cli()) {
     if (empty($input["type"])) {
 
         logger("error","no type has been given. Exit.");
+        $progress['globalStatus'] = 'idle';
+        _ads_save_progress_data($progress);
+        $progressFinalized = true;
         unlink(__DIR__."/cronAdditionalDataService.lock");
         exit;
 
@@ -195,8 +243,7 @@ if (is_cli()) {
         if (isset($input["type"])) {
             $runAll = false;
             // Valid types for ADS, ensure these match what externalData.php supports
-            // For now, using person, organisation, document, term as per the new logic design
-            $validADSTypes = array("person", "organisation", "document", "term"); 
+            $validADSTypes = ["person", "memberOfParliament", "organisation", "term", "legalDocument", "officialDocument"];
             $typesRequested = explode(",", $input["type"]);
             
             foreach ($typesRequested as $typeReq) {
@@ -213,271 +260,302 @@ if (is_cli()) {
             if (empty($entityTypesToProcess)) {
                 $noValidTypesMsg = "[ADS] No valid and supported entity types specified via --type parameter or all requested types were invalid. Valid types: " . implode(", ", $validADSTypes) . ". Exiting.";
                 logger("warn", $noValidTypesMsg);
-                if (function_exists('finalizeBaseProgressFile')) finalizeBaseProgressFile(CRON_ADS_PROGRESS_FILE, "idle", $noValidTypesMsg);
-                $progressFinalized = true; // Mark as finalized to prevent shutdown function from overwriting
-                // unlink(__DIR__."/cronAdditionalDataService.lock"); // Lock is removed by shutdown
+                $progress = _ads_get_progress_data();
+                $progress['globalStatus'] = 'idle';
+                $progress['statusDetails'] = $noValidTypesMsg; // A general status detail
+                _ads_save_progress_data($progress);
+                $progressFinalized = true;
                 exit; // Exit if no valid types to process
             }
         } else {
             // Default: process all configured valid types if --type is not given
-            $entityTypesToProcess = array("person", "organisation", "document", "term"); // Default set
+            $entityTypesToProcess = ["person", "memberOfParliament", "organisation", "term", "legalDocument", "officialDocument"]; // Default set
         }
 
         logger("info", "[ADS] Starting processing for types: " . implode(", ", $entityTypesToProcess));
-        if (function_exists('updateBaseProgressFile')) {
-            updateBaseProgressFile(CRON_ADS_PROGRESS_FILE, [
-                "statusDetails" => "Preparing to process types: " . implode(", ", $entityTypesToProcess),
-                "status"=>"running", // Set main status to running
-                "activeType" => null, // No specific type is active yet
-                "totalItems" => 0,    // Overall total not applicable here, will be per type
-                "processedItems" => 0
-            ]);
-        }
+        
+        $progress = _ads_get_progress_data();
+        $progress['globalStatus'] = 'running';
+        $progress['statusDetails'] = "Preparing to process types: " . implode(", ", $entityTypesToProcess);
+        _ads_save_progress_data($progress);
+
 
         foreach ($entityTypesToProcess as $type) {
             $processedItemsCountThisType = 0;
             $totalItemsThisType = 0;
             $typeSpecificErrors = false;
             $lastSuccessfullyProcessedIdThisType = null;
+            
+            $progress = _ads_get_progress_data();
+            $progress['activeType'] = $type;
+            _ads_save_progress_data($progress);
+
 
             logger("info", "[ADS] Attempting to get total count for type: {$type}");
             // Determine total items for this type for progress reporting
             try {
                 // Table names for entities should come from the PLATFORM config
                 $tableName = '';
+                $whereClause = '';
                 switch ($type) {
                     case "person":
-                        $tableName = $config["platform"]["sql"]["tbl"]["Person"] ?? 'person';
-                        $totalItemsThisType = $db->getOne("SELECT COUNT(*) FROM ?n", $tableName);
+                        $tableName = $config["platform"]["sql"]["tbl"]["Person"];
+                        $whereClause = "";
+                        break;
+                    case "memberOfParliament":
+                        $tableName = $config["platform"]["sql"]["tbl"]["Person"];
+                        $whereClause = $db->parse("WHERE PersonType = 'memberOfParliament'");
                         break;
                     case "organisation":
-                        $tableName = $config["platform"]["sql"]["tbl"]["Organisation"] ?? 'organisation';
-                        $totalItemsThisType = $db->getOne("SELECT COUNT(*) FROM ?n", $tableName);
+                        $tableName = $config["platform"]["sql"]["tbl"]["Organisation"];
+                        $whereClause = "";
                         break;
-                    case "document": // Assuming 'document' refers to a general document table for ADS
-                        $tableName = $config["platform"]["sql"]["tbl"]["Document"] ?? 'document';
-                        $totalItemsThisType = $db->getOne("SELECT COUNT(*) FROM ?n", $tableName);
+                    case "legalDocument":
+                        $tableName = $config["platform"]["sql"]["tbl"]["Document"];
+                        $whereClause = $db->parse("WHERE DocumentType = 'legalDocument'");
+                        break;
+                    case "officialDocument":
+                        $tableName = $config["platform"]["sql"]["tbl"]["Document"];
+                        $whereClause = $db->parse("WHERE DocumentType = 'officialDocument'");
                         break;
                     case "term":
-                        $tableName = $config["platform"]["sql"]["tbl"]["Term"] ?? 'term';
-                        $totalItemsThisType = $db->getOne("SELECT COUNT(*) FROM ?n", $tableName);
+                        $tableName = $config["platform"]["sql"]["tbl"]["Term"];
+                        $whereClause = "";
                         break;
                     default:
-                        logger("warn", "[ADS] Unknown entity type '{$type}' encountered when trying to get count. Skipping count.");
-                        $totalItemsThisType = 0; // Cannot determine
+                         $tableName = null;
+                }
+                if ($tableName) {
+                    $totalItemsThisType = $db->getOne("SELECT COUNT(*) FROM ?n ?p", $tableName, $whereClause);
+                } else {
+                    logger("warn", "[ADS] Unknown entity type '{$type}' encountered when trying to get count. Skipping count.");
+                    $totalItemsThisType = 0;
                 }
                 logger("info", "[ADS] Total items for type {$type}: {$totalItemsThisType}");
 
             } catch (Exception $e) {
                 $countErrorMsg = "[ADS] Error getting count for type {$type}: " . $e->getMessage();
                 logger("error", $countErrorMsg);
-                if (function_exists('logErrorToBaseProgressFile')) logErrorToBaseProgressFile(CRON_ADS_PROGRESS_FILE, $countErrorMsg, "N/A - Count Query for {$type}");
+                
+                $progress = _ads_get_progress_data();
+                $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => $countErrorMsg];
+                $progress['types'][$type]['statusDetails'] = "Error getting count. " . $e->getMessage();
+                $progress['types'][$type]['status'] = 'error';
+                _ads_save_progress_data($progress);
+                
                 $overallErrorsEncountered = true;
                 $typeSpecificErrors = true;
-                if (function_exists('updateBaseProgressFile')) {
-                     updateBaseProgressFile(CRON_ADS_PROGRESS_FILE, [ // Update general status, but also reflect this type is problematic
-                        "statusDetails" => "Error getting count for {$type}, this type will be skipped.",
-                        "activeType" => $type, // Show this type was attempted
-                     ]);
-                }
                 continue; // Skip to next entity type if count fails
             }
 
-            if (function_exists('updateBaseProgressFile')) {
-                updateBaseProgressFile(CRON_ADS_PROGRESS_FILE, [
-                    "activeType" => $type,
-                    "status" => "running", // Ensure status is running for this type
-                    "totalItems" => (int)$totalItemsThisType,
-                    "processedItems" => 0,
-                    "statusDetails" => "Starting processing for type: {$type}. Total items: {$totalItemsThisType}",
-                    "errors" => [], // Clear errors from previous type for this specific activeType context in progress file
-                    "lastSuccessfullyProcessedId" => null
-                ]);
-            }
+            $progress = _ads_get_progress_data();
+            $progress['types'][$type]['status'] = 'running';
+            $progress['types'][$type]['totalItems'] = (int)$totalItemsThisType;
+            $progress['types'][$type]['processedItems'] = 0;
+            $progress['types'][$type]['startTime'] = date('c');
+            $progress['types'][$type]['endTime'] = null;
+            $progress['types'][$type]['statusDetails'] = "Starting processing. Total items: {$totalItemsThisType}";
+            $progress['types'][$type]['errors'] = [];
+            $progress['types'][$type]['lastSuccessfullyProcessedId'] = null;
+            _ads_save_progress_data($progress);
+            
             logger("info", "[ADS] Processing type: {$type}. Total items: {$totalItemsThisType}");
 
             $offset = 0;
-            $limit = $config['ads']['batchSizeCli'] ?? 50; // Use a configurable batch size, default 50
+            // Set the number of items to fetch from the database in each batch.
+            $limit = 5;
 
-            if ($totalItemsThisType == 0) {
-                 logger("info", "[ADS] No items to process for type: {$type}");
-                 if (function_exists('updateBaseProgressFile')) {
-                    updateBaseProgressFile(CRON_ADS_PROGRESS_FILE, [
-                        "statusDetails" => "No items for type {$type}. Moving to next type or finishing.",
-                        "processedItems" => 0 // Explicitly set for this type
-                    ]);
-                 }
-            } else {
+            if ($totalItemsThisType > 0) {
                 while ($offset < $totalItemsThisType) {
-                    $items = array();
-                    $idColumn = 'id'; // Default ID column name
-                    // Determine ID column and table based on type
-                    $currentBatchIds = [];
+                    $items = [];
                     try {
+                        // Re-use logic from count to fetch items
                         $tableName = '';
-                        // These queries should also use the PLATFORM config and PLATFORM DB ($db)
+                        $idColumn = '';
+                        $whereClause = '';
+                        $typeForAPI = $type;
+
                         switch ($type) {
                             case "person":
-                                $tableName = $config["platform"]["sql"]["tbl"]["Person"] ?? 'person';
-                                $idColumn = $config["platform"]["sql"]["idcol"]["Person"] ?? 'PersonID';
-                                $items = $db->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
+                                $tableName = $config["platform"]["sql"]["tbl"]["Person"];
+                                $idColumn = 'PersonID';
+                                $whereClause = $db->parse("WHERE PersonType = 'person' OR PersonType IS NULL");
+                                break;
+                            case "memberOfParliament":
+                                $tableName = $config["platform"]["sql"]["tbl"]["Person"];
+                                $idColumn = 'PersonID';
+                                $whereClause = $db->parse("WHERE PersonType = 'memberOfParliament'");
                                 break;
                             case "organisation":
-                                $tableName = $config["platform"]["sql"]["tbl"]["Organisation"] ?? 'organisation';
-                                $idColumn = $config["platform"]["sql"]["idcol"]["Organisation"] ?? 'OrganisationID';
-                                $items = $db->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
+                                $tableName = $config["platform"]["sql"]["tbl"]["Organisation"];
+                                $idColumn = 'OrganisationID';
+                                $whereClause = "";
                                 break;
-                            case "document":
-                                $tableName = $config["platform"]["sql"]["tbl"]["Document"] ?? 'document';
-                                $idColumn = $config["platform"]["sql"]["idcol"]["Document"] ?? 'DocumentID';
-                                $items = $db->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
+                            case "legalDocument":
+                                $tableName = $config["platform"]["sql"]["tbl"]["Document"];
+                                $idColumn = 'DocumentWikidataID';
+                                $whereClause = $db->parse("WHERE DocumentType = 'legalDocument'");
+                                break;
+                            case "officialDocument":
+                                $tableName = $config["platform"]["sql"]["tbl"]["Document"];
+                                $idColumn = 'DocumentSourceURI';
+                                $whereClause = $db->parse("WHERE DocumentType = 'officialDocument'");
                                 break;
                             case "term":
-                                $tableName = $config["platform"]["sql"]["tbl"]["Term"] ?? 'term';
-                                $idColumn = $config["platform"]["sql"]["idcol"]["Term"] ?? 'TermID';
-                                $items = $db->getAll("SELECT ?n AS id FROM ?n ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $idColumn, $offset, $limit);
+                                $tableName = $config["platform"]["sql"]["tbl"]["Term"];
+                                $idColumn = 'TermID';
+                                $whereClause = "";
                                 break;
-                            default:
-                                logger("warn", "[ADS] Unknown entity type '{$type}' for fetching batch. Batch fetch skipped.");
-                                $items = []; // Ensure items is empty
                         }
-                         if (!empty($items)) {
-                            $currentBatchIds = array_column($items, 'id');
-                         }
+
+                        if ($tableName) {
+                           $items = $db->getAll("SELECT ?n AS id FROM ?n ?p ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $whereClause, $idColumn, $offset, $limit);
+                        }
 
                     } catch (Exception $e) {
                         $fetchErrorMsg = "[ADS] Error fetching batch for type {$type} (offset {$offset}): " . $e->getMessage();
                         logger("error", $fetchErrorMsg);
-                        if (function_exists('logErrorToBaseProgressFile')) logErrorToBaseProgressFile(CRON_ADS_PROGRESS_FILE, $fetchErrorMsg, "N/A - Batch Fetch for type {$type}, Offset {$offset}");
                         $overallErrorsEncountered = true;
                         $typeSpecificErrors = true;
-                        if (function_exists('updateBaseProgressFile')) updateBaseProgressFile(CRON_ADS_PROGRESS_FILE, ["statusDetails" => "Error fetching items for {$type}. Skipping remaining items for this type."]);
-                        break; // Break from while loop for this type if fetching fails critically
+                        
+                        $progress = _ads_get_progress_data();
+                        $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => $fetchErrorMsg];
+                        $progress['types'][$type]['statusDetails'] = "Error fetching items. Skipping remaining items for this type.";
+                        $progress['types'][$type]['status'] = 'error';
+                        _ads_save_progress_data($progress);
+                        break; // Break from while loop for this type
                     }
 
                     if (empty($items)) {
-                        // This might happen if totalItemsThisType was a bit off or items were deleted during processing.
-                        logger("warn", "[ADS] Fetched empty batch for type {$type} at offset {$offset}, though total was {$totalItemsThisType}. Ending processing for this type or batch was genuinely empty.");
+                        logger("warn", "[ADS] Fetched empty batch for type {$type} at offset {$offset}. Ending processing for this type.");
                         break; 
                     }
 
-    foreach ($items as $item) {
-                        $itemId = $item["id"]; // id is now consistently 'id' due to "AS id" in queries
+                    foreach ($items as $item) {
+                        $itemId = $item["id"];
                         $apiCallParams = [
                             "action" => "externalData",
-                            "itemType" => "update-entities", // Corrected itemType
-                            "ids" => [$itemId], // Pass as an array
-                            "type" => [$type], // Pass as an array
+                            "itemType" => "update-entities",
+                            "ids" => [$itemId],
+                            "type" => [$typeForAPI], 
                             "parliament" => $parliament
                         ];
                         
                         try {
-                            // $db is platform, $dbp is parliament specific
                             $response = apiV1($apiCallParams, $db, $dbp); 
                             
                             if (!isset($response["meta"]["requestStatus"]) || $response["meta"]["requestStatus"] !== "success") {
-                                $errorDetail = "Unknown API error"; // Default
+                                $errorDetail = "Unknown API error";
                                 if (!empty($response["errors"])) {
-                                    $firstError = $response["errors"][0];
-                                    $errorTitle = $firstError["title"] ?? 'Untitled Error';
-                                    
-                                    // Check for nested details from createApiErrorResponse
-                                    if (!empty($firstError["meta"]["details"])) {
-                                        $errorDetail = "{$errorTitle} - Details: " . json_encode($firstError["meta"]["details"]);
-                                    } else {
-                                        $errorDetail = $firstError["detail"] ?? json_encode($firstError);
-                                    }
+                                    $errorDetail = json_encode($response["errors"]);
                                 }
-
-                                $apiErrorMsg = "[ADS] API error updating {$type} ID {$itemId}: " . $errorDetail;
-                                logger("error", $apiErrorMsg);
-                                if (function_exists('logErrorToBaseProgressFile')) logErrorToBaseProgressFile(CRON_ADS_PROGRESS_FILE, $apiErrorMsg, $itemId, ["type" => $type]);
-                                $overallErrorsEncountered = true;
+                                $fullApiErrorMsg = "[ADS] API error updating {$type} ID {$itemId}: " . $errorDetail;
+                                logger("error", $fullApiErrorMsg);
                                 $typeSpecificErrors = true;
+                                $overallErrorsEncountered = true;
+                                
+                                // Create a simpler error for the UI
+                                $simpleError = "API error: " . ($response["errors"][0]["title"] ?? "Unknown failure.");
+                                $info = $response["errors"][0]["meta"]["details"][0]["error"][0]["info"] ?? null;
+                                if ($info) {
+                                    // Extract the core message, e.g., "Could not update Item in database"
+                                    $simpleError = explode(':', $info, 2)[0];
+                                }
+                                $uiMessage = "Error on ID {$itemId}: {$simpleError}";
+
+                                $progress = _ads_get_progress_data();
+                                $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => $uiMessage, "itemId" => $itemId];
+                                _ads_save_progress_data($progress);
+
                             } else {
                                 $lastSuccessfullyProcessedIdThisType = $itemId;
-                                if (function_exists('updateBaseProgressFile')) updateBaseProgressFile(CRON_ADS_PROGRESS_FILE, ["lastSuccessfullyProcessedId" => $lastSuccessfullyProcessedIdThisType]);
                             }
                         } catch (Exception $e) {
-                            $exceptionMsg = "[ADS] Exception updating {$type} ID {$itemId} via apiV1(externalData): " . $e->getMessage();
+                            $exceptionMsg = "[ADS] Exception updating {$type} ID {$itemId}: " . $e->getMessage();
                             logger("error", $exceptionMsg);
-                            if (function_exists('logErrorToBaseProgressFile')) logErrorToBaseProgressFile(CRON_ADS_PROGRESS_FILE, $exceptionMsg, $itemId, ["type" => $type]);
-                            $overallErrorsEncountered = true;
                             $typeSpecificErrors = true;
+                            $overallErrorsEncountered = true;
+                            
+                            $progress = _ads_get_progress_data();
+                            $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => $exceptionMsg, "itemId" => $itemId];
+                            _ads_save_progress_data($progress);
                         }
                         $processedItemsCountThisType++;
-                        if (function_exists('updateBaseProgressFile')) {
-                            updateBaseProgressFile(CRON_ADS_PROGRESS_FILE, [
-                                "processedItems" => $processedItemsCountThisType,
-                                "statusDetails" => "Processing {$type}: {$processedItemsCountThisType}/{$totalItemsThisType}, Last ID: {$itemId}"
-                            ]);
-                        }
-                    } // End foreach $item in $items
-                    $offset += count($items); 
-                } // End while $offset < $totalItemsThisType
-            } // End else for if ($totalItemsThisType == 0)
 
-            $typeFinishMsg = "[ADS] Finished processing type: {$type}. Processed: {$processedItemsCountThisType}/{$totalItemsThisType}.";
-            if ($typeSpecificErrors) $typeFinishMsg .= " Some errors encountered for this type.";
-            logger("info", $typeFinishMsg);
-            
-            if (function_exists('updateBaseProgressFile')) {
-                $remainingTypes = array_slice($entityTypesToProcess, array_search($type, $entityTypesToProcess) + 1);
-                $nextStatusDetails = $typeFinishMsg;
-                if (!empty($remainingTypes)) {
-                    $nextStatusDetails .= " Preparing for next type: " . $remainingTypes[0];
-            } else {
-                    $nextStatusDetails .= " All specified types processed.";
+                        // Update progress file every item
+                        $progress = _ads_get_progress_data();
+                        $progress['types'][$type]['processedItems'] = $processedItemsCountThisType;
+                        $progress['types'][$type]['lastSuccessfullyProcessedId'] = $lastSuccessfullyProcessedIdThisType;
+                        $progress['types'][$type]['statusDetails'] = "Processing: {$processedItemsCountThisType}/{$totalItemsThisType}";
+                        $progress['types'][$type]['lastActivityTime'] = date('c');
+                        _ads_save_progress_data($progress);
+                    }
+                    $offset += count($items); 
                 }
-                updateBaseProgressFile(CRON_ADS_PROGRESS_FILE, [
-                    "statusDetails" => $nextStatusDetails,
-                    // "activeType" => null, // Set to null only if truly going idle or handled by finalize
-                    // Keep current activeType to show what just finished, finalize will set overall.
-                ]);
             }
+
+            $typeFinishMsg = "Finished processing. Processed: {$processedItemsCountThisType}/{$totalItemsThisType}.";
+            $finalTypeStatus = 'completed_successfully';
+
+            if ($typeSpecificErrors) {
+                $finalTypeStatus = 'partially_completed_with_errors';
+                $progress = _ads_get_progress_data();
+                $errorCount = isset($progress['types'][$type]['errors']) ? count($progress['types'][$type]['errors']) : 0;
+                $typeFinishMsg = "Finished processing. Processed: {$processedItemsCountThisType}/{$totalItemsThisType} | Errors: {$errorCount}";
+            }
+            logger("info", "[ADS] {$typeFinishMsg}");
+            
+            $progress = _ads_get_progress_data();
+            $progress['types'][$type]['status'] = $finalTypeStatus;
+            $progress['types'][$type]['statusDetails'] = $typeFinishMsg;
+            $progress['types'][$type]['processedItems'] = $processedItemsCountThisType;
+            $progress['types'][$type]['endTime'] = date('c');
+            $progress['types'][$type]['lastActivityTime'] = date('c');
+            $progress['types'][$type]['lastSuccessfullyProcessedId'] = $lastSuccessfullyProcessedIdThisType;
+            _ads_save_progress_data($progress);
+            
         } // End foreach $entityTypesToProcess
 
-        $finalOverallStatusDetails = "[ADS] Processing completed for specified types: " . implode(", ", $entityTypesToProcess) . ".";
-        $finalProgressStatus = "completed_successfully";
+        // Finalize the global status
+        $progress = _ads_get_progress_data();
+        $progress['globalStatus'] = 'idle';
+        $progress['activeType'] = null;
         if ($overallErrorsEncountered) {
-            $finalProgressStatus = "partially_completed_with_errors";
-            $finalOverallStatusDetails .= " However, some errors were encountered during the process. Check logs and progress file errors array.";
+            logger("info", "[ADS] Processing completed for specified types: " . implode(", ", $entityTypesToProcess) . ". Errors were encountered.");
         } else {
-             $finalOverallStatusDetails .= " All tasks completed without errors.";
+            logger("info", "[ADS] Processing completed for specified types: " . implode(", ", $entityTypesToProcess) . ". All tasks completed without errors.");
         }
-        logger("info", $finalOverallStatusDetails);
-        if (function_exists('finalizeBaseProgressFile')) {
-            finalizeBaseProgressFile(CRON_ADS_PROGRESS_FILE, $finalProgressStatus, $finalOverallStatusDetails);
-        }
-        $progressFinalized = true; // Mark as finalized
+        _ads_save_progress_data($progress);
+        
+        $progressFinalized = true;
 
-        } catch (Exception $e) {
-        $criticalErrorMsg = "[ADS] CRITICAL unhandled exception in cronAdditionalDataService main processing block: " . $e->getMessage() . " at " . $e->getFile() . ":" . $e->getLine();
+    } catch (Exception $e) {
+        $criticalErrorMsg = "[ADS] CRITICAL UNHANDLED EXCEPTION: " . $e->getMessage() . " in " . $e->getFile() . " on line " . $e->getLine();
         logger("CRITICAL", $criticalErrorMsg);
-        if (function_exists('logErrorToBaseProgressFile') && function_exists('finalizeBaseProgressFile')) {
-            logErrorToBaseProgressFile(CRON_ADS_PROGRESS_FILE, $criticalErrorMsg, "CRITICAL_EXCEPTION_MAIN_BLOCK");
-            finalizeBaseProgressFile(CRON_ADS_PROGRESS_FILE, "error_final", "Critical unhandled exception occurred: " . $e->getMessage());
-        } else {
-            logger("error", "[ADS] CRITICAL EXCEPTION (main block): Base helper functions for progress logging not available. " . $criticalErrorMsg);
+        
+        $progress = _ads_get_progress_data();
+        $activeType = $progress['activeType'] ?? 'unknown';
+        $progress['globalStatus'] = 'error_critical';
+        $progress['activeType'] = null;
+        if(isset($progress['types'][$activeType])) {
+            $progress['types'][$activeType]['status'] = 'error_critical';
+            $progress['types'][$activeType]['errors'][] = ['timestamp' => date('c'), 'message' => $criticalErrorMsg];
         }
-        $progressFinalized = true; // Mark as finalized even on critical error
+        _ads_save_progress_data($progress);
+        
+        $progressFinalized = true;
     } finally {
-        // This 'finally' is for the main processing try-catch.
-        // Ensure $progressFinalized is set so shutdown function knows if normal completion/finalization occurred.
-        if (!$progressFinalized && function_exists('finalizeBaseProgressFile')) {
-             // If loop exited unexpectedly without setting $progressFinalized (e.g. an exit call within the loop not caught)
-             logger("warn", "[ADS] Main processing block 'finally' reached without explicit finalization. Attempting to finalize as error.");
-             finalizeBaseProgressFile(CRON_ADS_PROGRESS_FILE, "error_final", "Process ended unexpectedly within main block.");
+        if (!$progressFinalized) {
+             logger("warn", "[ADS] Reached 'finally' without explicit finalization. Attempting to finalize as error.");
+             $progress = _ads_get_progress_data();
+             $progress['globalStatus'] = 'error';
+             $progress['activeType'] = null;
+             _ads_save_progress_data($progress);
         }
         $progressFinalized = true; 
         
-        logger("info", "[ADS] cronAdditionalDataService main processing logic finished or caught critical error. Shutdown function will handle lock file removal.");
-        // The script will now naturally proceed to the end of the is_cli() block.
-        // The main lock file removal and final logging of execution time should be done by the shutdown function,
-        // or if we want explicit timing before shutdown, it can be here.
-        // For simplicity, relying on shutdown for lock removal.
+        logger("info", "[ADS] cronAdditionalDataService main processing logic finished.");
     }
-    // [END OF NEW ENTITY PROCESSING LOGIC]
 
 } // Closing brace for if(is_cli())
 

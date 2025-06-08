@@ -26,13 +26,13 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="parliaments-tab" data-bs-toggle="tab" data-bs-target="#parliaments" role="tab" aria-controls="parliaments" aria-selected="true"><span class="icon-bank"></span> Parliaments</a>
+                            <a class="nav-link active" id="parliaments-tab" data-bs-toggle="tab" data-bs-target="#parliaments" role="tab" aria-controls="parliaments" aria-selected="true"><span class="icon-bank"></span> <?= L::parliaments; ?></a>
                         </li>
 						<li class="nav-item">
-                            <a class="nav-link" id="external-tab" data-bs-toggle="tab" data-bs-target="#external" role="tab" aria-controls="external" aria-selected="false"><span class="icon-tags"></span> Entity Data</a>
+                            <a class="nav-link" id="external-tab" data-bs-toggle="tab" data-bs-target="#external" role="tab" aria-controls="external" aria-selected="false"><span class="icon-tags"></span> <?= L::entities; ?></a>
                         </li>
 						<li class="nav-item">
-                            <a class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="settings" aria-selected="false"><span class="icon-cog"></span> Settings</a>
+                            <a class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="settings" aria-selected="false"><span class="icon-cog"></span> <?= L::settings; ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -48,9 +48,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             </div>
                                         </div>
                                         <div class="mt-3">
-											<div>Last updated:</div>
+											<div><?= L::lastChanged; ?>:</div>
 											<div id="lastCommitDate" class="fw-bolder">-</div>
-											<div class="small">Sessions: <span id="repoRemoteSessions">-</span></div>
+											<div class="small"><?= L::sessions; ?>: <span id="repoRemoteSessions">-</span></div>
 											<div class="small mt-1 d-none">Location: <span id="repoLocation">-</span></div>
 										</div>
                                     </div>
@@ -62,9 +62,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             </div>
                                         </div>
                                         <div class="mt-3 bg-white" style="z-index: 3;position: relative;">
-											<div>Last updated:</div>
+											<div><?= L::lastChanged; ?>:</div>
 											<div id="repoLocalUpdate" class="fw-bolder">-</div>
-											<div class="small">Sessions: <span id="repoLocalSessions">-</span></div>
+											<div class="small"><?= L::sessions; ?>: <span id="repoLocalSessions">-</span></div>
 										</div>
                                     </div>
 									<div class="col-4 text-center status-item status-item-database">
@@ -75,9 +75,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             </div>
                                         </div>
                                         <div class="mt-3">
-											<div>Last updated:</div>
+											<div><?= L::lastChanged; ?>:</div>
 											<div id="lastDBDate" class="fw-bolder">-</div>
-											<div class="small">Sessions: <span id="dbSessions">-</span></div>
+											<div class="small"><?= L::sessions; ?>: <span id="dbSessions">-</span></div>
 										</div>
                                     </div>
                                 </div>
@@ -86,15 +86,15 @@ if ($auth["meta"]["requestStatus"] != "success") {
 							<div class="row" id="data-import-progress-section">
 								<div class="col-12">
 									<div class="d-flex justify-content-between">
-										<div class="fw-bolder">Data Import</div>
+										<div class="fw-bolder"><?= L::dataImport; ?> (DE)</div>
 										<div id="data-import-items-text" class="small">Idle</div>
 									</div>
 									<div class="progress my-1" role="progressbar" aria-label="Data Import Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 										<div id="data-import-progress-bar" class="progress-bar" style="width: 0%"></div>
 									</div>
                                     <div id="data-import-status-text" class="small text-muted mb-2">Status: Idle</div>
-                                    <div id="data-import-current-file-text" class="small text-muted mb-2">File: N/A</div>
-									<button type="button" id="btn-trigger-data-import" class="btn btn-outline-primary rounded-pill btn-sm me-1">Start Full Data Import</button>
+                                    <div id="data-import-current-file-text" class="small text-muted mb-2"><?= L::files; ?>: N/A</div>
+									<button type="button" id="btn-trigger-data-import" class="btn btn-outline-primary rounded-pill btn-sm me-1"><?= L::triggerManualUpdate; ?></button>
                                     <div id="data-import-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
 								</div>
 							</div>
@@ -102,90 +102,22 @@ if ($auth["meta"]["requestStatus"] != "success") {
 							<div class="row" id="search-index-progress-section-DE" data-parliament-code="DE">
 								<div class="col-12">
 									<div class="d-flex justify-content-between">
-										<div class="fw-bolder">Search Index (DE)</div> 
+										<div class="fw-bolder"><?= L::searchIndex; ?> (DE)</div> 
 										<div id="search-index-DE-items-text" class="small">Idle</div>
 									</div>
 									<div class="progress my-1" role="progressbar" aria-label="Search Index DE Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 										<div id="search-index-DE-progress-bar" class="progress-bar" style="width: 0%"></div>
 									</div>
                                     <div id="search-index-DE-status-text" class="small text-muted mb-2">Status: Idle</div>
-									<button type="button" id="btn-trigger-search-index-refresh-DE" class="btn btn-outline-primary rounded-pill btn-sm me-1" data-parliament-code="DE">Refresh Full Index (DE)</button>
-									<button type="button" id="btn-trigger-search-index-delete-DE" class="btn btn-outline-danger rounded-pill btn-sm me-1" data-parliament-code="DE">Delete Index (DE)</button>
+									<button type="button" id="btn-trigger-search-index-refresh-DE" class="btn btn-outline-primary rounded-pill btn-sm me-1" data-parliament-code="DE"><?= L::refreshFullIndex; ?> (DE)</button>
+									<button type="button" id="btn-trigger-search-index-delete-DE" class="btn btn-outline-danger rounded-pill btn-sm me-1" data-parliament-code="DE"><?= L::deleteIndex; ?> (DE)</button>
                                     <div id="search-index-DE-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
 								</div>
 							</div>
                         </div>
 						<div class="tab-pane bg-white fade p-3" id="external" role="tabpanel" aria-labelledby="external-tab">
-                            <!-- Main ADS Progress Display -->
-                            <div class="row mb-3" id="ads-overall-progress-section">
-                                <div class="col-12">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="fw-bolder">Overall Additional Data Service Status</div>
-                                        <div id="ads-overall-items-text" class="small">Idle</div>
-                                    </div>
-                                    <div class="progress my-1" role="progressbar" aria-label="Overall ADS Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                        <div id="ads-overall-progress-bar" class="progress-bar" style="width: 0%"></div>
-                                    </div>
-                                    <div id="ads-overall-status-text" class="small text-muted mb-2">Status: Idle</div>
-                                    <div id="ads-overall-active-type-text" class="small text-muted mb-2">Current Task: N/A</div>
-                                    <div id="ads-overall-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
-                                </div>
-                            </div>
-                            <hr class="mb-4">
-
-                            <!-- Entity Specific Triggers -->
-							<div class="row">
-								<div class="col-12">
-									<div class="d-flex justify-content-between align-items-center">
-										<div class="fw-bolder"><span class="icon-type-person"></span> People</div>
-										<button type="button" id="btn-trigger-ads-person" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="person">Refresh Data for People</button>
-									</div>
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-12">
-									<div class="d-flex justify-content-between align-items-center">
-										<div class="fw-bolder"><span class="icon-type-person"></span> Members of Parliament</div>
-										<button type="button" id="btn-trigger-ads-memberOfParliament" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="memberOfParliament">Refresh Data for MoPs</button>
-									</div>
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-12">
-									<div class="d-flex justify-content-between align-items-center">
-										<div class="fw-bolder"><span class="icon-type-organisation"></span> Organisations</div>
-										<button type="button" id="btn-trigger-ads-organisation" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="organisation">Refresh Data for Organisations</button>
-									</div>
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-12">
-									<div class="d-flex justify-content-between align-items-center">
-										<div class="fw-bolder"><span class="icon-type-document"></span> Legal Documents</div>
-										<button type="button" id="btn-trigger-ads-legalDocument" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="legalDocument">Refresh Data for Legal Documents</button>
-									</div>
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-12">
-									<div class="d-flex justify-content-between align-items-center">
-										<div class="fw-bolder"><span class="icon-type-document"></span> Official Documents</div>
-										<button type="button" id="btn-trigger-ads-officialDocument" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="officialDocument">Refresh Data for Official Documents</button>
-									</div>
-								</div>
-							</div>
-							<hr>
-							<div class="row">
-								<div class="col-12">
-									<div class="d-flex justify-content-between align-items-center">
-										<div class="fw-bolder"><span class="icon-type-term"></span> Terms</div>
-										<button type="button" id="btn-trigger-ads-term" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="term">Refresh Data for Terms</button>
-									</div>
-								</div>
+							<div id="ads-progress-container">
+								<!-- ADS Progress Bars will be dynamically inserted here -->
 							</div>
                         </div>
 						<div class="tab-pane bg-white fade" id="settings" role="tabpanel" aria-labelledby="settings-tab">
@@ -259,7 +191,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 return this.isOutOfSync() ? this.remoteSessions - this.localSessions : 0;
             }
         },
-        importStatus: {}
+        importStatus: {},
+        entityCounts: {}
     };
 
     const formatDate = (dateString) => {
@@ -418,7 +351,7 @@ document.addEventListener('DOMContentLoaded', function() {
         currentFileText: 'data-import-current-file-text',
         errorDisplay: 'data-import-error-display',
         triggerButton: 'btn-trigger-data-import',
-        originalButtonText: 'Start Full Data Import' 
+        originalButtonText: `${localizedLabels.triggerManualUpdate}` 
     };
 
     async function fetchDataImportStatus() {
@@ -439,7 +372,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const percentage = totalFiles > 0 ? (processedFiles / totalFiles) * 100 : 0;
         let finalStatusDetails = statusDetails;
-        let finalItemsText = `Files: ${processedFiles} / ${totalFiles}`;
+        let finalItemsText = `${localizedLabels.files}: ${processedFiles} / ${totalFiles}`;
         const isNotRunning = status !== 'running';
         const lastRunDate = formatDate(lastActivityTime);
 
@@ -449,11 +382,11 @@ document.addEventListener('DOMContentLoaded', function() {
             finalStatusDetails = `Repository is out of sync. ${diff} new session file${plural} available.`;
             finalItemsText = `Pending Sync: ${diff} session${plural}`;
             const fileToShow = lastSuccessfullyProcessedFile || 'N/A';
-            updateElementText(dataImportElems.currentFileText, `Last run: ${lastRunDate} | Last sync: ${fileToShow}`);
+            updateElementText(dataImportElems.currentFileText, `${localizedLabels.lastRun}: ${lastRunDate} | ${localizedLabels.lastUpdated}: ${fileToShow}`);
         } else if (isNotRunning) {
             // Handles idle, completed, error, etc.
             const fileToShow = lastSuccessfullyProcessedFile || 'N/A';
-            updateElementText(dataImportElems.currentFileText, `Last run: ${lastRunDate} | Last file: ${fileToShow}`);
+            updateElementText(dataImportElems.currentFileText, `${localizedLabels.lastRun}: ${lastRunDate} | ${localizedLabels.lastFile}: ${fileToShow}`);
         } else { // status === 'running'
             updateElementText(dataImportElems.currentFileText, `Current: ${currentFile || 'N/A'}`);
         }
@@ -463,7 +396,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateElementText(dataImportElems.itemsText, finalItemsText);
 
         if (status === 'running') {
-            toggleButton(dataImportElems.triggerButton, true, 'Importing...');
+            toggleButton(dataImportElems.triggerButton, true, `${localizedLabels.running}...`);
             clearError(dataImportElems.errorDisplay);
         } else {
             toggleButton(dataImportElems.triggerButton, false, dataImportElems.originalButtonText);
@@ -502,8 +435,8 @@ document.addEventListener('DOMContentLoaded', function() {
             errorDisplay: `search-index-${parliamentCode}-error-display`,
             refreshButton: `btn-trigger-search-index-refresh-${parliamentCode}`,
             deleteButton: `btn-trigger-search-index-delete-${parliamentCode}`,
-            originalRefreshBtnText: `Refresh Full Index (${parliamentCode})`,
-            originalDeleteBtnText: `Delete Index (${parliamentCode})`
+            originalRefreshBtnText: `${localizedLabels.refreshFullIndex} (${parliamentCode})`,
+            originalDeleteBtnText: `${localizedLabels.deleteIndex} (${parliamentCode})`
         };
     }
 
@@ -521,11 +454,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         updateProgressBar(elems.progressBar, percentage, status);
         updateElementText(elems.statusText, `Status: ${statusDetails}`);
-        updateElementText(elems.itemsText, `Speeches: ${processedMediaItems} / ${totalDbMediaItems}`);
+        updateElementText(elems.itemsText, `${localizedLabels.speeches}: ${processedMediaItems} / ${totalDbMediaItems}`);
 
         if (status === 'running') {
-            toggleButton(elems.refreshButton, true, 'Refreshing...');
-            toggleButton(elems.deleteButton, true, 'Processing...');
+            toggleButton(elems.refreshButton, true, `${localizedLabels.running}...`);
+            toggleButton(elems.deleteButton, true, `${localizedLabels.running}...`);
             clearError(elems.errorDisplay);
         } else {
             toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
@@ -618,20 +551,59 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Additional Data Services (ADS) Specific Functions ---
     const adsElems = {
-        progressBar: 'ads-overall-progress-bar',
-        statusText: 'ads-overall-status-text',
-        itemsText: 'ads-overall-items-text',
-        activeTypeText: 'ads-overall-active-type-text',
-        errorDisplay: 'ads-overall-error-display',
-        triggerButtons: document.querySelectorAll('.ads-trigger-btn')
+        progressContainer: 'ads-progress-container',
+        triggerButtonClass: '.ads-trigger-btn'
+    };
+    
+    const entityTypeDetails = {
+        'person': { label: localizedLabels.personPlural, icon: 'icon-type-person', parent: 'person' },
+        'memberOfParliament': { label: localizedLabels.personPlural + ' > memberOfParliament', icon: 'icon-type-person', parent: 'person' },
+        'organisation': { label: localizedLabels.organisations, icon: 'icon-type-organisation', parent: 'organisation' },
+        'legalDocument': { label: localizedLabels.documents + ' > legalDocument', icon: 'icon-type-document', parent: 'document' },
+        'officialDocument': { label: localizedLabels.documents + ' > officialDocument', icon: 'icon-type-document', parent: 'document' },
+        'term': { label: localizedLabels.terms, icon: 'icon-type-term', parent: 'term' }
     };
 
-    function getAdsButtonOriginalText(btn) {
-        let entityTypeDisplay = btn.dataset.entityType;
-        if (entityTypeDisplay === 'memberOfParliament') entityTypeDisplay = 'MoPs';
-        else if (entityTypeDisplay) entityTypeDisplay = entityTypeDisplay.charAt(0).toUpperCase() + entityTypeDisplay.slice(1) + ('s' !== entityTypeDisplay.slice(-1) ? 's' : '');
-        else entityTypeDisplay = 'All Entities';
-        return `Refresh Data for ${entityTypeDisplay}`;
+    function createAdsSectionHTML(entityType, details) {
+        return `
+            <div class="row mb-3" id="ads-${entityType}-progress-section" data-entity-type="${entityType}">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between">
+                        <div class="fw-bolder"><span class="${details.icon}"></span> ${details.label}</div>
+                        <div id="ads-${entityType}-items-text" class="small">Idle</div>
+                    </div>
+                    <div class="progress my-1" role="progressbar" aria-label="ADS ${details.label} Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div id="ads-${entityType}-progress-bar" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div id="ads-${entityType}-status-text" class="small text-muted mb-2">Status: Idle</div>
+                    <div id="ads-${entityType}-last-run-text" class="small text-muted mb-2">${localizedLabels.lastRun}: N/A</div>
+                    <button type="button" id="btn-trigger-ads-${entityType}" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="${entityType}">${localizedLabels.refreshData}</button>
+                    <div id="ads-${entityType}-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
+                </div>
+            </div>
+            <hr>`;
+    }
+
+    function initializeAdsSections() {
+        const container = document.getElementById(adsElems.progressContainer);
+        if (!container) return;
+
+        let html = '';
+        for (const type in entityTypeDetails) {
+            html += createAdsSectionHTML(type, entityTypeDetails[type]);
+        }
+        container.innerHTML = html;
+
+        // Add event listeners after creation
+        document.querySelectorAll(adsElems.triggerButtonClass).forEach(btn => {
+            btn.addEventListener('click', function() {
+                triggerAdsUpdate(this.dataset.entityType);
+            });
+        });
+    }
+
+    function getAdsButtonOriginalText(entityType) {
+        return `${localizedLabels.refreshData}`;
     }
 
     async function fetchAdsStatus() {
@@ -641,54 +613,120 @@ document.addEventListener('DOMContentLoaded', function() {
             updateAdsUI(result.data);
         } else {
             console.warn("Failed to fetch ADS status:", result.errors);
-            updateAdsUI({ status: 'error', statusDetails: 'Status fetch failed', percentage: 0, errors: result.errors || [{detail: 'Connection error while fetching status.'}] });
+            // Create a default error state for all types
+            const errorStatus = { 
+                globalStatus: 'error', 
+                activeType: null,
+                types: {}
+            };
+            for (const type in entityTypeDetails) {
+                errorStatus.types[type] = { 
+                    status: 'error', 
+                    statusDetails: 'Status fetch failed', 
+                    errors: result.errors || [{detail: 'Connection error while fetching status.'}] 
+                };
+            }
+            updateAdsUI(errorStatus);
         }
     }
 
     function updateAdsUI(statusData) {
-        const { status, statusDetails = 'N/A', activeType = null, totalItems = 0, processedItems = 0, errors = [] } = statusData;
+        const { globalStatus, activeType, types } = statusData;
 
-        const percentage = totalItems > 0 ? (processedItems / totalItems) * 100 : 0;
+        const allButtons = document.querySelectorAll(adsElems.triggerButtonClass);
 
-        updateProgressBar(adsElems.progressBar, percentage, status);
-        updateElementText(adsElems.statusText, `Status: ${statusDetails}`);
-        updateElementText(adsElems.activeTypeText, `Current Task: ${activeType || 'N/A'}`);
-        updateElementText(adsElems.itemsText, `Items: ${processedItems} / ${totalItems}`);
-        
-        if (status === 'running') {
-            adsElems.triggerButtons.forEach(btn => {
-                toggleButton(btn.id, true, `${btn.dataset.entityType} (Running)`);
+        if (globalStatus === 'running') {
+            allButtons.forEach(btn => {
+                const entityType = btn.dataset.entityType;
+                toggleButton(btn.id, true, getAdsButtonOriginalText(entityType)); 
             });
-            clearError(adsElems.errorDisplay);
-        } else {
-            adsElems.triggerButtons.forEach(btn => {
-                toggleButton(btn.id, false, getAdsButtonOriginalText(btn));
+            if (activeType) {
+                const activeButton = document.getElementById(`btn-trigger-ads-${activeType}`);
+                if (activeButton) {
+                    setButtonText(activeButton.id, `${localizedLabels.running}...`);
+                }
+            }
+        } else { // idle, completed, error, etc.
+            allButtons.forEach(btn => {
+                const entityType = btn.dataset.entityType;
+                toggleButton(btn.id, false, getAdsButtonOriginalText(entityType));
             });
-            if (status === 'error') {
-                const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred.'}]);
-                showError(adsElems.errorDisplay, errorMessages);
-            } else { // completed, idle
-                clearError(adsElems.errorDisplay);
+        }
+
+        for (const entityType in entityTypeDetails) { // Iterate over all known types to ensure UI is drawn
+            if (entityTypeDetails.hasOwnProperty(entityType)) {
+                const typeStatus = types[entityType] || {}; // Use received status or empty object
+                const {
+                    status,
+                    statusDetails = 'N/A',
+                    processedItems = 0,
+                    errors = [],
+                    endTime = null
+                } = typeStatus;
+                
+                let totalItems = 0;
+                const typeInfo = entityTypeDetails[entityType];
+                
+                if (entityType === typeInfo.parent && appState.entityCounts[entityType]) {
+                    // This is a "total" entry like 'person', 'organisation', or 'term'
+                    totalItems = appState.entityCounts[entityType].total;
+                } else if (appState.entityCounts[typeInfo.parent] && appState.entityCounts[typeInfo.parent].subtypes && appState.entityCounts[typeInfo.parent].subtypes[entityType] !== undefined) {
+                    // This is a subtype entry like 'memberOfParliament'
+                    totalItems = appState.entityCounts[typeInfo.parent].subtypes[entityType];
+                }
+                
+                // Fallback to progress file's total if available
+                if (typeStatus.totalItems > 0) {
+                    totalItems = typeStatus.totalItems;
+                }
+
+                const section = document.getElementById(`ads-${entityType}-progress-section`);
+                if (!section) continue;
+
+                const progressBarId = `ads-${entityType}-progress-bar`;
+                const itemsTextId = `ads-${entityType}-items-text`;
+                const statusTextId = `ads-${entityType}-status-text`;
+                const lastRunTextId = `ads-${entityType}-last-run-text`;
+                const errorDisplayId = `ads-${entityType}-error-display`;
+
+                const percentage = totalItems > 0 ? (processedItems / totalItems) * 100 : (status === 'completed_successfully' ? 100 : 0);
+                updateProgressBar(progressBarId, percentage, status || 'idle');
+
+                updateElementText(itemsTextId, `${localizedLabels.items}: ${processedItems} / ${totalItems}`);
+                updateElementText(statusTextId, `Status: ${statusDetails || 'Idle'}`);
+                updateElementText(lastRunTextId, `${localizedLabels.lastRun}: ${formatDate(endTime)}`);
+                
+                const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
+                if (errorStates.includes(status) && errors && errors.length > 0) {
+                    showError(errorDisplayId, errors.map(e => ({ detail: e.message || 'Error message not found.' })));
+                } else {
+                    clearError(errorDisplayId);
+                }
             }
         }
     }
     
-    async function triggerAdsUpdate(entityType = 'all') { 
-        adsElems.triggerButtons.forEach(btn => {
-            toggleButton(btn.id, true, `${btn.dataset.entityType} (Starting)`);
+    async function triggerAdsUpdate(entityType) { 
+        document.querySelectorAll(adsElems.triggerButtonClass).forEach(btn => {
+            toggleButton(btn.id, true);
         });
-        clearError(adsElems.errorDisplay);
-        const params = entityType && entityType.toLowerCase() !== 'all' ? { type: entityType } : {};
-        const url = getApiUrl('externalData', 'full-update', params);
+        const clickedButton = document.getElementById(`btn-trigger-ads-${entityType}`);
+        if(clickedButton) setButtonText(clickedButton.id, `${localizedLabels.running}...`);
+
+        const url = getApiUrl('externalData', 'full-update', { type: entityType });
         const result = await apiCall(url, 'POST');
 
         if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && typeof result.data.message === 'string') {
-            updateElementText(adsElems.statusText, `Status: ${result.data.message || `ADS update for ${entityType} triggered.`}`);
+            // The UI will update on the next poll, but we can give some immediate feedback
+            const statusText = document.getElementById(`ads-${entityType}-status-text`);
+            if(statusText) statusText.textContent = `Status: ${result.data.message}`;
             setTimeout(fetchAdsStatus, 1000);
         } else {
-            showError(adsElems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: `Failed to trigger ADS update for ${entityType}.`}]);
-            adsElems.triggerButtons.forEach(btn => {
-                toggleButton(btn.id, false, getAdsButtonOriginalText(btn));
+            const errorDisplayId = `ads-${entityType}-error-display`;
+            showError(errorDisplayId, result.errors || (result.data ? result.data.message : null) || [{detail: `Failed to trigger ADS update for ${entityType}.`}]);
+            // Re-enable buttons on failure to trigger
+            document.querySelectorAll(adsElems.triggerButtonClass).forEach(btn => {
+                toggleButton(btn.id, false, getAdsButtonOriginalText(btn.dataset.entityType));
             });
         }
     }
@@ -734,6 +772,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    async function fetchEntityCounts() {
+        const url = getApiUrl('statistics', 'entity-counts');
+        const result = await apiCall(url);
+        if (result.success && result.data) {
+            appState.entityCounts = result.data;
+            // Trigger a UI update with the new counts.
+            // The next poll of fetchAdsStatus will merge this with live data.
+            updateAdsUI({ globalStatus: 'idle', activeType: null, types: {} });
+        } else {
+            console.error("Failed to fetch entity counts:", result.errors);
+        }
+    }
+
     // --- Initialization ---
     function initPage() {
         // Data Import
@@ -749,12 +800,8 @@ document.addEventListener('DOMContentLoaded', function() {
         initializeSearchIndexSections();
         
         // Additional Data Services (ADS)
-        adsElems.triggerButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                triggerAdsUpdate(this.dataset.entityType);
-            });
-            setButtonText(btn.id, getAdsButtonOriginalText(btn));
-        });
+        initializeAdsSections();
+        fetchEntityCounts();
         fetchAdsStatus();
         setInterval(fetchAdsStatus, POLLING_INTERVAL);
 
