@@ -1,92 +1,135 @@
 <?php
 require_once('gd-text.php');
 
-function renderImageQuote($theme = 'l', $text = '', $author = '', $authorSecondary = '') {
+function renderImageQuote($theme, $text, $author, $authorSecondary) {
+	// Ensure proper UTF-8 encoding
+	$text = mb_convert_encoding($text, 'UTF-8', 'auto');
+	$author = mb_convert_encoding($author, 'UTF-8', 'auto');
+	$authorSecondary = mb_convert_encoding($authorSecondary, 'UTF-8', 'auto');
 	
+	// Truncate text if too long
 	$maxCharacters = 250;
-	if (strlen($text) >= $maxCharacters) {
+	if (mb_strlen($text) >= $maxCharacters) {
 		// truncate string
-		$stringCut = substr($text, 0, $maxCharacters);
-		$endPoint = strrpos($stringCut, ' ');
+		$stringCut = mb_substr($text, 0, $maxCharacters);
+		$endPoint = mb_strrpos($stringCut, ' ');
 
 		//if the string doesn't contain any space then it will cut without word basis.
-		$text = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
+		$text = $endPoint ? mb_substr($stringCut, 0, $endPoint) : mb_substr($stringCut, 0);
 		$text .= ' [...]';
 	}
-
-	$imageWidth = 1120;
-	$imageHeight = 600;
 	
-	$fontSize = getFontSize(strlen($text));
-	$lineHeight = 1.5;
-	$font = 'OpenSans-Regular.ttf';
-
-	$image = imagecreatetruecolor($imageWidth, $imageHeight);
-
-	switch ($theme) {
-		case 'd':
-			// dark
-			$backgroundColor = imagecolorallocate($image, 48, 49, 57);
-			$fontColor = new Color(255, 255, 255);
-			break;
-		case 'l':
-			// light
-			$backgroundColor = imagecolorallocate($image, 243, 244, 245);
-			$fontColor = new Color(115, 116, 124);
-			break;
-		default:
-			$backgroundColor = imagecolorallocate($image, 243, 244, 245);
-			$fontColor = new Color(115, 116, 124);
-			break;
+	// Set image dimensions
+	$width = 1120;
+	$height = 600;
+	
+	// Create image with alpha channel support
+	$image = imagecreatetruecolor($width, $height);
+	if (!$image) {
+		return false;
 	}
-
-	imagefill($image, 0, 0, $backgroundColor);
-
-	$logo = imagecreatefrompng('optv-logo.png');
-	$logoPercent = 0.2;
-	// Get new dimensions
-	list($width, $height) = getimagesize('optv-logo.png');
-	$newLogoWidth = $width * $logoPercent;
-	$newLogoHeight = $height * $logoPercent;
-	$logoResized = $logo;
-	imagecopyresampled($image, $logoResized, ($imageWidth - $newLogoWidth - 30), ($imageHeight - $newLogoHeight), 0, 0, $newLogoWidth, $newLogoHeight, $width, $height);
-
+	
+	// Enable alpha channel
+	imagesavealpha($image, true);
+	imagealphablending($image, true);
+	
+	// Set background color based on theme
+	if ($theme === 'd') {
+		$bgColor = imagecolorallocate($image, 48, 49, 57);
+		$textColor = new Color(255, 255, 255);
+	} else {
+		$bgColor = imagecolorallocate($image, 243, 244, 245);
+		$textColor = new Color(115, 116, 124);
+	}
+	imagefill($image, 0, 0, $bgColor);
+	
+	// Load logo
+	$logoPath = __DIR__ . '/optv-logo.png';
+	if (!file_exists($logoPath)) {
+		return false;
+	}
+	$logo = imagecreatefrompng($logoPath);
+	if (!$logo) {
+		return false;
+	}
+	
+	// Enable alpha channel for logo
+	imagealphablending($logo, true);
+	imagesavealpha($logo, true);
+	
+	// Get logo dimensions and resize to 20% of original size
+	$logoWidth = imagesx($logo);
+	$logoHeight = imagesy($logo);
+	$logoScale = 0.2;
+	$newLogoWidth = $logoWidth * $logoScale;
+	$newLogoHeight = $logoHeight * $logoScale;
+	
+	// Create resized logo
+	$logoResized = imagecreatetruecolor($newLogoWidth, $newLogoHeight);
+	imagealphablending($logoResized, false);
+	imagesavealpha($logoResized, true);
+	imagecopyresampled($logoResized, $logo, 0, 0, 0, 0, $newLogoWidth, $newLogoHeight, $logoWidth, $logoHeight);
+	
+	// Place logo in bottom right corner with padding
+	$logoX = $width - $newLogoWidth - 30;
+	$logoY = $height - $newLogoHeight;
+	imagecopy($image, $logoResized, $logoX, $logoY, 0, 0, $newLogoWidth, $newLogoHeight);
+	imagedestroy($logo);
+	imagedestroy($logoResized);
+	
+	// Load font
+	$fontPath = __DIR__ . '/OpenSans-Regular.ttf';
+	if (!file_exists($fontPath)) {
+		return false;
+	}
+	
+	// Calculate font size based on text length
+	$fontSize = getFontSize(mb_strlen($text));
+	$lineHeight = 1.5;
+	
+	// Create text boxes
 	$quoteBox = new Box($image);
-	$quoteBox->setFontFace(__DIR__.'/'.$font);
-	$quoteBox->setFontColor($fontColor);
+	$quoteBox->setFontFace($fontPath);
+	$quoteBox->setFontColor($textColor);
 	$quoteBox->setFontSize($fontSize);
 	$quoteBox->setLineHeight($lineHeight);
-	$quoteBox->setBox(60, 110, ($imageWidth - 120), ($imageHeight - 330));
+	$quoteBox->setBox(60, 110, ($width - 120), ($height - 330));
 	$quoteBox->setTextAlign('center', 'center');
 	$quoteBox->draw($text);
-
+	
 	$authorBox = new Box($image);
-	$authorBox->setFontFace(__DIR__.'/'.$font);
-	$authorBox->setFontColor($fontColor);
+	$authorBox->setFontFace($fontPath);
+	$authorBox->setFontColor($textColor);
 	$authorBox->setFontSize(34);
 	$authorBox->setLineHeight($lineHeight);
-	$authorBox->setBox(60, ($imageHeight - 180), ($imageWidth - 300), 80);
+	$authorBox->setBox(60, ($height - 180), ($width - 300), 80);
 	$authorBox->setTextAlign('left', 'bottom');
 	$authorBox->draw($author);
-
+	
 	$authorSecondaryBox = new Box($image);
-	$authorSecondaryBox->setFontFace(__DIR__.'/'.$font);
-	$authorSecondaryBox->setFontColor($fontColor);
+	$authorSecondaryBox->setFontFace($fontPath);
+	$authorSecondaryBox->setFontColor($textColor);
 	$authorSecondaryBox->setFontSize(34);
 	$authorSecondaryBox->setLineHeight($lineHeight);
-	$authorSecondaryBox->setBox(60, ($imageHeight - 120), ($imageWidth - 300), 80);
+	$authorSecondaryBox->setBox(60, ($height - 120), ($width - 300), 80);
 	$authorSecondaryBox->setTextAlign('left', 'center');
 	$authorSecondaryBox->draw($authorSecondary);
-
+	
 	$quotationMarkBox = new Box($image);
-	$quotationMarkBox->setFontFace(__DIR__.'/'.$font);
-	$quotationMarkBox->setFontColor($fontColor);
+	$quotationMarkBox->setFontFace($fontPath);
+	$quotationMarkBox->setFontColor($textColor);
 	$quotationMarkBox->setFontSize(160);
 	$quotationMarkBox->setBox(30, -10, 100, 100);
 	$quotationMarkBox->setTextAlign('left', 'top');
-	$quotationMarkBox->draw("“");
-
-	return imagepng($image, null, 9, PNG_ALL_FILTERS);
+	$quotationMarkBox->draw("\xE2\x80\x9C");
+	
+	// Output image
+	ob_start();
+	imagepng($image, null, 9, PNG_ALL_FILTERS);
+	$imageData = ob_get_clean();
+	imagedestroy($image);
+	
+	return $imageData;
 }
 
 function getFontSize($textLength) {
@@ -96,7 +139,6 @@ function getFontSize($textLength) {
 }
 
 function getQuoteFromRequestParams($timings, $fragments, $transcriptHTML) {
-	
 	$quoteString = '';
 
 	$t = explode(",", $timings);
@@ -122,13 +164,9 @@ function getQuoteFromRequestParams($timings, $fragments, $transcriptHTML) {
     // it loads the content without adding enclosing html/body tags and also the doctype declaration
     $htmlDOC->LoadHTML($transcriptHTML, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
 
-    // do whatever you want to do with this code now
-
 	$words = array();
-
 	
 	foreach($htmlDOC->getElementsByTagName('p') as $pElem) {
-		
 		// don't include comments in selection
 		if ($pElem->getAttribute('data-type') != "comment") {
 			foreach($pElem->getElementsByTagName('span') as $spanElem) {
@@ -137,7 +175,6 @@ function getQuoteFromRequestParams($timings, $fragments, $transcriptHTML) {
 		        }
 		    } 
 		}
-
 	}
 
 	if ($start && $end) {
@@ -201,6 +238,4 @@ function getQuoteFromRequestParams($timings, $fragments, $transcriptHTML) {
 		*/
 	}
 }
-
-
 ?>

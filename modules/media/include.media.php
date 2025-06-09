@@ -13,16 +13,12 @@
 	$apiInput["action"] = "search";
 	$apiInput["a"] = "search";
 	$apiInput["itemType"] = "media";
-	//print_r($apiInput);
+	
 	$apiResult = apiV1($apiInput);
 
 	if (!$apiResult || $apiResult["meta"]["results"]["total"] == 0) {
-
         $emptyResult = 1;
-
     } else {
-
-
         $autoplayResults = boolval($_REQUEST['playresults']);
 
         $speech = $apiResult["data"][0];
