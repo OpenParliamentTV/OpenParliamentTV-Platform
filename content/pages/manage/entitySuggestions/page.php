@@ -102,7 +102,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addEntityModalLabel">Add New Entity from Suggestion</h5>
+                <h5 class="modal-title" id="addEntityModalLabel"><?= L::manageEntitiesNew; ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -115,11 +115,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
             </div>
             <div class="modal-footer">
                 <div class="row w-100">
-                    <div class="col-6">
-                        <button type="button" class="btn btn-secondary rounded-pill w-100" data-bs-dismiss="modal">Cancel</button>
+					<div class="col-6">
+                        <button type="button" class="btn btn-primary rounded-pill w-100" id="modalAddEntitySubmitBtn" disabled><span class="icon-plus"></span> <?= L::manageEntitiesNew; ?></button>
                     </div>
-                    <div class="col-6">
-                        <button type="button" class="btn btn-primary rounded-pill w-100" id="modalAddEntitySubmitBtn" disabled>Add Entity</button>
+					<div class="col-6">
+                        <button type="button" class="btn btn-secondary rounded-pill w-100" data-bs-dismiss="modal"><?= L::cancel; ?></button>
                     </div>
                 </div>
             </div>

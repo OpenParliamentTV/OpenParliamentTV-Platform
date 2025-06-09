@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Component: entity-form.php
 
 //TODO: Check if fine to access this without auth check. But should be fine since all API actions are then checked anyway. 
@@ -16,7 +17,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
         <div class="row mb-4">
             <div class="col-12">
                  <div class="form-group">
-                    <label for="id">Paste Wikidata ID</label>
+                    <label for="id"><?= L::pasteWikidataID; ?></label>
                     <input type="text" class="form-control" name="id" placeholder="Wikidata ID (e.g. Q12345)">
                 </div>
             </div>
@@ -29,7 +30,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-3 mb-3 text-center entity-type-selection-item">
                 <label for="itemTypePerson" class="entity-type-label d-block">
                     <span class="icon-type-person entity-type-icon d-block mb-1"></span>
-                    <span class="entity-type-text d-block">Person</span>
+                    <span class="entity-type-text d-block"><?= L::personSingular; ?></span>
                 </label>
                 <input class="form-check-input entity-type-radio mt-2" type="radio" name="itemType" id="itemTypePerson" value="person">
             </div>
@@ -38,7 +39,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-3 mb-3 text-center entity-type-selection-item">
                 <label for="itemTypeOrganisation" class="entity-type-label d-block">
                     <span class="icon-type-organisation entity-type-icon d-block mb-1"></span>
-                    <span class="entity-type-text d-block">Organisation</span>
+                    <span class="entity-type-text d-block"><?= L::organisation; ?></span>
                 </label>
                 <input class="form-check-input entity-type-radio mt-2" type="radio" name="itemType" id="itemTypeOrganisation" value="organisation">
             </div>
@@ -47,7 +48,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-3 mb-3 text-center entity-type-selection-item">
                 <label for="itemTypeDocument" class="entity-type-label d-block">
                     <span class="icon-type-document entity-type-icon d-block mb-1"></span>
-                    <span class="entity-type-text d-block">Document</span>
+                    <span class="entity-type-text d-block"><?= L::document; ?></span>
                 </label>
                 <input class="form-check-input entity-type-radio mt-2" type="radio" name="itemType" id="itemTypeDocument" value="document">
             </div>
@@ -56,7 +57,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-3 mb-3 text-center entity-type-selection-item">
                 <label for="itemTypeTerm" class="entity-type-label d-block">
                     <span class="icon-type-term entity-type-icon d-block mb-1"></span>
-                    <span class="entity-type-text d-block">Term</span>
+                    <span class="entity-type-text d-block"><?= L::term; ?></span>
                 </label>
                 <input class="form-check-input entity-type-radio mt-2" type="radio" name="itemType" id="itemTypeTerm" value="term">
             </div>
@@ -67,7 +68,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-12 col-lg-3">
                 <div id="subtypeContainerPerson" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typePerson">
-                        <option value="" disabled selected>Choose Subtype ..</option>
+                        <option value="" disabled selected><?= L::selectType; ?> ..</option>
                         <option value="memberOfParliament">Member Of Parliament</option>
                         <option value="person">Person</option>
                     </select>
@@ -76,7 +77,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-12 col-lg-3">
                 <div id="subtypeContainerOrganisation" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typeOrganisation">
-                        <option value="" disabled selected>Choose Subtype ..</option>
+                        <option value="" disabled selected><?= L::selectType; ?> ..</option>
                         <option value="party">Party</option>
                         <option value="faction">Faction</option>
                         <option value="government">Government</option>
@@ -89,7 +90,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-12 col-lg-3">
                 <div id="subtypeContainerDocument" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typeDocument">
-                        <option value="" disabled selected>Choose Subtype ..</option>
+                        <option value="" disabled selected><?= L::selectType; ?> ..</option>
                         <option value="officialDocument">officialDocument</option>
                         <option value="legalDocument">legalDocument</option>
                         <option value="otherDocument">Other Document</option>
@@ -99,7 +100,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-12 col-lg-3">
                 <div id="subtypeContainerTerm" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typeTerm">
-                        <option value="" disabled selected>Choose Subtype ..</option>
+                        <option value="" disabled selected><?= L::selectType; ?> ..</option>
                         <option value="otherTerm">Other Term</option>
                     </select>
                 </div>

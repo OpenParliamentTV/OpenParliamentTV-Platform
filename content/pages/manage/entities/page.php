@@ -23,7 +23,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<h2><?= L::manageEntities; ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
-							<button type="button" id="openAddEntityModalBtn" class="btn btn-outline-success rounded-pill btn-sm me-1" data-bs-toggle="modal" data-bs-target="#addEntityModal"><span class="icon-plus"></span> New Entity</button>
+							<button type="button" id="openAddEntityModalBtn" class="btn btn-outline-success rounded-pill btn-sm me-1" data-bs-toggle="modal" data-bs-target="#addEntityModal"><span class="icon-plus"></span> <?= L::manageEntitiesNew; ?></button>
 						</div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
@@ -69,7 +69,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addEntityModalLabel">Add New Entity</h5>
+                <h5 class="modal-title" id="addEntityModalLabel"><?= L::manageEntitiesNew; ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -83,10 +83,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
             <div class="modal-footer">
                 <div class="row w-100">
                     <div class="col-6">
-                        <button type="button" class="btn btn-secondary rounded-pill w-100" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary rounded-pill w-100" id="modalAddEntitySubmitBtn" disabled><span class="icon-plus"></span> <?= L::manageEntitiesNew; ?></button>
                     </div>
-                    <div class="col-6">
-                        <button type="button" class="btn btn-primary rounded-pill w-100" id="modalAddEntitySubmitBtn" disabled>Add Entity</button>
+					<div class="col-6">
+                        <button type="button" class="btn btn-secondary rounded-pill w-100" data-bs-dismiss="modal"><?= L::cancel; ?></button>
                     </div>
                 </div>
             </div>
