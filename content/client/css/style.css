@@ -693,25 +693,46 @@ body.darkmode .list-group-item.working, body.darkmode .list-group-item.working:h
     }
 }
 
-.btn:not([class^='btn-outline-'], [class*='btn-outline-']),
+.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-primary, .btn-success, .btn-danger),
 .btn.btn-outline-primary {
     color: var(--primary-fg-color);
     border-color: var(--border-color);
-    background: var(--primary-bg-color);
+    background-color: var(--primary-bg-color);
     cursor: pointer;
+}
+
+.btn-primary {
+    --bs-btn-color: var(--primary-bg-color);
+    --bs-btn-bg: var(--primary-fg-color);
+    --bs-btn-border-color: var(--primary-fg-color);
+    --bs-btn-hover-color: var(--primary-bg-color);
+    --bs-btn-hover-bg: var(--primary-fg-color);
+    --bs-btn-hover-border-color: var(--primary-fg-color);
+    --bs-btn-active-color: var(--primary-bg-color);
+    --bs-btn-active-bg: var(--primary-fg-color);
+    --bs-btn-active-border-color: var(--primary-fg-color);
+    --bs-btn-disabled-color: var(--primary-bg-color);
+    --bs-btn-disabled-bg: var(--primary-fg-color);
+    --bs-btn-disabled-border-color: var(--primary-fg-color);
+    opacity: 1;
+}
+
+.btn-primary:hover {
+    opacity: .9;
 }
  
 .list-group-item {
     color: var(--primary-fg-color);
     background-color: var(--primary-bg-color);
     cursor: pointer;
+    padding: .5em .7em
 }
 
-.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link, .working):hover, 
+.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link, .working, .btn-primary, .btn-success, .btn-danger):hover, 
 .list-group-item:hover,
-.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link, .working):focus, 
+.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link, .working, .btn-primary, .btn-success, .btn-danger):focus, 
 .list-group-item:focus,
-.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link, .working):not(.disabled).active,
+.btn:not([class^='btn-outline-'], [class*='btn-outline-'], .btn-link, .working, .btn-primary, .btn-success, .btn-danger):not(.disabled).active,
 .list-group-item:not(.disabled).active,
 .btn.btn-outline-primary:hover, 
 .btn.btn-outline-primary:focus, 
@@ -725,6 +746,7 @@ body.darkmode .list-group-item.working, body.darkmode .list-group-item.working:h
 .list-group-item[disabled] {
     opacity: .6;
     color: #6c757d;
+    background-color: transparent;
     pointer-events: none;
     cursor: auto;
     border-color: #dee2e6;

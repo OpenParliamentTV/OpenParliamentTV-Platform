@@ -47,7 +47,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center mt-3 mb-3 mb-md-0">
                                             <label class="form-label mb-0"><?= L::password; ?></label>
-                                            <button type="button" class="btn btn-outline-primary rounded-pill btn-sm" id="togglePassword">
+                                            <button type="button" class="btn btn-outline-primary btn-sm" id="togglePassword">
                                                 <span class="icon-pencil"></span><?= L::changePassword; ?>
                                             </button>
                                         </div>
@@ -132,10 +132,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     <div class="col-12">
                                         <div class="row g-2">
                                             <div class="col-6 col-sm-auto">
-                                                <button type="submit" class="btn btn-primary rounded-pill w-100" id="saveButton" disabled><span class="icon-ok"></span> <?= L::save; ?></button>
+                                                <button type="submit" class="btn btn-primary w-100" id="saveButton" disabled><span class="icon-ok"></span> <?= L::save; ?></button>
                                             </div>
                                             <div class="col-6 col-sm-auto">
-                                                <button type="button" class="btn btn-primary rounded-pill w-100" id="cancelButton" disabled><span class="icon-cancel"></span> <?= L::cancel; ?></button>
+                                                <button type="button" class="btn btn-secondary w-100" id="cancelButton" disabled><span class="icon-cancel"></span> <?= L::cancel; ?></button>
                                             </div>
                                         </div>
                                     </div>

@@ -30,7 +30,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			</div>
 		</div>
 	</div>
-	<a target="_blank" class="d-block btn btn-primary" href="<?= $config["dir"]["root"] ?>/<?= $apiResult["data"]["type"] ?>/<?= $apiResult["data"]["id"] ?>" role="button" style="position: absolute; bottom: 20px; left: 20px; width: calc(100% - 40px);">Open Entity in New Tab</a>
+	<a target="_blank" class="d-block btn" href="<?= $config["dir"]["root"] ?>/<?= $apiResult["data"]["type"] ?>/<?= $apiResult["data"]["id"] ?>" role="button" style="position: absolute; bottom: 20px; left: 20px; width: calc(100% - 40px);">Open Entity in New Tab</a>
 </main>
 <script type="text/javascript">
 	$(document).ready( function() {

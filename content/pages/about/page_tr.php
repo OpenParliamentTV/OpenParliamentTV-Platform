@@ -31,7 +31,7 @@ include_once(__DIR__ . '/../../header.php');
 			</ul>
 			<p>Open Parliament TV ile, vatandaşlara ve gazetecilere parlamenter konuşmaların video alıntılarını <b>arama</b>, <b>paylaşma</b> ve <b>alıntılama</b>yı önemli ölçüde kolaylaştıran bir araç sunuyoruz. Tek tek terimlere veya cümle parçalarına dayanarak, ilgili video alıntıları saniyeler içinde bulunabilir, izlenebilir ve diğer platformlarda alıntı olarak entegre edilebilir.</p>
 			<p>Tam metin aramasının yanı sıra, Open Parliament TV, bir parlamento grubunun profil sayfası üzerinden konuşma araması veya belirli bir belge veya yasanın bahsedildiği tüm konuşmaları izleme gibi tartışmalara <b>ek giriş noktaları</b> sunuyor. Gelecekte, bu özellikleri genel kurul tutanaklarının yarı otomatik analizleriyle genişletmek istiyoruz.</p>
-			<a href="https://openparliament.tv" target="_blank" class="btn btn-primary btn-sm d-block"><span class="icon-right-open-big me-1"></span> Open Parliament TV'nin vizyonu, misyonu, stratejisi ve uygulama alanları hakkında daha fazla bilgi edinin</a>
+			<a href="https://openparliament.tv" target="_blank" class="btn btn-sm d-block"><span class="icon-right-open-big me-1"></span> Open Parliament TV'nin vizyonu, misyonu, stratejisi ve uygulama alanları hakkında daha fazla bilgi edinin</a>
 			<hr>
 			<h3>Açık Veri</h3>
 			<p>Open Parliament TV'deki tüm veriler <b>Açık Veri API'miz</b> üzerinden talep edilebilir:</p>

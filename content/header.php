@@ -51,9 +51,9 @@ if (!isset($page)) {
 				$backParamStr = preg_replace('/(&context=[^&]+)/', '', $backParamStr);
 			?>
 				<div class="navbarCenterOptions">
-					<a href='<?= $config["dir"]["root"]."/search".$backParamStr ?>' class="btn btn-primary btn-sm"><span class="icon-left-open-big"></span><span class="icon-search"></span><span class="visually-hidden"><?= L::backToResults; ?></span></a>
-					<div id="prevResultSnippetButton" class="btn btn-primary btn-sm"><span class="icon-left-open-big"></span><span class="visually-hidden"><?= L::previousSpeech; ?></span></div>
-					<div id="nextResultSnippetButton" class="btn btn-primary btn-sm"><span class="icon-right-open-big"></span><span class="visually-hidden"><?= L::nextSpeech; ?></span></div>
+					<a href='<?= $config["dir"]["root"]."/search".$backParamStr ?>' class="btn btn-sm"><span class="icon-left-open-big"></span><span class="icon-search"></span><span class="visually-hidden"><?= L::backToResults; ?></span></a>
+					<div id="prevResultSnippetButton" class="btn btn-sm"><span class="icon-left-open-big"></span><span class="visually-hidden"><?= L::previousSpeech; ?></span></div>
+					<div id="nextResultSnippetButton" class="btn btn-sm"><span class="icon-right-open-big"></span><span class="visually-hidden"><?= L::nextSpeech; ?></span></div>
 					<div id="toggleAutoplayResults" class="navbar-text switch-container <?=$autoplayResultsClass?>">
 						<span class="switch">
 							<span class="slider round"></span>
@@ -65,7 +65,7 @@ if (!isset($page)) {
 			?>
 			<div class="navbarRightOptions">
 				<div class="dropdown d-inline">
-					<button class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= L::menu; ?> <span class="icon-menu"></span></button>
+					<button class="btn btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= L::menu; ?> <span class="icon-menu"></span></button>
 					<div class="dropdown-menu dropdown-menu-end" style="width: 200px;">
 						<div id="toggleDarkmode" style="padding-left: 1.5rem;" class="navbar-text switch-container <?= ($color_scheme == "dark") ? "active" : "" ?>">
 							<span class="switch">

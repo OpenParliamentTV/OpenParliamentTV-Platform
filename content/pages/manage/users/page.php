@@ -21,7 +21,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <h2><?= L::manageUsers; ?></h2>
                     <div class="card mb-3">
                         <div class="card-body">
-                            <a href="<?= $config["dir"]["root"] ?>/register" class="btn btn-outline-success rounded-pill btn-sm me-1">Register New User</a>
+                            <a href="<?= $config["dir"]["root"] ?>/register" class="btn btn-outline-success btn-sm me-1">Register New User</a>
                         </div>
                     </div>
                     <ul class="nav nav-tabs" role="tablist">

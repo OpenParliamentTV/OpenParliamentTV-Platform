@@ -31,7 +31,7 @@ include_once(__DIR__ . '/../../header.php');
 			</ul>
 			<p>With Open Parliament TV we provide a tool for citizens and journalists, which significantly simplifies <b>finding</b>, <b>sharing</b> and <b>citing</b> video snippets from parliamentary speeches. Based on single terms or sentence fragments, the relevant video snippets can be found in split seconds, played and then embedded as a quote in other platforms.</p>
 			<p>Besides the full text search, Open Parliament TV includes <b>additional entry points</b> into the debates, like finding speeches via the profile page of a faction or watching all speeches in which a specific document or law is mentioned. In the future we want to extend these functionalities with semi-automated analysis of the plenary proceedings.</p>
-			<a href="https://openparliament.tv" target="_blank" class="btn btn-primary btn-sm d-block"><span class="icon-right-open-big me-1"></span> More about the vision, mission, strategy and application areas of Open Parliament TV</a>
+			<a href="https://openparliament.tv" target="_blank" class="btn btn-sm d-block"><span class="icon-right-open-big me-1"></span> More about the vision, mission, strategy and application areas of Open Parliament TV</a>
 			<hr>
 			<h3>Open Data</h3>
 			<p>All Data on Open Parliament TV can be requested via our <b>Open Data API</b>: </p>

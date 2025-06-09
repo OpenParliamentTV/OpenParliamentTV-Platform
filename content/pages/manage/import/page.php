@@ -94,7 +94,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 									</div>
                                     <div id="data-import-status-text" class="small text-muted mb-2">Status: Idle</div>
                                     <div id="data-import-current-file-text" class="small text-muted mb-2"><?= L::files; ?>: N/A</div>
-									<button type="button" id="btn-trigger-data-import" class="btn btn-outline-primary rounded-pill btn-sm me-1"><?= L::triggerManualUpdate; ?></button>
+									<button type="button" id="btn-trigger-data-import" class="btn btn-outline-primary btn-sm me-1"><span class="icon-cw"></span> <?= L::triggerManualUpdate; ?></button>
                                     <div id="data-import-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
 								</div>
 							</div>
@@ -109,8 +109,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 										<div id="search-index-DE-progress-bar" class="progress-bar" style="width: 0%"></div>
 									</div>
                                     <div id="search-index-DE-status-text" class="small text-muted mb-2">Status: Idle</div>
-									<button type="button" id="btn-trigger-search-index-refresh-DE" class="btn btn-outline-primary rounded-pill btn-sm me-1" data-parliament-code="DE"><?= L::refreshFullIndex; ?> (DE)</button>
-									<button type="button" id="btn-trigger-search-index-delete-DE" class="btn btn-outline-danger rounded-pill btn-sm me-1" data-parliament-code="DE"><?= L::deleteIndex; ?> (DE)</button>
+									<button type="button" id="btn-trigger-search-index-refresh-DE" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="DE"><span class="icon-arrows-cw"></span> <?= L::refreshFullIndex; ?> (DE)</button>
+									<button type="button" id="btn-trigger-search-index-delete-DE" class="btn btn-danger btn-sm me-1" data-parliament-code="DE"><span class="icon-trash"></span> <?= L::deleteIndex; ?> (DE)</button>
                                     <div id="search-index-DE-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
 								</div>
 							</div>
@@ -129,23 +129,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		</div>
 	</div>
 </main>
-
-<div class="modal fade" id="successRunCronDialog" tabindex="-1" role="dialog" aria-labelledby="successRunCronDialogLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="successRunCronDialogLabel">Run cronUpdater</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                The cronUpdater should run in background now
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary rounded-pill" data-bs-dismiss="modal">Okay</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <style>
 	.status-circle {
@@ -276,35 +259,43 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    function setButtonText(buttonId, textContent) {
+    function setButtonText(buttonId, content) {
         const btn = document.getElementById(buttonId);
-        if (btn) {
-            const icon = btn.querySelector('i, span[class^="icon-"]');
-            if (icon) {
-                let currentTextNode = null;
-                for (let i = 0; i < btn.childNodes.length; i++) {
-                    if (btn.childNodes[i].nodeType === Node.TEXT_NODE && btn.childNodes[i].textContent.trim() !== '') {
-                        currentTextNode = btn.childNodes[i];
-                        break;
-                    }
+        if (!btn) return;
+
+        // If content is HTML, just set it and we're done.
+        // This is for restoring buttons with icons.
+        if (typeof content === 'string' && content.trim().startsWith('<')) {
+            btn.innerHTML = content;
+            return;
+        }
+
+        const icon = btn.querySelector('i, span[class^="icon-"]');
+        if (icon) {
+            // This button has an icon. We want to preserve it and update the text.
+            // Remove existing text nodes to avoid duplicates.
+            const nodesToRemove = [];
+            btn.childNodes.forEach(child => {
+                if (child.nodeType === Node.TEXT_NODE) {
+                    nodesToRemove.push(child);
                 }
-                if (currentTextNode) {
-                    currentTextNode.textContent = ' ' + textContent; // Add space after icon
-                } else {
-                    btn.appendChild(document.createTextNode(' ' + textContent));
-                }
-            } else {
-                btn.textContent = textContent;
-            }
+            });
+            nodesToRemove.forEach(node => btn.removeChild(node));
+            
+            // Add new text node.
+            btn.appendChild(document.createTextNode(' ' + content));
+        } else {
+            // No icon, just set the text content.
+            btn.textContent = content;
         }
     }
 
-    function toggleButton(buttonId, disabledState, textContent = null) {
+    function toggleButton(buttonId, disabledState, content = null) {
         const btn = document.getElementById(buttonId);
         if (btn) {
             btn.disabled = disabledState;
-            if (textContent) {
-                setButtonText(buttonId, textContent);
+            if (content) {
+                setButtonText(buttonId, content);
             }
         }
     }
@@ -351,7 +342,7 @@ document.addEventListener('DOMContentLoaded', function() {
         currentFileText: 'data-import-current-file-text',
         errorDisplay: 'data-import-error-display',
         triggerButton: 'btn-trigger-data-import',
-        originalButtonText: `${localizedLabels.triggerManualUpdate}` 
+        originalButtonText: `<span class="icon-cw"></span> ${localizedLabels.triggerManualUpdate}` 
     };
 
     async function fetchDataImportStatus() {
@@ -435,8 +426,8 @@ document.addEventListener('DOMContentLoaded', function() {
             errorDisplay: `search-index-${parliamentCode}-error-display`,
             refreshButton: `btn-trigger-search-index-refresh-${parliamentCode}`,
             deleteButton: `btn-trigger-search-index-delete-${parliamentCode}`,
-            originalRefreshBtnText: `${localizedLabels.refreshFullIndex} (${parliamentCode})`,
-            originalDeleteBtnText: `${localizedLabels.deleteIndex} (${parliamentCode})`
+            originalRefreshBtnText: `<span class="icon-arrows-cw"></span> ${localizedLabels.refreshFullIndex} (${parliamentCode})`,
+            originalDeleteBtnText: `<span class="icon-trash"></span> ${localizedLabels.deleteIndex} (${parliamentCode})`
         };
     }
 
@@ -577,7 +568,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div id="ads-${entityType}-status-text" class="small text-muted mb-2">Status: Idle</div>
                     <div id="ads-${entityType}-last-run-text" class="small text-muted mb-2">${localizedLabels.lastRun}: N/A</div>
-                    <button type="button" id="btn-trigger-ads-${entityType}" class="btn btn-outline-primary rounded-pill btn-sm ads-trigger-btn" data-entity-type="${entityType}">${localizedLabels.refreshData}</button>
+                    <button type="button" id="btn-trigger-ads-${entityType}" class="btn btn-outline-primary btn-sm ads-trigger-btn" data-entity-type="${entityType}"><span class="icon-cw"></span> ${localizedLabels.refreshData}</button>
                     <div id="ads-${entityType}-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
                 </div>
             </div>
@@ -603,7 +594,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function getAdsButtonOriginalText(entityType) {
-        return `${localizedLabels.refreshData}`;
+        return `<span class="icon-cw"></span> ${localizedLabels.refreshData}`;
     }
 
     async function fetchAdsStatus() {

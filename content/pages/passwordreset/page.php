@@ -41,7 +41,7 @@
 						</div>
 						<div class="text-danger small" id="passwordStrengthText"></div>
 						<div class="text-danger small" id="passwordMatchText"></div>
-						<button type="submit" class="w-100 btn btn-primary rounded-pill mt-3"><?= L::changePassword; ?></button>
+						<button type="submit" class="w-100 btn btn-primary mt-3"><?= L::changePassword; ?></button>
 						<div id="reset-response" class="alert mt-3" style="display: none;"></div>
 					</form>
 					<?php

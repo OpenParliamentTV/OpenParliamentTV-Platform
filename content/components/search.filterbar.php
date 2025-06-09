@@ -49,7 +49,7 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
         </div>
         
         <?php if ($showToggleButton): ?>
-        <button id="toggleFilterContainer" class="btn btn-primary btn-sm d-block d-md-none" type="button" data-bs-toggle="collapse" data-bs-target=".filterContainer" aria-expanded="false" aria-controls="">
+        <button id="toggleFilterContainer" class="btn btn-sm d-block d-md-none" type="button" data-bs-toggle="collapse" data-bs-target=".filterContainer" aria-expanded="false" aria-controls="">
             <span class="icon-menu-1"></span><span class="labelShow"><?= L::filtersShow; ?></span><span class="labelCollapse"><?= L::filtersHide; ?></span><span class="icon-up-open-big"></span>
         </button>
         <?php endif; ?>

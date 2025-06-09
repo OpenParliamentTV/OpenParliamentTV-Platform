@@ -31,7 +31,7 @@ include_once(__DIR__ . '/../../header.php');
 			</ul>
 			<p>Avec Open Parliament TV, nous fournissons un outil aux citoyens et aux journalistes qui simplifie considérablement la <b>recherche</b>, le <b>partage</b> et la <b>citation</b> d'extraits vidéo des discours parlementaires. Basé sur des termes individuels ou des fragments de phrases, les extraits vidéo pertinents peuvent être trouvés en quelques secondes, lus puis intégrés comme citation dans d'autres plateformes.</p>
 			<p>Outre la recherche en texte intégral, Open Parliament TV inclut des <b>points d'entrée supplémentaires</b> dans les débats, comme la recherche de discours via la page de profil d'un groupe parlementaire ou le visionnage de tous les discours dans lesquels un document ou une loi spécifique est mentionné. À l'avenir, nous souhaitons étendre ces fonctionnalités avec des analyses semi-automatisées des procès-verbaux pléniers.</p>
-			<a href="https://openparliament.tv" target="_blank" class="btn btn-primary btn-sm d-block"><span class="icon-right-open-big me-1"></span> En savoir plus sur la vision, la mission, la stratégie et les domaines d'application d'Open Parliament TV</a>
+			<a href="https://openparliament.tv" target="_blank" class="btn btn-sm d-block"><span class="icon-right-open-big me-1"></span> En savoir plus sur la vision, la mission, la stratégie et les domaines d'application d'Open Parliament TV</a>
 			<hr>
 			<h3>Open Data</h3>
 			<p>Toutes les données sur Open Parliament TV peuvent être demandées via notre <b>API Open Data</b> : </p>

@@ -82,10 +82,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     <div class="col-12">
                                         <div class="row g-2">
                                             <div class="col-6 col-sm-auto">
-                                                <button type="submit" class="btn btn-primary rounded-pill w-100" id="saveButton" disabled><span class="icon-ok"></span> <?= L::save; ?></button>
+                                                <button type="submit" class="btn btn-primary w-100" id="saveButton" disabled><span class="icon-ok"></span> <?= L::save; ?></button>
                                             </div>
                                             <div class="col-6 col-sm-auto">
-                                                <button type="button" class="btn btn-primary rounded-pill w-100" id="cancelButton" disabled><span class="icon-cancel"></span> <?= L::cancel; ?></button>
+                                                <button type="button" class="btn btn-secondary w-100" id="cancelButton" disabled><span class="icon-cancel"></span> <?= L::cancel; ?></button>
                                             </div>
                                         </div>
                                     </div>

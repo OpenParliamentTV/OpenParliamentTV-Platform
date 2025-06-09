@@ -134,7 +134,7 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="w-100 btn btn-sm btn-secondary rounded-pill" data-bs-dismiss="modal"><?= L::close; ?></button>
+                <button type="button" class="w-100 btn btn-sm btn-secondary" data-bs-dismiss="modal"><?= L::close; ?></button>
             </div>
         </div>
     </div>

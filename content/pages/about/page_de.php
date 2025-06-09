@@ -31,7 +31,7 @@ include_once(__DIR__ . '/../../header.php');
 			</ul>
 			<p>Bürger:innen und Journalist:innen erhalten mit Open Parliament TV ein Werkzeug, welches das <b>Auffinden</b>, <b>Teilen</b> und <b>Zitieren</b> von Videoausschnitten aus Parlamentsreden enorm erleichtert. So lassen sich basierend auf einzelnen Schlüsselwörtern oder Satzbausteinen in Sekundenbruchteilen die entsprechenden Ausschnitte finden, abspielen und dann als Zitat in andere Plattformen einbinden.</p>
 			<p>Neben der Volltextsuche ermöglicht Open Parliament TV noch viele <b>weitere Einstiege in die Debatten</b>. So lassen sich Redebeiträge beispielsweise von Profilseiten der Fraktionen abrufen oder es ist möglich alle Reden anzusehen, in denen eine bestimmte Drucksache oder ein bestimmtes Gesetz erwähnt wird. Diese Funktionalitäten möchten wir zukünftig noch ausbauen und um semi-automatisierte Analysen der Plenarprotokolle ergänzen. </p>
-			<a href="https://openparliament.tv" target="_blank" class="btn btn-primary btn-sm d-block"><span class="icon-right-open-big me-1"></span> Mehr zur Vision, Mission, Strategie und Anwendungsbereichen von Open Parliament TV</a>
+			<a href="https://openparliament.tv" target="_blank" class="btn btn-sm d-block"><span class="icon-right-open-big me-1"></span> Mehr zur Vision, Mission, Strategie und Anwendungsbereichen von Open Parliament TV</a>
 			<hr>
 			<h3>Open Data</h3>
 			<p>Alle Daten auf Open Parliament TV können über unsere <b>Open Data API</b> abgefragt werden: </p>
