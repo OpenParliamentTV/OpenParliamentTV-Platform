@@ -22,11 +22,13 @@
 
                 <!-- Personal Settings -->
                 <div class="dropdown-header text-uppercase text-muted"><?= L::personalSettings; ?></div>
+                <!--
                 <a href="<?= $config["dir"]["root"] ?>/manage/notifications" 
                    class="dropdown-item <?= ($page == "manage-notifications") ? "active" : "" ?>">
                     <i class="icon-megaphone me-2"></i>
                     <?= L::notifications; ?>
                 </a>
+                -->
                 <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>" 
                    class="dropdown-item <?= ($page == "manage-users" && isset($_REQUEST["id"]) && $_REQUEST["id"] == $_SESSION["userdata"]["id"]) ? "active" : "" ?>">
                     <i class="icon-user me-2"></i>
@@ -101,6 +103,7 @@
         <div class="mb-0">
             <div class="mb-2 ps-3 text-uppercase text-muted"><?= L::personalSettings; ?></div>
             <ul class="nav nav-pills flex-column mb-auto">
+                <!--
                 <li class="nav-item">
                     <a href="<?= $config["dir"]["root"] ?>/manage/notifications" 
                        class="nav-link <?= ($page == "manage-notifications") ? "active" : "" ?>">
@@ -108,6 +111,7 @@
                         <?= L::notifications; ?>
                     </a>
                 </li>
+                -->
                 <li class="nav-item">
                     <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>" 
                        class="nav-link <?= ($page == "manage-users" && isset($_REQUEST["id"]) && $_REQUEST["id"] == $_SESSION["userdata"]["id"]) ? "active" : "" ?>">

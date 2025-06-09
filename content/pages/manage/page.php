@@ -28,7 +28,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12 col-xl-6 mb-3">
+                            <div class="col-12 col-xl-7 mb-3">
                                 <div class="card h-100">
                                     <div class="card-body">
                                         <div class="row g-3">
@@ -38,7 +38,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                                     <tr>
                                                         <th><?= L::contextmainSpeaker; ?></th>
                                                         <th><?= L::agendaItem; ?></th>
-                                                        <th>Last Changed</th>
+                                                        <th><?= L::lastChanged; ?></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>
@@ -47,7 +47,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-xl-6 mb-3">
+                            <div class="col-12 col-xl-5 mb-3">
                                 <div class="card h-100">
                                     <div class="card-body">
                                         <div class="row g-3">
@@ -55,9 +55,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             <table id="latestUpdatesEntities" class="table table-striped my-0">
                                                 <thead>
                                                     <tr>
-                                                        <th>Type</th>
-                                                        <th>Name</th>
-                                                        <th>Last Changed</th>
+                                                        <th><?= L::type; ?></th>
+                                                        <th><?= L::name; ?></th>
+                                                        <th><?= L::lastChanged; ?></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>

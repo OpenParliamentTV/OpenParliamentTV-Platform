@@ -22,7 +22,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <div class="card mb-3">
                         <div class="card-body">
                             <a href="<?= $config["dir"]["root"] ?>/register" class="btn btn-outline-success rounded-pill btn-sm me-1">Register New User</a>
-                            <a href="#" class="btn btn-primary rounded-pill btn-sm me-1">Send Invite</a>
                         </div>
                     </div>
                     <ul class="nav nav-tabs" role="tablist">
@@ -32,21 +31,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="all-users" role="tabpanel" aria-labelledby="all-users-tab">
-                            <table id="usersTable">
-                                <thead>
-                                    <tr>
-                                        <th data-field="UserID" data-visible="false">ID</th>
-                                        <th data-field="UserName" data-sortable="true">Username</th>
-                                        <th data-field="UserMail" data-sortable="true">Email</th>
-                                        <th data-field="UserRole" data-sortable="true">Role</th>
-                                        <th data-field="UserActive" data-sortable="true" data-formatter="activeFormatter">Active</th>
-                                        <th data-field="UserBlocked" data-sortable="true" data-formatter="blockedFormatter">Blocked</th>
-                                        <th data-field="UserLastLogin" data-sortable="true">Last Login</th>
-                                        <th data-field="UserRegisterDate" data-sortable="true">Register Date</th>
-                                        <th data-field="operate" data-formatter="operateFormatter" class="minWidthColumn"></th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            <table id="usersTable"></table>
                         </div>
                     </div>
                 </div>
@@ -130,13 +115,13 @@ $(function() {
         uniqueId: 'UserID',
         columns: [
             {field: 'UserID', visible: false},
-            {field: 'UserName', sortable: true, title: 'Username'},
-            {field: 'UserMail', sortable: true, title: 'Email'},
-            {field: 'UserRole', sortable: true, title: 'Role', formatter: formatters.roleFormatter},
-            {field: 'UserActive', sortable: true, title: 'Active', formatter: formatters.activeFormatter},
-            {field: 'UserBlocked', sortable: true, title: 'Blocked', formatter: formatters.blockedFormatter},
-            {field: 'UserLastLogin', sortable: true, title: 'Last Login', formatter: formatters.dateFormatter},
-            {field: 'UserRegisterDate', sortable: true, title: 'Register Date', formatter: formatters.dateFormatter},
+            {field: 'UserName', sortable: true, title: '<?= L::name; ?>'},
+            {field: 'UserMail', sortable: true, title: '<?= L::mailAddress; ?>'},
+            {field: 'UserRole', sortable: true, title: '<?= L::role; ?>', formatter: formatters.roleFormatter},
+            {field: 'UserActive', sortable: true, title: '<?= L::active; ?>', formatter: formatters.activeFormatter},
+            {field: 'UserBlocked', sortable: true, title: '<?= L::blocked; ?>', formatter: formatters.blockedFormatter},
+            {field: 'UserLastLogin', sortable: true, title: '<?= L::lastLogin; ?>', formatter: formatters.dateFormatter},
+            {field: 'UserRegisterDate', sortable: true, title: '<?= L::registerDate; ?>', formatter: formatters.dateFormatter},
             {field: 'operate', title: '', formatter: formatters.operateFormatter, class: 'minWidthColumn'}
         ],
         queryParams: function(params) {
