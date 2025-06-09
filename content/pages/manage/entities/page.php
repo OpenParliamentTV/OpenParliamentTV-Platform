@@ -83,7 +83,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
             <div class="modal-footer">
                 <div class="row w-100">
                     <div class="col-6">
-                        <button type="button" class="btn btn-primary rounded-pill w-100" id="modalAddEntitySubmitBtn" disabled><span class="icon-plus"></span> <?= L::manageEntitiesNew; ?></button>
+                        <button type="button" class="btn btn-outline-success rounded-pill w-100" id="modalAddEntitySubmitBtn" disabled><span class="icon-plus"></span> <?= L::manageEntitiesNew; ?></button>
                     </div>
 					<div class="col-6">
                         <button type="button" class="btn btn-secondary rounded-pill w-100" data-bs-dismiss="modal"><?= L::cancel; ?></button>

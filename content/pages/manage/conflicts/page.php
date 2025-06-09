@@ -28,7 +28,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="conflicts-tab" data-bs-toggle="tab" data-bs-target="#conflicts" role="tab" aria-controls="conflicts" aria-selected="true"><?= L::conflicts; ?></a>
+                            <a class="nav-link active" id="conflicts-tab" data-bs-toggle="tab" data-bs-target="#conflicts" role="tab" aria-controls="conflicts" aria-selected="true"><span class="icon-attention"></span> <?= L::conflicts; ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">

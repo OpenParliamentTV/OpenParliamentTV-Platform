@@ -203,13 +203,13 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     <label for="originid">Original ID</label>
                     <input type="text" class="form-control" name="originid">
                 </div>
-                <div id="formHintPartyFaction" class="formHint alert alert-warning d-none mt-3 mb-0">Please select a party and faction for this person</div>
+                <div id="formHintPartyFaction" class="formHint alert alert-warning d-none mt-3 mb-0 p-2"><?= L::messageSelectPartyFactionPerson; ?>:</div>
                 <div class="row mt-3">
                     <div class="col-6">
                         <div class="form-group formItem formItemTypePerson d-none">
-                            <label for="party">Party</label>
+                            <label for="party"><?= L::party; ?></label>
                             <select class="form-select" name="party">
-                                <option value="" disabled selected>Choose Party ..</option>
+                                <option value="" disabled selected><?= L::selectParty; ?> ..</option>
                                 <?php
                                 require_once (__DIR__."/../../api/v1/modules/organisation.php");
                                 $partyie = organisationSearch(array("type"=>"party"));
@@ -222,9 +222,9 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     </div>
                     <div class="col-6">
                         <div class="form-group formItem formItemTypePerson d-none">
-                            <label for="faction">Faction</label>
+                            <label for="faction"><?= L::faction; ?></label>
                             <select class="form-select" name="faction">
-                                <option value="" disabled selected>Choose Faction ..</option>
+                                <option value="" disabled selected><?= L::selectFaction; ?> ..</option>
                                 <?php
                                 $factionie = organisationSearch(array("type"=>"faction"));
                                 foreach ($factionie["data"] as $faction) {
@@ -428,12 +428,12 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                                         let html = '<div class="mt-3">';
                                         html += '  <div class="form-check mb-2">';
                                         html += '    <input class="form-check-input" type="checkbox" id="reimportSessionsCheckbox" checked>';
-                                        html += '    <label class="form-check-label" for="reimportSessionsCheckbox">Re-import affected sessions (' + speechCount + ' speeches)</label>';
+                                        html += '    <label class="form-check-label" for="reimportSessionsCheckbox">' + localizedLabels.reimportAffectedSessions + ' (' + speechCount + ' ' + localizedLabels.speeches + ')</label>';
                                         html += '  </div>';
                                         html += '</div>';
                                         $container.html(html);
                                     } else {
-                                        $container.html('<div class="mt-3 text-muted">No sessions will be affected.</div>');
+                                        $container.html('<div class="mt-3 text-muted"><span class="icon-info-circled"></span> ' + localizedLabels.messageNoSessionsAffected + '</div>');
                                     }
                                 },
                                 error: function() {
@@ -743,9 +743,11 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     if (ret && ret.errors && Array.isArray(ret.errors)) {
                         ret.errors.forEach(function(error) {
                             let message = error.title;
+                            /*
                             if (error.detail) {
                                 message += ": " + error.detail;
                             }
+                            */
                             errorMessages.push('<div>' + message + '</div>');
                             if (error.meta && error.meta.domSelector) {
                                 $(error.meta.domSelector).css("border", "1px solid red");
@@ -755,7 +757,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                         });
                     } else {
                         // Generic error if the structure is not as expected
-                        errorMessages.push('<div>An unexpected error occurred. Please try again.</div>');
+                        errorMessages.push('<div>' + localizedLabels.messageErrorGeneric + '</div>');
                     }
 
                     // Add messages from meta if they provide more context

@@ -24,7 +24,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </div>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="all-media-tab" data-bs-toggle="tab" data-bs-target="#all-media" role="tab" aria-controls="all-media" aria-selected="true">All Media</a>
+                            <a class="nav-link active" id="all-media-tab" data-bs-toggle="tab" data-bs-target="#all-media" role="tab" aria-controls="all-media" aria-selected="true"><span class="icon-play"></span> <?= L::speeches; ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
