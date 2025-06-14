@@ -1,7 +1,6 @@
 <?php
 
 require_once (__DIR__."/../../../config.php");
-require_once (__DIR__."/../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/textArrayConverters.php");
 require_once (__DIR__."/../../../modules/statistics/functions.php");
