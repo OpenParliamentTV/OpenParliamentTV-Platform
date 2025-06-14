@@ -465,22 +465,30 @@ function statisticsGetEntityCounts($request) {
         // Person
         $personTable = $config["platform"]["sql"]["tbl"]["Person"];
         $counts['person']['total'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n", $personTable);
-        $counts['person']['subtypes']['person'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE PersonType = 'person' OR PersonType IS NULL", $personTable);
-        $counts['person']['subtypes']['memberOfParliament'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE PersonType = 'memberOfParliament'", $personTable);
+        foreach ($config["entityTypes"]["person"] as $subtype) {
+            $counts['person']['subtypes'][$subtype] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE PersonType = ?s", $personTable, $subtype);
+        }
 
         // Organisation
         $orgTable = $config["platform"]["sql"]["tbl"]["Organisation"];
         $counts['organisation']['total'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n", $orgTable);
+        foreach ($config["entityTypes"]["organisation"] as $subtype) {
+            $counts['organisation']['subtypes'][$subtype] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE OrganisationType = ?s", $orgTable, $subtype);
+        }
 
         // Document
         $docTable = $config["platform"]["sql"]["tbl"]["Document"];
         $counts['document']['total'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n", $docTable);
-        $counts['document']['subtypes']['legalDocument'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE DocumentType = 'legalDocument'", $docTable);
-        $counts['document']['subtypes']['officialDocument'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE DocumentType = 'officialDocument'", $docTable);
+        foreach ($config["entityTypes"]["document"] as $subtype) {
+            $counts['document']['subtypes'][$subtype] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE DocumentType = ?s", $docTable, $subtype);
+        }
         
         // Term
         $termTable = $config["platform"]["sql"]["tbl"]["Term"];
         $counts['term']['total'] = (int)$db->getOne("SELECT COUNT(*) FROM ?n", $termTable);
+        foreach ($config["entityTypes"]["term"] as $subtype) {
+            $counts['term']['subtypes'][$subtype] = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE TermType = ?s", $termTable, $subtype);
+        }
 
     } catch (Exception $e) {
         return createApiErrorResponse(500, 1, "Database query error", $e->getMessage());

@@ -161,13 +161,13 @@ function personSearch($parameter, $db = false) {
 
     // Validate type
     if (array_key_exists("type", $filteredParameters)) {
-        if (!in_array($filteredParameters["type"], array("memberOfParliament", "unknown"))) {
+        if (!in_array($filteredParameters["type"], $config["entityTypes"]["person"])) {
             return createApiErrorResponse(
                 422, 
                 2, 
                 "messageErrorInvalidValueTitle", 
                 "messageErrorInvalidFormatDetail", 
-                ["field" => "type", "expected" => "memberOfParliament or unknown"]
+                ["field" => "type", "expected" => implode(" or ", $config["entityTypes"]["person"])]
             );
         }
     }
@@ -432,8 +432,8 @@ function personAdd($api_request, $db = false, $dbp = false) {
     if (empty($api_request["type"])) {
         return createApiErrorMissingParameter("type");
     }
-    if (!in_array($api_request["type"], array("memberOfParliament", "person"))) {
-        return createApiErrorInvalidParameter("type", "messageErrorInvalidValueDetail", ["value" => $api_request["type"], "expected" => "memberOfParliament or person"]);
+    if (!in_array($api_request["type"], $config["entityTypes"]["person"])) {
+        return createApiErrorInvalidParameter("type", "messageErrorInvalidValueDetail", ["value" => $api_request["type"], "expected" => implode(" or ", $config["entityTypes"]["person"])]);
     }
     if (empty($api_request["label"])) {
         return createApiErrorMissingParameter("label");

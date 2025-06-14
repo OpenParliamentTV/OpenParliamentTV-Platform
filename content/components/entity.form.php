@@ -69,8 +69,9 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                 <div id="subtypeContainerPerson" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typePerson">
                         <option value="" disabled selected><?= L::selectType; ?> ..</option>
-                        <option value="memberOfParliament">Member Of Parliament</option>
-                        <option value="person">Person</option>
+                        <?php foreach ($config["entityTypes"]["person"] as $subtype): ?>
+                            <option value="<?= $subtype ?>"><?= $subtype ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -78,12 +79,9 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                 <div id="subtypeContainerOrganisation" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typeOrganisation">
                         <option value="" disabled selected><?= L::selectType; ?> ..</option>
-                        <option value="party">Party</option>
-                        <option value="faction">Faction</option>
-                        <option value="government">Government</option>
-                        <option value="company">Company</option>
-                        <option value="ngo">NGO</option>
-                        <option value="otherOrganisation">Other Organisation</option>
+                        <?php foreach ($config["entityTypes"]["organisation"] as $subtype): ?>
+                            <option value="<?= $subtype ?>"><?= $subtype ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -91,9 +89,9 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                 <div id="subtypeContainerDocument" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typeDocument">
                         <option value="" disabled selected><?= L::selectType; ?> ..</option>
-                        <option value="officialDocument">officialDocument</option>
-                        <option value="legalDocument">legalDocument</option>
-                        <option value="otherDocument">Other Document</option>
+                        <?php foreach ($config["entityTypes"]["document"] as $subtype): ?>
+                            <option value="<?= $subtype ?>"><?= $subtype ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -101,7 +99,9 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                 <div id="subtypeContainerTerm" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typeTerm">
                         <option value="" disabled selected><?= L::selectType; ?> ..</option>
-                        <option value="otherTerm">Other Term</option>
+                        <?php foreach ($config["entityTypes"]["term"] as $subtype): ?>
+                            <option value="<?= $subtype ?>"><?= $subtype ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
