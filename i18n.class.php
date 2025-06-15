@@ -58,8 +58,8 @@ class i18n {
 
     /**
      * This is the separator used if you use sections in your ini-file.
-     * For example, if you have a string 'greeting' in a section 'welcomepage' you will can access it via 'L::welcomepage_greeting'.
-     * If you changed it to 'ABC' you could access your string via 'L::welcomepageABCgreeting'
+     * For example, if you have a string 'greeting' in a section 'welcomepage' you will can access it via 'L::welcomepage_greeting()'.
+     * If you changed it to 'ABC' you could access your string via 'L::welcomepageABCgreeting()'
      *
      * @var string
      */
@@ -157,11 +157,21 @@ class i18n {
             $compiled = "<?php class " . $this->prefix . " {\n"
             	. $this->compile($config)
             	. 'public static function __callStatic($string, $args) {' . "\n"
-            	. '    return vsprintf(constant("self::" . $string), $args);'
-            	. "\n}\n}\n"
+            	. '    $const_name = "self::" . $string;' . "\n"
+            	. '    if (defined($const_name)) {' . "\n"
+            	. '        return vsprintf(constant($const_name), $args);' . "\n"
+            	. '    } else {' . "\n"
+            	. '        return $string;' . "\n"
+            	. '    }' . "\n"
+            	. "}\n}\n"
             	. "function ".$this->prefix .'($string, $args=NULL) {'."\n"
-            	. '    $return = constant("'.$this->prefix.'::".$string);'."\n"
-            	. '    return $args ? vsprintf($return,$args) : $return;'
+            	. '    $const_name = "'.$this->prefix.'::".$string;'."\n"
+            	. '    if (defined($const_name)) {'."\n"
+            	. '        $return = constant($const_name);'."\n"
+            	. '    } else {'."\n"
+            	. '        $return = $string;'."\n"
+            	. '    }'."\n"
+            	. '    return $args ? vsprintf($return, $args) : $return;'
             	. "\n}";
 
 			if( ! is_dir($this->cachePath))
