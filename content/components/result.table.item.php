@@ -28,9 +28,9 @@ $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedP
 	<?php } ?>
 	<td>
 		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="<?= L::view; ?>" href="<?= $config["dir"]["root"]; ?>/media/<?= $result_item["id"] ?>" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="<?= L::view(); ?>" href="<?= $config["dir"]["root"]; ?>/media/<?= $result_item["id"] ?>" target="_blank"><span class="icon-eye"></span></a>
 			<?php if ($_SESSION["userdata"]["role"] == "admin") { ?>
-				<a class="list-group-item list-group-item-action" title="<?= L::edit; ?>" href="<?= $config["dir"]["root"]; ?>/manage/media/<?= $result_item["id"] ?>"><span class="icon-pencil"></span></a>
+				<a class="list-group-item list-group-item-action" title="<?= L::edit(); ?>" href="<?= $config["dir"]["root"]; ?>/manage/media/<?= $result_item["id"] ?>"><span class="icon-pencil"></span></a>
 			<?php } ?>
 			<a class="list-group-item list-group-item-action" title="API" href="<?= $config["dir"]["root"]; ?>/api/v1/media/<?= $result_item["id"] ?>" target="_blank"><span class="icon-code"></span></a>
 		</div>

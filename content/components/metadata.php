@@ -3,28 +3,28 @@ if (!isset($page)) {
     $page = ''; // Initialize $page if not set
 }
 $description = strip_tags($pageDescription);
-$claimShortClean = strip_tags(L::claimShort);
+$claimShortClean = strip_tags(L::claimShort());
 $url = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $urlWithoutParams = strtok($url, '?');
 switch ($page) {
   case 'main':
-    $title = L::brand.' | '.$claimShortClean;
+    $title = L::brand().' | '.$claimShortClean;
     $image = $config["dir"]["root"].'/content/client/images/thumbnail.png';
     $ogType = 'website';
     $canonicalUrl = $urlWithoutParams;
     break;
   case 'search': 
     if (count($_REQUEST) < 2 || (!$_REQUEST["q"] && !$_REQUEST["personID"])) {
-      $title = L::brand.' | '.$claimShortClean;
+      $title = L::brand().' | '.$claimShortClean;
     } else {
-      $title = strip_tags($pageTitle).' | '.L::brand;
+      $title = strip_tags($pageTitle).' | '.L::brand();
     }
     $image = $config["dir"]["root"].'/content/client/images/thumbnail.png';
     $ogType = 'website';
     $canonicalUrl = $url;
     break;
   case 'media':
-    $title = strip_tags($pageTitle).' | '.L::brand;
+    $title = strip_tags($pageTitle).' | '.L::brand();
     if (isset($_REQUEST['t']) && isset($_REQUEST['f'])) {
       $image = $config["dir"]["root"].'/content/client/images/share-image.php?id='.$_REQUEST['id'].'&t='.$_REQUEST['t'].'&f='.$_REQUEST['f'].'&c='.$_REQUEST['c'];
     } else {
@@ -34,7 +34,7 @@ switch ($page) {
     $canonicalUrl = $urlWithoutParams;
     break;
   default:
-    $title = strip_tags($pageTitle).' | '.L::brand;
+    $title = strip_tags($pageTitle).' | '.L::brand();
     $image = $config["dir"]["root"].'/content/client/images/thumbnail.png';
     $ogType = 'article';
     $canonicalUrl = $urlWithoutParams;

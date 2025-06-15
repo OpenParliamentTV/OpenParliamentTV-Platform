@@ -17,7 +17,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                     <div class="col-12">
-                        <h2><?= L::dashboard; ?></h2>
+                        <h2><?= L::dashboard(); ?></h2>
                         <div class="row mb-3">
                             <div class="col-12">
                                 <div class="card">
@@ -36,9 +36,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             <table id="latestUpdatesMedia" class="table table-striped my-0">
                                                 <thead>
                                                     <tr>
-                                                        <th><?= L::contextmainSpeaker; ?></th>
-                                                        <th><?= L::agendaItem; ?></th>
-                                                        <th><?= L::lastChanged; ?></th>
+                                                        <th><?= L::contextmainSpeaker(); ?></th>
+                                                        <th><?= L::agendaItem(); ?></th>
+                                                        <th><?= L::lastChanged(); ?></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>
@@ -55,9 +55,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             <table id="latestUpdatesEntities" class="table table-striped my-0">
                                                 <thead>
                                                     <tr>
-                                                        <th><?= L::type; ?></th>
-                                                        <th><?= L::name; ?></th>
-                                                        <th><?= L::lastChanged; ?></th>
+                                                        <th><?= L::type(); ?></th>
+                                                        <th><?= L::name(); ?></th>
+                                                        <th><?= L::lastChanged(); ?></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>

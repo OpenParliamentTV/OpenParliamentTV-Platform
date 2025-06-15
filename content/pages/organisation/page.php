@@ -29,7 +29,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 							<?php } ?>
 						</div>
 						<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
-						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?= L::source; ?>: <?= html_entity_decode($apiResult["data"]["attributes"]["thumbnailCreator"]); ?>, <?= $apiResult["data"]["attributes"]["thumbnailLicense"] ?></span></div>
+						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?= L::source(); ?>: <?= html_entity_decode($apiResult["data"]["attributes"]["thumbnailCreator"]); ?>, <?= $apiResult["data"]["attributes"]["thumbnailLicense"] ?></span></div>
 						<?php } ?>
 					</div>
 					<div class="col">
@@ -40,7 +40,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<?php if ($apiResult["data"]["attributes"]["abstract"] && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
 							<div class="mt-2"><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
 							<a class="btn btn-sm me-2 mt-2" href="<?= $apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"] ?>" target="_blank">
-								<span><?= L::moreAt; ?> Wikipedia</span><img class="ms-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikipedia.svg">
+								<span><?= L::moreAt(); ?> Wikipedia</span><img class="ms-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikipedia.svg">
 							</a>
 						<?php } ?>
 						<!--
@@ -63,16 +63,16 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			<ul class="nav nav-tabs" role="tablist">
 				<?php if ($apiResult["data"]["attributes"]["type"] == "faction") { ?>
 					<li class="nav-item">
-						<a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?= L::relatedMedia ?></span></a>
+						<a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?= L::relatedMedia() ?></span></a>
 					</li>
 				<?php } ?>
 				<?php if ($config["display"]["ner"]) { ?>
 					<li class="nav-item">
-						<a class="nav-link <?= (($apiResult["data"]["attributes"]["type"] == "faction") ? "" : "active") ?>" id="ner-tab" data-bs-toggle="tab" data-bs-target="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?= L::automaticallyDetectedInSpeeches ?><span class="alert ms-1 px-1 py-0 alert-warning" data-bs-toggle="modal" data-bs-target="#nerModal"><span class="icon-attention me-1"></span><u>beta</u></span></span></a>
+						<a class="nav-link <?= (($apiResult["data"]["attributes"]["type"] == "faction") ? "" : "active") ?>" id="ner-tab" data-bs-toggle="tab" data-bs-target="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?= L::automaticallyDetectedInSpeeches() ?><span class="alert ms-1 px-1 py-0 alert-warning" data-bs-toggle="modal" data-bs-target="#nerModal"><span class="icon-attention me-1"></span><u>beta</u></span></span></a>
 					</li>
 				<?php } ?>
 				<li class="nav-item ms-auto">
-					<a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?= L::data ?></span></a>
+					<a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?= L::data() ?></span></a>
 				</li>
 			</ul>
 			<div class="tab-content">
@@ -107,10 +107,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="nerModalTitle"><?= L::automaticallyDetected; ?></h5>
+                <h5 class="modal-title" id="nerModalTitle"><?= L::automaticallyDetected(); ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body"><?= L::messageAutomaticallyDetected; ?></div>
+            <div class="modal-body"><?= L::messageAutomaticallyDetected(); ?></div>
         </div>
     </div>
 </div>

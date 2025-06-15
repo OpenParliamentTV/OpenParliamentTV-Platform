@@ -18,19 +18,19 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2><?= L::manageStructure; ?></h2>
+                    <h2><?= L::manageStructure(); ?></h2>
                     <div class="card mb-3">
 						<div class="card-body"></div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="electoralPeriods-tab" data-bs-toggle="tab" data-bs-target="#electoralPeriods" role="tab" aria-controls="electoralPeriods" aria-selected="true"><span class="icon-check me-2"></span><?= L::electoralPeriods; ?></a>
+                            <a class="nav-link active" id="electoralPeriods-tab" data-bs-toggle="tab" data-bs-target="#electoralPeriods" role="tab" aria-controls="electoralPeriods" aria-selected="true"><span class="icon-check me-2"></span><?= L::electoralPeriods(); ?></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="sessions-tab" data-bs-toggle="tab" data-bs-target="#sessions" role="tab" aria-controls="sessions" aria-selected="false"><span class="icon-group me-2"></span><?= L::sessions; ?></a>
+                            <a class="nav-link" id="sessions-tab" data-bs-toggle="tab" data-bs-target="#sessions" role="tab" aria-controls="sessions" aria-selected="false"><span class="icon-group me-2"></span><?= L::sessions(); ?></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="agendaItems-tab" data-bs-toggle="tab" data-bs-target="#agendaItems" role="tab" aria-controls="agendaItems" aria-selected="false"><span class="icon-list-numbered me-2"></span><?= L::agendaItems; ?></a>
+                            <a class="nav-link" id="agendaItems-tab" data-bs-toggle="tab" data-bs-target="#agendaItems" role="tab" aria-controls="agendaItems" aria-selected="false"><span class="icon-list-numbered me-2"></span><?= L::agendaItems(); ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -42,7 +42,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         <div class="tab-pane bg-white fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
 							<div id="sessionsToolbar">
 								<select id="electoralPeriodFilter" class="form-select form-select-sm d-inline-block w-auto me-2">
-									<option value=""><?= L::all; ?> <?= L::electoralPeriods; ?></option>
+									<option value=""><?= L::all(); ?> <?= L::electoralPeriods(); ?></option>
 								</select>
 							</div>
 							<table id="sessionsTable"></table>
@@ -50,10 +50,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         <div class="tab-pane bg-white fade" id="agendaItems" role="tabpanel" aria-labelledby="agendaItems-tab">
 							<div id="agendaItemsToolbar">
 								<select id="agendaItemsElectoralPeriodFilter" class="form-select form-select-sm d-inline-block w-auto me-2">
-									<option value=""><?= L::all; ?> <?= L::electoralPeriods; ?></option>
+									<option value=""><?= L::all(); ?> <?= L::electoralPeriods(); ?></option>
 								</select>
 								<select id="agendaItemsSessionFilter" class="form-select form-select-sm d-inline-block w-auto me-2">
-									<option value=""><?= L::all; ?> <?= L::sessions; ?></option>
+									<option value=""><?= L::all(); ?> <?= L::sessions(); ?></option>
 								</select>
 							</div>
 							<table id="agendaItemsTable"></table>
@@ -71,14 +71,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		
 		function renderActionButtons(id, type, subtype) {
 			const viewButton = '<a class="list-group-item list-group-item-action" ' +
-				'title="<?= L::view; ?>" ' +
+				'title="<?= L::view(); ?>" ' +
 				'href="<?= $config["dir"]["root"]; ?>/' + type + '/' + id + '" ' +
 				'target="_blank">' +
 				'<span class="icon-eye"></span>' +
 				'</a>';
 			
 			const editButton = '<a class="list-group-item list-group-item-action" ' +
-				'title="<?= L::edit; ?>" ' +
+				'title="<?= L::edit(); ?>" ' +
 				'href="<?= $config["dir"]["root"]; ?>/manage/structure/' + type + '/' + id + '">' +
 				'<span class="icon-pencil"></span>' +
 				'</a>';
@@ -154,22 +154,22 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			columns: [
 				{
 					field: "Parliament",
-					title: "<?= L::parliament; ?>",
+					title: "<?= L::parliament(); ?>",
 					sortable: true
 				},
 				{
 					field: "ElectoralPeriodNumber",
-					title: "<?= L::electoralPeriod; ?>",
+					title: "<?= L::electoralPeriod(); ?>",
 					sortable: true
 				},
 				{
 					field: "ElectoralPeriodDateStart",
-					title: "<?= L::dateStart; ?>",
+					title: "<?= L::dateStart(); ?>",
 					sortable: true
 				},
 				{
 					field: "ElectoralPeriodDateEnd",
-					title: "<?= L::dateEnd; ?>",
+					title: "<?= L::dateEnd(); ?>",
 					sortable: true
 				},
 				{
@@ -193,7 +193,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					// Populate both electoral period filters
 					const filters = $("#electoralPeriodFilter, #agendaItemsElectoralPeriodFilter");
 					response.data.forEach(function(period) {
-						filters.append(`<option value="${period.ElectoralPeriodID}"><?= L::electoralPeriod; ?> ${period.ElectoralPeriodNumber}</option>`);
+						filters.append(`<option value="${period.ElectoralPeriodID}"><?= L::electoralPeriod(); ?> ${period.ElectoralPeriodNumber}</option>`);
 					});
 				}
 			}
@@ -256,7 +256,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			
 			// Clear and disable session dropdown if no electoral period selected
 			if (!electoralPeriodID) {
-				sessionFilter.html('<option value=""><?= L::all; ?> <?= L::sessions; ?></option>').prop('disabled', true);
+				sessionFilter.html('<option value=""><?= L::all(); ?> <?= L::sessions(); ?></option>').prop('disabled', true);
 				loadAllAgendaItemsData();
 				return;
 			}
@@ -268,10 +268,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				success: function(response) {
 					if (response.data) {
 						// Clear and update session dropdown
-						sessionFilter.html('<option value=""><?= L::all; ?> <?= L::sessions; ?></option>');
+						sessionFilter.html('<option value=""><?= L::all(); ?> <?= L::sessions(); ?></option>');
 						
 						response.data.forEach(function(session) {
-							sessionFilter.append(`<option value="${session.SessionID}"><?= L::session; ?> ${session.SessionNumber}</option>`);
+							sessionFilter.append(`<option value="${session.SessionID}"><?= L::session(); ?> ${session.SessionNumber}</option>`);
 						});
 						
 						sessionFilter.prop('disabled', false);
@@ -300,27 +300,27 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			columns: [
 				{
 					field: "Parliament",
-					title: "<?= L::parliament; ?>",
+					title: "<?= L::parliament(); ?>",
 					sortable: true
 				},
 				{
 					field: "ElectoralPeriodNumber",
-					title: "<?= L::electoralPeriod; ?>",
+					title: "<?= L::electoralPeriod(); ?>",
 					sortable: true
 				},
 				{
 					field: "SessionNumber",
-					title: "<?= L::session; ?>",
+					title: "<?= L::session(); ?>",
 					sortable: true
 				},
 				{
 					field: "SessionDateStart",
-					title: "<?= L::dateStart; ?>",
+					title: "<?= L::dateStart(); ?>",
 					sortable: true
 				},
 				{
 					field: "SessionDateEnd",
-					title: "<?= L::dateEnd; ?>",
+					title: "<?= L::dateEnd(); ?>",
 					sortable: true
 				},
 				{
@@ -357,28 +357,28 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			columns: [
 				{
 					field: "Parliament",
-					title: "<?= L::parliament; ?>",
+					title: "<?= L::parliament(); ?>",
 					sortable: true
 				},
 				{
 					field: "ElectoralPeriodNumber",
-					title: "<?= L::electoralPeriod; ?>",
+					title: "<?= L::electoralPeriod(); ?>",
 					sortable: true
 				},
 				{
 					field: "SessionNumber",
-					title: "<?= L::session; ?>",
+					title: "<?= L::session(); ?>",
 					sortable: true
 				},
 				{
 					field: "AgendaItemTitle",
-					title: "<?= L::agendaItem; ?>",
+					title: "<?= L::agendaItem(); ?>",
 					class: "w-100",
 					sortable: true
 				},
 				{
 					field: "AgendaItemOrder",
-					title: "<?= L::order; ?>",
+					title: "<?= L::order(); ?>",
 					sortable: true
 				},
 				{

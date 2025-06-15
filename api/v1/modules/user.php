@@ -219,7 +219,7 @@ function userLogin($parameter) {
     $_SESSION["userdata"]["role"] = $userdata["UserRole"];
 
     return createApiSuccessResponse([
-        "message" => L::messageLoginSuccessGeneric,
+        "message" => L::messageLoginSuccessGeneric(),
         "user" => [
             "id" => $userdata["UserID"],
             "name" => $userdata["UserName"],
@@ -309,15 +309,15 @@ function userRegister($parameter) {
     $userID = $db->insertId();
 
     // Send confirmation email
-    $registrationMailSubject = L::brand.': '.L::registerNewAccount;
+    $registrationMailSubject = L::brand().': '.L::registerNewAccount();
     $registrationMailVerifyLink = $config['dir']['root'].'/registerConfirm?id='.$userID.'&c='.$confirmationCode;
 
     $message = '<html><body>';
-    $message .= '<p>'.L::hello.' '.$parameter["UserName"].',</p>';
-    $message .= '<p>'.L::messageRegisterThankYou.' <b>'.$config['dir']['root'].'</b>.</p>';
-    $message .= '<p>'.L::messageRegisterClickLinkToValidate.'</p>';
+    $message .= '<p>'.L::hello().' '.$parameter["UserName"].',</p>';
+    $message .= '<p>'.L::messageRegisterThankYou().' <b>'.$config['dir']['root'].'</b>.</p>';
+    $message .= '<p>'.L::messageRegisterClickLinkToValidate().'</p>';
     $message .= '<p><a href="'.$registrationMailVerifyLink.'">'.$registrationMailVerifyLink.'</a></p>';
-    $message .= '<p>'.L::messageMailGreetings.',<br>'.L::brand.'</p>';
+    $message .= '<p>'.L::messageMailGreetings().',<br>'.L::brand().'</p>';
     $message .= '</body></html>';
 
     $header = array(
@@ -330,7 +330,7 @@ function userRegister($parameter) {
     mail($parameter["UserName"].' <'.$mail.'>', $registrationMailSubject, $message, $header);
 
     return createApiSuccessResponse([
-        "message" => L::messageRegisterSuccess,
+        "message" => L::messageRegisterSuccess(),
         "user" => [
             "id" => $userID,
             "name" => $parameter["UserName"],
@@ -396,15 +396,15 @@ function userPasswordResetRequest($parameter) {
     );
 
     // Send reset email
-    $passwordresetMailSubject = L::brand.': '.L::resetPassword;
+    $passwordresetMailSubject = L::brand().': '.L::resetPassword();
     $resetLink = $config["dir"]["root"] . "/password-reset?id=" . $userdata['UserID'] . "&code=" . $confirmationCode;
 
     $message = '<html><body>';
-    $message .= '<p>'.L::hello.' '.$userdata["UserName"].',</p>';
-    $message .= '<p>'.L::messagePasswordResetMailStart.'</p>';
+    $message .= '<p>'.L::hello().' '.$userdata["UserName"].',</p>';
+    $message .= '<p>'.L::messagePasswordResetMailStart().'</p>';
     $message .= '<p><a href="'.$resetLink.'">'.$resetLink.'</a></p>';
-    $message .= '<p>'.L::messagePasswordResetMailEnd.'</p>';
-    $message .= '<p>'.L::messageMailGreetings.',<br>'.L::brand.'</p>';
+    $message .= '<p>'.L::messagePasswordResetMailEnd().'</p>';
+    $message .= '<p>'.L::messageMailGreetings().',<br>'.L::brand().'</p>';
     $message .= '</body></html>';
 
     $header = array(
@@ -417,7 +417,7 @@ function userPasswordResetRequest($parameter) {
     mail($userdata["UserName"].' <'.$mail.'>', $passwordresetMailSubject, $message, $header);
 
     return createApiSuccessResponse([
-        "message" => L::messagePasswordResetMailSent
+        "message" => L::messagePasswordResetMailSent()
     ]);
 }
 
@@ -479,7 +479,7 @@ function userPasswordReset($parameter) {
     );
 
     return createApiSuccessResponse([
-        "message" => L::messagePasswordResetSuccess
+        "message" => L::messagePasswordResetSuccess()
     ]);
 }
 
@@ -537,7 +537,7 @@ function userConfirmRegistration($parameter) {
     );
 
     return createApiSuccessResponse([
-        "message" => L::messageAccountActivationSuccess
+        "message" => L::messageAccountActivationSuccess()
     ]);
 }
 

@@ -20,24 +20,24 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		<div class="sidebar-content">
 			<div class="row" style="position: relative; z-index: 1">
 				<div class="col-12 mainContainer">
-					<h2><?= L::manageEntities; ?></h2>
+					<h2><?= L::manageEntities(); ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
-							<button type="button" id="openAddEntityModalBtn" class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#addEntityModal"><span class="icon-plus"></span> <?= L::manageEntitiesNew; ?></button>
+							<button type="button" id="openAddEntityModalBtn" class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#addEntityModal"><span class="icon-plus"></span> <?= L::manageEntitiesNew(); ?></button>
 						</div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="people-tab" data-bs-toggle="tab" data-bs-target="#people" role="tab" aria-controls="people" aria-selected="true"><span class="icon-type-person"></span> <?= L::personPlural; ?></a>
+                            <a class="nav-link active" id="people-tab" data-bs-toggle="tab" data-bs-target="#people" role="tab" aria-controls="people" aria-selected="true"><span class="icon-type-person"></span> <?= L::personPlural(); ?></a>
                         </li>
 						<li class="nav-item">
-                            <a class="nav-link" id="organisations-tab" data-bs-toggle="tab" data-bs-target="#organisations" role="tab" aria-controls="organisations" aria-selected="false"><span class="icon-type-organisation"></span> <?= L::organisations; ?></a>
+                            <a class="nav-link" id="organisations-tab" data-bs-toggle="tab" data-bs-target="#organisations" role="tab" aria-controls="organisations" aria-selected="false"><span class="icon-type-organisation"></span> <?= L::organisations(); ?></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="icon-type-document"></span> <?= L::documents; ?></a>
+                            <a class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents" role="tab" aria-controls="documents" aria-selected="false"><span class="icon-type-document"></span> <?= L::documents(); ?></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="terms-tab" data-bs-toggle="tab" data-bs-target="#terms" role="tab" aria-controls="terms" aria-selected="false"><span class="icon-type-term"></span> <?= L::terms; ?></a>
+                            <a class="nav-link" id="terms-tab" data-bs-toggle="tab" data-bs-target="#terms" role="tab" aria-controls="terms" aria-selected="false"><span class="icon-type-term"></span> <?= L::terms(); ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -69,7 +69,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addEntityModalLabel"><?= L::manageEntitiesNew; ?></h5>
+                <h5 class="modal-title" id="addEntityModalLabel"><?= L::manageEntitiesNew(); ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -83,10 +83,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
             <div class="modal-footer">
                 <div class="row w-100">
                     <div class="col-6">
-                        <button type="button" class="btn btn-primary w-100" id="modalAddEntitySubmitBtn" disabled><span class="icon-plus"></span> <?= L::manageEntitiesNew; ?></button>
+                        <button type="button" class="btn btn-primary w-100" id="modalAddEntitySubmitBtn" disabled><span class="icon-plus"></span> <?= L::manageEntitiesNew(); ?></button>
                     </div>
 					<div class="col-6">
-                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal"><?= L::cancel; ?></button>
+                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal"><?= L::cancel(); ?></button>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		
 		function renderActionButtons(id, type, subtype) {
 			const viewButton = '<a class="list-group-item list-group-item-action" ' +
-				'title="<?= L::view; ?>" ' +
+				'title="<?= L::view(); ?>" ' +
 				'href="<?= $config["dir"]["root"]; ?>/' + type + '/' + id + '" ' +
 				'target="_blank">' +
 				'<span class="icon-eye"></span>' +
@@ -324,7 +324,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "PersonLabel",
-					title: "<?= L::name; ?>",
+					title: "<?= L::name(); ?>",
 					sortable: true,
 					formatter: function(value, row) {
 						return formatLabelWithAlternatives(value, row, 'PersonLabelAlternative', 'PersonID', 'peopleTable', 'person');
@@ -340,7 +340,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "PersonPartyOrganisationID",
-					title: "<?= L::party; ?>",
+					title: "<?= L::party(); ?>",
 					sortable: true,
 					formatter: function(value, row) {
 						if (!value || !row["PartyLabel"]) {
@@ -351,7 +351,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "PersonFactionOrganisationID",
-					title: "<?= L::faction; ?>",
+					title: "<?= L::faction(); ?>",
 					sortable: true,
 					formatter: function(value, row) {
 						if (!value || !row["FactionLabel"]) {
@@ -362,7 +362,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "PersonLastChanged",
-					title: "<?= L::lastChanged; ?>",
+					title: "<?= L::lastChanged(); ?>",
 					sortable: true,
 					formatter: function(value) {
 						if (value) {
@@ -413,7 +413,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "OrganisationLabel",
-					title: "<?= L::name; ?>",
+					title: "<?= L::name(); ?>",
 					sortable: true,
 					formatter: function(value, row) {
 						return formatLabelWithAlternatives(value, row, 'OrganisationLabelAlternative', 'OrganisationID', 'organisationsTable', 'organisation');
@@ -429,7 +429,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "OrganisationLastChanged",
-					title: "<?= L::lastChanged; ?>",
+					title: "<?= L::lastChanged(); ?>",
 					sortable: true,
 					formatter: function(value) {
 						if (value) {
@@ -480,7 +480,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "DocumentLabel",
-					title: "<?= L::title; ?>",
+					title: "<?= L::title(); ?>",
 					sortable: true,
 					formatter: function(value, row) {
 						return formatLabelWithAlternatives(value, row, 'DocumentLabelAlternative', 'DocumentID', 'documentsTable', 'document');
@@ -500,7 +500,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "DocumentLastChanged",
-					title: "<?= L::lastChanged; ?>",
+					title: "<?= L::lastChanged(); ?>",
 					sortable: true,
 					formatter: function(value) {
 						if (value) {
@@ -551,7 +551,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "TermLabel",
-					title: "<?= L::label; ?>",
+					title: "<?= L::label(); ?>",
 					sortable: true,
 					formatter: function(value, row) {
 						return formatLabelWithAlternatives(value, row, 'TermLabelAlternative', 'TermID', 'termsTable', 'term');
@@ -567,7 +567,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				},
 				{
 					field: "TermLastChanged",
-					title: "<?= L::lastChanged; ?>",
+					title: "<?= L::lastChanged(); ?>",
 					sortable: true,
 					formatter: function(value) {
 						if (value) {

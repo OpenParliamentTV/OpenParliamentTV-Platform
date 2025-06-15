@@ -21,7 +21,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		<div class="sidebar-content">
 			<div class="row" style="position: relative; z-index: 1">
 				<div class="col-12 mainContainer">
-					<h2><?= L::manageEntitySuggestions; ?></h2>
+					<h2><?= L::manageEntitySuggestions(); ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
 							
@@ -29,7 +29,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="suggested-entities-tab" data-bs-toggle="tab" data-bs-target="#suggested-entities" role="tab" aria-controls="suggested-entities" aria-selected="true"><span class="icon-lightbulb"></span> <?= L::suggestions; ?></a>
+                            <a class="nav-link active" id="suggested-entities-tab" data-bs-toggle="tab" data-bs-target="#suggested-entities" role="tab" aria-controls="suggested-entities" aria-selected="true"><span class="icon-lightbulb"></span> <?= L::suggestions(); ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -101,7 +101,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addEntityModalLabel"><?= L::manageEntitiesNew; ?></h5>
+                <h5 class="modal-title" id="addEntityModalLabel"><?= L::manageEntitiesNew(); ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -115,10 +115,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
             <div class="modal-footer">
                 <div class="row w-100">
 					<div class="col-6">
-                        <button type="button" class="btn btn-primary w-100" id="modalAddEntitySubmitBtn" disabled><span class="icon-plus"></span> <?= L::manageEntitiesNew; ?></button>
+                        <button type="button" class="btn btn-primary w-100" id="modalAddEntitySubmitBtn" disabled><span class="icon-plus"></span> <?= L::manageEntitiesNew(); ?></button>
                     </div>
 					<div class="col-6">
-                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal"><?= L::cancel; ?></button>
+                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal"><?= L::cancel(); ?></button>
                     </div>
                 </div>
             </div>
@@ -185,7 +185,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					class: "minWidthColumn",
 					sortable: false,
 					formatter: function(value, row) {
-                        let viewDetailsButton = "<span class='entitysuggestiondetails list-group-item list-group-item-action' title='<?= L::viewDetails; ?>' data-id='"+value+"' data-bs-toggle='modal' data-bs-target='#entityDetailsModal'><span class='icon-eye'></span></span>";
+                        let viewDetailsButton = "<span class='entitysuggestiondetails list-group-item list-group-item-action' title='<?= L::viewDetails(); ?>' data-id='"+value+"' data-bs-toggle='modal' data-bs-target='#entityDetailsModal'><span class='icon-eye'></span></span>";
                         let addEntityButton = "<button type='button' class='list-group-item list-group-item-action' title='Add Entity' " +
                                               "data-bs-toggle='modal' data-bs-target='#addEntityModal' " +
                                               "data-wikidata-id='" + row["EntitysuggestionExternalID"] + "' " +

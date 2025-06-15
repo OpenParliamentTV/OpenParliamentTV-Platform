@@ -2,7 +2,7 @@
 <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
-			<h2><?= L::imprint; ?></h2>
+			<h2><?= L::imprint(); ?></h2>
             <p>Open Parliament TV<br>
                 c/o Center for the Cultivation of Technology gemeinnützige GmbH<br>
                 Aufgang 4<br>
@@ -13,8 +13,8 @@
 				<a href="https://openparliament.tv/" target="_blank">https://openparliament.tv</a>
 			</p>
 			<p>TMG § 5, RStV § 55'e göre içerik sorumlusu: Joscha Jäger</p>
-			<h2><?= L::contactRequests; ?></h2>
-			<p>Joscha Jäger, <?= L::projectLead; ?>: joscha.jaeger [AT] openparliament.tv</p>
+			<h2><?= L::contactRequests(); ?></h2>
+			<p>Joscha Jäger, <?= L::projectLead(); ?>: joscha.jaeger [AT] openparliament.tv</p>
 			<hr>
 			<h2>Sorumluluk Reddi</h2>
 			<h3>İçerik Sorumluluğu</h3>

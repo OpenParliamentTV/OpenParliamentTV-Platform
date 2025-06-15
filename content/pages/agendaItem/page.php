@@ -27,7 +27,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					</div>
 					<div class="col">
 						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
-						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. <?= L::electoralPeriod ?></a> | <a href="../session/<?= $apiResult["data"]["relationships"]["session"]["data"]["id"] ?>"><?= L::session ?>: <?= $apiResult["data"]["relationships"]["session"]["data"]["attributes"]["number"] ?></a></div>
+						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. <?= L::electoralPeriod() ?></a> | <a href="../session/<?= $apiResult["data"]["relationships"]["session"]["data"]["id"] ?>"><?= L::session() ?>: <?= $apiResult["data"]["relationships"]["session"]["data"]["attributes"]["number"] ?></a></div>
 						<div class="mt-2"><?= $apiResult["data"]["attributes"]["officialTitle"] ?></div>
 						<h2><?= $apiResult["data"]["attributes"]["title"] ?></h2>
 					</div>
@@ -39,10 +39,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		<div class="col-12">
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="media-tab" data-bs-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?= L::relatedMedia ?></span></a>
+					<a class="nav-link active" id="media-tab" data-bs-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?= L::relatedMedia() ?></span></a>
 				</li>
 				<li class="nav-item ms-auto">
-					<a class="nav-link" id="data-tab" data-bs-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?= L::data ?></span></a>
+					<a class="nav-link" id="data-tab" data-bs-toggle="tab" href="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?= L::data() ?></span></a>
 				</li>
 			</ul>
 			<div class="tab-content">

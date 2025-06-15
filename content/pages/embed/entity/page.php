@@ -12,7 +12,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<div class="rounded-circle">
 							<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute;">
 						</div>
-						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?= L::source; ?>: <?= html_entity_decode($apiResult["data"]["attributes"]["thumbnailCreator"]); ?>, <?= $apiResult["data"]["attributes"]["thumbnailLicense"] ?></span></div>
+						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?= L::source(); ?>: <?= html_entity_decode($apiResult["data"]["attributes"]["thumbnailCreator"]); ?>, <?= $apiResult["data"]["attributes"]["thumbnailLicense"] ?></span></div>
 					</div>
 					<div class="col">
 						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>

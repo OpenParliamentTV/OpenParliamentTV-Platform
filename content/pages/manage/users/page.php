@@ -18,15 +18,15 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2><?= L::manageUsers; ?></h2>
+                    <h2><?= L::manageUsers(); ?></h2>
                     <div class="card mb-3">
                         <div class="card-body">
-                            <a href="<?= $config["dir"]["root"] ?>/register" class="btn btn-primary btn-sm me-1"> <span class="icon-plus"></span> <?= L::manageUsersNewAccount; ?></a>
+                            <a href="<?= $config["dir"]["root"] ?>/register" class="btn btn-primary btn-sm me-1"> <span class="icon-plus"></span> <?= L::manageUsersNewAccount(); ?></a>
                         </div>
                     </div>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="all-users-tab" data-bs-toggle="tab" data-bs-target="#all-users" role="tab" aria-controls="all-users" aria-selected="true"><span class="icon-users"></span> <?= L::users; ?></a>
+                            <a class="nav-link active" id="all-users-tab" data-bs-toggle="tab" data-bs-target="#all-users" role="tab" aria-controls="all-users" aria-selected="true"><span class="icon-users"></span> <?= L::users(); ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -83,7 +83,7 @@ $(function() {
         operateFormatter: function(value, row, index) {
             
             const editButton = '<a class="list-group-item list-group-item-action" ' +
-                'title="<?= L::edit; ?>" ' +
+                'title="<?= L::edit(); ?>" ' +
                 'href="<?= $config["dir"]["root"]; ?>/manage/users/' + row.UserID + '">' +
                 '<span class="icon-pencil"></span>' +
                 '</a>';
@@ -115,13 +115,13 @@ $(function() {
         uniqueId: 'UserID',
         columns: [
             {field: 'UserID', visible: false},
-            {field: 'UserName', sortable: true, title: '<?= L::name; ?>'},
-            {field: 'UserMail', sortable: true, title: '<?= L::mailAddress; ?>'},
-            {field: 'UserRole', sortable: true, title: '<?= L::role; ?>', formatter: formatters.roleFormatter},
-            {field: 'UserActive', sortable: true, title: '<?= L::active; ?>', formatter: formatters.activeFormatter},
-            {field: 'UserBlocked', sortable: true, title: '<?= L::blocked; ?>', formatter: formatters.blockedFormatter},
-            {field: 'UserLastLogin', sortable: true, title: '<?= L::lastLogin; ?>', formatter: formatters.dateFormatter},
-            {field: 'UserRegisterDate', sortable: true, title: '<?= L::registerDate; ?>', formatter: formatters.dateFormatter},
+            {field: 'UserName', sortable: true, title: '<?= L::name(); ?>'},
+            {field: 'UserMail', sortable: true, title: '<?= L::mailAddress(); ?>'},
+            {field: 'UserRole', sortable: true, title: '<?= L::role(); ?>', formatter: formatters.roleFormatter},
+            {field: 'UserActive', sortable: true, title: '<?= L::active(); ?>', formatter: formatters.activeFormatter},
+            {field: 'UserBlocked', sortable: true, title: '<?= L::blocked(); ?>', formatter: formatters.blockedFormatter},
+            {field: 'UserLastLogin', sortable: true, title: '<?= L::lastLogin(); ?>', formatter: formatters.dateFormatter},
+            {field: 'UserRegisterDate', sortable: true, title: '<?= L::registerDate(); ?>', formatter: formatters.dateFormatter},
             {field: 'operate', title: '', formatter: formatters.operateFormatter, class: 'minWidthColumn'}
         ],
         queryParams: function(params) {

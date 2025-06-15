@@ -13,8 +13,8 @@ $langJSONString = LanguageManager::getInstance()->getLangJSONString();
 $color_scheme = isset($_COOKIE["color_scheme"]) ? $_COOKIE["color_scheme"] : false;
 if ($color_scheme === false) $color_scheme = 'light';
 
-$pageTitle = 'API '.L::documentation;
-$pageDescription = L::messageOpenData;
+$pageTitle = 'API '.L::documentation();
+$pageDescription = L::messageOpenData();
 $pageType = 'default';
 $pageBreadcrumbs = [
 	[

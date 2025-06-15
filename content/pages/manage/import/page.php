@@ -20,19 +20,19 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		<div class="sidebar-content">
 			<div class="row" style="position: relative; z-index: 1">
 				<div class="col-12">
-					<h2><?= L::manageImport; ?></h2>
+					<h2><?= L::manageImport(); ?></h2>
 					<div class="card mb-3">
 						<div class="card-body"></div>
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="parliaments-tab" data-bs-toggle="tab" data-bs-target="#parliaments" role="tab" aria-controls="parliaments" aria-selected="true"><span class="icon-bank"></span> <?= L::parliaments; ?></a>
+                            <a class="nav-link active" id="parliaments-tab" data-bs-toggle="tab" data-bs-target="#parliaments" role="tab" aria-controls="parliaments" aria-selected="true"><span class="icon-bank"></span> <?= L::parliaments(); ?></a>
                         </li>
 						<li class="nav-item">
-                            <a class="nav-link" id="external-tab" data-bs-toggle="tab" data-bs-target="#external" role="tab" aria-controls="external" aria-selected="false"><span class="icon-tags"></span> <?= L::entities; ?></a>
+                            <a class="nav-link" id="external-tab" data-bs-toggle="tab" data-bs-target="#external" role="tab" aria-controls="external" aria-selected="false"><span class="icon-tags"></span> <?= L::entities(); ?></a>
                         </li>
 						<li class="nav-item">
-                            <a class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="settings" aria-selected="false"><span class="icon-cog"></span> <?= L::settings; ?></a>
+                            <a class="nav-link" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="settings" aria-selected="false"><span class="icon-cog"></span> <?= L::settings(); ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -48,9 +48,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             </div>
                                         </div>
                                         <div class="mt-3">
-											<div><?= L::lastChanged; ?>:</div>
+											<div><?= L::lastChanged(); ?>:</div>
 											<div id="lastCommitDate" class="fw-bolder">-</div>
-											<div class="small"><?= L::sessions; ?>: <span id="repoRemoteSessions">-</span></div>
+											<div class="small"><?= L::sessions(); ?>: <span id="repoRemoteSessions">-</span></div>
 											<div class="small mt-1 d-none">Location: <span id="repoLocation">-</span></div>
 										</div>
                                     </div>
@@ -62,9 +62,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             </div>
                                         </div>
                                         <div class="mt-3 bg-white" style="z-index: 3;position: relative;">
-											<div><?= L::lastChanged; ?>:</div>
+											<div><?= L::lastChanged(); ?>:</div>
 											<div id="repoLocalUpdate" class="fw-bolder">-</div>
-											<div class="small"><?= L::sessions; ?>: <span id="repoLocalSessions">-</span></div>
+											<div class="small"><?= L::sessions(); ?>: <span id="repoLocalSessions">-</span></div>
 										</div>
                                     </div>
 									<div class="col-4 text-center status-item status-item-database">
@@ -75,9 +75,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             </div>
                                         </div>
                                         <div class="mt-3">
-											<div><?= L::lastChanged; ?>:</div>
+											<div><?= L::lastChanged(); ?>:</div>
 											<div id="lastDBDate" class="fw-bolder">-</div>
-											<div class="small"><?= L::sessions; ?>: <span id="dbSessions">-</span></div>
+											<div class="small"><?= L::sessions(); ?>: <span id="dbSessions">-</span></div>
 										</div>
                                     </div>
                                 </div>
@@ -86,15 +86,15 @@ if ($auth["meta"]["requestStatus"] != "success") {
 							<div class="row" id="data-import-progress-section">
 								<div class="col-12">
 									<div class="d-flex justify-content-between">
-										<div class="fw-bolder"><?= L::dataImport; ?> (DE)</div>
+										<div class="fw-bolder"><?= L::dataImport(); ?> (DE)</div>
 										<div id="data-import-items-text" class="small">Idle</div>
 									</div>
 									<div class="progress my-1" role="progressbar" aria-label="Data Import Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 										<div id="data-import-progress-bar" class="progress-bar" style="width: 0%"></div>
 									</div>
                                     <div id="data-import-status-text" class="small text-muted mb-2">Status: Idle</div>
-                                    <div id="data-import-current-file-text" class="small text-muted mb-2"><?= L::files; ?>: N/A</div>
-									<button type="button" id="btn-trigger-data-import" class="btn btn-outline-primary btn-sm me-1"><span class="icon-cw"></span> <?= L::triggerManualUpdate; ?></button>
+                                    <div id="data-import-current-file-text" class="small text-muted mb-2"><?= L::files(); ?>: N/A</div>
+									<button type="button" id="btn-trigger-data-import" class="btn btn-outline-primary btn-sm me-1"><span class="icon-cw"></span> <?= L::triggerManualUpdate(); ?></button>
                                     <div id="data-import-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
 								</div>
 							</div>
@@ -102,15 +102,15 @@ if ($auth["meta"]["requestStatus"] != "success") {
 							<div class="row" id="search-index-progress-section-DE" data-parliament-code="DE">
 								<div class="col-12">
 									<div class="d-flex justify-content-between">
-										<div class="fw-bolder"><?= L::searchIndex; ?> (DE)</div> 
+										<div class="fw-bolder"><?= L::searchIndex(); ?> (DE)</div> 
 										<div id="search-index-DE-items-text" class="small">Idle</div>
 									</div>
 									<div class="progress my-1" role="progressbar" aria-label="Search Index DE Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
 										<div id="search-index-DE-progress-bar" class="progress-bar" style="width: 0%"></div>
 									</div>
                                     <div id="search-index-DE-status-text" class="small text-muted mb-2">Status: Idle</div>
-									<button type="button" id="btn-trigger-search-index-refresh-DE" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="DE"><span class="icon-arrows-cw"></span> <?= L::refreshFullIndex; ?> (DE)</button>
-									<button type="button" id="btn-trigger-search-index-delete-DE" class="btn btn-danger btn-sm me-1" data-parliament-code="DE"><span class="icon-trash"></span> <?= L::deleteIndex; ?> (DE)</button>
+									<button type="button" id="btn-trigger-search-index-refresh-DE" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="DE"><span class="icon-arrows-cw"></span> <?= L::refreshFullIndex(); ?> (DE)</button>
+									<button type="button" id="btn-trigger-search-index-delete-DE" class="btn btn-danger btn-sm me-1" data-parliament-code="DE"><span class="icon-trash"></span> <?= L::deleteIndex(); ?> (DE)</button>
                                     <div id="search-index-DE-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
 								</div>
 							</div>

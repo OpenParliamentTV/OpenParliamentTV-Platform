@@ -39,7 +39,7 @@ foreach ($allowedParams as $k=>$v) {
 $isResult = (strlen($paramStr) > 2) ? true : false;
 
 $pageTitle = '';
-$pageDescription = L::claim;
+$pageDescription = L::claim();
 $page = (isset($_REQUEST["a"]) && strlen($_REQUEST["a"]) > 0) ? $_REQUEST["a"] : "main";
 $schemaItemScopeString = '';
 
@@ -56,15 +56,15 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
         if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
-            $pageTitle = '404 - '.L::messageErrorNotFound;
-            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageTitle = '404 - '.L::messageErrorNotFound();
+            $pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
             $pageType = 'default';
             ob_start();
             include_once("./content/pages/404/page.php");
             $content = ob_get_clean();
         } else {
-            $pageTitle = '<span class="icon-list-numbered"></span>'.L::agendaItem.': '.$apiResult["data"]["attributes"]["title"].' - '.$apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"].'/'.$apiResult["data"]["relationships"]["session"]["data"]["attributes"]["number"].' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
-            $pageDescription = L::speeches.' '.L::basedOn.': '.$apiResult["data"]["attributes"]["officialTitle"].' - '.$apiResult["data"]["attributes"]["title"];
+            $pageTitle = '<span class="icon-list-numbered"></span>'.L::agendaItem().': '.$apiResult["data"]["attributes"]["title"].' - '.$apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"].'/'.$apiResult["data"]["relationships"]["session"]["data"]["attributes"]["number"].' - '.$apiResult["data"]["attributes"]["parliamentLabel"];
+            $pageDescription = L::speeches().' '.L::basedOn().': '.$apiResult["data"]["attributes"]["officialTitle"].' - '.$apiResult["data"]["attributes"]["title"];
             $pageType = 'entity';
             $pageBreadcrumbs = [
                 [
@@ -83,8 +83,8 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
         if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
-            $pageTitle = '404 - '.L::messageErrorNotFound;
-            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageTitle = '404 - '.L::messageErrorNotFound();
+            $pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
             $pageType = 'default';
             ob_start();
             include_once("./content/pages/404/page.php");
@@ -93,9 +93,9 @@ switch ($page) {
             $pageTitle = '<span class="icon-type-document"></span>' . $apiResult["data"]["attributes"]["label"];
             
             if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) {
-            	$pageDescription = L::speeches . ' ' . L::basedOn . ': ' . $apiResult["data"]["attributes"]["labelAlternative"][0];
+            	$pageDescription = L::speeches() . ' ' . L::basedOn() . ': ' . $apiResult["data"]["attributes"]["labelAlternative"][0];
             } else {
-            	$pageDescription = L::speeches . ' ' . L::basedOn . ': ' . $apiResult["data"]["attributes"]["label"];
+            	$pageDescription = L::speeches() . ' ' . L::basedOn() . ': ' . $apiResult["data"]["attributes"]["label"];
             }
             
             $pageType = 'entity';
@@ -116,15 +116,15 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
         if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
-            $pageTitle = '404 - '.L::messageErrorNotFound;
-            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageTitle = '404 - '.L::messageErrorNotFound();
+            $pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
             $pageType = 'default';
             ob_start();
             include_once("./content/pages/404/page.php");
             $content = ob_get_clean();
         } else {
-            $pageTitle = '<span class="icon-check"></span>' . $apiResult["data"]["attributes"]["number"] . '. ' . L::electoralPeriod . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
-            $pageDescription = L::speeches . ' ' . L::inDER . ' ' . $apiResult["data"]["attributes"]["number"] . '. ' . L::electoralPeriod . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
+            $pageTitle = '<span class="icon-check"></span>' . $apiResult["data"]["attributes"]["number"] . '. ' . L::electoralPeriod() . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
+            $pageDescription = L::speeches() . ' ' . L::inDER() . ' ' . $apiResult["data"]["attributes"]["number"] . '. ' . L::electoralPeriod() . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
             $pageType = 'entity';
             $pageBreadcrumbs = [
                 [
@@ -152,7 +152,7 @@ switch ($page) {
 	case "media":
 		require_once("./modules/media/include.media.php");
 		$pageTitle = $speechTitleShort;
-		$pageDescription = L::speech.' '.L::onTheSubject.' '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' '.L::by.' '.$mainSpeaker['attributes']['label'].' ('.$speech["attributes"]["parliamentLabel"].', '.$formattedDate.')';
+		$pageDescription = L::speech().' '.L::onTheSubject().' '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' '.L::by().' '.$mainSpeaker['attributes']['label'].' ('.$speech["attributes"]["parliamentLabel"].', '.$formattedDate.')';
 		$pageType = 'entity';
 		ob_start();
 		include_once("./content/pages/media/page.php");
@@ -165,8 +165,8 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
         if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
-            $pageTitle = '404 - '.L::messageErrorNotFound;
-            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageTitle = '404 - '.L::messageErrorNotFound();
+            $pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
             $pageType = 'default';
             ob_start();
             include_once("./content/pages/404/page.php");
@@ -175,9 +175,9 @@ switch ($page) {
             $pageTitle = '<span class="icon-type-organisation"></span>' . $apiResult["data"]["attributes"]["label"];
             
             if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) {
-            	$pageDescription = L::speeches . ' ' . L::by . ': ' . $apiResult["data"]["attributes"]["labelAlternative"][0];
+            	$pageDescription = L::speeches() . ' ' . L::by() . ': ' . $apiResult["data"]["attributes"]["labelAlternative"][0];
             } else {
-            	$pageDescription = L::speeches . ' ' . L::by . ': ' . $apiResult["data"]["attributes"]["label"];
+            	$pageDescription = L::speeches() . ' ' . L::by() . ': ' . $apiResult["data"]["attributes"]["label"];
             }
             
             $pageType = 'entity';
@@ -198,15 +198,15 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
         if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
-            $pageTitle = '404 - '.L::messageErrorNotFound;
-            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageTitle = '404 - '.L::messageErrorNotFound();
+            $pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
             $pageType = 'default';
             ob_start();
             include_once("./content/pages/404/page.php");
             $content = ob_get_clean();
         } else {
             $pageTitle = '<span class="icon-type-person"></span>' . $apiResult["data"]["attributes"]["label"];
-            $pageDescription = L::speeches . ' ' . L::by . ': ' . $apiResult["data"]["attributes"]["label"];
+            $pageDescription = L::speeches() . ' ' . L::by() . ': ' . $apiResult["data"]["attributes"]["label"];
             $pageType = 'entity';
             $pageBreadcrumbs = [
                 [
@@ -225,15 +225,15 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
         if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
-            $pageTitle = '404 - '.L::messageErrorNotFound;
-            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageTitle = '404 - '.L::messageErrorNotFound();
+            $pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
             $pageType = 'default';
             ob_start();
             include_once("./content/pages/404/page.php");
             $content = ob_get_clean();
         } else {
-            $pageTitle = '<span class="icon-group"></span>' . L::session . ' ' . $apiResult["data"]["attributes"]["number"] . ' – ' . $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] . '. ' . L::electoralPeriod . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
-            $pageDescription = L::speeches . ' ' . L::inDER . ' ' . $apiResult["data"]["attributes"]["number"] . '. ' . L::session . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
+            $pageTitle = '<span class="icon-group"></span>' . L::session() . ' ' . $apiResult["data"]["attributes"]["number"] . ' – ' . $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] . '. ' . L::electoralPeriod() . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
+            $pageDescription = L::speeches() . ' ' . L::inDER() . ' ' . $apiResult["data"]["attributes"]["number"] . '. ' . L::session() . ' - ' . $apiResult["data"]["attributes"]["parliamentLabel"];
             $pageType = 'entity';
             $pageBreadcrumbs = [
                 [
@@ -253,8 +253,8 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
         if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
-            $pageTitle = '404 - '.L::messageErrorNotFound;
-            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageTitle = '404 - '.L::messageErrorNotFound();
+            $pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
             $pageType = 'default';
             ob_start();
             include_once("./content/pages/404/page.php");
@@ -263,9 +263,9 @@ switch ($page) {
             $pageTitle = '<span class="icon-type-term"></span>' . $apiResult["data"]["attributes"]["label"];
             
             if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) {
-            	$pageDescription = L::speeches . ' ' . L::onTheSubject . ': ' . $apiResult["data"]["attributes"]["labelAlternative"][0];
+            	$pageDescription = L::speeches() . ' ' . L::onTheSubject() . ': ' . $apiResult["data"]["attributes"]["labelAlternative"][0];
             } else {
-            	$pageDescription = L::speeches . ' ' . L::onTheSubject . ': ' . $apiResult["data"]["attributes"]["label"];
+            	$pageDescription = L::speeches() . ' ' . L::onTheSubject() . ': ' . $apiResult["data"]["attributes"]["label"];
             }
 
             $pageType = 'entity';
@@ -283,7 +283,7 @@ switch ($page) {
 	* OTHER PAGES 
 	**********************************/
 	case "about":
-		$pageTitle = L::about;
+		$pageTitle = L::about();
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -295,7 +295,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "datapolicy":
-		$pageTitle = L::dataPolicy;
+		$pageTitle = L::dataPolicy();
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -307,7 +307,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "imprint":
-		$pageTitle = L::imprint;
+		$pageTitle = L::imprint();
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -319,7 +319,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "login":
-		$pageTitle = L::login;
+		$pageTitle = L::login();
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -331,7 +331,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "logout":
-		$pageTitle = L::logout;
+		$pageTitle = L::logout();
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -349,7 +349,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "password-reset":
-		$pageTitle = L::resetPassword;
+		$pageTitle = L::resetPassword();
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -361,7 +361,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "press":
-		$pageTitle = L::press;
+		$pageTitle = L::press();
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -373,7 +373,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "register":
-		$pageTitle = L::registerNewAccount;
+		$pageTitle = L::registerNewAccount();
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -385,7 +385,7 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "registerConfirm":
-		$pageTitle = L::registerConfirmMailAddress;
+		$pageTitle = L::registerConfirmMailAddress();
 		$pageType = 'default';
 		$pageBreadcrumbs = [
 			[
@@ -412,7 +412,7 @@ switch ($page) {
 	* USER-SPECIFIC / ADMINISTRATION
 	**********************************/
 	case "manage":
-		$pageTitle = L::dashboard;
+		$pageTitle = L::dashboard();
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
@@ -424,11 +424,11 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "manage-settings":
-		$pageTitle = L::platformSettings;
+		$pageTitle = L::platformSettings();
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard,
+				'label' => L::dashboard(),
 				'path' => '/manage'
 			],
 			[
@@ -442,15 +442,15 @@ switch ($page) {
 	case "manage-conflicts":
 		ob_start();
 		if (isset($_REQUEST["id"])) {
-			$pageTitle = L::manageConflicts;
+			$pageTitle = L::manageConflicts();
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
-					'label' => L::dashboard,
+					'label' => L::dashboard(),
 					'path' => '/manage'
 				],
 				[
-					'label' => L::manageConflicts,
+					'label' => L::manageConflicts(),
 					'path' => '/manage/conflicts'
 				],
 				[
@@ -460,11 +460,11 @@ switch ($page) {
 			include_once("./content/pages/manage/conflicts/conflict-detail/page.php");
 			$content = ob_get_clean();
 		} else {
-			$pageTitle = L::manageConflicts;
+			$pageTitle = L::manageConflicts();
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
-					'label' => L::dashboard,
+					'label' => L::dashboard(),
 					'path' => '/manage'
 				],
 				[
@@ -476,11 +476,11 @@ switch ($page) {
 		}
 	break;
 	case "manage-entities":
-		$pageTitle = L::manageEntities;
+		$pageTitle = L::manageEntities();
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard,
+				'label' => L::dashboard(),
 				'path' => '/manage'
 			],
 			[
@@ -493,11 +493,11 @@ switch ($page) {
 	break;
 	case "manage-entity-suggestions":
 		ob_start();
-		$pageTitle = L::manageEntitySuggestions;
+		$pageTitle = L::manageEntitySuggestions();
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard,
+				'label' => L::dashboard(),
 				'path' => '/manage'
 			],
 			[
@@ -508,11 +508,11 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "manage-import":
-		$pageTitle = L::manageImport;
+		$pageTitle = L::manageImport();
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard,
+				'label' => L::dashboard(),
 				'path' => '/manage'
 			],
 			[
@@ -530,11 +530,11 @@ switch ($page) {
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
-					'label' => L::dashboard,
+					'label' => L::dashboard(),
 					'path' => '/manage'
 				],
 				[
-					'label' => L::manageMedia,
+					'label' => L::manageMedia(),
 					'path' => '/manage/media'
 				],
 				[
@@ -544,11 +544,11 @@ switch ($page) {
 			include_once("./content/pages/manage/media/media-detail/page.php");
 			$content = ob_get_clean();
 		} else {
-			$pageTitle = L::manageMedia;
+			$pageTitle = L::manageMedia();
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
-					'label' => L::dashboard,
+					'label' => L::dashboard(),
 					'path' => '/manage'
 				],
 				[
@@ -560,11 +560,11 @@ switch ($page) {
 		}
 	break;
 	case "manage-notifications":
-		$pageTitle = L::notifications;
+		$pageTitle = L::notifications();
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard,
+				'label' => L::dashboard(),
 				'path' => '/manage'
 			],
 			[
@@ -576,11 +576,11 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "manage-structure":
-		$pageTitle = L::manageStructure;
+		$pageTitle = L::manageStructure();
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard,
+				'label' => L::dashboard(),
 				'path' => '/manage'
 			],
 			[
@@ -598,8 +598,8 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
         if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
-            $pageTitle = '404 - '.L::messageErrorNotFound;
-            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageTitle = '404 - '.L::messageErrorNotFound();
+            $pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
             $pageType = 'default';
             ob_start();
             include_once("./content/pages/404/page.php");
@@ -609,11 +609,11 @@ switch ($page) {
             $pageType = 'admin';
             $pageBreadcrumbs = [
 				[
-					'label' => L::dashboard,
+					'label' => L::dashboard(),
 					'path' => '/manage'
 				],
 				[
-					'label' => L::manageStructure,
+					'label' => L::manageStructure(),
 					'path' => '/manage/structure'
 				],
 				[
@@ -632,8 +632,8 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
         if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
-            $pageTitle = '404 - '.L::messageErrorNotFound;
-            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageTitle = '404 - '.L::messageErrorNotFound();
+            $pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
             $pageType = 'default';
             ob_start();
             include_once("./content/pages/404/page.php");
@@ -643,11 +643,11 @@ switch ($page) {
             $pageType = 'admin';
             $pageBreadcrumbs = [
 				[
-					'label' => L::dashboard,
+					'label' => L::dashboard(),
 					'path' => '/manage'
 				],
 				[
-					'label' => L::manageStructure,
+					'label' => L::manageStructure(),
 					'path' => '/manage/structure'
 				],
 				[
@@ -666,8 +666,8 @@ switch ($page) {
 			"id"=>$_REQUEST["id"]
 		]);
         if ((!$apiResult) || ($apiResult["meta"]["requestStatus"] == "error")) {
-            $pageTitle = '404 - '.L::messageErrorNotFound;
-            $pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+            $pageTitle = '404 - '.L::messageErrorNotFound();
+            $pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
             $pageType = 'default';
             ob_start();
             include_once("./content/pages/404/page.php");
@@ -677,11 +677,11 @@ switch ($page) {
             $pageType = 'admin';
             $pageBreadcrumbs = [
 				[
-					'label' => L::dashboard,
+					'label' => L::dashboard(),
 					'path' => '/manage'
 				],
 				[
-					'label' => L::manageStructure,
+					'label' => L::manageStructure(),
 					'path' => '/manage/structure'
 				],
 				[
@@ -703,8 +703,8 @@ switch ($page) {
 			]);
 
 			if ($apiResult["meta"]["requestStatus"] != "success") {
-				$pageTitle = '404 - '.L::messageErrorNotFound;
-				$pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+				$pageTitle = '404 - '.L::messageErrorNotFound();
+				$pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
 				$pageType = 'default';
 				include_once("./content/pages/404/page.php");
 			} else {
@@ -712,11 +712,11 @@ switch ($page) {
 				$pageType = 'admin';
 				$pageBreadcrumbs = [
 					[
-						'label' => L::dashboard,
+						'label' => L::dashboard(),
 						'path' => '/manage'
 					],
 					[
-						'label' => L::manageUsers,
+						'label' => L::manageUsers(),
 						'path' => '/manage/users'
 					],
 					[
@@ -727,11 +727,11 @@ switch ($page) {
 			}
 			$content = ob_get_clean();
 		} else {
-			$pageTitle = L::manageUsers;
+			$pageTitle = L::manageUsers();
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
-					'label' => L::dashboard,
+					'label' => L::dashboard(),
 					'path' => '/manage'
 				],
 				[
@@ -774,11 +774,11 @@ switch ($page) {
 			$pageTitle .= $_REQUEST["q"];
 
 			if (count($_REQUEST) < 2 || (!$_REQUEST["q"] && !$_REQUEST["personID"])) {
-				$pageTitle .= L::search;
+				$pageTitle .= L::search();
 			} elseif (isset($_REQUEST["parliament"]) && $_REQUEST["parliament"] && strlen($_REQUEST["parliament"]) >= 2) {
-				$pageTitle .= ' - '.L::speeches.' - '.$config["parliament"][$_REQUEST["parliament"]]["label"];
+				$pageTitle .= ' - '.L::speeches().' - '.$config["parliament"][$_REQUEST["parliament"]]["label"];
 			} else {
-				$pageTitle .= ' - '.L::speeches;
+				$pageTitle .= ' - '.L::speeches();
 			}
 		}
 
@@ -789,8 +789,8 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	default:
-		$pageTitle = '404 - '.L::messageErrorNotFound;
-		$pageDescription = L::messageErrorNotFoundQuote.' - Jakob Maria Mierscheid, SPD';
+		$pageTitle = '404 - '.L::messageErrorNotFound();
+		$pageDescription = L::messageErrorNotFoundQuote().' - Jakob Maria Mierscheid, SPD';
 		$pageType = 'default';
 		ob_start();
 		include_once("./content/pages/404/page.php");

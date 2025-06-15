@@ -20,7 +20,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2><?= L::manageUsers; ?>: <?= htmlspecialchars($userData["UserName"]); ?></h2>
+                    <h2><?= L::manageUsers(); ?>: <?= htmlspecialchars($userData["UserName"]); ?></h2>
                     <div class="card mb-3">
 						<div class="card-body">
                             
@@ -28,7 +28,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-cog"></span> <?= L::data; ?></a>
+                            <a class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-cog"></span> <?= L::data(); ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -39,22 +39,22 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="UserName" class="form-label"><?= L::name; ?></label>
+                                        <label for="UserName" class="form-label"><?= L::name(); ?></label>
                                         <input type="text" class="form-control" id="UserName" name="UserName" 
                                                value="<?= htmlspecialchars($userData["UserName"]); ?>" required>
                                         <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired; ?>
+                                            <?= L::messageErrorFieldRequired(); ?>
                                         </div>
                                         <div class="d-flex justify-content-between align-items-center mt-3 mb-3 mb-md-0">
-                                            <label class="form-label mb-0"><?= L::password; ?></label>
+                                            <label class="form-label mb-0"><?= L::password(); ?></label>
                                             <button type="button" class="btn btn-outline-primary btn-sm" id="togglePassword">
-                                                <span class="icon-pencil"></span><?= L::changePassword; ?>
+                                                <span class="icon-pencil"></span><?= L::changePassword(); ?>
                                             </button>
                                         </div>
                                         <div id="passwordFields" class="mt-3 mb-4 mb-md-0" style="display: none;">
                                             <div class="input-group mb-2">
                                                 <input type="password" class="form-control" id="UserPassword" name="UserPassword" 
-                                                       minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral; ?> <?= L::password; ?>">
+                                                       minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral(); ?> <?= L::password(); ?>">
                                                 <button class="btn btn-outline-primary" type="button" id="showPassword">
                                                     <i class="icon-eye"></i>
                                                 </button>
@@ -62,7 +62,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                             </div>
                                             <div class="input-group mb-2">
                                                 <input type="password" class="form-control" id="UserPasswordConfirm" name="UserPasswordConfirm" 
-                                                       minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral; ?> <?= L::passwordConfirm; ?>">
+                                                       minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral(); ?> <?= L::passwordConfirm(); ?>">
                                                 <button class="btn btn-outline-primary" type="button" id="showPasswordConfirm">
                                                     <i class="icon-eye"></i>
                                                 </button>
@@ -78,15 +78,15 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     <div class="col-md-6">
                                         <table class="table mb-2 mb-md-0" style="border: 1px solid var(--border-color);">
                                             <tr>
-                                                <td><?= L::mailAddress; ?>:</td>
+                                                <td><?= L::mailAddress(); ?>:</td>
                                                 <td><?= htmlspecialchars($userData["UserMail"]); ?></td>
                                             </tr>
                                             <tr>
-                                                <td><?= L::lastLogin; ?>:</td>
+                                                <td><?= L::lastLogin(); ?>:</td>
                                                 <td><?= $userData["UserLastLogin"]; ?></td>
                                             </tr>
                                             <tr>
-                                                <td><?= L::registerDate; ?>:</td>
+                                                <td><?= L::registerDate(); ?>:</td>
                                                 <td><?= $userData["UserRegisterDate"]; ?></td>
                                             </tr>
                                         </table>
@@ -97,10 +97,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 <hr>
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="UserRole" class="form-label"><?= L::role; ?></label>
+                                        <label for="UserRole" class="form-label"><?= L::role(); ?></label>
                                         <select class="form-select" id="UserRole" name="UserRole">
-                                            <option value="user" <?= $userData["UserRole"] === "user" ? "selected" : ""; ?>><?= L::roleUser; ?></option>
-                                            <option value="admin" <?= $userData["UserRole"] === "admin" ? "selected" : ""; ?>><?= L::roleAdmin; ?></option>
+                                            <option value="user" <?= $userData["UserRole"] === "user" ? "selected" : ""; ?>><?= L::roleUser(); ?></option>
+                                            <option value="admin" <?= $userData["UserRole"] === "admin" ? "selected" : ""; ?>><?= L::roleAdmin(); ?></option>
                                         </select>
                                     </div>
                                     <div class="col-md-6 mt-3 mt-md-0">
@@ -110,14 +110,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" id="UserActive" name="UserActive" 
                                                            <?= $userData["UserActive"] ? "checked" : ""; ?>>
-                                                    <label class="form-check-label" for="UserActive"><?= L::active; ?></label>
+                                                    <label class="form-check-label" for="UserActive"><?= L::active(); ?></label>
                                                 </div>
                                             </div>
                                             <div class="col-6">
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" id="UserBlocked" name="UserBlocked" 
                                                            <?= $userData["UserBlocked"] ? "checked" : ""; ?>>
-                                                    <label class="form-check-label" for="UserBlocked"><?= L::blocked; ?></label>
+                                                    <label class="form-check-label" for="UserBlocked"><?= L::blocked(); ?></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,10 +132,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     <div class="col-12">
                                         <div class="row g-2">
                                             <div class="col-6 col-sm-auto">
-                                                <button type="submit" class="btn btn-primary w-100" id="saveButton" disabled><span class="icon-ok"></span> <?= L::save; ?></button>
+                                                <button type="submit" class="btn btn-primary w-100" id="saveButton" disabled><span class="icon-ok"></span> <?= L::save(); ?></button>
                                             </div>
                                             <div class="col-6 col-sm-auto">
-                                                <button type="button" class="btn btn-secondary w-100" id="cancelButton" disabled><span class="icon-cancel"></span> <?= L::cancel; ?></button>
+                                                <button type="button" class="btn btn-secondary w-100" id="cancelButton" disabled><span class="icon-cancel"></span> <?= L::cancel(); ?></button>
                                             </div>
                                         </div>
                                     </div>
@@ -177,7 +177,7 @@ $(function() {
     togglePasswordBtn.addEventListener('click', function() {
         const isVisible = passwordFields.style.display !== 'none';
         passwordFields.style.display = isVisible ? 'none' : 'block';
-        togglePasswordBtn.innerHTML = isVisible ? '<span class="icon-pencil"></span><?= L::changePassword; ?>' : '<span class="icon-cancel"></span><?= L::cancel; ?>';
+        togglePasswordBtn.innerHTML = isVisible ? '<span class="icon-pencil"></span><?= L::changePassword(); ?>' : '<span class="icon-cancel"></span><?= L::cancel(); ?>';
         
         if (isVisible) {
             // Clear password fields when hiding
@@ -220,7 +220,7 @@ $(function() {
     cancelButton.addEventListener('click', function() {
         form.reset();
         passwordFields.style.display = 'none';
-        togglePasswordBtn.innerHTML = '<span class="icon-pencil"></span><?= L::changePassword; ?>';
+        togglePasswordBtn.innerHTML = '<span class="icon-pencil"></span><?= L::changePassword(); ?>';
         document.getElementById('passwordStrength').style.width = '0%';
         document.getElementById('passwordStrengthText').textContent = '';
         document.getElementById('passwordMatchText').textContent = '';
@@ -246,14 +246,14 @@ $(function() {
             if (!passwordValidation.checkPasswordStrength()) {
                 const passwordField = document.getElementById('UserPassword');
                 passwordField.classList.add('is-invalid');
-                passwordField.closest('.input-group').querySelector('.invalid-feedback').innerHTML = '<?= L::messagePasswordTooWeak; ?>';
+                passwordField.closest('.input-group').querySelector('.invalid-feedback').innerHTML = '<?= L::messagePasswordTooWeak(); ?>';
                 return;
             }
             
             if (!passwordValidation.checkPasswordMatch()) {
                 const confirmField = document.getElementById('UserPasswordConfirm');
                 confirmField.classList.add('is-invalid');
-                confirmField.closest('.input-group').querySelector('.invalid-feedback').innerHTML = '<?= L::messagePasswordNotIdentical; ?>';
+                confirmField.closest('.input-group').querySelector('.invalid-feedback').innerHTML = '<?= L::messagePasswordNotIdentical(); ?>';
                 return;
             }
         }
@@ -286,7 +286,7 @@ $(function() {
             success: function(response) {
                 if (response.meta.requestStatus === 'success') {
                     // Show success message
-                    formMessage.textContent = '<?= L::messageEditSuccess; ?>';
+                    formMessage.textContent = '<?= L::messageEditSuccess(); ?>';
                     formMessage.className = 'alert alert-success mb-3';
                     formMessage.style.display = 'block';
                     
@@ -301,7 +301,7 @@ $(function() {
                     
                     // Hide password fields and reset them
                     passwordFields.style.display = 'none';
-                    togglePasswordBtn.innerHTML = '<span class="icon-pencil"></span><?= L::changePassword; ?>';
+                    togglePasswordBtn.innerHTML = '<span class="icon-pencil"></span><?= L::changePassword(); ?>';
                     document.getElementById('UserPassword').value = '';
                     document.getElementById('UserPasswordConfirm').value = '';
                     document.getElementById('passwordStrength').style.width = '0%';
@@ -335,7 +335,7 @@ $(function() {
             },
             error: function(xhr, status, error) {
                 // Show error message
-                formMessage.textContent = '<?= L::messageEditError; ?>: ' + error;
+                formMessage.textContent = '<?= L::messageEditError(); ?>: ' + error;
                 formMessage.className = 'alert alert-danger mb-3';
                 formMessage.style.display = 'block';
                 

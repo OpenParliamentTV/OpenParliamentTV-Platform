@@ -38,13 +38,13 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			$findsString = str_replace(
 				['{hits}', '{speeches}'],
 				['<strong>'.$totalHits.'</strong>', '<strong>'.$totalResultString.'</strong>'],
-				L::hitsInSpeeches
+				L::hitsInSpeeches()
 			);
 		} else {
-			$findsString = '<strong>'.$totalResultString.'</strong> '.L::speechesFound;
+			$findsString = '<strong>'.$totalResultString.'</strong> '.L::speechesFound();
 		}
 	} else {
-		$findsString = '<strong>'.$totalResultString.'</strong> '.L::speechesFound;
+		$findsString = '<strong>'.$totalResultString.'</strong> '.L::speechesFound();
 	}
 
 	//echo "<pre style='color:#FFF'>";
@@ -58,17 +58,17 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			<label class="col-form-label px-0 me-0 me-sm-1 col-12 col-sm-auto text-center text-sm-left"><?= $findsString ?></label>
 		</div>
 		<div class="col-12 col-sm-6 pr-0 pr-sm-2" style="text-align: right;">
-			<label class="col-form-label" for="sort"><?= L::sortBy; ?></label>
+			<label class="col-form-label" for="sort"><?= L::sortBy(); ?></label>
 			<select style="width: auto;" class="form-select form-select-sm ms-1 d-inline-block" id="sort" name="sort">
-				<option value="relevance" selected><?= L::relevance; ?></option>
-				<option value="topic-asc"><?= L::topic; ?> (<?= L::sortByAsc; ?>)</option>
-				<option value="topic-desc"><?= L::topic; ?> (<?= L::sortByDesc; ?>)</option>
-				<option value="date-asc"><?= L::date; ?> (<?= L::sortByAsc; ?>)</option>
-				<option value="date-desc"><?= L::date; ?> (<?= L::sortByDesc; ?>)</option>
-				<option value="duration-asc"><?= L::duration; ?> (<?= L::sortByDurationAsc; ?>)</option>
+				<option value="relevance" selected><?= L::relevance(); ?></option>
+				<option value="topic-asc"><?= L::topic(); ?> (<?= L::sortByAsc(); ?>)</option>
+				<option value="topic-desc"><?= L::topic(); ?> (<?= L::sortByDesc(); ?>)</option>
+				<option value="date-asc"><?= L::date(); ?> (<?= L::sortByAsc(); ?>)</option>
+				<option value="date-desc"><?= L::date(); ?> (<?= L::sortByDesc(); ?>)</option>
+				<option value="duration-asc"><?= L::duration(); ?> (<?= L::sortByDurationAsc(); ?>)</option>
 				<?php if ($_SESSION["userdata"]["role"] == "admin") { ?>
-					<option value="changed-asc"><?= L::changeDate; ?> (<?= L::sortByAsc; ?>)</option>
-					<option value="changed-desc"><?= L::changeDate; ?> (<?= L::sortByDesc; ?>)</option>
+					<option value="changed-asc"><?= L::changeDate(); ?> (<?= L::sortByAsc(); ?>)</option>
+					<option value="changed-desc"><?= L::changeDate(); ?> (<?= L::sortByDesc(); ?>)</option>
 				<?php } ?>
 			</select>
 		</div>
@@ -80,22 +80,22 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<thead>
 						<tr>
 							<th>
-								<div class="th-inner"><?= L::session; ?></div>
+								<div class="th-inner"><?= L::session(); ?></div>
 							</th>
 							<th>
-								<div class="th-inner"><?= L::date; ?></div>
+								<div class="th-inner"><?= L::date(); ?></div>
 							</th>
 							<th>
-								<div class="th-inner"><?= L::agendaItem; ?></div>
+								<div class="th-inner"><?= L::agendaItem(); ?></div>
 							</th>
 							<th>
-								<div class="th-inner"><?= L::contextmainSpeaker; ?></div>
+								<div class="th-inner"><?= L::contextmainSpeaker(); ?></div>
 							</th>
 							<th>
-								<div class="th-inner"><?= L::duration; ?></div>
+								<div class="th-inner"><?= L::duration(); ?></div>
 							</th>
 							<th>
-								<div class="th-inner"><?= L::lastChanged; ?></div>
+								<div class="th-inner"><?= L::lastChanged(); ?></div>
 							</th>
 							<?php if ($_SESSION["userdata"]["role"] == "admin") { ?>
 								<th>
@@ -166,7 +166,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 } else {
 	?>
 	<div class="filterSummary row">
-		<div class="col alert alert-info"><?= L::noRelevant; ?> <?= L::speechesFound; ?></div>
+		<div class="col alert alert-info"><?= L::noRelevant(); ?> <?= L::speechesFound(); ?></div>
 	</div>
 
 <?php 

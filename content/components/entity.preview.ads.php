@@ -79,7 +79,7 @@ if ($entity["data"]["type"] == "organisation") {
 							// Original Source link for documents
 							if (isset($entity["data"]["attributes"]["sourceURI"]) && !empty($entity["data"]["attributes"]["sourceURI"])) { ?>
 								<a class="btn btn-sm me-2 mb-2" href="<?= $entity["data"]["attributes"]["sourceURI"] ?>" target="_blank">
-									<span class="icon-link"></span> Original <?= L::document; ?>
+									<span class="icon-link"></span> Original <?= L::document(); ?>
 								</a>
 							<?php }
 

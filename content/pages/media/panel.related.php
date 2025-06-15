@@ -193,7 +193,7 @@ $nerPanel = '';
 if ($config["display"]["ner"]) {
     $nerPanel = 
     '<hr>
-    <div class="relationshipsCategoryHeader">'.L::automaticallyDetected.' <a class="alert ms-1 px-1 py-0 alert-warning" data-bs-toggle="modal" data-bs-target="#nerModal" href="#" style="font-weight: lighter;"><span class="icon-attention me-1"></span><u>beta</u></a></div>
+    <div class="relationshipsCategoryHeader">'.L::automaticallyDetected().' <a class="alert ms-1 px-1 py-0 alert-warning" data-bs-toggle="modal" data-bs-target="#nerModal" href="#" style="font-weight: lighter;"><span class="icon-attention me-1"></span><u>beta</u></a></div>
     <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">
         '.$relatedPeopleHTMLNER.' '.$relatedOrganisationsHTMLNER.' '.$relatedDocumentsHTMLNER.' '.$relatedTermsHTMLNER.' 
     </div>';
@@ -207,45 +207,45 @@ if ($config["display"]["ner"]) {
         <?php } else { ?>
             <div class="container h-100" style="user-select: none;">
                 <div class="row h-100 align-items-center text-center">
-                    <div class="col"><?= L::messageNoProceedings ?></div>
+                    <div class="col"><?= L::messageNoProceedings() ?></div>
                 </div>
             </div>
         <?php } ?>
     </div>
     <div class="tab-pane fade" id="relationships" role="tabpanel">
-        <div class="relationshipsCategoryHeader"><?= L::personPlural ?></div>
+        <div class="relationshipsCategoryHeader"><?= L::personPlural() ?></div>
         <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2"><?= $relatedPeopleHTML ?></div>
         <hr>
-        <div class="relationshipsCategoryHeader"><?= L::documents ?></div>
+        <div class="relationshipsCategoryHeader"><?= L::documents() ?></div>
         <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2"><?= $relatedDocumentsHTML ?></div>
         <?= $nerPanel ?>
     </div>
     <div class="tab-pane fade" id="data" role="tabpanel">
         <div class="alert alert-info" role="alert">
-            <div class="mb-1"><?= L::messageOpenData; ?>: <a class="text-reset" href="<?= $config["dir"]["root"] ?>/api"><?= $config["dir"]["root"] ?>/api</a></div>
+            <div class="mb-1"><?= L::messageOpenData(); ?>: <a class="text-reset" href="<?= $config["dir"]["root"] ?>/api"><?= $config["dir"]["root"] ?>/api</a></div>
         </div>
         <div class="input-group">
             <span class="input-group-text me-0">API URL</span>
             <input id="apiLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= $speech["links"]["self"] ?>">
             <a href="<?= $speech["links"]["self"] ?>" target="_blank" class="btn btn-sm input-group-text">
                 <span class="icon-right-open-big"></span>
-                <span class="d-none d-md-inline"><?= L::showResult; ?></span>
+                <span class="d-none d-md-inline"><?= L::showResult(); ?></span>
             </a>
         </div>
         <hr>
-        <div class="relationshipsCategoryHeader"><?= L::data ?></div>
+        <div class="relationshipsCategoryHeader"><?= L::data() ?></div>
         <table class="table table-striped table-bordered">
             <tbody>
                 <tr>
-                    <td><?= L::source ?></td>
+                    <td><?= L::source() ?></td>
                     <td><?= $speech["attributes"]["creator"] ?>, <?= html_entity_decode($speech["attributes"]["license"]); ?></td>
                 </tr>
                 <tr>
-                    <td><?= L::citeAs ?></td>
-                    <td><?= $speech["attributes"]["creator"] ?> via <?= L::brand ?></td>
+                    <td><?= L::citeAs() ?></td>
+                    <td><?= $speech["attributes"]["creator"] ?> via <?= L::brand() ?></td>
                 </tr>
                 <tr>
-                    <td><?= L::retrievedFrom ?></td>
+                    <td><?= L::retrievedFrom() ?></td>
                     <td><a href="<?= $speech["attributes"]["sourcePage"] ?>" target="_blank"><?= $speech["attributes"]["sourcePage"] ?></a></td>
                 </tr>
             </tbody>
@@ -253,15 +253,15 @@ if ($config["display"]["ner"]) {
         <table class="table table-striped table-bordered">
             <tbody>
                 <tr>
-                    <td><?= L::electoralPeriod ?></td>
+                    <td><?= L::electoralPeriod() ?></td>
                     <td><a href="<?= $config["dir"]["root"] ?>/electoralPeriod/<?= $speech["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $speech["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?></a></td>
                 </tr>
                 <tr>
-                    <td><?= L::session ?></td>
+                    <td><?= L::session() ?></td>
                     <td><a href="<?= $config["dir"]["root"] ?>/session/<?= $speech["relationships"]["session"]["data"]["id"] ?>"><?= $speech["relationships"]["session"]["data"]["attributes"]["number"] ?></a></td>
                 </tr>
                 <tr>
-                    <td><?= L::agendaItem ?></td>
+                    <td><?= L::agendaItem() ?></td>
                     <td><a href="<?= $config["dir"]["root"] ?>/agendaItem/<?= $speech["attributes"]["parliament"] ?>-<?= $speech["relationships"]["agendaItem"]["data"]["id"] ?>"><?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["title"] ?></a></td>
                 </tr>
             </tbody>

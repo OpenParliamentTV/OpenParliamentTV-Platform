@@ -24,7 +24,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-th-list"></span> <?= L::data; ?></a>
+                            <a class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-th-list"></span> <?= L::data(); ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -34,11 +34,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="ElectoralPeriodNumber" class="form-label"><?= L::electoralPeriod; ?></label>
+                                        <label for="ElectoralPeriodNumber" class="form-label"><?= L::electoralPeriod(); ?></label>
                                         <input type="number" class="form-control" id="ElectoralPeriodNumber" name="ElectoralPeriodNumber" 
                                                value="<?= htmlspecialchars($electoralPeriodData["ElectoralPeriodNumber"]); ?>" required>
                                         <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired; ?>
+                                            <?= L::messageErrorFieldRequired(); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -48,7 +48,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                                 <td><?= htmlspecialchars($electoralPeriodData["ElectoralPeriodID"]); ?></td>
                                             </tr>
                                             <tr>
-                                                <td><?= L::parliament; ?>:</td>
+                                                <td><?= L::parliament(); ?>:</td>
                                                 <td><?= htmlspecialchars($electoralPeriodData["ParliamentLabel"]); ?></td>
                                             </tr>
                                         </table>
@@ -57,19 +57,19 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="ElectoralPeriodDateStart" class="form-label"><?= L::dateStart; ?></label>
+                                        <label for="ElectoralPeriodDateStart" class="form-label"><?= L::dateStart(); ?></label>
                                         <input type="date" class="form-control" id="ElectoralPeriodDateStart" name="ElectoralPeriodDateStart" 
                                                value="<?= htmlspecialchars($electoralPeriodData["ElectoralPeriodDateStart"]); ?>" required>
                                         <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired; ?>
+                                            <?= L::messageErrorFieldRequired(); ?>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="ElectoralPeriodDateEnd" class="form-label"><?= L::dateEnd; ?></label>
+                                        <label for="ElectoralPeriodDateEnd" class="form-label"><?= L::dateEnd(); ?></label>
                                         <input type="date" class="form-control" id="ElectoralPeriodDateEnd" name="ElectoralPeriodDateEnd" 
                                                value="<?= htmlspecialchars($electoralPeriodData["ElectoralPeriodDateEnd"]); ?>" required>
                                         <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired; ?>
+                                            <?= L::messageErrorFieldRequired(); ?>
                                         </div>
                                     </div>
                                 </div>
@@ -82,10 +82,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     <div class="col-12">
                                         <div class="row g-2">
                                             <div class="col-6 col-sm-auto">
-                                                <button type="submit" class="btn btn-primary w-100" id="saveButton" disabled><span class="icon-ok"></span> <?= L::save; ?></button>
+                                                <button type="submit" class="btn btn-primary w-100" id="saveButton" disabled><span class="icon-ok"></span> <?= L::save(); ?></button>
                                             </div>
                                             <div class="col-6 col-sm-auto">
-                                                <button type="button" class="btn btn-secondary w-100" id="cancelButton" disabled><span class="icon-cancel"></span> <?= L::cancel; ?></button>
+                                                <button type="button" class="btn btn-secondary w-100" id="cancelButton" disabled><span class="icon-cancel"></span> <?= L::cancel(); ?></button>
                                             </div>
                                         </div>
                                     </div>
@@ -210,7 +210,7 @@ $(function() {
 
                 if (response.meta.requestStatus === 'success') {
                     // Show success message
-                    formMessage.textContent = '<?= L::messageEditSuccess; ?>';
+                    formMessage.textContent = '<?= L::messageEditSuccess(); ?>';
                     formMessage.className = 'alert alert-success mb-3';
                     formMessage.style.display = 'block';
                     
@@ -247,7 +247,7 @@ $(function() {
             },
             error: function(xhr, status, error) {
                 // Show error message
-                formMessage.textContent = '<?= L::messageEditError; ?>: ' + error;
+                formMessage.textContent = '<?= L::messageEditError(); ?>: ' + error;
                 formMessage.className = 'alert alert-danger mb-3';
                 formMessage.style.display = 'block';
                 

@@ -2,7 +2,7 @@
 <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
-		    <h2><?= L::dataPolicy; ?></h2>
+		    <h2><?= L::dataPolicy(); ?></h2>
             <p>Veri işleme sorumlusu Joscha Jäger c/o Center for the Cultivation of Technology gemeinnützige GmbH, Aufgang 4, Gottschedstraße 4, 13357 Berlin'dir. Yetkili denetim otoritesi <a href="https://www.datenschutz-berlin.de">Berlin Veri Koruma ve Bilgi Özgürlüğü Komiseri</a>'dir.</p>
 			<p>Verilerinizin güvenliği bizim için en önemli önceliktir. Kişisel verilerinizi yetkisiz erişime karşı korumak için tüm olası önlemleri alıyoruz. AB'nin Genel Veri Koruma Yönetmeliği (GDPR), Federal Veri Koruma Yasası (BDSG), Medya Yasası (TMG) ve diğer tüm veri koruma düzenlemelerinin tüm gereksinimlerine uyuyoruz. Web sitemizi kişisel bilgi vermeden ziyaret edebilirsiniz.</p>
 			<p>OpenParliament.TV web sitesi ve parlamento özel alt alan ad adları (örneğin de.openparliament.tv), genel kurul tutanakları ve ek bilgilerle birlikte parlamento tartışmalarını izlemenize ve aramanıza olanak tanır.</p>

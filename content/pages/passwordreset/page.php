@@ -2,14 +2,14 @@
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
-			<h2 class="mb-3"><?= L::resetPassword; ?></h2>
+			<h2 class="mb-3"><?= L::resetPassword(); ?></h2>
 			<?php
 			if ($_REQUEST["mail"]) {
 				// Show success message for password reset request
-				echo '<div class="alert alert-success">'.L::messagePasswordResetMailSent.'</div>';
+				echo '<div class="alert alert-success">'.L::messagePasswordResetMailSent().'</div>';
 			} elseif ($_REQUEST["id"]) {
 				if (strlen($_REQUEST["c"]) < 10) {
-					echo '<div class="alert alert-danger">'.L::messagePasswordResetCodeIncorrect.'</div>';
+					echo '<div class="alert alert-danger">'.L::messagePasswordResetCodeIncorrect().'</div>';
 				} else {
 					?>
 					<form id="resetpassword-form" class="needs-validation" novalidate>
@@ -19,7 +19,7 @@
 						<div class="mb-3">
 							<div class="input-group">
 								<input type="password" class="form-control" id="reset-password" name="NewPassword" 
-									   minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral.' '.L::password; ?>" required>
+									   minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral().' '.L::password(); ?>" required>
 								<button class="btn btn-outline-primary" type="button" id="showPassword">
 									<i class="icon-eye"></i>
 								</button>
@@ -29,7 +29,7 @@
 						<div class="mb-3">
 							<div class="input-group">
 								<input type="password" class="form-control" id="reset-password-check" name="NewPasswordConfirm" 
-									   minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral.' '.L::passwordConfirm; ?>" required>
+									   minlength="8" autocomplete="new-password" placeholder="<?= L::newNeutral().' '.L::passwordConfirm(); ?>" required>
 								<button class="btn btn-outline-primary" type="button" id="showPasswordConfirm">
 									<i class="icon-eye"></i>
 								</button>
@@ -41,7 +41,7 @@
 						</div>
 						<div class="text-danger small" id="passwordStrengthText"></div>
 						<div class="text-danger small" id="passwordMatchText"></div>
-						<button type="submit" class="w-100 btn btn-primary mt-3"><?= L::changePassword; ?></button>
+						<button type="submit" class="w-100 btn btn-primary mt-3"><?= L::changePassword(); ?></button>
 						<div id="reset-response" class="alert mt-3" style="display: none;"></div>
 					</form>
 					<?php
@@ -50,11 +50,11 @@
 			?>
 				<form id="resetpassword-mail-form" class="needs-validation" novalidate>
 					<div class="form-floating mb-3">
-						<input type="email" class="form-control" id="reset-mail" name="UserMail" placeholder="<?= L::mailAddress; ?>" required>
-						<label for="reset-mail"><?= L::mailAddress; ?></label>
+						<input type="email" class="form-control" id="reset-mail" name="UserMail" placeholder="<?= L::mailAddress(); ?>" required>
+						<label for="reset-mail"><?= L::mailAddress(); ?></label>
 						<div class="invalid-feedback"></div>
 					</div>
-					<button type="submit" class="w-100 btn btn-primary rounded-pill"><?= L::resetPassword; ?></button>
+					<button type="submit" class="w-100 btn btn-primary rounded-pill"><?= L::resetPassword(); ?></button>
 					<div id="reset-mail-response" class="alert mt-3" style="display: none;"></div>
 				</form>
 			<?php

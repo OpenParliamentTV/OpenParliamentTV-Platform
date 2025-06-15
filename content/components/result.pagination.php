@@ -21,7 +21,7 @@ if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
 		<li class="page-item <?=$prevDisabledClass?>">
 			<a class="page-link" href='search?<?=preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($pagePrev)) ?>' aria-label="Vorherige">
 				<span aria-hidden="true">&laquo;</span>
-				<span class="visually-hidden"><?= L::previousPage; ?></span>
+				<span class="visually-hidden"><?= L::previousPage(); ?></span>
 			</a>
 		</li>
 		<?php
@@ -56,7 +56,7 @@ if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
 		<li class="page-item <?=$nextDisabledClass?>">
 			<a class="page-link" href='search?<?=preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($pageNext)) ?>' aria-label="Nächste">
 				<span aria-hidden="true">&raquo;</span>
-				<span class="visually-hidden"><?= L::nextPage; ?></span>
+				<span class="visually-hidden"><?= L::nextPage(); ?></span>
 			</a>
 		</li>
 	</ul>

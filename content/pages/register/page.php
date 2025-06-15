@@ -2,22 +2,22 @@
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
-			<h2 class="mb-3"><?= L::registerNewAccount; ?></h2>
+			<h2 class="mb-3"><?= L::registerNewAccount(); ?></h2>
 			<form id="register-form" class="needs-validation" novalidate>
 				<div class="form-floating mb-3">
-					<input type="text" class="form-control" id="register-name" name="UserName" placeholder="<?= L::name; ?>" required>
-					<label for="register-name"><?= L::name; ?></label>
+					<input type="text" class="form-control" id="register-name" name="UserName" placeholder="<?= L::name(); ?>" required>
+					<label for="register-name"><?= L::name(); ?></label>
 					<div class="invalid-feedback"></div>
 				</div>
 				<div class="form-floating mb-3">
-					<input type="email" class="form-control" id="register-mail" name="UserMail" placeholder="<?= L::mailAddress; ?>" required>
-					<label for="register-mail"><?= L::mailAddress; ?></label>
+					<input type="email" class="form-control" id="register-mail" name="UserMail" placeholder="<?= L::mailAddress(); ?>" required>
+					<label for="register-mail"><?= L::mailAddress(); ?></label>
 					<div class="invalid-feedback"></div>
 				</div>
 				<div class="mb-3">
 					<div class="input-group">
 						<input type="password" class="form-control" id="register-password" name="UserPassword" 
-							   minlength="8" autocomplete="new-password" placeholder="<?= L::password; ?>" required>
+							   minlength="8" autocomplete="new-password" placeholder="<?= L::password(); ?>" required>
 						<button class="btn btn-outline-primary" type="button" id="showPassword">
 							<i class="icon-eye"></i>
 						</button>
@@ -27,7 +27,7 @@
 				<div class="mb-3">
 					<div class="input-group">
 						<input type="password" class="form-control" id="register-password-check" name="UserPasswordConfirm" 
-							   minlength="8" autocomplete="new-password" placeholder="<?= L::passwordConfirm; ?>" required>
+							   minlength="8" autocomplete="new-password" placeholder="<?= L::passwordConfirm(); ?>" required>
 						<button class="btn btn-outline-primary" type="button" id="showPasswordConfirm">
 							<i class="icon-eye"></i>
 						</button>
@@ -39,7 +39,7 @@
 				</div>
 				<div class="text-danger small" id="passwordStrengthText"></div>
 				<div class="text-danger small" id="passwordMatchText"></div>
-				<button type="submit" class="w-100 btn btn-primary rounded-pill mt-3"><?= L::registerNewAccount; ?></button>
+				<button type="submit" class="w-100 btn btn-primary rounded-pill mt-3"><?= L::registerNewAccount(); ?></button>
 			</form>
 			<div id="register-response" class="alert mt-3" style="display: none;"></div>
 		</div>

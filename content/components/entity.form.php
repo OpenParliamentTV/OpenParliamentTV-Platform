@@ -17,7 +17,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
         <div class="row mb-4">
             <div class="col-12">
                  <div class="form-group">
-                    <label for="id"><?= L::pasteWikidataID; ?></label>
+                    <label for="id"><?= L::pasteWikidataID(); ?></label>
                     <input type="text" class="form-control" name="id" placeholder="Wikidata ID (e.g. Q12345)">
                 </div>
             </div>
@@ -30,7 +30,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-3 mb-3 text-center entity-type-selection-item">
                 <label for="itemTypePerson" class="entity-type-label d-block">
                     <span class="icon-type-person entity-type-icon d-block mb-1"></span>
-                    <span class="entity-type-text d-block"><?= L::personSingular; ?></span>
+                    <span class="entity-type-text d-block"><?= L::personSingular(); ?></span>
                 </label>
                 <input class="form-check-input entity-type-radio mt-2" type="radio" name="itemType" id="itemTypePerson" value="person">
             </div>
@@ -39,7 +39,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-3 mb-3 text-center entity-type-selection-item">
                 <label for="itemTypeOrganisation" class="entity-type-label d-block">
                     <span class="icon-type-organisation entity-type-icon d-block mb-1"></span>
-                    <span class="entity-type-text d-block"><?= L::organisation; ?></span>
+                    <span class="entity-type-text d-block"><?= L::organisation(); ?></span>
                 </label>
                 <input class="form-check-input entity-type-radio mt-2" type="radio" name="itemType" id="itemTypeOrganisation" value="organisation">
             </div>
@@ -48,7 +48,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-3 mb-3 text-center entity-type-selection-item">
                 <label for="itemTypeDocument" class="entity-type-label d-block">
                     <span class="icon-type-document entity-type-icon d-block mb-1"></span>
-                    <span class="entity-type-text d-block"><?= L::document; ?></span>
+                    <span class="entity-type-text d-block"><?= L::document(); ?></span>
                 </label>
                 <input class="form-check-input entity-type-radio mt-2" type="radio" name="itemType" id="itemTypeDocument" value="document">
             </div>
@@ -57,7 +57,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-3 mb-3 text-center entity-type-selection-item">
                 <label for="itemTypeTerm" class="entity-type-label d-block">
                     <span class="icon-type-term entity-type-icon d-block mb-1"></span>
-                    <span class="entity-type-text d-block"><?= L::term; ?></span>
+                    <span class="entity-type-text d-block"><?= L::term(); ?></span>
                 </label>
                 <input class="form-check-input entity-type-radio mt-2" type="radio" name="itemType" id="itemTypeTerm" value="term">
             </div>
@@ -68,7 +68,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-12 col-lg-3">
                 <div id="subtypeContainerPerson" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typePerson">
-                        <option value="" disabled selected><?= L::selectType; ?> ..</option>
+                        <option value="" disabled selected><?= L::selectType(); ?> ..</option>
                         <?php foreach ($config["entityTypes"]["person"] as $subtype): ?>
                             <option value="<?= $subtype ?>"><?= $subtype ?></option>
                         <?php endforeach; ?>
@@ -78,7 +78,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-12 col-lg-3">
                 <div id="subtypeContainerOrganisation" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typeOrganisation">
-                        <option value="" disabled selected><?= L::selectType; ?> ..</option>
+                        <option value="" disabled selected><?= L::selectType(); ?> ..</option>
                         <?php foreach ($config["entityTypes"]["organisation"] as $subtype): ?>
                             <option value="<?= $subtype ?>"><?= $subtype ?></option>
                         <?php endforeach; ?>
@@ -88,7 +88,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-12 col-lg-3">
                 <div id="subtypeContainerDocument" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typeDocument">
-                        <option value="" disabled selected><?= L::selectType; ?> ..</option>
+                        <option value="" disabled selected><?= L::selectType(); ?> ..</option>
                         <?php foreach ($config["entityTypes"]["document"] as $subtype): ?>
                             <option value="<?= $subtype ?>"><?= $subtype ?></option>
                         <?php endforeach; ?>
@@ -98,7 +98,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             <div class="col-12 col-lg-3">
                 <div id="subtypeContainerTerm" class="form-group subtype-container" style="display: none;">
                     <select class="form-select" name="type" id="typeTerm">
-                        <option value="" disabled selected><?= L::selectType; ?> ..</option>
+                        <option value="" disabled selected><?= L::selectType(); ?> ..</option>
                         <?php foreach ($config["entityTypes"]["term"] as $subtype): ?>
                             <option value="<?= $subtype ?>"><?= $subtype ?></option>
                         <?php endforeach; ?>
@@ -203,13 +203,13 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     <label for="originid">Original ID</label>
                     <input type="text" class="form-control" name="originid">
                 </div>
-                <div id="formHintPartyFaction" class="formHint alert alert-warning d-none mt-3 mb-0 p-2"><?= L::messageSelectPartyFactionPerson; ?>:</div>
+                <div id="formHintPartyFaction" class="formHint alert alert-warning d-none mt-3 mb-0 p-2"><?= L::messageSelectPartyFactionPerson(); ?>:</div>
                 <div class="row mt-3">
                     <div class="col-6">
                         <div class="form-group formItem formItemTypePerson d-none">
-                            <label for="party"><?= L::party; ?></label>
+                            <label for="party"><?= L::party(); ?></label>
                             <select class="form-select" name="party">
-                                <option value="" disabled selected><?= L::selectParty; ?> ..</option>
+                                <option value="" disabled selected><?= L::selectParty(); ?> ..</option>
                                 <?php
                                 require_once (__DIR__."/../../api/v1/modules/organisation.php");
                                 $partyie = organisationSearch(array("type"=>"party"));
@@ -222,9 +222,9 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     </div>
                     <div class="col-6">
                         <div class="form-group formItem formItemTypePerson d-none">
-                            <label for="faction"><?= L::faction; ?></label>
+                            <label for="faction"><?= L::faction(); ?></label>
                             <select class="form-select" name="faction">
-                                <option value="" disabled selected><?= L::selectFaction; ?> ..</option>
+                                <option value="" disabled selected><?= L::selectFaction(); ?> ..</option>
                                 <?php
                                 $factionie = organisationSearch(array("type"=>"faction"));
                                 foreach ($factionie["data"] as $faction) {

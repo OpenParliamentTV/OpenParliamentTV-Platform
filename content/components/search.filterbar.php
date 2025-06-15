@@ -24,20 +24,20 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
             <div class="position-relative">
                 <div>
                     <div class="searchInputContainer clearfix">
-                        <input id="edit-query" placeholder="<?= L::enterSearchTerm; ?>" name="edit-query" value="" type="text">
+                        <input id="edit-query" placeholder="<?= L::enterSearchTerm(); ?>" name="edit-query" value="" type="text">
                     </div>
-                    <button type="button" id="edit-submit" class="btn btn-sm btn-outline-primary"><span class="icon-search"></span><span class="visually-hidden"><?= L::search; ?></span></button>
+                    <button type="button" id="edit-submit" class="btn btn-sm btn-outline-primary"><span class="icon-search"></span><span class="visually-hidden"><?= L::search(); ?></span></button>
                 </div>
                 <?php if ($showSearchSuggestions): ?>
                 <div class="searchSuggestionContainer">
                     <div class="row">
                         <div class="col col-12 col-sm-6 col-lg-5">
-                            <div style="font-weight: bolder;"><?= L::suggestions; ?></div>
+                            <div style="font-weight: bolder;"><?= L::suggestions(); ?></div>
                             <hr class="my-1">
                             <div id="suggestionContainerText"></div>
                         </div>
                         <div class="col col-12 col-sm-6 col-lg-7">
-                            <div style="font-weight: bolder;"><span class="icon-type-person"></span><?= L::personPlural; ?></div>
+                            <div style="font-weight: bolder;"><span class="icon-type-person"></span><?= L::personPlural(); ?></div>
                             <hr class="my-1">
                             <div id="suggestionContainerPeople"></div>
                         </div>
@@ -50,7 +50,7 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
         
         <?php if ($showToggleButton): ?>
         <button id="toggleFilterContainer" class="btn btn-sm d-block d-md-none" type="button" data-bs-toggle="collapse" data-bs-target=".filterContainer" aria-expanded="false" aria-controls="">
-            <span class="icon-menu-1"></span><span class="labelShow"><?= L::filtersShow; ?></span><span class="labelCollapse"><?= L::filtersHide; ?></span><span class="icon-up-open-big"></span>
+            <span class="icon-menu-1"></span><span class="labelShow"><?= L::filtersShow(); ?></span><span class="labelCollapse"><?= L::filtersHide(); ?></span><span class="icon-up-open-big"></span>
         </button>
         <?php endif; ?>
         
@@ -64,7 +64,7 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
                         </div>
                         <?php endif; ?>
                         <div class="checkboxList flex-grow-1">
-                            <label style="display: block;" for="edit-party"><b><?= L::faction; ?></b></label>
+                            <label style="display: block;" for="edit-party"><b><?= L::faction(); ?></b></label>
                             <div class="formCheckbox form-check partyIndicator mb-2 mb-lg-1" data-faction="Q2207512">
                                 <input id="edit-party-16118" name="factionID[]" value="Q2207512" type="checkbox" class="form-check-input"> <label class="form-check-label" for="edit-party-16118">SPD</label>
                             </div>
@@ -96,7 +96,7 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
             <?php if ($showDateRange): ?>
             <hr>
             <div class="rangeContainer">
-                <label for="timeRange"><b><?= L::timePeriod; ?>:</b></label>
+                <label for="timeRange"><b><?= L::timePeriod(); ?>:</b></label>
                 <input type="text" id="timeRange" readonly style="border:0; background: transparent;"/>
                 <div id="timelineVizWrapper" class="resultTimeline"></div>
                 <div id="sliderRange"></div>
@@ -108,8 +108,8 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
             <hr>
             <div class="row">
                 <div class="col-12 col-lg-6 mb-3">
-                    <label for="agendaItemTitle-filter" class="form-label"><?= L::agendaItem; ?></label>
-                    <input type="text" class="form-control form-control-sm" id="agendaItemTitle-filter" name="agendaItemTitle" placeholder="<?= L::enterSearchTerm; ?>">
+                    <label for="agendaItemTitle-filter" class="form-label"><?= L::agendaItem(); ?></label>
+                    <input type="text" class="form-control form-control-sm" id="agendaItemTitle-filter" name="agendaItemTitle" placeholder="<?= L::enterSearchTerm(); ?>">
                 </div>
                 <div class="col-6 col-lg-2 mb-3">
                     <label for="public-filter" class="form-label">Public</label>

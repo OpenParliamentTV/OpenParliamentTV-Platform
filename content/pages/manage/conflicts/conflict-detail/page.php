@@ -41,7 +41,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		<div class="sidebar-content">
 			<div class="row">
 				<div class="col-12">
-					<h2><?= L::conflict; ?> Detail</h2>
+					<h2><?= L::conflict(); ?> Detail</h2>
                     <?php if ($conflict): ?>
 					<dl class="row">
 						<dt class="col-sm-3">ConflictID</dt>

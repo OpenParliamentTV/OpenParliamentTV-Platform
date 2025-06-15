@@ -14,29 +14,29 @@ $alertText = $alertText ?? null;
 			?>
 
 				<div class="alert alert-info">Angemeldet als:<br><b><?=$_SESSION["userdata"]["name"]?></b><br><?=$_SESSION["userdata"]["mail"]?></div>
-				<button type="button" class="w-100 button-logout btn btn-primary rounded-pill"><?= L::logout; ?></button>
+				<button type="button" class="w-100 button-logout btn btn-primary rounded-pill"><?= L::logout(); ?></button>
 
 			<?php
 
 			} else {
 
 			?>
-				<h2 class="mb-3"><?= L::login; ?></h2>
+				<h2 class="mb-3"><?= L::login(); ?></h2>
 				<form id="login-form" class="needs-validation mb-3" novalidate>
 					<div class="form-floating mb-3">
-						<input type="email" class="form-control" id="login-mail" name="UserMail" placeholder="<?= L::mailAddress; ?>" required>
-						<label for="login-mail"><?= L::mailAddress; ?></label>
+						<input type="email" class="form-control" id="login-mail" name="UserMail" placeholder="<?= L::mailAddress(); ?>" required>
+						<label for="login-mail"><?= L::mailAddress(); ?></label>
 						<div class="invalid-feedback"></div>
 					</div>
 					<div class="form-floating mb-3">
-						<input type="password" class="form-control" id="login-password" name="UserPassword" placeholder="<?= L::password; ?>" required>
-						<label for="login-password"><?= L::password; ?></label>
+						<input type="password" class="form-control" id="login-password" name="UserPassword" placeholder="<?= L::password(); ?>" required>
+						<label for="login-password"><?= L::password(); ?></label>
 						<div class="invalid-feedback"></div>
 					</div>
-					<button type="submit" class="w-100 btn btn-primary rounded-pill button-login"><?= L::login; ?></button>
+					<button type="submit" class="w-100 btn btn-primary rounded-pill button-login"><?= L::login(); ?></button>
 					<div id="login-response" class="alert mt-3" style="display: none;"></div>
 				</form>
-				<a href="password-reset" target="_self"><?= L::passwordForgotQuestion; ?></a>
+				<a href="password-reset" target="_self"><?= L::passwordForgotQuestion(); ?></a>
 			<?php
 			}
 			?>
