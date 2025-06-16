@@ -1,5 +1,15 @@
 <?php
-error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+
+require_once(__DIR__ . "/../config.php");
+
+if ($config["mode"] == "dev") {
+    error_reporting(E_ALL);
+} else {
+    error_reporting(E_ERROR);
+}
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+
 /**
  * This script expects to be run via CLI only
  *
@@ -208,7 +218,6 @@ if (is_cli()) {
 
     $parliament = ((isset($input["parliament"])) ? $input["parliament"] : "DE");
 
-    require_once(__DIR__ . "/../config.php");
     require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
     require_once(__DIR__ . "/../api/v1/modules/externalData.php");
     require_once(__DIR__ . "/../api/v1/api.php");

@@ -1,7 +1,5 @@
 <?php
 
-error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
-
 /*
 header('Content-Type: application/json');
 print_r(mergeAlignmentOutputWithTextObject($exampleAlignmentOutput, $exampleTextObject));

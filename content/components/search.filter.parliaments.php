@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(E_ALL ^ E_NOTICE ^ E_WARNING);
+require_once(__DIR__."/../../../config.php");
 
 
 include_once(__DIR__ . '/../../../modules/utilities/auth.php');

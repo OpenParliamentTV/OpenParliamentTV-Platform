@@ -1,8 +1,16 @@
 <?php
-error_reporting(E_ALL ^ E_WARNING);
 session_start();
 
 require_once (__DIR__."/config.php");
+
+if ($config["mode"] == "dev") {
+    error_reporting(E_ALL);
+} else {
+    error_reporting(E_ERROR);
+}
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+
 require_once(__DIR__."/modules/utilities/language.php");
 require_once(__DIR__."/modules/utilities/functions.php");
 
