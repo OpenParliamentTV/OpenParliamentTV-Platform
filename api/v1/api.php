@@ -463,6 +463,19 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     );
             }
             break;
+        
+        case "cleanup":
+            switch ($api_request["itemType"]) {
+                case "entity-suggestions":
+                    require_once (__DIR__."/modules/entitySuggestion.php");
+                    $cleanupResponse = entitySuggestionCleanup($db);
+                    return createApiResponse($cleanupResponse);
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
 
         default:
             return createApiResponse(

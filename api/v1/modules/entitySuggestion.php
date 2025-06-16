@@ -244,4 +244,75 @@ function entitySuggestionDelete($entitySuggestionID, $db = false) {
     }
 }
 
+/**
+ * Cleans up entity suggestions by removing those that already exist as entities.
+ *
+ * @param object|false $db Optional database connection object.
+ * @return array Standard API response array with a count of cleaned items.
+ */
+function entitySuggestionCleanup($db = false) {
+    global $config;
+
+    if (!$db) {
+        $db = getApiDatabaseConnection('platform');
+        if (is_array($db) && isset($db["errors"])) {
+            return $db;
+        }
+    }
+
+    try {
+        $suggestions = $db->getAll("SELECT EntitysuggestionID, EntitysuggestionExternalID FROM ?n", $config["platform"]["sql"]["tbl"]["Entitysuggestion"]);
+        
+        $cleanedCount = 0;
+        
+        if (empty($suggestions)) {
+            return createApiSuccessResponse(["cleanedCount" => 0, "status" => "No suggestions to clean."]);
+        }
+        
+        foreach ($suggestions as $suggestion) {
+            $externalId = $suggestion['EntitysuggestionExternalID'];
+            $suggestionId = $suggestion['EntitysuggestionID'];
+
+            $exists = false;
+            
+            // Check in persons table
+            if (!$exists) {
+                $personExists = $db->getOne("SELECT PersonID FROM ?n WHERE PersonID = ?s", $config["platform"]["sql"]["tbl"]["Person"], $externalId);
+                if ($personExists) $exists = true;
+            }
+
+            // Check in organisations table
+            if (!$exists) {
+                $orgExists = $db->getOne("SELECT OrganisationID FROM ?n WHERE OrganisationID = ?s", $config["platform"]["sql"]["tbl"]["Organisation"], $externalId);
+                if ($orgExists) $exists = true;
+            }
+
+            // Check in terms table
+            if (!$exists) {
+                $termExists = $db->getOne("SELECT TermID FROM ?n WHERE TermID = ?s", $config["platform"]["sql"]["tbl"]["Term"], $externalId);
+                if ($termExists) $exists = true;
+            }
+
+            // Check in documents table
+            if (!$exists) {
+                $docExists = $db->getOne("SELECT DocumentID FROM ?n WHERE DocumentWikidataID = ?s", $config["platform"]["sql"]["tbl"]["Document"], $externalId);
+                if ($docExists) $exists = true;
+            }
+
+            if ($exists) {
+                $deleteResult = entitySuggestionDelete($suggestionId, $db);
+                if (isset($deleteResult["meta"]["requestStatus"]) && $deleteResult["meta"]["requestStatus"] === 'success') {
+                    $cleanedCount++;
+                }
+            }
+        }
+
+        return createApiSuccessResponse(["cleanedCount" => $cleanedCount, "status" => "Cleanup completed."]);
+
+    } catch (Exception $e) {
+        error_log("Error in entitySuggestionCleanup: " . $e->getMessage());
+        return createApiErrorDatabaseError($e->getMessage());
+    }
+}
+
 ?> 

@@ -22,11 +22,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			<div class="row" style="position: relative; z-index: 1">
 				<div class="col-12 mainContainer">
 					<h2><?= L::manageEntitySuggestions(); ?></h2>
-					<div class="card mb-3">
-						<div class="card-body">
-							
-						</div>
-					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="suggested-entities-tab" data-bs-toggle="tab" data-bs-target="#suggested-entities" role="tab" aria-controls="suggested-entities" aria-selected="true"><span class="icon-lightbulb"></span> <?= L::suggestions(); ?></a>
@@ -34,6 +29,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="suggested-entities" role="tabpanel" aria-labelledby="suggested-entities-tab">
+                            <div id="cleanup-messages"></div>
+                            <div id="toolbar"></div>
 							<div id="entitiesDiv" class="contentContainer">
 								<table id="entitiesTable"></table>
 							</div>
@@ -144,6 +141,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			totalField: "total",
 			search: true,
 			searchAlign: "left",
+			toolbar: "#toolbar",
+			toolbarAlign: "right",
 			serverSort: true,
 			sortName: "EntitysuggestionCount",
 			sortOrder: "desc",
@@ -197,6 +196,44 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			]
 		});
 
+        const cleanupButton = `
+            <button id="cleanupSuggestionsBtn" class="btn" title="` + localizedLabels.cleanup + `">
+                <span class="icon-magic"></span> ` + localizedLabels.cleanup + `
+            </button>
+        `;
+        $('#toolbar').append(cleanupButton);
+
+        $('body').on('click', '#cleanupSuggestionsBtn', function() {
+            var $btn = $(this);
+            $btn.prop('disabled', true).addClass('working');
+
+            $('#cleanup-messages').empty().removeClass('alert alert-success alert-danger');
+
+            $.ajax({
+                url: config["dir"]["root"] + "/api/v1/",
+                type: "POST",
+                data: {
+                    action: "cleanup",
+                    itemType: "entity-suggestions"
+                },
+                dataType: "json",
+                success: function(response) {
+                    $btn.prop('disabled', false).removeClass('working');
+                    if (response && response.meta && response.meta.requestStatus === 'success') {
+                        var cleanedCount = response.data.cleanedCount || 0;
+                        $('#cleanup-messages').addClass('alert alert-success').html(localizedLabels.messageCleanupSuccess.replace('{count}', cleanedCount));
+                        $('#entitiesTable').bootstrapTable('refresh');
+                    } else {
+                        var errorMessage = (response && response.errors && response.errors[0] && response.errors[0].detail) ? response.errors[0].detail : 'An unknown error occurred during cleanup.';
+                        $('#cleanup-messages').addClass('alert alert-danger').html(errorMessage);
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    $btn.prop('disabled', false).removeClass('working');
+                    $('#cleanup-messages').addClass('alert alert-danger').html('An AJAX error occurred: ' + textStatus + ' - ' + errorThrown);
+                }
+            });
+        });
 
 		$(".mainContainer").on("click", ".entitysuggestiondetails",function() {
 
