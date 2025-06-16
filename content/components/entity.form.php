@@ -561,32 +561,6 @@ require_once(__DIR__."/../../modules/utilities/language.php");
             fetchAdditionalInfo();
         });
 
-        // Also enable button when form is valid
-        $form.on('change keyup', 'input, select, textarea', function() {
-            const wikidataID = $form.find('input[name="id"]').val().trim();
-            const entityType = $form.find("input[name='itemType']:checked").val();
-            let subType = "";
-
-            if (entityType) {
-                switch (entityType) {
-                    case "person":
-                        subType = $form.find("#typePerson:not(:disabled)").val();
-                        break;
-                    case "organisation":
-                        subType = $form.find("#typeOrganisation:not(:disabled)").val();
-                        break;
-                    case "document":
-                        subType = $form.find("#typeDocument:not(:disabled)").val();
-                        break;
-                    case "term":
-                        subType = $form.find("#typeTerm:not(:disabled)").val();
-                        break;
-                }
-            }
-
-            $('#modalAddEntitySubmitBtn').prop('disabled', !(wikidataID && entityType && subType));
-        });
-
         function resetForm() {
             // Uncheck radio buttons
             $form.find('input[name="itemType"]').prop('checked', false);
