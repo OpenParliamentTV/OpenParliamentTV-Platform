@@ -25,7 +25,7 @@ if ($entity["data"]["type"] == "organisation") {
 				<div class="row">
 					<div class="col flex-grow-0 detailsThumbnailContainer" style="width: 70px; height: 70px; flex-basis: 70px; overflow: visible;">
 						<div class="rounded-circle" style="top: 1px;">
-							<?php if ($entity["data"]["attributes"]["thumbnailURI"]) { ?>
+							<?php if (!empty($entity["data"]["attributes"]["thumbnailURI"])) { ?>
 								<img src="<?= $entity["data"]["attributes"]["thumbnailURI"] ?>" alt="..." style="position: absolute; object-fit: <?= $typeImageFit ?>; object-position: <?= $typeImagePosition ?>;"/>
 							<?php } else if ($entity["data"]["type"] == "person" || $entity["data"]["type"] == "document") { ?>
 								<span class="icon-type-<?= $entity["data"]["type"] ?>" style="position: absolute;top: 47%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
