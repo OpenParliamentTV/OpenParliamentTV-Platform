@@ -7,8 +7,8 @@ if (isset($result_item["_finds"]) && count($result_item['_finds']) > 0) {
 $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedParams));
 
 ?>
-<article class="resultItem col<?= ($snippets !== null) ? ' snippets' : '' ?>" data-speech-id="<?= $result_item["id"] ?>" data-faction="<?= $mainFaction["id"] ?>">
-	<div class="resultContent partyIndicator" data-faction="<?= $mainFaction["id"] ?>">
+<article class="resultItem col<?= ($snippets !== null) ? ' snippets' : '' ?>" data-speech-id="<?= $result_item["id"] ?>" data-faction="<?= $mainFaction ? $mainFaction["id"] : '' ?>">
+	<div class="resultContent partyIndicator" data-faction="<?= $mainFaction ? $mainFaction["id"] : '' ?>">
 		<a style="display: block;" href='<?= $config["dir"]["root"] ?>/media/<?= $result_item["id"]."?".$paramStr ?>'>
 			<div class="icon-play-1"></div>
 			<div class="resultDuration"><?= $formattedDuration ?></div>

@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once(__DIR__."/../../config.php");
 
 
@@ -148,7 +150,7 @@ if ($totalResults != 0) {
 			}
 
 			$highlightedName = $mainSpeaker['attributes']['label'];
-			if (strlen($_REQUEST['person']) > 1) {
+			if (isset($_REQUEST['person']) && strlen($_REQUEST['person']) > 1) {
 				$highlightedName = str_replace($_REQUEST['person'], '<em>'.$_REQUEST['person'].'</em>', $highlightedName);
 			}
 

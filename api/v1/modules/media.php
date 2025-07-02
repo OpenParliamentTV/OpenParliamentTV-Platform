@@ -324,7 +324,12 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
     }
 
     // Check media access permissions
-    if (($item["MediaPublic"] == 0) && ($_SESSION["userdata"]["role"] != "admin") && (!is_cli())) {
+    $userRole = null;
+    if (isset($_SESSION) && isset($_SESSION["userdata"]) && isset($_SESSION["userdata"]["role"])) {
+        $userRole = $_SESSION["userdata"]["role"];
+    }
+    
+    if (($item["MediaPublic"] == 0) && ($userRole != "admin") && (!is_cli())) {
         return createApiErrorResponse(
             511,
             1,

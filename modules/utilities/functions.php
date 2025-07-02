@@ -274,7 +274,9 @@ function annotationRawSortByMainSpeaker($array = array()){
 
         if($a_val === $b_val) {
             if($a['AnnotationType'] === 'person' && $b['AnnotationType'] === 'person') {
-                return strcmp($a['id'], $b['id']);
+                $a_id = isset($a['id']) ? $a['id'] : '';
+                $b_id = isset($b['id']) ? $b['id'] : '';
+                return strcmp($a_id, $b_id);
             } elseif($a['AnnotationType'] === 'person') {
                 return -1;
             } elseif($b['AnnotationType'] === 'person') {

@@ -141,7 +141,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						$mainFaction = getMainFactionFromOrganisationsArray($result_item["annotations"]['data'], $result_item["relationships"]["organisations"]['data']);
 
 						$highlightedName = $mainSpeaker['attributes']['label'];
-						if (strlen($_REQUEST['person']) > 1) {
+						if (isset($_REQUEST['person']) && strlen($_REQUEST['person']) > 1) {
 							$highlightedName = str_replace($_REQUEST['person'], '<em>'.$_REQUEST['person'].'</em>', $highlightedName);
 						}
 
