@@ -1,35 +1,18 @@
 <?php
 
 require_once(__DIR__.'/../../vendor/autoload.php');
-
-/*
- * TODO: REMOVE IF OTHER WORKS
- *
-$hosts = ["https://@localhost:9200"];
-$ESClient = Elasticsearch\ClientBuilder::create()
-    ->setHosts($hosts)
-    ->setBasicAuthentication("admin","admin")
-    ->setSSLVerification(realpath(__DIR__."/../../opensearch-root-ssl.pem"))
-    ->build();
-*/
 require_once(__DIR__.'/../../config.php');
 require_once(__DIR__."/../../api/v1/api.php");
 require_once(__DIR__.'/../utilities/functions.entities.php');
+require_once(__DIR__.'/../utilities/functions.api.php');
 
-$ESClientBuilder = Elasticsearch\ClientBuilder::create();
-
-if ($config["ES"]["hosts"]) {
-    $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+// Initialize OpenSearch client using centralized method
+$ESClient = getApiOpenSearchClient();
+if (is_array($ESClient) && isset($ESClient["errors"])) {
+    // Handle error case - log and set to null
+    error_log("Failed to initialize OpenSearch client in media functions: " . json_encode($ESClient));
+    $ESClient = null;
 }
-if ($config["ES"]["BasicAuthentication"]["user"]) {
-    $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
-}
-if ($config["ES"]["SSL"]["pem"]) {
-    $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
-}
-//print_r($ESClientBuilder);
-
-$ESClient = $ESClientBuilder->build();
 
 function getPrevDocument($currentDocumentTimestamp) {
 	

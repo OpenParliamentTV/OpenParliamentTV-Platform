@@ -3,24 +3,18 @@
 require_once(__DIR__.'/../../vendor/autoload.php');
 require_once(__DIR__.'/../../config.php');
 require_once(__DIR__.'/../../modules/search/functions.php');
+require_once(__DIR__.'/../utilities/functions.api.php');
 
 // Debug flag - set to 1 to enable debug logging
 $DEBUG_MODE = 0;
 
-// Initialize OpenSearch client
-$ESClientBuilder = Elasticsearch\ClientBuilder::create();
-
-if ($config["ES"]["hosts"]) {
-    $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+// Initialize OpenSearch client using centralized method
+$ESClient = getApiOpenSearchClient();
+if (is_array($ESClient) && isset($ESClient["errors"])) {
+    // Handle error case - log and set to null
+    error_log("Failed to initialize OpenSearch client in statistics functions: " . json_encode($ESClient));
+    $ESClient = null;
 }
-if ($config["ES"]["BasicAuthentication"]["user"]) {
-    $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
-}
-if ($config["ES"]["SSL"]["pem"]) {
-    $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
-}
-
-$ESClient = $ESClientBuilder->build();
 
 /**
  * Get general statistics about the dataset

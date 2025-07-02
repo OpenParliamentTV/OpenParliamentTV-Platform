@@ -8,19 +8,14 @@ require_once (__DIR__."/../../../modules/utilities/functions.api.php");
 
 // Initialize OpenSearch client if not already initialized
 if (!isset($GLOBALS['ESClient'])) {
-    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
-
-    if ($config["ES"]["hosts"]) {
-        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+    $ESClient = getApiOpenSearchClient();
+    if (is_array($ESClient) && isset($ESClient["errors"])) {
+        // Handle error case - log and set to null
+        error_log("Failed to initialize OpenSearch client in statistics module: " . json_encode($ESClient));
+        $GLOBALS['ESClient'] = null;
+    } else {
+        $GLOBALS['ESClient'] = $ESClient;
     }
-    if ($config["ES"]["BasicAuthentication"]["user"]) {
-        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
-    }
-    if ($config["ES"]["SSL"]["pem"]) {
-        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
-    }
-
-    $GLOBALS['ESClient'] = $ESClientBuilder->build();
 }
 
 /**

@@ -1632,10 +1632,10 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         // Process search hits into $return["data"]
         foreach ($search["hits"]["hits"] as $hit) {
             $resultData = $hit["_source"];
-            $resultData["_score"] = $hit["_score"];
-            $resultData["_highlight"] = $hit["highlight"];
-            $resultData["_finds"] = $hit["finds"];
-            $resultData["highlight_count"] = $hit["highlight_count"];
+            $resultData["_score"] = $hit["_score"] ?? 0;
+            $resultData["_highlight"] = $hit["highlight"] ?? [];
+            $resultData["_finds"] = $hit["finds"] ?? [];
+            $resultData["highlight_count"] = $hit["highlight_count"] ?? 0;
 
             $return["data"][] = $resultData;
         }

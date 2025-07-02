@@ -26,21 +26,15 @@ if (($auth["meta"]["requestStatus"] != "success") && (php_sapi_name() != "cli"))
 
 
     require __DIR__ . '/../../vendor/autoload.php';
-
     require_once(__DIR__ . "/../../config.php");
+    require_once(__DIR__ . "/../utilities/functions.api.php");
 
-    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
-
-    if ($config["ES"]["hosts"]) {
-        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+    $ESClient = getApiOpenSearchClient();
+    if (is_array($ESClient) && isset($ESClient["errors"])) {
+        // Handle error case - log and set to null
+        error_log("Failed to initialize OpenSearch client in alignment import: " . json_encode($ESClient));
+        $ESClient = null;
     }
-    if ($config["ES"]["BasicAuthentication"]["user"]) {
-        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"], $config["ES"]["BasicAuthentication"]["passwd"]);
-    }
-    if ($config["ES"]["SSL"]["pem"]) {
-        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
-    }
-    $ESClient = $ESClientBuilder->build();
 
 
     require_once(__DIR__ . '/../../api/v1/api.php');
