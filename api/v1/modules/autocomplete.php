@@ -28,4 +28,27 @@ function fulltextAutocomplete($text) {
         );
     }
 }
+
+function agendaItemAutocomplete($query) {
+    if (!isset($query)) {
+        return createApiErrorMissingParameter('q');
+    }
+
+    if (strlen($query) <= 2) {
+        return createApiErrorInvalidLength('q', 3);
+    }
+
+    try {
+        $autocompleteResult = searchAgendaItemAutocomplete($query);
+        return createApiSuccessResponse($autocompleteResult);
+    } catch (Exception $e) {
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorSearchGenericTitle",
+            "messageErrorSearchRequestDetail",
+            ["details" => $e->getMessage()]
+        );
+    }
+}
 ?>

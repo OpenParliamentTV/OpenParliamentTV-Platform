@@ -52,7 +52,39 @@ function getSearchIndexParameterBody() {
                 "data" => array("properties" => array(
                     "id" => array(
                         "type" => "keyword"
-                    )
+                    ),
+                    "attributes" => array("properties" => array(
+                        "title" => array(
+                            "type" => "text",
+                            "analyzer" => "agenda_item_analyzer",
+                            "search_analyzer" => "standard",
+                            "fields" => array(
+                                "keyword" => array(
+                                    "type" => "keyword",
+                                    "ignore_above" => 256
+                                ),
+                                "autocomplete" => array(
+                                    "analyzer" => "agenda_item_autocomplete_analyzer",
+                                    "type" => "text"
+                                )
+                            )
+                        ),
+                        "officialTitle" => array(
+                            "type" => "text",
+                            "analyzer" => "agenda_item_analyzer",
+                            "search_analyzer" => "standard",
+                            "fields" => array(
+                                "keyword" => array(
+                                    "type" => "keyword",
+                                    "ignore_above" => 256
+                                ),
+                                "autocomplete" => array(
+                                    "analyzer" => "agenda_item_autocomplete_analyzer",
+                                    "type" => "text"
+                                )
+                            )
+                        )
+                    ))
                 ))
             )),
             "people" => array("properties" => array(
@@ -119,6 +151,24 @@ function getSearchIndexParameterBody() {
                     "tokenizer" => "standard",
                     "char_filter" => ["custom_html_strip"],
                     "filter" => ["custom_stopwords", "lowercase", "custom_synonyms"]
+                ),
+                "agenda_item_analyzer" => array(
+                    "type" => "custom",
+                    "tokenizer" => "standard",
+                    "filter" => ["lowercase", "custom_stemmer", "custom_synonyms"]
+                ),
+                "agenda_item_autocomplete_analyzer" => array(
+                    "type" => "custom",
+                    "tokenizer" => "edge_ngram",
+                    "filter" => ["lowercase", "custom_synonyms"]
+                )
+            ),
+            "tokenizer" => array(
+                "edge_ngram" => array(
+                    "type" => "edge_ngram",
+                    "min_gram" => 2,
+                    "max_gram" => 20,
+                    "token_chars" => ["letter", "digit"]
                 )
             ),
             "char_filter" => array(

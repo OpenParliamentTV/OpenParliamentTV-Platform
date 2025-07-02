@@ -3,24 +3,18 @@
 require_once(__DIR__.'/../../vendor/autoload.php');
 require_once(__DIR__.'/../../config.php');
 require_once(__DIR__ .'/../../modules/utilities/functions.entities.php');
+require_once(__DIR__ .'/../../modules/utilities/functions.api.php');
 
 // Debug flag - set to 1 to enable debug logging
 $DEBUG_MODE = 0;
 
-$ESClientBuilder = Elasticsearch\ClientBuilder::create();
-
-if ($config["ES"]["hosts"]) {
-    $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+// Initialize OpenSearch client using centralized method
+$ESClient = getApiOpenSearchClient();
+if (is_array($ESClient) && isset($ESClient["errors"])) {
+    // Handle error case - log and set to null
+    error_log("Failed to initialize OpenSearch client: " . json_encode($ESClient));
+    $ESClient = null;
 }
-if ($config["ES"]["BasicAuthentication"]["user"]) {
-    $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
-}
-if ($config["ES"]["SSL"]["pem"]) {
-    $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
-}
-//print_r($ESClientBuilder);
-
-$ESClient = $ESClientBuilder->build();
 
 
 
@@ -54,27 +48,30 @@ function getIndexCount() {
  * @return array The search results
  */
 function searchSpeeches($request) {
-    require_once(__DIR__.'/../../vendor/autoload.php');
-    require(__DIR__.'/../../config.php');
+    require_once(__DIR__.'/../../modules/utilities/functions.api.php');
 
-    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
-
-    if ($config["ES"]["hosts"]) {
-        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+    $ESClient = getApiOpenSearchClient();
+    if (is_array($ESClient) && isset($ESClient["errors"])) {
+        // Return error response if client initialization failed
+        return [
+            "hits" => [
+                "hits" => [],
+                "total" => ["value" => 0],
+                "totalHits" => 0
+            ],
+            "aggregations" => [
+                "term_hits" => [
+                    "buckets" => []
+                ]
+            ]
+        ];
     }
-    if ($config["ES"]["BasicAuthentication"]["user"]) {
-        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
-    }
-    if ($config["ES"]["SSL"]["pem"]) {
-        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
-    }
-
-    $ESClient = $ESClientBuilder->build();
 
     $data = getSearchBody($request, false);
 
     // Debug output
-    if ($GLOBALS['DEBUG_MODE']) {
+    global $DEBUG_MODE;
+    if ($DEBUG_MODE) {
         error_log("Full search body: " . json_encode($data, JSON_PRETTY_PRINT));
     }
 
@@ -95,12 +92,14 @@ function searchSpeeches($request) {
         $results = $ESClient->search($searchParams);
         
         // Debug output
-        if ($GLOBALS['DEBUG_MODE']) {
+        global $DEBUG_MODE;
+        if ($DEBUG_MODE) {
             error_log("Search results: " . json_encode($results, JSON_PRETTY_PRINT));
         }
     } catch(Exception $e) {
         // Debug output
-        if ($GLOBALS['DEBUG_MODE']) {
+        global $DEBUG_MODE;
+        if ($DEBUG_MODE) {
             error_log("Search error: " . $e->getMessage());
         }
         // Return a properly structured error response
@@ -122,7 +121,7 @@ function searchSpeeches($request) {
     $findCnt = 0;
     $highlightCount = 0;
     
-    if (strlen($request["q"]) >= 1) {
+    if (isset($request["q"]) && strlen($request["q"]) >= 1) {
         if (isset($results["hits"]["hits"])) {
             foreach ($results["hits"]["hits"] as $hit) {
                 $resultCnt++;
@@ -218,22 +217,12 @@ function searchAutocomplete($textQuery) {
         return array();
     }
     
-    require_once(__DIR__.'/../../vendor/autoload.php');
-    require(__DIR__.'/../../config.php');
+    require_once(__DIR__.'/../../modules/utilities/functions.api.php');
 
-    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
-
-    if ($config["ES"]["hosts"]) {
-        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+    $ESClient = getApiOpenSearchClient();
+    if (is_array($ESClient) && isset($ESClient["errors"])) {
+        return array();
     }
-    if ($config["ES"]["BasicAuthentication"]["user"]) {
-        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"],$config["ES"]["BasicAuthentication"]["passwd"]);
-    }
-    if ($config["ES"]["SSL"]["pem"]) {
-        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
-    }
-
-    $ESClient = $ESClientBuilder->build();
 
     $data = getAutocompleteSearchBody($textQuery);
     
@@ -307,7 +296,8 @@ function getSearchBody($request, $getAllResults) {
     addAggregations($data);
     
     // Debug output
-    if ($GLOBALS['DEBUG_MODE']) {
+    global $DEBUG_MODE;
+    if ($DEBUG_MODE) {
         error_log("Search body: " . json_encode($data, JSON_PRETTY_PRINT));
     }
     
@@ -1121,6 +1111,176 @@ function getAutocompleteSearchBody($text) {
                     "min_word_length" => 3
                 )
             )
+        )
+    );
+
+    return $data;
+}
+
+/**
+ * Search for agenda item autocomplete suggestions based on a query
+ * 
+ * This function provides autocomplete suggestions for agenda item titles.
+ * It searches both title and officialTitle fields using match_phrase_prefix queries.
+ * 
+ * @param string $query The query to search for suggestions
+ * @return array An array of autocomplete suggestions
+ */
+function searchAgendaItemAutocomplete($query) {
+    
+    if (!isset($query) || strlen($query) <= 2) {
+        return array();
+    }
+    
+    require_once(__DIR__.'/../../modules/utilities/functions.api.php');
+
+    $ESClient = getApiOpenSearchClient();
+    if (is_array($ESClient) && isset($ESClient["errors"])) {
+        return array();
+    }
+
+    $data = getAgendaItemAutocompleteSearchBody($query);
+    
+    $searchParams = array("index" => "openparliamenttv_*", "body" => $data);
+    
+    // Debug: Log the query for troubleshooting
+    global $DEBUG_MODE;
+    if ($DEBUG_MODE) {
+        error_log("Agenda Item Autocomplete Query: " . json_encode($data, JSON_PRETTY_PRINT));
+    }
+    
+    try {
+        $results = $ESClient->search($searchParams);
+        
+        // Debug: Log the results for troubleshooting
+        global $DEBUG_MODE;
+        if ($DEBUG_MODE) {
+            error_log("Agenda Item Autocomplete Results: " . json_encode($results, JSON_PRETTY_PRINT));
+        }
+    } catch(Exception $e) {
+        global $DEBUG_MODE;
+        if ($DEBUG_MODE) {
+            error_log("Agenda Item Autocomplete Error: " . $e->getMessage());
+        }
+        return array();
+    }
+
+    $return = array();
+    
+    if ($results && isset($results["hits"]["hits"])) {
+        $seenTitles = array();
+        
+        foreach ($results["hits"]["hits"] as $hit) {
+            $agendaItem = $hit["_source"]["relationships"]["agendaItem"]["data"];
+            $highlight = $hit["highlight"] ?? array();
+            
+            if (isset($agendaItem["attributes"])) {
+                $title = $agendaItem["attributes"]["title"] ?? "";
+                $officialTitle = $agendaItem["attributes"]["officialTitle"] ?? "";
+                $agendaItemId = $agendaItem["id"] ?? "";
+                
+                // Use highlighted title if available, otherwise use original
+                $highlightedTitle = "";
+                if (isset($highlight["relationships.agendaItem.data.attributes.title.autocomplete"][0])) {
+                    $highlightedTitle = $highlight["relationships.agendaItem.data.attributes.title.autocomplete"][0];
+                } else {
+                    $highlightedTitle = $title;
+                }
+                
+                // Use highlighted official title if available, otherwise use original
+                $highlightedOfficialTitle = "";
+                if (isset($highlight["relationships.agendaItem.data.attributes.officialTitle.autocomplete"][0])) {
+                    $highlightedOfficialTitle = $highlight["relationships.agendaItem.data.attributes.officialTitle.autocomplete"][0];
+                } else {
+                    $highlightedOfficialTitle = $officialTitle;
+                }
+                
+                // Add title if it exists, not already seen, and contains the query
+                if (!empty($title) && !in_array($title, $seenTitles) && 
+                    (stripos($title, $query) !== false || stripos($highlightedTitle, '<em>') !== false)) {
+                    $return[] = array(
+                        "text" => $title,
+                        "highlightedText" => $highlightedTitle,
+                        "id" => $agendaItemId,
+                        "type" => "title"
+                    );
+                    $seenTitles[] = $title;
+                }
+                
+                // Add official title if it exists, is different from title, not already seen, and contains the query
+                if (!empty($officialTitle) && $officialTitle !== $title && !in_array($officialTitle, $seenTitles) &&
+                    (stripos($officialTitle, $query) !== false || stripos($highlightedOfficialTitle, '<em>') !== false)) {
+                    $return[] = array(
+                        "text" => $officialTitle,
+                        "highlightedText" => $highlightedOfficialTitle,
+                        "id" => $agendaItemId,
+                        "type" => "officialTitle"
+                    );
+                    $seenTitles[] = $officialTitle;
+                }
+            }
+            
+            // Limit results to 10 suggestions
+            if (count($return) >= 10) {
+                break;
+            }
+        }
+    }
+
+    return $return;
+}
+
+/**
+ * Build an agenda item autocomplete search query body
+ * 
+ * This function creates a search query body specifically for agenda item autocomplete functionality.
+ * It uses match_phrase_prefix queries on both title and officialTitle fields with highlighting.
+ * 
+ * @param string $query The query to search for suggestions
+ * @return array The agenda item autocomplete search query body
+ */
+function getAgendaItemAutocompleteSearchBody($query) {
+    
+    $maxResults = 20; // Get more results to account for deduplication
+
+    $data = array(
+        "size" => $maxResults,
+        "query" => array(
+            "bool" => array(
+                "should" => array(
+                    array(
+                        "match_phrase_prefix" => array(
+                            "relationships.agendaItem.data.attributes.title.autocomplete" => array(
+                                "query" => $query,
+                                "max_expansions" => 10
+                            )
+                        )
+                    ),
+                    array(
+                        "match_phrase_prefix" => array(
+                            "relationships.agendaItem.data.attributes.officialTitle.autocomplete" => array(
+                                "query" => $query,
+                                "max_expansions" => 10
+                            )
+                        )
+                    )
+                ),
+                "minimum_should_match" => 1
+            )
+        ),
+        "highlight" => array(
+            "number_of_fragments" => 0,
+            "pre_tags" => array("<em>"),
+            "post_tags" => array("</em>"),
+            "fields" => array(
+                "relationships.agendaItem.data.attributes.title.autocomplete" => new \stdClass(),
+                "relationships.agendaItem.data.attributes.officialTitle.autocomplete" => new \stdClass()
+            )
+        ),
+        "_source" => array(
+            "relationships.agendaItem.data.attributes.title",
+            "relationships.agendaItem.data.attributes.officialTitle",
+            "relationships.agendaItem.data.id"
         )
     );
 

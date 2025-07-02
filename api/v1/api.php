@@ -130,6 +130,15 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                             ["self" => htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"])]
                         )
                     );
+                case "agendaItem": 
+                    $item = agendaItemAutocomplete($api_request["q"]);
+                    return createApiResponse(
+                        createApiSuccessResponse(
+                            $item["data"],
+                            $item["meta"],
+                            ["self" => htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"])]
+                        )
+                    );
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
