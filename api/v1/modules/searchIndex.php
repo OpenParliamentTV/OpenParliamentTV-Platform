@@ -24,10 +24,6 @@ function getSearchIndexParameterBody() {
                         "keyword" => array(
                             "type" => "keyword",
                             "ignore_above" => 256
-                        ),
-                        "autocomplete" => array(
-                            "analyzer" => "autocomplete_html_analyzer",
-                            "type" => "text"
                         )
                     )
                 )
@@ -62,10 +58,6 @@ function getSearchIndexParameterBody() {
                                 "keyword" => array(
                                     "type" => "keyword",
                                     "ignore_above" => 256
-                                ),
-                                "autocomplete" => array(
-                                    "analyzer" => "agenda_item_autocomplete_analyzer",
-                                    "type" => "text"
                                 )
                             )
                         ),
@@ -77,10 +69,6 @@ function getSearchIndexParameterBody() {
                                 "keyword" => array(
                                     "type" => "keyword",
                                     "ignore_above" => 256
-                                ),
-                                "autocomplete" => array(
-                                    "analyzer" => "agenda_item_autocomplete_analyzer",
-                                    "type" => "text"
                                 )
                             )
                         )
@@ -146,31 +134,15 @@ function getSearchIndexParameterBody() {
                     "char_filter" => ["custom_html_strip"],
                     "filter" => ["lowercase", "custom_synonyms"]
                 ),
-                "autocomplete_html_analyzer" => array(
-                    "type" => "custom",
-                    "tokenizer" => "standard",
-                    "char_filter" => ["custom_html_strip"],
-                    "filter" => ["custom_stopwords", "lowercase", "custom_synonyms"]
-                ),
+
                 "agenda_item_analyzer" => array(
                     "type" => "custom",
                     "tokenizer" => "standard",
                     "filter" => ["lowercase", "custom_stemmer", "custom_synonyms"]
                 ),
-                "agenda_item_autocomplete_analyzer" => array(
-                    "type" => "custom",
-                    "tokenizer" => "edge_ngram",
-                    "filter" => ["lowercase", "custom_synonyms"]
-                )
+
             ),
-            "tokenizer" => array(
-                "edge_ngram" => array(
-                    "type" => "edge_ngram",
-                    "min_gram" => 2,
-                    "max_gram" => 20,
-                    "token_chars" => ["letter", "digit"]
-                )
-            ),
+
             "char_filter" => array(
                 "custom_html_strip" => array(
                     "type" => "pattern_replace",
@@ -199,6 +171,44 @@ function getSearchIndexParameterBody() {
     return $data;
 }
 
+/**
+ * @return array
+ * Helperfunction to setup the query for indexing and mapping a words index
+ */
+function getWordsIndexParameterBody() {
+    $data = array();
+
+    $data["mappings"] = array("properties" => array(
+        "word" => array(
+            "type" => "keyword",
+            "ignore_above" => 256
+        ),
+        "frequency" => array(
+            "type" => "long"
+        ),
+        "doc_count" => array(
+            "type" => "long"
+        ),
+        "type" => array(
+            "type" => "keyword"
+        )
+    ));
+
+    $data["settings"] = array(
+        "number_of_replicas" => 0,
+        "number_of_shards" => 1,
+        "analysis" => array(
+            "analyzer" => array(
+                "default" => array(
+                    "type" => "custom",
+                    "tokenizer" => "standard",
+                    "filter" => ["lowercase"]
+                )
+            )
+        )
+    );
+    return $data;
+}
 
 /**
  * Adds or updates media items in the search index.
@@ -295,6 +305,19 @@ function searchIndexUpdate($api_request) {
     }
     
     $finalMessage = "Search index update completed. Updated: {$updatedCount}, Failed: {$failedCount}.";
+    
+    // Build words index after main index update
+    try {
+        $wordsResult = buildWordsIndex($parliament);
+        if (isset($wordsResult['data'])) {
+            $finalMessage .= " Words index: " . $wordsResult['data']['message'];
+        }
+    } catch (Exception $e) {
+        // Log words index build failure but don't fail the main operation
+        error_log("Words index build failed for parliament {$parliament}: " . $e->getMessage());
+        $finalMessage .= " (Words index build failed)";
+    }
+    
     return createApiSuccessResponse(
         ['updated' => $updatedCount, 'failed' => $failedCount, 'errors' => $errorsEncountered],
         ['message' => $finalMessage]
@@ -447,6 +470,178 @@ function searchIndexTriggerFullUpdate($api_request) {
         return createApiSuccessResponse(["message" => "Full search index update process initiated for parliament: {$parliament}."]);
     } catch (Exception $e) {
         return createApiErrorResponse(500, 'ASYNC_EXEC_FAIL', 'messageErrorAsyncExec', 'messageErrorAsyncExec', ['error' => $e->getMessage()]);
+    }
+}
+
+/**
+ * Build words index from main index
+ * 
+ * This function extracts unique words from the main index and stores them
+ * in a lightweight words index for efficient autocomplete queries.
+ * 
+ * @param string $parliament The parliament identifier
+ * @return array API response
+ */
+function buildWordsIndex($parliament) {
+    global $config;
+    
+    try {
+        $ESClient = getApiOpenSearchClient();
+        if (is_array($ESClient) && isset($ESClient["errors"])) {
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorOpenSearchTitle",
+                "messageErrorOpenSearchClientInitFailed"
+            );
+        }
+
+        $wordsIndexName = "openparliamenttv_words_" . $parliament;
+        
+        // Check if words index exists, delete if it does
+        try {
+            $ESClient->indices()->delete(['index' => $wordsIndexName]);
+        } catch (Exception $e) {
+            // Index doesn't exist, which is fine
+        }
+        
+        // Create words index
+        $indexParams = getWordsIndexParameterBody();
+        $ESClient->indices()->create([
+            'index' => $wordsIndexName,
+            'body' => $indexParams
+        ]);
+        
+        // Get documents and extract clean words from text content
+        $query = [
+            "size" => 1000, // Process in batches
+            "query" => [
+                "exists" => [
+                    "field" => "attributes.textContents.textHTML"
+                ]
+            ],
+            "_source" => ["attributes.textContents.textHTML"]
+        ];
+        
+        $indexWords = [];
+        $processedDocs = 0;
+        $totalDocs = 0;
+        
+        // First, get total count
+        $countQuery = [
+            "size" => 0,
+            "query" => [
+                "exists" => [
+                    "field" => "attributes.textContents.textHTML"
+                ]
+            ]
+        ];
+        
+        $countResults = $ESClient->search([
+            "index" => "openparliamenttv_" . $parliament,
+            "body" => $countQuery
+        ]);
+        
+        $totalDocs = $countResults["hits"]["total"]["value"] ?? 0;
+        
+        // Process documents in batches
+        while ($processedDocs < $totalDocs) {
+            $query["from"] = $processedDocs;
+            $results = $ESClient->search([
+                "index" => "openparliamenttv_" . $parliament,
+                "body" => $query
+            ]);
+            
+            if (!isset($results["hits"]["hits"])) {
+                break;
+            }
+            
+            foreach ($results["hits"]["hits"] as $hit) {
+                if (isset($hit["_source"]["attributes"]["textContents"])) {
+                    foreach ($hit["_source"]["attributes"]["textContents"] as $textContent) {
+                        if (isset($textContent["textHTML"])) {
+                            // Strip HTML and extract words
+                            $cleanText = strip_tags($textContent["textHTML"]);
+                            $words = preg_split('/\\W+/u', mb_strtolower($cleanText, 'UTF-8'), -1, PREG_SPLIT_NO_EMPTY);
+                            
+                            foreach ($words as $word) {
+                                // Skip stopwords and short words
+                                if (strlen($word) < 3 || in_array($word, $config["excludedStopwords"])) {
+                                    continue;
+                                }
+                                
+                                // Clean the word
+                                $cleanWord = preg_replace('/[^\p{L}\p{N}]/u', '', $word);
+                                if (strlen($cleanWord) < 3) {
+                                    continue;
+                                }
+                                
+                                // Count frequency
+                                if (!isset($indexWords[$cleanWord])) {
+                                    $indexWords[$cleanWord] = [
+                                        "word" => $cleanWord,
+                                        "frequency" => 0,
+                                        "doc_count" => 0,
+                                        "type" => "word"
+                                    ];
+                                }
+                                $indexWords[$cleanWord]["frequency"]++;
+                            }
+                        }
+                    }
+                }
+            }
+            
+            $processedDocs += count($results["hits"]["hits"]);
+            
+            // Break if no more results
+            if (count($results["hits"]["hits"]) === 0) {
+                break;
+            }
+        }
+        
+        // Convert to array and sort by frequency
+        $indexWords = array_values($indexWords);
+        usort($indexWords, function($a, $b) {
+            return $b["frequency"] - $a["frequency"];
+        });
+        
+        // Batch index the words
+        $batchSize = 1000;
+        for ($i = 0; $i < count($indexWords); $i += $batchSize) {
+            $batch = array_slice($indexWords, $i, $batchSize);
+            $bulkData = [];
+            
+            foreach ($batch as $word) {
+                $bulkData[] = [
+                    "index" => [
+                        "_index" => $wordsIndexName,
+                        "_id" => $word["word"]
+                    ]
+                ];
+                $bulkData[] = $word;
+            }
+            
+            $ESClient->bulk(['body' => $bulkData]);
+        }
+        
+        // Refresh the index
+        $ESClient->indices()->refresh(['index' => $wordsIndexName]);
+        
+        return createApiSuccessResponse([
+            "message" => "Words index built successfully",
+            "index_name" => $wordsIndexName,
+            "word_count" => count($indexWords)
+        ]);
+        
+    } catch (Exception $e) {
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorAutocompleteIndexTitle",
+            "messageErrorAutocompleteIndexBuildFailed",
+            ["details" => $e->getMessage()]
+        );
     }
 }
 

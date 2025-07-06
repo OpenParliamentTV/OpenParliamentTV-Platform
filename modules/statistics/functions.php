@@ -24,136 +24,93 @@ if (is_array($ESClient) && isset($ESClient["errors"])) {
 function getGeneralStatistics() {
     global $ESClient, $DEBUG_MODE, $config;
     
+    // --- Use words index for word frequency ---
+    $wordsIndices = array_map(function($index) {
+        return strtolower(str_replace('openparliamenttv_', 'openparliamenttv_words_', $index));
+    }, getParliamentIndices());
+    $wordsIndexPattern = implode(',', $wordsIndices);
+    
+    // Get total word count and top 20 words by frequency
+    $totalWords = 0;
+    $topWords = [];
+    
+    try {
+        // Get total count of unique words
+        $countResults = $ESClient->count(['index' => $wordsIndexPattern]);
+        $totalWords = $countResults['count'] ?? 0;
+        
+        // Get top 20 words by frequency
+        $wordsQuery = [
+            'size' => 20,
+            'sort' => [
+                ['frequency' => ['order' => 'desc']],
+                ['word' => ['order' => 'asc']]
+            ]
+        ];
+        $wordsResults = $ESClient->search(['index' => $wordsIndexPattern, 'body' => $wordsQuery]);
+        if (isset($wordsResults['hits']['hits'])) {
+            foreach ($wordsResults['hits']['hits'] as $hit) {
+                $topWords[] = [
+                    'key' => $hit['_source']['word'],
+                    'doc_count' => $hit['_source']['frequency']
+                ];
+            }
+        }
+    } catch (Exception $e) {
+        error_log('Error fetching words from words index: ' . $e->getMessage());
+    }
+    // --- End words index ---
+
+    // Main aggregation query for all other stats (as before)
     $query = [
-        "size" => 0,
-        "aggs" => [
-            "speakers" => [
-                "nested" => [
-                    "path" => "annotations.data"
-                ],
-                "aggs" => [
-                    "filtered_speakers" => [
-                        "filter" => [
-                            "term" => [
-                                "annotations.data.attributes.context" => "main-speaker"
-                            ]
-                        ],
-                        "aggs" => [
-                            "unique_speakers" => [
-                                "cardinality" => [
-                                    "field" => "annotations.data.id"
-                                ]
-                            ],
-                            "top_speakers" => [
-                                "terms" => [
-                                    "field" => "annotations.data.id",
-                                    "size" => 10
-                                ]
-                            ]
+        'size' => 0,
+        'aggs' => [
+            'speakers' => [
+                'nested' => [ 'path' => 'annotations.data' ],
+                'aggs' => [
+                    'filtered_speakers' => [
+                        'filter' => [ 'term' => [ 'annotations.data.attributes.context' => 'main-speaker' ] ],
+                        'aggs' => [
+                            'unique_speakers' => [ 'cardinality' => [ 'field' => 'annotations.data.id' ] ],
+                            'top_speakers' => [ 'terms' => [ 'field' => 'annotations.data.id', 'size' => 10 ] ]
                         ]
                     ]
                 ]
             ],
-            "speakingTime" => [
-                "stats" => [
-                    "field" => "attributes.duration"
-                ]
-            ],
-            "speakerMentions" => [
-                "nested" => [
-                    "path" => "annotations.data"
-                ],
-                "aggs" => [
-                    "filtered_speakers" => [
-                        "filter" => [
-                            "term" => [
-                                "annotations.data.type" => "person"
-                            ]
-                        ],
-                        "aggs" => [
-                            "topSpeakers" => [
-                                "terms" => [
-                                    "field" => "annotations.data.id",
-                                    "size" => 10,
-                                    "order" => ["_count" => "desc"]
-                                ]
-                            ]
+            'speakingTime' => [ 'stats' => [ 'field' => 'attributes.duration' ] ],
+            'speakerMentions' => [
+                'nested' => [ 'path' => 'annotations.data' ],
+                'aggs' => [
+                    'filtered_speakers' => [
+                        'filter' => [ 'term' => [ 'annotations.data.type' => 'person' ] ],
+                        'aggs' => [
+                            'topSpeakers' => [ 'terms' => [ 'field' => 'annotations.data.id', 'size' => 10, 'order' => ['_count' => 'desc'] ] ]
                         ]
                     ]
                 ]
             ],
-            "shareOfVoice" => [
-                "nested" => [
-                    "path" => "annotations.data"
-                ],
-                "aggs" => [
-                    "parties" => [
-                        "filter" => [
-                            "term" => [
-                                "annotations.data.attributes.context" => "main-speaker-party"
-                            ]
-                        ],
-                        "aggs" => [
-                            "topParties" => [
-                                "terms" => [
-                                    "field" => "annotations.data.id",
-                                    "size" => 10,
-                                    "order" => ["_count" => "desc"]
-                                ]
-                            ]
-                        ]
+            'shareOfVoice' => [
+                'nested' => [ 'path' => 'annotations.data' ],
+                'aggs' => [
+                    'parties' => [
+                        'filter' => [ 'term' => [ 'annotations.data.attributes.context' => 'main-speaker-party' ] ],
+                        'aggs' => [ 'topParties' => [ 'terms' => [ 'field' => 'annotations.data.id', 'size' => 10, 'order' => ['_count' => 'desc'] ] ] ]
                     ],
-                    "factions" => [
-                        "filter" => [
-                            "term" => [
-                                "annotations.data.attributes.context" => "main-speaker-faction"
-                            ]
-                        ],
-                        "aggs" => [
-                            "topFactions" => [
-                                "terms" => [
-                                    "field" => "annotations.data.id",
-                                    "size" => 10,
-                                    "order" => ["_count" => "desc"]
-                                ]
-                            ]
-                        ]
+                    'factions' => [
+                        'filter' => [ 'term' => [ 'annotations.data.attributes.context' => 'main-speaker-faction' ] ],
+                        'aggs' => [ 'topFactions' => [ 'terms' => [ 'field' => 'annotations.data.id', 'size' => 10, 'order' => ['_count' => 'desc'] ] ] ]
                     ]
                 ]
             ],
-            "wordFrequency" => [
-                "terms" => [
-                    "field" => "attributes.textContents.textHTML",
-                    "size" => 20,
-                    "min_doc_count" => 1,
-                    "order" => ["_count" => "desc"],
-                    "exclude" => $config["excludedStopwords"]
-                ]
-            ],
-            "entities" => [
-                "nested" => [
-                    "path" => "annotations.data"
-                ],
-                "aggs" => [
-                    "entityTypes" => [
-                        "terms" => [
-                            "field" => "annotations.data.type.keyword",
-                            "size" => 5
-                        ],
-                        "aggs" => [
-                            "topEntities" => [
-                                "terms" => [
-                                    "field" => "annotations.data.id",
-                                    "size" => 10,
-                                    "order" => ["_count" => "desc"]
-                                ],
-                                "aggs" => [
-                                    "unique_documents" => [
-                                        "cardinality" => [
-                                            "field" => "_id"
-                                        ]
-                                    ]
-                                ]
+            'entities' => [
+                'nested' => [ 'path' => 'annotations.data' ],
+                'aggs' => [
+                    'entityTypes' => [
+                        'terms' => [ 'field' => 'annotations.data.type.keyword', 'size' => 5 ],
+                        'aggs' => [
+                            'topEntities' => [
+                                'terms' => [ 'field' => 'annotations.data.id', 'size' => 10, 'order' => ['_count' => 'desc'] ],
+                                'aggs' => [ 'unique_documents' => [ 'cardinality' => [ 'field' => '_id' ] ] ]
                             ]
                         ]
                     ]
@@ -163,55 +120,23 @@ function getGeneralStatistics() {
     ];
     
     try {
-        // First check if the index exists
-        $indices = $ESClient->cat()->indices(['index' => 'openparliamenttv_*']);
-        if (empty($indices)) {
-            throw new Exception("No OpenSearch indices found matching 'openparliamenttv_*'");
-        }
-        
-        if ($DEBUG_MODE) {
-            error_log("General Statistics Query: " . json_encode($query, JSON_PRETTY_PRINT));
-        }
-        
         $results = $ESClient->search([
-            "index" => "openparliamenttv_*",
-            "body" => $query
+            'index' => 'openparliamenttv_*',
+            'body' => $query
         ]);
-        
-        if ($DEBUG_MODE) {
-            error_log("General Statistics Response: " . json_encode($results, JSON_PRETTY_PRINT));
-            if (isset($results["aggregations"]["wordFrequency"]["buckets"])) {
-                error_log("Word Frequency Buckets: " . json_encode($results["aggregations"]["wordFrequency"]["buckets"], JSON_PRETTY_PRINT));
-                foreach ($results["aggregations"]["wordFrequency"]["buckets"] as $bucket) {
-                    error_log("Word: " . $bucket["key"] . ", Doc Count: " . $bucket["doc_count"]);
-                }
-            }
+        if (!isset($results['aggregations'])) {
+            throw new Exception('Invalid OpenSearch response: missing required aggregations');
         }
-        
-        // Validate response structure
-        if (!isset($results["aggregations"])) {
-            throw new Exception("Invalid OpenSearch response: missing aggregations");
-        }
-        
-        $aggregations = $results["aggregations"];
-        
-        // Validate required aggregations
-        if (!isset($aggregations["speakers"]) || 
-            !isset($aggregations["speakingTime"]) || 
-            !isset($aggregations["wordFrequency"])) {
-            throw new Exception("Invalid OpenSearch response: missing required aggregations");
-        }
-        
+        $aggregations = $results['aggregations'];
+        // Inject the top words from the words index
+        $aggregations['wordFrequency'] = [
+            'buckets' => $topWords,
+            'sum_other_doc_count' => $totalWords
+        ];
         return $aggregations;
-    } catch(Exception $e) {
-        error_log("Statistics error: " . $e->getMessage());
-        if ($DEBUG_MODE) {
-            error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
-            if (isset($results)) {
-                error_log("Response: " . json_encode($results, JSON_PRETTY_PRINT));
-            }
-        }
-        throw $e; // Re-throw to be handled by the API layer
+    } catch (Exception $e) {
+        error_log('General statistics error: ' . $e->getMessage());
+        throw $e;
     }
 }
 
@@ -295,92 +220,44 @@ function getEntityStatistics($entityType, $entityID) {
 function getTermStatistics() {
     global $ESClient, $DEBUG_MODE, $config;
     
-    $query = [
-        "size" => 0,
-        "aggs" => [
-            "frequency" => [
-                "terms" => [
-                    "field" => "attributes.textContents.textHTML",
-                    "size" => 20,
-                    "min_doc_count" => 1,
-                    "order" => ["_count" => "desc"],
-                    "exclude" => $config["excludedStopwords"]
-                ],
-                "aggs" => [
-                    "total_occurrences" => [
-                        "value_count" => [
-                            "field" => "attributes.textContents.textHTML"
-                        ]
-                    ]
-                ]
-            ],
-            "trends" => [
-                "date_histogram" => [
-                    "field" => "attributes.dateStart",
-                    "calendar_interval" => "day",
-                    "min_doc_count" => 0
-                ],
-                "aggs" => [
-                    "terms" => [
-                        "terms" => [
-                            "field" => "attributes.textContents.textHTML",
-                            "size" => 10,
-                            "min_doc_count" => 1,
-                            "order" => ["_count" => "desc"],
-                            "exclude" => $config["excludedStopwords"]
-                        ]
-                    ]
-                ]
-            ]
-        ],
-        "query" => [
-            "bool" => [
-                "must" => [
-                    [
-                        "exists" => [
-                            "field" => "attributes.textContents.textHTML"
-                        ]
-                    ]
-                ]
-            ]
+    // Use words index for all terms
+    $wordsIndices = array_map(function($index) {
+        return strtolower(str_replace('openparliamenttv_', 'openparliamenttv_words_', $index));
+    }, getParliamentIndices());
+    $wordsIndexPattern = implode(',', $wordsIndices);
+    $wordsQuery = [
+        'size' => 10000, // or as needed
+        'sort' => [
+            ['frequency' => ['order' => 'desc']],
+            ['word' => ['order' => 'asc']]
         ]
     ];
-    
+    $totalWords = 0;
+    $allWords = [];
     try {
-        // First check if the index exists
-        $indices = $ESClient->cat()->indices(['index' => 'openparliamenttv_*']);
-        if (empty($indices)) {
-            throw new Exception("No OpenSearch indices found matching 'openparliamenttv_*'");
-        }
+        // Get total count of unique words
+        $countResults = $ESClient->count(['index' => $wordsIndexPattern]);
+        $totalWords = $countResults['count'] ?? 0;
         
-        if ($DEBUG_MODE) {
-            error_log("Term Statistics Query: " . json_encode($query, JSON_PRETTY_PRINT));
-        }
-        
-        $results = $ESClient->search([
-            "index" => "openparliamenttv_*",
-            "body" => $query
-        ]);
-        
-        if ($DEBUG_MODE) {
-            error_log("Term Statistics Response: " . json_encode($results, JSON_PRETTY_PRINT));
-        }
-        
-        if (!isset($results["aggregations"])) {
-            throw new Exception("No aggregations found in search results");
-        }
-        
-        return $results["aggregations"];
-    } catch(Exception $e) {
-        error_log("Term statistics error: " . $e->getMessage());
-        if ($DEBUG_MODE) {
-            error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
-            if (isset($results)) {
-                error_log("Response: " . json_encode($results, JSON_PRETTY_PRINT));
+        $wordsResults = $ESClient->search(['index' => $wordsIndexPattern, 'body' => $wordsQuery]);
+        if (isset($wordsResults['hits']['hits'])) {
+            foreach ($wordsResults['hits']['hits'] as $hit) {
+                $allWords[] = [
+                    'key' => $hit['_source']['word'],
+                    'doc_count' => $hit['_source']['frequency']
+                ];
             }
         }
-        throw new Exception("Failed to retrieve term statistics: " . $e->getMessage());
+    } catch (Exception $e) {
+        error_log('Error fetching words from words index: ' . $e->getMessage());
     }
+    // Return in the same format as before
+    return [
+        'frequency' => [
+            'buckets' => $allWords,
+            'sum_other_doc_count' => $totalWords
+        ]
+    ];
 }
 
 /**

@@ -275,6 +275,19 @@ if (is_cli()) {
             $finalStatusDetails = "Search index update failed. All {$totalItems} items failed to process.";
         }
         
+        // Build words index after main index is complete
+        try {
+            logger("info", "Building words index for parliament: {$parliament}");
+            $wordsResult = buildWordsIndex($parliament);
+            if (isset($wordsResult['data'])) {
+                $finalStatusDetails .= " Words index: " . $wordsResult['data']['message'];
+                logger("info", "Words index built successfully: " . $wordsResult['data']['word_count'] . " words");
+            }
+        } catch (Exception $e) {
+            logger("error", "Words index build failed for parliament {$parliament}: " . $e->getMessage());
+            $finalStatusDetails .= " (Words index build failed)";
+        }
+        
         finalizeBaseProgressFile($searchIndexProgressFilePath, $finalStatus, $finalStatusDetails);
         $progressFinalized = true;
 

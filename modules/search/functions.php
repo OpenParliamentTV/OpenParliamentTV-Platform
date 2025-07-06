@@ -28,7 +28,12 @@ function getIndexCount() {
 	global $ESClient;
 
 	try {
-		$return = $ESClient->count(['index' => 'openparliamenttv_*']);
+		// Only count speech indices, exclude words indices
+		$indices = getParliamentIndices();
+		// Convert to lowercase to match actual index names
+		$indices = array_map('strtolower', $indices);
+		$indexPattern = implode(',', $indices);
+		$return = $ESClient->count(['index' => $indexPattern]);
 		$result = $return["count"];
 	} catch(Exception $e) {
 		//print_r($e->getMessage());
@@ -203,17 +208,12 @@ function getMediaIDListFromSearchResult($request) {
 }
 
 /**
- * Search for autocomplete suggestions based on a text query
- * 
- * This function provides autocomplete suggestions for a given text query.
- * It's useful for implementing search suggestions as the user types.
- * 
- * @param string $textQuery The text query to search for suggestions
- * @return array An array of autocomplete suggestions
+ * Enhanced autocomplete with priority-based suggestions using separate words index
+ * Priority: 1. Prefix matches, 2. Substring matches, 3. Spellcheck
  */
 function searchAutocomplete($textQuery) {
     
-    if (!isset($textQuery) || !strlen($textQuery) > 2 ) {
+    if (!isset($textQuery) || strlen($textQuery) <= 2 ) {
         return array();
     }
     
@@ -224,33 +224,260 @@ function searchAutocomplete($textQuery) {
         return array();
     }
 
-    $data = getAutocompleteSearchBody($textQuery);
-    
-    $searchParams = array("index" => "openparliamenttv_*", "body" => $data);
-    
-    try {
-        $results = $ESClient->search($searchParams);
-    } catch(Exception $e) {
-        //print_r($e->getMessage());
-        $results = null;
+    $maxResults = 6;
+    $results = array();
+    $seenTerms = array();
+    $searchTermLower = strtolower($textQuery);
+
+    // 1. PRIORITY 1: Prefix matches
+    $prefixResults = searchAutocompletePrefix($textQuery, $ESClient, $maxResults + 2);
+    // Debug output
+    error_log("Prefix results count: " . count($prefixResults));
+    foreach ($prefixResults as $result) {
+        if (count($results) >= $maxResults) break;
+        // Skip if it's the exact search term or already seen
+        if (strtolower($result['text']) !== $searchTermLower && !in_array($result['text'], $seenTerms)) {
+            $result['text'] = highlightSearchTerm($result['text'], $textQuery);
+            $results[] = $result;
+            $seenTerms[] = $result['text'];
+        }
     }
 
-    /*
-    echo '<pre>';
-    print_r($results); 
-    echo '</pre>';
-    */
-
-    if ($results && isset($results["suggest"]["autosuggest"][0]["options"])) {
-        $return = $results["suggest"]["autosuggest"][0]["options"];
-    } else {
-        $return = array();
+    // 2. PRIORITY 2: Substring matches
+    if (count($results) < $maxResults) {
+        $substringResults = searchAutocompleteSubstring($textQuery, $ESClient, $maxResults - count($results) + 2);
+        foreach ($substringResults as $result) {
+            if (count($results) >= $maxResults) break;
+            // Skip if it's the exact search term or already seen
+            if (strtolower($result['text']) !== $searchTermLower && !in_array($result['text'], $seenTerms)) {
+                $result['text'] = highlightSearchTerm($result['text'], $textQuery);
+                $results[] = $result;
+                $seenTerms[] = $result['text'];
+            }
+        }
     }
 
-    return $return;
+    // 3. PRIORITY 3: Spellcheck suggestions
+    if (count($results) < $maxResults) {
+        $spellcheckResults = searchAutocompleteSpellcheck($textQuery, $ESClient, $maxResults - count($results) + 2);
+        foreach ($spellcheckResults as $result) {
+            if (count($results) >= $maxResults) break;
+            // Skip if it's the exact search term or already seen
+            if (strtolower($result['text']) !== $searchTermLower && !in_array($result['text'], $seenTerms)) {
+                $result['text'] = highlightSearchTerm($result['text'], $textQuery);
+                $results[] = $result;
+                $seenTerms[] = $result['text'];
+            }
+        }
+    }
 
+    return $results;
 }
 
+/**
+ * Search for prefix matches using the words index
+ */
+function searchAutocompletePrefix($textQuery, $ESClient, $maxResults) {
+    global $config;
+    
+    // Get all parliament indices
+    $indices = getParliamentIndices();
+    $wordsIndices = array_map(function($index) {
+        return strtolower(str_replace('openparliamenttv_', 'openparliamenttv_words_', $index));
+    }, $indices);
+    
+    // Debug output
+    error_log("Words indices: " . implode(',', $wordsIndices));
+    
+    $data = array(
+        "size" => $maxResults,
+        "query" => array(
+            "prefix" => array(
+                "word" => strtolower($textQuery)
+            )
+        ),
+        "sort" => array(
+            array("frequency" => array("order" => "desc")),
+            array("word" => array("order" => "asc"))
+        )
+    );
+
+    try {
+        $results = $ESClient->search(array("index" => implode(',', $wordsIndices), "body" => $data));
+        
+        // Debug output
+        error_log("Raw results count: " . (isset($results["hits"]["hits"]) ? count($results["hits"]["hits"]) : 0));
+        
+        $return = array();
+        if (isset($results["hits"]["hits"])) {
+            foreach ($results["hits"]["hits"] as $hit) {
+                $word = $hit["_source"]["word"];
+                // Filter out stopwords in PHP
+                if (!in_array(strtolower($word), $config["excludedStopwords"])) {
+                    $return[] = array(
+                        "text" => $word,
+                        "score" => $hit["_source"]["frequency"],
+                        "freq" => $hit["_source"]["frequency"],
+                        "type" => "prefix"
+                    );
+                    if (count($return) >= $maxResults) break;
+                }
+            }
+        }
+        
+        // Debug output
+        error_log("Filtered results count: " . count($return));
+        
+        return $return;
+    } catch(Exception $e) {
+        error_log("Exception in searchAutocompletePrefix: " . $e->getMessage());
+        return array();
+    }
+}
+
+/**
+ * Search for substring matches using the words index
+ */
+function searchAutocompleteSubstring($textQuery, $ESClient, $maxResults) {
+    global $config;
+    
+    // Get all parliament indices
+    $indices = getParliamentIndices();
+    $wordsIndices = array_map(function($index) {
+        return strtolower(str_replace('openparliamenttv_', 'openparliamenttv_words_', $index));
+    }, $indices);
+    
+    $data = array(
+        "size" => $maxResults * 2, // Get more to filter
+        "query" => array(
+            "wildcard" => array(
+                "word" => "*" . strtolower($textQuery) . "*"
+            )
+        ),
+        "sort" => array(
+            array("frequency" => array("order" => "desc")),
+            array("word" => array("order" => "asc"))
+        )
+    );
+
+    try {
+        $results = $ESClient->search(array("index" => implode(',', $wordsIndices), "body" => $data));
+        
+        $return = array();
+        if (isset($results["hits"]["hits"])) {
+            foreach ($results["hits"]["hits"] as $hit) {
+                $word = $hit["_source"]["word"];
+                
+                // Only include if it's not a prefix match (to avoid duplicates)
+                if (strpos(strtolower($word), strtolower($textQuery)) !== 0) {
+                    // Additional check: ensure the term actually contains the search query
+                    if (strpos(strtolower($word), strtolower($textQuery)) !== false) {
+                        // Filter out stopwords in PHP
+                        if (!in_array(strtolower($word), $config["excludedStopwords"])) {
+                            $return[] = array(
+                                "text" => $word,
+                                "score" => $hit["_source"]["frequency"],
+                                "freq" => $hit["_source"]["frequency"],
+                                "type" => "substring"
+                            );
+                            if (count($return) >= $maxResults) break;
+                        }
+                    }
+                }
+            }
+        }
+        return $return;
+    } catch(Exception $e) {
+        return array();
+    }
+}
+
+/**
+ * Search for spellcheck suggestions using the words index
+ */
+function searchAutocompleteSpellcheck($textQuery, $ESClient, $maxResults) {
+    global $config;
+    
+    // Get all parliament indices
+    $indices = getParliamentIndices();
+    $wordsIndices = array_map(function($index) {
+        return strtolower(str_replace('openparliamenttv_', 'openparliamenttv_words_', $index));
+    }, $indices);
+    
+    $searchTermLower = strtolower($textQuery);
+    
+    // Only do spellcheck for terms with 3+ characters
+    if (strlen($searchTermLower) < 3) {
+        return array();
+    }
+    
+    // Use fuzzy query for spellcheck
+    $data = array(
+        "size" => $maxResults * 3, // Get more to filter
+        "query" => array(
+            "fuzzy" => array(
+                "word" => array(
+                    "value" => $searchTermLower,
+                    "fuzziness" => "AUTO",
+                    "max_expansions" => 50,
+                    "prefix_length" => 0,
+                    "transpositions" => true
+                )
+            )
+        ),
+        "sort" => array(
+            array("frequency" => array("order" => "desc")),
+            array("word" => array("order" => "asc"))
+        )
+    );
+
+    try {
+        $results = $ESClient->search(array("index" => implode(',', $wordsIndices), "body" => $data));
+        
+        $return = array();
+        if (isset($results["hits"]["hits"])) {
+            foreach ($results["hits"]["hits"] as $hit) {
+                $word = $hit["_source"]["word"];
+                $wordLower = strtolower($word);
+                
+                // Skip if it's the exact search term or a stopword
+                if ($wordLower === $searchTermLower || in_array($wordLower, $config["excludedStopwords"])) {
+                    continue;
+                }
+                
+                $return[] = array(
+                    "text" => $word,
+                    "score" => $hit["_source"]["frequency"],
+                    "freq" => $hit["_source"]["frequency"],
+                    "type" => "spellcheck"
+                );
+                
+                if (count($return) >= $maxResults) {
+                    break;
+                }
+            }
+        }
+        
+        return $return;
+    } catch(Exception $e) {
+        error_log("Exception in searchAutocompleteSpellcheck: " . $e->getMessage());
+        return array();
+    }
+}
+
+/**
+ * Get parliament indices for autocomplete search
+ */
+function getParliamentIndices() {
+    global $config;
+    $indices = array();
+    
+    foreach ($config["parliament"] as $parliamentKey => $parliamentConfig) {
+        $indices[] = "openparliamenttv_" . $parliamentKey;
+    }
+    
+    return $indices;
+}
 
 /**
  * Builds an OpenSearch query body based on request parameters
@@ -1085,37 +1312,7 @@ function addAggregations(&$data) {
     $data["aggs"]["datesCount"]["date_histogram"]["format"] = "yyyy-MM-dd";
 }
 
-/**
- * Build an autocomplete search query body
- * 
- * This function creates a search query body specifically for autocomplete functionality.
- * It uses the suggest API to provide text suggestions as the user types.
- * 
- * @param string $text The text query to search for suggestions
- * @return array The autocomplete search query body
- */
-function getAutocompleteSearchBody($text) {
 
-    $maxResults = 4;
-
-    $data = array(
-        "suggest" => array(
-            "text" => $text,
-            "autosuggest" => array(
-                "term" => array(
-                    "field" => "attributes.textContents.textHTML.autocomplete",
-                    "size" => $maxResults,
-                    "sort" => "score",
-                    "min_doc_freq" => 3,
-                    "suggest_mode" => "always",
-                    "min_word_length" => 3
-                )
-            )
-        )
-    );
-
-    return $data;
-}
 
 /**
  * Search for agenda item autocomplete suggestions based on a query
@@ -1306,6 +1503,25 @@ function DOMinnerHTML(DOMNode $element) {
     }
 
     return $innerHTML; 
+}
+
+/**
+ * Highlight the search term in the text by wrapping it with <em> tags
+ * 
+ * @param string $text The text to highlight
+ * @param string $searchTerm The search term to highlight
+ * @return string The text with highlighted search term
+ */
+function highlightSearchTerm($text, $searchTerm) {
+    if (empty($searchTerm)) {
+        return $text;
+    }
+    
+    // Case-insensitive replacement
+    $pattern = '/(' . preg_quote($searchTerm, '/') . ')/i';
+    $replacement = '<em>$1</em>';
+    
+    return preg_replace($pattern, $replacement, $text);
 }
 
 ?>

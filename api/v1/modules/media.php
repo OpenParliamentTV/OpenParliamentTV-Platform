@@ -435,6 +435,8 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
             $textHTML .= $paragraph["text"];
         }
 
+
+        
         $data["attributes"]["textContents"][] = [
             "id" => $itemText["TextID"],
             "type" => $itemText["TextType"],

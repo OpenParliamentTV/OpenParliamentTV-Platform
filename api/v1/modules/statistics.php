@@ -87,7 +87,7 @@ function statisticsGetGeneral($request) {
         // Process word frequency statistics
         if (isset($stats["wordFrequency"])) {
             $data["attributes"]["wordFrequency"] = [
-                "total" => $stats["wordFrequency"]["sum_other_doc_count"],
+                "totalWords" => $stats["wordFrequency"]["sum_other_doc_count"],
                 "topWords" => array_map(function($bucket) {
                     return [
                         "word" => $bucket["key"],
@@ -283,19 +283,6 @@ function statisticsGetTerms($request) {
                             "speechCount" => $bucket["doc_count"]
                         ];
                     }, $stats["frequency"]["buckets"])
-                ],
-                "trends" => [
-                    "timeline" => array_map(function($bucket) {
-                        return [
-                            "date" => $bucket["key_as_string"],
-                            "terms" => array_map(function($term) {
-                                return [
-                                    "term" => $term["key"],
-                                    "speechCount" => $term["doc_count"]
-                                ];
-                            }, $bucket["terms"]["buckets"])
-                        ];
-                    }, $stats["trends"]["buckets"])
                 ]
             ]
         ];
