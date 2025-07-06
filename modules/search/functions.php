@@ -231,8 +231,6 @@ function searchAutocomplete($textQuery) {
 
     // 1. PRIORITY 1: Prefix matches
     $prefixResults = searchAutocompletePrefix($textQuery, $ESClient, $maxResults + 2);
-    // Debug output
-    error_log("Prefix results count: " . count($prefixResults));
     foreach ($prefixResults as $result) {
         if (count($results) >= $maxResults) break;
         // Skip if it's the exact search term or already seen
@@ -286,9 +284,6 @@ function searchAutocompletePrefix($textQuery, $ESClient, $maxResults) {
         return strtolower(str_replace('openparliamenttv_', 'openparliamenttv_words_', $index));
     }, $indices);
     
-    // Debug output
-    error_log("Words indices: " . implode(',', $wordsIndices));
-    
     $data = array(
         "size" => $maxResults,
         "query" => array(
@@ -304,9 +299,6 @@ function searchAutocompletePrefix($textQuery, $ESClient, $maxResults) {
 
     try {
         $results = $ESClient->search(array("index" => implode(',', $wordsIndices), "body" => $data));
-        
-        // Debug output
-        error_log("Raw results count: " . (isset($results["hits"]["hits"]) ? count($results["hits"]["hits"]) : 0));
         
         $return = array();
         if (isset($results["hits"]["hits"])) {
@@ -324,9 +316,6 @@ function searchAutocompletePrefix($textQuery, $ESClient, $maxResults) {
                 }
             }
         }
-        
-        // Debug output
-        error_log("Filtered results count: " . count($return));
         
         return $return;
     } catch(Exception $e) {
