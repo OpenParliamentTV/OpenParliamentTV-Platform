@@ -4,6 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.api.php"); 
 require_once (__DIR__."/../../../vendor/autoload.php"); // For Elasticsearch
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
+require_once (__DIR__."/../../../modules/indexing/functions.main.php");
 
 /**
  * @return array
@@ -171,44 +172,6 @@ function getSearchIndexParameterBody() {
     return $data;
 }
 
-/**
- * @return array
- * Helperfunction to setup the query for indexing and mapping a words index
- */
-function getWordsIndexParameterBody() {
-    $data = array();
-
-    $data["mappings"] = array("properties" => array(
-        "word" => array(
-            "type" => "keyword",
-            "ignore_above" => 256
-        ),
-        "frequency" => array(
-            "type" => "long"
-        ),
-        "doc_count" => array(
-            "type" => "long"
-        ),
-        "type" => array(
-            "type" => "keyword"
-        )
-    ));
-
-    $data["settings"] = array(
-        "number_of_replicas" => 0,
-        "number_of_shards" => 1,
-        "analysis" => array(
-            "analyzer" => array(
-                "default" => array(
-                    "type" => "custom",
-                    "tokenizer" => "standard",
-                    "filter" => ["lowercase"]
-                )
-            )
-        )
-    );
-    return $data;
-}
 
 /**
  * Adds or updates media items in the search index.
@@ -306,16 +269,27 @@ function searchIndexUpdate($api_request) {
     
     $finalMessage = "Search index update completed. Updated: {$updatedCount}, Failed: {$failedCount}.";
     
-    // Build words index after main index update
-    try {
-        $wordsResult = buildWordsIndex($parliament);
-        if (isset($wordsResult['data'])) {
-            $finalMessage .= " Words index: " . $wordsResult['data']['message'];
+    // Detect if this is a full rebuild by checking if initIndex was requested
+    // Full rebuilds should not trigger incremental enhanced index updates
+    $isFullRebuild = $initIndex || (isset($api_request['isFullRebuild']) && $api_request['isFullRebuild']);
+    
+    if (!$isFullRebuild) {
+        // Only trigger incremental enhanced index updates for non-full-rebuild updates
+        try {
+            $enhancedUpdateResult = triggerEnhancedIndexUpdate($parliament, $items);
+            if ($enhancedUpdateResult['success']) {
+                $finalMessage .= " Enhanced indices update triggered.";
+            } else {
+                $finalMessage .= " (Enhanced indices update failed - indices may be out of sync)";
+                error_log("Enhanced indices update failed after main index update: " . json_encode($enhancedUpdateResult));
+            }
+        } catch (Exception $e) {
+            error_log("Enhanced indices update failed for parliament {$parliament}: " . $e->getMessage());
+            $finalMessage .= " (Enhanced indices update failed - indices may be out of sync)";
         }
-    } catch (Exception $e) {
-        // Log words index build failure but don't fail the main operation
-        error_log("Words index build failed for parliament {$parliament}: " . $e->getMessage());
-        $finalMessage .= " (Words index build failed)";
+    } else {
+        // For full rebuilds, enhanced indexing will be triggered by completion hook
+        $finalMessage .= " (Enhanced indices will be updated after main index completion)";
     }
     
     return createApiSuccessResponse(
@@ -447,202 +421,315 @@ function searchIndexTriggerFullUpdate($api_request) {
         return createApiErrorResponse(500, 'CONFIG_ERROR', 'messageErrorConfig', 'messageErrorConfigPHPNotFound');
     }
 
-    // --- Start: Delete index before rebuilding ---
+    // --- Start: Delete main index before rebuilding ---
     $deleteResult = searchIndexDelete($api_request);
 
     // If the deletion resulted in an error, stop and return that error.
     if (isset($deleteResult['errors']) || (isset($deleteResult['meta']['requestStatus']) && $deleteResult['meta']['requestStatus'] !== 'success')) {
         return $deleteResult;
     }
-    // --- End: Delete index ---
+    // --- End: Delete main index ---
 
-    // This script now triggers the original, reliable cronUpdater.php in search index mode.
+    // Execute main index rebuild asynchronously
     $cliScriptPath = realpath(__DIR__ . "/../../../data/cronUpdater.php");
+    
     if (!$cliScriptPath) {
         return createApiErrorResponse(500, 'SCRIPT_NOT_FOUND', 'messageErrorScriptNotFound', 'messageErrorScriptNotFoundCronUpdater');
     }
 
-    // Command to execute the background script for a full index rebuild
-    $command = $config["bin"]["php"] . " " . escapeshellarg($cliScriptPath) . " --justUpdateSearchIndex --parliament=" . escapeshellarg($parliament);
+    // Command to execute: rebuild main index with enhanced index trigger flag
+    $mainIndexCommand = $config["bin"]["php"] . " " . escapeshellarg($cliScriptPath) . " --justUpdateSearchIndex --parliament=" . escapeshellarg($parliament) . " --triggerEnhancedAfterCompletion";
     
     try {
-        executeAsyncShellCommand($command);
-        return createApiSuccessResponse(["message" => "Full search index update process initiated for parliament: {$parliament}."]);
+        executeAsyncShellCommand($mainIndexCommand);
+        return createApiSuccessResponse(["message" => "Full search index update process initiated for parliament: {$parliament}. Enhanced indices will be triggered automatically after main index completion."]);
     } catch (Exception $e) {
         return createApiErrorResponse(500, 'ASYNC_EXEC_FAIL', 'messageErrorAsyncExec', 'messageErrorAsyncExec', ['error' => $e->getMessage()]);
     }
 }
 
 /**
- * Build words index from main index
+ * Build enhanced indices after main index update
  * 
- * This function extracts unique words from the main index and stores them
- * in a lightweight words index for efficient autocomplete queries.
+ * This function creates enhanced indices for improved autocomplete and statistics
+ * using the new enhanced indexing system.
  * 
  * @param string $parliament The parliament identifier
  * @return array API response
  */
-function buildWordsIndex($parliament) {
-    global $config;
-    
-    try {
-        $ESClient = getApiOpenSearchClient();
-        if (is_array($ESClient) && isset($ESClient["errors"])) {
-            return createApiErrorResponse(
-                500,
-                1,
-                "messageErrorOpenSearchTitle",
-                "messageErrorOpenSearchClientInitFailed"
-            );
-        }
+function buildEnhancedIndices($parliament) {
+    // This function is now deprecated as enhanced indices are handled
+    // by the chained command approach in searchIndexTriggerFullUpdate
+    return createApiSuccessResponse([
+        "message" => "Enhanced indices are now automatically triggered by full index rebuild"
+    ]);
+}
 
-        $wordsIndexName = "openparliamenttv_words_" . $parliament;
+/**
+ * Trigger enhanced index update for incremental changes
+ * This function is called after main index updates to keep enhanced indices in sync
+ */
+function triggerEnhancedIndexUpdate($parliament, $items) {
+    try {
+        // Use incremental update for better performance
+        $result = processEnhancedIndexIncremental($parliament, $items);
         
-        // Check if words index exists, delete if it does
-        try {
-            $ESClient->indices()->delete(['index' => $wordsIndexName]);
-        } catch (Exception $e) {
-            // Index doesn't exist, which is fine
+        if ($result['success']) {
+            return [
+                'success' => true,
+                'message' => "Enhanced indices updated incrementally ({$result['processed']} speeches processed)",
+                'type' => 'incremental'
+            ];
+        } else {
+            return [
+                'success' => false,
+                'message' => 'Failed to update enhanced indices incrementally',
+                'errors' => $result['errors'] ?? []
+            ];
+        }
+    } catch (Exception $e) {
+        return [
+            'success' => false,
+            'message' => 'Exception triggering enhanced indices update: ' . $e->getMessage(),
+            'errors' => [$e->getMessage()]
+        ];
+    }
+}
+
+/**
+ * Process enhanced indices for specific items incrementally
+ * This is much faster than full rebuilds for regular updates
+ */
+function processEnhancedIndexIncremental($parliament, $items) {
+    try {
+        require_once(__DIR__ . '/../../../modules/indexing/functions.main.php');
+        
+        $parliamentCode = strtolower($parliament);
+        $processed = 0;
+        $errors = [];
+        
+        // Ensure enhanced indices exist
+        require_once(__DIR__ . '/../../../modules/indexing/functions.enhanced.php');
+        $createResult = createEnhancedIndices($parliamentCode, false);
+        if (!$createResult['success']) {
+            return [
+                'success' => false,
+                'message' => 'Failed to ensure enhanced indices exist',
+                'errors' => [$createResult['error']]
+            ];
         }
         
-        // Create words index
-        $indexParams = getWordsIndexParameterBody();
-        $ESClient->indices()->create([
-            'index' => $wordsIndexName,
-            'body' => $indexParams
-        ]);
-        
-        // Get documents and extract clean words from text content
-        $query = [
-            "size" => 1000, // Process in batches
-            "query" => [
-                "exists" => [
-                    "field" => "attributes.textContents.textHTML"
-                ]
-            ],
-            "_source" => ["attributes.textContents.textHTML"]
-        ];
-        
-        $indexWords = [];
-        $processedDocs = 0;
-        $totalDocs = 0;
-        
-        // First, get total count
-        $countQuery = [
-            "size" => 0,
-            "query" => [
-                "exists" => [
-                    "field" => "attributes.textContents.textHTML"
-                ]
-            ]
-        ];
-        
-        $countResults = $ESClient->search([
-            "index" => "openparliamenttv_" . $parliament,
-            "body" => $countQuery
-        ]);
-        
-        $totalDocs = $countResults["hits"]["total"]["value"] ?? 0;
-        
-        // Process documents in batches
-        while ($processedDocs < $totalDocs) {
-            $query["from"] = $processedDocs;
-            $results = $ESClient->search([
-                "index" => "openparliamenttv_" . $parliament,
-                "body" => $query
-            ]);
-            
-            if (!isset($results["hits"]["hits"])) {
-                break;
+        // Process each item incrementally
+        foreach ($items as $item) {
+            if (!isset($item['data']['id'])) {
+                continue;
             }
             
-            foreach ($results["hits"]["hits"] as $hit) {
-                if (isset($hit["_source"]["attributes"]["textContents"])) {
-                    foreach ($hit["_source"]["attributes"]["textContents"] as $textContent) {
-                        if (isset($textContent["textHTML"])) {
-                            // Strip HTML and extract words
-                            $cleanText = strip_tags($textContent["textHTML"]);
-                            $words = preg_split('/\\W+/u', mb_strtolower($cleanText, 'UTF-8'), -1, PREG_SPLIT_NO_EMPTY);
-                            
-                            foreach ($words as $word) {
-                                // Skip stopwords and short words
-                                if (strlen($word) < 3 || in_array($word, $config["excludedStopwords"])) {
-                                    continue;
-                                }
-                                
-                                // Clean the word
-                                $cleanWord = preg_replace('/[^\p{L}\p{N}]/u', '', $word);
-                                if (strlen($cleanWord) < 3) {
-                                    continue;
-                                }
-                                
-                                // Count frequency
-                                if (!isset($indexWords[$cleanWord])) {
-                                    $indexWords[$cleanWord] = [
-                                        "word" => $cleanWord,
-                                        "frequency" => 0,
-                                        "doc_count" => 0,
-                                        "type" => "word"
-                                    ];
-                                }
-                                $indexWords[$cleanWord]["frequency"]++;
-                            }
-                        }
-                    }
+            try {
+                // Process this specific speech for enhanced indexing
+                $speechId = $item['data']['id'];
+                $speechData = $item['data'];
+                
+                // Update word events index
+                $wordEventsResult = updateWordEventsForSpeech($parliamentCode, $speechId, $speechData);
+                if (!$wordEventsResult['success']) {
+                    $errors[] = "Word events update failed for {$speechId}: " . $wordEventsResult['error'];
                 }
-            }
-            
-            $processedDocs += count($results["hits"]["hits"]);
-            
-            // Break if no more results
-            if (count($results["hits"]["hits"]) === 0) {
-                break;
+                
+                // Update statistics index
+                $statisticsResult = updateStatisticsForSpeech($parliamentCode, $speechId, $speechData);
+                if (!$statisticsResult['success']) {
+                    $errors[] = "Statistics update failed for {$speechId}: " . $statisticsResult['error'];
+                }
+                
+                if ($wordEventsResult['success'] && $statisticsResult['success']) {
+                    $processed++;
+                }
+                
+            } catch (Exception $e) {
+                $errors[] = "Processing failed for {$speechId}: " . $e->getMessage();
             }
         }
         
-        // Convert to array and sort by frequency
-        $indexWords = array_values($indexWords);
-        usort($indexWords, function($a, $b) {
-            return $b["frequency"] - $a["frequency"];
-        });
-        
-        // Batch index the words
-        $batchSize = 1000;
-        for ($i = 0; $i < count($indexWords); $i += $batchSize) {
-            $batch = array_slice($indexWords, $i, $batchSize);
-            $bulkData = [];
-            
-            foreach ($batch as $word) {
-                $bulkData[] = [
-                    "index" => [
-                        "_index" => $wordsIndexName,
-                        "_id" => $word["word"]
-                    ]
-                ];
-                $bulkData[] = $word;
-            }
-            
-            $ESClient->bulk(['body' => $bulkData]);
-        }
-        
-        // Refresh the index
-        $ESClient->indices()->refresh(['index' => $wordsIndexName]);
-        
-        return createApiSuccessResponse([
-            "message" => "Words index built successfully",
-            "index_name" => $wordsIndexName,
-            "word_count" => count($indexWords)
-        ]);
+        return [
+            'success' => count($errors) === 0,
+            'processed' => $processed,
+            'errors' => $errors,
+            'message' => "Processed {$processed} speeches for enhanced indices"
+        ];
         
     } catch (Exception $e) {
-        return createApiErrorResponse(
-            500,
-            1,
-            "messageErrorAutocompleteIndexTitle",
-            "messageErrorAutocompleteIndexBuildFailed",
-            ["details" => $e->getMessage()]
-        );
+        return [
+            'success' => false,
+            'message' => 'Exception in incremental processing: ' . $e->getMessage(),
+            'errors' => [$e->getMessage()]
+        ];
     }
+}
+
+/**
+ * Enhanced indexing trigger for full rebuild (includes auto-setup)
+ */
+function searchIndexTriggerEnhancedUpdate($api_request) {
+    $parliament = $api_request['parliament'] ?? 'DE';
+    $batchSize = $api_request['batchSize'] ?? 100;
+    $startFrom = $api_request['startFrom'] ?? 0;
+    
+    if (empty($parliament)) {
+        return createApiErrorMissingParameter('parliament');
+    }
+    
+    // Check if already running
+    $lockFile = __DIR__ . '/../../../data/progress/enhancedIndexer_' . $parliament . '.lock';
+    if (file_exists($lockFile)) {
+        $lockData = json_decode(file_get_contents($lockFile), true);
+        $lockAge = time() - ($lockData['timestamp'] ?? 0);
+        
+        if ($lockAge < 3600) { // 1 hour timeout
+            return createApiErrorResponse(409, 'ALREADY_RUNNING', 'Enhanced indexing is already running', 'Process PID: ' . ($lockData['pid'] ?? 'unknown'));
+        } else {
+            // Remove stale lock
+            unlink($lockFile);
+        }
+    }
+    
+    // Start the batch processor in the background (it will handle clean rebuild automatically)
+    global $config;
+    $phpPath = $config["bin"]["php"] ?? PHP_BINARY;
+    $scriptPath = __DIR__ . '/../../../data/enhancedIndexer.php';
+    $logFile = __DIR__ . '/../../../data/enhancedIndexer_' . $parliament . '.log';
+    
+    $command = sprintf(
+        '%s %s --parliament=%s --batch-size=%d --start-from=%d > %s 2>&1 &',
+        escapeshellcmd($phpPath),
+        escapeshellarg($scriptPath),
+        escapeshellarg($parliament),
+        (int)$batchSize,
+        (int)$startFrom,
+        escapeshellarg($logFile)
+    );
+    
+    exec($command, $output, $returnCode);
+    
+    return createApiSuccessResponse([
+        'message' => 'Enhanced indexing rebuild started (clean rebuild with auto-setup)',
+        'parliament' => $parliament,
+        'batchSize' => $batchSize,
+        'logFile' => basename($logFile)
+    ]);
+}
+
+
+/**
+ * Get enhanced indexing progress file path
+ */
+function getEnhancedIndexProgressFilePath($parliamentCode) {
+    $progressDir = __DIR__ . "/../../../data/progress/";
+    $progressFileName = "enhancedIndexer_" . $parliamentCode . ".json";
+    return $progressDir . $progressFileName;
+}
+
+/**
+ * Enhanced indexing status
+ */
+function searchIndexGetEnhancedStatus($api_request) {
+    $parliament = $api_request['parliament'] ?? 'DE';
+    
+    if (empty($parliament)) {
+        return createApiErrorMissingParameter('parliament');
+    }
+    
+    $progressFile = getEnhancedIndexProgressFilePath($parliament);
+    $lockFile = __DIR__ . '/../../../data/progress/enhancedIndexer_' . $parliament . '.lock';
+    
+    // Check if process is running
+    $isRunning = false;
+    $pid = null;
+    
+    if (file_exists($lockFile)) {
+        $lockData = json_decode(file_get_contents($lockFile), true);
+        $lockAge = time() - ($lockData['timestamp'] ?? 0);
+        $pid = $lockData['pid'] ?? null;
+        
+        if ($lockAge < 3600 && $pid) {
+            // Check if process is actually running (simplified check)
+            $isRunning = file_exists("/proc/$pid") || (PHP_OS_FAMILY === 'Windows' && $pid);
+        } else {
+            // Remove stale lock
+            if (file_exists($lockFile)) {
+                unlink($lockFile);
+            }
+        }
+    }
+    
+    // Default progress data
+    $progressData = [
+        'status' => $isRunning ? 'running' : 'idle',
+        'statusDetails' => $isRunning ? 'Enhanced indexing in progress' : 'Enhanced indexing idle',
+        'parliament' => $parliament,
+        'totalDbMediaItems' => 0,
+        'processedMediaItems' => 0,
+        'successful_documents' => 0,
+        'failed_documents' => 0,
+        'current_batch' => 0,
+        'total_batches' => 0,
+        'words_indexed' => 0,
+        'statistics_updated' => 0,
+        'is_running' => $isRunning,
+        'pid' => $pid,
+        'performance' => [
+            'avg_docs_per_second' => 0,
+            'avg_words_per_doc' => 0
+        ]
+    ];
+    
+    // Read actual progress data if available
+    if (file_exists($progressFile)) {
+        $fileData = json_decode(file_get_contents($progressFile), true);
+        if ($fileData) {
+            $progressData = array_merge($progressData, $fileData);
+            
+            // Map enhanced indexing fields to standard fields for compatibility
+            $progressData['totalDbMediaItems'] = $fileData['total_documents'] ?? 0;
+            $progressData['processedMediaItems'] = $fileData['processed_documents'] ?? 0;
+            
+            // Set status details based on enhanced indexing status
+            switch ($fileData['status'] ?? 'idle') {
+                case 'starting':
+                    $progressData['statusDetails'] = 'Starting enhanced indexing...';
+                    break;
+                case 'initializing':
+                case 'setting_up_indices':
+                    $progressData['statusDetails'] = 'Setting up enhanced indices (auto-setup)...';
+                    break;
+                case 'counting_documents':
+                    $progressData['statusDetails'] = 'Counting documents...';
+                    break;
+                case 'processing':
+                case 'processing_batch':
+                    $batch = $fileData['current_batch'] ?? 0;
+                    $totalBatches = $fileData['total_batches'] ?? 0;
+                    $currentDoc = $fileData['current_document_id'] ?? '';
+                    $progressData['statusDetails'] = "Processing batch $batch/$totalBatches";
+                    if ($currentDoc && $currentDoc !== "batch_$batch") {
+                        $progressData['statusDetails'] .= " (Document: $currentDoc)";
+                    }
+                    break;
+                case 'completed':
+                    $progressData['statusDetails'] = 'Enhanced indexing completed';
+                    $progressData['status'] = 'completed';
+                    break;
+                case 'error':
+                    $progressData['statusDetails'] = 'Enhanced indexing failed';
+                    $progressData['status'] = 'error';
+                    break;
+                default:
+                    $progressData['statusDetails'] = 'Enhanced indexing idle';
+            }
+        }
+    }
+    
+    return createApiSuccessResponse($progressData);
 }
 
 ?> 

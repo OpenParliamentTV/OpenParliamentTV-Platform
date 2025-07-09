@@ -114,6 +114,21 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     <div id="search-index-DE-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
 								</div>
 							</div>
+							<hr>
+							<div class="row" id="enhanced-index-progress-section-DE" data-parliament-code="DE">
+								<div class="col-12">
+									<div class="d-flex justify-content-between">
+										<div class="fw-bolder">Enhanced Index (DE) <small class="text-muted">(auto-synced)</small></div> 
+										<div id="enhanced-index-DE-items-text" class="small">Idle</div>
+									</div>
+									<div class="progress my-1" role="progressbar" aria-label="Enhanced Index DE Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+										<div id="enhanced-index-DE-progress-bar" class="progress-bar" style="width: 0%"></div>
+									</div>
+                                    <div id="enhanced-index-DE-status-text" class="small text-muted mb-2">Status: Idle</div>
+									<button type="button" id="btn-trigger-enhanced-index-rebuild-DE" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="DE"><span class="icon-arrows-cw"></span> Rebuild Enhanced Index (DE)</button>
+                                    <div id="enhanced-index-DE-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
+								</div>
+							</div>
                         </div>
 						<div class="tab-pane bg-white fade p-3" id="external" role="tabpanel" aria-labelledby="external-tab">
 							<div id="ads-progress-container">
@@ -342,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
         currentFileText: 'data-import-current-file-text',
         errorDisplay: 'data-import-error-display',
         triggerButton: 'btn-trigger-data-import',
-        originalButtonText: `<span class="icon-cw"></span> ${localizedLabels.triggerManualUpdate}` 
+        originalButtonText: `<span class="icon-cw"></span> <?= L::triggerManualUpdate(); ?>` 
     };
 
     async function fetchDataImportStatus() {
@@ -363,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const percentage = totalFiles > 0 ? (processedFiles / totalFiles) * 100 : 0;
         let finalStatusDetails = statusDetails;
-        let finalItemsText = `${localizedLabels.files}: ${processedFiles} / ${totalFiles}`;
+        let finalItemsText = `<?= L::files(); ?>: ${processedFiles} / ${totalFiles}`;
         const isNotRunning = status !== 'running';
         const lastRunDate = formatDate(lastActivityTime);
 
@@ -373,11 +388,11 @@ document.addEventListener('DOMContentLoaded', function() {
             finalStatusDetails = `Repository is out of sync. ${diff} new session file${plural} available.`;
             finalItemsText = `Pending Sync: ${diff} session${plural}`;
             const fileToShow = lastSuccessfullyProcessedFile || 'N/A';
-            updateElementText(dataImportElems.currentFileText, `${localizedLabels.lastRun}: ${lastRunDate} | ${localizedLabels.lastUpdated}: ${fileToShow}`);
+            updateElementText(dataImportElems.currentFileText, `<?= L::lastRun(); ?>: ${lastRunDate} | <?= L::lastUpdated(); ?>: ${fileToShow}`);
         } else if (isNotRunning) {
             // Handles idle, completed, error, etc.
             const fileToShow = lastSuccessfullyProcessedFile || 'N/A';
-            updateElementText(dataImportElems.currentFileText, `${localizedLabels.lastRun}: ${lastRunDate} | ${localizedLabels.lastFile}: ${fileToShow}`);
+            updateElementText(dataImportElems.currentFileText, `<?= L::lastRun(); ?>: ${lastRunDate} | <?= L::lastFile(); ?>: ${fileToShow}`);
         } else { // status === 'running'
             updateElementText(dataImportElems.currentFileText, `Current: ${currentFile || 'N/A'}`);
         }
@@ -387,10 +402,56 @@ document.addEventListener('DOMContentLoaded', function() {
         updateElementText(dataImportElems.itemsText, finalItemsText);
 
         if (status === 'running') {
-            toggleButton(dataImportElems.triggerButton, true, `${localizedLabels.running}...`);
+            toggleButton(dataImportElems.triggerButton, true, `<?= L::running(); ?>...`);
+            
+            // Also disable main index buttons during data import since it will auto-trigger
+            const mainIndexElems = getSearchIndexElements('DE');
+            toggleButton(mainIndexElems.refreshButton, true, 'Data import running...');
+            toggleButton(mainIndexElems.deleteButton, true, 'Data import running...');
+            
+            // Also disable enhanced index button during data import since it will auto-trigger
+            const enhancedElems = getEnhancedIndexElements('DE');
+            toggleButton(enhancedElems.rebuildButton, true, 'Data import running...');
+            
             clearError(dataImportElems.errorDisplay);
         } else {
             toggleButton(dataImportElems.triggerButton, false, dataImportElems.originalButtonText);
+            
+            // Re-enable other buttons after data import completes
+            // Check current state of other processes to determine correct button states
+            const mainIndexElems = getSearchIndexElements('DE');
+            const enhancedElems = getEnhancedIndexElements('DE');
+            
+            // Check current states
+            const mainIndexStatus = window.mainIndexStatus?.['DE'];
+            const mainIndexRunning = mainIndexStatus?.isRunning || false;
+            
+            const enhancedState = window.enhancedIndexState?.['DE'];
+            const enhancedIsRunning = enhancedState?.isRunning || false;
+            
+            // Set button states based on current process states
+            if (mainIndexRunning) {
+                // Main index is running
+                toggleButton(mainIndexElems.refreshButton, true, 'Main index running...');
+                toggleButton(mainIndexElems.deleteButton, true, 'Main index running...');
+                toggleButton(enhancedElems.rebuildButton, true, 'Main index running...');
+            } else if (enhancedIsRunning) {
+                // Enhanced index is running
+                toggleButton(mainIndexElems.refreshButton, true, 'Enhanced index running...');
+                toggleButton(mainIndexElems.deleteButton, true, 'Enhanced index running...');
+                toggleButton(enhancedElems.rebuildButton, true, 'Enhanced index running...');
+            } else {
+                // No other processes running - enable all buttons
+                toggleButton(mainIndexElems.refreshButton, false, mainIndexElems.originalRefreshBtnText);
+                toggleButton(mainIndexElems.deleteButton, false, mainIndexElems.originalDeleteBtnText);
+                toggleButton(enhancedElems.rebuildButton, false, enhancedElems.originalRebuildBtnText);
+            }
+            
+            // Trigger status updates to ensure UI is synchronized
+            setTimeout(() => {
+                fetchSearchIndexStatus('DE');
+                fetchEnhancedIndexStatus('DE');
+            }, 1000);
             
             const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
             if (errorStates.includes(status) && !appState.repo.isOutOfSync()) {
@@ -426,8 +487,8 @@ document.addEventListener('DOMContentLoaded', function() {
             errorDisplay: `search-index-${parliamentCode}-error-display`,
             refreshButton: `btn-trigger-search-index-refresh-${parliamentCode}`,
             deleteButton: `btn-trigger-search-index-delete-${parliamentCode}`,
-            originalRefreshBtnText: `<span class="icon-arrows-cw"></span> ${localizedLabels.refreshFullIndex} (${parliamentCode})`,
-            originalDeleteBtnText: `<span class="icon-trash"></span> ${localizedLabels.deleteIndex} (${parliamentCode})`
+            originalRefreshBtnText: `<span class="icon-arrows-cw"></span> <?= L::refreshFullIndex(); ?> (${parliamentCode})`,
+            originalDeleteBtnText: `<span class="icon-trash"></span> <?= L::deleteIndex(); ?> (${parliamentCode})`
         };
     }
 
@@ -445,15 +506,63 @@ document.addEventListener('DOMContentLoaded', function() {
 
         updateProgressBar(elems.progressBar, percentage, status);
         updateElementText(elems.statusText, `Status: ${statusDetails}`);
-        updateElementText(elems.itemsText, `${localizedLabels.speeches}: ${processedMediaItems} / ${totalDbMediaItems}`);
+        updateElementText(elems.itemsText, `<?= L::speeches(); ?>: ${processedMediaItems} / ${totalDbMediaItems}`);
 
+        // Track main index status globally for enhanced index coordination
+        window.mainIndexStatus = window.mainIndexStatus || {};
+        const wasRunning = window.mainIndexStatus[parliamentCode]?.isRunning || false;
+        const isRunning = status === 'running';
+        window.mainIndexStatus[parliamentCode] = { isRunning: isRunning };
+        
+        // Check if data import is running - if so, don't update any buttons
+        const dataImportStatus = appState.importStatus?.status;
+        const dataImportRunning = dataImportStatus === 'running';
+        
+        if (dataImportRunning) {
+            // Skip all button updates during data import
+            // Data import has full control over button states
+            return;
+        }
+        
+        // Check enhanced index state to avoid conflicts
+        const enhancedState = window.enhancedIndexState?.[parliamentCode];
+        const enhancedIsRunning = enhancedState?.isRunning || false;
+        
         if (status === 'running') {
-            toggleButton(elems.refreshButton, true, `${localizedLabels.running}...`);
-            toggleButton(elems.deleteButton, true, `${localizedLabels.running}...`);
+            toggleButton(elems.refreshButton, true, `<?= L::running(); ?>...`);
+            toggleButton(elems.deleteButton, true, `<?= L::running(); ?>...`);
+            
+            // Also disable enhanced index button when main index is running
+            // This is the only time main index polling touches the enhanced index button
+            const enhancedElems = getEnhancedIndexElements(parliamentCode);
+            toggleButton(enhancedElems.rebuildButton, true, 'Main index running...');
+            
+            // Update enhanced index state to prevent it from changing the button
+            window.enhancedIndexState = window.enhancedIndexState || {};
+            window.enhancedIndexState[parliamentCode] = { isRunning: false };
+            
             clearError(elems.errorDisplay);
         } else {
-            toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
-            toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
+            // Main index is not running
+            // Only enable main index buttons if enhanced index is not running
+            if (!enhancedIsRunning) {
+                toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
+                toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
+            } else {
+                toggleButton(elems.refreshButton, true, 'Enhanced index running...');
+                toggleButton(elems.deleteButton, true, 'Enhanced index running...');
+            }
+            
+            // Don't touch the enhanced index button from main index polling
+            // Let the enhanced index polling have full control over its own button
+            // This prevents race conditions between the two polling intervals
+            
+            // Force enhanced index status check when main index completes
+            // This ensures enhanced index button state is updated if enhanced indexing is running
+            if (wasRunning && !isRunning) {
+                setTimeout(() => fetchEnhancedIndexStatus(parliamentCode), 1000);
+            }
+            
             if (status === 'error') {
                 const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred.'}]);
                 showError(elems.errorDisplay, errorMessages);
@@ -537,7 +646,163 @@ document.addEventListener('DOMContentLoaded', function() {
 
             fetchSearchIndexStatus(parliamentCode);
             setInterval(() => fetchSearchIndexStatus(parliamentCode), POLLING_INTERVAL);
+            
+            // Enhanced indexing setup
+            setupEnhancedIndexUI(parliamentCode);
         });
+    }
+
+    // --- Localized Labels ---
+    // Using L:: functions directly in PHP instead of JS variables
+    
+    // --- Enhanced Indexing Functions ---
+    
+    function getEnhancedIndexElements(parliamentCode) {
+        return {
+            progressBar: `enhanced-index-${parliamentCode}-progress-bar`,
+            statusText: `enhanced-index-${parliamentCode}-status-text`,
+            itemsText: `enhanced-index-${parliamentCode}-items-text`,
+            errorDisplay: `enhanced-index-${parliamentCode}-error-display`,
+            rebuildButton: `btn-trigger-enhanced-index-rebuild-${parliamentCode}`,
+            originalRebuildBtnText: `<span class="icon-arrows-cw"></span> Rebuild Enhanced Index (${parliamentCode})`
+        };
+    }
+    
+    function updateEnhancedIndexUI(parliamentCode, statusData) {
+        const elems = getEnhancedIndexElements(parliamentCode);
+        const {
+            status,
+            statusDetails = 'N/A',
+            totalDbMediaItems = 0,
+            processedMediaItems = 0,
+            words_indexed = 0,
+            statistics_updated = 0,
+            performance = {},
+            errors = []
+        } = statusData;
+
+        const percentage = totalDbMediaItems > 0 ? (processedMediaItems / totalDbMediaItems) * 100 : 0;
+
+        updateProgressBar(elems.progressBar, percentage, status);
+        updateElementText(elems.statusText, `Status: ${statusDetails}`);
+        
+        // Update items text with enhanced indexing metrics
+        let itemsText = `${processedMediaItems}/${totalDbMediaItems}`;
+        if (words_indexed > 0) {
+            itemsText += ` | Words: ${words_indexed.toLocaleString()}`;
+        }
+        if (statistics_updated > 0) {
+            itemsText += ` | Stats: ${statistics_updated.toLocaleString()}`;
+        }
+        if (performance.avg_docs_per_second > 0) {
+            itemsText += ` | ${performance.avg_docs_per_second}/s`;
+        }
+        updateElementText(elems.itemsText, itemsText);
+
+        // Handle button states
+        const isActive = ['running', 'processing', 'processing_batch', 'starting', 'initializing'].includes(status);
+        
+        // Update enhanced index state first
+        window.enhancedIndexState = window.enhancedIndexState || {};
+        const previousState = window.enhancedIndexState[parliamentCode]?.isRunning || false;
+        window.enhancedIndexState[parliamentCode] = { isRunning: isActive };
+        
+        // Check if data import is running - if so, don't update any buttons
+        const dataImportStatus = appState.importStatus?.status;
+        const dataImportRunning = dataImportStatus === 'running';
+        
+        if (dataImportRunning) {
+            // Skip all button updates during data import
+            // Data import has full control over button states
+            return;
+        }
+        
+        // Check if main index is running by checking the global state
+        // If main index is running, completely skip enhanced index button updates
+        const mainIndexStatus = window.mainIndexStatus || {};
+        const mainIndexRunning = mainIndexStatus[parliamentCode]?.isRunning || false;
+        
+        // Only update enhanced index button if main index is not running
+        if (!mainIndexRunning) {
+            // Always update button to match current state (don't check for changes)
+            if (isActive) {
+                toggleButton(elems.rebuildButton, true, 'Running...');
+            } else {
+                toggleButton(elems.rebuildButton, false, elems.originalRebuildBtnText);
+            }
+        }
+        // If main index is running, completely skip button updates
+        // The main index status update has full control over the enhanced index button
+
+        // Show errors if any
+        if (errors && errors.length > 0) {
+            showError(elems.errorDisplay, errors);
+        } else {
+            clearError(elems.errorDisplay);
+        }
+    }
+    
+    async function fetchEnhancedIndexStatus(parliamentCode) {
+        // Don't fetch enhanced index status while data import is running
+        const dataImportStatus = appState.importStatus?.status;
+        const dataImportRunning = dataImportStatus === 'running';
+        
+        if (dataImportRunning) {
+            // Skip enhanced index status update while data import is running
+            return;
+        }
+        
+        // Don't fetch enhanced index status while main index is running
+        const mainIndexStatus = window.mainIndexStatus || {};
+        const mainIndexRunning = mainIndexStatus[parliamentCode]?.isRunning || false;
+        
+        if (mainIndexRunning) {
+            // Skip enhanced index status update while main index is running
+            return;
+        }
+        
+        const url = getApiUrl('index', 'enhanced-status', { parliament: parliamentCode });
+        const result = await apiCall(url);
+        
+        if (result.success && result.data) {
+            updateEnhancedIndexUI(parliamentCode, result.data);
+        } else {
+            console.error('Failed to fetch enhanced index status:', result.errors);
+        }
+    }
+    
+    async function triggerEnhancedIndexRebuild(parliamentCode) {
+        if (!confirm(`Are you sure you want to rebuild the enhanced index for parliament ${parliamentCode}? This will process all documents and may take a long time. Setup will be handled automatically if needed.`)) {
+            return;
+        }
+        
+        const elems = getEnhancedIndexElements(parliamentCode);
+        toggleButton(elems.rebuildButton, true, 'Starting Rebuild...');
+        clearError(elems.errorDisplay);
+        
+        const url = getApiUrl('index', 'enhanced-update', { parliament: parliamentCode });
+        const result = await apiCall(url, 'POST');
+
+        if (result.success && result.meta && result.meta.requestStatus === 'success') {
+            updateElementText(elems.statusText, `Status: ${result.data.message || 'Enhanced index rebuild started.'}`);
+            setTimeout(() => fetchEnhancedIndexStatus(parliamentCode), 1000);
+        } else {
+            showError(elems.errorDisplay, result.errors || [{detail: 'Failed to start enhanced index rebuild.'}]);
+            toggleButton(elems.rebuildButton, false, elems.originalRebuildBtnText);
+        }
+    }
+    
+    function setupEnhancedIndexUI(parliamentCode) {
+        const elems = getEnhancedIndexElements(parliamentCode);
+        
+        const rebuildBtn = document.getElementById(elems.rebuildButton);
+        if (rebuildBtn) rebuildBtn.addEventListener('click', () => triggerEnhancedIndexRebuild(parliamentCode));
+
+        // Start enhanced index polling with a delay to avoid race conditions with main index polling
+        setTimeout(() => {
+            fetchEnhancedIndexStatus(parliamentCode);
+            setInterval(() => fetchEnhancedIndexStatus(parliamentCode), POLLING_INTERVAL);
+        }, 2500); // 2.5 second delay to offset from main index polling
     }
 
     // --- Additional Data Services (ADS) Specific Functions ---
@@ -547,12 +812,12 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     const entityTypeDetails = {
-        'person': { label: localizedLabels.personPlural, icon: 'icon-type-person', parent: 'person' },
-        'memberOfParliament': { label: localizedLabels.personPlural + ' > memberOfParliament', icon: 'icon-type-person', parent: 'person' },
-        'organisation': { label: localizedLabels.organisations, icon: 'icon-type-organisation', parent: 'organisation' },
-        'legalDocument': { label: localizedLabels.documents + ' > legalDocument', icon: 'icon-type-document', parent: 'document' },
-        'officialDocument': { label: localizedLabels.documents + ' > officialDocument', icon: 'icon-type-document', parent: 'document' },
-        'term': { label: localizedLabels.terms, icon: 'icon-type-term', parent: 'term' }
+        'person': { label: '<?= L::personPlural(); ?>', icon: 'icon-type-person', parent: 'person' },
+        'memberOfParliament': { label: '<?= L::personPlural(); ?> > memberOfParliament', icon: 'icon-type-person', parent: 'person' },
+        'organisation': { label: '<?= L::organisations(); ?>', icon: 'icon-type-organisation', parent: 'organisation' },
+        'legalDocument': { label: '<?= L::documents(); ?> > legalDocument', icon: 'icon-type-document', parent: 'document' },
+        'officialDocument': { label: '<?= L::documents(); ?> > officialDocument', icon: 'icon-type-document', parent: 'document' },
+        'term': { label: '<?= L::terms(); ?>', icon: 'icon-type-term', parent: 'term' }
     };
 
     function createAdsSectionHTML(entityType, details) {
@@ -567,8 +832,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div id="ads-${entityType}-progress-bar" class="progress-bar" style="width: 0%"></div>
                     </div>
                     <div id="ads-${entityType}-status-text" class="small text-muted mb-2">Status: Idle</div>
-                    <div id="ads-${entityType}-last-run-text" class="small text-muted mb-2">${localizedLabels.lastRun}: N/A</div>
-                    <button type="button" id="btn-trigger-ads-${entityType}" class="btn btn-outline-primary btn-sm ads-trigger-btn" data-entity-type="${entityType}"><span class="icon-cw"></span> ${localizedLabels.refreshData}</button>
+                    <div id="ads-${entityType}-last-run-text" class="small text-muted mb-2"><?= L::lastRun(); ?>: N/A</div>
+                    <button type="button" id="btn-trigger-ads-${entityType}" class="btn btn-outline-primary btn-sm ads-trigger-btn" data-entity-type="${entityType}"><span class="icon-cw"></span> <?= L::refreshData(); ?></button>
                     <div id="ads-${entityType}-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
                 </div>
             </div>
@@ -594,7 +859,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function getAdsButtonOriginalText(entityType) {
-        return `<span class="icon-cw"></span> ${localizedLabels.refreshData}`;
+        return `<span class="icon-cw"></span> <?= L::refreshData(); ?>`;
     }
 
     async function fetchAdsStatus() {
@@ -634,7 +899,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (activeType) {
                 const activeButton = document.getElementById(`btn-trigger-ads-${activeType}`);
                 if (activeButton) {
-                    setButtonText(activeButton.id, `${localizedLabels.running}...`);
+                    setButtonText(activeButton.id, `<?= L::running(); ?>...`);
                 }
             }
         } else { // idle, completed, error, etc.
@@ -683,9 +948,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const percentage = totalItems > 0 ? (processedItems / totalItems) * 100 : (status === 'completed_successfully' ? 100 : 0);
                 updateProgressBar(progressBarId, percentage, status || 'idle');
 
-                updateElementText(itemsTextId, `${localizedLabels.items}: ${processedItems} / ${totalItems}`);
+                updateElementText(itemsTextId, `<?= L::items(); ?>: ${processedItems} / ${totalItems}`);
                 updateElementText(statusTextId, `Status: ${statusDetails || 'Idle'}`);
-                updateElementText(lastRunTextId, `${localizedLabels.lastRun}: ${formatDate(endTime)}`);
+                updateElementText(lastRunTextId, `<?= L::lastRun(); ?>: ${formatDate(endTime)}`);
                 
                 const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
                 if (errorStates.includes(status) && errors && errors.length > 0) {
@@ -702,7 +967,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleButton(btn.id, true);
         });
         const clickedButton = document.getElementById(`btn-trigger-ads-${entityType}`);
-        if(clickedButton) setButtonText(clickedButton.id, `${localizedLabels.running}...`);
+        if(clickedButton) setButtonText(clickedButton.id, `<?= L::running(); ?>...`);
 
         const url = getApiUrl('externalData', 'full-update', { type: entityType });
         const result = await apiCall(url, 'POST');
@@ -778,6 +1043,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Initialization ---
     function initPage() {
+        // Initialize state tracking for coordination between main and enhanced index
+        window.enhancedIndexState = {};
+        window.mainIndexStatus = {};
+        
         // Data Import
         const triggerDataImportBtn = document.getElementById(dataImportElems.triggerButton);
         if (triggerDataImportBtn) {

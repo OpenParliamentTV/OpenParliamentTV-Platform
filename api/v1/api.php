@@ -123,22 +123,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             switch ($api_request["itemType"]) {
                 case "text": 
                     $item = fulltextAutocomplete($api_request["q"]);
-                    return createApiResponse(
-                        createApiSuccessResponse(
-                            $item["data"],
-                            $item["meta"],
-                            ["self" => htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"])]
-                        )
-                    );
+                    return createApiResponse($item);
                 case "agendaItem": 
                     $item = agendaItemAutocomplete($api_request["q"]);
-                    return createApiResponse(
-                        createApiSuccessResponse(
-                            $item["data"],
-                            $item["meta"],
-                            ["self" => htmlspecialchars($config["dir"]["root"]."/".$_SERVER["REQUEST_URI"])]
-                        )
-                    );
+                    return createApiResponse($item);
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
@@ -160,6 +148,12 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     return createApiResponse($item);
                 case "compare-terms":
                     $item = statisticsCompareTerms($api_request);
+                    return createApiResponse($item);
+                case "word-trends":
+                    $item = statisticsGetWordTrends($api_request);
+                    return createApiResponse($item);
+                case "speaker-vocabulary":
+                    $item = statisticsGetSpeakerVocabulary($api_request);
                     return createApiResponse($item);
                 case "network":
                     $item = statisticsGetNetwork($api_request);
@@ -422,6 +416,12 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "status":
                     $result = searchIndexGetStatus($api_request);
                     return createApiResponse($result);
+                case "enhanced-update":
+                    $result = searchIndexTriggerEnhancedUpdate($api_request);
+                    return createApiResponse($result);
+                case "enhanced-status":
+                    $result = searchIndexGetEnhancedStatus($api_request);
+                    return createApiResponse($result);
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
@@ -482,7 +482,6 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     );
             }
             break;
-
 
 
         default:

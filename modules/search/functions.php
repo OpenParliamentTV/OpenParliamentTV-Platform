@@ -208,8 +208,8 @@ function getMediaIDListFromSearchResult($request) {
 }
 
 /**
- * Enhanced autocomplete with priority-based suggestions using separate words index
- * Priority: 1. Prefix matches, 2. Substring matches, 3. Spellcheck
+ * Enhanced autocomplete using enhanced statistics index
+ * This function now delegates to the enhanced autocomplete system
  */
 function searchAutocomplete($textQuery) {
     
@@ -217,242 +217,29 @@ function searchAutocomplete($textQuery) {
         return array();
     }
     
-    require_once(__DIR__.'/../../modules/utilities/functions.api.php');
-
-    $ESClient = getApiOpenSearchClient();
-    if (is_array($ESClient) && isset($ESClient["errors"])) {
-        return array();
-    }
-
-    $maxResults = 6;
-    $results = array();
-    $seenTerms = array();
-    $searchTermLower = strtolower($textQuery);
-
-    // 1. PRIORITY 1: Prefix matches
-    $prefixResults = searchAutocompletePrefix($textQuery, $ESClient, $maxResults + 2);
-    foreach ($prefixResults as $result) {
-        if (count($results) >= $maxResults) break;
-        // Skip if it's the exact search term or already seen
-        if (strtolower($result['text']) !== $searchTermLower && !in_array($result['text'], $seenTerms)) {
-            $result['text'] = highlightSearchTerm($result['text'], $textQuery);
-            $results[] = $result;
-            $seenTerms[] = $result['text'];
-        }
-    }
-
-    // 2. PRIORITY 2: Substring matches
-    if (count($results) < $maxResults) {
-        $substringResults = searchAutocompleteSubstring($textQuery, $ESClient, $maxResults - count($results) + 2);
-        foreach ($substringResults as $result) {
-            if (count($results) >= $maxResults) break;
-            // Skip if it's the exact search term or already seen
-            if (strtolower($result['text']) !== $searchTermLower && !in_array($result['text'], $seenTerms)) {
-                $result['text'] = highlightSearchTerm($result['text'], $textQuery);
-                $results[] = $result;
-                $seenTerms[] = $result['text'];
-            }
-        }
-    }
-
-    // 3. PRIORITY 3: Spellcheck suggestions
-    if (count($results) < $maxResults) {
-        $spellcheckResults = searchAutocompleteSpellcheck($textQuery, $ESClient, $maxResults - count($results) + 2);
-        foreach ($spellcheckResults as $result) {
-            if (count($results) >= $maxResults) break;
-            // Skip if it's the exact search term or already seen
-            if (strtolower($result['text']) !== $searchTermLower && !in_array($result['text'], $seenTerms)) {
-                $result['text'] = highlightSearchTerm($result['text'], $textQuery);
-                $results[] = $result;
-                $seenTerms[] = $result['text'];
-            }
-        }
-    }
-
-    return $results;
-}
-
-/**
- * Search for prefix matches using the words index
- */
-function searchAutocompletePrefix($textQuery, $ESClient, $maxResults) {
-    global $config;
-    
-    // Get all parliament indices
-    $indices = getParliamentIndices();
-    $wordsIndices = array_map(function($index) {
-        return strtolower(str_replace('openparliamenttv_', 'openparliamenttv_words_', $index));
-    }, $indices);
-    
-    $data = array(
-        "size" => $maxResults,
-        "query" => array(
-            "prefix" => array(
-                "word" => strtolower($textQuery)
-            )
-        ),
-        "sort" => array(
-            array("frequency" => array("order" => "desc")),
-            array("word" => array("order" => "asc"))
-        )
-    );
+    require_once(__DIR__.'/functions.enhanced.php');
 
     try {
-        $results = $ESClient->search(array("index" => implode(',', $wordsIndices), "body" => $data));
+        $enhancedResults = searchAutocompleteEnhanced($textQuery, 6);
         
-        $return = array();
-        if (isset($results["hits"]["hits"])) {
-            foreach ($results["hits"]["hits"] as $hit) {
-                $word = $hit["_source"]["word"];
-                // Filter out stopwords in PHP
-                if (!in_array(strtolower($word), $config["excludedStopwords"])) {
-                    $return[] = array(
-                        "text" => $word,
-                        "score" => $hit["_source"]["frequency"],
-                        "freq" => $hit["_source"]["frequency"],
-                        "type" => "prefix"
-                    );
-                    if (count($return) >= $maxResults) break;
-                }
-            }
+        // Transform enhanced results to match old format for backward compatibility
+        $results = array();
+        foreach ($enhancedResults as $result) {
+            $results[] = array(
+                "text" => highlightSearchTerm($result['text'], $textQuery),
+                "score" => $result['frequency'],
+                "freq" => $result['frequency'],
+                "type" => $result['type']
+            );
         }
         
-        return $return;
-    } catch(Exception $e) {
-        error_log("Exception in searchAutocompletePrefix: " . $e->getMessage());
+        return $results;
+    } catch (Exception $e) {
+        error_log("Enhanced autocomplete fallback error: " . $e->getMessage());
         return array();
     }
 }
 
-/**
- * Search for substring matches using the words index
- */
-function searchAutocompleteSubstring($textQuery, $ESClient, $maxResults) {
-    global $config;
-    
-    // Get all parliament indices
-    $indices = getParliamentIndices();
-    $wordsIndices = array_map(function($index) {
-        return strtolower(str_replace('openparliamenttv_', 'openparliamenttv_words_', $index));
-    }, $indices);
-    
-    $data = array(
-        "size" => $maxResults * 2, // Get more to filter
-        "query" => array(
-            "wildcard" => array(
-                "word" => "*" . strtolower($textQuery) . "*"
-            )
-        ),
-        "sort" => array(
-            array("frequency" => array("order" => "desc")),
-            array("word" => array("order" => "asc"))
-        )
-    );
-
-    try {
-        $results = $ESClient->search(array("index" => implode(',', $wordsIndices), "body" => $data));
-        
-        $return = array();
-        if (isset($results["hits"]["hits"])) {
-            foreach ($results["hits"]["hits"] as $hit) {
-                $word = $hit["_source"]["word"];
-                
-                // Only include if it's not a prefix match (to avoid duplicates)
-                if (strpos(strtolower($word), strtolower($textQuery)) !== 0) {
-                    // Additional check: ensure the term actually contains the search query
-                    if (strpos(strtolower($word), strtolower($textQuery)) !== false) {
-                        // Filter out stopwords in PHP
-                        if (!in_array(strtolower($word), $config["excludedStopwords"])) {
-                            $return[] = array(
-                                "text" => $word,
-                                "score" => $hit["_source"]["frequency"],
-                                "freq" => $hit["_source"]["frequency"],
-                                "type" => "substring"
-                            );
-                            if (count($return) >= $maxResults) break;
-                        }
-                    }
-                }
-            }
-        }
-        return $return;
-    } catch(Exception $e) {
-        return array();
-    }
-}
-
-/**
- * Search for spellcheck suggestions using the words index
- */
-function searchAutocompleteSpellcheck($textQuery, $ESClient, $maxResults) {
-    global $config;
-    
-    // Get all parliament indices
-    $indices = getParliamentIndices();
-    $wordsIndices = array_map(function($index) {
-        return strtolower(str_replace('openparliamenttv_', 'openparliamenttv_words_', $index));
-    }, $indices);
-    
-    $searchTermLower = strtolower($textQuery);
-    
-    // Only do spellcheck for terms with 3+ characters
-    if (strlen($searchTermLower) < 3) {
-        return array();
-    }
-    
-    // Use fuzzy query for spellcheck
-    $data = array(
-        "size" => $maxResults * 3, // Get more to filter
-        "query" => array(
-            "fuzzy" => array(
-                "word" => array(
-                    "value" => $searchTermLower,
-                    "fuzziness" => "AUTO",
-                    "max_expansions" => 50,
-                    "prefix_length" => 0,
-                    "transpositions" => true
-                )
-            )
-        ),
-        "sort" => array(
-            array("frequency" => array("order" => "desc")),
-            array("word" => array("order" => "asc"))
-        )
-    );
-
-    try {
-        $results = $ESClient->search(array("index" => implode(',', $wordsIndices), "body" => $data));
-        
-        $return = array();
-        if (isset($results["hits"]["hits"])) {
-            foreach ($results["hits"]["hits"] as $hit) {
-                $word = $hit["_source"]["word"];
-                $wordLower = strtolower($word);
-                
-                // Skip if it's the exact search term or a stopword
-                if ($wordLower === $searchTermLower || in_array($wordLower, $config["excludedStopwords"])) {
-                    continue;
-                }
-                
-                $return[] = array(
-                    "text" => $word,
-                    "score" => $hit["_source"]["frequency"],
-                    "freq" => $hit["_source"]["frequency"],
-                    "type" => "spellcheck"
-                );
-                
-                if (count($return) >= $maxResults) {
-                    break;
-                }
-            }
-        }
-        
-        return $return;
-    } catch(Exception $e) {
-        error_log("Exception in searchAutocompleteSpellcheck: " . $e->getMessage());
-        return array();
-    }
-}
 
 /**
  * Get parliament indices for autocomplete search

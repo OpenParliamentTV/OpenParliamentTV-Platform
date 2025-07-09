@@ -16,7 +16,9 @@ function fulltextAutocomplete($text) {
     }
 
     try {
+        // Use the original autocomplete function which already returns the right format
         $autocompleteResult = searchAutocomplete($text);
+        
         return createApiSuccessResponse($autocompleteResult);
     } catch (Exception $e) {
         return createApiErrorResponse(

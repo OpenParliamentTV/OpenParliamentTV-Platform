@@ -428,6 +428,128 @@ function statisticsGetNetwork($request) {
     }
 }
 
+/**
+ * Get word trends over time using enhanced indexing
+ * 
+ * @param array $request The request parameters
+ * @return array The API response
+ */
+function statisticsGetWordTrends($request) {
+    global $config;
+    
+    try {
+        if (empty($request["words"])) {
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorParameterMissingTitle",
+                "messageErrorMissingParametersDetail",
+                ["parameters" => "words array"]
+            );
+        }
+        
+        $words = is_array($request["words"]) ? $request["words"] : [$request["words"]];
+        $startDate = $request["startDate"] ?? '2020-01-01';
+        $endDate = $request["endDate"] ?? date('Y-m-d');
+        $parliamentCode = $request["parliament"] ?? 'de';
+        
+        require_once(__DIR__ . "/../../../modules/search/functions.enhanced.php");
+        $trendsResult = getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode);
+        
+        if (!$trendsResult['success']) {
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorWordTrendsTitle",
+                $trendsResult['error']
+            );
+        }
+        
+        $data = [
+            "type" => "statistics",
+            "id" => "word-trends",
+            "attributes" => [
+                "words" => $words,
+                "startDate" => $startDate,
+                "endDate" => $endDate,
+                "trends" => $trendsResult['data']
+            ]
+        ];
+        
+        return createApiSuccessResponse($data, [], [
+            "self" => $config["dir"]["api"] . "/statistics/word-trends"
+        ]);
+        
+    } catch (Exception $e) {
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorWordTrendsTitle",
+            $e->getMessage()
+        );
+    }
+}
+
+/**
+ * Get speaker vocabulary analysis using enhanced indexing
+ * 
+ * @param array $request The request parameters
+ * @return array The API response
+ */
+function statisticsGetSpeakerVocabulary($request) {
+    global $config;
+    
+    try {
+        if (empty($request["speakerId"])) {
+            return createApiErrorResponse(
+                422,
+                1,
+                "messageErrorParameterMissingTitle",
+                "messageErrorMissingParametersDetail",
+                ["parameters" => "speakerId"]
+            );
+        }
+        
+        $speakerId = $request["speakerId"];
+        $limit = $request["limit"] ?? 50;
+        $parliamentCode = $request["parliament"] ?? 'de';
+        
+        require_once(__DIR__ . "/../../../modules/search/functions.enhanced.php");
+        $vocabularyResult = getSpeakerVocabularyEnhanced($speakerId, $limit, $parliamentCode);
+        
+        if (!$vocabularyResult['success']) {
+            return createApiErrorResponse(
+                500,
+                1,
+                "messageErrorSpeakerVocabularyTitle",
+                $vocabularyResult['error']
+            );
+        }
+        
+        $data = [
+            "type" => "statistics",
+            "id" => "speaker-vocabulary",
+            "attributes" => [
+                "speakerId" => $speakerId,
+                "limit" => $limit,
+                "vocabulary" => $vocabularyResult['data']
+            ]
+        ];
+        
+        return createApiSuccessResponse($data, [], [
+            "self" => $config["dir"]["api"] . "/statistics/speaker-vocabulary"
+        ]);
+        
+    } catch (Exception $e) {
+        return createApiErrorResponse(
+            500,
+            1,
+            "messageErrorSpeakerVocabularyTitle",
+            $e->getMessage()
+        );
+    }
+}
+
 function statisticsGetEntityCounts($request) {
     global $config;
 

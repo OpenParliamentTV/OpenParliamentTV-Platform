@@ -18,6 +18,7 @@ ini_set('memory_limit', '512M');
  *
  * --justUpdateSearchIndex "true" | (default not enabled) if this is set it will get all MediaItems from API or just the Items with given with following parameter (separeted IDs by comma)
  * --ids "DE-0190002013,DE-0190002014" | (default not enabled) comma separated list of MediaIDs which get updated if --justUpdateSearchIndex = true too
+ * --triggerEnhancedAfterCompletion | (default not enabled) if this is set with --justUpdateSearchIndex, enhanced indexing will be triggered asynchronously after main index completion
  *
  * --ignoreGit = "true" | (default not enabled) just processes session files from $meta["inputDir"] and dont do anything with git
  *
@@ -91,7 +92,7 @@ if (is_cli()) {
     touch (__DIR__."/cronUpdater.lock");
 
     //get CLI parameter to $input
-    $input = getopt(null, ["parliament:","justUpdateSearchIndex::","ids:","ignoreGit::"]);
+    $input = getopt(null, ["parliament:","justUpdateSearchIndex::","ids:","ignoreGit::","triggerEnhancedAfterCompletion::"]);
     $parliament = ((!empty($input["parliament"])) ? $input["parliament"] : "DE");
     $isDataImportMode = !isset($input["justUpdateSearchIndex"]);
     $progressFinalized = false; // Flag for shutdown handler
@@ -233,7 +234,7 @@ if (is_cli()) {
                 ]);
                 
                 if (!empty($mediaItemsBatch)) {
-                    $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsBatch, "initIndex" => ($currentBatchNum === 1)];
+                    $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsBatch, "initIndex" => ($currentBatchNum === 1), "isFullRebuild" => true];
                     $updateResult = searchIndexUpdate($updateRequest);
                     
                     $updatedInBatch = $updateResult['data']['updated'] ?? 0;
@@ -275,23 +276,27 @@ if (is_cli()) {
             $finalStatusDetails = "Search index update failed. All {$totalItems} items failed to process.";
         }
         
-        // Build words index after main index is complete
-        try {
-            logger("info", "Building words index for parliament: {$parliament}");
-            $wordsResult = buildWordsIndex($parliament);
-            if (isset($wordsResult['data'])) {
-                $finalStatusDetails .= " Words index: " . $wordsResult['data']['message'];
-                logger("info", "Words index built successfully: " . $wordsResult['data']['word_count'] . " words");
-            }
-        } catch (Exception $e) {
-            logger("error", "Words index build failed for parliament {$parliament}: " . $e->getMessage());
-            $finalStatusDetails .= " (Words index build failed)";
-        }
+        // Enhanced indices will be handled by the search index update process
+        // No need to build words index here anymore - using new enhanced indexing system
         
         finalizeBaseProgressFile($searchIndexProgressFilePath, $finalStatus, $finalStatusDetails);
         $progressFinalized = true;
 
         logger("info", "cronUpdater finished: Search index update complete. Total: {$totalItems}, Processed: {$processedItemCount}, Failed: {$failedItemCount}.");
+        
+        // Trigger enhanced indexing after successful completion if requested
+        if (isset($input["triggerEnhancedAfterCompletion"]) && $finalStatus === "completed_successfully") {
+            $enhancedScriptPath = realpath(__DIR__ . "/enhancedIndexer.php");
+            if ($enhancedScriptPath && file_exists($enhancedScriptPath)) {
+                $enhancedCommand = $config["bin"]["php"] . " " . escapeshellarg($enhancedScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=100 > /dev/null 2>&1 &";
+                logger("info", "Triggering enhanced indexing after main index completion: " . $enhancedCommand);
+                exec($enhancedCommand);
+                logger("info", "Enhanced indexing triggered successfully.");
+            } else {
+                logger("warn", "Enhanced indexing script not found at: " . __DIR__ . "/enhancedIndexer.php");
+            }
+        }
+        
         exit;
 
     } else {

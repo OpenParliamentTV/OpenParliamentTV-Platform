@@ -24,42 +24,57 @@ if (is_array($ESClient) && isset($ESClient["errors"])) {
 function getGeneralStatistics() {
     global $ESClient, $DEBUG_MODE, $config;
     
-    // --- Use words index for word frequency ---
-    $wordsIndices = array_map(function($index) {
-        return strtolower(str_replace('openparliamenttv_', 'openparliamenttv_words_', $index));
-    }, getParliamentIndices());
-    $wordsIndexPattern = implode(',', $wordsIndices);
+    // --- Use enhanced statistics index for word frequency ---
+    $statisticsIndex = 'optv_statistics_de'; // TODO: Support other parliaments
     
-    // Get total word count and top 20 words by frequency
+    // Get total word count and top 20 words by frequency from enhanced statistics
     $totalWords = 0;
     $topWords = [];
     
     try {
-        // Get total count of unique words
-        $countResults = $ESClient->count(['index' => $wordsIndexPattern]);
-        $totalWords = $countResults['count'] ?? 0;
-        
-        // Get top 20 words by frequency
+        // Get top 20 words by frequency from statistics index
         $wordsQuery = [
-            'size' => 20,
-            'sort' => [
-                ['frequency' => ['order' => 'desc']],
-                ['word' => ['order' => 'asc']]
+            'size' => 0,
+            'query' => [
+                'term' => ['aggregation_type' => 'word_frequency_daily_party']
+            ],
+            'aggs' => [
+                'top_words' => [
+                    'terms' => [
+                        'field' => 'word',
+                        'size' => 20,
+                        'order' => ['total_frequency' => 'desc']
+                    ],
+                    'aggs' => [
+                        'total_frequency' => ['sum' => ['field' => 'count']]
+                    ]
+                ],
+                'total_unique_words' => [
+                    'cardinality' => ['field' => 'word']
+                ]
             ]
         ];
-        $wordsResults = $ESClient->search(['index' => $wordsIndexPattern, 'body' => $wordsQuery]);
-        if (isset($wordsResults['hits']['hits'])) {
-            foreach ($wordsResults['hits']['hits'] as $hit) {
+        
+        $wordsResults = $ESClient->search(['index' => $statisticsIndex, 'body' => $wordsQuery]);
+        if (isset($wordsResults['aggregations']['top_words']['buckets'])) {
+            foreach ($wordsResults['aggregations']['top_words']['buckets'] as $bucket) {
                 $topWords[] = [
-                    'key' => $hit['_source']['word'],
-                    'doc_count' => $hit['_source']['frequency']
+                    'key' => $bucket['key'],
+                    'doc_count' => $bucket['total_frequency']['value']
                 ];
             }
         }
+        
+        if (isset($wordsResults['aggregations']['total_unique_words']['value'])) {
+            $totalWords = $wordsResults['aggregations']['total_unique_words']['value'];
+        }
     } catch (Exception $e) {
-        error_log('Error fetching words from words index: ' . $e->getMessage());
+        error_log('Error fetching words from enhanced statistics index: ' . $e->getMessage());
+        
+        // No fallback available - enhanced indexing is required
+        error_log('Enhanced statistics index is required for word frequency data');
     }
-    // --- End words index ---
+    // --- End enhanced statistics index ---
 
     // Main aggregation query for all other stats (as before)
     $query = [
@@ -213,44 +228,63 @@ function getEntityStatistics($entityType, $entityID) {
 }
 
 /**
- * Get term statistics
+ * Get term statistics using enhanced statistics index
  * 
  * @return array Statistics about terms in the dataset
  */
 function getTermStatistics() {
     global $ESClient, $DEBUG_MODE, $config;
     
-    // Use words index for all terms
-    $wordsIndices = array_map(function($index) {
-        return strtolower(str_replace('openparliamenttv_', 'openparliamenttv_words_', $index));
-    }, getParliamentIndices());
-    $wordsIndexPattern = implode(',', $wordsIndices);
-    $wordsQuery = [
-        'size' => 10000, // or as needed
-        'sort' => [
-            ['frequency' => ['order' => 'desc']],
-            ['word' => ['order' => 'asc']]
-        ]
-    ];
+    // Use enhanced statistics index for better performance
+    $statisticsIndex = 'optv_statistics_de'; // TODO: Support other parliaments
+    
     $totalWords = 0;
     $allWords = [];
+    
     try {
-        // Get total count of unique words
-        $countResults = $ESClient->count(['index' => $wordsIndexPattern]);
-        $totalWords = $countResults['count'] ?? 0;
+        // Get all words from enhanced statistics index
+        $wordsQuery = [
+            'size' => 0,
+            'query' => [
+                'term' => ['aggregation_type' => 'word_frequency_daily_party']
+            ],
+            'aggs' => [
+                'all_words' => [
+                    'terms' => [
+                        'field' => 'word',
+                        'size' => 10000,
+                        'order' => ['total_frequency' => 'desc']
+                    ],
+                    'aggs' => [
+                        'total_frequency' => ['sum' => ['field' => 'count']]
+                    ]
+                ],
+                'total_unique_words' => [
+                    'cardinality' => ['field' => 'word']
+                ]
+            ]
+        ];
         
-        $wordsResults = $ESClient->search(['index' => $wordsIndexPattern, 'body' => $wordsQuery]);
-        if (isset($wordsResults['hits']['hits'])) {
-            foreach ($wordsResults['hits']['hits'] as $hit) {
+        $wordsResults = $ESClient->search(['index' => $statisticsIndex, 'body' => $wordsQuery]);
+        if (isset($wordsResults['aggregations']['all_words']['buckets'])) {
+            foreach ($wordsResults['aggregations']['all_words']['buckets'] as $bucket) {
                 $allWords[] = [
-                    'key' => $hit['_source']['word'],
-                    'doc_count' => $hit['_source']['frequency']
+                    'key' => $bucket['key'],
+                    'doc_count' => $bucket['total_frequency']['value']
                 ];
             }
         }
+        
+        if (isset($wordsResults['aggregations']['total_unique_words']['value'])) {
+            $totalWords = $wordsResults['aggregations']['total_unique_words']['value'];
+        }
     } catch (Exception $e) {
-        error_log('Error fetching words from words index: ' . $e->getMessage());
+        error_log('Error fetching words from enhanced statistics index: ' . $e->getMessage());
+        
+        // No fallback available - enhanced indexing is required
+        error_log('Enhanced statistics index is required for term statistics data');
     }
+    
     // Return in the same format as before
     return [
         'frequency' => [
@@ -261,7 +295,7 @@ function getTermStatistics() {
 }
 
 /**
- * Compare terms statistics
+ * Compare terms statistics using enhanced statistics index
  * 
  * @param array $terms Array of terms to compare
  * @param array $factions Optional array of factions to filter by
@@ -270,17 +304,24 @@ function getTermStatistics() {
 function compareTermsStatistics($terms, $factions = []) {
     global $ESClient, $DEBUG_MODE;
     
+    // Use enhanced statistics index for better performance
+    $statisticsIndex = 'optv_statistics_de'; // TODO: Support other parliaments
+    
+    $mustClauses = [
+        ['terms' => ['word' => $terms]],
+        ['term' => ['aggregation_type' => 'word_frequency_daily_party']]
+    ];
+    
+    // Add faction filter if specified
+    if (!empty($factions)) {
+        $mustClauses[] = ['terms' => ['party_id' => $factions]];
+    }
+    
     $query = [
         "size" => 0,
         "query" => [
             "bool" => [
-                "should" => array_map(function($term) {
-                    return [
-                        "match_phrase" => [
-                            "attributes.textContents.textHTML" => $term
-                        ]
-                    ];
-                }, $terms)
+                "must" => $mustClauses
             ]
         ],
         "aggs" => [
@@ -288,8 +329,8 @@ function compareTermsStatistics($terms, $factions = []) {
                 "filters" => [
                     "filters" => array_reduce($terms, function($acc, $term) {
                         $acc[$term] = [
-                            "match_phrase" => [
-                                "attributes.textContents.textHTML" => $term
+                            "term" => [
+                                "word" => $term
                             ]
                         ];
                         return $acc;
@@ -298,8 +339,12 @@ function compareTermsStatistics($terms, $factions = []) {
                 "aggs" => [
                     "over_time" => [
                         "date_histogram" => [
-                            "field" => "attributes.dateStart",
-                            "calendar_interval" => "day"
+                            "field" => "date",
+                            "calendar_interval" => "1M",
+                            "format" => "yyyy-MM"
+                        ],
+                        "aggs" => [
+                            "total_count" => ["sum" => ["field" => "count"]]
                         ]
                     ]
                 ]
@@ -307,31 +352,45 @@ function compareTermsStatistics($terms, $factions = []) {
         ]
     ];
     
-    if (!empty($factions)) {
-        $query["query"]["bool"]["filter"] = [
-            "terms" => [
-                "annotations.data.attributes.context" => $factions
-            ]
-        ];
-    }
-    
     try {
         if ($DEBUG_MODE) {
-            error_log("Compare Terms Query: " . json_encode($query, JSON_PRETTY_PRINT));
+            error_log("Enhanced Compare Terms Query: " . json_encode($query, JSON_PRETTY_PRINT));
         }
         
         $results = $ESClient->search([
-            "index" => "openparliamenttv_*",
+            "index" => $statisticsIndex,
             "body" => $query
         ]);
         
         if ($DEBUG_MODE) {
-            error_log("Compare Terms Response: " . json_encode($results, JSON_PRETTY_PRINT));
+            error_log("Enhanced Compare Terms Response: " . json_encode($results, JSON_PRETTY_PRINT));
         }
         
-        return $results["aggregations"];
+        // Transform results to match expected format
+        $transformedResults = [
+            "term_comparison" => [
+                "buckets" => []
+            ]
+        ];
+        
+        if (isset($results["aggregations"]["term_comparison"]["buckets"])) {
+            foreach ($results["aggregations"]["term_comparison"]["buckets"] as $term => $termData) {
+                $transformedResults["term_comparison"]["buckets"][$term] = [
+                    "over_time" => [
+                        "buckets" => array_map(function($bucket) {
+                            return [
+                                "key_as_string" => $bucket["key_as_string"],
+                                "doc_count" => $bucket["total_count"]["value"] ?? $bucket["doc_count"]
+                            ];
+                        }, $termData["over_time"]["buckets"])
+                    ]
+                ];
+            }
+        }
+        
+        return $transformedResults;
     } catch(Exception $e) {
-        error_log("Term comparison error: " . $e->getMessage());
+        error_log("Enhanced term comparison error: " . $e->getMessage());
         if ($DEBUG_MODE) {
             error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
         }
