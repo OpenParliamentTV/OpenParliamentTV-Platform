@@ -141,6 +141,6 @@ $config["ES"]["BasicAuthentication"]["passwd"] = "";
 $config["ES"]["SSL"]["pem"] = ""; // E.g. realpath(__DIR__."/../opensearch-root-ssl.pem");
 
 // Include API config
-require_once(__DIR__."/api/v1/config.php");
+require_once(__DIR__."/api/v1/config.api.php");
 
 ?>
