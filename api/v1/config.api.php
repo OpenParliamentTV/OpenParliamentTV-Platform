@@ -114,7 +114,15 @@ $config["excludedStopwords"] = [
     "linke", "fraktion", "fr", "sehr", "90", "abgeordneten", "kollegen", "bündnis", "dank", "uns", "hier", "b", "was", 
     "gr", "jetzt", "vielen", "herr", "damit", "kolleginnen", "frau", "denn", "liebe", "diesem", "ja", "da", "linken", 
     "ihnen", "dr", "meine", "dieses", "weil", "abg", "geht", "doch", "sagen", "sondern", "dazu", "diesen", "gerade", 
-    "mich", "präs", "mal", "kommen", "unsere", "also", "viel", "breg", "deshalb", "mir", "anderen", "will"
+    "mich", "präs", "mal", "kommen", "unsere", "also", "viel", "breg", "deshalb", "mir", "anderen", "will",
+    // Additional parliamentary-specific stopwords for better indexing optimization
+    "bundestag", "bundesregierung", "parlament", "regierung", "opposition",
+    "minister", "ministerin", "staatssekretär", "staatssekretärin",
+    "bundesminister", "bundesministerin", "kanzler", "kanzlerin",
+    "präsident", "präsidentin", "vizepräsident", "vizepräsidentin",
+    "antrag", "gesetzentwurf", "beschluss", "vorlage", "drucksache",
+    "sitzung", "plenum", "ausschuss", "kommission", "gremium",
+    "deutschland", "deutschen", "deutsche", "bundesrepublik", "brd"
 ];
 
 ?>
