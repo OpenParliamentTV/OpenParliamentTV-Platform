@@ -529,8 +529,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const enhancedIsRunning = enhancedState?.isRunning || false;
         
         if (status === 'running') {
-            toggleButton(elems.refreshButton, true, `<?= L::running(); ?>...`);
-            toggleButton(elems.deleteButton, true, `<?= L::running(); ?>...`);
+            toggleButton(elems.refreshButton, true, 'Main index running...');
+            toggleButton(elems.deleteButton, true, 'Main index running...');
             
             // Also disable enhanced index button when main index is running
             // This is the only time main index polling touches the enhanced index button
@@ -726,7 +726,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!mainIndexRunning) {
             // Always update button to match current state (don't check for changes)
             if (isActive) {
-                toggleButton(elems.rebuildButton, true, 'Running...');
+                toggleButton(elems.rebuildButton, true, 'Enhanced index running...');
             } else {
                 toggleButton(elems.rebuildButton, false, elems.originalRebuildBtnText);
             }
