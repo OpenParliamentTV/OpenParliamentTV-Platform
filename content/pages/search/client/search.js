@@ -458,11 +458,20 @@ function updateSuggestions() {
 
 function addQueryItem(queryType, queryText, secondaryText, itemID, factionID) {
 	var queryItemIcon = queryType === 'text' ? '' : '<span class="icon-type-'+ queryType +' me-2"></span>';
+	
 	var queryItem = $('<span class="queryItem d-flex align-items-center" data-type="'+ queryType +'">'+ queryItemIcon +'<span class="queryText">'+ queryText +'</span></span>'),
 		queryDeleteItem = $('<span class="queryDeleteItem icon-cancel ms-2"></span>');
+	
 	if (secondaryText) {
 		queryItem.append('<span class="ms-2 partyIndicator" data-faction="'+ factionID +'">'+ secondaryText +'</span>');
 	}
+	
+	// Add link icon for entity types (not text) - always before delete button
+	if (queryType !== 'text' && itemID) {
+		var queryLinkIcon = $('<a href="'+ config.dir.root +'/'+ queryType +'/'+ itemID +'" target="_blank" class="queryLinkIcon icon-link-ext ms-2" title="Go to '+ queryType +' details"></a>');
+		queryItem.append(queryLinkIcon);
+	}
+	
 	if (itemID) {
 		queryItem.attr('data-item-id', itemID);
 	}
@@ -508,7 +517,7 @@ function renderEntitiesSuggestions(inputValue, data) {
 	var maxSuggestions = 8;
 
 	if (data.length == 0) {
-		$('.searchSuggestionContainer #suggestionContainerEntities').append('<div class="my-3">'+ localizedLabels.noEntitiesFound +'</div>');
+		$('.searchSuggestionContainer #suggestionContainerEntities').append('<div class="my-3">'+ localizedLabels.noSuggestionsFound +'</div>');
 	} else {
 		for (var i = 0; i < data.length; i++) {
 			var entityData = data[i];

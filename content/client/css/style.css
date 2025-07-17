@@ -1514,8 +1514,7 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
     background: transparent;
     white-space: nowrap;
     font-size: 70%;
-    vertical-align: middle;
-    margin-top: -3px;
+    margin-top: 0px;
     margin-right: 0px;
     margin-bottom:  0px;
     padding: 0px 5px;
