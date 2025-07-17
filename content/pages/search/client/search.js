@@ -474,8 +474,8 @@ function addQueryItem(queryType, queryText, secondaryText, itemID, factionID) {
 function renderTextSuggestions(inputValue, data) {
 	for (var i = 0; i < data.length; i++) {
 		var suggestionItemText = '<span class="suggestionItemLabel">'+ data[i].text +'</span>',
-			suggestionItemFrequency = '<span class=" ms-2 badge badge-pill badge-primary">'+ data[i].freq +'</span>',
-			suggestionItem = $('<div class="suggestionItem" data-type="text">'+ suggestionItemText /*+ suggestionItemFrequency*/ +'</div>');
+			suggestionItemFrequency = '<span class="badge rounded-pill">'+ data[i].freq +'</span>',
+			suggestionItem = $('<div class="suggestionItem d-flex justify-content-between align-items-center" data-type="text">'+ suggestionItemText + suggestionItemFrequency +'</div>');
 
 		suggestionItem.click(function(evt) {
 			var textValue = $(this).children('.suggestionItemLabel').text();

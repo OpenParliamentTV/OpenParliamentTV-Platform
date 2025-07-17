@@ -1477,21 +1477,22 @@ body.fixed .searchContainer {
 
 .searchSuggestionContainer .suggestionItem {
     border: 1px solid transparent;
-    padding: 2px 0;
+    padding: 2px 6px;
 }
 
 .searchSuggestionContainer .suggestionItem.selected, 
 .searchSuggestionContainer .suggestionItem:hover {
     border-color: var(--primary-fg-color);
-    padding-left: 6px;
-    right: 6px;
     border-radius: 3px;
     cursor: pointer;
 }
 
-.searchSuggestionContainer .suggestionItem {
-    border: 1px solid transparent;
-    padding: 2px 0;
+.searchSuggestionContainer .suggestionItem .suggestionItemLabel {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .searchSuggestionContainer .suggestionItem .suggestionItemLabel em {
