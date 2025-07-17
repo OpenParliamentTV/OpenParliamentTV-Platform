@@ -389,10 +389,10 @@ function entitiesAutocomplete($query) {
             }
         }
         
-        // 5. Documents
+        // 5. Documents - prioritize legalDocument type first
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
-            $documents = $db->getAll("SELECT DocumentID, DocumentLabel, DocumentLabelAlternative FROM ?n WHERE LOWER(DocumentLabel) LIKE LOWER(?s) OR LOWER(DocumentLabelAlternative) LIKE LOWER(?s) ORDER BY DocumentLabel ASC LIMIT ?i",
+            $documents = $db->getAll("SELECT DocumentID, DocumentLabel, DocumentLabelAlternative, DocumentType FROM ?n WHERE LOWER(DocumentLabel) LIKE LOWER(?s) OR LOWER(DocumentLabelAlternative) LIKE LOWER(?s) ORDER BY CASE WHEN DocumentType = 'legalDocument' THEN 0 ELSE 1 END, DocumentLabel ASC LIMIT ?i",
                 $config["platform"]["sql"]["tbl"]["Document"],
                 "%".$query."%",
                 "%".$query."%",
