@@ -37,9 +37,9 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
                             <div id="suggestionContainerText"></div>
                         </div>
                         <div class="col col-12 col-sm-6 col-lg-7">
-                            <div style="font-weight: bolder;"><span class="icon-type-person"></span><?= L::personPlural(); ?></div>
+                            <div style="font-weight: bolder;"><?= L::entities(); ?></div>
                             <hr class="my-1">
-                            <div id="suggestionContainerPeople"></div>
+                            <div id="suggestionContainerEntities"></div>
                         </div>
                     </div>
                 </div>

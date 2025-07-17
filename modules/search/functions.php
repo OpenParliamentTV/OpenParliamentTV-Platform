@@ -220,7 +220,7 @@ function searchAutocomplete($textQuery) {
     require_once(__DIR__.'/functions.enhanced.php');
 
     try {
-        $enhancedResults = searchAutocompleteEnhanced($textQuery, 6);
+        $enhancedResults = searchAutocompleteEnhanced($textQuery, 10);
         
         // Transform enhanced results to match old format for backward compatibility
         $results = array();

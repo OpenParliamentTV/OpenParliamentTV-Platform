@@ -79,12 +79,82 @@ function entitiesAutocomplete($query) {
             if (empty($text) || empty($query)) {
                 return $text;
             }
-            // Case-insensitive highlighting
-            return preg_replace('/(' . preg_quote($query, '/') . ')/i', '<em>$1</em>', $text);
+            
+            // Try exact case-insensitive match first
+            $highlighted = preg_replace('/(' . preg_quote($query, '/') . ')/i', '<em>$1</em>', $text);
+            
+            // If no match and query/text differ when normalized, try accent-insensitive highlighting
+            if ($highlighted === $text) {
+                $normalizedQuery = convertAccentsAndSpecialToNormal(strtolower($query));
+                $normalizedText = convertAccentsAndSpecialToNormal(strtolower($text));
+                
+                if (strpos($normalizedText, $normalizedQuery) !== false) {
+                    // Find position in normalized text
+                    $pos = strpos($normalizedText, $normalizedQuery);
+                    $len = strlen($normalizedQuery);
+                    
+                    // Extract the corresponding segment from original text
+                    // This is a simplified approach - may not be perfect for complex cases
+                    $beforeText = substr($text, 0, $pos);
+                    $matchText = substr($text, $pos, $len);
+                    $afterText = substr($text, $pos + $len);
+                    
+                    $highlighted = $beforeText . '<em>' . $matchText . '</em>' . $afterText;
+                }
+            }
+            
+            return $highlighted;
+        };
+        
+        // Helper function to create excerpt for document alternative labels
+        $createDocumentExcerpt = function($text, $query, $highlightText) {
+            if (empty($text)) {
+                return null;
+            }
+            
+            $words = explode(' ', $text);
+            $wordCount = count($words);
+            
+            // If 10 words or less, return the whole text highlighted
+            if ($wordCount <= 10) {
+                return $highlightText($text, $query);
+            }
+            
+            // Find which word contains the search term (case-insensitive and accent-insensitive)
+            $hitWordIndex = -1;
+            $normalizedQuery = convertAccentsAndSpecialToNormal(strtolower($query));
+            
+            foreach ($words as $index => $word) {
+                $normalizedWord = convertAccentsAndSpecialToNormal(strtolower($word));
+                if (strpos($normalizedWord, $normalizedQuery) !== false) {
+                    $hitWordIndex = $index;
+                    break;
+                }
+            }
+            
+            // If no hit found in any word, fallback to first 10 words
+            if ($hitWordIndex === -1) {
+                $excerpt = implode(' ', array_slice($words, 0, 10));
+                return $excerpt . '...';
+            }
+            
+            // Calculate excerpt window (5 words before and after the hit)
+            $startIndex = max(0, $hitWordIndex - 5);
+            $endIndex = min($wordCount - 1, $hitWordIndex + 5);
+            
+            // Extract the excerpt
+            $excerptWords = array_slice($words, $startIndex, $endIndex - $startIndex + 1);
+            $excerpt = implode(' ', $excerptWords);
+            
+            // Add ellipsis if needed
+            $prefix = $startIndex > 0 ? '...' : '';
+            $suffix = $endIndex < $wordCount - 1 ? '...' : '';
+            
+            return $prefix . $highlightText($excerpt, $query) . $suffix;
         };
         
         // Helper function to get the most relevant labelAlternative
-        $getRelevantLabelAlternative = function($jsonText, $query, $mainLabel) use ($highlightText) {
+        $getRelevantLabelAlternative = function($jsonText, $query, $mainLabel, $entityType) use ($highlightText, $createDocumentExcerpt) {
             if (empty($jsonText) || empty($query)) {
                 return null;
             }
@@ -93,35 +163,98 @@ function entitiesAutocomplete($query) {
                 return null;
             }
             
+            // Helper function to check for accent-insensitive match
+            $hasAccentInsensitiveMatch = function($text, $query) {
+                if (empty($text) || empty($query)) return false;
+                
+                // First try exact case-insensitive match
+                if (stripos($text, $query) !== false) return true;
+                
+                // Then try accent-insensitive match
+                $normalizedText = convertAccentsAndSpecialToNormal(strtolower($text));
+                $normalizedQuery = convertAccentsAndSpecialToNormal(strtolower($query));
+                
+                return strpos($normalizedText, $normalizedQuery) !== false;
+            };
+            
             // Check if main label has a hit
-            $mainLabelHasHit = stripos($mainLabel, $query) !== false;
+            $mainLabelHasHit = $hasAccentInsensitiveMatch($mainLabel, $query);
             
-            // If main label has hit, return first alternative (if exists)
-            if ($mainLabelHasHit) {
-                return $highlightText($decoded[0], $query);
-            }
-            
-            // Check if first alternative has hit
-            if (stripos($decoded[0], $query) !== false) {
-                return $highlightText($decoded[0], $query);
-            }
-            
-            // Find first alternative that has a hit
-            foreach ($decoded as $alternative) {
-                if (stripos($alternative, $query) !== false) {
-                    return $highlightText($alternative, $query);
+            // For person entities: only show alternative if there's a hit in alternatives
+            if ($entityType === 'person') {
+                // Only return alternative if there's a hit in the alternatives
+                foreach ($decoded as $alternative) {
+                    if ($hasAccentInsensitiveMatch($alternative, $query)) {
+                        return $highlightText($alternative, $query);
+                    }
                 }
+                return null; // No hit in alternatives for person
             }
             
-            // Fallback to first alternative (shouldn't happen due to our WHERE clause)
-            return $highlightText($decoded[0], $query);
+            // For other entity types (organisation, term): use original logic
+            if ($entityType === 'organisation' || $entityType === 'term') {
+                // If main label has hit, return first alternative (if exists)
+                if ($mainLabelHasHit) {
+                    return $highlightText($decoded[0], $query);
+                }
+                
+                // Find first alternative that has a hit
+                foreach ($decoded as $alternative) {
+                    if ($hasAccentInsensitiveMatch($alternative, $query)) {
+                        return $highlightText($alternative, $query);
+                    }
+                }
+                
+                return null;
+            }
+            
+            // For document entities: use original logic but apply excerpt formatting
+            if ($entityType === 'document') {
+                $relevantAlternative = null;
+                
+                // If main label has hit, return first alternative (original behavior)
+                if ($mainLabelHasHit && !empty($decoded[0])) {
+                    return $createDocumentExcerpt($decoded[0], $query, $highlightText);
+                }
+                
+                // Check if first alternative has hit
+                if (!empty($decoded[0]) && $hasAccentInsensitiveMatch($decoded[0], $query)) {
+                    return $createDocumentExcerpt($decoded[0], $query, $highlightText);
+                }
+                
+                // Find first alternative that has a hit
+                foreach ($decoded as $alternative) {
+                    if ($hasAccentInsensitiveMatch($alternative, $query)) {
+                        return $createDocumentExcerpt($alternative, $query, $highlightText);
+                    }
+                }
+                
+                return null;
+            }
+            
+            return null;
+        };
+        
+        // Helper function to check for accent-insensitive match (reusable outside getRelevantLabelAlternative)
+        $hasAccentInsensitiveMatch = function($text, $query) {
+            if (empty($text) || empty($query)) return false;
+            
+            // First try exact case-insensitive match
+            if (stripos($text, $query) !== false) return true;
+            
+            // Then try accent-insensitive match
+            $normalizedText = convertAccentsAndSpecialToNormal(strtolower($text));
+            $normalizedQuery = convertAccentsAndSpecialToNormal(strtolower($query));
+            
+            return strpos($normalizedText, $normalizedQuery) !== false;
         };
         
         // 1. People with type memberOfParliament
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
-            $peopleMP = $db->getAll("SELECT PersonID, PersonLabel, PersonLabelAlternative, PersonType FROM ?n WHERE PersonType = 'memberOfParliament' AND (LOWER(PersonLabel) LIKE LOWER(?s) OR LOWER(PersonFirstName) LIKE LOWER(?s) OR LOWER(PersonLastName) LIKE LOWER(?s) OR LOWER(PersonLabelAlternative) LIKE LOWER(?s)) ORDER BY PersonLabel ASC LIMIT ?i",
+            $peopleMP = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType = 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(p.PersonLabelAlternative) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
                 $config["platform"]["sql"]["tbl"]["Person"],
+                $config["platform"]["sql"]["tbl"]["Organisation"],
                 "%".$query."%",
                 "%".$query."%", 
                 "%".$query."%",
@@ -130,20 +263,41 @@ function entitiesAutocomplete($query) {
             );
             
             foreach ($peopleMP as $person) {
-                $results[] = [
-                    'id' => $person['PersonID'],
-                    'type' => 'person',
-                    'label' => $highlightText($person['PersonLabel'], $query),
-                    'labelAlternative' => $getRelevantLabelAlternative($person['PersonLabelAlternative'], $query, $person['PersonLabel'])
-                ];
+                // Check if there's a visible match in main label or alternatives
+                $mainLabelHasHit = $hasAccentInsensitiveMatch($person['PersonLabel'], $query) ||
+                                  $hasAccentInsensitiveMatch($person['PersonFirstName'], $query) ||
+                                  $hasAccentInsensitiveMatch($person['PersonLastName'], $query);
+                
+                $alternativeLabel = $getRelevantLabelAlternative($person['PersonLabelAlternative'], $query, $person['PersonLabel'], 'person');
+                
+                // Only include person if there's a visible match
+                if ($mainLabelHasHit || $alternativeLabel !== null) {
+                    $result = [
+                        'id' => $person['PersonID'],
+                        'type' => 'person',
+                        'label' => $highlightText($person['PersonLabel'], $query),
+                        'labelAlternative' => $alternativeLabel
+                    ];
+                    
+                    // Add faction information if available
+                    if ($person['PersonFactionOrganisationID'] && $person['FactionLabel']) {
+                        $result['faction'] = [
+                            'id' => $person['PersonFactionOrganisationID'],
+                            'label' => $person['FactionLabel']
+                        ];
+                    }
+                    
+                    $results[] = $result;
+                }
             }
         }
         
         // 2. Other people (all without type memberOfParliament)
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
-            $peopleOther = $db->getAll("SELECT PersonID, PersonLabel, PersonLabelAlternative, PersonType FROM ?n WHERE PersonType != 'memberOfParliament' AND (LOWER(PersonLabel) LIKE LOWER(?s) OR LOWER(PersonFirstName) LIKE LOWER(?s) OR LOWER(PersonLastName) LIKE LOWER(?s) OR LOWER(PersonLabelAlternative) LIKE LOWER(?s)) ORDER BY PersonLabel ASC LIMIT ?i",
+            $peopleOther = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType != 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(p.PersonLabelAlternative) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
                 $config["platform"]["sql"]["tbl"]["Person"],
+                $config["platform"]["sql"]["tbl"]["Organisation"],
                 "%".$query."%",
                 "%".$query."%",
                 "%".$query."%",
@@ -152,12 +306,32 @@ function entitiesAutocomplete($query) {
             );
             
             foreach ($peopleOther as $person) {
-                $results[] = [
-                    'id' => $person['PersonID'],
-                    'type' => 'person',
-                    'label' => $highlightText($person['PersonLabel'], $query),
-                    'labelAlternative' => $getRelevantLabelAlternative($person['PersonLabelAlternative'], $query, $person['PersonLabel'])
-                ];
+                // Check if there's a visible match in main label or alternatives
+                $mainLabelHasHit = $hasAccentInsensitiveMatch($person['PersonLabel'], $query) ||
+                                  $hasAccentInsensitiveMatch($person['PersonFirstName'], $query) ||
+                                  $hasAccentInsensitiveMatch($person['PersonLastName'], $query);
+                
+                $alternativeLabel = $getRelevantLabelAlternative($person['PersonLabelAlternative'], $query, $person['PersonLabel'], 'person');
+                
+                // Only include person if there's a visible match
+                if ($mainLabelHasHit || $alternativeLabel !== null) {
+                    $result = [
+                        'id' => $person['PersonID'],
+                        'type' => 'person',
+                        'label' => $highlightText($person['PersonLabel'], $query),
+                        'labelAlternative' => $alternativeLabel
+                    ];
+                    
+                    // Add faction information if available
+                    if ($person['PersonFactionOrganisationID'] && $person['FactionLabel']) {
+                        $result['faction'] = [
+                            'id' => $person['PersonFactionOrganisationID'],
+                            'label' => $person['FactionLabel']
+                        ];
+                    }
+                    
+                    $results[] = $result;
+                }
             }
         }
         
@@ -172,12 +346,19 @@ function entitiesAutocomplete($query) {
             );
             
             foreach ($organisations as $org) {
-                $results[] = [
-                    'id' => $org['OrganisationID'],
-                    'type' => 'organisation',
-                    'label' => $highlightText($org['OrganisationLabel'], $query),
-                    'labelAlternative' => $getRelevantLabelAlternative($org['OrganisationLabelAlternative'], $query, $org['OrganisationLabel'])
-                ];
+                // Check if there's a visible match in main label or alternatives
+                $mainLabelHasHit = $hasAccentInsensitiveMatch($org['OrganisationLabel'], $query);
+                $alternativeLabel = $getRelevantLabelAlternative($org['OrganisationLabelAlternative'], $query, $org['OrganisationLabel'], 'organisation');
+                
+                // Only include organisation if there's a visible match
+                if ($mainLabelHasHit || $alternativeLabel !== null) {
+                    $results[] = [
+                        'id' => $org['OrganisationID'],
+                        'type' => 'organisation',
+                        'label' => $highlightText($org['OrganisationLabel'], $query),
+                        'labelAlternative' => $alternativeLabel
+                    ];
+                }
             }
         }
         
@@ -192,12 +373,19 @@ function entitiesAutocomplete($query) {
             );
             
             foreach ($terms as $term) {
-                $results[] = [
-                    'id' => $term['TermID'],
-                    'type' => 'term',
-                    'label' => $highlightText($term['TermLabel'], $query),
-                    'labelAlternative' => $getRelevantLabelAlternative($term['TermLabelAlternative'], $query, $term['TermLabel'])
-                ];
+                // Check if there's a visible match in main label or alternatives
+                $mainLabelHasHit = $hasAccentInsensitiveMatch($term['TermLabel'], $query);
+                $alternativeLabel = $getRelevantLabelAlternative($term['TermLabelAlternative'], $query, $term['TermLabel'], 'term');
+                
+                // Only include term if there's a visible match
+                if ($mainLabelHasHit || $alternativeLabel !== null) {
+                    $results[] = [
+                        'id' => $term['TermID'],
+                        'type' => 'term',
+                        'label' => $highlightText($term['TermLabel'], $query),
+                        'labelAlternative' => $alternativeLabel
+                    ];
+                }
             }
         }
         
@@ -212,12 +400,19 @@ function entitiesAutocomplete($query) {
             );
             
             foreach ($documents as $doc) {
-                $results[] = [
-                    'id' => $doc['DocumentID'],
-                    'type' => 'document',
-                    'label' => $highlightText($doc['DocumentLabel'], $query),
-                    'labelAlternative' => $getRelevantLabelAlternative($doc['DocumentLabelAlternative'], $query, $doc['DocumentLabel'])
-                ];
+                // Check if there's a visible match in main label or alternatives
+                $mainLabelHasHit = $hasAccentInsensitiveMatch($doc['DocumentLabel'], $query);
+                $alternativeLabel = $getRelevantLabelAlternative($doc['DocumentLabelAlternative'], $query, $doc['DocumentLabel'], 'document');
+                
+                // Only include document if there's a visible match
+                if ($mainLabelHasHit || $alternativeLabel !== null) {
+                    $results[] = [
+                        'id' => $doc['DocumentID'],
+                        'type' => 'document',
+                        'label' => $highlightText($doc['DocumentLabel'], $query),
+                        'labelAlternative' => $alternativeLabel
+                    ];
+                }
             }
         }
         

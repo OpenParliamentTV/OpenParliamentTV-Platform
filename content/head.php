@@ -80,9 +80,22 @@ if (isset($personDataFromRequest)) {
   // If set personDataFromRequest contains labels for personID values so we can display names
 ?>
   <script type="text/javascript">
-    var personDataFromRequest = JSON.parse('<?= json_encode($personDataFromRequest); ?>');
+    var personDataFromRequest = <?= json_encode($personDataFromRequest, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE); ?>;
   </script>
 <?php
+}
+
+// Add similar variables for other entity types
+$entityTypes = ['organisation', 'document', 'term'];
+foreach ($entityTypes as $entityType) {
+  $entityDataVarName = $entityType . 'DataFromRequest';
+  if (isset($$entityDataVarName)) {
+?>
+  <script type="text/javascript">
+    var <?= $entityDataVarName ?> = <?= json_encode($$entityDataVarName, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE); ?>;
+  </script>
+<?php
+  }
 }
 ?>
 

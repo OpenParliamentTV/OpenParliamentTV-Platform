@@ -778,10 +778,41 @@ switch ($page) {
 					$pageTitle .= $personData['data']['attributes']['label'].' ';
 				}
 			}
+			
+			// Get labels for other entity types so we can display names
+			$entityTypes = ['organisation', 'document', 'term'];
+			foreach ($entityTypes as $entityType) {
+				$paramName = $entityType . 'ID';
+				if (isset($_REQUEST[$paramName])) {
+					$entityIDs = $_REQUEST[$paramName];
+					$entityDataVarName = $entityType . 'DataFromRequest';
+					$$entityDataVarName = array();
+					
+					if (is_array($entityIDs)) {
+						foreach ($entityIDs as $entityID) {
+							$entityData = apiV1([
+								"action"=>"getItem", 
+								"itemType"=>$entityType, 
+								"id"=>$entityID
+							]);
+							${$entityDataVarName}[$entityID] = $entityData['data'];
+							$pageTitle .= $entityData['data']['attributes']['label'].' ';
+						}
+					} else {
+						$entityData = apiV1([
+							"action"=>"getItem", 
+							"itemType"=>$entityType, 
+							"id"=>$entityIDs
+						]);
+						${$entityDataVarName}[$entityIDs] = $entityData['data'];
+						$pageTitle .= $entityData['data']['attributes']['label'].' ';
+					}
+				}
+			}
 
 			$pageTitle .= $_REQUEST["q"];
 
-			if (count($_REQUEST) < 2 || (!$_REQUEST["q"] && !$_REQUEST["personID"])) {
+			if (count($_REQUEST) < 2 || (!$_REQUEST["q"] && !$_REQUEST["personID"] && !$_REQUEST["organisationID"] && !$_REQUEST["documentID"] && !$_REQUEST["termID"])) {
 				$pageTitle .= L::search();
 			} elseif (isset($_REQUEST["parliament"]) && $_REQUEST["parliament"] && strlen($_REQUEST["parliament"]) >= 2) {
 				$pageTitle .= ' - '.L::speeches().' - '.$config["parliament"][$_REQUEST["parliament"]]["label"];

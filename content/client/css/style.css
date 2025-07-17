@@ -1495,13 +1495,13 @@ body.fixed .searchContainer {
     white-space: nowrap;
 }
 
-.searchSuggestionContainer .suggestionItem .suggestionItemLabel em {
+.searchSuggestionContainer .suggestionItem em {
     font-weight: normal;
     font-style: normal;
     color: #000;
 }
 
-body.darkmode .searchSuggestionContainer .suggestionItem .suggestionItemLabel em {
+body.darkmode .searchSuggestionContainer .suggestionItem em {
     color: #fff;
 }
 

@@ -2,7 +2,7 @@ var minDate = new Date('2013-10-01');
 var maxDate = new Date();
 var statsAjax,
 	suggestionsTextAjax,
-	suggestionsPeopleAjax;
+	suggestionsEntitiesAjax;
 var factionChart = null,
 	timeRangeChart = null;
 var selectedSuggestionIndex = null,
@@ -113,7 +113,7 @@ $(document).ready( function() {
 			} 
 			if (selectedSuggestionColumn == 'suggestionContainerText' && 
 				$('#suggestionContainerText .suggestionItem').length == 0) {
-				selectedSuggestionColumn = 'suggestionContainerPeople';
+				selectedSuggestionColumn = 'suggestionContainerEntities';
 			}
 			if (selectedSuggestionIndex === null) {
 				selectedSuggestionIndex = 0;
@@ -152,7 +152,7 @@ $(document).ready( function() {
 			if (selectedSuggestionIndex === null) {
 				return false;
 			}
-			if (selectedSuggestionColumn == 'suggestionContainerPeople' && 
+			if (selectedSuggestionColumn == 'suggestionContainerEntities' && 
 				$('#suggestionContainerText .suggestionItem').length != 0) {
 				
 				selectedSuggestionColumn = 'suggestionContainerText';
@@ -168,11 +168,11 @@ $(document).ready( function() {
 				return false;
 			}
 			if (selectedSuggestionColumn == 'suggestionContainerText' && 
-				$('#suggestionContainerPeople .suggestionItem').length != 0) {
+				$('#suggestionContainerEntities .suggestionItem').length != 0) {
 				
-				selectedSuggestionColumn = 'suggestionContainerPeople';
+				selectedSuggestionColumn = 'suggestionContainerEntities';
 
-				if (($('#suggestionContainerPeople .suggestionItem').length-1) < selectedSuggestionIndex) {
+				if (($('#suggestionContainerEntities .suggestionItem').length-1) < selectedSuggestionIndex) {
 					selectedSuggestionIndex = $('#'+ selectedSuggestionColumn +' .suggestionItem').length-1;
 				}
 
@@ -190,11 +190,20 @@ $(document).ready( function() {
 					var textValue = $('.searchSuggestionContainer .suggestionItem.selected .suggestionItemLabel').text();
 					addQueryItem('text', textValue);
 					updateQuery();
-				} else if (selectedSuggestionColumn == 'suggestionContainerPeople') {
-					var textValue = $('.searchSuggestionContainer .suggestionItem.selected').children('.suggestionItemLabel').text(),
-						secondaryText = $('.searchSuggestionContainer .suggestionItem.selected').children('.partyIndicator').text(),
-						itemID = $('.searchSuggestionContainer .suggestionItem.selected').attr('data-item-id');
-					addQueryItem('person', textValue, secondaryText, itemID);
+				} else if (selectedSuggestionColumn == 'suggestionContainerEntities') {
+					var textValue = $('.searchSuggestionContainer .suggestionItem.selected').find('.suggestionItemLabel').text(),
+						secondaryText = $('.searchSuggestionContainer .suggestionItem.selected').find('.partyIndicator').text(),
+						factionID = $('.searchSuggestionContainer .suggestionItem.selected').find('.partyIndicator').attr('data-faction'),
+						itemID = $('.searchSuggestionContainer .suggestionItem.selected').attr('data-item-id'),
+						entityType = $('.searchSuggestionContainer .suggestionItem.selected').attr('data-type');
+					
+					// Handle different entity types
+					if (entityType == 'person') {
+						addQueryItem('person', textValue, secondaryText, itemID, factionID);
+					} else {
+						// For non-person entities, add as entity type
+						addQueryItem(entityType, textValue, null, itemID);
+					}
 					updateQuery();
 				}
 			}
@@ -245,14 +254,21 @@ function updateContentsFromURL() {
 
 	//$('[name="person"]').val(getQueryVariable('person'));
 
-	$('#filterForm input[name="personID[]"]').remove();
-	var peopleIDs = getQueryVariable('personID');
-	if ($.isArray(peopleIDs)) {
-		for (var i = 0; i < peopleIDs.length; i++) {
-			$('#filterForm').append('<input type="hidden" name="personID[]" value="'+ peopleIDs[i] +'">');
+	// Handle all entity types
+	var entityTypes = ['person', 'organisation', 'document', 'term'];
+	for (var t = 0; t < entityTypes.length; t++) {
+		var entityType = entityTypes[t];
+		var paramName = entityType + 'ID[]';
+		
+		$('#filterForm input[name="' + paramName + '"]').remove();
+		var entityIDs = getQueryVariable(entityType + 'ID');
+		if ($.isArray(entityIDs)) {
+			for (var i = 0; i < entityIDs.length; i++) {
+				$('#filterForm').append('<input type="hidden" name="' + paramName + '" value="'+ entityIDs[i] +'">');
+			}
+		} else if (entityIDs) {
+			$('#filterForm').append('<input type="hidden" name="' + paramName + '" value="'+ entityIDs +'">');
 		}
-	} else if (peopleIDs) {
-		$('#filterForm').append('<input type="hidden" name="personID[]" value="'+ peopleIDs +'">');
 	}
 
 	$('[name="q"]').val(getQueryVariable('q'));
@@ -362,7 +378,7 @@ function updateSuggestions() {
 
 		$('.searchSuggestionContainer').data('current', textValue);
 
-		$('#suggestionContainerText, #suggestionContainerPeople').empty();
+		$('#suggestionContainerText, #suggestionContainerEntities').empty();
 		selectedSuggestionIndex = null,
 		selectedSuggestionColumn = 'suggestionContainerText';
 
@@ -393,47 +409,47 @@ function updateSuggestions() {
 	    	
 	    	if (textValue.indexOf('*') == -1) {
 		    	var wildcardSuggestionBeginItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">'+ textValue +'*</span><span class="ms-2" style="opacity: .68;">('+ localizedLabels.wildcardSearchBegin +')</span></div>');
-				
-				wildcardSuggestionBeginItem.click(function(evt) {
-					var textValue = $(this).children('.suggestionItemLabel').text();
-					addQueryItem('text', textValue);
-					updateQuery();
-				});
-
-				$('#suggestionContainerText').append(wildcardSuggestionBeginItem);
-
-				var wildcardSuggestionEndItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">*'+ textValue.toLowerCase() +'</span><span class="ms-2" style="opacity: .68;">('+ localizedLabels.wildcardSearchEnd +')</span></div>');
-				
-				wildcardSuggestionEndItem.click(function(evt) {
-					var textValue = $(this).children('.suggestionItemLabel').text();
-					addQueryItem('text', textValue);
-					updateQuery();
-				});
-
-				$('#suggestionContainerText').append(wildcardSuggestionEndItem);
-			}
-	    	suggestionsTextAjax = $.ajax({
-				method: "POST",
-				url: './api/v1/autocomplete/text?q='+ textValue
-			}).done(function(data) {
-				renderTextSuggestions(textValue, data.data);
-			}).fail(function(err) {
-				//console.log(err);
+			
+			wildcardSuggestionBeginItem.click(function(evt) {
+				var textValue = $(this).children('.suggestionItemLabel').text();
+				addQueryItem('text', textValue);
+				updateQuery();
 			});
-	    }
 
-	    if(suggestionsPeopleAjax && suggestionsPeopleAjax.readyState != 4){
-	        suggestionsPeopleAjax.abort();
-	    }
+			$('#suggestionContainerText').append(wildcardSuggestionBeginItem);
 
-	    suggestionsPeopleAjax = $.ajax({
+			var wildcardSuggestionEndItem = $('<div class="suggestionItem"><span class="suggestionItemLabel">*'+ textValue.toLowerCase() +'</span><span class="ms-2" style="opacity: .68;">('+ localizedLabels.wildcardSearchEnd +')</span></div>');
+			
+			wildcardSuggestionEndItem.click(function(evt) {
+				var textValue = $(this).children('.suggestionItemLabel').text();
+				addQueryItem('text', textValue);
+				updateQuery();
+			});
+
+			$('#suggestionContainerText').append(wildcardSuggestionEndItem);
+		}
+	    	suggestionsTextAjax = $.ajax({
 			method: "POST",
-			url: './api/v1/search/people?type=memberOfParliament&name='+ textValue
+			url: './api/v1/autocomplete/text?q='+ textValue
 		}).done(function(data) {
-			renderPeopleSuggestions(textValue, data.data);
+			renderTextSuggestions(textValue, data.data);
 		}).fail(function(err) {
 			//console.log(err);
 		});
+	    }
+
+	    if(suggestionsEntitiesAjax && suggestionsEntitiesAjax.readyState != 4){
+	        suggestionsEntitiesAjax.abort();
+	    }
+
+	    suggestionsEntitiesAjax = $.ajax({
+		method: "POST",
+		url: './api/v1/?action=autocomplete&itemType=entities&q='+ textValue
+	}).done(function(data) {
+		renderEntitiesSuggestions(textValue, data.data);
+	}).fail(function(err) {
+		//console.log(err);
+	});
 
 	} else {
 		$('.searchSuggestionContainer').hide();
@@ -441,8 +457,9 @@ function updateSuggestions() {
 }
 
 function addQueryItem(queryType, queryText, secondaryText, itemID, factionID) {
-	var queryItem = $('<span class="queryItem" data-type="'+ queryType +'"><span class="queryText">'+ queryText +'</span></span>'),
-		queryDeleteItem = $('<span class="queryDeleteItem icon-cancel"></span>');
+	var queryItemIcon = queryType === 'text' ? '' : '<span class="icon-type-'+ queryType +' me-2"></span>';
+	var queryItem = $('<span class="queryItem d-flex align-items-center" data-type="'+ queryType +'">'+ queryItemIcon +'<span class="queryText">'+ queryText +'</span></span>'),
+		queryDeleteItem = $('<span class="queryDeleteItem icon-cancel ms-2"></span>');
 	if (secondaryText) {
 		queryItem.append('<span class="ms-2 partyIndicator" data-faction="'+ factionID +'">'+ secondaryText +'</span>');
 	}
@@ -487,45 +504,51 @@ function renderTextSuggestions(inputValue, data) {
 	}
 }
 
-function renderPeopleSuggestions(inputValue, data) {
-	var maxSuggestions = 4;
+function renderEntitiesSuggestions(inputValue, data) {
+	var maxSuggestions = 8;
 
-	var textValue = $.trim(inputValue),
-		isExactMatch = /\".+\"/.test(textValue),
-		inputTermsArray = [];
-	
-	if (textValue.indexOf(' ') != -1 && !isExactMatch) {
-		var textValueParts = textValue.split(' ');
-		for (var i = 0; i < textValueParts.length; i++) {
-			inputTermsArray.push(textValueParts[i]);
-		}
-	} else {
-		inputTermsArray.push(textValue);
-	}
-	
 	if (data.length == 0) {
-		$('.searchSuggestionContainer #suggestionContainerPeople').append('<div class="my-3">'+ localizedLabels.noPeopleFound +'</div>');
+		$('.searchSuggestionContainer #suggestionContainerEntities').append('<div class="my-3">'+ localizedLabels.noEntitiesFound +'</div>');
 	} else {
 		for (var i = 0; i < data.length; i++) {
-			var highlightedLabel = data[i].attributes.label;
-			for (var h = inputTermsArray.length - 1; h >= 0; h--) {
-				highlightedLabel = highlightedLabel.split(inputTermsArray[h]).join('<em>' + inputTermsArray[h] + '</em>');
+			var entityData = data[i];
+			var suggestionItemIcon = '<span class="icon-type-'+ entityData.type +' me-2"></span>';
+			var suggestionItemLabel = '<span class="suggestionItemLabel">'+ entityData.label +'</span>';
+			var suggestionItemSecondary = '';
+			var suggestionItemClass = 'suggestionItem d-flex align-items-start';
+			var suggestionItemAttributes = 'data-type="'+ entityData.type +'" data-item-id="'+ entityData.id +'"';
+			
+			// Handle person-specific data (faction/party indicator)
+			if (entityData.type === 'person' && entityData.faction) {
+				suggestionItemSecondary = '<span class="ms-2 partyIndicator" data-faction="'+ entityData.faction.id +'">'+ entityData.faction.label +'</span>';
 			}
-
-			var suggestionItemPerson = '<span class="suggestionItemLabel">'+ highlightedLabel +'</span>',
-				suggestionItemFaction = (data[i].relationships.faction.data) ? '<span class="ms-2 partyIndicator" data-faction="'+ data[i].relationships.faction.data.id +'">'+ data[i].relationships.faction.data.attributes.label +'</span>' : '',
-				suggestionItem = $('<div class="suggestionItem" data-type="person" data-item-id="'+ data[i].id +'">'+ suggestionItemPerson + suggestionItemFaction +'</div>');
+			
+			// Handle secondary label for all entity types
+			if (entityData.labelAlternative) {
+				suggestionItemSecondary += '<div class="small text-muted">'+ entityData.labelAlternative +'</div>';
+			}
+			
+			var suggestionItemContent = '<div class="flex-grow-1">'+ suggestionItemLabel + suggestionItemSecondary +'</div>';
+			var suggestionItem = $('<div class="'+ suggestionItemClass +'" '+ suggestionItemAttributes +'>'+ suggestionItemIcon + suggestionItemContent +'</div>');
 
 			suggestionItem.click(function(evt) {
-				var textValue = $(this).children('.suggestionItemLabel').text(),
-					secondaryText = $(this).children('.partyIndicator').text(),
-					factionID = $(this).children('.partyIndicator').attr('data-faction'),
-					itemID = $(this).attr('data-item-id');
-				addQueryItem('person', textValue, secondaryText, itemID, factionID);
+				var textValue = $(this).find('.suggestionItemLabel').text(),
+					secondaryText = $(this).find('.partyIndicator').text(),
+					factionID = $(this).find('.partyIndicator').attr('data-faction'),
+					itemID = $(this).attr('data-item-id'),
+					entityType = $(this).attr('data-type');
+				
+				// Handle different entity types
+				if (entityType == 'person') {
+					addQueryItem('person', textValue, secondaryText, itemID, factionID);
+				} else {
+					// For non-person entities, add as entity type
+					addQueryItem(entityType, textValue, null, itemID);
+				}
 				updateQuery();
 			});
 
-			$('.searchSuggestionContainer #suggestionContainerPeople').append(suggestionItem);
+			$('.searchSuggestionContainer #suggestionContainerEntities').append(suggestionItem);
 			
 			if (i >= maxSuggestions-1) {
 				break;
@@ -537,21 +560,38 @@ function renderPeopleSuggestions(inputValue, data) {
 function updateQuery() {
 	$('input[name="q"]').val(getInteractiveQueryValues('text'));
 	
-	$('#filterForm input[name="personID[]"]').remove();
-	var peopleIDs = getInteractiveQueryValues('person');
-	for (var i = 0; i < peopleIDs.length; i++) {
-		$('#filterForm').append('<input type="hidden" name="personID[]" value="'+ peopleIDs[i] +'">');
+	// Handle all entity types
+	var entityTypes = ['person', 'organisation', 'document', 'term'];
+	var hasEntityFilters = false;
+	
+	for (var t = 0; t < entityTypes.length; t++) {
+		var entityType = entityTypes[t];
+		var paramName = entityType + 'ID[]';
+		
+		// Remove existing inputs for this entity type
+		$('#filterForm input[name="' + paramName + '"]').remove();
+		
+		// Add new inputs for this entity type
+		var entityIDs = getInteractiveQueryValues(entityType);
+		for (var i = 0; i < entityIDs.length; i++) {
+			$('#filterForm').append('<input type="hidden" name="' + paramName + '" value="'+ entityIDs[i] +'">');
+		}
+		
+		if (entityIDs.length > 0) {
+			hasEntityFilters = true;
+		}
 	}
+	
 
 	var targetPath = isMediaManagement ? 'media?' : 'search?';
 	
 	history.pushState(null, "", targetPath + getSerializedForm());
 	updateResultList();
-	if ($('input[name="q"]').val() != '' || peopleIDs.length != 0) {
-		if (peopleIDs.length != 0) {
+	if ($('input[name="q"]').val() != '' || hasEntityFilters) {
+		if (hasEntityFilters) {
 			var newDocumentTitle = '';
 			document.title = '';
-			$('.searchInputContainer .queryItem[data-type="person"]').each(function() {
+			$('.searchInputContainer .queryItem[data-item-id]').each(function() {
 				newDocumentTitle += $(this).find('.queryText').text() + ' ';
 			});
 			newDocumentTitle += $('input[name="q"]').val() +' - '+ localizedLabels.speeches +' | '+ localizedLabels.brand;
@@ -590,8 +630,11 @@ function updateResultList() {
 		url: config.dir.root + "/content/components/result."+view+".php?a=search"+includeAllString+"&queryOnly=1&" + langString + pageString + getSerializedForm()
 	}).done(function(data) {
 		var requestQuery = getQueryVariable('q'),
-			requestPersonID = getQueryVariable('personID');
-		if ((requestQuery && requestQuery.length >= 2) || requestPersonID) {
+			requestPersonID = getQueryVariable('personID'),
+			requestOrganisationID = getQueryVariable('organisationID'),
+			requestDocumentID = getQueryVariable('documentID'),
+			requestTermID = getQueryVariable('termID');
+		if ((requestQuery && requestQuery.length >= 2) || requestPersonID || requestOrganisationID || requestDocumentID || requestTermID) {
 			$('#filterbar').removeClass('nosearch');
 			$('.filterContainer').removeClass('d-none').addClass('d-md-block');
 			$('#toggleFilterContainer').removeClass('d-none').addClass('d-block');
@@ -646,7 +689,7 @@ function updateListeners(targetSelector) {
 function getInteractiveQueryValues(queryType) {
 	var queryItems = $('.searchInputContainer .queryItem[data-type="'+ queryType +'"]');
 	
-	if (queryType == 'person') {
+	if (queryType == 'person' || queryType == 'organisation' || queryType == 'document' || queryType == 'term') {
 		var queryValue = [];
 		queryItems.each(function() {
 			queryValue.push( $(this).attr('data-item-id') );
@@ -656,7 +699,7 @@ function getInteractiveQueryValues(queryType) {
 	} else {
 		var queryValue = '';
 		queryItems.each(function() {
-			queryValue += $(this).children('.queryText').text()+ ' ';
+			queryValue += $(this).find('.queryText').text()+ ' ';
 		});
 
 		return $.trim(queryValue);
@@ -685,6 +728,7 @@ function initInteractiveQueryValues() {
 	
 	$('.searchInputContainer .queryItem').remove();
 
+	// Handle person entities
 	if ($('[name="personID[]"]').length != 0) {
 		var personIDs = $.map($('[name="personID[]"]'), function(el) { return el.value; });
 		if (personIDs && typeof personDataFromRequest !== 'undefined') {
@@ -696,6 +740,24 @@ function initInteractiveQueryValues() {
 					addQueryItem('person', label, secondaryLabel, personIDs[i], factionID);
 				} else {
 					addQueryItem('person', label, false, personIDs[i]);
+				}
+			}
+		}
+	}
+
+	// Handle other entity types
+	var entityTypes = ['organisation', 'document', 'term'];
+	for (var t = 0; t < entityTypes.length; t++) {
+		var entityType = entityTypes[t];
+		var paramName = entityType + 'ID[]';
+		var dataVarName = entityType + 'DataFromRequest';
+		
+		if ($('[name="' + paramName + '"]').length != 0) {
+			var entityIDs = $.map($('[name="' + paramName + '"]'), function(el) { return el.value; });
+			if (entityIDs && typeof window[dataVarName] !== 'undefined') {
+				for (var i = entityIDs.length - 1; i >= 0; i--) {
+					var label = window[dataVarName][entityIDs[i]].attributes.label;
+					addQueryItem(entityType, label, null, entityIDs[i]);
 				}
 			}
 		}
