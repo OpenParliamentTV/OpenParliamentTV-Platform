@@ -28,6 +28,7 @@ function indexSpeechWordEvents($speechData, $parliamentCode = 'de') {
     
     $bulkData = [];
     $position = 0;
+    $sentenceIndex = 0;
     
     // Iterate through text contents and existing sentences
     foreach ($speechData['attributes']['textContents'] as $textContent) {
@@ -42,18 +43,29 @@ function indexSpeechWordEvents($speechData, $parliamentCode = 'de') {
                 $timeEnd = isset($sentence['timeEnd']) ? floatval($sentence['timeEnd']) : null;
                 $words = tokenizeWords($sentenceText);
                 
+                // Generate sentence ID for reference
+                $sentenceId = $speechId . '_sent_' . $sentenceIndex;
+                $positionInSentence = 0;
+                
                 foreach ($words as $word) {
                     $normalizedWord = normalizeWord($word);
+                    
+                    // Skip empty normalized words (too short, punctuation-only, etc.)
+                    if (empty($normalizedWord)) {
+                        $position++;
+                        $positionInSentence++;
+                        continue;
+                    }
                     
                     // Skip stopwords for events index
                     if (isStopword($normalizedWord, $config)) {
                         $position++;
+                        $positionInSentence++;
                         continue;
                     }
                     
                     $wordEvent = [
-                        'word' => $word,
-                        'word_normalized' => $normalizedWord,
+                        'word' => $normalizedWord,
                         'speech_id' => $speechId,
                         'speaker_id' => $speakerId,
                         'party_id' => $party['id'] ?? null,
@@ -62,7 +74,8 @@ function indexSpeechWordEvents($speechData, $parliamentCode = 'de') {
                         'position_in_speech' => $position,
                         'time_start' => $timeStart,
                         'time_end' => $timeEnd,
-                        'sentence_context' => truncateContext($sentenceText, 200)
+                        'sentence_id' => $sentenceId,
+                        'position_in_sentence' => $positionInSentence
                     ];
                     
                     $bulkData[] = [
@@ -74,6 +87,7 @@ function indexSpeechWordEvents($speechData, $parliamentCode = 'de') {
                     $bulkData[] = $wordEvent;
                     
                     $position++;
+                    $positionInSentence++;
                     
                     // Bulk index in batches to avoid memory issues
                     if (count($bulkData) >= 2000) { // 1000 documents
@@ -86,6 +100,8 @@ function indexSpeechWordEvents($speechData, $parliamentCode = 'de') {
                         }
                     }
                 }
+                
+                $sentenceIndex++;
             }
         }
     }

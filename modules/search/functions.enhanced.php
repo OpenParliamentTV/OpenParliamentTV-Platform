@@ -188,7 +188,7 @@ function findWordsWithTiming($word, $speechId = null, $parliamentCode = 'de') {
     $indexName = 'optv_word_events_' . strtolower($parliamentCode);
     
     $mustClauses = [
-        ['term' => ['word_normalized' => strtolower($word)]]
+        ['term' => ['word.keyword' => strtolower($word)]]
     ];
     
     if ($speechId) {

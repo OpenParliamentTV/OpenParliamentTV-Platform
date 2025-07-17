@@ -63,7 +63,7 @@ function tokenizeWords($text) {
 }
 
 /**
- * Normalize a word (basic cleaning)
+ * Normalize a word (basic cleaning only - no stemming)
  */
 function normalizeWord($word) {
     // Convert to lowercase and trim
@@ -78,9 +78,75 @@ function normalizeWord($word) {
     // Remove leading/trailing apostrophes (but keep internal ones for contractions)
     $normalized = trim($normalized, '\'');
     
-    // TODO: Add stemming here if needed (requires external library)
+    // Filter out words shorter than 3 characters (reduces noise)
+    if (strlen($normalized) < 3) {
+        return '';
+    }
     
+    // Return normalized word without stemming
+    // OpenSearch can handle stemming at search time with better quality
     return $normalized;
+}
+
+/**
+ * Apply stemming using OpenSearch analyzer
+ */
+function applyStemming($word) {
+    static $ESClient = null;
+    static $stemmingAvailable = null;
+    
+    // Initialize OpenSearch client once
+    if ($ESClient === null) {
+        $ESClient = getApiOpenSearchClient();
+        if (is_array($ESClient) && isset($ESClient["errors"])) {
+            // If OpenSearch is not available, return original word
+            $stemmingAvailable = false;
+            error_log("OpenSearch client not available for stemming, falling back to original words");
+            return $word;
+        }
+    }
+    
+    // If stemming was determined to be unavailable, don't retry
+    if ($stemmingAvailable === false) {
+        return $word;
+    }
+    
+    try {
+        // Use the German stemmer analyzer we configured
+        $response = $ESClient->indices()->analyze([
+            'body' => [
+                'tokenizer' => 'standard',
+                'filter' => [
+                    'lowercase',
+                    [
+                        'type' => 'stemmer',
+                        'name' => 'light_german'
+                    ]
+                ],
+                'text' => $word
+            ]
+        ]);
+        
+        if (isset($response['tokens'][0]['token'])) {
+            $stemmingAvailable = true;
+            $stemmed = $response['tokens'][0]['token'];
+            // Log first few successful stems to confirm it's working
+            static $loggedCount = 0;
+            if ($loggedCount < 5) {
+                error_log("Stemming working: '$word' -> '$stemmed'");
+                $loggedCount++;
+            }
+            return $stemmed;
+        } else {
+            error_log("Stemming response missing tokens for word '$word': " . json_encode($response));
+        }
+    } catch (Exception $e) {
+        // If stemming fails, log the error and return original word
+        error_log("Stemming failed for word '$word': " . $e->getMessage());
+        $stemmingAvailable = false;
+    }
+    
+    return $word;
 }
 
 /**

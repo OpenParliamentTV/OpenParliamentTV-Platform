@@ -179,6 +179,7 @@ function getSearchIndexParameterBody() {
  * @param array $api_request Expected keys: "parliament", "items" (array of full media item API responses), "initIndex" (boolean, optional)
  * @return array API response
  */
+
 function searchIndexUpdate($api_request) {
     global $config;
 

@@ -17,8 +17,13 @@ function createWordEventsIndex($parliamentCode = 'de') {
     $mapping = [
         'mappings' => [
             'properties' => [
-                'word' => ['type' => 'keyword'],
-                'word_normalized' => ['type' => 'keyword'],
+                'word' => [
+                    'type' => 'text',
+                    'analyzer' => 'german',
+                    'fields' => [
+                        'keyword' => ['type' => 'keyword']
+                    ]
+                ],
                 'speech_id' => ['type' => 'keyword'],
                 'speaker_id' => ['type' => 'keyword'],
                 'party_id' => ['type' => 'keyword'],
@@ -27,19 +32,30 @@ function createWordEventsIndex($parliamentCode = 'de') {
                 'position_in_speech' => ['type' => 'integer'],
                 'time_start' => ['type' => 'float'],
                 'time_end' => ['type' => 'float'],
-                'sentence_context' => [
-                    'type' => 'text',
-                    'fields' => [
-                        'keyword' => ['type' => 'keyword', 'ignore_above' => 256]
-                    ]
-                ]
+                'sentence_id' => ['type' => 'keyword'],
+                'position_in_sentence' => ['type' => 'integer']
             ]
         ],
         'settings' => [
             'number_of_shards' => 2,
             'number_of_replicas' => 0,
             'index.mapping.total_fields.limit' => 2000,
-            'refresh_interval' => '30s'
+            'refresh_interval' => '30s',
+            'codec' => 'best_compression',
+            'analysis' => [
+                'analyzer' => [
+                    'german_word_analyzer' => [
+                        'tokenizer' => 'standard',
+                        'filter' => ['lowercase', 'german_stemmer']
+                    ]
+                ],
+                'filter' => [
+                    'german_stemmer' => [
+                        'type' => 'stemmer',
+                        'name' => 'light_german'
+                    ]
+                ]
+            ]
         ]
     ];
     
@@ -375,8 +391,7 @@ function extractWordEventsFromSpeech($speechId, $speechData) {
                         
                         $wordEvents[] = [
                             'id' => $speechId . '_' . $position,
-                            'word' => $word,
-                            'word_normalized' => $normalizedWord,
+                            'word' => $normalizedWord,
                             'speech_id' => $speechId,
                             'speaker_id' => $speakerId,
                             'party_id' => $party['id'] ?? null,
