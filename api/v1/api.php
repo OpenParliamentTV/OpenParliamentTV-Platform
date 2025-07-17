@@ -126,6 +126,9 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "agendaItem": 
                     $item = agendaItemAutocomplete($api_request["q"]);
                     return createApiResponse($item);
+                case "entities": 
+                    $item = entitiesAutocomplete($api_request["q"]);
+                    return createApiResponse($item);
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
