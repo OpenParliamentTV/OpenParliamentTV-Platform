@@ -514,17 +514,23 @@ function renderTextSuggestions(inputValue, data) {
 }
 
 function renderEntitiesSuggestions(inputValue, data) {
-	var maxSuggestions = 8;
+	var maxSuggestions = 6;
 
 	if (data.length == 0) {
 		$('.searchSuggestionContainer #suggestionContainerEntities').append('<div class="my-3">'+ localizedLabels.noSuggestionsFound +'</div>');
 	} else {
 		for (var i = 0; i < data.length; i++) {
 			var entityData = data[i];
-			var suggestionItemIcon = '<span class="icon-type-'+ entityData.type +' me-2"></span>';
+			var suggestionItemIcon = '<div class="flex-shrink-0 me-2" style="width: 40px; height: 40px;"><div class="rounded-circle">';
+			if (entityData.thumbnailURI) {
+				suggestionItemIcon += '<img src="'+ entityData.thumbnailURI +'" alt="..." />';
+			} else {
+				suggestionItemIcon += '<span class="icon-type-'+ entityData.type +'" style="position: absolute;top: 48%;left: 50%;font-size: 18px;transform: translateX(-50%) translateY(-50%);"></span>';
+			}
+			suggestionItemIcon += '</div></div>';
 			var suggestionItemLabel = '<span class="suggestionItemLabel">'+ entityData.label +'</span>';
 			var suggestionItemSecondary = '';
-			var suggestionItemClass = 'suggestionItem d-flex align-items-start';
+			var suggestionItemClass = 'suggestionItem entityPreview d-flex py-1';
 			var suggestionItemAttributes = 'data-type="'+ entityData.type +'" data-item-id="'+ entityData.id +'"';
 			
 			// Handle person-specific data (faction/party indicator)
@@ -537,10 +543,18 @@ function renderEntitiesSuggestions(inputValue, data) {
 				suggestionItemSecondary += '<div class="small text-muted">'+ entityData.labelAlternative +'</div>';
 			}
 			
+			// Add link icon (aligned to the right)
+			var suggestionItemLinkIcon = '<a href="'+ config.dir.root +'/'+ entityData.type +'/'+ entityData.id +'" target="_blank" class="queryLinkIcon icon-link-ext ms-2 flex-shrink-0 d-flex align-items-center suggestion-link-icon" title="Go to '+ entityData.type +' details"></a>';
+			
 			var suggestionItemContent = '<div class="flex-grow-1">'+ suggestionItemLabel + suggestionItemSecondary +'</div>';
-			var suggestionItem = $('<div class="'+ suggestionItemClass +'" '+ suggestionItemAttributes +'>'+ suggestionItemIcon + suggestionItemContent +'</div>');
+			var suggestionItem = $('<div class="'+ suggestionItemClass +'" '+ suggestionItemAttributes +'>'+ suggestionItemIcon + suggestionItemContent + suggestionItemLinkIcon +'</div>');
 
 			suggestionItem.click(function(evt) {
+				// Don't trigger suggestion selection if link icon was clicked
+				if ($(evt.target).hasClass('queryLinkIcon') || $(evt.target).closest('.queryLinkIcon').length > 0) {
+					return;
+				}
+				
 				var textValue = $(this).find('.suggestionItemLabel').text(),
 					secondaryText = $(this).find('.partyIndicator').text(),
 					factionID = $(this).find('.partyIndicator').attr('data-faction'),

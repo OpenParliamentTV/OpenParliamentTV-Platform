@@ -1495,6 +1495,33 @@ body.fixed .searchContainer {
     white-space: nowrap;
 }
 
+.searchSuggestionContainer .suggestionItem .suggestion-link-icon {
+    opacity: 0.7;
+    height: 100%;
+    min-height: 40px;
+}
+
+.searchSuggestionContainer .suggestionItem .suggestion-link-icon:hover {
+    opacity: 1;
+}
+
+.searchSuggestionContainer .suggestionItem.entityPreview {
+    align-items: center;
+}
+
+.searchSuggestionContainer .suggestionItem .flex-grow-1 {
+    min-width: 0;
+}
+
+.searchSuggestionContainer .suggestionItem .text-muted {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .searchSuggestionContainer .suggestionItem em {
     font-weight: normal;
     font-style: normal;
@@ -1759,9 +1786,6 @@ table .rounded-circle {
     overflow: hidden;
     padding-bottom: 100%;
     background-color: #f9fafb;
-}
-
-table .rounded-circle {
     border: 1px solid var(--border-color);
 }
 

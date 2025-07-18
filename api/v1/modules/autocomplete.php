@@ -66,7 +66,7 @@ function entitiesAutocomplete($query) {
     try {
         global $config;
         $results = [];
-        $maxResults = 8;
+        $maxResults = 6;
         
         // Get database connection
         $db = getApiDatabaseConnection('platform');
@@ -115,8 +115,8 @@ function entitiesAutocomplete($query) {
             $words = explode(' ', $text);
             $wordCount = count($words);
             
-            // If 10 words or less, return the whole text highlighted
-            if ($wordCount <= 10) {
+            // If 7 words or less, return the whole text highlighted
+            if ($wordCount <= 7) {
                 return $highlightText($text, $query);
             }
             
@@ -132,15 +132,27 @@ function entitiesAutocomplete($query) {
                 }
             }
             
-            // If no hit found in any word, fallback to first 10 words
+            // If no hit found in any word, fallback to first 7 words
             if ($hitWordIndex === -1) {
-                $excerpt = implode(' ', array_slice($words, 0, 10));
+                $excerpt = implode(' ', array_slice($words, 0, 7));
                 return $excerpt . '...';
             }
             
-            // Calculate excerpt window (5 words before and after the hit)
-            $startIndex = max(0, $hitWordIndex - 5);
-            $endIndex = min($wordCount - 1, $hitWordIndex + 5);
+            // Calculate excerpt window (maximum 7 words total, centered around the hit)
+            $maxWords = 7;
+            $wordsBeforeHit = min(3, $hitWordIndex);
+            $wordsAfterHit = min(3, $wordCount - 1 - $hitWordIndex);
+            
+            // Adjust to use available space if one side has fewer words
+            if ($wordsBeforeHit < 3) {
+                $wordsAfterHit = min($wordsAfterHit, $maxWords - 1 - $wordsBeforeHit);
+            }
+            if ($wordsAfterHit < 3) {
+                $wordsBeforeHit = min($wordsBeforeHit, $maxWords - 1 - $wordsAfterHit);
+            }
+            
+            $startIndex = max(0, $hitWordIndex - $wordsBeforeHit);
+            $endIndex = min($wordCount - 1, $hitWordIndex + $wordsAfterHit);
             
             // Extract the excerpt
             $excerptWords = array_slice($words, $startIndex, $endIndex - $startIndex + 1);
@@ -252,7 +264,7 @@ function entitiesAutocomplete($query) {
         // 1. People with type memberOfParliament
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
-            $peopleMP = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType = 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(p.PersonLabelAlternative) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
+            $peopleMP = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, p.PersonThumbnailURI, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType = 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(p.PersonLabelAlternative) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
                 $config["platform"]["sql"]["tbl"]["Person"],
                 $config["platform"]["sql"]["tbl"]["Organisation"],
                 "%".$query."%",
@@ -276,7 +288,8 @@ function entitiesAutocomplete($query) {
                         'id' => $person['PersonID'],
                         'type' => 'person',
                         'label' => $highlightText($person['PersonLabel'], $query),
-                        'labelAlternative' => $alternativeLabel
+                        'labelAlternative' => $alternativeLabel,
+                        'thumbnailURI' => $person['PersonThumbnailURI']
                     ];
                     
                     // Add faction information if available
@@ -295,7 +308,7 @@ function entitiesAutocomplete($query) {
         // 2. Other people (all without type memberOfParliament)
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
-            $peopleOther = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType != 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(p.PersonLabelAlternative) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
+            $peopleOther = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, p.PersonThumbnailURI, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType != 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(p.PersonLabelAlternative) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
                 $config["platform"]["sql"]["tbl"]["Person"],
                 $config["platform"]["sql"]["tbl"]["Organisation"],
                 "%".$query."%",
@@ -319,7 +332,8 @@ function entitiesAutocomplete($query) {
                         'id' => $person['PersonID'],
                         'type' => 'person',
                         'label' => $highlightText($person['PersonLabel'], $query),
-                        'labelAlternative' => $alternativeLabel
+                        'labelAlternative' => $alternativeLabel,
+                        'thumbnailURI' => $person['PersonThumbnailURI']
                     ];
                     
                     // Add faction information if available
@@ -338,7 +352,7 @@ function entitiesAutocomplete($query) {
         // 3. Organisations
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
-            $organisations = $db->getAll("SELECT OrganisationID, OrganisationLabel, OrganisationLabelAlternative FROM ?n WHERE LOWER(OrganisationLabel) LIKE LOWER(?s) OR LOWER(OrganisationLabelAlternative) LIKE LOWER(?s) ORDER BY OrganisationLabel ASC LIMIT ?i",
+            $organisations = $db->getAll("SELECT OrganisationID, OrganisationLabel, OrganisationLabelAlternative, OrganisationThumbnailURI FROM ?n WHERE LOWER(OrganisationLabel) LIKE LOWER(?s) OR LOWER(OrganisationLabelAlternative) LIKE LOWER(?s) ORDER BY OrganisationLabel ASC LIMIT ?i",
                 $config["platform"]["sql"]["tbl"]["Organisation"],
                 "%".$query."%",
                 "%".$query."%",
@@ -356,7 +370,8 @@ function entitiesAutocomplete($query) {
                         'id' => $org['OrganisationID'],
                         'type' => 'organisation',
                         'label' => $highlightText($org['OrganisationLabel'], $query),
-                        'labelAlternative' => $alternativeLabel
+                        'labelAlternative' => $alternativeLabel,
+                        'thumbnailURI' => $org['OrganisationThumbnailURI']
                     ];
                 }
             }
@@ -365,7 +380,7 @@ function entitiesAutocomplete($query) {
         // 4. Terms
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
-            $terms = $db->getAll("SELECT TermID, TermLabel, TermLabelAlternative FROM ?n WHERE LOWER(TermLabel) LIKE LOWER(?s) OR LOWER(TermLabelAlternative) LIKE LOWER(?s) ORDER BY TermLabel ASC LIMIT ?i",
+            $terms = $db->getAll("SELECT TermID, TermLabel, TermLabelAlternative, TermThumbnailURI FROM ?n WHERE LOWER(TermLabel) LIKE LOWER(?s) OR LOWER(TermLabelAlternative) LIKE LOWER(?s) ORDER BY TermLabel ASC LIMIT ?i",
                 $config["platform"]["sql"]["tbl"]["Term"],
                 "%".$query."%",
                 "%".$query."%",
@@ -383,7 +398,8 @@ function entitiesAutocomplete($query) {
                         'id' => $term['TermID'],
                         'type' => 'term',
                         'label' => $highlightText($term['TermLabel'], $query),
-                        'labelAlternative' => $alternativeLabel
+                        'labelAlternative' => $alternativeLabel,
+                        'thumbnailURI' => $term['TermThumbnailURI']
                     ];
                 }
             }
@@ -392,7 +408,7 @@ function entitiesAutocomplete($query) {
         // 5. Documents - prioritize legalDocument type first
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
-            $documents = $db->getAll("SELECT DocumentID, DocumentLabel, DocumentLabelAlternative, DocumentType FROM ?n WHERE LOWER(DocumentLabel) LIKE LOWER(?s) OR LOWER(DocumentLabelAlternative) LIKE LOWER(?s) ORDER BY CASE WHEN DocumentType = 'legalDocument' THEN 0 ELSE 1 END, DocumentLabel ASC LIMIT ?i",
+            $documents = $db->getAll("SELECT DocumentID, DocumentLabel, DocumentLabelAlternative, DocumentType, DocumentThumbnailURI FROM ?n WHERE LOWER(DocumentLabel) LIKE LOWER(?s) OR LOWER(DocumentLabelAlternative) LIKE LOWER(?s) ORDER BY CASE WHEN DocumentType = 'legalDocument' THEN 0 ELSE 1 END, DocumentLabel ASC LIMIT ?i",
                 $config["platform"]["sql"]["tbl"]["Document"],
                 "%".$query."%",
                 "%".$query."%",
@@ -410,7 +426,8 @@ function entitiesAutocomplete($query) {
                         'id' => $doc['DocumentID'],
                         'type' => 'document',
                         'label' => $highlightText($doc['DocumentLabel'], $query),
-                        'labelAlternative' => $alternativeLabel
+                        'labelAlternative' => $alternativeLabel,
+                        'thumbnailURI' => $doc['DocumentThumbnailURI']
                     ];
                 }
             }
