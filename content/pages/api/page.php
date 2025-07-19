@@ -18,19 +18,19 @@ include_once(__DIR__ . '/../../header.php');
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 			<h2>API <?= L::documentation(); ?></h2>
-			<div class="alert bg-white"><?= L::messageOpenData(); ?>. Es gibt im Moment weder ein Limit für Anfragen noch benötigst du einen API Key. Aber bitte melde dich bei uns wenn du vor hast, unser gesamtes Datenset zu kopieren. Anstatt Millionen von Anfragen an unsere API zu senden, kannst du einfach einen SQL Dump von uns bekommen.</div>
+			<div class="alert bg-white"><?= L::messageOpenData(); ?>. There is currently no limit on requests nor do you need an api key. But please get in touch if you plan to copy our entire dataset. Instead of making millions of api requests you can just get an SQL dump from us.</div>
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
-					<a class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" role="tab" aria-controls="search" aria-selected="true"><span class="nav-item-label">Suche</span></a>
+					<a class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" role="tab" aria-controls="search" aria-selected="true"><span class="nav-item-label"><?= L::search(); ?></span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="entities-tab" data-bs-toggle="tab" data-bs-target="#entities" role="tab" aria-controls="entities" aria-selected="true"><span class="nav-item-label">Entitäten</span></a>
+					<a class="nav-link" id="entities-tab" data-bs-toggle="tab" data-bs-target="#entities" role="tab" aria-controls="entities" aria-selected="true"><span class="nav-item-label"><?= L::entities(); ?></span></a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="other-tab" data-bs-toggle="tab" data-bs-target="#other" role="tab" aria-controls="other" aria-selected="true"><span class="nav-item-label">Other Endpoints</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" role="tab" aria-controls="general" aria-selected="true"><span class="nav-item-label">Spezifikation v1.0</span></a>
+					<a class="nav-link" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" role="tab" aria-controls="general" aria-selected="true"><span class="nav-item-label">Specification v1.0</span></a>
 				</li>
 			</ul>
 			<div class="tab-content">
@@ -57,8 +57,8 @@ include_once(__DIR__ . '/../../header.php');
 							<h3>Endpoint</h3>
 							<code>/api/v1/search/media?</code>
 							<hr>
-							<h3><?= L::example(); ?>-Abfrage</h3>
-							<div>(<?= L::speeches(); ?> der SPD Fraktion von 11.04.2018 bis heute, die den Text "Rente" enthalten)</div>
+							<h3><?= L::example(); ?> Request</h3>
+							<div>(<?= L::speeches(); ?> containing the query "Rente" by Faction SPD from 11.04.2018 until today)</div>
 							<div class="apiExampleContainer">
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
@@ -68,22 +68,22 @@ include_once(__DIR__ . '/../../header.php');
 								<div class="apiResultContainer"></div>
 							</div>
 							<hr>
-							<h3>Parameter</h3>
+							<h3>Parameters</h3>
 							<div class="table-responsive-lg">
 								<table class="table table-sm table-striped">
 									<thead>
 										<tr>
 											<th>Parameter</th>
-											<th>Validierung</th>
-											<th>Übereinstimmung</th>
-											<th>Typ</th>
+											<th>Validation</th>
+											<th>Matches</th>
+											<th>Type</th>
 										</tr>
 									</thead>
 									<tbody>
 										<tr>
 											<td>q</td>
 											<td>min 3 chars</td>
-											<td>Volltextsuche</td>
+											<td>Full Text Search</td>
 											<td>String</td>
 										</tr>
 										<tr>
@@ -214,26 +214,26 @@ include_once(__DIR__ . '/../../header.php');
 							<h3>Endpoint</h3>
 							<code>/api/v1/search/people?</code>
 							<hr>
-							<h3><?= L::example(); ?>-Abfrage</h3>
-							<div>(<?= L::personPlural(); ?> aus der Partei "SPD" mit dem Namen "Michael")</div>
+							<h3><?= L::example(); ?> Request</h3>
+							<div>(<?= L::personPlural(); ?> with name "Michael" in the Party "SPD")</div>
 							<div class="apiExampleContainer">
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
-								<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/search/people?name=Michael&party=SPD" readonly>
+									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/search/people?name=Michael&party=SPD" readonly>
 									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
 								</div>
 								<div class="apiResultContainer"></div>
 							</div>
 							<hr>
-							<h3>Parameter</h3>
+							<h3>Parameters</h3>
 							<div class="table-responsive-lg">
 								<table class="table table-sm table-striped">
 									<thead>
 										<tr>
 											<th>Parameter</th>
-											<th>Validierung</th>
-											<th>Übereinstimmung</th>
-											<th>Typ</th>
+											<th>Validation</th>
+											<th>Matches</th>
+											<th>Type</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -308,30 +308,30 @@ include_once(__DIR__ . '/../../header.php');
 							</div>
 						</div>
 						<div class="tab-pane fade bg-white" id="organisations" role="tabpanel" aria-labelledby="organisations-tab">
-							<div class="alert alert-info">Bitte beachte dass im Open Parliament TV Datenmodell <b>Parteien</b> und <b>Fraktionen</b> genauso wie <b>Unternehmen</b> oder <b>NGOs</b> "Organisationen" sind. Diese können mit dem "type" Parameter <b>gefilteredt</b> werden (z.B. type=faction oder type=party).</div>
+							<div class="alert alert-info">Please note that in the Open Parliament TV data model <b>parties</b> and <b>factions</b> as well as other types of bodies like <b>companies</b> or <b>NGOs</b> are all "organisations". They can be <b>filtered</b> via the "type" parameter (eg. type=faction or type=party).</div>
 							<hr>
 							<h3>Endpoint</h3>
 							<code>/api/v1/search/organisations?</code>
 							<hr>
-							<h3><?= L::example(); ?>-Abfrage</h3>
-							<div>(<?= L::organisations(); ?> mit dem Namen "Linke")</div>
+							<h3><?= L::example(); ?> Request</h3>
+							<div>(<?= L::organisations(); ?> with name "Linke")</div>
 							<div class="apiExampleContainer">
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
-								<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/search/organisations?name=Linke" readonly>
+									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/search/organisations?name=Linke" readonly>
 									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
 								</div>
 								<div class="apiResultContainer"></div>
 							</div>
 							<hr>
-							<h3>Parameter</h3>
+							<h3>Parameters</h3>
 							<table class="table table-sm table-striped">
 								<thead>
 									<tr>
 										<th>Parameter</th>
-										<th>Validierung</th>
-										<th>Übereinstimmung</th>
-										<th>Typ</th>
+										<th>Validation</th>
+										<th>Matches</th>
+										<th>Type</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -352,30 +352,30 @@ include_once(__DIR__ . '/../../header.php');
 							<hr>
 						</div>
 						<div class="tab-pane fade bg-white" id="documents" role="tabpanel" aria-labelledby="documents-tab">
-							<div class="alert alert-info">Bitte beachte dass Dokumente sowohl Drucksachen als auch Gesetzestexte oder potentiell auch andere Typen von Dokumenten sein können, welche sich manchmal auf ein Parlament beziehen, manchmal allgemein sind, manchmal eine Wikidata ID haben, manchmal nicht. Deswegen <b>basieren die Dokument IDs nicht auf der Drucksachen-Nummer</b> oder der Wikidata ID. Um <b>Dokumente eines bestimmten Typs zu filtern</b>, verwende den "type" Parameter (z.B. type=officialDocument oder type=legalDocument).</div>
+							<div class="alert alert-info">Please note that documents can be official documents ("Drucksachen") as well as law texts and potentially other types of documents, sometimes applying to a specific parliament, sometimes generic, sometimes having a Wikidata ID, sometimes not. This is why the <b>document ID is not based on the official document number</b> or the Wikidata ID but an internal incremental ID. To <b>filter documents of a certain type</b>, use the "type" parameter (eg. type=officialDocument or type=legalDocument).</div>
 							<hr>
 							<h3>Endpoint</h3>
 							<code>/api/v1/search/documents?</code>
 							<hr>
-							<h3><?= L::example(); ?>-Abfrage</h3>
-							<div>(<?= L::documents(); ?> mit dem Label "19/5412", gibt sowohl die "Drucksache 19/5412" zurück als auch Dokumente in denen "19/5412" in einem der Titel oder dem Abstract vorkommt)</div>
+							<h3><?= L::example(); ?> Request</h3>
+							<div>(<?= L::documents(); ?> with label "19/5412", returns "Drucksache 19/5412" as well as documents where "19/5412" is mentioned in the titles or abstact)</div>
 							<div class="apiExampleContainer">
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
-								<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/search/documents?label=19/5412" readonly>
+									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/search/documents?label=19/5412" readonly>
 									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
 								</div>
 								<div class="apiResultContainer"></div>
 							</div>
 							<hr>
-							<h3>Parameter</h3>
+							<h3>Parameters</h3>
 							<table class="table table-sm table-striped">
 								<thead>
 									<tr>
 										<th>Parameter</th>
-										<th>Validierung</th>
-										<th>Übereinstimmung</th>
-										<th>Typ</th>
+										<th>Validation</th>
+										<th>Matches</th>
+										<th>Type</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -405,8 +405,8 @@ include_once(__DIR__ . '/../../header.php');
 							<h3>Endpoint</h3>
 							<code>/api/v1/search/terms?</code>
 							<hr>
-							<h3><?= L::example(); ?>-Abfrage</h3>
-							<div>(<?= L::terms(); ?> mit dem Label "digital")</div>
+							<h3><?= L::example(); ?> Request</h3>
+							<div>(<?= L::terms(); ?> with label "digital")</div>
 							<div class="apiExampleContainer">
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
@@ -416,14 +416,14 @@ include_once(__DIR__ . '/../../header.php');
 								<div class="apiResultContainer"></div>
 							</div>
 							<hr>
-							<h3>Parameter</h3>
+							<h3>Parameters</h3>
 							<table class="table table-sm table-striped">
 								<thead>
 									<tr>
 										<th>Parameter</th>
-										<th>Validierung</th>
-										<th>Übereinstimmung</th>
-										<th>Typ</th>
+										<th>Validation</th>
+										<th>Matches</th>
+										<th>Type</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -452,26 +452,26 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 				</div>
 				<div class="tab-pane fade bg-white" id="entities" role="tabpanel" aria-labelledby="entities-tab">
-					<div class="alert alert-info">Entitäten URIs <b>basieren auf der entsprechenden Plattform-URL</b> und können gebildet werden, indem <b>/api/v1</b> vor der Entität eingefügt wird. <br><br>
+					<div class="alert alert-info">Entity URIs are <b>based on the respective platform URL</b> and can be formed by simply adding <b>/api/v1</b> before the entity part. <br><br>
 					  <b><?= L::example(); ?></b>:<br>
 					  <a target="_blank" href="<?= $config["dir"]["root"] ?>/person/Q567"><?= $config["dir"]["root"] ?>/person/Q567</a><br>
 					  <a target="_blank" href="<?= $config["dir"]["root"] ?>/api/v1/person/Q567"><?= $config["dir"]["root"] ?>/api/v1/person/Q567</a></div>
 					<hr>
 					<h3><span class="icon-hypervideo me-1"></span> GET <?= L::speech(); ?></h3>
-					<p class="mb-2"><b>Redebeitrag IDs</b> enthalten Informationen über das Parlament, die Wahlperiode und die Sitzung. Du solltest aber nicht versuchen, diese IDs zu erraten (z.B. basierend auf der Reihenfolge der Reden). Dies mag in manchen Fällen funktionieren, in vielen Fällen aber nicht. </p>
+					<p class="mb-2"><b>Media IDs</b> contain info about the parliament, electoral period and session. You should however not try to guess those IDs (eg. based on the order of speeches). This might work in some cases, it will not in many others.</p>
 					<div><b>Endpoint</b>: <code>/api/v1/media/ID</code></div>
 					<div class="mb-2"><b><?= L::example(); ?></b>: <?= L::speech(); ?></div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
-						<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003" readonly>
+							<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003" readonly>
 							<button class="apiRequestButton btn btn-sm"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
 					<hr>
 					<h3><span class="icon-type-person"></span> GET <?= L::personSingular(); ?></h3>
-					<p class="mb-2"><b>Person IDs</b> sind <b>immer eine Wikidata ID</b>.</p>
+					<p class="mb-2"><b>Person IDs</b> are <b>always a Wikidata ID</b>.</p>
 					<div><b>Endpoint</b>: <code>/api/v1/person/ID</code></div>
 					<div class="mb-2"><b><?= L::example(); ?></b>: Angela Merkel (Wikidata ID Q567)</div>
 					<div class="apiExampleContainer">
@@ -484,7 +484,7 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 					<hr>
 					<h3><span class="icon-type-organisation"></span> GET <?= L::organisation(); ?></h3>
-					<p class="mb-2"><b><?= L::organisation(); ?> IDs</b> sind <b>immer eine Wikidata ID</b>.</p>
+					<p class="mb-2"><b><?= L::organisation(); ?> IDs</b> are <b>always a Wikidata ID</b>.</p>
 					<div><b>Endpoint</b>: <code>/api/v1/organisation/ID</code></div>
 					<div class="mb-2"><b><?= L::example(); ?></b>: <?= L::faction(); ?> BÜNDNIS 90/DIE GRÜNEN (Wikidata ID Q1007353)</div>
 					<div class="apiExampleContainer">
@@ -497,34 +497,34 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 					<hr>
 					<h3><span class="icon-type-document"></span> GET <?= L::document(); ?></h3>
-					<p class="mb-2"><b><?= L::document(); ?> IDs</b> sind interne inkrementelle IDs und enthalten keinerlei Referenz auf Drucksachen-Nummern (wie "Drucksache 19/1234"). Der Hintergrund ist, dass Dokumente sowohl Drucksachen als auch Gesetzestexte oder potentiell auch andere Typen von Dokumenten sein können, welche sich manchmal auf ein Parlament beziehen, manchmal allgemein sind, manchmal eine Wikidata ID haben, manchmal nicht. Um Dokumente basierend auf der Drucksachen-Nummer zu suchen, verwende bitte die Dokumenten-Suche. </p>
+					<p class="mb-2"><b><?= L::document(); ?> IDs</b> are internal incremental IDs and contain no reference to the document numbers (like "Drucksache 19/1234"). The rationale for this is that documents can be official documents as well as law texts and potentially other types of documents, sometimes applying to a specific parliament, sometimes generic, sometimes having a Wikidata ID, sometimes not. If you want to get a document by its official document number, you can use the document search. </p>
 					<div><b>Endpoint</b>: <code>/api/v1/document/ID</code></div>
 					<div class="mb-2"><b><?= L::example(); ?></b>: Drucksache 19/1184</div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
-						<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/document/14" readonly>
+							<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/document/14" readonly>
 							<button class="apiRequestButton btn btn-sm"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
 					<hr>
 					<h3><span class="icon-type-term"></span> GET <?= L::term(); ?></h3>
-					<p class="mb-2"><b><?= L::term(); ?> IDs</b> sind <b>immer eine Wikidata ID</b>.</p>
+					<p class="mb-2"><b><?= L::term(); ?> IDs</b> are <b>always a Wikidata ID</b>.</p>
 					<div><b>Endpoint</b>: <code>/api/v1/term/ID</code></div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
-						<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/term/Q4394526" readonly>
+							<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/term/Q4394526" readonly>
 							<button class="apiRequestButton btn btn-sm"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
 						</div>
 						<div class="apiResultContainer"></div>
 					</div>
 					<hr>
 					<h3><span class="icon-check"></span> GET <?= L::electoralPeriod(); ?></h3>
-					<p class="mb-2"><b><?= L::electoralPeriod(); ?> IDs</b> können zuverlässig über das Parlaments-Kürzel und die ensprechende Nummer referenziert werden. </p>
+					<p class="mb-2"><b><?= L::electoralPeriod(); ?> IDs</b> can safely be referenced by the parliament shortcode plus the respective number. </p>
 					<div><b>Endpoint</b>: <code>/api/v1/electoralPeriod/ID</code></div>
-					<div class="mb-2"><b><?= L::example(); ?></b>: <?= L::electoralPeriod(); ?> 19 des Deutschen Bundestages (ID: "DE-019")</div>
+					<div class="mb-2"><b><?= L::example(); ?></b>: <?= L::electoralPeriod(); ?> 19 of the German Bundestag (ID: "DE-019")</div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
@@ -535,9 +535,9 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 					<hr>
 					<h3><span class="icon-group"></span> GET <?= L::session(); ?></h3>
-					<p class="mb-2"><b><?= L::session(); ?> IDs</b> können zuverlässig über das Parlaments-Kürzel und den ensprechenden Nummern referenziert werden. </p>
+					<p class="mb-2"><b><?= L::session(); ?> IDs</b> can safely be referenced by the parliament shortcode plus the respective numbers. </p>
 					<div><b>Endpoint</b>: <code>/api/v1/session/ID</code></div>
-					<div class="mb-2"><b><?= L::example(); ?></b>: <?= L::session(); ?> 61 in <?= L::electoralPeriod(); ?> 19 des Deutschen Bundestages (ID: "DE-0190061")</div>
+					<div class="mb-2"><b><?= L::example(); ?></b>: <?= L::session(); ?> 61 in <?= L::electoralPeriod(); ?> 19 of the German Bundestag (ID: "DE-0190061")</div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
@@ -548,9 +548,9 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 					<hr>
 					<h3><span class="icon-list-numbered"></span> GET <?= L::agendaItem(); ?></h3>
-					<p class="mb-2"><b><?= L::agendaItem(); ?> IDs</b> bestehen aus dem Parlaments-Kürzel und einer inkrementellen ID. Du solltest jedoch nicht versuchen, diese IDs zu erraten (z.B. basierend auf der Reihenfolge der Tagesordnungspunkte). Dies mag in manchen Fällen funktionieren, in viele Fällen aber nicht. </p>
+					<p class="mb-2"><b><?= L::agendaItem(); ?> IDs</b> are built of the parliament shortcode and an incremental ID. You should not try to guess those IDs (eg. based on the order of agenda items). This might work in some cases, it will not in many others.</p>
 					<div><b>Endpoint</b>: <code>/api/v1/agendaItem/ID</code></div>
-					<div class="mb-2"><b><?= L::example(); ?></b>: <?= L::agendaItem(); ?> "Gesetzliche Rentenversicherung" in <?= L::session(); ?> 61 in <?= L::electoralPeriod(); ?> 19 des Deutschen Bundestages (ID: "DE-454")</div>
+					<div class="mb-2"><b><?= L::example(); ?></b>: <?= L::agendaItem(); ?> "Gesetzliche Rentenversicherung" in <?= L::session(); ?> 61 in <?= L::electoralPeriod(); ?> 19 of the German Bundestag (ID: "DE-454")</div>
 					<div class="apiExampleContainer">
 						<div class="input-group">
 							<span class="input-group-text">URI</span>
@@ -562,13 +562,11 @@ include_once(__DIR__ . '/../../header.php');
 				</div>
 				<div class="tab-pane fade bg-white" id="other" role="tabpanel" aria-labelledby="other-tab"></div>
 				<div class="tab-pane fade bg-white" id="general" role="tabpanel" aria-labelledby="general-tab">
-					<div class="alert alert-info">Die API Struktur basiert auf der <a href="https://jsonapi.org/format/">JSON:API Spezifikation</a>. Ob wir diesen Standard vollständig implementieren (auch für PATCH Anfragen / Daten-Updates) ist noch in der Diskussion. </div>
+					<div class="alert alert-info">The API structure is based on the <a href="https://jsonapi.org/format/">JSON:API Specification</a>. Whether or not we will fully implement the standard (also for PATCH requests / data updates) is to be discussed.</div>
 					<hr>
-					<h3>Pfade</h3>
+					<h3>Paths</h3>
 					<p><strong>API <?= L::documentation(); ?></strong><br><code>/api</code></p>
 					<p><strong>API Endpoint Base URL</strong><br><code>/api/v1</code></p>
-					<hr>
-					<div class="alert alert-info">Um widersprüchliche Versionen zu vermeiden existiert die Spezifikation nur auf Englisch. </div>
 					<hr>
 					<h3>API Responses</h3>
 					<p>Responses <strong>MUST</strong> include the following properties for any request (GET <strong>and</strong> POST):</p>

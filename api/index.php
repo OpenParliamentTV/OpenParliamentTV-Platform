@@ -49,6 +49,6 @@ require_once (__DIR__.'/v1/api.php');
 	<div class="mainLoadingIndicator">
 		<div class="workingSpinner" style="position: fixed; top: 50%;"></div>
 	</div>
-	<?php include_once(__DIR__ . '/../content/pages/api/page_'.$lang.'.php'); ?>
+	<?php include_once(__DIR__ . '/../content/pages/api/page.php'); ?>
 </body>
 </html>
