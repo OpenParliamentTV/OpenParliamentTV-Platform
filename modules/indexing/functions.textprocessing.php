@@ -34,9 +34,9 @@ function tokenizeWords($text) {
     // Remove HTML tags if any
     $text = strip_tags($text);
     
-    // Comprehensive list of punctuation and special characters to split on
-    // Using Unicode character classes and explicit character codes to avoid quote conflicts
-    $splitPattern = '/[\s\p{P}\p{S}\p{Z}]+/u';
+    // Split on whitespace, symbols, separators, and punctuation EXCEPT hyphens and slashes between alphanumeric characters
+    // This preserves hyphenated compound words like "Riester-Rente", "COVID-19" and slash combinations like "CDU/CSU"
+    $splitPattern = '/[\s\p{S}\p{Z}]|[\p{P}&&[^\/-]]|(?<![\p{L}\p{N}])[\/-]+|[\/-]+(?![\p{L}\p{N}])/u';
     
     $words = preg_split($splitPattern, strtolower(trim($text)), -1, PREG_SPLIT_NO_EMPTY);
     
@@ -45,11 +45,11 @@ function tokenizeWords($text) {
     foreach ($words as $word) {
         $word = trim($word);
         
-        // Remove any remaining punctuation from start/end using regex
-        $word = preg_replace('/^[\p{P}\p{S}\p{Z}]+|[\p{P}\p{S}\p{Z}]+$/u', '', $word);
+        // Remove punctuation from start/end but preserve hyphens, slashes, and apostrophes
+        $word = preg_replace('/^[\p{P}\p{S}\p{Z}&&[^\'\/-]]+|[\p{P}\p{S}\p{Z}&&[^\'\/-]]+$/u', '', $word);
         
-        // Keep only letters, including international characters and apostrophes in contractions
-        $word = preg_replace('/[^a-zäöüßàáâãåæçèéêëìíîïðñòóôõøùúûüýþÿā-žА-я\']/ui', '', $word);
+        // Keep only letters, numbers, international characters, apostrophes, hyphens, and slashes
+        $word = preg_replace('/[^a-zäöüßàáâãåæçèéêëìíîïðñòóôõøùúûüýþÿā-žА-я0-9\'\/-]/ui', '', $word);
         
         // Filter out words that are too short, purely numeric, or don't contain letters
         if (strlen($word) >= 2 && 
@@ -69,14 +69,14 @@ function normalizeWord($word) {
     // Convert to lowercase and trim
     $normalized = strtolower(trim($word));
     
-    // Remove punctuation from start/end using regex
-    $normalized = preg_replace('/^[\p{P}\p{S}\p{Z}]+|[\p{P}\p{S}\p{Z}]+$/u', '', $normalized);
+    // Remove punctuation from start/end but preserve hyphens, slashes, and apostrophes
+    $normalized = preg_replace('/^[\p{P}\p{S}\p{Z}&&[^\'\/-]]+|[\p{P}\p{S}\p{Z}&&[^\'\/-]]+$/u', '', $normalized);
     
-    // Keep only letters (international) and apostrophes for contractions
-    $normalized = preg_replace('/[^a-zäöüßàáâãåæçèéêëìíîïðñòóôõøùúûüýþÿā-žА-я\']/ui', '', $normalized);
+    // Keep only letters (international), numbers, apostrophes for contractions, hyphens, and slashes
+    $normalized = preg_replace('/[^a-zäöüßàáâãåæçèéêëìíîïðñòóôõøùúûüýþÿā-žА-я0-9\'\/-]/ui', '', $normalized);
     
-    // Remove leading/trailing apostrophes (but keep internal ones for contractions)
-    $normalized = trim($normalized, '\'');
+    // Remove leading/trailing apostrophes, hyphens, and slashes (but keep internal ones)
+    $normalized = trim($normalized, '\'-/');
     
     // Filter out words shorter than 3 characters (reduces noise)
     if (strlen($normalized) < 3) {
