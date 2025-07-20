@@ -331,6 +331,25 @@ class i18n {
     }
 
     /**
+     * Sanitize language values to allow safe HTML while preventing XSS
+     */
+    protected function sanitizeLanguageValue($value) {
+        // Allowed HTML tags for language constants
+        $allowedTags = '<b><strong><i><em><br><ul><li><ol><p><span>';
+        
+        // Strip dangerous tags but keep allowed ones
+        $cleaned = strip_tags($value, $allowedTags);
+        
+        // Remove dangerous attributes and JavaScript
+        $cleaned = preg_replace('/(<[^>]*)\s+(on[a-z]+\s*=\s*["\'][^"\']*["\'])/i', '$1', $cleaned);
+        $cleaned = preg_replace('/(<[^>]*)\s+(javascript\s*:)/i', '$1', $cleaned);
+        $cleaned = preg_replace('/(<[^>]*)\s+(style\s*=\s*["\'][^"\']*["\'])/i', '$1', $cleaned);
+        $cleaned = preg_replace('/(<[^>]*)\s+(class\s*=\s*["\'][^"\']*["\'])/i', '$1', $cleaned);
+        
+        return $cleaned;
+    }
+
+    /**
      * Recursively compile an associative array to PHP code.
      */
     protected function compile($config, $prefix = '') {
@@ -343,7 +362,9 @@ class i18n {
                 if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/', $fullName)) {
                     throw new InvalidArgumentException(__CLASS__ . ": Cannot compile translation key " . $fullName . " because it is not a valid PHP identifier.");
                 }
-                $code .= 'const ' . $fullName . ' = \'' . str_replace('\'', '\\\'', $value) . "';\n";
+                // Sanitize the value before adding to cache
+                $sanitizedValue = $this->sanitizeLanguageValue($value);
+                $code .= 'const ' . $fullName . ' = \'' . str_replace('\'', '\\\'', $sanitizedValue) . "';\n";
             }
         }
         return $code;
