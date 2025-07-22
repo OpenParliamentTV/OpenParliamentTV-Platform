@@ -15,16 +15,16 @@ if (isset($entity["attributes"]["context"])
     $contextLabelIdentifier = lcfirst(implode('', array_map('ucfirst', explode('-', $entity["attributes"]["context"]))));
 }
 
-$secondaryLabel = $entity["attributes"]["labelAlternative"][0];
-if ($entity["type"] == "person") {
+$secondaryLabel = isset($entity["attributes"]["labelAlternative"][0]) ? $entity["attributes"]["labelAlternative"][0] : '';
+if ($entity["type"] == "person" && isset($entity["attributes"]["faction"]["label"])) {
     $secondaryLabel = $entity["attributes"]["faction"]["label"];
 }
 
 ?>
 <div class="entityPreview col" data-type="<?= hAttr($entity["type"]) ?>">
-    <div class="entityContainer partyIndicator" data-faction="<?= hAttr($entity["attributes"]["faction"]["id"]) ?>">
+    <div class="entityContainer partyIndicator" data-faction="<?= hAttr(isset($entity["attributes"]["faction"]["id"]) ? $entity["attributes"]["faction"]["id"] : '') ?>">
         <a href="<?= $config["dir"]["root"].'/'.hAttr($entity["type"]).'/'.hAttr($entity["id"]) ?>">
-            <?php if ($entity["attributes"]["type"] != "officialDocument") { ?>
+            <?php if (isset($entity["attributes"]["type"]) && $entity["attributes"]["type"] != "officialDocument") { ?>
                 <div class="thumbnailContainer">
                     <div class="rounded-circle">
                         <?php if ($entity["attributes"]["thumbnailURI"]) { ?>
@@ -47,12 +47,12 @@ if ($entity["type"] == "person") {
                 <?php if ($contextLabelIdentifier) { ?>
                     <div><span class="icon-megaphone"></span><?= L('context'.$contextLabelIdentifier) ?></div>
                 <?php } ?>
-                <?php if ($countFound > 0 && isset($annotation["attributes"]["context"]) && $annotation["attributes"]["context"] == "NER") { ?>
+                <?php if ($countFound > 0 && isset($annotation) && isset($annotation["attributes"]["context"]) && $annotation["attributes"]["context"] == "NER") { ?>
                     <div><?= L::found() ?>: <span class="badge rounded-pill"><?= h($countFound) ?></span></div>
                 <?php } ?>
             </div>
         </a>
-        <?php if ($entity["type"] == "document" && $entity["attributes"]["type"] == "officialDocument") { ?>
+        <?php if ($entity["type"] == "document" && isset($entity["attributes"]["type"]) && $entity["attributes"]["type"] == "officialDocument") { ?>
             <a class="entityButton" href="<?= hAttr($relationshipItem["attributes"]["sourceURI"]) ?>" target="_blank"><span class="btn btn-sm icon-file-pdf"></span></a>
         <?php } ?>
     </div>

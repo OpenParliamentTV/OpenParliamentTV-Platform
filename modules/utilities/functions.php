@@ -403,7 +403,7 @@ function filterAllowedSearchParams($data, $type, $caseSensitive = true) {
 
     // Only allow includeAll and public for admin users
     // TODO: check if this is the correct way to do this
-    if ($_SESSION["userdata"]["role"] != "admin") {
+    if (isset($_SESSION["userdata"]["role"]) && $_SESSION["userdata"]["role"] != "admin") {
         $allowedParams[$type] = array_diff($allowedParams[$type], ["includeAll", "public"]);
     }
 

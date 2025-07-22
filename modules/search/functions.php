@@ -281,7 +281,7 @@ function getSearchBody($request, $getAllResults) {
     }
     
     // Process request parameters and build filters
-    $shouldCount = processRequestParameters($request, $filter);
+    $shouldCount = processRequestParameters($request, $filter, $getAllResults);
     
     // Build the main query structure
     $query = buildQueryStructure($filter, $request, $shouldCount);
@@ -348,7 +348,7 @@ function applyDefaultFilters(&$filter) {
  * @param array &$filter The filter array to modify
  * @return int The count of "should" conditions
  */
-function processRequestParameters($request, &$filter) {
+function processRequestParameters($request, &$filter, $getAllResults = false) {
     $shouldCount = 0;
     
     foreach ($request as $requestKey => $requestValue) {

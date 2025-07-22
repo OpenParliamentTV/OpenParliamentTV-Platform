@@ -277,8 +277,8 @@ function entitiesAutocomplete($query) {
             foreach ($peopleMP as $person) {
                 // Check if there's a visible match in main label or alternatives
                 $mainLabelHasHit = $hasAccentInsensitiveMatch($person['PersonLabel'], $query) ||
-                                  $hasAccentInsensitiveMatch($person['PersonFirstName'], $query) ||
-                                  $hasAccentInsensitiveMatch($person['PersonLastName'], $query);
+                                  $hasAccentInsensitiveMatch($person['PersonFirstName'] ?? '', $query) ||
+                                  $hasAccentInsensitiveMatch($person['PersonLastName'] ?? '', $query);
                 
                 $alternativeLabel = $getRelevantLabelAlternative($person['PersonLabelAlternative'], $query, $person['PersonLabel'], 'person');
                 
@@ -321,8 +321,8 @@ function entitiesAutocomplete($query) {
             foreach ($peopleOther as $person) {
                 // Check if there's a visible match in main label or alternatives
                 $mainLabelHasHit = $hasAccentInsensitiveMatch($person['PersonLabel'], $query) ||
-                                  $hasAccentInsensitiveMatch($person['PersonFirstName'], $query) ||
-                                  $hasAccentInsensitiveMatch($person['PersonLastName'], $query);
+                                  $hasAccentInsensitiveMatch($person['PersonFirstName'] ?? '', $query) ||
+                                  $hasAccentInsensitiveMatch($person['PersonLastName'] ?? '', $query);
                 
                 $alternativeLabel = $getRelevantLabelAlternative($person['PersonLabelAlternative'], $query, $person['PersonLabel'], 'person');
                 
