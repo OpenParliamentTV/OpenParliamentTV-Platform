@@ -10,7 +10,7 @@ $alertText = $alertText ?? null;
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
             <?php
             if ($alertText) {
-                echo '<div class="alert alert-info" role="alert">'.h($alertText).'</div>';
+                echo '<div class="alert alert-info" role="alert">'.safeHtml($alertText).'</div>';
             }
 			if (!empty($_SESSION["login"]) && $_SESSION["login"] == 1) {
 

@@ -17,9 +17,9 @@ include_once(__DIR__ . '/../../header.php');
 			]);
 
 			if ($apiResult["meta"]["requestStatus"] === "success") {
-				echo '<div class="alert alert-success" role="alert">' . h($apiResult["data"]["message"]) . '</div>';
+				echo '<div class="alert alert-success" role="alert">' . safeHtml($apiResult["data"]["message"]) . '</div>';
 			} else {
-				echo '<div class="alert alert-danger" role="alert">' . h($apiResult["errors"][0]["detail"]) . '</div>';
+				echo '<div class="alert alert-danger" role="alert">' . safeHtml($apiResult["errors"][0]["detail"]) . '</div>';
 			}
 			?>
 
