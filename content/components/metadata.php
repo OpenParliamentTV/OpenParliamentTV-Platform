@@ -1,4 +1,6 @@
 <?php 
+require_once(__DIR__ . '/../../modules/utilities/security.php');
+
 if (!isset($page)) {
     $page = ''; // Initialize $page if not set
 }
@@ -41,21 +43,21 @@ switch ($page) {
     break;
 }
 ?>
-<title><?= $title ?></title>
-<meta name="description" content="<?= $description ?>">
-<meta property="og:title" content="<?= $title ?>" />
-<meta property="og:url" content="<?= $canonicalUrl ?>" />
-<meta property="og:type" content="<?= $ogType ?>" />
-<meta property="og:image" content="<?= $image ?>" />
-<meta property="og:description" content="<?= $description ?>" />
+<title><?= h($title) ?></title>
+<meta name="description" content="<?= hAttr($description) ?>">
+<meta property="og:title" content="<?= hAttr($title) ?>" />
+<meta property="og:url" content="<?= hAttr($canonicalUrl) ?>" />
+<meta property="og:type" content="<?= hAttr($ogType) ?>" />
+<meta property="og:image" content="<?= hAttr($image) ?>" />
+<meta property="og:description" content="<?= hAttr($description) ?>" />
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@OpenParlTV">
-<meta name="twitter:title" content="<?= $title ?>">
-<meta name="twitter:description" content="<?= $description ?>">
-<meta name="twitter:image" content="<?= $image ?>">
+<meta name="twitter:title" content="<?= hAttr($title) ?>">
+<meta name="twitter:description" content="<?= hAttr($description) ?>">
+<meta name="twitter:image" content="<?= hAttr($image) ?>">
 
-<link rel="canonical" href="<?= $canonicalUrl ?>">
+<link rel="canonical" href="<?= hAttr($canonicalUrl) ?>">
 <?php
 global $acceptLang;
 $queryString = parse_url($url, PHP_URL_QUERY);
@@ -69,5 +71,5 @@ foreach ($acceptLang as $thisLang) {
   $params['lang'] = $thisLang["short"];
   $alternateUrl = $urlWithoutParams . '?' . http_build_query($params);
   ?>
-<link rel='alternate' hreflang='<?= $thisLang["short"] ?>' href='<?= $alternateUrl ?>' />
+<link rel='alternate' hreflang='<?= hAttr($thisLang["short"]) ?>' href='<?= hAttr($alternateUrl) ?>' />
 <?php } ?>

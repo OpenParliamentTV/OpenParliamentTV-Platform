@@ -1,5 +1,6 @@
 <?php
 
+require_once(__DIR__ . '/../../../modules/utilities/security.php');
 include_once(__DIR__ . '/../../../modules/utilities/auth.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
@@ -23,35 +24,35 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<div class="col d-none d-md-block flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
-								<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"]?>" alt="..." style="position: absolute;height: 100%;object-fit: cover;">
+								<img src="<?= hAttr($apiResult["data"]["attributes"]["thumbnailURI"]) ?>" alt="..." style="position: absolute;height: 100%;object-fit: cover;">
 							<?php } else { ?>
 								<span class="icon-type-document" style="position: absolute;top: 48%;left: 50%;font-size: 70px;transform: translateX(-50%) translateY(-50%);"></span>
 							<?php } ?>
 						</div>
 						<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
-						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?= L::source(); ?>: <?= html_entity_decode($apiResult["data"]["attributes"]["thumbnailCreator"]); ?>, <?= $apiResult["data"]["attributes"]["thumbnailLicense"] ?></span></div>
+						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?= L::source(); ?>: <?= safeHtml($apiResult["data"]["attributes"]["thumbnailCreator"]) ?>, <?= safeHtml($apiResult["data"]["attributes"]["thumbnailLicense"]) ?></span></div>
 						<?php } ?>
 					</div>
 					<div class="col">
 						<?php 
 						if (isset($apiResult["data"]["attributes"]["additionalInformation"]["subType"])) {
 						?> 
-						<div class="less-opacity"><?= $apiResult["data"]["attributes"]["additionalInformation"]["subType"] ?> <?= L::by() ?>: <?=$apiResult["data"]["attributes"]["additionalInformation"]["creator"][0] ?></div>
+						<div class="less-opacity"><?= h($apiResult["data"]["attributes"]["additionalInformation"]["subType"]) ?> <?= L::by() ?>: <?= h($apiResult["data"]["attributes"]["additionalInformation"]["creator"][0]) ?></div>
 						<?php
 						}
 						?>
-						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
+						<h2><?= h($apiResult["data"]["attributes"]["label"]) ?></h2>
 						<?php if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) { ?>
-							<div class="less-opacity"><?= $apiResult["data"]["attributes"]["labelAlternative"][0] ?></div>
+							<div class="less-opacity"><?= h($apiResult["data"]["attributes"]["labelAlternative"][0]) ?></div>
 						<?php } ?>
 						<?php if ($apiResult["data"]["attributes"]["abstract"] && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
-							<div class="mt-2"><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
-							<a class="btn btn-sm me-2 mt-2" href="<?= $apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"] ?>" target="_blank">
+							<div class="mt-2"><?= h($apiResult["data"]["attributes"]["abstract"]) ?></div>
+							<a class="btn btn-sm me-2 mt-2" href="<?= hAttr($apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"]) ?>" target="_blank">
 								<span><?= L::moreAt(); ?> Wikipedia</span><img class="ms-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikipedia.svg">
 							</a>
 						<?php } ?>
 						<?php if ($apiResult["data"]["attributes"]["sourceURI"]) { ?>
-							<a class="btn btn-sm me-2 mt-2" href="<?= $apiResult["data"]["attributes"]["sourceURI"] ?>" target="_blank">
+							<a class="btn btn-sm me-2 mt-2" href="<?= hAttr($apiResult["data"]["attributes"]["sourceURI"]) ?>" target="_blank">
 								<span>Original <?= L::document(); ?></span><span class="ms-2 icon-file-pdf"></span>
 							</a>
 						<?php } ?>

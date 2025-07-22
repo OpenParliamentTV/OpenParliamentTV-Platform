@@ -99,7 +99,11 @@ $(function() {
         .then(response => {
             if (response.meta.requestStatus === 'success') {
                 // Show success message
-                document.getElementById('register-response').innerHTML = '<div class="alert alert-success">' + response.data.message + '</div>';
+                const successDiv = document.createElement('div');
+                successDiv.className = 'alert alert-success';
+                successDiv.textContent = response.data.message;
+                document.getElementById('register-response').innerHTML = '';
+                document.getElementById('register-response').appendChild(successDiv);
                 // Redirect to login page after 2 seconds
                 setTimeout(() => {
                     window.location.href = '/login';
@@ -115,12 +119,16 @@ $(function() {
                                 // Find the invalid-feedback div within the same input-group or form-floating
                                 const feedbackElement = element.closest('.input-group, .form-floating')?.querySelector('.invalid-feedback');
                                 if (feedbackElement) {
-                                    feedbackElement.innerHTML = error.detail;
+                                    feedbackElement.textContent = error.detail;
                                 }
                             }
                         } else {
                             // Show error message in response div if no specific field
-                            document.getElementById('register-response').innerHTML = '<div class="alert alert-danger">' + error.detail + '</div>';
+                            const errorDiv = document.createElement('div');
+                            errorDiv.className = 'alert alert-danger';
+                            errorDiv.textContent = error.detail;
+                            document.getElementById('register-response').innerHTML = '';
+                            document.getElementById('register-response').appendChild(errorDiv);
                         }
                     });
                 } else {

@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/../../modules/utilities/security.php');
 //Entity-specific values
 
 $entity = $relationshipItem;
@@ -20,39 +21,39 @@ if ($entity["type"] == "person") {
 }
 
 ?>
-<div class="entityPreview col" data-type="<?= $entity["type"]?>">
-    <div class="entityContainer partyIndicator" data-faction="<?= $entity["attributes"]["faction"]["id"] ?>">
-        <a href="<?= $config["dir"]["root"].'/'.$entity["type"].'/'.$entity["id"] ?>">
+<div class="entityPreview col" data-type="<?= hAttr($entity["type"]) ?>">
+    <div class="entityContainer partyIndicator" data-faction="<?= hAttr($entity["attributes"]["faction"]["id"]) ?>">
+        <a href="<?= $config["dir"]["root"].'/'.hAttr($entity["type"]).'/'.hAttr($entity["id"]) ?>">
             <?php if ($entity["attributes"]["type"] != "officialDocument") { ?>
                 <div class="thumbnailContainer">
                     <div class="rounded-circle">
                         <?php if ($entity["attributes"]["thumbnailURI"]) { ?>
-                            <img src="<?= $entity["attributes"]["thumbnailURI"] ?>" alt="..."/>
+                            <img src="<?= hAttr($entity["attributes"]["thumbnailURI"]) ?>" alt="..."/>
                         <?php } else { ?>
-                            <span class="icon-type-<?= $entity["type"] ?>" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
+                            <span class="icon-type-<?= hAttr($entity["type"]) ?>" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
                         <?php } ?>
                     </div>
                 </div>
             <?php } ?>
             <div>
                 <?php if ($entity["type"] == "document" && isset($relationshipItem["attributes"]["additionalInformation"]["subType"])) { ?>
-                    <div class="entityType"><?= $relationshipItem["attributes"]["additionalInformation"]["subType"] ?></div>
+                    <div class="entityType"><?= h($relationshipItem["attributes"]["additionalInformation"]["subType"]) ?></div>
                 <?php } ?>
-                <div class="entityTitle"><?= $entity["attributes"]["label"] ?></div>
-                <div class="break-lines truncate-lines"><?= $secondaryLabel ?></div>
+                <div class="entityTitle"><?= h($entity["attributes"]["label"]) ?></div>
+                <div class="break-lines truncate-lines"><?= h($secondaryLabel) ?></div>
                 <?php if ($entity["type"] == "document" && isset($relationshipItem["attributes"]["additionalInformation"]["creator"][0])) { ?>
-                    <div class="text-truncate"><?= L::by() ?>: <?= $relationshipItem["attributes"]["additionalInformation"]["creator"][0] ?></div>
+                    <div class="text-truncate"><?= L::by() ?>: <?= h($relationshipItem["attributes"]["additionalInformation"]["creator"][0]) ?></div>
                 <?php } ?>
                 <?php if ($contextLabelIdentifier) { ?>
                     <div><span class="icon-megaphone"></span><?= L('context'.$contextLabelIdentifier) ?></div>
                 <?php } ?>
                 <?php if ($countFound > 0 && isset($annotation["attributes"]["context"]) && $annotation["attributes"]["context"] == "NER") { ?>
-                    <div><?= L::found() ?>: <span class="badge rounded-pill"><?= $countFound ?></span></div>
+                    <div><?= L::found() ?>: <span class="badge rounded-pill"><?= h($countFound) ?></span></div>
                 <?php } ?>
             </div>
         </a>
         <?php if ($entity["type"] == "document" && $entity["attributes"]["type"] == "officialDocument") { ?>
-            <a class="entityButton" href="<?= $relationshipItem["attributes"]["sourceURI"] ?>" target="_blank"><span class="btn btn-sm icon-file-pdf"></span></a>
+            <a class="entityButton" href="<?= hAttr($relationshipItem["attributes"]["sourceURI"]) ?>" target="_blank"><span class="btn btn-sm icon-file-pdf"></span></a>
         <?php } ?>
     </div>
 </div>

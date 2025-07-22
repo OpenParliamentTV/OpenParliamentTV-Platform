@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__."/../../../modules/utilities/language.php");
+require_once(__DIR__."/../../../modules/utilities/security.php");
 
 require_once(__DIR__."/../../../modules/media/functions.php");
 require_once(__DIR__."/../../../modules/media/include.media.php");
@@ -9,17 +10,15 @@ require_once(__DIR__."/../../../modules/utilities/textArrayConverters.php");
 ob_start();
 include "panel.related.php";
 $relatedContentsPanel = ob_get_clean();
-$relatedContentsHTML = str_replace(array("\r","\n"), " ",$relatedContentsPanel);
-$relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
 
 ?>
 <script type="text/javascript">
-    currentMediaID = '<?= $speech["id"] ?>';
-    currentMediaTimestamp = '<?= $speech["attributes"]["dateStartTimestamp"] ?>';
+    currentMediaID = <?= json_encode($speech["id"], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
+    currentMediaTimestamp = <?= json_encode($speech["attributes"]["dateStartTimestamp"], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
     <?php // json_encode($speech, JSON_PRETTY_PRINT) ?>
 
     // TODO: Replace URL Quick Fix
-    var originMediaID = '<?= $speech["attributes"]['originMediaID'] ?>';
+    var originMediaID = <?= json_encode($speech["attributes"]['originMediaID'], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
     //var videoSource = 'https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/'+ originMediaID +'/'+ originMediaID +'_h264_720_400_2000kb_baseline_de_2192.mp4';
     //var videoSource = 'https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/'+ originMediaID +'/'+ originMediaID +'_h264_720_400_2000kb_baseline_de_2192.mp4';
     if (currentMediaTimestamp < 1508828000) {
@@ -34,7 +33,7 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
     	'title': '',
     	'documents': [],
         'mediaSource': videoSource,
-    	'transcriptHTML': '<?= $relatedContentsHTML ?>',
+    	'transcriptHTML': <?= json_encode($relatedContentsPanel, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>,
         'aw_username': null,
         'finds': [
             <?php 
@@ -62,11 +61,11 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
 <div class="mediaContainer">
     <div class="d-flex flex-column flex-md-row-reverse">
         <div class="playerTitle">
-            <div class="speechMeta"><?= $formattedDate ?> | <span class="d-none d-sm-inline"><?= $speech["attributes"]["parliamentLabel"] ?> / </span><a href="../electoralPeriod/<?= $speech["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $speech["relationships"]["electoralPeriod"]['data']['attributes']['number'] ?><span class="d-none d-xl-inline">. <?= L::electoralPeriodShort(); ?></span></a> / <a href="../session/<?= $speech["relationships"]["session"]["data"]["id"] ?>"><span class="d-none d-xl-inline"><?= L::session(); ?> </span><?= $speech["relationships"]["session"]['data']['attributes']['number'] ?></a> / <a href="../agendaItem/<?= $speech["attributes"]["parliament"]."-".$speech["relationships"]["agendaItem"]["data"]["id"] ?>"><?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"] ?></a></div>
-            <h3><a href="../person/<?= $mainSpeaker["id"] ?>"><?= $mainSpeaker['attributes']['label'] ?></a><?php 
+            <div class="speechMeta"><?= h($formattedDate) ?> | <span class="d-none d-sm-inline"><?= h($speech["attributes"]["parliamentLabel"]) ?> / </span><a href="../electoralPeriod/<?= hAttr($speech["relationships"]["electoralPeriod"]["data"]["id"]) ?>"><?= h($speech["relationships"]["electoralPeriod"]['data']['attributes']['number']) ?><span class="d-none d-xl-inline">. <?= L::electoralPeriodShort(); ?></span></a> / <a href="../session/<?= hAttr($speech["relationships"]["session"]["data"]["id"]) ?>"><span class="d-none d-xl-inline"><?= L::session(); ?> </span><?= h($speech["relationships"]["session"]['data']['attributes']['number']) ?></a> / <a href="../agendaItem/<?= hAttr($speech["attributes"]["parliament"]."-".$speech["relationships"]["agendaItem"]["data"]["id"]) ?>"><?= h($speech["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"]) ?></a></div>
+            <h3><a href="../person/<?= hAttr($mainSpeaker["id"]) ?>"><?= h($mainSpeaker['attributes']['label']) ?></a><?php 
                 if (isset($mainFaction['attributes']['label'])) {
-                ?><a href="../organisation/<?= $mainFaction["id"] ?>"><span class="partyIndicator" data-faction="<?= $mainFaction["id"] ?>"><?= $mainFaction["attributes"]["label"] ?></span></a><?php 
-                } ?> - <?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["title"] ?></h3>
+                ?><a href="../organisation/<?= hAttr($mainFaction["id"]) ?>"><span class="partyIndicator" data-faction="<?= hAttr($mainFaction["id"]) ?>"><?= h($mainFaction["attributes"]["label"]) ?></span></a><?php 
+                } ?> - <?= h($speech["relationships"]["agendaItem"]["data"]["attributes"]["title"]) ?></h3>
         </div>
         <div class="playerTabs">
             <ul class="nav nav-tabs flex-nowrap" role="tablist">
@@ -98,7 +97,7 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-warning"><?= L::messageShareQuotePart1(); ?> <b><?= $mainSpeaker['attributes']['label'] ?></b>? <?= L::messageShareQuotePart2(); ?>!</div>
+                <div class="alert alert-warning"><?= L::messageShareQuotePart1(); ?> <b><?= h($mainSpeaker['attributes']['label']) ?></b>? <?= L::messageShareQuotePart2(); ?>!</div>
                 <label><b>1. <?= L::selectTheme(); ?></b>:</label>
                 <div class="row row-cols-2 mt-2">
                     <div class="col pe-2">
@@ -106,8 +105,8 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
                             <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
-                                    <div class="cardTitle text-truncate"><?= $speechTitleShort ?> | <?= L::brand() ?></div>
-                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= L::speech().' '.L::onTheSubject().' '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' '.L::by().' '.$mainSpeaker['attributes']['label'].' ('.$speech["attributes"]["parliamentLabel"].', '.$formattedDate.')' ?></div>
+                                    <div class="cardTitle text-truncate"><?= h($speechTitleShort) ?> | <?= L::brand() ?></div>
+                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= L::speech().' '.L::onTheSubject().' '.h($speech["relationships"]["agendaItem"]["data"]['attributes']["title"]).' '.L::by().' '.h($mainSpeaker['attributes']['label']).' ('.h($speech["attributes"]["parliamentLabel"]).', '.h($formattedDate).')' ?></div>
                                 </div>
                                 <div class="overflow-hidden text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
                             </div>
@@ -118,8 +117,8 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
                             <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
-                                    <div class="cardTitle text-truncate"><?= $speechTitleShort ?> | <?= L::brand() ?></div>
-                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= L::speech().' '.L::onTheSubject().' '.$speech["relationships"]["agendaItem"]["data"]['attributes']["title"].' '.L::by().' '.$mainSpeaker['attributes']['label'].' ('.$speech["attributes"]["parliamentLabel"].', '.$formattedDate.')' ?></div>
+                                    <div class="cardTitle text-truncate"><?= h($speechTitleShort) ?> | <?= L::brand() ?></div>
+                                    <div class="overflow-hidden text-break text-truncate whitespace-no-wrap select-none cardDescription"><?= L::speech().' '.L::onTheSubject().' '.h($speech["relationships"]["agendaItem"]["data"]['attributes']["title"]).' '.L::by().' '.h($mainSpeaker['attributes']['label']).' ('.h($speech["attributes"]["parliamentLabel"]).', '.h($formattedDate).')' ?></div>
                                 </div>
                                 <div class="overflow-hidden text-truncate text-nowrap cardWebsite">de.openparliament.tv</div>
                             </div>
@@ -138,7 +137,7 @@ $relatedContentsHTML = str_replace("'", "\"",$relatedContentsHTML);
         </div>
     </div>
 </div>
-<div id="videoAttribution" class="copyrightInfo" style="display: none;"><span class="icon-info-circled"></span><span class="copyrightText"><?= L::source(); ?>: <?= $speech["attributes"]["creator"] ?>, <?= html_entity_decode($speech["attributes"]["license"]); ?></span></div>
+<div id="videoAttribution" class="copyrightInfo" style="display: none;"><span class="icon-info-circled"></span><span class="copyrightText"><?= L::source(); ?>: <?= h($speech["attributes"]["creator"]) ?>, <?= safeHtml($speech["attributes"]["license"]) ?></span></div>
 <div class="modal fade" id="nerModal" tabindex="-1" aria-labelledby="nerModalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

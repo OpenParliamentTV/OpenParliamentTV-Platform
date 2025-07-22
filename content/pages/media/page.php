@@ -30,7 +30,7 @@ if ($emptyResult == 1) {
     <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/shareQuote.js?v=<?= $config["version"] ?>"></script>
     <script type="text/javascript">
         var autoplayResults = <?php if ($autoplayResults) { echo 'true'; } else { echo 'false'; } ?>;
-        var currentMediaID = '<?= $speech['id'] ?>';
+        var currentMediaID = <?= json_encode($speech['id'], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
     </script>
 
 <?php

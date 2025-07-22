@@ -3,6 +3,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once(__DIR__."/../../config.php");
+require_once(__DIR__ . '/../../modules/utilities/security.php');
+applySecurityHeaders();
 
 
 
@@ -140,7 +142,7 @@ if ($totalResults != 0) {
 			$mainFaction = getMainFactionFromOrganisationsArray($result_item["annotations"]['data'], $result_item["relationships"]["organisations"]['data']);
 
 			if ($sortFactor == 'topic' && $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"] != $currentAgendaItem) {
-				echo '<div class="sortDivider"><b>'.$formattedDate.' - '.$result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"].'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
+				echo '<div class="sortDivider"><b>'.h($formattedDate).' - '.h($result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"]).'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
 				$currentAgendaItem = $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"];
 			} elseif ($sortFactor == 'date' && $formattedDate != $currentDate) {
 				//echo '<div class="sortDivider"><b>'.$formattedDate.'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
@@ -151,7 +153,11 @@ if ($totalResults != 0) {
 
 			$highlightedName = $mainSpeaker['attributes']['label'];
 			if (isset($_REQUEST['person']) && strlen($_REQUEST['person']) > 1) {
-				$highlightedName = str_replace($_REQUEST['person'], '<em>'.$_REQUEST['person'].'</em>', $highlightedName);
+				// Escape user input before using in HTML, then apply highlighting safely
+				$searchTerm = h($_REQUEST['person']);
+				$highlightedName = str_replace($searchTerm, '<em>'.$searchTerm.'</em>', h($highlightedName));
+			} else {
+				$highlightedName = h($highlightedName);
 			}
 
 			include 'result.grid.item.php';
@@ -163,7 +169,7 @@ if ($totalResults != 0) {
     ?>
     <script type="text/javascript">
 
-        resultsAttributes = <?= json_encode($result["meta"]["attributes"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?>
+        resultsAttributes = <?= json_encode($result["meta"]["attributes"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT | JSON_HEX_APOS) ?>
 
     </script>
 	<?php 

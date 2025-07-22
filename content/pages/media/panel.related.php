@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/../../../modules/utilities/security.php');
 
 $relatedPeopleHTML = "";
 $relatedPeopleHTMLNER = "";
@@ -237,15 +238,15 @@ if ($config["display"]["ner"]) {
             <tbody>
                 <tr>
                     <td><?= L::source() ?></td>
-                    <td><?= $speech["attributes"]["creator"] ?>, <?= html_entity_decode($speech["attributes"]["license"]); ?></td>
+                    <td><?= h($speech["attributes"]["creator"]) ?>, <?= safeHtml($speech["attributes"]["license"]) ?></td>
                 </tr>
                 <tr>
                     <td><?= L::citeAs() ?></td>
-                    <td><?= $speech["attributes"]["creator"] ?> via <?= L::brand() ?></td>
+                    <td><?= h($speech["attributes"]["creator"]) ?> via <?= L::brand() ?></td>
                 </tr>
                 <tr>
                     <td><?= L::retrievedFrom() ?></td>
-                    <td><a href="<?= $speech["attributes"]["sourcePage"] ?>" target="_blank"><?= $speech["attributes"]["sourcePage"] ?></a></td>
+                    <td><a href="<?= hAttr($speech["attributes"]["sourcePage"]) ?>" target="_blank"><?= h($speech["attributes"]["sourcePage"]) ?></a></td>
                 </tr>
             </tbody>
         </table>
@@ -257,11 +258,11 @@ if ($config["display"]["ner"]) {
                 </tr>
                 <tr>
                     <td><?= L::session() ?></td>
-                    <td><a href="<?= $config["dir"]["root"] ?>/session/<?= $speech["relationships"]["session"]["data"]["id"] ?>"><?= $speech["relationships"]["session"]["data"]["attributes"]["number"] ?></a></td>
+                    <td><a href="<?= $config["dir"]["root"] ?>/session/<?= hAttr($speech["relationships"]["session"]["data"]["id"]) ?>"><?= h($speech["relationships"]["session"]["data"]["attributes"]["number"]) ?></a></td>
                 </tr>
                 <tr>
                     <td><?= L::agendaItem() ?></td>
-                    <td><a href="<?= $config["dir"]["root"] ?>/agendaItem/<?= $speech["attributes"]["parliament"] ?>-<?= $speech["relationships"]["agendaItem"]["data"]["id"] ?>"><?= $speech["relationships"]["agendaItem"]["data"]["attributes"]["title"] ?></a></td>
+                    <td><a href="<?= $config["dir"]["root"] ?>/agendaItem/<?= hAttr($speech["attributes"]["parliament"]) ?>-<?= hAttr($speech["relationships"]["agendaItem"]["data"]["id"]) ?>"><?= h($speech["relationships"]["agendaItem"]["data"]["attributes"]["title"]) ?></a></td>
                 </tr>
             </tbody>
         </table>

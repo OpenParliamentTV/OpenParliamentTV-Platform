@@ -6,6 +6,8 @@ session_start();
 
 require_once(__DIR__ . '/../../api/v1/api.php'); 
 require_once(__DIR__."/../../modules/utilities/language.php");
+require_once(__DIR__ . '/../../modules/utilities/security.php');
+applySecurityHeaders();
 
 ?>
 <div id="entityAddDiv" class="contentContainer">
@@ -70,7 +72,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     <select class="form-select" name="type" id="typePerson">
                         <option value="" disabled selected><?= L::selectType(); ?> ..</option>
                         <?php foreach ($config["entityTypes"]["person"] as $subtype): ?>
-                            <option value="<?= $subtype ?>"><?= $subtype ?></option>
+                            <option value="<?= hAttr($subtype) ?>"><?= h($subtype) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -80,7 +82,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     <select class="form-select" name="type" id="typeOrganisation">
                         <option value="" disabled selected><?= L::selectType(); ?> ..</option>
                         <?php foreach ($config["entityTypes"]["organisation"] as $subtype): ?>
-                            <option value="<?= $subtype ?>"><?= $subtype ?></option>
+                            <option value="<?= hAttr($subtype) ?>"><?= h($subtype) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -90,7 +92,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     <select class="form-select" name="type" id="typeDocument">
                         <option value="" disabled selected><?= L::selectType(); ?> ..</option>
                         <?php foreach ($config["entityTypes"]["document"] as $subtype): ?>
-                            <option value="<?= $subtype ?>"><?= $subtype ?></option>
+                            <option value="<?= hAttr($subtype) ?>"><?= h($subtype) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -100,7 +102,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                     <select class="form-select" name="type" id="typeTerm">
                         <option value="" disabled selected><?= L::selectType(); ?> ..</option>
                         <?php foreach ($config["entityTypes"]["term"] as $subtype): ?>
-                            <option value="<?= $subtype ?>"><?= $subtype ?></option>
+                            <option value="<?= hAttr($subtype) ?>"><?= h($subtype) ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -214,7 +216,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                                 require_once (__DIR__."/../../api/v1/modules/organisation.php");
                                 $partyie = organisationSearch(array("type"=>"party"));
                                 foreach ($partyie["data"] as $party) {
-                                    echo '<option value="'.$party["id"].'">'.$party["attributes"]["label"].'</option>';
+                                    echo '<option value="'.hAttr($party["id"]).'">'.h($party["attributes"]["label"]).'</option>';
                                 }
                                 ?>
                             </select>
@@ -228,7 +230,7 @@ require_once(__DIR__."/../../modules/utilities/language.php");
                                 <?php
                                 $factionie = organisationSearch(array("type"=>"faction"));
                                 foreach ($factionie["data"] as $faction) {
-                                    echo '<option value="'.$faction["id"].'">'.$faction["attributes"]["label"].'</option>';
+                                    echo '<option value="'.hAttr($faction["id"]).'">'.h($faction["attributes"]["label"]).'</option>';
                                 }
                                 ?>
                             </select>

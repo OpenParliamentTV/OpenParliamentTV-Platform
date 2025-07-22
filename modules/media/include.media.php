@@ -28,12 +28,22 @@
 
         $lastTextContents = end($speech["attributes"]['textContents']);
         if ($lastTextContents) {
-            if (isset($speech["_highlight"])) {
+            if (isset($speech["_highlight"]) && isset($speech["_highlight"]["attributes.textContents.textHTML"])) {
                 $textContentsHTML = $speech["_highlight"]["attributes.textContents.textHTML"][0];
             } else {
-                $textContentsHTML = textObjectToHTMLString(json_encode($speech["attributes"]['textContents'][(count($speech["attributes"]['textContents'])-1)]), $speech["attributes"]['videoFileURI'], $speech["id"]);
+                // The API returns textContents with structure: {id, type, textBody}
+                // But textObjectToHTMLString expects just the textBody structure
+                if (isset($lastTextContents['textBody'])) {
+                    $textBodyData = array('textBody' => $lastTextContents['textBody']);
+                    $jsonToPass = json_encode($textBodyData);
+                    $textContentsHTML = textObjectToHTMLString($jsonToPass, $speech["attributes"]['videoFileURI'], $speech["id"]);
+                } else {
+                    $textContentsHTML = '';
+                }
             }
             $textContentsHTML = str_replace("\n", "\\n", $textContentsHTML);
+        } else {
+            $textContentsHTML = '';
         }
 
         $formattedDate = date("d.m.Y", strtotime($speech["attributes"]["dateStart"]));

@@ -44,11 +44,7 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
      * Parameter validation
      */
     if ((empty($type) || (!in_array($type, $allowedTypes)))) {
-
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"][] = array("info"=>"wrong or missing parameter", "field"=>"type");
-        return $return;
-
+        return createApiErrorInvalidParameter("type", "messageErrorInvalidTypeDetail", ["allowedTypes" => implode(", ", $allowedTypes)]);
     }
 
 
@@ -65,14 +61,7 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
 
         } catch (exception $e) {
 
-            $return["meta"]["requestStatus"] = "error";
-            $return["errors"] = array();
-            $errorarray["status"] = "503";
-            $errorarray["code"] = "1";
-            $errorarray["title"] = "Database connection error";
-            $errorarray["detail"] = "Connecting to platform database failed";
-            array_push($return["errors"], $errorarray);
-            return $return;
+            return createApiErrorDatabaseConnection('platform');
 
         }
 
@@ -117,27 +106,21 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
 
     } else {
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"][] = array("info"=>"wrong or missing parameter", "field"=>"type");
-        return $return;
+        return createApiErrorInvalidParameter("type", "messageErrorInvalidTypeDetail", ["allowedTypes" => implode(", ", $allowedTypes)]);
 
     }
 
     try {
         $platformItem = $db->getRow("SELECT * FROM ?n WHERE " . $where, $table);
     } catch (Exception $e) {
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"][] = array("info"=>"Could not get Item from DB".$e->getMessage());
-        return $return;
+        return createApiErrorDatabaseError("Could not get Item from DB: ".$e->getMessage());
     }
 
 
 
     if (empty($platformItem)) {
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"][] = array("info"=>"Could not get Item from DB");
-        return $return;
+        return createApiErrorDatabaseError("Could not get Item from DB");
 
     }
 
@@ -148,17 +131,13 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
 
     } catch (Exception $e) {
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"][] = array("info"=>"Could not get Item from AdditionalDataServiceAPI".$e->getMessage());
-        return $return;
+        return createApiError("Could not get Item from AdditionalDataServiceAPI: ".$e->getMessage(), "EXTERNAL_API_ERROR");
 
     }
 
     if (empty($apiItem) || $apiItem["meta"]["requestStatus"] != "success" || empty($apiItem["data"])) {
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"][] = array("info"=>"Could not get Item from AdditionalDataServiceAPI");
-        return $return;
+        return createApiError("Could not get Item from AdditionalDataServiceAPI", "EXTERNAL_API_ERROR");
 
     }
 
@@ -252,15 +231,11 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
 
     } catch (Exception $e) {
 
-        $return["meta"]["requestStatus"] = "error";
-        $return["errors"][] = array("info"=>"Could not update Item in database ".$type." ".$id.": ".$e->getMessage());
-        return $return;
+        return createApiErrorDatabaseError("Could not update Item in database ".$type." ".$id.": ".$e->getMessage());
 
     }
 
-    $return["meta"]["requestStatus"] = "success";
-    $return["text"][] = array("info"=>"Item has been updated: ".$type." ".$id);
-    return $return;
+    return createApiSuccessResponse(null, ["message" => "Item has been updated: ".$type." ".$id]);
 
 
 }

@@ -1,4 +1,8 @@
-<?php include_once(__DIR__ . '/../../header.php'); ?>
+<?php 
+include_once(__DIR__ . '/../../header.php'); 
+require_once(__DIR__ . '/../../modules/utilities/security.php');
+applySecurityHeaders();
+?>
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
@@ -13,8 +17,8 @@
 				} else {
 					?>
 					<form id="resetpassword-form" class="needs-validation" novalidate>
-						<input type="hidden" name="UserID" value="<?= $_REQUEST["id"] ?>">
-						<input type="hidden" name="ResetCode" value="<?= $_REQUEST["c"] ?>">
+						<input type="hidden" name="UserID" value="<?= hAttr($_REQUEST["id"] ?? '') ?>">
+						<input type="hidden" name="ResetCode" value="<?= hAttr($_REQUEST["c"] ?? '') ?>">
 						
 						<div class="mb-3">
 							<div class="input-group">
@@ -109,7 +113,11 @@ $(function() {
             .then(response => {
                 if (response.meta.requestStatus === 'success') {
                     // Show success message
-                    document.getElementById('reset-mail-response').innerHTML = '<div class="alert alert-success">' + response.data.message + '</div>';
+                    const successDiv = document.createElement('div');
+                    successDiv.className = 'alert alert-success';
+                    successDiv.textContent = response.data.message;
+                    document.getElementById('reset-mail-response').innerHTML = '';
+                    document.getElementById('reset-mail-response').appendChild(successDiv);
                     // Hide form and show success message
                     document.getElementById('resetpassword-mail-form').style.display = 'none';
                 } else {
@@ -123,12 +131,16 @@ $(function() {
                                     // Find the invalid-feedback div within the same input-group or form-floating
                                     const feedbackElement = element.closest('.input-group, .form-floating')?.querySelector('.invalid-feedback');
                                     if (feedbackElement) {
-                                        feedbackElement.innerHTML = error.detail;
+                                        feedbackElement.textContent = error.detail;
                                     }
                                 }
                             } else {
                                 // Show error message in response div if no specific field
-                                document.getElementById('reset-mail-response').innerHTML = '<div class="alert alert-danger">' + error.detail + '</div>';
+                                const errorDiv = document.createElement('div');
+                                errorDiv.className = 'alert alert-danger';
+                                errorDiv.textContent = error.detail;
+                                document.getElementById('reset-mail-response').innerHTML = '';
+                                document.getElementById('reset-mail-response').appendChild(errorDiv);
                             }
                         });
                     } else {
@@ -182,7 +194,11 @@ $(function() {
             .then(response => {
                 if (response.meta.requestStatus === 'success') {
                     // Show success message
-                    document.getElementById('reset-response').innerHTML = '<div class="alert alert-success">' + response.data.message + '</div>';
+                    const successDiv = document.createElement('div');
+                    successDiv.className = 'alert alert-success';
+                    successDiv.textContent = response.data.message;
+                    document.getElementById('reset-response').innerHTML = '';
+                    document.getElementById('reset-response').appendChild(successDiv);
                     // Redirect to login page after 2 seconds
                     setTimeout(() => {
                         window.location.href = '<?= $config["dir"]["root"] ?>/login';
@@ -198,12 +214,16 @@ $(function() {
                                     // Find the invalid-feedback div within the same input-group or form-floating
                                     const feedbackElement = element.closest('.input-group, .form-floating')?.querySelector('.invalid-feedback');
                                     if (feedbackElement) {
-                                        feedbackElement.innerHTML = error.detail;
+                                        feedbackElement.textContent = error.detail;
                                     }
                                 }
                             } else {
                                 // Show error message in response div if no specific field
-                                document.getElementById('reset-response').innerHTML = '<div class="alert alert-danger">' + error.detail + '</div>';
+                                const errorDiv = document.createElement('div');
+                                errorDiv.className = 'alert alert-danger';
+                                errorDiv.textContent = error.detail;
+                                document.getElementById('reset-response').innerHTML = '';
+                                document.getElementById('reset-response').appendChild(errorDiv);
                             }
                         });
                     } else {

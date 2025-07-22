@@ -424,12 +424,12 @@ function updatePlayer() {
 							+       '<div class="icon icon-download"></div>'
 							+   '</div>');
 
-		var prevSpeaker = <?= ($prevSpeech) ? "'".$prevSpeech["_source"]["meta"]['speakerDegree'].' '.$prevSpeech["_source"]["meta"]['speakerFirstName'].' '.$prevSpeech["_source"]["meta"]['speakerLastName'].' <span class="partyIndicator" data-party="'.$prevSpeech["_source"]["meta"]['speakerParty'].'">'.$prevSpeech["_source"]["meta"]['speakerParty']."</span>'" : 'null' ?>;
+		var prevSpeaker = <?= ($prevSpeech) ? json_encode($prevSpeech["_source"]["meta"]['speakerDegree'].' '.$prevSpeech["_source"]["meta"]['speakerFirstName'].' '.$prevSpeech["_source"]["meta"]['speakerLastName'].' <span class="partyIndicator" data-party="'.htmlspecialchars($prevSpeech["_source"]["meta"]['speakerParty'], ENT_QUOTES).'">', JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) : 'null' ?>;
 
-		var nextSpeaker = <?= ($nextSpeech) ? "'".$nextSpeech["_source"]["meta"]['speakerDegree'].' '.$nextSpeech["_source"]["meta"]['speakerFirstName'].' '.$nextSpeech["_source"]["meta"]['speakerLastName'].' <span class="partyIndicator" data-party="'.$nextSpeech["_source"]["meta"]['speakerParty'].'">'.$nextSpeech["_source"]["meta"]['speakerParty']."</span>'" : 'null' ?>;
+		var nextSpeaker = <?= ($nextSpeech) ? json_encode($nextSpeech["_source"]["meta"]['speakerDegree'].' '.$nextSpeech["_source"]["meta"]['speakerFirstName'].' '.$nextSpeech["_source"]["meta"]['speakerLastName'].' <span class="partyIndicator" data-party="'.htmlspecialchars($nextSpeech["_source"]["meta"]['speakerParty'], ENT_QUOTES).'">', JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) : 'null' ?>;
 		
 		var navigationOptions = $('<div class="navigationOptions"></div>');
-		var prevSpeakerURL = '?id=<?= $prevSpeech["_source"]["meta"]['id'] ?>'.replace(/\s/g, '+');
+		var prevSpeakerURL = '?id=' + <?= json_encode($prevSpeech["_source"]["meta"]['id'] ?? '') ?>.replace(/\s/g, '+');
 		if (prevSpeaker) {
 			navigationOptions.append('<a href='+ prevSpeakerURL +' class="prevSpeech"><b>Vorheriger Redebeitrag</b><br>'+ prevSpeaker +'</a>');
 		}

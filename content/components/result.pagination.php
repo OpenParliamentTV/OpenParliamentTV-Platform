@@ -1,4 +1,5 @@
 <?php
+require_once(__DIR__ . '/../../modules/utilities/security.php');
 // Determine the page size based on the limit parameter or default config
 $pageSize = $config["display"]["speechesPerPage"];
 if (isset($_REQUEST["limit"]) && is_numeric($_REQUEST["limit"]) && intval($_REQUEST["limit"]) > 0) {
@@ -19,7 +20,7 @@ if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
 <nav aria-label="Paginierung" style="margin-top: 30px;">
 	<ul class="pagination justify-content-center">
 		<li class="page-item <?=$prevDisabledClass?>">
-			<a class="page-link" href='search?<?=preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($pagePrev)) ?>' aria-label="Vorherige">
+			<a class="page-link" href='search?<?= hAttr(preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($pagePrev))) ?>' aria-label="Vorherige">
 				<span aria-hidden="true">&laquo;</span>
 				<span class="visually-hidden"><?= L::previousPage(); ?></span>
 			</a>
@@ -31,7 +32,7 @@ if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
                 $pageNumber = $allowedParams;
                 unset($pageNumber["page"]);
 			?>
-				<li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='search?<?=preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($pageNumber)) ?>'><?=$i?></a></li>
+				<li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='search?<?= hAttr(preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($pageNumber))) ?>'><?= h($i) ?></a></li>
 			<?php
 			}
 			else if ($i < 3 || 
@@ -40,7 +41,7 @@ if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
                 $pageNumber = $allowedParams;
                 $pageNumber["page"] = $i;
 			?>
-				<li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='search?<?=preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($pageNumber)) ?>'><?=$i?></a></li>
+				<li class="page-item <?php if ($i == $currentPage) {echo "active";}  ?>"><a class="page-link" href='search?<?= hAttr(preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($pageNumber))) ?>'><?= h($i) ?></a></li>
 			<?php
 				$lastPageWasGap = false;
 			} elseif (!$lastPageWasGap) {
@@ -54,7 +55,7 @@ if ($_REQUEST["a"] == "search" && count($_REQUEST) > 1) {
 		}
 		?>
 		<li class="page-item <?=$nextDisabledClass?>">
-			<a class="page-link" href='search?<?=preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($pageNext)) ?>' aria-label="Nächste">
+			<a class="page-link" href='search?<?= hAttr(preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($pageNext))) ?>' aria-label="Nächste">
 				<span aria-hidden="true">&raquo;</span>
 				<span class="visually-hidden"><?= L::nextPage(); ?></span>
 			</a>

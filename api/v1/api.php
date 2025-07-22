@@ -4,6 +4,9 @@ require_once (__DIR__."/../../config.php");
 require_once (__DIR__."/../../modules/utilities/functions.php");
 require_once (__DIR__."/../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../modules/utilities/functions.api.php");
+require_once (__DIR__."/../../modules/utilities/security.php");
+applySecurityHeaders();
+
 
 function apiV1($request_param = false, $db = false, $dbp = false) {
     global $config;
@@ -27,6 +30,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             createApiErrorMissingParameter("itemType")
         );
     }
+
 
     switch ($api_request["action"]) {
 
@@ -221,6 +225,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     );
             }
             break;
+
 
         // =============================================
         // Private API endpoints (authentication required)

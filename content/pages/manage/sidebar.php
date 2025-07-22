@@ -1,5 +1,6 @@
 <?php
 // Sidebar navigation for manage section
+require_once(__DIR__ . '/../../../modules/utilities/security.php');
 ?>
 <aside class="sticky-sidebar">
     <!-- Mobile Navigation -->
@@ -30,7 +31,7 @@
                 </a>
                 -->
                 <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>" 
-                   class="dropdown-item <?= ($page == "manage-users" && isset($_REQUEST["id"]) && $_REQUEST["id"] == $_SESSION["userdata"]["id"]) ? "active" : "" ?>">
+                   class="dropdown-item <?= ($page == "manage-users" && isset($_REQUEST["id"]) && (string)$_REQUEST["id"] === (string)$_SESSION["userdata"]["id"]) ? "active" : "" ?>">
                     <i class="icon-user me-2"></i>
                     <?= L::userSettings(); ?>
                 </a>
@@ -56,7 +57,7 @@
                 <!-- Administration -->
                 <div class="dropdown-header text-uppercase text-muted"><?= L::administration(); ?></div>
                 <a href="<?= $config["dir"]["root"] ?>/manage/users" 
-                   class="dropdown-item <?= ($page == "manage-users" && (!isset($_REQUEST["id"]) || $_REQUEST["id"] != $_SESSION["userdata"]["id"])) ? "active" : "" ?>">
+                   class="dropdown-item <?= ($page == "manage-users" && (!isset($_REQUEST["id"]) || (string)$_REQUEST["id"] !== (string)$_SESSION["userdata"]["id"])) ? "active" : "" ?>">
                     <i class="icon-users me-2"></i>
                     <?= L::manageUsers(); ?>
                 </a>
@@ -114,7 +115,7 @@
                 -->
                 <li class="nav-item">
                     <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>" 
-                       class="nav-link <?= ($page == "manage-users" && isset($_REQUEST["id"]) && $_REQUEST["id"] == $_SESSION["userdata"]["id"]) ? "active" : "" ?>">
+                       class="nav-link <?= ($page == "manage-users" && isset($_REQUEST["id"]) && (string)$_REQUEST["id"] === (string)$_SESSION["userdata"]["id"]) ? "active" : "" ?>">
                         <i class="icon-user me-2"></i>
                         <?= L::userSettings(); ?>
                     </a>
@@ -158,7 +159,7 @@
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
                     <a href="<?= $config["dir"]["root"] ?>/manage/users" 
-                       class="nav-link <?= ($page == "manage-users" && (!isset($_REQUEST["id"]) || $_REQUEST["id"] != $_SESSION["userdata"]["id"])) ? "active" : "" ?>">
+                       class="nav-link <?= ($page == "manage-users" && (!isset($_REQUEST["id"]) || (string)$_REQUEST["id"] !== (string)$_SESSION["userdata"]["id"])) ? "active" : "" ?>">
                         <i class="icon-users me-2"></i>
                         <?= L::manageUsers(); ?>
                     </a>

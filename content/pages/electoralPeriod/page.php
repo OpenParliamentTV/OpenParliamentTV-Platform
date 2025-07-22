@@ -1,5 +1,6 @@
 <?php
 
+require_once(__DIR__ . '/../../../modules/utilities/security.php');
 include_once(__DIR__ . '/../../../modules/utilities/auth.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
@@ -27,13 +28,13 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						</div>
 					</div>
 					<div class="col">
-						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
-						<h2><?= $apiResult["data"]["attributes"]["number"] ?>. <?= L::electoralPeriod() ?></h2>
+						<div><?= h($apiResult["data"]["attributes"]["parliamentLabel"]) ?></div>
+						<h2><?= h($apiResult["data"]["attributes"]["number"]) ?>. <?= L::electoralPeriod() ?></h2>
 						<div><?php 
 							if ($apiResult["data"]["attributes"]["dateStart"]) {
 								$formattedDateStart = date("d.m.Y", strtotime($apiResult["data"]["attributes"]["dateStart"]));
 								$formattedDateEnd = ($apiResult["data"]["attributes"]["dateEnd"]) ? date("d.m.Y", strtotime($apiResult["data"]["attributes"]["dateEnd"])) : "";
-								echo $formattedDateStart." – ".$formattedDateEnd; 
+								echo h($formattedDateStart." – ".$formattedDateEnd); 
 							}
 						?></div>
 					</div>

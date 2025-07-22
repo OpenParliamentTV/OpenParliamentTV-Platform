@@ -207,6 +207,18 @@ function createApiErrorDuplicate($type, $field = null) {
     );
 }
 
+function createApiError($message, $code = "GENERIC_ERROR", $status = 500) {
+    return createApiErrorResponse(
+        $status,
+        1,
+        $message,
+        $message,
+        [],
+        null,
+        ["errorCode" => $code]
+    );
+}
+
 /**
  * Database connection with standardized error handling
  */
@@ -250,6 +262,21 @@ function getApiDatabaseConnection($type = 'platform', $parliament = null) {
         "messageErrorMissingParameter",
         ["param" => "parliament"]
     );
+}
+
+/**
+ * Safely sanitizes string input parameters
+ * @param string $input The input to sanitize
+ * @return string Sanitized input (trimmed, null-safe)
+ */
+function sanitizeStringInput($input) {
+    if ($input === null) {
+        return '';
+    }
+    if (!is_string($input)) {
+        return (string)$input;
+    }
+    return trim($input);
 }
 
 /**

@@ -1,3 +1,4 @@
+
 var updateAjax,
 	factionColors = {
 		"DIE LINKE": "#bc3475",

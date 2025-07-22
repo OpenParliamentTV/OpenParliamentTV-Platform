@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once(__DIR__."/../../config.php");
+require_once(__DIR__ . '/../../modules/utilities/security.php');
+applySecurityHeaders();
 
 include_once(__DIR__ . '/../../modules/utilities/auth.php');
 
@@ -142,7 +144,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 						$highlightedName = $mainSpeaker['attributes']['label'];
 						if (isset($_REQUEST['person']) && strlen($_REQUEST['person']) > 1) {
-							$highlightedName = str_replace($_REQUEST['person'], '<em>'.$_REQUEST['person'].'</em>', $highlightedName);
+							// Escape user input before using in HTML, then apply highlighting safely
+							$searchTerm = h($_REQUEST['person']);
+							$highlightedName = str_replace($searchTerm, '<em>'.$searchTerm.'</em>', h($highlightedName));
+						} else {
+							$highlightedName = h($highlightedName);
 						}
 
 						include 'result.table.item.php';
@@ -158,7 +164,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     ?>
     <script type="text/javascript">
 
-        resultsAttributes = <?= json_encode($result["meta"]["attributes"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) ?>
+        resultsAttributes = <?= json_encode($result["meta"]["attributes"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT | JSON_HEX_APOS) ?>
 
     </script>
 	<?php 

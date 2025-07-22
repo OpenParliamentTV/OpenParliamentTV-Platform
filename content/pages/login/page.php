@@ -1,4 +1,7 @@
-<?php include_once(__DIR__ . '/../../header.php'); ?>
+<?php 
+require_once(__DIR__ . '/../../modules/utilities/security.php');
+include_once(__DIR__ . '/../../header.php'); 
+?>
 <?php
 $alertText = $alertText ?? null;
 ?>
@@ -7,13 +10,13 @@ $alertText = $alertText ?? null;
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
             <?php
             if ($alertText) {
-                echo '<div class="alert alert-info" role="alert">'.$alertText.'</div>';
+                echo '<div class="alert alert-info" role="alert">'.h($alertText).'</div>';
             }
 			if (!empty($_SESSION["login"]) && $_SESSION["login"] == 1) {
 
 			?>
 
-				<div class="alert alert-info">Angemeldet als:<br><b><?=$_SESSION["userdata"]["name"]?></b><br><?=$_SESSION["userdata"]["mail"]?></div>
+				<div class="alert alert-info">Angemeldet als:<br><b><?= h($_SESSION["userdata"]["name"]) ?></b><br><?= h($_SESSION["userdata"]["mail"]) ?></div>
 				<button type="button" class="w-100 button-logout btn btn-primary rounded-pill"><?= L::logout(); ?></button>
 
 			<?php
@@ -86,14 +89,14 @@ $(function() {
                         if (error.meta && error.meta.domSelector) {
                             const $field = $(error.meta.domSelector);
                             $field.addClass("is-invalid");
-                            $field.siblings(".invalid-feedback").html(error.detail);
+                            $field.siblings(".invalid-feedback").text(error.detail);
                         } else {
                             // Show general error in response div
                             $("#login-response")
                                 .removeClass("alert-success")
                                 .addClass("alert-danger")
                                 .show()
-                                .html(error.detail);
+                                .text(error.detail);
                         }
                     });
 					$(".button-login").removeClass("working");
@@ -108,7 +111,7 @@ $(function() {
                     .removeClass("alert-success")
                     .addClass("alert-danger")
                     .show()
-                    .html(errorMessage);
+                    .text(errorMessage);
 				$(".button-login").removeClass("working");
             }
         });

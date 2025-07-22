@@ -1,5 +1,6 @@
 <?php
 
+require_once(__DIR__ . '/../../../modules/utilities/security.php');
 include_once(__DIR__ . '/../../../modules/utilities/auth.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
@@ -27,9 +28,9 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						</div>
 					</div>
 					<div class="col">
-						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
-						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. <?= L::electoralPeriod() ?></a></div>
-						<h2 class="mt-2"><?= L::session() ?> <?= $apiResult["data"]["attributes"]["number"] ?></h2>
+						<div><?= h($apiResult["data"]["attributes"]["parliamentLabel"]) ?></div>
+						<div><a href="../electoralPeriod/<?= hAttr($apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"]) ?>"><?= h($apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"]) ?>. <?= L::electoralPeriod() ?></a></div>
+						<h2 class="mt-2"><?= L::session() ?> <?= h($apiResult["data"]["attributes"]["number"]) ?></h2>
 						<div><?php 
 							$startDateParts = explode("T", $apiResult["data"]["attributes"]["dateStart"]);
 							$endDateParts = explode("T", $apiResult["data"]["attributes"]["dateEnd"]);
@@ -37,7 +38,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 
 							$formattedDateStart = date("d.m.Y G:i", strtotime($apiResult["data"]["attributes"]["dateStart"]));
 							$formattedDateEnd = (!$sameDate) ? date("d.m.Y G:i", strtotime($apiResult["data"]["attributes"]["dateEnd"])) : date("G:i", strtotime($apiResult["data"]["attributes"]["dateEnd"]));
-							echo $formattedDateStart." – ".$formattedDateEnd; 
+							echo h($formattedDateStart." – ".$formattedDateEnd); 
 						?></div>
 					</div>
 				</div>
@@ -71,11 +72,11 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<?php 
 					foreach ($apiResult["data"]["relationships"]["agendaItems"]["data"] as $relationshipItem) {
 					?>
-						<div class="entityPreview col" data-type="<?= $relationshipItem["type"] ?>">
+						<div class="entityPreview col" data-type="<?= hAttr($relationshipItem["type"]) ?>">
 							<div class="entityContainer">
-								<a href="<?= $config["dir"]["root"]."/".$relationshipItem["type"]."/".$apiResult["data"]["attributes"]["parliament"]."-".$relationshipItem["id"] ?>">
-									<div><?= $relationshipItem["attributes"]["officialTitle"] ?></div>
-									<div class="entityTitle"><?= $relationshipItem["attributes"]["title"] ?></div>
+								<a href="<?= $config["dir"]["root"]."/".hAttr($relationshipItem["type"])."/".hAttr($apiResult["data"]["attributes"]["parliament"])."-".hAttr($relationshipItem["id"]) ?>">
+									<div><?= h($relationshipItem["attributes"]["officialTitle"]) ?></div>
+									<div class="entityTitle"><?= h($relationshipItem["attributes"]["title"]) ?></div>
 								</a>
 							</div>
 						</div>

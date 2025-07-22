@@ -2,6 +2,8 @@
 session_start();
 
 require_once (__DIR__."/config.php");
+require_once (__DIR__."/modules/utilities/security.php");
+applySecurityHeaders();
 
 if ($config["mode"] == "dev") {
     error_reporting(E_ALL);

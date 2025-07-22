@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once(__DIR__."/../../../config.php");
+require_once(__DIR__ . '/../../../modules/utilities/security.php');
+applySecurityHeaders();
 
 
 include_once(__DIR__ . '/../../../modules/utilities/auth.php');
@@ -21,16 +23,16 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			<?php
 			foreach($config["parliament"] as $k=>$v) {
 				$selectedString = '';
-				if (isset($_REQUEST['parliament']) && $_REQUEST['parliament'] == $k) {
+				if (isset($_REQUEST['parliament']) && hAttr($_REQUEST['parliament']) == $k) {
 					$selectedString = ' selected';
 				}
 				
 				//TODO: Remove once all parliaments should be listed
 				if ($k == 'DE') {
-					echo '<option value="'.$k.'"'.$selectedString.'>'.$v["label"].'</option>';
+					echo '<option value="'.hAttr($k).'"'.$selectedString.'>'.h($v["label"]).'</option>';
 				}
 
-				//echo '<option value="'.$k.'"'.$selectedString.'>'.$v["label"].'</option>';
+				//echo '<option value="'.hAttr($k).'"'.$selectedString.'>'.h($v["label"]).'</option>';
 			}
 			?>
 		</select>
@@ -43,7 +45,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			<option value="all" <?php if (!isset($_REQUEST['electoralPeriod'])) { echo 'selected'; } ?>><?= L::showAll(); ?> <?= L::electoralPeriods(); ?></option>
 			<?php
 			$selectedString = '';
-			if (isset($_REQUEST['electoralPeriod']) && $_REQUEST['electoralPeriod'] == '19') {
+			if (isset($_REQUEST['electoralPeriod']) && hAttr($_REQUEST['electoralPeriod']) == '19') {
 				$selectedString = ' selected';
 			}
 			echo '<option value="19"'.$selectedString.'>19. '. L::electoralPeriod() .'</option>';
@@ -60,7 +62,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 			<?php
 			for ($i=1; $i <= 239; $i++) { 
 			 	$selectedString = '';
-				if (isset($_REQUEST['sessionNumber']) && $_REQUEST['sessionNumber'] == $i) {
+				if (isset($_REQUEST['sessionNumber']) && hAttr($_REQUEST['sessionNumber']) == $i) {
 					$selectedString = ' selected';
 				}
 			 	echo '<option value="'.$i.'"'.$selectedString.'>'.$i.'. '. L::session() .'</option>';

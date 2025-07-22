@@ -20,6 +20,10 @@ function textObjectToHTMLString($inputTextObject, $mediaFileURI, $mediaID, $auto
 	
 	$outputHTML = '<div data-media-file-uri="'.$mediaFileURI.'" data-media-id="'.$mediaID.'">';
 
+	if (!isset($inputTextObject['textBody'])) {
+		return '';
+	}
+
 	foreach ($inputTextObject['textBody'] as $paragraph) {
 		
 		$outputHTML .= '<p data-type="'.$paragraph['type'].'">';
