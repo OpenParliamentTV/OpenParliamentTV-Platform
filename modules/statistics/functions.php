@@ -19,9 +19,12 @@ if (is_array($ESClient) && isset($ESClient["errors"])) {
 /**
  * Get general statistics about the dataset
  * 
+ * @param string $contextFilter Context filter (main-speaker, vice-president, etc.)
+ * @param string|null $factionFilter Faction ID filter
+ * @param float $confidenceThreshold Minimum confidence threshold for NER annotations
  * @return array Statistics about the dataset
  */
-function getGeneralStatistics() {
+function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = null, $confidenceThreshold = 0.7) {
     global $ESClient, $DEBUG_MODE, $config;
     
     // --- Use enhanced statistics index for word frequency ---
@@ -30,15 +33,17 @@ function getGeneralStatistics() {
     // Get total word count and top 20 words by frequency from enhanced statistics
     $totalWords = 0;
     $topWords = [];
+    $contextBasedStats = [];
     
     try {
-        // Get top 20 words by frequency from statistics index
-        $wordsQuery = [
+        // Enhanced query to leverage speaker context groupings from planning docs
+        $enhancedWordsQuery = [
             'size' => 0,
             'query' => [
                 'term' => ['aggregation_type' => 'word_frequency_daily_party']
             ],
             'aggs' => [
+                // Top words overall
                 'top_words' => [
                     'terms' => [
                         'field' => 'word',
@@ -49,13 +54,47 @@ function getGeneralStatistics() {
                         'total_frequency' => ['sum' => ['field' => 'count']]
                     ]
                 ],
+                // Enhanced: Aggregation type groupings (actual field from real data)
+                'by_aggregation_type' => [
+                    'terms' => ['field' => 'aggregation_type'],
+                    'aggs' => [
+                        'top_words' => [
+                            'terms' => [
+                                'field' => 'word',
+                                'size' => 10,
+                                'order' => ['total_frequency' => 'desc']
+                            ],
+                            'aggs' => [
+                                'total_frequency' => ['sum' => ['field' => 'count']]
+                            ]
+                        ]
+                    ]
+                ],
+                // Enhanced: Party-specific analysis as recommended  
+                'by_party' => [
+                    'terms' => ['field' => 'party_id', 'size' => 10],
+                    'aggs' => [
+                        'top_words' => [
+                            'terms' => [
+                                'field' => 'word',
+                                'size' => 5,
+                                'order' => ['total_frequency' => 'desc']
+                            ],
+                            'aggs' => [
+                                'total_frequency' => ['sum' => ['field' => 'count']]
+                            ]
+                        ]
+                    ]
+                ],
                 'total_unique_words' => [
                     'cardinality' => ['field' => 'word']
                 ]
             ]
         ];
         
-        $wordsResults = $ESClient->search(['index' => $statisticsIndex, 'body' => $wordsQuery]);
+        $wordsResults = $ESClient->search(['index' => $statisticsIndex, 'body' => $enhancedWordsQuery]);
+        
+        // Process overall top words
         if (isset($wordsResults['aggregations']['top_words']['buckets'])) {
             foreach ($wordsResults['aggregations']['top_words']['buckets'] as $bucket) {
                 $topWords[] = [
@@ -63,6 +102,44 @@ function getGeneralStatistics() {
                     'doc_count' => $bucket['total_frequency']['value']
                 ];
             }
+        }
+        
+        // Process enhanced aggregation-type-based statistics from real data  
+        if (isset($wordsResults['aggregations']['by_aggregation_type']['buckets'])) {
+            foreach ($wordsResults['aggregations']['by_aggregation_type']['buckets'] as $aggBucket) {
+                $aggregationType = $aggBucket['key'];
+                $aggStats = ['aggregationType' => $aggregationType, 'topWords' => []];
+                
+                if (isset($aggBucket['top_words']['buckets'])) {
+                    foreach ($aggBucket['top_words']['buckets'] as $wordBucket) {
+                        $aggStats['topWords'][] = [
+                            'word' => $wordBucket['key'],
+                            'count' => $wordBucket['total_frequency']['value']
+                        ];
+                    }
+                }
+                $contextBasedStats[] = $aggStats;
+            }
+        }
+        
+        // Process party-based statistics from real data
+        if (isset($wordsResults['aggregations']['by_party']['buckets'])) {
+            $partyStats = ['type' => 'by_party', 'parties' => []];
+            foreach ($wordsResults['aggregations']['by_party']['buckets'] as $partyBucket) {
+                $partyID = $partyBucket['key'];
+                $partyInfo = ['partyID' => $partyID, 'topWords' => []];
+                
+                if (isset($partyBucket['top_words']['buckets'])) {
+                    foreach ($partyBucket['top_words']['buckets'] as $wordBucket) {
+                        $partyInfo['topWords'][] = [
+                            'word' => $wordBucket['key'],
+                            'count' => $wordBucket['total_frequency']['value']
+                        ];
+                    }
+                }
+                $partyStats['parties'][] = $partyInfo;
+            }
+            $contextBasedStats[] = $partyStats;
         }
         
         if (isset($wordsResults['aggregations']['total_unique_words']['value'])) {
@@ -76,15 +153,43 @@ function getGeneralStatistics() {
     }
     // --- End enhanced statistics index ---
 
-    // Main aggregation query for all other stats (as before)
+    // Build query filters based on parameters
+    $baseQuery = ['bool' => ['must' => []]];
+    
+    // Add faction filter to main query if specified
+    if ($factionFilter) {
+        $baseQuery['bool']['must'][] = [
+            'nested' => [
+                'path' => 'annotations.data',
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                            ['term' => ['annotations.data.id' => $factionFilter]],
+                            ['term' => ['annotations.data.attributes.context' => 'main-speaker-faction']]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    // Main aggregation query with dynamic context filtering
     $query = [
         'size' => 0,
+        'query' => count($baseQuery['bool']['must']) > 0 ? $baseQuery : ['match_all' => (object)[]],
         'aggs' => [
             'speakers' => [
                 'nested' => [ 'path' => 'annotations.data' ],
                 'aggs' => [
                     'filtered_speakers' => [
-                        'filter' => [ 'term' => [ 'annotations.data.attributes.context' => 'main-speaker' ] ],
+                        'filter' => [ 
+                            'bool' => [
+                                'must' => [
+                                    ['term' => [ 'annotations.data.attributes.context' => $contextFilter ]],
+                                    ['term' => [ 'annotations.data.type' => 'person' ]]
+                                ]
+                            ]
+                        ],
                         'aggs' => [
                             'unique_speakers' => [ 'cardinality' => [ 'field' => 'annotations.data.id' ] ],
                             'top_speakers' => [ 'terms' => [ 'field' => 'annotations.data.id', 'size' => 10 ] ]
@@ -143,10 +248,12 @@ function getGeneralStatistics() {
             throw new Exception('Invalid OpenSearch response: missing required aggregations');
         }
         $aggregations = $results['aggregations'];
-        // Inject the top words from the words index
+        // Inject the enhanced word frequency data from statistics index
         $aggregations['wordFrequency'] = [
             'buckets' => $topWords,
-            'sum_other_doc_count' => $totalWords
+            'sum_other_doc_count' => $totalWords,
+            // Enhanced: Context-based word analysis as recommended in planning docs
+            'contextBasedStats' => $contextBasedStats
         ];
         return $aggregations;
     } catch (Exception $e) {
@@ -164,6 +271,9 @@ function getGeneralStatistics() {
  */
 function getEntityStatistics($entityType, $entityID) {
     global $ESClient, $DEBUG_MODE;
+    
+    // Determine appropriate context based on entity type
+    $entitySpecificContext = ($entityType === 'person') ? 'main-speaker' : 'main-speaker-faction';
     
     $query = [
         "size" => 0,
@@ -186,10 +296,54 @@ function getEntityStatistics($entityType, $entityID) {
                     "path" => "annotations.data"
                 ],
                 "aggs" => [
+                    "unique_speeches" => [
+                        "reverse_nested" => new stdClass()
+                    ],
                     "top_speakers" => [
                         "terms" => [
                             "field" => "annotations.data.id",
                             "size" => 10
+                        ]
+                    ],
+                    "main_speakers_only" => [
+                        "filter" => [
+                            "bool" => [
+                                "must" => [
+                                    ["term" => ["annotations.data.type" => "person"]],
+                                    ["term" => ["annotations.data.attributes.context" => $entitySpecificContext]]
+                                ]
+                            ]
+                        ],
+                        "aggs" => [
+                            "top_main_speakers" => [
+                                "terms" => [
+                                    "field" => "annotations.data.id",
+                                    "size" => 10
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            "speeches_as_main_speaker" => [
+                "nested" => [
+                    "path" => "annotations.data"
+                ],
+                "aggs" => [
+                    "filter_this_person_as_main_speaker" => [
+                        "filter" => [
+                            "bool" => [
+                                "must" => [
+                                    ["term" => ["annotations.data.id" => $entityID]],
+                                    ["term" => ["annotations.data.type" => $entityType]],
+                                    ["term" => ["annotations.data.attributes.context" => $entitySpecificContext]]
+                                ]
+                            ]
+                        ],
+                        "aggs" => [
+                            "unique_speeches_as_speaker" => [
+                                "reverse_nested" => new stdClass()
+                            ]
                         ]
                     ]
                 ]
@@ -294,109 +448,6 @@ function getTermStatistics() {
     ];
 }
 
-/**
- * Compare terms statistics using enhanced statistics index
- * 
- * @param array $terms Array of terms to compare
- * @param array $factions Optional array of factions to filter by
- * @return array Comparison statistics
- */
-function compareTermsStatistics($terms, $factions = []) {
-    global $ESClient, $DEBUG_MODE;
-    
-    // Use enhanced statistics index for better performance
-    $statisticsIndex = 'optv_statistics_de'; // TODO: Support other parliaments
-    
-    $mustClauses = [
-        ['terms' => ['word' => $terms]],
-        ['term' => ['aggregation_type' => 'word_frequency_daily_party']]
-    ];
-    
-    // Add faction filter if specified
-    if (!empty($factions)) {
-        $mustClauses[] = ['terms' => ['party_id' => $factions]];
-    }
-    
-    $query = [
-        "size" => 0,
-        "query" => [
-            "bool" => [
-                "must" => $mustClauses
-            ]
-        ],
-        "aggs" => [
-            "term_comparison" => [
-                "filters" => [
-                    "filters" => array_reduce($terms, function($acc, $term) {
-                        $acc[$term] = [
-                            "term" => [
-                                "word" => $term
-                            ]
-                        ];
-                        return $acc;
-                    }, [])
-                ],
-                "aggs" => [
-                    "over_time" => [
-                        "date_histogram" => [
-                            "field" => "date",
-                            "calendar_interval" => "1M",
-                            "format" => "yyyy-MM"
-                        ],
-                        "aggs" => [
-                            "total_count" => ["sum" => ["field" => "count"]]
-                        ]
-                    ]
-                ]
-            ]
-        ]
-    ];
-    
-    try {
-        if ($DEBUG_MODE) {
-            error_log("Enhanced Compare Terms Query: " . json_encode($query, JSON_PRETTY_PRINT));
-        }
-        
-        $results = $ESClient->search([
-            "index" => $statisticsIndex,
-            "body" => $query
-        ]);
-        
-        if ($DEBUG_MODE) {
-            error_log("Enhanced Compare Terms Response: " . json_encode($results, JSON_PRETTY_PRINT));
-        }
-        
-        // Transform results to match expected format
-        $transformedResults = [
-            "term_comparison" => [
-                "buckets" => []
-            ]
-        ];
-        
-        if (isset($results["aggregations"]["term_comparison"]["buckets"])) {
-            foreach ($results["aggregations"]["term_comparison"]["buckets"] as $term => $termData) {
-                $transformedResults["term_comparison"]["buckets"][$term] = [
-                    "over_time" => [
-                        "buckets" => array_map(function($bucket) {
-                            return [
-                                "key_as_string" => $bucket["key_as_string"],
-                                "doc_count" => $bucket["total_count"]["value"] ?? $bucket["doc_count"]
-                            ];
-                        }, $termData["over_time"]["buckets"])
-                    ]
-                ];
-            }
-        }
-        
-        return $transformedResults;
-    } catch(Exception $e) {
-        error_log("Enhanced term comparison error: " . $e->getMessage());
-        if ($DEBUG_MODE) {
-            error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
-        }
-        return null;
-    }
-}
 
 /**
  * Get network/relationship analysis
@@ -486,7 +537,7 @@ function getNetworkAnalysis($entityID = null, $entityType = null) {
                                                         "filter" => [
                                                             "bool" => [
                                                                 "must_not" => [
-                                                                    ["term" => ["annotations.data.attributes.context" => "main-speaker"]]
+                                                                    ["term" => ["annotations.data.attributes.context" => $entitySpecificContext]]
                                                                 ]
                                                             ]
                                                         ],

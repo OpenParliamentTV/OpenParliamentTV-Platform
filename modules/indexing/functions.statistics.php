@@ -48,6 +48,7 @@ function updateSpeechStatistics($speechData, $parliamentCode = 'de') {
             'party_label' => $party['label'] ?? null,
             'count' => $count,
             'speech_count' => 1,
+            'speech_ids' => [$speechData['id'] ?? null => true],
             'last_updated' => $today
         ];
         
@@ -59,8 +60,18 @@ function updateSpeechStatistics($speechData, $parliamentCode = 'de') {
         ];
         $bulkData[] = [
             'script' => [
-                'source' => 'ctx._source.count += params.count; ctx._source.speech_count += 1; ctx._source.last_updated = params.today',
-                'params' => ['count' => $count, 'today' => $today]
+                'source' => '
+                    ctx._source.count += params.count;
+                    if (!ctx._source.containsKey("speech_ids")) {
+                        ctx._source.speech_ids = [:];
+                    }
+                    if (params.speechId != null && !ctx._source.speech_ids.containsKey(params.speechId)) {
+                        ctx._source.speech_ids[params.speechId] = true;
+                        ctx._source.speech_count = ctx._source.speech_ids.size();
+                    }
+                    ctx._source.last_updated = params.today
+                ',
+                'params' => ['count' => $count, 'speechId' => $speechData['id'] ?? null, 'today' => $today]
             ],
             'upsert' => $dailyPartyAgg
         ];
@@ -75,6 +86,7 @@ function updateSpeechStatistics($speechData, $parliamentCode = 'de') {
                 'word' => $word,
                 'count' => $count,
                 'speech_count' => 1,
+                'speech_ids' => [$speechData['id'] ?? null => true],
                 'first_used' => $dateTimestamp,
                 'last_used' => $dateTimestamp,
                 'first_used_string' => $dateString,
@@ -92,7 +104,13 @@ function updateSpeechStatistics($speechData, $parliamentCode = 'de') {
                 'script' => [
                     'source' => '
                         ctx._source.count += params.count; 
-                        ctx._source.speech_count += 1; 
+                        if (!ctx._source.containsKey("speech_ids")) {
+                            ctx._source.speech_ids = [:];
+                        }
+                        if (params.speechId != null && !ctx._source.speech_ids.containsKey(params.speechId)) {
+                            ctx._source.speech_ids[params.speechId] = true;
+                            ctx._source.speech_count = ctx._source.speech_ids.size();
+                        } 
                         ctx._source.last_used = params.dateTimestamp;
                         ctx._source.last_used_string = params.dateString;
                         ctx._source.last_updated = params.today;
@@ -103,6 +121,7 @@ function updateSpeechStatistics($speechData, $parliamentCode = 'de') {
                     ',
                     'params' => [
                         'count' => $count, 
+                        'speechId' => $speechData['id'] ?? null,
                         'dateTimestamp' => $dateTimestamp,
                         'dateString' => $dateString,
                         'today' => $today

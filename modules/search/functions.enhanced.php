@@ -78,7 +78,7 @@ function searchAutocompleteEnhanced($query, $maxResults = 10, $partyFilter = nul
 /**
  * Get word trends over time
  */
-function getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode = 'de') {
+function getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode = 'de', $factions = []) {
     $ESClient = getApiOpenSearchClient();
     if (is_array($ESClient) && isset($ESClient["errors"])) {
         return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
@@ -86,15 +86,22 @@ function getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode = '
     
     $indexName = 'optv_statistics_' . strtolower($parliamentCode);
     
+    $mustClauses = [
+        ['terms' => ['word' => $words]],
+        ['term' => ['aggregation_type' => 'word_frequency_daily_party']],
+        ['range' => ['date' => ['gte' => strtotime($startDate), 'lte' => strtotime($endDate)]]]
+    ];
+    
+    // Add faction filter if specified
+    if (!empty($factions)) {
+        $mustClauses[] = ['terms' => ['party_id' => $factions]];
+    }
+    
     $query = [
         'size' => 0,
         'query' => [
             'bool' => [
-                'must' => [
-                    ['terms' => ['word' => $words]],
-                    ['term' => ['aggregation_type' => 'word_frequency_daily_party']],
-                    ['range' => ['date' => ['gte' => strtotime($startDate), 'lte' => strtotime($endDate)]]]
-                ]
+                'must' => $mustClauses
             ]
         ],
         'aggs' => [
@@ -152,7 +159,7 @@ function getSpeakerVocabularyEnhanced($speakerId, $limit = 50, $parliamentCode =
                 'terms' => [
                     'field' => 'word',
                     'size' => $limit,
-                    'order' => ['_key' => 'asc']
+                    'order' => ['frequency' => 'desc']
                 ],
                 'aggs' => [
                     'frequency' => ['max' => ['field' => 'count']],
@@ -162,8 +169,7 @@ function getSpeakerVocabularyEnhanced($speakerId, $limit = 50, $parliamentCode =
                 ]
             ],
             'total_words' => ['sum' => ['field' => 'count']],
-            'unique_words' => ['cardinality' => ['field' => 'word']],
-            'total_speeches' => ['sum' => ['field' => 'speech_count']]
+            'unique_words' => ['cardinality' => ['field' => 'word']]
         ]
     ];
     
