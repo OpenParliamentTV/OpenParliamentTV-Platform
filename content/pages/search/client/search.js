@@ -82,7 +82,7 @@ $(document).ready( function() {
 				submitQueryText();
 			}
 			return false;
-		} else if ($('#edit-query').val() == '' && evt.keyCode == 8 || evt.keyCode == 46) {
+		} else if ($('#edit-query').val() == '' && (evt.keyCode == 8 || evt.keyCode == 46)) {
 			// backspace or delete when query is empty
 			evt.preventDefault();
 			if ($('.searchInputContainer .queryItem.markedForDeletion').length != 0) {
