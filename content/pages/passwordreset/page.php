@@ -1,6 +1,6 @@
 <?php 
 include_once(__DIR__ . '/../../header.php'); 
-require_once(__DIR__ . '/../../modules/utilities/security.php');
+require_once(__DIR__ . '/../../../modules/utilities/security.php');
 applySecurityHeaders();
 ?>
 <main class="container subpage">
