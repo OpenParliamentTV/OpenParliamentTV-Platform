@@ -15,7 +15,7 @@
 				<div style="float: left; margin-right: 15px; padding: 15px 10px 0px 10px">
 					<div><?= L::supportedBy(); ?>:</div>
 					<div class="partnerLogos">
-						<a href="https://www.abgeordnetenwatch.de/" target="_blank"><img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/abgeordnetenwatch-sw.png" style="height: 26px; margin-top: -4px;"></a>
+						<a href="https://www.abgeordnetenwatch.de/" target="_blank"><img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/abgeordnetenwatch-sw.png" style="height: 46px; margin: -13px 14px 11px 0;"></a>
 						<a href="https://correctiv.org/" target="_blank"><img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/correctiv.svg" style="height: 38px; margin-top: -8px; margin-bottom: 15px; margin-left: 10px; filter: opacity(0.8);"></a>
 						<a href="https://bbcnewslabs.co.uk/" target="_blank"><img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/bbc-news-labs.svg" style="height: 33px; margin-top: -8px;  margin-left: 10px; filter: opacity(0.7);"></a>
 						<a href="https://techcultivation.org/" target="_blank"><img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/cct.png" style="height: 37px; margin-top: -9px;filter: grayscale(1) invert(0) brightness(0) opacity(0.8);"></a>
