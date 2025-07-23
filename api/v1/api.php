@@ -152,9 +152,6 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "terms":
                     $item = statisticsGetTerms($api_request);
                     return createApiResponse($item);
-                case "compare-terms":
-                    $item = statisticsCompareTerms($api_request);
-                    return createApiResponse($item);
                 case "word-trends":
                     $item = statisticsGetWordTrends($api_request);
                     return createApiResponse($item);
