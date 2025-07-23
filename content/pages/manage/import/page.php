@@ -1031,8 +1031,8 @@ document.addEventListener('DOMContentLoaded', function() {
     async function fetchEntityCounts() {
         const url = getApiUrl('statistics', 'entity-counts');
         const result = await apiCall(url);
-        if (result.success && result.data) {
-            appState.entityCounts = result.data;
+        if (result.success && result.data && result.data.attributes && result.data.attributes.entityCounts) {
+            appState.entityCounts = result.data.attributes.entityCounts;
             // Trigger a UI update with the new counts.
             // The next poll of fetchAdsStatus will merge this with live data.
             updateAdsUI({ globalStatus: 'idle', activeType: null, types: {} });
