@@ -511,7 +511,8 @@ function processEnhancedIndexIncremental($parliament, $items) {
         
         // Ensure enhanced indices exist
         require_once(__DIR__ . '/../../../modules/indexing/functions.enhanced.php');
-        $createResult = createEnhancedIndices($parliamentCode, false);
+        require_once(__DIR__ . '/../../../modules/indexing/functions.statistics.php');
+        $createResult = createStatisticsIndexing($parliamentCode, false);
         if (!$createResult['success']) {
             return [
                 'success' => false,
@@ -531,19 +532,13 @@ function processEnhancedIndexIncremental($parliament, $items) {
                 $speechId = $item['data']['id'];
                 $speechData = $item['data'];
                 
-                // Update word events index
-                $wordEventsResult = updateWordEventsForSpeech($parliamentCode, $speechId, $speechData);
-                if (!$wordEventsResult['success']) {
-                    $errors[] = "Word events update failed for {$speechId}: " . $wordEventsResult['error'];
-                }
-                
-                // Update statistics index
-                $statisticsResult = updateStatisticsForSpeech($parliamentCode, $speechId, $speechData);
+                // Update statistics index only (word events eliminated)
+                $statisticsResult = processStatisticsForSpeechOptimized($speechData, $parliamentCode);
                 if (!$statisticsResult['success']) {
                     $errors[] = "Statistics update failed for {$speechId}: " . $statisticsResult['error'];
                 }
                 
-                if ($wordEventsResult['success'] && $statisticsResult['success']) {
+                if ($statisticsResult['success']) {
                     $processed++;
                 }
                 

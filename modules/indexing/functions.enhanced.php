@@ -3,78 +3,6 @@
 require_once(__DIR__.'/../utilities/functions.api.php');
 require_once(__DIR__.'/../search/functions.php');
 
-/**
- * Create word events index mapping
- */
-function createWordEventsIndex($parliamentCode = 'de') {
-    $ESClient = getApiOpenSearchClient();
-    if (is_array($ESClient) && isset($ESClient["errors"])) {
-        return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
-    }
-    
-    $indexName = 'optv_word_events_' . strtolower($parliamentCode);
-    
-    $mapping = [
-        'mappings' => [
-            'properties' => [
-                'word' => [
-                    'type' => 'text',
-                    'analyzer' => 'german',
-                    'fields' => [
-                        'keyword' => ['type' => 'keyword']
-                    ]
-                ],
-                'speech_id' => ['type' => 'keyword'],
-                'speaker_id' => ['type' => 'keyword'],
-                'party_id' => ['type' => 'keyword'],
-                'party_label' => ['type' => 'keyword'],
-                'date' => ['type' => 'date', 'format' => 'yyyy-MM-dd'],
-                'position_in_speech' => ['type' => 'integer'],
-                'time_start' => ['type' => 'float'],
-                'time_end' => ['type' => 'float'],
-                'sentence_id' => ['type' => 'keyword'],
-                'position_in_sentence' => ['type' => 'integer']
-            ]
-        ],
-        'settings' => [
-            'number_of_shards' => 2,
-            'number_of_replicas' => 0,
-            'index.mapping.total_fields.limit' => 2000,
-            'refresh_interval' => '30s',
-            'codec' => 'best_compression',
-            'analysis' => [
-                'analyzer' => [
-                    'german_word_analyzer' => [
-                        'tokenizer' => 'standard',
-                        'filter' => ['lowercase', 'german_stemmer']
-                    ]
-                ],
-                'filter' => [
-                    'german_stemmer' => [
-                        'type' => 'stemmer',
-                        'name' => 'light_german'
-                    ]
-                ]
-            ]
-        ]
-    ];
-    
-    try {
-        if ($ESClient->indices()->exists(['index' => $indexName])) {
-            return ['success' => true, 'message' => 'Index already exists'];
-        }
-        
-        $response = $ESClient->indices()->create([
-            'index' => $indexName,
-            'body' => $mapping
-        ]);
-        
-        return ['success' => true, 'response' => $response];
-    } catch (Exception $e) {
-        error_log("Error creating word events index: " . $e->getMessage());
-        return ['success' => false, 'error' => $e->getMessage()];
-    }
-}
 
 /**
  * Create statistics index mapping
@@ -102,8 +30,7 @@ function createStatisticsIndex($parliamentCode = 'de') {
                         ]
                     ]
                 ],
-                'party_id' => ['type' => 'keyword'],
-                'party_label' => ['type' => 'keyword'],
+                'faction_id' => ['type' => 'keyword'],
                 'speaker_id' => ['type' => 'keyword'],
                 'count' => ['type' => 'long'],
                 'speech_count' => ['type' => 'long'],
@@ -117,6 +44,9 @@ function createStatisticsIndex($parliamentCode = 'de') {
         'settings' => [
             'number_of_shards' => 1,
             'number_of_replicas' => 0,
+            'refresh_interval' => '30s', // Reduce refresh frequency during indexing
+            'index.merge.policy.max_merged_segment' => '2gb', // Larger segments
+            'index.translog.flush_threshold_size' => '1gb', // Less frequent flushing
             'analysis' => [
                 'analyzer' => [
                     'autocomplete_analyzer' => [
@@ -153,161 +83,67 @@ function createStatisticsIndex($parliamentCode = 'de') {
 }
 
 /**
- * Delete enhanced indices for clean rebuild
+ * Delete statistics index for clean rebuild
  */
-function deleteEnhancedIndices($parliamentCode = 'de') {
+function deleteStatisticsIndex($parliamentCode = 'de') {
     $ESClient = getApiOpenSearchClient();
     if (is_array($ESClient) && isset($ESClient["errors"])) {
         return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
     }
     
-    $results = [];
-    $wordEventsIndex = 'optv_word_events_' . strtolower($parliamentCode);
     $statisticsIndex = 'optv_statistics_' . strtolower($parliamentCode);
     
-    // Delete word events index
-    try {
-        if ($ESClient->indices()->exists(['index' => $wordEventsIndex])) {
-            $response = $ESClient->indices()->delete(['index' => $wordEventsIndex]);
-            $results['word_events'] = ['success' => true, 'message' => 'Word events index deleted', 'response' => $response];
-        } else {
-            $results['word_events'] = ['success' => true, 'message' => 'Word events index did not exist'];
-        }
-    } catch (Exception $e) {
-        $results['word_events'] = ['success' => false, 'error' => $e->getMessage()];
-        error_log("Error deleting word events index: " . $e->getMessage());
-    }
-    
-    // Delete statistics index
     try {
         if ($ESClient->indices()->exists(['index' => $statisticsIndex])) {
             $response = $ESClient->indices()->delete(['index' => $statisticsIndex]);
-            $results['statistics'] = ['success' => true, 'message' => 'Statistics index deleted', 'response' => $response];
+            return ['success' => true, 'message' => 'Statistics index deleted', 'response' => $response];
         } else {
-            $results['statistics'] = ['success' => true, 'message' => 'Statistics index did not exist'];
+            return ['success' => true, 'message' => 'Statistics index did not exist'];
         }
     } catch (Exception $e) {
-        $results['statistics'] = ['success' => false, 'error' => $e->getMessage()];
         error_log("Error deleting statistics index: " . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
     }
-    
-    // Overall success if both operations succeeded
-    $overallSuccess = $results['word_events']['success'] && $results['statistics']['success'];
-    
-    return [
-        'success' => $overallSuccess,
-        'results' => $results,
-        'message' => $overallSuccess ? 'Enhanced indices cleaned successfully' : 'Some indices failed to delete'
-    ];
 }
 
 /**
- * Create enhanced indices with clean rebuild option
+ * Create statistics index with clean rebuild option
  */
-function createEnhancedIndices($parliamentCode = 'de', $cleanRebuild = false) {
+function createStatisticsIndexing($parliamentCode = 'de', $cleanRebuild = false) {
     $results = [];
     
-    // Clean rebuild: delete existing indices first
+    // Clean rebuild: delete existing index first
     if ($cleanRebuild) {
-        $deleteResult = deleteEnhancedIndices($parliamentCode);
+        $deleteResult = deleteStatisticsIndex($parliamentCode);
         $results['cleanup'] = $deleteResult;
         
         if (!$deleteResult['success']) {
             return [
                 'success' => false,
-                'error' => 'Failed to clean existing indices for rebuild',
+                'error' => 'Failed to clean existing statistics index for rebuild',
                 'details' => $deleteResult
             ];
         }
     }
     
-    // Create word events index
-    $wordEventsResult = createWordEventsIndex($parliamentCode);
-    $results['word_events'] = $wordEventsResult;
-    
     // Create statistics index
     $statisticsResult = createStatisticsIndex($parliamentCode);
     $results['statistics'] = $statisticsResult;
     
-    // Overall success
-    $overallSuccess = $wordEventsResult['success'] && $statisticsResult['success'];
-    
     return [
-        'success' => $overallSuccess,
+        'success' => $statisticsResult['success'],
         'results' => $results,
-        'message' => $overallSuccess ? 'Enhanced indices created successfully' : 'Some indices failed to create'
+        'message' => $statisticsResult['success'] ? 'Statistics index created successfully' : 'Statistics index creation failed'
     ];
 }
 
 /**
- * Test index creation for both new indices
+ * Test statistics index creation
  */
-function testEnhancedIndexCreation($parliamentCode = 'de') {
-    return createEnhancedIndices($parliamentCode, false);
+function testStatisticsIndexCreation($parliamentCode = 'de') {
+    return createStatisticsIndexing($parliamentCode, false);
 }
 
-/**
- * Update word events index for a specific speech (incremental)
- */
-function updateWordEventsForSpeech($parliamentCode, $speechId, $speechData) {
-    try {
-        require_once(__DIR__ . '/../utilities/functions.api.php');
-        require_once(__DIR__ . '/functions.wordEvents.php');
-        
-        $ESClient = getApiOpenSearchClient();
-        if (is_array($ESClient) && isset($ESClient["errors"])) {
-            return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
-        }
-        
-        $indexName = 'optv_word_events_' . strtolower($parliamentCode);
-        
-        // First, delete existing word events for this speech to avoid duplicates
-        $deleteQuery = [
-            'query' => [
-                'term' => ['speech_id' => $speechId]
-            ]
-        ];
-        
-        try {
-            $ESClient->deleteByQuery([
-                'index' => $indexName,
-                'body' => $deleteQuery
-            ]);
-        } catch (Exception $e) {
-            // Index might not exist or no documents to delete - that's fine
-        }
-        
-        // Extract word events from speech data
-        $wordEvents = extractWordEventsFromSpeech($speechId, $speechData);
-        
-        if (empty($wordEvents)) {
-            return ['success' => true, 'message' => 'No word events to index - metadata-only speech'];
-        }
-        
-        // Bulk index the word events
-        $bulkParams = ['body' => []];
-        foreach ($wordEvents as $wordEvent) {
-            $bulkParams['body'][] = [
-                'index' => [
-                    '_index' => $indexName,
-                    '_id' => $wordEvent['id'] ?? null
-                ]
-            ];
-            $bulkParams['body'][] = $wordEvent;
-        }
-        
-        $response = $ESClient->bulk($bulkParams);
-        
-        if (isset($response['errors']) && $response['errors']) {
-            return ['success' => false, 'error' => 'Bulk indexing failed for word events'];
-        }
-        
-        return ['success' => true, 'message' => 'Word events updated for speech ' . $speechId];
-        
-    } catch (Exception $e) {
-        return ['success' => false, 'error' => $e->getMessage()];
-    }
-}
 
 /**
  * Update statistics index for a specific speech (incremental)
@@ -335,85 +171,59 @@ function updateStatisticsForSpeech($parliamentCode, $speechId, $speechData) {
     }
 }
 
+
 /**
- * Extract word events from speech data for incremental indexing
+ * Optimize statistics index by cleaning up deleted documents and merging segments
  */
-function extractWordEventsFromSpeech($speechId, $speechData) {
+function optimizeStatisticsIndex($parliamentCode = 'de') {
+    $ESClient = getApiOpenSearchClient();
+    if (is_array($ESClient) && isset($ESClient["errors"])) {
+        return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
+    }
+    
+    $statisticsIndex = 'optv_statistics_' . strtolower($parliamentCode);
+    
     try {
-        require_once(__DIR__ . '/functions.extraction.php');
-        require_once(__DIR__ . '/functions.textprocessing.php');
+        // Get stats before optimization
+        $statsBefore = $ESClient->indices()->stats(['index' => $statisticsIndex]);
+        $docsBefore = $statsBefore['indices'][$statisticsIndex]['total']['docs'];
         
-        global $config;
+        // Force merge to clean up deleted documents and optimize segments
+        $mergeParams = [
+            'index' => $statisticsIndex,
+            'max_num_segments' => 1, // Merge to single segment for maximum optimization
+            'only_expunge_deletes' => false // Full optimization, not just deletes
+        ];
         
-        // Extract speech metadata
-        $date = extractSpeechDateString($speechData);
-        $speakerId = extractMainSpeakerId($speechData);
-        $party = extractMainSpeakerFaction($speechData);
+        $startTime = microtime(true);
+        $mergeResponse = $ESClient->indices()->forcemerge($mergeParams);
+        $endTime = microtime(true);
         
-        // Check if speech has any text content
-        if (!isset($speechData['attributes']['textContents']) || 
-            !is_array($speechData['attributes']['textContents']) ||
-            empty($speechData['attributes']['textContents'])) {
-            return [];
-        }
+        // Get stats after optimization
+        sleep(2); // Give OpenSearch time to update stats
+        $statsAfter = $ESClient->indices()->stats(['index' => $statisticsIndex]);
+        $docsAfter = $statsAfter['indices'][$statisticsIndex]['total']['docs'];
         
-        // Check textContentsCount if available
-        if (isset($speechData['attributes']['textContentsCount']) && $speechData['attributes']['textContentsCount'] == 0) {
-            return [];
-        }
+        $deletedCleaned = $docsBefore['deleted'] - $docsAfter['deleted'];
+        $sizeBefore = $statsBefore['indices'][$statisticsIndex]['total']['store']['size_in_bytes'];
+        $sizeAfter = $statsAfter['indices'][$statisticsIndex]['total']['store']['size_in_bytes'];
+        $spaceReclaimed = $sizeBefore - $sizeAfter;
         
-        $wordEvents = [];
-        $position = 0;
-        
-        // Process text contents and extract word events
-        foreach ($speechData['attributes']['textContents'] as $textContent) {
-            if (!isset($textContent['textBody']) || !is_array($textContent['textBody'])) continue;
-            
-            foreach ($textContent['textBody'] as $textBodyItem) {
-                if (!isset($textBodyItem['sentences']) || !is_array($textBodyItem['sentences'])) continue;
-                
-                foreach ($textBodyItem['sentences'] as $sentence) {
-                    if (!isset($sentence['text']) || empty($sentence['text'])) continue;
-                    
-                    $sentenceText = $sentence['text'];
-                    $timeStart = isset($sentence['timeStart']) ? floatval($sentence['timeStart']) : null;
-                    $timeEnd = isset($sentence['timeEnd']) ? floatval($sentence['timeEnd']) : null;
-                    $words = tokenizeWords($sentenceText);
-                    
-                    foreach ($words as $word) {
-                        $normalizedWord = normalizeWord($word);
-                        
-                        // Skip stopwords for events index
-                        if (isStopword($normalizedWord, $config)) {
-                            $position++;
-                            continue;
-                        }
-                        
-                        $wordEvents[] = [
-                            'id' => $speechId . '_' . $position,
-                            'word' => $normalizedWord,
-                            'speech_id' => $speechId,
-                            'speaker_id' => $speakerId,
-                            'party_id' => $party['id'] ?? null,
-                            'party_label' => $party['label'] ?? null,
-                            'date' => $date,
-                            'position_in_speech' => $position,
-                            'time_start' => $timeStart,
-                            'time_end' => $timeEnd,
-                            'sentence_context' => truncateContext($sentenceText, 200)
-                        ];
-                        
-                        $position++;
-                    }
-                }
-            }
-        }
-        
-        return $wordEvents;
+        return [
+            'success' => true,
+            'duration' => round($endTime - $startTime, 2),
+            'deleted_cleaned' => $deletedCleaned,
+            'space_reclaimed' => $spaceReclaimed,
+            'space_savings_percent' => $sizeBefore > 0 ? round(($spaceReclaimed / $sizeBefore) * 100, 2) : 0,
+            'before' => $docsBefore,
+            'after' => $docsAfter,
+            'message' => "Optimization complete: {$deletedCleaned} deleted documents cleaned, " . 
+                        round($spaceReclaimed / 1024 / 1024, 2) . " MB reclaimed"
+        ];
         
     } catch (Exception $e) {
-        error_log("Error extracting word events from speech {$speechId}: " . $e->getMessage());
-        return [];
+        error_log("Error optimizing statistics index: " . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
     }
 }
 
@@ -431,7 +241,7 @@ function extractStatisticsFromSpeech($speechId, $speechData) {
         $dateTimestamp = extractSpeechDate($speechData);
         $dateString = extractSpeechDateString($speechData);
         $speakerId = extractMainSpeakerId($speechData);
-        $party = extractMainSpeakerFaction($speechData);
+        $faction = extractMainSpeakerFaction($speechData);
         
         if (empty($dateTimestamp)) {
             return [];
@@ -448,17 +258,16 @@ function extractStatisticsFromSpeech($speechId, $speechData) {
         $today = date('Y-m-d');
         
         foreach ($wordFreqs as $word => $count) {
-            // Daily party aggregation
-            $dailyPartyId = generateAggregationId('daily_party', $dateString, $word, $party['id'] ?? null);
+            // Daily faction aggregation (optimal performance)
+            $dailyFactionId = generateAggregationId('daily_faction', $dateString, $word, $faction['id'] ?? null);
             $statisticsUpdates[] = [
-                'id' => $dailyPartyId,
+                'id' => $dailyFactionId,
                 'data' => [
-                    'aggregation_type' => 'word_frequency_daily_party',
+                    'aggregation_type' => 'word_frequency_daily_faction',
                     'date' => $dateTimestamp,
                     'date_string' => $dateString,
                     'word' => $word,
-                    'party_id' => $party['id'] ?? null,
-                    'party_label' => $party['label'] ?? null,
+                    'faction_id' => $faction['id'] ?? null,
                     'count' => $count,
                     'speech_count' => 1,
                     'last_updated' => $today

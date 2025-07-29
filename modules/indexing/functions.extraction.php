@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Extract main speaker ID from speech annotations (context: main-speaker)
  */
@@ -35,9 +36,10 @@ function extractMainSpeakerFaction($speechData) {
         if ($annotation['type'] === 'organisation' && 
             isset($annotation['attributes']['context']) && 
             $annotation['attributes']['context'] === 'main-speaker-faction') {
+            
             return [
                 'id' => $annotation['id'],
-                'label' => $annotation['attributes']['label'] ?? ''
+                'label' => null // Labels not needed - use ID only for performance
             ];
         }
     }
@@ -127,6 +129,19 @@ function extractSpeechDateString($speechData) {
     $timestamp = extractSpeechDate($speechData);
     if ($timestamp) {
         return date('Y-m-d', is_numeric($timestamp) ? $timestamp : strtotime($timestamp));
+    }
+    return null;
+}
+
+/**
+ * Extract date as daily string (YYYY-MM-DD) for aggregation purposes
+ * Daily aggregation for optimal performance during indexing
+ */
+function extractSpeechDailyString($speechData) {
+    $timestamp = extractSpeechDate($speechData);
+    if ($timestamp) {
+        $ts = is_numeric($timestamp) ? $timestamp : strtotime($timestamp);
+        return date('Y-m-d', $ts);
     }
     return null;
 }

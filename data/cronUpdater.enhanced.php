@@ -1,105 +1,100 @@
 <?php
 /**
- * Enhanced indexing integration for cronUpdater.php
- * This file provides helper functions to integrate enhanced indexing 
- * with the existing cronUpdater workflow
+ * Statistics indexing integration for cronUpdater.php
+ * This file provides helper functions to integrate statistics indexing 
+ * with the existing cronUpdater workflow (word events eliminated)
  */
 
 require_once(__DIR__ . '/../modules/indexing/functions.main.php');
 
 /**
- * Setup enhanced indexing during cronUpdater startup
+ * Setup statistics indexing during cronUpdater startup
  */
-function cronUpdaterSetupEnhanced($parliamentCode) {
-    error_log("CronUpdater: Setting up enhanced indexing for parliament: $parliamentCode");
+function cronUpdaterSetupStatistics($parliamentCode) {
+    error_log("CronUpdater: Setting up statistics indexing for parliament: $parliamentCode");
     
-    $result = setupEnhancedIndexing($parliamentCode);
+    $result = setupStatisticsIndexing($parliamentCode);
     
     if ($result['success']) {
-        error_log("CronUpdater: Enhanced indexing setup successful");
+        error_log("CronUpdater: Statistics indexing setup successful");
     } else {
-        error_log("CronUpdater: Enhanced indexing setup failed: " . ($result['message'] ?? 'Unknown error'));
+        error_log("CronUpdater: Statistics indexing setup failed: " . ($result['message'] ?? 'Unknown error'));
     }
     
     return $result;
 }
 
 /**
- * Process a single speech with enhanced indexing during cronUpdater execution
+ * Process a single speech with statistics indexing during cronUpdater execution
  */
-function cronUpdaterProcessSpeechEnhanced($speechData, $parliamentCode) {
-    // Only process if enhanced indexing is enabled
-    if (!isEnhancedIndexingEnabled($parliamentCode)) {
-        return ['success' => true, 'message' => 'Enhanced indexing not enabled, skipping'];
+function cronUpdaterProcessSpeechStatistics($speechData, $parliamentCode) {
+    // Only process if statistics indexing is enabled
+    if (!isStatisticsIndexingEnabled($parliamentCode)) {
+        return ['success' => true, 'message' => 'Statistics indexing not enabled, skipping'];
     }
     
     try {
-        $result = integrateSpeechWithEnhancedIndexing($speechData, $parliamentCode);
+        // Use optimized statistics-only processing for incremental updates
+        $result = processStatisticsForSpeechOptimized($speechData, $parliamentCode);
         
         if ($result['success']) {
-            error_log("CronUpdater: Enhanced indexing successful for speech: " . $speechData['id']);
+            error_log("CronUpdater: Statistics indexing successful for speech: " . $speechData['id']);
         } else {
-            error_log("CronUpdater: Enhanced indexing failed for speech: " . $speechData['id'] . " - " . ($result['error'] ?? 'Unknown error'));
+            error_log("CronUpdater: Statistics indexing failed for speech: " . $speechData['id'] . " - " . ($result['error'] ?? 'Unknown error'));
         }
         
         return $result;
     } catch (Exception $e) {
-        error_log("CronUpdater: Enhanced indexing exception for speech: " . $speechData['id'] . " - " . $e->getMessage());
+        error_log("CronUpdater: Statistics indexing exception for speech: " . $speechData['id'] . " - " . $e->getMessage());
         return ['success' => false, 'error' => $e->getMessage()];
     }
 }
 
 /**
- * Check enhanced indexing status during cronUpdater execution
+ * Check statistics indexing status during cronUpdater execution
  */
-function cronUpdaterCheckEnhancedStatus($parliamentCode) {
-    $enabled = isEnhancedIndexingEnabled($parliamentCode);
+function cronUpdaterCheckStatisticsStatus($parliamentCode) {
+    $enabled = isStatisticsIndexingEnabled($parliamentCode);
     
     if ($enabled) {
-        error_log("CronUpdater: Enhanced indexing is ENABLED for parliament: $parliamentCode");
+        error_log("CronUpdater: Statistics indexing is ENABLED for parliament: $parliamentCode");
     } else {
-        error_log("CronUpdater: Enhanced indexing is DISABLED for parliament: $parliamentCode");
+        error_log("CronUpdater: Statistics indexing is DISABLED for parliament: $parliamentCode");
     }
     
     return $enabled;
 }
 
 /**
- * Log enhanced indexing statistics during cronUpdater execution
+ * Log statistics indexing stats during cronUpdater execution
  */
-function cronUpdaterLogEnhancedStats($parliamentCode) {
+function cronUpdaterLogStatisticsStats($parliamentCode) {
     try {
         $ESClient = getApiOpenSearchClient();
         if (is_array($ESClient) && isset($ESClient["errors"])) {
-            error_log("CronUpdater: Cannot get enhanced indexing stats - OpenSearch client error");
+            error_log("CronUpdater: Cannot get statistics indexing stats - OpenSearch client error");
             return;
         }
         
-        $wordEventsIndex = 'optv_word_events_' . strtolower($parliamentCode);
         $statisticsIndex = 'optv_statistics_' . strtolower($parliamentCode);
         
-        // Get document counts
-        if ($ESClient->indices()->exists(['index' => $wordEventsIndex])) {
-            $wordEventsCount = $ESClient->count(['index' => $wordEventsIndex]);
-            error_log("CronUpdater: Word events index has " . $wordEventsCount['count'] . " documents");
-        }
-        
+        // Get statistics document count
         if ($ESClient->indices()->exists(['index' => $statisticsIndex])) {
             $statisticsCount = $ESClient->count(['index' => $statisticsIndex]);
             error_log("CronUpdater: Statistics index has " . $statisticsCount['count'] . " documents");
         }
         
     } catch (Exception $e) {
-        error_log("CronUpdater: Error getting enhanced indexing stats: " . $e->getMessage());
+        error_log("CronUpdater: Error getting statistics indexing stats: " . $e->getMessage());
     }
 }
 
 /**
- * Bulk reprocess existing speeches with enhanced indexing
- * This can be used when running cronUpdater with enhanced indexing for the first time
+ * Bulk reprocess existing speeches with statistics indexing
+ * This can be used when running cronUpdater with statistics indexing for the first time
  */
-function cronUpdaterBulkReprocessEnhanced($parliamentCode, $batchSize = 50) {
-    error_log("CronUpdater: Starting bulk reprocessing with enhanced indexing");
+function cronUpdaterBulkReprocessStatistics($parliamentCode, $batchSize = 50) {
+    error_log("CronUpdater: Starting bulk reprocessing with statistics indexing");
     
     $result = bulkProcessExistingSpeeches($parliamentCode, $batchSize);
     
@@ -110,5 +105,64 @@ function cronUpdaterBulkReprocessEnhanced($parliamentCode, $batchSize = 50) {
     }
     
     return $result;
+}
+
+/**
+ * Periodic cleanup during incremental updates
+ * Call this after processing a batch of speeches (e.g., every 100 speeches)
+ */
+function cronUpdaterPeriodicCleanup($parliamentCode, $speechesProcessed = 0) {
+    // Only run cleanup every 100 speeches processed OR if forced
+    if ($speechesProcessed % 100 !== 0 && $speechesProcessed > 0) {
+        return ['success' => true, 'message' => 'Cleanup not due yet', 'next_cleanup_at' => $speechesProcessed + (100 - ($speechesProcessed % 100))];
+    }
+    
+    error_log("CronUpdater: Running periodic statistics cleanup after $speechesProcessed speeches");
+    
+    try {
+        require_once(__DIR__ . '/../modules/indexing/functions.statistics.php');
+        
+        $result = smartStatisticsCleanup($parliamentCode, false);
+        
+        if ($result['success'] && isset($result['cleanup_performed']) && $result['cleanup_performed']) {
+            error_log("CronUpdater: Cleanup completed - cleaned " . $result['deleted_cleaned'] . " deleted docs, reclaimed " . $result['space_reclaimed_mb'] . "MB");
+        } else if ($result['success']) {
+            error_log("CronUpdater: Cleanup check completed - " . $result['message'] . " (deleted: " . $result['deleted_percentage'] . "%)");
+        }
+        
+        return $result;
+        
+    } catch (Exception $e) {
+        error_log("CronUpdater: Periodic cleanup error: " . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+/**
+ * Final cleanup at end of cronUpdater run
+ */
+function cronUpdaterFinalCleanup($parliamentCode, $totalSpeechesProcessed) {
+    if ($totalSpeechesProcessed == 0) {
+        return ['success' => true, 'message' => 'No speeches processed, no cleanup needed'];
+    }
+    
+    error_log("CronUpdater: Running final statistics cleanup after processing $totalSpeechesProcessed speeches total");
+    
+    try {
+        require_once(__DIR__ . '/../modules/indexing/functions.statistics.php');
+        
+        // Force cleanup at end of run if we processed any speeches
+        $result = smartStatisticsCleanup($parliamentCode, $totalSpeechesProcessed >= 10);
+        
+        if ($result['success'] && isset($result['cleanup_performed']) && $result['cleanup_performed']) {
+            error_log("CronUpdater: Final cleanup completed - cleaned " . $result['deleted_cleaned'] . " deleted docs, reclaimed " . $result['space_reclaimed_mb'] . "MB");
+        }
+        
+        return $result;
+        
+    } catch (Exception $e) {
+        error_log("CronUpdater: Final cleanup error: " . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
 }
 ?>

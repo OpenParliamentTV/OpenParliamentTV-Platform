@@ -12,7 +12,7 @@ function searchAutocompleteEnhanced($query, $maxResults = 10, $partyFilter = nul
     $indexName = 'optv_statistics_' . strtolower($parliamentCode);
     
     $mustClauses = [
-        ['term' => ['aggregation_type' => 'word_frequency_daily_party']]
+        ['term' => ['aggregation_type' => 'word_frequency_daily_faction']]
     ];
     
     // Add word matching
@@ -22,7 +22,7 @@ function searchAutocompleteEnhanced($query, $maxResults = 10, $partyFilter = nul
     ];
     
     if ($partyFilter) {
-        $mustClauses[] = ['term' => ['party_id' => $partyFilter]];
+        $mustClauses[] = ['term' => ['faction_id' => $partyFilter]];
     }
     
     $searchQuery = [
@@ -88,13 +88,13 @@ function getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode = '
     
     $mustClauses = [
         ['terms' => ['word' => $words]],
-        ['term' => ['aggregation_type' => 'word_frequency_daily_party']],
+        ['term' => ['aggregation_type' => 'word_frequency_daily_faction']],
         ['range' => ['date' => ['gte' => strtotime($startDate), 'lte' => strtotime($endDate)]]]
     ];
     
     // Add faction filter if specified
     if (!empty($factions)) {
-        $mustClauses[] = ['terms' => ['party_id' => $factions]];
+        $mustClauses[] = ['terms' => ['faction_id' => $factions]];
     }
     
     $query = [
@@ -182,74 +182,6 @@ function getSpeakerVocabularyEnhanced($speakerId, $limit = 50, $parliamentCode =
     }
 }
 
-/**
- * Find words with timing for audio snippet functionality (future use)
- */
-function findWordsWithTiming($word, $speechId = null, $parliamentCode = 'de') {
-    $ESClient = getApiOpenSearchClient();
-    if (is_array($ESClient) && isset($ESClient["errors"])) {
-        return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
-    }
-    
-    $indexName = 'optv_word_events_' . strtolower($parliamentCode);
-    
-    $mustClauses = [
-        ['term' => ['word.keyword' => strtolower($word)]]
-    ];
-    
-    if ($speechId) {
-        $mustClauses[] = ['term' => ['speech_id' => $speechId]];
-    }
-    
-    $query = [
-        'size' => 100,
-        'query' => [
-            'bool' => [
-                'must' => $mustClauses,
-                'filter' => [
-                    ['exists' => ['field' => 'time_start']],
-                    ['exists' => ['field' => 'time_end']]
-                ]
-            ]
-        ],
-        'sort' => [
-            ['speech_id' => 'asc'],
-            ['time_start' => 'asc']
-        ],
-        '_source' => [
-            'speech_id', 'word', 'time_start', 'time_end', 
-            'sentence_context', 'speaker_id', 'party_label', 'date'
-        ]
-    ];
-    
-    try {
-        $results = $ESClient->search(['index' => $indexName, 'body' => $query]);
-        
-        $audioSnippets = [];
-        if (isset($results['hits']['hits'])) {
-            foreach ($results['hits']['hits'] as $hit) {
-                $source = $hit['_source'];
-                $audioSnippets[] = [
-                    'speech_id' => $source['speech_id'],
-                    'word' => $source['word'],
-                    'time_start' => $source['time_start'],
-                    'time_end' => $source['time_end'],
-                    'context' => $source['sentence_context'],
-                    'speaker_id' => $source['speaker_id'],
-                    'party' => $source['party_label'],
-                    'date' => $source['date'],
-                    // Future: Add media URL construction logic here
-                    'audio_url' => null // Could be constructed: "https://example.com/audio/{speech_id}?start={time_start}&end={time_end}"
-                ];
-            }
-        }
-        
-        return ['success' => true, 'data' => $audioSnippets];
-    } catch (Exception $e) {
-        error_log("Find words with timing error: " . $e->getMessage());
-        return ['success' => false, 'error' => $e->getMessage()];
-    }
-}
 
 /**
  * Test enhanced query functions
@@ -273,9 +205,6 @@ function testEnhancedQueries($parliamentCode = 'de') {
     $speakerResult = getSpeakerVocabularyEnhanced('test_speaker', 10, $parliamentCode);
     $results['speaker_vocab'] = $speakerResult;
     
-    // Test timing/audio snippet functionality
-    $timingResult = findWordsWithTiming('test', null, $parliamentCode);
-    $results['timing_snippets'] = $timingResult;
     
     return $results;
 }

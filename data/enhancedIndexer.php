@@ -12,7 +12,7 @@ require_once(__DIR__ . '/../modules/indexing/functions.main.php');
 // Command line arguments
 $argv = $_SERVER['argv'] ?? [];
 $parliamentCode = 'DE'; // Default
-$batchSize = 100; // Process 100 documents at a time
+$batchSize = 200; // Increased batch size for better performance
 $startFrom = 0;
 $totalLimit = null; // null = process all
 
@@ -124,14 +124,30 @@ try {
         throw new Exception('Failed to connect to OpenSearch: ' . json_encode($ESClient["errors"]));
     }
     
-    // Setup enhanced indexing with clean rebuild (deletes existing indices first)
+    // Setup statistics indexing with clean rebuild (deletes existing indices first)
     updateProgress(['status' => 'setting_up_indices']);
-    echo "Setting up enhanced indexing (clean rebuild)...\n";
-    $setupResult = setupEnhancedIndexing(strtolower($parliamentCode), true); // true = clean rebuild
+    echo "Setting up statistics indexing (clean rebuild)...\n";
+    $setupResult = setupStatisticsIndexing(strtolower($parliamentCode), true); // true = clean rebuild
     if (!$setupResult['success']) {
-        throw new Exception('Failed to setup enhanced indexing: ' . ($setupResult['message'] ?? 'Unknown error'));
+        throw new Exception('Failed to setup statistics indexing: ' . ($setupResult['message'] ?? 'Unknown error'));
     }
-    echo "Enhanced indexing setup complete (indices cleaned and recreated).\n";
+    echo "Statistics indexing setup complete (indices cleaned and recreated).\n";
+    
+    // Optimize index settings for bulk indexing
+    $indexName = 'optv_statistics_' . strtolower($parliamentCode);
+    echo "Optimizing index settings for bulk indexing...\n";
+    $ESClient->indices()->putSettings([
+        'index' => $indexName,
+        'body' => [
+            'settings' => [
+                'refresh_interval' => -1, // Disable refresh during indexing
+                'number_of_replicas' => 0, // No replicas during indexing  
+                'index.translog.sync_interval' => '30s', // Less frequent syncing
+                'index.translog.durability' => 'async' // Async durability for speed
+            ]
+        ]
+    ]);
+    echo "Index optimized for bulk operations.\n";
     
     // Get total document count
     updateProgress(['status' => 'counting_documents']);
@@ -172,7 +188,7 @@ try {
         'total_batches' => $totalBatches
     ]);
     
-    echo "Enhanced Indexing for $parliamentCode\n";
+    echo "Statistics Indexing for $parliamentCode\n";
     echo "Total documents: $totalDocuments\n";
     echo "Batch size: $batchSize\n";
     echo "Total batches: $totalBatches\n\n";
@@ -243,21 +259,21 @@ try {
             updateProgress(['current_document_id' => $doc['_id']]);
             
             try {
-                $result = indexSpeechEnhanced($speechData, strtolower($parliamentCode));
+                $result = indexSpeechStatistics($speechData, strtolower($parliamentCode));
                 
                 if ($result['success']) {
                     $batchSuccessful++;
                     
-                    if (isset($result['results']['word_events']['words_indexed'])) {
-                        $batchWords += $result['results']['word_events']['words_indexed'];
-                    }
-                    
+                    // Word events eliminated - only track statistics
                     if (isset($result['results']['statistics']['aggregations_updated'])) {
                         $batchStats += $result['results']['statistics']['aggregations_updated'];
                     }
+                    if (isset($result['results']['statistics']['unique_words'])) {
+                        $batchWords += $result['results']['statistics']['unique_words'];
+                    }
                 } else {
                     $batchFailed++;
-                    error_log("Enhanced indexing failed for document " . $doc['_id'] . ": " . ($result['error'] ?? 'Unknown error'));
+                    error_log("Statistics indexing failed for document " . $doc['_id'] . ": " . ($result['error'] ?? 'Unknown error'));
                 }
             } catch (Exception $e) {
                 $batchFailed++;
@@ -286,7 +302,7 @@ try {
         ]);
         
         echo "  Batch completed: $batchSuccessful successful, $batchFailed failed\n";
-        echo "  Words indexed: $batchWords, Statistics updated: $batchStats\n";
+        echo "  Unique words processed: $batchWords, Statistics updated: $batchStats\n";
         echo "  Batch time: {$batchTime}s\n\n";
         
         // Continue scrolling
@@ -312,6 +328,62 @@ try {
         // Ignore scroll clear errors
     }
     
+    // Restore index settings for normal operation
+    echo "Restoring index settings for normal operation...\n";
+    $ESClient->indices()->putSettings([
+        'index' => $indexName,
+        'body' => [
+            'settings' => [
+                'refresh_interval' => '1s', // Normal refresh interval
+                'index.translog.sync_interval' => '5s', // Normal sync interval
+                'index.translog.durability' => 'request' // Normal durability
+            ]
+        ]
+    ]);
+    
+    // Force refresh to make documents searchable
+    $ESClient->indices()->refresh(['index' => $indexName]);
+    echo "Index settings restored and refreshed.\n";
+    
+    // Optimize index by cleaning up deleted documents and merging segments
+    updateProgress(['status' => 'optimizing_index']);
+    echo "Optimizing index (cleaning deleted documents and merging segments)...\n";
+    $optimizeStartTime = time();
+    
+    try {
+        // Get stats before optimization
+        $statsBefore = $ESClient->indices()->stats(['index' => $indexName]);
+        $deletedBefore = $statsBefore['indices'][$indexName]['total']['docs']['deleted'] ?? 0;
+        $sizeBefore = $statsBefore['indices'][$indexName]['total']['store']['size_in_bytes'] ?? 0;
+        
+        // Force merge to clean up deleted documents and optimize segments
+        $ESClient->indices()->forcemerge([
+            'index' => $indexName,
+            'max_num_segments' => 1, // Merge to single segment for maximum optimization
+            'only_expunge_deletes' => false // Full optimization
+        ]);
+        
+        // Get stats after optimization
+        sleep(2); // Give OpenSearch time to update stats
+        $statsAfter = $ESClient->indices()->stats(['index' => $indexName]);
+        $deletedAfter = $statsAfter['indices'][$indexName]['total']['docs']['deleted'] ?? 0;
+        $sizeAfter = $statsAfter['indices'][$indexName]['total']['store']['size_in_bytes'] ?? 0;
+        
+        $deletedCleaned = $deletedBefore - $deletedAfter;
+        $spaceReclaimed = $sizeBefore - $sizeAfter;
+        $optimizeTime = time() - $optimizeStartTime;
+        
+        echo "Index optimization completed in {$optimizeTime}s:\n";
+        echo "  - Deleted documents cleaned: " . number_format($deletedCleaned) . "\n";  
+        echo "  - Space reclaimed: " . round($spaceReclaimed / 1024 / 1024, 1) . " MB\n";
+        echo "  - Final index size: " . round($sizeAfter / 1024 / 1024 / 1024, 2) . " GB\n";
+        
+    } catch (Exception $e) {
+        echo "Warning: Index optimization failed: " . $e->getMessage() . "\n";
+        error_log("Enhanced indexer optimization error: " . $e->getMessage());
+        // Continue anyway - optimization failure shouldn't fail the entire process
+    }
+    
     // Final status
     updateProgress([
         'status' => 'completed',
@@ -319,11 +391,11 @@ try {
         'completion_time' => time()
     ]);
     
-    echo "Enhanced indexing completed!\n";
+    echo "Statistics indexing completed!\n";
     echo "Total processed: $processedTotal documents\n";
     echo "Successful: $successfulTotal\n";
     echo "Failed: $failedTotal\n";
-    echo "Words indexed: $wordsTotal\n";
+    echo "Unique words processed: $wordsTotal\n";
     echo "Statistics updated: $statsTotal\n";
     
 } catch (Exception $e) {
@@ -334,7 +406,7 @@ try {
     ]);
     
     echo "Error: " . $e->getMessage() . "\n";
-    error_log("Enhanced indexing error: " . $e->getMessage());
+    error_log("Statistics indexing error: " . $e->getMessage());
     exit(1);
 }
 

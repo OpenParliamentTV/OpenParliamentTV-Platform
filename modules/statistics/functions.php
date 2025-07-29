@@ -40,7 +40,7 @@ function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = 
         $enhancedWordsQuery = [
             'size' => 0,
             'query' => [
-                'term' => ['aggregation_type' => 'word_frequency_daily_party']
+                'term' => ['aggregation_type' => 'word_frequency_daily_faction']
             ],
             'aggs' => [
                 // Top words overall
@@ -70,9 +70,9 @@ function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = 
                         ]
                     ]
                 ],
-                // Enhanced: Party-specific analysis as recommended  
-                'by_party' => [
-                    'terms' => ['field' => 'party_id', 'size' => 10],
+                // Enhanced: Faction-specific analysis as recommended  
+                'by_faction' => [
+                    'terms' => ['field' => 'faction_id', 'size' => 10],
                     'aggs' => [
                         'top_words' => [
                             'terms' => [
@@ -123,9 +123,9 @@ function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = 
         }
         
         // Process party-based statistics from real data
-        if (isset($wordsResults['aggregations']['by_party']['buckets'])) {
-            $partyStats = ['type' => 'by_party', 'parties' => []];
-            foreach ($wordsResults['aggregations']['by_party']['buckets'] as $partyBucket) {
+        if (isset($wordsResults['aggregations']['by_faction']['buckets'])) {
+            $partyStats = ['type' => 'by_faction', 'parties' => []];
+            foreach ($wordsResults['aggregations']['by_faction']['buckets'] as $partyBucket) {
                 $partyID = $partyBucket['key'];
                 $partyInfo = ['partyID' => $partyID, 'topWords' => []];
                 
@@ -400,7 +400,7 @@ function getTermStatistics() {
         $wordsQuery = [
             'size' => 0,
             'query' => [
-                'term' => ['aggregation_type' => 'word_frequency_daily_party']
+                'term' => ['aggregation_type' => 'word_frequency_daily_faction']
             ],
             'aggs' => [
                 'all_words' => [
