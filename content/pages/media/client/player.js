@@ -59,7 +59,7 @@ function getResultList(resultListCallback) {
 		ajaxURLParams += '&' + resultURLParts[1]; // Ensure leading & for subsequent params
 	}
 
-	var apiUrl = config.dir.root + "/api/v1/search/media?fields=id" + ajaxURLParams;
+	var apiUrl = config.dir.root + "/api/v1/search/media?fields=id&getAllResults=1" + ajaxURLParams;
 
 	resultListAjax = $.ajax({
 		method: "GET",

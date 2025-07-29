@@ -45,7 +45,9 @@ $config["allowedSearchParams"] = [
         "electoralPeriodID", 
         "faction", 
         "factionID", 
+        "fields",
         "fragDenStaatID", 
+        "getAllResults",
         "id", 
         "includeAll", 
         "limit",
@@ -65,8 +67,7 @@ $config["allowedSearchParams"] = [
         "sessionID", 
         "sessionNumber", 
         "sort", 
-        "termID",
-        "fields"
+        "termID"
     ],
     "person" => [
         "abgeordnetenwatchID",

@@ -1570,8 +1570,10 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
 
     $filteredParameters = filterAllowedSearchParams($parameter, 'media');
 
+    $getAllResults = isset($filteredParameters["getAllResults"]) ? boolval($filteredParameters["getAllResults"]) : false;
+
     try {
-        $search = searchSpeeches($filteredParameters);
+        $search = searchSpeeches($filteredParameters, $getAllResults);
 
         if (!isset($search["hits"]["hits"])) {
             return createApiErrorResponse(

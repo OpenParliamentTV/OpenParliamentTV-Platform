@@ -50,9 +50,10 @@ function getIndexCount() {
  * It handles text search, filtering, and highlighting of search results.
  * 
  * @param array $request The request parameters containing search criteria
+ * @param bool $getAllResults Whether to return all results (up to 10000) or paginate
  * @return array The search results
  */
-function searchSpeeches($request) {
+function searchSpeeches($request, $getAllResults = false) {
     require_once(__DIR__.'/../../modules/utilities/functions.api.php');
 
     $ESClient = getApiOpenSearchClient();
@@ -72,7 +73,7 @@ function searchSpeeches($request) {
         ];
     }
 
-    $data = getSearchBody($request, false);
+    $data = getSearchBody($request, $getAllResults);
 
     // Debug output
     global $DEBUG_MODE;
@@ -1018,7 +1019,10 @@ function calculatePagination($request, $getAllResults, $config) {
     $maxFullResults = ($getAllResults === true) ? 10000 : $pageSize;
     $from = 0;
     
-    if (isset($request["page"]) && !$getAllResults) {
+    // Bypass pagination when searching for a specific ID to ensure we find the item
+    if (isset($request["id"]) && strlen($request["id"]) > 3) {
+        $from = 0;
+    } else if (isset($request["page"]) && !$getAllResults) {
         $from = (intval($request["page"]) - 1) * $pageSize;
     }
     

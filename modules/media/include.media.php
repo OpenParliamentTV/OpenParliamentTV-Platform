@@ -6,6 +6,7 @@
     require_once(__DIR__."/../../modules/utilities/language.php");
 
 	$apiInput = $_REQUEST;
+	// Remove page parameter to ensure we get the specific media item regardless of pagination
 	unset($apiInput["page"]);
 	unset($apiInput["t"]);
 	unset($apiInput["f"]);
