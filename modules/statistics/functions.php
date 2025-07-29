@@ -459,6 +459,9 @@ function getTermStatistics() {
 function getNetworkAnalysis($entityID = null, $entityType = null) {
     global $ESClient, $DEBUG_MODE;
     
+    // Determine appropriate context based on entity type
+    $entitySpecificContext = ($entityType === 'person') ? 'main-speaker' : 'main-speaker-faction';
+    
     $query = [
         "size" => 0,
         "aggs" => [
@@ -486,7 +489,7 @@ function getNetworkAnalysis($entityID = null, $entityType = null) {
                                                     "bool" => [
                                                         "must_not" => $entityID ? [
                                                             ["term" => ["annotations.data.id" => $entityID]]
-                                                        ] : []
+                                                        ] : [["term" => ["annotations.data.id" => "nonexistent"]]]
                                                     ]
                                                 ],
                                                 "aggs" => [

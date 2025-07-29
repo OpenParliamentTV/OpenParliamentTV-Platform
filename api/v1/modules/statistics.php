@@ -169,7 +169,7 @@ function statisticsGetGeneral($request) {
                 "topMentions" => array_map(function($bucket) {
                     return enrichEntityWithSelfLink([
                         "id" => $bucket["key"],
-                        "count" => $bucket["doc_count"]
+                        "mentionCount" => $bucket["doc_count"]
                     ], 'person');
                 }, $stats["speakerMentions"]["filtered_speakers"]["topSpeakers"]["buckets"])
             ];
@@ -181,13 +181,13 @@ function statisticsGetGeneral($request) {
                 "parties" => array_map(function($bucket) {
                     return enrichEntityWithSelfLink([
                         "id" => $bucket["key"],
-                        "count" => $bucket["doc_count"]
+                        "speechCount" => $bucket["doc_count"]
                     ], 'organisation');
                 }, $stats["shareOfVoice"]["parties"]["topParties"]["buckets"]),
                 "factions" => array_map(function($bucket) {
                     return enrichEntityWithSelfLink([
                         "id" => $bucket["key"],
-                        "count" => $bucket["doc_count"]
+                        "speechCount" => $bucket["doc_count"]
                     ], 'organisation');
                 }, $stats["shareOfVoice"]["factions"]["topFactions"]["buckets"])
             ];
@@ -273,13 +273,13 @@ function statisticsGetEntity($request) {
                     "topCoOccurringPersons" => array_map(function($bucket) {
                         return enrichEntityWithSelfLink([
                             "id" => $bucket["key"],
-                            "count" => $bucket["doc_count"]
+                            "coOccurrenceCount" => $bucket["doc_count"]
                         ], 'person');
                     }, $stats["associations"]["top_speakers"]["buckets"]),
                     "topMainSpeakers" => array_map(function($bucket) {
                         return enrichEntityWithSelfLink([
                             "id" => $bucket["key"],
-                            "count" => $bucket["doc_count"]
+                            "coOccurrenceCount" => $bucket["doc_count"]
                         ], 'person');
                     }, $stats["associations"]["main_speakers_only"]["top_main_speakers"]["buckets"] ?? [])
                 ],
@@ -288,7 +288,7 @@ function statisticsGetEntity($request) {
                     "timeline" => array_map(function($bucket) {
                         return [
                             "date" => $bucket["key_as_string"],
-                            "count" => $bucket["doc_count"]
+                            "speechCount" => $bucket["doc_count"]
                         ];
                     }, $stats["trends"]["buckets"])
                 ]
