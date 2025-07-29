@@ -26,7 +26,7 @@ include_once(__DIR__ . '/../../header.php');
 				<li class="nav-item">
 					<a class="nav-link" id="entities-tab" data-bs-toggle="tab" data-bs-target="#entities" role="tab" aria-controls="entities" aria-selected="true"><span class="nav-item-label"><?= L::entities(); ?></span></a>
 				</li>
-				<li class="nav-item">
+				<li class="nav-item d-none">
 					<a class="nav-link" id="statistics-tab" data-bs-toggle="tab" data-bs-target="#statistics" role="tab" aria-controls="statistics" aria-selected="true"><span class="nav-item-label">Statistics</span></a>
 				</li>
 				<li class="nav-item">
@@ -570,13 +570,7 @@ include_once(__DIR__ . '/../../header.php');
 							<a class="nav-link" id="entity-stats-tab" data-bs-toggle="tab" data-bs-target="#entity-stats" role="tab" aria-controls="entity-stats" aria-selected="true"><span class="nav-item-label"><span class="icon-type-person me-1"></span> Entity Statistics</span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="speaker-vocab-tab" data-bs-toggle="tab" data-bs-target="#speaker-vocab" role="tab" aria-controls="speaker-vocab" aria-selected="true"><span class="nav-item-label"><span class="icon-comment me-1"></span> Speaker Vocabulary</span></a>
-						</li>
-						<li class="nav-item">
 							<a class="nav-link" id="word-trends-tab" data-bs-toggle="tab" data-bs-target="#word-trends" role="tab" aria-controls="word-trends" aria-selected="true"><span class="nav-item-label"><span class="icon-chart-line me-1"></span> Word Trends</span></a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="terms-stats-tab" data-bs-toggle="tab" data-bs-target="#terms-stats" role="tab" aria-controls="terms-stats" aria-selected="true"><span class="nav-item-label"><span class="icon-type-term me-1"></span> Terms Statistics</span></a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" id="network-tab" data-bs-toggle="tab" data-bs-target="#network" role="tab" aria-controls="network" aria-selected="true"><span class="nav-item-label"><span class="icon-share me-1"></span> Network Analysis</span></a>
@@ -595,7 +589,7 @@ include_once(__DIR__ . '/../../header.php');
 							<div class="apiExampleContainer">
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
-									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/statistics/general?context=main-speaker&factionID=Q2207512" readonly>
+									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/statistics/general" readonly>
 									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
 								</div>
 								<div class="apiResultContainer"></div>
@@ -672,68 +666,16 @@ include_once(__DIR__ . '/../../header.php');
 								</table>
 							</div>
 						</div>
-						<div class="tab-pane fade bg-white" id="speaker-vocab" role="tabpanel" aria-labelledby="speaker-vocab-tab">
-							<h3>Endpoint</h3>
-							<code>/api/v1/statistics/speaker-vocabulary</code>
-							<hr>
-							<h3><?= L::example(); ?> Request</h3>
-							<div>(Vocabulary analysis for most active speaker Petra Pau, showing top 10 words)</div>
-							<div class="apiExampleContainer">
-								<div class="input-group">
-									<span class="input-group-text">URI</span>
-									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/statistics/speaker-vocabulary?speakerID=Q77195&limit=10" readonly>
-									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
-								</div>
-								<div class="apiResultContainer"></div>
-							</div>
-							<hr>
-							<h3>Parameters</h3>
-							<div class="table-responsive-lg">
-								<table class="table table-sm table-striped">
-									<thead>
-										<tr>
-											<th>Parameter</th>
-											<th>Validation</th>
-											<th>Description</th>
-											<th>Type</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>speakerID</td>
-											<td>Required: Wikidata ID RegEx</td>
-											<td>ID of speaker to analyze (standardized from speakerId)</td>
-											<td>String</td>
-										</tr>
-										<tr>
-											<td>limit</td>
-											<td>Optional, defaults to 50</td>
-											<td>Number of top words to return</td>
-											<td>Integer</td>
-										</tr>
-										<tr>
-											<td>context</td>
-											<td>Optional</td>
-											<td>Filter by speaker context for enhanced analysis</td>
-											<td>String</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="alert alert-info mt-3">
-								<strong>Note:</strong> Property name standardized to <code>speakerID</code> (from <code>speakerId</code>) for consistency. Both forms supported for backwards compatibility.
-							</div>
-						</div>
 						<div class="tab-pane fade bg-white" id="word-trends" role="tabpanel" aria-labelledby="word-trends-tab">
 							<h3>Endpoint</h3>
 							<code>/api/v1/statistics/word-trends</code>
 							<hr>
 							<h3><?= L::example(); ?> Request</h3>
-							<div>(Word trends for "deutschland" and "europa" from 2020 to 2024, optionally filtered by faction)</div>
+							<div>(Word trends for "heute" and "wollen" from 2020 to 2024, optionally filtered by faction)</div>
 							<div class="apiExampleContainer">
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
-									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/statistics/word-trends?words[]=deutschland&words[]=europa&startDate=2020-01-01&endDate=2024-12-31&factions[]=Q2207512" readonly>
+									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/statistics/word-trends?words[]=heute&words[]=wollen&startDate=2020-01-01&endDate=2024-12-31&factions[]=Q2207512" readonly>
 									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
 								</div>
 								<div class="apiResultContainer"></div>
@@ -779,74 +721,6 @@ include_once(__DIR__ . '/../../header.php');
 								</table>
 							</div>
 						</div>
-						<div class="tab-pane fade bg-white" id="entity-counts" role="tabpanel" aria-labelledby="entity-counts-tab">
-							<h3>Endpoint</h3>
-							<code>/api/v1/statistics/entity-counts</code>
-							<hr>
-							<h3><?= L::example(); ?> Request</h3>
-							<div>(Get counts of all entity types in the database)</div>
-							<div class="apiExampleContainer">
-								<div class="input-group">
-									<span class="input-group-text">URI</span>
-									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/statistics/entity-counts" readonly>
-									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
-								</div>
-								<div class="apiResultContainer"></div>
-							</div>
-							<hr>
-							<h3>Parameters</h3>
-							<div class="table-responsive-lg">
-								<table class="table table-sm table-striped">
-									<thead>
-										<tr>
-											<th>Parameter</th>
-											<th>Validation</th>
-											<th>Description</th>
-											<th>Type</th>
-										</tr>
-									</thead>
-									<tbody>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="tab-pane fade bg-white" id="terms-stats" role="tabpanel" aria-labelledby="terms-stats-tab">
-							<h3>Endpoint</h3>
-							<code>/api/v1/statistics/terms</code>
-							<hr>
-							<h3><?= L::example(); ?> Request</h3>
-							<div>(Get the most frequently used terms across all speeches)</div>
-							<div class="apiExampleContainer">
-								<div class="input-group">
-									<span class="input-group-text">URI</span>
-									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/statistics/terms" readonly>
-									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
-								</div>
-								<div class="apiResultContainer"></div>
-							</div>
-							<hr>
-							<h3>Parameters</h3>
-							<div class="table-responsive-lg">
-								<table class="table table-sm table-striped">
-									<thead>
-										<tr>
-											<th>Parameter</th>
-											<th>Validation</th>
-											<th>Description</th>
-											<th>Type</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><em>None required</em></td>
-											<td>-</td>
-											<td>This endpoint returns overall term frequency statistics</td>
-											<td>-</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
 						<div class="tab-pane fade bg-white" id="network" role="tabpanel" aria-labelledby="network-tab">
 							<h3>Endpoint</h3>
 							<code>/api/v1/statistics/network</code>
@@ -886,6 +760,37 @@ include_once(__DIR__ . '/../../header.php');
 											<td>Focus network analysis on specific entity</td>
 											<td>String</td>
 										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<div class="tab-pane fade bg-white" id="entity-counts" role="tabpanel" aria-labelledby="entity-counts-tab">
+							<h3>Endpoint</h3>
+							<code>/api/v1/statistics/entity-counts</code>
+							<hr>
+							<h3><?= L::example(); ?> Request</h3>
+							<div>(Get counts of all entity types in the database)</div>
+							<div class="apiExampleContainer">
+								<div class="input-group">
+									<span class="input-group-text">URI</span>
+									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/statistics/entity-counts" readonly>
+									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
+								</div>
+								<div class="apiResultContainer"></div>
+							</div>
+							<hr>
+							<h3>Parameters</h3>
+							<div class="table-responsive-lg">
+								<table class="table table-sm table-striped">
+									<thead>
+										<tr>
+											<th>Parameter</th>
+											<th>Validation</th>
+											<th>Description</th>
+											<th>Type</th>
+										</tr>
+									</thead>
+									<tbody>
 									</tbody>
 								</table>
 							</div>
