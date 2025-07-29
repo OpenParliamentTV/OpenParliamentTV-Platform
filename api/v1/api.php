@@ -149,14 +149,8 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "entity":
                     $item = statisticsGetEntity($api_request);
                     return createApiResponse($item);
-                case "terms":
-                    $item = statisticsGetTerms($api_request);
-                    return createApiResponse($item);
                 case "word-trends":
                     $item = statisticsGetWordTrends($api_request);
-                    return createApiResponse($item);
-                case "speaker-vocabulary":
-                    $item = statisticsGetSpeakerVocabulary($api_request);
                     return createApiResponse($item);
                 case "network":
                     $item = statisticsGetNetwork($api_request);
