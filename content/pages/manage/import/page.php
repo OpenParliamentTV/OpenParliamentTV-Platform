@@ -900,9 +900,12 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     async function fetchStatisticsIndexStatus(parliamentCode) {
-        // Don't fetch statistics index status while any other process is running for this parliament
-        if (appState.isAnyProcessRunning(parliamentCode)) {
-            // Skip statistics index status update while other processes are running
+        // Don't fetch statistics index status while data import or main index are running 
+        // (but allow fetching when only statistics indexing is running)
+        if (appState.processes[parliamentCode] && 
+            (appState.processes[parliamentCode].dataImport.isRunning || 
+             appState.processes[parliamentCode].mainIndex.isRunning)) {
+            // Skip statistics index status update while data import or main index are running
             return;
         }
         
