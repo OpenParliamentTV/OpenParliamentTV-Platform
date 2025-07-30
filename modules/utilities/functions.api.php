@@ -288,14 +288,14 @@ function getApiOpenSearchClient() {
     global $config;
     $clientBuilder = OpenSearch\ClientBuilder::create();
 
-    if (!empty($config["ES"]["hosts"])) {
-        $clientBuilder->setHosts($config["ES"]["hosts"]);
+    if (!empty($config["OpenSearch"]["hosts"])) {
+        $clientBuilder->setHosts($config["OpenSearch"]["hosts"]);
     }
-    if (!empty($config["ES"]["BasicAuthentication"]["user"]) && isset($config["ES"]["BasicAuthentication"]["passwd"])) {
-        $clientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"], $config["ES"]["BasicAuthentication"]["passwd"]);
+    if (!empty($config["OpenSearch"]["BasicAuthentication"]["user"]) && isset($config["OpenSearch"]["BasicAuthentication"]["passwd"])) {
+        $clientBuilder->setBasicAuthentication($config["OpenSearch"]["BasicAuthentication"]["user"], $config["OpenSearch"]["BasicAuthentication"]["passwd"]);
     }
-    if (!empty($config["ES"]["SSL"]["pem"])) {
-        $clientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
+    if (!empty($config["OpenSearch"]["SSL"]["pem"])) {
+        $clientBuilder->setSSLVerification($config["OpenSearch"]["SSL"]["pem"]);
     }
     
     try {
@@ -303,7 +303,7 @@ function getApiOpenSearchClient() {
     } catch (Exception $e) {
         // Log error
         error_log("OpenSearch ClientBuilder failed: " . $e->getMessage());
-        return createApiErrorResponse(500, 'ES_CLIENT_ERROR', 'messageErrorESClient', 'OpenSearch client initialization failed: ' . $e->getMessage());
+        return createApiErrorResponse(500, 'OPENSEARCH_CLIENT_ERROR', 'messageErrorOpenSearchClient', 'OpenSearch client initialization failed: ' . $e->getMessage());
     }
 }
 

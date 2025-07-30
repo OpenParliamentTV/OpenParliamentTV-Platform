@@ -197,7 +197,7 @@ function searchIndexUpdate($api_request) {
         return createApiSuccessResponse(['updated' => 0, 'failed' => 0, 'errors' => []], ['message' => 'No items provided to index.']);
     }
 
-    $indexName = "openparliamenttv_" . ($config['parliament'][$parliament]['ES']['index'] ?? $parliament);
+    $indexName = "openparliamenttv_" . ($config['parliament'][$parliament]['OpenSearch']['index'] ?? $parliament);
     $openSearchClient = getApiOpenSearchClient();
 
     if (!$openSearchClient || (is_array($openSearchClient) && isset($openSearchClient["errors"]))) {
@@ -317,7 +317,7 @@ function searchIndexDelete($api_request) {
         return createApiErrorInvalidParameter('parliament', "Invalid parliament specified: {$parliament}");
     }
 
-    $indexName = "openparliamenttv_" . ($config['parliament'][$parliament]['ES']['index'] ?? $parliament);
+    $indexName = "openparliamenttv_" . ($config['parliament'][$parliament]['OpenSearch']['index'] ?? $parliament);
     $openSearchClient = getApiOpenSearchClient();
 
     if (!$openSearchClient || (is_array($openSearchClient) && isset($openSearchClient["errors"]))) {

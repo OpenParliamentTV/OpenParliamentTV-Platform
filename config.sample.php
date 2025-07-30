@@ -77,13 +77,25 @@ $config["mode"] = "production";
 
 
 /**
- * E-Mail addresses of the platform
+ * Mail Settings
  */
-$config["mail"]["from"] = "noreply@openparliament.tv";
+$config["mail"]["from"]["email"] = "noreply@openparliament.tv";
+$config["mail"]["from"]["name"] = "Open Parliament TV";
 $config["mail"]["replyto"] = "noreply@openparliament.tv";
 
+// SMTP Configuration (optional - leave empty to use PHP mail())
+$config["mail"]["smtp"]["enabled"] = false;
+$config["mail"]["smtp"]["host"] = ""; // E.g. "smtp.gmail.com"
+$config["mail"]["smtp"]["port"] = 587; // 587 for TLS, 465 for SSL, 25 for no encryption
+$config["mail"]["smtp"]["username"] = "";
+$config["mail"]["smtp"]["password"] = "";
+$config["mail"]["smtp"]["encryption"] = "tls"; // "tls", "ssl", or "" for no encryption
+
+// Development Mode: When $config["mode"] is "dev", emails are saved to files instead of being sent
+$config["mail"]["dev"]["file_path"] = ""; // E.g. realpath(__DIR__."/logs/mail") - leave empty for default (logs/mail)
+
 /**
- * Executabels
+ * Executables
  */
 $config["bin"]["git"] = "git";
 $config["bin"]["php"] = "php";
@@ -130,15 +142,15 @@ $config["parliament"]["DE"]["sql"]["tbl"]["Media"] = "media";
 $config["parliament"]["DE"]["sql"]["tbl"]["Annotation"] = "annotation";
 $config["parliament"]["DE"]["sql"]["tbl"]["Text"] = "text";
 $config["parliament"]["DE"]["git"]["repository"] = ""; //e.g. https://github.com/OpenParliamentTV/OpenParliamentTV-Data-DE.git
-$config["parliament"]["DE"]["ES"]["index"] = "de"; // openparliamenttv_THIS
+$config["parliament"]["DE"]["OpenSearch"]["index"] = "de"; // openparliamenttv_THIS
 
 /**
- * Configuration for the ElasticSearch or OpenSearch server
+ * Configuration for the OpenSearch server
  */
-$config["ES"]["hosts"] = []; // E.g. ["https://@localhost:9200"]
-$config["ES"]["BasicAuthentication"]["user"] = "";
-$config["ES"]["BasicAuthentication"]["passwd"] = "";
-$config["ES"]["SSL"]["pem"] = ""; // E.g. realpath(__DIR__."/../opensearch-root-ssl.pem");
+$config["OpenSearch"]["hosts"] = []; // E.g. ["https://@localhost:9200"]
+$config["OpenSearch"]["BasicAuthentication"]["user"] = "";
+$config["OpenSearch"]["BasicAuthentication"]["passwd"] = "";
+$config["OpenSearch"]["SSL"]["pem"] = ""; // E.g. realpath(__DIR__."/../opensearch-root-ssl.pem");
 
 // Include API config
 require_once(__DIR__."/api/v1/config.api.php");
