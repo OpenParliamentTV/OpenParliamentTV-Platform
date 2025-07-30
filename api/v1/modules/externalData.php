@@ -147,6 +147,7 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
             "DocumentLabel"=>$apiItem["data"]["label"],
             "DocumentLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             "DocumentAbstract"=>"",
+            "DocumentSourceURI"=>(isset($apiItem["data"]["sourceURI"]) ? $apiItem["data"]["sourceURI"] : null),
             "DocumentAdditionalInformation"=>json_encode($apiItem["data"]["additionalInformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
         );
 
@@ -156,7 +157,7 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
             //"DocumentLabel"=>$apiItem["data"]["label"],
             //"DocumentLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             "DocumentAbstract"=>$apiItem["data"]["abstract"],
-            "DocumentSourceURI"=>($apiItem["data"]["sourceURI"] ?? ''),
+            "DocumentSourceURI"=>(isset($apiItem["data"]["sourceURI"]) ? $apiItem["data"]["sourceURI"] : null),
             "DocumentAdditionalInformation"=>json_encode($apiItem["data"]["additionalInformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
         );
     } elseif ($type == "organisation") {
@@ -179,7 +180,7 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
         $updateArray = array(
             //"TermLabel"=>$apiItem["data"]["label"],
             //"TermLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-            "TermAbstract"=>_optv_get_string_from_data($apiItem["data"], "abstract", $type, $id),
+            "TermAbstract"=>(isset($apiItem["data"]["abstract"]) ? $apiItem["data"]["abstract"] : null),
             "TermThumbnailURI"=>_optv_get_string_from_data($apiItem["data"], "thumbnailURI", $type, $id),
             "TermThumbnailCreator"=>_optv_get_string_from_data($apiItem["data"], "thumbnailCreator", $type, $id),
             "TermThumbnailLicense"=>_optv_get_string_from_data($apiItem["data"], "thumbnailLicense", $type, $id),
