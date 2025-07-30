@@ -439,7 +439,7 @@ function externalDataUpdateEntities($api_request) {
     if (!empty($errors)) {
         // If there were any errors, return a mixed success/error response or just an error if all failed
         if ($successCount == 0) {
-            return createApiErrorResponse(500, "ENTITY_UPDATE_FAILED", "All entity updates failed.", null, [], null, ["details" => $errors]);
+            return createApiErrorResponse(500, "ENTITY_UPDATE_FAILED", "Entity updated failed.", null, [], null, ["details" => $errors]);
         }
         // Partial success
         return createApiSuccessResponse(
