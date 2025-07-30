@@ -437,7 +437,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     $result = importRunCronUpdater($api_request);
                     return createApiResponse($result);
                 case "status":
-                    $result = importGetCronUpdaterStatus();
+                    $result = importGetCronUpdaterStatus($api_request);
                     return createApiResponse($result);
                 default:
                     return createApiResponse(

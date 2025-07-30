@@ -37,6 +37,23 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="parliaments" role="tabpanel" aria-labelledby="parliaments-tab">
+                            <!-- Parliament Selection Dropdown -->
+                            <div class="row mb-3">
+                                <div class="col-12">
+                                    <select id="parliament-selector" class="form-select w-100">
+                                        <?php
+                                        $parliamentCount = count($config["parliament"]);
+                                        $firstParliament = true;
+                                        foreach($config["parliament"] as $parliamentCode => $parliamentDetails) {
+                                            $selected = ($parliamentCount === 1 || $firstParliament) ? 'selected' : '';
+                                            echo '<option value="' . htmlspecialchars($parliamentCode) . '" ' . $selected . '>' . htmlspecialchars($parliamentDetails["label"]) . '</option>';
+                                            $firstParliament = false;
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            
                             <div class="status-visualization p-4 position-relative">
                                 <div class="row align-items-start justify-content-center position-relative">
                                     <div class="connecting-line"></div>
@@ -86,7 +103,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 							<div class="row" id="data-import-progress-section">
 								<div class="col-12">
 									<div class="d-flex justify-content-between">
-										<div class="fw-bolder"><?= L::dataImport(); ?> (DE)</div>
+										<div class="fw-bolder"><?= L::dataImport(); ?> <span id="data-import-parliament-label">(DE)</span></div>
 										<div id="data-import-items-text" class="small">Idle</div>
 									</div>
 									<div class="progress my-1" role="progressbar" aria-label="Data Import Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -99,35 +116,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
 								</div>
 							</div>
 							<hr>
-							<div class="row" id="search-index-progress-section-DE" data-parliament-code="DE">
-								<div class="col-12">
-									<div class="d-flex justify-content-between">
-										<div class="fw-bolder"><?= L::searchIndex(); ?> (DE)</div> 
-										<div id="search-index-DE-items-text" class="small">Idle</div>
-									</div>
-									<div class="progress my-1" role="progressbar" aria-label="Search Index DE Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-										<div id="search-index-DE-progress-bar" class="progress-bar" style="width: 0%"></div>
-									</div>
-                                    <div id="search-index-DE-status-text" class="small text-muted mb-2">Status: Idle</div>
-									<button type="button" id="btn-trigger-search-index-refresh-DE" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="DE"><span class="icon-arrows-cw"></span> <?= L::refreshFullIndex(); ?> (DE)</button>
-									<button type="button" id="btn-trigger-search-index-delete-DE" class="btn btn-danger btn-sm me-1" data-parliament-code="DE"><span class="icon-trash"></span> <?= L::deleteIndex(); ?> (DE)</button>
-                                    <div id="search-index-DE-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
-								</div>
+							<!-- Dynamic Search Index Sections -->
+							<div id="search-index-sections-container">
+								<!-- Search index sections will be dynamically generated here -->
 							</div>
-							<hr>
-							<div class="row" id="statistics-index-progress-section-DE" data-parliament-code="DE">
-								<div class="col-12">
-									<div class="d-flex justify-content-between">
-										<div class="fw-bolder">Statistics Index (DE) <small class="text-muted">(auto-synced)</small></div> 
-										<div id="statistics-index-DE-items-text" class="small">Idle</div>
-									</div>
-									<div class="progress my-1" role="progressbar" aria-label="Statistics Index DE Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-										<div id="statistics-index-DE-progress-bar" class="progress-bar" style="width: 0%"></div>
-									</div>
-                                    <div id="statistics-index-DE-status-text" class="small text-muted mb-2">Status: Idle</div>
-									<button type="button" id="btn-trigger-statistics-index-rebuild-DE" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="DE"><span class="icon-arrows-cw"></span> Rebuild Statistics Index (DE)</button>
-                                    <div id="statistics-index-DE-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
-								</div>
+							
+							<!-- Dynamic Statistics Index Sections -->
+							<div id="statistics-index-sections-container">
+								<!-- Statistics index sections will be dynamically generated here -->
 							</div>
                         </div>
 						<div class="tab-pane bg-white fade p-3" id="external" role="tabpanel" aria-labelledby="external-tab">
@@ -191,17 +187,30 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         importStatus: {},
         entityCounts: {},
-        // Centralized process state management
-        processes: {
-            dataImport: { isRunning: false },
-            mainIndex: { isRunning: false },
-            statisticsIndex: { isRunning: false }
+        // Current selected parliament
+        currentParliament: null,
+        // Parliament configuration from PHP
+        parliaments: <?= json_encode($config["parliament"]) ?>,
+        // Centralized process state management per parliament
+        processes: {},
+        // Helper function to check if any process is running for a specific parliament
+        isAnyProcessRunning: function(parliamentCode = null) {
+            const targetParliament = parliamentCode || this.currentParliament;
+            if (!targetParliament || !this.processes[targetParliament]) {
+                return false;
+            }
+            return this.processes[targetParliament].dataImport.isRunning || 
+                   this.processes[targetParliament].mainIndex.isRunning || 
+                   this.processes[targetParliament].statisticsIndex.isRunning;
         },
-        // Helper function to check if any process is running
-        isAnyProcessRunning: function() {
-            return this.processes.dataImport.isRunning || 
-                   this.processes.mainIndex.isRunning || 
-                   this.processes.statisticsIndex.isRunning;
+        // Helper function to check if any process is running for any parliament
+        isAnyProcessRunningAnywhere: function() {
+            for (const parliamentCode in this.processes) {
+                if (this.isAnyProcessRunning(parliamentCode)) {
+                    return true;
+                }
+            }
+            return false;
         }
     };
 
@@ -219,6 +228,124 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // --- Parliament Management Functions ---
+    
+    function initializeParliamentState(parliamentCode) {
+        if (!appState.processes[parliamentCode]) {
+            appState.processes[parliamentCode] = {
+                dataImport: { isRunning: false },
+                mainIndex: { isRunning: false },
+                statisticsIndex: { isRunning: false }
+            };
+        }
+    }
+    
+    function generateSearchIndexSectionHTML(parliamentCode, parliamentLabel) {
+        return `
+            <div class="row" id="search-index-progress-section-${parliamentCode}" data-parliament-code="${parliamentCode}">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between">
+                        <div class="fw-bolder"><?= L::searchIndex(); ?> (${parliamentCode})</div> 
+                        <div id="search-index-${parliamentCode}-items-text" class="small">Idle</div>
+                    </div>
+                    <div class="progress my-1" role="progressbar" aria-label="Search Index ${parliamentCode} Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div id="search-index-${parliamentCode}-progress-bar" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div id="search-index-${parliamentCode}-status-text" class="small text-muted mb-2">Status: Idle</div>
+                    <button type="button" id="btn-trigger-search-index-refresh-${parliamentCode}" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-arrows-cw"></span> <?= L::refreshFullIndex(); ?> (${parliamentCode})</button>
+                    <button type="button" id="btn-trigger-search-index-delete-${parliamentCode}" class="btn btn-danger btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-trash"></span> <?= L::deleteIndex(); ?> (${parliamentCode})</button>
+                    <div id="search-index-${parliamentCode}-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
+                </div>
+            </div>
+            <hr>`;
+    }
+    
+    function generateStatisticsIndexSectionHTML(parliamentCode, parliamentLabel) {
+        return `
+            <div class="row" id="statistics-index-progress-section-${parliamentCode}" data-parliament-code="${parliamentCode}">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between">
+                        <div class="fw-bolder">Statistics Index (${parliamentCode}) <small class="text-muted">(auto-synced)</small></div> 
+                        <div id="statistics-index-${parliamentCode}-items-text" class="small">Idle</div>
+                    </div>
+                    <div class="progress my-1" role="progressbar" aria-label="Statistics Index ${parliamentCode} Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div id="statistics-index-${parliamentCode}-progress-bar" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div id="statistics-index-${parliamentCode}-status-text" class="small text-muted mb-2">Status: Idle</div>
+                    <button type="button" id="btn-trigger-statistics-index-rebuild-${parliamentCode}" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-arrows-cw"></span> Rebuild Statistics Index (${parliamentCode})</button>
+                    <div id="statistics-index-${parliamentCode}-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
+                </div>
+            </div>
+            <hr>`;
+    }
+    
+    function generateAllParliamentSections() {
+        const searchContainer = document.getElementById('search-index-sections-container');
+        const statisticsContainer = document.getElementById('statistics-index-sections-container');
+        
+        if (!searchContainer || !statisticsContainer) return;
+        
+        let searchHTML = '';
+        let statisticsHTML = '';
+        
+        for (const parliamentCode in appState.parliaments) {
+            const parliamentLabel = appState.parliaments[parliamentCode].label;
+            searchHTML += generateSearchIndexSectionHTML(parliamentCode, parliamentLabel);
+            statisticsHTML += generateStatisticsIndexSectionHTML(parliamentCode, parliamentLabel);
+            
+            // Initialize state for this parliament
+            initializeParliamentState(parliamentCode);
+        }
+        
+        searchContainer.innerHTML = searchHTML;
+        statisticsContainer.innerHTML = statisticsHTML;
+    }
+    
+    function switchParliament(parliamentCode) {
+        if (appState.currentParliament === parliamentCode) return;
+        
+        appState.currentParliament = parliamentCode;
+        
+        // Update UI labels
+        updateElementText('data-import-parliament-label', `(${parliamentCode})`);
+        
+        // Clear current status displays
+        clearAllStatusDisplays();
+        
+        // Fetch status for the new parliament
+        fetchDataImportStatus();
+        fetchSearchIndexStatus(parliamentCode);
+        fetchStatisticsIndexStatus(parliamentCode);
+        fetchOverallStatus();
+    }
+    
+    function clearAllStatusDisplays() {
+        // Clear data import status
+        updateElementText('data-import-items-text', 'Loading...');
+        updateElementText('data-import-status-text', 'Status: Loading...');
+        updateElementText('data-import-current-file-text', '<?= L::files(); ?>: Loading...');
+        updateProgressBar('data-import-progress-bar', 0, 'idle');
+        clearError('data-import-error-display');
+        
+        // Clear all search index statuses
+        for (const parliamentCode in appState.parliaments) {
+            const elems = getSearchIndexElements(parliamentCode);
+            updateElementText(elems.itemsText, 'Loading...');
+            updateElementText(elems.statusText, 'Status: Loading...');
+            updateProgressBar(elems.progressBar, 0, 'idle');
+            clearError(elems.errorDisplay);
+        }
+        
+        // Clear all statistics index statuses
+        for (const parliamentCode in appState.parliaments) {
+            const elems = getStatisticsIndexElements(parliamentCode);
+            updateElementText(elems.itemsText, 'Loading...');
+            updateElementText(elems.statusText, 'Status: Loading...');
+            updateProgressBar(elems.progressBar, 0, 'idle');
+            clearError(elems.errorDisplay);
+        }
+    }
+    
     // --- Generic Helper Functions ---
     function getApiUrl(action, itemType, params = {}) {
         const url = `${API_BASE_URL}/?action=${action}&itemType=${itemType}`;
@@ -373,7 +500,9 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     async function fetchDataImportStatus() {
-        const url = getApiUrl('import', 'status');
+        if (!appState.currentParliament) return;
+        
+        const url = getApiUrl('import', 'status', { parliament: appState.currentParliament });
         const result = await apiCall(url);
         if (result.success && result.data) {
             appState.importStatus = result.data;
@@ -413,8 +542,17 @@ document.addEventListener('DOMContentLoaded', function() {
         updateElementText(dataImportElems.statusText, `Status: ${finalStatusDetails}`);
         updateElementText(dataImportElems.itemsText, finalItemsText);
 
-        // Update centralized process state
-        appState.processes.dataImport.isRunning = (status === 'running');
+        // Update centralized process state for current parliament
+        if (appState.currentParliament) {
+            if (!appState.processes[appState.currentParliament]) {
+                appState.processes[appState.currentParliament] = {
+                    dataImport: { isRunning: false },
+                    mainIndex: { isRunning: false },
+                    statisticsIndex: { isRunning: false }
+                };
+            }
+            appState.processes[appState.currentParliament].dataImport.isRunning = (status === 'running');
+        }
         
         if (status === 'running') {
             toggleButton(dataImportElems.triggerButton, true, `<?= L::running(); ?>...`);
@@ -441,6 +579,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function triggerDataImport() {
+        if (!appState.currentParliament) return;
+        
         // Button should already be disabled if conflicts exist, but add safety check
         if (appState.isAnyProcessRunning()) {
             console.warn('triggerDataImport called while other processes are running - button should have been disabled');
@@ -449,7 +589,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         toggleButton(dataImportElems.triggerButton, true, 'Starting...');
         clearError(dataImportElems.errorDisplay);
-        const url = getApiUrl('import', 'run');
+        const url = getApiUrl('import', 'run', { parliament: appState.currentParliament });
         const result = await apiCall(url, 'POST'); 
 
         if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && typeof result.data.message === 'string') {
@@ -491,10 +631,17 @@ document.addEventListener('DOMContentLoaded', function() {
         updateElementText(elems.statusText, `Status: ${statusDetails}`);
         updateElementText(elems.itemsText, `<?= L::speeches(); ?>: ${processedMediaItems} / ${totalDbMediaItems}`);
 
-        // Update centralized process state
-        const wasRunning = appState.processes.mainIndex.isRunning;
+        // Update centralized process state for this parliament
+        if (!appState.processes[parliamentCode]) {
+            appState.processes[parliamentCode] = {
+                dataImport: { isRunning: false },
+                mainIndex: { isRunning: false },
+                statisticsIndex: { isRunning: false }
+            };
+        }
+        const wasRunning = appState.processes[parliamentCode].mainIndex.isRunning;
         const isRunning = status === 'running';
-        appState.processes.mainIndex.isRunning = isRunning;
+        appState.processes[parliamentCode].mainIndex.isRunning = isRunning;
         
         // Handle status-specific UI updates and errors
         if (status === 'error') {
@@ -530,7 +677,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function triggerSearchIndexRefresh(parliamentCode) {
         // Button should already be disabled if conflicts exist, but add safety check
-        if (appState.isAnyProcessRunning()) {
+        if (appState.isAnyProcessRunning(parliamentCode)) {
             console.warn('triggerSearchIndexRefresh called while other processes are running - button should have been disabled');
             return;
         }
@@ -554,7 +701,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function triggerSearchIndexDelete(parliamentCode) {
         // Button should already be disabled if conflicts exist, but add safety check
-        if (appState.isAnyProcessRunning()) {
+        if (appState.isAnyProcessRunning(parliamentCode)) {
             console.warn('triggerSearchIndexDelete called while other processes are running - button should have been disabled');
             return;
         }
@@ -582,14 +729,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function initializeSearchIndexSections() {
-        const sections = document.querySelectorAll('[id^="search-index-progress-section-"]');
-        sections.forEach(section => {
-            const parliamentCode = section.dataset.parliamentCode;
-            if (!parliamentCode) {
-                console.warn('Search index section found without data-parliament-code:', section.id);
-                return;
-            }
-            
+        // Initialize all parliament sections
+        for (const parliamentCode in appState.parliaments) {
             const elems = getSearchIndexElements(parliamentCode);
 
             const refreshBtn = document.getElementById(elems.refreshButton);
@@ -598,12 +739,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const deleteBtn = document.getElementById(elems.deleteButton);
             if (deleteBtn) deleteBtn.addEventListener('click', () => triggerSearchIndexDelete(parliamentCode));
 
-            fetchSearchIndexStatus(parliamentCode);
-            setInterval(() => fetchSearchIndexStatus(parliamentCode), POLLING_INTERVAL);
-            
             // Statistics indexing setup
             setupStatisticsIndexUI(parliamentCode);
-        });
+        }
     }
 
     // --- Tab State Management ---
@@ -613,7 +751,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const entitiesTab = document.getElementById('external-tab');
         
         // Check if any parliament processes are running using centralized state
-        const parliamentsWorking = appState.isAnyProcessRunning();
+        const parliamentsWorking = appState.isAnyProcessRunningAnywhere();
         
         // Check if ADS (entities) processes are running
         const adsRunning = window.adsGlobalStatus === 'running';
@@ -640,16 +778,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- Centralized Button State Management ---
     
     function updateAllButtonStates() {
-        const parliamentCode = 'DE';
-        const dataImportRunning = appState.processes.dataImport.isRunning;
-        const mainIndexRunning = appState.processes.mainIndex.isRunning;
-        const statisticsRunning = appState.processes.statisticsIndex.isRunning;
+        if (!appState.currentParliament) return;
+        
+        const parliamentCode = appState.currentParliament;
+        const currentProcesses = appState.processes[parliamentCode];
+        
+        if (!currentProcesses) return;
+        
+        const dataImportRunning = currentProcesses.dataImport.isRunning;
+        const mainIndexRunning = currentProcesses.mainIndex.isRunning;
+        const statisticsRunning = currentProcesses.statisticsIndex.isRunning;
         
         // Get UI elements
         const mainIndexElems = getSearchIndexElements(parliamentCode);
         const statisticsElems = getStatisticsIndexElements(parliamentCode);
         
-        // Check if ANY process is running
+        // Check if ANY process is running for this parliament
         const anyProcessRunning = dataImportRunning || mainIndexRunning || statisticsRunning;
         
         // Data Import Button: Disable if any other process is running
@@ -732,9 +876,16 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         updateElementText(elems.itemsText, itemsText);
 
-        // Update centralized process state
+        // Update centralized process state for this parliament
+        if (!appState.processes[parliamentCode]) {
+            appState.processes[parliamentCode] = {
+                dataImport: { isRunning: false },
+                mainIndex: { isRunning: false },
+                statisticsIndex: { isRunning: false }
+            };
+        }
         const isActive = ['running', 'processing', 'processing_batch', 'starting', 'initializing'].includes(status);
-        appState.processes.statisticsIndex.isRunning = isActive;
+        appState.processes[parliamentCode].statisticsIndex.isRunning = isActive;
         
         // Show errors if any
         if (errors && errors.length > 0) {
@@ -749,8 +900,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     async function fetchStatisticsIndexStatus(parliamentCode) {
-        // Don't fetch statistics index status while any other process is running
-        if (appState.isAnyProcessRunning()) {
+        // Don't fetch statistics index status while any other process is running for this parliament
+        if (appState.isAnyProcessRunning(parliamentCode)) {
             // Skip statistics index status update while other processes are running
             return;
         }
@@ -767,7 +918,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function triggerStatisticsIndexRebuild(parliamentCode) {
         // Button should already be disabled if conflicts exist, but add safety check
-        if (appState.isAnyProcessRunning()) {
+        if (appState.isAnyProcessRunning(parliamentCode)) {
             console.warn('triggerStatisticsIndexRebuild called while other processes are running - button should have been disabled');
             return;
         }
@@ -797,12 +948,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const rebuildBtn = document.getElementById(elems.rebuildButton);
         if (rebuildBtn) rebuildBtn.addEventListener('click', () => triggerStatisticsIndexRebuild(parliamentCode));
-
-        // Start statistics index polling with a delay to avoid race conditions with main index polling
-        setTimeout(() => {
-            fetchStatisticsIndexStatus(parliamentCode);
-            setInterval(() => fetchStatisticsIndexStatus(parliamentCode), POLLING_INTERVAL);
-        }, 2500); // 2.5 second delay to offset from main index polling
     }
 
     // --- Additional Data Services (ADS) Specific Functions ---
@@ -995,14 +1140,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Overall Status Display Functions ---
     function fetchOverallStatus() {
+        if (!appState.currentParliament) return;
+        
         const url = `${API_BASE_URL}/status/all`;
         
         apiCall(url).then(result => {
             if (result.success && result.data && result.data.parliaments && result.data.parliaments.length > 0) {
-                const parliamentData = result.data.parliaments[0]; // Assuming first parliament for now
+                // Find the current parliament's data
+                const parliamentData = result.data.parliaments.find(p => p.code === appState.currentParliament);
+                
+                if (!parliamentData) {
+                    console.warn(`No data found for parliament ${appState.currentParliament}`);
+                    return;
+                }
 
-					// Update Repository Info
-					if (parliamentData.repository) {
+				// Update Repository Info
+				if (parliamentData.repository) {
                     updateElementText('lastCommitDate', formatDate(parliamentData.repository.remote?.lastUpdated));
                     updateElementText('repoLocation', parliamentData.repository.location);
                     updateElementText('repoRemoteSessions', parliamentData.repository.remote?.numberOfSessions);
@@ -1014,21 +1167,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                     updateDataImportUI();
 
-					} else {
+				} else {
                     ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions'].forEach(id => updateElementText(id, 'N/A'));
-					}
+				}
 
-					// Update Database Info
-					if (parliamentData.database) {
+				// Update Database Info
+				if (parliamentData.database) {
                     updateElementText('lastDBDate', formatDate(parliamentData.database.lastUpdated));
                     updateElementText('dbSessions', parliamentData.database.numberOfSessions);
-					} else {
-                    ['lastDBDate', 'dbSessions'].forEach(id => updateElementText(id, 'N/A'));
-					}
-
 				} else {
+                    ['lastDBDate', 'dbSessions'].forEach(id => updateElementText(id, 'N/A'));
+				}
+
+			} else {
                 console.error("Error fetching status data or data is not in expected format:", result.errors || "Unknown error or no parliament data");
-					const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbSessions'];
+				const idsToReset = ['lastCommitDate', 'repoLocation', 'repoRemoteSessions', 'repoLocalUpdate', 'repoLocalSessions', 'lastDBDate', 'dbSessions'];
                 idsToReset.forEach(id => updateElementText(id, 'Error'));
             }
         });
@@ -1049,12 +1202,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Initialization ---
     function initPage() {
-        // Initialize centralized state tracking
-        appState.processes = {
-            dataImport: { isRunning: false },
-            mainIndex: { isRunning: false },
-            statisticsIndex: { isRunning: false }
-        };
+        // Generate all parliament sections
+        generateAllParliamentSections();
+        
+        // Set up parliament selector
+        const parliamentSelector = document.getElementById('parliament-selector');
+        if (parliamentSelector) {
+            // Set initial parliament (first one or selected one)
+            const initialParliament = parliamentSelector.value;
+            appState.currentParliament = initialParliament;
+            
+            // Add change event listener
+            parliamentSelector.addEventListener('change', function() {
+                switchParliament(this.value);
+            });
+        }
         
         // Data Import
         const triggerDataImportBtn = document.getElementById(dataImportElems.triggerButton);
@@ -1062,10 +1224,8 @@ document.addEventListener('DOMContentLoaded', function() {
             triggerDataImportBtn.addEventListener('click', triggerDataImport);
             setButtonText(dataImportElems.triggerButton, dataImportElems.originalButtonText);
         }
-        fetchDataImportStatus(); 
-        setInterval(fetchDataImportStatus, POLLING_INTERVAL);
-
-        // Search Index Sections 
+        
+        // Initialize search index sections for all parliaments
         initializeSearchIndexSections();
         
         // Additional Data Services (ADS)
@@ -1074,9 +1234,19 @@ document.addEventListener('DOMContentLoaded', function() {
         fetchAdsStatus();
         setInterval(fetchAdsStatus, POLLING_INTERVAL);
 
-        // Fetch overall status for repository/DB info
-        fetchOverallStatus();
-        setInterval(fetchOverallStatus, POLLING_INTERVAL);
+        // Fetch initial status for current parliament
+        if (appState.currentParliament) {
+            fetchDataImportStatus(); 
+            fetchSearchIndexStatus(appState.currentParliament);
+            fetchStatisticsIndexStatus(appState.currentParliament);
+            fetchOverallStatus();
+            
+            // Set up polling for current parliament
+            setInterval(fetchDataImportStatus, POLLING_INTERVAL);
+            setInterval(() => fetchSearchIndexStatus(appState.currentParliament), POLLING_INTERVAL);
+            setInterval(() => fetchStatisticsIndexStatus(appState.currentParliament), POLLING_INTERVAL);
+            setInterval(fetchOverallStatus, POLLING_INTERVAL);
+        }
     }
 
     initPage();

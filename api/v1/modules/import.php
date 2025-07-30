@@ -6,14 +6,23 @@ require_once (__DIR__."/../../../modules/utilities/functions.api.php");
 /**
  * Runs the cronUpdater script asynchronously
  * 
- * @param array $request The API request parameters
+ * @param array $request The API request parameters containing "parliament"
  * @return array Response with status information
  */
 function importRunCronUpdater($request) {
     global $config;
     
-    // Check if cronUpdater is already running
-    $lockFile = __DIR__ . "/../../../data/cronUpdater.lock";
+    // Validate parliament parameter
+    $parliament = $request['parliament'] ?? null;
+    if (empty($parliament)) {
+        return createApiErrorMissingParameter('parliament');
+    }
+    if (!isset($config['parliament'][$parliament])) {
+        return createApiErrorInvalidParameter('parliament', "Invalid parliament specified: {$parliament}");
+    }
+    
+    // Check if cronUpdater is already running for this parliament
+    $lockFile = __DIR__ . "/../../../data/cronUpdater_" . $parliament . ".lock";
     if (file_exists($lockFile)) {
         $lockAge = time() - filemtime($lockFile);
         
@@ -31,21 +40,24 @@ function importRunCronUpdater($request) {
                 [
                     "running" => true,
                     "runningSince" => date("Y-m-d H:i:s", filemtime($lockFile)),
-                    "runningFor" => $lockAge . " seconds"
+                    "runningFor" => $lockAge . " seconds",
+                    "parliament" => $parliament
                 ]
             );
         }
     }
     
     try {
-        // Execute the cronUpdater script asynchronously
-        executeAsyncShellCommand($config["bin"]["php"] . " " . realpath(__DIR__ . "/../../../data/cronUpdater.php"));
+        // Execute the cronUpdater script asynchronously with parliament parameter
+        $command = $config["bin"]["php"] . " " . realpath(__DIR__ . "/../../../data/cronUpdater.php") . " --parliament=" . escapeshellarg($parliament);
+        executeAsyncShellCommand($command);
         
         return createApiSuccessResponse(
             [
                 "running" => true,
                 "startedAt" => date("Y-m-d H:i:s"),
-                "message" => "CronUpdater started successfully"
+                "message" => "CronUpdater started successfully for parliament: {$parliament}",
+                "parliament" => $parliament
             ],
             []
         );
@@ -55,7 +67,7 @@ function importRunCronUpdater($request) {
             "CRON_START_FAILED",
             "messageErrorCronStartFailedTitle",
             "messageErrorCronStartFailedDetail",
-            ["details" => $e->getMessage()]
+            ["details" => $e->getMessage(), "parliament" => $parliament]
         );
     }
 }
@@ -63,12 +75,22 @@ function importRunCronUpdater($request) {
 /**
  * Gets the current status of the cronUpdater by reading its progress file.
  * 
+ * @param array $request The API request parameters containing "parliament"
  * @return array Response with status information from the cronUpdater.json file.
  */
-function importGetCronUpdaterStatus() {
+function importGetCronUpdaterStatus($request = []) {
     global $config;
     
-    $progressFilePath = __DIR__ . "/../../../data/progress/cronUpdater.json";
+    // Validate parliament parameter
+    $parliament = $request['parliament'] ?? null;
+    if (empty($parliament)) {
+        return createApiErrorMissingParameter('parliament');
+    }
+    if (!isset($config['parliament'][$parliament])) {
+        return createApiErrorInvalidParameter('parliament', "Invalid parliament specified: {$parliament}");
+    }
+    
+    $progressFilePath = __DIR__ . "/../../../data/progress/cronUpdater_" . $parliament . ".json";
 
     if (!file_exists($progressFilePath)) {
         // Default status if progress file doesn't exist (e.g., never run or cleaned up)
@@ -96,7 +118,7 @@ function importGetCronUpdaterStatus() {
                 "processedMediaObjectsInFile" => 0
             ]
         ];
-        return createApiSuccessResponse($defaultStatus, ["message" => "CronUpdater progress file not found, returning default idle status."]);
+        return createApiSuccessResponse($defaultStatus, ["message" => "CronUpdater progress file not found for parliament {$parliament}, returning default idle status."]);
     }
 
     $progressJson = @file_get_contents($progressFilePath);
@@ -128,7 +150,7 @@ function importGetCronUpdaterStatus() {
     return createApiSuccessResponse(
         $progressData,
         [
-            "message" => "CronUpdater status retrieved successfully from progress file."
+            "message" => "CronUpdater status retrieved successfully from progress file for parliament {$parliament}."
         ]
     );
 } 

@@ -57,8 +57,8 @@ if (file_exists($lockFile)) {
     }
 }
 
-// Check if cronUpdater is running to prevent conflicts
-$cronUpdaterLockFile = __DIR__ . "/cronUpdater.lock";
+// Check if cronUpdater is running for this parliament to prevent conflicts
+$cronUpdaterLockFile = __DIR__ . "/cronUpdater_" . $parliamentCode . ".lock";
 if (file_exists($cronUpdaterLockFile)) {
     $lockAge = time() - filemtime($cronUpdaterLockFile);
     
@@ -68,7 +68,7 @@ if (file_exists($cronUpdaterLockFile)) {
     } else {
         // Remove stale cronUpdater lock if it's too old
         unlink($cronUpdaterLockFile);
-        error_log("Removed stale cronUpdater lock file.");
+        error_log("Removed stale cronUpdater lock file for $parliamentCode.");
     }
 }
 

@@ -38,7 +38,7 @@ $meta["doneDir"] = __DIR__ . "/done/";
 $meta["preserveFiles"] = true;
 
 // Define path for the progress file for the DATA IMPORT part
-define("CRONUPDATER_PROGRESS_FILE", __DIR__ . "/progress/cronUpdater.json");
+// This will be set dynamically based on parliament
 
 require_once(__DIR__ . "/../modules/utilities/functions.php");
 
@@ -59,29 +59,37 @@ function logger($type = "info",$msg) {
 if (is_cli()) {
 
 
+    //get CLI parameter to $input first to determine parliament
+    $input = getopt(null, ["parliament:","justUpdateSearchIndex::","ids:","ignoreGit::","triggerStatisticsAfterCompletion::"]);
+    $parliament = ((!empty($input["parliament"])) ? $input["parliament"] : "DE");
+    
+    // Set parliament-specific progress file path
+    define("CRONUPDATER_PROGRESS_FILE", __DIR__ . "/progress/cronUpdater_" . $parliament . ".json");
+    
     /**
-     * Check if lock file exists and checks its age
+     * Check if parliament-specific lock file exists and checks its age
      */
-    if (file_exists(__DIR__."/cronUpdater.lock")) {
+    $lockFile = __DIR__."/cronUpdater_" . $parliament . ".lock";
+    if (file_exists($lockFile)) {
 
-        if (((time()-filemtime(__DIR__."/cronUpdater.lock")) >= ($config["time"]["warning"]*60)) && (time()-filemtime(__DIR__."/cronUpdater.lock")) <= ($config["time"]["ignore"]*60)) {
+        if (((time()-filemtime($lockFile)) >= ($config["time"]["warning"]*60)) && (time()-filemtime($lockFile)) <= ($config["time"]["ignore"]*60)) {
 
             if (filter_var($config["cronContactMail"], FILTER_VALIDATE_EMAIL)) {
                 require_once(__DIR__.'/../modules/send-mail/functions.php');
-                sendSimpleMail($config["cronContactMail"], "CronJob blocked", "CronJob was not executed. Its blocked now for over ".$config["time"]["warning"]." Minutes. Check the server and if its not running, remove the file: ".realpath(__DIR__."/cronUpdater.lock"));
-                logger("warn", "CronJob was not executed and log file is there for > ".$config["time"]["warning"]." Minutes already.");
+                sendSimpleMail($config["cronContactMail"], "CronJob blocked for parliament $parliament", "CronJob was not executed for parliament $parliament. Its blocked now for over ".$config["time"]["warning"]." Minutes. Check the server and if its not running, remove the file: ".realpath($lockFile));
+                logger("warn", "CronJob was not executed for parliament $parliament and lock file is there for > ".$config["time"]["warning"]." Minutes already.");
 
                 exit;
             }
 
-        } elseif ((time()-filemtime(__DIR__."/cronUpdater.lock")) >= ($config["time"]["ignore"]*60)) {
+        } elseif ((time()-filemtime($lockFile)) >= ($config["time"]["ignore"]*60)) {
 
-            logger("warn", "CronJob was blocked for > ".$config["time"]["ignore"]." Minutes now. Decided to ignore it and run it anyways.");
-            unlink(realpath(__DIR__."/cronUpdater.lock"));
+            logger("warn", "CronJob was blocked for parliament $parliament for > ".$config["time"]["ignore"]." Minutes now. Decided to ignore it and run it anyways.");
+            unlink(realpath($lockFile));
 
         } else {
-            logger("warn", "CronJob was blocked because its already running (for ".(time()-filemtime(__DIR__."/cronUpdater.lock"))." seconds)");
-            cliLog("cronUpdater still running");
+            logger("warn", "CronJob was blocked for parliament $parliament because its already running (for ".(time()-filemtime($lockFile))." seconds)");
+            cliLog("cronUpdater still running for parliament $parliament");
             exit;
 
         }
@@ -109,12 +117,9 @@ if (is_cli()) {
         }
     }
     
-    // create lock file
-    touch (__DIR__."/cronUpdater.lock");
+    // create parliament-specific lock file
+    touch (__DIR__."/cronUpdater_" . $parliament . ".lock");
 
-    //get CLI parameter to $input
-    $input = getopt(null, ["parliament:","justUpdateSearchIndex::","ids:","ignoreGit::","triggerStatisticsAfterCompletion::"]);
-    $parliament = ((!empty($input["parliament"])) ? $input["parliament"] : "DE");
     $isDataImportMode = !isset($input["justUpdateSearchIndex"]);
     $progressFinalized = false; // Flag for shutdown handler
 
@@ -126,7 +131,7 @@ if (is_cli()) {
 
 
     // Register shutdown function to ensure lock and progress are handled.
-    register_shutdown_function(function() use ($isDataImportMode, &$progressFinalized, $searchIndexProgressFilePath) {
+    register_shutdown_function(function() use ($isDataImportMode, &$progressFinalized, $searchIndexProgressFilePath, $parliament) {
         
         // Handle DATA IMPORT progress finalization on crash
         if ($isDataImportMode && function_exists('finalizeBaseProgressFile')) {
@@ -155,9 +160,9 @@ if (is_cli()) {
             }
         }
 
-        // Always try to remove the lock file
-        if (file_exists(__DIR__."/cronUpdater.lock")) {
-            @unlink(__DIR__."/cronUpdater.lock");
+        // Always try to remove the parliament-specific lock file
+        if (file_exists(__DIR__."/cronUpdater_" . $parliament . ".lock")) {
+            @unlink(__DIR__."/cronUpdater_" . $parliament . ".lock");
         }
     });
 
