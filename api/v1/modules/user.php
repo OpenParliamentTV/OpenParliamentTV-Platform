@@ -312,22 +312,18 @@ function userRegister($parameter) {
     $registrationMailSubject = L::brand().': '.L::registerNewAccount();
     $registrationMailVerifyLink = $config['dir']['root'].'/registerConfirm?id='.$userID.'&c='.$confirmationCode;
 
+    require_once(__DIR__.'/../../../modules/send-mail/functions.php');
+    require_once(__DIR__.'/../../../modules/utilities/security.php');
+    
     $message = '<html><body>';
-    $message .= '<p>'.L::hello().' '.$parameter["UserName"].',</p>';
-    $message .= '<p>'.L::messageRegisterThankYou().' <b>'.$config['dir']['root'].'</b>.</p>';
+    $message .= '<p>'.L::hello().' '.h($parameter["UserName"]).',</p>';
+    $message .= '<p>'.L::messageRegisterThankYou().' <b>'.h($config['dir']['root']).'</b>.</p>';
     $message .= '<p>'.L::messageRegisterClickLinkToValidate().'</p>';
-    $message .= '<p><a href="'.$registrationMailVerifyLink.'">'.$registrationMailVerifyLink.'</a></p>';
+    $message .= '<p><a href="'.hAttr($registrationMailVerifyLink).'">'.h($registrationMailVerifyLink).'</a></p>';
     $message .= '<p>'.L::messageMailGreetings().',<br>'.L::brand().'</p>';
     $message .= '</body></html>';
 
-    $header = array(
-        'MIME-Version' => '1.0',
-        'Content-type' => 'text/html; charset=utf-8',
-        'From' => $config["mail"]["from"],
-        'X-Mailer' => 'PHP/' . phpversion()
-    );
-
-    mail($parameter["UserName"].' <'.$mail.'>', $registrationMailSubject, $message, $header);
+    sendHtmlMail($mail, $registrationMailSubject, $message, $parameter["UserName"]);
 
     return createApiSuccessResponse([
         "message" => L::messageRegisterSuccess(),
@@ -399,22 +395,18 @@ function userPasswordResetRequest($parameter) {
     $passwordresetMailSubject = L::brand().': '.L::resetPassword();
     $resetLink = $config["dir"]["root"] . "/password-reset?id=" . $userdata['UserID'] . "&code=" . $confirmationCode;
 
+    require_once(__DIR__.'/../../../modules/send-mail/functions.php');
+    require_once(__DIR__.'/../../../modules/utilities/security.php');
+    
     $message = '<html><body>';
-    $message .= '<p>'.L::hello().' '.$userdata["UserName"].',</p>';
+    $message .= '<p>'.L::hello().' '.h($userdata["UserName"]).',</p>';
     $message .= '<p>'.L::messagePasswordResetMailStart().'</p>';
-    $message .= '<p><a href="'.$resetLink.'">'.$resetLink.'</a></p>';
+    $message .= '<p><a href="'.hAttr($resetLink).'">'.h($resetLink).'</a></p>';
     $message .= '<p>'.L::messagePasswordResetMailEnd().'</p>';
     $message .= '<p>'.L::messageMailGreetings().',<br>'.L::brand().'</p>';
     $message .= '</body></html>';
 
-    $header = array(
-        'MIME-Version' => '1.0',
-        'Content-type' => 'text/html; charset=utf-8',
-        'From' => $config["mail"]["from"],
-        'X-Mailer' => 'PHP/' . phpversion()
-    );
-
-    mail($userdata["UserName"].' <'.$mail.'>', $passwordresetMailSubject, $message, $header);
+    sendHtmlMail($mail, $passwordresetMailSubject, $message, $userdata["UserName"]);
 
     return createApiSuccessResponse([
         "message" => L::messagePasswordResetMailSent()

@@ -67,8 +67,8 @@ if (is_cli()) {
         if (((time()-filemtime(__DIR__."/cronUpdater.lock")) >= ($config["time"]["warning"]*60)) && (time()-filemtime(__DIR__."/cronUpdater.lock")) <= ($config["time"]["ignore"]*60)) {
 
             if (filter_var($config["cronContactMail"], FILTER_VALIDATE_EMAIL)) {
-
-                mail($config["cronContactMail"],"CronJob blocked", "CronJob was not executed. Its blocked now for over ".$config["time"]["warning"]." Minutes. Check the server and if its not running, remove the file: ".realpath(__DIR__."/cronUpdater.lock"));
+                require_once(__DIR__.'/../modules/send-mail/functions.php');
+                sendSimpleMail($config["cronContactMail"], "CronJob blocked", "CronJob was not executed. Its blocked now for over ".$config["time"]["warning"]." Minutes. Check the server and if its not running, remove the file: ".realpath(__DIR__."/cronUpdater.lock"));
                 logger("warn", "CronJob was not executed and log file is there for > ".$config["time"]["warning"]." Minutes already.");
 
                 exit;

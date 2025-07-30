@@ -122,8 +122,8 @@ if (is_cli()) {
         if (((time()-filemtime(__DIR__."/cronAdditionalDataService.lock")) >= ($config["time"]["warning"]*60)) && (time()-filemtime(__DIR__."/cronAdditionalDataService.lock")) <= ($config["time"]["ignore"]*60)) {
 
             if (filter_var($config["cronContactMail"], FILTER_VALIDATE_EMAIL)) {
-
-                mail($config["cronContactMail"],"CronJob AdditionalDataService blocked", "CronJob AdditionalDataService was not executed. Its blocked now for over ".$config["time"]["warning"]." Minutes. Check the server and if its not running, remove the file: ".realpath(__DIR__."/cronAdditionalDataService.lock"));
+                require_once(__DIR__.'/../modules/send-mail/functions.php');
+                sendSimpleMail($config["cronContactMail"], "CronJob AdditionalDataService blocked", "CronJob AdditionalDataService was not executed. Its blocked now for over ".$config["time"]["warning"]." Minutes. Check the server and if its not running, remove the file: ".realpath(__DIR__."/cronAdditionalDataService.lock"));
                 logger("warn", "CronJob was not executed and log file is there for > ".$config["time"]["warning"]." Minutes already.");
 
                 exit;
