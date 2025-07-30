@@ -82,7 +82,7 @@ function searchSpeeches($request, $getAllResults = false) {
     }
 
     // Add fragment settings to get all matches
-    if (!$data["highlight"]) {
+    if (!isset($data["highlight"])) {
         $data["highlight"] = [];
     }
     $data["highlight"]["number_of_fragments"] = 0;
