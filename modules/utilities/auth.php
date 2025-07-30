@@ -2,7 +2,7 @@
 
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/../utilities/safemysql.class.php");
-require_once(__DIR__."/language.php");
+require_once(__DIR__."/../i18n/language.php");
 
 // Language is automatically initialized by language.php if needed
 

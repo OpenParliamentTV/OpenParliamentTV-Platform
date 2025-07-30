@@ -9,7 +9,7 @@ if (!isset($entity) || !isset($entity['data'])) {
 	return;
 }
 
-require_once(__DIR__."/../../modules/utilities/language.php");
+require_once(__DIR__."/../../modules/i18n/language.php");
 
 $typeImageFit = "cover";
 $typeImagePosition = "top";

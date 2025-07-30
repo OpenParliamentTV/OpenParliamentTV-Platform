@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/../../../modules/utilities/language.php");
+require_once(__DIR__."/../../../modules/i18n/language.php");
 require_once(__DIR__."/../../../modules/utilities/security.php");
 
 require_once(__DIR__."/../../../modules/media/functions.php");

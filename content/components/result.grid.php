@@ -16,7 +16,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     echo "Not authorized";
 } else {
 
-require_once(__DIR__."/../../modules/utilities/language.php");
+require_once(__DIR__."/../../modules/i18n/language.php");
 
 require_once(__DIR__.'/../../modules/utilities/functions.entities.php');
 require_once(__DIR__."/../../modules/search/include.search.php");

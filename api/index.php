@@ -13,7 +13,7 @@ if ($config["mode"] == "dev") {
 ini_set('display_errors', '0');
 ini_set('log_errors', '1');
 
-require_once(__DIR__.'/../modules/utilities/language.php');
+require_once(__DIR__.'/../modules/i18n/language.php');
 
 // initialize language
 $lang = LanguageManager::getInstance()->getCurrentLang();

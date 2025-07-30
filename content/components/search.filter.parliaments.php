@@ -6,7 +6,7 @@ applySecurityHeaders();
 
 
 include_once(__DIR__ . '/../../../modules/utilities/auth.php');
-require_once(__DIR__."/../../../modules/utilities/language.php");
+require_once(__DIR__."/../../../modules/i18n/language.php");
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", "results");
 

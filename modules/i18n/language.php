@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/../../i18n.class.php");
+require_once(__DIR__."/i18n.class.php");
 require_once(__DIR__."/../../config.php");
 
 class LanguageManager {
