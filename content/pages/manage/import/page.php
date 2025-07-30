@@ -190,7 +190,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         },
         importStatus: {},
-        entityCounts: {}
+        entityCounts: {},
+        // Centralized process state management
+        processes: {
+            dataImport: { isRunning: false },
+            mainIndex: { isRunning: false },
+            statisticsIndex: { isRunning: false }
+        },
+        // Helper function to check if any process is running
+        isAnyProcessRunning: function() {
+            return this.processes.dataImport.isRunning || 
+                   this.processes.mainIndex.isRunning || 
+                   this.processes.statisticsIndex.isRunning;
+        }
     };
 
     const formatDate = (dateString) => {
@@ -401,6 +413,9 @@ document.addEventListener('DOMContentLoaded', function() {
         updateElementText(dataImportElems.statusText, `Status: ${finalStatusDetails}`);
         updateElementText(dataImportElems.itemsText, finalItemsText);
 
+        // Update centralized process state
+        appState.processes.dataImport.isRunning = (status === 'running');
+        
         if (status === 'running') {
             toggleButton(dataImportElems.triggerButton, true, `<?= L::running(); ?>...`);
             clearError(dataImportElems.errorDisplay);
@@ -421,17 +436,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Update all button states based on current process status
-        updateAllButtonStates();
+        // Use setTimeout to ensure state is properly updated before checking button states
+        setTimeout(() => updateAllButtonStates(), 0);
     }
 
     async function triggerDataImport() {
         // Button should already be disabled if conflicts exist, but add safety check
-        const statisticsState = window.statisticsIndexState?.['DE'];
-        const statisticsIsRunning = statisticsState?.isRunning || false;
-        const mainIndexStatus = window.mainIndexStatus?.['DE'];
-        const mainIndexRunning = mainIndexStatus?.isRunning || false;
-        
-        if (statisticsIsRunning || mainIndexRunning) {
+        if (appState.isAnyProcessRunning()) {
             console.warn('triggerDataImport called while other processes are running - button should have been disabled');
             return;
         }
@@ -480,11 +491,10 @@ document.addEventListener('DOMContentLoaded', function() {
         updateElementText(elems.statusText, `Status: ${statusDetails}`);
         updateElementText(elems.itemsText, `<?= L::speeches(); ?>: ${processedMediaItems} / ${totalDbMediaItems}`);
 
-        // Track main index status globally for enhanced index coordination
-        window.mainIndexStatus = window.mainIndexStatus || {};
-        const wasRunning = window.mainIndexStatus[parliamentCode]?.isRunning || false;
+        // Update centralized process state
+        const wasRunning = appState.processes.mainIndex.isRunning;
         const isRunning = status === 'running';
-        window.mainIndexStatus[parliamentCode] = { isRunning: isRunning };
+        appState.processes.mainIndex.isRunning = isRunning;
         
         // Handle status-specific UI updates and errors
         if (status === 'error') {
@@ -503,7 +513,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Update all button states based on current process status  
-        updateAllButtonStates();
+        // Use setTimeout to ensure state is properly updated before checking button states
+        setTimeout(() => updateAllButtonStates(), 0);
     }
 
     async function fetchSearchIndexStatus(parliamentCode) {
@@ -519,11 +530,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function triggerSearchIndexRefresh(parliamentCode) {
         // Button should already be disabled if conflicts exist, but add safety check
-        const statisticsState = window.statisticsIndexState?.[parliamentCode];
-        const statisticsIsRunning = statisticsState?.isRunning || false;
-        
-        if (statisticsIsRunning) {
-            console.warn('triggerSearchIndexRefresh called while statistics indexing is running - button should have been disabled');
+        if (appState.isAnyProcessRunning()) {
+            console.warn('triggerSearchIndexRefresh called while other processes are running - button should have been disabled');
             return;
         }
         
@@ -546,11 +554,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function triggerSearchIndexDelete(parliamentCode) {
         // Button should already be disabled if conflicts exist, but add safety check
-        const statisticsState = window.statisticsIndexState?.[parliamentCode];
-        const statisticsIsRunning = statisticsState?.isRunning || false;
-        
-        if (statisticsIsRunning) {
-            console.warn('triggerSearchIndexDelete called while statistics indexing is running - button should have been disabled');
+        if (appState.isAnyProcessRunning()) {
+            console.warn('triggerSearchIndexDelete called while other processes are running - button should have been disabled');
             return;
         }
         
@@ -601,23 +606,53 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // --- Tab State Management ---
+    
+    function updateTabStates() {
+        const parliamentsTab = document.getElementById('parliaments-tab');
+        const entitiesTab = document.getElementById('external-tab');
+        
+        // Check if any parliament processes are running using centralized state
+        const parliamentsWorking = appState.isAnyProcessRunning();
+        
+        // Check if ADS (entities) processes are running
+        const adsRunning = window.adsGlobalStatus === 'running';
+        
+        // Update parliaments tab
+        if (parliamentsTab) {
+            if (parliamentsWorking) {
+                parliamentsTab.classList.add('working');
+            } else {
+                parliamentsTab.classList.remove('working');
+            }
+        }
+        
+        // Update entities tab  
+        if (entitiesTab) {
+            if (adsRunning) {
+                entitiesTab.classList.add('working');
+            } else {
+                entitiesTab.classList.remove('working');
+            }
+        }
+    }
+    
     // --- Centralized Button State Management ---
     
     function updateAllButtonStates() {
-        const parliamentCode = 'DE'; // Currently hardcoded for DE
+        const parliamentCode = 'DE';
+        const dataImportRunning = appState.processes.dataImport.isRunning;
+        const mainIndexRunning = appState.processes.mainIndex.isRunning;
+        const statisticsRunning = appState.processes.statisticsIndex.isRunning;
         
-        // Get current status of all processes
-        const dataImportRunning = appState.importStatus?.status === 'running';
-        const mainIndexStatus = window.mainIndexStatus?.[parliamentCode];
-        const mainIndexRunning = mainIndexStatus?.isRunning || false;
-        const statisticsState = window.statisticsIndexState?.[parliamentCode];
-        const statisticsRunning = statisticsState?.isRunning || false;
-        
-        // Get UI elements (dataImportElems is already defined as const above)
+        // Get UI elements
         const mainIndexElems = getSearchIndexElements(parliamentCode);
         const statisticsElems = getStatisticsIndexElements(parliamentCode);
         
-        // Data Import Button: Disable if main index OR statistics indexing is running
+        // Check if ANY process is running
+        const anyProcessRunning = dataImportRunning || mainIndexRunning || statisticsRunning;
+        
+        // Data Import Button: Disable if any other process is running
         if (mainIndexRunning || statisticsRunning) {
             const blockingProcess = mainIndexRunning ? 'Main index running' : 'Statistics indexing running';
             toggleButton(dataImportElems.triggerButton, true, blockingProcess + '...');
@@ -625,7 +660,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleButton(dataImportElems.triggerButton, false, dataImportElems.originalButtonText);
         }
         
-        // Main Index Buttons: Disable if data import OR statistics indexing is running
+        // Main Index Buttons: Disable if any other process is running
         if (dataImportRunning || statisticsRunning) {
             const blockingProcess = dataImportRunning ? 'Data import running' : 'Statistics indexing running';
             toggleButton(mainIndexElems.refreshButton, true, blockingProcess + '...');
@@ -635,13 +670,19 @@ document.addEventListener('DOMContentLoaded', function() {
             toggleButton(mainIndexElems.deleteButton, false, mainIndexElems.originalDeleteBtnText);
         }
         
-        // Statistics Index Button: Disable if data import OR main index is running
-        if (dataImportRunning || mainIndexRunning) {
-            const blockingProcess = dataImportRunning ? 'Data import running' : 'Main index running';
+        // Statistics Index Button: Disable if any other process is running OR if statistics itself is running
+        if (dataImportRunning || mainIndexRunning || statisticsRunning) {
+            let blockingProcess = 'Unknown process running';
+            if (dataImportRunning) blockingProcess = 'Data import running';
+            else if (mainIndexRunning) blockingProcess = 'Main index running';
+            else if (statisticsRunning) blockingProcess = 'Statistics indexing running';
             toggleButton(statisticsElems.rebuildButton, true, blockingProcess + '...');
-        } else if (!statisticsRunning) {
+        } else {
             toggleButton(statisticsElems.rebuildButton, false, statisticsElems.originalRebuildBtnText);
         }
+        
+        // Update tab states
+        updateTabStates();
     }
     
     // --- Localized Labels ---
@@ -691,10 +732,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         updateElementText(elems.itemsText, itemsText);
 
-        // Update statistics index state for coordination with other processes
+        // Update centralized process state
         const isActive = ['running', 'processing', 'processing_batch', 'starting', 'initializing'].includes(status);
-        window.statisticsIndexState = window.statisticsIndexState || {};
-        window.statisticsIndexState[parliamentCode] = { isRunning: isActive };
+        appState.processes.statisticsIndex.isRunning = isActive;
         
         // Show errors if any
         if (errors && errors.length > 0) {
@@ -704,25 +744,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         // Update all button states based on current process status
-        updateAllButtonStates();
+        // Use setTimeout to ensure state is properly updated before checking button states
+        setTimeout(() => updateAllButtonStates(), 0);
     }
     
     async function fetchStatisticsIndexStatus(parliamentCode) {
-        // Don't fetch statistics index status while data import is running
-        const dataImportStatus = appState.importStatus?.status;
-        const dataImportRunning = dataImportStatus === 'running';
-        
-        if (dataImportRunning) {
-            // Skip statistics index status update while data import is running
-            return;
-        }
-        
-        // Don't fetch statistics index status while main index is running
-        const mainIndexStatus = window.mainIndexStatus || {};
-        const mainIndexRunning = mainIndexStatus[parliamentCode]?.isRunning || false;
-        
-        if (mainIndexRunning) {
-            // Skip statistics index status update while main index is running
+        // Don't fetch statistics index status while any other process is running
+        if (appState.isAnyProcessRunning()) {
+            // Skip statistics index status update while other processes are running
             return;
         }
         
@@ -738,11 +767,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     async function triggerStatisticsIndexRebuild(parliamentCode) {
         // Button should already be disabled if conflicts exist, but add safety check
-        const dataImportRunning = appState.importStatus?.status === 'running';
-        const mainIndexStatus = window.mainIndexStatus?.[parliamentCode];
-        const mainIndexRunning = mainIndexStatus?.isRunning || false;
-        
-        if (dataImportRunning || mainIndexRunning) {
+        if (appState.isAnyProcessRunning()) {
             console.warn('triggerStatisticsIndexRebuild called while other processes are running - button should have been disabled');
             return;
         }
@@ -863,6 +888,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateAdsUI(statusData) {
         const { globalStatus, activeType, types } = statusData;
+        
+        // Track ADS global status for tab state management
+        window.adsGlobalStatus = globalStatus;
 
         const allButtons = document.querySelectorAll(adsElems.triggerButtonClass);
 
@@ -935,6 +963,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }
+        
+        // Update tab states
+        updateTabStates();
     }
     
     async function triggerAdsUpdate(entityType) { 
@@ -1018,9 +1049,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Initialization ---
     function initPage() {
-        // Initialize state tracking for coordination between main and statistics index
-        window.statisticsIndexState = {};
-        window.mainIndexStatus = {};
+        // Initialize centralized state tracking
+        appState.processes = {
+            dataImport: { isRunning: false },
+            mainIndex: { isRunning: false },
+            statisticsIndex: { isRunning: false }
+        };
         
         // Data Import
         const triggerDataImportBtn = document.getElementById(dataImportElems.triggerButton);

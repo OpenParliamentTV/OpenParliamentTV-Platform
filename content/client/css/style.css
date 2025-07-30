@@ -645,7 +645,8 @@ body.darkmode .list-group-item.working, body.darkmode .list-group-item.working:h
     background: #575963 !important;
 }
 
-.btn.working::after, .list-group-item.working::after {
+.btn.working::after, 
+.list-group-item.working::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -690,6 +691,51 @@ body.darkmode .list-group-item.working, body.darkmode .list-group-item.working:h
     100% {
         -webkit-transform: rotate(360deg);
         transform: rotate(360deg);
+    }
+}
+
+.nav-link.working {
+    position: relative;
+    transition: padding-right .3s;
+    padding-right: 30px;
+}
+
+.nav-link.working::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 10px;
+    height: 10px;
+    margin-top: -4px;
+    margin-left: -5px;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    -webkit-animation: blinking 2.5s infinite ease-in-out;
+    animation: blinking 2.5s infinite ease-in-out;
+}
+
+@-webkit-keyframes blinking {
+    0% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: #0d6efd;
+    }
+    100% {
+        background-color: transparent;
+    }
+}
+
+@keyframes blinking {
+    0% {
+        background-color: transparent;
+    }
+    50% {
+        background-color: #0d6efd;
+    }
+    100% {
+        background-color: transparent;
     }
 }
 
