@@ -156,7 +156,7 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
             //"DocumentLabel"=>$apiItem["data"]["label"],
             //"DocumentLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
             "DocumentAbstract"=>$apiItem["data"]["abstract"],
-            "DocumentSourceURI"=>$apiItem["data"]["sourceURI"],
+            "DocumentSourceURI"=>($apiItem["data"]["sourceURI"] ?? ''),
             "DocumentAdditionalInformation"=>json_encode($apiItem["data"]["additionalInformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
         );
     } elseif ($type == "organisation") {
@@ -179,48 +179,48 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
         $updateArray = array(
             //"TermLabel"=>$apiItem["data"]["label"],
             //"TermLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-            "TermAbstract"=>$apiItem["data"]["abstract"],
-            "TermThumbnailURI"=>$apiItem["data"]["thumbnailURI"],
-            "TermThumbnailCreator"=>$apiItem["data"]["thumbnailCreator"],
-            "TermThumbnailLicense"=>$apiItem["data"]["thumbnailLicense"],
-            "TermWebsiteURI"=>$apiItem["data"]["websiteURI"],
-            "TermAdditionalInformation"=>json_encode($apiItem["data"]["additionalInformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+            "TermAbstract"=>_optv_get_string_from_data($apiItem["data"], "abstract", $type, $id),
+            "TermThumbnailURI"=>_optv_get_string_from_data($apiItem["data"], "thumbnailURI", $type, $id),
+            "TermThumbnailCreator"=>_optv_get_string_from_data($apiItem["data"], "thumbnailCreator", $type, $id),
+            "TermThumbnailLicense"=>_optv_get_string_from_data($apiItem["data"], "thumbnailLicense", $type, $id),
+            "TermWebsiteURI"=>_optv_get_string_from_data($apiItem["data"], "websiteURI", $type, $id),
+            "TermAdditionalInformation"=>json_encode(($apiItem["data"]["additionalInformation"] ?? []), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
         );
     } elseif ($type == "person") {
         $updateArray = array(
-            "PersonLabel"=>$apiItem["data"]["label"],
-            "PersonLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-            "PersonFirstName"=>$apiItem["data"]["firstName"],
-            "PersonLastName"=>$apiItem["data"]["lastName"],
-            "PersonDegree"=>$apiItem["data"]["degree"],
-            "PersonBirthDate"=>date('Y-m-d', strtotime($apiItem["data"]["birthDate"])),
-            "PersonGender"=>$apiItem["data"]["gender"],
-            "PersonAbstract"=>$apiItem["data"]["abstract"],
-            "PersonThumbnailURI"=>$apiItem["data"]["thumbnailURI"],
-            "PersonThumbnailCreator"=>$apiItem["data"]["thumbnailCreator"],
-            "PersonThumbnailLicense"=>$apiItem["data"]["thumbnailLicense"],
-            "PersonWebsiteURI"=>$apiItem["data"]["websiteURI"],
-            "PersonSocialMediaIDs"=>json_encode($apiItem["data"]["socialMediaIDs"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-            "PersonAdditionalInformation"=>json_encode($apiItem["data"]["additionalInformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+            "PersonLabel"=>_optv_get_string_from_data($apiItem["data"], "label", $type, $id),
+            "PersonLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?? []), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            "PersonFirstName"=>_optv_get_string_from_data($apiItem["data"], "firstName", $type, $id),
+            "PersonLastName"=>_optv_get_string_from_data($apiItem["data"], "lastName", $type, $id),
+            "PersonDegree"=>_optv_get_string_from_data($apiItem["data"], "degree", $type, $id),
+            "PersonBirthDate"=>isset($apiItem["data"]["birthDate"]) ? date('Y-m-d', strtotime($apiItem["data"]["birthDate"])) : '',
+            "PersonGender"=>_optv_get_string_from_data($apiItem["data"], "gender", $type, $id),
+            "PersonAbstract"=>_optv_get_string_from_data($apiItem["data"], "abstract", $type, $id),
+            "PersonThumbnailURI"=>_optv_get_string_from_data($apiItem["data"], "thumbnailURI", $type, $id),
+            "PersonThumbnailCreator"=>_optv_get_string_from_data($apiItem["data"], "thumbnailCreator", $type, $id),
+            "PersonThumbnailLicense"=>_optv_get_string_from_data($apiItem["data"], "thumbnailLicense", $type, $id),
+            "PersonWebsiteURI"=>_optv_get_string_from_data($apiItem["data"], "websiteURI", $type, $id),
+            "PersonSocialMediaIDs"=>json_encode(($apiItem["data"]["socialMediaIDs"] ?? []), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            "PersonAdditionalInformation"=>json_encode(($apiItem["data"]["additionalInformation"] ?? []), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
         );
     } elseif ($type == "memberOfParliament") {
         $updateArray = array(
-            "PersonLabel"=>$apiItem["data"]["label"],
-            "PersonLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-            "PersonFirstName"=>$apiItem["data"]["firstName"],
-            "PersonLastName"=>$apiItem["data"]["lastName"],
-            "PersonDegree"=>$apiItem["data"]["degree"],
-            "PersonBirthDate"=>date('Y-m-d', strtotime($apiItem["data"]["birthDate"])),
-            "PersonGender"=>$apiItem["data"]["gender"],
-            "PersonAbstract"=>$apiItem["data"]["abstract"],
-            "PersonThumbnailURI"=>$apiItem["data"]["thumbnailURI"],
-            "PersonThumbnailCreator"=>$apiItem["data"]["thumbnailCreator"],
-            "PersonThumbnailLicense"=>$apiItem["data"]["thumbnailLicense"],
-            "PersonWebsiteURI"=>$apiItem["data"]["websiteURI"],
-            "PersonSocialMediaIDs"=>json_encode($apiItem["data"]["socialMediaIDs"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-            "PersonAdditionalInformation"=>json_encode($apiItem["data"]["additionalInformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-            "PersonPartyOrganisationID"=>$apiItem["data"]["partyID"],
-            "PersonFactionOrganisationID"=>$apiItem["data"]["factionID"]
+            "PersonLabel"=>_optv_get_string_from_data($apiItem["data"], "label", $type, $id),
+            "PersonLabelAlternative"=>json_encode(($apiItem["data"]["labelAlternative"] ?? []), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            "PersonFirstName"=>_optv_get_string_from_data($apiItem["data"], "firstName", $type, $id),
+            "PersonLastName"=>_optv_get_string_from_data($apiItem["data"], "lastName", $type, $id),
+            "PersonDegree"=>_optv_get_string_from_data($apiItem["data"], "degree", $type, $id),
+            "PersonBirthDate"=>isset($apiItem["data"]["birthDate"]) ? date('Y-m-d', strtotime($apiItem["data"]["birthDate"])) : '',
+            "PersonGender"=>_optv_get_string_from_data($apiItem["data"], "gender", $type, $id),
+            "PersonAbstract"=>_optv_get_string_from_data($apiItem["data"], "abstract", $type, $id),
+            "PersonThumbnailURI"=>_optv_get_string_from_data($apiItem["data"], "thumbnailURI", $type, $id),
+            "PersonThumbnailCreator"=>_optv_get_string_from_data($apiItem["data"], "thumbnailCreator", $type, $id),
+            "PersonThumbnailLicense"=>_optv_get_string_from_data($apiItem["data"], "thumbnailLicense", $type, $id),
+            "PersonWebsiteURI"=>_optv_get_string_from_data($apiItem["data"], "websiteURI", $type, $id),
+            "PersonSocialMediaIDs"=>json_encode(($apiItem["data"]["socialMediaIDs"] ?? []), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            "PersonAdditionalInformation"=>json_encode(($apiItem["data"]["additionalInformation"] ?? []), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            "PersonPartyOrganisationID"=>($apiItem["data"]["partyID"] ?? ''),
+            "PersonFactionOrganisationID"=>($apiItem["data"]["factionID"] ?? '')
         );
 
     }

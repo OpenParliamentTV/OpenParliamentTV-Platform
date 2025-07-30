@@ -812,7 +812,7 @@ switch ($page) {
 				}
 			}
 
-			$pageTitle .= $_REQUEST["q"];
+			$pageTitle .= ($_REQUEST["q"] ?? '');
 
 			if (count($_REQUEST) < 2 || (!$_REQUEST["q"] && !$_REQUEST["personID"] && !$_REQUEST["organisationID"] && !$_REQUEST["documentID"] && !$_REQUEST["termID"])) {
 				$pageTitle .= L::search();
