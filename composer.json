@@ -1,5 +1,5 @@
 {
     "require": {
-        "elasticsearch/elasticsearch": "^7.4"
+        "opensearch-project/opensearch-php": "^2.0"
     }
 }

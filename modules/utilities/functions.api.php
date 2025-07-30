@@ -280,30 +280,30 @@ function sanitizeStringInput($input) {
 }
 
 /**
- * Prepares and returns the Elasticsearch client.
+ * Prepares and returns the OpenSearch client.
  *
- * @return \Elasticsearch\Client|array Error response array
+ * @return \OpenSearch\Client|array Error response array
  */
 function getApiOpenSearchClient() {
     global $config;
-    $ESClientBuilder = Elasticsearch\ClientBuilder::create();
+    $clientBuilder = OpenSearch\ClientBuilder::create();
 
     if (!empty($config["ES"]["hosts"])) {
-        $ESClientBuilder->setHosts($config["ES"]["hosts"]);
+        $clientBuilder->setHosts($config["ES"]["hosts"]);
     }
     if (!empty($config["ES"]["BasicAuthentication"]["user"]) && isset($config["ES"]["BasicAuthentication"]["passwd"])) {
-        $ESClientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"], $config["ES"]["BasicAuthentication"]["passwd"]);
+        $clientBuilder->setBasicAuthentication($config["ES"]["BasicAuthentication"]["user"], $config["ES"]["BasicAuthentication"]["passwd"]);
     }
     if (!empty($config["ES"]["SSL"]["pem"])) {
-        $ESClientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
+        $clientBuilder->setSSLVerification($config["ES"]["SSL"]["pem"]);
     }
     
     try {
-        return $ESClientBuilder->build();
+        return $clientBuilder->build();
     } catch (Exception $e) {
         // Log error
-        error_log("Elasticsearch ClientBuilder failed: " . $e->getMessage());
-        return createApiErrorResponse(500, 'ES_CLIENT_ERROR', 'messageErrorESClient', 'Elasticsearch client initialization failed: ' . $e->getMessage());
+        error_log("OpenSearch ClientBuilder failed: " . $e->getMessage());
+        return createApiErrorResponse(500, 'ES_CLIENT_ERROR', 'messageErrorESClient', 'OpenSearch client initialization failed: ' . $e->getMessage());
     }
 }
 
