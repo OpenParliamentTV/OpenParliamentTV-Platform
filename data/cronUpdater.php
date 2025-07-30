@@ -18,7 +18,7 @@ ini_set('memory_limit', '512M');
  *
  * --justUpdateSearchIndex "true" | (default not enabled) if this is set it will get all MediaItems from API or just the Items with given with following parameter (separeted IDs by comma)
  * --ids "DE-0190002013,DE-0190002014" | (default not enabled) comma separated list of MediaIDs which get updated if --justUpdateSearchIndex = true too
- * --triggerEnhancedAfterCompletion | (default not enabled) if this is set with --justUpdateSearchIndex, enhanced indexing will be triggered asynchronously after main index completion
+ * --triggerStatisticsAfterCompletion | (default not enabled) if this is set with --justUpdateSearchIndex, statistics indexing will be triggered asynchronously after main index completion
  *
  * --ignoreGit = "true" | (default not enabled) just processes session files from $meta["inputDir"] and dont do anything with git
  *
@@ -88,11 +88,32 @@ if (is_cli()) {
 
     }
 
+    // Check if statistics indexing is running to prevent conflicts
+    $statisticsLockFile = __DIR__ . "/progress/statisticsIndexer_" . $parliament . ".lock";
+    if (file_exists($statisticsLockFile)) {
+        $lockData = json_decode(file_get_contents($statisticsLockFile), true);
+        $lockAge = time() - ($lockData['timestamp'] ?? 0);
+        $mode = $lockData['mode'] ?? 'unknown';
+        
+        // Use appropriate timeout: 4 hours for full rebuild, 1 hour for incremental
+        $timeout = ($mode === 'full_rebuild') ? 14400 : 3600;
+        
+        if ($lockAge < $timeout) {
+            logger("warn", "Statistics indexing ($mode) is running for $parliament. Skipping data import to prevent conflicts.");
+            cliLog("Statistics indexing running - data import blocked");
+            exit;
+        } else {
+            // Remove stale statistics lock
+            unlink($statisticsLockFile);
+            logger("info", "Removed stale statistics indexing lock file.");
+        }
+    }
+    
     // create lock file
     touch (__DIR__."/cronUpdater.lock");
 
     //get CLI parameter to $input
-    $input = getopt(null, ["parliament:","justUpdateSearchIndex::","ids:","ignoreGit::","triggerEnhancedAfterCompletion::"]);
+    $input = getopt(null, ["parliament:","justUpdateSearchIndex::","ids:","ignoreGit::","triggerStatisticsAfterCompletion::"]);
     $parliament = ((!empty($input["parliament"])) ? $input["parliament"] : "DE");
     $isDataImportMode = !isset($input["justUpdateSearchIndex"]);
     $progressFinalized = false; // Flag for shutdown handler
@@ -284,16 +305,16 @@ if (is_cli()) {
 
         logger("info", "cronUpdater finished: Search index update complete. Total: {$totalItems}, Processed: {$processedItemCount}, Failed: {$failedItemCount}.");
         
-        // Trigger enhanced indexing after successful completion if requested
-        if (isset($input["triggerEnhancedAfterCompletion"]) && $finalStatus === "completed_successfully") {
-            $enhancedScriptPath = realpath(__DIR__ . "/enhancedIndexer.php");
-            if ($enhancedScriptPath && file_exists($enhancedScriptPath)) {
-                $enhancedCommand = $config["bin"]["php"] . " " . escapeshellarg($enhancedScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=100 > /dev/null 2>&1 &";
-                logger("info", "Triggering enhanced indexing after main index completion: " . $enhancedCommand);
-                exec($enhancedCommand);
-                logger("info", "Enhanced indexing triggered successfully.");
+        // Trigger statistics indexing after successful completion if requested
+        if (isset($input["triggerStatisticsAfterCompletion"]) && $finalStatus === "completed_successfully") {
+            $statisticsScriptPath = realpath(__DIR__ . "/statisticsIndexer.php");
+            if ($statisticsScriptPath && file_exists($statisticsScriptPath)) {
+                $statisticsCommand = $config["bin"]["php"] . " " . escapeshellarg($statisticsScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=200 > /dev/null 2>&1 &";
+                logger("info", "Triggering statistics indexing after main index completion: " . $statisticsCommand);
+                exec($statisticsCommand);
+                logger("info", "Statistics indexing triggered successfully.");
             } else {
-                logger("warn", "Enhanced indexing script not found at: " . __DIR__ . "/enhancedIndexer.php");
+                logger("warn", "Statistics indexing script not found at: " . __DIR__ . "/statisticsIndexer.php");
             }
         }
         
@@ -386,8 +407,26 @@ if (is_cli()) {
                 else { unlink($meta["inputDir"] . $file); }
                 
                 if (!empty($mediaItemsForSearchIndex)) {
+                    // Update main search index
                     $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsForSearchIndex, "initIndex" => false];
                     searchIndexUpdate($updateRequest);
+                    
+                    // Also update statistics index incrementally to keep in sync
+                    $mediaIds = [];
+                    foreach ($mediaItemsForSearchIndex as $item) {
+                        if (isset($item['data']['id'])) {
+                            $mediaIds[] = $item['data']['id'];
+                        }
+                    }
+                    
+                    if (!empty($mediaIds)) {
+                        $statisticsScriptPath = realpath(__DIR__ . "/statisticsIndexer.php");
+                        if ($statisticsScriptPath && file_exists($statisticsScriptPath)) {
+                            $statisticsCommand = $config["bin"]["php"] . " " . escapeshellarg($statisticsScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=200 --media-ids=" . escapeshellarg(implode(',', $mediaIds)) . " > /dev/null 2>&1 &";
+                            logger("info", "Triggering incremental statistics indexing for " . count($mediaIds) . " items: " . $statisticsCommand);
+                            exec($statisticsCommand);
+                        }
+                    }
                 }
                 
                 $processedFileCount++;

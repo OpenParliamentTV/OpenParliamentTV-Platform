@@ -73,7 +73,7 @@ $acceptLang = array(
  * for debugging and developing
  * Example: "dev" or "production"
  */
-$config["mode"] = "production";
+$config["mode"] = "dev";
 
 
 /**

@@ -414,11 +414,11 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "status":
                     $result = searchIndexGetStatus($api_request);
                     return createApiResponse($result);
-                case "enhanced-update":
-                    $result = searchIndexTriggerEnhancedUpdate($api_request);
+                case "statistics-update":
+                    $result = searchIndexTriggerStatisticsUpdate($api_request);
                     return createApiResponse($result);
-                case "enhanced-status":
-                    $result = searchIndexGetEnhancedStatus($api_request);
+                case "statistics-status":
+                    $result = searchIndexGetStatisticsStatus($api_request);
                     return createApiResponse($result);
                 default:
                     return createApiResponse(

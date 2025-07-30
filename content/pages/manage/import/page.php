@@ -115,18 +115,18 @@ if ($auth["meta"]["requestStatus"] != "success") {
 								</div>
 							</div>
 							<hr>
-							<div class="row" id="enhanced-index-progress-section-DE" data-parliament-code="DE">
+							<div class="row" id="statistics-index-progress-section-DE" data-parliament-code="DE">
 								<div class="col-12">
 									<div class="d-flex justify-content-between">
-										<div class="fw-bolder">Enhanced Index (DE) <small class="text-muted">(auto-synced)</small></div> 
-										<div id="enhanced-index-DE-items-text" class="small">Idle</div>
+										<div class="fw-bolder">Statistics Index (DE) <small class="text-muted">(auto-synced)</small></div> 
+										<div id="statistics-index-DE-items-text" class="small">Idle</div>
 									</div>
-									<div class="progress my-1" role="progressbar" aria-label="Enhanced Index DE Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-										<div id="enhanced-index-DE-progress-bar" class="progress-bar" style="width: 0%"></div>
+									<div class="progress my-1" role="progressbar" aria-label="Statistics Index DE Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+										<div id="statistics-index-DE-progress-bar" class="progress-bar" style="width: 0%"></div>
 									</div>
-                                    <div id="enhanced-index-DE-status-text" class="small text-muted mb-2">Status: Idle</div>
-									<button type="button" id="btn-trigger-enhanced-index-rebuild-DE" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="DE"><span class="icon-arrows-cw"></span> Rebuild Enhanced Index (DE)</button>
-                                    <div id="enhanced-index-DE-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
+                                    <div id="statistics-index-DE-status-text" class="small text-muted mb-2">Status: Idle</div>
+									<button type="button" id="btn-trigger-statistics-index-rebuild-DE" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="DE"><span class="icon-arrows-cw"></span> Rebuild Statistics Index (DE)</button>
+                                    <div id="statistics-index-DE-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
 								</div>
 							</div>
                         </div>
@@ -403,54 +403,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (status === 'running') {
             toggleButton(dataImportElems.triggerButton, true, `<?= L::running(); ?>...`);
-            
-            // Also disable main index buttons during data import since it will auto-trigger
-            const mainIndexElems = getSearchIndexElements('DE');
-            toggleButton(mainIndexElems.refreshButton, true, 'Data import running...');
-            toggleButton(mainIndexElems.deleteButton, true, 'Data import running...');
-            
-            // Also disable enhanced index button during data import since it will auto-trigger
-            const enhancedElems = getEnhancedIndexElements('DE');
-            toggleButton(enhancedElems.rebuildButton, true, 'Data import running...');
-            
             clearError(dataImportElems.errorDisplay);
         } else {
-            toggleButton(dataImportElems.triggerButton, false, dataImportElems.originalButtonText);
-            
-            // Re-enable other buttons after data import completes
-            // Check current state of other processes to determine correct button states
-            const mainIndexElems = getSearchIndexElements('DE');
-            const enhancedElems = getEnhancedIndexElements('DE');
-            
-            // Check current states
-            const mainIndexStatus = window.mainIndexStatus?.['DE'];
-            const mainIndexRunning = mainIndexStatus?.isRunning || false;
-            
-            const enhancedState = window.enhancedIndexState?.['DE'];
-            const enhancedIsRunning = enhancedState?.isRunning || false;
-            
-            // Set button states based on current process states
-            if (mainIndexRunning) {
-                // Main index is running
-                toggleButton(mainIndexElems.refreshButton, true, 'Main index running...');
-                toggleButton(mainIndexElems.deleteButton, true, 'Main index running...');
-                toggleButton(enhancedElems.rebuildButton, true, 'Main index running...');
-            } else if (enhancedIsRunning) {
-                // Enhanced index is running
-                toggleButton(mainIndexElems.refreshButton, true, 'Enhanced index running...');
-                toggleButton(mainIndexElems.deleteButton, true, 'Enhanced index running...');
-                toggleButton(enhancedElems.rebuildButton, true, 'Enhanced index running...');
-            } else {
-                // No other processes running - enable all buttons
-                toggleButton(mainIndexElems.refreshButton, false, mainIndexElems.originalRefreshBtnText);
-                toggleButton(mainIndexElems.deleteButton, false, mainIndexElems.originalDeleteBtnText);
-                toggleButton(enhancedElems.rebuildButton, false, enhancedElems.originalRebuildBtnText);
-            }
-            
             // Trigger status updates to ensure UI is synchronized
             setTimeout(() => {
                 fetchSearchIndexStatus('DE');
-                fetchEnhancedIndexStatus('DE');
+                fetchStatisticsIndexStatus('DE');
             }, 1000);
             
             const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
@@ -461,9 +419,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 clearError(dataImportElems.errorDisplay);
             }
         }
+        
+        // Update all button states based on current process status
+        updateAllButtonStates();
     }
 
     async function triggerDataImport() {
+        // Button should already be disabled if conflicts exist, but add safety check
+        const statisticsState = window.statisticsIndexState?.['DE'];
+        const statisticsIsRunning = statisticsState?.isRunning || false;
+        const mainIndexStatus = window.mainIndexStatus?.['DE'];
+        const mainIndexRunning = mainIndexStatus?.isRunning || false;
+        
+        if (statisticsIsRunning || mainIndexRunning) {
+            console.warn('triggerDataImport called while other processes are running - button should have been disabled');
+            return;
+        }
+        
         toggleButton(dataImportElems.triggerButton, true, 'Starting...');
         clearError(dataImportElems.errorDisplay);
         const url = getApiUrl('import', 'run');
@@ -514,65 +486,24 @@ document.addEventListener('DOMContentLoaded', function() {
         const isRunning = status === 'running';
         window.mainIndexStatus[parliamentCode] = { isRunning: isRunning };
         
-        // Check if data import is running - if so, don't update any buttons
-        const dataImportStatus = appState.importStatus?.status;
-        const dataImportRunning = dataImportStatus === 'running';
-        
-        if (dataImportRunning) {
-            // Skip all button updates during data import
-            // Data import has full control over button states
-            return;
-        }
-        
-        // Check enhanced index state to avoid conflicts
-        const enhancedState = window.enhancedIndexState?.[parliamentCode];
-        const enhancedIsRunning = enhancedState?.isRunning || false;
-        
-        if (status === 'running') {
-            toggleButton(elems.refreshButton, true, 'Main index running...');
-            toggleButton(elems.deleteButton, true, 'Main index running...');
-            
-            // Also disable enhanced index button when main index is running
-            // This is the only time main index polling touches the enhanced index button
-            const enhancedElems = getEnhancedIndexElements(parliamentCode);
-            toggleButton(enhancedElems.rebuildButton, true, 'Main index running...');
-            
-            // Update enhanced index state to prevent it from changing the button
-            window.enhancedIndexState = window.enhancedIndexState || {};
-            window.enhancedIndexState[parliamentCode] = { isRunning: false };
-            
-            clearError(elems.errorDisplay);
+        // Handle status-specific UI updates and errors
+        if (status === 'error') {
+            const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred.'}]);
+            showError(elems.errorDisplay, errorMessages);
         } else {
-            // Main index is not running
-            // Only enable main index buttons if enhanced index is not running
-            if (!enhancedIsRunning) {
-                toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
-                toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
-            } else {
-                toggleButton(elems.refreshButton, true, 'Enhanced index running...');
-                toggleButton(elems.deleteButton, true, 'Enhanced index running...');
-            }
-            
-            // Don't touch the enhanced index button from main index polling
-            // Let the enhanced index polling have full control over its own button
-            // This prevents race conditions between the two polling intervals
-            
-            // Force enhanced index status check when main index completes
-            // This ensures enhanced index button state is updated if enhanced indexing is running
-            if (wasRunning && !isRunning) {
-                setTimeout(() => fetchEnhancedIndexStatus(parliamentCode), 1000);
-            }
-            
-            if (status === 'error') {
-                const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred.'}]);
-                showError(elems.errorDisplay, errorMessages);
-            } else { // completed, idle
-                clearError(elems.errorDisplay);
-                if (status === 'deleted') { // Special case for after delete
-                    updateElementText(elems.itemsText, 'Index Deleted');
-                }
+            clearError(elems.errorDisplay);
+            if (status === 'deleted') { // Special case for after delete
+                updateElementText(elems.itemsText, 'Index Deleted');
             }
         }
+        
+        // Force statistics index status check when main index completes
+        if (wasRunning && !isRunning) {
+            setTimeout(() => fetchStatisticsIndexStatus(parliamentCode), 1000);
+        }
+        
+        // Update all button states based on current process status  
+        updateAllButtonStates();
     }
 
     async function fetchSearchIndexStatus(parliamentCode) {
@@ -587,6 +518,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function triggerSearchIndexRefresh(parliamentCode) {
+        // Button should already be disabled if conflicts exist, but add safety check
+        const statisticsState = window.statisticsIndexState?.[parliamentCode];
+        const statisticsIsRunning = statisticsState?.isRunning || false;
+        
+        if (statisticsIsRunning) {
+            console.warn('triggerSearchIndexRefresh called while statistics indexing is running - button should have been disabled');
+            return;
+        }
+        
         const elems = getSearchIndexElements(parliamentCode);
         toggleButton(elems.refreshButton, true, 'Starting Refresh...');
         toggleButton(elems.deleteButton, true); // Disable delete during refresh
@@ -605,6 +545,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function triggerSearchIndexDelete(parliamentCode) {
+        // Button should already be disabled if conflicts exist, but add safety check
+        const statisticsState = window.statisticsIndexState?.[parliamentCode];
+        const statisticsIsRunning = statisticsState?.isRunning || false;
+        
+        if (statisticsIsRunning) {
+            console.warn('triggerSearchIndexDelete called while statistics indexing is running - button should have been disabled');
+            return;
+        }
+        
         if (!confirm(`Are you sure you want to delete the search index for parliament ${parliamentCode}? This action cannot be undone.`)) {
             return;
         }
@@ -647,29 +596,72 @@ document.addEventListener('DOMContentLoaded', function() {
             fetchSearchIndexStatus(parliamentCode);
             setInterval(() => fetchSearchIndexStatus(parliamentCode), POLLING_INTERVAL);
             
-            // Enhanced indexing setup
-            setupEnhancedIndexUI(parliamentCode);
+            // Statistics indexing setup
+            setupStatisticsIndexUI(parliamentCode);
         });
     }
 
+    // --- Centralized Button State Management ---
+    
+    function updateAllButtonStates() {
+        const parliamentCode = 'DE'; // Currently hardcoded for DE
+        
+        // Get current status of all processes
+        const dataImportRunning = appState.importStatus?.status === 'running';
+        const mainIndexStatus = window.mainIndexStatus?.[parliamentCode];
+        const mainIndexRunning = mainIndexStatus?.isRunning || false;
+        const statisticsState = window.statisticsIndexState?.[parliamentCode];
+        const statisticsRunning = statisticsState?.isRunning || false;
+        
+        // Get UI elements (dataImportElems is already defined as const above)
+        const mainIndexElems = getSearchIndexElements(parliamentCode);
+        const statisticsElems = getStatisticsIndexElements(parliamentCode);
+        
+        // Data Import Button: Disable if main index OR statistics indexing is running
+        if (mainIndexRunning || statisticsRunning) {
+            const blockingProcess = mainIndexRunning ? 'Main index running' : 'Statistics indexing running';
+            toggleButton(dataImportElems.triggerButton, true, blockingProcess + '...');
+        } else if (!dataImportRunning) {
+            toggleButton(dataImportElems.triggerButton, false, dataImportElems.originalButtonText);
+        }
+        
+        // Main Index Buttons: Disable if data import OR statistics indexing is running
+        if (dataImportRunning || statisticsRunning) {
+            const blockingProcess = dataImportRunning ? 'Data import running' : 'Statistics indexing running';
+            toggleButton(mainIndexElems.refreshButton, true, blockingProcess + '...');
+            toggleButton(mainIndexElems.deleteButton, true, blockingProcess + '...');
+        } else if (!mainIndexRunning) {
+            toggleButton(mainIndexElems.refreshButton, false, mainIndexElems.originalRefreshBtnText);
+            toggleButton(mainIndexElems.deleteButton, false, mainIndexElems.originalDeleteBtnText);
+        }
+        
+        // Statistics Index Button: Disable if data import OR main index is running
+        if (dataImportRunning || mainIndexRunning) {
+            const blockingProcess = dataImportRunning ? 'Data import running' : 'Main index running';
+            toggleButton(statisticsElems.rebuildButton, true, blockingProcess + '...');
+        } else if (!statisticsRunning) {
+            toggleButton(statisticsElems.rebuildButton, false, statisticsElems.originalRebuildBtnText);
+        }
+    }
+    
     // --- Localized Labels ---
     // Using L:: functions directly in PHP instead of JS variables
     
-    // --- Enhanced Indexing Functions ---
+    // --- Statistics Indexing Functions ---
     
-    function getEnhancedIndexElements(parliamentCode) {
+    function getStatisticsIndexElements(parliamentCode) {
         return {
-            progressBar: `enhanced-index-${parliamentCode}-progress-bar`,
-            statusText: `enhanced-index-${parliamentCode}-status-text`,
-            itemsText: `enhanced-index-${parliamentCode}-items-text`,
-            errorDisplay: `enhanced-index-${parliamentCode}-error-display`,
-            rebuildButton: `btn-trigger-enhanced-index-rebuild-${parliamentCode}`,
-            originalRebuildBtnText: `<span class="icon-arrows-cw"></span> Rebuild Enhanced Index (${parliamentCode})`
+            progressBar: `statistics-index-${parliamentCode}-progress-bar`,
+            statusText: `statistics-index-${parliamentCode}-status-text`,
+            itemsText: `statistics-index-${parliamentCode}-items-text`,
+            errorDisplay: `statistics-index-${parliamentCode}-error-display`,
+            rebuildButton: `btn-trigger-statistics-index-rebuild-${parliamentCode}`,
+            originalRebuildBtnText: `<span class="icon-arrows-cw"></span> Rebuild Statistics Index (${parliamentCode})`
         };
     }
     
-    function updateEnhancedIndexUI(parliamentCode, statusData) {
-        const elems = getEnhancedIndexElements(parliamentCode);
+    function updateStatisticsIndexUI(parliamentCode, statusData) {
+        const elems = getStatisticsIndexElements(parliamentCode);
         const {
             status,
             statusDetails = 'N/A',
@@ -699,109 +691,92 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         updateElementText(elems.itemsText, itemsText);
 
-        // Handle button states
+        // Update statistics index state for coordination with other processes
         const isActive = ['running', 'processing', 'processing_batch', 'starting', 'initializing'].includes(status);
+        window.statisticsIndexState = window.statisticsIndexState || {};
+        window.statisticsIndexState[parliamentCode] = { isRunning: isActive };
         
-        // Update enhanced index state first
-        window.enhancedIndexState = window.enhancedIndexState || {};
-        const previousState = window.enhancedIndexState[parliamentCode]?.isRunning || false;
-        window.enhancedIndexState[parliamentCode] = { isRunning: isActive };
-        
-        // Check if data import is running - if so, don't update any buttons
-        const dataImportStatus = appState.importStatus?.status;
-        const dataImportRunning = dataImportStatus === 'running';
-        
-        if (dataImportRunning) {
-            // Skip all button updates during data import
-            // Data import has full control over button states
-            return;
-        }
-        
-        // Check if main index is running by checking the global state
-        // If main index is running, completely skip enhanced index button updates
-        const mainIndexStatus = window.mainIndexStatus || {};
-        const mainIndexRunning = mainIndexStatus[parliamentCode]?.isRunning || false;
-        
-        // Only update enhanced index button if main index is not running
-        if (!mainIndexRunning) {
-            // Always update button to match current state (don't check for changes)
-            if (isActive) {
-                toggleButton(elems.rebuildButton, true, 'Enhanced index running...');
-            } else {
-                toggleButton(elems.rebuildButton, false, elems.originalRebuildBtnText);
-            }
-        }
-        // If main index is running, completely skip button updates
-        // The main index status update has full control over the enhanced index button
-
         // Show errors if any
         if (errors && errors.length > 0) {
             showError(elems.errorDisplay, errors);
         } else {
             clearError(elems.errorDisplay);
         }
+        
+        // Update all button states based on current process status
+        updateAllButtonStates();
     }
     
-    async function fetchEnhancedIndexStatus(parliamentCode) {
-        // Don't fetch enhanced index status while data import is running
+    async function fetchStatisticsIndexStatus(parliamentCode) {
+        // Don't fetch statistics index status while data import is running
         const dataImportStatus = appState.importStatus?.status;
         const dataImportRunning = dataImportStatus === 'running';
         
         if (dataImportRunning) {
-            // Skip enhanced index status update while data import is running
+            // Skip statistics index status update while data import is running
             return;
         }
         
-        // Don't fetch enhanced index status while main index is running
+        // Don't fetch statistics index status while main index is running
         const mainIndexStatus = window.mainIndexStatus || {};
         const mainIndexRunning = mainIndexStatus[parliamentCode]?.isRunning || false;
         
         if (mainIndexRunning) {
-            // Skip enhanced index status update while main index is running
+            // Skip statistics index status update while main index is running
             return;
         }
         
-        const url = getApiUrl('index', 'enhanced-status', { parliament: parliamentCode });
+        const url = getApiUrl('index', 'statistics-status', { parliament: parliamentCode });
         const result = await apiCall(url);
         
         if (result.success && result.data) {
-            updateEnhancedIndexUI(parliamentCode, result.data);
+            updateStatisticsIndexUI(parliamentCode, result.data);
         } else {
-            console.error('Failed to fetch enhanced index status:', result.errors);
+            console.error('Failed to fetch statistics index status:', result.errors);
         }
     }
     
-    async function triggerEnhancedIndexRebuild(parliamentCode) {
-        if (!confirm(`Are you sure you want to rebuild the enhanced index for parliament ${parliamentCode}? This will process all documents and may take a long time. Setup will be handled automatically if needed.`)) {
+    async function triggerStatisticsIndexRebuild(parliamentCode) {
+        // Button should already be disabled if conflicts exist, but add safety check
+        const dataImportRunning = appState.importStatus?.status === 'running';
+        const mainIndexStatus = window.mainIndexStatus?.[parliamentCode];
+        const mainIndexRunning = mainIndexStatus?.isRunning || false;
+        
+        if (dataImportRunning || mainIndexRunning) {
+            console.warn('triggerStatisticsIndexRebuild called while other processes are running - button should have been disabled');
             return;
         }
         
-        const elems = getEnhancedIndexElements(parliamentCode);
+        if (!confirm(`Are you sure you want to rebuild the statistics index for parliament ${parliamentCode}? This will process all documents and may take a long time. Setup will be handled automatically if needed.`)) {
+            return;
+        }
+        
+        const elems = getStatisticsIndexElements(parliamentCode);
         toggleButton(elems.rebuildButton, true, 'Starting Rebuild...');
         clearError(elems.errorDisplay);
         
-        const url = getApiUrl('index', 'enhanced-update', { parliament: parliamentCode });
+        const url = getApiUrl('index', 'statistics-update', { parliament: parliamentCode });
         const result = await apiCall(url, 'POST');
 
         if (result.success && result.meta && result.meta.requestStatus === 'success') {
-            updateElementText(elems.statusText, `Status: ${result.data.message || 'Enhanced index rebuild started.'}`);
-            setTimeout(() => fetchEnhancedIndexStatus(parliamentCode), 1000);
+            updateElementText(elems.statusText, `Status: ${result.data.message || 'Statistics index rebuild started.'}`);
+            setTimeout(() => fetchStatisticsIndexStatus(parliamentCode), 1000);
         } else {
-            showError(elems.errorDisplay, result.errors || [{detail: 'Failed to start enhanced index rebuild.'}]);
+            showError(elems.errorDisplay, result.errors || [{detail: 'Failed to start statistics index rebuild.'}]);
             toggleButton(elems.rebuildButton, false, elems.originalRebuildBtnText);
         }
     }
     
-    function setupEnhancedIndexUI(parliamentCode) {
-        const elems = getEnhancedIndexElements(parliamentCode);
+    function setupStatisticsIndexUI(parliamentCode) {
+        const elems = getStatisticsIndexElements(parliamentCode);
         
         const rebuildBtn = document.getElementById(elems.rebuildButton);
-        if (rebuildBtn) rebuildBtn.addEventListener('click', () => triggerEnhancedIndexRebuild(parliamentCode));
+        if (rebuildBtn) rebuildBtn.addEventListener('click', () => triggerStatisticsIndexRebuild(parliamentCode));
 
-        // Start enhanced index polling with a delay to avoid race conditions with main index polling
+        // Start statistics index polling with a delay to avoid race conditions with main index polling
         setTimeout(() => {
-            fetchEnhancedIndexStatus(parliamentCode);
-            setInterval(() => fetchEnhancedIndexStatus(parliamentCode), POLLING_INTERVAL);
+            fetchStatisticsIndexStatus(parliamentCode);
+            setInterval(() => fetchStatisticsIndexStatus(parliamentCode), POLLING_INTERVAL);
         }, 2500); // 2.5 second delay to offset from main index polling
     }
 
@@ -1043,8 +1018,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Initialization ---
     function initPage() {
-        // Initialize state tracking for coordination between main and enhanced index
-        window.enhancedIndexState = {};
+        // Initialize state tracking for coordination between main and statistics index
+        window.statisticsIndexState = {};
         window.mainIndexStatus = {};
         
         // Data Import

@@ -144,7 +144,7 @@ function statisticsGetGeneral($request) {
             ];
         }
         
-        // Process word frequency statistics with enhanced context-based analysis
+        // Process word frequency statistics with context-based analysis
         if (isset($stats["wordFrequency"])) {
             $data["attributes"]["wordFrequency"] = [
                 "totalWords" => $stats["wordFrequency"]["sum_other_doc_count"],
@@ -156,7 +156,7 @@ function statisticsGetGeneral($request) {
                 }, $stats["wordFrequency"]["buckets"])
             ];
             
-            // Enhanced: Include context-based statistics as recommended in planning docs
+            // Include context-based statistics as recommended in planning docs
             if (isset($stats["wordFrequency"]["contextBasedStats"])) {
                 $data["attributes"]["wordFrequency"]["byContext"] = $stats["wordFrequency"]["contextBasedStats"];
             }
@@ -256,7 +256,7 @@ function statisticsGetEntity($request) {
             );
         }
         
-        // Build data structure with enhanced property names and self-links
+        // Build data structure with proper property names and self-links
         $data = [
             "type" => "statistics",
             "id" => "entity",
@@ -368,7 +368,7 @@ function statisticsGetNetwork($request) {
 }
 
 /**
- * Get word trends over time using enhanced indexing
+ * Get word trends over time using statistics indexing
  * 
  * @param array $request The request parameters
  * @return array The API response
