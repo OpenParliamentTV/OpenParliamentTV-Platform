@@ -48,9 +48,12 @@ class MediaResultsManager {
         const includeAllParam = this.view === 'table' ? '&includeAll=true' : '';
         const paginationModeParam = `&paginationMode=${this.mode}&baseUrl=${this.baseUrl}`;
         
+        // Check if we should show home intro (only for search page with no valid criteria)
+        const showHomeParam = this.shouldShowHome(query) ? '&showHome=1' : '';
+        
         $.ajax({
             method: "POST",
-            url: `${componentUrl}?a=search${includeAllParam}&queryOnly=1${paginationModeParam}&${query}`
+            url: `${componentUrl}?a=search${includeAllParam}&queryOnly=1${paginationModeParam}${showHomeParam}&${query}`
         }).done((data) => {
             $(this.container + ' .resultWrapper').html($(data));
             $(this.container + ' .loadingIndicator').hide();
@@ -181,6 +184,29 @@ class MediaResultsManager {
             const newUrl = baseUrl + (query ? '?' + query : '');
             history.pushState(null, '', newUrl);
         }
+    }
+    
+    /**
+     * Determine if home intro should be shown (search page only, no valid criteria)
+     */
+    shouldShowHome(query) {
+        // Only show home intro on search page
+        if (this.baseUrl !== 'search' && this.baseUrl !== '/search') {
+            return false;
+        }
+        
+        // Check if there are valid search criteria in the query
+        const urlParams = new URLSearchParams(query);
+        const hasValidCriteria = urlParams.get('q') || 
+                                urlParams.get('personID') || 
+                                urlParams.get('organisationID') || 
+                                urlParams.get('documentID') || 
+                                urlParams.get('termID') || 
+                                urlParams.get('sessionID') || 
+                                urlParams.get('agendaItemID') || 
+                                urlParams.get('electoralPeriodID');
+        
+        return !hasValidCriteria;
     }
     
     /**

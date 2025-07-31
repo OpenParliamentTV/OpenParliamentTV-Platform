@@ -27,7 +27,14 @@ include_once(__DIR__ . '/../../header.php'); ?>
 	<div class="row m-0" style="position: relative; z-index: 1">
 		<div id="speechListContainer" class="col">
 			<div class="resultWrapper">
-				<?php include_once(__DIR__ . '/../../components/result.grid.php'); ?>
+				<?php 
+				// Add showHome parameter for search page when no valid search criteria present
+				$hasValidSearchCriteria = isset($_REQUEST["q"]) || isset($_REQUEST["personID"]) || isset($_REQUEST["organisationID"]) || isset($_REQUEST["documentID"]) || isset($_REQUEST["termID"]) || isset($_REQUEST["sessionID"]) || isset($_REQUEST["agendaItemID"]) || isset($_REQUEST["electoralPeriodID"]);
+				if (!$hasValidSearchCriteria) {
+					$_REQUEST['showHome'] = 1;
+				}
+				include_once(__DIR__ . '/../../components/result.grid.php'); 
+				?>
 			</div>
 			<div class="loadingIndicator">
 				<div class="workingSpinner" style="position: fixed; top: 65%;"></div>
