@@ -96,7 +96,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
 	$(document).ready( function() {
-		updateMediaList("sessionID=<?= $apiResult["data"]["id"] ?>&sort=topic-asc");
+		updateMediaList(<?= json_encode("sessionID=" . $apiResult["data"]["id"] . "&sort=topic-asc", JSON_HEX_QUOT | JSON_HEX_APOS) ?>);
 		$('#dataTable').bootstrapTable({
 			classes: 'table-striped table-bordered',
 			showToggle: false,
@@ -119,7 +119,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			},
 			sortName: false,
 			cardView: false,
-			locale: '<?= $lang; ?>'
+			locale: <?= json_encode($lang, JSON_HEX_QUOT | JSON_HEX_APOS) ?>
 		});
 	});
 </script>

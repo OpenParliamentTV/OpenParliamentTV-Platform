@@ -64,7 +64,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			</div>
 			<div class="col-12">
 				<hr>
-				<div class="resultTimeline" data-filter-key="documentID" data-filter-value="<?= $apiResult["data"]["id"] ?>"></div>
+				<div class="resultTimeline" data-filter-key="documentID" data-filter-value="<?= hAttr($apiResult["data"]["id"]) ?>"></div>
 			</div>
 		</div>
 	</div>
@@ -78,7 +78,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				<?php } ?>
 				<?php if ($apiResult["data"]["attributes"]["type"] == "legalDocument" && $config["display"]["ner"]) { ?>
 					<li class="nav-item">
-						<a class="nav-link active" id="ner-tab" data-bs-toggle="tab" data-bs-target="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?= L::automaticallyDetectedInSpeeches() ?><span class="badge rounded-pill"><?= $countFound ?></span></span></a>
+						<a class="nav-link active" id="ner-tab" data-bs-toggle="tab" data-bs-target="#ner" role="tab" aria-controls="ner" aria-selected="true"><span class="icon-annotations"></span><span class="nav-item-label"><?= L::automaticallyDetectedInSpeeches() ?></span></a>
 					</li>
 				<?php } ?>
 				<li class="nav-item ms-auto">
@@ -130,8 +130,8 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 <script type="text/javascript">
 	$(document).ready( function() {
 		renderFilteredResultTimeline('.resultTimeline');
-		updateMediaList("documentID=<?= $apiResult["data"]["id"] ?>&context=proceedingsReference&sort=date-desc");
-		updateMediaList("documentID=<?= $apiResult["data"]["id"] ?>&context=NER&sort=date-desc", "#nerListContainer");
+		updateMediaList(<?= json_encode("documentID=" . $apiResult["data"]["id"] . "&context=proceedingsReference&sort=date-desc", JSON_HEX_QUOT | JSON_HEX_APOS) ?>);
+		updateMediaList(<?= json_encode("documentID=" . $apiResult["data"]["id"] . "&context=NER&sort=date-desc", JSON_HEX_QUOT | JSON_HEX_APOS) ?>, "#nerListContainer");
 		$('#dataTable').bootstrapTable({
 			classes: 'table-striped table-bordered',
 			showToggle: false,
@@ -154,7 +154,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			},
 			sortName: false,
 			cardView: false,
-			locale: '<?= $lang; ?>'
+			locale: <?= json_encode($lang, JSON_HEX_QUOT | JSON_HEX_APOS) ?>
 		});
 	});
 </script>

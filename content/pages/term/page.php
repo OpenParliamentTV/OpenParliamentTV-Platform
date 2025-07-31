@@ -23,7 +23,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<div class="col flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
-								<img src="<?= $apiResult["data"]["attributes"]["thumbnailURI"]?>" alt="..." style="position: absolute;height: 100%;object-fit: cover;">
+								<img src="<?= hAttr($apiResult["data"]["attributes"]["thumbnailURI"]) ?>" alt="..." style="position: absolute;height: 100%;object-fit: cover;">
 							<?php } else { ?>
 								<span class="icon-type-term" style="position: absolute;top: 50%;left: 50%;font-size: 50px;transform: translateX(-50%) translateY(-50%);"></span>
 							<?php } ?>
@@ -33,13 +33,13 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<?php } ?>
 					</div>
 					<div class="col">
-						<h2><?= $apiResult["data"]["attributes"]["label"] ?></h2>
+						<h2><?= h($apiResult["data"]["attributes"]["label"]) ?></h2>
 						<?php if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) { ?>
-						<div class="less-opacity"><?= $apiResult["data"]["attributes"]["labelAlternative"][0] ?></div>
+						<div class="less-opacity"><?= h($apiResult["data"]["attributes"]["labelAlternative"][0]) ?></div>
 						<?php } ?>
 						<?php if ($apiResult["data"]["attributes"]["abstract"] && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
-							<div class="mt-2"><?= $apiResult["data"]["attributes"]["abstract"] ?></div>
-							<a class="btn btn-sm me-2 mt-2" href="<?= $apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"] ?>" target="_blank">
+							<div class="mt-2"><?= h($apiResult["data"]["attributes"]["abstract"]) ?></div>
+							<a class="btn btn-sm me-2 mt-2" href="<?= hAttr($apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"]) ?>" target="_blank">
 								<span><?= L::moreAt(); ?> Wikipedia</span><img class="ms-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikipedia.svg">
 							</a>
 						<?php } ?>
@@ -51,7 +51,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			</div>
 			<div class="col-12">
 				<hr>
-				<div class="resultTimeline" data-filter-key="termID" data-filter-value="<?= $apiResult["data"]["id"] ?>"></div>
+				<div class="resultTimeline" data-filter-key="termID" data-filter-value="<?= hAttr($apiResult["data"]["id"]) ?>"></div>
 			</div>
 		</div>
 	</div>
@@ -110,7 +110,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() {
 		renderFilteredResultTimeline('.resultTimeline');
-		updateMediaList("termID=<?= $apiResult["data"]["id"] ?>&context=NER&sort=date-desc", "#nerListContainer");
+		updateMediaList(<?= json_encode("termID=" . $apiResult["data"]["id"] . "&context=NER&sort=date-desc", JSON_HEX_QUOT | JSON_HEX_APOS) ?>, "#nerListContainer");
 	});
 </script>
 

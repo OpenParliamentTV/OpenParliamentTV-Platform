@@ -26,10 +26,10 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						</div>
 					</div>
 					<div class="col">
-						<div><?= $apiResult["data"]["attributes"]["parliamentLabel"] ?></div>
-						<div><a href="../electoralPeriod/<?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"] ?>"><?= $apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"] ?>. <?= L::electoralPeriod() ?></a> | <a href="../session/<?= $apiResult["data"]["relationships"]["session"]["data"]["id"] ?>"><?= L::session() ?>: <?= $apiResult["data"]["relationships"]["session"]["data"]["attributes"]["number"] ?></a></div>
-						<div class="mt-2"><?= $apiResult["data"]["attributes"]["officialTitle"] ?></div>
-						<h2><?= $apiResult["data"]["attributes"]["title"] ?></h2>
+						<div><?= h($apiResult["data"]["attributes"]["parliamentLabel"]) ?></div>
+						<div><a href="../electoralPeriod/<?= hAttr($apiResult["data"]["relationships"]["electoralPeriod"]["data"]["id"]) ?>"><?= h($apiResult["data"]["relationships"]["electoralPeriod"]["data"]["attributes"]["number"]) ?>. <?= L::electoralPeriod() ?></a> | <a href="../session/<?= hAttr($apiResult["data"]["relationships"]["session"]["data"]["id"]) ?>"><?= L::session() ?>: <?= h($apiResult["data"]["relationships"]["session"]["data"]["attributes"]["number"]) ?></a></div>
+						<div class="mt-2"><?= h($apiResult["data"]["attributes"]["officialTitle"]) ?></div>
+						<h2><?= h($apiResult["data"]["attributes"]["title"]) ?></h2>
 					</div>
 				</div>
 			</div>
@@ -66,7 +66,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 <script type="text/javascript">
 	$(document).ready( function() {
 		<?php $actualAgendaItemIDParts = explode("-", $apiResult["data"]["id"]); ?>
-		updateMediaList("agendaItemID=<?= $actualAgendaItemIDParts[1] ?>&sort=date-asc");
+		updateMediaList(<?= json_encode("agendaItemID=" . $actualAgendaItemIDParts[1] . "&sort=date-asc", JSON_HEX_QUOT | JSON_HEX_APOS) ?>);
 		$('#dataTable').bootstrapTable({
 			classes: 'table-striped table-bordered',
 			showToggle: false,
@@ -89,7 +89,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 			},
 			sortName: false,
 			cardView: false,
-			locale: '<?= $lang; ?>'
+			locale: <?= json_encode($lang, JSON_HEX_QUOT | JSON_HEX_APOS) ?>
 		});
 	});
 </script>
