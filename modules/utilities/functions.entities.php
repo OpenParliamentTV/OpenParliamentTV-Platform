@@ -34,6 +34,10 @@ function flattenEntityJSON($array, $prefix = '') {
 
 function getMainSpeakerFromPeopleArray($annotationsArray, $peopleArray) {
 
+    if (!is_array($annotationsArray) || !is_array($peopleArray)) {
+        return ['attributes' => ['label' => '']]; // Return empty speaker if data missing
+    }
+
     foreach ($annotationsArray as $annotation) {
         if ($annotation["attributes"]["context"] == "main-speaker") {
             foreach ($peopleArray as $person) {
@@ -58,13 +62,17 @@ function getMainSpeakerFromPeopleArray($annotationsArray, $peopleArray) {
         }
     }
     if (!isset($mainSpeaker)) {
-        $mainSpeaker = array("PersonLabel"=>"TODO");
+        $mainSpeaker = array("attributes" => array("label" => ""));
     }
     
     return $mainSpeaker;
 }
 
 function getMainFactionFromOrganisationsArray($annotationsArray, $organisationsArray) {
+
+    if (!is_array($annotationsArray) || !is_array($organisationsArray)) {
+        return null; // Return null if data missing
+    }
 
     foreach ($annotationsArray as $annotation) {
         if ($annotation["attributes"]["context"] == "main-speaker-faction") {

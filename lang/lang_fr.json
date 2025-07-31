@@ -107,6 +107,8 @@
 	"login": "Se connecter",
 	"logout": "Se déconnecter",
 	"mailAddress": "Adresse e-mail",
+	"makePublic": "Rendre public",
+	"makeMediaPublicConfirm": "Voulez-vous vraiment rendre ce discours public? Cela le rendra visible et recherchable pour tous les utilisateurs de la plateforme.",
 	"manage": "Gérer",
 	"manageConflicts": "Résoudre les conflits",
 	"manageData": "Gérer les données",

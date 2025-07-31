@@ -82,11 +82,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
             </div>
             <div class="modal-footer">
                 <div class="row w-100">
-                    <div class="col-6">
+                    <div class="col-7 ps-0">
                         <button type="button" class="btn btn-primary w-100" id="modalAddEntitySubmitBtn" disabled><span class="icon-plus"></span> <?= L::manageEntitiesNew(); ?></button>
                     </div>
-					<div class="col-6">
-                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal"><?= L::cancel(); ?></button>
+					<div class="col-5 pe-0">
+                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal"><span class="icon-cancel"></span> <?= L::cancel(); ?></button>
                     </div>
                 </div>
             </div>

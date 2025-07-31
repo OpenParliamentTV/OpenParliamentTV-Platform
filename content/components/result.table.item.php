@@ -24,7 +24,7 @@ $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedP
 		</td>
 		<td class="text-center">
 			<div class="form-check form-switch d-flex justify-content-center">
-				<input class="form-check-input public-switch" type="checkbox" id="public-<?= hAttr($result_item["id"]) ?>" <?= $result_item["attributes"]["public"] ? "checked" : "" ?> data-speech-id="<?= hAttr($result_item["id"]) ?>" disabled>
+				<input class="form-check-input public-switch" type="checkbox" id="public-<?= hAttr($result_item["id"]) ?>" <?= $result_item["attributes"]["public"] ? "checked" : "" ?> data-speech-id="<?= hAttr($result_item["id"]) ?>">
 			</div>
 		</td>
 	<?php } ?>

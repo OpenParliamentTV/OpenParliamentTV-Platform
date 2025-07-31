@@ -107,6 +107,8 @@
 	"login": "Sign In",
 	"logout": "Logout",
 	"mailAddress": "Mail Address",
+	"makePublic": "Make Public",
+	"makeMediaPublicConfirm": "Do you really want to make this speech public? This will make it visible and searchable for all users on the platform.",
 	"manage": "Manage",
 	"manageConflicts": "Resolve Conflicts",
 	"manageData": "Manage Data",

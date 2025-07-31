@@ -103,6 +103,120 @@ $(document).ready(function() {
         const urlParams = new URLSearchParams(window.location.search);
         mediaManager.loadResults(urlParams.toString(), false);
     };
+    
+    // Handle public switch toggle
+    $(document).on('change', '.public-switch', function(e) {
+        const $switch = $(this);
+        const speechId = $switch.data('speech-id');
+        const newPublicStatus = $switch.is(':checked'); // What the switch is now set to
+        
+        // If making public (switch is now ON), show confirmation dialog
+        if (newPublicStatus) {
+            // Create confirmation modal
+            const confirmationHtml = `
+                <div class="modal fade" id="publicConfirmModal" tabindex="-1" aria-labelledby="publicConfirmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="publicConfirmModalLabel"><i class="icon-attention"></i> <?= L::makePublic() ?></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p><?= L::makeMediaPublicConfirm() ?></p>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="row w-100">
+                                    <div class="col-7 ps-0">
+                                        <button type="button" class="btn btn-primary w-100" id="confirmPublicBtn"><span class="icon-ok"></span> <?= L::makePublic() ?></button>
+                                    </div>
+                                    <div class="col-5 pe-0">
+                                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal"><span class="icon-cancel"></span> <?= L::cancel() ?></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Remove existing modal if any
+            $('#publicConfirmModal').remove();
+            
+            // Add modal to body
+            $('body').append(confirmationHtml);
+            
+            // Show modal
+            const modal = new bootstrap.Modal(document.getElementById('publicConfirmModal'));
+            modal.show();
+            
+            // Handle confirm button
+            $('#confirmPublicBtn').off('click').on('click', function() {
+                modal.hide();
+                updatePublicStatus(speechId, newPublicStatus, $switch);
+            });
+            
+            // Handle modal close/cancel - revert switch back to OFF
+            $('#publicConfirmModal').on('hidden.bs.modal', function() {
+                if (!$(this).data('confirmed')) {
+                    $switch.prop('checked', false);
+                }
+                $(this).remove();
+            });
+            
+            // Mark as confirmed when confirm button is clicked
+            $('#confirmPublicBtn').on('click', function() {
+                $('#publicConfirmModal').data('confirmed', true);
+            });
+            
+        } else {
+            // Direct update for making item non-public (no confirmation needed)
+            updatePublicStatus(speechId, newPublicStatus, $switch);
+        }
+    });
+    
+    // Function to update public status via API
+    function updatePublicStatus(speechId, publicStatus, $switch) {
+        // Disable switch during update
+        $switch.prop('disabled', true);
+        
+        const requestData = {
+            action: 'changeItem',
+            itemType: 'media',
+            id: speechId,
+            MediaPublic: publicStatus
+        };
+        
+        console.log('Sending request:', requestData);
+        
+        $.ajax({
+            url: '<?= $config["dir"]["root"] ?>/api/v1/',
+            method: 'POST',
+            data: requestData,
+            success: function(response) {
+                console.log('API Response:', response);
+                if (response && response.meta && response.meta.requestStatus === 'success') {
+                    // Success - switch stays in new position
+                    console.log('Public status updated successfully');
+                } else {
+                    // Error - revert switch
+                    console.error('Failed to update public status:', response);
+                    $switch.prop('checked', !publicStatus);
+                    alert('Failed to update public status: ' + (response.errors ? response.errors[0].detail : 'Unknown error'));
+                }
+            },
+            error: function(xhr, status, error) {
+                // Error - revert switch
+                console.error('AJAX error updating public status:', error);
+                console.error('Response text:', xhr.responseText);
+                $switch.prop('checked', !publicStatus);
+                alert('Error updating public status. Please try again.');
+            },
+            complete: function() {
+                // Re-enable switch
+                $switch.prop('disabled', false);
+            }
+        });
+    }
 });
 </script>
 

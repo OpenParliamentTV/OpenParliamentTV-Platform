@@ -1512,6 +1512,10 @@ function mediaChange($parameter) {
     $params = $dbp->filterArray($parameter, $allowedParams);
     $updateParams = array();
 
+    // Debug logging (remove when stable)
+    // error_log("MediaChange Debug - Received parameters: " . json_encode($parameter));
+    // error_log("MediaChange Debug - Filtered parameters: " . json_encode($params));
+
     // Process each parameter
     foreach ($params as $key => $value) {
         if ($key === "MediaAdditionalInformation") {
@@ -1545,11 +1549,56 @@ function mediaChange($parameter) {
     // Add last changed timestamp
     $updateParams[] = "MediaLastChanged=CURRENT_TIMESTAMP()";
 
+    // Debug logging (remove when stable)
+    // $updateQuery = "UPDATE " . $config["parliament"][$parliament]["sql"]["tbl"]["Media"] . " SET " . implode(", ", $updateParams) . " WHERE MediaID='" . $parameter["id"] . "'";
+    // error_log("MediaChange Debug - Update query: " . $updateQuery);
+    // error_log("MediaChange Debug - Update params: " . json_encode($updateParams));
+
     // Execute update
-    $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE MediaID=?s", 
+    $result = $dbp->query("UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE MediaID=?s", 
         $config["parliament"][$parliament]["sql"]["tbl"]["Media"], 
         $parameter["id"]
     );
+
+    // error_log("MediaChange Debug - Query executed, affected rows: " . $dbp->affectedRows());
+
+    // Update OpenSearch index with the changed media item
+    if ($dbp->affectedRows() > 0) {
+        try {
+            // Create database connection for platform data
+            $db = new SafeMySQL(array(
+                'host' => $config["platform"]["sql"]["access"]["host"],
+                'user' => $config["platform"]["sql"]["access"]["user"],
+                'pass' => $config["platform"]["sql"]["access"]["passwd"],
+                'db' => $config["platform"]["sql"]["db"]
+            ));
+            $updatedMediaData = mediaGetByID($parameter["id"], $db, $dbp);
+            
+            if ($updatedMediaData && !isset($updatedMediaData["errors"])) {
+                // Include searchIndex module for the update function
+                require_once(__DIR__ . "/searchIndex.php");
+                
+                // Prepare data for OpenSearch indexing
+                $indexUpdateRequest = [
+                    'parliament' => $parliament,
+                    'items' => [$updatedMediaData],
+                    'initIndex' => false
+                ];
+                
+                // Update the search index
+                $indexResult = searchIndexUpdate($indexUpdateRequest);
+                
+                // Log only errors, not success (remove when stable)
+                if (isset($indexResult["errors"])) {
+                    error_log("MediaChange: OpenSearch update failed: " . json_encode($indexResult["errors"]));
+                }
+            } else {
+                error_log("MediaChange: Could not retrieve updated media data for OpenSearch indexing");
+            }
+        } catch (Exception $e) {
+            error_log("MediaChange: OpenSearch update exception: " . $e->getMessage());
+        }
+    }
 
     return createApiSuccessResponse();
 }

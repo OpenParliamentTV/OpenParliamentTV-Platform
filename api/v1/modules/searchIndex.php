@@ -278,7 +278,7 @@ function searchIndexUpdate($api_request) {
         // Only trigger incremental statistics index updates for non-full-rebuild updates
         try {
             $statisticsUpdateResult = triggerStatisticsIndexUpdate($parliament, $items);
-            if ($statisticsUpdateResult['success']) {
+            if (isset($statisticsUpdateResult['meta']['requestStatus']) && $statisticsUpdateResult['meta']['requestStatus'] === 'success') {
                 $finalMessage .= " Statistics indices update triggered.";
             } else {
                 $finalMessage .= " (Statistics indices update failed - indices may be out of sync)";

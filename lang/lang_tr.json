@@ -107,6 +107,8 @@
 	"login": "Giriş Yap",
 	"logout": "Çıkış Yap",
 	"mailAddress": "E-posta Adresi",
+	"makePublic": "Herkese Açık Yap",
+	"makeMediaPublicConfirm": "Bu konuşmayı herkese açık yapmak istediğinize emin misiniz? Bu, tüm kullanıcıların platformunda görünür ve aranabilir hale getirir.",
 	"manage": "Yönet",
 	"manageConflicts": "Çakışmaları Çöz",
 	"manageData": "Verileri Yönet",
