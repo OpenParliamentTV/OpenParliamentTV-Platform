@@ -194,24 +194,7 @@ function getWordFrequenciesFromSpeech($speechData, $config = null) {
     return $frequencies;
 }
 
-/**
- * Extract word frequencies from text (legacy function for backward compatibility)
- */
-function getWordFrequencies($text, $config = null) {
-    $words = tokenizeWords($text);
-    $frequencies = [];
-    
-    foreach ($words as $word) {
-        $normalized = normalizeWord($word);
-        
-        // Skip stopwords and very short words
-        if (!isStopword($normalized, $config) && strlen($normalized) >= 2) {
-            $frequencies[$normalized] = ($frequencies[$normalized] ?? 0) + 1;
-        }
-    }
-    
-    return $frequencies;
-}
+// Legacy function getWordFrequencies() removed - use getWordFrequenciesFromSpeech() for speech data processing
 
 /**
  * Truncate text to specified length

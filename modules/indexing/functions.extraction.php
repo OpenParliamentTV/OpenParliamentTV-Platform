@@ -47,28 +47,7 @@ function extractMainSpeakerFaction($speechData) {
     return null;
 }
 
-/**
- * Extract party information from speech annotations (legacy function, now uses main-speaker-faction)
- */
-function extractPartyInfo($speechData) {
-    // Use main-speaker-faction instead of generic faction lookup
-    return extractMainSpeakerFaction($speechData);
-}
-
-/**
- * Extract speaker ID from speech data (legacy function, now uses main-speaker)
- */
-function extractSpeakerId($speechData) {
-    // Use main-speaker instead of relationship lookup
-    $mainSpeakerId = extractMainSpeakerId($speechData);
-    
-    // Fall back to relationship if main-speaker annotation not found
-    if (!$mainSpeakerId) {
-        return $speechData['relationships']['speaker']['data']['id'] ?? null;
-    }
-    
-    return $mainSpeakerId;
-}
+// Legacy functions extractPartyInfo() and extractSpeakerId() removed - use extractMainSpeakerFaction() and extractMainSpeakerId() directly
 
 /**
  * Extract session ID from speech data

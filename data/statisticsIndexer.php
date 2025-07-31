@@ -378,8 +378,7 @@ function processBatchWithProperStatistics($client, $parliamentCode, $hits) {
  */
 function setupStatisticsIndices($client, $parliamentCode, $isFullRebuild = false) {
     $indices = [
-        "optv_statistics_" . strtolower($parliamentCode),
-        "optv_word_events_" . strtolower($parliamentCode)
+        "optv_statistics_" . strtolower($parliamentCode)
     ];
     
     foreach ($indices as $indexName) {
@@ -418,8 +417,7 @@ function setupStatisticsIndices($client, $parliamentCode, $isFullRebuild = false
  */
 function restoreOptimalIndexSettings($client, $parliamentCode) {
     $indices = [
-        "optv_statistics_" . strtolower($parliamentCode),
-        "optv_word_events_" . strtolower($parliamentCode)
+        "optv_statistics_" . strtolower($parliamentCode)
     ];
     
     foreach ($indices as $indexName) {
@@ -450,28 +448,17 @@ function restoreOptimalIndexSettings($client, $parliamentCode) {
  * Get index mapping based on index name
  */
 function getStatisticsIndexMapping($indexName) {
-    if (strpos($indexName, 'word_events') !== false) {
-        return [
-            'properties' => [
-                'word' => ['type' => 'keyword'],
-                'speech_id' => ['type' => 'keyword'],
-                'speaker_id' => ['type' => 'keyword'],
-                'date' => ['type' => 'date'],
-                'position_in_speech' => ['type' => 'integer']
-            ]
-        ];
-    } else {
-        return [
-            'properties' => [
-                'aggregation_type' => ['type' => 'keyword'],
-                'speaker_id' => ['type' => 'keyword'],
-                'party_id' => ['type' => 'keyword'],
-                'word' => ['type' => 'keyword'],
-                'count' => ['type' => 'integer'],
-                'speech_count' => ['type' => 'integer'],
-                'date' => ['type' => 'long'],
-                'date_string' => ['type' => 'date']
-            ]
-        ];
-    }
+    // Only statistics index mapping needed - word_events index eliminated
+    return [
+        'properties' => [
+            'aggregation_type' => ['type' => 'keyword'],
+            'speaker_id' => ['type' => 'keyword'],
+            'party_id' => ['type' => 'keyword'],
+            'word' => ['type' => 'keyword'],
+            'count' => ['type' => 'integer'],
+            'speech_count' => ['type' => 'integer'],
+            'date' => ['type' => 'long'],
+            'date_string' => ['type' => 'date']
+        ]
+    ];
 }
