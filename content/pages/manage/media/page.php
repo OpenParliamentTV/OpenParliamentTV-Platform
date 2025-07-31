@@ -56,16 +56,55 @@ if ($auth["meta"]["requestStatus"] != "success") {
         margin-top: 0px !important;
         padding-top: 0px !important;
     }
-    .filterContainer {
-        display: block !important;
-    }
     .searchContainer {
         display: none !important;
     }
 </style>
 
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/search/client/search.js"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/filterController.js"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    // Initialize filter controller for manage/media page
+    const filterController = new FilterController({
+        mode: 'url-driven',
+        baseUrl: '/manage/media',
+        onFilterChange: function(formData) {
+            // Update URL and reload results using absolute path
+            const newUrl = '/manage/media' + (formData ? '?' + formData : '');
+            history.pushState(null, '', newUrl);
+            mediaManager.loadResults(formData);
+        }
+    });
+    
+    // Initialize media results manager for table view
+    const mediaManager = getMediaResultsManager('#speechListContainer', {
+        mode: 'url-driven',
+        view: 'table',
+        baseUrl: '/manage/media'
+    });
+    
+    // Load initial results from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialQuery = urlParams.toString();
+    filterController.updateFromUrl();
+    
+    // Set up callback to handle filter bar visibility
+    mediaManager.onLoaded(function(data) {
+        // Filter bar visibility is handled by updateFilterBarVisibility in mediaManager
+    });
+    
+    mediaManager.loadResults(initialQuery, false);
+    
+    // Handle browser back/forward
+    window.onpopstate = function(event) {
+        filterController.updateFromUrl();
+        const urlParams = new URLSearchParams(window.location.search);
+        mediaManager.loadResults(urlParams.toString(), false);
+    };
+});
+</script>
 
 <?php
 include_once(__DIR__ . '/../../../footer.php');

@@ -25,7 +25,7 @@ require_once(__DIR__."/../../api/v1/api.php");
 
 
 if (!isset($_REQUEST["a"]) || count($_REQUEST) < 2 ||
-	((isset($_REQUEST["queryOnly"]) && $_REQUEST["queryOnly"] == 1) && !isset($_REQUEST["q"]) && !isset($_REQUEST["personID"]) && !isset($_REQUEST["organisationID"]) && !isset($_REQUEST["documentID"]) && !isset($_REQUEST["termID"]))) {
+	((isset($_REQUEST["queryOnly"]) && $_REQUEST["queryOnly"] == 1) && !isset($_REQUEST["q"]) && !isset($_REQUEST["personID"]) && !isset($_REQUEST["organisationID"]) && !isset($_REQUEST["documentID"]) && !isset($_REQUEST["termID"]) && !isset($_REQUEST["sessionID"]) && !isset($_REQUEST["agendaItemID"]) && !isset($_REQUEST["electoralPeriodID"]))) {
 ?>
 
 <div class="row justify-content-center">

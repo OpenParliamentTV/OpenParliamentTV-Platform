@@ -1,16 +1,18 @@
+// Search Page Controller - handles search-specific UI and orchestrates components
 var minDate = new Date('2013-10-01');
 var maxDate = new Date();
-var statsAjax,
-	suggestionsTextAjax,
-	suggestionsEntitiesAjax;
+var suggestionsTextAjax,
+	suggestionsEntitiesAjax,
+	updateAjax;
 var factionChart = null,
 	timeRangeChart = null;
 var selectedSuggestionIndex = null,
 	selectedSuggestionColumn = 'suggestionContainerText';
 var timelineViz = null;
 
-// Check if we're in the media management context
-var isMediaManagement = window.location.pathname.includes('/manage/media');
+// Component instances
+var filterController = null;
+var mediaResultsManager = null;
 
 let resultsAttributes;
 
@@ -18,9 +20,12 @@ $(document).ready( function() {
 
 	$('.loadingIndicator').hide();
 
-	if (!isMediaManagement) {
-		$(window).scroll(function(){
-			var scroll = $(window).scrollTop();
+	// Initialize components
+	initializeComponents();
+
+	// Search page specific UI behavior
+	$(window).scroll(function(){
+		var scroll = $(window).scrollTop();
 
 		if (scroll >= 10 && !$('body').hasClass('fixed') && !$('#filterbar').hasClass('nosearch')) {
 			$('#speechListContainer').css('margin-top', $('.filterContainer').height() + 150);
@@ -28,18 +33,9 @@ $(document).ready( function() {
 			
 		} else if (scroll < 10) {
 			$('body').removeClass('fixed');
-				$('#speechListContainer').css('margin-top', 0);
-			}
-		});
-
-		$('body').on('click','#play-submit',function() {
-			var firstResult = $('.resultList').find('.resultItem').first();
-	
-			if (firstResult.length != 0) {
-				location.href = firstResult.children('.resultContent').children('a').eq(0).attr("href") + '&playresults=1';
-			}
-		});
-	}
+			$('#speechListContainer').css('margin-top', 0);
+		}
+	});
 
 	$(window).scroll();
 
@@ -67,6 +63,9 @@ $(document).ready( function() {
 	});
 
 	updateContentsFromURL();
+
+	// Initialize search-specific UI
+	initializeSearchUI();
 
 	$('#edit-keys').keydown(function(evt) {
 		if (evt.keyCode == 13) {
@@ -252,9 +251,12 @@ $(document).ready( function() {
 
 function updateContentsFromURL() {
 
-	//$('[name="person"]').val(getQueryVariable('person'));
+	// Update filter controller from URL
+	if (filterController) {
+		filterController.updateFromUrl();
+	}
 
-	// Handle all entity types
+	//$('[name="person"]').val(getQueryVariable('person'));
 	var entityTypes = ['person', 'organisation', 'document', 'term'];
 	for (var t = 0; t < entityTypes.length; t++) {
 		var entityType = entityTypes[t];
@@ -341,7 +343,12 @@ function updateContentsFromURL() {
 
 	/* DATE FUNCTIONS END */
 
-	updateResultList();
+	// Load initial results using the new media results manager
+	if (mediaResultsManager) {
+		const urlParams = new URLSearchParams(window.location.search);
+		const initialQuery = urlParams.toString();
+		mediaResultsManager.loadResults(initialQuery, false);
+	}
 }
 
 function initParliamentSelectMenu() {
@@ -605,11 +612,13 @@ function updateQuery() {
 		}
 	}
 	
-
-	var targetPath = isMediaManagement ? 'media?' : 'search?';
+	// Use the new media results manager instead of the old updateResultList
+	const formData = getSerializedForm();
+	if (mediaResultsManager) {
+		mediaResultsManager.loadResults(formData);
+	}
 	
-	history.pushState(null, "", targetPath + getSerializedForm());
-	updateResultList();
+	// Update document title
 	if ($('input[name="q"]').val() != '' || hasEntityFilters) {
 		if (hasEntityFilters) {
 			var newDocumentTitle = '';
@@ -652,12 +661,22 @@ function updateResultList() {
 		method: "POST",
 		url: config.dir.root + "/content/components/result."+view+".php?a=search"+includeAllString+"&queryOnly=1&" + langString + pageString + getSerializedForm()
 	}).done(function(data) {
+		// Use the same logic as result.grid.php to determine if we should show filters
+		// Only these parameters count as "valid search criteria" that warrant showing the filter bar
 		var requestQuery = getQueryVariable('q'),
 			requestPersonID = getQueryVariable('personID'),
 			requestOrganisationID = getQueryVariable('organisationID'),
 			requestDocumentID = getQueryVariable('documentID'),
 			requestTermID = getQueryVariable('termID');
-		if ((requestQuery && requestQuery.length >= 2) || requestPersonID || requestOrganisationID || requestDocumentID || requestTermID) {
+		
+		// Match the exact logic from result.grid.php line 28
+		var hasValidSearchCriteria = (requestQuery && requestQuery.length >= 2) || 
+									 requestPersonID || 
+									 requestOrganisationID || 
+									 requestDocumentID || 
+									 requestTermID;
+		
+		if (hasValidSearchCriteria) {
 			$('#filterbar').removeClass('nosearch');
 			$('.filterContainer').removeClass('d-none').addClass('d-md-block');
 			$('#toggleFilterContainer').removeClass('d-none').addClass('d-block');
@@ -754,16 +773,22 @@ function initInteractiveQueryValues() {
 	// Handle person entities
 	if ($('[name="personID[]"]').length != 0) {
 		var personIDs = $.map($('[name="personID[]"]'), function(el) { return el.value; });
-		if (personIDs && typeof personDataFromRequest !== 'undefined') {
-			for (var i = personIDs.length - 1; i >= 0; i--) {
-				var label = personDataFromRequest[personIDs[i]].attributes.label;
-				if (personDataFromRequest[personIDs[i]].relationships.faction.data) {
-					var secondaryLabel = personDataFromRequest[personIDs[i]].relationships.faction.data.attributes.label;
-					var factionID = personDataFromRequest[personIDs[i]].relationships.faction.data.id;
-					addQueryItem('person', label, secondaryLabel, personIDs[i], factionID);
-				} else {
-					addQueryItem('person', label, false, personIDs[i]);
+		if (personIDs) {
+			if (typeof personDataFromRequest !== 'undefined') {
+				// Use server-side data if available
+				for (var i = personIDs.length - 1; i >= 0; i--) {
+					var label = personDataFromRequest[personIDs[i]].attributes.label;
+					if (personDataFromRequest[personIDs[i]].relationships.faction.data) {
+						var secondaryLabel = personDataFromRequest[personIDs[i]].relationships.faction.data.attributes.label;
+						var factionID = personDataFromRequest[personIDs[i]].relationships.faction.data.id;
+						addQueryItem('person', label, secondaryLabel, personIDs[i], factionID);
+					} else {
+						addQueryItem('person', label, false, personIDs[i]);
+					}
 				}
+			} else {
+				// Fetch data via AJAX if server-side data not available
+				loadEntityDataAndAddQueryItems('person', personIDs);
 			}
 		}
 	}
@@ -777,10 +802,16 @@ function initInteractiveQueryValues() {
 		
 		if ($('[name="' + paramName + '"]').length != 0) {
 			var entityIDs = $.map($('[name="' + paramName + '"]'), function(el) { return el.value; });
-			if (entityIDs && typeof window[dataVarName] !== 'undefined') {
-				for (var i = entityIDs.length - 1; i >= 0; i--) {
-					var label = window[dataVarName][entityIDs[i]].attributes.label;
-					addQueryItem(entityType, label, null, entityIDs[i]);
+			if (entityIDs) {
+				if (typeof window[dataVarName] !== 'undefined') {
+					// Use server-side data if available
+					for (var i = entityIDs.length - 1; i >= 0; i--) {
+						var label = window[dataVarName][entityIDs[i]].attributes.label;
+						addQueryItem(entityType, label, null, entityIDs[i]);
+					}
+				} else {
+					// Fetch data via AJAX if server-side data not available
+					loadEntityDataAndAddQueryItems(entityType, entityIDs);
 				}
 			}
 		}
@@ -797,6 +828,48 @@ function initInteractiveQueryValues() {
 		}
 	} else if (queryString != '') {
 		addQueryItem('text', queryString);
+	}
+}
+
+/**
+ * Load entity data via AJAX and add query items when server-side data is not available
+ */
+function loadEntityDataAndAddQueryItems(entityType, entityIDs) {
+	// Process each entity ID
+	for (var i = entityIDs.length - 1; i >= 0; i--) {
+		(function(currentEntityID, currentEntityType) {
+			$.ajax({
+				method: "POST",
+				url: config.dir.root + "/api/v1/",
+				data: {
+					action: "getItem",
+					itemType: currentEntityType,
+					id: currentEntityID
+				}
+			}).done(function(response) {
+				if (response && response.data) {
+					var label = response.data.attributes.label;
+					
+					if (currentEntityType === 'person') {
+						// Handle person with potential faction data
+						if (response.data.relationships && response.data.relationships.faction && response.data.relationships.faction.data) {
+							var secondaryLabel = response.data.relationships.faction.data.attributes.label;
+							var factionID = response.data.relationships.faction.data.id;
+							addQueryItem('person', label, secondaryLabel, currentEntityID, factionID);
+						} else {
+							addQueryItem('person', label, false, currentEntityID);
+						}
+					} else {
+						// Handle other entity types
+						addQueryItem(currentEntityType, label, null, currentEntityID);
+					}
+				}
+			}).fail(function(err) {
+				console.warn('Failed to load ' + currentEntityType + ' data for ID:', currentEntityID, err);
+				// Add a fallback query item with just the ID as label
+				addQueryItem(currentEntityType, currentEntityID, null, currentEntityID);
+			});
+		})(entityIDs[i], entityType);
 	}
 }
 
@@ -1045,4 +1118,82 @@ function animateCountUp(el) {
 function runCounterAnimation() {
 	const countupEls = document.querySelectorAll( '.countup' );
 	countupEls.forEach( animateCountUp );
+}
+
+/**
+ * Initialize the FilterController and MediaResults components
+ */
+function initializeComponents() {
+	// Initialize filter controller
+	filterController = new FilterController({
+		mode: 'url-driven',
+		baseUrl: '/search',
+		onFilterChange: function(formData) {
+			updateQuery();
+		}
+	});
+
+	// Initialize media results manager
+	mediaResultsManager = getMediaResultsManager('#speechListContainer', {
+		mode: 'url-driven',
+		view: 'grid',
+		baseUrl: '/search'
+	});
+
+	// Set up callback for chart updates when results are loaded
+	mediaResultsManager.onLoaded(function(data) {
+		// Update filter bar visibility based on valid search criteria
+		updateFilterBarVisibility();
+		
+		updateFactionChart();
+		$('#timelineVizWrapper').empty();
+		updateTimelineViz();
+		runCounterAnimation();
+	});
+	
+	// Load initial results from URL on page load
+	const urlParams = new URLSearchParams(window.location.search);
+	const initialQuery = urlParams.toString();
+	if (initialQuery || window.location.pathname === '/search' || window.location.pathname.endsWith('/')) {
+		mediaResultsManager.loadResults(initialQuery, false);
+	}
+}
+
+/**
+ * Initialize search-specific UI components (suggestions, query building)
+ */
+function initializeSearchUI() {
+	// Search suggestion functionality remains here as it's search-page specific
+	// Filter and result management is now handled by the components
+}
+
+/**
+ * Update filter bar visibility based on valid search criteria
+ * This matches the logic in result.grid.php for consistency
+ */
+function updateFilterBarVisibility() {
+	// Use the same logic as result.grid.php to determine if we should show filters
+	// Only these parameters count as "valid search criteria" that warrant showing the filter bar
+	var requestQuery = getQueryVariable('q'),
+		requestPersonID = getQueryVariable('personID'),
+		requestOrganisationID = getQueryVariable('organisationID'),
+		requestDocumentID = getQueryVariable('documentID'),
+		requestTermID = getQueryVariable('termID');
+	
+	// Match the exact logic from result.grid.php line 28
+	var hasValidSearchCriteria = (requestQuery && requestQuery.length >= 2) || 
+								 requestPersonID || 
+								 requestOrganisationID || 
+								 requestDocumentID || 
+								 requestTermID;
+	
+	if (hasValidSearchCriteria) {
+		$('#filterbar').removeClass('nosearch');
+		$('.filterContainer').removeClass('d-none').addClass('d-md-block');
+		$('#toggleFilterContainer').removeClass('d-none').addClass('d-block');
+	} else {
+		$('#filterbar').addClass('nosearch');
+		$('.filterContainer').removeClass('d-md-block').addClass('d-none');
+		$('#toggleFilterContainer').removeClass('d-block').addClass('d-none');
+	}
 }
