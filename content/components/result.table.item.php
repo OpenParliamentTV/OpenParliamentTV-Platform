@@ -17,13 +17,13 @@ $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedP
 	<td><?= h($formattedDuration) ?></td>
 	<td><?= h($result_item["attributes"]["lastChanged"]) ?></td>
 	<?php if ($_SESSION["userdata"]["role"] == "admin") { ?>
-		<td>
-			<div class="form-check form-switch">
+		<td class="text-center">
+			<div class="form-check d-flex justify-content-center">
 				<input class="form-check-input aligned-switch" type="checkbox" id="aligned-<?= hAttr($result_item["id"]) ?>" <?= $result_item["attributes"]["aligned"] ? "checked" : "" ?> data-speech-id="<?= hAttr($result_item["id"]) ?>" disabled>
 			</div>
 		</td>
-		<td>
-			<div class="form-check form-switch">
+		<td class="text-center">
+			<div class="form-check form-switch d-flex justify-content-center">
 				<input class="form-check-input public-switch" type="checkbox" id="public-<?= hAttr($result_item["id"]) ?>" <?= $result_item["attributes"]["public"] ? "checked" : "" ?> data-speech-id="<?= hAttr($result_item["id"]) ?>" disabled>
 			</div>
 		</td>
