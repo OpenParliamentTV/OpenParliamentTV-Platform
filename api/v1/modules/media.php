@@ -1620,10 +1620,10 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
             "meta" => [
                 "requestStatus" => "success",
                 "attributes" => [
-                    "speechFirstDateStr" => $search["aggregations"]["dateFirst"]["value_as_string"],
-                    "speechFirstDateTimestamp" => $search["aggregations"]["dateFirst"]["value"],
-                    "speechLastDateStr" => $search["aggregations"]["dateLast"]["value_as_string"],
-                    "speechLastDateTimestamp" => $search["aggregations"]["dateLast"]["value"],
+                    "speechFirstDateStr" => $search["aggregations"]["dateFirst"]["value_as_string"] ?? null,
+                    "speechFirstDateTimestamp" => $search["aggregations"]["dateFirst"]["value"] ?? null,
+                    "speechLastDateStr" => $search["aggregations"]["dateLast"]["value_as_string"] ?? null,
+                    "speechLastDateTimestamp" => $search["aggregations"]["dateLast"]["value"] ?? null,
                     "resultsPerFaction" => [], // Placeholder
                     "days" => []             // Placeholder
                 ],
