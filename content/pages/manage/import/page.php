@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div id="search-index-${parliamentCode}-status-text" class="small text-muted mb-2">Status: Idle</div>
                     <button type="button" id="btn-trigger-search-index-refresh-${parliamentCode}" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-arrows-cw"></span> <?= L::refreshFullIndex(); ?> (${parliamentCode})</button>
-                    <button type="button" id="btn-trigger-search-index-delete-${parliamentCode}" class="btn btn-danger btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-trash"></span> <?= L::deleteIndex(); ?> (${parliamentCode})</button>
+                    <button type="button" id="btn-trigger-search-index-delete-${parliamentCode}" class="btn btn-outline-danger btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-trash"></span> <?= L::deleteIndex(); ?> (${parliamentCode})</button>
                     <div id="search-index-${parliamentCode}-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
                 </div>
             </div>

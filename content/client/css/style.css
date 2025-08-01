@@ -724,7 +724,7 @@ body.darkmode .list-group-item.working, body.darkmode .list-group-item.working:h
         background-color: transparent;
     }
     50% {
-        background-color: #0d6efd;
+        background-color: #2593e4;
     }
     100% {
         background-color: transparent;
@@ -736,7 +736,7 @@ body.darkmode .list-group-item.working, body.darkmode .list-group-item.working:h
         background-color: transparent;
     }
     50% {
-        background-color: #0d6efd;
+        background-color: #2593e4;
     }
     100% {
         background-color: transparent;
@@ -769,6 +769,12 @@ body.darkmode .list-group-item.working, body.darkmode .list-group-item.working:h
 
 .btn-primary:hover {
     opacity: .9;
+}
+
+.btn-danger, .btn-outline-danger, 
+.btn-success, .btn-outline-success, 
+.progress .progress-bar {
+    filter: brightness(1.4);
 }
  
 .list-group-item {
