@@ -37,6 +37,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
         // =============================================
         // Public API endpoints (no authentication required)
         // =============================================
+        // These actions are whitelisted in auth.php for "apiV1" action and are thus public by default
 
         case "getItem":
             switch ($api_request["itemType"]) {
@@ -228,7 +229,8 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
         // =============================================
         // Private API endpoints (authentication required)
         // =============================================
-
+        // These actions are NOT whitelisted in auth.php, so they require admin authentication.
+        
         case "addItem":
             switch ($api_request["itemType"]) {
                 case "media":
