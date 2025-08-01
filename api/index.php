@@ -47,7 +47,7 @@ require_once (__DIR__.'/v1/api.php');
         const localizedLabels = <?= $langJSONString ?>;
     </script>
 </head>
-<body class='<?= $color_scheme."mode" ?> <?= (($_SESSION["login"]) ? "login" : "") ?>'>
+<body class='<?= hAttr($color_scheme."mode") ?> <?= (($_SESSION["login"] ?? false) ? "login" : "") ?>'>
 	<div class="mainLoadingIndicator">
 		<div class="workingSpinner" style="position: fixed; top: 50%;"></div>
 	</div>

@@ -10,7 +10,7 @@ applySecurityHeaders();
 
 include_once(__DIR__ . '/../../modules/utilities/auth.php');
 
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", "results");
+$auth = auth($_SESSION["userdata"]["id"] ?? null, "requestPage", "results");
 
 if ($auth["meta"]["requestStatus"] != "success") {
     echo "Not authorized";
