@@ -20,7 +20,7 @@ if (!$_REQUEST["type"]) {
           To just get items, having a wikidata-id as id, use the parameter 'wiki'=true. in this case you can also add 'wikikeys'=true to get an object with wikidata ids as keys.<br><br>";
 } else {
     header('Content-Type: application/json; charset=utf-8');
-    echo json_encode(getEntityDump($_REQUEST),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    echo json_encode(getEntityDump($_REQUEST),JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT | JSON_HEX_APOS);
 }
 
 
