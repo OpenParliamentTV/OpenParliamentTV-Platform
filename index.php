@@ -615,7 +615,7 @@ switch ($page) {
             include_once("./content/pages/404/page.php");
             $content = ob_get_clean();
         } else {
-            $pageTitle = 'Manage Electoral Period Detail';
+            $pageTitle = L::edit().': '.L::electoralPeriod();
             $pageType = 'admin';
             $pageBreadcrumbs = [
 				[
@@ -649,7 +649,7 @@ switch ($page) {
             include_once("./content/pages/404/page.php");
             $content = ob_get_clean();
         } else {
-            $pageTitle = 'Manage Session Detail';
+            $pageTitle = L::edit().': '.L::session();
             $pageType = 'admin';
             $pageBreadcrumbs = [
 				[
@@ -683,7 +683,7 @@ switch ($page) {
             include_once("./content/pages/404/page.php");
             $content = ob_get_clean();
         } else {
-            $pageTitle = 'Manage Agenda Item Detail';
+            $pageTitle = L::edit().': '.L::agendaItem();
             $pageType = 'admin';
             $pageBreadcrumbs = [
 				[
@@ -718,7 +718,7 @@ switch ($page) {
 				$pageType = 'default';
 				include_once("./content/pages/404/page.php");
 			} else {
-				$pageTitle = 'Manage Detail User';
+				$pageTitle = L::edit().': '.L::user();
 				$pageType = 'admin';
 				$pageBreadcrumbs = [
 					[

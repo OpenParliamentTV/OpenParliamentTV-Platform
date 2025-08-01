@@ -32,7 +32,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
-							[ENTITY DATA]
+							[MEDIA DATA]
                         </div>
                     </div>
                 </div>
