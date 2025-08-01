@@ -18,7 +18,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2><?= L::manageUsers(); ?></h2>
                     <div class="card mb-3">
                         <div class="card-body">
                             <a href="<?= $config["dir"]["root"] ?>/register" class="btn btn-primary btn-sm me-1"> <span class="icon-plus"></span> <?= L::manageUsersNewAccount(); ?></a>

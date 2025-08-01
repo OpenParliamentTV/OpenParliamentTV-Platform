@@ -17,7 +17,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                     <div class="col-12">
-                        <h2><?= L::dashboard(); ?></h2>
                         <div class="row mb-3">
                             <div class="col-12">
                                 <div class="card">

@@ -18,10 +18,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2><?= L::manageStructure(); ?></h2>
-                    <div class="card mb-3">
-						<div class="card-body"></div>
-					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="electoralPeriods-tab" data-bs-toggle="tab" data-bs-target="#electoralPeriods" role="tab" aria-controls="electoralPeriods" aria-selected="true"><span class="icon-check me-2"></span><?= L::electoralPeriods(); ?></a>

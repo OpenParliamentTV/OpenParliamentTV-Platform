@@ -20,10 +20,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		<div class="sidebar-content">
 			<div class="row" style="position: relative; z-index: 1">
 				<div class="col-12">
-					<h2><?= L::manageImport(); ?></h2>
-					<div class="card mb-3">
-						<div class="card-body"></div>
-					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="parliaments-tab" data-bs-toggle="tab" data-bs-target="#parliaments" role="tab" aria-controls="parliaments" aria-selected="true"><span class="icon-bank"></span> <?= L::parliaments(); ?></a>

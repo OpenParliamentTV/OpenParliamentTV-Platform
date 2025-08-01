@@ -329,7 +329,7 @@ main.container-fluid.subpage {
 
 .sidebar-content {
     max-width: calc(100% - 280px);
-    margin-top: .5rem !important;
+    margin-top: 1px !important;
 }
 
 @media (max-width:991px) {

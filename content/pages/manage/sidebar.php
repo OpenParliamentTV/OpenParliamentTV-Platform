@@ -22,7 +22,6 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                 </a>
 
                 <!-- Personal Settings -->
-                <div class="dropdown-header text-uppercase text-muted"><?= L::personalSettings(); ?></div>
                 <!--
                 <a href="<?= $config["dir"]["root"] ?>/manage/notifications" 
                    class="dropdown-item <?= ($page == "manage-notifications") ? "active" : "" ?>">
@@ -33,7 +32,7 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                 <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>" 
                    class="dropdown-item <?= ($page == "manage-users" && isset($_REQUEST["id"]) && (string)$_REQUEST["id"] === (string)$_SESSION["userdata"]["id"]) ? "active" : "" ?>">
                     <i class="icon-user me-2"></i>
-                    <?= L::userSettings(); ?>
+                    <?= L::personalSettings(); ?>
                 </a>
 
                 <!-- Contents -->
@@ -49,7 +48,7 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                     <?= L::manageEntities(); ?>
                 </a>
                 <a href="<?= $config["dir"]["root"] ?>/manage/structure" 
-                   class="dropdown-item <?= ($page == "manage-structure") ? "active" : "" ?>">
+                   class="dropdown-item <?= (strpos($page, "manage-structure") === 0) ? "active" : "" ?>">
                     <i class="icon-flow-cascade me-2"></i>
                     <?= L::manageStructure(); ?>
                 </a>
@@ -102,7 +101,6 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
 
         <!-- Personal Settings -->
         <div class="mb-0">
-            <div class="mb-2 ps-3 text-uppercase text-muted"><?= L::personalSettings(); ?></div>
             <ul class="nav nav-pills flex-column mb-auto">
                 <!--
                 <li class="nav-item">
@@ -117,7 +115,7 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                     <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>" 
                        class="nav-link <?= ($page == "manage-users" && isset($_REQUEST["id"]) && (string)$_REQUEST["id"] === (string)$_SESSION["userdata"]["id"]) ? "active" : "" ?>">
                         <i class="icon-user me-2"></i>
-                        <?= L::userSettings(); ?>
+                        <?= L::personalSettings(); ?>
                     </a>
                 </li>
             </ul>
@@ -144,7 +142,7 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                 </li>
                 <li class="nav-item">
                     <a href="<?= $config["dir"]["root"] ?>/manage/structure" 
-                       class="nav-link <?= ($page == "manage-structure") ? "active" : "" ?>">
+                       class="nav-link <?= (strpos($page, "manage-structure") === 0) ? "active" : "" ?>">
                         <i class="icon-flow-cascade me-2"></i>
                         <?= L::manageStructure(); ?>
                     </a>

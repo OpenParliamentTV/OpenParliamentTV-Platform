@@ -20,7 +20,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		<div class="sidebar-content">
 			<div class="row" style="position: relative; z-index: 1">
 				<div class="col-12 mainContainer">
-					<h2><?= L::manageEntities(); ?></h2>
 					<div class="card mb-3">
 						<div class="card-body">
 							<button type="button" id="openAddEntityModalBtn" class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#addEntityModal"><span class="icon-plus"></span> <?= L::manageEntitiesNew(); ?></button>
