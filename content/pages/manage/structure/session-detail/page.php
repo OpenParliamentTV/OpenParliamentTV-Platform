@@ -27,12 +27,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2>Manage Detail Session</h2>
-                    <div class="card mb-3">
-						<div class="card-body">
-    
-                        </div>
-					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-th-list"></span> <?= L::data(); ?></a>
@@ -45,11 +39,21 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="SessionNumber" class="form-label"><?= L::session(); ?></label>
-                                        <input type="number" class="form-control" id="SessionNumber" name="SessionNumber" 
-                                               value="<?= htmlspecialchars($sessionData["SessionNumber"]); ?>" required>
-                                        <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired(); ?>
+                                        <div class="mb-3">
+                                            <label for="SessionDateStart" class="form-label"><?= L::dateStart(); ?></label>
+                                            <input type="datetime-local" class="form-control" id="SessionDateStart" name="SessionDateStart" 
+                                                   value="<?= htmlspecialchars($sessionData["SessionDateStart"]); ?>">
+                                            <div class="invalid-feedback">
+                                                <?= L::messageErrorFieldRequired(); ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="SessionDateEnd" class="form-label"><?= L::dateEnd(); ?></label>
+                                            <input type="datetime-local" class="form-control" id="SessionDateEnd" name="SessionDateEnd" 
+                                                   value="<?= htmlspecialchars($sessionData["SessionDateEnd"]); ?>">
+                                            <div class="invalid-feedback">
+                                                <?= L::messageErrorFieldRequired(); ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -59,29 +63,18 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                                 <td><?= htmlspecialchars($sessionData["SessionID"]); ?></td>
                                             </tr>
                                             <tr>
+                                                <td><?= L::parliament(); ?>:</td>
+                                                <td><?= htmlspecialchars($sessionData["ParliamentLabel"]); ?></td>
+                                            </tr>
+                                            <tr>
                                                 <td><?= L::electoralPeriod(); ?>:</td>
                                                 <td><?= htmlspecialchars($sessionData["ElectoralPeriodNumber"]); ?></td>
                                             </tr>
+                                            <tr>
+                                                <td><?= L::session(); ?>:</td>
+                                                <td><?= htmlspecialchars($sessionData["SessionNumber"]); ?></td>
+                                            </tr>
                                         </table>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="SessionDateStart" class="form-label"><?= L::dateStart(); ?></label>
-                                        <input type="datetime-local" class="form-control" id="SessionDateStart" name="SessionDateStart" 
-                                               value="<?= htmlspecialchars($sessionData["SessionDateStart"]); ?>" required>
-                                        <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired(); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="SessionDateEnd" class="form-label"><?= L::dateEnd(); ?></label>
-                                        <input type="datetime-local" class="form-control" id="SessionDateEnd" name="SessionDateEnd" 
-                                               value="<?= htmlspecialchars($sessionData["SessionDateEnd"]); ?>" required>
-                                        <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired(); ?>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -118,7 +111,6 @@ $(function() {
     
     // Store initial form state
     let initialFormState = {
-        SessionNumber: form.SessionNumber.value,
         SessionDateStart: form.SessionDateStart.value,
         SessionDateEnd: form.SessionDateEnd.value
     };
@@ -126,7 +118,6 @@ $(function() {
     // Function to check if form has changed
     function checkFormChanges() {
         const currentState = {
-            SessionNumber: form.SessionNumber.value,
             SessionDateStart: form.SessionDateStart.value,
             SessionDateEnd: form.SessionDateEnd.value
         };
@@ -225,7 +216,6 @@ $(function() {
                     
                     // Update initial state to match current form state
                     initialFormState = {
-                        SessionNumber: form.SessionNumber.value,
                         SessionDateStart: form.SessionDateStart.value,
                         SessionDateEnd: form.SessionDateEnd.value
                     };

@@ -18,11 +18,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2>Manage Detail Electoral Period</h2>
-                    <div class="card mb-3">
-						<div class="card-body"></div>
-					</div>
-					<ul class="nav nav-tabs" role="tablist">
+                    <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-th-list"></span> <?= L::data(); ?></a>
                         </li>
@@ -34,11 +30,21 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="ElectoralPeriodNumber" class="form-label"><?= L::electoralPeriod(); ?></label>
-                                        <input type="number" class="form-control" id="ElectoralPeriodNumber" name="ElectoralPeriodNumber" 
-                                               value="<?= htmlspecialchars($electoralPeriodData["ElectoralPeriodNumber"]); ?>" required>
-                                        <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired(); ?>
+                                        <div class="mb-3">
+                                            <label for="ElectoralPeriodDateStart" class="form-label"><?= L::dateStart(); ?></label>
+                                            <input type="date" class="form-control" id="ElectoralPeriodDateStart" name="ElectoralPeriodDateStart" 
+                                                   value="<?= htmlspecialchars($electoralPeriodData["ElectoralPeriodDateStart"]); ?>">
+                                            <div class="invalid-feedback">
+                                                <?= L::messageErrorFieldRequired(); ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="ElectoralPeriodDateEnd" class="form-label"><?= L::dateEnd(); ?></label>
+                                            <input type="date" class="form-control" id="ElectoralPeriodDateEnd" name="ElectoralPeriodDateEnd" 
+                                                   value="<?= htmlspecialchars($electoralPeriodData["ElectoralPeriodDateEnd"]); ?>">
+                                            <div class="invalid-feedback">
+                                                <?= L::messageErrorFieldRequired(); ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -51,26 +57,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                                 <td><?= L::parliament(); ?>:</td>
                                                 <td><?= htmlspecialchars($electoralPeriodData["ParliamentLabel"]); ?></td>
                                             </tr>
+                                            <tr>
+                                                <td><?= L::electoralPeriod(); ?>:</td>
+                                                <td><?= htmlspecialchars($electoralPeriodData["ElectoralPeriodNumber"]); ?></td>
+                                            </tr>
                                         </table>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="ElectoralPeriodDateStart" class="form-label"><?= L::dateStart(); ?></label>
-                                        <input type="date" class="form-control" id="ElectoralPeriodDateStart" name="ElectoralPeriodDateStart" 
-                                               value="<?= htmlspecialchars($electoralPeriodData["ElectoralPeriodDateStart"]); ?>" required>
-                                        <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired(); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="ElectoralPeriodDateEnd" class="form-label"><?= L::dateEnd(); ?></label>
-                                        <input type="date" class="form-control" id="ElectoralPeriodDateEnd" name="ElectoralPeriodDateEnd" 
-                                               value="<?= htmlspecialchars($electoralPeriodData["ElectoralPeriodDateEnd"]); ?>" required>
-                                        <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired(); ?>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -107,7 +98,6 @@ $(function() {
     
     // Store initial form state
     let initialFormState = {
-        ElectoralPeriodNumber: form.ElectoralPeriodNumber.value,
         ElectoralPeriodDateStart: form.ElectoralPeriodDateStart.value,
         ElectoralPeriodDateEnd: form.ElectoralPeriodDateEnd.value
     };
@@ -115,7 +105,6 @@ $(function() {
     // Function to check if form has changed
     function checkFormChanges() {
         const currentState = {
-            ElectoralPeriodNumber: form.ElectoralPeriodNumber.value,
             ElectoralPeriodDateStart: form.ElectoralPeriodDateStart.value,
             ElectoralPeriodDateEnd: form.ElectoralPeriodDateEnd.value
         };
@@ -179,6 +168,7 @@ $(function() {
         form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
         form.querySelectorAll('.invalid-feedback').forEach(el => el.textContent = '');
 
+
         const formData = new FormData(form);
         const data = {};
         formData.forEach((value, key) => {
@@ -216,7 +206,6 @@ $(function() {
                     
                     // Update initial state to match current form state
                     initialFormState = {
-                        ElectoralPeriodNumber: form.ElectoralPeriodNumber.value,
                         ElectoralPeriodDateStart: form.ElectoralPeriodDateStart.value,
                         ElectoralPeriodDateEnd: form.ElectoralPeriodDateEnd.value
                     };

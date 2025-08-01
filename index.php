@@ -627,7 +627,7 @@ switch ($page) {
 					'path' => '/manage/structure'
 				],
 				[
-					'label' => '<span class="icon-pencil"></span>'
+					'label' => '<span class="icon-pencil"></span>'. L::electoralPeriod() .': '. $apiResult["data"]["ElectoralPeriodID"]
 				]
 			];
             ob_start();
@@ -661,7 +661,7 @@ switch ($page) {
 					'path' => '/manage/structure'
 				],
 				[
-					'label' => '<span class="icon-pencil"></span>'
+					'label' => '<span class="icon-pencil"></span>'. L::session() .': '. $apiResult["data"]["SessionID"]
 				]
 			];
             ob_start();
@@ -695,7 +695,7 @@ switch ($page) {
 					'path' => '/manage/structure'
 				],
 				[
-					'label' => '<span class="icon-pencil"></span>'
+					'label' => '<span class="icon-pencil"></span>'. L::agendaItem() .': '. $apiResult["data"]["AgendaItemID"]
 				]
 			];
             ob_start();
@@ -730,7 +730,7 @@ switch ($page) {
 						'path' => '/manage/users'
 					],
 					[
-						'label' => '<span class="icon-pencil"></span>',
+						'label' => '<span class="icon-pencil"></span>'. L::user() .': '. $apiResult["data"]["UserName"]
 					]
 				];
 				include_once("./content/pages/manage/users/user-detail/page.php");

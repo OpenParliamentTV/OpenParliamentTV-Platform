@@ -21,12 +21,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
-                    <h2>Manage Detail Agenda Item</h2>
-                    <div class="card mb-3">
-						<div class="card-body">
-    
-                        </div>
-					</div>
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-th-list"></span> <?= L::data(); ?></a>
@@ -39,11 +33,29 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
-                                        <label for="AgendaItemTitle" class="form-label"><?= L::title(); ?></label>
-                                        <input type="text" class="form-control" id="AgendaItemTitle" name="AgendaItemTitle" 
-                                               value="<?= htmlspecialchars($agendaItemData["AgendaItemTitle"]); ?>" required>
-                                        <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired(); ?>
+                                        <div class="mb-3">
+                                            <label for="AgendaItemTitle" class="form-label"><?= L::title(); ?></label>
+                                            <input type="text" class="form-control" id="AgendaItemTitle" name="AgendaItemTitle" 
+                                                   value="<?= htmlspecialchars($agendaItemData["AgendaItemTitle"]); ?>" required>
+                                            <div class="invalid-feedback">
+                                                <?= L::messageErrorFieldRequired(); ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="AgendaItemOfficialTitle" class="form-label">Official Title</label>
+                                            <input type="text" class="form-control" id="AgendaItemOfficialTitle" name="AgendaItemOfficialTitle" 
+                                                   value="<?= htmlspecialchars($agendaItemData["AgendaItemOfficialTitle"]); ?>" required>
+                                            <div class="invalid-feedback">
+                                                <?= L::messageErrorFieldRequired(); ?>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="AgendaItemOrder" class="form-label"><?= L::order(); ?></label>
+                                            <input type="number" class="form-control" id="AgendaItemOrder" name="AgendaItemOrder" 
+                                                   value="<?= htmlspecialchars($agendaItemData["AgendaItemOrder"]); ?>">
+                                            <div class="invalid-feedback">
+                                                <?= L::messageErrorFieldRequired(); ?>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -53,36 +65,18 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                                 <td><?= htmlspecialchars($agendaItemData["AgendaItemID"]); ?></td>
                                             </tr>
                                             <tr>
-                                                <td><?= L::session(); ?>:</td>
-                                                <td><?= htmlspecialchars($agendaItemData["SessionNumber"]); ?></td>
+                                                <td><?= L::parliament(); ?>:</td>
+                                                <td><?= htmlspecialchars($agendaItemData["ParliamentLabel"]); ?></td>
                                             </tr>
                                             <tr>
                                                 <td><?= L::electoralPeriod(); ?>:</td>
                                                 <td><?= htmlspecialchars($agendaItemData["ElectoralPeriodNumber"]); ?></td>
                                             </tr>
+                                            <tr>
+                                                <td><?= L::session(); ?>:</td>
+                                                <td><?= htmlspecialchars($agendaItemData["SessionNumber"]); ?></td>
+                                            </tr>
                                         </table>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-12">
-                                        <label for="AgendaItemOfficialTitle" class="form-label">Official Title</label>
-                                        <input type="text" class="form-control" id="AgendaItemOfficialTitle" name="AgendaItemOfficialTitle" 
-                                               value="<?= htmlspecialchars($agendaItemData["AgendaItemOfficialTitle"]); ?>" required>
-                                        <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired(); ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <div class="col-md-6">
-                                        <label for="AgendaItemOrder" class="form-label"><?= L::order(); ?></label>
-                                        <input type="number" class="form-control" id="AgendaItemOrder" name="AgendaItemOrder" 
-                                               value="<?= htmlspecialchars($agendaItemData["AgendaItemOrder"]); ?>">
-                                        <div class="invalid-feedback">
-                                            <?= L::messageErrorFieldRequired(); ?>
-                                        </div>
                                     </div>
                                 </div>
 
