@@ -317,29 +317,53 @@ function searchIndexDelete($api_request) {
         return createApiErrorInvalidParameter('parliament', "Invalid parliament specified: {$parliament}");
     }
 
-    $indexName = "openparliamenttv_" . ($config['parliament'][$parliament]['OpenSearch']['index'] ?? $parliament);
+    $mainIndexName = "openparliamenttv_" . ($config['parliament'][$parliament]['OpenSearch']['index'] ?? $parliament);
+    $statisticsIndexName = "optv_statistics_" . strtolower($parliament);
     $openSearchClient = getApiOpenSearchClient();
 
     if (!$openSearchClient || (is_array($openSearchClient) && isset($openSearchClient["errors"]))) {
         return createApiErrorResponse(500, 'OPENSEARCH_CONNECTION_ERROR', 'messageErrorOpenSearchConnection', 'messageErrorOpenSearchConnection', ['parliament' => $parliament]);
     }
 
+    $deletedIndices = [];
+    $errors = [];
+
     try {
-        if ($openSearchClient->indices()->exists(['index' => $indexName])) {
-            $response = $openSearchClient->indices()->delete(['index' => $indexName]);
+        // Delete main search index
+        if ($openSearchClient->indices()->exists(['index' => $mainIndexName])) {
+            $response = $openSearchClient->indices()->delete(['index' => $mainIndexName]);
             if (isset($response['acknowledged']) && $response['acknowledged'] === true) {
-                return createApiSuccessResponse(['deleted' => true], ['message' => "Search index {$indexName} deleted successfully."]);
+                $deletedIndices[] = $mainIndexName;
             } else {
-                 return createApiErrorResponse(500, 'DELETE_FAILED_NOT_ACKNOWLEDGED', 'messageErrorIndexDelete', 'messageErrorIndexDeleteNotAcknowledged', ['indexName' => $indexName]);
+                $errors[] = "Failed to delete main index {$mainIndexName}: not acknowledged";
             }
         } else {
-            return createApiSuccessResponse(['deleted' => 'already_deleted_or_not_exists'], ['message' => "Search index {$indexName} does not exist. Nothing to delete."]);
+            $deletedIndices[] = $mainIndexName . " (already deleted or not exists)";
         }
+
+        // Delete statistics index
+        if ($openSearchClient->indices()->exists(['index' => $statisticsIndexName])) {
+            $response = $openSearchClient->indices()->delete(['index' => $statisticsIndexName]);
+            if (isset($response['acknowledged']) && $response['acknowledged'] === true) {
+                $deletedIndices[] = $statisticsIndexName;
+            } else {
+                $errors[] = "Failed to delete statistics index {$statisticsIndexName}: not acknowledged";
+            }
+        } else {
+            $deletedIndices[] = $statisticsIndexName . " (already deleted or not exists)";
+        }
+
+        if (!empty($errors)) {
+            return createApiErrorResponse(500, 'DELETE_FAILED_PARTIAL', 'messageErrorIndexDelete', 'messageErrorIndexDeletePartial', ['deletedIndices' => $deletedIndices, 'errors' => $errors]);
+        }
+
+        return createApiSuccessResponse(['deleted' => true, 'indices' => $deletedIndices], ['message' => "Indices deleted successfully: " . implode(', ', $deletedIndices)]);
+
     } catch (Exception $e) {
         if ($e instanceof \Elasticsearch\Common\Exceptions\Missing404Exception || (method_exists($e, 'getCode') && $e->getCode() == 404)) {
-            return createApiSuccessResponse(['deleted' => 'already_deleted_or_not_exists'], ['message' => "Search index {$indexName} does not exist (404)."]);
+            return createApiSuccessResponse(['deleted' => 'already_deleted_or_not_exists'], ['message' => "Indices do not exist (404)."]);
         }
-        return createApiErrorResponse(500, 'DELETE_EXCEPTION', 'messageErrorIndexDelete', 'messageErrorIndexDeleteException', ['indexName' => $indexName, 'error' => $e->getMessage()]);
+        return createApiErrorResponse(500, 'DELETE_EXCEPTION', 'messageErrorIndexDelete', 'messageErrorIndexDeleteException', ['mainIndex' => $mainIndexName, 'statisticsIndex' => $statisticsIndexName, 'error' => $e->getMessage()]);
     }
 }
 
