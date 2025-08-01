@@ -1,5 +1,6 @@
 <?php
 include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
+include_once(__DIR__ . '/../../../../../modules/utilities/security.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
 
@@ -26,14 +27,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
                             <form id="electoralPeriodForm" class="needs-validation" novalidate>
-                                <input type="hidden" name="id" value="<?= htmlspecialchars($electoralPeriodData["ElectoralPeriodID"]); ?>">
+                                <input type="hidden" name="id" value="<?= h($electoralPeriodData["ElectoralPeriodID"]); ?>">
                                 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="ElectoralPeriodDateStart" class="form-label"><?= L::dateStart(); ?></label>
                                             <input type="date" class="form-control" id="ElectoralPeriodDateStart" name="ElectoralPeriodDateStart" 
-                                                   value="<?= htmlspecialchars($electoralPeriodData["ElectoralPeriodDateStart"]); ?>">
+                                                   value="<?= h($electoralPeriodData["ElectoralPeriodDateStart"]); ?>">
                                             <div class="invalid-feedback">
                                                 <?= L::messageErrorFieldRequired(); ?>
                                             </div>
@@ -41,7 +42,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <div class="mb-3">
                                             <label for="ElectoralPeriodDateEnd" class="form-label"><?= L::dateEnd(); ?></label>
                                             <input type="date" class="form-control" id="ElectoralPeriodDateEnd" name="ElectoralPeriodDateEnd" 
-                                                   value="<?= htmlspecialchars($electoralPeriodData["ElectoralPeriodDateEnd"]); ?>">
+                                                   value="<?= h($electoralPeriodData["ElectoralPeriodDateEnd"]); ?>">
                                             <div class="invalid-feedback">
                                                 <?= L::messageErrorFieldRequired(); ?>
                                             </div>
@@ -51,15 +52,15 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <table class="table mt-3 mt-md-0 mb-2 mb-md-0" style="border: 1px solid var(--border-color);">
                                             <tr>
                                                 <td>ID:</td>
-                                                <td><?= htmlspecialchars($electoralPeriodData["ElectoralPeriodID"]); ?></td>
+                                                <td><?= h($electoralPeriodData["ElectoralPeriodID"]); ?></td>
                                             </tr>
                                             <tr>
                                                 <td><?= L::parliament(); ?>:</td>
-                                                <td><?= htmlspecialchars($electoralPeriodData["ParliamentLabel"]); ?></td>
+                                                <td><?= h($electoralPeriodData["ParliamentLabel"]); ?></td>
                                             </tr>
                                             <tr>
                                                 <td><?= L::electoralPeriod(); ?>:</td>
-                                                <td><?= htmlspecialchars($electoralPeriodData["ElectoralPeriodNumber"]); ?></td>
+                                                <td><?= h($electoralPeriodData["ElectoralPeriodNumber"]); ?></td>
                                             </tr>
                                         </table>
                                     </div>

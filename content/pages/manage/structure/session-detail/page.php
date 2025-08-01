@@ -1,5 +1,6 @@
 <?php
 include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
+include_once(__DIR__ . '/../../../../../modules/utilities/security.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
 
@@ -35,14 +36,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
                             <form id="sessionForm" class="needs-validation" novalidate>
-                                <input type="hidden" name="id" value="<?= htmlspecialchars($sessionData["SessionID"]); ?>">
+                                <input type="hidden" name="id" value="<?= h($sessionData["SessionID"]); ?>">
                                 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="SessionDateStart" class="form-label"><?= L::dateStart(); ?></label>
                                             <input type="datetime-local" class="form-control" id="SessionDateStart" name="SessionDateStart" 
-                                                   value="<?= htmlspecialchars($sessionData["SessionDateStart"]); ?>">
+                                                   value="<?= h($sessionData["SessionDateStart"]); ?>">
                                             <div class="invalid-feedback">
                                                 <?= L::messageErrorFieldRequired(); ?>
                                             </div>
@@ -50,7 +51,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <div class="mb-3">
                                             <label for="SessionDateEnd" class="form-label"><?= L::dateEnd(); ?></label>
                                             <input type="datetime-local" class="form-control" id="SessionDateEnd" name="SessionDateEnd" 
-                                                   value="<?= htmlspecialchars($sessionData["SessionDateEnd"]); ?>">
+                                                   value="<?= h($sessionData["SessionDateEnd"]); ?>">
                                             <div class="invalid-feedback">
                                                 <?= L::messageErrorFieldRequired(); ?>
                                             </div>
@@ -60,19 +61,19 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <table class="table mt-3 mt-md-0 mb-2 mb-md-0" style="border: 1px solid var(--border-color);">
                                             <tr>
                                                 <td>ID:</td>
-                                                <td><?= htmlspecialchars($sessionData["SessionID"]); ?></td>
+                                                <td><?= h($sessionData["SessionID"]); ?></td>
                                             </tr>
                                             <tr>
                                                 <td><?= L::parliament(); ?>:</td>
-                                                <td><?= htmlspecialchars($sessionData["ParliamentLabel"]); ?></td>
+                                                <td><?= h($sessionData["ParliamentLabel"]); ?></td>
                                             </tr>
                                             <tr>
                                                 <td><?= L::electoralPeriod(); ?>:</td>
-                                                <td><?= htmlspecialchars($sessionData["ElectoralPeriodNumber"]); ?></td>
+                                                <td><?= h($sessionData["ElectoralPeriodNumber"]); ?></td>
                                             </tr>
                                             <tr>
                                                 <td><?= L::session(); ?>:</td>
-                                                <td><?= htmlspecialchars($sessionData["SessionNumber"]); ?></td>
+                                                <td><?= h($sessionData["SessionNumber"]); ?></td>
                                             </tr>
                                         </table>
                                     </div>

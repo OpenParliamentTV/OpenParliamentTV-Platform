@@ -1,5 +1,6 @@
 <?php
 include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
+include_once(__DIR__ . '/../../../../../modules/utilities/security.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
 
@@ -45,28 +46,28 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <?php if ($conflict): ?>
 					<dl class="row">
 						<dt class="col-sm-3">ConflictID</dt>
-						<dd class="col-sm-9"><?= htmlspecialchars($conflict['ConflictID'] ?? '', ENT_QUOTES, 'UTF-8'); ?></dd>
+						<dd class="col-sm-9"><?= h($conflict['ConflictID'] ?? ''); ?></dd>
 
 						<dt class="col-sm-3">ConflictEntity</dt>
-						<dd class="col-sm-9"><?= htmlspecialchars($conflict['ConflictEntity'] ?? '', ENT_QUOTES, 'UTF-8'); ?></dd>
+						<dd class="col-sm-9"><?= h($conflict['ConflictEntity'] ?? ''); ?></dd>
 
 						<dt class="col-sm-3">ConflictIdentifier</dt>
-						<dd class="col-sm-9"><?= htmlspecialchars($conflict['ConflictIdentifier'] ?? '', ENT_QUOTES, 'UTF-8'); ?></dd>
+						<dd class="col-sm-9"><?= h($conflict['ConflictIdentifier'] ?? ''); ?></dd>
 
 						<dt class="col-sm-3">ConflictRival</dt>
-						<dd class="col-sm-9"><?= htmlspecialchars($conflict['ConflictRival'] ?? '', ENT_QUOTES, 'UTF-8'); ?></dd>
+						<dd class="col-sm-9"><?= h($conflict['ConflictRival'] ?? ''); ?></dd>
 
 						<dt class="col-sm-3">ConflictSubject</dt>
-						<dd class="col-sm-9"><?= htmlspecialchars($conflict['ConflictSubject'] ?? '', ENT_QUOTES, 'UTF-8'); ?></dd>
+						<dd class="col-sm-9"><?= h($conflict['ConflictSubject'] ?? ''); ?></dd>
 
 						<dt class="col-sm-3">ConflictDescription</dt>
-						<dd class="col-sm-9"><pre><?= htmlspecialchars($conflict['ConflictDescription'] ?? '', ENT_QUOTES, 'UTF-8'); ?></pre></dd>
+						<dd class="col-sm-9"><pre><?= h($conflict['ConflictDescription'] ?? ''); ?></pre></dd>
 
 						<dt class="col-sm-3">ConflictDate</dt>
-						<dd class="col-sm-9"><?= htmlspecialchars($conflict['ConflictDate'] ?? '', ENT_QUOTES, 'UTF-8'); ?></dd>
+						<dd class="col-sm-9"><?= h($conflict['ConflictDate'] ?? ''); ?></dd>
 
 						<dt class="col-sm-3">ConflictTimestamp</dt>
-						<dd class="col-sm-9"><?= htmlspecialchars($conflict['ConflictTimestamp'] ?? '', ENT_QUOTES, 'UTF-8'); ?></dd>
+						<dd class="col-sm-9"><?= h($conflict['ConflictTimestamp'] ?? ''); ?></dd>
 
 						<dt class="col-sm-3">ConflictResolved</dt>
 						<dd class="col-sm-9"><?= ($conflict['ConflictResolved'] ?? '0') == '1' ? 'Yes' : 'No'; ?></dd>

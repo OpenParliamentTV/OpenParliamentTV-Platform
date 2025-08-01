@@ -1,5 +1,6 @@
 <?php
 include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
+include_once(__DIR__ . '/../../../../../modules/utilities/security.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
 
@@ -29,14 +30,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="data" role="tabpanel" aria-labelledby="data-tab">
                             <form id="agendaItemForm" class="needs-validation" novalidate>
-                                <input type="hidden" name="id" value="<?= htmlspecialchars($agendaItemData["AgendaItemID"]); ?>">
+                                <input type="hidden" name="id" value="<?= h($agendaItemData["AgendaItemID"]); ?>">
                                 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="AgendaItemTitle" class="form-label"><?= L::title(); ?></label>
                                             <input type="text" class="form-control" id="AgendaItemTitle" name="AgendaItemTitle" 
-                                                   value="<?= htmlspecialchars($agendaItemData["AgendaItemTitle"]); ?>" required>
+                                                   value="<?= h($agendaItemData["AgendaItemTitle"]); ?>" required>
                                             <div class="invalid-feedback">
                                                 <?= L::messageErrorFieldRequired(); ?>
                                             </div>
@@ -44,7 +45,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <div class="mb-3">
                                             <label for="AgendaItemOfficialTitle" class="form-label">Official Title</label>
                                             <input type="text" class="form-control" id="AgendaItemOfficialTitle" name="AgendaItemOfficialTitle" 
-                                                   value="<?= htmlspecialchars($agendaItemData["AgendaItemOfficialTitle"]); ?>" required>
+                                                   value="<?= h($agendaItemData["AgendaItemOfficialTitle"]); ?>" required>
                                             <div class="invalid-feedback">
                                                 <?= L::messageErrorFieldRequired(); ?>
                                             </div>
@@ -52,7 +53,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <div class="mb-3">
                                             <label for="AgendaItemOrder" class="form-label"><?= L::order(); ?></label>
                                             <input type="number" class="form-control" id="AgendaItemOrder" name="AgendaItemOrder" 
-                                                   value="<?= htmlspecialchars($agendaItemData["AgendaItemOrder"]); ?>">
+                                                   value="<?= h($agendaItemData["AgendaItemOrder"]); ?>">
                                             <div class="invalid-feedback">
                                                 <?= L::messageErrorFieldRequired(); ?>
                                             </div>
@@ -62,19 +63,19 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <table class="table mt-3 mt-md-0 mb-2 mb-md-0" style="border: 1px solid var(--border-color);">
                                             <tr>
                                                 <td>ID:</td>
-                                                <td><?= htmlspecialchars($agendaItemData["AgendaItemID"]); ?></td>
+                                                <td><?= h($agendaItemData["AgendaItemID"]); ?></td>
                                             </tr>
                                             <tr>
                                                 <td><?= L::parliament(); ?>:</td>
-                                                <td><?= htmlspecialchars($agendaItemData["ParliamentLabel"]); ?></td>
+                                                <td><?= h($agendaItemData["ParliamentLabel"]); ?></td>
                                             </tr>
                                             <tr>
                                                 <td><?= L::electoralPeriod(); ?>:</td>
-                                                <td><?= htmlspecialchars($agendaItemData["ElectoralPeriodNumber"]); ?></td>
+                                                <td><?= h($agendaItemData["ElectoralPeriodNumber"]); ?></td>
                                             </tr>
                                             <tr>
                                                 <td><?= L::session(); ?>:</td>
-                                                <td><?= htmlspecialchars($agendaItemData["SessionNumber"]); ?></td>
+                                                <td><?= h($agendaItemData["SessionNumber"]); ?></td>
                                             </tr>
                                         </table>
                                     </div>

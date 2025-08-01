@@ -1,5 +1,6 @@
 <?php
 include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
+include_once(__DIR__ . '/../../../../../modules/utilities/security.php');
 
 $auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
 
@@ -29,13 +30,13 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         <div class="tab-pane bg-white fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
                             
                             <form id="userForm" class="needs-validation" novalidate>
-                                <input type="hidden" name="id" value="<?= htmlspecialchars($userData["UserID"]); ?>">
+                                <input type="hidden" name="id" value="<?= h($userData["UserID"]); ?>">
                                 
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <label for="UserName" class="form-label"><?= L::name(); ?></label>
                                         <input type="text" class="form-control" id="UserName" name="UserName" 
-                                               value="<?= htmlspecialchars($userData["UserName"]); ?>" required>
+                                               value="<?= h($userData["UserName"]); ?>" required>
                                         <div class="invalid-feedback">
                                             <?= L::messageErrorFieldRequired(); ?>
                                         </div>
@@ -73,7 +74,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                         <table class="table mb-2 mb-md-0" style="border: 1px solid var(--border-color);">
                                             <tr>
                                                 <td><?= L::mailAddress(); ?>:</td>
-                                                <td><?= htmlspecialchars($userData["UserMail"]); ?></td>
+                                                <td><?= h($userData["UserMail"]); ?></td>
                                             </tr>
                                             <tr>
                                                 <td><?= L::lastLogin(); ?>:</td>
