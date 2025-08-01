@@ -332,6 +332,8 @@
 	"speech": "Speech",
 	"speeches": "Speeches",
 	"speechesFound": "speeches found",
+	"startProcess": "Start Process",
+	"startProcessConfirm": "This process takes a long time and uses considerable resources. Are you sure you want to start it?",
 	"suggestions": "Suggestions",
 	"supportedBy": "Supported by",
 	"term": "Term",

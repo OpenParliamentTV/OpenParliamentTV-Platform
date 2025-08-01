@@ -331,6 +331,8 @@
 	"speech": "Redebeitrag",
 	"speeches": "Redebeiträge",
 	"speechesFound": "Redebeiträge gefunden",
+	"startProcess": "Prozess starten",
+	"startProcessConfirm": "Dieser Prozess dauert lange und benötigt viele Ressourcen. Bist du sicher, dass du ihn starten möchtest?",
 	"suggestions": "Vorschläge",
 	"supportedBy": "Unterstützt von",
 	"term": "Begriff",

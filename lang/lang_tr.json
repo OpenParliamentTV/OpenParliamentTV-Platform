@@ -331,6 +331,8 @@
 	"speech": "Konuşma",
 	"speeches": "Konuşmalar",
 	"speechesFound": "konuşma bulundu",
+	"startProcess": "Süreci Başlat",
+	"startProcessConfirm": "Bu süreç uzun sürer ve çok kaynak kullanır. Süreci başlatmak istediğinize emin misiniz?",
 	"suggestions": "Öneriler",
 	"supportedBy": "Destekleyen",
 	"term": "Terim",

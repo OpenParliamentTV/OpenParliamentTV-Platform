@@ -331,6 +331,8 @@
 	"speech": "Discours",
 	"speeches": "Discours",
 	"speechesFound": "discours trouvés",
+	"startProcess": "Démarrer le processus",
+	"startProcessConfirm": "Ce processus prend du temps et utilise de nombreuses ressources. Êtes-vous sûr de vouloir le démarrer?",
 	"suggestions": "Suggestions",
 	"supportedBy": "Soutenu par",
 	"term": "Terme",

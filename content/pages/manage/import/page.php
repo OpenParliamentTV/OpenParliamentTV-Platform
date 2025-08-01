@@ -137,6 +137,31 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	</div>
 </main>
 
+<!-- Process Confirmation Modal -->
+<div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="confirmationModalLabel"><?= L::startProcess(); ?>?</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p><?= L::startProcessConfirm(); ?></p>
+			</div>
+			<div class="modal-footer">
+                <div class="row w-100">
+                    <div class="col-7 ps-0">
+                        <button type="button" class="btn btn-primary w-100" id="confirmAction"><span class="icon-play"></span> <?= L::startProcess(); ?></button>
+                    </div>
+					<div class="col-5 pe-0">
+                        <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal"><span class="icon-cancel"></span> <?= L::cancel(); ?></button>
+                    </div>
+                </div>				
+			</div>
+		</div>
+	</div>
+</div>
+
 <style>
 	.status-circle {
 		width: 100px;
@@ -678,6 +703,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Show generic confirmation modal
+        const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+        modal.show();
+        
+        // Store the action and parliament code for the confirmation handler
+        window.pendingConfirmationAction = 'searchRefresh';
+        window.pendingConfirmationParliament = parliamentCode;
+    }
+    
+    async function executeSearchIndexRefresh(parliamentCode) {
         const elems = getSearchIndexElements(parliamentCode);
         toggleButton(elems.refreshButton, true, 'Starting Refresh...');
         toggleButton(elems.deleteButton, true); // Disable delete during refresh
@@ -922,10 +957,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        if (!confirm(`Are you sure you want to rebuild the statistics index for parliament ${parliamentCode}? This will process all documents and may take a long time. Setup will be handled automatically if needed.`)) {
-            return;
-        }
+        // Show generic confirmation modal
+        const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+        modal.show();
         
+        // Store the action and parliament code for the confirmation handler
+        window.pendingConfirmationAction = 'statisticsRebuild';
+        window.pendingConfirmationParliament = parliamentCode;
+    }
+    
+    async function executeStatisticsIndexRebuild(parliamentCode) {
         const elems = getStatisticsIndexElements(parliamentCode);
         toggleButton(elems.rebuildButton, true, 'Starting Rebuild...');
         clearError(elems.errorDisplay);
@@ -1113,6 +1154,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     async function triggerAdsUpdate(entityType) { 
+        // Show generic confirmation modal
+        const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+        modal.show();
+        
+        // Store the action and entity type for the confirmation handler
+        window.pendingConfirmationAction = 'adsUpdate';
+        window.pendingConfirmationEntityType = entityType;
+    }
+    
+    async function executeAdsUpdate(entityType) {
         document.querySelectorAll(adsElems.triggerButtonClass).forEach(btn => {
             toggleButton(btn.id, true);
         });
@@ -1214,6 +1265,36 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add change event listener
             parliamentSelector.addEventListener('change', function() {
                 switchParliament(this.value);
+            });
+        }
+        
+        // Set up generic modal confirmation handler
+        const confirmActionButton = document.getElementById('confirmAction');
+        if (confirmActionButton) {
+            confirmActionButton.addEventListener('click', function() {
+                const action = window.pendingConfirmationAction;
+                const parliamentCode = window.pendingConfirmationParliament;
+                const entityType = window.pendingConfirmationEntityType;
+                
+                if (action) {
+                    // Close modal
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
+                    modal.hide();
+                    
+                    // Execute the appropriate action
+                    if (action === 'statisticsRebuild' && parliamentCode) {
+                        executeStatisticsIndexRebuild(parliamentCode);
+                    } else if (action === 'searchRefresh' && parliamentCode) {
+                        executeSearchIndexRefresh(parliamentCode);
+                    } else if (action === 'adsUpdate' && entityType) {
+                        executeAdsUpdate(entityType);
+                    }
+                    
+                    // Clear pending actions
+                    window.pendingConfirmationAction = null;
+                    window.pendingConfirmationParliament = null;
+                    window.pendingConfirmationEntityType = null;
+                }
             });
         }
         
