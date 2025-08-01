@@ -256,7 +256,6 @@ switch ($page) {
         }
 	break;
 	case "term":
-	    /* TODO */
 		$apiResult = apiV1([
 			"action"=>"getItem", 
 			"itemType"=>$page, 
@@ -857,8 +856,6 @@ switch ($page) {
         ], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>
 
         const localizedLabels = <?= $langJSONString ?>;
-
-        //TODO: Move API to root $config and add it to JS Object
     </script>
 </head>
 <body class='<?= hAttr($color_scheme."mode") ?> <?= (!empty($_SESSION["login"]) ? "login" : "") ?>'>
