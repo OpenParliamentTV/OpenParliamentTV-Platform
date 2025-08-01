@@ -38,10 +38,10 @@ foreach ($allowedParams as $k=>$v) {
 	}
     if (is_array($v)) {
         foreach ($v as $i) {
-            $paramStr .= $paramPrefix.$k."[]=".$i;
+            $paramStr .= $paramPrefix.$k."[]=".urlencode($i);
         }
     } else {
-        $paramStr .= $paramPrefix.$k."=".$_REQUEST[$k];
+        $paramStr .= $paramPrefix.$k."=".urlencode($_REQUEST[$k]);
     }
     $paramCount++;
 }
@@ -812,12 +812,12 @@ switch ($page) {
 				}
 			}
 
-			$pageTitle .= ($_REQUEST["q"] ?? '');
+			$pageTitle .= h($_REQUEST["q"] ?? '');
 
 			if (count($_REQUEST) < 2 || (!$_REQUEST["q"] && !$_REQUEST["personID"] && !$_REQUEST["organisationID"] && !$_REQUEST["documentID"] && !$_REQUEST["termID"])) {
 				$pageTitle .= L::search();
 			} elseif (isset($_REQUEST["parliament"]) && $_REQUEST["parliament"] && strlen($_REQUEST["parliament"]) >= 2) {
-				$pageTitle .= ' - '.L::speeches().' - '.$config["parliament"][$_REQUEST["parliament"]]["label"];
+				$pageTitle .= ' - '.L::speeches().' - '.$config["parliament"][h($_REQUEST["parliament"])]["label"];
 			} else {
 				$pageTitle .= ' - '.L::speeches();
 			}
@@ -845,23 +845,23 @@ switch ($page) {
 <head>
 	<?php require_once('content/head.php'); ?>
     <script type="text/javascript">
-        const config = {
-            "dir": {
-                "root": "<?=$config["dir"]["root"]?>"
-            },
-            "display": {
-            	"ner": <?= json_encode($config["display"]["ner"]) ?>,
-            	"speechesPerPage": <?= json_encode($config["display"]["speechesPerPage"]) ?>
-            },
-            "isMobile": <?= json_encode($isMobile) ?>
-        }
+        const config = <?= json_encode([
+            "dir" => [
+                "root" => $config["dir"]["root"]
+            ],
+            "display" => [
+                "ner" => $config["display"]["ner"],
+                "speechesPerPage" => $config["display"]["speechesPerPage"]
+            ],
+            "isMobile" => $isMobile
+        ], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>
 
         const localizedLabels = <?= $langJSONString ?>;
 
         //TODO: Move API to root $config and add it to JS Object
     </script>
 </head>
-<body class='<?= $color_scheme."mode" ?> <?= (!empty($_SESSION["login"]) ? "login" : "") ?>'>
+<body class='<?= hAttr($color_scheme."mode") ?> <?= (!empty($_SESSION["login"]) ? "login" : "") ?>'>
 	<div class="mainLoadingIndicator">
 		<div class="workingSpinner" style="position: fixed; top: 50%;"></div>
 	</div>
