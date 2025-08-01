@@ -226,7 +226,7 @@ function getIndexStatus($parliamentCode) {
     ];
     $searchResultLastChanged = apiV1($apiRequestParamsLastChanged, false, false);
 
-    if (isset($searchResultLastChanged["meta"]["requestStatus"]) && $searchResultLastChanged["meta"]["requestStatus"] === "success") {
+    if (isset($searchResultLastChanged["meta"]["requestStatus"]) && $searchResultLastChanged["meta"]["requestStatus"] === "success" && !empty($searchResultLastChanged["data"]) && isset($searchResultLastChanged["data"][0])) {
         $status["lastUpdated"] = formatDateToISO8601($searchResultLastChanged["data"][0]["attributes"]["lastChanged"]);
     }
 
@@ -241,7 +241,7 @@ function getIndexStatus($parliamentCode) {
     ];
     $searchResultLastSpeechDate = apiV1($apiRequestParamsLastSpeechDate, false, false);
 
-    if (isset($searchResultLastSpeechDate["meta"]["requestStatus"]) && $searchResultLastSpeechDate["meta"]["requestStatus"] === "success") {
+    if (isset($searchResultLastSpeechDate["meta"]["requestStatus"]) && $searchResultLastSpeechDate["meta"]["requestStatus"] === "success" && !empty($searchResultLastSpeechDate["data"]) && isset($searchResultLastSpeechDate["data"][0])) {
         $status["lastSpeechDate"] = formatDateToISO8601($searchResultLastSpeechDate["data"][0]["attributes"]["dateStart"]);
     }
 

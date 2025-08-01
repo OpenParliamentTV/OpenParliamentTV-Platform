@@ -362,11 +362,11 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     break;
                 case "session":
                     require_once (__DIR__."/modules/session.php");
-                    $result = sessionGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], false, $api_request["electoralPeriodID"]);
+                    $result = sessionGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], false, $api_request["electoralPeriodID"] ?? null);
                     break;
                 case "agendaItem":
                     require_once (__DIR__."/modules/agendaItem.php");
-                    $result = agendaItemGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], false, $api_request["electoralPeriodID"], $api_request["sessionID"]);
+                    $result = agendaItemGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], false, $api_request["electoralPeriodID"] ?? null, $api_request["sessionID"] ?? null);
                     break;
                 case "user":
                     require_once (__DIR__."/modules/user.php");

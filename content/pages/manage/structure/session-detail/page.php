@@ -14,7 +14,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     $sessionData = $apiResult["data"];
 
     // Get ID parts
-    $idParts = getInfosFromStringID($sessionData["id"]);
+    $idParts = getInfosFromStringID($sessionData["id"] ?? "");
     
     // Format dates for form fields (convert from ISO to datetime-local format)
     $sessionData["SessionDateStart"] = date('Y-m-d\TH:i', strtotime($sessionData["SessionDateStart"]));

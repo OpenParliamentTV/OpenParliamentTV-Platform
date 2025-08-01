@@ -12,7 +12,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     $agendaItemData = $apiResult["data"];
 
     // Get ID parts
-    $idParts = getInfosFromStringID($agendaItemData["id"]);
+    $idParts = getInfosFromStringID($agendaItemData["id"] ?? "");
     
     include_once(__DIR__ . '/../../../../header.php'); ?>
 
