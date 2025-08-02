@@ -790,115 +790,109 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        
         const elems = getSearchIndexElements(parliamentCode);
+        toggleButton(elems.optimizeButton, true, 'Starting...');
+        const optimizeBtn = document.getElementById(elems.optimizeButton);
+        if (optimizeBtn) optimizeBtn.classList.add('working');
         
-        try {
-            toggleButton(elems.optimizeButton, true, 'Optimizing...');
-            const optimizeBtn = document.getElementById(elems.optimizeButton);
-            if (optimizeBtn) optimizeBtn.classList.add('working');
-            
-            // Update centralized process state - optimization is running
-            if (!appState.processes[parliamentCode]) {
-                initializeParliamentState(parliamentCode);
-            }
-            appState.processes[parliamentCode].optimization.isRunning = true;
-            updateAllButtonStates(); // Disable all buttons
-            
+        clearError(elems.errorDisplay);
+        
+        const url = getApiUrl('index', 'optimize', { parliament: parliamentCode });
+        const result = await apiCall(url, 'POST');
+
+        if (result.success && result.meta && result.meta.requestStatus === 'success') {
+            updateElementText(elems.statusText, `Status: ${result.data.message || 'Index optimization started.'}`);
+            // Start polling for optimization status
+            setTimeout(() => fetchOptimizationStatus(parliamentCode), 1000);
+        } else {
+            handleApiResponseError(elems.errorDisplay, result, 'Failed to start index optimization.', elems.optimizeButton, elems.originalOptimizeBtnText);
+            if (optimizeBtn) optimizeBtn.classList.remove('working');
+        }
+    }
+
+    async function fetchOptimizationStatus(parliamentCode) {
+        const url = getApiUrl('index', 'optimization-status', { parliament: parliamentCode });
+        const result = await apiCall(url);
+        if (result.success && result.data) {
+            updateOptimizationUI(parliamentCode, result.data);
+        } else {
+            console.warn(`Failed to fetch optimization status for ${parliamentCode}:`, result.errors);
+            updateOptimizationUI(parliamentCode, { 
+                status: 'error', 
+                statusDetails: 'Status fetch failed', 
+                errors: result.errors || [{detail: 'Connection error while fetching status.'}] 
+            });
+        }
+    }
+
+    function updateOptimizationUI(parliamentCode, statusData) {
+        const elems = getSearchIndexElements(parliamentCode);
+        const {
+            status,
+            statusDetails = 'N/A',
+            results = {},
+            errors = []
+        } = statusData;
+
+        updateElementText(elems.statusText, `Status: ${statusDetails}`);
+
+        // Update centralized process state for this parliament
+        if (!appState.processes[parliamentCode]) {
+            initializeParliamentState(parliamentCode);
+        }
+        const wasRunning = appState.processes[parliamentCode].optimization.isRunning;
+        const isRunning = status === 'running';
+        appState.processes[parliamentCode].optimization.isRunning = isRunning;
+
+        // Handle status-specific UI updates
+        if (status === 'error') {
+            const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred.'}]);
+            showError(elems.errorDisplay, errorMessages);
+        } else if (status === 'completed_successfully') {
             clearError(elems.errorDisplay);
             
-            const url = getApiUrl('index', 'optimize', { parliament: parliamentCode });
-            const result = await apiCall(url, 'POST');
-
-            if (result.success && result.meta && result.meta.requestStatus === 'success') {
-                const data = result.data || {};
-                let message = 'Index optimization completed successfully.';
-                
-                // Show detailed results if available
-                if (data.statistics_index) {
-                    const stats = data.statistics_index;
-                    message += ` Statistics index: ${stats.deleted_docs_removed || 0} deleted docs removed, ${stats.space_reclaimed_mb || 0}MB reclaimed in ${stats.time_seconds || 0}s.`;
-                }
-                if (data.main_index) {
-                    const mainStats = data.main_index;
-                    message += ` Main index optimized in ${mainStats.time_seconds || 0}s.`;
-                }
-                
-                updateElementText(elems.statusText, `Status: ${message}`);
-                
-                // Show persistent success message with close button
-                const successAlert = document.createElement('div');
-                successAlert.className = 'alert alert-success alert-dismissible mt-2';
-                successAlert.setAttribute('data-persistent', 'true'); // Mark as persistent to avoid being cleared by status updates
-                successAlert.innerHTML = `
-                    ${message}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                `;
-                
-                const errorDisplayElement = document.getElementById(elems.errorDisplay);
-                if (errorDisplayElement && errorDisplayElement.parentNode) {
-                    // Remove any existing success messages first
-                    const existingSuccessAlerts = errorDisplayElement.parentNode.querySelectorAll('.alert-success[data-persistent="true"]');
-                    existingSuccessAlerts.forEach(alert => alert.remove());
-                    
-                    errorDisplayElement.parentNode.insertBefore(successAlert, errorDisplayElement);
-                }
-                
-            } else {
-                // Show persistent API error message with close button
-                const errors = result.errors || [{detail: 'Failed to optimize search indices.'}];
-                const errorMessages = errors.map(err => err.detail || err.title || 'An error occurred.').join('; ');
-                
-                const errorAlert = document.createElement('div');
-                errorAlert.className = 'alert alert-danger alert-dismissible mt-2';
-                errorAlert.setAttribute('data-persistent', 'true'); // Mark as persistent
-                errorAlert.innerHTML = `
-                    ${errorMessages}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                `;
-                
-                const errorDisplayElement = document.getElementById(elems.errorDisplay);
-                if (errorDisplayElement && errorDisplayElement.parentNode) {
-                    // Remove any existing error messages first
-                    const existingErrorAlerts = errorDisplayElement.parentNode.querySelectorAll('.alert-danger[data-persistent="true"]');
-                    existingErrorAlerts.forEach(alert => alert.remove());
-                    
-                    errorDisplayElement.parentNode.insertBefore(errorAlert, errorDisplayElement);
-                }
+            // Show detailed success message if results are available
+            let message = 'Index optimization completed successfully.';
+            if (results.statistics_index) {
+                const stats = results.statistics_index;
+                message += ` Statistics index: ${stats.deleted_docs_removed || 0} deleted docs removed, ${stats.space_reclaimed_mb || 0}MB reclaimed in ${stats.time_seconds || 0}s.`;
+            }
+            if (results.main_index) {
+                const mainStats = results.main_index;
+                message += ` Main index optimized in ${mainStats.time_seconds || 0}s.`;
             }
             
-        } catch (error) {
-            console.error('Error during optimization:', error);
-            
-            // Show persistent error message with close button
-            const errorAlert = document.createElement('div');
-            errorAlert.className = 'alert alert-danger alert-dismissible mt-2';
-            errorAlert.setAttribute('data-persistent', 'true'); // Mark as persistent
-            errorAlert.innerHTML = `
-                Optimization failed: ${error.message}
+            // Show persistent success message
+            const successAlert = document.createElement('div');
+            successAlert.className = 'alert alert-success alert-dismissible mt-2';
+            successAlert.setAttribute('data-persistent', 'true');
+            successAlert.innerHTML = `
+                ${message}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             `;
             
             const errorDisplayElement = document.getElementById(elems.errorDisplay);
             if (errorDisplayElement && errorDisplayElement.parentNode) {
-                // Remove any existing error messages first
-                const existingErrorAlerts = errorDisplayElement.parentNode.querySelectorAll('.alert-danger[data-persistent="true"]');
-                existingErrorAlerts.forEach(alert => alert.remove());
-                
-                errorDisplayElement.parentNode.insertBefore(errorAlert, errorDisplayElement);
+                const existingSuccessAlerts = errorDisplayElement.parentNode.querySelectorAll('.alert-success[data-persistent="true"]');
+                existingSuccessAlerts.forEach(alert => alert.remove());
+                errorDisplayElement.parentNode.insertBefore(successAlert, errorDisplayElement);
             }
-            
-        } finally {
-            // Clear optimization state and update all buttons
-            if (appState.processes[parliamentCode]) {
-                appState.processes[parliamentCode].optimization.isRunning = false;
-            }
-            updateAllButtonStates(); // Re-enable all buttons
-            
-            // Always re-enable optimize button and remove working class, even if there was an error
-            toggleButton(elems.optimizeButton, false, elems.originalOptimizeBtnText);
-            const optimizeBtn = document.getElementById(elems.optimizeButton);
+        } else {
+            clearError(elems.errorDisplay);
+        }
+
+        // Remove working class and re-enable button when not running
+        const optimizeBtn = document.getElementById(elems.optimizeButton);
+        if (!isRunning) {
             if (optimizeBtn) optimizeBtn.classList.remove('working');
+        }
+
+        // Update all button states based on current process status
+        setTimeout(() => updateAllButtonStates(), 0);
+
+        // Continue polling if still running
+        if (isRunning) {
+            setTimeout(() => fetchOptimizationStatus(parliamentCode), 2000);
         }
     }
 
@@ -1431,12 +1425,14 @@ document.addEventListener('DOMContentLoaded', function() {
             fetchDataImportStatus(); 
             fetchSearchIndexStatus(appState.currentParliament);
             fetchStatisticsIndexStatus(appState.currentParliament);
+            fetchOptimizationStatus(appState.currentParliament);
             fetchOverallStatus();
             
             // Set up polling for current parliament
             setInterval(fetchDataImportStatus, POLLING_INTERVAL);
             setInterval(() => fetchSearchIndexStatus(appState.currentParliament), POLLING_INTERVAL);
             setInterval(() => fetchStatisticsIndexStatus(appState.currentParliament), POLLING_INTERVAL);
+            setInterval(() => fetchOptimizationStatus(appState.currentParliament), POLLING_INTERVAL);
             setInterval(fetchOverallStatus, POLLING_INTERVAL);
         }
     }

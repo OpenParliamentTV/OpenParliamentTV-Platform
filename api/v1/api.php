@@ -432,6 +432,9 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "optimize":
                     $result = searchIndexOptimize($api_request);
                     return createApiResponse($result);
+                case "optimization-status":
+                    $result = searchIndexGetOptimizationStatus($api_request);
+                    return createApiResponse($result);
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")

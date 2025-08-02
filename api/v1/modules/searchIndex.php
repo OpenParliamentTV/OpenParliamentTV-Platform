@@ -597,7 +597,7 @@ function searchIndexTriggerStatisticsUpdate($api_request) {
 }
 
 /**
- * Optimize indices after rebuild - removes deleted documents and consolidates segments
+ * Trigger asynchronous optimization of indices - removes deleted documents and consolidates segments
  */
 function searchIndexOptimize($api_request) {
     global $config;
@@ -607,8 +607,93 @@ function searchIndexOptimize($api_request) {
         return createApiErrorMissingParameter('parliament');
     }
     
-    // Create lock file to prevent interference from cronUpdater
+    // Check if optimization is already running
     $lockFile = __DIR__ . '/../../../data/progress/indexOptimization_' . $parliament . '.lock';
+    if (file_exists($lockFile)) {
+        $lockData = json_decode(file_get_contents($lockFile), true);
+        $lockAge = time() - ($lockData['timestamp'] ?? 0);
+        
+        if ($lockAge < 600) { // 10 minute timeout
+            return createApiErrorResponse(409, 'ALREADY_RUNNING', 'Index optimization is already running', 'Process started at: ' . date('Y-m-d H:i:s', $lockData['timestamp'] ?? 0));
+        } else {
+            // Remove stale lock
+            unlink($lockFile);
+        }
+    }
+    
+    // Create progress file for status tracking
+    $progressFile = __DIR__ . '/../../../data/progress/indexOptimization_' . $parliament . '.json';
+    $progressData = [
+        'processName' => 'indexOptimization',
+        'parliament' => $parliament,
+        'status' => 'running',
+        'statusDetails' => 'Starting index optimization...',
+        'startTime' => date('c'),
+        'errors' => []
+    ];
+    file_put_contents($progressFile, json_encode($progressData, JSON_PRETTY_PRINT));
+    
+    // Execute optimization script asynchronously
+    $scriptPath = realpath(__DIR__ . '/../../../data/indexOptimizer.php');
+    if (!$scriptPath) {
+        // If script doesn't exist, we'll create it
+        $scriptPath = __DIR__ . '/../../../data/indexOptimizer.php';
+    }
+    
+    $phpPath = $config["bin"]["php"] ?? PHP_BINARY;
+    $command = sprintf(
+        '%s %s --parliament=%s > /dev/null 2>&1 &',
+        escapeshellcmd($phpPath),
+        escapeshellarg($scriptPath),
+        escapeshellarg($parliament)
+    );
+    
+    try {
+        executeAsyncShellCommand($command);
+        return createApiSuccessResponse(['message' => 'Index optimization started successfully'], ['message' => 'Index optimization is running in the background']);
+    } catch (Exception $e) {
+        // Clean up progress file on failure
+        if (file_exists($progressFile)) {
+            unlink($progressFile);
+        }
+        return createApiErrorResponse(500, 'ASYNC_EXEC_FAIL', 'Failed to start optimization process', $e->getMessage());
+    }
+}
+
+/**
+ * Get optimization status
+ */
+function searchIndexGetOptimizationStatus($api_request) {
+    $parliament = $api_request['parliament'] ?? 'DE';
+    $progressFile = __DIR__ . '/../../../data/progress/indexOptimization_' . $parliament . '.json';
+    
+    if (!file_exists($progressFile)) {
+        return createApiSuccessResponse([
+            'status' => 'idle',
+            'statusDetails' => 'Index optimization not running',
+            'processName' => 'indexOptimization',
+            'parliament' => $parliament
+        ]);
+    }
+    
+    $progressData = json_decode(file_get_contents($progressFile), true);
+    if (!$progressData) {
+        return createApiErrorResponse(500, 'PROGRESS_READ_ERROR', 'Could not read optimization progress file', 'Progress file exists but could not be parsed');
+    }
+    
+    return createApiSuccessResponse($progressData);
+}
+
+/**
+ * Synchronous optimization function - moved for use by async script
+ */
+function performIndexOptimization($parliament) {
+    global $config;
+    
+    $progressFile = __DIR__ . '/../../../data/progress/indexOptimization_' . $parliament . '.json';
+    $lockFile = __DIR__ . '/../../../data/progress/indexOptimization_' . $parliament . '.lock';
+    
+    // Create lock file
     $lockData = [
         'process' => 'indexOptimization',
         'parliament' => $parliament,
@@ -617,23 +702,44 @@ function searchIndexOptimize($api_request) {
     ];
     file_put_contents($lockFile, json_encode($lockData));
     
-    $mainIndexName = "openparliamenttv_" . ($config['parliament'][$parliament]['OpenSearch']['index'] ?? $parliament);
-    $statisticsIndexName = "optv_statistics_" . strtolower($parliament);
-    $openSearchClient = getApiOpenSearchClient();
-    
-    if (!$openSearchClient || (is_array($openSearchClient) && isset($openSearchClient["errors"]))) {
-        return createApiErrorResponse(500, 'OPENSEARCH_CONNECTION_ERROR', 'messageErrorOpenSearchConnection', 'messageErrorOpenSearchConnection', ['parliament' => $parliament]);
+    function updateOptimizationProgress($progressFile, $updates) {
+        if (file_exists($progressFile)) {
+            $current = json_decode(file_get_contents($progressFile), true) ?: [];
+            $updated = array_merge($current, $updates);
+            file_put_contents($progressFile, json_encode($updated, JSON_PRETTY_PRINT));
+        }
     }
     
-    $results = [];
-    
     try {
+        $mainIndexName = "openparliamenttv_" . ($config['parliament'][$parliament]['OpenSearch']['index'] ?? $parliament);
+        $statisticsIndexName = "optv_statistics_" . strtolower($parliament);
+        $openSearchClient = getApiOpenSearchClient();
+        
+        if (!$openSearchClient || (is_array($openSearchClient) && isset($openSearchClient["errors"]))) {
+            updateOptimizationProgress($progressFile, [
+                'status' => 'error',
+                'statusDetails' => 'Failed to connect to OpenSearch',
+                'endTime' => date('c')
+            ]);
+            return false;
+        }
+        
+        updateOptimizationProgress($progressFile, [
+            'statusDetails' => 'Connected to OpenSearch, starting optimization...'
+        ]);
+        
+        $results = [];
+        
         // Optimize main index (usually clean, but good practice)
         if ($openSearchClient->indices()->exists(['index' => $mainIndexName])) {
+            updateOptimizationProgress($progressFile, [
+                'statusDetails' => 'Optimizing main index...'
+            ]);
+            
             $startTime = microtime(true);
             $openSearchClient->indices()->forcemerge([
                 'index' => $mainIndexName,
-                'max_num_segments' => 1 // Single segment for optimal performance
+                'max_num_segments' => 1
             ]);
             $results['main_index'] = [
                 'optimized' => true,
@@ -643,6 +749,10 @@ function searchIndexOptimize($api_request) {
         
         // Optimize statistics index (this is where the real benefit is)
         if ($openSearchClient->indices()->exists(['index' => $statisticsIndexName])) {
+            updateOptimizationProgress($progressFile, [
+                'statusDetails' => 'Optimizing statistics index (phase 1: expunge deletes)...'
+            ]);
+            
             $startTime = microtime(true);
             
             // Get stats before optimization
@@ -650,23 +760,27 @@ function searchIndexOptimize($api_request) {
             $deletedBefore = $statsBefore['indices'][$statisticsIndexName]['total']['docs']['deleted'] ?? 0;
             $sizeBefore = $statsBefore['indices'][$statisticsIndexName]['total']['store']['size_in_bytes'] ?? 0;
             
-            // First pass: Expunge deletes only (fast, removes most deleted docs)
+            // First pass: Expunge deletes only
             $openSearchClient->indices()->forcemerge([
                 'index' => $statisticsIndexName,
                 'only_expunge_deletes' => true
             ]);
             
-            // Wait for first pass to complete
             sleep(3);
             
-            // Second pass: Force merge to fewer segments for optimal performance
-            $openSearchClient->indices()->forcemerge([
-                'index' => $statisticsIndexName,
-                'max_num_segments' => 1 // Single segment for maximum space reclamation
+            updateOptimizationProgress($progressFile, [
+                'statusDetails' => 'Optimizing statistics index (phase 2: segment consolidation)...'
             ]);
             
+            // Second pass: Force merge to fewer segments
+            $openSearchClient->indices()->forcemerge([
+                'index' => $statisticsIndexName,
+                'max_num_segments' => 1
+            ]);
+            
+            sleep(5);
+            
             // Get stats after optimization
-            sleep(5); // Allow more time for stats to update after two operations
             $statsAfter = $openSearchClient->indices()->stats(['index' => $statisticsIndexName]);
             $deletedAfter = $statsAfter['indices'][$statisticsIndexName]['total']['docs']['deleted'] ?? 0;
             $sizeAfter = $statsAfter['indices'][$statisticsIndexName]['total']['store']['size_in_bytes'] ?? 0;
@@ -680,10 +794,24 @@ function searchIndexOptimize($api_request) {
             ];
         }
         
-        return createApiSuccessResponse($results, ['message' => 'Index optimization completed']);
+        // Update final progress
+        updateOptimizationProgress($progressFile, [
+            'status' => 'completed_successfully',
+            'statusDetails' => 'Index optimization completed successfully',
+            'endTime' => date('c'),
+            'results' => $results
+        ]);
+        
+        return true;
         
     } catch (Exception $e) {
-        return createApiErrorResponse(500, 'OPTIMIZATION_ERROR', 'Index optimization failed', $e->getMessage());
+        updateOptimizationProgress($progressFile, [
+            'status' => 'error',
+            'statusDetails' => 'Optimization failed: ' . $e->getMessage(),
+            'endTime' => date('c'),
+            'errors' => [['message' => $e->getMessage()]]
+        ]);
+        return false;
     } finally {
         // Always clean up lock file
         if (isset($lockFile) && file_exists($lockFile)) {
