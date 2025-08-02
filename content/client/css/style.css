@@ -771,8 +771,8 @@ body.darkmode .list-group-item.working, body.darkmode .list-group-item.working:h
     opacity: .9;
 }
 
-.btn-danger, .btn-outline-danger, 
-.btn-success, .btn-outline-success, 
+.btn-danger:not(:disabled), .btn-outline-danger:not(:disabled), 
+.btn-success:not(:disabled), .btn-outline-success:not(:disabled), 
 .progress .progress-bar {
     filter: brightness(1.4);
 }
