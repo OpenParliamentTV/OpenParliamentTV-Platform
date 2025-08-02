@@ -596,6 +596,102 @@ function searchIndexTriggerStatisticsUpdate($api_request) {
     return triggerStatisticsIndexing($parliament, false);
 }
 
+/**
+ * Optimize indices after rebuild - removes deleted documents and consolidates segments
+ */
+function searchIndexOptimize($api_request) {
+    global $config;
+    
+    $parliament = $api_request['parliament'] ?? null;
+    if (empty($parliament)) {
+        return createApiErrorMissingParameter('parliament');
+    }
+    
+    // Create lock file to prevent interference from cronUpdater
+    $lockFile = __DIR__ . '/../../../data/progress/indexOptimization_' . $parliament . '.lock';
+    $lockData = [
+        'process' => 'indexOptimization',
+        'parliament' => $parliament,
+        'timestamp' => time(),
+        'pid' => getmypid()
+    ];
+    file_put_contents($lockFile, json_encode($lockData));
+    
+    $mainIndexName = "openparliamenttv_" . ($config['parliament'][$parliament]['OpenSearch']['index'] ?? $parliament);
+    $statisticsIndexName = "optv_statistics_" . strtolower($parliament);
+    $openSearchClient = getApiOpenSearchClient();
+    
+    if (!$openSearchClient || (is_array($openSearchClient) && isset($openSearchClient["errors"]))) {
+        return createApiErrorResponse(500, 'OPENSEARCH_CONNECTION_ERROR', 'messageErrorOpenSearchConnection', 'messageErrorOpenSearchConnection', ['parliament' => $parliament]);
+    }
+    
+    $results = [];
+    
+    try {
+        // Optimize main index (usually clean, but good practice)
+        if ($openSearchClient->indices()->exists(['index' => $mainIndexName])) {
+            $startTime = microtime(true);
+            $openSearchClient->indices()->forcemerge([
+                'index' => $mainIndexName,
+                'max_num_segments' => 1 // Single segment for optimal performance
+            ]);
+            $results['main_index'] = [
+                'optimized' => true,
+                'time_seconds' => round(microtime(true) - $startTime, 2)
+            ];
+        }
+        
+        // Optimize statistics index (this is where the real benefit is)
+        if ($openSearchClient->indices()->exists(['index' => $statisticsIndexName])) {
+            $startTime = microtime(true);
+            
+            // Get stats before optimization
+            $statsBefore = $openSearchClient->indices()->stats(['index' => $statisticsIndexName]);
+            $deletedBefore = $statsBefore['indices'][$statisticsIndexName]['total']['docs']['deleted'] ?? 0;
+            $sizeBefore = $statsBefore['indices'][$statisticsIndexName]['total']['store']['size_in_bytes'] ?? 0;
+            
+            // First pass: Expunge deletes only (fast, removes most deleted docs)
+            $openSearchClient->indices()->forcemerge([
+                'index' => $statisticsIndexName,
+                'only_expunge_deletes' => true
+            ]);
+            
+            // Wait for first pass to complete
+            sleep(3);
+            
+            // Second pass: Force merge to fewer segments for optimal performance
+            $openSearchClient->indices()->forcemerge([
+                'index' => $statisticsIndexName,
+                'max_num_segments' => 1 // Single segment for maximum space reclamation
+            ]);
+            
+            // Get stats after optimization
+            sleep(5); // Allow more time for stats to update after two operations
+            $statsAfter = $openSearchClient->indices()->stats(['index' => $statisticsIndexName]);
+            $deletedAfter = $statsAfter['indices'][$statisticsIndexName]['total']['docs']['deleted'] ?? 0;
+            $sizeAfter = $statsAfter['indices'][$statisticsIndexName]['total']['store']['size_in_bytes'] ?? 0;
+            
+            $results['statistics_index'] = [
+                'optimized' => true,
+                'time_seconds' => round(microtime(true) - $startTime, 2),
+                'deleted_docs_removed' => $deletedBefore - $deletedAfter,
+                'space_reclaimed_mb' => round(($sizeBefore - $sizeAfter) / 1024 / 1024, 1),
+                'strategy' => 'two_pass_expunge_then_merge'
+            ];
+        }
+        
+        return createApiSuccessResponse($results, ['message' => 'Index optimization completed']);
+        
+    } catch (Exception $e) {
+        return createApiErrorResponse(500, 'OPTIMIZATION_ERROR', 'Index optimization failed', $e->getMessage());
+    } finally {
+        // Always clean up lock file
+        if (isset($lockFile) && file_exists($lockFile)) {
+            unlink($lockFile);
+        }
+    }
+}
+
 
 
 ?> 

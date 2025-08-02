@@ -120,6 +120,24 @@ if (is_cli()) {
         }
     }
     
+    // Check if index optimization is running to prevent conflicts
+    $optimizationLockFile = __DIR__ . "/progress/indexOptimization_" . $parliament . ".lock";
+    if (file_exists($optimizationLockFile)) {
+        $lockData = json_decode(file_get_contents($optimizationLockFile), true);
+        $lockAge = time() - ($lockData['timestamp'] ?? 0);
+        
+        // Optimization is typically short (1-2 minutes), use 10 minute timeout
+        if ($lockAge < 600) {
+            logger("warn", "Index optimization is running for $parliament. Skipping data import to prevent conflicts.");
+            cliLog("Index optimization running - data import blocked");
+            exit;
+        } else {
+            // Remove stale optimization lock
+            unlink($optimizationLockFile);
+            logger("info", "Removed stale index optimization lock file.");
+        }
+    }
+    
     // create parliament-specific lock file
     touch (__DIR__."/cronUpdater_" . $parliament . ".lock");
 

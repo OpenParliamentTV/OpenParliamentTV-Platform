@@ -222,7 +222,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             return this.processes[targetParliament].dataImport.isRunning || 
                    this.processes[targetParliament].mainIndex.isRunning || 
-                   this.processes[targetParliament].statisticsIndex.isRunning;
+                   this.processes[targetParliament].statisticsIndex.isRunning ||
+                   this.processes[targetParliament].optimization.isRunning;
         },
         // Helper function to check if any process is running for any parliament
         isAnyProcessRunningAnywhere: function() {
@@ -256,7 +257,8 @@ document.addEventListener('DOMContentLoaded', function() {
             appState.processes[parliamentCode] = {
                 dataImport: { isRunning: false },
                 mainIndex: { isRunning: false },
-                statisticsIndex: { isRunning: false }
+                statisticsIndex: { isRunning: false },
+                optimization: { isRunning: false }
             };
         }
     }
@@ -275,6 +277,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div id="search-index-${parliamentCode}-status-text" class="small text-muted mb-2">Status: Idle</div>
                     <button type="button" id="btn-trigger-search-index-refresh-${parliamentCode}" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-arrows-cw"></span> <?= L::refreshFullIndex(); ?> (${parliamentCode})</button>
                     <button type="button" id="btn-trigger-search-index-delete-${parliamentCode}" class="btn btn-outline-danger btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-trash"></span> <?= L::deleteIndex(); ?> (${parliamentCode})</button>
+                    <button type="button" id="btn-trigger-search-index-optimize-${parliamentCode}" class="btn btn-outline-warning btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-magic"></span> <?= L::optimizeIndices(); ?> (${parliamentCode})</button>
                     <div id="search-index-${parliamentCode}-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
                 </div>
             </div>
@@ -569,7 +572,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 appState.processes[appState.currentParliament] = {
                     dataImport: { isRunning: false },
                     mainIndex: { isRunning: false },
-                    statisticsIndex: { isRunning: false }
+                    statisticsIndex: { isRunning: false },
+                    optimization: { isRunning: false }
                 };
             }
             appState.processes[appState.currentParliament].dataImport.isRunning = (status === 'running');
@@ -617,8 +621,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateElementText(dataImportElems.statusText, `Status: ${result.data.message || 'Import triggered, waiting for progress...'}`);
             setTimeout(fetchDataImportStatus, 1000); 
         } else {
-            showError(dataImportElems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: 'Failed to trigger data import.'}]);
-            toggleButton(dataImportElems.triggerButton, false, dataImportElems.originalButtonText); 
+            handleApiResponseError(dataImportElems.errorDisplay, result, 'Failed to trigger data import.', dataImportElems.triggerButton, dataImportElems.originalButtonText);
         }
     }
 
@@ -631,8 +634,10 @@ document.addEventListener('DOMContentLoaded', function() {
             errorDisplay: `search-index-${parliamentCode}-error-display`,
             refreshButton: `btn-trigger-search-index-refresh-${parliamentCode}`,
             deleteButton: `btn-trigger-search-index-delete-${parliamentCode}`,
+            optimizeButton: `btn-trigger-search-index-optimize-${parliamentCode}`,
             originalRefreshBtnText: `<span class="icon-arrows-cw"></span> <?= L::refreshFullIndex(); ?> (${parliamentCode})`,
-            originalDeleteBtnText: `<span class="icon-trash"></span> <?= L::deleteIndex(); ?> (${parliamentCode})`
+            originalDeleteBtnText: `<span class="icon-trash"></span> <?= L::deleteIndex(); ?> (${parliamentCode})`,
+            originalOptimizeBtnText: `<span class="icon-magic"></span> <?= L::optimizeIndices(); ?> (${parliamentCode})`
         };
     }
 
@@ -657,7 +662,8 @@ document.addEventListener('DOMContentLoaded', function() {
             appState.processes[parliamentCode] = {
                 dataImport: { isRunning: false },
                 mainIndex: { isRunning: false },
-                statisticsIndex: { isRunning: false }
+                statisticsIndex: { isRunning: false },
+                optimization: { isRunning: false }
             };
         }
         const wasRunning = appState.processes[parliamentCode].mainIndex.isRunning;
@@ -685,14 +691,44 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => updateAllButtonStates(), 0);
     }
 
-    async function fetchSearchIndexStatus(parliamentCode) {
-        const url = getApiUrl('index', 'status', { parliament: parliamentCode });
+    // Generic API status fetcher - reduces duplicate code
+    async function fetchProcessStatus(processType, endpoint, parliamentCode, updateFunction) {
+        const url = getApiUrl(endpoint, 'status', { parliament: parliamentCode });
         const result = await apiCall(url);
         if (result.success && result.data) {
-            updateSearchIndexUI(parliamentCode, result.data);
+            updateFunction(parliamentCode, result.data);
         } else {
-            console.warn(`Failed to fetch search index status for ${parliamentCode}:`, result.errors);
-            updateSearchIndexUI(parliamentCode, { status: 'error', statusDetails: 'Status fetch failed', errors: result.errors || [{detail: 'Connection error while fetching status.'}] });
+            console.warn(`Failed to fetch ${processType} status for ${parliamentCode}:`, result.errors);
+            updateFunction(parliamentCode, { 
+                status: 'error', 
+                statusDetails: 'Status fetch failed', 
+                errors: result.errors || [{detail: 'Connection error while fetching status.'}] 
+            });
+        }
+    }
+
+    async function fetchSearchIndexStatus(parliamentCode) {
+        return fetchProcessStatus('search index', 'index', parliamentCode, updateSearchIndexUI);
+    }
+
+    // Generic confirmation modal helper - reduces duplicate modal code
+    function showConfirmationModal(action, params = {}) {
+        const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+        modal.show();
+        
+        // Store action and parameters globally for the confirmation handler
+        window.pendingConfirmationAction = action;
+        Object.assign(window, params); // Merge additional parameters into window
+    }
+
+    // Generic API response error handler - reduces duplicate error handling
+    function handleApiResponseError(errorDisplayId, result, fallbackMessage, button = null, originalButtonText = null) {
+        const errors = result.errors || (result.data ? result.data.message : null) || [{detail: fallbackMessage}];
+        showError(errorDisplayId, errors);
+        
+        // Re-enable button if provided
+        if (button && originalButtonText) {
+            toggleButton(button, false, originalButtonText);
         }
     }
 
@@ -703,19 +739,12 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Show generic confirmation modal
-        const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-        modal.show();
-        
-        // Store the action and parliament code for the confirmation handler
-        window.pendingConfirmationAction = 'searchRefresh';
-        window.pendingConfirmationParliament = parliamentCode;
+        showConfirmationModal('searchRefresh', { pendingConfirmationParliament: parliamentCode });
     }
     
     async function executeSearchIndexRefresh(parliamentCode) {
         const elems = getSearchIndexElements(parliamentCode);
         toggleButton(elems.refreshButton, true, 'Starting Refresh...');
-        toggleButton(elems.deleteButton, true); // Disable delete during refresh
         clearError(elems.errorDisplay);
         const url = getApiUrl('index', 'full-update', { parliament: parliamentCode });
         const result = await apiCall(url, 'POST');
@@ -724,9 +753,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateElementText(elems.statusText, `Status: ${result.data.message || 'Search index refresh triggered.'}`);
             setTimeout(() => fetchSearchIndexStatus(parliamentCode), 1000);
         } else {
-            showError(elems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: 'Failed to trigger search index refresh.'}]);
-            toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
-            toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
+            handleApiResponseError(elems.errorDisplay, result, 'Failed to trigger search index refresh.', elems.refreshButton, elems.originalRefreshBtnText);
         }
     }
 
@@ -742,7 +769,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         const elems = getSearchIndexElements(parliamentCode);
         toggleButton(elems.deleteButton, true, 'Deleting...');
-        toggleButton(elems.refreshButton, true); // Disable refresh during delete
         clearError(elems.errorDisplay);
         const url = getApiUrl('index', 'delete', { parliament: parliamentCode, init: true }); 
         const result = await apiCall(url, 'POST');
@@ -753,9 +779,126 @@ document.addEventListener('DOMContentLoaded', function() {
             updateSearchIndexUI(parliamentCode, {status: 'deleted', statusDetails: result.data.message || 'Index deleted'});
             setTimeout(() => fetchSearchIndexStatus(parliamentCode), 1000); 
         } else {
-            showError(elems.errorDisplay, result.errors || (result.data ? result.data.message : null) || [{detail: 'Failed to delete search index.'}]);
-            toggleButton(elems.deleteButton, false, elems.originalDeleteBtnText);
-            toggleButton(elems.refreshButton, false, elems.originalRefreshBtnText);
+            handleApiResponseError(elems.errorDisplay, result, 'Failed to delete search index.', elems.deleteButton, elems.originalDeleteBtnText);
+        }
+    }
+
+    async function triggerSearchIndexOptimize(parliamentCode) {
+        // Button should already be disabled if conflicts exist, but add safety check
+        if (appState.isAnyProcessRunning(parliamentCode)) {
+            console.warn('triggerSearchIndexOptimize called while other processes are running - button should have been disabled');
+            return;
+        }
+        
+        
+        const elems = getSearchIndexElements(parliamentCode);
+        
+        try {
+            toggleButton(elems.optimizeButton, true, 'Optimizing...');
+            const optimizeBtn = document.getElementById(elems.optimizeButton);
+            if (optimizeBtn) optimizeBtn.classList.add('working');
+            
+            // Update centralized process state - optimization is running
+            if (!appState.processes[parliamentCode]) {
+                initializeParliamentState(parliamentCode);
+            }
+            appState.processes[parliamentCode].optimization.isRunning = true;
+            updateAllButtonStates(); // Disable all buttons
+            
+            clearError(elems.errorDisplay);
+            
+            const url = getApiUrl('index', 'optimize', { parliament: parliamentCode });
+            const result = await apiCall(url, 'POST');
+
+            if (result.success && result.meta && result.meta.requestStatus === 'success') {
+                const data = result.data || {};
+                let message = 'Index optimization completed successfully.';
+                
+                // Show detailed results if available
+                if (data.statistics_index) {
+                    const stats = data.statistics_index;
+                    message += ` Statistics index: ${stats.deleted_docs_removed || 0} deleted docs removed, ${stats.space_reclaimed_mb || 0}MB reclaimed in ${stats.time_seconds || 0}s.`;
+                }
+                if (data.main_index) {
+                    const mainStats = data.main_index;
+                    message += ` Main index optimized in ${mainStats.time_seconds || 0}s.`;
+                }
+                
+                updateElementText(elems.statusText, `Status: ${message}`);
+                
+                // Show persistent success message with close button
+                const successAlert = document.createElement('div');
+                successAlert.className = 'alert alert-success alert-dismissible mt-2';
+                successAlert.setAttribute('data-persistent', 'true'); // Mark as persistent to avoid being cleared by status updates
+                successAlert.innerHTML = `
+                    ${message}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                
+                const errorDisplayElement = document.getElementById(elems.errorDisplay);
+                if (errorDisplayElement && errorDisplayElement.parentNode) {
+                    // Remove any existing success messages first
+                    const existingSuccessAlerts = errorDisplayElement.parentNode.querySelectorAll('.alert-success[data-persistent="true"]');
+                    existingSuccessAlerts.forEach(alert => alert.remove());
+                    
+                    errorDisplayElement.parentNode.insertBefore(successAlert, errorDisplayElement);
+                }
+                
+            } else {
+                // Show persistent API error message with close button
+                const errors = result.errors || [{detail: 'Failed to optimize search indices.'}];
+                const errorMessages = errors.map(err => err.detail || err.title || 'An error occurred.').join('; ');
+                
+                const errorAlert = document.createElement('div');
+                errorAlert.className = 'alert alert-danger alert-dismissible mt-2';
+                errorAlert.setAttribute('data-persistent', 'true'); // Mark as persistent
+                errorAlert.innerHTML = `
+                    ${errorMessages}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                
+                const errorDisplayElement = document.getElementById(elems.errorDisplay);
+                if (errorDisplayElement && errorDisplayElement.parentNode) {
+                    // Remove any existing error messages first
+                    const existingErrorAlerts = errorDisplayElement.parentNode.querySelectorAll('.alert-danger[data-persistent="true"]');
+                    existingErrorAlerts.forEach(alert => alert.remove());
+                    
+                    errorDisplayElement.parentNode.insertBefore(errorAlert, errorDisplayElement);
+                }
+            }
+            
+        } catch (error) {
+            console.error('Error during optimization:', error);
+            
+            // Show persistent error message with close button
+            const errorAlert = document.createElement('div');
+            errorAlert.className = 'alert alert-danger alert-dismissible mt-2';
+            errorAlert.setAttribute('data-persistent', 'true'); // Mark as persistent
+            errorAlert.innerHTML = `
+                Optimization failed: ${error.message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+            
+            const errorDisplayElement = document.getElementById(elems.errorDisplay);
+            if (errorDisplayElement && errorDisplayElement.parentNode) {
+                // Remove any existing error messages first
+                const existingErrorAlerts = errorDisplayElement.parentNode.querySelectorAll('.alert-danger[data-persistent="true"]');
+                existingErrorAlerts.forEach(alert => alert.remove());
+                
+                errorDisplayElement.parentNode.insertBefore(errorAlert, errorDisplayElement);
+            }
+            
+        } finally {
+            // Clear optimization state and update all buttons
+            if (appState.processes[parliamentCode]) {
+                appState.processes[parliamentCode].optimization.isRunning = false;
+            }
+            updateAllButtonStates(); // Re-enable all buttons
+            
+            // Always re-enable optimize button and remove working class, even if there was an error
+            toggleButton(elems.optimizeButton, false, elems.originalOptimizeBtnText);
+            const optimizeBtn = document.getElementById(elems.optimizeButton);
+            if (optimizeBtn) optimizeBtn.classList.remove('working');
         }
     }
 
@@ -769,6 +912,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const deleteBtn = document.getElementById(elems.deleteButton);
             if (deleteBtn) deleteBtn.addEventListener('click', () => triggerSearchIndexDelete(parliamentCode));
+            
+            const optimizeBtn = document.getElementById(elems.optimizeButton);
+            if (optimizeBtn) optimizeBtn.addEventListener('click', () => triggerSearchIndexOptimize(parliamentCode));
 
             // Statistics indexing setup
             setupStatisticsIndexUI(parliamentCode);
@@ -812,47 +958,25 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!appState.currentParliament) return;
         
         const parliamentCode = appState.currentParliament;
-        const currentProcesses = appState.processes[parliamentCode];
-        
-        if (!currentProcesses) return;
-        
-        const dataImportRunning = currentProcesses.dataImport.isRunning;
-        const mainIndexRunning = currentProcesses.mainIndex.isRunning;
-        const statisticsRunning = currentProcesses.statisticsIndex.isRunning;
+        const anyProcessRunning = appState.isAnyProcessRunning(parliamentCode);
         
         // Get UI elements
         const mainIndexElems = getSearchIndexElements(parliamentCode);
         const statisticsElems = getStatisticsIndexElements(parliamentCode);
         
-        // Check if ANY process is running for this parliament
-        const anyProcessRunning = dataImportRunning || mainIndexRunning || statisticsRunning;
-        
-        // Data Import Button: Disable if any other process is running
-        if (mainIndexRunning || statisticsRunning) {
-            const blockingProcess = mainIndexRunning ? 'Main index running' : 'Statistics indexing running';
-            toggleButton(dataImportElems.triggerButton, true, blockingProcess + '...');
-        } else if (!dataImportRunning) {
+        if (anyProcessRunning) {
+            // Disable ALL buttons when ANY process is running
+            toggleButton(dataImportElems.triggerButton, true, 'Process running...');
+            toggleButton(mainIndexElems.refreshButton, true, 'Process running...');
+            toggleButton(mainIndexElems.deleteButton, true, 'Process running...');
+            toggleButton(mainIndexElems.optimizeButton, true, 'Process running...');
+            toggleButton(statisticsElems.rebuildButton, true, 'Process running...');
+        } else {
+            // Enable ALL buttons when NO processes are running
             toggleButton(dataImportElems.triggerButton, false, dataImportElems.originalButtonText);
-        }
-        
-        // Main Index Buttons: Disable if any other process is running
-        if (dataImportRunning || statisticsRunning) {
-            const blockingProcess = dataImportRunning ? 'Data import running' : 'Statistics indexing running';
-            toggleButton(mainIndexElems.refreshButton, true, blockingProcess + '...');
-            toggleButton(mainIndexElems.deleteButton, true, blockingProcess + '...');
-        } else if (!mainIndexRunning) {
             toggleButton(mainIndexElems.refreshButton, false, mainIndexElems.originalRefreshBtnText);
             toggleButton(mainIndexElems.deleteButton, false, mainIndexElems.originalDeleteBtnText);
-        }
-        
-        // Statistics Index Button: Disable if any other process is running OR if statistics itself is running
-        if (dataImportRunning || mainIndexRunning || statisticsRunning) {
-            let blockingProcess = 'Unknown process running';
-            if (dataImportRunning) blockingProcess = 'Data import running';
-            else if (mainIndexRunning) blockingProcess = 'Main index running';
-            else if (statisticsRunning) blockingProcess = 'Statistics indexing running';
-            toggleButton(statisticsElems.rebuildButton, true, blockingProcess + '...');
-        } else {
+            toggleButton(mainIndexElems.optimizeButton, false, mainIndexElems.originalOptimizeBtnText);
             toggleButton(statisticsElems.rebuildButton, false, statisticsElems.originalRebuildBtnText);
         }
         
@@ -912,7 +1036,8 @@ document.addEventListener('DOMContentLoaded', function() {
             appState.processes[parliamentCode] = {
                 dataImport: { isRunning: false },
                 mainIndex: { isRunning: false },
-                statisticsIndex: { isRunning: false }
+                statisticsIndex: { isRunning: false },
+                optimization: { isRunning: false }
             };
         }
         const isActive = ['running', 'processing', 'processing_batch', 'starting', 'initializing'].includes(status);
@@ -957,13 +1082,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        // Show generic confirmation modal
-        const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-        modal.show();
-        
-        // Store the action and parliament code for the confirmation handler
-        window.pendingConfirmationAction = 'statisticsRebuild';
-        window.pendingConfirmationParliament = parliamentCode;
+        showConfirmationModal('statisticsRebuild', { pendingConfirmationParliament: parliamentCode });
     }
     
     async function executeStatisticsIndexRebuild(parliamentCode) {
@@ -978,8 +1097,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateElementText(elems.statusText, `Status: ${result.data.message || 'Statistics index rebuild started.'}`);
             setTimeout(() => fetchStatisticsIndexStatus(parliamentCode), 1000);
         } else {
-            showError(elems.errorDisplay, result.errors || [{detail: 'Failed to start statistics index rebuild.'}]);
-            toggleButton(elems.rebuildButton, false, elems.originalRebuildBtnText);
+            handleApiResponseError(elems.errorDisplay, result, 'Failed to start statistics index rebuild.', elems.rebuildButton, elems.originalRebuildBtnText);
         }
     }
     
@@ -1154,13 +1272,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     async function triggerAdsUpdate(entityType) { 
-        // Show generic confirmation modal
-        const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
-        modal.show();
-        
-        // Store the action and entity type for the confirmation handler
-        window.pendingConfirmationAction = 'adsUpdate';
-        window.pendingConfirmationEntityType = entityType;
+        showConfirmationModal('adsUpdate', { pendingConfirmationEntityType: entityType });
     }
     
     async function executeAdsUpdate(entityType) {
@@ -1180,7 +1292,7 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(fetchAdsStatus, 1000);
         } else {
             const errorDisplayId = `ads-${entityType}-error-display`;
-            showError(errorDisplayId, result.errors || (result.data ? result.data.message : null) || [{detail: `Failed to trigger ADS update for ${entityType}.`}]);
+            handleApiResponseError(errorDisplayId, result, `Failed to trigger ADS update for ${entityType}.`);
             // Re-enable buttons on failure to trigger
             document.querySelectorAll(adsElems.triggerButtonClass).forEach(btn => {
                 toggleButton(btn.id, false, getAdsButtonOriginalText(btn.dataset.entityType));
