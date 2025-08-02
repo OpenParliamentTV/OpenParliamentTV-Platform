@@ -1441,7 +1441,6 @@ body.fixed .searchContainer {
     background-clip: padding-box;
     border: 1px solid var(--border-color);
     border-radius: .25rem;
-    border-top-left-radius: 0px;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     cursor: text;
 }
