@@ -277,7 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div id="search-index-${parliamentCode}-status-text" class="small text-muted mb-2">Status: Idle</div>
                     <button type="button" id="btn-trigger-search-index-refresh-${parliamentCode}" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-arrows-cw"></span> <?= L::refreshFullIndex(); ?> (${parliamentCode})</button>
                     <button type="button" id="btn-trigger-search-index-delete-${parliamentCode}" class="btn btn-outline-danger btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-trash"></span> <?= L::deleteIndex(); ?> (${parliamentCode})</button>
-                    <button type="button" id="btn-trigger-search-index-optimize-${parliamentCode}" class="btn btn-outline-warning btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-magic"></span> <?= L::optimizeIndices(); ?> (${parliamentCode})</button>
                     <div id="search-index-${parliamentCode}-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
                 </div>
             </div>
@@ -298,6 +297,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div id="statistics-index-${parliamentCode}-status-text" class="small text-muted mb-2">Status: Idle</div>
                     <button type="button" id="btn-trigger-statistics-index-rebuild-${parliamentCode}" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-arrows-cw"></span> Rebuild Statistics Index (${parliamentCode})</button>
                     <div id="statistics-index-${parliamentCode}-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
+                </div>
+            </div>
+            <hr>
+            <div class="row" id="optimization-progress-section-${parliamentCode}">
+                <div class="col-12">
+                    <div class="d-flex justify-content-between">
+                        <div class="fw-bolder">Index Optimization (${parliamentCode})</div>
+                        <div id="optimization-${parliamentCode}-items-text" class="small">Idle</div>
+                    </div>
+                    <div class="progress my-1" role="progressbar" aria-label="Optimization ${parliamentCode} Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div id="optimization-${parliamentCode}-progress-bar" class="progress-bar" style="width: 0%"></div>
+                    </div>
+                    <div id="optimization-${parliamentCode}-status-text" class="small text-muted mb-2">Status: Idle</div>
+                    <button type="button" id="btn-trigger-search-index-optimize-${parliamentCode}" class="btn btn-outline-primary btn-sm me-1" data-parliament-code="${parliamentCode}"><span class="icon-magic"></span> <?= L::optimizeIndices(); ?> (${parliamentCode})</button>
+                    <div id="optimization-${parliamentCode}-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
                 </div>
             </div>
             <hr>`;
@@ -641,6 +655,16 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
+    function getOptimizationElements(parliamentCode) {
+        return {
+            progressBar: `optimization-${parliamentCode}-progress-bar`,
+            statusText: `optimization-${parliamentCode}-status-text`,
+            itemsText: `optimization-${parliamentCode}-items-text`,
+            errorDisplay: `optimization-${parliamentCode}-error-display`,
+            section: `optimization-progress-section-${parliamentCode}`
+        };
+    }
+
     function updateSearchIndexUI(parliamentCode, statusData) {
         const elems = getSearchIndexElements(parliamentCode);
         const {
@@ -790,22 +814,34 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
-        const elems = getSearchIndexElements(parliamentCode);
-        toggleButton(elems.optimizeButton, true, 'Starting...');
-        const optimizeBtn = document.getElementById(elems.optimizeButton);
+        const searchElems = getSearchIndexElements(parliamentCode);
+        const optimizationElems = getOptimizationElements(parliamentCode);
+        
+        toggleButton(searchElems.optimizeButton, true, 'Starting...');
+        const optimizeBtn = document.getElementById(searchElems.optimizeButton);
         if (optimizeBtn) optimizeBtn.classList.add('working');
         
-        clearError(elems.errorDisplay);
+        // Clear both error displays
+        clearError(searchElems.errorDisplay);
+        clearError(optimizationElems.errorDisplay);
+        
+        // Update optimization section
+        updateElementText(optimizationElems.statusText, 'Status: Starting optimization...');
+        updateElementText(optimizationElems.itemsText, 'Starting...');
         
         const url = getApiUrl('index', 'optimize', { parliament: parliamentCode });
         const result = await apiCall(url, 'POST');
 
         if (result.success && result.meta && result.meta.requestStatus === 'success') {
-            updateElementText(elems.statusText, `Status: ${result.data.message || 'Index optimization started.'}`);
+            updateElementText(optimizationElems.statusText, `Status: ${result.data.message || 'Index optimization started.'}`);
             // Start polling for optimization status
             setTimeout(() => fetchOptimizationStatus(parliamentCode), 1000);
         } else {
-            handleApiResponseError(elems.errorDisplay, result, 'Failed to start index optimization.', elems.optimizeButton, elems.originalOptimizeBtnText);
+            // Show error in status text instead of alert
+            const errorMessage = result.errors && result.errors.length > 0 ? result.errors[0].detail : 'Failed to start index optimization';
+            updateElementText(optimizationElems.statusText, `Status: Error - ${errorMessage}`);
+            updateElementText(optimizationElems.itemsText, 'Idle');
+            toggleButton(searchElems.optimizeButton, false, searchElems.originalOptimizeBtnText);
             if (optimizeBtn) optimizeBtn.classList.remove('working');
         }
     }
@@ -826,7 +862,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updateOptimizationUI(parliamentCode, statusData) {
-        const elems = getSearchIndexElements(parliamentCode);
+        const searchElems = getSearchIndexElements(parliamentCode);
+        const optimizationElems = getOptimizationElements(parliamentCode);
         const {
             status,
             statusDetails = 'N/A',
@@ -834,7 +871,8 @@ document.addEventListener('DOMContentLoaded', function() {
             errors = []
         } = statusData;
 
-        updateElementText(elems.statusText, `Status: ${statusDetails}`);
+        // Update optimization section status
+        updateElementText(optimizationElems.statusText, `Status: ${statusDetails}`);
 
         // Update centralized process state for this parliament
         if (!appState.processes[parliamentCode]) {
@@ -844,45 +882,56 @@ document.addEventListener('DOMContentLoaded', function() {
         const isRunning = status === 'running';
         appState.processes[parliamentCode].optimization.isRunning = isRunning;
 
+        // Update progress bar with proper colors and animation
+        const progressBar = document.getElementById(optimizationElems.progressBar);
+        if (progressBar) {
+            // Clear all contextual classes first
+            progressBar.classList.remove('bg-success', 'bg-primary', 'bg-danger', 'progress-bar-animated', 'progress-bar-striped');
+            
+            if (isRunning) {
+                updateElementText(optimizationElems.itemsText, 'Processing...');
+                progressBar.style.width = '100%';
+                progressBar.classList.add('bg-primary', 'progress-bar-striped', 'progress-bar-animated');
+            } else if (status === 'completed_successfully') {
+                updateElementText(optimizationElems.itemsText, 'Completed');
+                progressBar.style.width = '100%';
+                progressBar.classList.add('bg-success');
+            } else if (status === 'error') {
+                updateElementText(optimizationElems.itemsText, 'Error');
+                progressBar.style.width = '100%';
+                progressBar.classList.add('bg-danger');
+            } else {
+                updateElementText(optimizationElems.itemsText, 'Idle');
+                progressBar.style.width = '0%';
+            }
+        }
+
         // Handle status-specific UI updates
         if (status === 'error') {
-            const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred.'}]);
-            showError(elems.errorDisplay, errorMessages);
+            // Show error in status text instead of alert
+            const errorMessage = errors && errors.length > 0 ? errors[0].detail || errors[0].message : statusDetails;
+            updateElementText(optimizationElems.statusText, `Status: Error - ${errorMessage}`);
+            clearError(optimizationElems.errorDisplay);
         } else if (status === 'completed_successfully') {
-            clearError(elems.errorDisplay);
+            clearError(optimizationElems.errorDisplay);
             
-            // Show detailed success message if results are available
-            let message = 'Index optimization completed successfully.';
+            // Show detailed success message in status text
+            let message = 'Completed successfully';
             if (results.statistics_index) {
                 const stats = results.statistics_index;
-                message += ` Statistics index: ${stats.deleted_docs_removed || 0} deleted docs removed, ${stats.space_reclaimed_mb || 0}MB reclaimed in ${stats.time_seconds || 0}s.`;
+                message += ` - ${stats.deleted_docs_removed || 0} deleted docs removed, ${stats.space_reclaimed_mb || 0}MB reclaimed in ${stats.time_seconds || 0}s`;
             }
             if (results.main_index) {
                 const mainStats = results.main_index;
-                message += ` Main index optimized in ${mainStats.time_seconds || 0}s.`;
+                message += ` - main index optimized in ${mainStats.time_seconds || 0}s`;
             }
-            
-            // Show persistent success message
-            const successAlert = document.createElement('div');
-            successAlert.className = 'alert alert-success alert-dismissible mt-2';
-            successAlert.setAttribute('data-persistent', 'true');
-            successAlert.innerHTML = `
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            `;
-            
-            const errorDisplayElement = document.getElementById(elems.errorDisplay);
-            if (errorDisplayElement && errorDisplayElement.parentNode) {
-                const existingSuccessAlerts = errorDisplayElement.parentNode.querySelectorAll('.alert-success[data-persistent="true"]');
-                existingSuccessAlerts.forEach(alert => alert.remove());
-                errorDisplayElement.parentNode.insertBefore(successAlert, errorDisplayElement);
-            }
+            updateElementText(optimizationElems.statusText, `Status: ${message}`);
         } else {
-            clearError(elems.errorDisplay);
+            clearError(optimizationElems.errorDisplay);
         }
 
         // Remove working class and re-enable button when not running
-        const optimizeBtn = document.getElementById(elems.optimizeButton);
+        const optimizeBtn = document.getElementById(searchElems.optimizeButton);
         if (!isRunning) {
             if (optimizeBtn) optimizeBtn.classList.remove('working');
         }
