@@ -1090,7 +1090,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (status === 'running' && totalDbMediaItems > 0 && processedMediaItems < totalDbMediaItems && performance.avg_docs_per_second > 0) {
             // Calculate estimated time remaining for running processes
             const remainingItems = totalDbMediaItems - processedMediaItems;
-            const estimatedSecondsRemaining = Math.ceil(remainingItems / performance.avg_docs_per_second);
+            const progressPercentage = processedMediaItems / totalDbMediaItems;
+            
+            // Apply degradation factor - processing tends to slow down over time
+            // Start with 1.0x factor early in the process, increase to 1.4x later
+            const degradationFactor = 1.0 + (progressPercentage * 0.4);
+            
+            const estimatedSecondsRemaining = Math.ceil((remainingItems / performance.avg_docs_per_second) * degradationFactor);
             const estimatedMinutes = Math.floor(estimatedSecondsRemaining / 60);
             const estimatedSeconds = estimatedSecondsRemaining % 60;
             
