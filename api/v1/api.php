@@ -148,31 +148,6 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             }
             break;
 
-        case "statistics":
-            include_once(__DIR__."/modules/statistics.php");
-            switch ($api_request["itemType"]) {
-                case "general": 
-                    $item = statisticsGetGeneral($api_request);
-                    return createApiResponse($item);
-                case "entity":
-                    $item = statisticsGetEntity($api_request);
-                    return createApiResponse($item);
-                case "word-trends":
-                    $item = statisticsGetWordTrends($api_request);
-                    return createApiResponse($item);
-                case "network":
-                    $item = statisticsGetNetwork($api_request);
-                    return createApiResponse($item);
-                case "entity-counts":
-                    $item = statisticsGetEntityCounts($api_request);
-                    return createApiResponse($item);
-                default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
-                    );
-            }
-            break;
-
         case "user":
             require_once (__DIR__."/modules/user.php");
             switch ($api_request["itemType"]) {
@@ -489,6 +464,31 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/entitySuggestion.php");
                     $cleanupResponse = entitySuggestionCleanup($db);
                     return createApiResponse($cleanupResponse);
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+        
+        case "statistics":
+            include_once(__DIR__."/modules/statistics.php");
+            switch ($api_request["itemType"]) {
+                case "general": 
+                    $item = statisticsGetGeneral($api_request);
+                    return createApiResponse($item);
+                case "entity":
+                    $item = statisticsGetEntity($api_request);
+                    return createApiResponse($item);
+                case "word-trends":
+                    $item = statisticsGetWordTrends($api_request);
+                    return createApiResponse($item);
+                case "network":
+                    $item = statisticsGetNetwork($api_request);
+                    return createApiResponse($item);
+                case "entity-counts":
+                    $item = statisticsGetEntityCounts($api_request);
+                    return createApiResponse($item);
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")

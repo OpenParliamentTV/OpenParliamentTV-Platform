@@ -149,7 +149,6 @@ function auth($userID, $action, $entity, $db = false) {
                 "getItem",
                 "search",
                 "autocomplete",
-                "statistics",
                 "user",
                 "status",
                 "lang"
