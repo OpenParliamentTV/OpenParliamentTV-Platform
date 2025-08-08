@@ -642,7 +642,7 @@ function searchIndexOptimize($api_request) {
     
     $phpPath = $config["bin"]["php"] ?? PHP_BINARY;
     $command = sprintf(
-        '%s %s --parliament=%s > /dev/null 2>&1 &',
+        '%s %s --parliament=%s',
         escapeshellcmd($phpPath),
         escapeshellarg($scriptPath),
         escapeshellarg($parliament)
