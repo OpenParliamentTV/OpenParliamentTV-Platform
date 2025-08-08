@@ -1092,9 +1092,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const remainingItems = totalDbMediaItems - processedMediaItems;
             const progressPercentage = processedMediaItems / totalDbMediaItems;
             
-            // Apply degradation factor - processing tends to slow down over time
-            // Start with 1.0x factor early in the process, increase to 1.4x later
-            const degradationFactor = 1.0 + (progressPercentage * 0.4);
+            // Apply degradation factor - anticipate future slowdown
+            // Start with higher factor early (1.4x), decrease to normal (1.0x) later as slowdown is reflected in current speed
+            const degradationFactor = 1.4 - (progressPercentage * 0.4);
             
             const estimatedSecondsRemaining = Math.ceil((remainingItems / performance.avg_docs_per_second) * degradationFactor);
             const estimatedMinutes = Math.floor(estimatedSecondsRemaining / 60);
