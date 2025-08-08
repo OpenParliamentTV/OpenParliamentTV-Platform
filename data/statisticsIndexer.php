@@ -49,11 +49,12 @@ if (file_exists($lockFile)) {
     $timeout = $isIncremental ? 3600 : 14400; // 1 hour for incremental, 4 hours for full rebuild
     
     if ($lockAge < $timeout) {
-        error_log("Statistics indexer already running for $parliamentCode (PID: " . ($lockData['pid'] ?? 'unknown') . ")");
+        logMessage('ERROR', "Statistics indexer already running for $parliamentCode (PID: " . ($lockData['pid'] ?? 'unknown') . ")");
         exit(1);
     } else {
         // Remove stale lock
         unlink($lockFile);
+        logMessage('INFO', "Removed stale statistics indexer lock file for $parliamentCode");
     }
 }
 
@@ -63,12 +64,12 @@ if (file_exists($cronUpdaterLockFile)) {
     $lockAge = time() - filemtime($cronUpdaterLockFile);
     
     if ($lockAge < 5400) { // 90 minutes timeout (same as cronUpdater)
-        error_log("CronUpdater is running for $parliamentCode. Skipping statistics indexing to prevent conflicts.");
+        logMessage('ERROR', "CronUpdater is running for $parliamentCode. Skipping statistics indexing to prevent conflicts.");
         exit(1);
     } else {
         // Remove stale cronUpdater lock if it's too old
         unlink($cronUpdaterLockFile);
-        error_log("Removed stale cronUpdater lock file for $parliamentCode.");
+        logMessage('INFO', "Removed stale cronUpdater lock file for $parliamentCode.");
     }
 }
 
@@ -104,8 +105,11 @@ function updateProgress($data) {
 }
 
 function logMessage($level, $message) {
+    global $parliamentCode;
     $timestamp = date('Y-m-d H:i:s');
-    error_log("[$timestamp] [$level] Statistics Indexer: $message");
+    $logFile = __DIR__ . "/statisticsIndexer_{$parliamentCode}.log";
+    $logEntry = "[$timestamp] [$level] Statistics Indexer: $message" . PHP_EOL;
+    file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
 }
 
 // Register shutdown handler to clean up lock file
