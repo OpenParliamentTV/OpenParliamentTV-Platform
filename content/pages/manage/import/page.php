@@ -687,11 +687,14 @@ document.addEventListener('DOMContentLoaded', function() {
             // Calculate estimated time remaining for running processes
             const remainingItems = totalDbMediaItems - processedMediaItems;
             const estimatedSecondsRemaining = Math.ceil(remainingItems / performance.avg_docs_per_second);
-            const estimatedMinutes = Math.floor(estimatedSecondsRemaining / 60);
+            const estimatedHours = Math.floor(estimatedSecondsRemaining / 3600);
+            const estimatedMinutes = Math.floor((estimatedSecondsRemaining % 3600) / 60);
             const estimatedSeconds = estimatedSecondsRemaining % 60;
             
             let timeRemainingText;
-            if (estimatedMinutes > 0) {
+            if (estimatedHours > 0) {
+                timeRemainingText = `${estimatedHours}h ${estimatedMinutes}m ${estimatedSeconds}s`;
+            } else if (estimatedMinutes > 0) {
                 timeRemainingText = `${estimatedMinutes}m ${estimatedSeconds}s`;
             } else {
                 timeRemainingText = `${estimatedSeconds}s`;
