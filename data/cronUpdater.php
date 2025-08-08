@@ -234,6 +234,8 @@ if (is_cli()) {
         $totalBatches = ceil($totalItems / $batchSize);
         logger("info", "Starting search index update for ".$totalItems." items for parliament: {$parliament}");
         
+        $performanceStartTime = time();
+        
         initBaseProgressFile($searchIndexProgressFilePath, [
             'processName' => 'searchIndexFullUpdate',
             'parliament' => $parliament,
@@ -242,7 +244,11 @@ if (is_cli()) {
             'processedMediaItems' => 0,
             'itemsFailed' => 0,
             'currentBatch' => 0,
-            'totalBatches' => $totalBatches
+            'totalBatches' => $totalBatches,
+            'performance' => [
+                'start_time' => $performanceStartTime,
+                'avg_docs_per_second' => 0
+            ]
         ]);
 
         $mediaItemsBatch = [];
@@ -301,10 +307,18 @@ if (is_cli()) {
                     }
                 }
                 
+                // Calculate performance metrics
+                $elapsedTime = time() - $performanceStartTime;
+                $avgDocsPerSecond = $elapsedTime > 0 ? round($processedItemCount / $elapsedTime, 2) : 0;
+                
                 // Update progress after every batch, reflecting all successes and failures so far.
                 updateBaseProgressFile($searchIndexProgressFilePath, [
                     'processedMediaItems' => $processedItemCount, // Only successfully indexed items
-                    'itemsFailed' => $failedItemCount // All failures (fetch + index)
+                    'itemsFailed' => $failedItemCount, // All failures (fetch + index)
+                    'performance' => [
+                        'start_time' => $performanceStartTime,
+                        'avg_docs_per_second' => $avgDocsPerSecond
+                    ]
                 ]);
 
                 // Explicitly free memory

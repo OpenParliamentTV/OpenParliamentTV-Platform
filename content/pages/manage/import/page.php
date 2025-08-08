@@ -672,6 +672,7 @@ document.addEventListener('DOMContentLoaded', function() {
             statusDetails = 'N/A',
             totalDbMediaItems = 0,
             processedMediaItems = 0,
+            performance = {},
             errors = []
         } = statusData;
 
@@ -679,7 +680,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
         updateProgressBar(elems.progressBar, percentage, status);
         updateElementText(elems.statusText, `Status: ${statusDetails}`);
-        updateElementText(elems.itemsText, `<?= L::speeches(); ?>: ${processedMediaItems} / ${totalDbMediaItems}`);
+        
+        // Update items text with estimated time remaining for running processes
+        let itemsText;
+        if (status === 'running' && totalDbMediaItems > 0 && processedMediaItems < totalDbMediaItems && performance.avg_docs_per_second > 0) {
+            // Calculate estimated time remaining for running processes
+            const remainingItems = totalDbMediaItems - processedMediaItems;
+            const estimatedSecondsRemaining = Math.ceil(remainingItems / performance.avg_docs_per_second);
+            const estimatedMinutes = Math.floor(estimatedSecondsRemaining / 60);
+            const estimatedSeconds = estimatedSecondsRemaining % 60;
+            
+            let timeRemainingText;
+            if (estimatedMinutes > 0) {
+                timeRemainingText = `${estimatedMinutes}m ${estimatedSeconds}s`;
+            } else {
+                timeRemainingText = `${estimatedSeconds}s`;
+            }
+            
+            itemsText = `<?= L::speeches(); ?>: ${processedMediaItems} / ${totalDbMediaItems} | Estimated Time Remaining: ${timeRemainingText}`;
+        } else {
+            itemsText = `<?= L::speeches(); ?>: ${processedMediaItems} / ${totalDbMediaItems}`;
+        }
+        
+        updateElementText(elems.itemsText, itemsText);
 
         // Update centralized process state for this parliament
         if (!appState.processes[parliamentCode]) {
@@ -1062,16 +1085,37 @@ document.addEventListener('DOMContentLoaded', function() {
         updateElementText(elems.statusText, `Status: ${statusDetails}`);
         
         // Update items text with enhanced indexing metrics
-        let itemsText = `${processedMediaItems}/${totalDbMediaItems}`;
-        if (words_indexed > 0) {
-            itemsText += ` | Words: ${words_indexed.toLocaleString()}`;
+        let itemsText;
+        
+        if (status === 'running' && totalDbMediaItems > 0 && processedMediaItems < totalDbMediaItems && performance.avg_docs_per_second > 0) {
+            // Calculate estimated time remaining for running processes
+            const remainingItems = totalDbMediaItems - processedMediaItems;
+            const estimatedSecondsRemaining = Math.ceil(remainingItems / performance.avg_docs_per_second);
+            const estimatedMinutes = Math.floor(estimatedSecondsRemaining / 60);
+            const estimatedSeconds = estimatedSecondsRemaining % 60;
+            
+            let timeRemainingText;
+            if (estimatedMinutes > 0) {
+                timeRemainingText = `${estimatedMinutes}m ${estimatedSeconds}s`;
+            } else {
+                timeRemainingText = `${estimatedSeconds}s`;
+            }
+            
+            itemsText = `Words: ${words_indexed.toLocaleString()} | Estimated Time Remaining: ${timeRemainingText}`;
+        } else {
+            // Default format for non-running or completed states
+            itemsText = `${processedMediaItems}/${totalDbMediaItems}`;
+            if (words_indexed > 0) {
+                itemsText += ` | Words: ${words_indexed.toLocaleString()}`;
+            }
+            if (statistics_updated > 0) {
+                itemsText += ` | Stats: ${statistics_updated.toLocaleString()}`;
+            }
+            if (performance.avg_docs_per_second > 0) {
+                itemsText += ` | ${performance.avg_docs_per_second.toFixed(1)}/s`;
+            }
         }
-        if (statistics_updated > 0) {
-            itemsText += ` | Stats: ${statistics_updated.toLocaleString()}`;
-        }
-        if (performance.avg_docs_per_second > 0) {
-            itemsText += ` | ${performance.avg_docs_per_second}/s`;
-        }
+        
         updateElementText(elems.itemsText, itemsText);
 
         // Update centralized process state for this parliament
