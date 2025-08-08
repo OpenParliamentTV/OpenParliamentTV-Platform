@@ -496,15 +496,15 @@ function triggerStatisticsIndexing($parliament, $isIncremental = false, $mediaId
         escapeshellarg($scriptPath),
         escapeshellarg($parliament)
     );
-    
+
     if ($isIncremental && !empty($mediaIds)) {
         $command .= ' --media-ids=' . escapeshellarg(implode(',', $mediaIds));
     } elseif ($isIncremental) {
         $command .= ' --incremental';
     }
     
-    $command .= ' > ' . escapeshellarg($logFile) . ' 2>&1 &';
-    
+    $command .= ' > ' . escapeshellarg($logFile);
+
     try {
         executeAsyncShellCommand($command);
         return createApiSuccessResponse([
