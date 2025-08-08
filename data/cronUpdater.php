@@ -335,7 +335,7 @@ if (is_cli()) {
             $statisticsScriptPath = realpath(__DIR__ . "/statisticsIndexer.php");
             if ($statisticsScriptPath && file_exists($statisticsScriptPath)) {
                 $statisticsCommand = $config["bin"]["php"] . " " . escapeshellarg($statisticsScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=200 > /dev/null 2>&1 &";
-                logger("info", "Triggering statistics indexing after main index completion: " . $statisticsCommand);
+                logger("info", "Triggering statistics indexing after main index completion");
                 exec($statisticsCommand);
                 logger("info", "Statistics indexing triggered successfully.");
             } else {
@@ -448,7 +448,7 @@ if (is_cli()) {
                         $statisticsScriptPath = realpath(__DIR__ . "/statisticsIndexer.php");
                         if ($statisticsScriptPath && file_exists($statisticsScriptPath)) {
                             $statisticsCommand = $config["bin"]["php"] . " " . escapeshellarg($statisticsScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=200 --media-ids=" . escapeshellarg(implode(',', $mediaIds)) . " > /dev/null 2>&1 &";
-                            logger("info", "Triggering incremental statistics indexing for " . count($mediaIds) . " items: " . $statisticsCommand);
+                            logger("info", "Triggering incremental statistics indexing for " . count($mediaIds) . " items");
                             exec($statisticsCommand);
                         }
                     }
