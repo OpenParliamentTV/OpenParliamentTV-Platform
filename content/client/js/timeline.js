@@ -177,7 +177,7 @@
             .data(years)
             .enter()
             .append("div")
-            .attr("class", "yearLabel")
+            .attr("class", (d, i) => i === 0 ? "yearLabel d-none" : "yearLabel d-none d-lg-block")
             .style("position", "absolute")
             .style("left", d => {
                 // Calculate position based on the first day of the year
@@ -192,7 +192,6 @@
             .style("transform", "translateY(-50%)")
             .style("padding-left", "4px")
             .text(d => d)
-            .style("display", (d, i) => i === 0 ? "none" : "block"); // Hide the first year label
         
         // Apply custom styles to year labels if provided
         if (this.styles.yearLabel) {
@@ -232,11 +231,10 @@
             .data(yearBoundaries)
             .enter()
             .append("div")
-            .attr("class", "yearLine")
+            .attr("class", (d, i) => i === 0 ? "yearLine d-none" : "yearLine d-none d-lg-block")
             .style("position", "absolute")
             .style("left", d => d.leftPercent + "%")
             .style("z-index", "1")
-            .style("display", (d, i) => i === 0 ? "none" : "block"); // Hide the first year line
         
         // Apply custom styles to year lines if provided
         if (this.styles.yearLine) {
