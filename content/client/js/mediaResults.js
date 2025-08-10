@@ -73,8 +73,8 @@ class MediaResultsManager {
             
             this.isLoading = false;
             
-            // Update filter bar visibility based on results
-            this.updateFilterBarVisibility(data);
+            // Update filter bar visibility based on search criteria
+            this.updateFilterBarVisibility(query);
             
             // Trigger callback if provided
             if (this.onResultsLoaded) {
@@ -210,17 +210,15 @@ class MediaResultsManager {
     }
     
     /**
-     * Update filter bar visibility based on result content
-     * Matches the logic from result.grid.php lines 27-28
-     * Shows filter bar when results are displayed, hides when intro hint is shown
+     * Update filter bar visibility based on search criteria
+     * Shows filter bar when there are valid search criteria (opposite of shouldShowHome logic)
      */
-    updateFilterBarVisibility(responseData) {
-        const $response = $(responseData);
-        const hasIntroHint = $response.find('#introHint').length > 0;
-        const hasResults = $response.find('.resultList').length > 0;
+    updateFilterBarVisibility(query) {
+        // Show filter container when there are valid search criteria
+        // (inverse of shouldShowHome logic)
+        const shouldShowFilters = !this.shouldShowHome(query);
         
-        // Show filter bar only when results are displayed (not intro hint)
-        if (hasResults && !hasIntroHint) {
+        if (shouldShowFilters) {
             $('.filterContainer').show();
         } else {
             $('.filterContainer').hide();
