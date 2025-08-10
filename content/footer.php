@@ -5,7 +5,7 @@
 				<div style="float: left; margin-right: 15px; padding: 15px 10px 0px 10px">
 						<div><?= L::fundedBy(); ?>:</div>
 						<div class="partnerLogos">
-							<a href="https://www.miz-babelsberg.de" target="_blank"><img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/miz-logo.png" style="height: 30px; margin-top: -9px;margin-right: 28px;"></a>
+							<a href="https://www.miz-babelsberg.de" target="_blank"><img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/miz-logo-square.png" style="height: 30px; margin-top: -9px;margin-right: 28px;"></a>
 							<a href="https://www.deutsche-stiftung-engagement-und-ehrenamt.de/" target="_blank"><img src="<?= $config["dir"]["root"] ?>/content/client/images/logos/dsee.svg" style="height: 43px; margin-top: -15px;margin-right: 34px;"></a>
 							<a href="https://www.bmbf.de" target="_blank"><img style="height: 57px; margin-top: -13px;" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/bmbf-de.svg"></a>
 							<a href="https://www.jetzt-mitwirken.de/" target="_blank"><img style="height: 67px; margin-top: -26px;margin-right: 0px;" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/mitwirken.png"></a>
