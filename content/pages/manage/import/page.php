@@ -1214,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     
     const entityTypeDetails = {
-        'person': { label: '<?= L::personPlural(); ?>', icon: 'icon-type-person', parent: 'person' },
+        'person': { label: '<?= L::personPlural(); ?> > person', icon: 'icon-type-person', parent: 'person' },
         'memberOfParliament': { label: '<?= L::personPlural(); ?> > memberOfParliament', icon: 'icon-type-person', parent: 'person' },
         'organisation': { label: '<?= L::organisations(); ?>', icon: 'icon-type-organisation', parent: 'organisation' },
         'legalDocument': { label: '<?= L::documents(); ?> > legalDocument', icon: 'icon-type-document', parent: 'document' },
@@ -1328,12 +1328,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 let totalItems = 0;
                 const typeInfo = entityTypeDetails[entityType];
                 
-                if (entityType === typeInfo.parent && appState.entityCounts[entityType]) {
-                    // This is a "total" entry like 'person', 'organisation', or 'term'
-                    totalItems = appState.entityCounts[entityType].total;
-                } else if (appState.entityCounts[typeInfo.parent] && appState.entityCounts[typeInfo.parent].subtypes && appState.entityCounts[typeInfo.parent].subtypes[entityType] !== undefined) {
-                    // This is a subtype entry like 'memberOfParliament'
+                // Always use subtype count for specific entity types
+                if (appState.entityCounts[typeInfo.parent] && appState.entityCounts[typeInfo.parent].subtypes && appState.entityCounts[typeInfo.parent].subtypes[entityType] !== undefined) {
+                    // This is a subtype entry like 'person', 'memberOfParliament', etc.
                     totalItems = appState.entityCounts[typeInfo.parent].subtypes[entityType];
+                } else if (entityType === typeInfo.parent && appState.entityCounts[entityType]) {
+                    // Fallback to total if subtype data not available
+                    totalItems = appState.entityCounts[entityType].total;
                 }
                 
                 // Fallback to progress file's total if available

@@ -309,7 +309,7 @@ if (is_cli()) {
                 switch ($type) {
                     case "person":
                         $tableName = $config["platform"]["sql"]["tbl"]["Person"];
-                        $whereClause = "";
+                        $whereClause = $db->parse("WHERE PersonType = 'person' OR PersonType IS NULL");
                         break;
                     case "memberOfParliament":
                         $tableName = $config["platform"]["sql"]["tbl"]["Person"];
