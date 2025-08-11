@@ -27,6 +27,18 @@ $(document).ready( function() {
 		//console.log(resultList);
 
 		updatePrevNext();
+		
+		// Update button states now that we have the result list
+		if (prevResultURL) {
+			$('#prevResultSnippetButton').attr("disabled", false);
+		} else {
+			$('#prevResultSnippetButton').attr("disabled", true);
+		}
+		if (nextResultURL) {
+			$('#nextResultSnippetButton').attr("disabled", false);
+		} else {
+			$('#nextResultSnippetButton').attr("disabled", true);
+		}
 	});
 
 	$('#toggleAutoplayResults').click(function() {

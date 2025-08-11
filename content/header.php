@@ -43,13 +43,17 @@ if (!isset($page)) {
 			<?php
 			if (isset($_REQUEST["a"]) && $_REQUEST["a"] == "media" && isset($isResult) && $isResult) {
 				$autoplayResultsClass = (isset($_REQUEST['playresults']) && boolval($_REQUEST['playresults'])) ? "active" : "";
-				$backParamStr = preg_replace('/(&playresults=[0-1])/', '', ltrim($paramStr, '&'));
-				$backParamStr = preg_replace('/(&context=[^&]+)/', '', $backParamStr);
+				// Remove unwanted parameters and rebuild clean parameter string
+				$backParamStr = preg_replace('/[?&](playresults=[0-1]|context=[^&]+|id=[^&]+)/', '', $paramStr);
+				$backParamStr = preg_replace('/^&|&&+/', '&', $backParamStr);
+				if (!empty($backParamStr)) {
+					$backParamStr = '?' . ltrim($backParamStr, '&');
+				}
 			?>
 				<div class="navbarCenterOptions">
 					<a href='<?= $config["dir"]["root"]."/search".$backParamStr ?>' class="btn btn-sm border-end-0 rounded-0 rounded-start"><span class="icon-left-open-big"></span><span class="icon-search"></span><span class="visually-hidden"><?= L::backToResults(); ?></span></a>
-					<div id="prevResultSnippetButton" class="btn btn-sm border-end-0 rounded-0"><span class="icon-left-open-big"></span><span class="visually-hidden"><?= L::previousSpeech(); ?></span></div>
-					<div id="nextResultSnippetButton" class="btn btn-sm rounded-0 rounded-end"><span class="icon-right-open-big"></span><span class="visually-hidden"><?= L::nextSpeech(); ?></span></div>
+					<div id="prevResultSnippetButton" class="btn btn-sm border-end-0 rounded-0" disabled="true"><span class="icon-left-open-big"></span><span class="visually-hidden"><?= L::previousSpeech(); ?></span></div>
+					<div id="nextResultSnippetButton" class="btn btn-sm rounded-0 rounded-end" disabled="true"><span class="icon-right-open-big"></span><span class="visually-hidden"><?= L::nextSpeech(); ?></span></div>
 					<div id="toggleAutoplayResults" class="navbar-text switch-container <?=$autoplayResultsClass?>">
 						<span class="switch">
 							<span class="slider round"></span>

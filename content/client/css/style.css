@@ -847,7 +847,7 @@ body.darkmode .list-group-item.working, body.darkmode .list-group-item.working:h
     background-color: transparent;
     pointer-events: none;
     cursor: auto;
-    border-color: #dee2e6;
+    border-color: var(--border-color);
 }
 
 main .btn[data-bs-toggle="collapse"]:not(.collapsed) {
