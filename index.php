@@ -421,7 +421,7 @@ switch ($page) {
 	* USER-SPECIFIC / ADMINISTRATION
 	**********************************/
 	case "manage":
-		$pageTitle = L::dashboard();
+		$pageTitle = '<span class="icon-th-1"></span>'.L::dashboard();
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
@@ -437,7 +437,7 @@ switch ($page) {
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard(),
+				'label' => '<span class="icon-th-1 me-0"></span>',
 				'path' => '/manage'
 			],
 			[
@@ -455,7 +455,7 @@ switch ($page) {
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
-					'label' => L::dashboard(),
+					'label' => '<span class="icon-th-1 me-0"></span>',
 					'path' => '/manage'
 				],
 				[
@@ -473,7 +473,7 @@ switch ($page) {
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
-					'label' => L::dashboard(),
+					'label' => '<span class="icon-th-1 me-0"></span>',
 					'path' => '/manage'
 				],
 				[
@@ -489,7 +489,7 @@ switch ($page) {
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard(),
+				'label' => '<span class="icon-th-1 me-0"></span>',
 				'path' => '/manage'
 			],
 			[
@@ -506,7 +506,7 @@ switch ($page) {
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard(),
+				'label' => '<span class="icon-th-1 me-0"></span>',
 				'path' => '/manage'
 			],
 			[
@@ -521,7 +521,7 @@ switch ($page) {
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard(),
+				'label' => '<span class="icon-th-1 me-0"></span>',
 				'path' => '/manage'
 			],
 			[
@@ -539,7 +539,7 @@ switch ($page) {
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
-					'label' => L::dashboard(),
+					'label' => '<span class="icon-th-1 me-0"></span>',
 					'path' => '/manage'
 				],
 				[
@@ -557,7 +557,7 @@ switch ($page) {
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
-					'label' => L::dashboard(),
+					'label' => '<span class="icon-th-1 me-0"></span>',
 					'path' => '/manage'
 				],
 				[
@@ -573,7 +573,7 @@ switch ($page) {
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard(),
+				'label' => '<span class="icon-th-1 me-0"></span>',
 				'path' => '/manage'
 			],
 			[
@@ -589,7 +589,7 @@ switch ($page) {
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
 			[
-				'label' => L::dashboard(),
+				'label' => '<span class="icon-th-1 me-0"></span>',
 				'path' => '/manage'
 			],
 			[
@@ -618,7 +618,7 @@ switch ($page) {
             $pageType = 'admin';
             $pageBreadcrumbs = [
 				[
-					'label' => L::dashboard(),
+					'label' => '<span class="icon-th-1 me-0"></span>',
 					'path' => '/manage'
 				],
 				[
@@ -652,7 +652,7 @@ switch ($page) {
             $pageType = 'admin';
             $pageBreadcrumbs = [
 				[
-					'label' => L::dashboard(),
+					'label' => '<span class="icon-th-1 me-0"></span>',
 					'path' => '/manage'
 				],
 				[
@@ -686,7 +686,7 @@ switch ($page) {
             $pageType = 'admin';
             $pageBreadcrumbs = [
 				[
-					'label' => L::dashboard(),
+					'label' => '<span class="icon-th-1 me-0"></span>',
 					'path' => '/manage'
 				],
 				[
@@ -721,7 +721,7 @@ switch ($page) {
 				$pageType = 'admin';
 				$pageBreadcrumbs = [
 					[
-						'label' => L::dashboard(),
+						'label' => '<span class="icon-th-1 me-0"></span>',
 						'path' => '/manage'
 					],
 					[
@@ -729,7 +729,7 @@ switch ($page) {
 						'path' => '/manage/users'
 					],
 					[
-						'label' => '<span class="icon-pencil"></span>'. L::user() .': '. $apiResult["data"]["UserName"]
+						'label' => '<span class="icon-pencil"></span>'. $apiResult["data"]["UserName"]
 					]
 				];
 				include_once("./content/pages/manage/users/user-detail/page.php");
@@ -740,7 +740,7 @@ switch ($page) {
 			$pageType = 'admin';
 			$pageBreadcrumbs = [
 				[
-					'label' => L::dashboard(),
+					'label' => '<span class="icon-th-1 me-0"></span>',
 					'path' => '/manage'
 				],
 				[

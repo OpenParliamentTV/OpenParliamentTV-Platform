@@ -92,6 +92,13 @@ header .navbar {
     transition-duration: 600ms;
 }
 
+header .navbar .container-fluid {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    flex-wrap: nowrap; /* Prevent wrapping to new line */
+}
+
 header .navbar .navbar-text {
     display: inline-block;
     color: var(--primary-fg-color);
@@ -131,6 +138,7 @@ header .dropdown-menu {
 header .navbar .navbar-text.brand {
     padding-left: 44px;
     padding-right: 0px;
+    flex-shrink: 0; /* Don't allow brand to shrink */
 }
 
 header .navbar .navbar-text.brand img {
@@ -150,7 +158,15 @@ header .navbar .navbar-text:hover, header .navbar .navbar-text:focus {
 }
 
 header .navbarCenterOptions {
-    margin-left: 20px;
+    flex-shrink: 0; /* Don't allow center options to shrink */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1; /* Take remaining space and center within it */
+}
+
+header .navbarRightOptions {
+    flex-shrink: 0; /* Don't allow right options to shrink */
 }
 
 header .navbarCenterOptions #toggleAutoplayResults.active .icon-play-1::before {
@@ -211,38 +227,64 @@ footer {
     box-shadow: 0px 0px 4px var(--shadow-color);
 }
 
+/* Flexbox layout for navbar breadcrumb */
+header .navbar .container-fluid > div:first-child {
+    display: flex;
+    align-items: center;
+    min-width: 0; /* Allow flex item to shrink */
+    overflow: hidden; /* Ensure truncation works */
+    max-width: calc(100% - 80px); /* Reserve space for menu button */
+}
+
+/* When there are no center options, breadcrumb container should expand */
+header .navbar .container-fluid > div:first-child.flex-fill {
+    flex: 1; /* Take up available space when no center options */
+}
+
+/* Responsive space adjustments */
+@media (max-width: 576px) {
+    header .navbar .container-fluid > div:first-child {
+        max-width: calc(100% - 70px); /* Less space needed on small screens */
+    }
+}
+
+@media (min-width: 768px) {
+    header .navbar .container-fluid > div:first-child {
+        max-width: calc(100% - 90px); /* More space for larger menu button */
+    }
+}
+
+/* When center options are present (media player pages), reserve more space */
+header .navbar .container-fluid:has(.navbarCenterOptions) > div:first-child {
+    max-width: calc(100% - 250px); /* Reserve space for center options + menu */
+}
+
+@media (max-width: 768px) {
+    header .navbar .container-fluid:has(.navbarCenterOptions) > div:first-child {
+        max-width: calc(100% - 180px); /* Less space on smaller screens */
+    }
+}
+
 .breadcrumb-page {
-    float: left;
+    display: flex;
+    align-items: center;
+    min-width: 0; /* Allow flex item to shrink */
 }
 
 .breadcrumb-page .text-truncate {
-    max-width: 218px;
+    /* Remove fixed max-widths - let flex handle the space */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0; /* Important for flex text truncation */
 }
 
-@media (min-width:576px) {
-    .breadcrumb-page .text-truncate {
-        max-width: 300px;
-    }
-}
-@media (min-width:620px) {
-    .breadcrumb-page .text-truncate {
-        max-width: 380px;
-    }
-}
-@media (min-width:768px) {
-    .breadcrumb-page .text-truncate {
-        max-width: 380px;
-    }
-}
-@media (min-width:992px) {
-    .breadcrumb-page .text-truncate {
-        max-width: 600px;
-    }
-}
-@media (min-width:1200px) {
-    .breadcrumb-page .text-truncate {
-        max-width: 820px;
-    }
+/* Icon-only breadcrumb items (like dashboard) should not truncate */
+.breadcrumb-page .text-truncate:has([class^="icon-"].me-0:only-child),
+.breadcrumb-page .text-truncate:has([class*=" icon-"].me-0:only-child) {
+    overflow: visible;
+    text-overflow: unset;
+    flex-shrink: 0;
 }
 
 .breadcrumb-page [class^="icon-"] {
@@ -1056,6 +1098,7 @@ body.darkmode .detailsHeader .btn:focus img {
     padding: 1rem;
     margin: 2px 0;
     min-height: 200px;
+    overflow-x: auto;
 }
 
 .tab-content .tab-pane .resultWrapper {
