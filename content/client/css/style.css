@@ -1645,6 +1645,16 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
     padding: 0px 5px;
 }
 
+@media (max-width: 575.98px) {
+    #suggestionContainerText .suggestionItem:nth-child(n+6) {
+        display: none !important;
+    }
+    
+    #suggestionContainerEntities .suggestionItem:nth-child(n+4) {
+        display: none !important;
+    }
+}
+
 .filterContainer {
     padding: 10px;
     background: var(--primary-bg-color);

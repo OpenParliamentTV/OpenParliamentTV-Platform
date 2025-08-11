@@ -36,7 +36,7 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
                             <hr class="my-1">
                             <div id="suggestionContainerText"></div>
                         </div>
-                        <div class="col col-12 col-sm-6 col-lg-7">
+                        <div class="col col-12 col-sm-6 col-lg-7 mt-3 mt-sm-0">
                             <div style="font-weight: bolder;"><?= L::entities(); ?><span class="alert ms-2 mb-0 px-1 py-0 alert-warning"><span class="icon-attention me-1"></span>beta</span></div>
                             <hr class="my-1">
                             <div id="suggestionContainerEntities"></div>
