@@ -35,61 +35,39 @@ function flattenEntityJSON($array, $prefix = '') {
 function getMainSpeakerFromPeopleArray($annotationsArray, $peopleArray) {
 
     if (!is_array($annotationsArray) || !is_array($peopleArray)) {
-        return ['attributes' => ['label' => '']]; // Return empty speaker if data missing
+        return null;
     }
 
     foreach ($annotationsArray as $annotation) {
         if ($annotation["attributes"]["context"] == "main-speaker") {
             foreach ($peopleArray as $person) {
                 if ($person["id"] == $annotation["id"]) {
-                    $mainSpeaker = $person;
+                    return $person;
                 }
             }
         }
     }
 
-    if (!isset($mainSpeaker)) {
-        //TODO
-        //$mainSpeaker = $peopleArray[0];
-        foreach ($annotationsArray as $annotation) {
-            if (preg_match("~president~",$annotation["attributes"]["context"])) {
-                foreach ($peopleArray as $person) {
-                    if ($person["id"] == $annotation["id"]) {
-                        $mainSpeaker = $person;
-                    }
-                }
-            }
-        }
-    }
-    if (!isset($mainSpeaker)) {
-        $mainSpeaker = array("attributes" => array("label" => ""));
-    }
-    
-    return $mainSpeaker;
+    return null;
 }
 
 function getMainFactionFromOrganisationsArray($annotationsArray, $organisationsArray) {
 
     if (!is_array($annotationsArray) || !is_array($organisationsArray)) {
-        return null; // Return null if data missing
+        return null;
     }
 
     foreach ($annotationsArray as $annotation) {
         if ($annotation["attributes"]["context"] == "main-speaker-faction") {
             foreach ($organisationsArray as $organisation) {
                 if ($organisation["id"] == $annotation["id"]) {
-                    $mainFaction = $organisation;
+                    return $organisation;
                 }
             }
         }
     }
 
-    if (!isset($mainFaction)) {
-        //$mainFaction = $organisationsArray[0];
-        $mainFaction = null;
-    }
-
-    return $mainFaction;
+    return null;
 }
 
 ?>
