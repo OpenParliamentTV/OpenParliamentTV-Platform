@@ -198,13 +198,13 @@ class MediaResultsManager {
         // Check if there are valid search criteria in the query
         const urlParams = new URLSearchParams(query);
         const hasValidCriteria = urlParams.get('q') || 
-                                urlParams.get('personID') || 
-                                urlParams.get('organisationID') || 
-                                urlParams.get('documentID') || 
-                                urlParams.get('termID') || 
-                                urlParams.get('sessionID') || 
-                                urlParams.get('agendaItemID') || 
-                                urlParams.get('electoralPeriodID');
+                                urlParams.get('personID') || urlParams.has('personID[]') ||
+                                urlParams.get('organisationID') || urlParams.has('organisationID[]') ||
+                                urlParams.get('documentID') || urlParams.has('documentID[]') ||
+                                urlParams.get('termID') || urlParams.has('termID[]') ||
+                                urlParams.get('sessionID') || urlParams.has('sessionID[]') ||
+                                urlParams.get('agendaItemID') || urlParams.has('agendaItemID[]') ||
+                                urlParams.get('electoralPeriodID') || urlParams.has('electoralPeriodID[]');
         
         return !hasValidCriteria;
     }
