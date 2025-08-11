@@ -219,7 +219,7 @@ class MediaResultsManager {
         const shouldShowFilters = !this.shouldShowHome(query);
         
         if (shouldShowFilters) {
-            $('.filterContainer').show();
+            $('.filterContainer').css('display', '');
         } else {
             $('.filterContainer').hide();
         }
