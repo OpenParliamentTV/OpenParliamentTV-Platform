@@ -141,8 +141,21 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						
 						$mainSpeaker = getMainSpeakerFromPeopleArray($result_item["annotations"]['data'] ?? [], $result_item["relationships"]["people"]['data'] ?? []);
 						$mainFaction = getMainFactionFromOrganisationsArray($result_item["annotations"]['data'] ?? [], $result_item["relationships"]["organisations"]['data'] ?? []);
+						$mainSpeakerRole = getRoleFromMainSpeakerAnnotation($result_item["annotations"]['data'] ?? []);
 
-						$highlightedName = $mainSpeaker ? $mainSpeaker['attributes']['label'] : '';
+						$speakerName = $mainSpeaker ? $mainSpeaker['attributes']['label'] : '';
+						$factionName = $mainFaction ? $mainFaction['attributes']['label'] : '';
+						$roleName = $mainSpeakerRole ? translateContextValue($mainSpeakerRole) : '';
+						
+						// Show speaker name with faction if available, otherwise with role
+						$speakerDisplay = $speakerName;
+						if ($factionName) {
+							$speakerDisplay .= ' (' . $factionName . ')';
+						} elseif ($roleName) {
+							$speakerDisplay .= ' (' . $roleName . ')';
+						}
+
+						$highlightedName = $speakerDisplay;
 						if (isset($_REQUEST['person']) && strlen($_REQUEST['person']) > 1) {
 							// Escape user input before using in HTML, then apply highlighting safely
 							$searchTerm = h($_REQUEST['person']);

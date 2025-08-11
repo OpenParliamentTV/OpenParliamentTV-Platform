@@ -70,4 +70,59 @@ function getMainFactionFromOrganisationsArray($annotationsArray, $organisationsA
     return null;
 }
 
+function getRoleFromMainSpeakerAnnotation($annotationsArray) {
+
+    if (!is_array($annotationsArray)) {
+        return null;
+    }
+
+    foreach ($annotationsArray as $annotation) {
+        if ($annotation["attributes"]["context"] == "main-speaker") {
+            if (isset($annotation["attributes"]["additionalInformation"]["role"]) && 
+                !empty($annotation["attributes"]["additionalInformation"]["role"])) {
+                return $annotation["attributes"]["additionalInformation"]["role"];
+            }
+        }
+    }
+
+    return null;
+}
+
+function translateContextValue($value, $prefix = 'context') {
+    if (!$value) {
+        return null;
+    }
+    
+    // Security: Only allow alphanumeric characters, dashes, and underscores
+    // This prevents potential injection attacks through translation keys
+    if (!preg_match('/^[a-zA-Z0-9_-]+$/', $value)) {
+        return $value; // Return original if contains invalid characters
+    }
+    
+    // Security: Limit length to prevent excessively long translation keys
+    if (strlen($value) > 50) {
+        return $value; // Return original if too long
+    }
+    
+    // Convert dash-separated values to camelCase (e.g., "interim-president" -> "interimPresident")
+    // For single-word values like "Bundeskanzler", just use as-is
+    if (strpos($value, '-') !== false) {
+        $camelCaseValue = lcfirst(implode('', array_map('ucfirst', explode('-', $value))));
+        $translationKey = $prefix . $camelCaseValue;
+    } else {
+        // For single words, just prefix and lowercase the first letter
+        $translationKey = $prefix . lcfirst($value);
+    }
+    
+    // Try to get translation, fallback to original if not found
+    $translatedValue = L::$translationKey();
+    
+    // If translation key equals the returned value, it means no translation was found
+    if ($translatedValue === $translationKey) {
+        return $value; // Fallback to original
+    }
+    
+    return $translatedValue;
+}
+
 ?>

@@ -61,8 +61,10 @@ $relatedContentsPanel = ob_get_clean();
         <div class="playerTitle">
             <div class="speechMeta"><?= h($formattedDate) ?> | <span class="d-none d-sm-inline"><?= h($speech["attributes"]["parliamentLabel"]) ?> / </span><a href="../electoralPeriod/<?= hAttr($speech["relationships"]["electoralPeriod"]["data"]["id"]) ?>"><?= h($speech["relationships"]["electoralPeriod"]['data']['attributes']['number']) ?><span class="d-none d-xl-inline">. <?= L::electoralPeriodShort(); ?></span></a> / <a href="../session/<?= hAttr($speech["relationships"]["session"]["data"]["id"]) ?>"><span class="d-none d-xl-inline"><?= L::session(); ?> </span><?= h($speech["relationships"]["session"]['data']['attributes']['number']) ?></a> / <a href="../agendaItem/<?= hAttr($speech["attributes"]["parliament"]."-".$speech["relationships"]["agendaItem"]["data"]["id"]) ?>"><?= h($speech["relationships"]["agendaItem"]["data"]["attributes"]["officialTitle"]) ?></a></div>
             <h3><a href="../person/<?= hAttr($mainSpeaker["id"]) ?>"><?= h($mainSpeaker['attributes']['label']) ?></a><?php 
-                if (isset($mainFaction['attributes']['label'])) {
+                if ($mainFaction) {
                 ?><a href="../organisation/<?= hAttr($mainFaction["id"]) ?>"><span class="partyIndicator" data-faction="<?= hAttr($mainFaction["id"]) ?>"><?= h($mainFaction["attributes"]["label"]) ?></span></a><?php 
+                } elseif ($mainSpeakerRole) {
+                ?><span class="partyIndicator"><?= h(translateContextValue($mainSpeakerRole)) ?></span><?php 
                 } ?> - <?= h($speech["relationships"]["agendaItem"]["data"]["attributes"]["title"]) ?></h3>
         </div>
         <div class="playerTabs">

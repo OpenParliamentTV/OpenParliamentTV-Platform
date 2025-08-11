@@ -1,18 +1,19 @@
 <?php
 require_once(__DIR__ . '/../../modules/utilities/security.php');
+require_once(__DIR__ . '/../../modules/utilities/functions.entities.php');
 //Entity-specific values
 
 $entity = $relationshipItem;
 $countFound = ((isset($tmpCount)) ? $tmpCount : 0);
 
-$contextLabelIdentifier = null;
+$contextLabel = null;
 if (isset($entity["attributes"]["context"]) 
     && $entity["attributes"]["context"] != "NER"
     && $entity["attributes"]["context"] != "main-speaker-faction"
     && $entity["attributes"]["context"] != "vice-president-faction"
     && $entity["attributes"]["context"] != "speaker-faction" 
     && $entity["attributes"]["context"] != "proceedingsReference") {
-    $contextLabelIdentifier = lcfirst(implode('', array_map('ucfirst', explode('-', $entity["attributes"]["context"]))));
+    $contextLabel = translateContextValue($entity["attributes"]["context"]);
 }
 
 $secondaryLabel = isset($entity["attributes"]["labelAlternative"][0]) ? $entity["attributes"]["labelAlternative"][0] : '';
@@ -44,8 +45,8 @@ if ($entity["type"] == "person" && isset($entity["attributes"]["faction"]["label
                 <?php if ($entity["type"] == "document" && isset($relationshipItem["attributes"]["additionalInformation"]["creator"][0])) { ?>
                     <div class="text-truncate"><?= L::by() ?>: <?= h($relationshipItem["attributes"]["additionalInformation"]["creator"][0]) ?></div>
                 <?php } ?>
-                <?php if ($contextLabelIdentifier) { ?>
-                    <div><span class="icon-megaphone"></span><?= L('context'.$contextLabelIdentifier) ?></div>
+                <?php if ($contextLabel) { ?>
+                    <div><span class="icon-megaphone"></span><?= h($contextLabel) ?></div>
                 <?php } ?>
                 <?php if ($countFound > 0 && isset($annotation) && isset($annotation["attributes"]["context"]) && $annotation["attributes"]["context"] == "NER") { ?>
                     <div><?= L::found() ?>: <span class="badge rounded-pill"><?= h($countFound) ?></span></div>
