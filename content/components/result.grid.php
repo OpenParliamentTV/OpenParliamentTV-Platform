@@ -131,7 +131,7 @@ if ($totalResults != 0) {
 				// No divider needed for duration sorting as items are already sorted by duration
 			}
 
-			$highlightedName = $mainSpeaker['attributes']['label'];
+			$highlightedName = $mainSpeaker ? $mainSpeaker['attributes']['label'] : '';
 			if (isset($_REQUEST['person']) && strlen($_REQUEST['person']) > 1) {
 				// Escape user input before using in HTML, then apply highlighting safely
 				$searchTerm = h($_REQUEST['person']);

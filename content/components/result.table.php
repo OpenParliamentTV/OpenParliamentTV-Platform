@@ -142,7 +142,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						$mainSpeaker = getMainSpeakerFromPeopleArray($result_item["annotations"]['data'] ?? [], $result_item["relationships"]["people"]['data'] ?? []);
 						$mainFaction = getMainFactionFromOrganisationsArray($result_item["annotations"]['data'] ?? [], $result_item["relationships"]["organisations"]['data'] ?? []);
 
-						$highlightedName = $mainSpeaker['attributes']['label'];
+						$highlightedName = $mainSpeaker ? $mainSpeaker['attributes']['label'] : '';
 						if (isset($_REQUEST['person']) && strlen($_REQUEST['person']) > 1) {
 							// Escape user input before using in HTML, then apply highlighting safely
 							$searchTerm = h($_REQUEST['person']);
