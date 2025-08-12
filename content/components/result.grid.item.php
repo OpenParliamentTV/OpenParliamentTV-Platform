@@ -48,7 +48,7 @@ $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedP
 		
 		if ($snippets) {
 			echo '</div>';
-			echo '<div class="resultTimeline">';
+			echo '<div class="hitTimeline">';
 		}
 
 		if ($snippets && $result_item["attributes"]['duration'] !== 0) {

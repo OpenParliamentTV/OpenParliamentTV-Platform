@@ -2140,7 +2140,7 @@ body.darkmode .resultItem .resultSnippets .resultSnippet:hover {
     display: none;
 }
 
-.resultItem .resultTimeline {
+.resultItem .hitTimeline {
     position: absolute;
     bottom: 10px;
     width: calc(100% - 20px);
@@ -2149,7 +2149,7 @@ body.darkmode .resultItem .resultSnippets .resultSnippet:hover {
     left: 8px;
 }
 
-.resultItem .resultTimeline .hit {
+.resultItem .hitTimeline .hit {
     position: absolute;
     top: 0px;
     min-width: 6px;
