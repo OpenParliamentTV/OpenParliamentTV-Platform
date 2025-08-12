@@ -236,6 +236,100 @@ function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $se
     ];
 }
 
+function electoralPeriodSearch($parameter) {
+    global $config;
+
+    $outputLimit = 25;
+
+    // Validate parliament parameter
+    if (!isset($parameter["parliament"])) {
+        return createApiErrorMissingParameter("parliament");
+    }
+
+    $parliament = $parameter["parliament"];
+    if (!isset($config["parliament"][$parliament])) {
+        return createApiErrorResponse(
+            422,
+            1,
+            "messageErrorInvalidParameter",
+            "messageErrorInvalidParameter",
+            ["parameter" => "parliament"]
+        );
+    }
+
+    // Get database connection for the specified parliament
+    $db = getApiDatabaseConnection('parliament', $parliament);
+    if (!is_object($db)) {
+        return $db; // Error response from getApiDatabaseConnection
+    }
+
+    try {
+        // Build base query
+        $query = "SELECT ElectoralPeriodID, ElectoralPeriodNumber, ElectoralPeriodDateStart, ElectoralPeriodDateEnd FROM ?n";
+        
+        $conditions = [];
+        $queryParams = [$config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"]];
+
+        // Always add parliament filter (implicit since we're querying specific parliament database)
+        $conditions[] = "1";
+
+        // Add WHERE clause if conditions exist
+        if (count($conditions) > 0) {
+            $query .= " WHERE " . implode(" AND ", $conditions);
+        }
+
+        // Add ordering by electoral period number ascending
+        $query .= " ORDER BY ElectoralPeriodNumber ASC";
+
+        // Get total count for pagination
+        $countQuery = "SELECT COUNT(ElectoralPeriodID) as count FROM ?n";
+        if (count($conditions) > 0 && $conditions[0] !== "1") {
+            $countQuery .= " WHERE " . implode(" AND ", array_slice($conditions, 0, -1)); // Remove parliament condition for count
+        }
+        $totalCount = $db->getOne($countQuery, $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"]);
+
+        // Add pagination
+        $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
+        $query .= $db->parse(" LIMIT ?i, ?i", ($page-1)*$outputLimit, $outputLimit);
+
+        // Execute query
+        $findings = $db->getAll($query, ...$queryParams);
+
+        // Format results according to JSON:API specification
+        $data = [];
+        foreach ($findings as $finding) {
+            $data[] = [
+                "type" => "electoralPeriod",
+                "id" => $finding["ElectoralPeriodID"],
+                "attributes" => [
+                    "number" => (int)$finding["ElectoralPeriodNumber"],
+                    "dateStart" => $finding["ElectoralPeriodDateStart"],
+                    "dateEnd" => $finding["ElectoralPeriodDateEnd"],
+                    "parliament" => $parliament,
+                    "parliamentLabel" => $config["parliament"][$parliament]["label"]
+                ],
+                "links" => [
+                    "self" => $config["dir"]["api"]."/electoralPeriod/".$finding["ElectoralPeriodID"]
+                ]
+            ];
+        }
+
+        return createApiSuccessResponse(
+            $data,
+            [
+                "page" => $page,
+                "pageTotal" => ceil($totalCount/$outputLimit)
+            ],
+            [
+                "self" => $config["dir"]["api"]."/search/electoralPeriods?parliament=".$parliament
+            ]
+        );
+
+    } catch (exception $e) {
+        return createApiErrorDatabaseError($e->getMessage());
+    }
+}
+
 function electoralPeriodChange($params) {
     global $config;
 
