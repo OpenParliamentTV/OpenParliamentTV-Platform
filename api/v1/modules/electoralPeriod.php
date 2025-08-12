@@ -324,7 +324,8 @@ function electoralPeriodChange($params) {
                     "[name='".$key."']"
                 );
             }
-            $updateParams[] = $db->parse("?n=?s", $key, $value);
+            // Convert empty strings to NULL for MySQL DATE fields
+            $updateParams[] = $db->parse("?n=?s", $key, empty($value) ? null : $value);
         }
     }
 
