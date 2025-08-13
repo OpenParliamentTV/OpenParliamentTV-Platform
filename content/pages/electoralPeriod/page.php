@@ -99,7 +99,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
 	$(document).ready( function() {
-		renderFilteredResultTimeline('.resultTimeline');
+		renderFilteredResultTimeline('.resultTimeline', { showElectoralPeriods: true });
 		updateMediaList(<?= json_encode("electoralPeriodID=" . $apiResult["data"]["id"] . "&sort=date-asc", JSON_HEX_QUOT | JSON_HEX_APOS) ?>);
 		$('#dataTable').bootstrapTable({
 			classes: 'table-striped table-bordered',

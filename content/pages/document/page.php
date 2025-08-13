@@ -129,7 +129,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
 	$(document).ready( function() {
-		renderFilteredResultTimeline('.resultTimeline');
+		renderFilteredResultTimeline('.resultTimeline', { showElectoralPeriods: true });
 		updateMediaList(<?= json_encode("documentID=" . $apiResult["data"]["id"] . "&context=proceedingsReference&sort=date-desc", JSON_HEX_QUOT | JSON_HEX_APOS) ?>);
 		updateMediaList(<?= json_encode("documentID=" . $apiResult["data"]["id"] . "&context=NER&sort=date-desc", JSON_HEX_QUOT | JSON_HEX_APOS) ?>, "#nerListContainer");
 		$('#dataTable').bootstrapTable({

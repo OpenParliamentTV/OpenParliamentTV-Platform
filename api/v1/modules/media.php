@@ -1711,6 +1711,31 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
             }
         }
         
+        // Add electoral periods data for timeline visualization
+        require_once(__DIR__ . "/electoralPeriod.php");
+        
+        $electoralPeriodsData = electoralPeriodGetItemsFromDB("all");
+        $electoralPeriods = [];
+        
+        // Convert to JSON:API format consistent with electoralPeriodSearch output
+        if (isset($electoralPeriodsData["data"]) && is_array($electoralPeriodsData["data"])) {
+            foreach ($electoralPeriodsData["data"] as $ep) {
+                $electoralPeriods[] = [
+                    "type" => "electoralPeriod",
+                    "id" => $ep["ElectoralPeriodID"],
+                    "attributes" => [
+                        "number" => (int)$ep["ElectoralPeriodNumber"],
+                        "dateStart" => $ep["ElectoralPeriodDateStart"],
+                        "dateEnd" => $ep["ElectoralPeriodDateEnd"],
+                        "parliament" => $ep["Parliament"],
+                        "parliamentLabel" => $ep["ParliamentLabel"]
+                    ]
+                ];
+            }
+        }
+        
+        $return["meta"]["attributes"]["electoralPeriods"] = $electoralPeriods;
+        
         // Now $return["meta"] and $return["links"] are fully populated
         return createApiSuccessResponse(
             $return["data"],

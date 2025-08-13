@@ -13,9 +13,9 @@ class FilterController {
         this.baseUrl = options.baseUrl || 'search';
         this.onFilterChange = options.onFilterChange || null;
         
-        // Date range configuration - use global variables if available, otherwise defaults
-        this.minDate = (typeof minDate !== 'undefined') ? minDate : new Date('2013-10-01');
-        this.maxDate = (typeof maxDate !== 'undefined') ? maxDate : new Date();
+        // Date range configuration - use fallback date, actual minDate calculated dynamically from electoral periods
+        this.minDate = new Date("2013-10-01");
+        this.maxDate = new Date();
         
         // Chart instances
         this.factionChart = null;

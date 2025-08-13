@@ -124,7 +124,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <script type="text/javascript">
 	$(document).ready( function() {
-		renderFilteredResultTimeline('.resultTimeline');
+		renderFilteredResultTimeline('.resultTimeline', { showElectoralPeriods: true });
 		updateMediaList(<?= json_encode("organisationID=" . $apiResult["data"]["id"] . $contextString . "&sort=date-desc", JSON_HEX_QUOT | JSON_HEX_APOS) ?>);
 		updateMediaList(<?= json_encode("organisationID=" . $apiResult["data"]["id"] . "&context=NER&sort=date-desc", JSON_HEX_QUOT | JSON_HEX_APOS) ?>, "#nerListContainer");
 		$('#dataTable').bootstrapTable({

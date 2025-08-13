@@ -1,5 +1,5 @@
 // Search Page Controller - handles search-specific UI and orchestrates components
-var minDate = new Date('2013-10-01');
+var minDate = new Date("2013-10-01"); // Fallback date - actual minDate calculated dynamically from electoral periods
 var maxDate = new Date();
 var suggestionsTextAjax,
 	suggestionsEntitiesAjax,
@@ -891,17 +891,32 @@ function updateTimelineViz() {
         });
     }
     
-    // Initialize or update the timeline visualization
-    if (!timelineViz) {
-        timelineViz = new TimelineViz({
-            container: 'timelineVizWrapper',
-            data: timelineData,
-            minDate: minDate,
-            maxDate: maxDate
-        });
-    } else {
-        timelineViz.update(timelineData, minDate, maxDate);
+    // Get electoral periods from search results if available
+    var electoralPeriodsData = [];
+    if (resultsAttributes && resultsAttributes.electoralPeriods) {
+        electoralPeriodsData = resultsAttributes.electoralPeriods;
     }
+    
+    // Calculate dynamic minDate from electoral periods data or use fallback
+    var dynamicMinDate = calculateTimelineMinDate(electoralPeriodsData, minDate.toISOString().slice(0,10));
+    
+    // Function to initialize timeline with electoral periods
+    function initTimeline() {
+        if (!timelineViz) {
+            timelineViz = new TimelineViz({
+                container: 'timelineVizWrapper',
+                data: timelineData,
+                minDate: dynamicMinDate,
+                maxDate: maxDate,
+                showElectoralPeriods: true,
+                electoralPeriods: electoralPeriodsData || []
+            });
+        } else {
+            timelineViz.update(timelineData, dynamicMinDate, maxDate);
+        }
+    }
+    
+    initTimeline();
 }
 
 function updateFactionChart() {
