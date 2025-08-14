@@ -326,7 +326,7 @@ function applyDefaultFilters(&$filter) {
     foreach ($excludedTitles as $title) {
         $filter["must_not"][] = [
             "match_phrase" => [
-                "relationships.agendaItem.data.attributes.title" => $title
+                "relationships.agendaItem.data.attributes.title.keyword" => $title
             ]
         ];
     }
