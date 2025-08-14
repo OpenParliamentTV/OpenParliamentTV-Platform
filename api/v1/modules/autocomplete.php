@@ -299,7 +299,7 @@ function entitiesAutocomplete($query) {
         // 1. People with type memberOfParliament
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
-            $peopleMP = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, p.PersonThumbnailURI, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType = 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(p.PersonLabelAlternative) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
+            $peopleMP = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, p.PersonThumbnailURI, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType = 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(JSON_UNQUOTE(JSON_EXTRACT(p.PersonLabelAlternative, '$[0]'))) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
                 $config["platform"]["sql"]["tbl"]["Person"],
                 $config["platform"]["sql"]["tbl"]["Organisation"],
                 "%".$query."%",
@@ -340,10 +340,11 @@ function entitiesAutocomplete($query) {
             }
         }
         
-        // 2. Other people (all without type memberOfParliament)
+        // 2. Other people (all without type memberOfParliament) - TEMPORARILY DISABLED
+        /* Temporarily disabled - only showing memberOfParliament in suggestions
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
-            $peopleOther = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, p.PersonThumbnailURI, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType != 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(p.PersonLabelAlternative) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
+            $peopleOther = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, p.PersonThumbnailURI, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType != 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(JSON_UNQUOTE(JSON_EXTRACT(p.PersonLabelAlternative, '$[0]'))) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
                 $config["platform"]["sql"]["tbl"]["Person"],
                 $config["platform"]["sql"]["tbl"]["Organisation"],
                 "%".$query."%",
@@ -383,6 +384,7 @@ function entitiesAutocomplete($query) {
                 }
             }
         }
+        */
         
         // 3. Organisations
         if (count($results) < $maxResults) {
