@@ -32589,6 +32589,8 @@ window.FrameTrail_L10n['en-US'] = {
 	"GenericLanguage": "Language",
 	"GenericLastChanged": "Last changed",
 	"GenericName": "Name",
+	"GenericNo": "No",
+	"GenericNoDiscard": "Discard",
 	"GenericNone": "None",
 	"GenericOptional": "optional",
 	"GenericOptions": "Options",
@@ -32605,6 +32607,7 @@ window.FrameTrail_L10n['en-US'] = {
 	"GenericTextTranscript": "Text Transcript",
 	"GenericTimelines": "Timelines",
 	"GenericType": "Type",
+	"GenericYes": "Yes",
 	"HypervideoAdd": "Add Hypervideo",
 	"HypervideoNew": "New Hypervideo",
 	"LocationSearch": "Location Search",
@@ -32897,6 +32900,8 @@ window.FrameTrail_L10n['de'] = {
 	"GenericLanguage": "Sprache",
 	"GenericLastChanged": "Zuletzt geändert",
 	"GenericName": "Name",
+	"GenericNo": "Nein",
+	"GenericNoDiscard": "Verwerfen",
 	"GenericNone": "Keine",
 	"GenericOptional": "optional",
 	"GenericOptions": "Optionen",
@@ -32913,6 +32918,7 @@ window.FrameTrail_L10n['de'] = {
 	"GenericTextTranscript": "Text Transkript",
 	"GenericTimelines": "Timelines",
 	"GenericType": "Typ",
+	"GenericYes": "Ja",
 	"HypervideoAdd": "Hypervideo hinzufügen",
 	"HypervideoNew": "Neues Hypervideo",
 	"LocationSearch": "Suche nach Orten",
@@ -45538,7 +45544,7 @@ FrameTrail.defineModule('UserManagement', function(FrameTrail){
 					+	'             	<input type="text" name="mail" placeholder="'+ labels['UserMail'] +'"><br>'
 					+	'             	<input type="password" name="passwd" placeholder="'+ labels['UserPassword'] +'"><br>'
 					+	'             	<input type="hidden" name="a" value="userRegister"><br>'
-					+	'             	<input type="submit" value="'+ labels['UserPassword'] +'">'
+					+	'             	<input type="submit" value="'+ labels['UserCreateAccount'] +'">'
 					+	'             	<button type="button" class="loginBoxCancelButton">'+ labels['GenericCancel'] +'</button>'
 					+	'             </form>'
 					+	'        </div>'
@@ -45856,7 +45862,7 @@ FrameTrail.defineModule('UserManagement', function(FrameTrail){
 					loginBox.find('.userRegistrationFormStatus').removeClass('success').addClass('active error').text(labels['ErrorMailExists']);
 					break;
 				case 3:
-					loginBox.find('.userRegistrationFormStatus').removeClass('success error').addClass('active').text(labels['MessageRegisteredActivationPending']);
+					loginBox.find('.userRegistrationFormStatus').removeClass('error').addClass('active success').text(labels['MessageRegisteredActivationPending']);
 					break;
 
 			}
@@ -46010,6 +46016,8 @@ FrameTrail.defineModule('UserManagement', function(FrameTrail){
 		FrameTrail.changeState('userColor', userData.color);
 		FrameTrail.changeState('loggedIn', true);
 
+		$(FrameTrail.getState('target')).addClass('loggedIn');
+
 		updateView(true);
 
 	}
@@ -46085,6 +46093,8 @@ FrameTrail.defineModule('UserManagement', function(FrameTrail){
 					username: '',
 					userColor: ''
 				});
+
+				$(FrameTrail.getState('target')).removeClass('loggedIn');
 
 				updateView(false);
 
@@ -49872,73 +49882,81 @@ FrameTrail.defineModule('UserTraces', function(FrameTrail){
 									+ '</div>');
 
 				confirmDialog.dialog({
-				  resizable: false,
-				  modal: true,
-				  close: function() {
+					resizable: false,
+					modal: true,
+					close: function() {
 					confirmDialog.remove();
-				  },
-				  buttons: {
-					'Yes': function() {
-
-						// TODO: Show saving indicator in dialog
-
-						save(function(){
-							
-							if (FrameTrail.module('RouteNavigation').environment.iframe) {
-					            FrameTrail.module('ViewVideo').toggleNativeFullscreenState(false, 'close');
-					        }
-
-							FrameTrail.changeState('editMode', false);
-
-							FrameTrail.triggerEvent('userAction', {
-								action: 'EditEnd'
-							});
-
-							confirmDialog.dialog('close');
-
-							if (logoutAfterLeaving) {
-								FrameTrail.module('UserManagement').logout();
-							}
-
-							/*
-							window.setTimeout(function() {
-								window.location.reload();
-							}, 100);
-
-							if (logoutAfterLeaving) {
-								FrameTrail.module('UserManagement').logout();
-							}
-							*/
-						});
-
 					},
-					'No, discard': function() {
+					buttons: [
+					  	{
+							text: labels['GenericYes'],
+							click: function() {
 
-						FrameTrail.changeState('unsavedChanges', false);
-						confirmDialog.dialog('close');
+								// TODO: Show saving indicator in dialog
 
-						if (FrameTrail.module('RouteNavigation').environment.iframe) {
-				            FrameTrail.module('ViewVideo').toggleNativeFullscreenState(false, 'close');
-				        }
+								save(function(){
+									
+									if (FrameTrail.module('RouteNavigation').environment.iframe) {
+							            FrameTrail.module('ViewVideo').toggleNativeFullscreenState(false, 'close');
+							        }
 
-						FrameTrail.triggerEvent('userAction', {
-							action: 'EditEnd'
-						});
+									FrameTrail.changeState('editMode', false);
 
-						if (logoutAfterLeaving) {
-							FrameTrail.module('UserManagement').logout();
+									FrameTrail.triggerEvent('userAction', {
+										action: 'EditEnd'
+									});
+
+									confirmDialog.dialog('close');
+
+									if (logoutAfterLeaving) {
+										FrameTrail.module('UserManagement').logout();
+									}
+
+									/*
+									window.setTimeout(function() {
+										window.location.reload();
+									}, 100);
+
+									if (logoutAfterLeaving) {
+										FrameTrail.module('UserManagement').logout();
+									}
+									*/
+								});
+
+							}
+						},
+						{
+							text: labels['GenericNoDiscard'],
+							click: function() {
+
+								FrameTrail.changeState('unsavedChanges', false);
+								confirmDialog.dialog('close');
+
+								if (FrameTrail.module('RouteNavigation').environment.iframe) {
+						            FrameTrail.module('ViewVideo').toggleNativeFullscreenState(false, 'close');
+						        }
+
+								FrameTrail.triggerEvent('userAction', {
+									action: 'EditEnd'
+								});
+
+								if (logoutAfterLeaving) {
+									FrameTrail.module('UserManagement').logout();
+								}
+
+								window.setTimeout(function() {
+									//window.location.reload();
+									updateHypervideo(FrameTrail.module('RouteNavigation').hypervideoID, false, true);
+								}, 100);
+							}
+						},
+						{
+							text: labels['GenericCancel'],
+							click: function() {
+						  		confirmDialog.dialog('close');
+							}
 						}
-
-						window.setTimeout(function() {
-							//window.location.reload();
-							updateHypervideo(FrameTrail.module('RouteNavigation').hypervideoID, false, true);
-						}, 100);
-
-					},
-					Cancel: function() {
-					  confirmDialog.dialog('close');
-					}
-				  }
+					]
 				});
 
 		} else {
