@@ -60,16 +60,6 @@
         $affiliationLabel = $factionLabel ? $factionLabel : $roleLabel;
         
         $speechTitleShort = $speakerLabel . ($speakerLabel && $affiliationLabel ? ', ' : '') . $affiliationLabel . ($speakerLabel || $affiliationLabel ? ' | ' : '') . $formattedDate . ' | ' . (isset($speech["relationships"]["agendaItem"]["data"]['attributes']["title"]) ? $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] : '');
-
-        // For full title: show faction with party indicator if available, otherwise show role
-        $affiliationHTML = '';
-        if ($mainFaction) {
-            $affiliationHTML = ' <span class="partyIndicator" data-party="' . $mainFaction['id'] . '">' . $factionLabel . '</span>';
-        } elseif ($roleLabel) {
-            $affiliationHTML = ' <span class="partyIndicator">(' . $roleLabel . ')</span>';
-        }
-        
-        $speechTitle = '<div class="speechMeta">' . $formattedDate . ' | ' . (isset($speech["relationships"]["electoralPeriod"]['data']['attributes']['number']) ? $speech["relationships"]["electoralPeriod"]['data']['attributes']['number'] : '') . '. Electoral Period | Session ' . (isset($speech["relationships"]["session"]['data']['attributes']['number']) ? $speech["relationships"]["session"]['data']['attributes']['number'] : '') . ' | ' . (isset($speech["relationships"]["agendaItem"]["data"]['attributes']["officialTitle"]) ? $speech["relationships"]["agendaItem"]["data"]['attributes']["officialTitle"] : '') . '</div>' . $speakerLabel . $affiliationHTML . '<div class=\"speechTOPs\">' . (isset($speech["relationships"]["agendaItem"]["data"]['attributes']["title"]) ? $speech["relationships"]["agendaItem"]["data"]['attributes']["title"] : '') . '</div>';
     }
 
 ?>
