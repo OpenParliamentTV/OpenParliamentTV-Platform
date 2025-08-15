@@ -193,7 +193,7 @@ $nerPanel = '';
 if ($config["display"]["ner"]) {
     $nerPanel = 
     '<hr>
-    <div class="relationshipsCategoryHeader">'.L::automaticallyDetected().' <a class="alert ms-1 px-1 py-0 alert-warning" data-bs-toggle="modal" data-bs-target="#nerModal" href="#" style="font-weight: lighter;"><span class="icon-attention me-1"></span><u>beta</u></a></div>
+    <div class="relationshipsCategoryHeader">'.L::automaticallyDetected().' <a class="betaWarning" data-bs-toggle="modal" data-bs-target="#nerModal" href="#" style="font-weight: lighter;"><span class="icon-attention me-1"></span><u>beta</u></a></div>
     <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2">
         '.$relatedPeopleHTMLNER.' '.$relatedOrganisationsHTMLNER.' '.$relatedDocumentsHTMLNER.' '.$relatedTermsHTMLNER.' 
     </div>';

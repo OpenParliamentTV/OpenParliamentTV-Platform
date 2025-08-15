@@ -70,7 +70,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 	</div>
 	<div class="row">
 		<div class="col-12">
-			<ul class="nav nav-tabs" role="tablist">
+			<ul class="nav nav-tabs modern-tabs" role="tablist">
 				<?php if ($apiResult["data"]["attributes"]["type"] == "officialDocument") { ?>
 					<li class="nav-item">
 						<a class="nav-link active" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" role="tab" aria-controls="media" aria-selected="true"><span class="icon-hypervideo"></span><span class="nav-item-label"><?= L::relatedMedia() ?></span></a>
@@ -85,7 +85,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?= L::data() ?></span></a>
 				</li>
 			</ul>
-			<div class="tab-content">
+			<div class="tab-content modern-tabs">
 				<?php if ($apiResult["data"]["attributes"]["type"] == "officialDocument") { ?>
 					<div class="tab-pane fade show active" id="media" role="tabpanel" aria-labelledby="media-tab">
 						<div id="speechListContainer">
@@ -107,7 +107,9 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					</div>
 				<?php } ?>
 				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
-					<?php include_once(__DIR__ . '/../../components/entity.data.php'); ?>
+					<div class="bg-white border p-3">
+						<?php include_once(__DIR__ . '/../../components/entity.data.php'); ?>
+					</div>
 				</div>
 			</div>
 		</div>
