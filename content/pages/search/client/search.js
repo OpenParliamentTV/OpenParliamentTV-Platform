@@ -50,17 +50,6 @@ $(document).ready( function() {
 		updateContentsFromURL();
 	}
 
-	$('[name="factionID[]"], [name="numberOfTexts"], [name="aligned"], [name="public"]').change(function() {
-		updateQuery();
-	});
-
-	$('[name="agendaItemTitle"]').keyup(function() {
-		updateQuery();
-	});
-
-	$('main').on('change', '[name="sort"]', function() {
-		updateQuery();
-	});
 
 	updateContentsFromURL();
 
@@ -239,7 +228,6 @@ $(document).ready( function() {
 
 
 
-	initParliamentSelectMenu();
 
 });
 
@@ -250,86 +238,11 @@ function updateContentsFromURL() {
 		filterController.updateFromUrl();
 	}
 
-	//$('[name="person"]').val(getQueryVariable('person'));
-	var entityTypes = ['person', 'organisation', 'document', 'term'];
-	for (var t = 0; t < entityTypes.length; t++) {
-		var entityType = entityTypes[t];
-		var paramName = entityType + 'ID[]';
-		
-		$('#filterForm input[name="' + paramName + '"]').remove();
-		var entityIDs = getQueryVariable(entityType + 'ID');
-		if ($.isArray(entityIDs)) {
-			for (var i = 0; i < entityIDs.length; i++) {
-				$('#filterForm').append('<input type="hidden" name="' + paramName + '" value="'+ entityIDs[i] +'">');
-			}
-		} else if (entityIDs) {
-			$('#filterForm').append('<input type="hidden" name="' + paramName + '" value="'+ entityIDs +'">');
-		}
-	}
-
+	// Query text field (not handled by FilterController)
 	$('[name="q"]').val(getQueryVariable('q'));
-	$('[name="context"]').val(getQueryVariable('context'));
-	$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
-
-	$('[name="factionID[]"]').each(function() {
-		$(this)[0].checked = false;
-	});
-	var factionQueries = getQueryVariable('factionID');
-	if (factionQueries) {
-		for (var p=0; p<factionQueries.length; p++) {
-			var cleanValue = factionQueries[p].replace('+', ' ').toUpperCase();
-			if ($('[name="factionID[]"][value="'+cleanValue+'"]').length != 0) {
-				$('[name="factionID[]"][value="'+cleanValue+'"]')[0].checked = true;
-			}
-		}
-	}
 	
 	initInteractiveQueryValues();
 
-	/* DATE FUNCTIONS START */
-
-	var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-
-	var queryFrom = getQueryVariable('dateFrom');
-	var queryTo = getQueryVariable('dateTo');
-
-	var queryFromDate = new Date(queryFrom);
-	var queryToDate = new Date(queryTo);
-
-	$('#sliderRange').slider({
-		range: true,
-		min: minDate.getTime(),
-		max: maxDate.getTime(),
-		slide: function (event, ui) {
-			
-			var date1 = new Date(ui.values[0]);
-			var date2 = new Date(ui.values[1]);
-			
-			var date2String = (date2.toISOString().slice(0,10) == maxDate.toISOString().slice(0,10)) ? localizedLabels.today : date2.toLocaleDateString('de-DE', options);
-
-			$("#timeRange").val( date1.toLocaleDateString('de-DE', options) + " - " + date2String );
-
-			$('#dateFrom').val(date1.toISOString().slice(0,10));
-			$('#dateTo').val(date2.toISOString().slice(0,10));
-
-		},
-		stop: function (event, ui) {
-			updateQuery();
-		},
-		values: [(queryFrom) ? queryFromDate.getTime() : 0, (queryTo) ? queryToDate.getTime() : maxDate.getTime()]
-	});
-
-	var startDate = (queryFrom) ? queryFromDate.toLocaleDateString('de-DE', options) : minDate.toLocaleDateString('de-DE', options);
-	var endDate = (queryTo) ? queryToDate.toLocaleDateString('de-DE', options) : maxDate.toLocaleDateString('de-DE', options);
-
-	var endDateString = (endDate == maxDate.toLocaleDateString('de-DE', options)) ? localizedLabels.today : endDate;
-
-	$( "#timeRange" ).val( startDate + " - " + endDateString );
-	
-	$('#dateFrom').val((queryFrom) ? queryFrom : minDate.toISOString().slice(0,10));
-	$('#dateTo').val((queryTo) ? queryTo : maxDate.toISOString().slice(0,10));
-
-	$('[name="agendaItemTitle"]').val(getQueryVariable('agendaItemTitle'));
 
 	updateFactionChart();
     $('#timelineVizWrapper').empty();
@@ -345,26 +258,6 @@ function updateContentsFromURL() {
 	}
 }
 
-function initParliamentSelectMenu() {
-	$('.parliamentFilterContainer').on('change', 'select', function(evt) {
-		var targetSelectMenu = $(evt.currentTarget);
-		if (targetSelectMenu.attr('name') == 'parliament') {
-			$('.parliamentFilterContainer #selectElectoralPeriod').remove();
-			$('.parliamentFilterContainer #selectSession').remove();
-		} else if (targetSelectMenu.attr('name') == 'electoralPeriod') {
-			$('.parliamentFilterContainer #selectSession').remove();
-		}
-		updateQuery();
-		$.ajax({
-			method: "POST",
-			url: "./content/pages/search/content.filter.parliaments.php?"+ getSerializedForm()
-		}).done(function(data) {
-			$('.parliamentFilterContainer').html($(data));
-		}).fail(function(err) {
-			//console.log(err);
-		});
-	});
-}
 
 function updateSuggestions() {
 	var textValue = $('#edit-query').val(),
@@ -607,8 +500,8 @@ function updateQuery() {
 	}
 	
 	// Use the new media results manager instead of the old updateResultList
-	const formData = getSerializedForm();
-	if (mediaResultsManager) {
+	if (mediaResultsManager && filterController) {
+		const formData = filterController.getSerializedForm();
 		mediaResultsManager.loadResults(formData);
 	}
 	
@@ -630,80 +523,6 @@ function updateQuery() {
 	}
 }
 
-function updateResultList() {
-	$('.loadingIndicator').show();
-	if(updateAjax && updateAjax.readyState != 4){
-        updateAjax.abort();
-    }
-    
-    var pageParam = getQueryVariable('page'),
-    	pageString = '';
-    if (pageParam) {
-    	pageString = 'page=' + pageParam + '&';
-    }
-
-    var langParam = getQueryVariable('lang'),
-    	langString = '';
-    if (langParam) {
-    	langString = 'lang=' + langParam + '&';
-    }
-
-	var view = isMediaManagement ? 'table' : 'grid';
-	var includeAllString = isMediaManagement ? '&includeAll=true' : '';
-
-	updateAjax = $.ajax({
-		method: "POST",
-		url: config.dir.root + "/content/components/result."+view+".php?a=search"+includeAllString+"&queryOnly=1&" + langString + pageString + getSerializedForm()
-	}).done(function(data) {
-		// Use the same logic as result.grid.php to determine if we should show filters
-		// Only these parameters count as "valid search criteria" that warrant showing the filter bar
-		var requestQuery = getQueryVariable('q'),
-			requestPersonID = getQueryVariable('personID'),
-			requestOrganisationID = getQueryVariable('organisationID'),
-			requestDocumentID = getQueryVariable('documentID'),
-			requestTermID = getQueryVariable('termID');
-		
-		// Match the exact logic from result.grid.php line 28
-		var hasValidSearchCriteria = (requestQuery && requestQuery.length >= 2) || 
-									 requestPersonID || 
-									 requestOrganisationID || 
-									 requestDocumentID || 
-									 requestTermID;
-		
-		if (hasValidSearchCriteria) {
-			$('#filterbar').removeClass('nosearch');
-			$('.filterContainer').removeClass('d-none').addClass('d-md-block');
-			$('#toggleFilterContainer').removeClass('d-none').addClass('d-block');
-		} else {
-			$('#filterbar').addClass('nosearch');
-			$('.filterContainer').removeClass('d-md-block').addClass('d-none');
-			$('#toggleFilterContainer').removeClass('d-block').addClass('d-none');
-		}
-		$('#speechListContainer .resultWrapper').html($(data));
-		$('[name="sort"]').val((getQueryVariable('sort')) ? getQueryVariable('sort') : 'relevance');
-		
-		updateFactionChart();
-        $('#timelineVizWrapper').empty();
-        updateTimelineViz();
-
-		$('.loadingIndicator').hide();
-		runCounterAnimation();
-
-		//TODO: fix this
-		/*
-		if (isMediaManagement) {
-			$('#speechListContainer .resultWrapper > nav a').each(function() {
-				var thisPage = getQueryVariableFromString('page', $(this).attr('href'));
-				if (!thisPage) { thisPage = 1; }
-				$(this).attr('href', '#page='+ thisPage);
-			});
-			//updateListeners('#speechListContainer');
-		}
-		*/	
-	}).fail(function(err) {
-		//console.log(err);
-	});
-}
 
 function updateListeners(targetSelector) {
 	$(targetSelector +' .resultWrapper > nav a').click(function(evt) {
@@ -1066,31 +885,6 @@ function updateFactionChart() {
     }
 }
 
-function getSerializedForm() {
-	var formData = $('#filterForm :input, select[name="sort"]').filter(function(index, element) {
-		if ($(element).attr('name') == 'dateFrom' && $(element).val() == minDate.toISOString().slice(0,10)) {
-			return false;
-		} else if ($(element).attr('name') == 'dateTo' && $(element).val() == maxDate.toISOString().slice(0,10)) {
-			return false;
-		} else if ($(element).attr('name') == 'sort' && $(element).val() == 'relevance') {
-			return false;
-		} else if ($(element).attr('name') == 'edit-query') {
-			return false;
-		} else if ($(element).attr('name') == 'parliament' && $(element).val() == 'all') {
-			return false;
-		} else if ($(element).attr('name') == 'electoralPeriod' && $(element).val() == 'all') {
-			return false;
-		} else if ($(element).attr('name') == 'sessionNumber' && $(element).val() == 'all') {
-			return false;
-		} else if ($(element).val() != '') {
-			return true;
-		} else {
-			return false;
-		}
-    }).serialize();
-	
-    return formData;
-}
 
 function easeOutQuad(t) {
 	return t === 1 ? 1 : 1 - Math.pow(2, -20 * t);
