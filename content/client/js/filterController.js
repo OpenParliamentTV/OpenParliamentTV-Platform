@@ -49,17 +49,19 @@ class FilterController {
             this.triggerFilterUpdate();
         });
         
-        // Faction hover effects for result highlighting
-        $('#filterForm .formCheckbox').hover(
-            function() {
-                $('.resultItem, #filterForm .formCheckbox').addClass('inactive');
-                $('.resultItem[data-faction="'+ $(this).children('input').val() +'"]').removeClass('inactive');
-                $(this).removeClass('inactive');
-            },
-            function() {
-                $('.resultItem, #filterForm .formCheckbox').removeClass('inactive');
-            }
-        );
+        // Faction hover effects for result highlighting (disabled on mobile)
+        if (!config.isMobile) {
+            $('#filterForm .formCheckbox').hover(
+                function() {
+                    $('.resultItem, #filterForm .formCheckbox').addClass('inactive');
+                    $('.resultItem[data-faction="'+ $(this).children('input').val() +'"]').removeClass('inactive');
+                    $(this).removeClass('inactive');
+                },
+                function() {
+                    $('.resultItem, #filterForm .formCheckbox').removeClass('inactive');
+                }
+            );
+        }
     }
     
     /**
