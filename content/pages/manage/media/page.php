@@ -57,9 +57,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
     }
 </style>
 
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/filterController.js"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/filterController.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     // Initialize filter controller for manage/media page
