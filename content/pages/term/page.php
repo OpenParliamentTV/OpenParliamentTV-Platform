@@ -19,31 +19,33 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 	<div class="detailsHeader">
 		<div class="row" style="position: relative; z-index: 1">
 			<div class="col-12 col-md-8 col-lg-9">
-				<div class="row align-items-center">
-					<div class="col flex-grow-0 detailsThumbnailContainer">
+				<div class="detailsLayoutContainer">
+					<div class="detailsLayoutThumbnail detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
 								<img src="<?= hAttr($apiResult["data"]["attributes"]["thumbnailURI"]) ?>" alt="..." style="position: absolute;height: 100%;object-fit: cover;">
 							<?php } else { ?>
-								<span class="icon-type-term" style="position: absolute;top: 50%;left: 50%;font-size: 50px;transform: translateX(-50%) translateY(-50%);"></span>
+								<span class="icon-type-term" style="position: absolute;top: 50%;left: 50%;font-size: 40px;transform: translateX(-50%) translateY(-50%);"></span>
 							<?php } ?>
 						</div>
 						<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
 						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?= L::source(); ?>: <?= safeHtml($apiResult["data"]["attributes"]["thumbnailCreator"]); ?>, <?= safeHtml($apiResult["data"]["attributes"]["thumbnailLicense"]) ?></span></div>
 						<?php } ?>
 					</div>
-					<div class="col">
+					<div class="detailsLayoutLabel">
 						<h2><?= h($apiResult["data"]["attributes"]["label"]) ?></h2>
 						<?php if (isset($apiResult["data"]["attributes"]["labelAlternative"][0])) { ?>
 						<div class="less-opacity"><?= h($apiResult["data"]["attributes"]["labelAlternative"][0]) ?></div>
 						<?php } ?>
-						<?php if ($apiResult["data"]["attributes"]["abstract"] && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
-							<div class="mt-2"><?= h($apiResult["data"]["attributes"]["abstract"]) ?></div>
-							<a class="btn btn-sm me-2 mt-2" href="<?= hAttr($apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"]) ?>" target="_blank">
-								<span><?= L::moreAt(); ?> Wikipedia</span><img class="ms-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikipedia.svg">
-							</a>
-						<?php } ?>
 					</div>
+					<?php if ($apiResult["data"]["attributes"]["abstract"] && $apiResult["data"]["attributes"]["abstract"] != "undefined") { ?>
+					<div class="detailsLayoutAbstract">
+						<div><?= h($apiResult["data"]["attributes"]["abstract"]) ?></div>
+						<a class="btn btn-sm me-2 mt-2 col-12 col-sm-auto" href="<?= hAttr($apiResult["data"]["attributes"]["additionalInformation"]["wikipedia"]["url"]) ?>" target="_blank">
+							<span><?= L::moreAt(); ?> Wikipedia</span><img class="ms-2" src="<?= $config["dir"]["root"] ?>/content/client/images/logos/wikipedia.svg">
+						</a>
+					</div>
+					<?php } ?>
 				</div>
 			</div>
 			<div class="col-12 col-md-4 col-lg-3">

@@ -1944,13 +1944,13 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
 }
 
 .detailsHeader .detailsThumbnailContainer {
-    flex-basis: 130px;
+    flex-basis: 100px;
     padding-right: 0px;
 }
 
 @media (min-width:992px) {
     .detailsHeader .detailsThumbnailContainer {
-        flex-basis: 160px;
+        flex-basis: 130px;
     }
 }
 
@@ -2040,6 +2040,54 @@ table td.thumbnailColumn-organisation .rounded-circle img {
     display: inline-block;
     text-decoration: none !important;
     line-height: 14px;
+}
+
+/* Responsive grid layout for entity detail headers */
+.detailsLayoutContainer {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    grid-template-areas: 
+        "thumbnail label"
+        "thumbnail abstract";
+    gap: 15px;
+    align-items: start;
+}
+
+@media (min-width: 992px) {
+    .detailsLayoutContainer {
+        grid-template-columns: 130px 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .detailsLayoutContainer {
+        grid-template-columns: 100px 1fr;
+        grid-template-areas: 
+            "thumbnail label"
+            "abstract abstract";
+        gap: 10px 15px;
+    }
+}
+
+.detailsLayoutThumbnail {
+    grid-area: thumbnail;
+    flex-basis: unset !important; /* Override existing flex-basis rule */
+    align-self: center;
+}
+
+.detailsLayoutLabel {
+    grid-area: label;
+    hyphens: auto;
+}
+
+@media (max-width: 575.98px) {
+    .detailsLayoutLabel {
+        align-self: center;
+    }
+}
+
+.detailsLayoutAbstract {
+    grid-area: abstract;
 }
 
 #speechListContainer, #interventionListContainer {
