@@ -237,13 +237,7 @@ $(document).ready( function() {
 		updateQuery();
 	}, 1000));
 
-	$('#filterForm .formCheckbox').hover(function() {
-		$('.resultItem, #filterForm .formCheckbox').addClass('inactive');
-		$('.resultItem[data-faction="'+ $(this).children('input').val() +'"]').removeClass('inactive');
-		$(this).removeClass('inactive');
-	}, function() {
-		$('.resultItem, #filterForm .formCheckbox').removeClass('inactive');
-	});
+
 
 	initParliamentSelectMenu();
 
