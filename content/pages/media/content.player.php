@@ -64,7 +64,7 @@ $relatedContentsPanel = ob_get_clean();
                 if ($mainFaction) {
                 ?><a href="../organisation/<?= hAttr($mainFaction["id"]) ?>"><span class="partyIndicator" data-faction="<?= hAttr($mainFaction["id"]) ?>"><?= h($mainFaction["attributes"]["label"]) ?></span></a><?php 
                 } elseif ($mainSpeakerRole) {
-                ?><span class="partyIndicator"><?= h(translateContextValue($mainSpeakerRole)) ?></span><?php 
+                ?><span class="partyIndicator d-inline-block text-truncate align-text-top" style="max-width: 200px;" title="<?= h(translateContextValue($mainSpeakerRole)) ?>"><?= h(translateContextValue($mainSpeakerRole)) ?></span><?php 
                 } ?> - <?= h($speech["relationships"]["agendaItem"]["data"]["attributes"]["title"]) ?></h3>
         </div>
         <div class="playerTabs">
