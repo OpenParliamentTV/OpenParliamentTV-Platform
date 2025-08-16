@@ -1881,6 +1881,23 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
     cursor: pointer;
 }
 
+/* Chart Visualization - Responsive Heights */
+.chartVisualization {
+    height: 200px;
+}
+
+@media (min-width: 576px) {
+    .chartVisualization {
+        height: 250px;
+    }
+}
+
+@media (min-width: 992px) {
+    .chartVisualization {
+        height: 350px;
+    }
+}
+
 .filterSummary {
     margin: 5px 0 10px 0;
 }
