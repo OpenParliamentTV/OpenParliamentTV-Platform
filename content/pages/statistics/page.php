@@ -201,7 +201,7 @@ include_once(__DIR__ . '/../../header.php');
 									<div class="rangeContainer">
 										<label for="wordTrendsTimeRange"><b>Time Period:</b></label>
 										<input type="text" id="wordTrendsTimeRange" readonly style="border:0; background: transparent;"/>
-										<div id="wordTrendsChart">
+										<div id="wordTrendsChart" class="chartVisualization mt-2">
 											<div class="text-center text-muted py-3">
 												<p class="small">No words analyzed yet</p>
 											</div>
@@ -1099,19 +1099,23 @@ function createWordTrendsChart(trendsData, startDate, endDate) {
 	// Clear any existing chart
 	d3.select("#wordTrendsChart").selectAll("*").remove();
 	
-	// Get container width for responsive design with fallback
+	// Get container dimensions for responsive design with fallbacks
 	const container = document.getElementById('wordTrendsChart');
 	let containerWidth = container.offsetWidth;
+	let containerHeight = container.offsetHeight;
 	
-	// Fallback if container width is 0 or too small (common during redraws)
+	// Fallback if container dimensions are 0 or too small (common during redraws)
 	if (containerWidth < 200) {
 		containerWidth = container.parentElement.offsetWidth || 800;
 	}
+	if (containerHeight < 200) {
+		containerHeight = 400; // Fallback height
+	}
 	
-	// Set dimensions and margins - responsive width, no legend below
-	const margin = {top: 20, right: 20, bottom: 40, left: 60};
+	// Set dimensions and margins - minimal margins for full width/height
+	const margin = {top: 5, right: 5, bottom: 25, left: 35};
 	const width = containerWidth - margin.left - margin.right;
-	const height = 400 - margin.top - margin.bottom;
+	const height = containerHeight - margin.top - margin.bottom;
 	
 	// Create SVG with responsive width
 	const svg = d3.select("#wordTrendsChart")
