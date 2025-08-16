@@ -77,8 +77,8 @@ class FilterController {
         const queryFromDate = queryFrom ? new Date(queryFrom) : this.minDate;
         const queryToDate = queryTo ? new Date(queryTo) : this.maxDate;
         
-        if ($('#sliderRange').length > 0) {
-            $('#sliderRange').slider({
+        if ($('.sliderRange').length > 0) {
+            $('.sliderRange').slider({
                 range: true,
                 min: this.minDate.getTime(),
                 max: this.maxDate.getTime(),

@@ -1803,7 +1803,6 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
 }
 
 #timelineVizWrapper {
-    z-index: 0;
     min-height: 30px;;
 }
 
@@ -1811,6 +1810,7 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
     position: relative;
     width: 100%;
     background: transparent;
+    z-index: 0;;
     pointer-events: none;
 }
 
@@ -1855,21 +1855,21 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
     background: var(--border-color);
 }
 
-#sliderRange {
+.sliderRange {
     position: absolute;
-    top: 24px;
+    top: 21px;
     height: 4px;
     background: var(--border-color);
-    margin: 20px 0px 40px 0px;
+    margin: 0px 0px 40px 0px;
     width: 100%;
 }
-#sliderRange .ui-slider-range {
+.sliderRange .ui-slider-range {
     position: absolute;
     display: block;
     height: 4px;
     background: var(--primary-fg-color);
 }
-#sliderRange .ui-slider-handle {
+.sliderRange .ui-slider-handle {
     position: absolute;
     display: block;
     width: 16px;
@@ -2078,6 +2078,7 @@ table td.thumbnailColumn-organisation .rounded-circle img {
 .detailsLayoutLabel {
     grid-area: label;
     hyphens: auto;
+    overflow: hidden;
 }
 
 @media (max-width: 575.98px) {

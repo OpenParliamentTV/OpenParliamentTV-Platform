@@ -98,8 +98,10 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
             <div class="rangeContainer">
                 <label for="timeRange"><b><?= L::timePeriod(); ?>:</b></label>
                 <input type="text" id="timeRange" readonly style="border:0; background: transparent;"/>
-                <div id="timelineVizWrapper" class="resultTimeline"></div>
-                <div id="sliderRange"></div>
+                <div class="position-relative">
+                    <div id="timelineVizWrapper" class="resultTimeline"></div>
+                    <div id="sliderRange" class="sliderRange"></div>
+                </div>
                 <input type="hidden" id="dateFrom" name="dateFrom"/>
                 <input type="hidden" id="dateTo" name="dateTo"/>
             </div>
