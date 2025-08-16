@@ -22,7 +22,7 @@ function searchAutocompleteEnhanced($query, $maxResults = 10, $partyFilter = nul
     ];
     
     if ($partyFilter) {
-        $mustClauses[] = ['term' => ['faction_id' => $partyFilter]];
+        $mustClauses[] = ['term' => ['faction_id.keyword' => $partyFilter]];
     }
     
     $searchQuery = [
@@ -94,7 +94,7 @@ function getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode = '
     
     // Add faction filter if specified
     if (!empty($factions)) {
-        $mustClauses[] = ['terms' => ['faction_id' => $factions]];
+        $mustClauses[] = ['terms' => ['faction_id.keyword' => $factions]];
     }
     
     $query = [
@@ -110,7 +110,7 @@ function getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode = '
                 'aggs' => [
                     'time_series' => [
                         'date_histogram' => [
-                            'field' => 'date',
+                            'field' => 'date_string',
                             'calendar_interval' => '1M',
                             'format' => 'yyyy-MM'
                         ],

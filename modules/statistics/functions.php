@@ -21,10 +21,9 @@ if (is_array($ESClient) && isset($ESClient["errors"])) {
  * 
  * @param string $contextFilter Context filter (main-speaker, vice-president, etc.)
  * @param string|null $factionFilter Faction ID filter
- * @param float $confidenceThreshold Minimum confidence threshold for NER annotations
  * @return array Statistics about the dataset
  */
-function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = null, $confidenceThreshold = 0.7) {
+function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = null) {
     global $ESClient, $DEBUG_MODE, $config;
     
     // --- Use enhanced statistics index for word frequency ---
@@ -72,7 +71,7 @@ function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = 
                 ],
                 // Enhanced: Faction-specific analysis as recommended  
                 'by_faction' => [
-                    'terms' => ['field' => 'faction_id', 'size' => 10],
+                    'terms' => ['field' => 'faction_id.keyword', 'size' => 10],
                     'aggs' => [
                         'top_words' => [
                             'terms' => [
@@ -212,10 +211,6 @@ function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = 
             'shareOfVoice' => [
                 'nested' => [ 'path' => 'annotations.data' ],
                 'aggs' => [
-                    'parties' => [
-                        'filter' => [ 'term' => [ 'annotations.data.attributes.context' => 'main-speaker-party' ] ],
-                        'aggs' => [ 'topParties' => [ 'terms' => [ 'field' => 'annotations.data.id', 'size' => 10, 'order' => ['_count' => 'desc'] ] ] ]
-                    ],
                     'factions' => [
                         'filter' => [ 'term' => [ 'annotations.data.attributes.context' => 'main-speaker-faction' ] ],
                         'aggs' => [ 'topFactions' => [ 'terms' => [ 'field' => 'annotations.data.id', 'size' => 10, 'order' => ['_count' => 'desc'] ] ] ]

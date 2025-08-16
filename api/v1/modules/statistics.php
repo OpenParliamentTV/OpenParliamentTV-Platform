@@ -29,13 +29,14 @@ function createEntitySelfLink($entityType, $entityID) {
 }
 
 /**
- * Enrich entity with self-link for easy navigation
+ * Enrich entity with self-link and label for easy navigation
  * @param array $entity The entity data
  * @param string $entityType The entity type (required - we should always know this from context)
- * @return array The enriched entity with self-link
+ * @return array The enriched entity with self-link and label
  */
 function enrichEntityWithSelfLink($entity, $entityType) {
     if ($entityType && isset($entity['id'])) {
+        $entity['label'] = getEntityLabel($entityType, $entity['id']);
         $entity['links'] = ['self' => createEntitySelfLink($entityType, $entity['id'])];
     }
     
@@ -56,6 +57,61 @@ function detectEntityType($entityID) {
         return 'document';
     }
     return null;
+}
+
+/**
+ * Fetch entity label from database using getByID functions
+ * @param string $entityType The entity type
+ * @param string $entityID The entity ID
+ * @return string The entity label or ID if not found
+ */
+function getEntityLabel($entityType, $entityID) {
+    try {
+        // Cache to avoid multiple lookups for the same entity
+        static $labelCache = [];
+        $cacheKey = $entityType . ':' . $entityID;
+        
+        if (isset($labelCache[$cacheKey])) {
+            return $labelCache[$cacheKey];
+        }
+        
+        // Map entity types to their respective modules and functions
+        $functionMap = [
+            'person' => ['module' => 'person', 'function' => 'personGetByID'],
+            'organisation' => ['module' => 'organisation', 'function' => 'organisationGetByID'],
+            'organization' => ['module' => 'organisation', 'function' => 'organisationGetByID'],
+            'document' => ['module' => 'document', 'function' => 'documentGetByID'],
+            'term' => ['module' => 'term', 'function' => 'termGetByID']
+        ];
+        
+        $mapping = $functionMap[$entityType] ?? null;
+        if (!$mapping) {
+            $labelCache[$cacheKey] = $entityID;
+            return $entityID;
+        }
+        
+        // Include the appropriate module
+        $modulePath = __DIR__ . "/{$mapping['module']}.php";
+        if (file_exists($modulePath)) {
+            require_once($modulePath);
+            
+            if (function_exists($mapping['function'])) {
+                $result = $mapping['function']($entityID);
+                if (isset($result['data']['attributes']['label']) && !empty($result['data']['attributes']['label'])) {
+                    $labelCache[$cacheKey] = $result['data']['attributes']['label'];
+                    return $result['data']['attributes']['label'];
+                }
+            }
+        }
+        
+        // Fallback: return ID if no label found
+        $labelCache[$cacheKey] = $entityID;
+        return $entityID;
+    } catch (Exception $e) {
+        // Log but don't fail - return ID as fallback
+        //error_log("Error fetching entity label for {$entityType}/{$entityID}: " . $e->getMessage());
+        return $entityID;
+    }
 }
 
 // Initialize OpenSearch client if not already initialized
@@ -94,9 +150,8 @@ function statisticsGetGeneral($request) {
         // Statistics MUST use main-speaker context by default, not user-configurable
         $contextFilter = 'main-speaker'; // Hardcoded to ensure data consistency  
         $factionFilter = $request['factionID'] ?? null;
-        $confidenceThreshold = $request['confidenceThreshold'] ?? 0.7;
         
-        $stats = getGeneralStatistics($contextFilter, $factionFilter, $confidenceThreshold);
+        $stats = getGeneralStatistics($contextFilter, $factionFilter);
         
         if ($stats === null) {
             return createApiErrorResponse(
@@ -178,12 +233,6 @@ function statisticsGetGeneral($request) {
         // Process share of voice with self-links  
         if (isset($stats["shareOfVoice"])) {
             $data["attributes"]["shareOfVoice"] = [
-                "parties" => array_map(function($bucket) {
-                    return enrichEntityWithSelfLink([
-                        "id" => $bucket["key"],
-                        "speechCount" => $bucket["doc_count"]
-                    ], 'organisation');
-                }, $stats["shareOfVoice"]["parties"]["topParties"]["buckets"]),
                 "factions" => array_map(function($bucket) {
                     return enrichEntityWithSelfLink([
                         "id" => $bucket["key"],
@@ -247,6 +296,17 @@ function statisticsGetEntity($request) {
         
         $stats = getEntityStatistics($request["entityType"], $request["entityID"]);
         
+        // Get speaker vocabulary if this is a person entity
+        $speakerVocabulary = null;
+        if ($request["entityType"] === 'person') {
+            require_once(__DIR__ . "/../../../modules/search/functions.enhanced.php");
+            $limit = $request["limit"] ?? 50;
+            $vocabResult = getSpeakerVocabularyEnhanced($request["entityID"], $limit);
+            if ($vocabResult['success']) {
+                $speakerVocabulary = $vocabResult['data'];
+            }
+        }
+        
         if ($stats === null) {
             return createApiErrorResponse(
                 500,
@@ -294,6 +354,23 @@ function statisticsGetEntity($request) {
                 ]
             ]
         ];
+        
+        // Add speaker vocabulary if available
+        if ($speakerVocabulary) {
+            $data["attributes"]["speakerVocabulary"] = [
+                "totalWords" => $speakerVocabulary["total_words"]["value"] ?? 0,
+                "uniqueWords" => $speakerVocabulary["unique_words"]["value"] ?? 0,
+                "topWords" => array_map(function($bucket) {
+                    return [
+                        "word" => $bucket["key"],
+                        "frequency" => $bucket["frequency"]["value"] ?? 0,
+                        "speechCount" => $bucket["speech_count"]["value"] ?? 0,
+                        "firstUsed" => $bucket["first_used"]["value"] ?? null,
+                        "lastUsed" => $bucket["last_used"]["value"] ?? null
+                    ];
+                }, $speakerVocabulary["top_words"]["buckets"] ?? [])
+            ];
+        }
         
         // Build self link with parameters
         $params = [
