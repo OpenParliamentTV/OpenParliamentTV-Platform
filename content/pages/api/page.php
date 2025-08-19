@@ -561,7 +561,7 @@ include_once(__DIR__ . '/../../header.php');
 					</div>
 				</div>
 				<div class="tab-pane fade bg-white" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">
-					<div class="alert alert-info">Statistics endpoints provide aggregated insights into parliamentary data, including speaker activity, word frequency analysis, entity relationships, and political discourse patterns. All endpoints support context filtering to distinguish between political speeches and procedural statements.</div>
+					<div class="alert alert-info">Statistics endpoints provide aggregated insights into parliamentary data, including speaker activity, word frequency analysis, entity relationships, and political discourse patterns. </div>
 					<ul class="nav nav-tabs" role="tablist">
 						<li class="nav-item">
 							<a class="nav-link active" id="general-stats-tab" data-bs-toggle="tab" data-bs-target="#general-stats" role="tab" aria-controls="general-stats" aria-selected="true"><span class="nav-item-label"><span class="icon-chart-bar me-1"></span> General Statistics</span></a>
@@ -573,9 +573,6 @@ include_once(__DIR__ . '/../../header.php');
 							<a class="nav-link" id="word-trends-tab" data-bs-toggle="tab" data-bs-target="#word-trends" role="tab" aria-controls="word-trends" aria-selected="true"><span class="nav-item-label"><span class="icon-chart-line me-1"></span> Word Trends</span></a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" id="network-tab" data-bs-toggle="tab" data-bs-target="#network" role="tab" aria-controls="network" aria-selected="true"><span class="nav-item-label"><span class="icon-share me-1"></span> Network Analysis</span></a>
-						</li>
-						<li class="nav-item">
 							<a class="nav-link" id="entity-counts-tab" data-bs-toggle="tab" data-bs-target="#entity-counts" role="tab" aria-controls="entity-counts" aria-selected="true"><span class="nav-item-label"><span class="icon-database me-1"></span> Entity Counts</span></a>
 						</li>
 					</ul>
@@ -585,7 +582,7 @@ include_once(__DIR__ . '/../../header.php');
 							<code>/api/v1/statistics/general</code>
 							<hr>
 							<h3><?= L::example(); ?> Request</h3>
-							<div>(General statistics with context filtering to show only political speeches, filtered by SPD faction)</div>
+							<div>(General statistics showing speeches, speakers, speaking time, and vocabulary across all parliaments)</div>
 							<div class="apiExampleContainer">
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
@@ -608,15 +605,9 @@ include_once(__DIR__ . '/../../header.php');
 									</thead>
 									<tbody>
 										<tr>
-											<td>context</td>
-											<td>Optional, defaults to "main-speaker"</td>
-											<td>Filter by speaker context (main-speaker, vice-president)</td>
-											<td>String</td>
-										</tr>
-										<tr>
-											<td>factionID</td>
-											<td>Optional, Wikidata ID RegEx</td>
-											<td>Filter statistics by specific political faction</td>
+											<td>parliament</td>
+											<td>Optional, defaults to "de"</td>
+											<td>Parliament code for multi-parliament support</td>
 											<td>String</td>
 										</tr>
 									</tbody>
@@ -624,11 +615,12 @@ include_once(__DIR__ . '/../../header.php');
 							</div>
 						</div>
 						<div class="tab-pane fade bg-white" id="entity-stats" role="tabpanel" aria-labelledby="entity-stats-tab">
+							<div class="alert alert-info">For person entities, this endpoint automatically includes speaker vocabulary statistics (total words, unique words, and top words with usage frequency).</div>
 							<h3>Endpoint</h3>
 							<code>/api/v1/statistics/entity</code>
 							<hr>
 							<h3><?= L::example(); ?> Request</h3>
-							<div>(Statistics for person Angela Merkel, showing associations and trends)</div>
+							<div>(Statistics for person Angela Merkel, showing associations, trends, and vocabulary)</div>
 							<div class="apiExampleContainer">
 								<div class="input-group">
 									<span class="input-group-text">URI</span>
@@ -717,48 +709,17 @@ include_once(__DIR__ . '/../../header.php');
 											<td>Parliament code for multi-parliament support</td>
 											<td>String</td>
 										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="tab-pane fade bg-white" id="network" role="tabpanel" aria-labelledby="network-tab">
-							<h3>Endpoint</h3>
-							<code>/api/v1/statistics/network</code>
-							<hr>
-							<h3><?= L::example(); ?> Request</h3>
-							<div>(Network analysis showing entity relationships and co-occurrences)</div>
-							<div class="apiExampleContainer">
-								<div class="input-group">
-									<span class="input-group-text">URI</span>
-									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/statistics/network?entityType=person&entityID=Q77195" readonly>
-									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
-								</div>
-								<div class="apiResultContainer"></div>
-							</div>
-							<hr>
-							<h3>Parameters</h3>
-							<div class="table-responsive-lg">
-								<table class="table table-sm table-striped">
-									<thead>
 										<tr>
-											<th>Parameter</th>
-											<th>Validation</th>
-											<th>Description</th>
-											<th>Type</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>entityType</td>
-											<td>Optional, person|organisation</td>
-											<td>Filter network analysis by entity type</td>
-											<td>String</td>
+											<td>factions[]</td>
+											<td>Optional, array of Wikidata IDs</td>
+											<td>Filter word trends by specific political factions</td>
+											<td>Array</td>
 										</tr>
 										<tr>
-											<td>entityID</td>
-											<td>Optional, Wikidata ID RegEx</td>
-											<td>Focus network analysis on specific entity</td>
-											<td>String</td>
+											<td>separateByFaction</td>
+											<td>Optional, boolean</td>
+											<td>Separate results by faction when true</td>
+											<td>Boolean</td>
 										</tr>
 									</tbody>
 								</table>
