@@ -206,6 +206,72 @@ include_once(__DIR__ . '/../../header.php');
 											<td>id</td>
 											<td>String</td>
 										</tr>
+										<tr>
+											<td>agendaItemTitle</td>
+											<td>min 3 chars</td>
+											<td>agendaItem.data.attributes.title</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>aligned</td>
+											<td>boolean</td>
+											<td>Filter by alignment status</td>
+											<td>Boolean</td>
+										</tr>
+										<tr>
+											<td>fragDenStaatID</td>
+											<td>min 1 char</td>
+											<td>FragDenStaat ID</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>numberOfTexts</td>
+											<td>integer</td>
+											<td>Number of text segments</td>
+											<td>Integer</td>
+										</tr>
+										<tr>
+											<td>organisation</td>
+											<td>min 3 chars</td>
+											<td>Organisation name</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>personOriginID</td>
+											<td>min 1 char</td>
+											<td>Person origin identifier</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>procedureID</td>
+											<td>min 1 char</td>
+											<td>Procedure identifier</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>limit</td>
+											<td>integer</td>
+											<td>Maximum number of results to return</td>
+											<td>Integer</td>
+										</tr>
+										<tr>
+											<td>page</td>
+											<td>integer</td>
+											<td>Page number for pagination</td>
+											<td>Integer</td>
+										</tr>
+										<tr>
+											<td>sort</td>
+											<td>date-asc, date-desc, topic-asc, topic-desc, duration-asc, duration-desc, changed-asc, changed-desc</td>
+											<td>Sort results by date, duration, or last changed timestamp (defaults to relevance)</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>fields</td>
+											<td>comma-separated values</td>
+											<td>Return only specified fields (e.g., "id" for ID-only results)</td>
+											<td>String</td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -301,6 +367,12 @@ include_once(__DIR__ . '/../../header.php');
 											<td>abgeordnetenwatchID</td>
 											<td>min 1 char</td>
 											<td>additionalInformation.abgeordnetenwatchID</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>fragDenStaatID</td>
+											<td>min 1 char</td>
+											<td>FragDenStaat ID</td>
 											<td>String</td>
 										</tr>
 									</tbody>
