@@ -254,27 +254,70 @@ function externalDataGetInfo($api_request) {
     try {
         $url = $config["ads"]["api"]["uri"]."?key=".$config["ads"]["api"]["key"]."&type=".$api_request["type"]."&wikidataID=".$api_request["wikidataID"];
         $response_json = file_get_contents($url);
+        
         if ($response_json === false) {
             return createApiError("Failed to fetch data from external service: ".$url, "EXTERNAL_SERVICE_ERROR");
         }
+        
+        // Check if response is empty
+        if (empty($response_json)) {
+            return createApiError("Empty response from external service", "EXTERNAL_SERVICE_EMPTY_RESPONSE");
+        }
+        
         $response_array = json_decode($response_json, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             return createApiError("Invalid JSON response from external service: ".json_last_error_msg(), "EXTERNAL_SERVICE_INVALID_JSON");
         }
-        // Assuming the external service returns a structure that can be directly passed or needs specific mapping
-        // The original ajaxServer.php directly returned the json_decode output.
-        // We need to ensure it's compatible with createApiResponse structure or wrap it.
-        // For now, let's assume the external service returns success/data or error structure
-        if (isset($response_array["success"]) && $response_array["success"] == "false") {
-             return createApiError($response_array["text"] ?? "Unknown error from external service", "EXTERNAL_SERVICE_API_ERROR");
+        
+        // Check if response_array is null or empty after JSON decode
+        if (empty($response_array)) {
+            return createApiError("No data returned from external service", "EXTERNAL_SERVICE_NO_DATA");
         }
-        // If the external service's "success" isn't "false", we assume it's a successful response.
-        // The original code returned the full decoded JSON. Let's wrap it in a standard success response.
-        return createApiSuccessResponse($response_array["data"] ?? $response_array, ["message" => $response_array["text"] ?? "Successfully fetched data."]);
-
+        
+        // Check for explicit error responses from the external service
+        if (isset($response_array["success"]) && $response_array["success"] === false) {
+            $errorMessage = $response_array["text"] ?? $response_array["message"] ?? "Unknown error from external service";
+            return createApiError($errorMessage, "EXTERNAL_SERVICE_API_ERROR");
+        }
+        
+        // Check for error status in response meta
+        if (isset($response_array["meta"]["requestStatus"]) && $response_array["meta"]["requestStatus"] === "error") {
+            $errorMessage = "External service returned an error";
+            if (isset($response_array["errors"]) && is_array($response_array["errors"])) {
+                $errorDetails = array_filter($response_array["errors"], function($error) {
+                    return !empty($error);
+                });
+                if (!empty($errorDetails)) {
+                    // Format error details properly
+                    $formattedErrors = array_map(function($error) {
+                        if (is_array($error)) {
+                            return json_encode($error);
+                        }
+                        return (string)$error;
+                    }, $errorDetails);
+                    $errorMessage = "External service error: " . implode(", ", $formattedErrors);
+                }
+            }
+            return createApiError($errorMessage, "EXTERNAL_SERVICE_API_ERROR");
+        }
+        
+        // Check for error status in response
+        if (isset($response_array["error"]) || (isset($response_array["status"]) && $response_array["status"] === "error")) {
+            $errorMessage = $response_array["error"] ?? $response_array["message"] ?? "Error response from external service";
+            return createApiError($errorMessage, "EXTERNAL_SERVICE_API_ERROR");
+        }
+        
+        // Validate that we have actual data to return
+        $data = $response_array["data"] ?? $response_array;
+        if (empty($data)) {
+            return createApiError("No data found in external service response", "EXTERNAL_SERVICE_NO_DATA");
+        }
+        
+        // Return successful response with the data
+        return createApiSuccessResponse($data, ["message" => $response_array["text"] ?? $response_array["message"] ?? "Successfully fetched data."]);
 
     } catch (Exception $e) {
-        return createApiError("Exception: ".$e->getMessage(), "EXTERNAL_SERVICE_EXCEPTION");
+        return createApiError("Exception occurred while fetching external data: ".$e->getMessage(), "EXTERNAL_SERVICE_EXCEPTION");
     }
 }
 
