@@ -39,13 +39,6 @@ $(document).ready( function() {
 
 	$(window).scroll();
 
-	// Add window resize event listener for responsive chart
-	$(window).resize(function() {
-		if (typeof resultsAttributes === "object") {
-			updateFactionChart();
-		}
-	});
-
 	window.onpopstate = function(event) {
 		updateContentsFromURL();
 	}
@@ -745,143 +738,47 @@ function updateFactionChart() {
         return;
     }
     
-    // Clear any existing chart
-    d3.select("#factionChart").selectAll("*").remove();
-    
-    // Store previous data for animation
-    var previousData = window.factionChartData || [];
-    window.factionChartData = []; // Will be populated below
-    
-    // Prepare data for D3
+    // Prepare data for the generic chart function
     var data = [];
     
     if (!speechesPerFaction || Object.keys(speechesPerFaction).length === 0) {
-        data.push({ faction: ' ', value: 1, color: '#aaaaaa' });
+        data.push({ 
+            id: 'empty', 
+            label: 'No data', 
+            value: 1, 
+            color: '#aaaaaa' 
+        });
     } else {
         for (var faction in speechesPerFaction) {
             if (speechesPerFaction.hasOwnProperty(faction)) {
-                var factionColor = (factionIDColors[faction]) ? factionIDColors[faction] : "#aaaaaa";
                 data.push({
-                    faction: faction,
-                    value: speechesPerFaction[faction],
-                    color: factionColor
+                    id: faction,
+                    label: faction,
+                    value: speechesPerFaction[faction]
                 });
             }
         }
     }
     
-    // Store the new data for next update
-    window.factionChartData = data;
-    
-    // Set up dimensions - use the parent container's dimensions
-    var containerWidth = chartContainer.parentElement.clientWidth;
-    var containerHeight = chartContainer.parentElement.clientHeight;
-    var width = containerWidth;
-    var height = containerHeight;
-    
-    // Create SVG container
-    var svg = d3.select("#factionChart")
-        .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-    
-    // Calculate radius based on the smaller dimension
-    var radius = Math.min(width, height) / 2;
-    
-    // Create color scale
-    var color = d3.scaleOrdinal()
-        .domain(data.map(d => d.faction))
-        .range(data.map(d => d.color));
-    
-    // Create pie generator
-    var pie = d3.pie()
-        .value(d => d.value)
-        .sort(null);
-    
-    // Create arc generator for the doughnut
-    var arc = d3.arc()
-        .outerRadius(radius)
-        .innerRadius(radius * 0.75);
-    
-    // Add the arcs to the SVG
-    var arcs = svg.selectAll(".arc")
-        .data(pie(data))
-        .enter()
-        .append("g")
-        .attr("class", "arc");
-    
-    // Add the paths
-    arcs.append("path")
-        .attr("d", arc)
-        .style("fill", d => d.data.color)
-        .style("stroke", "#fff")
-        .style("stroke-width", "1px");
-    
-    // Add tooltips
-    arcs.append("title")
-        .text(d => d.data.faction + ": " + d.data.value);
-        
-    // Add animation
-    if (previousData.length > 0) {
-        // If we have previous data, animate from that state
-        var previousPie = d3.pie()
-            .value(d => d.value)
-            .sort(null);
-            
-        var previousArcs = previousPie(previousData);
-        
-        // Match previous data to current data by faction
-        var previousArcsMap = {};
-        previousArcs.forEach(function(d) {
-            previousArcsMap[d.data.faction] = d;
+    // Initialize or update the chart using the generic function
+    if (!window.factionChart) {
+        window.factionChart = renderDonutChart({
+            container: '#factionChart',
+            data: data,
+            type: 'donut',
+            colorType: 'factions',
+            valueField: 'value',
+            labelField: 'label',
+            idField: 'id',
+            animate: true,
+            animationDuration: 500,
+            innerRadius: 0.75,
+            margin: 1,
+            showTooltips: false,
+            enableAutoResize: false
         });
-        
-        // Animate from previous state to current state
-        arcs.selectAll("path")
-            .attr("d", function(d) {
-                // Find matching previous arc or use zero angles
-                var prevArc = previousArcsMap[d.data.faction] || { startAngle: 0, endAngle: 0 };
-                return arc(prevArc);
-            })
-            .transition()
-            .duration(500)
-            .ease(d3.easeQuadInOut)
-            .attrTween("d", function(d) {
-                var prevArc = previousArcsMap[d.data.faction] || { startAngle: 0, endAngle: 0 };
-                var interpolate = d3.interpolate(
-                    { startAngle: prevArc.startAngle, endAngle: prevArc.endAngle },
-                    { startAngle: d.startAngle, endAngle: d.endAngle }
-                );
-                return function(t) {
-                    return arc(interpolate(t));
-                };
-            });
     } else {
-        // If no previous data, animate from zero
-        arcs.selectAll("path")
-            .attr("d", function(d) {
-                // Create a copy of the data with zero angles
-                var d0 = {
-                    startAngle: 0,
-                    endAngle: 0,
-                    data: d.data
-                };
-                return arc(d0);
-            })
-            .transition()
-            .duration(500)
-            .ease(d3.easeQuadInOut)
-            .attrTween("d", function(d) {
-                var interpolate = d3.interpolate(
-                    { startAngle: 0, endAngle: 0 },
-                    { startAngle: d.startAngle, endAngle: d.endAngle }
-                );
-                return function(t) {
-                    return arc(interpolate(t));
-                };
-            });
+        window.factionChart.update(data);
     }
 }
 
@@ -960,6 +857,13 @@ function initializeComponents() {
 	if (initialQuery || window.location.pathname === '/search' || window.location.pathname.endsWith('/')) {
 		mediaResultsManager.loadResults(initialQuery, false);
 	}
+	
+	// Simple resize handler for faction chart
+	$(window).resize(function() {
+		if (typeof resultsAttributes === "object" && window.factionChart) {
+			updateFactionChart();
+		}
+	});
 }
 
 /**

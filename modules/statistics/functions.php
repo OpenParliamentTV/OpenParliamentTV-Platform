@@ -171,7 +171,7 @@ function getGeneralStatistics() {
                         'aggs' => [
                             'unique_speakers' => [ 'cardinality' => [ 'field' => 'annotations.data.id' ] ],
                             'top_speakers' => [ 
-                                'terms' => [ 'field' => 'annotations.data.id', 'size' => 10 ],
+                                'terms' => [ 'field' => 'annotations.data.id', 'size' => 20 ],
                                 'aggs' => [
                                     'unique_speeches' => [
                                         'reverse_nested' => new stdClass(),
@@ -212,7 +212,7 @@ function getGeneralStatistics() {
                                                         'aggs' => [
                                                             'unique_speakers' => [ 'cardinality' => [ 'field' => 'annotations.data.id' ] ],
                                                             'top_speakers' => [
-                                                                'terms' => [ 'field' => 'annotations.data.id', 'size' => 10 ],
+                                                                'terms' => [ 'field' => 'annotations.data.id', 'size' => 20 ],
                                                                 'aggs' => [
                                                                     'speech_count' => [
                                                                         'reverse_nested' => new stdClass(),

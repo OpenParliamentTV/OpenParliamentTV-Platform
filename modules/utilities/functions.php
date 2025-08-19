@@ -706,4 +706,180 @@ function finalizeBaseProgressFile($progressFilePath, $finalStatus, $finalStatusD
 
 // --- END: Generic Progress File Helper Functions ---
 
+/**
+ * Formats time duration or time ago with multilingual support
+ * 
+ * @param array $options Configuration array
+ * @param int|string|DateTime $options['input'] - Seconds (for duration) or Date/DateTime (for time ago)
+ * @param string $options['mode'] - 'duration' or 'ago' (default: 'duration')
+ * @param bool $options['short'] - Show only 2 largest units (default: false)
+ * @param bool $options['showAgo'] - Add "ago" suffix for ago mode (default: true)
+ * @param array $options['labels'] - Override labels (optional, uses global $lang by default)
+ * @param string $options['lang'] - Language code (optional, uses global $lang by default)
+ * @return string Formatted time string
+ */
+function getTimeDistanceString($options = []) {
+    $defaults = [
+        'input' => 0,
+        'mode' => 'duration',
+        'short' => false,
+        'showAgo' => true,
+        'labels' => null,
+        'lang' => null
+    ];
+    
+    $config = array_merge($defaults, $options);
+    
+    // Get current language from global or default to 'en'
+    global $lang;
+    $currentLang = $config['lang'] ?? ($lang ?? 'en');
+    
+    // Helper function to get plural/singular form using L:: constants
+    $getTimeLabel = function($value, $singularKey, $pluralKey) {
+        // Try to get the label using L:: constants if class exists
+        if (class_exists('L')) {
+            try {
+                if ($value == 1) {
+                    if (defined('L::' . $singularKey)) {
+                        return constant('L::' . $singularKey);
+                    }
+                } else {
+                    if (defined('L::' . $pluralKey)) {
+                        return constant('L::' . $pluralKey);
+                    }
+                }
+            } catch (Exception $e) {
+                // Continue to fallback
+            }
+        }
+        
+        // Fallback to English
+        $fallback = [
+            'timeDay' => 'day', 'timeDays' => 'days',
+            'timeHour' => 'hour', 'timeHours' => 'hours',
+            'timeMinute' => 'minute', 'timeMinutes' => 'minutes',
+            'timeSecond' => 'second', 'timeSeconds' => 'seconds'
+        ];
+        return $value == 1 ? $fallback[$singularKey] : $fallback[$pluralKey];
+    };
+    
+    $seconds = 0;
+    
+    if ($config['mode'] === 'ago') {
+        // Calculate seconds from date to now
+        $inputDate = null;
+        
+        if ($config['input'] instanceof DateTime) {
+            $inputDate = $config['input'];
+        } elseif (is_string($config['input'])) {
+            $inputDate = new DateTime($config['input']);
+        } elseif (is_numeric($config['input'])) {
+            // Assume it's a timestamp
+            $inputDate = new DateTime('@' . $config['input']);
+        } else {
+            // Invalid input for ago mode
+            return '';
+        }
+        
+        $now = new DateTime();
+        $seconds = (int)($now->getTimestamp() - $inputDate->getTimestamp());
+        
+        // Handle future dates
+        if ($seconds < 0) {
+            $seconds = abs($seconds);
+        }
+    } else {
+        // Duration mode - input is already in seconds
+        $seconds = (int)$config['input'];
+    }
+    
+    // Handle zero or negative values
+    if ($seconds <= 0) {
+        if ($config['mode'] === 'ago') {
+            // Try to get timeAgo using L:: constant
+            if (class_exists('L')) {
+                try {
+                    if (defined('L::timeAgo')) {
+                        return constant('L::timeAgo');
+                    }
+                } catch (Exception $e) {
+                    // Continue to fallback
+                }
+            }
+            
+            return 'ago';
+        }
+        return '0 ' . $getTimeLabel(0, 'timeSecond', 'timeSeconds');
+    }
+    
+    // Calculate time units
+    $days = (int)($seconds / 86400);
+    $hours = (int)(($seconds % 86400) / 3600);
+    $minutes = (int)(($seconds % 3600) / 60);
+    $remainingSeconds = $seconds % 60;
+    
+    // Build parts array
+    $parts = [];
+    
+    if ($days > 0) {
+        $parts[] = $days . ' ' . $getTimeLabel($days, 'timeDay', 'timeDays');
+    }
+    
+    if ($hours > 0) {
+        $parts[] = $hours . ' ' . $getTimeLabel($hours, 'timeHour', 'timeHours');
+    }
+    
+    if ($minutes > 0) {
+        $parts[] = $minutes . ' ' . $getTimeLabel($minutes, 'timeMinute', 'timeMinutes');
+    }
+    
+    if ($remainingSeconds > 0) {
+        $parts[] = $remainingSeconds . ' ' . $getTimeLabel($remainingSeconds, 'timeSecond', 'timeSeconds');
+    }
+    
+    // Handle edge case where all units are 0 (shouldn't happen with our logic, but safety)
+    if (empty($parts)) {
+        $parts[] = '0 ' . $getTimeLabel(0, 'timeSecond', 'timeSeconds');
+    }
+    
+    // Apply short mode (only 2 largest units)
+    if ($config['short'] && count($parts) > 2) {
+        $parts = array_slice($parts, 0, 2);
+    }
+    
+    // Join parts
+    $result = implode(' ', $parts);
+    
+    // Add "ago" suffix for ago mode
+    if ($config['mode'] === 'ago' && $config['showAgo']) {
+        // Try to get timeAgo using L:: constant
+        $timeAgo = 'ago';
+        if (class_exists('L')) {
+            try {
+                if (defined('L::timeAgo')) {
+                    $timeAgo = constant('L::timeAgo');
+                }
+            } catch (Exception $e) {
+                // Continue to fallback
+            }
+        }
+        
+        // Different languages have different word orders
+        // German: "vor 2 Stunden" (ago at beginning)
+        // English: "2 hours ago" (ago at end)
+        // French: "il y a 2 heures" (ago at beginning)
+        // Turkish: "2 saat önce" (ago at end)
+        
+        if ($currentLang === 'de' || $currentLang === 'fr') {
+            // German and French: "vor/il y a" + time
+            $result = $timeAgo . ' ' . $result;
+        } else {
+            // English, Turkish, and others: time + "ago/önce"
+            $result = $result . ' ' . $timeAgo;
+        }
+    }
+    
+    return $result;
+}
+
 ?>

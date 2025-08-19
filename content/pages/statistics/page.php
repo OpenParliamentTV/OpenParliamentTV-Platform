@@ -15,16 +15,15 @@ include_once(__DIR__ . '/../../header.php');
 ?>
 <main class="container-fluid subpage">
 	<div class="row" style="position: relative; z-index: 1">
-		<div class="col-12">
+		<div class="col-12 mb-3">
 			<h2>Statistics</h2>
-			<p class="text-muted">Browse and analyze parliamentary word usage statistics, speaker vocabulary data, and network relationships from the database.</p>
 		</div>
 	</div>
 
 	<!-- Statistics Navigation -->
 	<ul class="nav nav-tabs modern-tabs" id="statisticsTab" role="tablist">
 		<li class="nav-item" role="presentation">
-			<button class="nav-link" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab">
+			<button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab">
 				General Statistics
 			</button>
 		</li>
@@ -34,7 +33,7 @@ include_once(__DIR__ . '/../../header.php');
 			</button>
 		</li>
 		<li class="nav-item" role="presentation">
-			<button class="nav-link active" id="word-trends-tab" data-bs-toggle="tab" data-bs-target="#word-trends" type="button" role="tab">
+			<button class="nav-link" id="word-trends-tab" data-bs-toggle="tab" data-bs-target="#word-trends" type="button" role="tab">
 				Word Trends
 			</button>
 		</li>
@@ -44,47 +43,340 @@ include_once(__DIR__ . '/../../header.php');
 	<div class="tab-content modern-tabs" id="statisticsTabContent">
 		
 		<!-- General Statistics Tab -->
-		<div class="tab-pane fade" id="general" role="tabpanel">
-			<div class="row mb-3">
-				<div class="col-md-6">
-					<div class="card">
+		<div class="tab-pane fade show active" id="general" role="tabpanel">
+			<?php
+			// Fetch general statistics data server-side
+			$generalStatsParams = [
+				"action" => "statistics",
+				"itemType" => "general",
+				"parliament" => "DE"
+			];
+			$generalStatsResult = apiV1($generalStatsParams);
+			$generalStats = $generalStatsResult["data"]["attributes"] ?? null;
+			
+			if (!$generalStats) {
+				echo '<div class="alert alert-warning">Unable to load general statistics data.</div>';
+			} else {
+			?>
+			
+			<!-- Row 1: Speeches + Speaking Time -->
+			<div class="row mb-4 align-items-stretch">
+				<!-- Speeches Section -->
+				<div class="col-xl-6 mb-4 mb-xl-0 d-flex">
+					<div class="card flex-fill">
 						<div class="card-header">
-							<h5 class="card-title mb-0">General Statistics Filters</h5>
+							<h5 class="card-title mb-0">Speeches per Faction/Group</h5>
 						</div>
 						<div class="card-body">
-							<form id="generalStatsForm">
-								<button type="button" class="btn btn-primary" onclick="loadGeneralStats()">Load Data</button>
-								<button type="button" class="btn btn-secondary" onclick="resetGeneralStats()">Reset</button>
-							</form>
+							<div class="row">
+								<div class="col-sm-4 col-md-3 col-lg-2">
+									<div class="chart-container mb-3" style="height: 100px;">
+										<div id="speechesByFactionChart" style="height: 100%; width: 100%;"></div>
+									</div>
+								</div>
+								<div class="col-sm-8 col-md-9 col-lg-10">
+									<div class="row">
+										<div class="col-12 mb-3">
+											<div class="card flex-fill">
+												<div class="card-body">
+													<h6 class="card-title">Total Speeches</h6>
+													<p class="card-text"><strong><?= h(number_format($generalStats["speeches"]["total"])) ?></strong></p>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="table-responsive">
+										<table class="table table-striped table-sm">
+											<thead>
+												<tr>
+													<th>Faction/Group</th>
+													<th>Speech Count</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php foreach ($generalStats["speeches"]["byFaction"] as $faction): ?>
+												<tr>
+													<td>
+														<?php if (isset($faction["links"]["self"])): ?>
+															<a href="<?= h($faction['links']['self']) ?>" target="_blank"><?= h($faction["label"]) ?></a>
+														<?php else: ?>
+															<?= h($faction["label"]) ?>
+														<?php endif; ?>
+													</td>
+													<td><?= number_format($faction["total"]) ?></td>
+												</tr>
+												<?php endforeach; ?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-12">
-					<div class="card">
+				
+				<!-- Speaking Time Section -->
+				<div class="col-xl-6 d-flex">
+					<div class="card flex-fill">
 						<div class="card-header">
-							<h5 class="card-title mb-0">General Statistics Results</h5>
+							<h5 class="card-title mb-0">Speaking Time per Faction/Group</h5>
 						</div>
 						<div class="card-body">
-							<div id="generalStatsContent">
-								<div class="text-center text-muted py-5">
-									<i class="bi bi-bar-chart fs-1 mb-3"></i>
-									<p>No data loaded yet</p>
+							<div class="row">
+								<div class="col-sm-4 col-md-3 col-lg-2">
+									<h6 class="mb-2 text-center">Total</h6>
+									<div class="chart-container mb-3" style="height: 100px;">
+										<div id="speakingTimeByFactionChart" style="height: 100%; width: 100%;"></div>
+									</div>
+									
+									<h6 class="mb-2 mt-4 text-center">Average</h6>
+									<div class="chart-container mb-3" style="height: 100px;">
+										<div id="averageSpeakingTimeByFactionChart" style="height: 100%; width: 100%;"></div>
+									</div>
+								</div>
+								<div class="col-sm-8 col-md-9 col-lg-10">
+									<?php if (isset($generalStats["speakingTime"])): ?>
+										<div class="row">
+											<div class="col-md-6">
+												<div class="card flex-fill">
+													<div class="card-body">
+														<h6 class="card-title">Total Speaking Time</h6>
+														<p class="card-text"><strong><?= h(getTimeDistanceString(['input' => $generalStats["speakingTime"]["total"], 'mode' => 'duration', 'short' => true])) ?></strong></p>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-6">
+												<div class="card flex-fill">
+													<div class="card-body">
+														<h6 class="card-title">Average Speaking Time</h6>
+														<p class="card-text"><strong><?= h(getTimeDistanceString(['input' => $generalStats["speakingTime"]["average"], 'mode' => 'duration', 'short' => true])) ?></strong></p>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+										<!-- Show breakdown by faction if available -->
+										<?php if (isset($generalStats["speakingTime"]["byFaction"])): ?>
+										<div class="table-responsive mt-3">
+											<table class="table table-striped table-sm">
+												<thead>
+													<tr>
+														<th>Faction/Group</th>
+														<th>Total Time</th>
+														<th>Average Time</th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php foreach ($generalStats["speakingTime"]["byFaction"] as $faction): ?>
+													<tr>
+														<td><?= h($faction["factionLabel"]) ?></td>
+														<td><?= h(getTimeDistanceString(['input' => $faction["total"], 'mode' => 'duration', 'short' => true])) ?></td>
+														<td><?= h(getTimeDistanceString(['input' => $faction["average"], 'mode' => 'duration', 'short' => true])) ?></td>
+													</tr>
+													<?php endforeach; ?>
+												</tbody>
+											</table>
+										</div>
+										<?php endif; ?>
+									<?php endif; ?>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			
+			<!-- Row 2: Speakers + Vocabulary -->
+			<div class="row mb-4 align-items-stretch">
+				<!-- Speakers Section -->
+				<div class="col-xl-6 mb-4 mb-xl-0 d-flex">
+					<div class="card flex-fill">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Top 20 Speakers</h5>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-12 mb-3">
+									<div class="card flex-fill">
+										<div class="card-body">
+											<h6 class="card-title">Total Speakers</h6>
+											<p class="card-text"><strong><?= h(number_format($generalStats["speakers"]["total"])) ?></strong></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Tabbed content for speakers -->
+							<ul class="nav nav-tabs modern-tabs mb-3" id="speakersTab" role="tablist">
+								<li class="nav-item" role="presentation">
+									<button class="nav-link active" id="speakers-total-tab" data-bs-toggle="pill" data-bs-target="#speakers-total" type="button" role="tab">Total</button>
+								</li>
+								<?php foreach ($generalStats["speakers"]["byFaction"] as $faction): ?>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link" id="speakers-<?= hAttr($faction['factionID']) ?>-tab" data-bs-toggle="pill" data-bs-target="#speakers-<?= hAttr($faction['factionID']) ?>" type="button" role="tab"><?= h($faction["factionLabel"]) ?></button>
+								</li>
+								<?php endforeach; ?>
+							</ul>
+							
+							<div class="tab-content modern-tabs" id="speakersTabContent">
+								<!-- Total speakers tab -->
+								<div class="tab-pane fade show active" id="speakers-total" role="tabpanel">
+									<div class="table-responsive">
+										<table class="table table-striped table-sm">
+											<thead>
+												<tr>
+													<th>Speaker</th>
+													<th>Speech Count</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php foreach ($generalStats["speakers"]["topSpeakers"] as $speaker): ?>
+												<tr>
+													<td>
+														<?php if (isset($speaker["links"]["self"])): ?>
+															<a href="<?= h($speaker['links']['self']) ?>" target="_blank"><?= h($speaker["label"]) ?></a>
+														<?php else: ?>
+															<?= h($speaker["label"]) ?>
+														<?php endif; ?>
+													</td>
+													<td><?= number_format($speaker["speechCount"]) ?></td>
+												</tr>
+												<?php endforeach; ?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								
+								<!-- Faction-specific speaker tabs -->
+								<?php foreach ($generalStats["speakers"]["byFaction"] as $faction): ?>
+								<div class="tab-pane fade" id="speakers-<?= hAttr($faction['factionID']) ?>" role="tabpanel">
+									<div class="table-responsive">
+										<table class="table table-striped table-sm">
+											<thead>
+												<tr>
+													<th>Speaker</th>
+													<th>Speech Count</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php foreach ($faction["topSpeakers"] as $speaker): ?>
+												<tr>
+													<td>
+														<?php if (isset($speaker["links"]["self"])): ?>
+															<a href="<?= h($speaker['links']['self']) ?>" target="_blank"><?= h($speaker["label"]) ?></a>
+														<?php else: ?>
+															<?= h($speaker["label"]) ?>
+														<?php endif; ?>
+													</td>
+													<td><?= number_format($speaker["speechCount"]) ?></td>
+												</tr>
+												<?php endforeach; ?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<?php endforeach; ?>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Vocabulary Section -->
+				<div class="col-xl-6 d-flex">
+					<div class="card flex-fill">
+						<div class="card-header">
+							<h5 class="card-title mb-0">Most used words</h5>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-12 mb-3">
+									<div class="card flex-fill">
+										<div class="card-body">
+											<h6 class="card-title">Total Unique Words</h6>
+											<p class="card-text"><strong><?= h(number_format($generalStats["vocabulary"]["totalUniqueWords"])) ?></strong></p>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<!-- Tabbed content for vocabulary -->
+							<ul class="nav nav-tabs modern-tabs mb-3" id="vocabularyTab" role="tablist">
+								<li class="nav-item" role="presentation">
+									<button class="nav-link active" id="vocabulary-total-tab" data-bs-toggle="pill" data-bs-target="#vocabulary-total" type="button" role="tab">Total</button>
+								</li>
+								<?php if (isset($generalStats["vocabulary"]["byFaction"])): ?>
+									<?php foreach ($generalStats["vocabulary"]["byFaction"] as $faction): ?>
+									<li class="nav-item" role="presentation">
+										<button class="nav-link" id="vocabulary-<?= hAttr($faction['factionID']) ?>-tab" data-bs-toggle="pill" data-bs-target="#vocabulary-<?= hAttr($faction['factionID']) ?>" type="button" role="tab"><?= h($faction["factionLabel"]) ?></button>
+									</li>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</ul>
+							
+							<div class="tab-content modern-tabs" id="vocabularyTabContent">
+								<!-- Total vocabulary tab -->
+								<div class="tab-pane fade show active" id="vocabulary-total" role="tabpanel">
+									<div class="table-responsive">
+										<table class="table table-striped table-sm">
+											<thead>
+												<tr>
+													<th>Word</th>
+													<th>Usage Count</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php foreach ($generalStats["vocabulary"]["topWords"] as $word): ?>
+												<tr>
+													<td><?= h($word["word"]) ?></td>
+													<td><?= number_format($word["speechCount"]) ?></td>
+												</tr>
+												<?php endforeach; ?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								
+								<!-- Faction-specific vocabulary tabs -->
+								<?php if (isset($generalStats["vocabulary"]["byFaction"])): ?>
+									<?php foreach ($generalStats["vocabulary"]["byFaction"] as $faction): ?>
+									<div class="tab-pane fade" id="vocabulary-<?= hAttr($faction['factionID']) ?>" role="tabpanel">
+										<div class="table-responsive">
+											<table class="table table-striped table-sm">
+												<thead>
+													<tr>
+														<th>Word</th>
+														<th>Usage Count</th>
+													</tr>
+												</thead>
+												<tbody>
+													<?php foreach ($faction["topWords"] as $word): ?>
+													<tr>
+														<td><?= h($word["word"]) ?></td>
+														<td><?= number_format($word["speechCount"]) ?></td>
+													</tr>
+													<?php endforeach; ?>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<?php endforeach; ?>
+								<?php endif; ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<?php
+			} // End if generalStats
+			?>
 		</div>
 
 		<!-- Entity Statistics Tab -->
 		<div class="tab-pane fade" id="entity" role="tabpanel">
 			<div class="row mb-3">
 				<div class="col-md-6">
-					<div class="card">
+					<div class="card flex-fill">
 						<div class="card-header">
 							<h5 class="card-title mb-0">Entity Filters</h5>
 						</div>
@@ -123,7 +415,7 @@ include_once(__DIR__ . '/../../header.php');
 
 			<div class="row">
 				<div class="col-12">
-					<div class="card">
+					<div class="card flex-fill">
 						<div class="card-header">
 							<h5 class="card-title mb-0">Entity Statistics Results</h5>
 						</div>
@@ -141,10 +433,10 @@ include_once(__DIR__ . '/../../header.php');
 		</div>
 
 		<!-- Word Trends Tab -->
-		<div class="tab-pane fade show active" id="word-trends" role="tabpanel">
+		<div class="tab-pane fade" id="word-trends" role="tabpanel">
 			<div class="row mb-3">
 				<div class="col-12">
-					<div class="card">
+					<div class="card flex-fill">
 						<div class="card-body">
 							<div class="mb-2">
 								<span class="text-muted small">Example: <a href="#" id="wordTrendsExample">pandemie, flüchtlinge, ukraine</a></span>
@@ -235,7 +527,7 @@ include_once(__DIR__ . '/../../header.php');
 			<!-- Single Word Faction Trends Section -->
 			<div class="row mt-4">
 				<div class="col-12">
-					<div class="card">
+					<div class="card flex-fill">
 						<div class="card-header">
 							<h5 class="card-title mb-0">Word by Faction Analysis</h5>
 						</div>
@@ -299,6 +591,9 @@ include_once(__DIR__ . '/../../header.php');
 document.getElementById('wordTrendsEndDate').value = new Date().toISOString().split('T')[0];
 document.getElementById('factionWordEndDate').value = new Date().toISOString().split('T')[0];
 
+// General statistics data from server
+var generalStatsData = <?= json_encode($generalStats, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
+
 // Word trends interactive variables
 var wordTrendsSuggestionsAjax;
 var selectedWordSuggestionIndex = null;
@@ -316,10 +611,11 @@ var currentFactionWord = null;
 var minDate = new Date("2013-10-01");
 var maxDate = new Date();
 
-// Initialize word trends interactive interface
+// Initialize word trends interactive interface and general statistics charts
 $(document).ready(function() {
 	initializeWordTrendsInterface();
 	initializeFactionWordInterface();
+	initializeGeneralStatisticsCharts();
 });
 
 // Initialize timeline after all scripts are loaded
@@ -1023,7 +1319,7 @@ function createTable(data, columns, tableId) {
 	}
 	
 	let html = `<div class="table-responsive"><table class="table table-striped table-hover" id="${tableId}">`;
-	html += '<thead class="table-dark"><tr>';
+	html += '<thead><tr>';
 	columns.forEach(col => {
 		html += `<th>${col.title}</th>`;
 	});
@@ -1059,77 +1355,119 @@ function createEntityLink(entity, label = null) {
 	return displayText;
 }
 
-// General Statistics Functions
-async function loadGeneralStats() {
-	const params = {};
+// General Statistics Charts Initialization (for server-side rendered content)
+function initializeGeneralStatisticsCharts() {
+	// Only initialize charts when the General Statistics tab is shown
+	$('#general-tab').on('shown.bs.tab', function (e) {
+		// Small delay to ensure DOM is ready
+		setTimeout(function() {
+			initializeSpeechesByFactionChart();
+			initializeSpeakingTimeByFactionChart();
+			initializeAverageSpeakingTimeByFactionChart();
+		}, 100);
+	});
 	
-	const result = await makeApiRequest('general', params);
-	
-	if (result.errors) {
-		document.getElementById('generalStatsContent').innerHTML = 
-			`<div class="alert alert-danger">${result.errors[0].detail}</div>`;
-		return;
+	// Initialize immediately if general tab is already active
+	if ($('#general-tab').hasClass('active')) {
+		setTimeout(function() {
+			initializeSpeechesByFactionChart();
+			initializeSpeakingTimeByFactionChart();
+			initializeAverageSpeakingTimeByFactionChart();
+		}, 100);
 	}
-	
-	displayGeneralStats(result.data);
 }
 
-function displayGeneralStats(data) {
-	const attrs = data.attributes;
-	let html = '';
+// Initialize speeches by faction chart from server data
+function initializeSpeechesByFactionChart() {
+	const chartContainer = document.getElementById('speechesByFactionChart');
+	if (!chartContainer || !generalStatsData?.speeches?.byFaction) return;
 	
-	// Speeches section (first in new order)
-	if (attrs.speeches) {
-		html += '<div class="row mb-4"><div class="col-12">';
-		html += `<h6>Which factions/groups give the most speeches? (${formatNumber(attrs.speeches.total)} total speeches)</h6>`;
-		html += createTable(attrs.speeches.byFaction, [
-			{ field: 'label', title: 'Faction/Group', formatter: (val, row) => createEntityLink(row, val) },
-			{ field: 'total', title: 'Speech Count', formatter: formatNumber }
-		], 'speechesTable');
-		html += '</div></div>';
+	// Use the raw data from server
+	const speechesData = generalStatsData.speeches.byFaction.map(faction => ({
+		id: faction.id,
+		label: faction.label,
+		value: faction.total
+	}));
+	
+	// Render donut chart
+	if (speechesData.length > 0) {
+		window.speechesByFactionChart = renderDonutChart({
+			container: '#speechesByFactionChart',
+			data: speechesData,
+			type: 'donut',
+			colorType: 'factions',
+			valueField: 'value',
+			labelField: 'label',
+			idField: 'id',
+			animate: true,
+			animationDuration: 750,
+			innerRadius: 0.8
+		});
 	}
-	
-	// Speakers section (second in new order)
-	if (attrs.speakers) {
-		html += '<div class="row mb-4"><div class="col-12">';
-		html += `<h6>Who are the speakers that give the most speeches? (${formatNumber(attrs.speakers.total)} total speakers)</h6>`;
-		html += createTable(attrs.speakers.topSpeakers, [
-			{ field: 'label', title: 'Speaker', formatter: (val, row) => createEntityLink(row, val) },
-			{ field: 'speechCount', title: 'Speech Count', formatter: formatNumber }
-		], 'speakersTable');
-		html += '</div></div>';
-	}
-	
-	// Speaking time section (third in new order)
-	if (attrs.speakingTime) {
-		html += '<div class="row mb-4"><div class="col-md-6">';
-		html += '<div class="card"><div class="card-body">';
-		html += `<h6>How much total speaking time is recorded?</h6>`;
-		html += `<p><strong>Total:</strong> ${formatNumber(Math.round(attrs.speakingTime.total))} seconds</p>`;
-		html += `<p><strong>Average:</strong> ${formatNumber(Math.round(attrs.speakingTime.average))} seconds</p>`;
-		html += '</div></div></div></div>';
-	}
-	
-	// Vocabulary section (fourth in new order - renamed from wordFrequency)
-	if (attrs.vocabulary) {
-		html += '<div class="row mb-4"><div class="col-12">';
-		html += `<h6>What are the most frequently spoken words in parliamentary speeches? (${formatNumber(attrs.vocabulary.totalUniqueWords)} unique words)</h6>`;
-		html += createTable(attrs.vocabulary.topWords, [
-			{ field: 'word', title: 'Word' },
-			{ field: 'speechCount', title: 'Usage Count', formatter: formatNumber }
-		], 'vocabularyTable');
-		html += '</div></div>';
-	}
-	
-	document.getElementById('generalStatsContent').innerHTML = html;
 }
 
-function resetGeneralStats() {
-	document.getElementById('generalStatsContent').innerHTML = 
-		'<div class="text-center text-muted py-5"><i class="bi bi-bar-chart fs-1 mb-3"></i><p>No data loaded yet</p></div>';
+// Initialize speaking time by faction chart from server data
+function initializeSpeakingTimeByFactionChart() {
+	const chartContainer = document.getElementById('speakingTimeByFactionChart');
+	if (!chartContainer || !generalStatsData?.speakingTime?.byFaction) return;
+	
+	// Use the raw data from server
+	const speakingTimeData = generalStatsData.speakingTime.byFaction.map(faction => ({
+		id: faction.factionID,
+		label: faction.factionLabel,
+		value: faction.total
+	}));
+	
+	// Render donut chart
+	if (speakingTimeData.length > 0) {
+		window.speakingTimeByFactionChart = renderDonutChart({
+			container: '#speakingTimeByFactionChart',
+			data: speakingTimeData,
+			type: 'donut',
+			colorType: 'factions',
+			valueField: 'value',
+			labelField: 'label',
+			idField: 'id',
+			animate: true,
+			animationDuration: 750,
+			innerRadius: 0.8
+		});
+	}
 }
 
-// Entity Statistics Functions
+// Initialize average speaking time by faction chart from server data
+function initializeAverageSpeakingTimeByFactionChart() {
+	const chartContainer = document.getElementById('averageSpeakingTimeByFactionChart');
+	if (!chartContainer || !generalStatsData?.speakingTime?.byFaction) return;
+	
+	// Use the raw data from server
+	const averageSpeakingTimeData = generalStatsData.speakingTime.byFaction.map(faction => ({
+		id: faction.factionID,
+		label: faction.factionLabel,
+		value: faction.average
+	}));
+	
+	// Render donut chart
+	if (averageSpeakingTimeData.length > 0) {
+		window.averageSpeakingTimeByFactionChart = renderDonutChart({
+			container: '#averageSpeakingTimeByFactionChart',
+			data: averageSpeakingTimeData,
+			type: 'donut',
+			colorType: 'factions',
+			valueField: 'value',
+			labelField: 'label',
+			idField: 'id',
+			animate: true,
+			animationDuration: 750,
+			innerRadius: 0.8
+		});
+	}
+}
+
+// Legacy chart functions removed - now using server-side rendered content with chart initialization
+// Charts are initialized from initializeGeneralStatisticsCharts() function
+
+// Entity Statistics Functions (remain unchanged for dynamic loading)
 async function loadEntityStats() {
 	const entityType = document.getElementById('entityType').value;
 	const entityID = document.getElementById('entityID').value;

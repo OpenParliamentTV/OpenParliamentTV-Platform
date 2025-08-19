@@ -1898,6 +1898,23 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
     }
 }
 
+/* Chart Container - Center charts horizontally */
+.chart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-container svg {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Faction Chart Container - Allow D3.js to control dimensions */
+.factionChartContainer svg {
+    display: block;
+}
+
 .filterSummary {
     margin: 5px 0 10px 0;
 }
