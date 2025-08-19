@@ -35,7 +35,8 @@ temp
 
 # Cache
 langcache/*.php
-api/v1/cache/*
+api/v1/cache/*.json
+api/v1/cache/*.meta
 
 # Data
 data/import-error-log.txt
