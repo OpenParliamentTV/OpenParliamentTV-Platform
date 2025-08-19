@@ -43,6 +43,7 @@ function enrichEntityWithSelfLink($entity, $entityType) {
     return $entity;
 }
 
+
 /**
  * Detect entity type from context or annotations
  * @param string $entityID The entity ID
@@ -60,19 +61,19 @@ function detectEntityType($entityID) {
 }
 
 /**
- * Fetch entity label from database using getByID functions
+ * Fetch entity information (label and filtering data) using existing API methods
  * @param string $entityType The entity type
  * @param string $entityID The entity ID
- * @return string The entity label or ID if not found
+ * @return array Array with 'label' and 'shouldFilter' keys
  */
-function getEntityLabel($entityType, $entityID) {
+function getEntityInfo($entityType, $entityID) {
     try {
         // Cache to avoid multiple lookups for the same entity
-        static $labelCache = [];
+        static $infoCache = [];
         $cacheKey = $entityType . ':' . $entityID;
         
-        if (isset($labelCache[$cacheKey])) {
-            return $labelCache[$cacheKey];
+        if (isset($infoCache[$cacheKey])) {
+            return $infoCache[$cacheKey];
         }
         
         // Map entity types to their respective modules and functions
@@ -84,10 +85,12 @@ function getEntityLabel($entityType, $entityID) {
             'term' => ['module' => 'term', 'function' => 'termGetByID']
         ];
         
+        $result = ['label' => $entityID, 'shouldFilter' => false];
         $mapping = $functionMap[$entityType] ?? null;
+        
         if (!$mapping) {
-            $labelCache[$cacheKey] = $entityID;
-            return $entityID;
+            $infoCache[$cacheKey] = $result;
+            return $result;
         }
         
         // Include the appropriate module
@@ -96,22 +99,39 @@ function getEntityLabel($entityType, $entityID) {
             require_once($modulePath);
             
             if (function_exists($mapping['function'])) {
-                $result = $mapping['function']($entityID);
-                if (isset($result['data']['attributes']['label']) && !empty($result['data']['attributes']['label'])) {
-                    $labelCache[$cacheKey] = $result['data']['attributes']['label'];
-                    return $result['data']['attributes']['label'];
+                $apiResult = $mapping['function']($entityID);
+                
+                if (isset($apiResult['data']['attributes']['label']) && !empty($apiResult['data']['attributes']['label'])) {
+                    $result['label'] = $apiResult['data']['attributes']['label'];
+                }
+                
+                // Check for filtering criteria based on entity type
+                if ($entityType === 'person' && isset($apiResult['data']['attributes']['type'])) {
+                    $result['shouldFilter'] = ($apiResult['data']['attributes']['type'] === 'memberOfParliament');
+                } elseif (($entityType === 'organisation' || $entityType === 'organization') && isset($apiResult['data']['attributes']['type'])) {
+                    $result['shouldFilter'] = ($apiResult['data']['attributes']['type'] === 'faction');
                 }
             }
         }
         
-        // Fallback: return ID if no label found
-        $labelCache[$cacheKey] = $entityID;
-        return $entityID;
+        $infoCache[$cacheKey] = $result;
+        return $result;
     } catch (Exception $e) {
         // Log but don't fail - return ID as fallback
-        //error_log("Error fetching entity label for {$entityType}/{$entityID}: " . $e->getMessage());
-        return $entityID;
+        //error_log("Error fetching entity info for {$entityType}/{$entityID}: " . $e->getMessage());
+        return ['label' => $entityID, 'shouldFilter' => false];
     }
+}
+
+/**
+ * Fetch entity label from database using getByID functions
+ * @param string $entityType The entity type
+ * @param string $entityID The entity ID
+ * @return string The entity label or ID if not found
+ */
+function getEntityLabel($entityType, $entityID) {
+    $info = getEntityInfo($entityType, $entityID);
+    return $info['label'];
 }
 
 // Initialize OpenSearch client if not already initialized
@@ -136,6 +156,13 @@ function statisticsGetGeneral($request) {
     global $config;
     
     try {
+        // Check cache first
+        $parliament = $request['parliament'] ?? 'de';
+        $cachedResult = getGeneralStatisticsFromCache($parliament);
+        if ($cachedResult !== null) {
+            return $cachedResult;
+        }
+        
         // Check if OpenSearch client is available
         if (!isset($GLOBALS['ESClient'])) {
             return createApiErrorResponse(
@@ -146,12 +173,7 @@ function statisticsGetGeneral($request) {
             );
         }
         
-        // CRITICAL: Hardcode context filtering for meaningful statistics
-        // Statistics MUST use main-speaker context by default, not user-configurable
-        $contextFilter = 'main-speaker'; // Hardcoded to ensure data consistency  
-        $factionFilter = $request['factionID'] ?? null;
-        
-        $stats = getGeneralStatistics($contextFilter, $factionFilter);
+        $stats = getGeneralStatistics();
         
         if ($stats === null) {
             return createApiErrorResponse(
@@ -172,97 +194,108 @@ function statisticsGetGeneral($request) {
             );
         }
 
-        $data = [
-            "type" => "statistics",
-            "id" => "general",
-            "attributes" => [
-                "context" => $contextFilter, // Show which context filter is applied
-                "factionID" => $factionFilter, // Show faction filter if applied
-                "speakers" => [
-                    "total" => $stats["speakers"]["filtered_speakers"]["unique_speakers"]["value"],
-                    "topSpeakers" => array_map(function($bucket) {
-                        return enrichEntityWithSelfLink([
-                            "id" => $bucket["key"],
-                            "speechCount" => $bucket["doc_count"]
-                        ], 'person');
-                    }, $stats["speakers"]["filtered_speakers"]["top_speakers"]["buckets"])
-                ]
-            ]
-        ];
-        
-        // Process speaking time statistics
-        if (isset($stats["speakingTime"])) {
-            $data["attributes"]["speakingTime"] = [
-                "total" => $stats["speakingTime"]["sum"],
-                "average" => $stats["speakingTime"]["avg"],
-                "unit" => "seconds"
+        // Build data structure in the exact order requested: speeches, speakers, speakingTime, vocabulary
+        $attributes = [];
+
+        // 1. Speeches (first in order)
+        if (isset($stats["speeches"])) {
+            $attributes["speeches"] = [
+                "total" => $stats["speeches"]["total_speeches"]["speech_count"]["value"],
+                "byFaction" => array_map(function($bucket) {
+                    return enrichEntityWithSelfLink([
+                        "id" => $bucket["key"],
+                        "total" => $bucket["speech_count"]["speeches"]["value"]
+                    ], 'organisation');
+                }, $stats["speeches"]["factions"]["by_faction"]["buckets"])
             ];
         }
-        
-        // Process word frequency statistics with context-based analysis
+
+        // 2. Speakers (second in order)
+        $attributes["speakers"] = [
+            "total" => $stats["speakers"]["filtered_speakers"]["unique_speakers"]["value"],
+            "topSpeakers" => array_map(function($bucket) {
+                return enrichEntityWithSelfLink([
+                    "id" => $bucket["key"],
+                    "speechCount" => $bucket["unique_speeches"]["speech_count"]["value"]
+                ], 'person');
+            }, $stats["speakers"]["filtered_speakers"]["top_speakers"]["buckets"]),
+            "byFaction" => array_map(function($bucket) {
+                return [
+                    "factionID" => $bucket["key"],
+                    "factionLabel" => getEntityLabel('organisation', $bucket["key"]),
+                    "total" => $bucket["back_to_speeches"]["speakers_in_faction"]["main_speakers"]["unique_speakers"]["value"],
+                    "topSpeakers" => array_map(function($speakerBucket) {
+                        return enrichEntityWithSelfLink([
+                            "id" => $speakerBucket["key"],
+                            "speechCount" => $speakerBucket["speech_count"]["speeches"]["value"]
+                        ], 'person');
+                    }, $bucket["back_to_speeches"]["speakers_in_faction"]["main_speakers"]["top_speakers"]["buckets"])
+                ];
+            }, $stats["speakers_by_faction"]["faction_filter"]["factions"]["buckets"])
+        ];
+
+        // 3. Speaking time (third in order)
+        if (isset($stats["speakingTime"])) {
+            $attributes["speakingTime"] = [
+                "total" => $stats["speakingTime"]["sum"],
+                "average" => $stats["speakingTime"]["avg"],
+                "unit" => "seconds",
+                "byFaction" => array_map(function($bucket) {
+                    return [
+                        "factionID" => $bucket["key"],
+                        "factionLabel" => getEntityLabel('organisation', $bucket["key"]),
+                        "total" => $bucket["back_to_speeches"]["speaking_time"]["sum"],
+                        "average" => $bucket["back_to_speeches"]["speaking_time"]["avg"],
+                        "unit" => "seconds"
+                    ];
+                }, $stats["speaking_time_by_faction"]["faction_filter"]["factions"]["buckets"])
+            ];
+        }
+
+        // 4. Vocabulary (fourth in order, renamed from wordFrequency)
         if (isset($stats["wordFrequency"])) {
-            $data["attributes"]["wordFrequency"] = [
-                "totalWords" => $stats["wordFrequency"]["sum_other_doc_count"],
+            $attributes["vocabulary"] = [
+                "totalUniqueWords" => $stats["wordFrequency"]["total_unique_words"],
                 "topWords" => array_map(function($bucket) {
                     return [
                         "word" => $bucket["key"],
                         "speechCount" => $bucket["doc_count"]
                     ];
-                }, $stats["wordFrequency"]["buckets"])
-            ];
-            
-            // Include context-based statistics as recommended in planning docs
-            if (isset($stats["wordFrequency"]["contextBasedStats"])) {
-                $data["attributes"]["wordFrequency"]["byContext"] = $stats["wordFrequency"]["contextBasedStats"];
-            }
-        }
-
-        // Process speaker mentions with self-links
-        if (isset($stats["speakerMentions"])) {
-            $data["attributes"]["speakerMentions"] = [
-                "total" => $stats["speakerMentions"]["filtered_speakers"]["doc_count"],
-                "topMentions" => array_map(function($bucket) {
-                    return enrichEntityWithSelfLink([
-                        "id" => $bucket["key"],
-                        "mentionCount" => $bucket["doc_count"]
-                    ], 'person');
-                }, $stats["speakerMentions"]["filtered_speakers"]["topSpeakers"]["buckets"])
+                }, $stats["wordFrequency"]["buckets"]),
+                "byFaction" => array_map(function($factionInfo) {
+                    return [
+                        "factionID" => $factionInfo["factionID"],
+                        "factionLabel" => getEntityLabel('organisation', $factionInfo["factionID"]),
+                        "topWords" => $factionInfo["topWords"]
+                    ];
+                }, (function() use ($stats) {
+                    // Find the by_faction context in contextBasedStats
+                    $contextStats = $stats["wordFrequency"]["contextBasedStats"] ?? [];
+                    foreach ($contextStats as $contextItem) {
+                        if (isset($contextItem["type"]) && $contextItem["type"] === "by_faction") {
+                            return $contextItem["factions"] ?? [];
+                        }
+                    }
+                    return [];
+                })())
             ];
         }
 
-        // Process share of voice with self-links  
-        if (isset($stats["shareOfVoice"])) {
-            $data["attributes"]["shareOfVoice"] = [
-                "factions" => array_map(function($bucket) {
-                    return enrichEntityWithSelfLink([
-                        "id" => $bucket["key"],
-                        "speechCount" => $bucket["doc_count"]
-                    ], 'organisation');
-                }, $stats["shareOfVoice"]["factions"]["topFactions"]["buckets"])
-            ];
-        }
+        // Assemble final data structure with enforced order
+        $data = [
+            "type" => "statistics",
+            "id" => "general",
+            "attributes" => $attributes
+        ];
 
-        // Process entities statistics with self-links
-        if (isset($stats["entities"])) {
-            $data["attributes"]["entities"] = [];
-            foreach ($stats["entities"]["entityTypes"]["buckets"] as $typeBucket) {
-                $entityType = $typeBucket["key"];
-                $data["attributes"]["entities"][$entityType] = [
-                    "total" => $typeBucket["doc_count"],
-                    "topEntities" => array_map(function($bucket) use ($entityType) {
-                        return enrichEntityWithSelfLink([
-                            "id" => $bucket["key"],
-                            "totalCount" => $bucket["doc_count"],
-                            "speechCount" => $bucket["unique_documents"]["value"]
-                        ], $entityType);
-                    }, $typeBucket["topEntities"]["buckets"])
-                ];
-            }
-        }
-
-        return createApiSuccessResponse($data, [], [
+        $result = createApiSuccessResponse($data, [], [
             "self" => $config["dir"]["api"]."/statistics/general"
         ]);
+        
+        // Cache the result
+        cacheGeneralStatistics($result, $parliament);
+        
+        return $result;
         
     } catch (Exception $e) {
         return createApiErrorResponse(
@@ -300,8 +333,7 @@ function statisticsGetEntity($request) {
         $speakerVocabulary = null;
         if ($request["entityType"] === 'person') {
             require_once(__DIR__ . "/../../../modules/search/functions.enhanced.php");
-            $limit = $request["limit"] ?? 50;
-            $vocabResult = getSpeakerVocabularyEnhanced($request["entityID"], $limit);
+            $vocabResult = getSpeakerVocabularyEnhanced($request["entityID"], 50);
             if ($vocabResult['success']) {
                 $speakerVocabulary = $vocabResult['data'];
             }
@@ -330,18 +362,31 @@ function statisticsGetEntity($request) {
                     "speechesInPrimaryContext" => $stats["speeches_as_main_speaker"]["filter_this_person_as_main_speaker"]["unique_speeches_as_speaker"]["doc_count"] ?? 0 // speeches where entity appears in primary context (main-speaker for person, main-speaker-faction for organisation)
                 ],
                 "entityAssociations" => [ // SEMANTIC CLARIFICATION: other entities appearing in same speeches as this entity
-                    "topCoOccurringPersons" => array_map(function($bucket) {
+                    "topDetectedEntities" => array_slice(array_values(array_filter(array_map(function($bucket) {
+                        // Get the entity type from the nested aggregation
+                        $entityType = $bucket["entity_type"]["buckets"][0]["key"] ?? 'unknown';
+                        $entityId = $bucket["key"];
+                        
+                        // Get entity info (label and filtering data) in one database call
+                        $entityInfo = getEntityInfo($entityType, $entityId);
+                        
+                        // Filter out entities that should be filtered (political factions, parliament members)
+                        if ($entityInfo['shouldFilter']) {
+                            return null;
+                        }
+                        
+                        return enrichEntityWithSelfLink([
+                            "id" => $entityId,
+                            "type" => $entityType,
+                            "coOccurrenceCount" => $bucket["doc_count"]
+                        ], $entityType);
+                    }, $stats["associations"]["top_detected_entities"]["ner_entities"]["buckets"] ?? []))), 0, 10),
+                    "topMentionedBy" => array_map(function($bucket) {
                         return enrichEntityWithSelfLink([
                             "id" => $bucket["key"],
                             "coOccurrenceCount" => $bucket["doc_count"]
                         ], 'person');
-                    }, $stats["associations"]["top_speakers"]["buckets"]),
-                    "topMainSpeakers" => array_map(function($bucket) {
-                        return enrichEntityWithSelfLink([
-                            "id" => $bucket["key"],
-                            "coOccurrenceCount" => $bucket["doc_count"]
-                        ], 'person');
-                    }, $stats["associations"]["main_speakers_only"]["top_main_speakers"]["buckets"] ?? [])
+                    }, $stats["associations"]["mentioned_by_speakers"]["top_mentioned_by"]["buckets"] ?? [])
                 ],
                 "trends" => [
                     "total" => $stats["trends"]["buckets"][count($stats["trends"]["buckets"])-1]["doc_count"],
@@ -403,46 +448,6 @@ function statisticsGetEntity($request) {
 
 
 
-/**
- * Get network/relationship analysis
- * 
- * @param array $request The request parameters
- * @return array The API response
- */
-function statisticsGetNetwork($request) {
-    global $config;
-    
-    try {
-        $entityID = isset($request["entityID"]) ? $request["entityID"] : null;
-        $entityType = isset($request["entityType"]) ? $request["entityType"] : null;
-        
-        $stats = getNetworkAnalysis($entityID, $entityType);
-        
-        if ($stats === null) {
-            return createApiErrorResponse(
-                500,
-                1,
-                "messageErrorNetworkStatsTitle",
-                "messageErrorNetworkStatsQueryFailed"
-            );
-        }
-        
-        // Use the processed data but preserve the self link
-        $data = $stats["data"];
-        
-        return createApiSuccessResponse($data, [], [
-            "self" => $config["dir"]["api"]."/statistics/network"
-        ]);
-        
-    } catch (Exception $e) {
-        return createApiErrorResponse(
-            500,
-            1,
-            "messageErrorNetworkStatsTitle",
-            $e->getMessage()
-        );
-    }
-}
 
 /**
  * Get word trends over time using statistics indexing
@@ -469,9 +474,11 @@ function statisticsGetWordTrends($request) {
         $endDate = $request["endDate"] ?? date('Y-m-d');
         $parliamentCode = $request["parliament"] ?? 'de';
         $factions = $request["factions"] ?? []; // Add faction filtering support
+        $separateByFaction = isset($request["separateByFaction"]) && 
+                           (strtolower($request["separateByFaction"]) === 'true' || $request["separateByFaction"] === '1' || $request["separateByFaction"] === true);
         
         require_once(__DIR__ . "/../../../modules/search/functions.enhanced.php");
-        $trendsResult = getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode, $factions);
+        $trendsResult = getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode, $factions, $separateByFaction);
         
         if (!$trendsResult['success']) {
             return createApiErrorResponse(
@@ -487,7 +494,40 @@ function statisticsGetWordTrends($request) {
         
         // Process word trends with proper naming conventions
         $wordTrends = [];
-        if (isset($rawData['words_over_time']['buckets'])) {
+        
+        if ($separateByFaction && isset($rawData['words_by_faction']['buckets'])) {
+            // Process faction-separated data structure
+            foreach ($rawData['words_by_faction']['buckets'] as $wordBucket) {
+                $factionBreakdown = [];
+                
+                if (isset($wordBucket['factions']['buckets'])) {
+                    foreach ($wordBucket['factions']['buckets'] as $factionBucket) {
+                        $timeSeriesData = [];
+                        if (isset($factionBucket['time_series']['buckets'])) {
+                            foreach ($factionBucket['time_series']['buckets'] as $timeBucket) {
+                                $timeSeriesData[] = [
+                                    'date' => $timeBucket['key_as_string'],
+                                    'totalCount' => $timeBucket['total_count']['value'] ?? 0,
+                                    'speechCount' => $timeBucket['speech_count']['value'] ?? 0
+                                ];
+                            }
+                        }
+                        
+                        $factionBreakdown[] = [
+                            'factionID' => $factionBucket['key'],
+                            'factionLabel' => getEntityLabel('organisation', $factionBucket['key']),
+                            'timeline' => $timeSeriesData
+                        ];
+                    }
+                }
+                
+                $wordTrends[] = [
+                    'word' => $wordBucket['key'],
+                    'factionBreakdown' => $factionBreakdown
+                ];
+            }
+        } else if (isset($rawData['words_over_time']['buckets'])) {
+            // Process regular aggregated data structure
             foreach ($rawData['words_over_time']['buckets'] as $wordBucket) {
                 $timeSeriesData = [];
                 if (isset($wordBucket['time_series']['buckets'])) {
@@ -598,6 +638,142 @@ function statisticsGetEntityCounts($request) {
     return createApiSuccessResponse($data, [], [
         "self" => $config["dir"]["api"] . "/statistics/entity-counts"
     ]);
+}
+
+/**
+ * Get general statistics from cache if valid
+ * 
+ * @param string $parliament Parliament code (e.g., 'de')
+ * @return array|null Cached result or null if not valid/missing
+ */
+function getGeneralStatisticsFromCache($parliament = 'de') {
+    $cacheDir = __DIR__ . '/../cache/';
+    $cacheKey = "general_statistics_{$parliament}.json";
+    $cacheFile = $cacheDir . $cacheKey;
+    $cacheMetaFile = $cacheDir . "general_statistics_{$parliament}.meta";
+    
+    // Check if both cache and metadata files exist
+    if (!file_exists($cacheFile) || !file_exists($cacheMetaFile)) {
+        return null;
+    }
+    
+    // Check if cache is still valid
+    if (!isGeneralStatisticsCacheValid($parliament)) {
+        // Clean up invalid cache files
+        @unlink($cacheFile);
+        @unlink($cacheMetaFile);
+        return null;
+    }
+    
+    // Read and return cached data
+    $cachedData = @file_get_contents($cacheFile);
+    if ($cachedData !== false) {
+        $decodedData = json_decode($cachedData, true);
+        if (is_array($decodedData)) {
+            return $decodedData;
+        }
+    }
+    
+    return null;
+}
+
+/**
+ * Cache general statistics result
+ * 
+ * @param array $result The API result to cache
+ * @param string $parliament Parliament code (e.g., 'de')
+ */
+function cacheGeneralStatistics($result, $parliament = 'de') {
+    $cacheDir = __DIR__ . '/../cache/';
+    $cacheKey = "general_statistics_{$parliament}.json";
+    $cacheFile = $cacheDir . $cacheKey;
+    $cacheMetaFile = $cacheDir . "general_statistics_{$parliament}.meta";
+    
+    // Create cache directory if it doesn't exist
+    if (!is_dir($cacheDir)) {
+        @mkdir($cacheDir, 0775, true);
+    }
+    
+    // Get current index versions for validation
+    $indexVersions = getCurrentIndexVersions($parliament);
+    
+    // Save cache data and metadata
+    @file_put_contents($cacheFile, json_encode($result));
+    @file_put_contents($cacheMetaFile, json_encode([
+        'created_at' => time(),
+        'parliament' => $parliament,
+        'index_versions' => $indexVersions
+    ]));
+}
+
+/**
+ * Check if general statistics cache is valid
+ * 
+ * @param string $parliament Parliament code (e.g., 'de')
+ * @return bool True if cache is valid
+ */
+function isGeneralStatisticsCacheValid($parliament = 'de') {
+    $cacheDir = __DIR__ . '/../cache/';
+    $cacheMetaFile = $cacheDir . "general_statistics_{$parliament}.meta";
+    
+    if (!file_exists($cacheMetaFile)) {
+        return false;
+    }
+    
+    $meta = json_decode(@file_get_contents($cacheMetaFile), true);
+    if (!$meta || !isset($meta['index_versions'])) {
+        return false;
+    }
+    
+    // Compare with current index versions
+    $currentVersions = getCurrentIndexVersions($parliament);
+    return $meta['index_versions'] === $currentVersions;
+}
+
+/**
+ * Get current index versions for cache validation
+ * 
+ * @param string $parliament Parliament code (e.g., 'de')
+ * @return array Index version information
+ */
+function getCurrentIndexVersions($parliament = 'de') {
+    try {
+        if (!isset($GLOBALS['ESClient'])) {
+            return ['timestamp' => time()]; // Fallback
+        }
+        
+        $ESClient = $GLOBALS['ESClient'];
+        
+        $mainIndexName = "openparliamenttv_" . strtolower($parliament);
+        $statsIndexName = "optv_statistics_" . strtolower($parliament);
+        
+        $mainStats = $ESClient->indices()->stats(['index' => $mainIndexName]);
+        $statsStats = $ESClient->indices()->stats(['index' => $statsIndexName]);
+        
+        return [
+            'main_docs' => $mainStats['indices'][$mainIndexName]['total']['docs']['count'] ?? 0,
+            'stats_docs' => $statsStats['indices'][$statsIndexName]['total']['docs']['count'] ?? 0,
+            'main_size' => $mainStats['indices'][$mainIndexName]['total']['store']['size_in_bytes'] ?? 0,
+            'stats_size' => $statsStats['indices'][$statsIndexName]['total']['store']['size_in_bytes'] ?? 0
+        ];
+    } catch (Exception $e) {
+        // Fallback to timestamp if OpenSearch is unavailable
+        return ['timestamp' => time()];
+    }
+}
+
+/**
+ * Invalidate general statistics cache for a parliament
+ * 
+ * @param string $parliament Parliament code (e.g., 'de')
+ */
+function invalidateGeneralStatisticsCache($parliament = 'de') {
+    $cacheDir = __DIR__ . '/../cache/';
+    $cacheFile = $cacheDir . "general_statistics_{$parliament}.json";
+    $cacheMetaFile = $cacheDir . "general_statistics_{$parliament}.meta";
+    
+    @unlink($cacheFile);
+    @unlink($cacheMetaFile);
 }
 
 ?>

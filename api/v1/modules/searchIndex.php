@@ -293,6 +293,10 @@ function searchIndexUpdate($api_request) {
         $finalMessage .= " (Statistics indices will be updated after main index completion)";
     }
     
+    // Invalidate general statistics cache since index has been updated
+    require_once(__DIR__ . '/statistics.php');
+    invalidateGeneralStatisticsCache($parliament);
+
     return createApiSuccessResponse(
         ['updated' => $updatedCount, 'failed' => $failedCount, 'errors' => $errorsEncountered],
         ['message' => $finalMessage]
@@ -468,6 +472,11 @@ function searchIndexTriggerFullUpdate($api_request) {
     
     try {
         executeAsyncShellCommand($mainIndexCommand);
+        
+        // Invalidate general statistics cache since full rebuild will change all data
+        require_once(__DIR__ . '/statistics.php');
+        invalidateGeneralStatisticsCache($parliament);
+        
         return createApiSuccessResponse(["message" => "Full rebuild initiated: main index followed by statistics indices for parliament: {$parliament}."]);
     } catch (Exception $e) {
         return createApiErrorResponse(500, 'ASYNC_EXEC_FAIL', 'messageErrorAsyncExec', 'messageErrorAsyncExec', ['error' => $e->getMessage()]);
@@ -593,7 +602,13 @@ function searchIndexTriggerStatisticsUpdate($api_request) {
     }
     
     // Use unified statistics indexing with optimal settings
-    return triggerStatisticsIndexing($parliament, false);
+    $result = triggerStatisticsIndexing($parliament, false);
+    
+    // Invalidate general statistics cache since statistics will be rebuilt
+    require_once(__DIR__ . '/statistics.php');
+    invalidateGeneralStatisticsCache($parliament);
+    
+    return $result;
 }
 
 /**

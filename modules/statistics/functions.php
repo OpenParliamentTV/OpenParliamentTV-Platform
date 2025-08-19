@@ -19,18 +19,16 @@ if (is_array($ESClient) && isset($ESClient["errors"])) {
 /**
  * Get general statistics about the dataset
  * 
- * @param string $contextFilter Context filter (main-speaker, vice-president, etc.)
- * @param string|null $factionFilter Faction ID filter
  * @return array Statistics about the dataset
  */
-function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = null) {
+function getGeneralStatistics() {
     global $ESClient, $DEBUG_MODE, $config;
     
     // --- Use enhanced statistics index for word frequency ---
     $statisticsIndex = 'optv_statistics_de'; // TODO: Support other parliaments
     
     // Get total word count and top 20 words by frequency from enhanced statistics
-    $totalWords = 0;
+    $totalUniqueWords = 0;
     $topWords = [];
     $contextBasedStats = [];
     
@@ -76,7 +74,7 @@ function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = 
                         'top_words' => [
                             'terms' => [
                                 'field' => 'word',
-                                'size' => 5,
+                                'size' => 20,
                                 'order' => ['total_frequency' => 'desc']
                             ],
                             'aggs' => [
@@ -121,29 +119,30 @@ function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = 
             }
         }
         
-        // Process party-based statistics from real data
+        // Process faction-based statistics from real data
         if (isset($wordsResults['aggregations']['by_faction']['buckets'])) {
-            $partyStats = ['type' => 'by_faction', 'parties' => []];
-            foreach ($wordsResults['aggregations']['by_faction']['buckets'] as $partyBucket) {
-                $partyID = $partyBucket['key'];
-                $partyInfo = ['partyID' => $partyID, 'topWords' => []];
+            $factionStats = ['type' => 'by_faction', 'factions' => []];
+            foreach ($wordsResults['aggregations']['by_faction']['buckets'] as $factionBucket) {
+                $factionID = $factionBucket['key'];
+                $factionInfo = ['factionID' => $factionID, 'topWords' => []];
                 
-                if (isset($partyBucket['top_words']['buckets'])) {
-                    foreach ($partyBucket['top_words']['buckets'] as $wordBucket) {
-                        $partyInfo['topWords'][] = [
+                if (isset($factionBucket['top_words']['buckets'])) {
+                    foreach ($factionBucket['top_words']['buckets'] as $wordBucket) {
+                        $factionInfo['topWords'][] = [
                             'word' => $wordBucket['key'],
                             'count' => $wordBucket['total_frequency']['value']
                         ];
                     }
                 }
-                $partyStats['parties'][] = $partyInfo;
+                $factionStats['factions'][] = $factionInfo;
             }
-            $contextBasedStats[] = $partyStats;
+            $contextBasedStats[] = $factionStats;
         }
         
         if (isset($wordsResults['aggregations']['total_unique_words']['value'])) {
-            $totalWords = $wordsResults['aggregations']['total_unique_words']['value'];
+            $totalUniqueWords = $wordsResults['aggregations']['total_unique_words']['value'];
         }
+        
     } catch (Exception $e) {
         error_log('Error fetching words from enhanced statistics index: ' . $e->getMessage());
         
@@ -152,30 +151,10 @@ function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = 
     }
     // --- End enhanced statistics index ---
 
-    // Build query filters based on parameters
-    $baseQuery = ['bool' => ['must' => []]];
-    
-    // Add faction filter to main query if specified
-    if ($factionFilter) {
-        $baseQuery['bool']['must'][] = [
-            'nested' => [
-                'path' => 'annotations.data',
-                'query' => [
-                    'bool' => [
-                        'must' => [
-                            ['term' => ['annotations.data.id' => $factionFilter]],
-                            ['term' => ['annotations.data.attributes.context' => 'main-speaker-faction']]
-                        ]
-                    ]
-                ]
-            ]
-        ];
-    }
-
-    // Main aggregation query with dynamic context filtering
+    // Main aggregation query for all statistics
     $query = [
         'size' => 0,
-        'query' => count($baseQuery['bool']['must']) > 0 ? $baseQuery : ['match_all' => (object)[]],
+        'query' => ['match_all' => (object)[]],
         'aggs' => [
             'speakers' => [
                 'nested' => [ 'path' => 'annotations.data' ],
@@ -184,48 +163,121 @@ function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = 
                         'filter' => [ 
                             'bool' => [
                                 'must' => [
-                                    ['term' => [ 'annotations.data.attributes.context' => $contextFilter ]],
+                                    ['term' => [ 'annotations.data.attributes.context' => 'main-speaker' ]],
                                     ['term' => [ 'annotations.data.type' => 'person' ]]
                                 ]
                             ]
                         ],
                         'aggs' => [
                             'unique_speakers' => [ 'cardinality' => [ 'field' => 'annotations.data.id' ] ],
-                            'top_speakers' => [ 'terms' => [ 'field' => 'annotations.data.id', 'size' => 10 ] ]
+                            'top_speakers' => [ 
+                                'terms' => [ 'field' => 'annotations.data.id', 'size' => 10 ],
+                                'aggs' => [
+                                    'unique_speeches' => [
+                                        'reverse_nested' => new stdClass(),
+                                        'aggs' => [
+                                            'speech_count' => [ 'cardinality' => [ 'field' => '_id' ] ]
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ],
+            'speakers_by_faction' => [
+                'nested' => [ 'path' => 'annotations.data' ],
+                'aggs' => [
+                    'faction_filter' => [
+                        'filter' => [ 'term' => [ 'annotations.data.attributes.context' => 'main-speaker-faction' ] ],
+                        'aggs' => [
+                            'factions' => [
+                                'terms' => [ 'field' => 'annotations.data.id', 'size' => 10 ],
+                                'aggs' => [
+                                    'back_to_speeches' => [
+                                        'reverse_nested' => new stdClass(),
+                                        'aggs' => [
+                                            'speakers_in_faction' => [
+                                                'nested' => [ 'path' => 'annotations.data' ],
+                                                'aggs' => [
+                                                    'main_speakers' => [
+                                                        'filter' => [ 
+                                                            'bool' => [
+                                                                'must' => [
+                                                                    ['term' => [ 'annotations.data.attributes.context' => 'main-speaker' ]],
+                                                                    ['term' => [ 'annotations.data.type' => 'person' ]]
+                                                                ]
+                                                            ]
+                                                        ],
+                                                        'aggs' => [
+                                                            'unique_speakers' => [ 'cardinality' => [ 'field' => 'annotations.data.id' ] ],
+                                                            'top_speakers' => [
+                                                                'terms' => [ 'field' => 'annotations.data.id', 'size' => 10 ],
+                                                                'aggs' => [
+                                                                    'speech_count' => [
+                                                                        'reverse_nested' => new stdClass(),
+                                                                        'aggs' => [
+                                                                            'speeches' => [ 'cardinality' => [ 'field' => '_id' ] ]
+                                                                        ]
+                                                                    ]
+                                                                ]
+                                                            ]
+                                                        ]
+                                                    ]
+                                                ]
+                                            ]
+                                        ]
+                                    ]
+                                ]
+                            ]
                         ]
                     ]
                 ]
             ],
             'speakingTime' => [ 'stats' => [ 'field' => 'attributes.duration' ] ],
-            'speakerMentions' => [
+            'speaking_time_by_faction' => [
                 'nested' => [ 'path' => 'annotations.data' ],
                 'aggs' => [
-                    'filtered_speakers' => [
-                        'filter' => [ 'term' => [ 'annotations.data.type' => 'person' ] ],
+                    'faction_filter' => [
+                        'filter' => [ 'term' => [ 'annotations.data.attributes.context' => 'main-speaker-faction' ] ],
                         'aggs' => [
-                            'topSpeakers' => [ 'terms' => [ 'field' => 'annotations.data.id', 'size' => 10, 'order' => ['_count' => 'desc'] ] ]
+                            'factions' => [
+                                'terms' => [ 'field' => 'annotations.data.id', 'size' => 10 ],
+                                'aggs' => [
+                                    'back_to_speeches' => [
+                                        'reverse_nested' => new stdClass(),
+                                        'aggs' => [
+                                            'speaking_time' => [ 'stats' => [ 'field' => 'attributes.duration' ] ]
+                                        ]
+                                    ]
+                                ]
+                            ]
                         ]
                     ]
                 ]
             ],
-            'shareOfVoice' => [
+            'speeches' => [
                 'nested' => [ 'path' => 'annotations.data' ],
                 'aggs' => [
+                    'total_speeches' => [
+                        'reverse_nested' => new stdClass(),
+                        'aggs' => [
+                            'speech_count' => [ 'cardinality' => [ 'field' => '_id' ] ]
+                        ]
+                    ],
                     'factions' => [
                         'filter' => [ 'term' => [ 'annotations.data.attributes.context' => 'main-speaker-faction' ] ],
-                        'aggs' => [ 'topFactions' => [ 'terms' => [ 'field' => 'annotations.data.id', 'size' => 10, 'order' => ['_count' => 'desc'] ] ] ]
-                    ]
-                ]
-            ],
-            'entities' => [
-                'nested' => [ 'path' => 'annotations.data' ],
-                'aggs' => [
-                    'entityTypes' => [
-                        'terms' => [ 'field' => 'annotations.data.type.keyword', 'size' => 5 ],
-                        'aggs' => [
-                            'topEntities' => [
-                                'terms' => [ 'field' => 'annotations.data.id', 'size' => 10, 'order' => ['_count' => 'desc'] ],
-                                'aggs' => [ 'unique_documents' => [ 'cardinality' => [ 'field' => '_id' ] ] ]
+                        'aggs' => [ 
+                            'by_faction' => [ 
+                                'terms' => [ 'field' => 'annotations.data.id', 'size' => 10, 'order' => ['speech_count' => 'desc'] ],
+                                'aggs' => [
+                                    'speech_count' => [
+                                        'reverse_nested' => new stdClass(),
+                                        'aggs' => [
+                                            'speeches' => [ 'cardinality' => [ 'field' => '_id' ] ]
+                                        ]
+                                    ]
+                                ]
                             ]
                         ]
                     ]
@@ -246,7 +298,7 @@ function getGeneralStatistics($contextFilter = 'main-speaker', $factionFilter = 
         // Inject the enhanced word frequency data from statistics index
         $aggregations['wordFrequency'] = [
             'buckets' => $topWords,
-            'sum_other_doc_count' => $totalWords,
+            'total_unique_words' => $totalUniqueWords,
             // Enhanced: Context-based word analysis as recommended in planning docs
             'contextBasedStats' => $contextBasedStats
         ];
@@ -294,23 +346,48 @@ function getEntityStatistics($entityType, $entityID) {
                     "unique_speeches" => [
                         "reverse_nested" => new stdClass()
                     ],
-                    "top_speakers" => [
-                        "terms" => [
-                            "field" => "annotations.data.id",
-                            "size" => 10
-                        ]
-                    ],
-                    "main_speakers_only" => [
+                    "top_detected_entities" => [
                         "filter" => [
                             "bool" => [
                                 "must" => [
-                                    ["term" => ["annotations.data.type" => "person"]],
-                                    ["term" => ["annotations.data.attributes.context" => $entitySpecificContext]]
+                                    ["term" => ["annotations.data.attributes.context" => "NER"]]
+                                ],
+                                "must_not" => [
+                                    ["term" => ["annotations.data.id" => $entityID]]
                                 ]
                             ]
                         ],
                         "aggs" => [
-                            "top_main_speakers" => [
+                            "ner_entities" => [
+                                "terms" => [
+                                    "field" => "annotations.data.id",
+                                    "size" => 50
+                                ],
+                                "aggs" => [
+                                    "entity_type" => [
+                                        "terms" => [
+                                            "field" => "annotations.data.type.keyword",
+                                            "size" => 1
+                                        ]
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ],
+                    "mentioned_by_speakers" => [
+                        "filter" => [
+                            "bool" => [
+                                "must" => [
+                                    ["term" => ["annotations.data.type" => "person"]],
+                                    ["term" => ["annotations.data.attributes.context" => "main-speaker"]]
+                                ],
+                                "must_not" => [
+                                    ["term" => ["annotations.data.id" => $entityID]]
+                                ]
+                            ]
+                        ],
+                        "aggs" => [
+                            "top_mentioned_by" => [
                                 "terms" => [
                                     "field" => "annotations.data.id",
                                     "size" => 10
@@ -376,318 +453,7 @@ function getEntityStatistics($entityType, $entityID) {
     }
 }
 
-/**
- * Get term statistics using enhanced statistics index
- * 
- * @return array Statistics about terms in the dataset
- */
-function getTermStatistics() {
-    global $ESClient, $DEBUG_MODE, $config;
-    
-    // Use enhanced statistics index for better performance
-    $statisticsIndex = 'optv_statistics_de'; // TODO: Support other parliaments
-    
-    $totalWords = 0;
-    $allWords = [];
-    
-    try {
-        // Get all words from enhanced statistics index
-        $wordsQuery = [
-            'size' => 0,
-            'query' => [
-                'term' => ['aggregation_type' => 'word_frequency_daily_faction']
-            ],
-            'aggs' => [
-                'all_words' => [
-                    'terms' => [
-                        'field' => 'word',
-                        'size' => 10000,
-                        'order' => ['total_frequency' => 'desc']
-                    ],
-                    'aggs' => [
-                        'total_frequency' => ['sum' => ['field' => 'count']]
-                    ]
-                ],
-                'total_unique_words' => [
-                    'cardinality' => ['field' => 'word']
-                ]
-            ]
-        ];
-        
-        $wordsResults = $ESClient->search(['index' => $statisticsIndex, 'body' => $wordsQuery]);
-        if (isset($wordsResults['aggregations']['all_words']['buckets'])) {
-            foreach ($wordsResults['aggregations']['all_words']['buckets'] as $bucket) {
-                $allWords[] = [
-                    'key' => $bucket['key'],
-                    'doc_count' => $bucket['total_frequency']['value']
-                ];
-            }
-        }
-        
-        if (isset($wordsResults['aggregations']['total_unique_words']['value'])) {
-            $totalWords = $wordsResults['aggregations']['total_unique_words']['value'];
-        }
-    } catch (Exception $e) {
-        error_log('Error fetching words from enhanced statistics index: ' . $e->getMessage());
-        
-        // No fallback available - enhanced indexing is required
-        error_log('Enhanced statistics index is required for term statistics data');
-    }
-    
-    // Return in the same format as before
-    return [
-        'frequency' => [
-            'buckets' => $allWords,
-            'sum_other_doc_count' => $totalWords
-        ]
-    ];
-}
 
 
-/**
- * Get network/relationship analysis
- * 
- * @param string|null $entityID Optional entity ID to analyze
- * @param string|null $entityType Optional entity type
- * @return array Network analysis statistics
- */
-function getNetworkAnalysis($entityID = null, $entityType = null) {
-    global $ESClient, $DEBUG_MODE;
-    
-    // Determine appropriate context based on entity type
-    $entitySpecificContext = ($entityType === 'person') ? 'main-speaker' : 'main-speaker-faction';
-    
-    $query = [
-        "size" => 0,
-        "aggs" => [
-            "co_occurrences" => [
-                "nested" => [
-                    "path" => "annotations.data"
-                ],
-                "aggs" => [
-                    "entity_pairs" => [
-                        "terms" => [
-                            "field" => "annotations.data.id",
-                            "size" => 100
-                        ],
-                        "aggs" => [
-                            "co_occurring_entities" => [
-                                "reverse_nested" => new stdClass(),
-                                "aggs" => [
-                                    "related_entities" => [
-                                        "nested" => [
-                                            "path" => "annotations.data"
-                                        ],
-                                        "aggs" => [
-                                            "filtered" => [
-                                                "filter" => [
-                                                    "bool" => [
-                                                        "must_not" => $entityID ? [
-                                                            ["term" => ["annotations.data.id" => $entityID]]
-                                                        ] : [["term" => ["annotations.data.id" => "nonexistent"]]]
-                                                    ]
-                                                ],
-                                                "aggs" => [
-                                                    "entity_connections" => [
-                                                        "terms" => [
-                                                            "field" => "annotations.data.id",
-                                                            "size" => 50,
-                                                            "min_doc_count" => 1
-                                                        ]
-                                                    ]
-                                                ]
-                                            ]
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ],
-            "speaker_entity_network" => [
-                "nested" => [
-                    "path" => "annotations.data"
-                ],
-                "aggs" => [
-                    "speakers" => [
-                        "filter" => [
-                            "term" => [
-                                "annotations.data.attributes.context" => "main-speaker"
-                            ]
-                        ],
-                        "aggs" => [
-                            "top_speakers" => [
-                                "terms" => [
-                                    "field" => "annotations.data.id",
-                                    "size" => 50
-                                ],
-                                "aggs" => [
-                                    "mentioned_entities" => [
-                                        "reverse_nested" => new stdClass(),
-                                        "aggs" => [
-                                            "entities" => [
-                                                "nested" => [
-                                                    "path" => "annotations.data"
-                                                ],
-                                                "aggs" => [
-                                                    "filtered" => [
-                                                        "filter" => [
-                                                            "bool" => [
-                                                                "must_not" => [
-                                                                    ["term" => ["annotations.data.attributes.context" => $entitySpecificContext]]
-                                                                ]
-                                                            ]
-                                                        ],
-                                                        "aggs" => [
-                                                            "entity_mentions" => [
-                                                                "terms" => [
-                                                                    "field" => "annotations.data.id",
-                                                                    "size" => 50,
-                                                                    "min_doc_count" => 1
-                                                                ]
-                                                            ]
-                                                        ]
-                                                    ]
-                                                ]
-                                            ]
-                                        ]
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ]
-    ];
-    
-    if ($entityID && $entityType) {
-        $query["query"] = [
-            "nested" => [
-                "path" => "annotations.data",
-                "query" => [
-                    "bool" => [
-                        "must" => [
-                            ["term" => ["annotations.data.id" => $entityID]],
-                            ["term" => ["annotations.data.type" => $entityType]]
-                        ]
-                    ]
-                ]
-            ]
-        ];
-    }
-    
-    try {
-        // First check if the index exists
-        $indices = $ESClient->cat()->indices(['index' => 'openparliamenttv_*']);
-        if (empty($indices)) {
-            throw new Exception("No OpenSearch indices found matching 'openparliamenttv_*'");
-        }
-        
-        if ($DEBUG_MODE) {
-            error_log("Network Analysis Query: " . json_encode($query, JSON_PRETTY_PRINT));
-        }
-        
-        $results = $ESClient->search([
-            "index" => "openparliamenttv_*",
-            "body" => $query
-        ]);
-        
-        if ($DEBUG_MODE) {
-            error_log("Network Analysis Response: " . json_encode($results, JSON_PRETTY_PRINT));
-        }
-        
-        // Validate response structure
-        if (!isset($results["aggregations"])) {
-            throw new Exception("Invalid OpenSearch response: missing aggregations");
-        }
-        
-        $aggregations = $results["aggregations"];
-        
-        // Process co-occurrence network
-        $nodes = [];
-        $edges = [];
-        
-        if (isset($aggregations["co_occurrences"]["entity_pairs"]["buckets"])) {
-            foreach ($aggregations["co_occurrences"]["entity_pairs"]["buckets"] as $bucket) {
-                $sourceId = $bucket["key"];
-                $nodes[] = [
-                    "id" => $sourceId,
-                    "type" => "entity"
-                ];
-                
-                if (isset($bucket["co_occurring_entities"]["related_entities"]["filtered"]["entity_connections"]["buckets"])) {
-                    foreach ($bucket["co_occurring_entities"]["related_entities"]["filtered"]["entity_connections"]["buckets"] as $connection) {
-                        $targetId = $connection["key"];
-                        $edges[] = [
-                            "source" => $sourceId,
-                            "target" => $targetId,
-                            "weight" => $connection["doc_count"]
-                        ];
-                    }
-                }
-            }
-        }
-
-        // Process speaker-entity network
-        $speakerNodes = [];
-        $speakerEdges = [];
-
-        if (isset($aggregations["speaker_entity_network"]["speakers"]["top_speakers"]["buckets"])) {
-            foreach ($aggregations["speaker_entity_network"]["speakers"]["top_speakers"]["buckets"] as $speakerBucket) {
-                $speakerId = $speakerBucket["key"];
-                $speakerNodes[] = [
-                    "id" => $speakerId,
-                    "type" => "person",
-                    "context" => "main-speaker"
-                ];
-                
-                if (isset($speakerBucket["mentioned_entities"]["entities"]["filtered"]["entity_mentions"]["buckets"])) {
-                    foreach ($speakerBucket["mentioned_entities"]["entities"]["filtered"]["entity_mentions"]["buckets"] as $entityBucket) {
-                        $entityId = $entityBucket["key"];
-                        $speakerEdges[] = [
-                            "source" => $speakerId,
-                            "target" => $entityId,
-                            "weight" => $entityBucket["doc_count"]
-                        ];
-                    }
-                }
-            }
-        }
-        
-        $response = [
-            "data" => [
-                "type" => "statistics",
-                "id" => "network",
-                "attributes" => [
-                    "coOccurrence" => [
-                        "nodes" => $nodes,
-                        "edges" => $edges
-                    ],
-                    "speakerEntity" => [
-                        "nodes" => $speakerNodes,
-                        "edges" => $speakerEdges
-                    ]
-                ]
-            ]
-        ];
-        
-        if ($DEBUG_MODE) {
-            error_log("Processed Network Response: " . json_encode($response, JSON_PRETTY_PRINT));
-        }
-        
-        return $response;
-    } catch(Exception $e) {
-        error_log("Network analysis error: " . $e->getMessage());
-        if ($DEBUG_MODE) {
-            error_log("Query: " . json_encode($query, JSON_PRETTY_PRINT));
-            if (isset($results)) {
-                error_log("Response: " . json_encode($results, JSON_PRETTY_PRINT));
-            }
-        }
-        throw new Exception("Failed to retrieve network analysis: " . $e->getMessage());
-    }
-}
 
 ?>

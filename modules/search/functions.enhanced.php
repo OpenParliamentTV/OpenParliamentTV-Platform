@@ -78,7 +78,7 @@ function searchAutocompleteEnhanced($query, $maxResults = 10, $partyFilter = nul
 /**
  * Get word trends over time
  */
-function getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode = 'de', $factions = []) {
+function getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode = 'de', $factions = [], $separateByFaction = false) {
     $ESClient = getApiOpenSearchClient();
     if (is_array($ESClient) && isset($ESClient["errors"])) {
         return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
@@ -97,6 +97,52 @@ function getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode = '
         $mustClauses[] = ['terms' => ['faction_id.keyword' => $factions]];
     }
     
+    // Create aggregation structure based on whether we want faction separation
+    $aggregations = [];
+    
+    if ($separateByFaction) {
+        // Separate by faction: words -> factions -> time series
+        $aggregations['words_by_faction'] = [
+            'terms' => ['field' => 'word', 'size' => count($words)],
+            'aggs' => [
+                'factions' => [
+                    'terms' => ['field' => 'faction_id.keyword', 'size' => 50], // Support up to 50 factions
+                    'aggs' => [
+                        'time_series' => [
+                            'date_histogram' => [
+                                'field' => 'date_string',
+                                'calendar_interval' => '1M',
+                                'format' => 'yyyy-MM'
+                            ],
+                            'aggs' => [
+                                'total_count' => ['sum' => ['field' => 'count']],
+                                'speech_count' => ['sum' => ['field' => 'speech_count']]
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+    } else {
+        // Regular aggregation: words -> time series (all factions combined)
+        $aggregations['words_over_time'] = [
+            'terms' => ['field' => 'word', 'size' => count($words)],
+            'aggs' => [
+                'time_series' => [
+                    'date_histogram' => [
+                        'field' => 'date_string',
+                        'calendar_interval' => '1M',
+                        'format' => 'yyyy-MM'
+                    ],
+                    'aggs' => [
+                        'total_count' => ['sum' => ['field' => 'count']],
+                        'speech_count' => ['sum' => ['field' => 'speech_count']]
+                    ]
+                ]
+            ]
+        ];
+    }
+    
     $query = [
         'size' => 0,
         'query' => [
@@ -104,24 +150,7 @@ function getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode = '
                 'must' => $mustClauses
             ]
         ],
-        'aggs' => [
-            'words_over_time' => [
-                'terms' => ['field' => 'word', 'size' => count($words)],
-                'aggs' => [
-                    'time_series' => [
-                        'date_histogram' => [
-                            'field' => 'date_string',
-                            'calendar_interval' => '1M',
-                            'format' => 'yyyy-MM'
-                        ],
-                        'aggs' => [
-                            'total_count' => ['sum' => ['field' => 'count']],
-                            'speech_count' => ['sum' => ['field' => 'speech_count']]
-                        ]
-                    ]
-                ]
-            ]
-        ]
+        'aggs' => $aggregations
     ];
     
     try {
