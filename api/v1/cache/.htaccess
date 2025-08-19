@@ -1,0 +1,4 @@
+# Deny all web access to cache files
+# This directory contains cached API responses that should only be accessed internally by the application
+Order Deny,Allow
+Deny from all
