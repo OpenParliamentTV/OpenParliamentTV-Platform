@@ -66,8 +66,8 @@ function tokenizeWords($text) {
  * Normalize a word (basic cleaning only - no stemming)
  */
 function normalizeWord($word) {
-    // Convert to lowercase and trim
-    $normalized = strtolower(trim($word));
+    // Convert to lowercase and trim (using mb_strtolower for proper UTF-8 handling)
+    $normalized = mb_strtolower(trim($word), 'UTF-8');
     
     // Remove punctuation from start/end but preserve hyphens, slashes, and apostrophes
     $normalized = preg_replace('/^[\p{P}\p{S}\p{Z}&&[^\'\/-]]+|[\p{P}\p{S}\p{Z}&&[^\'\/-]]+$/u', '', $normalized);
