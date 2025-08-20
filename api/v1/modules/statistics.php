@@ -221,8 +221,8 @@ function statisticsGetGeneral($request) {
             }, $stats["speakers"]["filtered_speakers"]["top_speakers"]["buckets"]),
             "byFaction" => array_map(function($bucket) {
                 return [
-                    "factionID" => $bucket["key"],
-                    "factionLabel" => getEntityLabel('organisation', $bucket["key"]),
+                    "id" => $bucket["key"],
+                    "label" => getEntityLabel('organisation', $bucket["key"]),
                     "total" => $bucket["back_to_speeches"]["speakers_in_faction"]["main_speakers"]["unique_speakers"]["value"],
                     "topSpeakers" => array_map(function($speakerBucket) {
                         return enrichEntityWithSelfLink([
@@ -242,8 +242,8 @@ function statisticsGetGeneral($request) {
                 "unit" => "seconds",
                 "byFaction" => array_map(function($bucket) {
                     return [
-                        "factionID" => $bucket["key"],
-                        "factionLabel" => getEntityLabel('organisation', $bucket["key"]),
+                        "id" => $bucket["key"],
+                        "label" => getEntityLabel('organisation', $bucket["key"]),
                         "total" => $bucket["back_to_speeches"]["speaking_time"]["sum"],
                         "average" => $bucket["back_to_speeches"]["speaking_time"]["avg"],
                         "unit" => "seconds"
@@ -259,13 +259,14 @@ function statisticsGetGeneral($request) {
                 "topWords" => array_map(function($bucket) {
                     return [
                         "word" => $bucket["key"],
-                        "speechCount" => $bucket["doc_count"]
+                        "speechCount" => $bucket["doc_count"],
+                        "frequency" => $bucket["frequency"]
                     ];
                 }, $stats["wordFrequency"]["buckets"]),
                 "byFaction" => array_map(function($factionInfo) {
                     return [
-                        "factionID" => $factionInfo["factionID"],
-                        "factionLabel" => getEntityLabel('organisation', $factionInfo["factionID"]),
+                        "id" => $factionInfo["factionID"],
+                        "label" => getEntityLabel('organisation', $factionInfo["factionID"]),
                         "topWords" => $factionInfo["topWords"]
                     ];
                 }, (function() use ($stats) {
@@ -514,8 +515,8 @@ function statisticsGetWordTrends($request) {
                         }
                         
                         $factionBreakdown[] = [
-                            'factionID' => $factionBucket['key'],
-                            'factionLabel' => getEntityLabel('organisation', $factionBucket['key']),
+                            'id' => $factionBucket['key'],
+                            'label' => getEntityLabel('organisation', $factionBucket['key']),
                             'timeline' => $timeSeriesData
                         ];
                     }

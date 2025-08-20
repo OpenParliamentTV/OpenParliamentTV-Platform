@@ -169,7 +169,7 @@ include_once(__DIR__ . '/../../header.php');
 												<tbody>
 													<?php foreach ($generalStats["speakingTime"]["byFaction"] as $faction): ?>
 													<tr>
-														<td><?= h($faction["factionLabel"]) ?></td>
+														<td><?= h($faction["label"]) ?></td>
 														<td><?= h(getTimeDistanceString(['input' => $faction["total"], 'mode' => 'duration', 'short' => true])) ?></td>
 														<td><?= h(getTimeDistanceString(['input' => $faction["average"], 'mode' => 'duration', 'short' => true])) ?></td>
 													</tr>
@@ -213,7 +213,7 @@ include_once(__DIR__ . '/../../header.php');
 								</li>
 								<?php foreach ($generalStats["speakers"]["byFaction"] as $faction): ?>
 								<li class="nav-item" role="presentation">
-									<button class="nav-link" id="speakers-<?= hAttr($faction['factionID']) ?>-tab" data-bs-toggle="pill" data-bs-target="#speakers-<?= hAttr($faction['factionID']) ?>" type="button" role="tab"><?= h($faction["factionLabel"]) ?></button>
+									<button class="nav-link" id="speakers-<?= hAttr($faction['id']) ?>-tab" data-bs-toggle="pill" data-bs-target="#speakers-<?= hAttr($faction['id']) ?>" type="button" role="tab"><?= h($faction["label"]) ?></button>
 								</li>
 								<?php endforeach; ?>
 							</ul>
@@ -249,7 +249,7 @@ include_once(__DIR__ . '/../../header.php');
 								
 								<!-- Faction-specific speaker tabs -->
 								<?php foreach ($generalStats["speakers"]["byFaction"] as $faction): ?>
-								<div class="tab-pane fade" id="speakers-<?= hAttr($faction['factionID']) ?>" role="tabpanel">
+								<div class="tab-pane fade" id="speakers-<?= hAttr($faction['id']) ?>" role="tabpanel">
 									<div class="table-responsive">
 										<table class="table table-striped table-sm">
 											<thead>
@@ -307,7 +307,7 @@ include_once(__DIR__ . '/../../header.php');
 								<?php if (isset($generalStats["vocabulary"]["byFaction"])): ?>
 									<?php foreach ($generalStats["vocabulary"]["byFaction"] as $faction): ?>
 									<li class="nav-item" role="presentation">
-										<button class="nav-link" id="vocabulary-<?= hAttr($faction['factionID']) ?>-tab" data-bs-toggle="pill" data-bs-target="#vocabulary-<?= hAttr($faction['factionID']) ?>" type="button" role="tab"><?= h($faction["factionLabel"]) ?></button>
+										<button class="nav-link" id="vocabulary-<?= hAttr($faction['id']) ?>-tab" data-bs-toggle="pill" data-bs-target="#vocabulary-<?= hAttr($faction['id']) ?>" type="button" role="tab"><?= h($faction["label"]) ?></button>
 									</li>
 									<?php endforeach; ?>
 								<?php endif; ?>
@@ -321,7 +321,8 @@ include_once(__DIR__ . '/../../header.php');
 											<thead>
 												<tr>
 													<th>Word</th>
-													<th>Usage Count</th>
+													<th>Speech Count</th>
+													<th>Frequency</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -329,6 +330,7 @@ include_once(__DIR__ . '/../../header.php');
 												<tr>
 													<td><?= h($word["word"]) ?></td>
 													<td><?= number_format($word["speechCount"]) ?></td>
+													<td><?= number_format($word["frequency"]) ?></td>
 												</tr>
 												<?php endforeach; ?>
 											</tbody>
@@ -339,13 +341,14 @@ include_once(__DIR__ . '/../../header.php');
 								<!-- Faction-specific vocabulary tabs -->
 								<?php if (isset($generalStats["vocabulary"]["byFaction"])): ?>
 									<?php foreach ($generalStats["vocabulary"]["byFaction"] as $faction): ?>
-									<div class="tab-pane fade" id="vocabulary-<?= hAttr($faction['factionID']) ?>" role="tabpanel">
+									<div class="tab-pane fade" id="vocabulary-<?= hAttr($faction['id']) ?>" role="tabpanel">
 										<div class="table-responsive">
 											<table class="table table-striped table-sm">
 												<thead>
 													<tr>
 														<th>Word</th>
-														<th>Usage Count</th>
+														<th>Speech Count</th>
+													<th>Frequency</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -353,6 +356,7 @@ include_once(__DIR__ . '/../../header.php');
 													<tr>
 														<td><?= h($word["word"]) ?></td>
 														<td><?= number_format($word["speechCount"]) ?></td>
+														<td><?= number_format($word["frequency"]) ?></td>
 													</tr>
 													<?php endforeach; ?>
 												</tbody>
@@ -1413,8 +1417,8 @@ function initializeSpeakingTimeByFactionChart() {
 	
 	// Use the raw data from server
 	const speakingTimeData = generalStatsData.speakingTime.byFaction.map(faction => ({
-		id: faction.factionID,
-		label: faction.factionLabel,
+		id: faction.id,
+		label: faction.label,
 		value: faction.total
 	}));
 	
@@ -1442,8 +1446,8 @@ function initializeAverageSpeakingTimeByFactionChart() {
 	
 	// Use the raw data from server
 	const averageSpeakingTimeData = generalStatsData.speakingTime.byFaction.map(faction => ({
-		id: faction.factionID,
-		label: faction.factionLabel,
+		id: faction.id,
+		label: faction.label,
 		value: faction.average
 	}));
 	

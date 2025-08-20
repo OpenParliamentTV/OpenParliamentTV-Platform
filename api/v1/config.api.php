@@ -103,27 +103,26 @@ $config["allowedSearchParams"] = [
  * List of stopwords to exclude from term frequency statistics
  */
 $config["excludedStopwords"] = [
-    "die", "der", "und", "in", "den", "das", "ist", "zu", "von", "mit", "sich", "des", "auf", "für", "im", "dem", 
-    "nicht", "ein", "eine", "als", "auch", "es", "an", "werden", "aus", "er", "hat", "dass", "sie", "nach", "wird", 
-    "bei", "einer", "um", "am", "sind", "noch", "wie", "einem", "über", "einen", "so", "zum", "war", "haben", "oder", 
-    "aber", "vor", "zur", "bis", "mehr", "durch", "man", "sein", "wurde", "sei", "wurden", "während", "hatte", 
-    "kann", "gegen", "vom", "können", "schon", "wenn", "habe", "seine", "mark", "ihre", "dann", "unter", "wir", "soll", 
-    "ich", "eines", "es", "jahr", "zwei", "jahren", "diese", "dieser", "wieder", "keine", "um", "und", "muss", "jahr", 
-    "zwei", "dabei", "beim", "wurde", "sowie", "nur", "ber", "dabei", "viele", "zwischen", "immer", "einmal", "etwa", 
-    "alle", "beiden", "dafür", "sollte", "seit", "wurden", "wurde", "etwas", "sagte", "sagt", "gibt", "folge", "große", 
-    "insbesondere", "ganz", "müssen", "selbst", "nun", "beifall", "cdu", "csu", "fdp", "grünen", "spd", "afd", "fdp", 
-    "linke", "fraktion", "fr", "sehr", "90", "abgeordneten", "kollegen", "bündnis", "dank", "uns", "hier", "b", "was", 
-    "gr", "jetzt", "vielen", "herr", "damit", "kolleginnen", "frau", "denn", "liebe", "diesem", "ja", "da", "linken", 
-    "ihnen", "dr", "meine", "dieses", "weil", "abg", "geht", "doch", "sagen", "sondern", "dazu", "diesen", "gerade", 
-    "mich", "präs", "mal", "kommen", "unsere", "also", "viel", "breg", "deshalb", "mir", "anderen", "will",
-    // Additional parliamentary-specific stopwords for better indexing optimization
-    "bundestag", "bundesregierung", "parlament", "regierung", "opposition",
-    "minister", "ministerin", "staatssekretär", "staatssekretärin",
-    "bundesminister", "bundesministerin", "kanzler", "kanzlerin",
-    "präsident", "präsidentin", "vizepräsident", "vizepräsidentin",
-    "antrag", "gesetzentwurf", "beschluss", "vorlage", "drucksache",
-    "sitzung", "plenum", "ausschuss", "kommission", "gremium",
-    "deutschland", "deutschen", "deutsche", "bundesrepublik", "brd"
+    "90/die", "aber", "abgeordneten", "alle", "alles", "also", "anderen", "antrag", "auch", "ausschuss",
+    "beiden", "beifall", "beim", "beschluss", "brauchen", "breg", "bundesminister", "bundesministerin", "bundesregierung", "bundesrepublik",
+    "bundestag", "bündnis", "bündnisses", "cdu/csu", "dabei", "dafür", "damen", "damit", "dank", "dann",
+    "darauf", "dass", "dazu", "denn", "deshalb", "deswegen", "deutsche", "deutschen", "deutschland", "diese",
+    "diesem", "diesen", "dieser", "dieses", "doch", "drucksache", "durch", "eigentlich", "eine", "einem",
+    "einen", "einer", "eines", "einmal", "etwa", "etwas", "folge", "frage", "fraktion", "fraktionslosen",
+    "frau", "für", "ganz", "geehrte", "gegen", "geht", "genau", "gerade", "gesagt", "gesetzentwurf",
+    "gibt", "gremium", "große", "grünen", "habe", "haben", "hatte", "herr", "herren", "heute",
+    "hier", "ihnen", "ihre", "ihrer", "immer", "insbesondere", "jahr", "jahren", "jetzt", "kann",
+    "kanzler", "kanzlerin", "kein", "keine", "kollege", "kollegen", "kolleginnen", "kommen", "kommission", "können",
+    "lassen", "letzten", "liebe", "linke", "linken", "machen", "mark", "mehr", "meine", "mich",
+    "minister", "ministerin", "muss", "möchte", "müssen", "nach", "natürlich", "nicht", "nichts", "noch",
+    "oder", "ohne", "plenum", "prozent", "präs", "präsident", "präsidentin",
+    "sagen", "sagt", "sagte", "schon", "sehr", "sein", "seine", "seit", "selbst", "sich",
+    "sind", "sitzung", "soll", "sollte", "sondern", "sowie", "staatssekretär", "staatssekretärin", "union", "unsere",
+    "unserer", "unter", "viel", "viele", "vielen", "vizepräsident", "vizepräsidentin", "vorlage", "weil", "wenn",
+    "werden", "wieder", "will", "wird", "wirklich", "wollen", "wort", "wurde", "wurden", "während", "wäre",
+    "zwei", "zwischen", "über", "thema", "richtig", "zuruf", "darüber", "stellen", "worden", "beispiel", "andere", "unserem", 
+    "dort", "kollegin", "debatte", "einfach", "endlich", "ihren", "ihrem", "eben", "weiter", "kommt", "recht", "klar", 
+    "nämlich", "spd-fraktion", "fraktionslos", "bitte", "ende", "schluss", "redner", "rednerin", "wichtig"
 ];
 
 ?>

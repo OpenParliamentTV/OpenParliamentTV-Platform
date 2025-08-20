@@ -21,10 +21,19 @@ function getStopwords($config = null) {
 
 /**
  * Check if a word is a stopword
+ * Auto-filters words with < 4 characters plus manual excludedStopwords list
  */
 function isStopword($word, $config = null) {
+    $normalized = mb_strtolower($word, 'UTF-8');
+    
+    // Auto-filter words shorter than 4 characters
+    if (strlen($normalized) < 4) {
+        return true;
+    }
+    
+    // Check manual stopwords list
     $stopwords = getStopwords($config);
-    return in_array(strtolower($word), $stopwords);
+    return in_array($normalized, $stopwords);
 }
 
 /**

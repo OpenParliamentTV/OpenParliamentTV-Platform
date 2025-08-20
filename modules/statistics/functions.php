@@ -62,7 +62,8 @@ function getGeneralStatistics() {
                                 'order' => ['total_frequency' => 'desc']
                             ],
                             'aggs' => [
-                                'total_frequency' => ['sum' => ['field' => 'count']]
+                                'total_frequency' => ['sum' => ['field' => 'count']],
+                                'speech_count' => ['sum' => ['field' => 'speech_count']]
                             ]
                         ]
                     ]
@@ -78,7 +79,8 @@ function getGeneralStatistics() {
                                 'order' => ['total_frequency' => 'desc']
                             ],
                             'aggs' => [
-                                'total_frequency' => ['sum' => ['field' => 'count']]
+                                'total_frequency' => ['sum' => ['field' => 'count']],
+                                'speech_count' => ['sum' => ['field' => 'speech_count']]
                             ]
                         ]
                     ]
@@ -96,7 +98,8 @@ function getGeneralStatistics() {
             foreach ($wordsResults['aggregations']['top_words']['buckets'] as $bucket) {
                 $topWords[] = [
                     'key' => $bucket['key'],
-                    'doc_count' => $bucket['total_frequency']['value']
+                    'doc_count' => $bucket['doc_count'], // Number of speeches containing the word
+                    'frequency' => $bucket['total_frequency']['value'] // Total word occurrences
                 ];
             }
         }
@@ -111,7 +114,8 @@ function getGeneralStatistics() {
                     foreach ($aggBucket['top_words']['buckets'] as $wordBucket) {
                         $aggStats['topWords'][] = [
                             'word' => $wordBucket['key'],
-                            'count' => $wordBucket['total_frequency']['value']
+                            'speechCount' => $wordBucket['speech_count']['value'],
+                            'frequency' => $wordBucket['total_frequency']['value']
                         ];
                     }
                 }
@@ -130,7 +134,8 @@ function getGeneralStatistics() {
                     foreach ($factionBucket['top_words']['buckets'] as $wordBucket) {
                         $factionInfo['topWords'][] = [
                             'word' => $wordBucket['key'],
-                            'count' => $wordBucket['total_frequency']['value']
+                            'speechCount' => $wordBucket['speech_count']['value'],
+                            'frequency' => $wordBucket['total_frequency']['value']
                         ];
                     }
                 }
