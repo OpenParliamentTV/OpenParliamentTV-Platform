@@ -1966,11 +1966,11 @@ function createFactionWordChart(trendsData, startDate, endDate) {
 	trendsData.forEach(wordData => {
 		if (wordData.factionBreakdown) {
 			wordData.factionBreakdown.forEach(factionData => {
-				factionLabels[factionData.factionID] = factionData.factionLabel;
+				factionLabels[factionData.id] = factionData.label;
 				factionData.timeline.forEach(timePoint => {
 					allData.push({
-						faction: factionData.factionID,
-						factionLabel: factionData.factionLabel,
+						faction: factionData.id,
+						factionLabel: factionData.label,
 						date: parseDate(timePoint.date),
 						count: timePoint.totalCount || 0
 					});
