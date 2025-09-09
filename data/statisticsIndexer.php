@@ -40,6 +40,23 @@ foreach ($argv as $arg) {
 $progressFile = __DIR__ . '/progress/statisticsIndexer_' . $parliamentCode . '.json';
 $lockFile = __DIR__ . '/progress/statisticsIndexer_' . $parliamentCode . '.lock';
 
+// Initialize progress tracking early so we can report errors
+$progressData = [
+    'processName' => 'statisticsIndexing',
+    'status' => 'starting',
+    'statusDetails' => $isIncremental ? 'Starting incremental statistics update...' : 'Starting full statistics rebuild...',
+    'totalDbMediaItems' => 0,
+    'processedMediaItems' => 0,
+    'words_indexed' => 0,
+    'statistics_updated' => 0,
+    'performance' => [
+        'start_time' => time(),
+        'avg_docs_per_second' => 0
+    ],
+    'errors' => []
+];
+file_put_contents($progressFile, json_encode($progressData, JSON_PRETTY_PRINT));
+
 // Check for existing statistics indexer lock
 if (file_exists($lockFile)) {
     $lockData = json_decode(file_get_contents($lockFile), true);
@@ -50,6 +67,13 @@ if (file_exists($lockFile)) {
     
     if ($lockAge < $timeout) {
         logMessage('ERROR', "Statistics indexer already running for $parliamentCode (PID: " . ($lockData['pid'] ?? 'unknown') . ")");
+        
+        // Set error status in progress file before exiting
+        updateProgress([
+            'status' => 'error',
+            'statusDetails' => 'Statistics indexer already running (PID: ' . ($lockData['pid'] ?? 'unknown') . ')',
+            'errors' => [['message' => 'Process already running', 'time' => time()]]
+        ]);
         exit(1);
     } else {
         // Remove stale lock
@@ -65,6 +89,13 @@ if (file_exists($cronUpdaterLockFile)) {
     
     if ($lockAge < 5400) { // 90 minutes timeout (same as cronUpdater)
         logMessage('ERROR', "CronUpdater is running for $parliamentCode. Skipping statistics indexing to prevent conflicts.");
+        
+        // Set error status in progress file before exiting
+        updateProgress([
+            'status' => 'error',
+            'statusDetails' => 'CronUpdater is running. Skipping to prevent conflicts.',
+            'errors' => [['message' => 'CronUpdater conflict', 'time' => time()]]
+        ]);
         exit(1);
     } else {
         // Remove stale cronUpdater lock if it's too old
@@ -81,22 +112,6 @@ $lockData = [
     'mode' => $isIncremental ? 'incremental' : 'full_rebuild'
 ];
 file_put_contents($lockFile, json_encode($lockData));
-
-// Initialize progress tracking
-$progressData = [
-    'processName' => 'statisticsIndexing',
-    'status' => 'starting',
-    'statusDetails' => $isIncremental ? 'Starting incremental statistics update...' : 'Starting full statistics rebuild...',
-    'totalDbMediaItems' => 0,
-    'processedMediaItems' => 0,
-    'words_indexed' => 0,
-    'statistics_updated' => 0,
-    'performance' => [
-        'start_time' => time(),
-        'avg_docs_per_second' => 0
-    ],
-    'errors' => []
-];
 
 function updateProgress($data) {
     global $progressFile, $progressData;
@@ -118,13 +133,18 @@ register_shutdown_function(function() use ($lockFile, $progressFile) {
         unlink($lockFile);
     }
     
-    // Final progress update
+    // Final progress update - only if actually running (not if exited due to error)
     global $progressData;
-    if ($progressData['status'] === 'running' || $progressData['status'] === 'starting') {
+    $error = error_get_last();
+    $exitCode = null;
+    
+    // Check if we exited normally or due to an error
+    if ($progressData['status'] === 'running' && !$error) {
         $progressData['status'] = 'completed_successfully';
         $progressData['statusDetails'] = 'Statistics indexing completed successfully';
         file_put_contents($progressFile, json_encode($progressData, JSON_PRETTY_PRINT));
     }
+    // Don't override error status or starting status if there was an error
 });
 
 try {
@@ -334,9 +354,17 @@ function processSpecificMediaIds($client, $parliamentCode, $mediaIds) {
  * Process incremental updates for recently changed items
  */
 function processIncrementalUpdates($client, $parliamentCode, $batchSize) {
+    global $progressData;
+    
     // For now, redirect to full rebuild
     // In the future, this could query for recently updated documents
     logMessage('INFO', "Incremental updates not yet implemented, performing full rebuild");
+    
+    // Update progress to reflect that we're doing a full rebuild instead of incremental
+    updateProgress([
+        'statusDetails' => 'Running full rebuild (incremental updates not yet implemented)...'
+    ]);
+    
     performFullRebuild($client, $parliamentCode, $batchSize, 0, null);
 }
 

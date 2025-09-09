@@ -403,6 +403,9 @@ if (is_cli()) {
             });
             $totalFilesToProcess = count($inputFiles);
             updateBaseProgressFile(CRONUPDATER_PROGRESS_FILE, ["totalFiles" => $totalFilesToProcess]);
+            
+            // Collect all media IDs for batched statistics update at the end
+            $allProcessedMediaIds = [];
 
             if (empty($inputFiles)) {
                 finalizeBaseProgressFile(CRONUPDATER_PROGRESS_FILE, "completed_successfully", "No new files to process.");
@@ -450,20 +453,10 @@ if (is_cli()) {
                     $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsForSearchIndex, "initIndex" => false];
                     searchIndexUpdate($updateRequest);
                     
-                    // Also update statistics index incrementally to keep in sync
-                    $mediaIds = [];
+                    // Collect media IDs for batched statistics update at the end
                     foreach ($mediaItemsForSearchIndex as $item) {
                         if (isset($item['data']['id'])) {
-                            $mediaIds[] = $item['data']['id'];
-                        }
-                    }
-                    
-                    if (!empty($mediaIds)) {
-                        $statisticsScriptPath = realpath(__DIR__ . "/statisticsIndexer.php");
-                        if ($statisticsScriptPath && file_exists($statisticsScriptPath)) {
-                            $statisticsCommand = $config["bin"]["php"] . " " . escapeshellarg($statisticsScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=200 --media-ids=" . escapeshellarg(implode(',', $mediaIds)) . " > /dev/null 2>&1 &";
-                            logger("info", "Triggering incremental statistics indexing for " . count($mediaIds) . " items");
-                            exec($statisticsCommand);
+                            $allProcessedMediaIds[] = $item['data']['id'];
                         }
                     }
                 }
@@ -474,6 +467,18 @@ if (is_cli()) {
                     "statusDetails" => "Finished file: " . $file,
                     "lastSuccessfullyProcessedFile" => $file
                 ]);
+            }
+            
+            // Trigger batched statistics indexing for all processed media items
+            if (!empty($allProcessedMediaIds)) {
+                // Remove duplicates and get unique media IDs
+                $uniqueMediaIds = array_unique($allProcessedMediaIds);
+                $statisticsScriptPath = realpath(__DIR__ . "/statisticsIndexer.php");
+                if ($statisticsScriptPath && file_exists($statisticsScriptPath)) {
+                    $statisticsCommand = $config["bin"]["php"] . " " . escapeshellarg($statisticsScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=200 --media-ids=" . escapeshellarg(implode(',', $uniqueMediaIds)) . " > /dev/null 2>&1 &";
+                    logger("info", "Triggering batched statistics indexing for " . count($uniqueMediaIds) . " items after all files processed");
+                    exec($statisticsCommand);
+                }
             }
             
             // When finalizing, clear the currentFile since nothing is actively being processed.
