@@ -354,15 +354,25 @@ function processSpecificMediaIds($client, $parliamentCode, $mediaIds) {
  * Process incremental updates for recently changed items
  */
 function processIncrementalUpdates($client, $parliamentCode, $batchSize) {
-    global $progressData;
+    global $progressData, $mediaIds;
     
-    // For now, redirect to full rebuild
-    // In the future, this could query for recently updated documents
-    logMessage('INFO', "Incremental updates not yet implemented, performing full rebuild");
+    // If specific media IDs are provided, process them incrementally
+    if (!empty($mediaIds)) {
+        logMessage('INFO', "Processing incremental updates for " . count($mediaIds) . " media items");
+        
+        updateProgress([
+            'statusDetails' => 'Processing incremental statistics updates...'
+        ]);
+        
+        processSpecificMediaIds($client, $parliamentCode, $mediaIds);
+        return;
+    }
     
-    // Update progress to reflect that we're doing a full rebuild instead of incremental
+    // If no specific media IDs provided, fall back to full rebuild
+    logMessage('INFO', "No specific media IDs provided for incremental update, performing full rebuild");
+    
     updateProgress([
-        'statusDetails' => 'Running full rebuild (incremental updates not yet implemented)...'
+        'statusDetails' => 'No media IDs specified, running full rebuild...'
     ]);
     
     performFullRebuild($client, $parliamentCode, $batchSize, 0, null);
