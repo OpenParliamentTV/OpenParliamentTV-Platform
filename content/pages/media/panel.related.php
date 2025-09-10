@@ -202,7 +202,7 @@ if ($config["display"]["ner"]) {
 ?>
 <div class="tab-content">
     <div class="tab-pane timebasedTab fade show active" id="proceedings" role="tabpanel">
-        <?php if (isset($textContentsHTML)) { ?>
+        <?php if (isset($textContentsHTML) && !empty(trim($textContentsHTML))) { ?>
             <?= $textContentsHTML ?>
         <?php } else { ?>
             <div class="container h-100" style="user-select: none;">
