@@ -31,40 +31,6 @@ function fulltextAutocomplete($text) {
     }
 }
 
-/**
- * Get OpenSearch format suggestions
- * 
- * This function returns suggestions in the OpenSearch format:
- * [query, suggestion1, suggestion2, ...]
- */
-function getOpenSearchSuggestions($text) {
-    if (!isset($text) || strlen($text) <= 2) {
-        return [$text]; // Return just the query if too short
-    }
-
-    try {
-        // Get enhanced autocomplete results
-        require_once(__DIR__.'/../../../modules/search/functions.enhanced.php');
-        $enhancedResults = searchAutocompleteEnhanced($text, 8);
-        
-        // Transform to OpenSearch format: [query, suggestion1, suggestion2, ...]
-        $suggestions = [$text]; // First element is the original query
-        
-        foreach ($enhancedResults as $result) {
-            // Clean the text by removing HTML tags
-            $cleanText = strip_tags($result['text']);
-            if (!empty($cleanText) && !in_array($cleanText, $suggestions)) {
-                $suggestions[] = $cleanText;
-            }
-        }
-        
-        return $suggestions;
-        
-    } catch (Exception $e) {
-        error_log("OpenSearch suggestions error: " . $e->getMessage());
-        return [$text]; // Return just the query if there's an error
-    }
-}
 
 function agendaItemAutocomplete($query) {
     if (!isset($query)) {

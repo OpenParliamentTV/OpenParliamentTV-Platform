@@ -138,13 +138,6 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "entities": 
                     $item = entitiesAutocomplete($api_request["q"]);
                     return createApiResponse($item);
-                case "opensearch": 
-                    // Handle OpenSearch format suggestions
-                    $suggestions = getOpenSearchSuggestions($api_request["q"]);
-                    header('Content-Type: application/x-suggestions+json; charset=utf-8');
-                    header('Access-Control-Allow-Origin: *');
-                    echo json_encode($suggestions);
-                    exit;
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")

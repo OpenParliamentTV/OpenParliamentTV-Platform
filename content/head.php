@@ -18,8 +18,6 @@
 <meta name="theme-color" content="#ffffff">
 <!-- End Icons -->
 
-<!-- OpenSearch -->
-<link rel="search" type="application/opensearchdescription+xml" title="Open Parliament TV" href="<?= $config["dir"]["root"] ?>/opensearch.xml" />
 
 <?php
 if (!isset($page)) {
