@@ -502,7 +502,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 ul.className = 'list-unstyled mb-0';
                 messages.forEach(err => {
                     const li = document.createElement('li');
-                    li.textContent = err.detail || err.title || 'An unspecified error occurred.';
+                    li.textContent = err.detail || err.message || err.title || 'An unspecified error occurred.';
                     ul.appendChild(li);
                 });
                 messageContent = ul;

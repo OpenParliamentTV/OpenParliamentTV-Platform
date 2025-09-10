@@ -274,7 +274,10 @@ function searchIndexUpdate($api_request) {
     // Full rebuilds should not trigger incremental statistics index updates
     $isFullRebuild = $initIndex || (isset($api_request['isFullRebuild']) && $api_request['isFullRebuild']);
     
-    if (!$isFullRebuild) {
+    // Allow caller to explicitly skip automatic statistics triggering (e.g., when batched trigger will happen later)
+    $skipAutoStatistics = isset($api_request['skipAutoStatistics']) && $api_request['skipAutoStatistics'];
+    
+    if (!$isFullRebuild && !$skipAutoStatistics) {
         // Only trigger incremental statistics index updates for non-full-rebuild updates
         try {
             $statisticsUpdateResult = triggerStatisticsIndexUpdate($parliament, $items);
@@ -290,7 +293,12 @@ function searchIndexUpdate($api_request) {
         }
     } else {
         // For full rebuilds, statistics indexing will be triggered by completion hook
-        $finalMessage .= " (Statistics indices will be updated after main index completion)";
+        // For skipAutoStatistics, caller will handle statistics triggering
+        if ($isFullRebuild) {
+            $finalMessage .= " (Statistics indices will be updated after main index completion)";
+        } else if ($skipAutoStatistics) {
+            $finalMessage .= " (Statistics indices will be updated separately)";
+        }
     }
     
     // Invalidate general statistics cache since index has been updated

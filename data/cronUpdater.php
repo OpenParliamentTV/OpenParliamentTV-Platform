@@ -447,8 +447,8 @@ if (is_cli()) {
                 else { unlink($meta["inputDir"] . $file); }
                 
                 if (!empty($mediaItemsForSearchIndex)) {
-                    // Update main search index
-                    $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsForSearchIndex, "initIndex" => false];
+                    // Update main search index (disable auto statistics trigger since we'll do batched trigger later)
+                    $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsForSearchIndex, "initIndex" => false, "skipAutoStatistics" => true];
                     searchIndexUpdate($updateRequest);
                     
                     // Collect media IDs for batched statistics update at the end
