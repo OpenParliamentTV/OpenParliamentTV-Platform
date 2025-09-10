@@ -33,6 +33,11 @@ composer.phar
 /vendor/
 temp
 
+# Tmp local planning docs 
+_planning/
+.cursor/
+CLAUDE.md
+
 # Cache
 langcache/*.php
 api/v1/cache/*.json
