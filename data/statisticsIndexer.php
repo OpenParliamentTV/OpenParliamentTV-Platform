@@ -423,10 +423,18 @@ function processSpecificMediaIds($client, $parliamentCode, $mediaIds) {
         $batchResults = processBatch($client, $parliamentCode, $docs);
         
         updateProgress([
-            'processedMediaItems' => count($docs),
+            'processedMediaItems' => count($mediaIds), // Count all requested items, not just those with text
             'words_indexed' => $batchResults['words'],
             'statistics_updated' => $batchResults['stats'],
             'statusDetails' => 'Completed processing specific media items'
+        ]);
+    } else {
+        // Even if no items had text content, we still processed all requested items
+        updateProgress([
+            'processedMediaItems' => count($mediaIds),
+            'words_indexed' => 0,
+            'statistics_updated' => 0,
+            'statusDetails' => 'Completed processing specific media items (no text content found)'
         ]);
     }
 }
