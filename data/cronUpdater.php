@@ -100,17 +100,15 @@ if (is_cli()) {
     }
 
     // Check if statistics indexing is running to prevent conflicts
-    $statisticsLockFile = __DIR__ . "/progress/statisticsIndexer_" . $parliament . ".lock";
+    $statisticsLockFile = __DIR__ . "/statisticsIndexer_" . $parliament . ".lock";
     if (file_exists($statisticsLockFile)) {
-        $lockData = json_decode(file_get_contents($statisticsLockFile), true);
-        $lockAge = time() - ($lockData['timestamp'] ?? 0);
-        $mode = $lockData['mode'] ?? 'unknown';
+        $lockAge = time() - filemtime($statisticsLockFile);
         
-        // Use appropriate timeout: 4 hours for full rebuild, 1 hour for incremental
-        $timeout = ($mode === 'full_rebuild') ? 14400 : 3600;
+        // Use 4 hour timeout (matches statisticsIndexer timeout for full rebuilds)
+        $timeout = 14400;
         
         if ($lockAge < $timeout) {
-            logger("warn", "Statistics indexing ($mode) is running for $parliament. Skipping data import to prevent conflicts.");
+            logger("warn", "Statistics indexing is running for $parliament. Skipping data import to prevent conflicts.");
             cliLog("Statistics indexing running - data import blocked");
             exit;
         } else {

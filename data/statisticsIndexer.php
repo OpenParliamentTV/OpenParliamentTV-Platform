@@ -6,6 +6,7 @@
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 require_once(__DIR__ . '/../config.php');
+require_once(__DIR__ . '/../modules/utilities/functions.php');
 require_once(__DIR__ . '/../modules/utilities/functions.api.php');
 require_once(__DIR__ . '/../modules/indexing/functions.main.php');
 
@@ -37,13 +38,13 @@ foreach ($argv as $arg) {
 }
 
 // Progress and lock file paths
-$progressFile = __DIR__ . '/progress/statisticsIndexer_' . $parliamentCode . '.json';
-$lockFile = __DIR__ . '/progress/statisticsIndexer_' . $parliamentCode . '.lock';
+define("STATISTICSINDEXER_PROGRESS_FILE", __DIR__ . "/progress/statisticsIndexer_" . $parliamentCode . ".json");
+$progressFile = STATISTICSINDEXER_PROGRESS_FILE;
+$lockFile = __DIR__ . '/statisticsIndexer_' . $parliamentCode . '.lock';
 
-// Initialize progress tracking early so we can report errors
-$progressData = [
+// Initialize progress tracking with helper function
+$initialData = [
     'processName' => 'statisticsIndexing',
-    'status' => 'starting',
     'statusDetails' => $isIncremental ? 'Starting incremental statistics update...' : 'Starting full statistics rebuild...',
     'totalDbMediaItems' => 0,
     'processedMediaItems' => 0,
@@ -52,33 +53,43 @@ $progressData = [
     'performance' => [
         'start_time' => time(),
         'avg_docs_per_second' => 0
-    ],
-    'errors' => []
+    ]
 ];
-file_put_contents($progressFile, json_encode($progressData, JSON_PRETTY_PRINT));
+initBaseProgressFile(STATISTICSINDEXER_PROGRESS_FILE, $initialData);
+
+// Handle reset command if requested
+if (is_cli() && isset($argv)) {
+    foreach ($argv as $arg) {
+        if (strpos($arg, '--reset') === 0) {
+            echo "Resetting statistics indexer progress for $parliamentCode...\n";
+            $result = resetProgressStatus($parliamentCode);
+            echo "Reset completed. Status: " . json_encode($result, JSON_PRETTY_PRINT) . "\n";
+            exit(0);
+        }
+    }
+}
 
 // Check for existing statistics indexer lock
 if (file_exists($lockFile)) {
-    $lockData = json_decode(file_get_contents($lockFile), true);
-    $lockAge = time() - ($lockData['timestamp'] ?? 0);
+    $lockAge = time() - filemtime($lockFile);
     
     // Use longer timeout for full rebuilds (4 hours), shorter for incremental (1 hour)
     $timeout = $isIncremental ? 3600 : 14400; // 1 hour for incremental, 4 hours for full rebuild
     
     if ($lockAge < $timeout) {
-        logMessage('ERROR', "Statistics indexer already running for $parliamentCode (PID: " . ($lockData['pid'] ?? 'unknown') . ")");
+        logger('error', "Statistics indexer already running for $parliamentCode");
         
         // Set error status in progress file before exiting
         updateProgress([
             'status' => 'error',
-            'statusDetails' => 'Statistics indexer already running (PID: ' . ($lockData['pid'] ?? 'unknown') . ')',
+            'statusDetails' => 'Statistics indexer already running',
             'errors' => [['message' => 'Process already running', 'time' => time()]]
         ]);
         exit(1);
     } else {
-        // Remove stale lock
+        // Remove stale lock due to timeout
         unlink($lockFile);
-        logMessage('INFO', "Removed stale statistics indexer lock file for $parliamentCode");
+        logger('info', "Removed stale statistics indexer lock file for $parliamentCode (timeout exceeded)");
     }
 }
 
@@ -88,7 +99,7 @@ if (file_exists($cronUpdaterLockFile)) {
     $lockAge = time() - filemtime($cronUpdaterLockFile);
     
     if ($lockAge < 5400) { // 90 minutes timeout (same as cronUpdater)
-        logMessage('ERROR', "CronUpdater is running for $parliamentCode. Skipping statistics indexing to prevent conflicts.");
+        logger('error', "CronUpdater is running for $parliamentCode. Skipping statistics indexing to prevent conflicts.");
         
         // Set error status in progress file before exiting
         updateProgress([
@@ -100,55 +111,97 @@ if (file_exists($cronUpdaterLockFile)) {
     } else {
         // Remove stale cronUpdater lock if it's too old
         unlink($cronUpdaterLockFile);
-        logMessage('INFO', "Removed stale cronUpdater lock file for $parliamentCode.");
+        logger('info', "Removed stale cronUpdater lock file for $parliamentCode.");
     }
 }
 
 // Create lock file
-$lockData = [
-    'pid' => getmypid(),
-    'timestamp' => time(),
-    'parliament' => $parliamentCode,
-    'mode' => $isIncremental ? 'incremental' : 'full_rebuild'
-];
-file_put_contents($lockFile, json_encode($lockData));
+touch($lockFile);
 
 function updateProgress($data) {
-    global $progressFile, $progressData;
-    $progressData = array_merge($progressData, $data);
-    file_put_contents($progressFile, json_encode($progressData, JSON_PRETTY_PRINT));
+    updateBaseProgressFile(STATISTICSINDEXER_PROGRESS_FILE, $data);
 }
 
-function logMessage($level, $message) {
+function logger($type = "info", $msg) {
     global $parliamentCode;
     $timestamp = date('Y-m-d H:i:s');
     $logFile = __DIR__ . "/statisticsIndexer_{$parliamentCode}.log";
-    $logEntry = "[$timestamp] [$level] Statistics Indexer: $message" . PHP_EOL;
+    $logEntry = "$timestamp - $type: $msg" . PHP_EOL;
     file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
 }
 
-// Register shutdown handler to clean up lock file
-register_shutdown_function(function() use ($lockFile, $progressFile) {
+/**
+ * Reset statistics indexer progress status to allow new runs
+ * This can be called from API or command line to recover from stuck states
+ */
+function resetProgressStatus($parliamentCode) {
+    $progressFile = __DIR__ . '/progress/statisticsIndexer_' . $parliamentCode . '.json';
+    $lockFile = __DIR__ . '/statisticsIndexer_' . $parliamentCode . '.lock';
+    
+    // Remove lock file if it exists
     if (file_exists($lockFile)) {
         unlink($lockFile);
+        logger('info', "Manually removed lock file for recovery");
     }
     
-    // Final progress update - only if actually running (not if exited due to error)
-    global $progressData;
-    $error = error_get_last();
-    $exitCode = null;
+    // Reset progress status using helper function
+    $resetData = [
+        'processName' => 'statisticsIndexing',
+        'statusDetails' => 'Ready for indexing (manually reset)',
+        'totalDbMediaItems' => 0,
+        'processedMediaItems' => 0,
+        'words_indexed' => 0,
+        'statistics_updated' => 0,
+        'performance' => [
+            'start_time' => null,
+            'avg_docs_per_second' => 0
+        ],
+        'reset_time' => time(),
+        'reset_reason' => 'Manual recovery reset'
+    ];
     
-    // Check if we exited normally or due to an error
-    if ($progressData['status'] === 'running' && !$error) {
-        $progressData['status'] = 'completed_successfully';
-        $progressData['statusDetails'] = 'Statistics indexing completed successfully';
-        file_put_contents($progressFile, json_encode($progressData, JSON_PRETTY_PRINT));
+    initBaseProgressFile($progressFile, $resetData);
+    finalizeBaseProgressFile($progressFile, 'idle', 'Ready for indexing (manually reset)');
+    logger('info', "Progress status reset for recovery");
+    
+    // Return data for compatibility
+    $currentProgress = @file_get_contents($progressFile);
+    return $currentProgress ? json_decode($currentProgress, true) : $resetData;
+}
+
+// Register shutdown handler to ensure lock and progress are handled
+register_shutdown_function(function() use ($lockFile) {
+    // Always try to remove the lock file
+    if (file_exists($lockFile)) {
+        @unlink($lockFile);
     }
-    // Don't override error status or starting status if there was an error
+    
+    // Handle progress finalization on crash using helper functions
+    if (function_exists('finalizeBaseProgressFile')) {
+        if (file_exists(STATISTICSINDEXER_PROGRESS_FILE)) {
+            $currentProgressJson = @file_get_contents(STATISTICSINDEXER_PROGRESS_FILE);
+            $currentProgress = $currentProgressJson ? json_decode($currentProgressJson, true) : null;
+            
+            if (is_array($currentProgress) && $currentProgress["status"] === "running") {
+                $error = error_get_last();
+                $fatalErrorTypes = [E_ERROR, E_PARSE, E_CORE_ERROR, E_CORE_WARNING, E_COMPILE_ERROR, E_COMPILE_WARNING];
+                
+                if ($error && in_array($error['type'], $fatalErrorTypes)) {
+                    $logMessageDetail = "Statistics Indexer exited unexpectedly: " . $error['message'] . " in " . $error['file'] . " on line " . $error['line'];
+                    logErrorToBaseProgressFile(STATISTICSINDEXER_PROGRESS_FILE, $logMessageDetail, "FATAL");
+                    finalizeBaseProgressFile(STATISTICSINDEXER_PROGRESS_FILE, "error_shutdown", "Process terminated unexpectedly due to fatal error.");
+                } else {
+                    $logMessageDetail = "Statistics Indexer exited unexpectedly while 'running'.";
+                    logErrorToBaseProgressFile(STATISTICSINDEXER_PROGRESS_FILE, $logMessageDetail, "CRASH");
+                    finalizeBaseProgressFile(STATISTICSINDEXER_PROGRESS_FILE, "error_shutdown", "Process terminated unexpectedly.");
+                }
+            }
+        }
+    }
 });
 
 try {
-    logMessage('INFO', "Starting statistics indexer - Mode: " . ($isIncremental ? 'incremental' : 'full_rebuild') . ", Parliament: $parliamentCode");
+    logger('info', "Starting statistics indexer - Mode: " . ($isIncremental ? 'incremental' : 'full_rebuild') . ", Parliament: $parliamentCode");
     
     updateProgress([
         'status' => 'running',
@@ -164,34 +217,27 @@ try {
     // Determine processing mode
     if ($isIncremental && !empty($mediaIds)) {
         // Process specific media IDs
-        logMessage('INFO', "Processing specific media IDs: " . implode(', ', array_slice($mediaIds, 0, 5)) . (count($mediaIds) > 5 ? '...' : ''));
+        logger('info', "Processing specific media IDs: " . implode(', ', array_slice($mediaIds, 0, 5)) . (count($mediaIds) > 5 ? '...' : ''));
         processSpecificMediaIds($client, $parliamentCode, $mediaIds);
         
     } elseif ($isIncremental) {
         // Incremental update - process recently updated items
-        logMessage('INFO', "Processing incremental updates");
+        logger('info', "Processing incremental updates");
         processIncrementalUpdates($client, $parliamentCode, $batchSize);
         
     } else {
         // Full rebuild
-        logMessage('INFO', "Starting full statistics rebuild");
+        logger('info', "Starting full statistics rebuild");
         performFullRebuild($client, $parliamentCode, $batchSize, $startFrom, $totalLimit);
     }
 
-    updateProgress([
-        'status' => 'completed_successfully',
-        'statusDetails' => 'Statistics indexing completed successfully'
-    ]);
-    
-    logMessage('INFO', "Statistics indexing completed successfully");
+    finalizeBaseProgressFile(STATISTICSINDEXER_PROGRESS_FILE, 'completed_successfully', 'Statistics indexing completed successfully');
+    logger('info', "Statistics indexing completed successfully");
 
 } catch (Exception $e) {
-    logMessage('ERROR', "Critical error: " . $e->getMessage());
-    updateProgress([
-        'status' => 'error',
-        'statusDetails' => 'Critical error: ' . $e->getMessage(),
-        'errors' => [['message' => $e->getMessage(), 'time' => time()]]
-    ]);
+    logger('error', "Critical error: " . $e->getMessage());
+    logErrorToBaseProgressFile(STATISTICSINDEXER_PROGRESS_FILE, $e->getMessage(), "EXCEPTION");
+    finalizeBaseProgressFile(STATISTICSINDEXER_PROGRESS_FILE, 'error_critical', 'Critical error: ' . $e->getMessage());
     exit(1);
 }
 
@@ -230,7 +276,7 @@ function performFullRebuild($client, $parliamentCode, $batchSize, $startFrom, $t
         return;
     }
     
-    logMessage('INFO', "Processing $totalItems documents in batches of $batchSize");
+    logger('info', "Processing $totalItems documents in batches of $batchSize");
     
     // Process documents in batches using scroll API
     $processed = 0;
@@ -282,7 +328,7 @@ function performFullRebuild($client, $parliamentCode, $batchSize, $startFrom, $t
             'performance' => ['avg_docs_per_second' => $avgDocsPerSecond]
         ]);
         
-        logMessage('INFO', "Processed $processed/$totalItems documents ($avgDocsPerSecond docs/sec)");
+        logger('info', "Processed $processed/$totalItems documents ($avgDocsPerSecond docs/sec)");
         
         if ($totalLimit && $processed >= $totalLimit) break;
         
@@ -299,13 +345,13 @@ function performFullRebuild($client, $parliamentCode, $batchSize, $startFrom, $t
     try {
         $client->clearScroll(['scroll_id' => $scrollId]);
     } catch (Exception $e) {
-        logMessage('WARN', "Could not clear scroll: " . $e->getMessage());
+        logger('warn', "Could not clear scroll: " . $e->getMessage());
     }
     
     // Restore optimal index settings
     restoreOptimalIndexSettings($client, $parliamentCode);
     
-    logMessage('INFO', "Full rebuild completed: $processed documents, $wordsIndexed words, $statisticsUpdated statistics");
+    logger('info', "Full rebuild completed: $processed documents, $wordsIndexed words, $statisticsUpdated statistics");
 }
 
 /**
@@ -319,23 +365,58 @@ function processSpecificMediaIds($client, $parliamentCode, $mediaIds) {
         'statusDetails' => 'Processing specific media items...'
     ]);
     
-    $mainIndexName = "optv_main_" . strtolower($parliamentCode);
+    // Use correct index naming pattern consistent with rest of codebase
+    global $config;
+    $mainIndexName = "openparliamenttv_" . ($config['parliament'][$parliamentCode]['OpenSearch']['index'] ?? strtolower($parliamentCode));
     
-    // Get documents by IDs
-    $response = $client->mget([
-        'index' => $mainIndexName,
-        'body' => [
-            'ids' => $mediaIds
-        ]
-    ]);
-    
-    $docs = [];
-    foreach ($response['docs'] as $doc) {
-        if ($doc['found'] && isset($doc['_source']['textContents'])) {
-            $docs[] = [
-                '_source' => $doc['_source']
-            ];
+    // Get documents by IDs with comprehensive error handling
+    try {
+        $response = $client->mget([
+            'index' => $mainIndexName,
+            'body' => [
+                'ids' => $mediaIds
+            ]
+        ]);
+        
+        // Validate OpenSearch response structure
+        if (!isset($response['docs']) || !is_array($response['docs'])) {
+            throw new Exception("Invalid OpenSearch mget response structure");
         }
+        
+        $docs = [];
+        $errorCount = 0;
+        
+        foreach ($response['docs'] as $doc) {
+            // Handle different response scenarios:
+            // 1. Document found: has 'found' => true and '_source'
+            // 2. Document not found: has 'found' => false
+            // 3. Index error: has 'error' but no 'found' key
+            
+            if (isset($doc['error'])) {
+                $errorCount++;
+                logger('warn', "Document error: " . json_encode($doc['error']));
+                continue;
+            }
+            
+            if (isset($doc['found']) && $doc['found'] === true && isset($doc['_source']['textContents'])) {
+                $docs[] = [
+                    '_source' => $doc['_source']
+                ];
+            } elseif (isset($doc['found']) && $doc['found'] === false) {
+                // Document not found - this is normal, just log for debugging
+                logger('info', "Document not found: " . ($doc['_id'] ?? 'unknown'));
+            } else {
+                logger('warn', "Unexpected document structure: " . json_encode($doc));
+            }
+        }
+        
+        if ($errorCount > 0) {
+            logger('warn', "Encountered $errorCount errors while fetching documents from index: $mainIndexName");
+        }
+        
+    } catch (Exception $e) {
+        logger('error', "Failed to fetch documents from OpenSearch: " . $e->getMessage());
+        throw new Exception("OpenSearch mget operation failed: " . $e->getMessage());
     }
     
     if (!empty($docs)) {
@@ -358,7 +439,7 @@ function processIncrementalUpdates($client, $parliamentCode, $batchSize) {
     
     // If specific media IDs are provided, process them incrementally
     if (!empty($mediaIds)) {
-        logMessage('INFO', "Processing incremental updates for " . count($mediaIds) . " media items");
+        logger('info', "Processing incremental updates for " . count($mediaIds) . " media items");
         
         updateProgress([
             'statusDetails' => 'Processing incremental statistics updates...'
@@ -369,7 +450,7 @@ function processIncrementalUpdates($client, $parliamentCode, $batchSize) {
     }
     
     // If no specific media IDs provided, fall back to full rebuild
-    logMessage('INFO', "No specific media IDs provided for incremental update, performing full rebuild");
+    logger('info', "No specific media IDs provided for incremental update, performing full rebuild");
     
     updateProgress([
         'statusDetails' => 'No media IDs specified, running full rebuild...'
@@ -403,10 +484,10 @@ function processBatchWithProperStatistics($client, $parliamentCode, $hits) {
                     $wordsIndexed += $result['results']['statistics']['unique_words'];
                 }
             } else {
-                logMessage('ERROR', "Statistics processing failed for speech {$speechData['id']}: " . ($result['error'] ?? 'Unknown error'));
+                logger('error', "Statistics processing failed for speech {$speechData['id']}: " . ($result['error'] ?? 'Unknown error'));
             }
         } catch (Exception $e) {
-            logMessage('ERROR', "Exception processing speech {$speechData['id']}: " . $e->getMessage());
+            logger('error', "Exception processing speech {$speechData['id']}: " . $e->getMessage());
         }
     }
     
@@ -428,7 +509,7 @@ function setupStatisticsIndices($client, $parliamentCode, $isFullRebuild = false
             // Delete existing index for clean rebuild
             try {
                 $client->indices()->delete(['index' => $indexName]);
-                logMessage('INFO', "Deleted existing index: $indexName");
+                logger('info', "Deleted existing index: $indexName");
             } catch (Exception $e) {
                 // Index might not exist, which is fine
             }
@@ -449,7 +530,7 @@ function setupStatisticsIndices($client, $parliamentCode, $isFullRebuild = false
                     'mappings' => getStatisticsIndexMapping($indexName)
                 ]
             ]);
-            logMessage('INFO', "Created index with bulk settings: $indexName");
+            logger('info', "Created index with bulk settings: $indexName");
         }
     }
 }
@@ -479,9 +560,9 @@ function restoreOptimalIndexSettings($client, $parliamentCode) {
             // Force refresh
             $client->indices()->refresh(['index' => $indexName]);
             
-            logMessage('INFO', "Restored optimal settings for: $indexName");
+            logger('info', "Restored optimal settings for: $indexName");
         } catch (Exception $e) {
-            logMessage('WARN', "Could not restore settings for $indexName: " . $e->getMessage());
+            logger('warn', "Could not restore settings for $indexName: " . $e->getMessage());
         }
     }
 }
