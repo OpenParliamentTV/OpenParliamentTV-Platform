@@ -246,7 +246,7 @@ if ($config["display"]["ner"]) {
                 </tr>
                 <tr>
                     <td><?= L::retrievedFrom() ?></td>
-                    <td><a href="<?= hAttr($speech["attributes"]["sourcePage"]) ?>" target="_blank"><?= h($speech["attributes"]["sourcePage"]) ?></a></td>
+                    <td><a href="<?= hAttr(str_replace('/fvid/', '/cvid/', $speech["attributes"]["sourcePage"])) ?>" target="_blank"><?= h(str_replace('/fvid/', '/cvid/', $speech["attributes"]["sourcePage"])) ?></a></td>
                 </tr>
             </tbody>
         </table>
