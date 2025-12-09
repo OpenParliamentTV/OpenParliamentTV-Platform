@@ -10,7 +10,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 } else {
     include_once(__DIR__ . '/../../../../header.php');
     // Ensure API functions and the apiV1 dispatcher are available
-    require_once(__DIR__ . '/../../../../../modules/utilities/functions.api.php'); // For createApiErrorResponse, etc.
+    require_once(__DIR__ . '/../../../../../api/v1/utilities.php'); // For createApiErrorResponse, etc.
     require_once(__DIR__ . '/../../../../../api/v1/api.php'); // For apiV1 function
 
     $conflict = null; // Initialize conflict variable

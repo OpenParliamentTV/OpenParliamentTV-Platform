@@ -19,11 +19,11 @@
 function createApiErrorResponse($status, $code, $messageKey, $detailKey, $params = [], $domSelector = null, $additionalMeta = []) {
     $return["meta"]["requestStatus"] = "error";
     $return["errors"] = array();
-    
+
     // Get message from language file or use key as fallback
     $title = defined('L::' . $messageKey) ? L($messageKey) : $messageKey;
     $detail = defined('L::' . $detailKey) ? L($detailKey) : $detailKey;
-    
+
     // Replace parameters in messages
     foreach ($params as $key => $value) {
         if (!is_array($value)) {
@@ -31,25 +31,25 @@ function createApiErrorResponse($status, $code, $messageKey, $detailKey, $params
             $detail = str_replace("{".$key."}", $value, $detail);
         }
     }
-    
+
     $errorarray = [
         "status" => $status,
         "code" => $code,
         "title" => $title,
         "detail" => $detail
     ];
-    
+
     if ($domSelector) {
         $errorarray["meta"]["domSelector"] = $domSelector;
     }
-    
+
     if (!empty($additionalMeta)) {
         $errorarray["meta"] = array_merge(
             $errorarray["meta"] ?? [],
             $additionalMeta
         );
     }
-    
+
     array_push($return["errors"], $errorarray);
     return $return;
 }
@@ -75,7 +75,7 @@ function createApiSuccessResponse($data = null, $meta = [], $links = null, $rela
             $meta
         )
     ];
-    
+
     if ($data !== null) {
         $return["data"] = $data;
     }
@@ -99,7 +99,7 @@ function createApiSuccessResponse($data = null, $meta = [], $links = null, $rela
     if ($total !== null) {
         $return["total"] = $total;
     }
-    
+
     return $return;
 }
 
@@ -118,10 +118,10 @@ function createApiErrorMissingParameter($field = null) {
 }
 
 function createApiErrorDatabaseConnection($type = 'platform') {
-    $messageKey = $type === 'platform' 
-        ? "messageErrorDatabasePlatform" 
+    $messageKey = $type === 'platform'
+        ? "messageErrorDatabasePlatform"
         : "messageErrorDatabaseParliament";
-    
+
     return createApiErrorResponse(
         503,
         1,
@@ -152,12 +152,12 @@ function createApiErrorInvalidID($type) {
 
 function createApiErrorInvalidFormat($field, $expectedType) {
     return createApiErrorResponse(
-        422, 
-        1,   
+        422,
+        1,
         "messageErrorIDParseError",
         "messageErrorIDParseError",
-        ["field" => $field, "expectedType" => ucfirst($expectedType)], 
-        $field ? "[name='".$field."']" : null 
+        ["field" => $field, "expectedType" => ucfirst($expectedType)],
+        $field ? "[name='".$field."']" : null
     );
 }
 
@@ -178,9 +178,9 @@ function createApiErrorInvalidParameter($paramName, $detailMessageKey = null, $d
     return createApiErrorResponse(
         422, // Unprocessable Entity or 400 Bad Request
         1,   // Consistent error code
-        "messageErrorInvalidParameter", 
-        $detailMessageKey ?: "messageErrorInvalidParameter", 
-        array_merge(["param" => $paramName], $detailParams), 
+        "messageErrorInvalidParameter",
+        $detailMessageKey ?: "messageErrorInvalidParameter",
+        array_merge(["param" => $paramName], $detailParams),
         "[name=".$paramName."]" // Optional: DOM selector for the field
     );
 }
@@ -224,7 +224,7 @@ function createApiError($message, $code = "GENERIC_ERROR", $status = 500) {
  */
 function getApiDatabaseConnection($type = 'platform', $parliament = null) {
     global $config;
-    
+
     try {
         if ($type === 'platform') {
             return new SafeMySQL([
@@ -243,7 +243,7 @@ function getApiDatabaseConnection($type = 'platform', $parliament = null) {
                     ["param" => "parliament"]
                 );
             }
-            
+
             return new SafeMySQL([
                 'host' => $config["parliament"][$parliament]["sql"]["access"]["host"],
                 'user' => $config["parliament"][$parliament]["sql"]["access"]["user"],
@@ -254,7 +254,7 @@ function getApiDatabaseConnection($type = 'platform', $parliament = null) {
     } catch (exception $e) {
         return createApiErrorDatabaseConnection($type);
     }
-    
+
     return createApiErrorResponse(
         422,
         1,
@@ -297,7 +297,7 @@ function getApiOpenSearchClient() {
     if (!empty($config["OpenSearch"]["SSL"]["pem"])) {
         $clientBuilder->setSSLVerification($config["OpenSearch"]["SSL"]["pem"]);
     }
-    
+
     try {
         return $clientBuilder->build();
     } catch (Exception $e) {
@@ -329,7 +329,7 @@ function validateApiEmail($email, $field = 'email') {
     if ($required !== true) {
         return $required;
     }
-    
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return createApiErrorResponse(
             422,
@@ -340,7 +340,7 @@ function validateApiEmail($email, $field = 'email') {
             "[name='".$field."']"
         );
     }
-    
+
     return true;
 }
 
@@ -349,7 +349,7 @@ function validateApiPassword($password, $field = 'password') {
     if ($required !== true) {
         return $required;
     }
-    
+
     if (!passwordStrength($password)) {
         return createApiErrorResponse(
             422,
@@ -360,7 +360,7 @@ function validateApiPassword($password, $field = 'password') {
             "[name='".$field."']"
         );
     }
-    
+
     return true;
 }
 
@@ -403,7 +403,7 @@ function validateApiNumber($value, $field, $min = 1) {
  */
 function createApiResponse($moduleResponse) {
     global $config;
-    
+
     $baseResponse = [
         "meta" => [
             "api" => [
@@ -416,7 +416,7 @@ function createApiResponse($moduleResponse) {
             ]
         ]
     ];
-    
+
     $result = array_replace_recursive($baseResponse, $moduleResponse);
     return $result;
 }
@@ -429,7 +429,7 @@ function createApiResponse($moduleResponse) {
  * @param string $identifier
  * @param string $rival
  * @param string $description
- * @param object|false $dbPlatform 
+ * @param object|false $dbPlatform
  * @return array The API response from apiV1 or an error structure.
  */
 function reportConflict($entity, $subject, $identifier = "", $rival = "", $description = "", $dbPlatform = false /* Kept for signature compatibility */) {
@@ -439,7 +439,7 @@ function reportConflict($entity, $subject, $identifier = "", $rival = "", $descr
     // This might already be handled by the calling script's autoloader or includes.
     // If apiV1 is in the global scope already, this require might not be strictly necessary
     // but it's safer to ensure it's available.
-    require_once (__DIR__."/../../api/v1/api.php"); 
+    require_once (__DIR__."/api.php");
 
     $request_params = [
         'action' => 'addItem',
@@ -458,8 +458,8 @@ function reportConflict($entity, $subject, $identifier = "", $rival = "", $descr
         // Fallback error reporting if calling apiV1 itself throws an exception
         error_log("Exception in reportConflict (API helper) when calling apiV1: " . $e->getMessage());
         return createApiErrorResponse(
-            500, 
-            'HELPER_API_CALL_FAILED', 
+            500,
+            'HELPER_API_CALL_FAILED',
             'messageErrorApiCallFailedTitle',
             'messageErrorApiCallFailedDetail',
             ['details' => $e->getMessage()]
@@ -482,7 +482,7 @@ function reportEntitySuggestion($entitysuggestionExternalID, $entitysuggestionTy
     global $config; // apiV1 might use it, or config within api.php scope
 
     // just for safety:
-    require_once (__DIR__."/../../api/v1/api.php"); 
+    require_once (__DIR__."/api.php");
 
     $request_params = [
         'action' => 'addItem',
@@ -501,8 +501,8 @@ function reportEntitySuggestion($entitysuggestionExternalID, $entitysuggestionTy
     } catch (Exception $e) {
         error_log("Exception in reportEntitySuggestion (API helper) when calling apiV1: " . $e->getMessage());
         return createApiErrorResponse(
-            500, 
-            'HELPER_API_CALL_FAILED', 
+            500,
+            'HELPER_API_CALL_FAILED',
             'messageErrorApiCallFailedTitle',
             'messageErrorApiCallFailedDetail',
             ['details' => $e->getMessage()]
@@ -546,7 +546,7 @@ function handleEntitySuggestionPostProcessing($reimportAffectedSessionsFlag, $so
 
     // Ensure the main API file is loaded for apiV1 calls
     // and functions.php for getInfosFromStringID
-    require_once (__DIR__."/../../api/v1/api.php"); 
+    require_once (__DIR__."/api.php");
 
     $postProcessingResult = [
         'reimportStatus' => 'not_attempted',
@@ -576,7 +576,7 @@ function handleEntitySuggestionPostProcessing($reimportAffectedSessionsFlag, $so
         $postProcessingResult['suggestionDeleteStatus'] = 'error'; // Cannot proceed with delete if suggestion not fetched
         return $postProcessingResult;
     }
-    
+
     $entitySuggestionItem = is_array($suggestionApiResponse["data"]) && isset($suggestionApiResponse["data"][0]) ? $suggestionApiResponse["data"][0] : $suggestionApiResponse["data"];
 
     if (isset($entitySuggestionItem["EntitysuggestionContext"]) && is_array($entitySuggestionItem["EntitysuggestionContext"])) {
@@ -634,7 +634,7 @@ function handleEntitySuggestionPostProcessing($reimportAffectedSessionsFlag, $so
     } else {
         // Context was present but resulted in no valid files (e.g., getInfosFromStringID failed for all)
         // This is also considered a success for re-import as there were no valid sessions to process.
-        $postProcessingResult['reimportStatus'] = 'success'; 
+        $postProcessingResult['reimportStatus'] = 'success';
         $postProcessingResult['reimportSummary'] = 'No valid session files derived from context to re-import.';
     }
 

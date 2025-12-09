@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__."/safemysql.class.php");
-require_once(__DIR__."/functions.api.php");
+require_once(__DIR__."/../../api/v1/utilities.php");
 
 function flattenEntityJSON($array, $prefix = '') {
     $flat = array();

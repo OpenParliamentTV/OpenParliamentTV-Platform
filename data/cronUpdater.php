@@ -64,7 +64,7 @@ if (is_cli()) {
     $parliament = ((!empty($input["parliament"])) ? $input["parliament"] : "DE");
     
     // Include functions needed for CLI operations early
-    require_once(__DIR__ . "/../modules/utilities/functions.api.php");
+    require_once(__DIR__ . "/../api/v1/utilities.php");
     
     // Set parliament-specific progress file path
     define("CRONUPDATER_PROGRESS_FILE", __DIR__ . "/progress/cronUpdater_" . $parliament . ".json");

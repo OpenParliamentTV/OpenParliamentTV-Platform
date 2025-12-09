@@ -30,7 +30,7 @@ function updateFilesFromGit($parliament = "DE") {
 
     require_once(__DIR__ . "/../config.php");
     require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
-    require_once(__DIR__ . "/../modules/utilities/functions.api.php");
+    require_once(__DIR__ . "/../api/v1/utilities.php");
     require_once(__DIR__ . "/../api/v1/api.php");
     require_once(__DIR__ . "/../api/v1/modules/media.php");
     global $config;
