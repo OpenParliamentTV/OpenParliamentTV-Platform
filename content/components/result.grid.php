@@ -29,7 +29,7 @@ $shouldShowHome = isset($_REQUEST["showHome"]) && $_REQUEST["showHome"] == 1;
 $hasValidSearchCriteria = isset($_REQUEST["q"]) || isset($_REQUEST["personID"]) || isset($_REQUEST["organisationID"]) || isset($_REQUEST["documentID"]) || isset($_REQUEST["termID"]) || isset($_REQUEST["sessionID"]) || isset($_REQUEST["agendaItemID"]) || isset($_REQUEST["electoralPeriodID"]);
 
 if ($shouldShowHome && !$hasValidSearchCriteria) {
-    include_once(__DIR__ . '/home.php');
+    include_once(include_custom(realpath(__DIR__ . '/home.php'), false));
 } else if (!isset($_REQUEST["a"]) || count($_REQUEST) < 2) {
     // Fallback for malformed requests
     echo "Invalid request";
