@@ -1,5 +1,5 @@
 <?php
-include_once(__DIR__ . '/../../header.php');
+include_custom(realpath(__DIR__ . '/../../header.php'));
 ?>
 <main class="container subpage" style="height: calc(100% - 70px);">
 	<div class="h-100">
@@ -13,5 +13,5 @@ include_once(__DIR__ . '/../../header.php');
 	</div>
 </main>
 <?php
-include_once(__DIR__ . '/../../footer.php');
+include_custom(realpath(__DIR__ . '/../../footer.php'));
 ?>
