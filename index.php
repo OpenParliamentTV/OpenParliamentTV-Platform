@@ -300,7 +300,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		include_once("./content/pages/about/page_".$lang.".php");
+		include_once(include_custom(realpath(__DIR__."/content/pages/about/page.php"), false));
 		$content = ob_get_clean();
 	break;
 	case "datapolicy":
