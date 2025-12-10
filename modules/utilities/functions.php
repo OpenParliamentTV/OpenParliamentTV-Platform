@@ -882,4 +882,52 @@ function getTimeDistanceString($options = []) {
     return $result;
 }
 
+/**
+ * @param $file string realpath to file to include
+ * @param $include bool include or return the path
+ *
+ * This function checks if there is a custom file at /custom/ at the given sub-path of $file and includes (or returns) this instead of the given generic file.
+ * If there is a custom language file, it gets preferred.
+ *
+ * e.g.: $file = /www/content/footer.php
+ * if $_SESSION["lang"] is "en" and there is /www/custom/content/footer.en.php it gets included.
+ * if not, but /www/custom/content/footer.php is available, it gets included.
+ * if this file is also not available, the original file located at /www/content/footer.php gets included.
+ *
+ */
+
+function include_custom($file, $include = true) {
+
+    $pathinfo = pathinfo($file);
+    $selfpath = pathinfo(realpath(__DIR__."/../../index.php"));
+
+    $custompath = str_replace($selfpath["dirname"], $selfpath["dirname"]."/custom/", $pathinfo["dirname"]);
+
+    if (file_exists($custompath."/".$pathinfo["filename"].".".$_SESSION["lang"].".".$pathinfo["extension"])) {
+
+        $path = realpath($custompath."/".$pathinfo["filename"].".".$_SESSION["lang"].".".$pathinfo["extension"]);
+
+    } elseif (file_exists($custompath."/".$pathinfo["basename"])) {
+
+        $path = realpath($custompath."/".$pathinfo["basename"]);
+
+    } else {
+
+        $path = $file;
+
+    }
+
+    if ($include) {
+
+        include_once($path);
+
+    } else {
+
+        return $path;
+
+    }
+
+
+}
+
 ?>
