@@ -312,7 +312,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		include_once("./content/pages/datapolicy/page_".$lang.".php");
+        include_once(include_custom(realpath(__DIR__."/content/pages/datapolicy/page.php"), false));
 		$content = ob_get_clean();
 	break;
 	case "imprint":
