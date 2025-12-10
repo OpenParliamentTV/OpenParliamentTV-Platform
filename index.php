@@ -324,7 +324,7 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		include_once("./content/pages/imprint/page_".$lang.".php");
+        include_once(include_custom(realpath(__DIR__."/content/pages/imprint/page.php"), false));
 		$content = ob_get_clean();
 	break;
 	case "login":
