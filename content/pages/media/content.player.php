@@ -7,6 +7,10 @@ require_once(__DIR__."/../../../modules/media/functions.php");
 require_once(__DIR__."/../../../modules/media/include.media.php");
 require_once(__DIR__."/../../../modules/utilities/textArrayConverters.php");
 
+if (file_exists(__DIR__."/../../../custom/overriding.functions.php")) {
+    require_once(__DIR__."/../../../custom/overriding.functions.php");
+}
+
 ob_start();
 include "panel.related.php";
 $relatedContentsPanel = ob_get_clean();
@@ -19,13 +23,18 @@ $relatedContentsPanel = ob_get_clean();
 
     // TODO: Replace URL Quick Fix
     var originMediaID = <?= json_encode($speech["attributes"]['originMediaID'], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
-    //var videoSource = 'https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/'+ originMediaID +'/'+ originMediaID +'_h264_720_400_2000kb_baseline_de_2192.mp4';
-    //var videoSource = 'https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/'+ originMediaID +'/'+ originMediaID +'_h264_720_400_2000kb_baseline_de_2192.mp4';
-    if (currentMediaTimestamp < 1508828000) {
-        var videoSource = 'https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/'+ originMediaID +'/'+ originMediaID +'_h264_720_400_2000kb_baseline_de_2192.mp4';
-    } else {
-        var videoSource = 'https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/'+ originMediaID +'/'+ originMediaID +'_h264_1920_1080_5000kb_baseline_de_5000.mp4';
-    }
+
+    <?php
+        if (function_exists("overrideVideoSource")) {
+
+            echo 'var videoSource = "'.overrideVideoSource($speech).'";';
+
+        } else {
+
+            echo 'var videoSource = '.json_encode($speech["attributes"]["videoFileURI"], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE).';';
+            
+        }
+    ?>
 
 
 
