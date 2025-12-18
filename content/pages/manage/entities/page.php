@@ -10,7 +10,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 } else {
 
-    include_once(__DIR__ . '/../../../header.php');
+    include_once(include_custom(realpath(__DIR__ . '/../../../header.php'),false));
 
 
 ?>

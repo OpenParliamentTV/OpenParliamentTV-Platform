@@ -10,7 +10,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 } else {
 
-    include_once(__DIR__ . '/../../../header.php');
+    include_once(include_custom(realpath(__DIR__ . '/../../header.php'),false));
     // Ensure API functions and the apiV1 dispatcher are available for programmatic call
     require_once(__DIR__ . '/../../../../api/v1/utilities.php');
     require_once(__DIR__ . '/../../../../api/v1/api.php');

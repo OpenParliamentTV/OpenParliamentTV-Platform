@@ -11,7 +11,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 } else {
 
-include_once(__DIR__ . '/../../header.php'); ?>
+    include_once(include_custom(realpath(__DIR__ . '/../../header.php'),false)); ?>
 <main class="container-fluid">
 	<?php 
 	// Include the filter bar component with all features enabled for search page

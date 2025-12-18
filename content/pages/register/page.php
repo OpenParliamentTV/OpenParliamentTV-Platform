@@ -1,4 +1,4 @@
-<?php include_once(__DIR__ . '/../../header.php'); ?>
+<?php include_once(include_custom(realpath(__DIR__ . '/../../header.php'),false)); ?>
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">

@@ -10,9 +10,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
     include_once (__DIR__."/../login/page.php");
 
 } else {
-include_once(__DIR__ . '/../../header.php');
-require_once(__DIR__."/../../../modules/utilities/functions.entities.php");
-$flatDataArray = flattenEntityJSON($apiResult["data"]);
+    include_once(include_custom(realpath(__DIR__ . '/../../header.php'),false));
+    require_once(__DIR__."/../../../modules/utilities/functions.entities.php");
+    $flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <main class="container-fluid subpage">
 	<div class="detailsHeader">

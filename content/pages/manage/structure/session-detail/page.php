@@ -19,8 +19,8 @@ if ($auth["meta"]["requestStatus"] != "success") {
     // Format dates for form fields (convert from ISO to datetime-local format)
     $sessionData["SessionDateStart"] = date('Y-m-d\TH:i', strtotime($sessionData["SessionDateStart"]));
     $sessionData["SessionDateEnd"] = date('Y-m-d\TH:i', strtotime($sessionData["SessionDateEnd"]));
-    
-    include_once(__DIR__ . '/../../../../header.php'); ?>
+
+    include_once(include_custom(realpath(__DIR__ . '/../../../../header.php'),false)); ?>
 
 <main class="container-fluid subpage">
     <div class="row">
