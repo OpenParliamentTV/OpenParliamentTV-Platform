@@ -189,5 +189,5 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <?php
 }
-include_once(__DIR__ . '/../../footer.php');
+include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false));
 ?>

@@ -41,7 +41,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     </div>
 </main>
 <?php
-    include_once(__DIR__ . '/../../../../footer.php');
+    include_once (include_custom(realpath(__DIR__ . '/../../../../footer.php'),false));
 
 }
 ?>

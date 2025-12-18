@@ -994,7 +994,7 @@ include_once(__DIR__ . '/../../header.php');
 		</div>
 	</div>
 </main>
-<?php include_once(__DIR__ . '/../../footer.php'); ?>
+<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/api/client/jquery.json-view.min.css?v=<?= $config["version"] ?>" media="all">
 <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/api/client/atom-one-light.min.css?v=<?= $config["version"] ?>" media="all">
 <style type="text/css">

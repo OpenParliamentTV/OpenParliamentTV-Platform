@@ -35,6 +35,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 }
 
-include_custom(realpath(__DIR__ . '/../../footer.php'));
+include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false));
 
 ?>

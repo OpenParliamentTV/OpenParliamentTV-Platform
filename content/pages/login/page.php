@@ -46,7 +46,7 @@ $alertText = $alertText ?? null;
 		</div>
 	</div>
 </main>
-<?php include_once(__DIR__ . '/../../footer.php'); ?>
+<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <script>
 $(function() {
     // Reset form validation state

@@ -13,5 +13,5 @@ include_custom(realpath(__DIR__ . '/../../header.php'));
 	</div>
 </main>
 <?php
-include_custom(realpath(__DIR__ . '/../../footer.php'));
+include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false));
 ?>

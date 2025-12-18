@@ -2114,7 +2114,7 @@ function resetWordTrends() {
 // Statistics are loaded on-demand to optimize initial page load time
 </script>
 
-<?php include_once(__DIR__ . '/../../footer.php'); ?>
+<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
 <?php
 }

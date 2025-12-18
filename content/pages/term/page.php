@@ -108,7 +108,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
         </div>
     </div>
 </div>
-<?php include_once(__DIR__ . '/../../footer.php'); ?>
+<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">

@@ -26,5 +26,5 @@ include_once(__DIR__ . '/../../header.php');
 		</div>
 	</div>
 </main>
-<?php include_once(__DIR__ . '/../../footer.php'); ?>
+<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <script type="text/javascript" src="content/pages/registerconfirm/client/registerconfirm.functions.js"></script>

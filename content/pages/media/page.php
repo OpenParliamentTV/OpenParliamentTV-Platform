@@ -23,7 +23,7 @@ if ($emptyResult == 1) {
     <main id="content">
         <?php include_once('content.player.php'); ?>
     </main>
-    <?php include_once(__DIR__ . '/../../footer.php'); ?>
+    <?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
     <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/FrameTrail.min.js?v=<?= $config["version"] ?>"></script>
     <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.js?v=<?= $config["version"] ?>"></script>
     <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/share-this.js?v=<?= $config["version"] ?>"></script>
