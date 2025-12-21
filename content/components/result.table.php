@@ -178,7 +178,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     <script type="text/javascript">
         <?php
 
-        if (!$filterableFactions) {
+        if (!isset($filterableFactions)) {
             $factions = apiV1(array("action" => "search", "itemType" => "organisations", "type" => "faction", "filterable" => 1));
             $filterableFactions = [];
             foreach ($factions["data"] as $faction) {

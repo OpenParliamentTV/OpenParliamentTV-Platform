@@ -150,14 +150,14 @@ if ($totalResults != 0) {
     <script type="text/javascript">
         <?php
 
-            if (!$filterableFactions) {
+            if (!isset($filterableFactions)) {
                 $factions = apiV1(array("action" => "search", "itemType" => "organisations", "type" => "faction", "filterable" => 1));
                 $filterableFactions = [];
                 foreach ($factions["data"] as $faction) {
                     $filterableFactions[] = $faction["id"];
                 }
             }
-            
+
         $result["meta"]["attributes"]["resultsPerFaction"] = array_filter(
             $result["meta"]["attributes"]["resultsPerFaction"],
             fn ($k) => in_array($k, $filterableFactions),
