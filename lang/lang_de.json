@@ -100,6 +100,8 @@
 	"mailAddress": "E-Mail Adresse",
 	"makePublic": "Öffentlich sichtbar machen",
 	"makeMediaPublicConfirm": "Willst du diesen Redebeitrag wirklich öffentlich sichtbar machen? Dadurch wird er für alle Nutzer:innen in der Plattform angezeigt und ist in der Suche auffindbar.",
+	"filterable": "Filterbar",
+	"makeFilterable": "Willst du diese {faction} als Filter verfügbar machen?",
 	"manage": "Verwalten",
 	"manageConflicts": "Konflikte lösen",
 	"manageData": "Daten verwalten",

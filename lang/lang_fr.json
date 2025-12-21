@@ -100,6 +100,8 @@
 	"mailAddress": "Adresse e-mail",
 	"makePublic": "Rendre public",
 	"makeMediaPublicConfirm": "Voulez-vous vraiment rendre ce discours public? Cela le rendra visible et recherchable pour tous les utilisateurs de la plateforme.",
+	"filterable": "Filtrer",
+	"makeFilterable": "Souhaitez-vous rendre cette {faction} disponible en tant que filtre?",
 	"manage": "Gérer",
 	"manageConflicts": "Résoudre les conflits",
 	"manageData": "Gérer les données",
