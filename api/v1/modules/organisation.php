@@ -193,6 +193,10 @@ function organisationSearch($parameter, $noLimit = false) {
             }
         }
 
+        if (isset($filteredParameters["filterable"])) {
+            $conditions[] = $db->parse("OrganisationFilterable = ?i", $filteredParameters["filterable"]);
+        }
+
         // Build final query
         $query = $db->parse("?p WHERE ?p", $query, implode(" AND ", $conditions));
         

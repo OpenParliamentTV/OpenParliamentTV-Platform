@@ -85,7 +85,8 @@ $config["allowedSearchParams"] = [
     ],
     "organisation" => [
         "name",
-        "type"
+        "type",
+        "filterable"
     ],
     "document" => [
         "label", 
