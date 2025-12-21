@@ -148,7 +148,23 @@ if ($totalResults != 0) {
     //print_r($result);
     ?>
     <script type="text/javascript">
+        <?php
 
+            if (!$filterableFactions) {
+                $factions = apiV1(array("action" => "search", "itemType" => "organisations", "type" => "faction", "filterable" => 1));
+                $filterableFactions = [];
+                foreach ($factions["data"] as $faction) {
+                    $filterableFactions[] = $faction["id"];
+                }
+            }
+            
+        $result["meta"]["attributes"]["resultsPerFaction"] = array_filter(
+            $result["meta"]["attributes"]["resultsPerFaction"],
+            fn ($k) => in_array($k, $filterableFactions),
+            ARRAY_FILTER_USE_KEY
+        );
+
+        ?>
         resultsAttributes = <?= json_encode($result["meta"]["attributes"], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT | JSON_HEX_APOS) ?>
 
     </script>
