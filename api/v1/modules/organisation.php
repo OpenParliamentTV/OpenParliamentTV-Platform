@@ -101,6 +101,8 @@ function organisationGetDataObject($item = false, $db = false) {
         $return["attributes"]["websiteURI"] = $item["OrganisationWebsiteURI"];
         $return["attributes"]["socialMediaIDs"] = json_decode($item["OrganisationSocialMediaIDs"],true);
         $return["attributes"]["color"] = $item["OrganisationColor"];
+        $return["attributes"]["order"] = $item["OrganisationOrder"];
+        $return["attributes"]["filterable"] = $item["OrganisationFilterable"];
         $return["attributes"]["additionalInformation"] = json_decode($item["OrganisationAdditionalInformation"],true);
         $return["attributes"]["lastChanged"] = $item["OrganisationLastChanged"];
         $return["links"]["self"] = $config["dir"]["api"]."/".$return["type"]."/".$return["id"];
@@ -200,7 +202,7 @@ function organisationSearch($parameter, $noLimit = false) {
         // Add pagination
         $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
         $offset = ($page - 1) * $outputLimit;
-        $query .= $db->parse(" LIMIT ?i, ?i", $offset, $outputLimit);
+        $query .= $db->parse(" ORDER BY OrganisationFilterable DESC, OrganisationOrder ASC LIMIT ?i, ?i", $offset, $outputLimit);
 
         // Execute search
         $findings = $db->getAll($query);
@@ -495,7 +497,7 @@ function organisationChange($parameter) {
         "OrganisationType", "OrganisationLabel", "OrganisationLabelAlternative", 
         "OrganisationAbstract", "OrganisationThumbnailURI", "OrganisationThumbnailCreator", 
         "OrganisationThumbnailLicense", "OrganisationEmbedURI", "OrganisationWebsiteURI", 
-        "OrganisationSocialMediaIDs", "OrganisationColor", "OrganisationAdditionalInformation"
+        "OrganisationSocialMediaIDs", "OrganisationColor", "OrganisationFilterable", "OrganisationOrder", "OrganisationAdditionalInformation"
     );
 
     // Filter parameters
