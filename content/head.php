@@ -100,18 +100,44 @@ foreach ($entityTypes as $entityType) {
 }
 ?>
 
-<!-- Matomo -->
-<script>
-  var _paq = window._paq = window._paq || [];
-  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//stats.openparliament.tv/";
-    _paq.push(['setTrackerUrl', u+'matomo.php']);
-    _paq.push(['setSiteId', '1']);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-  })();
+
+<script type="text/javascript">
+
+    <?php
+
+    require_once (__DIR__."/../api/v1/api.php");
+
+    $factions = apiV1(array("action"=>"search", "itemType"=>"organisations", "type"=>"faction", "filterable"=>1 ));
+
+    $factionColors = [];
+    $factionIDColors = [];
+    $factionCSS = [];
+    foreach ($factions["data"] as $faction) {
+        $factionColors[$faction["attributes"]["label"]] = $faction["attributes"]["color"];
+        $factionIDColors[$faction["id"]] = $faction["attributes"]["color"];
+
+        $tmpFactionCSS = "
+        .partyIndicator[data-party='".$faction["attributes"]["label"]."'],
+        .partyIndicator[data-faction='".$faction["attributes"]["label"]."'],
+        .partyIndicator[data-party='".$faction["id"]."'],
+        .partyIndicator[data-faction='".$faction["id"]."']";
+        foreach ($faction["attributes"]["labelAlternative"] as $labelAlternative) {
+            $tmpFactionCSS .= ", .partyIndicator[data-faction='".$labelAlternative."'], .partyIndicator[data-faction='".$labelAlternative."']";
+        }
+        $tmpFactionCSS .= " { background-color:".$faction["attributes"]["color"]."; border-color:".$faction["attributes"]["color"]."; background: var(--primary-bg-color); }";
+        $factionsCSS[] = $tmpFactionCSS;
+    }
+
+    echo "var factionColors=".json_encode($factionColors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT | JSON_HEX_APOS | JSON_FORCE_OBJECT).";\n";
+    echo "var factionIDColors=".json_encode($factionIDColors, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_QUOT | JSON_HEX_APOS | JSON_FORCE_OBJECT);
+
+    ?>
+
 </script>
-<!-- End Matomo Code -->
+<style type="text/css">
+    <?php
+    foreach ($factionsCSS as $factionCSS) {
+        echo $factionCSS;
+    }
+    ?>
+</style>
