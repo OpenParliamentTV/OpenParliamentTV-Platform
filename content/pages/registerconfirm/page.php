@@ -1,6 +1,6 @@
 <?php 
 require_once(__DIR__ . '/../../modules/utilities/security.php');
-include_once(include_custom(realpath(__DIR__ . '/../../header.php'),false));
+include_once(__DIR__ . '/../../header.php');
 ?>
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">

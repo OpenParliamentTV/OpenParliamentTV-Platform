@@ -8,7 +8,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     $alertText = $auth["errors"][0]["detail"];
     include_once (__DIR__."/../../../login/page.php");
 } else {
-    include_once(include_custom(realpath(__DIR__ . '/../../../../header.php'),false));
+    include_once(__DIR__ . '/../../../../header.php');
     // Ensure API functions and the apiV1 dispatcher are available
     require_once(__DIR__ . '/../../../../../api/v1/utilities.php'); // For createApiErrorResponse, etc.
     require_once(__DIR__ . '/../../../../../api/v1/api.php'); // For apiV1 function

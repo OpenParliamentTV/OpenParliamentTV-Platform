@@ -12,7 +12,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 } else {
 
 
-    include_once(include_custom(realpath(__DIR__ . '/../../header.php'),false));
+    include_once(__DIR__ . '/../../header.php');
     require_once(__DIR__."/../../../modules/media/include.media.php");
 
 if ($emptyResult == 1) {

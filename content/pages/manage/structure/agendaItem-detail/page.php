@@ -14,7 +14,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     // Get ID parts
     $idParts = getInfosFromStringID($agendaItemData["id"] ?? "");
 
-    include_once(include_custom(realpath(__DIR__ . '/../../../../header.php'),false)); ?>
+    include_once(__DIR__ . '/../../../../header.php'); ?>
 
 <main class="container-fluid subpage">
     <div class="row">

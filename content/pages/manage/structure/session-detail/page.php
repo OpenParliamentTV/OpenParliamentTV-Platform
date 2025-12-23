@@ -20,7 +20,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
     $sessionData["SessionDateStart"] = date('Y-m-d\TH:i', strtotime($sessionData["SessionDateStart"]));
     $sessionData["SessionDateEnd"] = date('Y-m-d\TH:i', strtotime($sessionData["SessionDateEnd"]));
 
-    include_once(include_custom(realpath(__DIR__ . '/../../../../header.php'),false)); ?>
+    include_once(__DIR__ . '/../../../../header.php'); ?>
 
 <main class="container-fluid subpage">
     <div class="row">
