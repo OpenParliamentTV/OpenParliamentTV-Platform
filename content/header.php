@@ -21,7 +21,7 @@ if (!isset($page)) {
 					$brandClass = "d-none d-lg-inline";
 				}
 				?>
-					<img src="<?= $config["dir"]["root"] ?>/content/client/images/optv-logo_klein.png"><span class="<?= $brandClass ?>">Open <b>Parliament TV</b></span>
+					<img src="<?= $config["dir"]["root"].((file_exists(__DIR__."/../custom/content/client/images/logo_small.png")) ? "/custom/content/client/images/logo_small.png" : "/content/client/images/optv-logo_small.png");?>"><span class="<?= $brandClass ?>"><?=$config["customization"]["wordmark"]?></span>
 				</a>
 				<?php 
 					if (isset($pageBreadcrumbs)) {

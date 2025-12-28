@@ -144,6 +144,7 @@ $config["parliament"]["DE"]["sql"]["tbl"]["Text"] = "text";
 $config["parliament"]["DE"]["git"]["repository"] = ""; //e.g. https://github.com/OpenParliamentTV/OpenParliamentTV-Data-DE.git
 $config["parliament"]["DE"]["OpenSearch"]["index"] = "de"; // openparliamenttv_THIS
 
+
 /**
  * Configuration for the OpenSearch server
  */
@@ -151,6 +152,13 @@ $config["OpenSearch"]["hosts"] = []; // E.g. ["https://@localhost:9200"]
 $config["OpenSearch"]["BasicAuthentication"]["user"] = "";
 $config["OpenSearch"]["BasicAuthentication"]["passwd"] = "";
 $config["OpenSearch"]["SSL"]["pem"] = ""; // E.g. realpath(__DIR__."/../opensearch-root-ssl.pem");
+
+
+/**
+ * Customization
+ */
+$config["customization"]["wordmark"] = ""; //e.g. "Open <b>Parliament TV<b>"
+
 
 // Include API config
 require_once(__DIR__."/api/v1/config.api.php");
