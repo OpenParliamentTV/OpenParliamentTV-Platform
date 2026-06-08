@@ -515,7 +515,7 @@
      * @returns {Date} The calculated minimum date
      */
     window.calculateTimelineMinDate = function(electoralPeriods, fallbackDate) {
-        fallbackDate = fallbackDate || "2013-10-01";
+        fallbackDate = fallbackDate || "2009-10-01";
         
         if (!electoralPeriods || !Array.isArray(electoralPeriods) || electoralPeriods.length === 0) {
             return new Date(fallbackDate);

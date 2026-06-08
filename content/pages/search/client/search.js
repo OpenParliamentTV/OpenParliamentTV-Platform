@@ -1,5 +1,5 @@
 // Search Page Controller - handles search-specific UI and orchestrates components
-var minDate = new Date("2013-10-01"); // Fallback date - actual minDate calculated dynamically from electoral periods
+var minDate = new Date("2009-10-01"); // Fallback date - actual minDate calculated dynamically from electoral periods
 var maxDate = new Date();
 var suggestionsTextAjax,
 	suggestionsEntitiesAjax,

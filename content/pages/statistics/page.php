@@ -478,7 +478,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 											<div id="wordTrendsTimelineWrapper" class="resultTimeline"></div>
 											<div id="wordTrendsSliderRange" class="sliderRange"></div>
 										</div>
-										<input type="hidden" id="wordTrendsStartDate" value="2013-10-01"/>
+										<input type="hidden" id="wordTrendsStartDate" value="2009-10-01"/>
 										<input type="hidden" id="wordTrendsEndDate"/>
 									</div>
 								</div>
@@ -572,7 +572,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 											<div id="factionWordTimelineWrapper" class="resultTimeline"></div>
 											<div id="factionWordSliderRange" class="sliderRange"></div>
 										</div>
-										<input type="hidden" id="factionWordStartDate" value="2013-10-01"/>
+										<input type="hidden" id="factionWordStartDate" value="2009-10-01"/>
 										<input type="hidden" id="factionWordEndDate"/>
 									</div>
 								</div>
@@ -612,7 +612,7 @@ var factionWordSlider = null;
 var currentFactionWord = null;
 
 // Default timeline range
-var minDate = new Date("2013-10-01");
+var minDate = new Date("2009-10-01");
 var maxDate = new Date();
 
 // Initialize word trends interactive interface and general statistics charts
@@ -1250,7 +1250,7 @@ function updateWordTrendsVisualization() {
 	}
 
 	// Get filter values
-	var startDate = $('#wordTrendsStartDate').val() || '2013-01-01';
+	var startDate = $('#wordTrendsStartDate').val() || '2009-01-01';
 	var endDate = $('#wordTrendsEndDate').val() || new Date().toISOString().split('T')[0];
 	
 	// Get selected factions from checkboxes
@@ -1858,7 +1858,7 @@ function updateFactionWordVisualization() {
 	}
 
 	// Get filter values
-	var startDate = $('#factionWordStartDate').val() || '2013-01-01';
+	var startDate = $('#factionWordStartDate').val() || '2009-01-01';
 	var endDate = $('#factionWordEndDate').val() || new Date().toISOString().split('T')[0];
 	
 	// Show loading state

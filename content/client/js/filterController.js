@@ -14,7 +14,7 @@ class FilterController {
         this.onFilterChange = options.onFilterChange || null;
         
         // Date range configuration - use fallback date, actual minDate calculated dynamically from electoral periods
-        this.minDate = new Date("2013-10-01");
+        this.minDate = new Date("2009-10-01");
         this.maxDate = new Date();
         
         // Chart instances
