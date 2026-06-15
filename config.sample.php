@@ -157,7 +157,7 @@ $config["OpenSearch"]["SSL"]["pem"] = ""; // E.g. realpath(__DIR__."/../opensear
 /**
  * Customization
  */
-$config["customization"]["wordmark"] = ""; //e.g. "Open <b>Parliament TV<b>"
+$config["customization"]["wordmark"] = ""; //e.g. "Open <b>Parliament TV</b>"
 
 
 // Include API config
