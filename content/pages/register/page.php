@@ -49,7 +49,7 @@
 <script type="text/javascript">
 $(function() {
     // Initialize password fields
-    initPasswordFields({
+    const passwordValidation = initPasswordFields({
         passwordFieldId: 'register-password',
         confirmFieldId: 'register-password-check'
     });
@@ -66,19 +66,17 @@ $(function() {
         e.preventDefault();
         resetValidation();
 
-        // Only check password strength if password is being changed
-        const password = document.getElementById('register-password').value;
-        const passwordConfirm = document.getElementById('register-password-check').value;
-        
-        if (password && !checkPasswordStrength(password)) {
-            document.getElementById('register-password').classList.add('is-invalid');
-            document.getElementById('register-password').nextElementSibling.innerHTML = L.messagePasswordTooWeak;
+        if (!passwordValidation.checkPasswordStrength()) {
+            const passwordField = document.getElementById('register-password');
+            passwordField.classList.add('is-invalid');
+            passwordField.closest('.input-group').querySelector('.invalid-feedback').innerHTML = L.messagePasswordTooWeak;
             return;
         }
 
-        if (password && password !== passwordConfirm) {
-            document.getElementById('register-password-check').classList.add('is-invalid');
-            document.getElementById('register-password-check').nextElementSibling.innerHTML = L.messagePasswordNotIdentical;
+        if (!passwordValidation.checkPasswordMatch()) {
+            const passwordConfirmField = document.getElementById('register-password-check');
+            passwordConfirmField.classList.add('is-invalid');
+            passwordConfirmField.closest('.input-group').querySelector('.invalid-feedback').innerHTML = L.messagePasswordNotIdentical;
             return;
         }
 
