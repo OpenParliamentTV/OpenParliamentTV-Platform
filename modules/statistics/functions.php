@@ -21,11 +21,12 @@ if (is_array($ESClient) && isset($ESClient["errors"])) {
  * 
  * @return array Statistics about the dataset
  */
-function getGeneralStatistics() {
+function getGeneralStatistics($parliamentKey = null) {
     global $ESClient, $DEBUG_MODE, $config;
     
-    // --- Use enhanced statistics index for word frequency ---
-    $statisticsIndex = 'optv_statistics_de'; // TODO: Support other parliaments
+    $parliamentKey = resolveParliamentKey($parliamentKey);
+    $statisticsIndex = getStatisticsIndexName($parliamentKey);
+    $speechIndexPattern = getSearchIndexPattern($parliamentKey);
     
     // Get total word count and top 20 words by frequency from enhanced statistics
     $totalUniqueWords = 0;
@@ -293,7 +294,7 @@ function getGeneralStatistics() {
     
     try {
         $results = $ESClient->search([
-            'index' => 'openparliamenttv_*',
+            'index' => $speechIndexPattern,
             'body' => $query
         ]);
         if (!isset($results['aggregations'])) {
@@ -321,8 +322,10 @@ function getGeneralStatistics() {
  * @param string $entityID The ID of the entity
  * @return array Statistics about the entity
  */
-function getEntityStatistics($entityType, $entityID) {
+function getEntityStatistics($entityType, $entityID, $parliamentKey = null) {
     global $ESClient, $DEBUG_MODE;
+    
+    $speechIndexPattern = getSearchIndexPattern($parliamentKey);
     
     // Determine appropriate context based on entity type
     $entitySpecificContext = ($entityType === 'person') ? 'main-speaker' : 'main-speaker-faction';
@@ -440,7 +443,7 @@ function getEntityStatistics($entityType, $entityID) {
         }
         
         $results = $ESClient->search([
-            "index" => "openparliamenttv_*",
+            "index" => $speechIndexPattern,
             "body" => $query
         ]);
         

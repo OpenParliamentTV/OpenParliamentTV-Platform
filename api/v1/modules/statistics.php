@@ -157,7 +157,7 @@ function statisticsGetGeneral($request) {
     
     try {
         // Check cache first
-        $parliament = $request['parliament'] ?? 'de';
+        $parliament = resolveParliamentKey($request['parliament'] ?? null);
         $cachedResult = getGeneralStatisticsFromCache($parliament);
         if ($cachedResult !== null) {
             return $cachedResult;
@@ -173,7 +173,7 @@ function statisticsGetGeneral($request) {
             );
         }
         
-        $stats = getGeneralStatistics();
+        $stats = getGeneralStatistics($parliament);
         
         if ($stats === null) {
             return createApiErrorResponse(
@@ -328,13 +328,14 @@ function statisticsGetEntity($request) {
             );
         }
         
-        $stats = getEntityStatistics($request["entityType"], $request["entityID"]);
+        $parliament = resolveParliamentKey($request['parliament'] ?? null);
+        $stats = getEntityStatistics($request["entityType"], $request["entityID"], $parliament);
         
         // Get speaker vocabulary if this is a person entity
         $speakerVocabulary = null;
         if ($request["entityType"] === 'person') {
             require_once(__DIR__ . "/../../../modules/search/functions.enhanced.php");
-            $vocabResult = getSpeakerVocabularyEnhanced($request["entityID"], 50);
+            $vocabResult = getSpeakerVocabularyEnhanced($request["entityID"], 50, getParliamentOpenSearchSuffix($parliament));
             if ($vocabResult['success']) {
                 $speakerVocabulary = $vocabResult['data'];
             }
@@ -473,7 +474,7 @@ function statisticsGetWordTrends($request) {
         $words = is_array($request["words"]) ? $request["words"] : [$request["words"]];
         $startDate = $request["startDate"] ?? '2020-01-01';
         $endDate = $request["endDate"] ?? date('Y-m-d');
-        $parliamentCode = $request["parliament"] ?? 'de';
+        $parliamentCode = getParliamentOpenSearchSuffix(resolveParliamentKey($request["parliament"] ?? null));
         $factions = $request["factions"] ?? []; // Add faction filtering support
         $separateByFaction = isset($request["separateByFaction"]) && 
                            (strtolower($request["separateByFaction"]) === 'true' || $request["separateByFaction"] === '1' || $request["separateByFaction"] === true);
@@ -647,7 +648,8 @@ function statisticsGetEntityCounts($request) {
  * @param string $parliament Parliament code (e.g., 'de')
  * @return array|null Cached result or null if not valid/missing
  */
-function getGeneralStatisticsFromCache($parliament = 'de') {
+function getGeneralStatisticsFromCache($parliament = null) {
+    $parliament = resolveParliamentKey($parliament);
     $cacheDir = __DIR__ . '/../cache/';
     $cacheKey = "general_statistics_{$parliament}.json";
     $cacheFile = $cacheDir . $cacheKey;
@@ -684,7 +686,8 @@ function getGeneralStatisticsFromCache($parliament = 'de') {
  * @param array $result The API result to cache
  * @param string $parliament Parliament code (e.g., 'de')
  */
-function cacheGeneralStatistics($result, $parliament = 'de') {
+function cacheGeneralStatistics($result, $parliament = null) {
+    $parliament = resolveParliamentKey($parliament);
     $cacheDir = __DIR__ . '/../cache/';
     $cacheKey = "general_statistics_{$parliament}.json";
     $cacheFile = $cacheDir . $cacheKey;
@@ -713,7 +716,8 @@ function cacheGeneralStatistics($result, $parliament = 'de') {
  * @param string $parliament Parliament code (e.g., 'de')
  * @return bool True if cache is valid
  */
-function isGeneralStatisticsCacheValid($parliament = 'de') {
+function isGeneralStatisticsCacheValid($parliament = null) {
+    $parliament = resolveParliamentKey($parliament);
     $cacheDir = __DIR__ . '/../cache/';
     $cacheMetaFile = $cacheDir . "general_statistics_{$parliament}.meta";
     
@@ -737,16 +741,17 @@ function isGeneralStatisticsCacheValid($parliament = 'de') {
  * @param string $parliament Parliament code (e.g., 'de')
  * @return array Index version information
  */
-function getCurrentIndexVersions($parliament = 'de') {
+function getCurrentIndexVersions($parliament = null) {
     try {
         if (!isset($GLOBALS['ESClient'])) {
             return ['timestamp' => time()]; // Fallback
         }
         
         $ESClient = $GLOBALS['ESClient'];
+        $parliament = resolveParliamentKey($parliament);
         
-        $mainIndexName = "openparliamenttv_" . strtolower($parliament);
-        $statsIndexName = "optv_statistics_" . strtolower($parliament);
+        $mainIndexName = getParliamentIndexName($parliament);
+        $statsIndexName = getStatisticsIndexName($parliament);
         
         $mainStats = $ESClient->indices()->stats(['index' => $mainIndexName]);
         $statsStats = $ESClient->indices()->stats(['index' => $statsIndexName]);
@@ -768,7 +773,8 @@ function getCurrentIndexVersions($parliament = 'de') {
  * 
  * @param string $parliament Parliament code (e.g., 'de')
  */
-function invalidateGeneralStatisticsCache($parliament = 'de') {
+function invalidateGeneralStatisticsCache($parliament = null) {
+    $parliament = resolveParliamentKey($parliament);
     $cacheDir = __DIR__ . '/../cache/';
     $cacheFile = $cacheDir . "general_statistics_{$parliament}.json";
     $cacheMetaFile = $cacheDir . "general_statistics_{$parliament}.meta";

@@ -5,6 +5,7 @@ require_once(__DIR__.'/../../config.php');
 require_once(__DIR__."/../../api/v1/api.php");
 require_once(__DIR__.'/../utilities/functions.entities.php');
 require_once(__DIR__.'/../../api/v1/utilities.php');
+require_once(__DIR__.'/../search/functions.php');
 
 // Initialize OpenSearch client using centralized method
 $ESClient = getApiOpenSearchClient();
@@ -18,7 +19,7 @@ function getPrevDocument($currentDocumentTimestamp) {
 	
 	global $ESClient;
 	
-	$searchParams = array("index" => "openparliamenttv_*", 
+	$searchParams = array("index" => getSearchIndexPattern(), 
 		"body" => array(
 			"size" => 1,
 			"query" => array(
@@ -53,7 +54,7 @@ function getNextDocument($currentDocumentTimestamp) {
 	
 	global $ESClient;
 	
-	$searchParams = array("index" => "openparliamenttv_*", 
+	$searchParams = array("index" => getSearchIndexPattern(), 
 		"body" => array(
 			"size" => 1,
 			"query" => array(
@@ -87,7 +88,7 @@ function getNextDocument($currentDocumentTimestamp) {
 function getDocument($documentID) {
 	global $ESClient;
 	
-	$docParams = array("index" => "openparliamenttv_*", 
+	$docParams = array("index" => getSearchIndexPattern(), 
 		"id" => $documentID, 
 		"_source" => true);
 	

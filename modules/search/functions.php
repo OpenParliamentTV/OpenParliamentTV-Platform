@@ -19,20 +19,102 @@ if (is_array($ESClient) && isset($ESClient["errors"])) {
 
 
 /**
+ * Get the default parliament key from config
+ */
+function getDefaultParliamentKey() {
+	global $config;
+	return array_key_first($config["parliament"]);
+}
+
+/**
+ * Resolve a parliament config key from a request value or use the default
+ */
+function resolveParliamentKey($parliamentCode = null) {
+	global $config;
+
+	if ($parliamentCode === null || $parliamentCode === '') {
+		return getDefaultParliamentKey();
+	}
+
+	if (isset($config["parliament"][$parliamentCode])) {
+		return $parliamentCode;
+	}
+
+	foreach ($config["parliament"] as $key => $parliamentConfig) {
+		if (strcasecmp($key, $parliamentCode) === 0) {
+			return $key;
+		}
+
+		$suffix = $parliamentConfig['OpenSearch']['index'] ?? strtolower($key);
+		if (strcasecmp($suffix, $parliamentCode) === 0) {
+			return $key;
+		}
+	}
+
+	return getDefaultParliamentKey();
+}
+
+/**
+ * Get the OpenSearch index suffix configured for a parliament (e.g. "at")
+ */
+function getParliamentOpenSearchSuffix($parliamentKey = null) {
+	global $config;
+
+	$key = resolveParliamentKey($parliamentKey);
+	return $config["parliament"][$key]['OpenSearch']['index'] ?? strtolower($key);
+}
+
+/**
+ * Get the main speech index name for a parliament
+ */
+function getParliamentIndexName($parliamentKey = null) {
+	return "openparliamenttv_" . getParliamentOpenSearchSuffix($parliamentKey);
+}
+
+/**
+ * Get all configured speech index names for this instance
+ */
+function getParliamentIndices() {
+	global $config;
+	$indices = [];
+
+	foreach ($config["parliament"] as $parliamentKey => $parliamentConfig) {
+		$indices[] = getParliamentIndexName($parliamentKey);
+	}
+
+	return $indices;
+}
+
+/**
+ * Get the statistics index name for a parliament
+ */
+function getStatisticsIndexName($parliamentKey = null) {
+	return 'optv_statistics_' . getParliamentOpenSearchSuffix($parliamentKey);
+}
+
+/**
+ * Get the OpenSearch index pattern for speech queries
+ */
+function getSearchIndexPattern($parliamentKey = null) {
+	if ($parliamentKey !== null && $parliamentKey !== '') {
+		return getParliamentIndexName(resolveParliamentKey($parliamentKey));
+	}
+
+	return implode(',', getParliamentIndices());
+}
+
+/**
  * Get the total count of documents in the OpenSearch index
  * 
+ * @param string|null $parliamentKey Optional parliament key to count a single index
  * @return int The total count of documents in the index
  */
-function getIndexCount() {
+function getIndexCount($parliamentKey = null) {
 	
 	global $ESClient;
 
 	try {
-		// Only count speech indices, exclude words indices
-		$indices = getParliamentIndices();
-		// Convert to lowercase to match actual index names
-		$indices = array_map('strtolower', $indices);
-		$indexPattern = implode(',', $indices);
+		$indexPattern = getSearchIndexPattern($parliamentKey);
 		$return = $ESClient->count(['index' => $indexPattern]);
 		$result = $return["count"];
 	} catch(Exception $e) {
@@ -92,7 +174,7 @@ function searchSpeeches($request, $getAllResults = false) {
         "post_tags" => ["</em>"]
     ];
 
-    $searchParams = array("index" => "openparliamenttv_*", "body" => $data);
+    $searchParams = array("index" => getSearchIndexPattern($request["parliament"] ?? null), "body" => $data);
     
     try {
         $results = $ESClient->search($searchParams);
@@ -182,7 +264,7 @@ function getMediaIDListFromSearchResult($request) {
 
 	$data = getSearchBody($request, true);
 	
-	$searchParams = array("index" => "openparliamenttv_*", "body" => $data);
+	$searchParams = array("index" => getSearchIndexPattern($request["parliament"] ?? null), "body" => $data);
 	
 	try {
 		$results = $ESClient->search($searchParams);
@@ -221,7 +303,8 @@ function searchAutocomplete($textQuery) {
     require_once(__DIR__.'/functions.enhanced.php');
 
     try {
-        $enhancedResults = searchAutocompleteEnhanced($textQuery, 9);
+        $parliamentCode = getParliamentOpenSearchSuffix();
+        $enhancedResults = searchAutocompleteEnhanced($textQuery, 9, null, $parliamentCode);
         
         // Transform enhanced results to match old format for backward compatibility
         $results = array();
@@ -241,20 +324,6 @@ function searchAutocomplete($textQuery) {
     }
 }
 
-
-/**
- * Get parliament indices for autocomplete search
- */
-function getParliamentIndices() {
-    global $config;
-    $indices = array();
-    
-    foreach ($config["parliament"] as $parliamentKey => $parliamentConfig) {
-        $indices[] = "openparliamenttv_" . $parliamentKey;
-    }
-    
-    return $indices;
-}
 
 /**
  * Builds an OpenSearch query body based on request parameters
@@ -1118,7 +1187,7 @@ function searchAgendaItemAutocomplete($query) {
 
     $data = getAgendaItemAutocompleteSearchBody($query);
     
-    $searchParams = array("index" => "openparliamenttv_*", "body" => $data);
+    $searchParams = array("index" => getSearchIndexPattern(), "body" => $data);
     
     // Debug: Log the query for troubleshooting
     global $DEBUG_MODE;

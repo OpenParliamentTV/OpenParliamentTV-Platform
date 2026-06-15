@@ -212,7 +212,7 @@ function getIndexStatus($parliamentCode) {
         $ESClient = getApiOpenSearchClient(); 
     }
     if (is_object($ESClient) && !isset($ESClient->errors)) { 
-        $status["numberOfSpeeches"] = getIndexCount(); 
+        $status["numberOfSpeeches"] = getIndexCount($parliamentCode);
     } 
 
     // Call 1: For lastUpdated (sort by changed-desc)
