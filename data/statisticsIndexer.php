@@ -6,6 +6,16 @@
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 require_once(__DIR__ . '/../config.php');
+
+if ($config["mode"] == "dev") {
+    error_reporting(E_ALL);
+} else {
+    error_reporting(E_ERROR);
+}
+ini_set('display_errors', '0');
+ini_set('log_errors', '1');
+ini_set('memory_limit', '512M');
+
 require_once(__DIR__ . '/../modules/utilities/functions.php');
 require_once(__DIR__ . '/../api/v1/utilities.php');
 require_once(__DIR__ . '/../modules/indexing/functions.main.php');
@@ -253,7 +263,7 @@ function performFullRebuild($client, $parliamentCode, $batchSize, $startFrom, $t
     setupStatisticsIndices($client, $parliamentCode, true);
     
     // Get total count from main index
-    $mainIndexName = "openparliamenttv_" . strtolower($parliamentCode);
+    $mainIndexName = getStatisticsMainIndexName($parliamentCode);
     $countResponse = $client->count([
         'index' => $mainIndexName,
         'body' => [
@@ -332,6 +342,8 @@ function performFullRebuild($client, $parliamentCode, $batchSize, $startFrom, $t
         
         if ($totalLimit && $processed >= $totalLimit) break;
         
+        unset($hits, $batchResults);
+        
         // Get next batch
         $response = $client->scroll([
             'scroll_id' => $scrollId,
@@ -358,85 +370,100 @@ function performFullRebuild($client, $parliamentCode, $batchSize, $startFrom, $t
  * Process specific media IDs for incremental updates
  */
 function processSpecificMediaIds($client, $parliamentCode, $mediaIds) {
-    global $progressData;
+    global $config, $batchSize;
+    
+    $mediaIds = array_values(array_unique(array_filter($mediaIds)));
     
     updateProgress([
         'totalDbMediaItems' => count($mediaIds),
         'statusDetails' => 'Processing specific media items...'
     ]);
     
-    // Use correct index naming pattern consistent with rest of codebase
+    $mainIndexName = getStatisticsMainIndexName($parliamentCode);
+    $mgetBatchSize = min($batchSize, 50);
+    $wordsIndexed = 0;
+    $statisticsUpdated = 0;
+    $processedChunks = 0;
+    $totalChunks = (int) ceil(count($mediaIds) / $mgetBatchSize);
+    
+    foreach (array_chunk($mediaIds, $mgetBatchSize) as $idChunk) {
+        $processedChunks++;
+        
+        try {
+            $response = $client->mget([
+                'index' => $mainIndexName,
+                'body' => [
+                    'ids' => $idChunk
+                ]
+            ]);
+            
+            if (!isset($response['docs']) || !is_array($response['docs'])) {
+                throw new Exception("Invalid OpenSearch mget response structure");
+            }
+            
+            $docs = [];
+            $errorCount = 0;
+            
+            foreach ($response['docs'] as $doc) {
+                if (isset($doc['error'])) {
+                    $errorCount++;
+                    logger('warn', "Document error: " . json_encode($doc['error']));
+                    continue;
+                }
+                
+                if (isset($doc['found']) && $doc['found'] === true && speechSourceHasTextContent($doc['_source'] ?? [])) {
+                    $docs[] = [
+                        '_id' => $doc['_id'],
+                        '_source' => $doc['_source']
+                    ];
+                } elseif (isset($doc['found']) && $doc['found'] === false) {
+                    logger('info', "Document not found: " . ($doc['_id'] ?? 'unknown'));
+                }
+            }
+            
+            if ($errorCount > 0) {
+                logger('warn', "Encountered $errorCount errors while fetching documents from index: $mainIndexName");
+            }
+            
+            if (!empty($docs)) {
+                $batchResults = processBatchWithProperStatistics($client, $parliamentCode, $docs);
+                $wordsIndexed += $batchResults['words'];
+                $statisticsUpdated += $batchResults['stats'];
+            }
+        } catch (Exception $e) {
+            logger('error', "Failed to fetch documents from OpenSearch: " . $e->getMessage());
+            throw new Exception("OpenSearch mget operation failed: " . $e->getMessage());
+        }
+        
+        unset($response, $docs, $idChunk);
+        
+        updateProgress([
+            'processedMediaItems' => min(count($mediaIds), $processedChunks * $mgetBatchSize),
+            'words_indexed' => $wordsIndexed,
+            'statistics_updated' => $statisticsUpdated,
+            'statusDetails' => "Processing specific media items: chunk $processedChunks/$totalChunks"
+        ]);
+    }
+    
+    updateProgress([
+        'processedMediaItems' => count($mediaIds),
+        'words_indexed' => $wordsIndexed,
+        'statistics_updated' => $statisticsUpdated,
+        'statusDetails' => 'Completed processing specific media items'
+    ]);
+}
+
+function getStatisticsMainIndexName($parliamentCode) {
     global $config;
-    $mainIndexName = "openparliamenttv_" . ($config['parliament'][$parliamentCode]['OpenSearch']['index'] ?? strtolower($parliamentCode));
-    
-    // Get documents by IDs with comprehensive error handling
-    try {
-        $response = $client->mget([
-            'index' => $mainIndexName,
-            'body' => [
-                'ids' => $mediaIds
-            ]
-        ]);
-        
-        // Validate OpenSearch response structure
-        if (!isset($response['docs']) || !is_array($response['docs'])) {
-            throw new Exception("Invalid OpenSearch mget response structure");
-        }
-        
-        $docs = [];
-        $errorCount = 0;
-        
-        foreach ($response['docs'] as $doc) {
-            // Handle different response scenarios:
-            // 1. Document found: has 'found' => true and '_source'
-            // 2. Document not found: has 'found' => false
-            // 3. Index error: has 'error' but no 'found' key
-            
-            if (isset($doc['error'])) {
-                $errorCount++;
-                logger('warn', "Document error: " . json_encode($doc['error']));
-                continue;
-            }
-            
-            if (isset($doc['found']) && $doc['found'] === true && isset($doc['_source']['textContents'])) {
-                $docs[] = [
-                    '_source' => $doc['_source']
-                ];
-            } elseif (isset($doc['found']) && $doc['found'] === false) {
-                // Document not found - this is normal, just log for debugging
-                logger('info', "Document not found: " . ($doc['_id'] ?? 'unknown'));
-            } else {
-                logger('warn', "Unexpected document structure: " . json_encode($doc));
-            }
-        }
-        
-        if ($errorCount > 0) {
-            logger('warn', "Encountered $errorCount errors while fetching documents from index: $mainIndexName");
-        }
-        
-    } catch (Exception $e) {
-        logger('error', "Failed to fetch documents from OpenSearch: " . $e->getMessage());
-        throw new Exception("OpenSearch mget operation failed: " . $e->getMessage());
+    return "openparliamenttv_" . ($config['parliament'][$parliamentCode]['OpenSearch']['index'] ?? strtolower($parliamentCode));
+}
+
+function speechSourceHasTextContent($source) {
+    if (isset($source['attributes']['textContentsCount']) && (int) $source['attributes']['textContentsCount'] > 0) {
+        return true;
     }
     
-    if (!empty($docs)) {
-        $batchResults = processBatch($client, $parliamentCode, $docs);
-        
-        updateProgress([
-            'processedMediaItems' => count($mediaIds), // Count all requested items, not just those with text
-            'words_indexed' => $batchResults['words'],
-            'statistics_updated' => $batchResults['stats'],
-            'statusDetails' => 'Completed processing specific media items'
-        ]);
-    } else {
-        // Even if no items had text content, we still processed all requested items
-        updateProgress([
-            'processedMediaItems' => count($mediaIds),
-            'words_indexed' => 0,
-            'statistics_updated' => 0,
-            'statusDetails' => 'Completed processing specific media items (no text content found)'
-        ]);
-    }
+    return !empty($source['attributes']['textContents']);
 }
 
 /**
@@ -475,16 +502,13 @@ function processBatchWithProperStatistics($client, $parliamentCode, $hits) {
     $statisticsUpdated = 0;
     
     foreach ($hits as $hit) {
-        $source = $hit['_source'];
-        $speechData = $source;
+        $speechData = $hit['_source'];
         $speechData['id'] = $hit['_id'];
         
         try {
-            // Use the proper statistics processing function
             $result = indexSpeechStatistics($speechData, strtolower($parliamentCode));
             
             if ($result['success']) {
-                // Count words from the result
                 if (isset($result['results']['statistics']['aggregations_updated'])) {
                     $statisticsUpdated += $result['results']['statistics']['aggregations_updated'];
                 }
@@ -497,7 +521,11 @@ function processBatchWithProperStatistics($client, $parliamentCode, $hits) {
         } catch (Exception $e) {
             logger('error', "Exception processing speech {$speechData['id']}: " . $e->getMessage());
         }
+        
+        unset($speechData, $result);
     }
+    
+    unset($hits);
     
     return ['words' => $wordsIndexed, 'stats' => $statisticsUpdated];
 }
