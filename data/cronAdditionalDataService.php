@@ -120,24 +120,6 @@ function _ads_resolve_parliament($requestedParliament = null) {
     return 'DE';
 }
 
-function _ads_format_connection_error($errorResponse, $fallback) {
-    if (!is_array($errorResponse) || empty($errorResponse['errors'][0])) {
-        return $fallback;
-    }
-
-    $error = $errorResponse['errors'][0];
-    if (!empty($error['meta']['exception'])) {
-        return $fallback . ': ' . $error['meta']['exception'];
-    }
-
-    $detail = $error['detail'] ?? '';
-    if ($detail && strpos($detail, 'messageError') !== 0) {
-        return $detail;
-    }
-
-    return $fallback;
-}
-
 function _ads_record_startup_error($errorMessage, $entityType = null) {
     $progress = _ads_get_progress_data();
     $progress['globalStatus'] = 'error';
@@ -286,10 +268,8 @@ if (is_cli()) {
     // Use helper function to get database connections
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        $errorMessage = _ads_format_connection_error(
-            $db,
-            'Platform database connection failed'
-        );
+        // The helper returns an error array on failure
+        $errorMessage = $db['errors'][0]['detail'] ?? 'Platform database connection failed.';
         logger("error", "[ADS] CRITICAL: " . $errorMessage);
         _ads_record_startup_error($errorMessage, $input["type"]);
         $progressFinalized = true;
@@ -298,10 +278,8 @@ if (is_cli()) {
 
     $dbp = getApiDatabaseConnection('parliament', $parliament);
     if (!is_object($dbp)) {
-        $errorMessage = _ads_format_connection_error(
-            $dbp,
-            "Parliament database connection failed for parliament '{$parliament}'"
-        );
+        // The helper returns an error array on failure
+        $errorMessage = $dbp['errors'][0]['detail'] ?? "Parliament database connection failed for {$parliament}.";
         logger("error", "[ADS] CRITICAL: " . $errorMessage);
         _ads_record_startup_error($errorMessage, $input["type"]);
         $progressFinalized = true;

@@ -117,24 +117,16 @@ function createApiErrorMissingParameter($field = null) {
     );
 }
 
-function createApiErrorDatabaseConnection($type = 'platform', $exceptionMessage = null) {
+function createApiErrorDatabaseConnection($type = 'platform') {
     $messageKey = $type === 'platform'
         ? "messageErrorDatabasePlatform"
         : "messageErrorDatabaseParliament";
-
-    $additionalMeta = [];
-    if ($exceptionMessage !== null && $exceptionMessage !== '') {
-        $additionalMeta['exception'] = $exceptionMessage;
-    }
 
     return createApiErrorResponse(
         503,
         1,
         "messageErrorNoDatabaseConnectionTitle",
-        $messageKey,
-        [],
-        null,
-        $additionalMeta
+        $messageKey
     );
 }
 
@@ -260,7 +252,7 @@ function getApiDatabaseConnection($type = 'platform', $parliament = null) {
             ]);
         }
     } catch (exception $e) {
-        return createApiErrorDatabaseConnection($type, $e->getMessage());
+        return createApiErrorDatabaseConnection($type);
     }
 
     return createApiErrorResponse(
