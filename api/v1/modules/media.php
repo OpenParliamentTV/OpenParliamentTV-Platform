@@ -1435,8 +1435,15 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
             $entityDump = getEntityDump(array("type"=>"all","wiki"=>true,"wikikeys"=>"true"),$db);
         }
         
-        // Process text contents if confidence check passes
-        if (($item["debug"]["confidence"] == 1) && (count($item["debug"]["linkedMediaIndexes"]) == 1)) {
+        // DE alignment pipeline: only import text when media-speech link is confident.
+        // Other sources (e.g. AT) omit debug.confidence — import text when textContents are present.
+        $hasAlignmentMetadata = isset($item["debug"]["confidence"]) && array_key_exists("linkedMediaIndexes", $item["debug"]);
+        $passesAlignmentCheck = $hasAlignmentMetadata
+            && ($item["debug"]["confidence"] == 1)
+            && (count($item["debug"]["linkedMediaIndexes"]) == 1);
+        $shouldProcessText = !empty($item["textContents"]) && (!$hasAlignmentMetadata || $passesAlignmentCheck);
+
+        if ($shouldProcessText) {
             // Clear existing NER annotations
             $dbp->query(
                 "DELETE FROM ?n WHERE AnnotationMediaID = ?s AND AnnotationContext = ?s",
