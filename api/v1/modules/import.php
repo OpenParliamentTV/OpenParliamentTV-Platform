@@ -47,14 +47,15 @@ function importRunCronUpdater($request) {
         }
     }
     
-    $phpBinary = $config["bin"]["php"] ?? "";
+    $phpBinary = resolveConfiguredExecutable($config["bin"]["php"] ?? "");
     $cronScript = realpath(__DIR__ . "/../../../data/cronUpdater.php");
-    if (empty($phpBinary) || !is_file($phpBinary)) {
+    if (!$phpBinary) {
+        $configuredPhp = $config["bin"]["php"] ?? "(empty)";
         return createApiErrorResponse(
             500,
             "PHP_BINARY_NOT_FOUND",
             "Could not start data import",
-            "PHP binary not found or not configured: " . ($phpBinary ?: "(empty)") . ". Set \$config[\"bin\"][\"php\"] in config.php to the output of `which php` on this server.",
+            "PHP binary not found or not executable: " . $configuredPhp . ". Set \$config[\"bin\"][\"php\"] in config.php to a valid path (output of `which php`) or a command available in the web server's PATH.",
             ["parliament" => $parliament]
         );
     }
