@@ -39,6 +39,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                     <select id="parliament-selector" class="form-select w-100">
                                         <?php
                                         $parliamentCount = count($config["parliament"]);
+                                        $defaultParliamentCode = array_key_first($config["parliament"]);
                                         $firstParliament = true;
                                         foreach($config["parliament"] as $parliamentCode => $parliamentDetails) {
                                             $selected = ($parliamentCount === 1 || $firstParliament) ? 'selected' : '';
@@ -99,7 +100,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 							<div class="row" id="data-import-progress-section">
 								<div class="col-12">
 									<div class="d-flex justify-content-between">
-										<div class="fw-bolder"><?= L::dataImport(); ?> <span id="data-import-parliament-label">(DE)</span></div>
+										<div class="fw-bolder"><?= L::dataImport(); ?> <span id="data-import-parliament-label">(<?= htmlspecialchars($defaultParliamentCode) ?>)</span></div>
 										<div id="data-import-items-text" class="small">Idle</div>
 									</div>
 									<div class="progress my-1" role="progressbar" aria-label="Data Import Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -599,8 +600,10 @@ document.addEventListener('DOMContentLoaded', function() {
         } else {
             // Trigger status updates to ensure UI is synchronized
             setTimeout(() => {
-                fetchSearchIndexStatus('DE');
-                fetchStatisticsIndexStatus('DE');
+                if (appState.currentParliament) {
+                    fetchSearchIndexStatus(appState.currentParliament);
+                    fetchStatisticsIndexStatus(appState.currentParliament);
+                }
             }, 1000);
             
             const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
@@ -1473,6 +1476,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Set initial parliament (first one or selected one)
             const initialParliament = parliamentSelector.value;
             appState.currentParliament = initialParliament;
+            updateElementText('data-import-parliament-label', `(${initialParliament})`);
             
             // Add change event listener
             parliamentSelector.addEventListener('change', function() {
