@@ -53,18 +53,18 @@ function importRunCronUpdater($request) {
         return createApiErrorResponse(
             500,
             "PHP_BINARY_NOT_FOUND",
-            "messageErrorCronStartFailedTitle",
-            "messageErrorCronStartFailedDetail",
-            ["details" => "PHP binary not found or not configured: " . ($phpBinary ?: "(empty)"), "parliament" => $parliament]
+            "Could not start data import",
+            "PHP binary not found or not configured: " . ($phpBinary ?: "(empty)") . ". Set \$config[\"bin\"][\"php\"] in config.php to the output of `which php` on this server.",
+            ["parliament" => $parliament]
         );
     }
     if (!$cronScript || !is_file($cronScript)) {
         return createApiErrorResponse(
             500,
             "CRON_SCRIPT_NOT_FOUND",
-            "messageErrorCronStartFailedTitle",
-            "messageErrorCronStartFailedDetail",
-            ["details" => "cronUpdater.php not found.", "parliament" => $parliament]
+            "Could not start data import",
+            "cronUpdater.php not found at the expected path.",
+            ["parliament" => $parliament]
         );
     }
 
@@ -86,9 +86,9 @@ function importRunCronUpdater($request) {
         return createApiErrorResponse(
             500,
             "CRON_START_FAILED",
-            "messageErrorCronStartFailedTitle",
-            "messageErrorCronStartFailedDetail",
-            ["details" => $e->getMessage(), "parliament" => $parliament]
+            "Could not start data import",
+            $e->getMessage(),
+            ["parliament" => $parliament]
         );
     }
 }
