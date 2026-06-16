@@ -47,9 +47,30 @@ function importRunCronUpdater($request) {
         }
     }
     
+    $phpBinary = $config["bin"]["php"] ?? "";
+    $cronScript = realpath(__DIR__ . "/../../../data/cronUpdater.php");
+    if (empty($phpBinary) || !is_file($phpBinary)) {
+        return createApiErrorResponse(
+            500,
+            "PHP_BINARY_NOT_FOUND",
+            "messageErrorCronStartFailedTitle",
+            "messageErrorCronStartFailedDetail",
+            ["details" => "PHP binary not found or not configured: " . ($phpBinary ?: "(empty)"), "parliament" => $parliament]
+        );
+    }
+    if (!$cronScript || !is_file($cronScript)) {
+        return createApiErrorResponse(
+            500,
+            "CRON_SCRIPT_NOT_FOUND",
+            "messageErrorCronStartFailedTitle",
+            "messageErrorCronStartFailedDetail",
+            ["details" => "cronUpdater.php not found.", "parliament" => $parliament]
+        );
+    }
+
     try {
         // Execute the cronUpdater script asynchronously with parliament parameter
-        $command = $config["bin"]["php"] . " " . realpath(__DIR__ . "/../../../data/cronUpdater.php") . " --parliament=" . escapeshellarg($parliament);
+        $command = $phpBinary . " " . $cronScript . " --parliament=" . escapeshellarg($parliament);
         executeAsyncShellCommand($command);
         
         return createApiSuccessResponse(

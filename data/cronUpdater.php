@@ -191,18 +191,46 @@ if (is_cli()) {
     require_once(__DIR__ . "/../api/v1/api.php");
     require_once(__DIR__ . "/../api/v1/modules/searchIndex.php");
 
+    if ($isDataImportMode) {
+        $lastSuccess = null;
+        if (file_exists(CRONUPDATER_PROGRESS_FILE)) {
+            $previousProgressJson = @file_get_contents(CRONUPDATER_PROGRESS_FILE);
+            if ($previousProgressJson) {
+                $previousProgress = json_decode($previousProgressJson, true);
+                if (isset($previousProgress['lastSuccessfullyProcessedFile'])) {
+                    $lastSuccess = $previousProgress['lastSuccessfullyProcessedFile'];
+                }
+            }
+        }
+
+        initBaseProgressFile(CRONUPDATER_PROGRESS_FILE, [
+            "processName" => "dataImport",
+            "statusDetails" => "Connecting to databases...",
+            "totalFiles" => 0,
+            "processedFiles" => 0,
+            "lastSuccessfullyProcessedFile" => $lastSuccess
+        ]);
+    }
+
+    $failDataImport = function ($message) use ($isDataImportMode, &$progressFinalized) {
+        logger("error", $message);
+        if ($isDataImportMode && function_exists('finalizeBaseProgressFile')) {
+            logErrorToBaseProgressFile(CRONUPDATER_PROGRESS_FILE, $message, "STARTUP");
+            finalizeBaseProgressFile(CRONUPDATER_PROGRESS_FILE, "error_critical", $message);
+            $progressFinalized = true;
+        }
+        exit(1);
+    };
 
     try {
         $db = new SafeMySQL(['host' => $config["platform"]["sql"]["access"]["host"], 'user' => $config["platform"]["sql"]["access"]["user"], 'pass' => $config["platform"]["sql"]["access"]["passwd"], 'db' => $config["platform"]["sql"]["db"]]);
     } catch (exception $e) {
-        logger("error", "connection to platform database failed. ".$e->getMessage());
-        exit;
+        $failDataImport("Platform database connection failed: " . $e->getMessage());
     }
     try {
         $dbp = new SafeMySQL(['host' => $config["parliament"][$parliament]["sql"]["access"]["host"], 'user' => $config["parliament"][$parliament]["sql"]["access"]["user"], 'pass' => $config["parliament"][$parliament]["sql"]["access"]["passwd"], 'db' => $config["parliament"][$parliament]["sql"]["db"]]);
     } catch (exception $e) {
-        logger("error", "connection to parliament database failed: ".$e->getMessage());
-        exit;
+        $failDataImport("Parliament database connection failed for {$parliament}: " . $e->getMessage());
     }
 
     /**
@@ -375,14 +403,9 @@ if (is_cli()) {
                 }
             }
 
-            // Initialize progress tracking for data import
-            initBaseProgressFile(CRONUPDATER_PROGRESS_FILE, [
-                "processName" => "dataImport", 
-                "status" => "running", 
-                "statusDetails" => "Starting data import process...", 
-                "totalFiles" => 0, 
-                "processedFiles" => 0,
-                "lastSuccessfullyProcessedFile" => $lastSuccess // Carry over the last success
+            updateBaseProgressFile(CRONUPDATER_PROGRESS_FILE, [
+                "statusDetails" => "Starting data import process...",
+                "lastSuccessfullyProcessedFile" => $lastSuccess
             ]);
             
             // By default, sync from Git. The --ignoreGit flag prevents this.
