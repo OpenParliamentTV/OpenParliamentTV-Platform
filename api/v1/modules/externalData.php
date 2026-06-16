@@ -365,7 +365,14 @@ function externalDataTriggerFullUpdate($api_request) {
         return createApiErrorResponse(500, "SCRIPT_PATH_ERROR", "Server configuration error: Script path not found.", "The system could not find the necessary script to run the update process.");
     }
 
-    $command = $config["bin"]["php"]." ".$scriptPath." --type ".$api_request["type"];
+    $parliament = $api_request["parliament"] ?? null;
+    if ($parliament === null || $parliament === '' || !isset($config["parliament"][$parliament])) {
+        $parliament = !empty($config["parliament"]) ? array_key_first($config["parliament"]) : "DE";
+    }
+
+    $command = $config["bin"]["php"]." ".$scriptPath
+        ." --type=".escapeshellarg($api_request["type"])
+        ." --parliament=".escapeshellarg($parliament);
     executeAsyncShellCommand($command);
     
     return createApiSuccessResponse(["message" => "Full update process for type '".$api_request["type"]."' initiated."]);

@@ -106,6 +106,49 @@ function _ads_save_progress_data($data) {
     @file_put_contents(CRON_ADS_PROGRESS_FILE, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 }
 
+function _ads_resolve_parliament($requestedParliament = null) {
+    global $config;
+
+    if ($requestedParliament !== null && $requestedParliament !== '' && isset($config['parliament'][$requestedParliament])) {
+        return $requestedParliament;
+    }
+
+    if (!empty($config['parliament']) && is_array($config['parliament'])) {
+        return array_key_first($config['parliament']);
+    }
+
+    return 'DE';
+}
+
+function _ads_record_startup_error($errorMessage, $entityType = null) {
+    $progress = _ads_get_progress_data();
+    $progress['globalStatus'] = 'error';
+    $progress['activeType'] = null;
+    $progress['statusDetails'] = $errorMessage;
+
+    $typesToUpdate = [];
+    if ($entityType) {
+        $typesToUpdate = array_map('trim', explode(',', $entityType));
+    }
+
+    foreach ($typesToUpdate as $type) {
+        if (!isset($progress['types'][$type])) {
+            continue;
+        }
+
+        $progress['types'][$type]['status'] = 'error_critical';
+        $progress['types'][$type]['statusDetails'] = $errorMessage;
+        $progress['types'][$type]['endTime'] = date('c');
+        $progress['types'][$type]['lastActivityTime'] = date('c');
+        $progress['types'][$type]['errors'][] = [
+            'timestamp' => date('c'),
+            'message' => $errorMessage
+        ];
+    }
+
+    _ads_save_progress_data($progress);
+}
+
 
 /**
  * Checks if this script is executed from CLI
@@ -200,7 +243,7 @@ if (is_cli()) {
     _ads_save_progress_data($progress);
 
     //get CLI parameter to $input
-    $input = getopt(null, ["type:","ids:"]);
+    $input = getopt("", ["type:", "ids:", "parliament:"]);
 
     if (empty($input["type"])) {
 
@@ -215,8 +258,8 @@ if (is_cli()) {
 
     logger("info","cronAdditionalDataService started for ".$input["type"]);
 
-
-    $parliament = ((isset($input["parliament"])) ? $input["parliament"] : "DE");
+    $parliament = _ads_resolve_parliament($input["parliament"] ?? null);
+    logger("info", "[ADS] Using parliament database: {$parliament}");
 
     require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
     require_once(__DIR__ . "/../api/v1/modules/externalData.php");
@@ -228,7 +271,9 @@ if (is_cli()) {
         // The helper returns an error array on failure
         $errorMessage = $db['errors'][0]['detail'] ?? 'Platform database connection failed.';
         logger("error", "[ADS] CRITICAL: " . $errorMessage);
-        exit; // Shutdown function will handle lock file and progress status
+        _ads_record_startup_error($errorMessage, $input["type"]);
+        $progressFinalized = true;
+        exit;
     }
 
     $dbp = getApiDatabaseConnection('parliament', $parliament);
@@ -236,7 +281,9 @@ if (is_cli()) {
         // The helper returns an error array on failure
         $errorMessage = $dbp['errors'][0]['detail'] ?? "Parliament database connection failed for {$parliament}.";
         logger("error", "[ADS] CRITICAL: " . $errorMessage);
-        exit; // Shutdown function will handle lock file and progress status
+        _ads_record_startup_error($errorMessage, $input["type"]);
+        $progressFinalized = true;
+        exit;
     }
 
     // [START OF NEW ENTITY PROCESSING LOGIC - MOVED HERE]
