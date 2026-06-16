@@ -562,13 +562,20 @@ document.addEventListener('DOMContentLoaded', function() {
         const isNotRunning = status !== 'running';
         const lastRunDate = formatDate(lastActivityTime);
 
-        if (isNotRunning && appState.repo.isOutOfSync()) {
+        const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
+        const hasImportError = errorStates.includes(status);
+
+        if (isNotRunning && appState.repo.isOutOfSync() && status === 'idle') {
             const diff = appState.repo.getOutOfSyncCount();
             const plural = diff > 1 ? 's' : '';
             finalStatusDetails = `Repository is out of sync. ${diff} new session file${plural} available.`;
             finalItemsText = `Pending Sync: ${diff} session${plural}`;
             const fileToShow = lastSuccessfullyProcessedFile || 'N/A';
             updateElementText(dataImportElems.currentFileText, `<?= L::lastRun(); ?>: ${lastRunDate} | <?= L::lastUpdated(); ?>: ${fileToShow}`);
+        } else if (isNotRunning && appState.repo.isOutOfSync() && !hasImportError) {
+            const diff = appState.repo.getOutOfSyncCount();
+            const plural = diff > 1 ? 's' : '';
+            finalItemsText = `Pending Sync: ${diff} session${plural}`;
         } else if (isNotRunning) {
             // Handles idle, completed, error, etc.
             const fileToShow = lastSuccessfullyProcessedFile || 'N/A';
@@ -606,11 +613,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }, 1000);
             
-            const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
-            if (errorStates.includes(status) && !appState.repo.isOutOfSync()) {
+            if (hasImportError) {
                 const errorMessages = errors && errors.length > 0 ? errors : (statusDetails ? [{ detail: statusDetails }] : [{detail: 'An unknown error occurred during data import.'}]);
                 showError(dataImportElems.errorDisplay, errorMessages);
-            } else { // completed, idle, or out-of-sync
+            } else { // completed, idle, or out-of-sync without import error
                 clearError(dataImportElems.errorDisplay);
             }
         }
