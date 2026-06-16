@@ -20,13 +20,12 @@ function getFilesWithDates ($dir,$pattern = "~[0-9]{5}-session\.json~") {
  * @param string $parliament
  * @return bool if there are any new files in input
  *
- * Will not do anything at the first pull/clone
- *
  */
 
 function updateFilesFromGit($parliament = "DE") {
 
     $return = false;
+    $wasFreshClone = false;
 
     require_once(__DIR__ . "/../config.php");
     require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
@@ -52,6 +51,7 @@ function updateFilesFromGit($parliament = "DE") {
 
         if (chdir($realpath)) {
             shell_exec($config["bin"]["git"] . ' -C "' . $realpath . '" clone ' . $config["parliament"][$parliament]["git"]["repository"] . ' .');
+            $wasFreshClone = true;
         }
 
     }
@@ -82,10 +82,10 @@ function updateFilesFromGit($parliament = "DE") {
     //print_r($currentFiles);
     //print_r($newCurrentFiles);
 
-    //compare the new fileslist with the old fileslist
+    // On first clone, import all session files. Otherwise only copy files changed by pull.
     foreach ($newCurrentFiles as $fileName=>$file) {
 
-        if (!array_key_exists($fileName,$currentFiles) || ($currentFiles[$fileName]["date"] != $file["date"])) {
+        if ($wasFreshClone || !array_key_exists($fileName,$currentFiles) || ($currentFiles[$fileName]["date"] != $file["date"])) {
             copy($realpath."/processed/".$fileName, __DIR__."/input/".$fileName);
             $return = true;
         }
