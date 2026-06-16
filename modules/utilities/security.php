@@ -120,7 +120,7 @@ function applySecurityHeaders() {
         "style-src 'self' 'unsafe-inline'",
         "img-src 'self' data: https:", // Third-party images/thumbnails
         "font-src 'self'",
-        "connect-src 'self' https://*.openparliament.tv",
+        "connect-src 'self' https://*.openparliament.tv https:", // hls.js manifest/segment fetches (parliament CDNs)
         "frame-src 'self' stats.openparliament.tv", // Matomo + self-embedding
         "media-src 'self' https:", // Third-party videos
         "object-src 'none'", // Block plugins
@@ -132,7 +132,7 @@ function applySecurityHeaders() {
     // Only exception: Skip external services when on local domains (they won't work anyway)
     if ($isLocalDomain) {
         $cspDirectives[1] = "script-src 'self' 'unsafe-inline' 'unsafe-eval'"; // Remove stats.openparliament.tv but keep unsafe-eval
-        $cspDirectives[5] = "connect-src 'self'"; // Remove *.openparliament.tv
+        $cspDirectives[5] = "connect-src 'self' https:"; // Allow cross-origin fetches (e.g. HLS CDNs); no stats.openparliament.tv on local
         $cspDirectives[6] = "frame-src 'self'"; // Remove stats.openparliament.tv
     }
     
