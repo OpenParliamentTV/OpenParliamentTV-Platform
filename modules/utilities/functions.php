@@ -394,13 +394,55 @@ function resolveConfiguredExecutable($configuredPath) {
     return null;
 }
 
-function executeAsyncShellCommand($cmd = null) {
+/**
+ * Resolve a PHP CLI binary for spawning background jobs from the web context.
+ * Bare "php" in config often fails under Apache's limited PATH.
+ */
+function resolvePhpCliBinary($configuredPath = '') {
+    $configuredPath = trim((string) $configuredPath);
+
+    if ($configuredPath !== '' && (strpos($configuredPath, '/') !== false || strpos($configuredPath, '\\') !== false) && is_file($configuredPath)) {
+        return $configuredPath;
+    }
+
+    if (defined('PHP_BINDIR')) {
+        $bindirPhp = PHP_BINDIR . DIRECTORY_SEPARATOR . 'php';
+        if (is_file($bindirPhp)) {
+            return $bindirPhp;
+        }
+    }
+
+    if (defined('PHP_BINARY') && PHP_BINARY !== '' && stripos(PHP_BINARY, 'fpm') === false && is_file(PHP_BINARY)) {
+        return PHP_BINARY;
+    }
+
+    return $configuredPath !== '' ? $configuredPath : 'php';
+}
+
+function isPhpFunctionDisabled($functionName) {
+    if (!function_exists($functionName)) {
+        return true;
+    }
+
+    $disabled = ini_get('disable_functions');
+    if ($disabled === false || $disabled === '') {
+        return false;
+    }
+
+    return in_array($functionName, array_map('trim', explode(',', $disabled)), true);
+}
+
+function executeAsyncShellCommand($cmd = null, $logFile = null) {
 
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
         //pclose(popen("start /B " . $cmd, "r"));
         pclose(popen('start /B cmd /C "'.$cmd.' >NUL 2>NUL"', 'r'));
     } else {
-        exec("$cmd > /dev/null &");
+        if ($logFile) {
+            exec($cmd . ' >> ' . escapeshellarg($logFile) . ' 2>&1 &');
+        } else {
+            exec("$cmd > /dev/null 2>&1 &");
+        }
     }
 }
 

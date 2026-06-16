@@ -47,21 +47,17 @@ function importRunCronUpdater($request) {
         }
     }
     
-    $phpBinary = trim($config["bin"]["php"] ?? "");
-    if ($phpBinary === "") {
-        if (defined('PHP_BINARY') && PHP_BINARY !== '') {
-            $phpBinary = PHP_BINARY;
-        } else {
-            return createApiErrorResponse(
-                500,
-                "PHP_BINARY_NOT_CONFIGURED",
-                "Could not start data import",
-                "PHP binary is not configured. Set \$config[\"bin\"][\"php\"] in config.php.",
-                ["parliament" => $parliament]
-            );
-        }
+    if (isPhpFunctionDisabled('exec')) {
+        return createApiErrorResponse(
+            500,
+            "EXEC_DISABLED",
+            "Could not start data import",
+            "PHP exec() is disabled on this server. Background import jobs cannot be started from the web interface.",
+            ["parliament" => $parliament]
+        );
     }
 
+    $phpBinary = resolvePhpCliBinary($config["bin"]["php"] ?? "");
     $cronScript = realpath(__DIR__ . "/../../../data/cronUpdater.php");
     if (!$cronScript || !is_file($cronScript)) {
         return createApiErrorResponse(
@@ -73,10 +69,15 @@ function importRunCronUpdater($request) {
         );
     }
 
+    $logFile = realpath(__DIR__ . "/../../../data/cronUpdater.log");
+    if ($logFile === false) {
+        $logFile = __DIR__ . "/../../../data/cronUpdater.log";
+    }
+
     try {
-        // Execute the cronUpdater script asynchronously with parliament parameter
-        $command = $phpBinary . " " . $cronScript . " --parliament=" . escapeshellarg($parliament);
-        executeAsyncShellCommand($command);
+        $command = escapeshellarg($phpBinary) . ' ' . escapeshellarg($cronScript) . ' --parliament=' . escapeshellarg($parliament);
+        file_put_contents($logFile, date('Y-m-d H:i:s') . " - info: [import-api] Spawning: {$command}\n", FILE_APPEND);
+        executeAsyncShellCommand($command, $logFile);
         
         return createApiSuccessResponse(
             [
