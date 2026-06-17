@@ -506,12 +506,6 @@ function triggerStatisticsIndexing($parliament, $isIncremental = false, $mediaId
         return createApiErrorResponse(500, 'SCRIPT_NOT_FOUND', 'messageErrorScriptNotFound', 'Statistics indexer script not found');
     }
     
-    // Large ID lists are processed via scroll rebuild inside statisticsIndexer
-    if ($isIncremental && count($mediaIds) > 200) {
-        $isIncremental = false;
-        $mediaIds = [];
-    }
-    
     // Build command with consistent optimal settings
     $command = sprintf(
         '%s %s --parliament=%s --batch-size=50',

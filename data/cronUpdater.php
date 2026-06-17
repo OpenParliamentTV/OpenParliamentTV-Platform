@@ -496,14 +496,8 @@ if (is_cli()) {
                 $uniqueMediaIds = array_values(array_unique($allProcessedMediaIds));
                 $statisticsScriptPath = realpath(__DIR__ . "/statisticsIndexer.php");
                 if ($statisticsScriptPath && file_exists($statisticsScriptPath)) {
-                    // Large imports: full scroll rebuild. Small batches: pass media IDs (chunked inside statisticsIndexer).
-                    if (count($uniqueMediaIds) > 200) {
-                        $statisticsCommand = $config["bin"]["php"] . " " . escapeshellarg($statisticsScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=50 > /dev/null 2>&1 &";
-                        logger("info", "Triggering full statistics rebuild for " . count($uniqueMediaIds) . " imported items");
-                    } else {
-                        $statisticsCommand = $config["bin"]["php"] . " " . escapeshellarg($statisticsScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=50 --media-ids=" . escapeshellarg(implode(',', $uniqueMediaIds)) . " > /dev/null 2>&1 &";
-                        logger("info", "Triggering batched statistics indexing for " . count($uniqueMediaIds) . " items after all files processed");
-                    }
+                    $statisticsCommand = $config["bin"]["php"] . " " . escapeshellarg($statisticsScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=50 --media-ids=" . escapeshellarg(implode(',', $uniqueMediaIds)) . " > /dev/null 2>&1 &";
+                    logger("info", "Triggering incremental statistics indexing for " . count($uniqueMediaIds) . " items after all files processed");
                     exec($statisticsCommand);
                 }
             }
