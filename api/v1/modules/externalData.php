@@ -4,6 +4,24 @@ require_once (__DIR__."/../../../config.php");
 require_once(__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php"); 
 
+function _externalData_resolve_parliament($requestedParliament = null) {
+    global $config;
+
+    if ($requestedParliament !== null && $requestedParliament !== '' && isset($config['parliament'][$requestedParliament])) {
+        return $requestedParliament;
+    }
+
+    if (!empty($config['parliament']) && is_array($config['parliament'])) {
+        return array_key_first($config['parliament']);
+    }
+
+    return 'DE';
+}
+
+function _externalData_build_ads_url($serviceAPI, $queryParams) {
+    return $serviceAPI . '?' . http_build_query($queryParams);
+}
+
 // Helper function to safely get a string value from API data
 function _optv_get_string_from_data($data_source, $key, $entity_type = 'unknown', $entity_id = 'unknown') {
     if (!isset($data_source[$key])) {
@@ -26,7 +44,7 @@ function _optv_get_string_from_data($data_source, $key, $entity_type = 'unknown'
     return (string)$value;
 }
 
-function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de", $db = false) {
+function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de", $parliament = null, $db = false) {
 
     /*if (($id == "Q2415493") || ($id == "Q4316268")) {
         //TODO: Add Blacklist
@@ -127,7 +145,13 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
 
     try {
 
-        $apiItem = json_decode(file_get_contents($serviceAPI . "?key=" . $key . "&type=" . $type . "&" . $idLabelAPI . "=" . $id), true);
+        $parliament = _externalData_resolve_parliament($parliament);
+        $apiItem = json_decode(file_get_contents(_externalData_build_ads_url($serviceAPI, [
+            'key' => $key,
+            'type' => $type,
+            $idLabelAPI => $id,
+            'parliament' => $parliament,
+        ])), true);
 
     } catch (Exception $e) {
 
@@ -252,7 +276,13 @@ function externalDataGetInfo($api_request) {
     }
     
     try {
-        $url = $config["ads"]["api"]["uri"]."?key=".$config["ads"]["api"]["key"]."&type=".$api_request["type"]."&wikidataID=".$api_request["wikidataID"];
+        $parliament = _externalData_resolve_parliament($api_request["parliament"] ?? null);
+        $url = _externalData_build_ads_url($config["ads"]["api"]["uri"], [
+            'key' => $config["ads"]["api"]["key"],
+            'type' => $api_request["type"],
+            'wikidataID' => $api_request["wikidataID"],
+            'parliament' => $parliament,
+        ]);
         $response_json = file_get_contents($url);
         
         if ($response_json === false) {
@@ -365,10 +395,7 @@ function externalDataTriggerFullUpdate($api_request) {
         return createApiErrorResponse(500, "SCRIPT_PATH_ERROR", "Server configuration error: Script path not found.", "The system could not find the necessary script to run the update process.");
     }
 
-    $parliament = $api_request["parliament"] ?? null;
-    if ($parliament === null || $parliament === '' || !isset($config["parliament"][$parliament])) {
-        $parliament = !empty($config["parliament"]) ? array_key_first($config["parliament"]) : "DE";
-    }
+    $parliament = _externalData_resolve_parliament($api_request["parliament"] ?? null);
 
     $command = $config["bin"]["php"]." ".$scriptPath
         ." --type=".escapeshellarg($api_request["type"])
@@ -467,7 +494,7 @@ function externalDataUpdateEntities($api_request) {
     }
     
     $language = $api_request["language"] ?? "de";
-
+    $parliament = _externalData_resolve_parliament($api_request["parliament"] ?? null);
 
     $results = [];
     $errors = [];
@@ -476,7 +503,7 @@ function externalDataUpdateEntities($api_request) {
     foreach ($api_request["ids"] as $k => $id) {
         // The type for each ID comes from the parallel $api_request["type"] array
         $current_type = $api_request["type"][$k]; 
-        $update_result = updateEntityFromService($current_type, $id, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $language /*, $db - db instance could be passed or created inside updateEntityFromService */);
+        $update_result = updateEntityFromService($current_type, $id, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $language, $parliament);
         
         if (isset($update_result["meta"]["requestStatus"]) && $update_result["meta"]["requestStatus"] == "success") {
             $results[] = $update_result; // Or a simplified success message

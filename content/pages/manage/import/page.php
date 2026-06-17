@@ -1391,7 +1391,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const clickedButton = document.getElementById(`btn-trigger-ads-${entityType}`);
         if(clickedButton) setButtonText(clickedButton.id, `<?= L::running(); ?>...`);
 
-        const url = getApiUrl('externalData', 'full-update', { type: entityType });
+        const url = getApiUrl('externalData', 'full-update', { type: entityType, parliament: appState.currentParliament });
         const result = await apiCall(url, 'POST');
 
         if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && typeof result.data.message === 'string') {
