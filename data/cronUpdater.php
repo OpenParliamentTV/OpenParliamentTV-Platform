@@ -61,7 +61,7 @@ if (is_cli()) {
     logger("info", "cronUpdater CLI invoked. argv=" . implode(' ', $_SERVER['argv'] ?? []));
 
     //get CLI parameter to $input first to determine parliament
-    $input = getopt(null, ["parliament:","justUpdateSearchIndex::","ids:","ignoreGit::","triggerStatisticsAfterCompletion::"]);
+    $input = getopt("", ["parliament:","justUpdateSearchIndex::","ids:","ignoreGit::","triggerStatisticsAfterCompletion::"]);
     $parliament = ((!empty($input["parliament"])) ? $input["parliament"] : "DE");
     
     // Include functions needed for CLI operations early

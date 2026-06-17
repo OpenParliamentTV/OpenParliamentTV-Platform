@@ -395,9 +395,14 @@ function externalDataTriggerFullUpdate($api_request) {
         return createApiErrorResponse(500, "SCRIPT_PATH_ERROR", "Server configuration error: Script path not found.", "The system could not find the necessary script to run the update process.");
     }
 
-    $parliament = _externalData_resolve_parliament($api_request["parliament"] ?? null);
+    if (isPhpFunctionDisabled('exec')) {
+        return createApiErrorResponse(500, "EXEC_DISABLED", "Could not start update process", "PHP exec() is disabled on this server. Background update jobs cannot be started from the web interface.");
+    }
 
-    $command = $config["bin"]["php"]." ".$scriptPath
+    $parliament = _externalData_resolve_parliament($api_request["parliament"] ?? null);
+    $phpBinary = resolvePhpCliBinary($config["bin"]["php"] ?? "");
+
+    $command = escapeshellarg($phpBinary)." ".escapeshellarg($scriptPath)
         ." --type=".escapeshellarg($api_request["type"])
         ." --parliament=".escapeshellarg($parliament);
     executeAsyncShellCommand($command);

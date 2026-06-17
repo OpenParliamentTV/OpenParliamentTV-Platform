@@ -374,26 +374,6 @@ function isJson($string) {
     return (json_last_error() == JSON_ERROR_NONE);
 }
 
-function resolveConfiguredExecutable($configuredPath) {
-    if (empty($configuredPath)) {
-        return null;
-    }
-
-    if (is_file($configuredPath) && is_executable($configuredPath)) {
-        return $configuredPath;
-    }
-
-    // Allow bare command names such as "php" (as in config.sample.php)
-    if (strpos($configuredPath, '/') === false && strpos($configuredPath, '\\') === false) {
-        $resolved = trim((string) shell_exec('command -v ' . escapeshellarg($configuredPath) . ' 2>/dev/null'));
-        if ($resolved !== '' && is_file($resolved) && is_executable($resolved)) {
-            return $resolved;
-        }
-    }
-
-    return null;
-}
-
 /**
  * Resolve a PHP CLI binary for spawning background jobs from the web context.
  * Bare "php" in config often fails under Apache's limited PATH.

@@ -28,7 +28,7 @@ function logger($type = "info", $msg) {
  */
 if (is_cli()) {
     // Get CLI parameters
-    $input = getopt(null, ["parliament:"]);
+    $input = getopt("", ["parliament:"]);
     $parliament = (!empty($input["parliament"])) ? $input["parliament"] : "DE";
     
     logger("info", "Index optimization started for parliament: {$parliament}");
