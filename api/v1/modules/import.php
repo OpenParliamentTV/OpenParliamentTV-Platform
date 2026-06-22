@@ -25,9 +25,16 @@ function importRunCronUpdater($request) {
     $lockFile = __DIR__ . "/../../../data/cronUpdater_" . $parliament . ".lock";
     if (file_exists($lockFile)) {
         $lockAge = time() - filemtime($lockFile);
-        
+
+        // Only treat the lock as stale once it is older than the ignore threshold.
+        // $config["time"] is defined inside the CLI cron scripts, not in config.php,
+        // so the API process sees it as undefined here. Without this default it would
+        // evaluate to 0, making every Import click remove the lock and spawn a second
+        // concurrent cronUpdater (the cause of impossible counters like "692 / 369").
+        $ignoreMinutes = $config["time"]["ignore"] ?? 90;
+
         // If lock is older than ignore time, remove it
-        if ($lockAge >= ($config["time"]["ignore"] * 60)) {
+        if ($lockAge >= ($ignoreMinutes * 60)) {
             unlink($lockFile);
         } else {
             return createApiErrorResponse(

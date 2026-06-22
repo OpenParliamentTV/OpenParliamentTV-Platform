@@ -451,7 +451,21 @@ document.addEventListener('DOMContentLoaded', function() {
             // If currentStatus is idle and percentage is 0, no specific color class is added here (default progress bar appearance)
         }
     }
-    
+
+    // Normalizes a "current / max" counter so the UI can never show an impossible value.
+    // `max` is a one-time snapshot taken when a job starts, while `current` is a live counter,
+    // so a working set that changed mid-run (or stale/racing progress data) could otherwise
+    // render "1783 / 1782" or a bar past 100%. We display max as max(current, max) and clamp
+    // the percentage to [0, 100]. Returns { current, max, text, percentage }.
+    function formatCounter(current, max, label, isCompleted = false) {
+        current = Math.max(0, parseInt(current, 10) || 0);
+        max = Math.max(0, parseInt(max, 10) || 0);
+        const displayMax = Math.max(current, max);
+        const percentage = displayMax > 0 ? Math.min(100, (current / displayMax) * 100) : (isCompleted ? 100 : 0);
+        const text = label ? `${label}: ${current} / ${displayMax}` : `${current} / ${displayMax}`;
+        return { current, max: displayMax, text, percentage };
+    }
+
     function setButtonText(buttonId, content) {
         const btn = document.getElementById(buttonId);
         if (!btn) return;
@@ -556,9 +570,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateDataImportUI() {
         const { status, statusDetails = 'N/A', totalFiles = 0, processedFiles = 0, currentFile = 'N/A', lastSuccessfullyProcessedFile = null, lastActivityTime = null, errors = [] } = appState.importStatus;
         
-        const percentage = totalFiles > 0 ? (processedFiles / totalFiles) * 100 : 0;
+        const isCompleted = status === 'completed_successfully';
+        const filesCounter = formatCounter(processedFiles, totalFiles, '<?= L::files(); ?>', isCompleted);
+        const percentage = filesCounter.percentage;
         let finalStatusDetails = statusDetails;
-        let finalItemsText = `<?= L::files(); ?>: ${processedFiles} / ${totalFiles}`;
+        let finalItemsText = filesCounter.text;
         const isNotRunning = status !== 'running';
         const lastRunDate = formatDate(lastActivityTime);
 
@@ -685,11 +701,11 @@ document.addEventListener('DOMContentLoaded', function() {
             errors = []
         } = statusData;
 
-        const percentage = totalDbMediaItems > 0 ? (processedMediaItems / totalDbMediaItems) * 100 : 0;
+        const speechesCounter = formatCounter(processedMediaItems, totalDbMediaItems, '<?= L::speeches(); ?>', status === 'completed_successfully');
 
-        updateProgressBar(elems.progressBar, percentage, status);
+        updateProgressBar(elems.progressBar, speechesCounter.percentage, status);
         updateElementText(elems.statusText, `Status: ${statusDetails}`);
-        
+
         // Update items text with estimated time remaining for running processes
         let itemsText;
         if (status === 'running' && totalDbMediaItems > 0 && processedMediaItems < totalDbMediaItems && performance.avg_docs_per_second > 0) {
@@ -709,9 +725,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 timeRemainingText = `${estimatedSeconds}s`;
             }
             
-            itemsText = `<?= L::speeches(); ?>: ${processedMediaItems} / ${totalDbMediaItems} | Estimated Time Remaining: ${timeRemainingText}`;
+            itemsText = `${speechesCounter.text} | Estimated Time Remaining: ${timeRemainingText}`;
         } else {
-            itemsText = `<?= L::speeches(); ?>: ${processedMediaItems} / ${totalDbMediaItems}`;
+            itemsText = speechesCounter.text;
         }
         
         updateElementText(elems.itemsText, itemsText);
@@ -1091,11 +1107,11 @@ document.addEventListener('DOMContentLoaded', function() {
             errors = []
         } = statusData;
 
-        const percentage = totalDbMediaItems > 0 ? (processedMediaItems / totalDbMediaItems) * 100 : 0;
+        const statsCounter = formatCounter(processedMediaItems, totalDbMediaItems, null, status === 'completed_successfully');
 
-        updateProgressBar(elems.progressBar, percentage, status);
+        updateProgressBar(elems.progressBar, statsCounter.percentage, status);
         updateElementText(elems.statusText, `Status: ${statusDetails}`);
-        
+
         // Update items text with enhanced indexing metrics
         let itemsText;
         
@@ -1125,7 +1141,7 @@ document.addEventListener('DOMContentLoaded', function() {
             itemsText = `Words: ${words_indexed.toLocaleString()} | Estimated Time Remaining: ${timeRemainingText}`;
         } else {
             // Default format for non-running or completed states
-            itemsText = `${processedMediaItems}/${totalDbMediaItems}`;
+            itemsText = `${statsCounter.current}/${statsCounter.max}`;
             if (words_indexed > 0) {
                 itemsText += ` | Words: ${words_indexed.toLocaleString()}`;
             }
@@ -1337,18 +1353,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 let totalItems = 0;
                 const typeInfo = entityTypeDetails[entityType];
                 
-                // Always use subtype count for specific entity types
+                // Prefer the live DB count from the entity-counts API (the truthful current
+                // total, e.g. the memberOfParliament count) over the start-of-run snapshot.
+                let liveCount = null;
                 if (appState.entityCounts[typeInfo.parent] && appState.entityCounts[typeInfo.parent].subtypes && appState.entityCounts[typeInfo.parent].subtypes[entityType] !== undefined) {
                     // This is a subtype entry like 'person', 'memberOfParliament', etc.
-                    totalItems = appState.entityCounts[typeInfo.parent].subtypes[entityType];
+                    liveCount = appState.entityCounts[typeInfo.parent].subtypes[entityType];
                 } else if (entityType === typeInfo.parent && appState.entityCounts[entityType]) {
                     // Fallback to total if subtype data not available
-                    totalItems = appState.entityCounts[entityType].total;
+                    liveCount = appState.entityCounts[entityType].total;
+                }
+                if (liveCount !== null) {
+                    totalItems = liveCount;
                 }
                 
-                // Fallback to progress file's total if available
+                // Reconcile with the progress file's snapshot: take the larger of the two so a
+                // stale snapshot can't understate the live total (the cause of "1783 / 1782").
                 if (typeStatus.totalItems > 0) {
-                    totalItems = typeStatus.totalItems;
+                    totalItems = Math.max(totalItems, typeStatus.totalItems);
                 }
 
                 const section = document.getElementById(`ads-${entityType}-progress-section`);
@@ -1360,10 +1382,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const lastRunTextId = `ads-${entityType}-last-run-text`;
                 const errorDisplayId = `ads-${entityType}-error-display`;
 
-                const percentage = totalItems > 0 ? (processedItems / totalItems) * 100 : (status === 'completed_successfully' ? 100 : 0);
-                updateProgressBar(progressBarId, percentage, status || 'idle');
+                const itemsCounter = formatCounter(processedItems, totalItems, '<?= L::items(); ?>', status === 'completed_successfully');
+                updateProgressBar(progressBarId, itemsCounter.percentage, status || 'idle');
 
-                updateElementText(itemsTextId, `<?= L::items(); ?>: ${processedItems} / ${totalItems}`);
+                updateElementText(itemsTextId, itemsCounter.text);
                 updateElementText(statusTextId, `Status: ${statusDetails || 'Idle'}`);
                 updateElementText(lastRunTextId, `<?= L::lastRun(); ?>: ${formatDate(endTime)}`);
                 

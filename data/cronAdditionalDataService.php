@@ -352,37 +352,51 @@ if (is_cli()) {
             try {
                 // Table names for entities should come from the PLATFORM config
                 $tableName = '';
+                $idColumn = '';
                 $whereClause = '';
                 switch ($type) {
                     case "person":
                         $tableName = $config["platform"]["sql"]["tbl"]["Person"];
+                        $idColumn = 'PersonID';
                         $whereClause = $db->parse("WHERE PersonType = 'person' OR PersonType IS NULL");
                         break;
                     case "memberOfParliament":
                         $tableName = $config["platform"]["sql"]["tbl"]["Person"];
+                        $idColumn = 'PersonID';
                         $whereClause = $db->parse("WHERE PersonType = 'memberOfParliament'");
                         break;
                     case "organisation":
                         $tableName = $config["platform"]["sql"]["tbl"]["Organisation"];
+                        $idColumn = 'OrganisationID';
                         $whereClause = "";
                         break;
                     case "legalDocument":
                         $tableName = $config["platform"]["sql"]["tbl"]["Document"];
+                        $idColumn = 'DocumentWikidataID';
                         $whereClause = $db->parse("WHERE DocumentType = 'legalDocument'");
                         break;
                     case "officialDocument":
                         $tableName = $config["platform"]["sql"]["tbl"]["Document"];
+                        $idColumn = 'DocumentSourceURI';
                         $whereClause = $db->parse("WHERE DocumentType = 'officialDocument'");
                         break;
                     case "term":
                         $tableName = $config["platform"]["sql"]["tbl"]["Term"];
+                        $idColumn = 'TermID';
                         $whereClause = "";
                         break;
                     default:
                          $tableName = null;
                 }
+                // Fetch the full list of IDs once, up front. The per-item enrichment below
+                // writes back to these same rows (it can rewrite PersonID/PersonType), so
+                // paginating the live table with LIMIT/OFFSET would let a re-keyed row shift
+                // into a later page and be processed twice -> the deterministic "N+1 / N"
+                // off-by-one. Iterating a fixed snapshot makes processedItems == totalItems.
+                $allIdsThisType = [];
                 if ($tableName) {
-                    $totalItemsThisType = $db->getOne("SELECT COUNT(*) FROM ?n ?p", $tableName, $whereClause);
+                    $allIdsThisType = $db->getAll("SELECT ?n AS id FROM ?n ?p ORDER BY ?n", $idColumn, $tableName, $whereClause, $idColumn);
+                    $totalItemsThisType = count($allIdsThisType);
                 } else {
                     logger("warn", "[ADS] Unknown entity type '{$type}' encountered when trying to get count. Skipping count.");
                     $totalItemsThisType = 0;
@@ -418,55 +432,20 @@ if (is_cli()) {
             logger("info", "[ADS] Processing type: {$type}. Total items: {$totalItemsThisType}");
 
             $offset = 0;
-            // Set the number of items to fetch from the database in each batch.
+            // Number of pre-fetched IDs to process per chunk (controls progress-write cadence).
             $limit = 5;
 
             if ($totalItemsThisType > 0) {
                 while ($offset < $totalItemsThisType) {
                     $items = [];
                     try {
-                        // Re-use logic from count to fetch items
-                        $tableName = '';
-                        $idColumn = '';
-                        $whereClause = '';
                         $typeForAPI = $type;
-
-                        switch ($type) {
-                            case "person":
-                                $tableName = $config["platform"]["sql"]["tbl"]["Person"];
-                                $idColumn = 'PersonID';
-                                $whereClause = $db->parse("WHERE PersonType = 'person' OR PersonType IS NULL");
-                                break;
-                            case "memberOfParliament":
-                                $tableName = $config["platform"]["sql"]["tbl"]["Person"];
-                                $idColumn = 'PersonID';
-                                $whereClause = $db->parse("WHERE PersonType = 'memberOfParliament'");
-                                break;
-                            case "organisation":
-                                $tableName = $config["platform"]["sql"]["tbl"]["Organisation"];
-                                $idColumn = 'OrganisationID';
-                                $whereClause = "";
-                                break;
-                            case "legalDocument":
-                                $tableName = $config["platform"]["sql"]["tbl"]["Document"];
-                                $idColumn = 'DocumentWikidataID';
-                                $whereClause = $db->parse("WHERE DocumentType = 'legalDocument'");
-                                break;
-                            case "officialDocument":
-                                $tableName = $config["platform"]["sql"]["tbl"]["Document"];
-                                $idColumn = 'DocumentSourceURI';
-                                $whereClause = $db->parse("WHERE DocumentType = 'officialDocument'");
-                                break;
-                            case "term":
-                                $tableName = $config["platform"]["sql"]["tbl"]["Term"];
-                                $idColumn = 'TermID';
-                                $whereClause = "";
-                                break;
-                        }
-
-                        if ($tableName) {
-                           $items = $db->getAll("SELECT ?n AS id FROM ?n ?p ORDER BY ?n LIMIT ?i, ?i", $idColumn, $tableName, $whereClause, $idColumn, $offset, $limit);
-                        }
+                        // Slice the pre-fetched ID snapshot instead of re-querying the live
+                        // table. The enrichment below mutates these same rows, so a fresh
+                        // LIMIT/OFFSET query would shift under us and double-count a boundary
+                        // row (the deterministic "N+1 / N" off-by-one). The snapshot and the
+                        // total were captured together, above.
+                        $items = array_slice($allIdsThisType, $offset, $limit);
 
                     } catch (Exception $e) {
                         $fetchErrorMsg = "[ADS] Error fetching batch for type {$type} (offset {$offset}): " . $e->getMessage();
@@ -565,6 +544,9 @@ if (is_cli()) {
             $progress['types'][$type]['status'] = $finalTypeStatus;
             $progress['types'][$type]['statusDetails'] = $typeFinishMsg;
             $progress['types'][$type]['processedItems'] = $processedItemsCountThisType;
+            // Safety net: max can never read below the processed count, so the UI never
+            // shows "N+1 / N" even if the working set changed in some future code path.
+            $progress['types'][$type]['totalItems'] = max((int)($progress['types'][$type]['totalItems'] ?? 0), $processedItemsCountThisType);
             $progress['types'][$type]['endTime'] = date('c');
             $progress['types'][$type]['lastActivityTime'] = date('c');
             $progress['types'][$type]['lastSuccessfullyProcessedId'] = $lastSuccessfullyProcessedIdThisType;

@@ -572,7 +572,72 @@ function initBaseProgressFile($progressFilePath, array $initialData) {
 }
 
 /**
- * Updates the progress file with new data.
+ * Atomically applies a mutation to an existing progress file under an exclusive lock.
+ *
+ * The file is opened once and an exclusive flock is held across the whole
+ * read-modify-write, so concurrent writers (e.g. a cron run and an API-triggered run)
+ * cannot interleave and scramble counters. The $mutator receives the decoded progress
+ * array and returns the array to persist (or null to abort the write). A corrupt or
+ * empty file is recovered in place while the lock is held.
+ *
+ * @param string $progressFilePath Full path to the progress file.
+ * @param callable $mutator function(array $currentProgress): ?array
+ * @return bool True on success, false on failure or if the file is not initialized.
+ */
+function _atomicUpdateProgressFile($progressFilePath, callable $mutator) {
+    if (!file_exists($progressFilePath)) {
+        error_log("Cannot update progress file, it does not exist: " . $progressFilePath . ". Initialize it first.");
+        return false;
+    }
+
+    $fp = @fopen($progressFilePath, 'c+');
+    if ($fp === false) {
+        error_log("Failed to open progress file for update: " . $progressFilePath);
+        return false;
+    }
+
+    try {
+        if (!flock($fp, LOCK_EX)) {
+            error_log("Failed to acquire exclusive lock on progress file: " . $progressFilePath);
+            return false;
+        }
+
+        $currentProgress = json_decode(stream_get_contents($fp), true);
+        if (!is_array($currentProgress)) {
+            error_log("Progress file content is not valid JSON or empty, recovering in place: " . $progressFilePath);
+            $currentProgress = [
+                'processName' => 'UnknownProcessOnCorrupt',
+                'statusDetails' => 'File was corrupt, re-initialized during update.',
+                'status' => 'running',
+                'startTime' => date('c'),
+                'endTime' => null,
+                'errors' => [],
+                'lastActivityTime' => date('c'),
+            ];
+        }
+
+        $newProgress = $mutator($currentProgress);
+        if (!is_array($newProgress)) {
+            return false; // mutator chose not to write
+        }
+
+        rewind($fp);
+        ftruncate($fp, 0);
+        $written = fwrite($fp, json_encode($newProgress, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        fflush($fp);
+        if ($written === false) {
+            error_log("Failed to write updated progress data to: " . $progressFilePath);
+            return false;
+        }
+        return true;
+    } finally {
+        flock($fp, LOCK_UN);
+        fclose($fp);
+    }
+}
+
+/**
+ * Updates the progress file with new data (merged), atomically.
  * Always updates 'lastActivityTime'.
  *
  * @param string $progressFilePath Full path to the progress file.
@@ -580,44 +645,10 @@ function initBaseProgressFile($progressFilePath, array $initialData) {
  * @return bool True on success, false on failure to read/write or if file not init.
  */
 function updateBaseProgressFile($progressFilePath, array $updateData) {
-    if (!file_exists($progressFilePath)) {
-        error_log("Cannot update progress file, it does not exist: " . $progressFilePath . ". Initialize it first.");
-        return false; 
-    }
-
-    $currentProgressJson = @file_get_contents($progressFilePath);
-    if ($currentProgressJson === false) {
-        error_log("Failed to read progress file for update: " . $progressFilePath);
-        return false;
-    }
-
-    $currentProgress = json_decode($currentProgressJson, true);
-    if (!is_array($currentProgress)) {
-        error_log("Progress file content is not valid JSON or empty, cannot update: " . $progressFilePath . ". Attempting to re-initialize.");
-        // Fallback: re-initialize with a generic structure if current is unusable.
-        // This is a recovery attempt, $updateData might be lost for this cycle if structure was critical.
-        $reinitData = ['processName' => 'UnknownProcessOnCorrupt', 'statusDetails' => 'File was corrupt, re-initialized during update.'];
-        if (!initBaseProgressFile($progressFilePath, $reinitData)) {
-            error_log("Re-initialization failed for corrupt progress file: " . $progressFilePath);
-            return false;
-        }
-        // Try reading again after re-initialization
-        $currentProgressJson = @file_get_contents($progressFilePath);
-        $currentProgress = json_decode($currentProgressJson, true);
-        if (!is_array($currentProgress)) { // If still not an array, give up for this update cycle.
-             error_log("Failed to use progress file even after re-initialization attempt: " . $progressFilePath);
-            return false;
-        }
-    }
-
-    $updateData["lastActivityTime"] = date('c'); // Always update last activity time
-    $newProgress = array_merge($currentProgress, $updateData);
-
-    if (file_put_contents($progressFilePath, json_encode($newProgress, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)) === false) {
-        error_log("Failed to write updated progress data to: " . $progressFilePath);
-        return false;
-    }
-    return true;
+    return _atomicUpdateProgressFile($progressFilePath, function ($currentProgress) use ($updateData) {
+        $updateData["lastActivityTime"] = date('c'); // Always update last activity time
+        return array_merge($currentProgress, $updateData);
+    });
 }
 
 /**
@@ -630,59 +661,27 @@ function updateBaseProgressFile($progressFilePath, array $updateData) {
  * @return bool True on success, false on failure.
  */
 function logErrorToBaseProgressFile($progressFilePath, $errorMessage, $itemId = null, $errorDetail = null) {
-    if (!file_exists($progressFilePath)) {
-        error_log("Cannot log error to progress file, it does not exist: " . $progressFilePath . ". Initialize it first.");
-        // Consider if auto-initialization on error is desired.
-        // initBaseProgressFile($progressFilePath, ['processName' => 'UnknownOnErrorInit', 'statusDetails' => 'Auto-initialized on error log']);
-        return false;
-    }
-
-    $currentProgressJson = @file_get_contents($progressFilePath);
-     if ($currentProgressJson === false) {
-        error_log("Failed to read progress file for error logging: " . $progressFilePath);
-        return false;
-    }
-
-    $currentProgress = json_decode($currentProgressJson, true);
-    if (!is_array($currentProgress)) {
-        error_log("Progress file content is not valid JSON or empty, cannot log error: " . $progressFilePath . ". Attempting re-init.");
-        $reinitData = ['processName' => 'UnknownProcessOnCorruptError', 'statusDetails' => 'File was corrupt, re-initialized during error log.'];
-        if (!initBaseProgressFile($progressFilePath, $reinitData)) {
-             error_log("Re-initialization failed for corrupt progress file during error log: " . $progressFilePath);
-            return false;
+    return _atomicUpdateProgressFile($progressFilePath, function ($currentProgress) use ($errorMessage, $itemId, $errorDetail) {
+        if (!isset($currentProgress["errors"]) || !is_array($currentProgress["errors"])) {
+            $currentProgress["errors"] = [];
         }
-        $currentProgressJson = @file_get_contents($progressFilePath);
-        $currentProgress = json_decode($currentProgressJson, true);
-        if (!is_array($currentProgress)) {
-            error_log("Failed to use progress file for error log even after re-initialization: " . $progressFilePath);
-            return false;
+
+        $errorEntry = [
+            "timestamp" => date('c'),
+            "message" => $errorMessage
+        ];
+        if ($itemId !== null) {
+            $errorEntry["itemId"] = $itemId;
         }
-    }
-    
-    if (!isset($currentProgress["errors"]) || !is_array($currentProgress["errors"])) {
-        $currentProgress["errors"] = [];
-    }
+        if ($errorDetail !== null) {
+            $errorEntry["detail"] = $errorDetail;
+        }
+        $currentProgress["errors"][] = $errorEntry;
+        $currentProgress["lastError"] = end($currentProgress["errors"]);
+        $currentProgress["lastActivityTime"] = date('c');
 
-    $errorEntry = [
-        "timestamp" => date('c'),
-        "message" => $errorMessage
-    ];
-    if ($itemId !== null) {
-        $errorEntry["itemId"] = $itemId;
-    }
-    if ($errorDetail !== null) {
-        $errorEntry["detail"] = $errorDetail;
-    }
-    $currentProgress["errors"][] = $errorEntry;
-    $currentProgress["lastError"] = end($currentProgress["errors"]); 
-    $currentProgress["lastActivityTime"] = date('c');
-
-
-    if (file_put_contents($progressFilePath, json_encode($currentProgress, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)) === false) {
-        error_log("Failed to write error to progress data: " . $progressFilePath);
-        return false;
-    }
-    return true;
+        return $currentProgress;
+    });
 }
 
 /**
@@ -694,56 +693,23 @@ function logErrorToBaseProgressFile($progressFilePath, $errorMessage, $itemId = 
  * @return bool True on success, false on failure.
  */
 function finalizeBaseProgressFile($progressFilePath, $finalStatus, $finalStatusDetails = null) {
-    if (!file_exists($progressFilePath)) {
-         error_log("Cannot finalize progress file, it does not exist: " . $progressFilePath . ". Initialize it first.");
-        // initBaseProgressFile($progressFilePath, ['processName' => 'UnknownOnFinalizeInit', 'statusDetails' => 'Auto-initialized on finalize']);
-        return false;
-    }
-    
-    $currentProgressJson = @file_get_contents($progressFilePath);
-    if ($currentProgressJson === false) {
-        error_log("Failed to read progress file for finalization: " . $progressFilePath);
-        return false;
-    }
-    $currentProgress = json_decode($currentProgressJson, true);
-
-    if (!is_array($currentProgress)) {
-        error_log("Progress file content is not valid JSON or empty, cannot finalize: " . $progressFilePath . ". Attempting re-init.");
-        $reinitData = ['processName' => 'UnknownProcessOnCorruptFinalize', 'statusDetails' => 'File was corrupt, re-initialized during finalize.'];
-         if (!initBaseProgressFile($progressFilePath, $reinitData)) {
-            error_log("Re-initialization failed for corrupt progress file during finalize: " . $progressFilePath);
-            return false;
+    return _atomicUpdateProgressFile($progressFilePath, function ($currentProgress) use ($finalStatus, $finalStatusDetails) {
+        $currentProgress["status"] = $finalStatus;
+        if ($finalStatusDetails !== null) {
+            $currentProgress["statusDetails"] = $finalStatusDetails;
+        } else {
+            $currentProgress["statusDetails"] = ucfirst(str_replace("_", " ", $finalStatus));
         }
-        $currentProgressJson = @file_get_contents($progressFilePath);
-        $currentProgress = json_decode($currentProgressJson, true);
-        if (!is_array($currentProgress)) {
-            error_log("Failed to use progress file for finalize even after re-initialization: " . $progressFilePath);
-            return false;
-        }
-    }
+        $currentProgress["endTime"] = date('c');
+        $currentProgress["lastActivityTime"] = date('c');
 
-    $currentProgress["status"] = $finalStatus;
-    if ($finalStatusDetails !== null) {
-        $currentProgress["statusDetails"] = $finalStatusDetails;
-    } else {
-        $currentProgress["statusDetails"] = ucfirst(str_replace("_", " ", $finalStatus)); 
-    }
-    $currentProgress["endTime"] = date('c');
-    $currentProgress["lastActivityTime"] = date('c');
-    
-    if ($finalStatus === "completed_successfully" && empty($currentProgress["errors"])) {
-        // This ensures that if it's successful, the errors array is present and empty.
-        // If errors might have been logged and then resolved, this might clear legitimate past errors.
-        // Depending on logic, one might only want to ensure $currentProgress["errors"] exists.
-        // For now, if it's a clean success, we ensure the errors array is empty.
-        $currentProgress["errors"] = []; 
-    }
-    
-    if (file_put_contents($progressFilePath, json_encode($currentProgress, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)) === false) {
-        error_log("Failed to write final progress data to: " . $progressFilePath);
-        return false;
-    }
-    return true;
+        if ($finalStatus === "completed_successfully" && empty($currentProgress["errors"])) {
+            // For a clean success, ensure the errors array is present and empty.
+            $currentProgress["errors"] = [];
+        }
+
+        return $currentProgress;
+    });
 }
 
 // --- END: Generic Progress File Helper Functions ---
