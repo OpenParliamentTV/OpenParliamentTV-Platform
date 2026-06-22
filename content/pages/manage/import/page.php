@@ -1345,8 +1345,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 let totalItems = 0;
                 const typeInfo = entityTypeDetails[entityType];
                 
-                // Prefer the live DB count from the entity-counts API (the truthful current
-                // total, e.g. the memberOfParliament count) over the start-of-run snapshot.
+                // Use the live DB count from the entity-counts API as a fallback only — e.g.
+                // before a type has ever been processed, so an idle type can hint "0 / N".
                 let liveCount = null;
                 if (appState.entityCounts[typeInfo.parent] && appState.entityCounts[typeInfo.parent].subtypes && appState.entityCounts[typeInfo.parent].subtypes[entityType] !== undefined) {
                     // This is a subtype entry like 'person', 'memberOfParliament', etc.
@@ -1358,11 +1358,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (liveCount !== null) {
                     totalItems = liveCount;
                 }
-                
-                // Reconcile with the progress file's snapshot: take the larger of the two so a
-                // stale snapshot can't understate the live total (the cause of "1783 / 1782").
+
+                // Prefer the progress file's own total: it reflects what the last run actually
+                // processed, so the counter matches the "Processed: A/B" status line and a finished
+                // run shows a full bar (not "1 / 5" because the DB grew since that run).
+                // formatCounter() still clamps, so a stale processed>total file renders as N/N.
                 if (typeStatus.totalItems > 0) {
-                    totalItems = Math.max(totalItems, typeStatus.totalItems);
+                    totalItems = typeStatus.totalItems;
                 }
 
                 const section = document.getElementById(`ads-${entityType}-progress-section`);
