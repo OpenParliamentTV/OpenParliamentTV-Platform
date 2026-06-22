@@ -237,6 +237,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
+    // Shared status taxonomies. ERROR_STATES = "is this an error"; ACTIVE_STATES = "is this
+    // actively working" (a wider set including granular backend phases). They answer different
+    // questions, so they are intentionally distinct.
+    const ERROR_STATES = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
+    const ACTIVE_STATES = ['running', 'processing', 'processing_batch', 'starting', 'initializing'];
+    const isErrorStatus = (status) => ERROR_STATES.includes(status);
+    const isActiveStatus = (status) => ACTIVE_STATES.includes(status);
+
+    // Transient UI state kept in the closure rather than on window.
+    let pendingConfirmation = null;      // { action, parliament?, entityType? } set by the modal
+    let adsGlobalStatus = null;          // last-known ADS global status, used by updateTabStates
+
     const formatDate = (dateString) => {
         if (!dateString) return '-';
         try {
@@ -428,18 +440,36 @@ document.addEventListener('DOMContentLoaded', function() {
         if (el) el.textContent = text;
     }
 
-    function updateProgressBar(barId, percentage, currentStatus) {
+    // Renders a progress bar. In normal mode `percentage` drives the width. In indeterminate
+    // mode (for processes with no numeric progress, e.g. index optimization) the bar is a pure
+    // state indicator: full while running/completed/errored, empty when idle.
+    function updateProgressBar(barId, percentage, currentStatus, { indeterminate = false } = {}) {
         const bar = document.getElementById(barId);
         if (bar) {
             percentage = parseFloat(percentage) || 0;
-            bar.style.width = percentage + '%';
             bar.textContent = '';
 
             // Clear all contextual classes first
             bar.classList.remove('bg-success', 'bg-primary', 'bg-danger', 'progress-bar-animated', 'progress-bar-striped');
 
-            const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
-            if (errorStates.includes(currentStatus)) {
+            if (indeterminate) {
+                if (isErrorStatus(currentStatus)) {
+                    bar.style.width = '100%';
+                    bar.classList.add('bg-danger');
+                } else if (currentStatus === 'running') {
+                    bar.style.width = '100%';
+                    bar.classList.add('bg-primary', 'progress-bar-striped', 'progress-bar-animated');
+                } else if (currentStatus === 'completed_successfully') {
+                    bar.style.width = '100%';
+                    bar.classList.add('bg-success');
+                } else {
+                    bar.style.width = '0%';
+                }
+                return;
+            }
+
+            bar.style.width = percentage + '%';
+            if (isErrorStatus(currentStatus)) {
                 bar.classList.add('bg-danger');
             } else if (currentStatus === 'running') {
                 bar.classList.add('bg-primary', 'progress-bar-animated', 'progress-bar-striped');
@@ -578,8 +608,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const isNotRunning = status !== 'running';
         const lastRunDate = formatDate(lastActivityTime);
 
-        const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
-        const hasImportError = errorStates.includes(status);
+        const hasImportError = isErrorStatus(status);
 
         if (isNotRunning && appState.repo.isOutOfSync() && status === 'idle') {
             const diff = appState.repo.getOutOfSyncCount();
@@ -606,14 +635,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Update centralized process state for current parliament
         if (appState.currentParliament) {
-            if (!appState.processes[appState.currentParliament]) {
-                appState.processes[appState.currentParliament] = {
-                    dataImport: { isRunning: false },
-                    mainIndex: { isRunning: false },
-                    statisticsIndex: { isRunning: false },
-                    optimization: { isRunning: false }
-                };
-            }
+            initializeParliamentState(appState.currentParliament);
             appState.processes[appState.currentParliament].dataImport.isRunning = (status === 'running');
         }
         
@@ -644,24 +666,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function triggerDataImport() {
         if (!appState.currentParliament) return;
-        
-        // Button should already be disabled if conflicts exist, but add safety check
-        if (appState.isAnyProcessRunning()) {
-            console.warn('triggerDataImport called while other processes are running - button should have been disabled');
-            return;
-        }
-        
-        toggleButton(dataImportElems.triggerButton, true, 'Starting...');
-        clearError(dataImportElems.errorDisplay);
-        const url = getApiUrl('import', 'run', { parliament: appState.currentParliament });
-        const result = await apiCall(url, 'POST'); 
+        if (!guardNotRunning('triggerDataImport')) return;
 
-        if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && typeof result.data.message === 'string') {
-            updateElementText(dataImportElems.statusText, `Status: ${result.data.message || 'Import triggered, waiting for progress...'}`);
-            setTimeout(fetchDataImportStatus, 1000); 
-        } else {
-            handleApiResponseError(dataImportElems.errorDisplay, result, 'Failed to trigger data import.', dataImportElems.triggerButton, dataImportElems.originalButtonText);
-        }
+        return executeTrigger({
+            button: dataImportElems.triggerButton,
+            busyText: 'Starting...',
+            originalButtonText: dataImportElems.originalButtonText,
+            errorDisplay: dataImportElems.errorDisplay,
+            statusText: dataImportElems.statusText,
+            url: getApiUrl('import', 'run', { parliament: appState.currentParliament }),
+            successTail: (r) => r.data && typeof r.data.message === 'string',
+            successMessage: 'Import triggered, waiting for progress...',
+            failMessage: 'Failed to trigger data import.',
+            onSuccess: fetchDataImportStatus
+        });
     }
 
     // --- Search Index Specific Functions (Refactored for Reusability) ---
@@ -733,14 +751,7 @@ document.addEventListener('DOMContentLoaded', function() {
         updateElementText(elems.itemsText, itemsText);
 
         // Update centralized process state for this parliament
-        if (!appState.processes[parliamentCode]) {
-            appState.processes[parliamentCode] = {
-                dataImport: { isRunning: false },
-                mainIndex: { isRunning: false },
-                statisticsIndex: { isRunning: false },
-                optimization: { isRunning: false }
-            };
-        }
+        initializeParliamentState(parliamentCode);
         const wasRunning = appState.processes[parliamentCode].mainIndex.isRunning;
         const isRunning = status === 'running';
         appState.processes[parliamentCode].mainIndex.isRunning = isRunning;
@@ -766,79 +777,109 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => updateAllButtonStates(), 0);
     }
 
-    // Generic API status fetcher - reduces duplicate code
-    async function fetchProcessStatus(processType, endpoint, parliamentCode, updateFunction) {
-        const url = getApiUrl(endpoint, 'status', { parliament: parliamentCode });
+    // Common success prefix shared by every "trigger a process" response. Callers AND this
+    // together with their own response-specific tail (e.g. a message string, or deleted===true).
+    function apiTriggerSucceeded(result) {
+        return result.success && result.meta && result.meta.requestStatus === 'success';
+    }
+
+    // Builds the standard "status fetch failed" payload passed to an updateX UI function.
+    function buildErrorStatus(errors) {
+        return {
+            status: 'error',
+            statusDetails: 'Status fetch failed',
+            errors: errors || [{ detail: 'Connection error while fetching status.' }]
+        };
+    }
+
+    // Generic API status fetcher - reduces duplicate code. itemType defaults to 'status' but
+    // can be overridden (e.g. 'statistics-status', 'optimization-status').
+    async function fetchProcessStatus(processType, endpoint, itemType, parliamentCode, updateFunction) {
+        const url = getApiUrl(endpoint, itemType, { parliament: parliamentCode });
         const result = await apiCall(url);
         if (result.success && result.data) {
             updateFunction(parliamentCode, result.data);
         } else {
             console.warn(`Failed to fetch ${processType} status for ${parliamentCode}:`, result.errors);
-            updateFunction(parliamentCode, { 
-                status: 'error', 
-                statusDetails: 'Status fetch failed', 
-                errors: result.errors || [{detail: 'Connection error while fetching status.'}] 
-            });
+            updateFunction(parliamentCode, buildErrorStatus(result.errors));
         }
     }
 
     async function fetchSearchIndexStatus(parliamentCode) {
-        return fetchProcessStatus('search index', 'index', parliamentCode, updateSearchIndexUI);
+        return fetchProcessStatus('search index', 'index', 'status', parliamentCode, updateSearchIndexUI);
     }
 
-    // Generic confirmation modal helper - reduces duplicate modal code
+    // Generic confirmation modal helper - reduces duplicate modal code.
+    // Holds the pending action/params in a closure variable (not on window) until the
+    // user confirms; the confirm handler in initPage reads and clears it.
     function showConfirmationModal(action, params = {}) {
         const modal = new bootstrap.Modal(document.getElementById('confirmationModal'));
         modal.show();
-        
-        // Store action and parameters globally for the confirmation handler
-        window.pendingConfirmationAction = action;
-        Object.assign(window, params); // Merge additional parameters into window
+        pendingConfirmation = { action, ...params };
     }
 
     // Generic API response error handler - reduces duplicate error handling
     function handleApiResponseError(errorDisplayId, result, fallbackMessage, button = null, originalButtonText = null) {
         const errors = result.errors || (result.data ? result.data.message : null) || [{detail: fallbackMessage}];
         showError(errorDisplayId, errors);
-        
+
         // Re-enable button if provided
         if (button && originalButtonText) {
             toggleButton(button, false, originalButtonText);
         }
     }
 
-    async function triggerSearchIndexRefresh(parliamentCode) {
-        // Button should already be disabled if conflicts exist, but add safety check
+    // Shared "is it safe to start a process" guard. The triggering buttons are already disabled
+    // while anything runs; this is the belt-and-braces check. Returns false (and warns) if blocked.
+    function guardNotRunning(triggerName, parliamentCode = null) {
         if (appState.isAnyProcessRunning(parliamentCode)) {
-            console.warn('triggerSearchIndexRefresh called while other processes are running - button should have been disabled');
-            return;
+            console.warn(`${triggerName} called while other processes are running - button should have been disabled`);
+            return false;
         }
-        
-        showConfirmationModal('searchRefresh', { pendingConfirmationParliament: parliamentCode });
+        return true;
     }
-    
-    async function executeSearchIndexRefresh(parliamentCode) {
-        const elems = getSearchIndexElements(parliamentCode);
-        toggleButton(elems.refreshButton, true, 'Starting Refresh...');
-        clearError(elems.errorDisplay);
-        const url = getApiUrl('index', 'full-update', { parliament: parliamentCode });
+
+    // Shared "POST a trigger and react to the response" flow used by the uniform process
+    // triggers (data import, search refresh, statistics rebuild). The genuinely different
+    // cases (delete, optimize) keep their own bodies. `successTail` is the response-specific
+    // extra check; `onSuccess` is the follow-up status fetch to schedule.
+    async function executeTrigger({ button, busyText, originalButtonText, errorDisplay, statusText, url, successTail = () => true, successMessage, failMessage, onSuccess }) {
+        toggleButton(button, true, busyText);
+        clearError(errorDisplay);
         const result = await apiCall(url, 'POST');
 
-        if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && typeof result.data.message === 'string') {
-            updateElementText(elems.statusText, `Status: ${result.data.message || 'Search index refresh triggered.'}`);
-            setTimeout(() => fetchSearchIndexStatus(parliamentCode), 1000);
+        if (apiTriggerSucceeded(result) && successTail(result)) {
+            updateElementText(statusText, `Status: ${(result.data && result.data.message) || successMessage}`);
+            setTimeout(onSuccess, 1000);
         } else {
-            handleApiResponseError(elems.errorDisplay, result, 'Failed to trigger search index refresh.', elems.refreshButton, elems.originalRefreshBtnText);
+            handleApiResponseError(errorDisplay, result, failMessage, button, originalButtonText);
         }
+    }
+
+    async function triggerSearchIndexRefresh(parliamentCode) {
+        if (!guardNotRunning('triggerSearchIndexRefresh', parliamentCode)) return;
+        showConfirmationModal('searchRefresh', { parliament: parliamentCode });
+    }
+
+    async function executeSearchIndexRefresh(parliamentCode) {
+        const elems = getSearchIndexElements(parliamentCode);
+        return executeTrigger({
+            button: elems.refreshButton,
+            busyText: 'Starting Refresh...',
+            originalButtonText: elems.originalRefreshBtnText,
+            errorDisplay: elems.errorDisplay,
+            statusText: elems.statusText,
+            url: getApiUrl('index', 'full-update', { parliament: parliamentCode }),
+            successTail: (r) => r.data && typeof r.data.message === 'string',
+            successMessage: 'Search index refresh triggered.',
+            failMessage: 'Failed to trigger search index refresh.',
+            onSuccess: () => fetchSearchIndexStatus(parliamentCode)
+        });
     }
 
     async function triggerSearchIndexDelete(parliamentCode) {
-        // Button should already be disabled if conflicts exist, but add safety check
-        if (appState.isAnyProcessRunning(parliamentCode)) {
-            console.warn('triggerSearchIndexDelete called while other processes are running - button should have been disabled');
-            return;
-        }
-        
+        if (!guardNotRunning('triggerSearchIndexDelete', parliamentCode)) return;
+
         if (!confirm(`Are you sure you want to delete the search index for parliament ${parliamentCode}? This action cannot be undone.`)) {
             return;
         }
@@ -848,7 +889,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const url = getApiUrl('index', 'delete', { parliament: parliamentCode, init: true }); 
         const result = await apiCall(url, 'POST');
 
-        if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && result.data.deleted === true) {
+        if (apiTriggerSucceeded(result) && result.data && result.data.deleted === true) {
             updateElementText(elems.statusText, `Status: ${result.data.message || 'Search index deleted successfully.'}`);
             updateProgressBar(elems.progressBar, 0, 'idle'); // Reset progress bar to idle and 0%
             updateSearchIndexUI(parliamentCode, {status: 'deleted', statusDetails: result.data.message || 'Index deleted'});
@@ -859,12 +900,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function triggerSearchIndexOptimize(parliamentCode) {
-        // Button should already be disabled if conflicts exist, but add safety check
-        if (appState.isAnyProcessRunning(parliamentCode)) {
-            console.warn('triggerSearchIndexOptimize called while other processes are running - button should have been disabled');
-            return;
-        }
-        
+        if (!guardNotRunning('triggerSearchIndexOptimize', parliamentCode)) return;
+
         const searchElems = getSearchIndexElements(parliamentCode);
         const optimizationElems = getOptimizationElements(parliamentCode);
         
@@ -883,7 +920,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const url = getApiUrl('index', 'optimize', { parliament: parliamentCode });
         const result = await apiCall(url, 'POST');
 
-        if (result.success && result.meta && result.meta.requestStatus === 'success') {
+        if (apiTriggerSucceeded(result)) {
             updateElementText(optimizationElems.statusText, `Status: ${result.data.message || 'Index optimization started.'}`);
             // Start polling for optimization status
             setTimeout(() => fetchOptimizationStatus(parliamentCode), 1000);
@@ -898,18 +935,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     async function fetchOptimizationStatus(parliamentCode) {
-        const url = getApiUrl('index', 'optimization-status', { parliament: parliamentCode });
-        const result = await apiCall(url);
-        if (result.success && result.data) {
-            updateOptimizationUI(parliamentCode, result.data);
-        } else {
-            console.warn(`Failed to fetch optimization status for ${parliamentCode}:`, result.errors);
-            updateOptimizationUI(parliamentCode, { 
-                status: 'error', 
-                statusDetails: 'Status fetch failed', 
-                errors: result.errors || [{detail: 'Connection error while fetching status.'}] 
-            });
-        }
+        return fetchProcessStatus('optimization', 'index', 'optimization-status', parliamentCode, updateOptimizationUI);
     }
 
     function updateOptimizationUI(parliamentCode, statusData) {
@@ -926,35 +952,21 @@ document.addEventListener('DOMContentLoaded', function() {
         updateElementText(optimizationElems.statusText, `Status: ${statusDetails}`);
 
         // Update centralized process state for this parliament
-        if (!appState.processes[parliamentCode]) {
-            initializeParliamentState(parliamentCode);
-        }
+        initializeParliamentState(parliamentCode);
         const wasRunning = appState.processes[parliamentCode].optimization.isRunning;
         const isRunning = status === 'running';
         appState.processes[parliamentCode].optimization.isRunning = isRunning;
 
-        // Update progress bar with proper colors and animation
-        const progressBar = document.getElementById(optimizationElems.progressBar);
-        if (progressBar) {
-            // Clear all contextual classes first
-            progressBar.classList.remove('bg-success', 'bg-primary', 'bg-danger', 'progress-bar-animated', 'progress-bar-striped');
-            
-            if (isRunning) {
-                updateElementText(optimizationElems.itemsText, 'Processing...');
-                progressBar.style.width = '100%';
-                progressBar.classList.add('bg-primary', 'progress-bar-striped', 'progress-bar-animated');
-            } else if (status === 'completed_successfully') {
-                updateElementText(optimizationElems.itemsText, 'Completed');
-                progressBar.style.width = '100%';
-                progressBar.classList.add('bg-success');
-            } else if (status === 'error') {
-                updateElementText(optimizationElems.itemsText, 'Error');
-                progressBar.style.width = '100%';
-                progressBar.classList.add('bg-danger');
-            } else {
-                updateElementText(optimizationElems.itemsText, 'Idle');
-                progressBar.style.width = '0%';
-            }
+        // Optimization has no numeric progress, so render the bar as a state indicator.
+        updateProgressBar(optimizationElems.progressBar, 100, status, { indeterminate: true });
+        if (isRunning) {
+            updateElementText(optimizationElems.itemsText, 'Processing...');
+        } else if (status === 'completed_successfully') {
+            updateElementText(optimizationElems.itemsText, 'Completed');
+        } else if (status === 'error') {
+            updateElementText(optimizationElems.itemsText, 'Error');
+        } else {
+            updateElementText(optimizationElems.itemsText, 'Idle');
         }
 
         // Handle status-specific UI updates
@@ -1025,7 +1037,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const parliamentsWorking = appState.isAnyProcessRunningAnywhere();
         
         // Check if ADS (entities) processes are running
-        const adsRunning = window.adsGlobalStatus === 'running';
+        const adsRunning = adsGlobalStatus === 'running';
         
         // Update parliaments tab
         if (parliamentsTab) {
@@ -1156,15 +1168,8 @@ document.addEventListener('DOMContentLoaded', function() {
         updateElementText(elems.itemsText, itemsText);
 
         // Update centralized process state for this parliament
-        if (!appState.processes[parliamentCode]) {
-            appState.processes[parliamentCode] = {
-                dataImport: { isRunning: false },
-                mainIndex: { isRunning: false },
-                statisticsIndex: { isRunning: false },
-                optimization: { isRunning: false }
-            };
-        }
-        const isActive = ['running', 'processing', 'processing_batch', 'starting', 'initializing'].includes(status);
+        initializeParliamentState(parliamentCode);
+        const isActive = isActiveStatus(status);
         appState.processes[parliamentCode].statisticsIndex.isRunning = isActive;
         
         // Show errors if any
@@ -1180,49 +1185,36 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     async function fetchStatisticsIndexStatus(parliamentCode) {
-        // Don't fetch statistics index status while data import or main index are running 
+        // Don't fetch statistics index status while data import or main index are running
         // (but allow fetching when only statistics indexing is running)
-        if (appState.processes[parliamentCode] && 
-            (appState.processes[parliamentCode].dataImport.isRunning || 
+        if (appState.processes[parliamentCode] &&
+            (appState.processes[parliamentCode].dataImport.isRunning ||
              appState.processes[parliamentCode].mainIndex.isRunning)) {
             // Skip statistics index status update while data import or main index are running
             return;
         }
-        
-        const url = getApiUrl('index', 'statistics-status', { parliament: parliamentCode });
-        const result = await apiCall(url);
-        
-        if (result.success && result.data) {
-            updateStatisticsIndexUI(parliamentCode, result.data);
-        } else {
-            console.error('Failed to fetch statistics index status:', result.errors);
-        }
+
+        return fetchProcessStatus('statistics index', 'index', 'statistics-status', parliamentCode, updateStatisticsIndexUI);
     }
     
     async function triggerStatisticsIndexRebuild(parliamentCode) {
-        // Button should already be disabled if conflicts exist, but add safety check
-        if (appState.isAnyProcessRunning(parliamentCode)) {
-            console.warn('triggerStatisticsIndexRebuild called while other processes are running - button should have been disabled');
-            return;
-        }
-        
-        showConfirmationModal('statisticsRebuild', { pendingConfirmationParliament: parliamentCode });
+        if (!guardNotRunning('triggerStatisticsIndexRebuild', parliamentCode)) return;
+        showConfirmationModal('statisticsRebuild', { parliament: parliamentCode });
     }
-    
+
     async function executeStatisticsIndexRebuild(parliamentCode) {
         const elems = getStatisticsIndexElements(parliamentCode);
-        toggleButton(elems.rebuildButton, true, 'Starting Rebuild...');
-        clearError(elems.errorDisplay);
-        
-        const url = getApiUrl('index', 'statistics-update', { parliament: parliamentCode });
-        const result = await apiCall(url, 'POST');
-
-        if (result.success && result.meta && result.meta.requestStatus === 'success') {
-            updateElementText(elems.statusText, `Status: ${result.data.message || 'Statistics index rebuild started.'}`);
-            setTimeout(() => fetchStatisticsIndexStatus(parliamentCode), 1000);
-        } else {
-            handleApiResponseError(elems.errorDisplay, result, 'Failed to start statistics index rebuild.', elems.rebuildButton, elems.originalRebuildBtnText);
-        }
+        return executeTrigger({
+            button: elems.rebuildButton,
+            busyText: 'Starting Rebuild...',
+            originalButtonText: elems.originalRebuildBtnText,
+            errorDisplay: elems.errorDisplay,
+            statusText: elems.statusText,
+            url: getApiUrl('index', 'statistics-update', { parliament: parliamentCode }),
+            successMessage: 'Statistics index rebuild started.',
+            failMessage: 'Failed to start statistics index rebuild.',
+            onSuccess: () => fetchStatisticsIndexStatus(parliamentCode)
+        });
     }
     
     function setupStatisticsIndexUI(parliamentCode) {
@@ -1317,7 +1309,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const { globalStatus, activeType, types } = statusData;
         
         // Track ADS global status for tab state management
-        window.adsGlobalStatus = globalStatus;
+        adsGlobalStatus = globalStatus;
 
         const allButtons = document.querySelectorAll(adsElems.triggerButtonClass);
 
@@ -1389,8 +1381,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateElementText(statusTextId, `Status: ${statusDetails || 'Idle'}`);
                 updateElementText(lastRunTextId, `<?= L::lastRun(); ?>: ${formatDate(endTime)}`);
                 
-                const errorStates = ['error', 'error_shutdown', 'error_critical', 'error_all_items_failed', 'partially_completed_with_errors', 'error_final'];
-                if (errorStates.includes(status) && errors && errors.length > 0) {
+                if (isErrorStatus(status) && errors && errors.length > 0) {
                     showError(errorDisplayId, errors.map(e => ({ detail: e.message || 'Error message not found.' })));
                 } else {
                     clearError(errorDisplayId);
@@ -1403,7 +1394,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     async function triggerAdsUpdate(entityType) { 
-        showConfirmationModal('adsUpdate', { pendingConfirmationEntityType: entityType });
+        showConfirmationModal('adsUpdate', { entityType: entityType });
     }
     
     async function executeAdsUpdate(entityType) {
@@ -1416,7 +1407,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const url = getApiUrl('externalData', 'full-update', { type: entityType, parliament: appState.currentParliament });
         const result = await apiCall(url, 'POST');
 
-        if (result.success && result.meta && result.meta.requestStatus === 'success' && result.data && typeof result.data.message === 'string') {
+        if (apiTriggerSucceeded(result) && result.data && typeof result.data.message === 'string') {
             // The UI will update on the next poll, but we can give some immediate feedback
             const statusText = document.getElementById(`ads-${entityType}-status-text`);
             if(statusText) statusText.textContent = `Status: ${result.data.message}`;
@@ -1516,15 +1507,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const confirmActionButton = document.getElementById('confirmAction');
         if (confirmActionButton) {
             confirmActionButton.addEventListener('click', function() {
-                const action = window.pendingConfirmationAction;
-                const parliamentCode = window.pendingConfirmationParliament;
-                const entityType = window.pendingConfirmationEntityType;
-                
+                const { action, parliament: parliamentCode, entityType } = pendingConfirmation || {};
+
                 if (action) {
                     // Close modal
                     const modal = bootstrap.Modal.getInstance(document.getElementById('confirmationModal'));
                     modal.hide();
-                    
+
                     // Execute the appropriate action
                     if (action === 'statisticsRebuild' && parliamentCode) {
                         executeStatisticsIndexRebuild(parliamentCode);
@@ -1533,11 +1522,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     } else if (action === 'adsUpdate' && entityType) {
                         executeAdsUpdate(entityType);
                     }
-                    
-                    // Clear pending actions
-                    window.pendingConfirmationAction = null;
-                    window.pendingConfirmationParliament = null;
-                    window.pendingConfirmationEntityType = null;
+
+                    // Clear pending action
+                    pendingConfirmation = null;
                 }
             });
         }
