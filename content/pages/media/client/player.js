@@ -227,7 +227,7 @@ function updatePlayer() {
 					"selector": {
 						"conformsTo": "http://www.w3.org/TR/media-frags/",
 						"type": "FragmentSelector",
-						"value": "t="+ playerData.finds[i+1].start +""
+						"value": "t="+ playerData.finds[i].end +""
 					}
 				},
 				"body": {
