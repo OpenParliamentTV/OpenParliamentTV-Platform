@@ -57,8 +57,16 @@ $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedP
 			<?php
 			foreach($snippets as $snippet) {
 				if ($result_item["attributes"]['duration'] > 0) {
-					$leftPercent = 100 * ((float)$snippet["data-start"] / $result_item["attributes"]["duration"]);
-					$widthPercent  = 100 * (($snippet['data-end'] - $snippet['data-start']) / $result_item["attributes"]['duration']);
+					$duration = (float)$result_item["attributes"]["duration"];
+					$start = (float)$snippet["data-start"];
+					$end = (float)$snippet['data-end'];
+					// Clamp into the [0,100]% track: alignment timecodes can exceed
+					// the media duration (e.g. when the aligned audio was longer
+					// than the published clip), which would otherwise push the .hit
+					// outside .hitTimeline/.resultItem and break the layout.
+					$leftPercent = max(0, min(100, 100 * ($start / $duration)));
+					$rawWidth = 100 * (($end - $start) / $duration);
+					$widthPercent = max(0, min(100 - $leftPercent, $rawWidth));
 					?>
 					<div class="hit" style="left: <?= hAttr($leftPercent) ?>%; width: <?= hAttr($widthPercent) ?>%;"></div>
 					<?php
