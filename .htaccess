@@ -75,6 +75,21 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteRule ^(documentation)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
 	########################################
+	# Rewrite /feed/ urls
+	########################################
+	# Global feeds (no ID): /feed/media, /feed/sessions
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^feed/(media|sessions)$ index.php?a=feed&feedType=$1 [QSA,L]
+	# Entity feeds (with ID): /feed/person/Q567 etc.
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^feed/(person|organisation|term|document|session|agendaItem)/([a-zA-Z0-9_-]+)$ index.php?a=feed&feedType=$1&id=$2 [QSA,L]
+	# Search feed (filters passed through via QSA): /feed/search?personID=...
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^feed/search$ index.php?a=feed&feedType=search [QSA,L]
+	########################################
 	# Generic URL Rewrites
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-d

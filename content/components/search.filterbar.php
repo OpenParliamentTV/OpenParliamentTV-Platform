@@ -136,4 +136,4 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
             <?php endif; ?>
         </div>
     </form>
-</div> 
+</div>

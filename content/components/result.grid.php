@@ -73,6 +73,48 @@ if ($shouldShowHome && !$hasValidSearchCriteria) {
 //print_r($result);
 
 if ($totalResults != 0) {
+	// Build the RSS feed href for the current search/filter state (server-side,
+	// so it always matches the active query without extra JS).
+	$rssParams = filterAllowedSearchParams($_REQUEST, 'media');
+	unset($rssParams['limit'], $rssParams['page'], $rssParams['sort'], $rssParams['format'],
+	      $rssParams['a'], $rssParams['feedType'], $rssParams['includeAll'], $rssParams['public'],
+	      $rssParams['queryOnly'], $rssParams['paginationMode'], $rssParams['showHome']);
+
+	// Prefer the pretty per-entity feed URL (/feed/person/Q567) when the list is
+	// scoped to exactly one entity and its context matches that entity feed's
+	// default — otherwise fall back to the search-style URL so the feed reflects
+	// the exact query (e.g. NER / proceedingsReference contexts).
+	$rssHref = null;
+	$entityFeedMap = [
+		'personID'       => ['type' => 'person',       'defaultContext' => 'main-speaker'],
+		'organisationID' => ['type' => 'organisation', 'defaultContext' => ''],
+		'termID'         => ['type' => 'term',         'defaultContext' => ''],
+		'documentID'     => ['type' => 'document',     'defaultContext' => ''],
+		'sessionID'      => ['type' => 'session',      'defaultContext' => ''],
+		'agendaItemID'   => ['type' => 'agendaItem',   'defaultContext' => ''],
+	];
+	$nonContextParams = $rssParams;
+	unset($nonContextParams['context']);
+	$entityKeys = array_values(array_intersect(array_keys($nonContextParams), array_keys($entityFeedMap)));
+	if (count($nonContextParams) === 1 && count($entityKeys) === 1) {
+		$eKey = $entityKeys[0];
+		$eVal = $rssParams[$eKey];
+		$ctx  = $rssParams['context'] ?? $entityFeedMap[$eKey]['defaultContext'];
+		if (!is_array($eVal) && $ctx === $entityFeedMap[$eKey]['defaultContext']) {
+			$feedType = $entityFeedMap[$eKey]['type'];
+			$feedId   = (string) $eVal;
+			// agendaItem IDs are stored numeric; prefix with the parliament for the
+			// canonical pretty URL (e.g. 9955 -> DE-9955), matching the page route.
+			if ($feedType === 'agendaItem' && strpos($feedId, '-') === false && !empty($result["data"][0]["attributes"]["parliament"])) {
+				$feedId = $result["data"][0]["attributes"]["parliament"] . '-' . $feedId;
+			}
+			$rssHref = $config["dir"]["root"] . '/feed/' . $feedType . '/' . rawurlencode($feedId);
+		}
+	}
+	if ($rssHref === null) {
+		$rssQuery = empty($rssParams) ? '' : '?' . preg_replace('/%5B\d+%5D=/i', '%5B%5D=', http_build_query($rssParams));
+		$rssHref  = $config["dir"]["root"] . ($rssQuery !== '' ? '/feed/search' . $rssQuery : '/feed/media');
+	}
 ?>
 	<div class="filterSummary row">
 		<div class="col-12 col-sm-6 mb-3 mb-sm-0 px-0 px-sm-2"><label class="col-form-label px-0 me-0 me-sm-1 col-12 col-sm-auto text-center text-sm-left"><?= $findsString ?></label>
@@ -80,7 +122,7 @@ if ($totalResults != 0) {
 		</div>
 		<div class="col-12 col-sm-6 pr-0 pr-sm-2" style="text-align: right;">
 			<label class="col-form-label" for="sort"><?= L::sortBy(); ?></label>
-			<select style="width: auto;" class="form-select form-select-sm ms-1 d-inline-block" id="sort" name="sort">
+			<select style="width: auto;" class="form-select form-select-sm ms-1 d-inline-block align-middle" id="sort" name="sort">
 				<option value="relevance" selected><?= L::relevance(); ?></option>
 				<option value="topic-asc"><?= L::topic(); ?> (<?= L::sortByAsc(); ?>)</option>
 				<option value="topic-desc"><?= L::topic(); ?> (<?= L::sortByDesc(); ?>)</option>
@@ -89,6 +131,7 @@ if ($totalResults != 0) {
 				<option value="duration-asc"><?= L::duration(); ?> (<?= L::sortByDurationAsc(); ?>)</option>
 				<option value="duration-desc"><?= L::duration(); ?> (<?= L::sortByDurationDesc(); ?>)</option>
 			</select>
+			<a href="<?= hAttr($rssHref) ?>" id="searchRssFeedLink" class="btn btn-sm btn-outline-primary rss-feed-link ms-2 align-middle" title="<?= hAttr(L::feedRssLinkTitle()) ?>" target="_blank">RSS<svg class="ms-1" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:baseline;"><path d="M6.18 17.82a2.18 2.18 0 1 0 0 4.36 2.18 2.18 0 0 0 0-4.36zM4 10.1v2.92c2.93 0 5.7 1.14 7.78 3.22A11 11 0 0 1 15 24h2.93A14 14 0 0 0 4 10.1zM4 4v2.93C13.43 6.93 21.07 14.57 21.07 24H24A20 20 0 0 0 4 4z"/></svg></a>
 		</div>
 	</div>
 	<div class="resultList row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">

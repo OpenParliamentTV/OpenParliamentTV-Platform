@@ -57,7 +57,28 @@ require_once(__DIR__."/api/v1/api.php");
 
 switch ($page) {
 	/*********************************
-	* RESOURCES / DETAIL PAGES 
+	* RSS / ATOM FEEDS
+	*********************************/
+	case "feed":
+		require_once(__DIR__."/modules/feed/functions.php");
+		$feedType   = $_REQUEST["feedType"] ?? "media";
+		$feedFormat = (($_REQUEST["format"] ?? "rss") === "atom") ? "atom" : "rss";
+		$feedOutput = generateFeed($feedType, $_REQUEST, $feedFormat);
+		// Discard any stray output (e.g. pre-existing leading whitespace emitted
+		// by common includes) so the XML declaration starts at the first byte.
+		while (ob_get_level() > 0) {
+			ob_end_clean();
+		}
+		// Served as text/xml (not application/rss+xml) so browsers render the
+		// document and apply the XSL stylesheet instead of downloading it.
+		// Feed readers still accept text/xml and parse the RSS/Atom by content;
+		// autodiscovery <link> tags continue to advertise the proper feed type.
+		header("Content-Type: text/xml; charset=utf-8");
+		header("Cache-Control: public, max-age=300");
+		echo $feedOutput;
+		exit;
+	/*********************************
+	* RESOURCES / DETAIL PAGES
 	*********************************/
 	case "agendaItem":
 		$apiResult = apiV1([

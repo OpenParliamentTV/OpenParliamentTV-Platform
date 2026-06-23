@@ -18,6 +18,35 @@
 <meta name="theme-color" content="#ffffff">
 <!-- End Icons -->
 
+<?php
+// RSS feed autodiscovery
+$rssFeedUrl = null;
+switch ($page ?? '') {
+	case 'person':
+	case 'organisation':
+	case 'term':
+	case 'document':
+	case 'session':
+	case 'agendaItem':
+		if (!empty($_REQUEST['id']) && isset($apiResult['data'])) {
+			$rssFeedUrl = $config['dir']['root'] . '/feed/' . $page . '/' . rawurlencode($_REQUEST['id']);
+		}
+		break;
+	case 'search':
+	case 'main':
+		if (!empty($isResult)) {
+			$rssFeedUrl = $config['dir']['root'] . '/feed/search' . ($paramStr ?? '');
+		} else {
+			$rssFeedUrl = $config['dir']['root'] . '/feed/media';
+		}
+		break;
+}
+if ($rssFeedUrl):
+	$rssFeedTitle = (!empty($pageTitle) ? strip_tags($pageTitle) . ' — ' : L::brand() . ' — ') . 'RSS';
+?>
+<link rel="alternate" type="application/rss+xml" title="<?= hAttr($rssFeedTitle) ?>" href="<?= hAttr($rssFeedUrl) ?>">
+<?php endif; ?>
+
 
 <?php
 if (!isset($page)) {
