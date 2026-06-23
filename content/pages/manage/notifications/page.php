@@ -30,7 +30,7 @@ if (empty($_SESSION["login"]) || $auth["meta"]["requestStatus"] != "success") {
                         </div>
                         <div class="mt-3">
                             <a href="<?= $config["dir"]["root"] ?>/manage/alerts" class="btn btn-sm btn-outline-primary"><?= L::alertManageTitle(); ?></a>
-                            <a href="<?= $config["dir"]["root"] ?>/notifications" class="btn btn-sm btn-outline-secondary"><?= L::notificationViewAll(); ?></a>
+                            <a href="<?= $config["dir"]["root"] ?>/notifications" class="btn btn-sm btn-outline"><?= L::notificationViewAll(); ?></a>
                         </div>
                     </div>
                 </div>

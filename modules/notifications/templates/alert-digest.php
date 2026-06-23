@@ -9,7 +9,7 @@ function renderAlertDigestEmail($userName, $groups, $frequency, $manageUrl, $uns
 
     $html  = '<div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;color:#222;">';
     $html .= '<p>' . L::hello() . ' ' . $name . ',</p>';
-    $html .= '<p>' . htmlspecialchars($frequency, ENT_QUOTES, "UTF-8") . ' &mdash; ' . L::notificationInboxTitle() . '</p>';
+    $html .= '<p>' . htmlspecialchars($frequency, ENT_QUOTES, "UTF-8") . ' &mdash; ' . L::notifications() . '</p>';
 
     foreach ($groups as $group) {
         $label = htmlspecialchars($group["label"], ENT_QUOTES, "UTF-8");

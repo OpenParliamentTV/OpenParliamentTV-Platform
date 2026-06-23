@@ -21,14 +21,14 @@ if (empty($_SESSION["login"]) || empty($config["allow"]["notifications"])) {
 #notificationBell .notificationItem .nTime { font-size: .7rem; opacity: .6; }
 </style>
 <div class="dropdown d-inline notificationBell me-1" id="notificationBell">
-	<button class="btn btn-sm dropdown-toggle position-relative" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" title="<?= hAttr(L::notificationInboxTitle()) ?>">
+	<button class="btn btn-sm dropdown-toggle position-relative" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" title="<?= hAttr(L::notifications()) ?>">
 		<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22zm6.36-6.4V10.5c0-3.07-1.64-5.64-4.5-6.32V3.5a1.86 1.86 0 0 0-3.72 0v.68C7.28 4.86 5.64 7.42 5.64 10.5v5.1L4 17.2v.8h16v-.8l-1.64-1.6z"/></svg>
 		<span class="notificationBellBadge badge rounded-pill bg-danger d-none" id="notificationBellBadge">0</span>
-		<span class="visually-hidden"><?= L::notificationInboxTitle() ?></span>
+		<span class="visually-hidden"><?= L::notifications() ?></span>
 	</button>
 	<div class="dropdown-menu dropdown-menu-end notificationBellMenu p-0" style="width: 340px;">
 		<div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
-			<strong><?= L::notificationInboxTitle() ?></strong>
+			<strong><?= L::notifications() ?></strong>
 			<a href="#" class="small" id="notificationMarkAllRead"><?= L::notificationMarkAllRead() ?></a>
 		</div>
 		<div id="notificationBellList" class="notificationBellList">

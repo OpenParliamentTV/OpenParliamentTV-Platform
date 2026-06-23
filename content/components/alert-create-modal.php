@@ -18,7 +18,7 @@ if (empty($_SESSION["login"]) || empty($config["allow"]["notifications"])) {
 				<input type="hidden" id="alertModalId" value="">
 				<input type="hidden" id="alertModalCriteria" value="">
 				<div class="mb-3">
-					<label class="form-label" for="alertModalLabel"><?= L::alertName() ?></label>
+					<label class="form-label" for="alertModalLabel"><?= L::name() ?></label>
 					<input type="text" class="form-control" id="alertModalLabel" maxlength="255">
 				</div>
 				<div class="mb-3">
@@ -46,7 +46,7 @@ if (empty($_SESSION["login"]) || empty($config["allow"]["notifications"])) {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal"><?= L::cancel() ?></button>
+				<button type="button" class="btn btn-sm btn-outline" data-bs-dismiss="modal"><?= L::cancel() ?></button>
 				<button type="button" class="btn btn-sm btn-primary" id="alertModalSave"><?= L::save() ?></button>
 			</div>
 		</div>

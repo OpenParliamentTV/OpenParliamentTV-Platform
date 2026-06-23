@@ -21,6 +21,23 @@ if (empty($_SESSION["login"]) || $auth["meta"]["requestStatus"] != "success") {
         return $config["dir"]["root"] . "/search?" . $qs;
     };
 
+    // Flatten alerts into bootstrap-table rows (client-side data source).
+    $alertRows = array_map(function ($a) use ($searchUrlFromCriteria) {
+        $at = $a["attributes"];
+        return [
+            "id" => $a["id"],
+            "label" => $at["label"],
+            "criteria" => $at["criteriaSummary"],
+            "frequency" => $at["frequency"],
+            "channelEmail" => $at["channelEmail"],
+            "channelInApp" => $at["channelInApp"],
+            "active" => $at["active"],
+            "created" => $at["created"],
+            "searchUrl" => $searchUrlFromCriteria($at["criteria"]),
+            "alert" => $a, // full object, used by the edit modal
+        ];
+    }, $alerts);
+
     include_once(__DIR__ . '/../../../header.php');
 ?>
 <main class="container-fluid subpage">
@@ -28,47 +45,109 @@ if (empty($_SESSION["login"]) || $auth["meta"]["requestStatus"] != "success") {
         <?php include_once(__DIR__ . '/../sidebar.php'); ?>
         <div class="sidebar-content">
             <div class="row" style="position: relative; z-index: 1">
-                <div class="col-12 col-lg-9">
-                    <h2 class="mb-4"><?= L::alertManageTitle(); ?></h2>
-                    <div id="alertList">
-                        <?php if (empty($alerts)): ?>
-                            <div class="text-muted py-4"><?= L::alertNone(); ?></div>
-                        <?php else: foreach ($alerts as $alert):
-                            $a = $alert["attributes"]; ?>
-                            <div class="bg-white border rounded p-3 mb-2 d-flex justify-content-between align-items-start" data-alert-id="<?= (int)$alert["id"] ?>">
-                                <div class="me-2">
-                                    <div class="fw-bold"><?= h($a["label"]) ?> <?php if (!$a["active"]): ?><span class="badge bg-secondary"><?= L::alertPaused() ?></span><?php endif; ?></div>
-                                    <div class="small text-muted"><?= h($a["criteriaSummary"]) ?></div>
-                                    <div class="small text-muted"><?= h($a["frequency"]) ?><?= $a["channelEmail"] ? " · " . h(L::alertChannelEmail()) : "" ?></div>
-                                    <a class="small" href="<?= hAttr($searchUrlFromCriteria($a["criteria"])) ?>"><?= L::alertViewMatching() ?></a>
-                                </div>
-                                <div class="text-nowrap">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary alertEditBtn" data-alert='<?= hAttr(json_encode($alert, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>'><?= L::edit() ?></button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger alertDeleteBtn" data-alert-id="<?= (int)$alert["id"] ?>"><?= L::delete() ?></button>
-                                </div>
-                            </div>
-                        <?php endforeach; endif; ?>
+                <div class="col-12">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="alerts-tab" data-bs-toggle="tab" data-bs-target="#alerts" role="tab" aria-controls="alerts" aria-selected="true"><span class="icon-attention"></span> <?= L::alertManageTitle(); ?></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane bg-white fade show active" id="alerts" role="tabpanel" aria-labelledby="alerts-tab">
+                            <table id="alertsTable"></table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
-<script>
-(function () {
-    document.querySelectorAll(".alertEditBtn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-            try { AlertManager.openEdit(JSON.parse(btn.getAttribute("data-alert"))); } catch (e) {}
+
+<script type="text/javascript">
+$(function () {
+    var alertData = <?= json_encode($alertRows, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
+    var labels = window.localizedLabels || {};
+    function t(k, f) { return labels[k] || f || k; }
+
+    var freqLabels = {
+        realtime: t("alertFrequencyRealtime", "Real-time"),
+        daily: t("alertFrequencyDaily", "Daily digest"),
+        weekly: t("alertFrequencyWeekly", "Weekly digest")
+    };
+
+    var formatters = {
+        frequencyFormatter: function (value) {
+            return '<span class="badge bg-light text-dark">' + (freqLabels[value] || value) + '</span>';
+        },
+        channelsFormatter: function (value, row) {
+            var out = [];
+            if (row.channelInApp) { out.push(t("alertChannelInApp", "In-app")); }
+            if (row.channelEmail) { out.push(t("alertChannelEmail", "Email")); }
+            return out.join(", ") || "&mdash;";
+        },
+        activeFormatter: function (value, row) {
+            return '<div class="form-check form-switch">' +
+                '<input class="form-check-input alert-active-switch" type="checkbox" data-alertid="' + row.id + '" ' +
+                (value ? 'checked' : '') + '></div>';
+        },
+        dateFormatter: function (value) {
+            return value ? new Date(value).toLocaleString('<?= $lang ?>') : "-";
+        },
+        operateFormatter: function (value, row) {
+            return '<div class="list-group list-group-horizontal">' +
+                '<a class="list-group-item list-group-item-action view-alert" title="' + t("alertViewMatching", "View matching speeches") + '" href="' + row.searchUrl + '"><span class="icon-search"></span></a>' +
+                '<a class="list-group-item list-group-item-action edit-alert" title="' + t("edit", "Edit") + '" href="javascript:void(0)"><span class="icon-pencil"></span></a>' +
+                '<a class="list-group-item list-group-item-action delete-alert text-danger" title="' + t("delete", "Delete") + '" href="javascript:void(0)"><span class="icon-trash"></span></a>' +
+                '</div>';
+        }
+    };
+
+    var operateEvents = {
+        'click .edit-alert': function (e, value, row) { if (window.AlertManager) { AlertManager.openEdit(row.alert); } },
+        'click .delete-alert': function (e, value, row) {
+            if (!confirm(t("alertConfirmDelete", "Delete this alert?"))) { return; }
+            if (window.AlertManager) { AlertManager.remove(row.id); }
+        }
+    };
+
+    $('#alertsTable').bootstrapTable({
+        data: alertData,
+        classes: "table table-striped",
+        locale: "<?= $lang; ?>",
+        search: true,
+        searchAlign: "left",
+        pagination: true,
+        pageSize: 25,
+        pageList: [10, 25, 50, 'all'],
+        escape: true,
+        uniqueId: 'id',
+        sortName: 'created',
+        sortOrder: 'desc',
+        columns: [
+            {field: 'id', visible: false},
+            {field: 'label', sortable: true, title: '<?= L::name(); ?>'},
+            {field: 'criteria', sortable: true, title: '<?= L::alertCriteria(); ?>'},
+            {field: 'frequency', sortable: true, title: '<?= L::alertFrequency(); ?>', formatter: formatters.frequencyFormatter},
+            {field: 'channels', title: '<?= L::alertChannels(); ?>', formatter: formatters.channelsFormatter},
+            {field: 'active', sortable: true, title: '<?= L::active(); ?>', formatter: formatters.activeFormatter},
+            {field: 'created', sortable: true, title: '<?= L::date(); ?>', formatter: formatters.dateFormatter},
+            {field: 'operate', title: '<?= L::actions(); ?>', formatter: formatters.operateFormatter, events: operateEvents, class: 'minWidthColumn'}
+        ]
+    });
+
+    // Active/paused toggle.
+    $(document).on('change', '.alert-active-switch', function () {
+        var id = $(this).data('alertid');
+        var active = $(this).prop('checked');
+        $.ajax({
+            url: '<?= $config["dir"]["root"] ?>/api/v1/alert/update?id=' + id,
+            method: 'POST',
+            data: { active: active ? 1 : 0 }
         });
     });
-    document.querySelectorAll(".alertDeleteBtn").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-            if (!confirm(localizedLabels.alertConfirmDelete || "Delete this alert?")) { return; }
-            AlertManager.remove(btn.getAttribute("data-alert-id"));
-        });
-    });
+
+    // Reload after create/edit/delete from the modal/AlertManager.
     document.addEventListener("alertsChanged", function () { setTimeout(function () { location.reload(); }, 600); });
-})();
+});
 </script>
 <?php
     include_once (include_custom(realpath(__DIR__ . '/../../../footer.php'),false));

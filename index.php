@@ -607,7 +607,7 @@ switch ($page) {
 	break;
 	case "manage-alerts":
 		$pageTitle = L::alertManageTitle();
-		$pageType = 'default';
+		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
 				'label' => '<span class="icon-th-1 me-0"></span>',
@@ -638,8 +638,8 @@ switch ($page) {
 		$content = ob_get_clean();
 	break;
 	case "notifications":
-		$pageTitle = L::notificationInboxTitle();
-		$pageType = 'default';
+		$pageTitle = L::notifications();
+		$pageType = 'entity';
 		$pageBreadcrumbs = [
 			[
 				'label' => $pageTitle,
