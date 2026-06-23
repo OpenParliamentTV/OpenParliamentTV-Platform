@@ -37,7 +37,7 @@ if ($page != 'media') {
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.css?v=<?= $config["version"] ?>" media="all" />
-  <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/shareQuote.css?v=<?= $config["version"] ?>" media="all" />
+  <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/quote-display.css?v=<?= $config["version"] ?>" media="all" />
 <?php
 }
 ?>

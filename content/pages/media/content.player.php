@@ -98,20 +98,20 @@ $relatedContentsPanel = ob_get_clean();
     </div>
     <div id="OPTV_Player"></div>
 </div>
-<div id="shareQuoteModal" class="modal" tabindex="-1">
+<div id="quoteDisplayModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title"><span class="icon-share"></span> <?= L::shareQuote(); ?></h5>
+                <h5 class="modal-title"><span class="icon-share"></span> <?= L::quoteDisplay(); ?></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-warning"><?= L::messageShareQuotePart1(); ?> <b><?= h($mainSpeaker['attributes']['label']) ?></b>? <?= L::messageShareQuotePart2(); ?>!</div>
+                <div class="alert alert-warning"><?= L::messageQuoteDisplayPart1(); ?> <b><?= h($mainSpeaker['attributes']['label']) ?></b>? <?= L::messageQuoteDisplayPart2(); ?>!</div>
                 <label><b>1. <?= L::selectTheme(); ?></b>:</label>
                 <div class="row row-cols-2 mt-2">
                     <div class="col pe-2">
-                        <div class="card sharePreview active" data-theme="l">
-                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
+                        <div class="card quotePreview active" data-theme="l">
+                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/quote-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
                                     <div class="cardTitle text-truncate"><?= h($speechTitleShort) ?> | <?= L::brand() ?></div>
@@ -122,8 +122,8 @@ $relatedContentsPanel = ob_get_clean();
                         </div>
                     </div>
                     <div class="col ps-2">
-                        <div class="card sharePreview" data-theme="d">
-                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/share-image.php">
+                        <div class="card quotePreview" data-theme="d">
+                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/quote-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
                                     <div class="cardTitle text-truncate"><?= h($speechTitleShort) ?> | <?= L::brand() ?></div>
@@ -134,10 +134,10 @@ $relatedContentsPanel = ob_get_clean();
                         </div>
                     </div>
                 </div>
-                <small class="d-block mt-2 text-muted"><?= L::shareQuoteMessageTheme(); ?></small>
+                <small class="d-block mt-2 text-muted"><?= L::quoteDisplayMessageTheme(); ?></small>
                 <div class="form-group mt-3">
-                    <label for="shareURL"><b>2. <?= L::shareQuoteMessageURL(); ?></b>:</label>
-                    <textarea id="shareURL" class="form-control mt-2" type="text" name="shareURL" rows=3></textarea>
+                    <label for="quoteURL"><b>2. <?= L::quoteDisplayMessageURL(); ?></b>:</label>
+                    <textarea id="quoteURL" class="form-control mt-2" type="text" name="quoteURL" rows=3></textarea>
                 </div>
             </div>
             <div class="modal-footer">

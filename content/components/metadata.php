@@ -28,7 +28,7 @@ switch ($page) {
   case 'media':
     $title = strip_tags($pageTitle).' | '.L::brand();
     if (isset($_REQUEST['t']) && isset($_REQUEST['f'])) {
-      $image = $config["dir"]["root"].'/content/client/images/share-image.php?id='.$_REQUEST['id'].'&t='.$_REQUEST['t'].'&f='.$_REQUEST['f'].'&c='.$_REQUEST['c'];
+      $image = $config["dir"]["root"].'/content/client/images/quote-image.php?id='.$_REQUEST['id'].'&t='.$_REQUEST['t'].'&f='.$_REQUEST['f'].'&c='.$_REQUEST['c'];
     } else {
       $image = $config["dir"]["root"].'/content/client/images/thumbnail.png';
     }

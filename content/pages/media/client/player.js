@@ -20,7 +20,7 @@ $(document).ready( function() {
 	updateAutoplayState();
 
 	updatePlayer();
-	$('#shareQuoteModal, #nerModal').appendTo('body');
+	$('#quoteDisplayModal, #nerModal').appendTo('body');
 
 	getResultList(function(data) {
 		resultList = data.results;
@@ -95,7 +95,7 @@ function updateContents(resultURL) {
 	//$('.loadingIndicator').show();
 	
 	$('#content').removeClass('ready');
-	$('#shareQuoteModal').remove();
+	$('#quoteDisplayModal').remove();
 
 	if(updateAjax && updateAjax.readyState != 4){
 		updateAjax.abort();
@@ -111,7 +111,7 @@ function updateContents(resultURL) {
 	}).done(function(data) {
 		$('#content').html($(data));
 		updatePlayer();
-		$('#shareQuoteModal').appendTo('body');
+		$('#quoteDisplayModal').appendTo('body');
 		updateAutoplayState();
 		$('.loadingIndicator').hide();
 	}).fail(function(err) {

@@ -1,5 +1,5 @@
 !function (e, t) {
-    'object' == typeof exports && 'undefined' != typeof module ? module.exports = t() : 'function' == typeof define && define.amd ? define(t) : (e = e || self).ShareThis = t()
+    'object' == typeof exports && 'undefined' != typeof module ? module.exports = t() : 'function' == typeof define && define.amd ? define(t) : (e = e || self).QuoteSelector = t()
 }(this, function () {
     'use strict';
     var e;
@@ -77,7 +77,7 @@
         u.position = 'absolute',
         e.className = n.popoverClass
     }
-    var i = 'data-share-via';
+    var i = 'data-quote-action';
     function a(e) {
         return {
             createPopover: function () {
@@ -111,7 +111,7 @@
     u = function (e, t, n, r) {
         var o = e.shareUrl || e.document.defaultView.location;
         return '<ul>' + t.map(function (e) {
-            return '<li data-share-via="' + e.name + '">' + e.render.call(e, n, r, o) + '</li>'
+            return '<li data-quote-action="' + e.name + '">' + e.render.call(e, n, r, o) + '</li>'
         }).join('') + '</ul>'
     },
     f = [
@@ -129,7 +129,7 @@
             selector: 'body',
             sharers: [
             ],
-            popoverClass: 'share-this-popover',
+            popoverClass: 'quote-selection-popover',
             transformer: function (e) {
                 return e.trim().replace(/\s+/g, ' ')
             }
@@ -143,7 +143,7 @@
         v = c;
         return {
             init: function () {
-                return !i && (l = t.document, (p = l.defaultView).getSelection ? (f.forEach(h), p.addEventListener('resize', g), v = a(l), i = !0) : (console.warn('share-this: Selection API isn\'t supported'), !1))
+                return !i && (l = t.document, (p = l.defaultView).getSelection ? (f.forEach(h), p.addEventListener('resize', g), v = a(l), i = !0) : (console.warn('quote-selector: Selection API isn\'t supported'), !1))
             },
             destroy: function () {
                 return !(!i || s) && (f.forEach(m), p.removeEventListener('resize', g), C(), l = c, p = c, s = !0)
@@ -202,4 +202,3 @@
         }
     }
 });
-//# sourceMappingURL=share-this.js.map

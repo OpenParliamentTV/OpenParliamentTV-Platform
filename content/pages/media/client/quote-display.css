@@ -1,4 +1,4 @@
-@-webkit-keyframes share-this-intro {
+@-webkit-keyframes quote-popover-intro {
     0% {
         -webkit-transform: translateY(-3em);
         opacity: 0;
@@ -11,7 +11,7 @@
         -webkit-transform: translateY(0);
     }
 }
-@keyframes share-this-intro {
+@keyframes quote-popover-intro {
     0% {
         transform: translateY(-3em);
         opacity: 0;
@@ -24,16 +24,16 @@
         transform: translateY(0);
     }
 }
-.share-this-popover {
+.quote-selection-popover {
     max-width: 8em;
     pointer-events: none;
     -webkit-filter:drop-shadow(0 1px 3px rgba(0,0,0,.35));
     filter:drop-shadow(0 1px 3px rgba(0,0,0,.35));
-    -webkit-animation: share-this-intro 0.3s;
-    animation: share-this-intro 0.3s;
+    -webkit-animation: quote-popover-intro 0.3s;
+    animation: quote-popover-intro 0.3s;
     z-index: 10001;
 }
-.share-this-popover::before {
+.quote-selection-popover::before {
     content: "";
     position: absolute;
     bottom: calc(100% + 1px);
@@ -46,7 +46,7 @@
     border-style: solid;
     border-color: #fff transparent;
 }
-.share-this-popover > ul {
+.quote-selection-popover > ul {
     pointer-events: auto;
     list-style: none;
     padding: 0;
@@ -60,53 +60,53 @@
     -ms-transform: translate(-50%,-100%);
     transform: translate(-50%,-100%);
 }
-.share-this-popover > ul > li {
+.quote-selection-popover > ul > li {
     display: inline-block;
     background: #fff;
     padding: 3px;
     border-radius: .25rem;
 }
-.share-this-popover > ul > li > button {
+.quote-selection-popover > ul > li > button {
 	background: #f39c12 !important;
     color: #fff !important;
     border: none !important;
 }
-.share-this-popover > ul > li > button.btn:focus,
-.share-this-popover > ul > li > button.btn:hover {
+.quote-selection-popover > ul > li > button.btn:focus,
+.quote-selection-popover > ul > li > button.btn:hover {
     background: #f39c12 !important;
     color: #fff !important;
     font-weight: normal !important;
 }
 @media (pointer:coarse) {
-    .share-this-popover {
+    .quote-selection-popover {
         /*font-size: 150%*/;
     }
-    .share-this-popover::before {
+    .quote-selection-popover::before {
         bottom: auto;
         top: 100%;
         border-width: 0 0.5em 0.5em;
         margin-top: 0;
     }
-    .share-this-popover > ul {
+    .quote-selection-popover > ul {
         top: 100%;
         transform: translateX(-50%);
         margin: 0.5em 0 0;
     }
 }
 @media (max-width:575px) {
-    .share-this-popover {
+    .quote-selection-popover {
         left: 0!important;
         right: 0!important;
         width: auto!important;
         max-width: none;
     }
-    .share-this-popover::before {
+    .quote-selection-popover::before {
         bottom: auto;
         top: 100%;
         border-width: 0 0.5em 0.5em;
         margin-top: 0;
     }
-    .share-this-popover > ul {
+    .quote-selection-popover > ul {
         top: 100%;
         transform: translateX(-50%);
         margin: 0.5em 0 0;
@@ -117,21 +117,21 @@
         text-align: center;
     }
 }
-.share-match {
+.quote-highlight {
 	color: #333 !important;
     background: #ffeaa7 !important;
 }
 
-#shareQuoteModal .sharePreview {
+#quoteDisplayModal .quotePreview {
     border: 6px solid transparent;
 }
 
-#shareQuoteModal .sharePreview:hover, #shareQuoteModal .sharePreview.active {
+#quoteDisplayModal .quotePreview:hover, #quoteDisplayModal .quotePreview.active {
     outline: 3px solid #f39c12;
     cursor: pointer;
 }
 
-#shareQuoteModal .card {
+#quoteDisplayModal .card {
     box-sizing: border-box;
     width: 100%;
     overflow: hidden;
@@ -145,13 +145,13 @@
     font-size:  12px;
 }
 
-#shareQuoteModal .card .cardMeta {
+#quoteDisplayModal .card .cardMeta {
     box-sizing: border-box;
     padding: .75em;
     text-decoration: none;
 }
 
-#shareQuoteModal .card .cardMeta .cardTitleWrapper {
+#quoteDisplayModal .card .cardMeta .cardTitleWrapper {
     display: block;
     border-collapse: separate;
     text-align: left;
@@ -162,20 +162,20 @@
     direction: ltr;
 }
 
-#shareQuoteModal .card .cardMeta .cardTitleWrapper .cardTitle {
+#quoteDisplayModal .card .cardMeta .cardTitleWrapper .cardTitle {
     margin: 0 0 .15em;
     line-height: 18px;
     font-weight: bold;
 }
 
-#shareQuoteModal .card .cardMeta .cardTitleWrapper .cardDescription {
+#quoteDisplayModal .card .cardMeta .cardTitleWrapper .cardDescription {
     max-height: 2.6em;
     margin-top: .32333em;
     -webkit-line-clamp: 2;
     font-weight: normal;
 }
 
-#shareQuoteModal .card .cardMeta .cardWebsite {
+#quoteDisplayModal .card .cardMeta .cardWebsite {
     margin-top: .32333em;
     overflow: hidden;
     color: #8899a6;

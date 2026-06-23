@@ -3,36 +3,37 @@
  * https://github.com/hyperaudio/hyperaudio-lite/
  *************************************************/
 
-var shareThis = window.ShareThis,
-	start, end, prefix, suffix, shareURL;
+var quoteSelector = window.QuoteSelector,
+	start, end, prefix, suffix, quoteURL;
 
 $(document).ready( function() {
-	initShareQuote();
+	initQuoteDisplay();
 });
 
-function initShareQuote() {
+function initQuoteDisplay() {
 	
-	$('#shareQuoteModal .sharePreview').click(function() {
-		$('#shareQuoteModal .sharePreview').removeClass('active');
+	$('#quoteDisplayModal .quotePreview').click(function() {
+		$('#quoteDisplayModal .quotePreview').removeClass('active');
 		$(this).addClass('active');
 		var thisTheme = $(this).data('theme');
-		shareURL = shareURL.replace(/c=\w+/, 'c='+thisTheme);
-		$('#shareQuoteModal #shareURL').val(shareURL);
+		quoteURL = quoteURL.replace(/c=\w+/, 'c='+thisTheme);
+		$('#quoteDisplayModal #quoteURL').val(quoteURL);
 	});
 	
 	processQuery();
 
-	const selectionShare = shareThis({
+	const quoteSelection = quoteSelector({
 		selector: "#proceedings",
+		popoverClass: 'quote-selection-popover',
 		sharers: [{
 			'render': function() {
-				return '<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#shareQuoteModal"><span class="icon-share"></span> '+ localizedLabels.shareQuote +'</button>'
+				return '<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#quoteDisplayModal"><span class="icon-share"></span> '+ localizedLabels.quoteDisplay +'</button>'
 			},
 			'name': 'OPTV' 
 		}]
 	});
 
-	selectionShare.init();
+	quoteSelection.init();
 
 	$(window).on('mouseup touchend touchcancel', function(evt) {
 		if ($(evt.target).hasClass('timebased')) {
@@ -40,7 +41,7 @@ function initShareQuote() {
 		}
 	});
 
-	$('#shareURL').click(function() {
+	$('#quoteURL').click(function() {
 		$(this).select();
 	});
 }
@@ -71,13 +72,13 @@ function processQuery() {
 		for (var i = 1; i < words.length; i++) {
 			var wordStart = parseFloat(words[i].getAttribute("data-start"));
 			if (wordStart >= start && end > wordStart) {
-				words[i].classList.add("share-match");
+				words[i].classList.add("quote-highlight");
 			}
 		}
 
 		if (prefix && suffix) {
 			// console.log(prefix, suffix);
-			var matches = Array.from(document.querySelectorAll(".share-match"));
+			var matches = Array.from(document.querySelectorAll(".quote-highlight"));
 			var matchesHash = matches
 				.map(function(t) {
 					var root = t.innerText
@@ -101,8 +102,8 @@ function processQuery() {
 						.length
 					)
 					.forEach(function(m) {
-						m.classList.add("share-mismatch");
-						m.classList.remove("share-match");
+						m.classList.add("quote-excluded");
+						m.classList.remove("quote-highlight");
 					});
 			}
 
@@ -116,8 +117,8 @@ function processQuery() {
 						suffix.split(/(?=[A-Z])/).length
 					)
 					.forEach(function(m) {
-						m.classList.add("share-mismatch");
-						m.classList.remove("share-match");
+						m.classList.add("quote-excluded");
+						m.classList.remove("quote-highlight");
 					});
 			}
 
@@ -166,7 +167,7 @@ function getSelectionMediaFragment() {
 		if (OPTV_Player){ 
 			OPTV_Player.pause();
 		}
-		$('.share-match').removeClass('share-match');
+		$('.quote-highlight').removeClass('quote-highlight');
 
 		var searchParams = removeQuoteParamsFromURL(window.location.search.toString());
 		var locationString = currentMediaID + searchParams;
@@ -255,17 +256,17 @@ function getSelectionMediaFragment() {
 		if (prefix && suffix) {
 			
 			var baseURL = window.location.toString(),
-				currentTheme = $('#shareQuoteModal .sharePreview.active').data('theme');
+				currentTheme = $('#quoteDisplayModal .quotePreview.active').data('theme');
 			if (baseURL.indexOf('?') > 0) {
 				baseURL = baseURL.substring(0, baseURL.indexOf('?'));
 			}
-			shareURL = baseURL +'?t='+ nodeStart + ',' + nodeEnd + '&f='+ prefix + ',' + suffix + '&c='+ currentTheme;
+			quoteURL = baseURL +'?t='+ nodeStart + ',' + nodeEnd + '&f='+ prefix + ',' + suffix + '&c='+ currentTheme;
 
-			var currentPreviewSrc = $('#shareQuoteModal .sharePreview[data-theme="l"] img').attr('src').split('?'),
+			var currentPreviewSrc = $('#quoteDisplayModal .quotePreview[data-theme="l"] img').attr('src').split('?'),
 				newPreviewSrc = currentPreviewSrc[0] + '?id='+ currentMediaID +'&t='+ nodeStart + ',' + nodeEnd + '&f='+ prefix + ',' + suffix;
-			$('#shareQuoteModal .sharePreview[data-theme="l"] img').attr('src', newPreviewSrc + '&c=l');
-			$('#shareQuoteModal .sharePreview[data-theme="d"] img').attr('src', newPreviewSrc + '&c=d');
-			$('#shareQuoteModal #shareURL').val(shareURL);
+			$('#quoteDisplayModal .quotePreview[data-theme="l"] img').attr('src', newPreviewSrc + '&c=l');
+			$('#quoteDisplayModal .quotePreview[data-theme="d"] img').attr('src', newPreviewSrc + '&c=d');
+			$('#quoteDisplayModal #quoteURL').val(quoteURL);
 		}
 		
 	} 

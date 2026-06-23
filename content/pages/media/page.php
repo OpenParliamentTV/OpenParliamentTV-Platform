@@ -26,8 +26,8 @@ if ($emptyResult == 1) {
     <?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
     <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/FrameTrail.min.js?v=<?= $config["version"] ?>"></script>
     <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.js?v=<?= $config["version"] ?>"></script>
-    <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/share-this.js?v=<?= $config["version"] ?>"></script>
-    <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/shareQuote.js?v=<?= $config["version"] ?>"></script>
+    <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/quote-selector.js?v=<?= $config["version"] ?>"></script>
+    <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/quote-handler.js?v=<?= $config["version"] ?>"></script>
     <script type="text/javascript">
         var autoplayResults = <?php if ($autoplayResults) { echo 'true'; } else { echo 'false'; } ?>;
         var currentMediaID = <?= json_encode($speech['id'], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
