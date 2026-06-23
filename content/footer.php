@@ -5,3 +5,8 @@
 </footer>
 
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/generic.js?v=<?= $config["version"] ?>"></script>
+<?php if (!empty($_SESSION["login"]) && !empty($config["allow"]["notifications"])): ?>
+<?php include(__DIR__ . '/components/alert-create-modal.php'); ?>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/alertManager.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/notificationBell.js?v=<?= $config["version"] ?>"></script>
+<?php endif; ?>

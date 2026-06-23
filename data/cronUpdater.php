@@ -460,6 +460,21 @@ if (is_cli()) {
                         $tmpMedia = apiV1(["action" => "getItem", "itemType" => "media", "id" => $return["data"]["id"]], $db, $dbp);
                         if ($tmpMedia["meta"]["requestStatus"] == "success") {
                             $mediaItemsForSearchIndex[] = $tmpMedia;
+
+                            // Alert matching (Plan B): fire notifications for newly-indexed
+                            // public speeches. Dedup on (AlertID, MediaID) makes re-imports
+                            // safe; wrapped so a matcher error never breaks the import.
+                            if (!empty($config["allow"]["notifications"])) {
+                                try {
+                                    require_once(__DIR__ . "/../modules/notifications/alert-matcher.php");
+                                    $matchCount = matchMediaItemAgainstAlerts($tmpMedia["data"], $parliament, $db);
+                                    if ($matchCount > 0) {
+                                        logger("info", "Alert matcher created " . $matchCount . " notification(s) for " . $return["data"]["id"]);
+                                    }
+                                } catch (Exception $e) {
+                                    logger("ERROR", "Alert matcher failed for " . ($return["data"]["id"] ?? "?") . ": " . $e->getMessage());
+                                }
+                            }
                         }
                     } else {
                         logger("ERROR", "Could not add media from file " . $file . " | return: " . json_encode($return) . " | Item: " . json_encode($media));

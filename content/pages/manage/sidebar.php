@@ -22,14 +22,19 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                 </a>
 
                 <!-- Personal Settings -->
-                <!--
-                <a href="<?= $config["dir"]["root"] ?>/manage/notifications" 
+                <?php if (!empty($config["allow"]["notifications"])): ?>
+                <a href="<?= $config["dir"]["root"] ?>/manage/alerts"
+                   class="dropdown-item <?= ($page == "manage-alerts") ? "active" : "" ?>">
+                    <i class="icon-attention me-2"></i>
+                    <?= L::alertManageTitle(); ?>
+                </a>
+                <a href="<?= $config["dir"]["root"] ?>/manage/notifications"
                    class="dropdown-item <?= ($page == "manage-notifications") ? "active" : "" ?>">
                     <i class="icon-megaphone me-2"></i>
-                    <?= L::notifications(); ?>
+                    <?= L::notificationSettingsTitle(); ?>
                 </a>
-                -->
-                <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>" 
+                <?php endif; ?>
+                <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>"
                    class="dropdown-item <?= ($page == "manage-users" && isset($_REQUEST["id"]) && (string)$_REQUEST["id"] === (string)$_SESSION["userdata"]["id"]) ? "active" : "" ?>">
                     <i class="icon-user me-2"></i>
                     <?= L::personalSettings(); ?>
@@ -75,11 +80,18 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                     <i class="icon-lightbulb me-2"></i>
                     <?= L::manageEntitySuggestions(); ?>
                 </a>
-                <a href="<?= $config["dir"]["root"] ?>/manage/settings" 
+                <a href="<?= $config["dir"]["root"] ?>/manage/settings"
                    class="dropdown-item <?= ($page == "manage-settings") ? "active" : "" ?>">
                     <i class="icon-cogs me-2"></i>
                     <?= L::platformSettings(); ?>
                 </a>
+                <?php if (!empty($config["allow"]["notifications"]) && ($_SESSION["userdata"]["role"] ?? "") === "admin"): ?>
+                <a href="<?= $config["dir"]["root"] ?>/manage/system-messages"
+                   class="dropdown-item <?= ($page == "manage-system-messages") ? "active" : "" ?>">
+                    <i class="icon-megaphone me-2"></i>
+                    <?= L::notifications(); ?>
+                </a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -102,17 +114,24 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
         <!-- Personal Settings -->
         <div class="mb-0">
             <ul class="nav nav-pills flex-column mb-auto">
-                <!--
+                <?php if (!empty($config["allow"]["notifications"])): ?>
                 <li class="nav-item">
-                    <a href="<?= $config["dir"]["root"] ?>/manage/notifications" 
-                       class="nav-link <?= ($page == "manage-notifications") ? "active" : "" ?>">
-                        <i class="icon-megaphone me-2"></i>
-                        <?= L::notifications(); ?>
+                    <a href="<?= $config["dir"]["root"] ?>/manage/alerts"
+                       class="nav-link <?= ($page == "manage-alerts") ? "active" : "" ?>">
+                        <i class="icon-attention me-2"></i>
+                        <?= L::alertManageTitle(); ?>
                     </a>
                 </li>
-                -->
                 <li class="nav-item">
-                    <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>" 
+                    <a href="<?= $config["dir"]["root"] ?>/manage/notifications"
+                       class="nav-link <?= ($page == "manage-notifications") ? "active" : "" ?>">
+                        <i class="icon-megaphone me-2"></i>
+                        <?= L::notificationSettingsTitle(); ?>
+                    </a>
+                </li>
+                <?php endif; ?>
+                <li class="nav-item">
+                    <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>"
                        class="nav-link <?= ($page == "manage-users" && isset($_REQUEST["id"]) && (string)$_REQUEST["id"] === (string)$_SESSION["userdata"]["id"]) ? "active" : "" ?>">
                         <i class="icon-user me-2"></i>
                         <?= L::personalSettings(); ?>
@@ -184,12 +203,21 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $config["dir"]["root"] ?>/manage/settings" 
+                    <a href="<?= $config["dir"]["root"] ?>/manage/settings"
                        class="nav-link <?= ($page == "manage-settings") ? "active" : "" ?>">
                         <i class="icon-cogs me-2"></i>
                         <?= L::platformSettings(); ?>
                     </a>
                 </li>
+                <?php if (!empty($config["allow"]["notifications"]) && ($_SESSION["userdata"]["role"] ?? "") === "admin"): ?>
+                <li class="nav-item">
+                    <a href="<?= $config["dir"]["root"] ?>/manage/system-messages"
+                       class="nav-link <?= ($page == "manage-system-messages") ? "active" : "" ?>">
+                        <i class="icon-megaphone me-2"></i>
+                        <?= L::notifications(); ?>
+                    </a>
+                </li>
+                <?php endif; ?>
             </ul>
         </div>
     </div>

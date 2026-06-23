@@ -173,8 +173,68 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             }
             break;
 
+        case "alert":
+            require_once (__DIR__."/modules/alert.php");
+            switch ($api_request["itemType"]) {
+                case "list":
+                    return createApiResponse(alertList($api_request));
+                case "get":
+                    return createApiResponse(alertGet($api_request));
+                case "create":
+                    return createApiResponse(alertCreate($api_request));
+                case "update":
+                    return createApiResponse(alertUpdate($api_request));
+                case "delete":
+                    return createApiResponse(alertDelete($api_request));
+                case "status":
+                    return createApiResponse(alertStatus($api_request));
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
+        case "systemMessage":
+            require_once (__DIR__."/modules/systemMessage.php");
+            switch ($api_request["itemType"]) {
+                case "list":
+                    return createApiResponse(systemMessageList($api_request));
+                case "create":
+                    return createApiResponse(systemMessageCreate($api_request));
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
+        case "notification":
+            require_once (__DIR__."/modules/notification.php");
+            switch ($api_request["itemType"]) {
+                case "list":
+                    return createApiResponse(notificationList($api_request));
+                case "unreadCount":
+                    return createApiResponse(notificationUnreadCount($api_request));
+                case "markRead":
+                    return createApiResponse(notificationMarkRead($api_request));
+                case "markAllRead":
+                    return createApiResponse(notificationMarkAllRead($api_request));
+                case "preferences":
+                    return createApiResponse(notificationPreferences($api_request));
+                case "unsubscribe":
+                    return createApiResponse(notificationUnsubscribe($api_request));
+                case "runMatch":
+                    return createApiResponse(notificationRunMatch($api_request));
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
         case "lang":
-            global $acceptLang; 
+            global $acceptLang;
             switch ($api_request["itemType"]) {
                 case "set":
                     if (!empty($api_request["lang"]) && isset($acceptLang) && array_key_exists($api_request["lang"], $acceptLang)) {

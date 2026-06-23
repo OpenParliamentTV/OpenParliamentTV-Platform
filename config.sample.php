@@ -48,6 +48,14 @@ $config["allow"]["publicAccess"] = true;
 
 
 /**
+ * Enable the notifications & alerts feature (Plan B)
+ * Controls alert matching during imports and rendering of the bell / subscribe UI.
+ * true or false
+ */
+$config["allow"]["notifications"] = true;
+
+
+/**
  * A complicated string to salt the user account password hashes
  */
 $config["salt"] = "";
@@ -122,6 +130,10 @@ $config["platform"]["sql"]["tbl"]["Auth"] = "auth";
 $config["platform"]["sql"]["tbl"]["Conflict"] = "conflict";
 $config["platform"]["sql"]["tbl"]["Entitysuggestion"] = "entitysuggestion";
 $config["platform"]["sql"]["tbl"]["User"] = "user";
+$config["platform"]["sql"]["tbl"]["Alert"] = "alert";
+$config["platform"]["sql"]["tbl"]["Notification"] = "notification";
+$config["platform"]["sql"]["tbl"]["SystemMessage"] = "system_message";
+$config["platform"]["sql"]["tbl"]["NotificationPreference"] = "notification_preference";
 
 
 /**

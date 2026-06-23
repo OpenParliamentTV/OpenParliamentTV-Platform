@@ -590,6 +590,38 @@ switch ($page) {
 		}
 	break;
 	case "manage-notifications":
+		$pageTitle = L::notificationSettingsTitle();
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => '<span class="icon-th-1 me-0"></span>',
+				'path' => '/manage'
+			],
+			[
+				'label' => $pageTitle,
+			]
+		];
+		ob_start();
+		include_once("./content/pages/manage/notifications/page.php");
+		$content = ob_get_clean();
+	break;
+	case "manage-alerts":
+		$pageTitle = L::alertManageTitle();
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => '<span class="icon-th-1 me-0"></span>',
+				'path' => '/manage'
+			],
+			[
+				'label' => $pageTitle,
+			]
+		];
+		ob_start();
+		include_once("./content/pages/manage/alerts/page.php");
+		$content = ob_get_clean();
+	break;
+	case "manage-system-messages":
 		$pageTitle = L::notifications();
 		$pageType = 'admin';
 		$pageBreadcrumbs = [
@@ -602,7 +634,19 @@ switch ($page) {
 			]
 		];
 		ob_start();
-		include_once("./content/pages/manage/notifications/page.php");
+		include_once("./content/pages/manage/system-messages/page.php");
+		$content = ob_get_clean();
+	break;
+	case "notifications":
+		$pageTitle = L::notificationInboxTitle();
+		$pageType = 'default';
+		$pageBreadcrumbs = [
+			[
+				'label' => $pageTitle,
+			]
+		];
+		ob_start();
+		include_once("./content/pages/notifications/page.php");
 		$content = ob_get_clean();
 	break;
 	case "manage-structure":

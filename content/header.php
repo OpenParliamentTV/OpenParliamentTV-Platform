@@ -64,6 +64,7 @@ if (!isset($page)) {
 			}
 			?>
 			<div class="navbarRightOptions">
+				<?php include(__DIR__ . '/components/notification-bell.php'); ?>
 				<div class="dropdown d-inline">
 					<button class="btn btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= L::menu(); ?> <span class="icon-menu"></span></button>
 					<div class="dropdown-menu dropdown-menu-end" style="width: 200px;">
