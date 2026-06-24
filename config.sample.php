@@ -115,6 +115,13 @@ $config["ads"]["api"]["uri"] = "";
 $config["ads"]["api"]["key"] = "";
 
 /**
+ * Local cache directory (absolute filesystem path) for downloaded & optimized
+ * entity thumbnails (Wikimedia Commons images served via the local image proxy).
+ * Leave empty to use the default: <platform root>/cache/images
+ */
+$config["dir"]["imageCache"] = "";
+
+/**
  * Platform Database (mariadb/MySQL) information
  */
 $config["platform"]["sql"]["access"]["host"] = "";

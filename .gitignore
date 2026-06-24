@@ -42,6 +42,10 @@ CLAUDE.md
 langcache/*.php
 api/v1/cache/*.json
 api/v1/cache/*.meta
+cache/images/*.webp
+cache/images/*.png
+cache/images/*.jpg
+cache/images/*.src
 
 # Data
 data/import-error-log.txt

@@ -4,6 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
+require_once (__DIR__."/../../../modules/images/functions.php");
 
 /**
  * @param string $id String of OrganisationID (= WikidataID)
@@ -45,7 +46,7 @@ function organisationGetByID($id = false) {
                 "label" => $item["OrganisationLabel"],
                 "labelAlternative" => json_decode($item["OrganisationLabelAlternative"], true),
                 "abstract" => $item["OrganisationAbstract"],
-                "thumbnailURI" => $item["OrganisationThumbnailURI"],
+                "thumbnailURI" => thumbnailCacheURL("organisation", $item["OrganisationID"], $item["OrganisationThumbnailURI"]),
                 "thumbnailCreator" => $item["OrganisationThumbnailCreator"],
                 "thumbnailLicense" => $item["OrganisationThumbnailLicense"],
                 "embedURI" => $item["OrganisationEmbedURI"],
@@ -94,7 +95,7 @@ function organisationGetDataObject($item = false, $db = false) {
         $return["attributes"]["label"] = $item["OrganisationLabel"];
         $return["attributes"]["labelAlternative"] = json_decode($item["OrganisationLabelAlternative"],true);
         $return["attributes"]["abstract"] = $item["OrganisationAbstract"];
-        $return["attributes"]["thumbnailURI"] = $item["OrganisationThumbnailURI"];
+        $return["attributes"]["thumbnailURI"] = thumbnailCacheURL("organisation", $item["OrganisationID"], $item["OrganisationThumbnailURI"]);
         $return["attributes"]["thumbnailCreator"] = $item["OrganisationThumbnailCreator"];
         $return["attributes"]["thumbnailLicense"] = $item["OrganisationThumbnailLicense"];
         $return["attributes"]["embedURI"] = $item["OrganisationEmbedURI"];
@@ -451,11 +452,20 @@ function organisationGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $searc
         
         // Get results
         $items = $db->getAll("SELECT *
-                             FROM ?n 
+                             FROM ?n
                              WHERE ?p",
                              $config["platform"]["sql"]["tbl"]["Organisation"],
                              $whereClause);
-        
+
+        // Route thumbnails through the local image cache (admin entity table).
+        if (is_array($items)) {
+            foreach ($items as $k => $row) {
+                if (!empty($row["OrganisationThumbnailURI"])) {
+                    $items[$k]["OrganisationThumbnailURI"] = thumbnailCacheURL("organisation", $row["OrganisationID"], $row["OrganisationThumbnailURI"]);
+                }
+            }
+        }
+
         return array(
             "total" => (int)$totalCount,
             "data" => $items

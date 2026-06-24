@@ -6,6 +6,7 @@ require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/functions.entities.php");
 require_once (__DIR__."/../../../modules/utilities/textArrayConverters.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
+require_once (__DIR__."/../../../modules/images/functions.php");
 
 /**
  * Helper function to process document annotations
@@ -33,7 +34,7 @@ function processDocumentAnnotation($annotation, $db, $config) {
             "type" => $ditem["DocumentType"],
             "label" => str_replace(["\r","\n"], " ", $ditem["DocumentLabel"]),
             "labelAlternative" => json_decode($ditem["DocumentLabelAlternative"]),
-            "thumbnailURI" => $ditem["DocumentThumbnailURI"],
+            "thumbnailURI" => thumbnailCacheURL("document", $annotation["AnnotationResourceID"], $ditem["DocumentThumbnailURI"]),
             "thumbnailCreator" => $ditem["DocumentThumbnailCreator"],
             "thumbnailLicense" => $ditem["DocumentThumbnailLicense"],
             "additionalInformation" => json_decode($ditem["DocumentAdditionalInformation"], true) ?: [],
@@ -74,7 +75,7 @@ function processOrganisationAnnotation($annotation, $db, $config) {
             "type" => $ditem["OrganisationType"],
             "label" => $ditem["OrganisationLabel"],
             "labelAlternative" => json_decode($ditem["OrganisationLabelAlternative"]),
-            "thumbnailURI" => $ditem["OrganisationThumbnailURI"],
+            "thumbnailURI" => thumbnailCacheURL("organisation", $annotation["AnnotationResourceID"], $ditem["OrganisationThumbnailURI"]),
             "thumbnailCreator" => $ditem["OrganisationThumbnailCreator"],
             "thumbnailLicense" => $ditem["OrganisationThumbnailLicense"],
             "additionalInformation" => json_decode($ditem["OrganisationAdditionalInformation"] ?? "", true) ?: [],
@@ -113,7 +114,7 @@ function processTermAnnotation($annotation, $db, $config) {
             "label" => $ditem["TermLabel"],
             "labelAlternative" => json_decode($ditem["TermLabelAlternative"]),
             "websiteURI" => $ditem["TermWebsiteURI"],
-            "thumbnailURI" => $ditem["TermThumbnailURI"],
+            "thumbnailURI" => thumbnailCacheURL("term", $annotation["AnnotationResourceID"], $ditem["TermThumbnailURI"]),
             "thumbnailCreator" => $ditem["TermThumbnailCreator"],
             "thumbnailLicense" => $ditem["TermThumbnailLicense"],
             "additionalInformation" => json_decode($ditem["TermAdditionalInformation"], true) ?: []
@@ -167,7 +168,7 @@ function processPersonAnnotation($annotation, $db, $config) {
             "label" => $pitem["PersonLabel"],
             "labelAlternative" => json_decode($pitem["PersonLabelAlternative"]),
             "degree" => $pitem["PersonDegree"],
-            "thumbnailURI" => $pitem["PersonThumbnailURI"],
+            "thumbnailURI" => thumbnailCacheURL("person", $pitem["PersonID"], $pitem["PersonThumbnailURI"]),
             "thumbnailCreator" => $pitem["PersonThumbnailCreator"],
             "thumbnailLicense" => $pitem["PersonThumbnailLicense"],
             "additionalInformation" => json_decode($pitem["PersonAdditionalInformation"], true) ?: [],

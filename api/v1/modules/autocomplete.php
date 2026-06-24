@@ -5,6 +5,7 @@ require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
 require_once (__DIR__."/../../../modules/search/functions.php");
+require_once (__DIR__."/../../../modules/images/functions.php");
 
 function fulltextAutocomplete($text) {
     if (!isset($text)) {
@@ -291,7 +292,7 @@ function entitiesAutocomplete($query) {
                         'subtype' => $person['PersonType'],
                         'label' => $highlightText($person['PersonLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => $person['PersonThumbnailURI']
+                        'thumbnailURI' => thumbnailCacheURL('person', $person['PersonID'], $person['PersonThumbnailURI'])
                     ];
                     
                     // Add faction information if available
@@ -337,7 +338,7 @@ function entitiesAutocomplete($query) {
                         'subtype' => $person['PersonType'],
                         'label' => $highlightText($person['PersonLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => $person['PersonThumbnailURI']
+                        'thumbnailURI' => thumbnailCacheURL('person', $person['PersonID'], $person['PersonThumbnailURI'])
                     ];
                     
                     // Add faction information if available
@@ -375,7 +376,7 @@ function entitiesAutocomplete($query) {
                         'type' => 'organisation',
                         'label' => $highlightText($org['OrganisationLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => $org['OrganisationThumbnailURI']
+                        'thumbnailURI' => thumbnailCacheURL('organisation', $org['OrganisationID'], $org['OrganisationThumbnailURI'])
                     ];
                 }
             }
@@ -403,7 +404,7 @@ function entitiesAutocomplete($query) {
                         'type' => 'term',
                         'label' => $highlightText($term['TermLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => $term['TermThumbnailURI']
+                        'thumbnailURI' => thumbnailCacheURL('term', $term['TermID'], $term['TermThumbnailURI'])
                     ];
                 }
             }
@@ -431,7 +432,7 @@ function entitiesAutocomplete($query) {
                         'type' => 'document',
                         'label' => $highlightText($doc['DocumentLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => $doc['DocumentThumbnailURI']
+                        'thumbnailURI' => thumbnailCacheURL('document', $doc['DocumentID'], $doc['DocumentThumbnailURI'])
                     ];
                 }
             }
