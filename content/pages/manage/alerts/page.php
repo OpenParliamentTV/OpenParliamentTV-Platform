@@ -28,7 +28,6 @@ if (empty($_SESSION["login"]) || $auth["meta"]["requestStatus"] != "success") {
         $at = $a["attributes"];
         return [
             "id" => $a["id"],
-            "label" => $at["label"],
             "criteria" => $at["criteriaSummary"],
             "frequency" => $at["frequency"],
             "channelEmail" => $at["channelEmail"],
@@ -102,7 +101,7 @@ $(function () {
             return '<div class="list-group list-group-horizontal">' +
                 '<a class="list-group-item list-group-item-action view-alert" title="' + t("alertViewMatching", "View matching speeches") + '" href="' + row.searchUrl + '"><span class="icon-search"></span></a>' +
                 '<a class="list-group-item list-group-item-action edit-alert" title="' + t("edit", "Edit") + '" href="javascript:void(0)"><span class="icon-pencil"></span></a>' +
-                '<a class="list-group-item list-group-item-action delete-alert text-danger" title="' + t("delete", "Delete") + '" href="javascript:void(0)"><span class="icon-trash"></span></a>' +
+                '<a class="list-group-item list-group-item-action delete-alert" title="' + t("delete", "Delete") + '" href="javascript:void(0)"><span class="icon-trash"></span></a>' +
                 '</div>';
         }
     };
@@ -140,7 +139,6 @@ $(function () {
         onPostBody: renderCriteriaChips,
         columns: [
             {field: 'id', visible: false},
-            {field: 'label', sortable: true, title: '<?= L::name(); ?>'},
             {field: 'criteria', sortable: true, title: '<?= L::alertCriteria(); ?>', formatter: formatters.criteriaFormatter},
             {field: 'frequency', sortable: true, title: '<?= L::alertFrequency(); ?>', formatter: formatters.frequencyFormatter},
             {field: 'channels', title: '<?= L::alertChannels(); ?>', formatter: formatters.channelsFormatter},

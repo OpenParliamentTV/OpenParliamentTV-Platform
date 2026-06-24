@@ -34,7 +34,6 @@ function alertRowToObject($row) {
         "type" => "alert",
         "id" => (int)$row["AlertID"],
         "attributes" => [
-            "label" => $row["AlertLabel"],
             "criteria" => $criteria,
             "criteriaSummary" => alertCriteriaSummary($criteria),
             "frequency" => $row["AlertFrequency"],
@@ -120,12 +119,6 @@ function alertCreate($parameter = []) {
         return createApiErrorResponse(429, 1, "messageAlertLimitTitle", "messageAlertLimitDetail");
     }
 
-    $label = isset($parameter["label"]) ? trim((string)$parameter["label"]) : "";
-    if ($label === "") {
-        $label = alertCriteriaSummary($raw) ?: "Alert";
-    }
-    $label = mb_substr($label, 0, 255);
-
     $frequency = $parameter["frequency"] ?? "realtime";
     if (!in_array($frequency, ["realtime", "daily", "weekly"], true)) {
         $frequency = "realtime";
@@ -135,7 +128,6 @@ function alertCreate($parameter = []) {
 
     $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Alert"], [
         "AlertUserID" => $userId,
-        "AlertLabel" => $label,
         "AlertCriteria" => alertCriteriaStorageJson($raw),
         "AlertFrequency" => $frequency,
         "AlertChannelEmail" => $channelEmail,
@@ -167,9 +159,6 @@ function alertUpdate($parameter = []) {
     if (!$row) { return createApiErrorNotFound("alert"); }
 
     $set = [];
-    if (isset($parameter["label"])) {
-        $set["AlertLabel"] = mb_substr(trim((string)$parameter["label"]), 0, 255);
-    }
     if (isset($parameter["frequency"]) && in_array($parameter["frequency"], ["realtime", "daily", "weekly"], true)) {
         $set["AlertFrequency"] = $parameter["frequency"];
     }
@@ -191,7 +180,7 @@ function alertUpdate($parameter = []) {
     }
 
     if (empty($set)) {
-        return createApiErrorMissingParameter("label");
+        return createApiErrorMissingParameter("criteria");
     }
 
     $db->query("UPDATE ?n SET ?u WHERE AlertID = ?i AND AlertUserID = ?i",

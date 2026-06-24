@@ -30,22 +30,6 @@
 		setTimeout(function () { el.remove(); }, 3000);
 	}
 
-	function criteriaSummary(criteria) {
-		var parts = [];
-		var labels = (criteria && criteria._labels) || {};
-		var nameOf = function (token) {
-			var id = String(token).split("~")[0];
-			return (labels[id] && labels[id].label) || id;
-		};
-		if (criteria.q) { parts.push("“" + criteria.q + "”"); }
-		["personID", "organisationID", "factionID", "termID", "documentID"].forEach(function (key) {
-			var v = criteria[key];
-			if (!v) { return; }
-			parts.push((Array.isArray(v) ? v : [v]).map(nameOf).join(", "));
-		});
-		return parts.join(" · ");
-	}
-
 	// ---- Modal ----------------------------------------------------------------
 	var modalEl = document.getElementById("alertModal");
 	var bsModal = (modalEl && window.bootstrap) ? new bootstrap.Modal(modalEl) : null;
@@ -56,7 +40,6 @@
 		var criteria = opts.criteria || {};
 		document.getElementById("alertModalId").value = opts.id || "";
 		document.getElementById("alertModalCriteria").value = JSON.stringify(criteria);
-		document.getElementById("alertModalLabel").value = opts.label || criteriaSummary(criteria) || "";
 		// Render the criteria as editable chips (delete + per-entity role) via the
 		// shared CriteriaChips component, the same visual used in the filterbar/lists.
 		if (window.CriteriaChips) {
@@ -83,7 +66,6 @@
 			});
 			var params = {
 				criteria: JSON.stringify(criteria),
-				label: document.getElementById("alertModalLabel").value,
 				frequency: document.getElementById("alertModalFrequency").value,
 				channelInApp: document.getElementById("alertModalChannelInApp").checked,
 				channelEmail: document.getElementById("alertModalChannelEmail").checked
@@ -148,12 +130,11 @@
 
 	// ---- Public helpers for the manage page ----------------------------------
 	window.AlertManager = {
-		openCreate: function (criteria, label) { openModal({ criteria: criteria, label: label }); },
+		openCreate: function (criteria) { openModal({ criteria: criteria }); },
 		openEdit: function (alert) {
 			openModal({
 				id: alert.id,
 				criteria: alert.attributes.criteria,
-				label: alert.attributes.label,
 				frequency: alert.attributes.frequency,
 				channelInApp: alert.attributes.channelInApp,
 				channelEmail: alert.attributes.channelEmail

@@ -390,7 +390,12 @@
 	"notificationEmailEnabled": "Recevoir les e-mails de notification",
 	"notificationRunMatch": "Lancer la correspondance maintenant",
 	"notificationMessage": "Message",
+	"notificationAlertMatchTitle": "Nouvelle intervention correspondante",
 	"markRead": "Marquer comme lu",
+	"markUnread": "Marquer comme non lu",
+	"delete": "Supprimer",
+	"notificationFilterAlerts": "Alertes",
+	"notificationFilterMessages": "Messages",
 	"messageAlertCriteriaEmpty": "Veuillez fournir au moins un critère de recherche pour l'alerte.",
 	"messageAlertLimitTitle": "Limite d'alertes atteinte",
 	"messageAlertLimitDetail": "Vous avez atteint le nombre maximum d'alertes."

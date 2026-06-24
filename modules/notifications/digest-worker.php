@@ -19,6 +19,7 @@ ini_set('log_errors', '1');
 
 require_once(__DIR__ . "/../utilities/functions.php");
 require_once(__DIR__ . "/../utilities/safemysql.class.php");
+require_once(__DIR__ . "/functions.php"); // alertCriteriaSummary() for digest group headings
 require_once(__DIR__ . "/email-functions.php");
 
 function digestWorkerLog($type, $msg) {
@@ -58,7 +59,7 @@ try {
     $tblP = $config["platform"]["sql"]["tbl"]["NotificationPreference"];
 
     $rows = $db->getAll(
-        "SELECT n.*, a.AlertLabel, u.UserMail, u.UserName,
+        "SELECT n.*, a.AlertCriteria, u.UserMail, u.UserName,
                 p.NotificationPreferenceUnsubscribeToken AS token
          FROM ?n n
          JOIN ?n a ON a.AlertID = n.NotificationAlertID
@@ -74,18 +75,20 @@ try {
         $tblN, $tblA, $tblU, $tblP, $frequency
     );
 
-    // Group: user -> alertLabel -> items
+    // Group: user -> alert (keyed by AlertID) -> items. Alerts have no title, so the
+    // group heading is derived from the alert's criteria summary.
     $byUser = [];
     foreach ($rows ?: [] as $n) {
         $uid = (int)$n["NotificationUserID"];
         if (!isset($byUser[$uid])) {
             $byUser[$uid] = ["mail" => $n["UserMail"], "name" => $n["UserName"], "token" => $n["token"], "groups" => [], "ids" => []];
         }
-        $label = $n["AlertLabel"];
-        if (!isset($byUser[$uid]["groups"][$label])) {
-            $byUser[$uid]["groups"][$label] = ["label" => $label, "items" => []];
+        $alertId = (int)$n["NotificationAlertID"];
+        if (!isset($byUser[$uid]["groups"][$alertId])) {
+            $label = alertCriteriaSummary(json_decode($n["AlertCriteria"], true));
+            $byUser[$uid]["groups"][$alertId] = ["label" => $label, "items" => []];
         }
-        $byUser[$uid]["groups"][$label]["items"][] = $n;
+        $byUser[$uid]["groups"][$alertId]["items"][] = $n;
         $byUser[$uid]["ids"][] = (int)$n["NotificationID"];
     }
 

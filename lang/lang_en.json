@@ -391,7 +391,12 @@
 	"notificationEmailEnabled": "Receive notification emails",
 	"notificationRunMatch": "Run matching now",
 	"notificationMessage": "Message",
+	"notificationAlertMatchTitle": "New matching speech",
 	"markRead": "Mark as read",
+	"markUnread": "Mark as unread",
+	"delete": "Delete",
+	"notificationFilterAlerts": "Alerts",
+	"notificationFilterMessages": "Messages",
 	"messageAlertCriteriaEmpty": "Please provide at least one search criterion for the alert.",
 	"messageAlertLimitTitle": "Alert limit reached",
 	"messageAlertLimitDetail": "You have reached the maximum number of alerts."

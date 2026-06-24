@@ -27,16 +27,16 @@ window.CriteriaChips = (function ($) {
 		return labels[key] || fallback || key;
 	};
 
-	// Only person chips carry a role ("context") selector. The "*" sentinel means
-	// "any context" — translated to an empty context server-side, so the backend's
-	// per-type default (main-speaker) is not applied. Members of parliament get the
-	// full presiding/speaking context list; all other people get a reduced set.
+	// Only members of parliament carry a role ("context") selector — their speeches
+	// span the presiding/speaking contexts below. Everyone else (and every other
+	// entity type) has no role control and is matched in any context ("*"). The "*"
+	// sentinel maps to an empty context server-side, so the per-type default
+	// (main-speaker) is not applied.
 	var PERSON_ROLES_MP = ["*", "main-speaker", "speaker", "president", "vice-president", "interim-president", "NER"];
-	var PERSON_ROLES_OTHER = ["*", "main-speaker", "NER"];
 
 	function rolesFor(type, subtype) {
-		if (type !== "person") { return []; }
-		return (subtype === "memberOfParliament") ? PERSON_ROLES_MP : PERSON_ROLES_OTHER;
+		if (type !== "person" || subtype !== "memberOfParliament") { return []; }
+		return PERSON_ROLES_MP;
 	}
 
 	// The role that a bare (role-less) token represents — mirrors the search
@@ -137,15 +137,17 @@ window.CriteriaChips = (function ($) {
 		if (!roles.length) { return null; }
 
 		if (!opts.editable) {
-			return $('<span class="queryRole ms-2"></span>')
+			return $('<span class="queryRole ps-2"></span>')
 				.addClass(ROLE_ICONS[role] || "")
 				.attr("title", roleTitle(role));
 		}
 
-		var wrap = $('<span class="queryRole queryRoleEditable ms-2"></span>');
+		var wrap = $('<span class="queryRole queryRoleEditable ps-2"></span>');
 		var toggle = $('<span class="queryRoleToggle"></span>')
 			.addClass(ROLE_ICONS[role] || "")
 			.attr("title", roleTitle(role));
+		// Small dropdown indicator (caret) to the right of the role icon.
+		toggle.append('<span class="queryRoleCaret"></span>');
 		var menu = $('<span class="queryRoleMenu"></span>');
 		// Generic "Context" header so the bare role nouns read in context.
 		menu.append($('<span class="queryRoleMenuHeader"></span>').text(L("context", "Context")));
@@ -191,24 +193,35 @@ window.CriteriaChips = (function ($) {
 		if (spec.id) { chip.attr("data-item-id", spec.id); }
 		if (type === "person" && spec.subtype) { chip.attr("data-subtype", spec.subtype); }
 
+		// Type icon + label + party badge. For linkable entity types this whole
+		// group is wrapped in an <a> to the detail page, so clicking it navigates
+		// (the role control and delete button sit outside the link).
+		var linkable = opts.link !== false && entity && spec.id;
+		var $inner = linkable
+			? $('<a target="_blank" class="queryItemLink d-flex align-items-center"></a>')
+				.attr("href", config.dir.root + "/" + type + "/" + encodeURIComponent(spec.id))
+				.attr("title", L("goToDetails", "Open details"))
+			: $('<span class="queryItemLabel d-flex align-items-center"></span>');
+
 		var iconClass = entity ? ("icon-type-" + type) : scalarIcon(type);
-		if (iconClass) { chip.append('<span class="' + iconClass + ' me-2"></span>'); }
+		if (iconClass) { $inner.append('<span class="' + iconClass + ' me-2"></span>'); }
 
 		var labelText = spec.label != null && spec.label !== "" ? spec.label : (spec.id || "");
 		if (type === "faction") {
 			// The label itself is the party-coloured badge (no separate affiliation).
-			chip.append($('<span class="queryText partyIndicator"></span>')
+			$inner.append($('<span class="queryText partyIndicator"></span>')
 				.attr("data-faction", spec.id || labelText)
 				.text(labelText));
 		} else {
-			chip.append($('<span class="queryText"></span>').text(labelText));
+			$inner.append($('<span class="queryText"></span>').text(labelText));
 			// Faction colour badge for a person's affiliation.
 			if (spec.faction) {
-				chip.append($('<span class="ms-2 partyIndicator"></span>')
+				$inner.append($('<span class="ms-2 partyIndicator"></span>')
 					.attr("data-faction", spec.faction)
 					.text(spec.factionLabel || spec.faction));
 			}
 		}
+		chip.append($inner);
 
 		// Per-entity role control (person only).
 		if (entity) {
@@ -216,13 +229,6 @@ window.CriteriaChips = (function ($) {
 			chip.attr("data-role", role);
 			var roleCtrl = buildRoleControl(type, role, opts, spec.subtype);
 			if (roleCtrl) { chip.append(roleCtrl); }
-		}
-
-		// Link to entity detail page.
-		if (opts.link !== false && entity && spec.id) {
-			chip.append($('<a target="_blank" class="queryLinkIcon icon-link-ext ms-2"></a>')
-				.attr("href", config.dir.root + "/" + type + "/" + encodeURIComponent(spec.id))
-				.attr("title", L("goToDetails", "Open details")));
 		}
 
 		// Delete control (editable only).

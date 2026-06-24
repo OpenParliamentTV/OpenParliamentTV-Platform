@@ -1544,16 +1544,30 @@ body.fixed .searchContainer {
 .queryRole {
     display: inline-flex;
     align-items: center;
+    padding-right: 4px;
 }
 .queryRole.queryRoleEditable {
     position: relative;
 }
 .queryRole .queryRoleToggle {
+    display: inline-flex;
+    align-items: center;
     cursor: pointer;
     opacity: .65;
 }
 .queryRole.queryRoleEditable .queryRoleToggle:hover {
     opacity: 1;
+}
+/* Small dropdown indicator (thin chevron) right of the role icon. */
+.queryRoleCaret {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-left: 4px;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: translateY(-1px) rotate(45deg);
+    opacity: .7;
 }
 .queryRoleMenu {
     display: none;
@@ -1593,6 +1607,43 @@ body.fixed .searchContainer {
 }
 .queryRoleOption.active {
     font-weight: bold;
+}
+
+/* The icon + label + party badge group is a link to the entity detail page. */
+.queryItem .queryItemLink,
+.queryItem .queryItemLabel {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+.queryItem .queryItemLabel {
+    cursor: default;
+}
+.queryItem .queryItemLink:hover,
+.queryItem .queryItemLink:hover .queryText {
+    text-decoration: none;
+}
+
+/* ---- Notifications: "Redebeitrag" cell. Reuses the result-grid .resultItem /
+   .resultSnippets styling (incl. `td em` highlight); only the compact head needs
+   a few tweaks. ---- */
+.notifMediaCard.resultItem {
+    padding: 0;
+}
+.notifMediaCard .notifMediaHead {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+.notifMediaCard .notifMediaHead:hover .notifMediaSpeaker {
+    text-decoration: underline;
+}
+/* Weight is inherited from the row (fw-bolder when unread, normal when read). */
+.notifMediaCard .notifMediaMeta {
+    opacity: .7;
+}
+.notifMediaCard .resultSnippets {
+    margin-top: .35rem;
 }
 
 /* ---- Shared criteria chips (alert modal, /manage/alerts, /notifications) ---- */

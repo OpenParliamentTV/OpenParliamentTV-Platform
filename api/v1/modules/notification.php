@@ -85,20 +85,63 @@ function notificationUnreadCount($parameter = []) {
     return createApiSuccessResponse(["unreadCount" => $count]);
 }
 
-function notificationMarkRead($parameter = []) {
+/**
+ * Parse one or more notification ids from a request: accepts `id` (single) and/or
+ * `ids` (array or comma-separated string). Returns a list of positive ints.
+ */
+function notificationParseIds($parameter) {
+    $raw = [];
+    if (isset($parameter["ids"])) {
+        $raw = is_array($parameter["ids"]) ? $parameter["ids"] : explode(",", (string)$parameter["ids"]);
+    }
+    if (isset($parameter["id"])) {
+        $raw[] = $parameter["id"];
+    }
+    $ids = array_values(array_unique(array_filter(array_map('intval', $raw), function ($v) { return $v > 0; })));
+    return $ids;
+}
+
+/**
+ * Set the read flag on one or more of the user's own notifications.
+ */
+function notificationSetRead($parameter, $read) {
     global $config;
     $userId = notificationRequireUser();
     if (is_array($userId)) { return $userId; }
 
-    $id = isset($parameter["id"]) ? (int)$parameter["id"] : 0;
-    if (!$id) { return createApiErrorMissingParameter("id"); }
+    $ids = notificationParseIds($parameter);
+    if (empty($ids)) { return createApiErrorMissingParameter("id"); }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) { return $db; }
 
-    $db->query("UPDATE ?n SET NotificationRead = 1 WHERE NotificationID = ?i AND NotificationUserID = ?i",
-        $config["platform"]["sql"]["tbl"]["Notification"], $id, $userId);
-    return createApiSuccessResponse(["id" => $id, "read" => true]);
+    $db->query("UPDATE ?n SET NotificationRead = ?i WHERE NotificationID IN (?a) AND NotificationUserID = ?i",
+        $config["platform"]["sql"]["tbl"]["Notification"], $read ? 1 : 0, $ids, $userId);
+    return createApiSuccessResponse(["ids" => $ids, "read" => (bool)$read, "affected" => $db->affectedRows()]);
+}
+
+function notificationMarkRead($parameter = []) {
+    return notificationSetRead($parameter, 1);
+}
+
+function notificationMarkUnread($parameter = []) {
+    return notificationSetRead($parameter, 0);
+}
+
+function notificationDelete($parameter = []) {
+    global $config;
+    $userId = notificationRequireUser();
+    if (is_array($userId)) { return $userId; }
+
+    $ids = notificationParseIds($parameter);
+    if (empty($ids)) { return createApiErrorMissingParameter("id"); }
+
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) { return $db; }
+
+    $db->query("DELETE FROM ?n WHERE NotificationID IN (?a) AND NotificationUserID = ?i",
+        $config["platform"]["sql"]["tbl"]["Notification"], $ids, $userId);
+    return createApiSuccessResponse(["ids" => $ids, "deleted" => $db->affectedRows()]);
 }
 
 function notificationMarkAllRead($parameter = []) {

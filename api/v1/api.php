@@ -218,8 +218,12 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     return createApiResponse(notificationUnreadCount($api_request));
                 case "markRead":
                     return createApiResponse(notificationMarkRead($api_request));
+                case "markUnread":
+                    return createApiResponse(notificationMarkUnread($api_request));
                 case "markAllRead":
                     return createApiResponse(notificationMarkAllRead($api_request));
+                case "delete":
+                    return createApiResponse(notificationDelete($api_request));
                 case "preferences":
                     return createApiResponse(notificationPreferences($api_request));
                 case "unsubscribe":

@@ -61,12 +61,19 @@ function mediaMatchIndex($mediaItem) {
         }
     }
 
-    // Concatenate transcript text (HTML) for keyword matching.
+    // Concatenate transcript text for keyword matching. getItem exposes the text as
+    // `textHTML` (a string) per textContents entry (with `textBody` as the structured
+    // fallback); there is no `text` key.
     $text = "";
     if (isset($attr["textContents"]) && is_array($attr["textContents"])) {
         foreach ($attr["textContents"] as $tc) {
-            $t = $tc["text"] ?? "";
-            $text .= " " . (is_array($t) ? json_encode($t) : (string)$t);
+            if (isset($tc["textHTML"]) && is_string($tc["textHTML"])) {
+                $text .= " " . $tc["textHTML"];
+            } elseif (isset($tc["textBody"])) {
+                $text .= " " . (is_array($tc["textBody"]) ? json_encode($tc["textBody"]) : (string)$tc["textBody"]);
+            } elseif (isset($tc["text"])) {
+                $text .= " " . (is_array($tc["text"]) ? json_encode($tc["text"]) : (string)$tc["text"]);
+            }
         }
     }
 
@@ -141,7 +148,7 @@ function mediaMatchesCriteria($index, $criteria) {
 /**
  * Build a notification payload (title/body/link) from a media item.
  */
-function notificationPayloadForMedia($mediaItem, $parliament, $alertLabel) {
+function notificationPayloadForMedia($mediaItem, $parliament) {
     global $config;
     $attr = $mediaItem["attributes"] ?? [];
     $rel = $mediaItem["relationships"] ?? [];
@@ -152,17 +159,19 @@ function notificationPayloadForMedia($mediaItem, $parliament, $alertLabel) {
         ?? ($rel["agendaItem"]["data"]["attributes"]["officialTitle"] ?? "");
     $date = $attr["dateStart"] ?? "";
 
-    $bodyParts = array_filter([
-        $speaker . ($faction ? " (" . $faction . ")" : ""),
-        $agenda,
-        $date,
-    ]);
+    // Alerts have no title — the notification headline is the matched speech itself
+    // (speaker), with the agenda/date as body and the criteria chips for context.
+    $title = $speaker . ($faction ? " (" . $faction . ")" : "");
+    if ($title === "") {
+        $title = $agenda !== "" ? $agenda : (function_exists('L') ? L("notificationAlertMatchTitle") : "New matching speech");
+    }
+    $bodyParts = array_filter([$agenda, $date]);
 
     $root = $config["dir"]["root"] ?? "";
     $link = $root . "/media/" . rawurlencode((string)($mediaItem["id"] ?? ""));
 
     return [
-        "title" => $alertLabel,
+        "title" => $title,
         "body" => implode(" — ", $bodyParts),
         "link" => $link,
     ];
@@ -203,7 +212,7 @@ function matchMediaItemAgainstAlerts($mediaItem, $parliament, $db) {
             continue;
         }
 
-        $payload = notificationPayloadForMedia($mediaItem, $parliament, $alert["AlertLabel"]);
+        $payload = notificationPayloadForMedia($mediaItem, $parliament);
         $isNew = createNotification($db, [
             "userID" => (int)$alert["AlertUserID"],
             "alertID" => (int)$alert["AlertID"],

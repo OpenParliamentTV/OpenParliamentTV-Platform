@@ -390,7 +390,12 @@
 	"notificationEmailEnabled": "Bildirim e-postaları al",
 	"notificationRunMatch": "Eşleştirmeyi şimdi çalıştır",
 	"notificationMessage": "Mesaj",
+	"notificationAlertMatchTitle": "Yeni eşleşen konuşma",
 	"markRead": "Okundu olarak işaretle",
+	"markUnread": "Okunmadı olarak işaretle",
+	"delete": "Sil",
+	"notificationFilterAlerts": "Uyarılar",
+	"notificationFilterMessages": "Mesajlar",
 	"messageAlertCriteriaEmpty": "Lütfen uyarı için en az bir arama ölçütü girin.",
 	"messageAlertLimitTitle": "Uyarı sınırına ulaşıldı",
 	"messageAlertLimitDetail": "Maksimum uyarı sayısına ulaştınız."

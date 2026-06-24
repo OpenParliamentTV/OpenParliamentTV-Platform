@@ -390,7 +390,12 @@
 	"notificationEmailEnabled": "Benachrichtigungs-E-Mails erhalten",
 	"notificationRunMatch": "Abgleich jetzt ausführen",
 	"notificationMessage": "Nachricht",
+	"notificationAlertMatchTitle": "Neuer passender Redebeitrag",
 	"markRead": "Als gelesen markieren",
+	"markUnread": "Als ungelesen markieren",
+	"delete": "Löschen",
+	"notificationFilterAlerts": "Alerts",
+	"notificationFilterMessages": "Mitteilungen",
 	"messageAlertCriteriaEmpty": "Bitte gib mindestens ein Suchkriterium für die Benachrichtigung an.",
 	"messageAlertLimitTitle": "Limit erreicht",
 	"messageAlertLimitDetail": "Du hast die maximale Anzahl an Benachrichtigungen erreicht."

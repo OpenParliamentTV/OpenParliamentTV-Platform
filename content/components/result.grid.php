@@ -131,7 +131,7 @@ if ($totalResults != 0) {
 				<option value="duration-asc"><?= L::duration(); ?> (<?= L::sortByDurationAsc(); ?>)</option>
 				<option value="duration-desc"><?= L::duration(); ?> (<?= L::sortByDurationDesc(); ?>)</option>
 			</select>
-			<a href="<?= hAttr($rssHref) ?>" id="searchRssFeedLink" class="btn btn-sm btn-outline-primary rss-feed-link ms-2 align-middle" title="<?= hAttr(L::feedRssLinkTitle()) ?>" target="_blank">RSS<svg class="ms-1" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:baseline;"><path d="M6.18 17.82a2.18 2.18 0 1 0 0 4.36 2.18 2.18 0 0 0 0-4.36zM4 10.1v2.92c2.93 0 5.7 1.14 7.78 3.22A11 11 0 0 1 15 24h2.93A14 14 0 0 0 4 10.1zM4 4v2.93C13.43 6.93 21.07 14.57 21.07 24H24A20 20 0 0 0 4 4z"/></svg></a>
+			<a href="<?= hAttr($rssHref) ?>" id="searchRssFeedLink" class="btn btn-sm btn-outline-primary rss-feed-link ms-2 align-middle" title="<?= hAttr(L::feedRssLinkTitle()) ?>" target="_blank">RSS<span class="icon-rss ms-1" aria-hidden="true"></span></a>
 <?php
 			// "Save as alert" — logged-in only. Reuses the same criteria as the RSS
 			// link ($rssParams), so it appears on search and entity pages alike (the
@@ -188,7 +188,7 @@ if ($totalResults != 0) {
 				}
 				if ($hasAlertCriteria):
 ?>
-			<button type="button" id="saveAsAlertButton" class="btn btn-sm btn-outline-primary ms-2 align-middle" data-criteria="<?= hAttr(json_encode($alertCriteria, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>" title="<?= hAttr(L::alertSaveAsAlert()) ?>"><span class="saveAsAlertLabel"><?= L::alertSaveAsAlert() ?></span><svg class="ms-1" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:baseline;"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22zm6.36-6.4V10.5c0-3.07-1.64-5.64-4.5-6.32V3.5a1.86 1.86 0 0 0-3.72 0v.68C7.28 4.86 5.64 7.42 5.64 10.5v5.1L4 17.2v.8h16v-.8l-1.64-1.6z"/></svg></button>
+			<button type="button" id="saveAsAlertButton" class="btn btn-sm btn-outline-primary ms-2 align-middle" data-criteria="<?= hAttr(json_encode($alertCriteria, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>" title="<?= hAttr(L::alertSaveAsAlert()) ?>"><span class="saveAsAlertLabel"><?= L::alertSaveAsAlert() ?></span><span class="icon-attention ms-1" aria-hidden="true"></span></button>
 <?php
 				endif;
 			}

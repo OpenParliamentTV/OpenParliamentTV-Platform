@@ -18,10 +18,6 @@ if (empty($_SESSION["login"]) || empty($config["allow"]["notifications"])) {
 				<input type="hidden" id="alertModalId" value="">
 				<input type="hidden" id="alertModalCriteria" value="">
 				<div class="mb-3">
-					<label class="form-label" for="alertModalLabel"><?= L::name() ?></label>
-					<input type="text" class="form-control" id="alertModalLabel" maxlength="255">
-				</div>
-				<div class="mb-3">
 					<label class="form-label"><?= L::alertCriteria() ?></label>
 					<div id="alertModalCriteriaChips" class="border rounded px-2 pt-2 pb-1"></div>
 				</div>

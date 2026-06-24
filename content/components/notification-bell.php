@@ -1,6 +1,6 @@
 <?php
 /**
- * Notification bell (Plan B). Rendered in the header for logged-in users only.
+ * Notification bell. Rendered in the header for logged-in users only.
  * The dropdown list is populated client-side by notificationBell.js, which also
  * polls the unread count.
  */
@@ -10,7 +10,7 @@ if (empty($_SESSION["login"]) || empty($config["allow"]["notifications"])) {
 ?>
 <style>
 #notificationBell .dropdown-toggle::after { display: none; }
-#notificationBell .notificationBellBadge { position: absolute; top: 2px; right: 0; font-size: 10px; }
+#notificationBell .notificationBellBadge { position: absolute; top: -5px; right: 0; font-size: 10px; }
 #notificationBell .notificationBellMenu { max-width: 90vw; }
 #notificationBell .notificationBellList { max-height: 50vh; overflow-y: auto; }
 #notificationBell .notificationItem { display: block; padding: .5rem .85rem; border-bottom: 1px solid rgba(0,0,0,.06); color: inherit; text-decoration: none; }
@@ -22,8 +22,8 @@ if (empty($_SESSION["login"]) || empty($config["allow"]["notifications"])) {
 </style>
 <div class="dropdown d-inline notificationBell me-1" id="notificationBell">
 	<button class="btn btn-sm dropdown-toggle position-relative" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false" title="<?= hAttr(L::notifications()) ?>">
-		<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:text-bottom;"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22zm6.36-6.4V10.5c0-3.07-1.64-5.64-4.5-6.32V3.5a1.86 1.86 0 0 0-3.72 0v.68C7.28 4.86 5.64 7.42 5.64 10.5v5.1L4 17.2v.8h16v-.8l-1.64-1.6z"/></svg>
-		<span class="notificationBellBadge badge rounded-pill bg-danger d-none" id="notificationBellBadge">0</span>
+		<span class="icon-attention" aria-hidden="true" style="font-size:18px;"></span>
+		<span class="notificationBellBadge badge rounded-pill border d-none" id="notificationBellBadge">0</span>
 		<span class="visually-hidden"><?= L::notifications() ?></span>
 	</button>
 	<div class="dropdown-menu dropdown-menu-end notificationBellMenu p-0" style="width: 340px;">
