@@ -278,6 +278,32 @@ if (is_cli()) {
             ]
         ]);
 
+        // Preflight: verify OpenSearch is actually reachable before grinding through
+        // thousands of batches. getApiOpenSearchClient() builds the client lazily and never
+        // opens a connection, so a dead server is only detected on the first real request.
+        // Without this check the loop below would call bulk() per batch, swallow each failure
+        // (0 updated / 0 failed), record nothing, and still finalize as "completed" having
+        // indexed zero documents. Fail loudly here instead.
+        $preflightClient = getApiOpenSearchClient();
+        $openSearchReachable = false;
+        if ($preflightClient && !(is_array($preflightClient) && isset($preflightClient["errors"]))) {
+            try {
+                $openSearchReachable = $preflightClient->ping();
+            } catch (Exception $e) {
+                logger("error", "OpenSearch ping threw: " . $e->getMessage());
+                $openSearchReachable = false;
+            }
+        }
+        unset($preflightClient);
+        if (!$openSearchReachable) {
+            $msg = "OpenSearch is not reachable. Aborting search index rebuild for {$parliament} before processing any of the {$totalItems} items.";
+            logger("error", $msg);
+            logErrorToBaseProgressFile($searchIndexProgressFilePath, $msg, "OPENSEARCH_UNREACHABLE");
+            finalizeBaseProgressFile($searchIndexProgressFilePath, "error_critical", $msg);
+            $progressFinalized = true;
+            exit(1);
+        }
+
         $mediaItemsBatch = [];
         $processedItemCount = 0;
         $failedItemCount = 0;
@@ -315,7 +341,22 @@ if (is_cli()) {
                 if (!empty($mediaItemsBatch)) {
                     $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsBatch, "initIndex" => ($currentBatchNum === 1), "isFullRebuild" => true];
                     $updateResult = searchIndexUpdate($updateRequest);
-                    
+
+                    // A failed searchIndexUpdate() returns an error response (meta.requestStatus
+                    // === 'error', no 'data' key) — e.g. OpenSearch went down mid-run, or the
+                    // bulk request threw. Reading 'data.updated'/'data.failed' with ?? 0 would
+                    // hide that: the run would march through every remaining batch indexing
+                    // nothing and still finalize as "completed". Detect it and abort loudly.
+                    if (isset($updateResult['meta']['requestStatus']) && $updateResult['meta']['requestStatus'] === 'error') {
+                        $errorDetail = $updateResult['errors'][0]['detail'] ?? ($updateResult['errors'][0]['title'] ?? 'Unknown indexing error');
+                        $msg = "Search index update failed at batch {$currentBatchNum}/{$totalBatches} (OpenSearch may be down): {$errorDetail}. Aborting after {$processedItemCount} indexed items.";
+                        logger("error", $msg);
+                        logErrorToBaseProgressFile($searchIndexProgressFilePath, $msg, "BATCH_{$currentBatchNum}");
+                        finalizeBaseProgressFile($searchIndexProgressFilePath, "error_critical", $msg);
+                        $progressFinalized = true;
+                        exit(1);
+                    }
+
                     $updatedInBatch = $updateResult['data']['updated'] ?? 0;
                     $failedInBatch = $updateResult['data']['failed'] ?? 0;
                     
