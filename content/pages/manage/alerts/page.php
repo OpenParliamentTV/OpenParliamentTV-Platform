@@ -14,8 +14,10 @@ if (empty($_SESSION["login"]) || $auth["meta"]["requestStatus"] != "success") {
     $alertsResp = alertList([]);
     $alerts = ($alertsResp["meta"]["requestStatus"] === "success") ? $alertsResp["data"] : [];
 
-    // Build a /search URL from criteria (same param names as the search API).
+    // Build a /search URL from criteria (same param names as the search API). Drop
+    // the presentation-only `_labels` snapshot so it doesn't leak into the URL.
     $searchUrlFromCriteria = function ($criteria) use ($config) {
+        unset($criteria["_labels"]);
         if (empty($criteria)) { return $config["dir"]["root"] . "/search"; }
         $qs = preg_replace('/%5B\d+%5D=/i', '%5B%5D=', http_build_query($criteria));
         return $config["dir"]["root"] . "/search?" . $qs;
@@ -65,7 +67,7 @@ if (empty($_SESSION["login"]) || $auth["meta"]["requestStatus"] != "success") {
 <script type="text/javascript">
 $(function () {
     var alertData = <?= json_encode($alertRows, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
-    var labels = window.localizedLabels || {};
+    var labels = (typeof localizedLabels !== "undefined" && localizedLabels) ? localizedLabels : {};
     function t(k, f) { return labels[k] || f || k; }
 
     var freqLabels = {
@@ -75,6 +77,10 @@ $(function () {
     };
 
     var formatters = {
+        criteriaFormatter: function (value, row) {
+            // Placeholder; populated with shared chips in onPostBody.
+            return '<div class="alertCriteriaCell" data-id="' + row.id + '"></div>';
+        },
         frequencyFormatter: function (value) {
             return '<span class="badge bg-light text-dark">' + (freqLabels[value] || value) + '</span>';
         },
@@ -109,6 +115,15 @@ $(function () {
         }
     };
 
+    // Render each alert's criteria as shared chips after every table (re)paint.
+    function renderCriteriaChips() {
+        if (!window.CriteriaChips) { return; }
+        alertData.forEach(function (row) {
+            var criteria = row.alert && row.alert.attributes ? row.alert.attributes.criteria : null;
+            CriteriaChips.render(criteria || {}, '.alertCriteriaCell[data-id="' + row.id + '"]', { editable: false });
+        });
+    }
+
     $('#alertsTable').bootstrapTable({
         data: alertData,
         classes: "table table-striped",
@@ -122,10 +137,11 @@ $(function () {
         uniqueId: 'id',
         sortName: 'created',
         sortOrder: 'desc',
+        onPostBody: renderCriteriaChips,
         columns: [
             {field: 'id', visible: false},
             {field: 'label', sortable: true, title: '<?= L::name(); ?>'},
-            {field: 'criteria', sortable: true, title: '<?= L::alertCriteria(); ?>'},
+            {field: 'criteria', sortable: true, title: '<?= L::alertCriteria(); ?>', formatter: formatters.criteriaFormatter},
             {field: 'frequency', sortable: true, title: '<?= L::alertFrequency(); ?>', formatter: formatters.frequencyFormatter},
             {field: 'channels', title: '<?= L::alertChannels(); ?>', formatter: formatters.channelsFormatter},
             {field: 'active', sortable: true, title: '<?= L::active(); ?>', formatter: formatters.activeFormatter},

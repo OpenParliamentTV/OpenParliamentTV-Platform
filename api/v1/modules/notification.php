@@ -35,6 +35,10 @@ function notificationRowToObject($row) {
             "parliament" => $row["NotificationParliament"],
             "read" => (bool)$row["NotificationRead"],
             "created" => $row["NotificationCreated"],
+            // Criteria snapshot of the originating alert (if still present), so the
+            // inbox can render the same criteria chips as the manage/alerts list.
+            "alertCriteria" => (!empty($row["AlertCriteria"]))
+                ? (json_decode($row["AlertCriteria"], true) ?: null) : null,
         ],
         "relationships" => [
             "alert" => ["data" => $row["NotificationAlertID"] ? ["type" => "alert", "id" => (int)$row["NotificationAlertID"]] : null],
@@ -53,13 +57,15 @@ function notificationList($parameter = []) {
     $unreadOnly = !empty($parameter["unreadOnly"]) && json_decode((string)$parameter["unreadOnly"]);
     $limit = isset($parameter["limit"]) ? max(1, min(100, (int)$parameter["limit"])) : 20;
     $tbl = $config["platform"]["sql"]["tbl"]["Notification"];
+    $alertTbl = $config["platform"]["sql"]["tbl"]["Alert"];
 
+    // LEFT JOIN the alert so each alert notification carries its criteria snapshot.
     if ($unreadOnly) {
-        $rows = $db->getAll("SELECT * FROM ?n WHERE NotificationUserID = ?i AND NotificationRead = 0 ORDER BY NotificationCreated DESC LIMIT ?i",
-            $tbl, $userId, $limit);
+        $rows = $db->getAll("SELECT n.*, a.AlertCriteria FROM ?n n LEFT JOIN ?n a ON n.NotificationAlertID = a.AlertID WHERE n.NotificationUserID = ?i AND n.NotificationRead = 0 ORDER BY n.NotificationCreated DESC LIMIT ?i",
+            $tbl, $alertTbl, $userId, $limit);
     } else {
-        $rows = $db->getAll("SELECT * FROM ?n WHERE NotificationUserID = ?i ORDER BY NotificationCreated DESC LIMIT ?i",
-            $tbl, $userId, $limit);
+        $rows = $db->getAll("SELECT n.*, a.AlertCriteria FROM ?n n LEFT JOIN ?n a ON n.NotificationAlertID = a.AlertID WHERE n.NotificationUserID = ?i ORDER BY n.NotificationCreated DESC LIMIT ?i",
+            $tbl, $alertTbl, $userId, $limit);
     }
     $total = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE NotificationUserID = ?i", $tbl, $userId);
     $out = array_map('notificationRowToObject', $rows ?: []);

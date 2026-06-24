@@ -140,6 +140,7 @@ if ($totalResults != 0) {
 				$alertCriteria = array_filter([
 					"personID"          => $rssParams["personID"] ?? null,
 					"organisationID"    => $rssParams["organisationID"] ?? null,
+					"factionID"         => $rssParams["factionID"] ?? null,
 					"termID"            => $rssParams["termID"] ?? null,
 					"documentID"        => $rssParams["documentID"] ?? null,
 					"q"                 => $rssParams["q"] ?? null,
@@ -148,7 +149,43 @@ if ($totalResults != 0) {
 					"parliament"        => $rssParams["parliament"] ?? null,
 				], function ($v) { return $v !== null && $v !== ""; });
 				$hasAlertCriteria = isset($alertCriteria["personID"]) || isset($alertCriteria["organisationID"])
-					|| isset($alertCriteria["termID"]) || isset($alertCriteria["documentID"]) || isset($alertCriteria["q"]);
+					|| isset($alertCriteria["factionID"]) || isset($alertCriteria["termID"])
+					|| isset($alertCriteria["documentID"]) || isset($alertCriteria["q"]);
+				// Snapshot entity labels (+ faction/colour) so the alert modal and the
+				// alert/notification lists render names instead of raw IDs. Entity tokens
+				// may carry a "~role" suffix — resolve by the bare id.
+				if ($hasAlertCriteria) {
+					$alertLabels = [];
+					$resolveAlertLabels = function ($type, $ids) use (&$alertLabels) {
+						foreach ((array)$ids as $token) {
+							$id = strtok((string)$token, "~");
+							if ($id === "" || isset($alertLabels[$id])) { continue; }
+							$r = apiV1(["action" => "getItem", "itemType" => $type, "id" => $id]);
+							$d = $r["data"] ?? null;
+							if (!$d) { continue; }
+							$entry = ["label" => $d["attributes"]["label"] ?? $id];
+							if ($type === "person") {
+								$entry["type"] = $d["attributes"]["type"] ?? null; // subtype: memberOfParliament / person
+								if (!empty($d["relationships"]["faction"]["data"])) {
+									$entry["faction"] = $d["relationships"]["faction"]["data"]["id"];
+									$entry["factionLabel"] = $d["relationships"]["faction"]["data"]["attributes"]["label"] ?? "";
+								}
+							}
+							if ($type === "organisation" && !empty($d["attributes"]["color"])) {
+								$entry["color"] = $d["attributes"]["color"];
+							}
+							$alertLabels[$id] = $entry;
+						}
+					};
+					$resolveAlertLabels("person", $alertCriteria["personID"] ?? []);
+					$resolveAlertLabels("organisation", $alertCriteria["organisationID"] ?? []);
+					$resolveAlertLabels("organisation", $alertCriteria["factionID"] ?? []);
+					$resolveAlertLabels("term", $alertCriteria["termID"] ?? []);
+					$resolveAlertLabels("document", $alertCriteria["documentID"] ?? []);
+					if (!empty($alertLabels)) {
+						$alertCriteria["_labels"] = $alertLabels;
+					}
+				}
 				if ($hasAlertCriteria):
 ?>
 			<button type="button" id="saveAsAlertButton" class="btn btn-sm btn-outline-primary ms-2 align-middle" data-criteria="<?= hAttr(json_encode($alertCriteria, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>" title="<?= hAttr(L::alertSaveAsAlert()) ?>"><span class="saveAsAlertLabel"><?= L::alertSaveAsAlert() ?></span><svg class="ms-1" xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:baseline;"><path d="M12 22a2.5 2.5 0 0 0 2.45-2h-4.9A2.5 2.5 0 0 0 12 22zm6.36-6.4V10.5c0-3.07-1.64-5.64-4.5-6.32V3.5a1.86 1.86 0 0 0-3.72 0v.68C7.28 4.86 5.64 7.42 5.64 10.5v5.1L4 17.2v.8h16v-.8l-1.64-1.6z"/></svg></button>

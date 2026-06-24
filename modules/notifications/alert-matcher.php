@@ -20,26 +20,44 @@ function mediaMatchIndex($mediaItem) {
     $attr = $mediaItem["attributes"] ?? [];
     $rel = $mediaItem["relationships"] ?? [];
 
-    $idsFrom = function ($node) {
-        $out = [];
+    // Build, per relationship node, both the plain id set and the role-aware
+    // "<id>~<context>" token set so per-entity role filters can be matched.
+    $collect = function ($node) {
+        $ids = [];
+        $roleTokens = [];
         if (isset($node["data"]) && is_array($node["data"])) {
             foreach ($node["data"] as $entry) {
-                if (is_array($entry) && isset($entry["id"])) {
-                    $out[] = (string)$entry["id"];
-                }
+                if (!is_array($entry) || !isset($entry["id"])) { continue; }
+                $id = (string)$entry["id"];
+                $ids[] = $id;
+                $ctx = $entry["attributes"]["context"] ?? null;
+                if ($ctx) { $roleTokens[] = $id . "~" . $ctx; }
             }
         }
-        return $out;
+        return [array_values(array_unique($ids)), array_values(array_unique($roleTokens))];
     };
 
-    // Organisation match should also cover each speaker's party/faction org IDs,
-    // mirroring how a faction/party search scopes to that speaker's affiliation.
-    $orgIDs = $idsFrom($rel["organisations"] ?? []);
+    list($personIDs, $personRoles) = $collect($rel["people"] ?? []);
+    list($orgIDs, $orgRoles)       = $collect($rel["organisations"] ?? []);
+    list($termIDs, $termRoles)     = $collect($rel["terms"] ?? []);
+    list($docIDs, $docRoles)       = $collect($rel["documents"] ?? []);
+
+    // Organisation/faction match should also cover each speaker's party/faction org
+    // IDs, mirroring how a faction/party search scopes to that speaker's affiliation.
+    $factionIDs = [];
     if (isset($rel["people"]["data"]) && is_array($rel["people"]["data"])) {
         foreach ($rel["people"]["data"] as $person) {
             $pa = $person["attributes"] ?? [];
-            if (!empty($pa["party"]["id"]))   { $orgIDs[] = (string)$pa["party"]["id"]; }
-            if (!empty($pa["faction"]["id"])) { $orgIDs[] = (string)$pa["faction"]["id"]; }
+            if (!empty($pa["party"]["id"])) {
+                $orgIDs[] = (string)$pa["party"]["id"];
+                $orgRoles[] = (string)$pa["party"]["id"] . "~main-speaker-party";
+                $factionIDs[] = (string)$pa["party"]["id"];
+            }
+            if (!empty($pa["faction"]["id"])) {
+                $orgIDs[] = (string)$pa["faction"]["id"];
+                $orgRoles[] = (string)$pa["faction"]["id"] . "~main-speaker-faction";
+                $factionIDs[] = (string)$pa["faction"]["id"];
+            }
         }
     }
 
@@ -53,10 +71,16 @@ function mediaMatchIndex($mediaItem) {
     }
 
     return [
-        "personID" => array_values(array_unique($idsFrom($rel["people"] ?? []))),
+        "personID" => $personIDs,
+        "personID_roles" => $personRoles,
         "organisationID" => array_values(array_unique($orgIDs)),
-        "termID" => array_values(array_unique($idsFrom($rel["terms"] ?? []))),
-        "documentID" => array_values(array_unique($idsFrom($rel["documents"] ?? []))),
+        "organisationID_roles" => array_values(array_unique($orgRoles)),
+        "factionID" => array_values(array_unique($factionIDs)),
+        "factionID_roles" => array_values(array_unique($orgRoles)),
+        "termID" => $termIDs,
+        "termID_roles" => $termRoles,
+        "documentID" => $docIDs,
+        "documentID_roles" => $docRoles,
         "electoralPeriodID" => isset($rel["electoralPeriod"]["data"]["id"]) ? (string)$rel["electoralPeriod"]["data"]["id"] : null,
         "parliament" => $attr["parliament"] ?? null,
         "text" => strtolower(strip_tags($text)),
@@ -65,7 +89,9 @@ function mediaMatchIndex($mediaItem) {
 
 /**
  * Does a media index satisfy an alert's (normalized) criteria?
- * AND across filter types; OR within a multi-value entity filter.
+ * AND across filter types; OR within a multi-value entity filter. Per-entity role
+ * tokens ("<id>~<role>") match against the index' role-aware token set; plain ids
+ * match any context.
  */
 function mediaMatchesCriteria($index, $criteria) {
     $criteria = normalizeAlertCriteria($criteria);
@@ -74,10 +100,26 @@ function mediaMatchesCriteria($index, $criteria) {
     }
 
     foreach (alertCriteriaEntityKeys() as $key) {
-        if (!empty($criteria[$key])) {
-            if (empty(array_intersect($criteria[$key], $index[$key] ?? []))) {
-                return false;
+        if (empty($criteria[$key])) { continue; }
+        $plain = $index[$key] ?? [];
+        $roleTokens = $index[$key . "_roles"] ?? [];
+        // A role-less token means the key's default context (mirrors the search
+        // backend); "" default (org/term/document) and the "all"/"any" sentinel both
+        // mean "match any context".
+        $defaultRole = alertEntityKeyDefaultRole($key);
+        $matched = false;
+        foreach ($criteria[$key] as $token) {
+            list($id, $role) = alertSplitRoleToken($token);
+            if ($role === null || $role === "") { $role = $defaultRole; }
+            if ($role === "" || $role === "*" || $role === "all" || $role === "any") {
+                // Wildcard / empty default → match the id in any context.
+                if (in_array($id, $plain, true)) { $matched = true; break; }
+            } else {
+                if (in_array($id . "~" . $role, $roleTokens, true)) { $matched = true; break; }
             }
+        }
+        if (!$matched) {
+            return false;
         }
     }
 

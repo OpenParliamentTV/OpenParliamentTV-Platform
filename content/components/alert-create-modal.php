@@ -23,7 +23,7 @@ if (empty($_SESSION["login"]) || empty($config["allow"]["notifications"])) {
 				</div>
 				<div class="mb-3">
 					<label class="form-label"><?= L::alertCriteria() ?></label>
-					<div id="alertModalCriteriaSummary" class="form-text border rounded px-2 py-1"></div>
+					<div id="alertModalCriteriaChips" class="border rounded px-2 pt-2 pb-1"></div>
 				</div>
 				<div class="mb-3">
 					<label class="form-label" for="alertModalFrequency"><?= L::alertFrequency() ?></label>

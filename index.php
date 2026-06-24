@@ -826,18 +826,20 @@ switch ($page) {
 				$personDataFromRequest = array();
 				if (is_array($personIDs)) {
 					foreach ($personIDs as $personID) {
+						$personID = strtok((string)$personID, "~"); // strip per-entity "~role" suffix
 						$personData = apiV1([
-							"action"=>"getItem", 
-							"itemType"=>'person', 
+							"action"=>"getItem",
+							"itemType"=>'person',
 							"id"=>$personID
 						]);
 						$personDataFromRequest[$personID] = $personData['data'];
 						$pageTitle .= $personData['data']['attributes']['label'].' ';
 					}
 				} else {
+					$personIDs = strtok((string)$personIDs, "~"); // strip per-entity "~role" suffix
 					$personData = apiV1([
-						"action"=>"getItem", 
-						"itemType"=>'person', 
+						"action"=>"getItem",
+						"itemType"=>'person',
 						"id"=>$personIDs
 					]);
 					$personDataFromRequest[$personIDs] = $personData['data'];
@@ -856,18 +858,20 @@ switch ($page) {
 					
 					if (is_array($entityIDs)) {
 						foreach ($entityIDs as $entityID) {
+							$entityID = strtok((string)$entityID, "~"); // strip per-entity "~role" suffix
 							$entityData = apiV1([
-								"action"=>"getItem", 
-								"itemType"=>$entityType, 
+								"action"=>"getItem",
+								"itemType"=>$entityType,
 								"id"=>$entityID
 							]);
 							${$entityDataVarName}[$entityID] = $entityData['data'];
 							$pageTitle .= $entityData['data']['attributes']['label'].' ';
 						}
 					} else {
+						$entityIDs = strtok((string)$entityIDs, "~"); // strip per-entity "~role" suffix
 						$entityData = apiV1([
-							"action"=>"getItem", 
-							"itemType"=>$entityType, 
+							"action"=>"getItem",
+							"itemType"=>$entityType,
 							"id"=>$entityIDs
 						]);
 						${$entityDataVarName}[$entityIDs] = $entityData['data'];

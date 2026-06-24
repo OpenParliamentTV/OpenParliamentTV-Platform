@@ -24,6 +24,7 @@ if (empty($_SESSION["login"]) || $auth["meta"]["requestStatus"] != "success") {
             "read" => $a["read"],
             "created" => $a["created"],
             "notificationType" => $a["notificationType"],
+            "alertCriteria" => $a["alertCriteria"] ?? null,
         ];
     }, $items);
 
@@ -46,7 +47,7 @@ if (empty($_SESSION["login"]) || $auth["meta"]["requestStatus"] != "success") {
 <script type="text/javascript">
 $(function () {
     var notificationData = <?= json_encode($notificationRows, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
-    var labels = window.localizedLabels || {};
+    var labels = (typeof localizedLabels !== "undefined" && localizedLabels) ? localizedLabels : {};
     var api = (config.dir.root || "") + "/api/v1";
     function t(k, f) { return labels[k] || f || k; }
 
@@ -75,11 +76,25 @@ $(function () {
         dateFormatter: function (value) {
             return value ? new Date(value).toLocaleString('<?= $lang ?>') : "-";
         },
+        criteriaFormatter: function (value, row) {
+            // Placeholder; populated with shared chips in onPostBody.
+            return row.alertCriteria ? '<div class="alertCriteriaCell" data-id="' + escapeHtml(row.id) + '"></div>' : '';
+        },
         operateFormatter: function (value, row) {
             if (row.read) { return ''; }
             return '<a class="list-group-item list-group-item-action mark-read" title="' + t("markRead", "Mark as read") + '" href="javascript:void(0)"><span class="icon-ok"></span></a>';
         }
     };
+
+    // Render alert criteria as shared chips after each table (re)paint.
+    function renderCriteriaChips() {
+        if (!window.CriteriaChips) { return; }
+        notificationData.forEach(function (row) {
+            if (row.alertCriteria) {
+                CriteriaChips.render(row.alertCriteria, '.alertCriteriaCell[data-id="' + row.id + '"]', { editable: false });
+            }
+        });
+    }
 
     var operateEvents = {
         'click .mark-read': function (e, value, row) {
@@ -109,10 +124,12 @@ $(function () {
         sortName: 'created',
         sortOrder: 'desc',
         rowStyle: function (row) { return row.read ? {} : { classes: 'fw-semibold' }; },
+        onPostBody: renderCriteriaChips,
         columns: [
             {field: 'id', visible: false},
             {field: 'title', sortable: true, title: '<?= L::title(); ?>', formatter: formatters.titleFormatter, events: linkEvents},
             {field: 'body', sortable: true, title: '<?= L::notificationMessage(); ?>'},
+            {field: 'criteria', title: '<?= L::alertCriteria(); ?>', formatter: formatters.criteriaFormatter},
             {field: 'created', sortable: true, title: '<?= L::date(); ?>', formatter: formatters.dateFormatter},
             {field: 'operate', title: '<?= L::actions(); ?>', formatter: formatters.operateFormatter, events: operateEvents, class: 'minWidthColumn'}
         ]

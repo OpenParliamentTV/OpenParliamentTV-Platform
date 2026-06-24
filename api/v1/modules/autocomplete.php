@@ -288,6 +288,7 @@ function entitiesAutocomplete($query) {
                     $result = [
                         'id' => $person['PersonID'],
                         'type' => 'person',
+                        'subtype' => $person['PersonType'],
                         'label' => $highlightText($person['PersonLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
                         'thumbnailURI' => $person['PersonThumbnailURI']
@@ -306,8 +307,8 @@ function entitiesAutocomplete($query) {
             }
         }
         
-        // 2. Other people (all without type memberOfParliament) - TEMPORARILY DISABLED
-        /* Temporarily disabled - only showing memberOfParliament in suggestions
+        // 2. Other people (without type memberOfParliament) — fill the remaining
+        //    slots only when fewer than the max were found among MPs.
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
             $peopleOther = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, p.PersonThumbnailURI, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType != 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(JSON_UNQUOTE(JSON_EXTRACT(p.PersonLabelAlternative, '$[0]'))) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
@@ -333,6 +334,7 @@ function entitiesAutocomplete($query) {
                     $result = [
                         'id' => $person['PersonID'],
                         'type' => 'person',
+                        'subtype' => $person['PersonType'],
                         'label' => $highlightText($person['PersonLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
                         'thumbnailURI' => $person['PersonThumbnailURI']
@@ -350,8 +352,7 @@ function entitiesAutocomplete($query) {
                 }
             }
         }
-        */
-        
+
         // 3. Organisations
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);

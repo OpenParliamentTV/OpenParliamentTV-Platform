@@ -1540,6 +1540,95 @@ body.fixed .searchContainer {
     box-shadow: 0 0 0 .2rem var(--border-color);
 }
 
+/* ---- Per-entity role control ("as:") — shared by filterbar + criteriaChips ---- */
+.queryRole {
+    display: inline-flex;
+    align-items: center;
+}
+.queryRole.queryRoleEditable {
+    position: relative;
+}
+.queryRole .queryRoleToggle {
+    cursor: pointer;
+    opacity: .65;
+}
+.queryRole.queryRoleEditable .queryRoleToggle:hover {
+    opacity: 1;
+}
+.queryRoleMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1090;
+    min-width: 190px;
+    margin-top: 4px;
+    padding: 4px 0;
+    background: var(--secondary-bg-color, #ffffff);
+    border: 1px solid var(--border-color, #cccccc);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px var(--shadow-color, rgba(0,0,0,.15));
+    white-space: nowrap;
+}
+.queryRoleMenu.show {
+    display: block;
+}
+.queryRoleMenuHeader {
+    display: block;
+    padding: 2px 12px;
+    font-size: 75%;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    opacity: .55;
+}
+.queryRoleOption {
+    display: flex;
+    align-items: center;
+    padding: 4px 12px;
+    cursor: pointer;
+    font-size: 90%;
+}
+.queryRoleOption:hover {
+    background: var(--primary-bg-color, #f0f0f0);
+}
+.queryRoleOption.active {
+    font-weight: bold;
+}
+
+/* ---- Shared criteria chips (alert modal, /manage/alerts, /notifications) ---- */
+.criteriaChips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.criteriaChips .queryItem {
+    position: relative;
+    padding: 2px 8px;
+    margin-right: 7px;
+    margin-bottom: 6px;
+    border: 1px solid #aaaaaa;
+    border-radius: 3px;
+    white-space: nowrap;
+    cursor: default;
+}
+.criteriaChips .queryItem .queryDeleteItem {
+    cursor: pointer;
+    opacity: .65;
+}
+.criteriaChips .queryItem .queryDeleteItem:hover {
+    opacity: 1;
+}
+.criteriaChips .partyIndicator {
+    display: inline-block;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    background: transparent;
+    white-space: nowrap;
+    font-size: 70%;
+    padding: 0px 5px;
+}
+
 .searchContainer .searchInputContainer input#edit-query,
 .searchContainer .searchInputContainer input#edit-query:focus,
 .searchContainer .searchInputContainer input#edit-query:focus-visible,

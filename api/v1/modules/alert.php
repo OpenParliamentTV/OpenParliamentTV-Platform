@@ -49,8 +49,10 @@ function alertRowToObject($row) {
 }
 
 /**
- * Extract criteria from a request: accepts a `criteria` param (JSON string or array)
- * or falls back to top-level search-style params on the request itself.
+ * Extract the raw criteria array from a request: accepts a `criteria` param (JSON
+ * string or array) or falls back to top-level search-style params on the request
+ * itself. Returns the *raw* array (incl. any `_labels` snapshot); callers
+ * normalize for validity/dedup and persist via alertCriteriaStorageJson().
  */
 function alertExtractCriteria($parameter) {
     $raw = [];
@@ -59,7 +61,7 @@ function alertExtractCriteria($parameter) {
     } else {
         $raw = $parameter; // pick the known keys out of the request directly
     }
-    return normalizeAlertCriteria($raw);
+    return is_array($raw) ? $raw : [];
 }
 
 function alertList($parameter = []) {
@@ -105,7 +107,8 @@ function alertCreate($parameter = []) {
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) { return $db; }
 
-    $criteria = alertExtractCriteria($parameter);
+    $raw = alertExtractCriteria($parameter);
+    $criteria = normalizeAlertCriteria($raw);
     if (empty($criteria)) {
         return createApiErrorResponse(422, 1, "messageErrorMissingParameter", "messageAlertCriteriaEmpty");
     }
@@ -119,7 +122,7 @@ function alertCreate($parameter = []) {
 
     $label = isset($parameter["label"]) ? trim((string)$parameter["label"]) : "";
     if ($label === "") {
-        $label = alertCriteriaSummary($criteria) ?: "Alert";
+        $label = alertCriteriaSummary($raw) ?: "Alert";
     }
     $label = mb_substr($label, 0, 255);
 
@@ -133,7 +136,7 @@ function alertCreate($parameter = []) {
     $db->query("INSERT INTO ?n SET ?u", $config["platform"]["sql"]["tbl"]["Alert"], [
         "AlertUserID" => $userId,
         "AlertLabel" => $label,
-        "AlertCriteria" => alertCriteriaCanonicalJson($criteria),
+        "AlertCriteria" => alertCriteriaStorageJson($raw),
         "AlertFrequency" => $frequency,
         "AlertChannelEmail" => $channelEmail,
         "AlertChannelInApp" => $channelInApp,
@@ -180,11 +183,11 @@ function alertUpdate($parameter = []) {
         $set["AlertActive"] = (int)(bool)json_decode((string)$parameter["active"]);
     }
     if (isset($parameter["criteria"])) {
-        $criteria = alertExtractCriteria($parameter);
-        if (empty($criteria)) {
+        $raw = alertExtractCriteria($parameter);
+        if (empty(normalizeAlertCriteria($raw))) {
             return createApiErrorResponse(422, 1, "messageErrorMissingParameter", "messageAlertCriteriaEmpty");
         }
-        $set["AlertCriteria"] = alertCriteriaCanonicalJson($criteria);
+        $set["AlertCriteria"] = alertCriteriaStorageJson($raw);
     }
 
     if (empty($set)) {
@@ -228,22 +231,31 @@ function alertStatus($parameter = []) {
     $userId = alertRequireUser();
     if (is_array($userId)) { return $userId; }
 
-    $criteria = alertExtractCriteria($parameter);
-    if (empty($criteria)) {
+    $raw = alertExtractCriteria($parameter);
+    if (empty(normalizeAlertCriteria($raw))) {
         return createApiSuccessResponse(["subscribed" => false, "alertID" => null]);
     }
-    $canonical = alertCriteriaCanonicalJson($criteria);
+    $canonical = alertCriteriaCanonicalJson($raw);
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) { return $db; }
 
-    $match = $db->getOne(
-        "SELECT AlertID FROM ?n WHERE AlertUserID = ?i AND AlertCriteria = ?s LIMIT 1",
-        $config["platform"]["sql"]["tbl"]["Alert"], $userId, $canonical
+    // Stored AlertCriteria carries a presentation `_labels` sidecar, so compare on
+    // the canonical (labels-stripped) form rather than a raw string match.
+    $rows = $db->getAll(
+        "SELECT AlertID, AlertCriteria FROM ?n WHERE AlertUserID = ?i",
+        $config["platform"]["sql"]["tbl"]["Alert"], $userId
     );
+    $matchID = null;
+    foreach ($rows ?: [] as $r) {
+        if (alertCriteriaCanonicalJson(json_decode($r["AlertCriteria"], true)) === $canonical) {
+            $matchID = (int)$r["AlertID"];
+            break;
+        }
+    }
 
     return createApiSuccessResponse([
-        "subscribed" => $match ? true : false,
-        "alertID" => $match ? (int)$match : null,
+        "subscribed" => $matchID ? true : false,
+        "alertID" => $matchID,
     ]);
 }

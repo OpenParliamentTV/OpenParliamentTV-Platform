@@ -7,7 +7,7 @@
 	"use strict";
 
 	var apiBase = (window.config && config.dir && config.dir.root ? config.dir.root : "") + "/api/v1";
-	var labels = window.localizedLabels || {};
+	var labels = (typeof localizedLabels !== "undefined" && localizedLabels) ? localizedLabels : {};
 	function t(key, fallback) { return labels[key] || fallback || key; }
 
 	function post(path, params) {
@@ -32,10 +32,16 @@
 
 	function criteriaSummary(criteria) {
 		var parts = [];
+		var labels = (criteria && criteria._labels) || {};
+		var nameOf = function (token) {
+			var id = String(token).split("~")[0];
+			return (labels[id] && labels[id].label) || id;
+		};
 		if (criteria.q) { parts.push("“" + criteria.q + "”"); }
-		[["personID", "Person"], ["organisationID", "Organisation"], ["termID", "Term"], ["documentID", "Document"]].forEach(function (p) {
-			var v = criteria[p[0]];
-			if (v) { parts.push(p[1] + ": " + (Array.isArray(v) ? v.join(", ") : v)); }
+		["personID", "organisationID", "factionID", "termID", "documentID"].forEach(function (key) {
+			var v = criteria[key];
+			if (!v) { return; }
+			parts.push((Array.isArray(v) ? v : [v]).map(nameOf).join(", "));
 		});
 		return parts.join(" · ");
 	}
@@ -51,7 +57,11 @@
 		document.getElementById("alertModalId").value = opts.id || "";
 		document.getElementById("alertModalCriteria").value = JSON.stringify(criteria);
 		document.getElementById("alertModalLabel").value = opts.label || criteriaSummary(criteria) || "";
-		document.getElementById("alertModalCriteriaSummary").textContent = criteriaSummary(criteria) || "—";
+		// Render the criteria as editable chips (delete + per-entity role) via the
+		// shared CriteriaChips component, the same visual used in the filterbar/lists.
+		if (window.CriteriaChips) {
+			CriteriaChips.render(criteria, "#alertModalCriteriaChips", { editable: true });
+		}
 		document.getElementById("alertModalFrequency").value = opts.frequency || "realtime";
 		document.getElementById("alertModalChannelInApp").checked = opts.channelInApp !== false;
 		document.getElementById("alertModalChannelEmail").checked = opts.channelEmail !== false;
@@ -63,8 +73,16 @@
 		var saveBtn = document.getElementById("alertModalSave");
 		saveBtn.addEventListener("click", function () {
 			var id = document.getElementById("alertModalId").value;
+			// Collect the (possibly edited) chips back into criteria, then re-apply the
+			// scalar filters that aren't represented as editable chips.
+			var baseCriteria = {};
+			try { baseCriteria = JSON.parse(document.getElementById("alertModalCriteria").value || "{}"); } catch (e) {}
+			var criteria = window.CriteriaChips ? CriteriaChips.collect("#alertModalCriteriaChips") : baseCriteria;
+			["parliament", "electoralPeriodID", "context"].forEach(function (k) {
+				if (baseCriteria[k]) { criteria[k] = baseCriteria[k]; }
+			});
 			var params = {
-				criteria: document.getElementById("alertModalCriteria").value,
+				criteria: JSON.stringify(criteria),
 				label: document.getElementById("alertModalLabel").value,
 				frequency: document.getElementById("alertModalFrequency").value,
 				channelInApp: document.getElementById("alertModalChannelInApp").checked,

@@ -10,7 +10,7 @@
 	if (!bell) { return; }
 
 	var apiBase = (window.config && config.dir && config.dir.root ? config.dir.root : "") + "/api/v1";
-	var labels = window.localizedLabels || {};
+	var labels = (typeof localizedLabels !== "undefined" && localizedLabels) ? localizedLabels : {};
 	var badge = document.getElementById("notificationBellBadge");
 	var list = document.getElementById("notificationBellList");
 	var markAllBtn = document.getElementById("notificationMarkAllRead");
