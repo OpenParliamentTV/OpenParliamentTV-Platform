@@ -589,22 +589,6 @@ switch ($page) {
 			$content = ob_get_clean();
 		}
 	break;
-	case "manage-notifications":
-		$pageTitle = L::notificationSettingsTitle();
-		$pageType = 'default';
-		$pageBreadcrumbs = [
-			[
-				'label' => '<span class="icon-th-1 me-0"></span>',
-				'path' => '/manage'
-			],
-			[
-				'label' => $pageTitle,
-			]
-		];
-		ob_start();
-		include_once("./content/pages/manage/notifications/page.php");
-		$content = ob_get_clean();
-	break;
 	case "manage-alerts":
 		$pageTitle = L::alertManageTitle();
 		$pageType = 'entity';
@@ -619,22 +603,6 @@ switch ($page) {
 		];
 		ob_start();
 		include_once("./content/pages/manage/alerts/page.php");
-		$content = ob_get_clean();
-	break;
-	case "manage-system-messages":
-		$pageTitle = L::notifications();
-		$pageType = 'admin';
-		$pageBreadcrumbs = [
-			[
-				'label' => '<span class="icon-th-1 me-0"></span>',
-				'path' => '/manage'
-			],
-			[
-				'label' => $pageTitle,
-			]
-		];
-		ob_start();
-		include_once("./content/pages/manage/system-messages/page.php");
 		$content = ob_get_clean();
 	break;
 	case "notifications":
@@ -783,7 +751,9 @@ switch ($page) {
 				include_once("./content/pages/404/page.php");
 			} else {
 				$pageTitle = L::edit().': '.L::user();
-				$pageType = 'admin';
+				// Users may open their own profile (personal settings); editing
+				// other users stays admin-only.
+				$pageType = ($_REQUEST["id"] == ($_SESSION["userdata"]["id"] ?? null)) ? 'default' : 'admin';
 				$pageBreadcrumbs = [
 					[
 						'label' => '<span class="icon-th-1 me-0"></span>',
