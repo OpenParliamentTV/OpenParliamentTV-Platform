@@ -720,6 +720,14 @@ body.darkmode .playerContainer .playerProgress .ui-slider-range {
 	display: none !important;
 }
 
+/* FrameTrail has no config flag for these controls (sharingWidget is static
+   markup; layoutAreasButton auto-shows when any layout area is visible), so hide
+   them via CSS like the other controls above. */
+.sharingWidget,
+.layoutAreasButton {
+	display: none !important;
+}
+
 .hypervideoContainer .videoContainer .videoStartOverlay .playButtonBig {
 	background-color: #fff;
 }
