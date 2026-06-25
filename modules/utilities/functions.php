@@ -911,9 +911,20 @@ function include_custom($file, $include = true) {
 
     $custompath = str_replace($selfpath["dirname"], $selfpath["dirname"]."/custom/", $pathinfo["dirname"]);
 
-    if (file_exists($custompath."/".$pathinfo["filename"].".".$_SESSION["lang"].".".$pathinfo["extension"])) {
+    // Resolve the active language the same way L:: does (request → session → Accept-Language → cookie → fallback),
+    // not just $_SESSION["lang"], which is only set after an explicit ?lang= switch. Otherwise the localized
+    // template (e.g. home.en.php) is skipped while L:: already renders in that language, mixing languages on the page.
+    $lang = isset($_SESSION["lang"]) ? $_SESSION["lang"] : null;
+    if (class_exists("LanguageManager")) {
+        $currentLang = LanguageManager::getInstance()->getCurrentLang();
+        if (!empty($currentLang)) {
+            $lang = $currentLang;
+        }
+    }
 
-        $path = realpath($custompath."/".$pathinfo["filename"].".".$_SESSION["lang"].".".$pathinfo["extension"]);
+    if ($lang !== null && file_exists($custompath."/".$pathinfo["filename"].".".$lang.".".$pathinfo["extension"])) {
+
+        $path = realpath($custompath."/".$pathinfo["filename"].".".$lang.".".$pathinfo["extension"]);
 
     } elseif (file_exists($custompath."/".$pathinfo["basename"])) {
 
