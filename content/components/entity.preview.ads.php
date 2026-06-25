@@ -1,3 +1,4 @@
+<?php defined('OPTV') or die(); ?>
 <?php
 require_once(__DIR__ . '/../../modules/utilities/security.php');
 // Handle POST data for preview

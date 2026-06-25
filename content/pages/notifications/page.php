@@ -1,14 +1,6 @@
-<?php
-include_once(__DIR__ . '/../../../modules/utilities/auth.php');
-
-$auth = auth($_SESSION["userdata"]["id"] ?? null, "requestPage", $pageType);
-
-if (empty($_SESSION["login"]) || $auth["meta"]["requestStatus"] != "success") {
-
-    $alertText = $auth["errors"][0]["detail"] ?? "";
-    include_once (__DIR__."/../login/page.php");
-
-} else {
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/admin') ?>
+<?php 
 
     require_once(__DIR__ . '/../../../api/v1/modules/notification.php');
     $resp = notificationList(["limit" => 100]);
@@ -30,7 +22,6 @@ if (empty($_SESSION["login"]) || $auth["meta"]["requestStatus"] != "success") {
         ];
     }, $items);
 
-    include_once(__DIR__ . '/../../header.php');
 
     // Bulk action toolbar, repeated in each tab (scope = closest .tab-pane).
     $bulkToolbar = function () { ?>
@@ -322,10 +313,4 @@ $(function () {
     });
 });
 </script>
-    <?php
-
-}
-
-include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false));
-
-?>
+    

@@ -1,4 +1,5 @@
-<?php include_once(__DIR__ . '/../../header.php'); ?>
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/default') ?>
 <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
@@ -6,4 +7,3 @@
 		</div>
 	</div>
 </main>
-<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>

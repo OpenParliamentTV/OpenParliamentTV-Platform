@@ -1,4 +1,7 @@
 <?php
+// NOTE: direct-access AJAX endpoint (fetched by mediaResults.js as
+// /content/components/result.grid.php) — must NOT have the OPTV guard; it
+// bootstraps config/session itself below.
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

@@ -1,16 +1,7 @@
-<?php
-include_once(__DIR__ . '/../../../../modules/utilities/auth.php');
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/admin') ?>
+<?php 
 
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../../login/page.php");
-
-} else {
-
-    include_once(__DIR__ . '/../../../header.php');
     include_once (__DIR__."/../../../../api/v1/api.php");
 
     require_once(__DIR__ . '/../../../../api/v1/modules/systemMessage.php');
@@ -401,9 +392,3 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 
     </script>
-<?php
-
-    include_once (include_custom(realpath(__DIR__ . '/../../../footer.php'),false));
-
-}
-?>

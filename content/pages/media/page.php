@@ -1,29 +1,8 @@
-<?php
-
-include_once(__DIR__ . '/../../../modules/utilities/auth.php');
-
-$auth = auth(isset($_SESSION["userdata"]["id"]) ? $_SESSION["userdata"]["id"] : null, "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../login/page.php");
-
-} else {
-
-
-    include_once(__DIR__ . '/../../header.php');
-    require_once(__DIR__."/../../../modules/media/include.media.php");
-
-if ($emptyResult == 1) {
-    include_once(__DIR__ . '/../404/page.php');
-} else {
-    $flatDataArray = flattenEntityJSON($apiResult["data"][0]);
-?>
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/default') ?>
     <main id="content">
-        <?php include_once('content.player.php'); ?>
+        <?php include_once(__DIR__ . '/content.player.php'); ?>
     </main>
-    <?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
     <script src="https://cdn.jsdelivr.net/npm/@frametrail/frametrail@v1.2.1/frametrail.min.js"></script>
     <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.js?v=<?= $config["version"] ?>"></script>
     <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/quote-selector.js?v=<?= $config["version"] ?>"></script>
@@ -32,8 +11,3 @@ if ($emptyResult == 1) {
         var autoplayResults = <?php if ($autoplayResults) { echo 'true'; } else { echo 'false'; } ?>;
         var currentMediaID = <?= json_encode($speech['id'], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
     </script>
-
-<?php
-    }
-}
-?>

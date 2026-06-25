@@ -1,6 +1,5 @@
-<?php
-include_once(__DIR__ . '/../../header.php');
-?>
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/default') ?>
 <main class="container subpage" style="height: calc(100% - 70px);">
 	<div class="h-100">
 	<div class="row h-100 align-items-center justify-content-center">
@@ -12,6 +11,3 @@ include_once(__DIR__ . '/../../header.php');
     </div>
 	</div>
 </main>
-<?php
-include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false));
-?>

@@ -1,7 +1,5 @@
-<?php 
-require_once(__DIR__ . '/../../modules/utilities/security.php');
-include_once(__DIR__ . '/../../header.php');
-?>
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/default') ?>
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
@@ -26,5 +24,4 @@ include_once(__DIR__ . '/../../header.php');
 		</div>
 	</div>
 </main>
-<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <script type="text/javascript" src="content/pages/registerconfirm/client/registerconfirm.functions.js"></script>

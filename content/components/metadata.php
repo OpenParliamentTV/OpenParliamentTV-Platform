@@ -1,4 +1,4 @@
-<?php 
+<?php defined('OPTV') or die();
 require_once(__DIR__ . '/../../modules/utilities/security.php');
 
 if (!isset($page)) {

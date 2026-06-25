@@ -1,10 +1,6 @@
-<?php 
-require_once(__DIR__ . '/../../../modules/utilities/security.php');
-include_once(__DIR__ . '/../../header.php');
-?>
-<?php
-$alertText = $alertText ?? null;
-?>
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/default') ?>
+<?php $alertText = $alertText ?? null; ?>
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
@@ -46,7 +42,6 @@ $alertText = $alertText ?? null;
 		</div>
 	</div>
 </main>
-<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <script>
 $(function() {
     // Reset form validation state

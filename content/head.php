@@ -1,3 +1,4 @@
+<?php defined('OPTV') or die(); ?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta charset="utf-8">
 <meta http-equiv="cache-control" content="no-cache">

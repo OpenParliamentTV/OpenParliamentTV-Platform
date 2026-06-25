@@ -1,7 +1,7 @@
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/embed') ?>
 <?php
-
-require_once(__DIR__ . "/../../../../modules/utilities/security.php");
-require_once(__DIR__."/../../../../modules/utilities/functions.entities.php");
+require_once(__DIR__ . "/../../../../modules/utilities/functions.entities.php");
 $flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <main class="mt-0" style="height: 100%">

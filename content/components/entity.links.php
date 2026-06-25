@@ -1,3 +1,4 @@
+<?php defined('OPTV') or die(); ?>
 <div class="entityLinksContainer d-flex flex-row flex-md-column mt-3 mt-md-0">
 	<?php if ($apiResult["data"]["type"] == "person" || $apiResult["data"]["type"] == "organisation" || $apiResult["data"]["type"] == "term") { ?>
 		<div class="text-right">

@@ -1,3 +1,4 @@
+<?php defined('OPTV') or die(); ?>
 <?php
 require_once(__DIR__ . '/../../modules/utilities/security.php');
 // Determine the page size based on the limit parameter or default config

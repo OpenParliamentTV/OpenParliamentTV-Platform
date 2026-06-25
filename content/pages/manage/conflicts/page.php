@@ -1,16 +1,7 @@
-<?php
-include_once(__DIR__ . '/../../../../modules/utilities/auth.php');
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/admin') ?>
+<?php 
 
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../../login/page.php");
-
-} else {
-
-    include_once(include_custom(realpath(__DIR__ . '/../../header.php'),false));
     // Ensure API functions and the apiV1 dispatcher are available for programmatic call
     require_once(__DIR__ . '/../../../../api/v1/utilities.php');
     require_once(__DIR__ . '/../../../../api/v1/api.php');
@@ -176,9 +167,3 @@ $(document).on("click",".conflictsDetailToggle", function() {
 });
 </script>
 
-<?php
-
-    include_once (include_custom(realpath(__DIR__ . '/../../../footer.php'),false));
-
-}
-?>

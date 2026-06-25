@@ -1,3 +1,4 @@
+<?php defined('OPTV') or die(); ?>
 <?php
 // Optional parameters that can be passed to this component
 $showSearchBar = isset($showSearchBar) ? $showSearchBar : false;
