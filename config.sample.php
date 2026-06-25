@@ -68,7 +68,8 @@ $acceptLang = array(
     "de"=>array(
         "short"=>"de",
         "name"=>"Deutsch",
-        "icon"=>""
+        "icon"=>"",
+        "default"=>true
     ),
     "en"=>array(
         "short"=>"en",

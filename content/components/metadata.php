@@ -50,6 +50,7 @@ switch ($page) {
 <meta property="og:type" content="<?= hAttr($ogType) ?>" />
 <meta property="og:image" content="<?= hAttr($image) ?>" />
 <meta property="og:description" content="<?= hAttr($description) ?>" />
+<meta property="og:locale" content="<?= hAttr(LanguageManager::getInstance()->getCurrentLang()) ?>" />
 
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@OpenParlTV">

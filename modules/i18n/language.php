@@ -23,25 +23,49 @@ class LanguageManager {
         return self::$instance;
     }
 
+    /**
+     * Resolves the configured default language from $acceptLang.
+     * Looks for the entry flagged with "default" => true. Falls back to the
+     * first key in $acceptLang, or 'en' as an absolute last resort.
+     * Single source of truth for the instance default language (used for
+     * bots/crawlers with no session, cookie or Accept-Language header).
+     */
+    public static function getDefaultLang() {
+        global $acceptLang;
+
+        if (isset($acceptLang) && is_array($acceptLang)) {
+            foreach ($acceptLang as $code => $entry) {
+                if (!empty($entry['default'])) {
+                    return $code;
+                }
+            }
+            return array_key_first($acceptLang) ?? 'en';
+        }
+
+        return 'en';
+    }
+
     public function init($customConfig = null) {
         if ($this->initialized) {
             return;
         }
 
         global $config, $acceptLang;
-        
+
+        $defaultLang = self::getDefaultLang();
+
         // Handle language switching via request
         if (isset($_REQUEST["lang"]) && isset($acceptLang) && array_key_exists($_REQUEST["lang"], $acceptLang)) {
             $_SESSION["lang"] = $_REQUEST["lang"];
             // Force the language to be the one requested
             $this->currentLang = $_REQUEST["lang"];
         }
-        
+
         // Default configuration using absolute paths
         $defaultConfig = [
             'filePath' => $this->projectRoot . '/lang/lang_{LANGUAGE}.json',
             'cachePath' => $this->projectRoot . '/langcache/',
-            'fallbackLang' => 'de'
+            'fallbackLang' => $defaultLang
         ];
 
         // Merge with provided config
@@ -58,8 +82,8 @@ class LanguageManager {
         // Determine current language if not already set
         if ($this->currentLang === null) {
             $userLang = $this->i18n->getUserLangs();
-            $langIntersection = array_values(array_intersect($userLang, array_keys($acceptLang ?? ['de' => true])));
-            $this->currentLang = (count($langIntersection) > 0) ? $langIntersection[0] : 'de';
+            $langIntersection = array_values(array_intersect($userLang, array_keys($acceptLang ?? [$defaultLang => true])));
+            $this->currentLang = (count($langIntersection) > 0) ? $langIntersection[0] : $defaultLang;
         }
 
         // Load language JSON for JavaScript using absolute path

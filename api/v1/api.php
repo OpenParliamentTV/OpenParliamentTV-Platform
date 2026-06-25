@@ -31,6 +31,18 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
         );
     }
 
+    // Content negotiation: serve IIIF Manifests from existing media/session URIs.
+    require_once (__DIR__."/modules/iiif.php");
+    if (isIIIFRequest()) {
+        $iiifResult = handleIIIFRequest($api_request);
+        if ($iiifResult !== null) {
+            header('Content-Type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"');
+            header('Access-Control-Allow-Origin: *'); // IIIF viewers fetch cross-origin
+            return $iiifResult;
+        }
+        // null => fall through to normal routing (produces proper error responses)
+    }
+
 
     switch ($api_request["action"]) {
 
@@ -73,6 +85,47 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/electoralPeriod.php");
                     $item = electoralPeriodGetByID($api_request["id"]);
                     return createApiResponse($item);
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
+        case "transcript":
+            require_once (__DIR__."/modules/transcript.php");
+            switch ($api_request["itemType"]) {
+                case "vtt":
+                    // Serves text/vtt directly and exits (bypasses JSON encoder).
+                    transcriptServeVTT(
+                        $api_request["id"] ?? "",
+                        $api_request["type"] ?? null,
+                        $api_request["lang"] ?? null
+                    );
+                    return; // unreachable; transcriptServeVTT exits
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
+        case "iiif":
+            require_once (__DIR__."/modules/iiif.php");
+            switch ($api_request["itemType"]) {
+                case "collection":
+                    $collection = iiifGenerateCollection(
+                        $api_request["parliament"] ?? "",
+                        $api_request["electoralPeriod"] ?? null
+                    );
+                    if ($collection === null) {
+                        return createApiResponse(
+                            createApiErrorInvalidParameter("parliament")
+                        );
+                    }
+                    header('Content-Type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"');
+                    header('Access-Control-Allow-Origin: *');
+                    return $collection;
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
