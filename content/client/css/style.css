@@ -964,7 +964,7 @@ body.darkmode .modal-content .btn-close {
 }
 
 .relationshipsList .entityPreview .entityContainer {
-    background: var(--primary-bg-color);
+    background: var(--secondary-bg-color);
     padding: 0px;
     display: block;
     margin-bottom: 10px;
