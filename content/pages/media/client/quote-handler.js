@@ -69,7 +69,7 @@ function processQuery() {
 	var words = document.querySelectorAll('p:not([data-type="comment"]) span[data-start]');
 
 	if (start && end) {
-		for (var i = 1; i < words.length; i++) {
+		for (var i = 0; i < words.length; i++) {
 			var wordStart = parseFloat(words[i].getAttribute("data-start"));
 			if (wordStart >= start && end > wordStart) {
 				words[i].classList.add("quote-highlight");

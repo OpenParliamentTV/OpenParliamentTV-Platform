@@ -178,7 +178,7 @@ function getQuoteFromRequestParams($timings, $fragments, $transcriptHTML) {
 	}
 
 	if ($start && $end) {
-		for ($i = 1; $i < count($words); $i++) {
+		for ($i = 0; $i < count($words); $i++) {
 			$wordStart = $words[$i]->getAttribute("data-start");
 			if ($wordStart >= $start && $end > $wordStart) {
 				$quoteString .= $words[$i]->nodeValue;
