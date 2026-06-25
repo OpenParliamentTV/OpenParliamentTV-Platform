@@ -3,108 +3,26 @@
 ########################################
 <IfModule mod_rewrite.c>
 	Options +FollowSymLinks
-	########################################
-	# Try to fix conflicting rewrite rules 
-	# set by Wordpress etc:
-	########################################
 	RewriteEngine Off
 	RewriteEngine On
+
 	########################################
-	# Set Rewrite Base
-	########################################
-	#RewriteBase /
-	########################################
-	# Always remove trailing slash
+	# Always remove trailing slash (except for real directories)
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_URI} (.+)/$
-	RewriteRule ^ %1 [L,R]
+	RewriteRule ^ %1 [L,R=301]
+
 	########################################
-	# Rewrite non-existing urls
+	# Send all non-file, non-directory requests to index.php.
+	# Existing files (JS, CSS, images, content.player.php, share-image.php,
+	# api/…, etc.) are served directly by Apache and never hit the router.
 	########################################
-	#TODO
-	########################################
-	# Rewrite /manage/entities/ urls
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/(entities)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/(entities)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3 [QSA,L]
-	########################################
-	# Rewrite /import/ urls
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/(import)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/(import)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3 [QSA,L]
-	########################################
-	# Rewrite general /manage/ urls
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2&id=$3 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
-	########################################
-	# Rewrite /embed/ urls
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(embed)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
-	########################################
-	# Rewrite /campaigns/ urls
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(campaigns)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
-	########################################
-	# Rewrite /documentation/ urls
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(documentation)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2&id=$3 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(documentation)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
-	########################################
-	# Rewrite /feed/ urls
-	########################################
-	# Global feeds (no ID): /feed/media, /feed/sessions
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^feed/(media|sessions)$ index.php?a=feed&feedType=$1 [QSA,L]
-	# Entity feeds (with ID): /feed/person/Q567 etc.
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^feed/(person|organisation|term|document|session|agendaItem)/([a-zA-Z0-9_-]+)$ index.php?a=feed&feedType=$1&id=$2 [QSA,L]
-	# Search feed (filters passed through via QSA): /feed/search?personID=...
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^feed/search$ index.php?a=feed&feedType=search [QSA,L]
-	########################################
-	# Generic URL Rewrites
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2&id=$3 [QSA,L]
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1&id=$2 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^([a-zA-Z0-9_-]+)? index.php?a=$1 [QSA]
+	RewriteRule ^ index.php [QSA,L]
 </IfModule>
+
 ########################################
 # Add Mime Types
 ########################################

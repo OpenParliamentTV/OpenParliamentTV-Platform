@@ -1,17 +1,5 @@
-<?php
-
-include_once(__DIR__ . '/../../../modules/utilities/auth.php');
-
-$auth = auth($_SESSION["userdata"]["id"] ?? null, "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../login/page.php");
-
-} else {
-
-    include_once(__DIR__ . '/../../header.php'); ?>
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/default') ?>
 <main class="container-fluid">
 	<?php 
 	// Include the filter bar component with all features enabled for search page
@@ -42,12 +30,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		</div>
 	</div>
 </main>
-<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/filterController.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/search/client/search.js?v=<?= $config["version"] ?>"></script>
-
-<?php
-}
-?>

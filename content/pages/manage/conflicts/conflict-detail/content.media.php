@@ -1,3 +1,4 @@
+<?php defined('OPTV') or die(); ?>
 <table class="table table-borderless" id="conflictCompareTable">
 <?php
 

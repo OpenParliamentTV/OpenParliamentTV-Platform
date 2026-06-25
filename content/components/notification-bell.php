@@ -1,3 +1,4 @@
+<?php defined('OPTV') or die(); ?>
 <?php
 /**
  * Notification bell. Rendered in the header for logged-in users only.

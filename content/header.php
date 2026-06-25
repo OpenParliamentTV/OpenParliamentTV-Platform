@@ -1,4 +1,4 @@
-<?php
+<?php defined('OPTV') or die();
 if (!isset($page)) {
 	$page = ''; // Initialize $page if not set
 }
@@ -46,8 +46,11 @@ if (!isset($page)) {
 				// Remove unwanted parameters and rebuild clean parameter string
 				$backParamStr = preg_replace('/[?&](playresults=[0-1]|context=[^&]+|id=[^&]+)/', '', $paramStr);
 				$backParamStr = preg_replace('/^&|&&+/', '&', $backParamStr);
-				if (!empty($backParamStr)) {
-					$backParamStr = '?' . ltrim($backParamStr, '&');
+				// Strip a leading '?' or '&' (the removed id/playresults param may or
+				// may not have been the first one) before re-prepending a single '?'.
+				$backParamStr = ltrim($backParamStr, '?&');
+				if ($backParamStr !== '') {
+					$backParamStr = '?' . $backParamStr;
 				}
 			?>
 				<div class="navbarCenterOptions">

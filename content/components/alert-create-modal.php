@@ -1,3 +1,4 @@
+<?php defined('OPTV') or die(); ?>
 <?php
 /**
  * Alert create/edit modal (Plan B). Included once in the footer for logged-in

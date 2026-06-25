@@ -1,3 +1,4 @@
+<?php defined('OPTV') or die(); ?>
 <?php
 // Sidebar navigation for manage section
 require_once(__DIR__ . '/../../../modules/utilities/security.php');

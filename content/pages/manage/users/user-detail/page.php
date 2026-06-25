@@ -1,13 +1,6 @@
-<?php
-include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
-include_once(__DIR__ . '/../../../../../modules/utilities/security.php');
-
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../../../login/page.php");
-} else {
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/admin') ?>
+<?php 
     $userData = $apiResult["data"];
     $isAdmin = $_SESSION["userdata"]["role"] === "admin";
     $isOwnProfile = $_SESSION["userdata"]["id"] == $_REQUEST["id"];
@@ -22,7 +15,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
         $notificationPref = ($prefResp["meta"]["requestStatus"] === "success") ? $prefResp["data"] : ["emailEnabled" => true];
     }
 
-    include_once(__DIR__ . '/../../../../header.php');
 ?>
 
 <main class="container-fluid subpage">
@@ -383,7 +375,3 @@ $(function() {
 });
 </script>
 
-<?php
-    include_once (include_custom(realpath(__DIR__ . '/../../../../footer.php'),false));
-}
-?>

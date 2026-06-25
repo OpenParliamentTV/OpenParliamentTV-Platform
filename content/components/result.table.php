@@ -1,4 +1,7 @@
 <?php
+// NOTE: direct-access AJAX endpoint (fetched by mediaResults.js as
+// /content/components/result.table.php) — must NOT have the OPTV guard; it
+// bootstraps config/session itself below.
 session_start();
 require_once(__DIR__."/../../config.php");
 require_once(__DIR__ . '/../../modules/utilities/security.php');

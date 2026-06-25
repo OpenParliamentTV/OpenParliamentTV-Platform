@@ -1,3 +1,4 @@
+<?php defined('OPTV') or die(); ?>
 <?php require_once(__DIR__ . '/../../modules/utilities/security.php'); ?>
 <div class="alert alert-info" role="alert">
 	<div class="mb-1"><?= L::messageOpenData(); ?>: </div>

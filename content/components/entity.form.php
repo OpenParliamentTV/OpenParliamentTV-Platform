@@ -1,3 +1,4 @@
+<?php defined('OPTV') or die(); ?>
 <?php
 session_start();
 // Component: entity-form.php
