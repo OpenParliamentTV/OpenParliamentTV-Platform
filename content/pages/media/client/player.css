@@ -374,41 +374,49 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] .titleb
 	border-left: 10px solid var(--secondary-bg-color);
 }
 
-.areaLeftContainer[data-size="large"] {
+.areaLeftContainer[data-size="large"], .areaLeftContainer.hiddenTabs[data-size="large"] {
 	flex: 0 0 50%;
 	min-width: 50%;
 }
 
-@media (max-width:768px) {
-    .hypervideoContainer {
+/* Small PLAYER widths — keyed to @container ft-root (the .frametrail-body
+   container's inline-size), matching FrameTrail v1.2.0's own breakpoint instead of
+   @media (viewport). v1.2.0 sets .areaLeftContainer{flex:0 0 100%!important} here (a
+   width rule for its flex-wrap layout); under our flex-direction:column that became a
+   HEIGHT rule, so the proceedings text took the full height and hid the video. We
+   override it with our own !important and stack video + transcript 50/50; the bottom
+   annotation/resource area is hidden at this size. */
+@container ft-root (max-width: 768px) {
+	.hypervideoContainer {
 		flex-direction: column;
+		flex-wrap: nowrap;
 	}
-    .areaLeftContainer[data-size="large"] {
-		flex: 0 0 60%;
-		min-height: 60%;
-		height: 60%;
+	.areaLeftContainer[data-size="large"], .areaLeftContainer.hiddenTabs[data-size="large"] {
+		flex: 0 0 50% !important;
+		min-width: 100% !important;
+		min-height: 50%;
+		height: 50%;
 	}
 	.hypervideoContainer .videoContainer {
-		flex: 0 0 40%;
-		min-height: 40%;
+		flex: 0 0 50% !important;
 		min-width: 100%;
-		height: 40%;
+		min-height: 50%;
+		height: 50%;
 	}
-}
-@media (min-width: 768) and (max-width:992px) {
-	.hypervideoContainer .videoContainer {
-		flex: 0 0 50%;
-		min-width: 50%;
+	/* Annotations / resources (bottom area) are not shown at small sizes */
+	.areaBottomContainer,
+	.viewVideo.slide-pos-bottom .areaBottomDetails {
+		display: none !important;
 	}
 }
 @media (min-width:992px) {
-    .areaLeftContainer[data-size="large"] {
+    .areaLeftContainer[data-size="large"], .areaLeftContainer.hiddenTabs[data-size="large"] {
 		flex: 0 0 500px;
 		min-width: 500px;
 	}
 }
 @media (min-width:1200px) {
-    .areaLeftContainer[data-size="large"] {
+    .areaLeftContainer[data-size="large"], .areaLeftContainer.hiddenTabs[data-size="large"] {
 		flex: 0 0 600px;
 		min-width: 600px;
 	}
@@ -584,7 +592,9 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 	content: '\e8b4';
 }
 
-.resourceThumb[style^="background-image"] .resourceOverlay {
+/* v1.2.0 sets the thumb as style="--thumb-bg:url(...); background-image:var(--thumb-bg)"
+   — no longer *starts* with background-image, so match "contains" instead. */
+.resourceThumb[style*="background-image"] .resourceOverlay {
 	display: none;
 }
 
@@ -734,7 +744,11 @@ body.darkmode .playerContainer .controls {
 	background: rgba(190, 190, 190,.2);
 }
 
-.areaBottomDetails {
+/* Scope to the open state (.slide-pos-bottom/-top) to match FrameTrail v1.2.0's
+   own .viewVideo.slide-pos-* .area*Details rule (specificity 0,3,0) — a plain
+   .areaBottomDetails (0,1,0) loses to it and the panel balloons to clamp(...,450px). */
+.viewVideo.slide-pos-bottom .areaBottomDetails,
+.viewVideo.slide-pos-top .areaTopDetails {
     flex: 0 1 190px;
     min-height: 190px;
 }
@@ -742,7 +756,7 @@ body.darkmode .playerContainer .controls {
 /* Media Queries */
 
 @media (min-height: 1500px) {
-    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+    .viewVideo.slide-pos-bottom .areaBottomDetails, .viewVideo.slide-pos-top .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
         flex-basis: 300px;
     }
 
@@ -752,7 +766,7 @@ body.darkmode .playerContainer .controls {
 }
 
 @media (min-height: 1300px) and (max-height: 1500px) {
-    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+    .viewVideo.slide-pos-bottom .areaBottomDetails, .viewVideo.slide-pos-top .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
         flex-basis: 200px;
     }
 
@@ -762,7 +776,7 @@ body.darkmode .playerContainer .controls {
 }
 
 @media (min-height: 1100px) and (max-height: 1300px) {
-    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+    .viewVideo.slide-pos-bottom .areaBottomDetails, .viewVideo.slide-pos-top .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
         flex-basis: 200px;
     }
 
@@ -772,7 +786,7 @@ body.darkmode .playerContainer .controls {
 }
 
 @media (min-height: 920px) and (max-height: 1100px) {
-    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+    .viewVideo.slide-pos-bottom .areaBottomDetails, .viewVideo.slide-pos-top .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
         flex-basis: 200px;
     }
 
@@ -782,7 +796,7 @@ body.darkmode .playerContainer .controls {
 }
 
 @media (min-height: 820px) and (max-height: 920px) {
-    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+    .viewVideo.slide-pos-bottom .areaBottomDetails, .viewVideo.slide-pos-top .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
         flex-basis: 200px;
     }
 
@@ -792,7 +806,7 @@ body.darkmode .playerContainer .controls {
 }
 
 @media (min-height: 680px) and (max-height: 820px) {
-    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+    .viewVideo.slide-pos-bottom .areaBottomDetails, .viewVideo.slide-pos-top .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
         flex-basis: 200px;
     }
 
@@ -802,7 +816,7 @@ body.darkmode .playerContainer .controls {
 }
 
 @media (min-height: 540px) and (max-height: 680px) {
-    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+    .viewVideo.slide-pos-bottom .areaBottomDetails, .viewVideo.slide-pos-top .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
         flex-basis: 200px;
     }
 
@@ -812,7 +826,7 @@ body.darkmode .playerContainer .controls {
 }
 
 @media (min-height: 400px) and (max-height: 540px) {
-    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+    .viewVideo.slide-pos-bottom .areaBottomDetails, .viewVideo.slide-pos-top .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
         flex-basis: 200px;
     }
 
@@ -822,7 +836,7 @@ body.darkmode .playerContainer .controls {
 }
 
 @media (max-height: 400px) {
-    .areaBottomDetails, .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
+    .viewVideo.slide-pos-bottom .areaBottomDetails, .viewVideo.slide-pos-top .areaTopDetails, .areaTopContainer[data-size="large"], .areaBottomContainer[data-size="large"] {
         flex-basis: 190px;
     }
 

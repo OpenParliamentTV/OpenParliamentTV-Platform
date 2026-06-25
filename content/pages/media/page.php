@@ -24,7 +24,7 @@ if ($emptyResult == 1) {
         <?php include_once('content.player.php'); ?>
     </main>
     <?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
-    <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/FrameTrail.min.js?v=<?= $config["version"] ?>"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@frametrail/frametrail@v1.2.0/frametrail.min.js"></script>
     <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.js?v=<?= $config["version"] ?>"></script>
     <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/quote-selector.js?v=<?= $config["version"] ?>"></script>
     <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/media/client/quote-handler.js?v=<?= $config["version"] ?>"></script>

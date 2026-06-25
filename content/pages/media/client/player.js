@@ -380,7 +380,7 @@ function updatePlayer() {
 				},
 				"customCSS": "",
 				"contents": speechCodeSnippets,
-				"subtitles": []
+				"subtitles": {}
 			},
 			annotations: ((playerData.annotations.length == 0) ? false : playerData.annotations)
 			//annotations: ["<?=$annotationSource?>"]
@@ -419,11 +419,11 @@ function updatePlayer() {
 				"cf910d",
 				"b85e02"
 			],
-			"videoFit": "contain"
+			"videoFit": "contain",
+			"defaultLanguage": document.documentElement.lang
 		},
-		language: document.documentElement.lang,
 		users: {}
-	});
+	}, 'PlayerLauncher');
 
 	OPTV_Player.on('ready', function() {
 

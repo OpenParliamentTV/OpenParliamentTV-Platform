@@ -52,17 +52,20 @@ if ($rssFeedUrl):
 if (!isset($page)) {
     $page = ''; // Initialize $page if not set
 }
+?>
+	<!-- Platform icon font (frametrail-webfont family) — loaded on EVERY page. The FrameTrail player (JS + CDN css) is only included on the media page. -->
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/frametrail-icons.css?v=<?= $config["version"] ?>" media="all" />
+<?php
 if ($page != 'media') {
 ?>
 
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
-    <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/frametrail-webfont.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 
 <?php
 } else {
 ?>
-	<link rel="stylesheet" type="text/css" href="<?= $config["dir"]["root"] ?>/content/client/FrameTrail.min.css?v=<?= $config["version"] ?>">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@frametrail/frametrail@v1.2.0/frametrail.min.css">
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.css?v=<?= $config["version"] ?>" media="all" />
