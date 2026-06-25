@@ -515,13 +515,12 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased {
 	background-color: transparent;
-	opacity: 1;
+	opacity: .9;
 }
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased:hover, .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased.active {
-	background-color: #f0f1f3;
+	background-color: transparent;
 	color: #000;
-	border-bottom: none;
 }
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased::-moz-selection,
@@ -531,7 +530,7 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 }
 
 body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased:hover, body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer .timebased.active {
-	background-color: #515158;
+	background-color: transparent;
 	color: #fff;
 }
 
@@ -548,6 +547,7 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer p[data-type="comment"] .timebased {
 	background: transparent !important;
 	pointer-events: none;
+	border-bottom: none !important;
 }
 
 .layoutArea .contentViewContainer .contentViewContents .customhtmlContainer p[data-type="comment"]::before {
