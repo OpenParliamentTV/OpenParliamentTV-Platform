@@ -53,9 +53,6 @@ echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
 // ===== Static pages =====
 sitemapUrl($baseUrl . '/', null, 'daily', '1.0');
 sitemapUrl($baseUrl . '/about', null, 'monthly', '0.4');
-sitemapUrl($baseUrl . '/press', null, 'monthly', '0.4');
-sitemapUrl($baseUrl . '/datapolicy', null, 'yearly', '0.3');
-sitemapUrl($baseUrl . '/imprint', null, 'yearly', '0.3');
 
 // ===== Persons (platform DB) =====
 $persons = $db->getAll(
