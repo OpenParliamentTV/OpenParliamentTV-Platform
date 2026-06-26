@@ -142,6 +142,21 @@ $config["platform"]["sql"]["tbl"]["Alert"] = "alert";
 $config["platform"]["sql"]["tbl"]["Notification"] = "notification";
 $config["platform"]["sql"]["tbl"]["SystemMessage"] = "system_message";
 $config["platform"]["sql"]["tbl"]["NotificationPreference"] = "notification_preference";
+$config["platform"]["sql"]["tbl"]["ApiRateLimit"] = "apiratelimit";
+$config["platform"]["sql"]["tbl"]["ApiKey"] = "apikey";
+
+/**
+ * Public API rate limiting (external HTTP entry api/v1/index.php only; internal
+ * apiV1() calls from page handlers are never limited). DB-backed fixed window.
+ * Logged-in users and exemptIPs are exempt; exemptActions skip high-frequency
+ * UI calls (autocomplete etc.). Requires the `apiratelimit` table.
+ */
+$config["api"]["rateLimit"]["enabled"] = true;
+$config["api"]["rateLimit"]["window"] = 60;   // seconds
+$config["api"]["rateLimit"]["limit"] = 240;    // requests per window per client IP
+$config["api"]["rateLimit"]["trustProxy"] = false; // honor X-Forwarded-For / CF-Connecting-IP (only behind a trusted proxy)
+$config["api"]["rateLimit"]["exemptActions"] = ["autocomplete", "status", "lang", "systemMessage", "notification"];
+$config["api"]["rateLimit"]["exemptIPs"] = [];
 
 
 /**

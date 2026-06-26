@@ -128,6 +128,83 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+-- ---------------------------------------------------------------------
+-- Notifications & Alerts, API rate limiting, API keys (feature tables)
+-- ---------------------------------------------------------------------
+
+CREATE TABLE `alert` (
+  `AlertID` int(10) NOT NULL,
+  `AlertUserID` int(10) NOT NULL,
+  `AlertCriteria` text NOT NULL,
+  `AlertFrequency` enum('realtime','daily','weekly') NOT NULL DEFAULT 'realtime',
+  `AlertChannelEmail` tinyint(1) NOT NULL DEFAULT 1,
+  `AlertChannelInApp` tinyint(1) NOT NULL DEFAULT 1,
+  `AlertActive` tinyint(1) NOT NULL DEFAULT 1,
+  `AlertCreated` timestamp NOT NULL DEFAULT current_timestamp(),
+  `AlertLastTriggered` timestamp NULL DEFAULT NULL,
+  `AlertLastChanged` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `notification` (
+  `NotificationID` int(10) NOT NULL,
+  `NotificationUserID` int(10) NOT NULL,
+  `NotificationAlertID` int(10) DEFAULT NULL,
+  `NotificationType` enum('alert','system_broadcast','system_event') NOT NULL,
+  `NotificationTitle` varchar(500) NOT NULL,
+  `NotificationBody` text DEFAULT NULL,
+  `NotificationLink` varchar(1024) DEFAULT NULL,
+  `NotificationMediaID` varchar(255) DEFAULT NULL,
+  `NotificationParliament` varchar(16) DEFAULT NULL,
+  `NotificationRead` tinyint(1) NOT NULL DEFAULT 0,
+  `NotificationEmailSent` tinyint(1) NOT NULL DEFAULT 0,
+  `NotificationEmailSentAt` timestamp NULL DEFAULT NULL,
+  `NotificationDigested` tinyint(1) NOT NULL DEFAULT 0,
+  `NotificationCreated` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `system_message` (
+  `SystemMessageID` int(10) NOT NULL,
+  `SystemMessageType` enum('broadcast','event') NOT NULL,
+  `SystemMessageTitle` varchar(500) NOT NULL,
+  `SystemMessageBody` text DEFAULT NULL,
+  `SystemMessageLink` varchar(1024) DEFAULT NULL,
+  `SystemMessageCreatedBy` int(10) DEFAULT NULL,
+  `SystemMessageTargetRole` varchar(255) DEFAULT NULL,
+  `SystemMessageSendEmail` tinyint(1) NOT NULL DEFAULT 0,
+  `SystemMessageCreated` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `notification_preference` (
+  `NotificationPreferenceID` int(10) NOT NULL,
+  `NotificationPreferenceUserID` int(10) NOT NULL,
+  `NotificationPreferenceEmailEnabled` tinyint(1) NOT NULL DEFAULT 1,
+  `NotificationPreferenceDigestFrequency` enum('daily','weekly') DEFAULT 'daily',
+  `NotificationPreferenceDigestDay` tinyint(1) DEFAULT 1,
+  `NotificationPreferenceUnsubscribeToken` varchar(64) NOT NULL,
+  `NotificationPreferenceLastChanged` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `apiratelimit` (
+  `RateLimitKey` varchar(191) NOT NULL,
+  `RateLimitWindowStart` int(10) unsigned NOT NULL,
+  `RateLimitCount` int(10) unsigned NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `apikey` (
+  `ApiKeyID` int(10) unsigned NOT NULL,
+  `ApiKeyHash` char(64) NOT NULL,
+  `ApiKeyPrefix` varchar(16) DEFAULT NULL,
+  `ApiKeyLabel` varchar(191) NOT NULL DEFAULT '',
+  `ApiKeyOwnerUserID` int(10) DEFAULT NULL,
+  `ApiKeyRateLimit` int(10) unsigned DEFAULT NULL,
+  `ApiKeyActive` tinyint(1) NOT NULL DEFAULT 1,
+  `ApiKeyCreated` timestamp NOT NULL DEFAULT current_timestamp(),
+  `ApiKeyExpires` timestamp NULL DEFAULT NULL,
+  `ApiKeyLastUsed` timestamp NULL DEFAULT NULL,
+  `ApiKeyLastChanged` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 ALTER TABLE `auth`
   ADD PRIMARY KEY (`AuthID`);
 
@@ -170,6 +247,36 @@ ALTER TABLE `term` ADD FULLTEXT KEY `TermLabel_3` (`TermLabel`,`TermLabelAlterna
 ALTER TABLE `user`
   ADD PRIMARY KEY (`UserID`);
 
+ALTER TABLE `alert`
+  ADD PRIMARY KEY (`AlertID`),
+  ADD KEY `idx_alert_user` (`AlertUserID`),
+  ADD KEY `idx_alert_active` (`AlertActive`);
+
+ALTER TABLE `notification`
+  ADD PRIMARY KEY (`NotificationID`),
+  ADD UNIQUE KEY `idx_notif_dedup` (`NotificationAlertID`,`NotificationMediaID`),
+  ADD KEY `idx_notification_user_read` (`NotificationUserID`,`NotificationRead`),
+  ADD KEY `idx_notification_email` (`NotificationEmailSent`,`NotificationType`),
+  ADD KEY `idx_notification_created` (`NotificationCreated`);
+
+ALTER TABLE `system_message`
+  ADD PRIMARY KEY (`SystemMessageID`);
+
+ALTER TABLE `notification_preference`
+  ADD PRIMARY KEY (`NotificationPreferenceID`),
+  ADD UNIQUE KEY `idx_pref_user` (`NotificationPreferenceUserID`),
+  ADD UNIQUE KEY `idx_pref_token` (`NotificationPreferenceUnsubscribeToken`);
+
+ALTER TABLE `apiratelimit`
+  ADD PRIMARY KEY (`RateLimitKey`),
+  ADD KEY `idx_ratelimit_window` (`RateLimitWindowStart`);
+
+ALTER TABLE `apikey`
+  ADD PRIMARY KEY (`ApiKeyID`),
+  ADD UNIQUE KEY `uniq_apikey_hash` (`ApiKeyHash`),
+  ADD KEY `idx_apikey_active` (`ApiKeyActive`),
+  ADD KEY `idx_apikey_owner` (`ApiKeyOwnerUserID`);
+
 
 ALTER TABLE `auth`
   MODIFY `AuthID` int(8) NOT NULL AUTO_INCREMENT;
@@ -185,6 +292,21 @@ ALTER TABLE `entitysuggestion`
 
 ALTER TABLE `user`
   MODIFY `UserID` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `alert`
+  MODIFY `AlertID` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `notification`
+  MODIFY `NotificationID` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `system_message`
+  MODIFY `SystemMessageID` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `notification_preference`
+  MODIFY `NotificationPreferenceID` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `apikey`
+  MODIFY `ApiKeyID` int(10) unsigned NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -198,6 +198,7 @@
 	"messageErrorNoParameters": "Aucun paramètre valide n'a été fourni",
 	"messageErrorNoValidFieldsToUpdateDetail": "Aucun champ valide n'a été fourni pour la mise à jour.",
 	"messageErrorNotEnoughSearchParametersDetail": "Pas assez de paramètres de recherche fournis pour effectuer la recherche.",
+	"messageErrorRateLimited": "Trop de requêtes. Veuillez réessayer dans {seconds} secondes.",
 	"messageErrorNotFound": "Non trouvé",
 	"messageErrorNotFoundQuote": "\"Parfois l'attendu est inattendu.\"",
 	"messageErrorOpenSearchClientInitFailed": "Le client OpenSearch n'a pas été initialisé.",

@@ -199,6 +199,7 @@
 	"messageErrorNoParameters": "No valid parameters were provided",
 	"messageErrorNoValidFieldsToUpdateDetail": "No valid fields were provided for the update.",
 	"messageErrorNotEnoughSearchParametersDetail": "Not enough search parameters were provided to perform the search.",
+	"messageErrorRateLimited": "Too many requests. Please try again in {seconds} seconds.",
 	"messageErrorNotFound": "Not found",
 	"messageErrorNotFoundQuote": "\"Sometimes the expected is unexpectedly not present.\"",
 	"messageErrorOpenSearchClientInitFailed": "OpenSearch client not initialized.",

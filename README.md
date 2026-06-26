@@ -9,7 +9,7 @@ It is multi-parliament by design: one codebase serves many instances, each with 
 This repository is the **presentation and API layer**: it ingests the unified, enriched per-session data produced upstream and serves it as a searchable web application and REST API. Related repositories:
 
 - **[OpenParliamentTV-Tools](https://github.com/OpenParliamentTV/OpenParliamentTV-Tools)** is the data import pipeline. It fetches parliamentary proceedings and media feeds, parses them into a unified per-session JSON format, and enriches them with named-entity linking, sentence-level audio alignment, and named-entity recognition.
-- **[OpenParliamentTV-Architecture](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture)** holds the system design and data-format specifications, for example [PIPELINE.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/PIPELINE.md), [STAGE2-FORMAT.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/STAGE2-FORMAT.md), and [DATA-STRUCTURES.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/DATA-STRUCTURES.md).
+- **[OpenParliamentTV-Architecture](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture)** holds the system design and data-format specifications, for example [PIPELINE.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/PIPELINE.md), [STAGE2-FORMAT.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/STAGE2-FORMAT.md), [DATA-STRUCTURES.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/DATA-STRUCTURES.md), and [PLATFORM-DB-SCHEMA.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/PLATFORM-DB-SCHEMA.md) (the conceptual database schema).
 - **Parliament data repositories**: one published data repository per parliament (for example [OpenParliamentTV-Data-DE](https://github.com/OpenParliamentTV/OpenParliamentTV-Data-DE)). The platform clones these under `data/` and imports them into MariaDB and OpenSearch.
 
 The flow is: Tools produces per-session JSON, which is published to the Data repositories, which this Platform ingests, indexes, and serves.
@@ -61,6 +61,7 @@ api/v1/                   REST API (openapi.yaml; docs page served at /api)
 content/                  base.php, layout/, pages/, components/, and client assets (css/js/fonts/images)
 custom/                   Per-instance overrides (branding, content, hooks); see Customization
 data/                     Parliament data repositories and import/indexing scripts
+db/                        SQL schema dumps (platform + parliament databases)
 lang/                     UI translations (de/en/fr/tr); langcache/ holds generated caches
 cache/images/             Cached entity thumbnails
 config.php                Main configuration (copy from config.sample.php)
@@ -87,7 +88,7 @@ config.php                Main configuration (copy from config.sample.php)
    cp config.sample.php config.php
    ```
    Fill in at least: `dir.root` (base URL) and `version` (cache busting); database credentials (`platform.sql.*`, `parliament.<code>.sql.*`, table names); OpenSearch hosts/auth/SSL and index prefixes; password `salt`; mail (PHP mail or SMTP); optional `ads.api.*` and `customization.wordmark`.
-4. **Load relational data**: import the provided SQL dumps into the platform and parliament databases (table names must match the config).
+4. **Load relational data**: import the schema dumps from `db/` — `db/openparliamenttv_platform.sql` into the platform database and `db/openparliamenttv_parliament.sql` into each parliament database (table names must match the config). The data model is documented conceptually in [PLATFORM-DB-SCHEMA.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/PLATFORM-DB-SCHEMA.md).
 5. **Set write permissions** for the PHP user:
    - `langcache/` for generated i18n caches
    - `api/v1/cache/` for API response caches

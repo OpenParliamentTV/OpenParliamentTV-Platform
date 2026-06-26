@@ -198,6 +198,7 @@
 	"messageErrorNoParameters": "Geçerli parametre sağlanmadı",
 	"messageErrorNoValidFieldsToUpdateDetail": "Güncelleme için geçerli alan sağlanmadı.",
 	"messageErrorNotEnoughSearchParametersDetail": "Arama yapmak için yeterli arama parametresi sağlanmadı.",
+	"messageErrorRateLimited": "Çok fazla istek. Lütfen {seconds} saniye sonra tekrar deneyin.",
 	"messageErrorNotFound": "Bulunamadı",
 	"messageErrorNotFoundQuote": "\"Bazen beklenen, beklenmedik şekilde mevcut değildir.\"",
 	"messageErrorOpenSearchClientInitFailed": "OpenSearch istemcisi başlatılamadı.",

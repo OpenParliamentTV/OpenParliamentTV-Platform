@@ -198,6 +198,7 @@
 	"messageErrorNoParameters": "Keine gültigen Parameter wurden bereitgestellt",
 	"messageErrorNoValidFieldsToUpdateDetail": "Keine gültigen Felder für die Aktualisierung bereitgestellt.",
 	"messageErrorNotEnoughSearchParametersDetail": "Nicht genügend Suchparameter für die Suche bereitgestellt.",
+	"messageErrorRateLimited": "Zu viele Anfragen. Bitte versuchen Sie es in {seconds} Sekunden erneut.",
 	"messageErrorNotFound": "Nicht gefunden",
 	"messageErrorNotFoundQuote": "\"Manchmal ist das Erwartete ganz unerwartet gar nicht da.\"",
 	"messageErrorOpenSearchClientInitFailed": "OpenSearch-Client konnte nicht initialisiert werden.",

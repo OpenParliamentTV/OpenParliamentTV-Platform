@@ -12,7 +12,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<div class="detailsLayoutThumbnail detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
-								<img src="<?= hAttr($apiResult["data"]["attributes"]["thumbnailURI"]) ?>" alt="..." style="position: absolute;height: 100%;object-fit: cover;">
+								<img src="<?= hAttr($apiResult["data"]["attributes"]["thumbnailURI"]) ?>" alt="<?= hAttr($apiResult["data"]["attributes"]["label"]) ?>" style="position: absolute;height: 100%;object-fit: cover;">
 							<?php } else { ?>
 								<span class="icon-type-term" style="position: absolute;top: 50%;left: 50%;font-size: 40px;transform: translateX(-50%) translateY(-50%);"></span>
 							<?php } ?>

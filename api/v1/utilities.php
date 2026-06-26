@@ -667,5 +667,3 @@ function handleEntitySuggestionPostProcessing($reimportAffectedSessionsFlag, $so
 
     return $postProcessingResult;
 }
-
-?> 

@@ -7,11 +7,27 @@
 	RewriteEngine On
 
 	########################################
+	# Block AI / scraper bots that ignore robots.txt (return 403).
+	# Search engines (Googlebot, Bingbot, Applebot, …) are unaffected.
+	# Scope is the web root only — /api/ has its own .htaccess and stays
+	# reachable by these bots on purpose (structured machine path).
+	# Keep this list in sync with $blockedBots in robots.php.
+	########################################
+	RewriteCond %{HTTP_USER_AGENT} (GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|anthropic-ai|Claude-Web|Google-Extended|Applebot-Extended|PerplexityBot|CCBot|cohere-ai|Bytespider|Amazonbot|Meta-ExternalAgent|FacebookBot|Diffbot|ImagesiftBot|Omgilibot|YouBot|DataForSeoBot|PetalBot) [NC]
+	RewriteRule ^ - [F,L]
+
+	########################################
 	# Always remove trailing slash (except for real directories)
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_URI} (.+)/$
 	RewriteRule ^ %1 [L,R=301]
+
+	########################################
+	# Sitemap & Robots (pretty URLs → PHP generators)
+	########################################
+	RewriteRule ^sitemap\.xml$ sitemap.php [L]
+	RewriteRule ^robots\.txt$ robots.php [L]
 
 	########################################
 	# Send all non-file, non-directory requests to index.php.
