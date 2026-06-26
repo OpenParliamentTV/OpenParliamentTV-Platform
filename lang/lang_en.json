@@ -400,5 +400,6 @@
 	"notificationFilterMessages": "Messages",
 	"messageAlertCriteriaEmpty": "Please provide at least one search criterion for the alert.",
 	"messageAlertLimitTitle": "Alert limit reached",
-	"messageAlertLimitDetail": "You have reached the maximum number of alerts."
+	"messageAlertLimitDetail": "You have reached the maximum number of alerts.",
+	"footerMatomoOptOut": "Instead of the usual providers, Open Parliament TV uses privacy-friendly technology by <a href=\"https://matomo.org\" target=\"_blank\">Matomo</a> for statistical analysis of site usage. <br>If you do not want this, <a href=\"%1$s\">you can remove the tick here</a>. You can find more information in <a href=\"%2$s\">our Data Policy</a>."
 }
