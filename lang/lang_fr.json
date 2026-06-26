@@ -399,6 +399,5 @@
 	"notificationFilterMessages": "Messages",
 	"messageAlertCriteriaEmpty": "Veuillez fournir au moins un critère de recherche pour l'alerte.",
 	"messageAlertLimitTitle": "Limite d'alertes atteinte",
-	"messageAlertLimitDetail": "Vous avez atteint le nombre maximum d'alertes.",
-	"footerMatomoOptOut": "Au lieu des fournisseurs habituels, Open Parliament TV utilise une technologie respectueuse de la vie privée par <a href=\"https://matomo.org\" target=\"_blank\">Matomo</a> pour l'analyse statistique de l'utilisation du site. <br>Si vous ne le souhaitez pas, <a href=\"%1$s\">vous pouvez retirer la coche ici</a>. Vous pouvez trouver plus d'informations dans <a href=\"%2$s\">notre politique de données</a>."
+	"messageAlertLimitDetail": "Vous avez atteint le nombre maximum d'alertes."
 }

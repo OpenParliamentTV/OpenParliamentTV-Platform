@@ -399,6 +399,5 @@
 	"notificationFilterMessages": "Mesajlar",
 	"messageAlertCriteriaEmpty": "Lütfen uyarı için en az bir arama ölçütü girin.",
 	"messageAlertLimitTitle": "Uyarı sınırına ulaşıldı",
-	"messageAlertLimitDetail": "Maksimum uyarı sayısına ulaştınız.",
-	"footerMatomoOptOut": "Open Parliament TV, site kullanımının istatistiksel analizi için <a href=\"https://matomo.org\" target=\"_blank\">Matomo</a> gizlilik dostu teknoloji kullanır. <br>Bunu istemiyorsanız, <a href=\"%1$s\">buradaki işareti kaldırabilirsiniz</a>. Daha fazla bilgiyi <a href=\"%2$s\">Veri Politikamızda bulabilirsiniz</a>."
+	"messageAlertLimitDetail": "Maksimum uyarı sayısına ulaştınız."
 }
