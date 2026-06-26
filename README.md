@@ -1,73 +1,152 @@
-## Open Parliament TV - Platform
+# Open Parliament TV - Platform
 
-A PHP web application and REST API for exploring parliamentary data (speeches, sessions, agenda items, documents, people, organizations). Full‑text and faceted search is backed by OpenSearch; relational data lives in MariaDB/MySQL. The UI renders server-side via PHP and consumes the internal API.
+**Open Parliament TV** is a **search engine** and **interactive video platform** for **parliamentary debates**. This repository is the **platform**: a PHP web application and REST API that ingests parliamentary data (speeches, sessions, agenda items, documents, people, organisations), indexes it for full-text and faceted search, and presents it with a transcript-synced video player.
+
+It is multi-parliament by design: one codebase serves many instances, each with its own database and branding (for example the German Bundestag at `de.openparliament.tv`).
+
+## The Open Parliament TV ecosystem
+
+This repository is the **presentation and API layer**: it ingests the unified, enriched per-session data produced upstream and serves it as a searchable web application and REST API. Related repositories:
+
+- **[OpenParliamentTV-Tools](https://github.com/OpenParliamentTV/OpenParliamentTV-Tools)** is the data import pipeline. It fetches parliamentary proceedings and media feeds, parses them into a unified per-session JSON format, and enriches them with named-entity linking, sentence-level audio alignment, and named-entity recognition.
+- **[OpenParliamentTV-Architecture](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture)** holds the system design and data-format specifications, for example [PIPELINE.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/PIPELINE.md), [STAGE2-FORMAT.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/STAGE2-FORMAT.md), and [DATA-STRUCTURES.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/DATA-STRUCTURES.md).
+- **Parliament data repositories**: one published data repository per parliament (for example [OpenParliamentTV-Data-DE](https://github.com/OpenParliamentTV/OpenParliamentTV-Data-DE)). The platform clones these under `data/` and imports them into MariaDB and OpenSearch.
+
+The flow is: Tools produces per-session JSON, which is published to the Data repositories, which this Platform ingests, indexes, and serves.
 
 ---
 
-### Architecture
-- `index.php` - entry point for the web UI; dispatches pages and calls the internal API (`api/v1/api.php`).
-- `api/` - REST API with OpenAPI spec (`api/openapi.yaml`) and API documentation page at `/api`.
-- `content/` - UI pages, components, and assets (CSS/JS/fonts/images).
-- `custom/` - Custom content and overriding files.
-- `data/` - Git repositories of parliament data.
-- `modules/` - domain logic and helpers (search, media, i18n, mail, utilities).
-- `lang/` - translation JSON files; `langcache/` holds generated i18n caches (needs write access).
-- `vendor/` - Composer dependencies (OpenSearch PHP client, PHPMailer).
-- Configuration lives in `config.php` (see `config.sample.php` for all options); API-specific settings in `api/v1/config.api.php`.
+## Features
 
-### Prerequisites
-- PHP 7.4+ (8.x recommended) with extensions: mysqli, mbstring, json, dom, curl, openssl.
-- Apache webserver.
-- MariaDB/MySQL:
-  - Platform DB (users, orgs, metadata).
-  - Parliament DB (sessions, agenda items, media IDs, texts).
-- OpenSearch 2.x cluster with indices named `openparliamenttv_*`.
-- Composer for PHP dependencies.
-- Optional SMTP credentials (otherwise PHP `mail()`).
+- **Full-text and faceted search** over speeches and entities, backed by OpenSearch.
+- **Entity pages** for people, organisations, terms, documents, sessions, electoral periods and agenda items, linked to Wikidata and other sources.
+- **Transcript-synced video player** (FrameTrail) with shareable, timecoded quotes.
+- **REST API** (`/api/v1`) with an OpenAPI spec and a docs UI at `/api`.
+- **Feeds and interop**: RSS/Atom feeds (`/feed/*`), IIIF manifests, and WebVTT transcripts.
+- **Alerts and notifications**: users can save searches and receive in-app or email digests.
+- **Multi-language UI** (German, English, French, Turkish) and **per-instance branding and content** via `custom/`.
+- **Multi-parliament**: each parliament uses its own database; instances are configured, not forked.
 
-### Setup
-1) **Place code** - Clone the repository to the directory of choice.
-2) **Create config** - copy `config.sample.php` to `config.php` and fill:
-   - `dir.root` base URL; `version` for cache busting.
-   - UI toggles (`display`, `allow`), password `salt`.
-   - Mail (PHP mail or SMTP).
-   - DB credentials: `platform.sql.access.*`, `parliament.*.sql.access.*`, table names.
-   - OpenSearch hosts/auth/SSL (`OpenSearch.*`) and index prefixes.
-   - Optional ADS API (`ads.api.*`) and wordmark (`customization.wordmark`).
-3) **Install dependencies** - run inside the root directory:
+## Tech stack
+
+- **PHP** with [FastRoute](https://github.com/nikic/FastRoute) (routing) and [Plates](https://platesphp.com/) (templating), served by **Apache** (mod_rewrite).
+- **MariaDB / MySQL** via the `SafeMySQL` wrapper (parameterised queries).
+- **OpenSearch 2.x** for search and aggregated statistics.
+- Composer dependencies: `opensearch-project/opensearch-php`, `phpmailer/phpmailer`, `nikic/fast-route`, `league/plates`, `symfony/yaml`.
+- Frontend: Bootstrap 5 and jQuery, FrameTrail video player.
+
+## Architecture
+
+```
+Apache (.htaccess, single catch-all)
+  index.php     front controller: config + session + i18n + Plates engine
+  FastRoute     matches the URL against routes/web.php
+  handler       modules/routing/handlers.php loads data and renders a Plates template
+```
+
+- **Auth is checked once** at the routing layer (`modules/routing/auth.php`), not in individual templates.
+- **Templates** use layout inheritance: `content/base.php` (the outer HTML) wraps `content/layout/{default,admin,embed}.php`, which wrap `content/pages/*/page.php`, with shared `content/components/*`.
+- **Result lists and the media player** are fetched by JavaScript as standalone PHP fragments rather than rendered inline, which keeps pages light.
+- **The REST API** under `api/v1/` is independent of the web routing and has its own `.htaccess`.
+
+## Directory layout
+
+```
+index.php                 Front controller (FastRoute dispatch)
+routes/web.php            Route definitions
+modules/routing/          Route handlers and centralized auth
+modules/templating/       Plates engine factory and custom-override resolver
+modules/                  Domain logic: search, media, feed, notifications, images, i18n, mail, utilities
+api/v1/                   REST API (openapi.yaml; docs page served at /api)
+content/                  base.php, layout/, pages/, components/, and client assets (css/js/fonts/images)
+custom/                   Per-instance overrides (branding, content, hooks); see Customization
+data/                     Parliament data repositories and import/indexing scripts
+lang/                     UI translations (de/en/fr/tr); langcache/ holds generated caches
+cache/images/             Cached entity thumbnails
+config.php                Main configuration (copy from config.sample.php)
+```
+
+## Requirements
+
+- **PHP 7.4+** (8.1+ recommended) with extensions: `mysqli`, `mbstring`, `json`, `dom`, `curl`, `openssl`.
+- **Apache** with `mod_rewrite`.
+- **MariaDB / MySQL**: a platform database (users, organisations, terms, documents) plus one database per parliament (sessions, agenda items, media, electoral periods).
+- **OpenSearch 2.x** (indices prefixed `openparliamenttv_*`, statistics in `optv_statistics_*`).
+- **Composer**.
+- Optional **SMTP** credentials (otherwise PHP `mail()` is used).
+
+## Setup
+
+1. **Clone** the repository into your web root.
+2. **Install dependencies**:
    ```bash
    composer install --no-dev
    ```
-4) **Import data** - load provided SQL dumps (e.g., `openparliamenttv_parliament.sql`, `openparliamenttv_platform.sql`) into the respective databases; ensure table names match config.
-5) **Index into OpenSearch** - indices `openparliamenttv_*` will be created at the first import of data.
-6) **Set write permissions** - PHP user needs write access to:
-   - `langcache/` (i18n caches)
-   - `api/v1/cache/` (API caches)
-   - optional mail log path (`logs/mail` if `mail.dev.file_path` is used)
-7) **Run**
-   - Production: configure Apache to serve your root directory (HTTPS recommended).
+3. **Create config**: copy and edit.
+   ```bash
+   cp config.sample.php config.php
+   ```
+   Fill in at least: `dir.root` (base URL) and `version` (cache busting); database credentials (`platform.sql.*`, `parliament.<code>.sql.*`, table names); OpenSearch hosts/auth/SSL and index prefixes; password `salt`; mail (PHP mail or SMTP); optional `ads.api.*` and `customization.wordmark`.
+4. **Load relational data**: import the provided SQL dumps into the platform and parliament databases (table names must match the config).
+5. **Set write permissions** for the PHP user:
+   - `langcache/` for generated i18n caches
+   - `api/v1/cache/` for API response caches
+   - `cache/images/` for the entity thumbnail cache
+   - the mail log path if `mail.dev.file_path` is used
+6. **Import and index parliament data** (creates the OpenSearch indices on first run):
+   ```bash
+   php data/cronUpdater.php --parliament DE
+   ```
+   In production this is typically run via cron or triggered from the admin Import page rather than ad hoc.
+7. **Serve**: point Apache at the repository root.
 
-### Usage
-- Web UI: `https://<host>/` (e.g. `/search`).
-- API docs UI: `https://<host>/api`.
-- REST base: `https://<host>/api/v1`.
-- Languages: translations in `lang/*.json`.
+## Configuration highlights
 
-### Security & Operations
-- `config["mode"]="dev"` logs errors but hides them in the browser; set to `production` for live.
-- Public endpoints are whitelisted (e.g., `getItem`, `search`, `autocomplete`, `status`, user login/registration). Admin-only actions (indexing, CRUD) require authenticated sessions.
-- Sessions manage login and language; `color_scheme` cookie controls dark/light mode.
-- Mail: in dev mode you can store mails to disk (`mail.dev.file_path`).
+- `mode`: `dev` logs errors and surfaces them locally; `production` hides them. Always run live sites in `production`.
+- `allow.publicAccess`: whether anonymous visitors can read public content.
+- `parliament.<code>`: per-parliament database connection and labels; add one block per instance.
+- `OpenSearch.*`: hosts, auth, SSL, and index prefixes.
+- `customization.wordmark` and the `custom/` directory: per-instance branding.
 
-### Data & IDs
-- IDs follow `<PARL>-<...>`; parsing derives type, electoral period, session, etc.
-- OpenSearch highlights come from `attributes.textContents.textHTML` with `<em>` tags.
+## API
 
-### License
-See `LICENSE`.
+- **Docs UI**: `https://<host>/api` (spec at `api/openapi.yaml`).
+- **Base**: `https://<host>/api/v1`, REST path form, for example:
+  - `GET /api/v1/search/media?q=...&personID=Q...`
+  - `GET /api/v1/person/{id}`
+  - `GET /api/v1/status?parliament=DE`
+- **Public actions** (whitelisted): `getItem`, `search`, `autocomplete`, `status`, `lang`, `user` (login/register/etc.), `iiif`, `transcript`, `alert`, `notification`, `systemMessage`.
+- **Admin actions** (CRUD, indexing, import, raw DB reads) require an authenticated session.
 
-### Custom overrides
-- Use `/custom/` to override content without touching core files. The helper `include_custom()` first looks for language-specific overrides (e.g., `custom/content/footer.en.php`), then for a generic override (e.g., `custom/content/footer.php`), and falls back to the original file.
-- Existing overrides: custom home/footer components and about/datapolicy/imprint pages (per language), plus custom logos under `custom/content/client/images/`.
-- Custom logic: `custom/overriding.functions.php` can define hooks like `overrideVideoSource($speech)` that the media player uses when present.
-- Keep your installation-specific branding or behavior in `/custom/`; core updates remain unaffected.
+## Customization (per-instance overrides)
+
+Keep instance-specific branding and content in `custom/` so core updates stay clean. Any template or partial name is resolved in this order (language from the active session):
+
+```
+custom/content/{name}.{lang}.php   (language-specific override)
+custom/content/{name}.php          (generic override)
+content/{name}.php                 (default)
+```
+
+- **Page overrides** (`custom/content/pages/<page>/page.php`) are full Plates pages:
+  ```php
+  <?php defined('OPTV') or die(); ?>
+  <?php $this->layout('layout/default') ?>
+  <main> ... your content ... </main>
+  ```
+  Do **not** include `header.php` or `footer.php`; the layout provides them.
+- **Partial and component overrides** (`custom/content/footer.php`, `components/home.php`, and similar) are plain fragments: `<?php defined('OPTV') or die(); ?>` followed by markup. They must **not** carry bootstrap `require_once` (config/security/i18n); the entry point already loads those.
+- **Function hooks**: `custom/overriding.functions.php` may define hooks such as `overrideVideoSource($speech)`.
+- **Assets**: custom logos and images under `custom/content/client/images/`.
+
+Every template begins with `<?php defined('OPTV') or die(); ?>`; the `OPTV` constant is defined in `config.php`, so direct browser access to a template is blocked. A small set of components are fetched directly by JavaScript (`result.grid.php`, `result.table.php`, `entity.form.php`, `entity.preview.ads.php`, `content/pages/media/content.player.php`) and therefore do **not** carry the guard.
+
+## Security
+
+- All database access goes through `SafeMySQL` with parameterised placeholders.
+- Output is escaped with `h()`, `hAttr()`, and `safeHtml()` (`modules/utilities/security.php`); response headers via `applySecurityHeaders()`.
+- Authorization is enforced server-side; public and admin actions are whitelisted in the API and the routing layer.
+
+## License
+
+See [`LICENSE`](LICENSE).
