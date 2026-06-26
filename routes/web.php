@@ -9,70 +9,67 @@
  *   - skipAuth: true to bypass the auth check entirely (public embeds, feeds)
  *   - pageTypeResolver: optional callable(array $params): string to compute pageType
  *                       dynamically (used by the user-detail "own profile" case)
- *
- * NOTE: campaigns/{slug} and documentation/{section} are intentionally omitted —
- * they had .htaccess rules but no working handler (they 404 today).
  */
 
 use FastRoute\RouteCollector;
 
 return function (RouteCollector $r) {
 
+    // Local helper: GET route with the common metadata keys, plus any extras.
+    $get = function (string $path, string $handler, string $page, string $pageType, array $extra = []) use ($r) {
+        $r->addRoute('GET', $path, ['handler' => $handler, 'page' => $page, 'pageType' => $pageType] + $extra);
+    };
+
     // ---- Search / home (public) ----
-    $r->addRoute('GET', '/', ['handler' => 'page_search', 'page' => 'main', 'pageType' => 'default']);
-    $r->addRoute('GET', '/search', ['handler' => 'page_search', 'page' => 'search', 'pageType' => 'default']);
+    $get('/', 'page_search', 'main', 'default');
+    $get('/search', 'page_search', 'search', 'default');
 
     // ---- Static / simple public pages ----
-    $r->addRoute('GET', '/about', ['handler' => 'page_static', 'page' => 'about', 'pageType' => 'default']);
-    $r->addRoute('GET', '/datapolicy', ['handler' => 'page_static', 'page' => 'datapolicy', 'pageType' => 'default']);
-    $r->addRoute('GET', '/imprint', ['handler' => 'page_static', 'page' => 'imprint', 'pageType' => 'default']);
-    $r->addRoute('GET', '/press', ['handler' => 'page_static', 'page' => 'press', 'pageType' => 'default']);
-    $r->addRoute('GET', '/login', ['handler' => 'page_static', 'page' => 'login', 'pageType' => 'default']);
-    $r->addRoute('GET', '/register', ['handler' => 'page_static', 'page' => 'register', 'pageType' => 'default']);
-    $r->addRoute('GET', '/registerConfirm', ['handler' => 'page_static', 'page' => 'registerConfirm', 'pageType' => 'default']);
-    $r->addRoute('GET', '/password-reset', ['handler' => 'page_static', 'page' => 'password-reset', 'pageType' => 'default']);
-    $r->addRoute('GET', '/logout', ['handler' => 'page_logout', 'page' => 'logout', 'pageType' => 'default']);
+    $get('/about', 'page_static', 'about', 'default');
+    $get('/datapolicy', 'page_static', 'datapolicy', 'default');
+    $get('/imprint', 'page_static', 'imprint', 'default');
+    $get('/press', 'page_static', 'press', 'default');
+    $get('/login', 'page_static', 'login', 'default');
+    $get('/register', 'page_static', 'register', 'default');
+    $get('/registerConfirm', 'page_static', 'registerConfirm', 'default');
+    $get('/password-reset', 'page_static', 'password-reset', 'default');
+    $get('/logout', 'page_logout', 'logout', 'default');
 
     // ---- Entity detail pages ----
     foreach (['person', 'organisation', 'term', 'document', 'session', 'electoralPeriod', 'agendaItem'] as $entityType) {
-        $r->addRoute('GET', '/' . $entityType . '/{id}', [
-            'handler' => 'page_entity', 'page' => $entityType, 'pageType' => 'entity', 'entityType' => $entityType,
-        ]);
+        $get('/' . $entityType . '/{id}', 'page_entity', $entityType, 'entity', ['entityType' => $entityType]);
     }
-    $r->addRoute('GET', '/media/{id}', ['handler' => 'page_media', 'page' => 'media', 'pageType' => 'entity']);
+    $get('/media/{id}', 'page_media', 'media', 'entity');
 
     // ---- Embed (public, skips auth) ----
-    $r->addRoute('GET', '/embed/{type}', ['handler' => 'page_embed_entity', 'page' => 'embed-entity', 'pageType' => 'embed', 'skipAuth' => true]);
+    $get('/embed/{type}', 'page_embed_entity', 'embed-entity', 'embed', ['skipAuth' => true]);
 
     // ---- Feeds (XML, bypass auth + layout) ----
-    $r->addRoute('GET', '/feed/{feedType}', ['handler' => 'page_feed', 'page' => 'feed', 'pageType' => 'default', 'skipAuth' => true]);
-    $r->addRoute('GET', '/feed/{feedType}/{id}', ['handler' => 'page_feed', 'page' => 'feed', 'pageType' => 'default', 'skipAuth' => true]);
+    $get('/feed/{feedType}', 'page_feed', 'feed', 'default', ['skipAuth' => true]);
+    $get('/feed/{feedType}/{id}', 'page_feed', 'feed', 'default', ['skipAuth' => true]);
 
     // ---- Admin / manage list pages ----
-    $r->addRoute('GET', '/manage', ['handler' => 'page_admin', 'page' => 'manage', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/manage/settings', ['handler' => 'page_admin', 'page' => 'manage-settings', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/manage/conflicts', ['handler' => 'page_admin', 'page' => 'manage-conflicts', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/manage/entities', ['handler' => 'page_admin', 'page' => 'manage-entities', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/manage/entity-suggestions', ['handler' => 'page_admin', 'page' => 'manage-entity-suggestions', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/manage/import', ['handler' => 'page_admin', 'page' => 'manage-import', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/manage/media', ['handler' => 'page_admin', 'page' => 'manage-media', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/manage/structure', ['handler' => 'page_admin', 'page' => 'manage-structure', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/manage/users', ['handler' => 'page_admin', 'page' => 'manage-users', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/statistics', ['handler' => 'page_admin', 'page' => 'statistics', 'pageType' => 'admin']);
+    $get('/manage', 'page_admin', 'manage', 'admin');
+    $get('/manage/settings', 'page_admin', 'manage-settings', 'admin');
+    $get('/manage/conflicts', 'page_admin', 'manage-conflicts', 'admin');
+    $get('/manage/entities', 'page_admin', 'manage-entities', 'admin');
+    $get('/manage/entity-suggestions', 'page_admin', 'manage-entity-suggestions', 'admin');
+    $get('/manage/import', 'page_admin', 'manage-import', 'admin');
+    $get('/manage/media', 'page_admin', 'manage-media', 'admin');
+    $get('/manage/structure', 'page_admin', 'manage-structure', 'admin');
+    $get('/manage/users', 'page_admin', 'manage-users', 'admin');
+    $get('/statistics', 'page_admin', 'statistics', 'admin');
 
     // Entity-typed manage pages (logged-in users; module enforces login on data) —
     // preserve old pageType 'entity'.
-    $r->addRoute('GET', '/manage/alerts', ['handler' => 'page_admin', 'page' => 'manage-alerts', 'pageType' => 'entity']);
-    $r->addRoute('GET', '/notifications', ['handler' => 'page_admin', 'page' => 'notifications', 'pageType' => 'entity', 'requireLogin' => true]);
+    $get('/manage/alerts', 'page_admin', 'manage-alerts', 'entity');
+    $get('/notifications', 'page_admin', 'notifications', 'entity', ['requireLogin' => true]);
 
     // ---- Admin / manage detail pages ----
-    $r->addRoute('GET', '/manage/conflicts/{id}', ['handler' => 'page_admin_detail', 'page' => 'manage-conflicts', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/manage/media/{id}', ['handler' => 'page_admin_detail', 'page' => 'manage-media', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/manage/structure/{subpage}/{id}', ['handler' => 'page_admin_detail', 'page' => 'manage-structure', 'pageType' => 'admin']);
-    $r->addRoute('GET', '/manage/users/{id}', [
-        'handler' => 'page_admin_detail',
-        'page' => 'manage-users',
-        'pageType' => 'admin',
+    $get('/manage/conflicts/{id}', 'page_admin_detail', 'manage-conflicts', 'admin');
+    $get('/manage/media/{id}', 'page_admin_detail', 'manage-media', 'admin');
+    $get('/manage/structure/{subpage}/{id}', 'page_admin_detail', 'manage-structure', 'admin');
+    $get('/manage/users/{id}', 'page_admin_detail', 'manage-users', 'admin', [
         // Own profile is accessible to the user themselves; editing others is admin-only.
         'pageTypeResolver' => function (array $params) {
             return (($params['id'] ?? null) == ($_SESSION['userdata']['id'] ?? null)) ? 'default' : 'admin';
