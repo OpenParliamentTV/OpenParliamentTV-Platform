@@ -3,12 +3,15 @@
  * Route Handler Functions
  *
  * Each handler receives:
- *   - $routeData: the route metadata from routes/web.php (handler, page, pageType, …)
+ *   - $routeData: the route metadata from routes/web.php (handler, page, access, …)
  *   - $params:    URL parameters extracted by FastRoute ({id}, {type}, …)
  *   - $plates:    the shared Plates engine
  *
- * Handlers load data and render a page template. Auth is already checked by the
- * dispatcher before the handler runs (except routes flagged 'skipAuth'). The
+ * Handlers load data and set the presentation `pageType` on the render data
+ * (drives footer/asset layout in head.php/footer.php) — this is independent of
+ * the route's `access` level, which the dispatcher uses purely for auth. Auth is
+ * already checked by the dispatcher before the handler runs (except routes
+ * flagged 'skipAuth'). The
  * 'page' value carried on each route reproduces the legacy $_REQUEST["a"] string
  * so content/head.php and content/header.php keep their asset-loading / nav logic.
  */
@@ -442,12 +445,13 @@ function page_admin_detail(array $routeData, array $params, Engine $plates): voi
                 render_404($plates);
                 return;
             }
-            // Users may open their own profile (personal settings); editing other
-            // users stays admin-only — reproduces the per-request pageType switch.
-            $pageType = ($id == ($_SESSION['userdata']['id'] ?? null)) ? 'default' : 'admin';
+            // Presentation is always the admin/manage chrome here (table + form
+            // assets, no funding-logo footer) regardless of viewer. Who may open
+            // the page is decided separately by the route's accessResolver: own
+            // profile is 'public', editing other users stays 'admin'-only.
             optvRenderPage($plates, 'pages/manage/users/user-detail/page', [
                 'page' => 'manage-users',
-                'pageType' => $pageType,
+                'pageType' => 'admin',
                 'pageTitle' => L::edit() . ': ' . L::user(),
                 'pageBreadcrumbs' => [
                     $home,

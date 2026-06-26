@@ -115,13 +115,16 @@ switch ($routeInfo[0]) {
         }
 
         // --- Centralized auth check (skipped for public embeds & feeds) ---
+        // Uses the route's `access` level ('public'|'admin'), which is the AUTH
+        // dimension only — separate from the presentation `pageType` the handlers
+        // put on the render data.
         if (empty($routeData['skipAuth'])) {
-            $pageType = $routeData['pageType'];
-            if (isset($routeData['pageTypeResolver']) && is_callable($routeData['pageTypeResolver'])) {
-                $pageType = $routeData['pageTypeResolver']($params);
+            $access = $routeData['access'] ?? 'public';
+            if (isset($routeData['accessResolver']) && is_callable($routeData['accessResolver'])) {
+                $access = $routeData['accessResolver']($params);
             }
 
-            $authResult = checkPageAuth($pageType);
+            $authResult = checkPageAuth($access);
 
             // Some entity-typed pages (e.g. notifications) are public by page type
             // but still require an authenticated session — reproduces the old

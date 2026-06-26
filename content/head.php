@@ -66,7 +66,7 @@ if ($page != 'media') {
 <?php
 } else {
 ?>
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@frametrail/frametrail@v1.2.1/frametrail.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@frametrail/frametrail@v1.2.3/frametrail.min.css">
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.css?v=<?= $config["version"] ?>" media="all" />
@@ -79,6 +79,15 @@ if ($page != 'media') {
 if ($pageType == 'admin' || $pageType == 'entity') {
 ?>
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap-table.min.css?v=<?= $config["version"] ?>" />
+<?php
+}
+?>
+
+<?php
+if (($page ?? '') == 'api') {
+?>
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/api/client/jquery.json-view.min.css?v=<?= $config["version"] ?>" media="all">
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/api/client/atom-one-light.min.css?v=<?= $config["version"] ?>" media="all">
 <?php
 }
 ?>
@@ -105,6 +114,15 @@ if ($pageType == 'admin' || $pageType == 'entity') {
   <!--<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-multi-toggle.min.js?v=<?= $config["version"] ?>"></script>-->
   <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/shim.min.js?v=<?= $config["version"] ?>"></script>
   <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/xlsx.full.min.js?v=<?= $config["version"] ?>"></script>
+<?php
+}
+?>
+
+<?php
+if (($page ?? '') == 'api') {
+?>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/api/client/jquery.json-view.min.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/api/client/highlight.min.js?v=<?= $config["version"] ?>"></script>
 <?php
 }
 ?>
