@@ -36,13 +36,13 @@
 <main class="container-fluid subpage">
     <div class="row" style="position: relative; z-index: 1">
         <div class="col-12">
-            <h2 class="h4 mb-3"><?= L::notifications(); ?></h2>
+            <h2 class="mb-3"><?= L::notifications(); ?></h2>
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link active" id="alerts-tab" data-bs-toggle="tab" data-bs-target="#tab-alerts" role="tab" aria-controls="tab-alerts" aria-selected="true"><span class="icon-attention me-1"></span><?= L::notificationFilterAlerts(); ?></a>
+                    <a class="nav-link active" id="alerts-tab" data-bs-toggle="tab" data-bs-target="#tab-alerts" role="tab" aria-controls="tab-alerts" aria-selected="true"><span class="icon-bell-fill me-1"></span><?= L::notificationFilterAlerts(); ?></a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#tab-messages" role="tab" aria-controls="tab-messages" aria-selected="false"><span class="icon-megaphone me-1"></span><?= L::notificationFilterMessages(); ?></a>
+                    <a class="nav-link" id="messages-tab" data-bs-toggle="tab" data-bs-target="#tab-messages" role="tab" aria-controls="tab-messages" aria-selected="false"><span class="icon-mail-alt me-1"></span><?= L::notificationFilterMessages(); ?></a>
                 </li>
             </ul>
             <div class="tab-content">

@@ -1590,23 +1590,27 @@ body.fixed .searchContainer {
 .queryRoleMenuHeader {
     display: block;
     padding: 2px 12px;
-    font-size: 75%;
+    font-size: 85%;
     text-transform: uppercase;
     letter-spacing: .04em;
-    opacity: .55;
+    opacity: .65;
 }
 .queryRoleOption {
     display: flex;
     align-items: center;
     padding: 4px 12px;
     cursor: pointer;
-    font-size: 90%;
+    border-left: 2px solid transparent;
+    opacity: .9;
 }
 .queryRoleOption:hover {
     background: var(--primary-bg-color, #f0f0f0);
+    opacity: 1;
 }
 .queryRoleOption.active {
-    font-weight: bold;
+    font-weight: bolder;
+    border-left-color: var(--primary-fg-color);
+    opacity: 1;
 }
 
 /* The icon + label + party badge group is a link to the entity detail page. */

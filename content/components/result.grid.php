@@ -191,7 +191,7 @@ if ($totalResults != 0) {
 				}
 				if ($hasAlertCriteria):
 ?>
-			<button type="button" id="saveAsAlertButton" class="btn btn-sm btn-outline-primary ms-2 align-middle" data-criteria="<?= hAttr(json_encode($alertCriteria, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>" title="<?= hAttr(L::alertSaveAsAlert()) ?>"><span class="saveAsAlertLabel"><?= L::alertSaveAsAlert() ?></span><span class="icon-attention ms-1" aria-hidden="true"></span></button>
+			<button type="button" id="saveAsAlertButton" class="btn btn-sm btn-outline-primary ms-2 align-middle" data-criteria="<?= hAttr(json_encode($alertCriteria, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>" title="<?= hAttr(L::alertSaveAsAlert()) ?>"><span class="saveAsAlertLabel"><?= L::alertSaveAsAlert() ?></span><span class="icon-bell-fill ms-1" aria-hidden="true"></span></button>
 <?php
 				endif;
 			}

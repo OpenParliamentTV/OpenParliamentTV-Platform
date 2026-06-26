@@ -26,7 +26,7 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                 <?php if (!empty($config["allow"]["notifications"])): ?>
                 <a href="<?= $config["dir"]["root"] ?>/manage/alerts"
                    class="dropdown-item <?= ($page == "manage-alerts") ? "active" : "" ?>">
-                    <i class="icon-attention me-2"></i>
+                    <i class="icon-bell-fill me-2"></i>
                     <?= L::alertManageTitle(); ?>
                 </a>
                 <?php endif; ?>
@@ -107,7 +107,7 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                 <li class="nav-item">
                     <a href="<?= $config["dir"]["root"] ?>/manage/alerts"
                        class="nav-link <?= ($page == "manage-alerts") ? "active" : "" ?>">
-                        <i class="icon-attention me-2"></i>
+                        <i class="icon-bell-fill me-2"></i>
                         <?= L::alertManageTitle(); ?>
                     </a>
                 </li>

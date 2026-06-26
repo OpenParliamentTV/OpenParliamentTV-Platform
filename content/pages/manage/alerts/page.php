@@ -40,7 +40,7 @@
                 <div class="col-12">
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="alerts-tab" data-bs-toggle="tab" data-bs-target="#alerts" role="tab" aria-controls="alerts" aria-selected="true"><span class="icon-attention"></span> <?= L::alertManageTitle(); ?></a>
+                            <a class="nav-link active" id="alerts-tab" data-bs-toggle="tab" data-bs-target="#alerts" role="tab" aria-controls="alerts" aria-selected="true"><span class="icon-bell-fill"></span> <?= L::alertManageTitle(); ?></a>
                         </li>
                     </ul>
                     <div class="tab-content">
