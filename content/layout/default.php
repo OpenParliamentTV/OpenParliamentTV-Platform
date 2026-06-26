@@ -5,3 +5,4 @@
 <?= $this->section('content') ?>
 
 <?php $this->insert('footer') ?>
+<?php $this->insert('components/core-scripts') ?>
