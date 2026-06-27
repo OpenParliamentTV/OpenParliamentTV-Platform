@@ -27,6 +27,15 @@ if ($page === 'search') {
     $robotsMeta = 'noindex, nofollow';
 }
 
+// Meta images always render in the configured default language (no per-language
+// variants), so no lang parameter is forwarded.
+$metaImageBase = $root.'/content/client/images/meta-image.php';
+
+// Short content-version hash for crawler/CDN cache-busting when data changes.
+$metaImageVersion = function(array $parts) {
+    return substr(md5(implode('|', $parts)), 0, 8);
+};
+
 switch ($page) {
   case 'main':
     $title = L::brand().' | '.$claimShortClean;
@@ -40,20 +49,62 @@ switch ($page) {
     } else {
       $title = strip_tags($pageTitle).' | '.L::brand();
     }
-    $image = $root.'/content/client/images/thumbnail.png';
+    // Reuse the facet labels the search handler already resolved (so the image
+    // endpoint doesn't have to re-resolve them): compose "Label · Label · "q"".
+    $searchLabelParts = [];
+    foreach ([
+      $personDataFromRequest ?? null, $organisationDataFromRequest ?? null,
+      $documentDataFromRequest ?? null, $termDataFromRequest ?? null,
+    ] as $facet) {
+      if (is_array($facet)) {
+        foreach ($facet as $facetNode) {
+          if (!empty($facetNode['attributes']['label'])) { $searchLabelParts[] = $facetNode['attributes']['label']; }
+        }
+      }
+    }
+    if (!empty($_REQUEST['q'])) { $searchLabelParts[] = '“'.$_REQUEST['q'].'”'; }
+    // Pass the composed label plus the filter ids (used for the result count).
+    $searchParams = ['type' => 'search', 'label' => implode('  ·  ', $searchLabelParts)];
+    foreach (['q', 'personID', 'organisationID', 'termID', 'documentID'] as $sp) {
+      if (!empty($_REQUEST[$sp])) { $searchParams[$sp] = $_REQUEST[$sp]; }
+    }
+    $image = $metaImageBase.'?'.http_build_query($searchParams);
     $ogType = 'website';
     $canonicalUrl = $url;
     break;
   case 'media':
     $title = strip_tags($pageTitle).' | '.L::brand();
     if (isset($_REQUEST['t']) && isset($_REQUEST['f'])) {
-      $image = $root.'/content/client/images/quote-image.php?id='.$_REQUEST['id'].'&t='.$_REQUEST['t'].'&f='.$_REQUEST['f'].'&c='.$_REQUEST['c'];
-    } else if (isset($speech) && !empty($speech["attributes"]["thumbnailURI"])) {
-      $image = $speech["attributes"]["thumbnailURI"];
+      $image = $metaImageBase.'?type=quote&id='.urlencode($_REQUEST['id']).'&t='.urlencode($_REQUEST['t']).'&f='.urlencode($_REQUEST['f']).'&c='.urlencode($_REQUEST['c'] ?? 'l');
     } else {
-      $image = $root.'/content/client/images/thumbnail.png';
+      $image = $metaImageBase.'?type=media&id='.urlencode($_REQUEST['id'] ?? '');
     }
     $ogType = 'video.other';
+    $canonicalUrl = $urlWithoutParams . $canonicalLangSuffix;
+    break;
+  case 'person':
+  case 'organisation':
+  case 'term':
+  case 'document':
+    $title = strip_tags($pageTitle).' | '.L::brand();
+    $entityId = $apiResult['data']['id'] ?? ($_REQUEST['id'] ?? '');
+    $v = $metaImageVersion([
+      $apiResult['data']['attributes']['label'] ?? '',
+      $apiResult['data']['attributes']['thumbnailURI'] ?? '',
+    ]);
+    $image = $metaImageBase.'?type='.$page.'&id='.urlencode($entityId).'&v='.$v;
+    $ogType = 'article';
+    $canonicalUrl = $urlWithoutParams . $canonicalLangSuffix;
+    break;
+  case 'session':
+  case 'electoralPeriod':
+  case 'agendaItem':
+    // Date/structural types: no label/thumbnail, so version off the page title.
+    $title = strip_tags($pageTitle).' | '.L::brand();
+    $entityId = $apiResult['data']['id'] ?? ($_REQUEST['id'] ?? '');
+    $v = $metaImageVersion([strip_tags($pageTitle)]);
+    $image = $metaImageBase.'?type='.$page.'&id='.urlencode($entityId).'&v='.$v;
+    $ogType = 'article';
     $canonicalUrl = $urlWithoutParams . $canonicalLangSuffix;
     break;
   default:

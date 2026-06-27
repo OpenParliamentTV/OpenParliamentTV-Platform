@@ -111,7 +111,7 @@ $relatedContentsPanel = ob_get_clean();
                 <div class="row row-cols-2 mt-2">
                     <div class="col pe-2">
                         <div class="card quotePreview active" data-theme="l">
-                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/quote-image.php">
+                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/meta-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
                                     <div class="cardTitle text-truncate"><?= h($speechTitleShort) ?> | <?= L::brand() ?></div>
@@ -123,7 +123,7 @@ $relatedContentsPanel = ob_get_clean();
                     </div>
                     <div class="col ps-2">
                         <div class="card quotePreview" data-theme="d">
-                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/quote-image.php">
+                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/meta-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
                                     <div class="cardTitle text-truncate"><?= h($speechTitleShort) ?> | <?= L::brand() ?></div>

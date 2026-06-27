@@ -418,6 +418,91 @@ function optvImageFetchAndStore($type, $id, $sourceURL) {
 }
 
 /**
+ * Resolve the authoritative current source URL for an entity thumbnail from the
+ * platform DB. Returns the URL string, or null if the entity/column is empty or
+ * the DB is unreachable.
+ */
+function optvImageDbSourceURL($type, $id) {
+    global $config;
+
+    if (!in_array($type, OPTV_IMAGE_ENTITY_TYPES, true) || !optvImageIsValidId($type, $id)) {
+        return null;
+    }
+
+    try {
+        $db = new SafeMySQL([
+            'host' => $config["platform"]["sql"]["access"]["host"],
+            'user' => $config["platform"]["sql"]["access"]["user"],
+            'pass' => $config["platform"]["sql"]["access"]["passwd"],
+            'db'   => $config["platform"]["sql"]["db"],
+        ]);
+
+        $map = [
+            'person'       => [$config["platform"]["sql"]["tbl"]["Person"],       'PersonID',       'PersonThumbnailURI'],
+            'organisation' => [$config["platform"]["sql"]["tbl"]["Organisation"], 'OrganisationID', 'OrganisationThumbnailURI'],
+            'term'         => [$config["platform"]["sql"]["tbl"]["Term"],         'TermID',         'TermThumbnailURI'],
+            'document'     => [$config["platform"]["sql"]["tbl"]["Document"],     'DocumentID',     'DocumentThumbnailURI'],
+        ];
+        list($table, $idCol, $thumbCol) = $map[$type];
+
+        $idPlaceholder = ($type === 'document') ? '?i' : '?s';
+        $idValue       = ($type === 'document') ? (int) $id : $id;
+
+        $source = $db->getOne("SELECT $thumbCol FROM ?n WHERE $idCol=$idPlaceholder LIMIT 1", $table, $idValue);
+        return ($source === null || $source === '') ? null : $source;
+    } catch (Exception $e) {
+        return null;
+    }
+}
+
+/**
+ * Ensure a locally cached copy of an entity thumbnail exists and return its
+ * filesystem path, or null if none is available.
+ *
+ * Shared by the proxy endpoint (entity-image.php, which then streams the file)
+ * and the meta-image renderers (which composite it). Uses the DB as the source
+ * of truth, serves an existing cache when the source is unchanged, and fetches +
+ * encodes on a miss/changed source (reusing optvImageFetchAndStore).
+ *
+ * Requires SafeMySQL to be available (caller includes safemysql.class.php).
+ *
+ * @return string|null absolute path to the cached image, or null on failure
+ */
+function optvImageEnsureCached($type, $id) {
+    if (!in_array($type, OPTV_IMAGE_ENTITY_TYPES, true) || !optvImageIsValidId($type, $id)) {
+        return null;
+    }
+
+    $cached       = optvImageCachedFile($type, $id); // ['path'=>..,'mime'=>..] or null
+    $storedSource = is_file(optvImageSourceMarkerPath($type, $id))
+        ? (string) file_get_contents(optvImageSourceMarkerPath($type, $id))
+        : '';
+
+    $currentSource = optvImageDbSourceURL($type, $id);
+
+    // DB unreachable / no source: serve a stale cache if we have one.
+    if ($currentSource === null) {
+        return $cached !== null ? $cached['path'] : null;
+    }
+
+    // Cache present and source unchanged -> use it.
+    if ($cached !== null && $currentSource === $storedSource) {
+        return $cached['path'];
+    }
+
+    // (Re)build, then return the fresh copy.
+    if (optvImageIsAllowedSource($currentSource) && optvImageFetchAndStore($type, $id, $currentSource)) {
+        $fresh = optvImageCachedFile($type, $id);
+        if ($fresh !== null) {
+            return $fresh['path'];
+        }
+    }
+
+    // Build failed: fall back to a stale cache if present.
+    return $cached !== null ? $cached['path'] : null;
+}
+
+/**
  * Fetch raw image bytes from an allowed host with a descriptive User-Agent and a
  * short timeout. Returns the body string or false on failure (incl. non-2xx).
  */

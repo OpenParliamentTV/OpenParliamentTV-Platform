@@ -1,7 +1,7 @@
 <?php
-require_once('gd-text.php');
+require_once(__DIR__ . '/gd-text.php');
 
-function renderImageQuote($theme, $text, $author, $authorSecondary) {
+function renderQuoteImage($theme, $text, $author, $authorSecondary) {
 	// Ensure proper UTF-8 encoding
 	$text = mb_convert_encoding($text, 'UTF-8', 'auto');
 	$author = mb_convert_encoding($author, 'UTF-8', 'auto');
@@ -38,8 +38,9 @@ function renderImageQuote($theme, $text, $author, $authorSecondary) {
 		$bgColor = imagecolorallocate($image, 48, 49, 57);
 		$textColor = new Color(255, 255, 255);
 	} else {
-		$bgColor = imagecolorallocate($image, 243, 244, 245);
-		$textColor = new Color(115, 116, 124);
+		// Light theme — shared palette: background #f9fafb, foreground #535263.
+		$bgColor = imagecolorallocate($image, 249, 250, 251);
+		$textColor = new Color(83, 82, 99);
 	}
 	imagefill($image, 0, 0, $bgColor);
 	

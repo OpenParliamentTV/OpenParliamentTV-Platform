@@ -82,32 +82,10 @@ if ($cached !== null && $v !== '' && $storedSource !== '' && $v === optvImageVer
 }
 
 // Otherwise resolve the authoritative current source URL from the platform DB.
-$currentSource = null;
-try {
-    $db = new SafeMySQL([
-        'host' => $config["platform"]["sql"]["access"]["host"],
-        'user' => $config["platform"]["sql"]["access"]["user"],
-        'pass' => $config["platform"]["sql"]["access"]["passwd"],
-        'db'   => $config["platform"]["sql"]["db"],
-    ]);
-
-    $map = [
-        'person'       => [$config["platform"]["sql"]["tbl"]["Person"],       'PersonID',       'PersonThumbnailURI'],
-        'organisation' => [$config["platform"]["sql"]["tbl"]["Organisation"], 'OrganisationID', 'OrganisationThumbnailURI'],
-        'term'         => [$config["platform"]["sql"]["tbl"]["Term"],         'TermID',         'TermThumbnailURI'],
-        'document'     => [$config["platform"]["sql"]["tbl"]["Document"],     'DocumentID',     'DocumentThumbnailURI'],
-    ];
-    list($table, $idCol, $thumbCol) = $map[$type];
-
-    $idPlaceholder = ($type === 'document') ? '?i' : '?s';
-    $idValue       = ($type === 'document') ? (int) $id : $id;
-    $currentSource = $db->getOne(
-        "SELECT $thumbCol FROM ?n WHERE $idCol=$idPlaceholder LIMIT 1",
-        $table,
-        $idValue
-    );
-} catch (Exception $e) {
-    // DB unreachable: serve a stale cache if we have one, else give up.
+// Returns null when the DB is unreachable or the entity has no thumbnail.
+$currentSource = optvImageDbSourceURL($type, $id);
+if ($currentSource === null) {
+    // Serve a stale cache if we have one, else give up.
     if ($cached !== null) {
         optvImageServeFile($cached, $storedSource);
     }
@@ -116,7 +94,7 @@ try {
 }
 
 // Cache is present and the source hasn't changed -> serve it (revalidated).
-if ($cached !== null && $currentSource !== '' && $currentSource === $storedSource) {
+if ($cached !== null && $currentSource === $storedSource) {
     optvImageServeFile($cached, $storedSource);
 }
 
