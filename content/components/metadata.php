@@ -350,7 +350,10 @@ switch ($page) {
 if ($jsonLd !== null) {
     $jsonLd = array_filter($jsonLd, function ($v) { return $v !== null && $v !== ''; });
     echo "\n<script type=\"application/ld+json\">\n";
-    echo json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+    // JSON_HEX_TAG (+ AMP/QUOT/APOS) hex-escapes <, >, &, ", ' so entity-derived
+    // values (labels/abstracts imported from Wikidata/Wikipedia) can't break out
+    // of the <script> element — e.g. a "</script>" in a label can't inject HTML.
+    echo json_encode($jsonLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_QUOT | JSON_HEX_APOS);
     echo "\n</script>\n";
 }
 
