@@ -17,13 +17,6 @@ $relatedContentsPanel = ob_get_clean();
 
 ?>
 <script type="text/javascript">
-    currentMediaID = <?= json_encode($speech["id"], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
-    currentMediaTimestamp = <?= json_encode($speech["attributes"]["dateStartTimestamp"], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
-    <?php // json_encode($speech, JSON_PRETTY_PRINT) ?>
-
-    // TODO: Replace URL Quick Fix
-    var originMediaID = <?= json_encode($speech["attributes"]['originMediaID'], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
-
     <?php
         if (function_exists("overrideVideoSource")) {
 
@@ -35,9 +28,7 @@ $relatedContentsPanel = ob_get_clean();
             
         }
     ?>
-
-
-
+    
     playerData = {
     	'title': '',
     	'documents': [],
