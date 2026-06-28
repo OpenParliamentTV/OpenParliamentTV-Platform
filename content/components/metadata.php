@@ -36,10 +36,17 @@ $metaImageVersion = function(array $parts) {
     return substr(md5(implode('|', $parts)), 0, 8);
 };
 
+// Image dimensions (declared in og:image:width/height so social platforms render
+// the large card immediately on first share, before they've fetched the image).
+// Default = the generated meta-image cards; overridden for the quote image and
+// the static fallback thumbnail below.
+$imageW = 1200; $imageH = 630;
+
 switch ($page) {
   case 'main':
     $title = L::brand().' | '.$claimShortClean;
     $image = $root.'/content/client/images/thumbnail.png';
+    $imageW = 2000; $imageH = 1120;
     $ogType = 'website';
     $canonicalUrl = $urlWithoutParams . $canonicalLangSuffix;
     break;
@@ -76,6 +83,7 @@ switch ($page) {
     $title = strip_tags($pageTitle).' | '.L::brand();
     if (isset($_REQUEST['t']) && isset($_REQUEST['f'])) {
       $image = $metaImageBase.'?type=quote&id='.urlencode($_REQUEST['id']).'&t='.urlencode($_REQUEST['t']).'&f='.urlencode($_REQUEST['f']).'&c='.urlencode($_REQUEST['c'] ?? 'l');
+      $imageW = 1120; $imageH = 600; // quote image uses its own canvas size
     } else {
       $image = $metaImageBase.'?type=media&id='.urlencode($_REQUEST['id'] ?? '');
     }
@@ -110,6 +118,7 @@ switch ($page) {
   default:
     $title = strip_tags($pageTitle).' | '.L::brand();
     $image = $root.'/content/client/images/thumbnail.png';
+    $imageW = 2000; $imageH = 1120;
     $ogType = 'article';
     $canonicalUrl = $urlWithoutParams . $canonicalLangSuffix;
     break;
@@ -124,6 +133,11 @@ switch ($page) {
 <meta property="og:url" content="<?= hAttr($canonicalUrl) ?>" />
 <meta property="og:type" content="<?= hAttr($ogType) ?>" />
 <meta property="og:image" content="<?= hAttr($image) ?>" />
+<meta property="og:image:secure_url" content="<?= hAttr($image) ?>" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:width" content="<?= (int) $imageW ?>" />
+<meta property="og:image:height" content="<?= (int) $imageH ?>" />
+<meta property="og:image:alt" content="<?= hAttr($title) ?>" />
 <meta property="og:description" content="<?= hAttr($description) ?>" />
 <meta property="og:site_name" content="<?= hAttr(L::brand()) ?>" />
 <meta property="og:locale" content="<?= hAttr(LanguageManager::getInstance()->getCurrentLang()) ?>" />
@@ -135,11 +149,12 @@ switch ($page) {
 <?php endif; ?>
 <?php endif; ?>
 
-<meta name="twitter:card" content="<?= ($page === 'media') ? 'player' : 'summary_large_image' ?>">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@OpenParlTV">
 <meta name="twitter:title" content="<?= hAttr($title) ?>">
 <meta name="twitter:description" content="<?= hAttr($description) ?>">
 <meta name="twitter:image" content="<?= hAttr($image) ?>">
+<meta name="twitter:image:alt" content="<?= hAttr($title) ?>">
 
 <link rel="canonical" href="<?= hAttr($canonicalUrl) ?>">
 <?php
