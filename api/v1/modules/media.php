@@ -1632,6 +1632,18 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
     try {
         $search = searchSpeeches($filteredParameters, $getAllResults);
 
+        // Search service (OpenSearch) unavailable — surface as an error so the
+        // UI can show a "temporarily unavailable" notice instead of an empty
+        // "no speeches found" result. Absent flag = available.
+        if (isset($search["serviceAvailable"]) && $search["serviceAvailable"] === false) {
+            return createApiErrorResponse(
+                503,
+                3,
+                "messageErrorSearchGenericTitle",
+                "messageServiceSearchUnavailable"
+            );
+        }
+
         if (!isset($search["hits"]["hits"])) {
             return createApiErrorResponse(
                 503,

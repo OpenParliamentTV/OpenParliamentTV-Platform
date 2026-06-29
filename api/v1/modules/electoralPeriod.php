@@ -152,11 +152,13 @@ function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $se
     }
     
     $parliaments = $targetParliament ? [$targetParliament] : array_keys($config["parliament"]);
-    
+
+    $connectionFailed = false;
     foreach ($parliaments as $parliament) {
         $db_connection = getApiDatabaseConnection('parliament', $parliament);
         if (!is_object($db_connection)) {
-            continue; 
+            $connectionFailed = true;
+            continue;
         }
         
         try {
@@ -229,7 +231,13 @@ function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $se
             continue;
         }
     }
-    
+
+    // Surface an unreachable parliament DB as a 503 error instead of a silent
+    // empty success (see sessionGetItemsFromDB for rationale).
+    if (empty($allResults) && $connectionFailed) {
+        return createApiErrorDatabaseConnection('parliament');
+    }
+
     return [
         "total" => $totalCount,
         "data" => $allResults

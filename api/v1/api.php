@@ -480,6 +480,13 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     );
             }
 
+            // A getItemsFromDB function may return a ready-made API error
+            // response (e.g. parliament DB unreachable) — pass it through
+            // instead of wrapping it as an empty success.
+            if (is_array($result) && (($result["meta"]["requestStatus"] ?? null) === "error")) {
+                return createApiResponse($result);
+            }
+
             if ($result) {
                 return createApiResponse(
                     createApiSuccessResponse(

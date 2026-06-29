@@ -251,6 +251,7 @@
 	"messageRegisterThankYou": "Vielen Dank für deine Registrierung auf",
 	"messageRegisterWrongConfirmationCode": "Bestätigungscode ist nicht korrekt",
 	"messageSelectPartyFactionPerson": "Bitte wähle eine Partei und eine Fraktion/Gruppe für diese Person aus",
+	"messageServiceSearchUnavailable": "Der Suchindex ist gerade nicht erreichbar oder überlastet. Bitte versuche es in einigen Momenten erneut.",
 	"messageQuoteDisplayPart1": "Ist dieses Zitat wirklich von",
 	"messageQuoteDisplayPart2": "Wir ordnen Zitate den Hauptredner:innen zu. Bitte stelle sicher dass dieses Zitat <b>keine Zwischenfrage oder Kommentar von einer anderen Person ist</b>",
 	"moreAt": "Mehr auf",

@@ -155,11 +155,13 @@ function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = f
     }
     
     $parliaments = $targetParliament ? array($targetParliament) : array_keys($config["parliament"]);
-    
+
+    $connectionFailed = false;
     foreach ($parliaments as $parliament) {
         $db_connection = getApiDatabaseConnection('parliament', $parliament); // Renamed to avoid conflict with $db param
         if (!is_object($db_connection)) {
-            continue; 
+            $connectionFailed = true;
+            continue;
         }
         
         try {
@@ -253,10 +255,17 @@ function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = f
             
         } catch (exception $e) {
             error_log("Error in sessionGetItemsFromDB for parliament $parliament: " . $e->getMessage());
-            continue; 
+            continue;
         }
     }
-    
+
+    // If nothing could be loaded because a parliament DB was unreachable,
+    // surface it as a 503 error rather than a silent empty success so the UI
+    // can tell the user the database is down instead of showing empty tables.
+    if (empty($allResults) && $connectionFailed) {
+        return createApiErrorDatabaseConnection('parliament');
+    }
+
     return [
         "total" => $totalCount,
         "data" => $allResults

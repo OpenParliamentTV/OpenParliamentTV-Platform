@@ -251,6 +251,7 @@
 	"messageRegisterThankYou": "Merci de vous être inscrit sur",
 	"messageRegisterWrongConfirmationCode": "Le code de confirmation n'est pas correct",
 	"messageSelectPartyFactionPerson": "Veuillez sélectionner une partie et un groupe pour cette personne",
+	"messageServiceSearchUnavailable": "L'index de recherche n'est actuellement pas accessible ou surchargé. Veuillez réessayer dans quelques instants.",
 	"messageQuoteDisplayPart1": "Cette citation est-elle vraiment de",
 	"messageQuoteDisplayPart2": "Nous attribuons les citations à l'orateur principal. Veuillez vous assurer que cette citation <b>n'est pas une intervention ou un commentaire de quelqu'un d'autre</b>",
 	"moreAt": "Plus sur",

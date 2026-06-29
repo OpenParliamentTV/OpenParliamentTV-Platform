@@ -140,8 +140,13 @@ function searchSpeeches($request, $getAllResults = false) {
 
     $ESClient = getApiOpenSearchClient();
     if (is_array($ESClient) && isset($ESClient["errors"])) {
-        // Return error response if client initialization failed
+        // Return error response if client initialization failed. The
+        // "serviceAvailable" => false flag lets callers (mediaSearch) tell a
+        // service outage apart from a genuine empty result set. The success
+        // path returns the raw OpenSearch result and does NOT carry this key,
+        // so absence must be treated as "available".
         return [
+            "serviceAvailable" => false,
             "hits" => [
                 "hits" => [],
                 "total" => ["value" => 0],
@@ -190,8 +195,11 @@ function searchSpeeches($request, $getAllResults = false) {
         if ($DEBUG_MODE) {
             error_log("Search error: " . $e->getMessage());
         }
-        // Return a properly structured error response
+        // Return a properly structured error response. The "serviceAvailable"
+        // => false flag distinguishes this query failure (e.g. OpenSearch
+        // unreachable / crashed) from a genuine empty result set.
         return [
+            "serviceAvailable" => false,
             "hits" => [
                 "hits" => [],
                 "total" => ["value" => 0],

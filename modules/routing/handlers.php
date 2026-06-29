@@ -19,6 +19,7 @@
 use League\Plates\Engine;
 
 require_once(__DIR__ . '/../../api/v1/api.php');
+require_once(__DIR__ . '/../utilities/health.php');
 
 /**
  * Render a page template with the standard variable contract every layout/head
@@ -26,6 +27,7 @@ require_once(__DIR__ . '/../../api/v1/api.php');
  */
 function optvRenderPage(Engine $plates, string $template, array $vars): void
 {
+    $health = optvServiceHealth();
     $defaults = [
         'page' => '',
         'pageType' => 'default',
@@ -34,6 +36,8 @@ function optvRenderPage(Engine $plates, string $template, array $vars): void
         'pageBreadcrumbs' => [],
         'schemaItemScopeString' => '',
         'apiResult' => null,
+        // Service health for the global header banner (see content/header.php).
+        'searchAvailable' => $health['searchAvailable'],
     ];
     // Publish the page meta as shared engine data so the whole render tree
     // (page template → layout → base → head/header/footer/components) can read

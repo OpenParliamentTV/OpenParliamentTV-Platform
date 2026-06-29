@@ -251,6 +251,7 @@
 	"messageRegisterThankYou": "Hesap oluşturduğunuz için teşekkür ederiz",
 	"messageRegisterWrongConfirmationCode": "Onay kodu doğru değil",
 	"messageSelectPartyFactionPerson": "Lütfen bir parti ve grup seçin",
+	"messageServiceSearchUnavailable": "Arama dizini şu anda erişilebilir değil veya yükleniyor. Lütfen birkaç dakika sonra tekrar deneyin.",
 	"messageQuoteDisplayPart1": "Bu alıntı gerçekten",
 	"messageQuoteDisplayPart2": "tarafından mı? Alıntıları ana konuşmacıya atıyoruz. Lütfen bu alıntının <b>başka birinin müdahalesi veya yorumu olmadığından</b> emin olun",
 	"moreAt": "Daha fazlası",

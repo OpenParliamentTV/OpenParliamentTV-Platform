@@ -43,7 +43,18 @@ if ($shouldShowHome && !$hasValidSearchCriteria) {
 	$parameter["itemType"] = "media";
 	$result = apiV1($parameter);
 
-
+	// Search service (OpenSearch) unavailable — show a "temporarily
+	// unavailable" notice rather than the empty "no speeches found" message,
+	// so users can tell an outage (often heavy load) apart from a real 0-hit
+	// query. mediaSearch() returns requestStatus=error in this case.
+	if (($result["meta"]["requestStatus"] ?? null) === "error") {
+		?>
+		<div class="filterSummary row">
+			<div class="col alert alert-warning"><?= L::messageServiceSearchUnavailable(); ?></div>
+		</div>
+		<?php
+		return;
+	}
 
 	$result_items = $result["data"];
 
