@@ -10,8 +10,7 @@
 			$apiResult = apiV1([
 				"action" => "user",
 				"itemType" => "confirm-registration",
-				"UserID" => $_REQUEST["id"],
-				"ConfirmationCode" => $_REQUEST["c"]
+				"ConfirmationCode" => $_REQUEST["c"] ?? ""
 			]);
 
 			if ($apiResult["meta"]["requestStatus"] === "success") {

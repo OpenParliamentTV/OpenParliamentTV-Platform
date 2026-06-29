@@ -123,7 +123,7 @@ CREATE TABLE `user` (
   `UserLastLogin` timestamp NULL DEFAULT NULL,
   `UserActive` tinyint(1) NOT NULL DEFAULT 0,
   `UserRegisterConfirmation` varchar(255) DEFAULT NULL,
-  `UserPasswordReset` varchar(255) NOT NULL DEFAULT '0',
+  `UserPasswordReset` varchar(255) DEFAULT NULL,
   `UserBlocked` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -245,7 +245,9 @@ ALTER TABLE `term` ADD FULLTEXT KEY `TermLabel_2` (`TermLabel`,`TermLabelAlterna
 ALTER TABLE `term` ADD FULLTEXT KEY `TermLabel_3` (`TermLabel`,`TermLabelAlternative`,`TermAbstract`);
 
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`UserID`);
+  ADD PRIMARY KEY (`UserID`),
+  ADD UNIQUE KEY `uniq_user_register_confirmation` (`UserRegisterConfirmation`(191)),
+  ADD UNIQUE KEY `uniq_user_password_reset` (`UserPasswordReset`(191));
 
 ALTER TABLE `alert`
   ADD PRIMARY KEY (`AlertID`),
