@@ -917,5 +917,10 @@ function updateFilterBarVisibility() {
 		$('#toggleFilterContainer').removeClass('d-block').addClass('d-none');
 		// Back to the home state: show the landing intro
 		$('.homeIntro').removeClass('d-none');
+		// Home state must never use the fixed/compact layout. The scroll handler
+		// only clears 'fixed' when scrolled back to the top, so reset it here in
+		// case we entered the home state while still scrolled down.
+		$('body').removeClass('fixed');
+		$('#speechListContainer').css('margin-top', 0);
 	}
 }
