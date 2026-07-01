@@ -8,6 +8,10 @@ $showFactionChart = isset($showFactionChart) ? $showFactionChart : true;
 $showDateRange = isset($showDateRange) ? $showDateRange : true;
 $showSearchSuggestions = isset($showSearchSuggestions) ? $showSearchSuggestions : false;
 $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : false;
+// Landing intro (claim + examples) shown only on the front/search page in its
+// home state. Content lives in overridable partials (search.claim/search.examples).
+$showHomeIntro = isset($showHomeIntro) ? $showHomeIntro : false;
+$homeIntroInitiallyHidden = isset($homeIntroInitiallyHidden) ? $homeIntroInitiallyHidden : false;
 ?>
 
 <div id="filterbar" class="col-12">
@@ -15,6 +19,9 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
         <input type="hidden" name="q" value="">
         <input type="hidden" name="context" value="">
         <div class="searchContainer">
+            <?php if ($showHomeIntro): ?>
+            <?php include_once(include_custom(__DIR__ . '/search.claim.php', false)); ?>
+            <?php endif; ?>
             <?php if ($showParliamentFilter): ?>
             <div class="parliamentFilterContainer d-none">
                 <?php include_once('search.filter.parliaments.php'); ?>
@@ -46,6 +53,9 @@ $showAdvancedFilters = isset($showAdvancedFilters) ? $showAdvancedFilters : fals
                 </div>
                 <?php endif; ?>
             </div>
+            <?php endif; ?>
+            <?php if ($showHomeIntro): ?>
+            <?php include_once(include_custom(__DIR__ . '/search.examples.php', false)); ?>
             <?php endif; ?>
         </div>
         

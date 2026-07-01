@@ -7,7 +7,6 @@ if (!isset($page)) {
 	<?php if (isset($searchAvailable) && $searchAvailable === false): ?>
 	<div class="text-center alert m-0 px-1 py-0 alert-warning" style="font-size: 14px;"><span class="icon-attention mr-1"></span><?= L::messageServiceSearchUnavailable(); ?></div>
 	<?php endif; ?>
-	<!--<div class="text-center alert m-0 px-1 py-0 alert-info" style="font-size: 14px;">* <span class="icon-attention mr-1"></span><a href="<?= $config["dir"]["root"] ?>/announcements" style="color: inherit; text-decoration: underline;"><?= L::messageAnnouncementCurrentState(); ?></a></div>-->
 	<nav class="navbar justify-content-between navbar-light">
 		<div class="container-fluid px-0">
 			<div class="<?=($page != "media") ? "flex-fill" : ""?>">

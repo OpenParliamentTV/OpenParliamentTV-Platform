@@ -5,7 +5,7 @@
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 			<h2>API <?= L::documentation(); ?></h2>
-			<div class="alert bg-white"><?= L::messageOpenData(); ?>. There is currently no limit on requests nor do you need an api key. But please get in touch if you plan to copy our entire dataset. Instead of making millions of api requests you can just get an SQL dump from us.</div>
+			<div class="alert bg-white">All data on Open Parliament TV can be requested via our <b>Open Data API</b>. There is currently no limit on requests nor do you need an api key. But please get in touch if you plan to copy our entire dataset. Instead of making millions of api requests you can just get an SQL dump from us.</div>
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" role="tab" aria-controls="search" aria-selected="true"><span class="nav-item-label"><?= L::search(); ?></span></a>

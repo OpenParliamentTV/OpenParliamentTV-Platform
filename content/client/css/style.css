@@ -1832,6 +1832,10 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
     }
 }
 
+.donut-chart-tooltip {
+    top: 0px;
+}
+
 .filterContainer .form-group {
     margin: 0;
 }
@@ -2041,8 +2045,26 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
 }
 
 .examplesContainer {
-    font-size: 1rem;
     line-height: 30px;
+}
+
+/* Landing claim shown at the top of the search bar's searchContainer (home state).
+   Scoped to .searchContainer so it doesn't affect the #introHint claim variant. */
+.searchContainer .introClaim {
+    font-size: 1.2rem;
+    margin-bottom: 1.4rem;
+    line-height: 1.4em;
+}
+@media (min-width:768px) {
+    .searchContainer .introClaim {
+        font-size: 1.4rem;
+        margin-bottom: 2rem;
+    }
+}
+@media (min-width:1500px) {
+    .searchContainer .introClaim {
+        margin-bottom: 2.8rem;
+    }
 }
 
 .detailsHeader {
@@ -2227,7 +2249,7 @@ table td.thumbnailColumn-organisation .rounded-circle img {
     text-decoration: none;
 }
 
-#speechListContainer .examplesContainer a, #interventionListContainer .examplesContainer a {
+#speechListContainer .examplesContainer a, #interventionListContainer .examplesContainer a, .searchContainer .examplesContainer a {
     float: left;
     width: auto;
     padding: 0px 8px;
@@ -2240,7 +2262,7 @@ table td.thumbnailColumn-organisation .rounded-circle img {
     line-height: 1.5;
 }
 
-#speechListContainer .examplesContainer a:hover, #interventionListContainer .examplesContainer a:hover {
+#speechListContainer .examplesContainer a:hover, #interventionListContainer .examplesContainer a:hover, .searchContainer .examplesContainer a:hover {
     border-color: var(--primary-fg-color);
 }
 

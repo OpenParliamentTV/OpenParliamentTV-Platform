@@ -354,7 +354,7 @@ function page_search(array $routeData, array $params, Engine $plates): void
         'pageType' => 'default',
         'pageTitle' => $pageTitle,
         'pageDescription' => $pageDescription,
-        'pageBreadcrumbs' => $pageTitle !== '' ? [['label' => $pageTitle]] : [],
+        'pageBreadcrumbs' => [],
     ], $renderVars));
 }
 

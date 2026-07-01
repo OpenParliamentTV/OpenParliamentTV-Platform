@@ -909,9 +909,13 @@ function updateFilterBarVisibility() {
 		$('#filterbar').removeClass('nosearch');
 		$('.filterContainer').removeClass('d-none').addClass('d-md-block');
 		$('#toggleFilterContainer').removeClass('d-none').addClass('d-block');
+		// Landing intro (claim + examples) is hidden once a search is active
+		$('.homeIntro').addClass('d-none');
 	} else {
 		$('#filterbar').addClass('nosearch');
 		$('.filterContainer').removeClass('d-md-block').addClass('d-none');
 		$('#toggleFilterContainer').removeClass('d-block').addClass('d-none');
+		// Back to the home state: show the landing intro
+		$('.homeIntro').removeClass('d-none');
 	}
 }
