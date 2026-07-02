@@ -3,21 +3,44 @@ info:
   title: Open Parliament TV API
   version: '1.0'
   description: |
-    API for accessing parliamentary data including speeches, documents, and related entities.
-    All data is available through the Open Data API without rate limits or API key requirements.
+    API for accessing parliamentary data including speeches (media), documents, and related entities.
+
+    The API is free to use and requires **no API key**. To protect the service against
+    scraping and automated bulk traffic, requests are **rate-limited per client IP**
+    (a few requests per second; see the `429` responses below). Logged-in sessions and a
+    configurable IP allowlist are exempt. If you need higher or unlimited limits, please get
+    in touch — an API key can be issued on request.
+
+    If you want the complete raw dataset, do not scrape the API: all raw speech data imported
+    into the platform is published in the Open Parliament TV GitHub data repositories
+    (https://github.com/OpenParliamentTV/).
+
+    The response envelope follows the JSON:API-inspired structure documented under the
+    Specification tab of the `/api` page.
   license:
     name: ODC Open Database License (ODbL) v1.0
     url: https://opendatacommons.org/licenses/odbl/1-0/
 
 servers:
   - url: https://de.openparliament.tv/api/v1
-    description: Production server
+    description: Production server (German Bundestag instance)
+
+# The public API requires no authentication (no API key). Rate limiting is applied per client IP.
+security: []
 
 tags:
   - name: Search
     description: Endpoints for searching various entities
   - name: Entities
     description: Endpoints for retrieving specific entities by ID
+  - name: IIIF
+    description: IIIF Presentation API 3.0 manifests and collections (JSON-LD)
+  - name: Transcript
+    description: WebVTT transcript downloads for media items
+  - name: Autocomplete
+    description: Type-ahead suggestion endpoints
+  - name: System
+    description: Service status
 
 paths:
   /search/media:
@@ -25,11 +48,28 @@ paths:
       tags:
         - Search
       summary: Search for media content (speeches)
-      description: Search for parliamentary speeches with various filters
+      description: |
+        Search for parliamentary speeches with various filters.
+
+        **Entity filters and context (`~`) syntax:** the entity-ID filters
+        (`personID`, `organisationID`, `factionID`, `partyID`, `documentID`, `termID`)
+        accept an optional per-value context suffix of the form `ID~context`, e.g.
+        `personID=Q567~NER`. Without a suffix a per-type default context is used
+        (`personID` → `main-speaker`, `factionID` → `main-speaker-faction`,
+        `partyID` → `main-speaker-party`; others → no context filter). A global
+        `context` parameter applies to entity filters that carry no own suffix.
+
+        Valid context values by entity type:
+        - person: `main-speaker` (default), `speaker`, `president`, `vice-president`, `interim-president`, `NER`
+        - organisation: `main-speaker-faction` (default), `main-speaker-party` (default), `NER`, `proceedingsReference`
+        - term: `NER`, `proceedingsReference`
+        - document: `proceedingsReference`, `NER`
+
+        All entity-ID and name filters accept either a single value or an array (`param[]=…`).
       parameters:
         - name: q
           in: query
-          description: Search query (minimum 3 characters)
+          description: Full-text search query (minimum 3 characters)
           required: false
           schema:
             type: string
@@ -43,49 +83,49 @@ paths:
             minLength: 2
         - name: electoralPeriod
           in: query
-          description: Electoral period number
+          description: Electoral period number (matches electoralPeriod.data.attributes.number)
           required: false
           schema:
             type: string
             minLength: 1
         - name: electoralPeriodID
           in: query
-          description: Electoral period ID
+          description: Electoral period ID (matches electoralPeriod.data.id)
           required: false
           schema:
             type: string
             minLength: 1
         - name: sessionID
           in: query
-          description: Session ID
+          description: Session ID (matches session.data.id)
           required: false
           schema:
             type: string
             minLength: 1
         - name: sessionNumber
           in: query
-          description: Session number
+          description: Session number (matches session.data.attributes.number)
           required: false
           schema:
             type: string
             minLength: 1
         - name: dateFrom
           in: query
-          description: Start date in ISO format (e.g., "2017-10-28")
+          description: Start date in ISO format (e.g., "2017-10-28"); matches dateStart
           required: false
           schema:
             type: string
             format: date
         - name: dateTo
           in: query
-          description: End date in ISO format (e.g., "2017-12-22")
+          description: End date in ISO format (e.g., "2017-12-22"); matches dateStart
           required: false
           schema:
             type: string
             format: date
         - name: party
           in: query
-          description: Party name or array of party names
+          description: Party name or array of party names (matches people.data.attributes.party.labelAlternative)
           required: false
           schema:
             oneOf:
@@ -97,7 +137,7 @@ paths:
                   minLength: 1
         - name: partyID
           in: query
-          description: Party Wikidata ID or array of IDs
+          description: Party Wikidata ID or array of IDs (matches organisations.data.id). Supports the `~context` suffix.
           required: false
           schema:
             oneOf:
@@ -109,7 +149,7 @@ paths:
                   minLength: 1
         - name: faction
           in: query
-          description: Faction name or array of faction names
+          description: Faction name or array of faction names (matches people.data.attributes.faction.labelAlternative)
           required: false
           schema:
             oneOf:
@@ -121,7 +161,7 @@ paths:
                   minLength: 1
         - name: factionID
           in: query
-          description: Faction Wikidata ID or array of IDs
+          description: Faction Wikidata ID or array of IDs (matches organisations.data.id). Supports the `~context` suffix.
           required: false
           schema:
             oneOf:
@@ -133,74 +173,174 @@ paths:
                   minLength: 1
         - name: person
           in: query
-          description: Person name (minimum 3 characters)
+          description: Person name (minimum 3 characters; matches people.data.attributes.label)
           required: false
           schema:
             type: string
             minLength: 3
         - name: personID
           in: query
-          description: Person Wikidata ID
+          description: Person Wikidata ID or array of IDs (matches people.data.id). Supports the `~context` suffix (e.g. `Q567~NER`).
           required: false
           schema:
-            type: string
-            pattern: '^Q[0-9]+$'
-        - name: abgeordnetenwatchID
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
+        - name: organisation
           in: query
-          description: Abgeordnetenwatch ID
+          description: Organisation name or array of names (minimum 3 characters)
           required: false
           schema:
-            type: string
-            minLength: 1
+            oneOf:
+              - type: string
+                minLength: 3
+              - type: array
+                items:
+                  type: string
+                  minLength: 3
         - name: organisationID
           in: query
-          description: Organisation Wikidata ID
+          description: Organisation Wikidata ID (matches people.data.attributes.party.id / people.data.attributes.faction.id). Supports the `~context` suffix.
           required: false
           schema:
             type: string
             pattern: '^Q[0-9]+$'
         - name: context
           in: query
-          description: Context search (minimum 3 characters)
+          description: |
+            Global annotation context applied to entity filters that do not carry their own
+            `~context` suffix (minimum 3 characters). See the endpoint description for valid values.
           required: false
           schema:
             type: string
             minLength: 3
+        - name: abgeordnetenwatchID
+          in: query
+          description: Abgeordnetenwatch ID (matches people.data.attributes.additionalInformation.abgeordnetenwatchID)
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: fragDenStaatID
+          in: query
+          description: FragDenStaat ID
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: personOriginID
+          in: query
+          description: Person origin identifier
+          required: false
+          schema:
+            type: string
+            minLength: 1
+        - name: procedureID
+          in: query
+          description: Procedure identifier
+          required: false
+          schema:
+            type: string
+            minLength: 1
         - name: agendaItemID
           in: query
-          description: Agenda item ID
+          description: Agenda item ID (matches agendaItem.data.id)
           required: false
           schema:
             type: string
             minLength: 2
+        - name: agendaItemTitle
+          in: query
+          description: Agenda item title (minimum 3 characters; matches agendaItem.data.attributes.title)
+          required: false
+          schema:
+            type: string
+            minLength: 3
         - name: documentID
           in: query
-          description: Document ID
+          description: Document ID or array of IDs (matches documents.data.id). Supports the `~context` suffix.
           required: false
           schema:
-            type: string
-            minLength: 1
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
         - name: termID
           in: query
-          description: Term ID
+          description: Term ID or array of IDs (matches terms.data.id). Supports the `~context` suffix.
           required: false
           schema:
-            type: string
-            minLength: 1
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
         - name: id
           in: query
-          description: Media ID
+          description: Media ID (minimum 4 characters)
           required: false
           schema:
             type: string
             minLength: 4
+        - name: aligned
+          in: query
+          description: Filter by transcript/audio alignment status
+          required: false
+          schema:
+            type: boolean
+        - name: numberOfTexts
+          in: query
+          description: Filter by number of text segments
+          required: false
+          schema:
+            type: integer
+        - name: sort
+          in: query
+          description: |
+            Sort order. Defaults to relevance (by score) when omitted.
+            `topic-*` is an alias of `date-*`.
+          required: false
+          schema:
+            type: string
+            enum:
+              - date-asc
+              - date-desc
+              - topic-asc
+              - topic-desc
+              - duration-asc
+              - duration-desc
+              - changed-asc
+              - changed-desc
+        - name: limit
+          in: query
+          description: Maximum number of results per page
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: page
+          in: query
+          description: Page number for pagination (1-based)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+        - name: fields
+          in: query
+          description: 'Return only specified fields. The special value `id` returns an optimized ID-only list (`data: [{ type: media, id }]`).'
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchResponse'
+                $ref: '#/components/schemas/MediaSearchResponse'
               example:
                 meta:
                   api:
@@ -210,30 +350,30 @@ paths:
                       label: "ODC Open Database License (ODbL) v1.0"
                       link: "https://opendatacommons.org/licenses/odbl/1-0/"
                   requestStatus: "success"
+                  attributes:
+                    speechFirstDateStr: "2018-04-11"
+                    speechFirstDateTimestamp: 1523404800
+                    speechLastDateStr: "2021-09-07"
+                    speechLastDateTimestamp: 1631000000
+                    resultsPerFaction: []
+                    days: []
                   results:
                     count: 25
                     total: 128
-                    rangeStart: 51
-                    rangeEnd: 75
-                    maxScore: 4.7654785
+                    totalHits: 0
                 data:
                   - type: "media"
                     id: "DE-198765837"
                     attributes:
-                      title: "Rede von Angela Merkel zur Rentenreform"
-                      date: "2018-04-11"
+                      dateStart: "2018-04-11"
                       duration: 1200
                     relationships:
-                      person:
+                      people:
                         data:
-                          type: "person"
-                          id: "Q567"
+                          - type: "person"
+                            id: "Q567"
                 links:
-                  self: "https://de.openparliament.tv/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11"
-                  first: "https://de.openparliament.tv/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11&page[number]=1&page[size]=25"
-                  prev: "https://de.openparliament.tv/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11&page[number]=2&page[size]=25"
-                  next: "https://de.openparliament.tv/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11&page[number]=4&page[size]=25"
-                  last: "https://de.openparliament.tv/api/v1/search/media?q=Rente&party=SPD&dateFrom=2018-04-11&page[number]=13&page[size]=25"
+                  self: "https://de.openparliament.tv/api/v1/search/media?q=Rente&factionID[]=Q2207512&dateFrom=2018-04-11"
         '422':
           description: Validation error
           content:
@@ -256,6 +396,8 @@ paths:
                     detail: "Search query must contain at least three characters."
                 links:
                   self: "https://de.openparliament.tv/api/v1/search/media?q=Re"
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /search/people:
     get:
@@ -266,18 +408,18 @@ paths:
       parameters:
         - name: name
           in: query
-          description: Name to search for (minimum 3 characters)
+          description: Name to search for (minimum 3 characters; matches label, firstName, lastName)
           required: false
           schema:
             type: string
             minLength: 3
         - name: type
           in: query
-          description: Type of person
+          description: Type (subtype) of person
           required: false
           schema:
             type: string
-            enum: [memberOfParliament, unknown]
+            enum: [memberOfParliament, person]
         - name: party
           in: query
           description: Party name or array of party names
@@ -328,7 +470,7 @@ paths:
                   pattern: '^Q[0-9]+$'
         - name: organisationID
           in: query
-          description: Organisation Wikidata ID
+          description: Organisation Wikidata ID (matches partyOrganisationID or factionOrganisationID)
           required: false
           schema:
             type: string
@@ -346,7 +488,7 @@ paths:
           required: false
           schema:
             type: string
-            enum: [male, female, nonbinary, bi, queer]
+            enum: [male, female, nonbinary]
         - name: originID
           in: query
           description: Origin ID
@@ -361,13 +503,20 @@ paths:
           schema:
             type: string
             minLength: 1
+        - name: fragDenStaatID
+          in: query
+          description: FragDenStaat ID
+          required: false
+          schema:
+            type: string
+            minLength: 1
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchResponse'
+                $ref: '#/components/schemas/EntitySearchResponse'
               example:
                 meta:
                   api:
@@ -377,12 +526,8 @@ paths:
                       label: "ODC Open Database License (ODbL) v1.0"
                       link: "https://opendatacommons.org/licenses/odbl/1-0/"
                   requestStatus: "success"
-                  results:
-                    count: 10
-                    total: 42
-                    rangeStart: 1
-                    rangeEnd: 10
-                    maxScore: 3.2456789
+                  page: 1
+                  pageTotal: 5
                 data:
                   - type: "person"
                     id: "Q567"
@@ -394,33 +539,29 @@ paths:
                       party:
                         label: "CDU"
                         id: "Q49764"
-                    relationships:
-                      media:
-                        data:
-                          - type: "media"
-                            id: "DE-198765837"
                 links:
                   self: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD"
-                  first: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD&page[number]=1&page[size]=10"
-                  next: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD&page[number]=2&page[size]=10"
-                  last: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD&page[number]=5&page[size]=10"
         '422':
           description: Validation error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /search/organisations:
     get:
       tags:
         - Search
       summary: Search for organisations
-      description: Search for organisations with various filters
+      description: |
+        Search for organisations. In the Open Parliament TV data model, parties, factions,
+        governments, companies and NGOs are all "organisations" — filter by the `type` parameter.
       parameters:
         - name: name
           in: query
-          description: Name to search for (minimum 3 characters)
+          description: Name to search for (minimum 3 characters; matches label, labelAlternative, abstract)
           required: false
           schema:
             oneOf:
@@ -432,18 +573,25 @@ paths:
                   minLength: 3
         - name: type
           in: query
-          description: Type of organisation
+          description: 'Type of organisation (e.g. party, faction, government, company, ngo, otherOrganisation)'
           required: false
           schema:
             type: string
             minLength: 2
+        - name: filterable
+          in: query
+          description: Restrict to organisations flagged as filterable in the UI (1) or not (0)
+          required: false
+          schema:
+            type: integer
+            enum: [0, 1]
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchResponse'
+                $ref: '#/components/schemas/EntitySearchResponse'
               example:
                 meta:
                   api:
@@ -453,12 +601,8 @@ paths:
                       label: "ODC Open Database License (ODbL) v1.0"
                       link: "https://opendatacommons.org/licenses/odbl/1-0/"
                   requestStatus: "success"
-                  results:
-                    count: 5
-                    total: 5
-                    rangeStart: 1
-                    rangeEnd: 5
-                    maxScore: 2.3456789
+                  page: 1
+                  pageTotal: 1
                 data:
                   - type: "organisation"
                     id: "Q1007353"
@@ -466,11 +610,6 @@ paths:
                       label: "BÜNDNIS 90/DIE GRÜNEN"
                       labelAlternative: "Die Grünen"
                       type: "faction"
-                    relationships:
-                      people:
-                        data:
-                          - type: "person"
-                            id: "Q12345"
                 links:
                   self: "https://de.openparliament.tv/api/v1/search/organisations?name=Linke"
         '422':
@@ -479,17 +618,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /search/documents:
     get:
       tags:
         - Search
       summary: Search for documents
-      description: Search for documents with various filters
+      description: |
+        Search for documents. Documents can be official documents ("Drucksachen"), law texts and
+        other types — filter by the `type` parameter (e.g. officialDocument, legalDocument).
       parameters:
         - name: label
           in: query
-          description: Document label to search for (minimum 3 characters)
+          description: Document label to search for (minimum 3 characters; matches label, labelAlternative, abstract)
           required: false
           schema:
             oneOf:
@@ -508,18 +651,18 @@ paths:
             minLength: 2
         - name: wikidataID
           in: query
-          description: Wikidata ID
+          description: Wikidata ID (Q- or P-ID)
           required: false
           schema:
             type: string
-            pattern: '^Q[0-9]+$'
+            pattern: '^(Q|P)[0-9]+$'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchResponse'
+                $ref: '#/components/schemas/EntitySearchResponse'
               example:
                 meta:
                   api:
@@ -529,23 +672,14 @@ paths:
                       label: "ODC Open Database License (ODbL) v1.0"
                       link: "https://opendatacommons.org/licenses/odbl/1-0/"
                   requestStatus: "success"
-                  results:
-                    count: 2
-                    total: 2
-                    rangeStart: 1
-                    rangeEnd: 2
-                    maxScore: 1.2345678
+                  page: 1
+                  pageTotal: 1
                 data:
                   - type: "document"
                     id: "201"
                     attributes:
                       label: "Drucksache 19/5412"
                       type: "officialDocument"
-                    relationships:
-                      media:
-                        data:
-                          - type: "media"
-                            id: "DE-198765837"
                 links:
                   self: "https://de.openparliament.tv/api/v1/search/documents?label=19/5412"
         '422':
@@ -554,6 +688,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /search/terms:
     get:
@@ -564,7 +700,7 @@ paths:
       parameters:
         - name: label
           in: query
-          description: Term label to search for (minimum 3 characters)
+          description: Term label to search for (minimum 3 characters; matches label, labelAlternative)
           required: false
           schema:
             oneOf:
@@ -574,20 +710,27 @@ paths:
                 items:
                   type: string
                   minLength: 3
-        - name: wikidataID
+        - name: type
           in: query
-          description: Wikidata ID
+          description: Type of term
           required: false
           schema:
             type: string
-            pattern: '^Q[0-9]+$'
+            minLength: 2
+        - name: wikidataID
+          in: query
+          description: Wikidata ID (Q- or P-ID)
+          required: false
+          schema:
+            type: string
+            pattern: '^(Q|P)[0-9]+$'
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SearchResponse'
+                $ref: '#/components/schemas/EntitySearchResponse'
               example:
                 meta:
                   api:
@@ -597,38 +740,36 @@ paths:
                       label: "ODC Open Database License (ODbL) v1.0"
                       link: "https://opendatacommons.org/licenses/odbl/1-0/"
                   requestStatus: "success"
-                  results:
-                    count: 3
-                    total: 3
-                    rangeStart: 1
-                    rangeEnd: 3
-                    maxScore: 1.1234567
+                  page: 1
+                  pageTotal: 1
                 data:
                   - type: "term"
                     id: "Q123456"
                     attributes:
                       label: "Rentenreform"
-                      abstract: "Gesetzliche Änderungen zur Reform der gesetzlichen Rentenversicherung"
-                    relationships:
-                      media:
-                        data:
-                          - type: "media"
-                            id: "DE-198765837"
                 links:
-                  self: "https://de.openparliament.tv/api/v1/search/terms?label=Rente"
+                  self: "https://de.openparliament.tv/api/v1/search/terms?label=digital"
         '422':
           description: Validation error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /media/{id}:
     get:
       tags:
         - Entities
+        - IIIF
       summary: Get media by ID
-      description: Retrieve a specific media item by its ID
+      description: |
+        Retrieve a specific media item (speech) by its ID.
+
+        **Content negotiation:** append `?format=iiif` (or send an `Accept` header of
+        `application/ld+json`) to receive a IIIF Presentation API 3.0 **Manifest**
+        (`application/ld+json`) instead of the default JSON:API response.
       parameters:
         - name: id
           in: path
@@ -636,9 +777,16 @@ paths:
           required: true
           schema:
             type: string
+        - name: format
+          in: query
+          description: Set to `iiif` to return a IIIF Presentation 3.0 Manifest instead of the default response
+          required: false
+          schema:
+            type: string
+            enum: [iiif]
       responses:
         '200':
-          description: Successful response
+          description: Successful response (JSON:API, or IIIF Manifest when `format=iiif`)
           content:
             application/json:
               schema:
@@ -656,31 +804,76 @@ paths:
                   type: "media"
                   id: "DE-198765837"
                   attributes:
-                    title: "Rede von Angela Merkel zur Rentenreform"
-                    date: "2018-04-11"
+                    dateStart: "2018-04-11"
                     duration: 1200
-                    text: "Sehr geehrte Damen und Herren, heute debattieren wir über die Rentenreform..."
                   relationships:
-                    person:
+                    people:
                       data:
-                        type: "person"
-                        id: "Q567"
-                    documents:
-                      data:
-                        - type: "document"
-                          id: "201"
-                    terms:
-                      data:
-                        - type: "term"
-                          id: "Q123456"
+                        - type: "person"
+                          id: "Q567"
                 links:
                   self: "https://de.openparliament.tv/api/v1/media/DE-198765837"
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/IIIFResource'
         '404':
           description: Media not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /media/{id}/transcript.vtt:
+    get:
+      tags:
+        - Transcript
+      summary: Download a media item's transcript as WebVTT
+      description: |
+        Returns the speech transcript as a WebVTT (`text/vtt`) file, suitable for a
+        `<track>` element or IIIF viewers. When `type`/`lang` are omitted the best
+        available transcript is returned (preferring the proceedings transcript in the
+        instance default language). Responses are cacheable and CORS-enabled.
+      parameters:
+        - name: id
+          in: path
+          description: Media ID
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: 'Transcript type filter (e.g. "proceedings", "generated")'
+          required: false
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: Language filter (BCP-47, e.g. "de")
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: WebVTT transcript
+          content:
+            text/vtt:
+              schema:
+                type: string
+              example: |
+                WEBVTT
+
+                00:00:00.000 --> 00:00:05.000
+                Sehr geehrte Damen und Herren, ...
+        '404':
+          description: Media not found, not public, or no matching transcript
+          content:
+            text/plain:
+              schema:
+                type: string
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /person/{id}:
     get:
@@ -720,16 +913,6 @@ paths:
                     firstName: "Angela"
                     lastName: "Merkel"
                     gender: "female"
-                    party:
-                      label: "CDU"
-                      id: "Q49764"
-                    faction:
-                      label: "CDU/CSU"
-                  relationships:
-                    media:
-                      data:
-                        - type: "media"
-                          id: "DE-198765837"
                 links:
                   self: "https://de.openparliament.tv/api/v1/person/Q567"
         '404':
@@ -738,6 +921,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /organisation/{id}:
     get:
@@ -776,12 +961,6 @@ paths:
                     label: "BÜNDNIS 90/DIE GRÜNEN"
                     labelAlternative: "Die Grünen"
                     type: "faction"
-                    abstract: "Bündnis 90/Die Grünen ist eine politische Partei in Deutschland."
-                  relationships:
-                    people:
-                      data:
-                        - type: "person"
-                          id: "Q12345"
                 links:
                   self: "https://de.openparliament.tv/api/v1/organisation/Q1007353"
         '404':
@@ -790,13 +969,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /document/{id}:
     get:
       tags:
         - Entities
       summary: Get document by ID
-      description: Retrieve a specific document by its ID
+      description: Retrieve a specific document by its (internal, incremental) ID
       parameters:
         - name: id
           in: path
@@ -826,12 +1007,6 @@ paths:
                   attributes:
                     label: "Drucksache 19/5412"
                     type: "officialDocument"
-                    abstract: "Gesetzentwurf zur Reform der gesetzlichen Rentenversicherung"
-                  relationships:
-                    media:
-                      data:
-                        - type: "media"
-                          id: "DE-198765837"
                 links:
                   self: "https://de.openparliament.tv/api/v1/document/201"
         '404':
@@ -840,6 +1015,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /term/{id}:
     get:
@@ -854,7 +1031,7 @@ paths:
           required: true
           schema:
             type: string
-            pattern: '^Q[0-9]+$'
+            pattern: '^(Q|P)[0-9]+$'
       responses:
         '200':
           description: Successful response
@@ -876,12 +1053,6 @@ paths:
                   id: "Q123456"
                   attributes:
                     label: "Rentenreform"
-                    abstract: "Gesetzliche Änderungen zur Reform der gesetzlichen Rentenversicherung"
-                  relationships:
-                    media:
-                      data:
-                        - type: "media"
-                          id: "DE-198765837"
                 links:
                   self: "https://de.openparliament.tv/api/v1/term/Q123456"
         '404':
@@ -890,23 +1061,37 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /session/{id}:
     get:
       tags:
         - Entities
+        - IIIF
       summary: Get session by ID
-      description: Retrieve a specific parliamentary session by its ID
+      description: |
+        Retrieve a specific parliamentary session by its ID.
+
+        **Content negotiation:** append `?format=iiif` to receive a IIIF Presentation 3.0
+        **Manifest** of the session (one Canvas per public speech, grouped into Ranges by agenda item).
       parameters:
         - name: id
           in: path
-          description: Session ID (format PARLIAMENT-ELECTORALPERIOD-SESSIONNUMBER)
+          description: Session ID (e.g. "DE-0190061")
           required: true
           schema:
             type: string
+        - name: format
+          in: query
+          description: Set to `iiif` to return a IIIF Presentation 3.0 Manifest of the session
+          required: false
+          schema:
+            type: string
+            enum: [iiif]
       responses:
         '200':
-          description: Successful response
+          description: Successful response (JSON:API, or IIIF Manifest when `format=iiif`)
           content:
             application/json:
               schema:
@@ -925,25 +1110,24 @@ paths:
                   id: "DE-0190061"
                   attributes:
                     number: "61"
-                    date: "2018-04-11"
-                    title: "61. Sitzung des Deutschen Bundestages"
                   relationships:
                     electoralPeriod:
                       data:
                         type: "electoralPeriod"
                         id: "DE-019"
-                    media:
-                      data:
-                        - type: "media"
-                          id: "DE-198765837"
                 links:
                   self: "https://de.openparliament.tv/api/v1/session/DE-0190061"
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/IIIFResource'
         '404':
           description: Session not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /electoralPeriod/{id}:
     get:
@@ -954,7 +1138,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Electoral period ID (format PARLIAMENT-ELECTORALPERIOD)
+          description: Electoral period ID (e.g. "DE-019")
           required: true
           schema:
             type: string
@@ -979,14 +1163,6 @@ paths:
                   id: "DE-019"
                   attributes:
                     number: "19"
-                    startDate: "2017-10-24"
-                    endDate: "2021-10-26"
-                    parliament: "DE"
-                  relationships:
-                    sessions:
-                      data:
-                        - type: "session"
-                          id: "DE-0190061"
                 links:
                   self: "https://de.openparliament.tv/api/v1/electoralPeriod/DE-019"
         '404':
@@ -995,6 +1171,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
 
   /agendaItem/{id}:
     get:
@@ -1005,7 +1183,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Agenda item ID
+          description: Agenda item ID (e.g. "DE-454")
           required: true
           schema:
             type: string
@@ -1030,16 +1208,6 @@ paths:
                   id: "DE-454"
                   attributes:
                     title: "Gesetzliche Rentenversicherung"
-                    number: "4"
-                  relationships:
-                    session:
-                      data:
-                        type: "session"
-                        id: "DE-0190061"
-                    media:
-                      data:
-                        - type: "media"
-                          id: "DE-198765837"
                 links:
                   self: "https://de.openparliament.tv/api/v1/agendaItem/DE-454"
         '404':
@@ -1048,45 +1216,278 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /iiif/collection/{parliament}:
+    get:
+      tags:
+        - IIIF
+      summary: IIIF Collection for a parliament
+      description: Returns a IIIF Presentation 3.0 Collection listing the parliament's electoral periods as sub-collections.
+      parameters:
+        - name: parliament
+          in: path
+          description: Parliament code (e.g. "DE")
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: IIIF Collection
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/IIIFResource'
+        '422':
+          description: Unknown parliament
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /iiif/collection/{parliament}/{electoralPeriod}:
+    get:
+      tags:
+        - IIIF
+      summary: IIIF Collection for an electoral period
+      description: Returns a IIIF Presentation 3.0 Collection listing the sessions of the given electoral period as Manifest references.
+      parameters:
+        - name: parliament
+          in: path
+          description: Parliament code (e.g. "DE")
+          required: true
+          schema:
+            type: string
+        - name: electoralPeriod
+          in: path
+          description: Electoral period ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: IIIF Collection
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/IIIFResource'
+        '422':
+          description: Unknown parliament
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /iiif/search:
+    get:
+      tags:
+        - IIIF
+      summary: IIIF Collection built from a media search
+      description: |
+        Returns a IIIF Presentation 3.0 Collection whose items are Manifest references to the
+        media items matching the given search. Accepts the same query parameters as
+        `/search/media` (e.g. `q`, `personID`, `factionID`, `dateFrom`/`dateTo`, `context`,
+        including the `~context` suffix). Returns 404 when there are no matches.
+      parameters:
+        - name: q
+          in: query
+          required: false
+          schema:
+            type: string
+            minLength: 3
+        - name: personID
+          in: query
+          description: See `/search/media` — same entity filter (supports arrays and the `~context` suffix)
+          required: false
+          schema:
+            oneOf:
+              - type: string
+              - type: array
+                items:
+                  type: string
+      responses:
+        '200':
+          description: IIIF Collection
+          content:
+            application/ld+json:
+              schema:
+                $ref: '#/components/schemas/IIIFResource'
+        '404':
+          description: No matching media
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+
+  /autocomplete/{type}:
+    get:
+      tags:
+        - Autocomplete
+      summary: Type-ahead suggestions
+      description: |
+        Returns suggestions for the given query. `entities` returns mixed people/organisations/
+        terms/documents; `text` returns full-text suggestions; `agendaItem` returns agenda-item
+        suggestions. Matched substrings are wrapped in `<em>` tags in the returned labels.
+      parameters:
+        - name: type
+          in: path
+          description: Suggestion type
+          required: true
+          schema:
+            type: string
+            enum: [text, agendaItem, entities]
+        - name: q
+          in: query
+          description: Query string (minimum 3 characters)
+          required: true
+          schema:
+            type: string
+            minLength: 3
+      responses:
+        '200':
+          description: Suggestions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutocompleteResponse'
+              example:
+                meta:
+                  api:
+                    version: "1.0"
+                    documentation: "https://de.openparliament.tv/api"
+                    license:
+                      label: "ODC Open Database License (ODbL) v1.0"
+                      link: "https://opendatacommons.org/licenses/odbl/1-0/"
+                  requestStatus: "success"
+                data:
+                  - id: "Q567"
+                    type: "person"
+                    subtype: "memberOfParliament"
+                    label: "Angela <em>Merk</em>el"
+                    labelAlternative: "Angela Dorothea <em>Merk</em>el"
+                    thumbnailURI: "https://de.openparliament.tv/content/client/images/entity-image.php?type=person&id=Q567"
+                links:
+                  self: "https://de.openparliament.tv/api/v1/autocomplete/entities?q=merk"
+
+  /status:
+    get:
+      tags:
+        - System
+      summary: Service and data status
+      description: Returns per-parliament status information (data repository, search index, counts).
+      parameters:
+        - name: parliament
+          in: query
+          description: Restrict to a single parliament code (e.g. "DE"); defaults to all configured parliaments
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Meta'
+                  data:
+                    type: object
+                    properties:
+                      parliaments:
+                        type: object
+                  links:
+                    type: object
 
 components:
+  responses:
+    RateLimited:
+      description: Too Many Requests — per-IP rate limit exceeded
+      headers:
+        Retry-After:
+          description: Seconds to wait before retrying
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          example:
+            meta:
+              api:
+                version: "1.0"
+                documentation: "https://de.openparliament.tv/api"
+                license:
+                  label: "ODC Open Database License (ODbL) v1.0"
+                  link: "https://opendatacommons.org/licenses/odbl/1-0/"
+              requestStatus: "error"
+            errors:
+              - status: "429"
+                code: "RATE_LIMIT_EXCEEDED"
+                title: "Too Many Requests"
+                detail: "Rate limit exceeded. Please slow down or request an API key for higher limits."
+                meta:
+                  retryAfter: 42
+
   schemas:
-    SearchResponse:
+    MediaSearchResponse:
       type: object
+      description: |
+        Media (speech) search response. Note the media search meta differs from the entity
+        search meta: it carries a `results` object and date-range `attributes` instead of
+        `page`/`pageTotal`. Pagination is driven by the `page`/`limit` request parameters;
+        the only link returned is `self`.
       properties:
         meta:
           type: object
           properties:
             api:
-              type: object
-              properties:
-                version:
-                  type: string
-                documentation:
-                  type: string
-                license:
-                  type: object
-                  properties:
-                    label:
-                      type: string
-                    link:
-                      type: string
+              $ref: '#/components/schemas/ApiMeta'
             requestStatus:
               type: string
               enum: [success, error]
+            attributes:
+              type: object
+              properties:
+                speechFirstDateStr:
+                  type: string
+                  nullable: true
+                speechFirstDateTimestamp:
+                  type: integer
+                  nullable: true
+                speechLastDateStr:
+                  type: string
+                  nullable: true
+                speechLastDateTimestamp:
+                  type: integer
+                  nullable: true
+                resultsPerFaction:
+                  type: array
+                  items:
+                    type: object
+                days:
+                  type: array
+                  items:
+                    type: object
             results:
               type: object
               properties:
                 count:
                   type: integer
+                  description: Number of items on this page
                 total:
                   type: integer
-                rangeStart:
+                  description: Total number of matching items
+                totalHits:
                   type: integer
-                rangeEnd:
-                  type: integer
-                maxScore:
-                  type: number
         data:
           type: array
           items:
@@ -1096,14 +1497,67 @@ components:
           properties:
             self:
               type: string
-            first:
+
+    EntitySearchResponse:
+      type: object
+      description: |
+        Entity search response (people, organisations, documents, terms). The meta carries the
+        current `page` and total `pageTotal` count; the only link returned is `self`.
+      properties:
+        meta:
+          type: object
+          properties:
+            api:
+              $ref: '#/components/schemas/ApiMeta'
+            requestStatus:
               type: string
-            prev:
+              enum: [success, error]
+            page:
+              type: integer
+            pageTotal:
+              type: integer
+        data:
+          type: array
+          items:
+            type: object
+        links:
+          type: object
+          properties:
+            self:
               type: string
-            next:
+
+    AutocompleteResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            type: object
+        links:
+          type: object
+          properties:
+            self:
               type: string
-            last:
-              type: string
+
+    IIIFResource:
+      type: object
+      description: |
+        A IIIF Presentation API 3.0 resource (Manifest or Collection) as JSON-LD. Served with
+        `Content-Type: application/ld+json` and `Access-Control-Allow-Origin: *`. See
+        https://iiif.io/api/presentation/3.0/ for the full structure.
+      properties:
+        '@context':
+          type: string
+          example: http://iiif.io/api/presentation/3/context.json
+        id:
+          type: string
+        type:
+          type: string
+          enum: [Manifest, Collection]
+        label:
+          type: object
 
     ErrorResponse:
       type: object
@@ -1112,19 +1566,7 @@ components:
           type: object
           properties:
             api:
-              type: object
-              properties:
-                version:
-                  type: string
-                documentation:
-                  type: string
-                license:
-                  type: object
-                  properties:
-                    label:
-                      type: string
-                    link:
-                      type: string
+              $ref: '#/components/schemas/ApiMeta'
             requestStatus:
               type: string
               enum: [error]
@@ -1138,6 +1580,8 @@ components:
                 properties:
                   domSelector:
                     type: string
+                  retryAfter:
+                    type: integer
               status:
                 type: string
               code:
@@ -1336,23 +1780,26 @@ components:
             self:
               type: string
 
+    ApiMeta:
+      type: object
+      properties:
+        version:
+          type: string
+        documentation:
+          type: string
+        license:
+          type: object
+          properties:
+            label:
+              type: string
+            link:
+              type: string
+
     Meta:
       type: object
       properties:
         api:
-          type: object
-          properties:
-            version:
-              type: string
-            documentation:
-              type: string
-            license:
-              type: object
-              properties:
-                label:
-                  type: string
-                link:
-                  type: string
+          $ref: '#/components/schemas/ApiMeta'
         requestStatus:
           type: string
-          enum: [success, error] 
+          enum: [success, error]

@@ -43,6 +43,10 @@
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^iiif/collection/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ index.php?action=iiif&itemType=collection&parliament=$1&electoralPeriod=$2 [QSA,L]
+	# IIIF Collection built from a media search (mirrors the RSS search feed)
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^iiif/search/?$ index.php?action=iiif&itemType=search [QSA,L]
 	########################################
 	# Generic URL Rewrites
 	########################################

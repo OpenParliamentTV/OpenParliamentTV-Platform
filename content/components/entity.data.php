@@ -7,7 +7,7 @@
 <div class="input-group">
 	<span class="input-group-text">API URL</span>
 	<input id="apiLink" class="form-control" type="text" value="<?= hAttr($apiResult["data"]["links"]["self"]) ?>">
-	<a href="<?= hAttr($apiResult["data"]["links"]["self"]) ?>" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+	<a href="<?= hAttr($apiResult["data"]["links"]["self"]) ?>" class="btn btn-sm input-group-text"><span class="icon-right-open-big me-0"></span></a>
 </div>
 <hr>
 <div><b><?= L::dataTable(); ?></b></div>

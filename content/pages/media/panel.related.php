@@ -226,11 +226,24 @@ if ($config["display"]["ner"]) {
             <div class="mb-1"><?= L::messageOpenData(); ?>: <a class="text-reset" href="<?= $config["dir"]["root"] ?>/api"><?= $config["dir"]["root"] ?>/api</a></div>
         </div>
         <div class="input-group">
-            <span class="input-group-text me-0">API URL</span>
+            <span class="input-group-text me-0" style="width: 7rem;">API URL</span>
             <input id="apiLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= $speech["links"]["self"] ?>">
             <a href="<?= $speech["links"]["self"] ?>" target="_blank" class="btn btn-sm input-group-text">
-                <span class="icon-right-open-big"></span>
-                <span class="d-none d-md-inline"><?= L::showResult(); ?></span>
+                <span class="icon-right-open-big me-0"></span>
+            </a>
+        </div>
+        <div class="input-group mt-2">
+            <span class="input-group-text me-0" style="width: 7rem;">IIIF Manifest</span>
+            <input id="iiifLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= hAttr($speech["links"]["self"]) ?>?format=iiif">
+            <a href="<?= hAttr($speech["links"]["self"]) ?>?format=iiif" target="_blank" class="btn btn-sm input-group-text">
+                <span class="icon-right-open-big me-0"></span>
+            </a>
+        </div>
+        <div class="input-group mt-2">
+            <span class="input-group-text me-0" style="width: 7rem;">WebVTT</span>
+            <input id="vttLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= hAttr($speech["links"]["self"]) ?>/transcript.vtt">
+            <a href="<?= hAttr($speech["links"]["self"]) ?>/transcript.vtt" target="_blank" class="btn btn-sm input-group-text">
+                <span class="icon-right-open-big me-0"></span>
             </a>
         </div>
         <hr>

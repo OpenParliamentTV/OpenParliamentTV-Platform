@@ -643,3 +643,89 @@ function iiifGenerateCollection(string $parliamentCode, ?string $electoralPeriod
         'items' => $items,
     ];
 }
+
+/**
+ * Dynamic Collection built from a media search — the IIIF counterpart to the
+ * RSS search feed. Takes the same allowed media-search params (personID, termID,
+ * q, dateFrom/To, context, …) and returns a Collection whose items are Manifest
+ * references to the matching media items. Mirrors fetchFeedSpeeches() in the
+ * feed module; like a Collection everywhere, items are lightweight references
+ * (no per-item mediaGetByID). Returns null when there are no matches.
+ */
+function iiifGenerateSearchCollection(array $params): ?array {
+    global $config;
+
+    $api = $config['dir']['api'];
+
+    // Same filtering/limits as the RSS search feed, minus presentation params.
+    $request = filterAllowedSearchParams($params, 'media');
+    unset($request['limit'], $request['page'], $request['sort'], $request['format'],
+          $request['includeAll'], $request['public'], $request['getAllResults'], $request['fields'],
+          $request['a'], $request['queryOnly'], $request['paginationMode'], $request['showHome'],
+          $request['feedType']);
+
+    // The search filters that define this collection (for its self id + label).
+    $filters = $request;
+
+    $request['action']   = 'search';
+    $request['itemType'] = 'media';
+    $request['sort']     = 'date-desc';
+    $request['limit']    = 200;
+    $request['page']     = 1;
+
+    $result = mediaSearch($request);
+    if (!isset($result['data']) || !is_array($result['data']) || count($result['data']) === 0) {
+        return null;
+    }
+
+    $parliamentLabel = '';
+    $items = [];
+    foreach ($result['data'] as $d) {
+        $mediaID = $d['id'] ?? '';
+        if ($mediaID === '') {
+            continue;
+        }
+        $attr  = $d['attributes'] ?? [];
+        $rel   = $d['relationships'] ?? [];
+        $annos = $d['annotations']['data'] ?? [];
+        if ($parliamentLabel === '' && !empty($attr['parliamentLabel'])) {
+            $parliamentLabel = $attr['parliamentLabel'];
+        }
+
+        $speaker = getMainSpeakerFromPeopleArray($annos, $rel['people']['data'] ?? []);
+        $faction = getMainFactionFromOrganisationsArray($annos, $rel['organisations']['data'] ?? []);
+        $speakerLabel = $speaker['attributes']['label'] ?? '';
+        $factionLabel = $faction['attributes']['label'] ?? '';
+        $agendaTitle  = $rel['agendaItem']['data']['attributes']['title'] ?? '';
+        $label = trim($speakerLabel . ($speakerLabel && $factionLabel ? ' (' . $factionLabel . ')' : ''));
+        if ($agendaTitle !== '') {
+            $label = $label !== '' ? $label . ' — ' . $agendaTitle : $agendaTitle;
+        }
+        if ($label === '') {
+            $label = $mediaID;
+        }
+
+        $items[] = [
+            'id' => $api . '/media/' . rawurlencode($mediaID) . '?format=iiif',
+            'type' => 'Manifest',
+            'label' => iiifLangMap($label),
+        ];
+    }
+
+    if (empty($items)) {
+        return null;
+    }
+
+    $parliamentLabel = $parliamentLabel !== '' ? $parliamentLabel : L::brand();
+    $query = empty($filters) ? '' : '?' . preg_replace('/%5B\d+%5D=/i', '%5B%5D=', http_build_query($filters));
+
+    return [
+        '@context' => 'http://iiif.io/api/presentation/3/context.json',
+        'id' => $api . '/iiif/search' . $query,
+        'type' => 'Collection',
+        'label' => iiifLangMap(L::brand() . ' — ' . L::search()),
+        'requiredStatement' => iiifRequiredStatement($parliamentLabel),
+        'provider' => iiifProvider(),
+        'items' => $items,
+    ];
+}

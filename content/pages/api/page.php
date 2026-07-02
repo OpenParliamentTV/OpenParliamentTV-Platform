@@ -1,17 +1,40 @@
 <?php defined('OPTV') or die(); ?>
 <?php $this->layout('layout/default') ?>
+<?php
+// Collect the GitHub data repositories used by this instance (one per configured
+// parliament), deduped and stripped of the trailing ".git". Fall back to the
+// Open Parliament TV organisation when none are configured.
+$dataRepos = [];
+foreach (($config["parliament"] ?? []) as $pCfg) {
+    $repo = trim($pCfg["git"]["repository"] ?? "");
+    if ($repo !== "") {
+        $repo = preg_replace('/\.git$/', '', $repo);
+        $dataRepos[$repo] = $repo;
+    }
+}
+if (empty($dataRepos)) {
+    $dataRepos = ["https://github.com/OpenParliamentTV/"];
+}
+$openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
+?>
 
 <main class="container subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12">
 			<h2>API <?= L::documentation(); ?></h2>
-			<div class="alert bg-white">All data on Open Parliament TV can be requested via our <b>Open Data API</b>. There is currently no limit on requests nor do you need an api key. But please get in touch if you plan to copy our entire dataset. Instead of making millions of api requests you can just get an SQL dump from us.</div>
+			<div class="alert bg-white">
+				<div class="mb-2">All data on Open Parliament TV can be requested via our <b>Open Data API</b>. Recently we are overrun by automated traffic from AI tools and bots, sometimes millions of requests per day of people wanting to scrape our entire dataset. To keep the service usable for all users, anonymous requests are now <b>rate-limited</b>. If you need unlimited requests, please get in touch so we can issue you an <b>API key</b>.</div>
+				<div class="mb-0">Scraping our entire dataset via the API is <b>completely unnecessary</b>, as <b>all raw speech data is published as JSON files</b> in GitHub repositories: 
+					<?php $i = 0; foreach ($dataRepos as $repoURL): $i++; ?><a href="<?= hAttr($repoURL) ?>" target="_blank"><?= h(preg_replace('#^https?://github\.com/#', '', $repoURL)) ?></a><?= ($i < count($dataRepos) ? ", " : "") ?><?php endforeach; ?>.
+				</div>
+			</div>
 			<ul class="nav nav-tabs" role="tablist">
 				<li class="nav-item">
 					<a class="nav-link active" id="search-tab" data-bs-toggle="tab" data-bs-target="#search" role="tab" aria-controls="search" aria-selected="true"><span class="nav-item-label"><?= L::search(); ?></span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" id="entities-tab" data-bs-toggle="tab" data-bs-target="#entities" role="tab" aria-controls="entities" aria-selected="true"><span class="nav-item-label"><?= L::entities(); ?></span></a>
+					<a class="nav-link" id="entities-tab" data-bs-toggle="tab" data-bs-target="#entities" role="tab" aria-controls="entities" aria-selected="true"><span class="nav-item-label"><?= L::entities(); ?></span></a></li>
+					<li class="nav-item"><a class="nav-link" id="formats-tab" data-bs-toggle="tab" data-bs-target="#formats" role="tab" aria-controls="formats" aria-selected="true"><span class="nav-item-label">IIIF / WebVTT</span></a>
 				</li>
 				<li class="nav-item d-none">
 					<a class="nav-link" id="statistics-tab" data-bs-toggle="tab" data-bs-target="#statistics" role="tab" aria-controls="statistics" aria-selected="true"><span class="nav-item-label">Statistics</span></a>
@@ -619,7 +642,65 @@
 						<div class="apiResultContainer"></div>
 					</div>
 				</div>
-				<div class="tab-pane fade bg-white" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">
+				<div class="tab-pane fade bg-white" id="formats" role="tabpanel" aria-labelledby="formats-tab">
+						<div class="alert alert-info">Many endpoints are available in open, standardised formats. <b>IIIF</b> (International Image Interoperability Framework, <a href="https://iiif.io/api/presentation/3.0/" target="_blank">Presentation API 3.0</a>) manifests and collections open in viewers like <a href="https://projectmirador.org/" target="_blank">Mirador</a> or <a href="https://universalviewer.io/" target="_blank">Universal Viewer</a>. <b>WebVTT</b> provides timed transcripts for HTML5 <code>&lt;track&gt;</code> elements and media players. IIIF resources are served as JSON-LD (<code>application/ld+json</code>); both are CORS-enabled.</div>
+						<hr>
+						<h3><span class="icon-doc-text"></span> WebVTT Transcript</h3>
+						<p class="mb-2">Timed transcript of a speech as a WebVTT file (<code>text/vtt</code>). Optional query parameters: <code>type</code> (e.g. <code>proceedings</code>, <code>generated</code>) and <code>lang</code> (e.g. <code>de</code>). Without them the best available transcript is returned.</p>
+						<div><b>Endpoint</b>: <code>/api/v1/media/ID/transcript.vtt</code></div>
+						<div class="apiExampleContainer">
+							<div class="input-group">
+								<span class="input-group-text">URI</span>
+								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003/transcript.vtt" readonly>
+								<a href="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003/transcript.vtt" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+							</div>
+						</div>
+						<hr>
+						<h3><span class="icon-hypervideo me-1"></span> IIIF Manifest - <?= L::speech(); ?></h3>
+						<p class="mb-2">IIIF Presentation 3.0 Manifest for a single speech (video, transcript annotations, named-entity annotations with time codes). Request via the <code>format=iiif</code> query parameter (or an <code>Accept: application/ld+json</code> header) on the media endpoint.</p>
+						<div><b>Endpoint</b>: <code>/api/v1/media/ID?format=iiif</code></div>
+						<div class="apiExampleContainer">
+							<div class="input-group">
+								<span class="input-group-text">URI</span>
+								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003?format=iiif" readonly>
+								<a href="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003?format=iiif" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+							</div>
+						</div>
+						<hr>
+						<h3><span class="icon-group"></span> IIIF Manifest - <?= L::session(); ?></h3>
+						<p class="mb-2">IIIF Manifest for a whole session: one Canvas per public speech, grouped into Ranges by agenda item.</p>
+						<div><b>Endpoint</b>: <code>/api/v1/session/ID?format=iiif</code></div>
+						<div class="apiExampleContainer">
+							<div class="input-group">
+								<span class="input-group-text">URI</span>
+								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/session/DE-0190061?format=iiif" readonly>
+								<a href="<?= $config["dir"]["root"]; ?>/api/v1/session/DE-0190061?format=iiif" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+							</div>
+						</div>
+						<hr>
+						<h3><span class="icon-database"></span> IIIF Collection - Parliament / <?= L::electoralPeriod(); ?></h3>
+						<p class="mb-2">IIIF Collection for a whole parliament (its electoral periods as sub-collections), or for a single electoral period (its sessions as Manifest references).</p>
+						<div><b>Endpoint</b>: <code>/api/v1/iiif/collection/PARLIAMENT</code> and <code>/api/v1/iiif/collection/PARLIAMENT/ELECTORALPERIOD</code></div>
+						<div class="apiExampleContainer">
+							<div class="input-group">
+								<span class="input-group-text">URI</span>
+								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/iiif/collection/DE" readonly>
+								<a href="<?= $config["dir"]["root"]; ?>/api/v1/iiif/collection/DE" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+							</div>
+						</div>
+						<hr>
+						<h3><span class="icon-database"></span> IIIF Collection - <?= L::search(); ?></h3>
+						<p class="mb-2">A IIIF Collection built from a media search: its items are Manifest references to the matching speeches. Accepts the same query parameters as <code>/api/v1/search/media</code> (see the Search tab), including the per-entity <code>~context</code> suffix.</p>
+						<div><b>Endpoint</b>: <code>/api/v1/iiif/search?PARAMETERS</code></div>
+						<div class="apiExampleContainer">
+							<div class="input-group">
+								<span class="input-group-text">URI</span>
+								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/iiif/search?personID=Q567" readonly>
+								<a href="<?= $config["dir"]["root"]; ?>/api/v1/iiif/search?personID=Q567" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade bg-white" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">
 					<div class="alert alert-info">Statistics endpoints provide aggregated insights into parliamentary data, including speaker activity, word frequency analysis, entity relationships, and political discourse patterns. </div>
 					<ul class="nav nav-tabs" role="tablist">
 						<li class="nav-item">
@@ -818,7 +899,7 @@
 					</div>
 				</div>
 				<div class="tab-pane fade bg-white" id="general" role="tabpanel" aria-labelledby="general-tab">
-					<div class="alert alert-info">The API structure is based on the <a href="https://jsonapi.org/format/">JSON:API Specification</a>. Whether or not we will fully implement the standard (also for PATCH requests / data updates) is to be discussed.</div>
+					<div class="alert alert-info">The API structure is based on the <a href="https://jsonapi.org/format/">JSON:API Specification</a>. <br>A machine-readable <b>OpenAPI 3.0</b> description of the API is available at <a href="<?= hAttr($openapiURL) ?>" class="fw-bolder" target="_blank"><?= h($openapiURL) ?></a>. Browse it rendered in an external viewer: <a class="fw-bolder" href="https://redocly.github.io/redoc/?url=<?= hAttr(urlencode($openapiURL)) ?>" target="_blank">Redoc</a> or <a class="fw-bolder" href="https://editor.swagger.io/?url=<?= hAttr(urlencode($openapiURL)) ?>" target="_blank">Swagger Editor</a>.</div>
 					<hr>
 					<h3>Paths</h3>
 					<p><strong>API <?= L::documentation(); ?></strong><br><code>/api</code></p>

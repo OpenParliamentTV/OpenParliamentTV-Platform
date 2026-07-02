@@ -126,6 +126,16 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     header('Content-Type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"');
                     header('Access-Control-Allow-Origin: *');
                     return $collection;
+                case "search":
+                    $collection = iiifGenerateSearchCollection($api_request);
+                    if ($collection === null) {
+                        return createApiResponse(
+                            createApiErrorNotFound("media")
+                        );
+                    }
+                    header('Content-Type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"');
+                    header('Access-Control-Allow-Origin: *');
+                    return $collection;
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")

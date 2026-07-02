@@ -129,6 +129,12 @@ if ($totalResults != 0) {
 		$rssQuery = empty($rssParams) ? '' : '?' . preg_replace('/%5B\d+%5D=/i', '%5B%5D=', http_build_query($rssParams));
 		$rssHref  = $config["dir"]["root"] . ($rssQuery !== '' ? '/feed/search' . $rssQuery : '/feed/media');
 	}
+
+	// IIIF Collection for the current result set (the IIIF counterpart to the RSS
+	// link). IIIF has no pretty per-entity form, so always use the search-collection
+	// endpoint, built from the same filter params as the RSS href.
+	$iiifQuery = empty($rssParams) ? '' : '?' . preg_replace('/%5B\d+%5D=/i', '%5B%5D=', http_build_query($rssParams));
+	$iiifHref  = $config["dir"]["api"] . '/iiif/search' . $iiifQuery;
 ?>
 	<div class="filterSummary row">
 		<div class="col-12 col-sm-6 mb-3 mb-sm-0 px-0 px-sm-2"><label class="col-form-label px-0 me-0 me-sm-1 col-12 col-sm-auto text-center text-sm-left"><?= $findsString ?></label>
@@ -146,6 +152,7 @@ if ($totalResults != 0) {
 				<option value="duration-desc"><?= L::duration(); ?> (<?= L::sortByDurationDesc(); ?>)</option>
 			</select>
 			<a href="<?= hAttr($rssHref) ?>" id="searchRssFeedLink" class="btn btn-sm btn-outline-primary rss-feed-link ms-2 align-middle" title="<?= hAttr(L::feedRssLinkTitle()) ?>" target="_blank">RSS<span class="icon-rss ms-1" aria-hidden="true"></span></a>
+			<a href="<?= hAttr($iiifHref) ?>" id="searchIiifCollectionLink" class="btn btn-sm btn-outline-primary ms-2 align-middle" title="<?= hAttr(L::iiifCollectionLinkTitle()) ?>" target="_blank">IIIF<span class="icon-data-structured ms-1" aria-hidden="true"></span></a>
 <?php
 			// "Save as alert" — logged-in only. Reuses the same criteria as the RSS
 			// link ($rssParams), so it appears on search and entity pages alike (the
