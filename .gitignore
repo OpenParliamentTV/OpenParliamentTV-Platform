@@ -59,7 +59,7 @@ modules/alignment/output/*.json
 modules/import/input/*.json
 modules/import/done/*.json
 config.php
-config-server.php
+config-*.php
 # ...but the meta-image module's config.php is layout config, not bootstrap config — keep it tracked.
 !modules/meta-image/config.php
 

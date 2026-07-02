@@ -1,7 +1,18 @@
 <?php
 
 /**
- * Version Number 
+ * OPTV bootstrap guard — prevents direct access to template files.
+ * Every template starts with: defined('OPTV') or die();
+ * config.php is required by all entry points (index.php, content.player.php,
+ * api/index.php, meta-image.php, …), so defining it here means any file that
+ * loads config automatically sets the constant.
+ */
+if (!defined('OPTV')) {
+    define('OPTV', true);
+}
+
+/**
+ * Version Number
  * (mostly used for refreshing cached resources of previous version)
  * Example: "1.5"
  * String
