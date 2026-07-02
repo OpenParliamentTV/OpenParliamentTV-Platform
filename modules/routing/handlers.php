@@ -59,6 +59,22 @@ function render_404(Engine $plates): void
     ]);
 }
 
+/** Standard 429 (Too Many Requests) response for the page rate limiter. */
+function render_429(Engine $plates, int $retryAfter): void
+{
+    http_response_code(429);
+    header('Retry-After: ' . $retryAfter);
+    // L::* uses vsprintf and won't fill the {seconds} named placeholder (that is
+    // substituted client-side for the API), so do it here for the rendered page.
+    $message = str_replace('{seconds}', (string) $retryAfter, L::messageErrorRateLimited());
+    optvRenderPage($plates, 'pages/429/page', [
+        'page' => '429',
+        'pageType' => 'default',
+        'pageTitle' => '429 - ' . $message,
+        'rateLimitMessage' => $message,
+    ]);
+}
+
 /** Dashboard breadcrumb stub reused across admin pages. */
 function optvManageHomeCrumb(): array
 {

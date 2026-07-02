@@ -72,6 +72,20 @@ $plates = createPlatesEngine();
 require_once(__DIR__ . "/modules/routing/auth.php");
 require_once(__DIR__ . "/modules/routing/handlers.php");
 
+// --- Per-client page rate limit (coarse anti-scrape guard) ---
+// Only true router-driven navigations reach here; static files, AJAX fragments
+// and the image proxy are served directly by Apache and are not counted.
+// Logged-in users and exemptIPs are exempted inside the limiter.
+require_once(__DIR__ . "/modules/utilities/ratelimit.php");
+$pageRateLimit = $config["rateLimit"]["pages"] ?? null;
+if ($pageRateLimit) {
+    $pageRetryAfter = optvRateLimitExceeded($pageRateLimit, 'page');
+    if ($pageRetryAfter !== null) {
+        render_429($plates, $pageRetryAfter);
+        exit;
+    }
+}
+
 // --- Build the request path (strip query string and any base path) ---
 $uri = $_SERVER['REQUEST_URI'];
 if (false !== ($pos = strpos($uri, '?'))) {

@@ -157,17 +157,28 @@ $config["platform"]["sql"]["tbl"]["ApiRateLimit"] = "apiratelimit";
 $config["platform"]["sql"]["tbl"]["ApiKey"] = "apikey";
 
 /**
- * Public API rate limiting (external HTTP entry api/v1/index.php only; internal
- * apiV1() calls from page handlers are never limited). DB-backed fixed window.
- * Logged-in users and exemptIPs are exempt; exemptActions skip high-frequency
- * UI calls (autocomplete etc.). Requires the `apiratelimit` table.
+ * Request rate limiting. Two independent surfaces, both DB-backed fixed-window
+ * (shared `apiratelimit` table, separate namespaces). Logged-in users and
+ * exemptIPs are exempt on both; the API also skips exemptActions.
+ *
+ * ["api"]   — external API HTTP entry (api/v1/index.php). Internal apiV1()
+ *             calls from page handlers are never limited.
+ * ["pages"] — web router entry (index.php). Static files, AJAX fragments and
+ *             the image proxy are served directly by Apache and NOT counted,
+ *             so this only caps true page navigations (coarse anti-scrape).
  */
-$config["api"]["rateLimit"]["enabled"] = true;
-$config["api"]["rateLimit"]["window"] = 60;   // seconds
-$config["api"]["rateLimit"]["limit"] = 240;    // requests per window per client IP
-$config["api"]["rateLimit"]["trustProxy"] = false; // honor X-Forwarded-For / CF-Connecting-IP (only behind a trusted proxy)
-$config["api"]["rateLimit"]["exemptActions"] = ["autocomplete", "status", "lang", "systemMessage", "notification"];
-$config["api"]["rateLimit"]["exemptIPs"] = [];
+$config["rateLimit"]["api"]["enabled"] = true;
+$config["rateLimit"]["api"]["window"] = 60;   // seconds
+$config["rateLimit"]["api"]["limit"] = 240;    // requests per window per client IP
+$config["rateLimit"]["api"]["trustProxy"] = false; // honor X-Forwarded-For / CF-Connecting-IP (only behind a trusted proxy)
+$config["rateLimit"]["api"]["exemptActions"] = ["autocomplete", "status", "lang", "systemMessage", "notification"];
+$config["rateLimit"]["api"]["exemptIPs"] = [];
+
+$config["rateLimit"]["pages"]["enabled"] = true;
+$config["rateLimit"]["pages"]["window"] = 60;   // seconds
+$config["rateLimit"]["pages"]["limit"] = 200;    // page requests per window per client IP
+$config["rateLimit"]["pages"]["trustProxy"] = false;
+$config["rateLimit"]["pages"]["exemptIPs"] = [];
 
 
 /**
