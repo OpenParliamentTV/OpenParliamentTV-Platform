@@ -295,6 +295,7 @@ function userRegister($parameter) {
         UserPasswordPepper=?s,
         UserRole=?s,
         UserActive=?i,
+        UserBlocked=?i,
         UserRegisterConfirmation=?s",
         $config["platform"]["sql"]["tbl"]["User"],
         $parameter["UserName"],
@@ -303,6 +304,7 @@ function userRegister($parameter) {
         $pepper,
         "user",
         0,
+        0,
         $confirmationCode
     );
 
@@ -310,7 +312,7 @@ function userRegister($parameter) {
 
     // Send confirmation email
     $registrationMailSubject = L::brand().': '.L::registerNewAccount();
-    $registrationMailVerifyLink = $config['dir']['root'].'/registerConfirm?id='.$userID.'&c='.$confirmationCode;
+    $registrationMailVerifyLink = $config['dir']['root'].'/registerConfirm?c='.$confirmationCode;
 
     require_once(__DIR__.'/../../../modules/send-mail/functions.php');
     require_once(__DIR__.'/../../../modules/utilities/security.php');
@@ -393,7 +395,7 @@ function userPasswordResetRequest($parameter) {
 
     // Send reset email
     $passwordresetMailSubject = L::brand().': '.L::resetPassword();
-    $resetLink = $config["dir"]["root"] . "/password-reset?id=" . $userdata['UserID'] . "&code=" . $confirmationCode;
+    $resetLink = $config["dir"]["root"] . "/password-reset?c=" . $confirmationCode;
 
     require_once(__DIR__.'/../../../modules/send-mail/functions.php');
     require_once(__DIR__.'/../../../modules/utilities/security.php');
@@ -417,7 +419,7 @@ function userPasswordReset($parameter) {
     global $config;
 
     // Validate required fields
-    $requiredFields = ["UserID", "ResetCode", "NewPassword"];
+    $requiredFields = ["ResetCode", "NewPassword"];
     foreach ($requiredFields as $field) {
         if (empty($parameter[$field])) {
             return createApiErrorMissingParameter($field);
@@ -436,18 +438,15 @@ function userPasswordReset($parameter) {
         return $db; // Error response from getApiDatabaseConnection
     }
 
-    // Check if user exists
-    $userdata = $db->getRow("SELECT * FROM ?n WHERE UserID = ?i LIMIT 1", 
+    // The reset link no longer carries the UserID; the random code alone
+    // identifies the account. Consumed codes are NULL, so a pending code maps to
+    // exactly one user (and an empty/sentinel value can never match).
+    $userdata = $db->getRow("SELECT * FROM ?n WHERE UserPasswordReset = ?s LIMIT 1",
         $config["platform"]["sql"]["tbl"]["User"],
-        $parameter["UserID"]
+        $parameter["ResetCode"]
     );
 
     if (!$userdata) {
-        return createApiErrorNotFound("User");
-    }
-
-    // Validate reset code
-    if ($userdata["UserPasswordReset"] != $parameter["ResetCode"]) {
         return createApiErrorResponse(
             400,
             1,
@@ -456,18 +455,17 @@ function userPasswordReset($parameter) {
         );
     }
 
-    // Generate new password hash and clear reset code
+    // Generate new password hash and consume the reset code.
     $pepper = bin2hex(random_bytes(9));
     $db->query("UPDATE ?n SET 
         UserPasswordHash=?s, 
-        UserPasswordReset=?i, 
+        UserPasswordReset=NULL, 
         UserPasswordPepper=?s 
         WHERE UserID=?i", 
         $config["platform"]["sql"]["tbl"]["User"],
         hash("sha512", $pepper.$parameter["NewPassword"].$config["salt"]),
-        0,
         $pepper,
-        $parameter["UserID"]
+        $userdata["UserID"]
     );
 
     return createApiSuccessResponse([
@@ -479,11 +477,8 @@ function userConfirmRegistration($parameter) {
     global $config;
 
     // Validate required fields
-    $requiredFields = ["UserID", "ConfirmationCode"];
-    foreach ($requiredFields as $field) {
-        if (empty($parameter[$field])) {
-            return createApiErrorMissingParameter($field);
-        }
+    if (empty($parameter["ConfirmationCode"])) {
+        return createApiErrorMissingParameter("ConfirmationCode");
     }
 
     // Get database connection
@@ -492,14 +487,21 @@ function userConfirmRegistration($parameter) {
         return $db; // Error response from getApiDatabaseConnection
     }
 
-    // Check if user exists
-    $userdata = $db->getRow("SELECT * FROM ?n WHERE UserID = ?i LIMIT 1", 
+    // The confirmation link no longer carries the UserID; the random code alone
+    // identifies the account. Consumed codes are NULL, so a pending code maps to
+    // exactly one user (and an empty/sentinel value can never match).
+    $userdata = $db->getRow("SELECT * FROM ?n WHERE UserRegisterConfirmation = ?s LIMIT 1",
         $config["platform"]["sql"]["tbl"]["User"],
-        $parameter["UserID"]
+        $parameter["ConfirmationCode"]
     );
 
     if (!$userdata) {
-        return createApiErrorNotFound("User");
+        return createApiErrorResponse(
+            400,
+            1,
+            "messageErrorInvalidConfirmationCodeTitle",
+            "messageRegisterWrongConfirmationCode"
+        );
     }
 
     // Check if account is blocked
@@ -512,18 +514,8 @@ function userConfirmRegistration($parameter) {
         );
     }
 
-    // Validate confirmation code
-    if ($userdata["UserRegisterConfirmation"] != $parameter["ConfirmationCode"]) {
-        return createApiErrorResponse(
-            400,
-            1,
-            "messageErrorInvalidConfirmationCodeTitle",
-            "messageRegisterWrongConfirmationCode"
-        );
-    }
-
-    // Activate account
-    $db->query("UPDATE ?n SET UserActive=1, UserRegisterConfirmation=1 WHERE UserID=?i LIMIT 1", 
+    // Activate account and consume the confirmation code.
+    $db->query("UPDATE ?n SET UserActive=1, UserRegisterConfirmation=NULL WHERE UserID=?i LIMIT 1",
         $config["platform"]["sql"]["tbl"]["User"],
         $userdata["UserID"]
     );

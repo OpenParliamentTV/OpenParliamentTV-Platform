@@ -418,6 +418,12 @@ function createApiResponse($moduleResponse) {
     ];
 
     $result = array_replace_recursive($baseResponse, $moduleResponse);
+
+    // Safety net: route any entity thumbnailURI (e.g. nested in search results
+    // straight from the search index) through the local image cache proxy.
+    require_once(__DIR__."/../../modules/images/functions.php");
+    applyThumbnailCacheRecursive($result);
+
     return $result;
 }
 
@@ -661,5 +667,3 @@ function handleEntitySuggestionPostProcessing($reimportAffectedSessionsFlag, $so
 
     return $postProcessingResult;
 }
-
-?> 

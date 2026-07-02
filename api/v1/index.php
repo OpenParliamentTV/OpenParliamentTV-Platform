@@ -15,6 +15,9 @@ ini_set('display_errors', '0');
 ini_set('log_errors', '1');
 
 header('Content-Type: application/json');
+// API JSON is reachable by crawlers/agents (the sanctioned machine path) but
+// must not be indexed as content pages.
+header('X-Robots-Tag: noindex');
 
 
 include_once(__DIR__ . '/../../modules/utilities/auth.php');
@@ -28,8 +31,17 @@ if ($auth["meta"]["requestStatus"] != "success") {
 } else {
 
     require_once(__DIR__ . "/api.php");
+    require_once(__DIR__ . "/ratelimit.php");
 
-    $return = apiV1($_REQUEST);
+    // Per-client rate limit for external API requests (internal apiV1() callers
+    // bypass this entry point entirely).
+    $rateLimitError = apiRateLimitCheck($_REQUEST["action"] ?? "");
+    if ($rateLimitError !== null) {
+        http_response_code(429);
+        $return = $rateLimitError;
+    } else {
+        $return = apiV1($_REQUEST);
+    }
 
 }
 

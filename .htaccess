@@ -3,93 +3,42 @@
 ########################################
 <IfModule mod_rewrite.c>
 	Options +FollowSymLinks
-	########################################
-	# Try to fix conflicting rewrite rules 
-	# set by Wordpress etc:
-	########################################
 	RewriteEngine Off
 	RewriteEngine On
+
 	########################################
-	# Set Rewrite Base
+	# Block AI / scraper bots that ignore robots.txt (return 403).
+	# Search engines (Googlebot, Bingbot, Applebot, …) are unaffected.
+	# Scope is the web root only — /api/ has its own .htaccess and stays
+	# reachable by these bots on purpose (structured machine path).
+	# Keep this list in sync with $blockedBots in robots.php.
 	########################################
-	#RewriteBase /
+	RewriteCond %{HTTP_USER_AGENT} (GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|anthropic-ai|Claude-Web|Google-Extended|Applebot-Extended|PerplexityBot|CCBot|cohere-ai|Bytespider|Amazonbot|Meta-ExternalAgent|FacebookBot|Diffbot|ImagesiftBot|Omgilibot|YouBot|DataForSeoBot|PetalBot) [NC]
+	RewriteRule ^ - [F,L]
+
 	########################################
-	# Always remove trailing slash
+	# Always remove trailing slash (except for real directories)
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteCond %{REQUEST_URI} (.+)/$
-	RewriteRule ^ %1 [L,R]
+	RewriteRule ^ %1 [L,R=301]
+
 	########################################
-	# Rewrite non-existing urls
+	# Sitemap & Robots (pretty URLs → PHP generators)
 	########################################
-	#TODO
+	RewriteRule ^sitemap\.xml$ sitemap.php [L]
+	RewriteRule ^robots\.txt$ robots.php [L]
+
 	########################################
-	# Rewrite /manage/entities/ urls
+	# Send all non-file, non-directory requests to index.php.
+	# Existing files (JS, CSS, images, content.player.php, share-image.php,
+	# api/…, etc.) are served directly by Apache and never hit the router.
 	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/(entities)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/(entities)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3 [QSA,L]
-	########################################
-	# Rewrite /import/ urls
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/(import)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/(import)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3 [QSA,L]
-	########################################
-	# Rewrite general /manage/ urls
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2&id=$3 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(manage)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
-	########################################
-	# Rewrite /embed/ urls
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(embed)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
-	########################################
-	# Rewrite /campaigns/ urls
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(campaigns)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
-	########################################
-	# Rewrite /documentation/ urls
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(documentation)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2&id=$3 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^(documentation)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2 [QSA,L]
-	########################################
-	# Generic URL Rewrites
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2-$3&id=$4 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1-$2&id=$3 [QSA,L]
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?a=$1&id=$2 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^([a-zA-Z0-9_-]+)? index.php?a=$1 [QSA]
+	RewriteRule ^ index.php [QSA,L]
 </IfModule>
+
 ########################################
 # Add Mime Types
 ########################################

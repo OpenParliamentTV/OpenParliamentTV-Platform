@@ -1,19 +1,7 @@
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/default') ?>
 <?php
-
-require_once(__DIR__ . '/../../../modules/utilities/security.php');
-include_once(__DIR__ . '/../../../modules/utilities/auth.php');
-
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../login/page.php");
-
-} else {
-
-include_once(__DIR__ . '/../../header.php');
-require_once(__DIR__."/../../../modules/utilities/functions.entities.php");
+require_once(__DIR__ . '/../../../modules/utilities/functions.entities.php');
 $flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <main class="container-fluid subpage">
@@ -24,7 +12,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 					<div class="detailsLayoutThumbnail detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
-								<img src="<?= hAttr($apiResult["data"]["attributes"]["thumbnailURI"]) ?>" alt="..." style="position: absolute;height: 100%;object-fit: cover;">
+								<img src="<?= hAttr($apiResult["data"]["attributes"]["thumbnailURI"]) ?>" alt="<?= hAttr($apiResult["data"]["attributes"]["label"]) ?>" style="position: absolute;height: 100%;object-fit: cover;">
 							<?php } else { ?>
 								<span class="icon-type-document" style="position: absolute;top: 48%;left: 50%;font-size: 50px;transform: translateX(-50%) translateY(-50%);"></span>
 							<?php } ?>
@@ -130,7 +118,6 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
         </div>
     </div>
 </div>
-<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
@@ -164,7 +151,3 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		});
 	});
 </script>
-
-<?php
-}
-?>

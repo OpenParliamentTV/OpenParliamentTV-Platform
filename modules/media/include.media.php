@@ -45,9 +45,13 @@
                     $textContentsHTML = '';
                 }
             }
+            // Keep raw HTML (real newlines) for server-side use / JSON-LD transcript,
+            // before escaping newlines for JS embedding.
+            $textContentsHTMLRaw = $textContentsHTML;
             $textContentsHTML = str_replace("\n", "\\n", $textContentsHTML);
         } else {
             $textContentsHTML = '';
+            $textContentsHTMLRaw = '';
         }
 
         $formattedDate = date("d.m.Y", strtotime($speech["attributes"]["dateStart"]));

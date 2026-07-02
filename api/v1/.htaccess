@@ -29,11 +29,30 @@
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(statistics)/(entity)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2&entityType=$3 [QSA,L]
 	########################################
+	# IIIF / Transcript Rewrites
+	########################################
+	# WebVTT transcript download for a media item
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^media/([a-zA-Z0-9_-]+)/transcript\.vtt$ index.php?action=transcript&itemType=vtt&id=$1 [QSA,L]
+	# IIIF Collection for a parliament instance
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^iiif/collection/([a-zA-Z0-9_-]+)/?$ index.php?action=iiif&itemType=collection&parliament=$1 [QSA,L]
+	# IIIF Collection for an electoral period within a parliament
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^iiif/collection/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ index.php?action=iiif&itemType=collection&parliament=$1&electoralPeriod=$2 [QSA,L]
+	# IIIF Collection built from a media search (mirrors the RSS search feed)
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^iiif/search/?$ index.php?action=iiif&itemType=search [QSA,L]
+	########################################
 	# Generic URL Rewrites
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(search|autocomplete|statistics|user|index|status|lang|import|externalData)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2 [QSA,L]
+	RewriteRule ^(search|autocomplete|statistics|user|index|status|lang|import|externalData|alert|notification|systemMessage)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2 [QSA,L]
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^(status)/? index.php?action=$1&itemType=all [QSA,L]

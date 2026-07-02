@@ -1,20 +1,13 @@
-<?php
-include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
-include_once(__DIR__ . '/../../../../../modules/utilities/security.php');
-
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../../../login/page.php");
-} else {
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/admin') ?>
+<?php 
     // Get agenda item data
     $agendaItemData = $apiResult["data"];
 
     // Get ID parts
     $idParts = getInfosFromStringID($agendaItemData["id"] ?? "");
 
-    include_once(__DIR__ . '/../../../../header.php'); ?>
+ ?>
 
 <main class="container-fluid subpage">
     <div class="row">
@@ -258,7 +251,4 @@ $(function() {
     });
 });
 </script>
-<?php
-    include_once (include_custom(realpath(__DIR__ . '/../../../../footer.php'),false));
-}
-?> 
+ 

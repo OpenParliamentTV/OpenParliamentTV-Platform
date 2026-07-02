@@ -1,4 +1,7 @@
 <?php
+// NOTE: direct-access AJAX endpoint (fetched by mediaResults.js as
+// /content/components/result.grid.php) — must NOT have the OPTV guard; it
+// bootstraps config/session itself below.
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -40,7 +43,18 @@ if ($shouldShowHome && !$hasValidSearchCriteria) {
 	$parameter["itemType"] = "media";
 	$result = apiV1($parameter);
 
-
+	// Search service (OpenSearch) unavailable — show a "temporarily
+	// unavailable" notice rather than the empty "no speeches found" message,
+	// so users can tell an outage (often heavy load) apart from a real 0-hit
+	// query. mediaSearch() returns requestStatus=error in this case.
+	if (($result["meta"]["requestStatus"] ?? null) === "error") {
+		?>
+		<div class="filterSummary row">
+			<div class="col alert alert-warning"><?= L::messageServiceSearchUnavailable(); ?></div>
+		</div>
+		<?php
+		return;
+	}
 
 	$result_items = $result["data"];
 
@@ -73,6 +87,54 @@ if ($shouldShowHome && !$hasValidSearchCriteria) {
 //print_r($result);
 
 if ($totalResults != 0) {
+	// Build the RSS feed href for the current search/filter state (server-side,
+	// so it always matches the active query without extra JS).
+	$rssParams = filterAllowedSearchParams($_REQUEST, 'media');
+	unset($rssParams['limit'], $rssParams['page'], $rssParams['sort'], $rssParams['format'],
+	      $rssParams['a'], $rssParams['feedType'], $rssParams['includeAll'], $rssParams['public'],
+	      $rssParams['queryOnly'], $rssParams['paginationMode'], $rssParams['showHome']);
+
+	// Prefer the pretty per-entity feed URL (/feed/person/Q567) when the list is
+	// scoped to exactly one entity and its context matches that entity feed's
+	// default — otherwise fall back to the search-style URL so the feed reflects
+	// the exact query (e.g. NER / proceedingsReference contexts).
+	$rssHref = null;
+	$entityFeedMap = [
+		'personID'       => ['type' => 'person',       'defaultContext' => 'main-speaker'],
+		'organisationID' => ['type' => 'organisation', 'defaultContext' => ''],
+		'termID'         => ['type' => 'term',         'defaultContext' => ''],
+		'documentID'     => ['type' => 'document',     'defaultContext' => ''],
+		'sessionID'      => ['type' => 'session',      'defaultContext' => ''],
+		'agendaItemID'   => ['type' => 'agendaItem',   'defaultContext' => ''],
+	];
+	$nonContextParams = $rssParams;
+	unset($nonContextParams['context']);
+	$entityKeys = array_values(array_intersect(array_keys($nonContextParams), array_keys($entityFeedMap)));
+	if (count($nonContextParams) === 1 && count($entityKeys) === 1) {
+		$eKey = $entityKeys[0];
+		$eVal = $rssParams[$eKey];
+		$ctx  = $rssParams['context'] ?? $entityFeedMap[$eKey]['defaultContext'];
+		if (!is_array($eVal) && $ctx === $entityFeedMap[$eKey]['defaultContext']) {
+			$feedType = $entityFeedMap[$eKey]['type'];
+			$feedId   = (string) $eVal;
+			// agendaItem IDs are stored numeric; prefix with the parliament for the
+			// canonical pretty URL (e.g. 9955 -> DE-9955), matching the page route.
+			if ($feedType === 'agendaItem' && strpos($feedId, '-') === false && !empty($result["data"][0]["attributes"]["parliament"])) {
+				$feedId = $result["data"][0]["attributes"]["parliament"] . '-' . $feedId;
+			}
+			$rssHref = $config["dir"]["root"] . '/feed/' . $feedType . '/' . rawurlencode($feedId);
+		}
+	}
+	if ($rssHref === null) {
+		$rssQuery = empty($rssParams) ? '' : '?' . preg_replace('/%5B\d+%5D=/i', '%5B%5D=', http_build_query($rssParams));
+		$rssHref  = $config["dir"]["root"] . ($rssQuery !== '' ? '/feed/search' . $rssQuery : '/feed/media');
+	}
+
+	// IIIF Collection for the current result set (the IIIF counterpart to the RSS
+	// link). IIIF has no pretty per-entity form, so always use the search-collection
+	// endpoint, built from the same filter params as the RSS href.
+	$iiifQuery = empty($rssParams) ? '' : '?' . preg_replace('/%5B\d+%5D=/i', '%5B%5D=', http_build_query($rssParams));
+	$iiifHref  = $config["dir"]["api"] . '/iiif/search' . $iiifQuery;
 ?>
 	<div class="filterSummary row">
 		<div class="col-12 col-sm-6 mb-3 mb-sm-0 px-0 px-sm-2"><label class="col-form-label px-0 me-0 me-sm-1 col-12 col-sm-auto text-center text-sm-left"><?= $findsString ?></label>
@@ -80,7 +142,7 @@ if ($totalResults != 0) {
 		</div>
 		<div class="col-12 col-sm-6 pr-0 pr-sm-2" style="text-align: right;">
 			<label class="col-form-label" for="sort"><?= L::sortBy(); ?></label>
-			<select style="width: auto;" class="form-select form-select-sm ms-1 d-inline-block" id="sort" name="sort">
+			<select style="width: auto;" class="form-select form-select-sm ms-1 d-inline-block align-middle" id="sort" name="sort">
 				<option value="relevance" selected><?= L::relevance(); ?></option>
 				<option value="topic-asc"><?= L::topic(); ?> (<?= L::sortByAsc(); ?>)</option>
 				<option value="topic-desc"><?= L::topic(); ?> (<?= L::sortByDesc(); ?>)</option>
@@ -89,6 +151,69 @@ if ($totalResults != 0) {
 				<option value="duration-asc"><?= L::duration(); ?> (<?= L::sortByDurationAsc(); ?>)</option>
 				<option value="duration-desc"><?= L::duration(); ?> (<?= L::sortByDurationDesc(); ?>)</option>
 			</select>
+			<a href="<?= hAttr($rssHref) ?>" id="searchRssFeedLink" class="btn btn-sm btn-outline-primary rss-feed-link ms-2 align-middle" title="<?= hAttr(L::feedRssLinkTitle()) ?>" target="_blank">RSS<span class="icon-rss ms-1" aria-hidden="true"></span></a>
+			<a href="<?= hAttr($iiifHref) ?>" id="searchIiifCollectionLink" class="btn btn-sm btn-outline-primary ms-2 align-middle" title="<?= hAttr(L::iiifCollectionLinkTitle()) ?>" target="_blank">IIIF<span class="icon-data-structured ms-1" aria-hidden="true"></span></a>
+<?php
+			// "Save as alert" — logged-in only. Reuses the same criteria as the RSS
+			// link ($rssParams), so it appears on search and entity pages alike (the
+			// grid is AJAX-fetched into both). The alert API normalizes the criteria.
+			if (!empty($_SESSION["login"]) && !empty($config["allow"]["notifications"])) {
+				$alertCriteria = array_filter([
+					"personID"          => $rssParams["personID"] ?? null,
+					"organisationID"    => $rssParams["organisationID"] ?? null,
+					"factionID"         => $rssParams["factionID"] ?? null,
+					"termID"            => $rssParams["termID"] ?? null,
+					"documentID"        => $rssParams["documentID"] ?? null,
+					"q"                 => $rssParams["q"] ?? null,
+					"electoralPeriodID" => $rssParams["electoralPeriodID"] ?? null,
+					"context"           => $rssParams["context"] ?? null,
+					"parliament"        => $rssParams["parliament"] ?? null,
+				], function ($v) { return $v !== null && $v !== ""; });
+				$hasAlertCriteria = isset($alertCriteria["personID"]) || isset($alertCriteria["organisationID"])
+					|| isset($alertCriteria["factionID"]) || isset($alertCriteria["termID"])
+					|| isset($alertCriteria["documentID"]) || isset($alertCriteria["q"]);
+				// Snapshot entity labels (+ faction/colour) so the alert modal and the
+				// alert/notification lists render names instead of raw IDs. Entity tokens
+				// may carry a "~role" suffix — resolve by the bare id.
+				if ($hasAlertCriteria) {
+					$alertLabels = [];
+					$resolveAlertLabels = function ($type, $ids) use (&$alertLabels) {
+						foreach ((array)$ids as $token) {
+							$id = strtok((string)$token, "~");
+							if ($id === "" || isset($alertLabels[$id])) { continue; }
+							$r = apiV1(["action" => "getItem", "itemType" => $type, "id" => $id]);
+							$d = $r["data"] ?? null;
+							if (!$d) { continue; }
+							$entry = ["label" => $d["attributes"]["label"] ?? $id];
+							if ($type === "person") {
+								$entry["type"] = $d["attributes"]["type"] ?? null; // subtype: memberOfParliament / person
+								if (!empty($d["relationships"]["faction"]["data"])) {
+									$entry["faction"] = $d["relationships"]["faction"]["data"]["id"];
+									$entry["factionLabel"] = $d["relationships"]["faction"]["data"]["attributes"]["label"] ?? "";
+								}
+							}
+							if ($type === "organisation" && !empty($d["attributes"]["color"])) {
+								$entry["color"] = $d["attributes"]["color"];
+							}
+							$alertLabels[$id] = $entry;
+						}
+					};
+					$resolveAlertLabels("person", $alertCriteria["personID"] ?? []);
+					$resolveAlertLabels("organisation", $alertCriteria["organisationID"] ?? []);
+					$resolveAlertLabels("organisation", $alertCriteria["factionID"] ?? []);
+					$resolveAlertLabels("term", $alertCriteria["termID"] ?? []);
+					$resolveAlertLabels("document", $alertCriteria["documentID"] ?? []);
+					if (!empty($alertLabels)) {
+						$alertCriteria["_labels"] = $alertLabels;
+					}
+				}
+				if ($hasAlertCriteria):
+?>
+			<button type="button" id="saveAsAlertButton" class="btn btn-sm btn-outline-primary ms-2 align-middle" data-criteria="<?= hAttr(json_encode($alertCriteria, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>" title="<?= hAttr(L::alertSaveAsAlert()) ?>"><span class="saveAsAlertLabel"><?= L::alertSaveAsAlert() ?></span><span class="icon-bell-fill ms-1" aria-hidden="true"></span></button>
+<?php
+				endif;
+			}
+?>
 		</div>
 	</div>
 	<div class="resultList row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">

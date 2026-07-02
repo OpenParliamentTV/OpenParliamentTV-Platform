@@ -1,14 +1,6 @@
-<?php
-include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
-include_once(__DIR__ . '/../../../../../modules/utilities/security.php');
-
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../../../login/page.php");
-} else {
-    include_once(__DIR__ . '/../../../../header.php');
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/admin') ?>
+<?php 
     // Ensure API functions and the apiV1 dispatcher are available
     require_once(__DIR__ . '/../../../../../api/v1/utilities.php'); // For createApiErrorResponse, etc.
     require_once(__DIR__ . '/../../../../../api/v1/api.php'); // For apiV1 function
@@ -80,9 +72,5 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		</div>
 	</div>
 </main>
-<?php
-    include_once (include_custom(realpath(__DIR__ . '/../../../../footer.php'),false));
-}
-?>
 
 <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/manage/conflicts/conflict-detail/client/style.css?v=<?= $config["version"] ?>" media="all" />

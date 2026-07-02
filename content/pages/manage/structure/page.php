@@ -1,21 +1,10 @@
-<?php
-include_once(__DIR__ . '/../../../../modules/utilities/auth.php');
-
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../../login/page.php");
-
-} else {
-
-    include_once(__DIR__ . '/../../../header.php');
-?>
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/admin') ?>
 <main class="container-fluid subpage">
     <div class="row">
         <?php include_once(__DIR__ . '/../sidebar.php'); ?>
         <div class="sidebar-content">
+            <div id="structureDbError" class="alert alert-warning d-none" role="alert"><?= L::messageErrorDatabaseParliament(); ?></div>
             <div class="row" style="position: relative; z-index: 1">
                 <div class="col-12">
 					<ul class="nav nav-tabs" role="tablist">
@@ -64,7 +53,14 @@ if ($auth["meta"]["requestStatus"] != "success") {
 <script type="text/javascript">
 
 	$(function(){
-		
+
+		// Reveal the parliament-DB-unreachable notice when a getItemsFromDB
+		// request fails (the API returns HTTP 503 when the parliament database
+		// can't be reached), so the page no longer just shows empty tables.
+		function showStructureDbError() {
+			$("#structureDbError").removeClass("d-none");
+		}
+
 		function renderActionButtons(id, type, subtype) {
 			const viewButton = '<a class="list-group-item list-group-item-action" ' +
 				'title="<?= L::view(); ?>" ' +
@@ -135,12 +131,16 @@ if ($auth["meta"]["requestStatus"] != "success") {
 				
 				return queryParams;
 			},
+			onLoadError: function(status, jqXHR) {
+				// 503 = parliament DB unreachable (see getItemsFromDB).
+				showStructureDbError();
+			},
 			responseHandler: function(res) {
 				// Return the response directly if it has the expected format
 				if (res && res.data && res.total !== undefined) {
 					return res;
 				}
-				
+
 				// Fallback for unexpected response format
 				return {
 					total: 0,
@@ -192,6 +192,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
 						filters.append(`<option value="${period.ElectoralPeriodID}"><?= L::electoralPeriod(); ?> ${period.ElectoralPeriodNumber}</option>`);
 					});
 				}
+			},
+			error: function(xhr, status, error) {
+				showStructureDbError();
 			}
 		});
 
@@ -221,7 +224,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					});
 				},
 				error: function(xhr, status, error) {
-					// Error handling without console log
+					showStructureDbError();
 				}
 			});
 		}
@@ -241,7 +244,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					});
 				},
 				error: function(xhr, status, error) {
-					// Error handling without console log
+					showStructureDbError();
 				}
 			});
 		}
@@ -277,7 +280,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					loadAllAgendaItemsData();
 				},
 				error: function(xhr, status, error) {
-					// Error handling without console log
+					showStructureDbError();
 				}
 			});
 		}
@@ -406,8 +409,3 @@ if ($auth["meta"]["requestStatus"] != "success") {
 	})
 
 </script>
-<?php
-    include_once (include_custom(realpath(__DIR__ . '/../../../footer.php'),false));
-
-}
-?>

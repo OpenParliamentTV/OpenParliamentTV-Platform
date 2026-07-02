@@ -1,7 +1,6 @@
+<?php defined('OPTV') or die(); ?>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta charset="utf-8">
-<meta http-equiv="cache-control" content="no-cache">
-<meta http-equiv="Expires" content="-1">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <?php include_once(__DIR__ . '/components/metadata.php'); ?>
@@ -18,22 +17,54 @@
 <meta name="theme-color" content="#ffffff">
 <!-- End Icons -->
 
+<?php
+// RSS feed autodiscovery
+$rssFeedUrl = null;
+switch ($page ?? '') {
+	case 'person':
+	case 'organisation':
+	case 'term':
+	case 'document':
+	case 'session':
+	case 'agendaItem':
+		if (!empty($_REQUEST['id']) && isset($apiResult['data'])) {
+			$rssFeedUrl = $config['dir']['root'] . '/feed/' . $page . '/' . rawurlencode($_REQUEST['id']);
+		}
+		break;
+	case 'search':
+	case 'main':
+		if (!empty($isResult)) {
+			$rssFeedUrl = $config['dir']['root'] . '/feed/search' . ($paramStr ?? '');
+		} else {
+			$rssFeedUrl = $config['dir']['root'] . '/feed/media';
+		}
+		break;
+}
+if ($rssFeedUrl):
+	$rssFeedTitle = (!empty($pageTitle) ? strip_tags($pageTitle) . ' — ' : L::brand() . ' — ') . 'RSS';
+?>
+<link rel="alternate" type="application/rss+xml" title="<?= hAttr($rssFeedTitle) ?>" href="<?= hAttr($rssFeedUrl) ?>">
+<?php endif; ?>
+
 
 <?php
 if (!isset($page)) {
     $page = ''; // Initialize $page if not set
 }
+?>
+	<!-- Platform icon font (frametrail-webfont family) — loaded on EVERY page. The FrameTrail player (JS + CDN css) is only included on the media page. -->
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/frametrail-icons.css?v=<?= $config["version"] ?>" media="all" />
+<?php
 if ($page != 'media') {
 ?>
 
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
-    <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/frametrail-webfont.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 
 <?php
 } else {
 ?>
-	<link rel="stylesheet" type="text/css" href="<?= $config["dir"]["root"] ?>/content/client/FrameTrail.min.css?v=<?= $config["version"] ?>">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@frametrail/frametrail@v1.2.3/frametrail.min.css">
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.css?v=<?= $config["version"] ?>" media="all" />
@@ -46,6 +77,15 @@ if ($page != 'media') {
 if ($pageType == 'admin' || $pageType == 'entity') {
 ?>
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap-table.min.css?v=<?= $config["version"] ?>" />
+<?php
+}
+?>
+
+<?php
+if (($page ?? '') == 'api') {
+?>
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/api/client/jquery.json-view.min.css?v=<?= $config["version"] ?>" media="all">
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/api/client/atom-one-light.min.css?v=<?= $config["version"] ?>" media="all">
 <?php
 }
 ?>
@@ -72,6 +112,15 @@ if ($pageType == 'admin' || $pageType == 'entity') {
   <!--<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-multi-toggle.min.js?v=<?= $config["version"] ?>"></script>-->
   <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/shim.min.js?v=<?= $config["version"] ?>"></script>
   <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/xlsx.full.min.js?v=<?= $config["version"] ?>"></script>
+<?php
+}
+?>
+
+<?php
+if (($page ?? '') == 'api') {
+?>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/api/client/jquery.json-view.min.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/api/client/highlight.min.js?v=<?= $config["version"] ?>"></script>
 <?php
 }
 ?>

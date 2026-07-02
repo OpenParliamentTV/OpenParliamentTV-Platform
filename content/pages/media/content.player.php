@@ -17,13 +17,6 @@ $relatedContentsPanel = ob_get_clean();
 
 ?>
 <script type="text/javascript">
-    currentMediaID = <?= json_encode($speech["id"], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
-    currentMediaTimestamp = <?= json_encode($speech["attributes"]["dateStartTimestamp"], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
-    <?php // json_encode($speech, JSON_PRETTY_PRINT) ?>
-
-    // TODO: Replace URL Quick Fix
-    var originMediaID = <?= json_encode($speech["attributes"]['originMediaID'], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
-
     <?php
         if (function_exists("overrideVideoSource")) {
 
@@ -35,9 +28,7 @@ $relatedContentsPanel = ob_get_clean();
             
         }
     ?>
-
-
-
+    
     playerData = {
     	'title': '',
     	'documents': [],
@@ -63,7 +54,9 @@ $relatedContentsPanel = ob_get_clean();
         ],
         'annotations': <?= json_encode(getFrametrailAnnotations($speech["annotations"]["data"], $speech["relationships"], $speech["attributes"]["videoFileURI"]))?>
     };
-    
+
+    currentMediaID = <?= json_encode($speech['id'], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
+
 </script>
 <div class="mediaContainer">
     <div class="d-flex flex-column flex-md-row-reverse">
@@ -111,7 +104,7 @@ $relatedContentsPanel = ob_get_clean();
                 <div class="row row-cols-2 mt-2">
                     <div class="col pe-2">
                         <div class="card quotePreview active" data-theme="l">
-                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/quote-image.php">
+                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/meta-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
                                     <div class="cardTitle text-truncate"><?= h($speechTitleShort) ?> | <?= L::brand() ?></div>
@@ -123,7 +116,7 @@ $relatedContentsPanel = ob_get_clean();
                     </div>
                     <div class="col ps-2">
                         <div class="card quotePreview" data-theme="d">
-                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/quote-image.php">
+                            <img class="img-fluid" src="<?= $config["dir"]["root"] ?>/content/client/images/meta-image.php">
                             <div class="antialiased text-break cardMeta">
                                 <div class="overflow-hidden select-none cardTitleWrapper">
                                     <div class="cardTitle text-truncate"><?= h($speechTitleShort) ?> | <?= L::brand() ?></div>

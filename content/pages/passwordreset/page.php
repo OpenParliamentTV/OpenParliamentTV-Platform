@@ -1,8 +1,5 @@
-<?php
-include_once(__DIR__ . '/../../header.php');
-require_once(__DIR__ . '/../../../modules/utilities/security.php');
-applySecurityHeaders();
-?>
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/default') ?>
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
@@ -11,13 +8,12 @@ applySecurityHeaders();
 			if ($_REQUEST["mail"]) {
 				// Show success message for password reset request
 				echo '<div class="alert alert-success">'.L::messagePasswordResetMailSent().'</div>';
-			} elseif ($_REQUEST["id"]) {
+			} elseif (!empty($_REQUEST["c"])) {
 				if (strlen($_REQUEST["c"]) < 10) {
 					echo '<div class="alert alert-danger">'.L::messagePasswordResetCodeIncorrect().'</div>';
 				} else {
 					?>
 					<form id="resetpassword-form" class="needs-validation" novalidate>
-						<input type="hidden" name="UserID" value="<?= hAttr($_REQUEST["id"] ?? '') ?>">
 						<input type="hidden" name="ResetCode" value="<?= hAttr($_REQUEST["c"] ?? '') ?>">
 						
 						<div class="mb-3">
@@ -67,7 +63,6 @@ applySecurityHeaders();
 		</div>
 	</div>
 </main>
-<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <script>
 $(function() {
     // Initialize password fields only if the reset password form exists
@@ -84,10 +79,17 @@ $(function() {
     function resetValidation() {
         document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
         document.querySelectorAll('.invalid-feedback').forEach(el => el.innerHTML = '');
-        const resetResponse = document.getElementById('reset-response');
-        const resetMailResponse = document.getElementById('reset-mail-response');
-        if (resetResponse) resetResponse.innerHTML = '';
-        if (resetMailResponse) resetMailResponse.innerHTML = '';
+        showResponse('reset-response', null, '');
+        showResponse('reset-mail-response', null, '');
+    }
+
+    // Show (or clear) a form-level response banner. type: 'success' | 'danger' | null
+    function showResponse(elId, type, message) {
+        const el = document.getElementById(elId);
+        if (!el) return;
+        el.className = 'alert mt-3' + (type ? ' alert-' + type : '');
+        el.textContent = message || '';
+        el.style.display = type ? 'block' : 'none';
     }
 
     // Handle password reset request form submission
@@ -113,13 +115,8 @@ $(function() {
             .then(response => response.json())
             .then(response => {
                 if (response.meta.requestStatus === 'success') {
-                    // Show success message
-                    const successDiv = document.createElement('div');
-                    successDiv.className = 'alert alert-success';
-                    successDiv.textContent = response.data.message;
-                    document.getElementById('reset-mail-response').innerHTML = '';
-                    document.getElementById('reset-mail-response').appendChild(successDiv);
-                    // Hide form and show success message
+                    showResponse('reset-mail-response', 'success', response.data.message);
+                    // Hide the request form now that the mail has been sent
                     document.getElementById('resetpassword-mail-form').style.display = 'none';
                 } else {
                     // Handle validation errors
@@ -134,24 +131,23 @@ $(function() {
                                     if (feedbackElement) {
                                         feedbackElement.textContent = error.detail;
                                     }
+                                } else {
+                                    // Field not present on this page — surface at form level instead of dropping it
+                                    showResponse('reset-mail-response', 'danger', error.detail);
                                 }
                             } else {
-                                // Show error message in response div if no specific field
-                                const errorDiv = document.createElement('div');
-                                errorDiv.className = 'alert alert-danger';
-                                errorDiv.textContent = error.detail;
-                                document.getElementById('reset-mail-response').innerHTML = '';
-                                document.getElementById('reset-mail-response').appendChild(errorDiv);
+                                // Show error message in the response banner if no specific field
+                                showResponse('reset-mail-response', 'danger', error.detail);
                             }
                         });
                     } else {
                         // Show general error message
-                        document.getElementById('reset-mail-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
+                        showResponse('reset-mail-response', 'danger', L.messageErrorGeneric);
                     }
                 }
             })
             .catch(error => {
-                document.getElementById('reset-mail-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
+                showResponse('reset-mail-response', 'danger', L.messageErrorGeneric);
             });
         });
     }
@@ -192,12 +188,7 @@ $(function() {
             .then(response => response.json())
             .then(response => {
                 if (response.meta.requestStatus === 'success') {
-                    // Show success message
-                    const successDiv = document.createElement('div');
-                    successDiv.className = 'alert alert-success';
-                    successDiv.textContent = response.data.message;
-                    document.getElementById('reset-response').innerHTML = '';
-                    document.getElementById('reset-response').appendChild(successDiv);
+                    showResponse('reset-response', 'success', response.data.message);
                     // Redirect to login page after 2 seconds
                     setTimeout(() => {
                         window.location.href = '<?= $config["dir"]["root"] ?>/login';
@@ -215,24 +206,23 @@ $(function() {
                                     if (feedbackElement) {
                                         feedbackElement.textContent = error.detail;
                                     }
+                                } else {
+                                    // Field not present on this page — surface at form level instead of dropping it
+                                    showResponse('reset-response', 'danger', error.detail);
                                 }
                             } else {
-                                // Show error message in response div if no specific field
-                                const errorDiv = document.createElement('div');
-                                errorDiv.className = 'alert alert-danger';
-                                errorDiv.textContent = error.detail;
-                                document.getElementById('reset-response').innerHTML = '';
-                                document.getElementById('reset-response').appendChild(errorDiv);
+                                // Show error message in the response banner if no specific field
+                                showResponse('reset-response', 'danger', error.detail);
                             }
                         });
                     } else {
                         // Show general error message
-                        document.getElementById('reset-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
+                        showResponse('reset-response', 'danger', L.messageErrorGeneric);
                     }
                 }
             })
             .catch(error => {
-                document.getElementById('reset-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
+                showResponse('reset-response', 'danger', L.messageErrorGeneric);
             });
         });
     }

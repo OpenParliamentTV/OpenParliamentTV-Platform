@@ -1,4 +1,5 @@
-<?php include_once(__DIR__ . '/../../header.php'); ?>
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/default') ?>
 <main class="container subpage">
 	<div class="row mt-4 justify-content-center">
 		<div class="col-11 col-md-8 col-lg-6 col-xl-5">
@@ -45,7 +46,6 @@
 		</div>
 	</div>
 </main>
-<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <script type="text/javascript">
 $(function() {
     // Initialize password fields
@@ -58,7 +58,15 @@ $(function() {
     function resetValidation() {
         document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
         document.querySelectorAll('.invalid-feedback').forEach(el => el.innerHTML = '');
-        document.getElementById('register-response').innerHTML = '';
+        showResponse(null, '');
+    }
+
+    // Show (or clear) the form-level response banner. type: 'success' | 'danger' | null
+    function showResponse(type, message) {
+        const responseEl = document.getElementById('register-response');
+        responseEl.className = 'alert mt-3' + (type ? ' alert-' + type : '');
+        responseEl.textContent = message || '';
+        responseEl.style.display = type ? 'block' : 'none';
     }
 
     // Handle form submission
@@ -96,12 +104,7 @@ $(function() {
         .then(response => response.json())
         .then(response => {
             if (response.meta.requestStatus === 'success') {
-                // Show success message
-                const successDiv = document.createElement('div');
-                successDiv.className = 'alert alert-success';
-                successDiv.textContent = response.data.message;
-                document.getElementById('register-response').innerHTML = '';
-                document.getElementById('register-response').appendChild(successDiv);
+                showResponse('success', response.data.message);
                 // Redirect to login page after 2 seconds
                 setTimeout(() => {
                     window.location.href = '/login';
@@ -119,24 +122,23 @@ $(function() {
                                 if (feedbackElement) {
                                     feedbackElement.textContent = error.detail;
                                 }
+                            } else {
+                                // Field not present on this page — surface at form level instead of dropping it
+                                showResponse('danger', error.detail);
                             }
                         } else {
-                            // Show error message in response div if no specific field
-                            const errorDiv = document.createElement('div');
-                            errorDiv.className = 'alert alert-danger';
-                            errorDiv.textContent = error.detail;
-                            document.getElementById('register-response').innerHTML = '';
-                            document.getElementById('register-response').appendChild(errorDiv);
+                            // Show error message in the response banner if no specific field
+                            showResponse('danger', error.detail);
                         }
                     });
                 } else {
                     // Show general error message
-                    document.getElementById('register-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
+                    showResponse('danger', L.messageErrorGeneric);
                 }
             }
         })
         .catch(error => {
-            document.getElementById('register-response').innerHTML = '<div class="alert alert-danger">' + L.messageErrorGeneric + '</div>';
+            showResponse('danger', L.messageErrorGeneric);
         });
     });
 });

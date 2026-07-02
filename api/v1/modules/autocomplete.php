@@ -5,6 +5,7 @@ require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
 require_once (__DIR__."/../../../modules/search/functions.php");
+require_once (__DIR__."/../../../modules/images/functions.php");
 
 function fulltextAutocomplete($text) {
     if (!isset($text)) {
@@ -288,9 +289,10 @@ function entitiesAutocomplete($query) {
                     $result = [
                         'id' => $person['PersonID'],
                         'type' => 'person',
+                        'subtype' => $person['PersonType'],
                         'label' => $highlightText($person['PersonLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => $person['PersonThumbnailURI']
+                        'thumbnailURI' => thumbnailCacheURL('person', $person['PersonID'], $person['PersonThumbnailURI'])
                     ];
                     
                     // Add faction information if available
@@ -306,8 +308,8 @@ function entitiesAutocomplete($query) {
             }
         }
         
-        // 2. Other people (all without type memberOfParliament) - TEMPORARILY DISABLED
-        /* Temporarily disabled - only showing memberOfParliament in suggestions
+        // 2. Other people (without type memberOfParliament) — fill the remaining
+        //    slots only when fewer than the max were found among MPs.
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
             $peopleOther = $db->getAll("SELECT p.PersonID, p.PersonLabel, p.PersonLabelAlternative, p.PersonType, p.PersonFactionOrganisationID, p.PersonThumbnailURI, ofr.OrganisationLabel as FactionLabel FROM ?n AS p LEFT JOIN ?n as ofr ON ofr.OrganisationID = p.PersonFactionOrganisationID WHERE p.PersonType != 'memberOfParliament' AND (LOWER(p.PersonLabel) LIKE LOWER(?s) OR LOWER(p.PersonFirstName) LIKE LOWER(?s) OR LOWER(p.PersonLastName) LIKE LOWER(?s) OR LOWER(JSON_UNQUOTE(JSON_EXTRACT(p.PersonLabelAlternative, '$[0]'))) LIKE LOWER(?s)) ORDER BY p.PersonLabel ASC LIMIT ?i",
@@ -333,9 +335,10 @@ function entitiesAutocomplete($query) {
                     $result = [
                         'id' => $person['PersonID'],
                         'type' => 'person',
+                        'subtype' => $person['PersonType'],
                         'label' => $highlightText($person['PersonLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => $person['PersonThumbnailURI']
+                        'thumbnailURI' => thumbnailCacheURL('person', $person['PersonID'], $person['PersonThumbnailURI'])
                     ];
                     
                     // Add faction information if available
@@ -350,8 +353,7 @@ function entitiesAutocomplete($query) {
                 }
             }
         }
-        */
-        
+
         // 3. Organisations
         if (count($results) < $maxResults) {
             $remainingSlots = $maxResults - count($results);
@@ -374,7 +376,7 @@ function entitiesAutocomplete($query) {
                         'type' => 'organisation',
                         'label' => $highlightText($org['OrganisationLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => $org['OrganisationThumbnailURI']
+                        'thumbnailURI' => thumbnailCacheURL('organisation', $org['OrganisationID'], $org['OrganisationThumbnailURI'])
                     ];
                 }
             }
@@ -402,7 +404,7 @@ function entitiesAutocomplete($query) {
                         'type' => 'term',
                         'label' => $highlightText($term['TermLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => $term['TermThumbnailURI']
+                        'thumbnailURI' => thumbnailCacheURL('term', $term['TermID'], $term['TermThumbnailURI'])
                     ];
                 }
             }
@@ -430,7 +432,7 @@ function entitiesAutocomplete($query) {
                         'type' => 'document',
                         'label' => $highlightText($doc['DocumentLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => $doc['DocumentThumbnailURI']
+                        'thumbnailURI' => thumbnailCacheURL('document', $doc['DocumentID'], $doc['DocumentThumbnailURI'])
                     ];
                 }
             }

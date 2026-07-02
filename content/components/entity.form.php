@@ -1,4 +1,7 @@
 <?php
+// NOTE: direct-access AJAX endpoint (fetched by the manage/entities page to
+// populate the add/edit dialog) — must NOT have the OPTV guard; it bootstraps
+// session/config itself below.
 session_start();
 // Component: entity-form.php
 

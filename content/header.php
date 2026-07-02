@@ -1,10 +1,12 @@
-<?php
+<?php defined('OPTV') or die();
 if (!isset($page)) {
 	$page = ''; // Initialize $page if not set
 }
 ?>
 <header>
-	<!--<div class="text-center alert m-0 px-1 py-0 alert-info" style="font-size: 14px;">* <span class="icon-attention mr-1"></span><a href="<?= $config["dir"]["root"] ?>/announcements" style="color: inherit; text-decoration: underline;"><?= L::messageAnnouncementCurrentState(); ?></a></div>-->
+	<?php if (isset($searchAvailable) && $searchAvailable === false): ?>
+	<div class="text-center alert m-0 px-1 py-0 alert-warning" style="font-size: 14px;"><span class="icon-attention mr-1"></span><?= L::messageServiceSearchUnavailable(); ?></div>
+	<?php endif; ?>
 	<nav class="navbar justify-content-between navbar-light">
 		<div class="container-fluid px-0">
 			<div class="<?=($page != "media") ? "flex-fill" : ""?>">
@@ -46,8 +48,11 @@ if (!isset($page)) {
 				// Remove unwanted parameters and rebuild clean parameter string
 				$backParamStr = preg_replace('/[?&](playresults=[0-1]|context=[^&]+|id=[^&]+)/', '', $paramStr);
 				$backParamStr = preg_replace('/^&|&&+/', '&', $backParamStr);
-				if (!empty($backParamStr)) {
-					$backParamStr = '?' . ltrim($backParamStr, '&');
+				// Strip a leading '?' or '&' (the removed id/playresults param may or
+				// may not have been the first one) before re-prepending a single '?'.
+				$backParamStr = ltrim($backParamStr, '?&');
+				if ($backParamStr !== '') {
+					$backParamStr = '?' . $backParamStr;
 				}
 			?>
 				<div class="navbarCenterOptions">
@@ -64,6 +69,7 @@ if (!isset($page)) {
 			}
 			?>
 			<div class="navbarRightOptions">
+				<?php include(__DIR__ . '/components/notification-bell.php'); ?>
 				<div class="dropdown d-inline">
 					<button class="btn btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= L::menu(); ?> <span class="icon-menu"></span></button>
 					<div class="dropdown-menu dropdown-menu-end" style="width: 200px;">

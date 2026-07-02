@@ -140,8 +140,13 @@ function searchSpeeches($request, $getAllResults = false) {
 
     $ESClient = getApiOpenSearchClient();
     if (is_array($ESClient) && isset($ESClient["errors"])) {
-        // Return error response if client initialization failed
+        // Return error response if client initialization failed. The
+        // "serviceAvailable" => false flag lets callers (mediaSearch) tell a
+        // service outage apart from a genuine empty result set. The success
+        // path returns the raw OpenSearch result and does NOT carry this key,
+        // so absence must be treated as "available".
         return [
+            "serviceAvailable" => false,
             "hits" => [
                 "hits" => [],
                 "total" => ["value" => 0],
@@ -190,8 +195,11 @@ function searchSpeeches($request, $getAllResults = false) {
         if ($DEBUG_MODE) {
             error_log("Search error: " . $e->getMessage());
         }
-        // Return a properly structured error response
+        // Return a properly structured error response. The "serviceAvailable"
+        // => false flag distinguishes this query failure (e.g. OpenSearch
+        // unreachable / crashed) from a genuine empty result set.
         return [
+            "serviceAvailable" => false,
             "hits" => [
                 "hits" => [],
                 "total" => ["value" => 0],
@@ -698,27 +706,67 @@ function processEntityIDFilter($requestKey, $requestValue, $request, &$filter, &
     // Determine resource type and default context
     $resourceType = determineResourceType($requestKey);
     $defaultContext = determineDefaultContext($requestKey);
-    
-    if (!isset($request["context"])) {
-        $request["context"] = $defaultContext;
-    }
-    
+    $globalContext = isset($request["context"]) ? $request["context"] : null;
+
+    // Per-entity role: each token may carry its own context as "<id>~<role>".
+    // The "*" wildcard (legacy "all"/"any") means "no context filter" — return an
+    // empty context so createEntityIDNestedQuery() adds no context constraint and
+    // the per-type default (e.g. main-speaker) is NOT silently applied. An explicit
+    // role is used verbatim; only a truly absent role falls back to global/default.
+    $resolveContext = function ($role) use ($globalContext, $defaultContext) {
+        if ($role !== null && strlen($role) > 0) {
+            return ($role === "*" || $role === "all" || $role === "any") ? "" : $role;
+        }
+        if ($globalContext !== null && strlen($globalContext) > 0) { return $globalContext; }
+        return $defaultContext;
+    };
+
     if (is_array($requestValue)) {
         foreach ($requestValue as $entityID) {
-            $filter["should"][] = createEntityIDNestedQuery(
-                $entityID, 
-                $resourceType, 
-                $request["context"]
-            );
+            list($id, $role) = parseEntityRoleToken($entityID);
+            $filter["should"][] = createEntityIDNestedQuery($id, $resourceType, $resolveContext($role));
         }
         $shouldCount++;
     } else {
-        $filter["must"][] = createEntityIDNestedQuery(
-            $requestValue, 
-            $resourceType, 
-            $request["context"]
-        );
+        list($id, $role) = parseEntityRoleToken($requestValue);
+        $filter["must"][] = createEntityIDNestedQuery($id, $resourceType, $resolveContext($role));
     }
+}
+
+/**
+ * Split an entity filter token "<id>~<role>" into [id, role].
+ *
+ * The optional "~role" suffix encodes the per-entity context (e.g. "speaker",
+ * "NER", "main-speaker-faction"). Returns role === null when no suffix is
+ * present, so callers fall back to the request-wide / per-type default context.
+ * The "~" delimiter is safe: Wikidata Q-IDs and term/document IDs never contain it.
+ *
+ * @param string $token
+ * @return array [string $id, string|null $role]
+ */
+function parseEntityRoleToken($token) {
+    $token = (string)$token;
+    $pos = strpos($token, "~");
+    if ($pos === false) {
+        return [$token, null];
+    }
+    return [substr($token, 0, $pos), substr($token, $pos + 1)];
+}
+
+/**
+ * Valid per-entity context roles by entity type, default (used when no role is
+ * given) listed first. Single source of truth shared by the search backend, the
+ * alert matcher and — mirrored in JS (criteriaChips.js) — the filterbar UI.
+ *
+ * @return array<string, string[]>
+ */
+function entityContextRoles() {
+    return [
+        "person"       => ["main-speaker", "speaker", "president", "vice-president", "interim-president", "NER"],
+        "organisation" => ["main-speaker-faction", "main-speaker-party", "NER", "proceedingsReference"],
+        "term"         => ["NER", "proceedingsReference"],
+        "document"     => ["proceedingsReference", "NER"],
+    ];
 }
 
 /**

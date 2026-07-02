@@ -116,11 +116,11 @@ function applySecurityHeaders() {
     // Base CSP directives - identical for dev/production except for local domain compatibility
     $cspDirectives = [
         "default-src 'self'",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' stats.openparliament.tv", // Added 'unsafe-eval' for FrameTrail.js
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' stats.openparliament.tv https://cdn.jsdelivr.net", // 'unsafe-eval' + jsDelivr for FrameTrail player
         "worker-src 'self' blob:", // FrameTrail/hls.js demuxer worker via blob URL
-        "style-src 'self' 'unsafe-inline'",
+        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net", // jsDelivr for FrameTrail player css
         "img-src 'self' data: https:", // Third-party images/thumbnails
-        "font-src 'self'",
+        "font-src 'self' data:", // data: for FrameTrail CDN css inlined fonts
         "connect-src 'self' https://*.openparliament.tv https:", // hls.js manifest/segment fetches (parliament CDNs)
         "frame-src 'self' stats.openparliament.tv", // Matomo + self-embedding
         "media-src 'self' https:", // Third-party videos
@@ -132,7 +132,7 @@ function applySecurityHeaders() {
     
     // Only exception: Skip external services when on local domains (they won't work anyway)
     if ($isLocalDomain) {
-        $cspDirectives[1] = "script-src 'self' 'unsafe-inline' 'unsafe-eval'"; // Remove stats.openparliament.tv but keep unsafe-eval
+        $cspDirectives[1] = "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net"; // Remove stats.openparliament.tv but keep unsafe-eval + jsDelivr
         $cspDirectives[6] = "connect-src 'self' https:"; // Allow cross-origin fetches (e.g. HLS CDNs); no stats.openparliament.tv on local
         $cspDirectives[7] = "frame-src 'self'"; // Remove stats.openparliament.tv
     }

@@ -4,6 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
+require_once (__DIR__."/../../../modules/images/functions.php");
 
 
 
@@ -79,7 +80,7 @@ function termGetDataObject($item = false, $db = false) {
                 "label" => $item["TermLabel"],
                 "labelAlternative" => $labelAlternative,
                 "abstract" => $item["TermAbstract"],
-                "thumbnailURI" => $item["TermThumbnailURI"],
+                "thumbnailURI" => thumbnailCacheURL("term", $item["TermID"], $item["TermThumbnailURI"]),
                 "thumbnailCreator" => $item["TermThumbnailCreator"],
                 "thumbnailLicense" => $item["TermThumbnailLicense"],
                 "websiteURI" => $item["TermWebsiteURI"],
@@ -509,7 +510,13 @@ function termGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = fals
                     $item['TermAdditionalInformation'] = json_encode($addInfo);
                 }
             }
+
+            // Route thumbnails through the local image cache (admin entity table).
+            if (!empty($item["TermThumbnailURI"]) && isset($item["TermID"])) {
+                $item["TermThumbnailURI"] = thumbnailCacheURL("term", $item["TermID"], $item["TermThumbnailURI"]);
+            }
         }
+        unset($item);
 
         return [
             "total" => $totalCount,

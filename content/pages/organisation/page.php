@@ -1,19 +1,8 @@
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/default') ?>
 <?php
-
-include_once(__DIR__ . '/../../../modules/utilities/auth.php');
-
-$auth = auth($_SESSION["userdata"]["id"] ?? null, "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../login/page.php");
-
-} else {
-
-    include_once(__DIR__ . '/../../header.php');
-    require_once(__DIR__."/../../../modules/utilities/functions.entities.php");
-    $flatDataArray = flattenEntityJSON($apiResult["data"]);
+require_once(__DIR__ . '/../../../modules/utilities/functions.entities.php');
+$flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <main class="container-fluid subpage">
 	<div class="detailsHeader">
@@ -23,7 +12,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 					<div class="detailsLayoutThumbnail detailsThumbnailContainer">
 						<div class="rounded-circle">
 							<?php if ($apiResult["data"]["attributes"]["thumbnailURI"]) { ?>
-								<img src="<?= hAttr($apiResult["data"]["attributes"]["thumbnailURI"]) ?>" alt="..." style="position: absolute; top: 50%; transform: translateY(-50%) translateX(-50%);left: 50%;width: 80%;object-fit: contain;object-position: center;">
+								<img src="<?= hAttr($apiResult["data"]["attributes"]["thumbnailURI"]) ?>" alt="<?= hAttr($apiResult["data"]["attributes"]["label"]) ?>" style="position: absolute; top: 50%; transform: translateY(-50%) translateX(-50%);left: 50%;width: 80%;object-fit: contain;object-position: center;">
 							<?php } else { ?>
 								<span class="icon-type-organisation" style="position: absolute;top: 48%;left: 50%;font-size: 50px;transform: translateX(-50%) translateY(-50%);"></span>
 							<?php } ?>
@@ -118,7 +107,6 @@ if ($auth["meta"]["requestStatus"] != "success") {
         </div>
     </div>
 </div>
-<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
 <?php 
@@ -157,7 +145,3 @@ if ($auth["meta"]["requestStatus"] != "success") {
 		});
 	});
 </script>
-
-<?php
-}
-?>

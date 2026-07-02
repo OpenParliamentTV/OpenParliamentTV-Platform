@@ -55,7 +55,7 @@ function sanitizeEmailSubject($subject) {
  * @param string|null $reply_to_name Reply-to name (optional)
  * @return bool True on success, false on failure
  */
-function sendMail($to_email, $to_name = '', $subject = '', $message = '', $is_html = false, $reply_to = null, $reply_to_name = null) {
+function sendMail($to_email, $to_name = '', $subject = '', $message = '', $is_html = false, $reply_to = null, $reply_to_name = null, $headers = []) {
     global $config;
     
     // Validate required parameters
@@ -84,7 +84,7 @@ function sendMail($to_email, $to_name = '', $subject = '', $message = '', $is_ht
     
     // Handle development mode - save emails to files instead of sending
     if ($config["mode"] === "dev") {
-        return saveMailToFile($to_email, $to_name, $subject, $message, $is_html, $reply_to, $reply_to_name);
+        return saveMailToFile($to_email, $to_name, $subject, $message, $is_html, $reply_to, $reply_to_name, $headers);
     }
     
     try {
@@ -126,10 +126,17 @@ function sendMail($to_email, $to_name = '', $subject = '', $message = '', $is_ht
         $mail->isHTML($is_html);
         $mail->Subject = $subject;
         $mail->Body = $message;
-        
+
         // Set charset
         $mail->CharSet = 'UTF-8';
-        
+
+        // Optional custom headers (e.g. List-Unsubscribe for notification emails)
+        if (!empty($headers) && is_array($headers)) {
+            foreach ($headers as $hName => $hValue) {
+                $mail->addCustomHeader($hName, $hValue);
+            }
+        }
+
         $mail->send();
         return true;
         
@@ -143,7 +150,7 @@ function sendMail($to_email, $to_name = '', $subject = '', $message = '', $is_ht
 /**
  * Save email to file in development mode
  */
-function saveMailToFile($to_email, $to_name, $subject, $message, $is_html, $reply_to, $reply_to_name) {
+function saveMailToFile($to_email, $to_name, $subject, $message, $is_html, $reply_to, $reply_to_name, $headers = []) {
     global $config;
     
     // Security: Validate and sanitize file path
@@ -175,6 +182,11 @@ function saveMailToFile($to_email, $to_name, $subject, $message, $is_html, $repl
     $email_content .= "Content-Type: " . ($is_html ? "text/html" : "text/plain") . "; charset=UTF-8\n";
     if ($reply_to) {
         $email_content .= "Reply-To: " . ($reply_to_name ? "{$reply_to_name} <{$reply_to}>" : $reply_to) . "\n";
+    }
+    if (!empty($headers) && is_array($headers)) {
+        foreach ($headers as $hName => $hValue) {
+            $email_content .= $hName . ": " . preg_replace('/[\r\n]/', '', $hValue) . "\n";
+        }
     }
     $email_content .= "\n";
     $email_content .= $message;

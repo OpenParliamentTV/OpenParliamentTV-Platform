@@ -319,6 +319,7 @@ function updatePlayer() {
 	
 	window.OPTV_Player = FrameTrail.init({
 		target:             '#OPTV_Player',
+		fullscreenTarget:   '#content',
 		contentTargets:     {},
 		contents:           [{
 			hypervideo: {
@@ -380,7 +381,7 @@ function updatePlayer() {
 				},
 				"customCSS": "",
 				"contents": speechCodeSnippets,
-				"subtitles": []
+				"subtitles": {}
 			},
 			annotations: ((playerData.annotations.length == 0) ? false : playerData.annotations)
 			//annotations: ["<?=$annotationSource?>"]
@@ -419,11 +420,11 @@ function updatePlayer() {
 				"cf910d",
 				"b85e02"
 			],
-			"videoFit": "contain"
+			"videoFit": "contain",
+			"defaultLanguage": document.documentElement.lang
 		},
-		language: document.documentElement.lang,
 		users: {}
-	});
+	}, 'PlayerLauncher');
 
 	OPTV_Player.on('ready', function() {
 
@@ -431,6 +432,14 @@ function updatePlayer() {
 
 		$('#content').addClass('ready');
 		processQuery();
+
+		// Re-sync fullscreen state: when switching results the browser stays
+		// fullscreen on '#content', but this freshly re-init'd FrameTrail instance
+		// doesn't know it. Restore the button/background state on the new player.
+		if (document.fullscreenElement) {
+			$('#OPTV_Player').addClass('inFullscreen');
+			$('#OPTV_Player .fullscreenButton').addClass('active');
+		}
 		/*
 		var downloadOptions = $('<div class="downloadOptions">'
 							+       '<div class="icon icon-download"></div>'

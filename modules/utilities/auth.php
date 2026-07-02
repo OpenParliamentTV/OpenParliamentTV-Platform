@@ -151,7 +151,16 @@ function auth($userID, $action, $entity, $db = false) {
                 "autocomplete",
                 "user",
                 "status",
-                "lang"
+                "lang",
+                // Public, read-only IIIF Manifests/Collections and WebVTT transcripts
+                "iiif",
+                "transcript",
+                // Notifications & alerts: the action passes the central gate; each
+                // module enforces "logged-in" (and admin where needed) itself, so
+                // anonymous callers get an auth error from the module, not here.
+                "alert",
+                "notification",
+                "systemMessage"
             );
 
             if (in_array($entity, $whitelist)) {

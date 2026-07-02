@@ -1,18 +1,5 @@
-<?php
-
-include_once(__DIR__ . '/../../../modules/utilities/auth.php');
-
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../login/page.php");
-
-} else {
-
-    include_once(__DIR__ . '/../../header.php');
-?>
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/admin') ?>
 <main class="container-fluid subpage">
 	<div class="row" style="position: relative; z-index: 1">
 		<div class="col-12 mb-3">
@@ -2114,8 +2101,5 @@ function resetWordTrends() {
 // Statistics are loaded on-demand to optimize initial page load time
 </script>
 
-<?php include_once (include_custom(realpath(__DIR__ . '/../../footer.php'),false)); ?>
+<?php ?>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
-<?php
-}
-?>

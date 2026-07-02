@@ -1,7 +1,7 @@
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/embed') ?>
 <?php
-
-require_once(__DIR__ . "/../../../../modules/utilities/security.php");
-require_once(__DIR__."/../../../../modules/utilities/functions.entities.php");
+require_once(__DIR__ . "/../../../../modules/utilities/functions.entities.php");
 $flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <main class="mt-0" style="height: 100%">
@@ -11,7 +11,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				<div class="row align-items-center">
 					<div class="col flex-grow-0 detailsThumbnailContainer">
 						<div class="rounded-circle">
-							<img src="<?= hAttr($apiResult["data"]["attributes"]["thumbnailURI"]) ?>" alt="..." style="position: absolute;">
+							<img src="<?= hAttr($apiResult["data"]["attributes"]["thumbnailURI"]) ?>" alt="<?= hAttr($apiResult["data"]["attributes"]["label"]) ?>" style="position: absolute;">
 						</div>
 						<div class="copyrightInfo"><span class="icon-info-circled"></span><span class="copyrightText"><?= L::source(); ?>: <?= safeHtml($apiResult["data"]["attributes"]["thumbnailCreator"]) ?>, <?= safeHtml($apiResult["data"]["attributes"]["thumbnailLicense"]) ?></span></div>
 					</div>

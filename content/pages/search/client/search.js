@@ -343,36 +343,27 @@ function updateSuggestions() {
 	}
 }
 
-function addQueryItem(queryType, queryText, secondaryText, itemID, factionID) {
-	var queryItemIcon = queryType === 'text' ? '' : '<span class="icon-type-'+ queryType +' me-2"></span>';
-	
-	var queryItem = $('<span class="queryItem d-flex align-items-center" data-type="'+ queryType +'">'+ queryItemIcon +'<span class="queryText">'+ queryText +'</span></span>'),
-		queryDeleteItem = $('<span class="queryDeleteItem icon-cancel ms-2"></span>');
-	
-	if (secondaryText) {
-		queryItem.append('<span class="ms-2 partyIndicator" data-faction="'+ factionID +'">'+ secondaryText +'</span>');
-	}
-	
-	// Add link icon for entity types (not text) - always before delete button
-	if (queryType !== 'text' && itemID) {
-		var queryLinkIcon = $('<a href="'+ config.dir.root +'/'+ queryType +'/'+ itemID +'" target="_blank" class="queryLinkIcon icon-link-ext ms-2" title="Go to '+ queryType +' details"></a>');
-		queryItem.append(queryLinkIcon);
-	}
-	
-	if (itemID) {
-		queryItem.attr('data-item-id', itemID);
-	}
-	queryDeleteItem.click(function(evt) {
-		evt.preventDefault();
-		evt.stopPropagation();
-		
-		$(this).parents('.queryItem').remove();
-		$('.searchInputContainer').addClass('active');
-		$('#edit-query').focus();
-		updateQuery();
+function addQueryItem(queryType, queryText, secondaryText, itemID, factionID, role, subtype) {
+	// Delegate chip construction to the shared CriteriaChips factory so the
+	// filterbar, the alert modal and the alert/notification lists stay identical.
+	var queryItem = CriteriaChips.buildChip({
+		type: queryType,
+		id: itemID,
+		label: queryText,
+		faction: factionID,
+		factionLabel: secondaryText,
+		role: role,
+		subtype: subtype
+	}, {
+		editable: true,
+		link: true,
+		onDelete: function () {
+			$('.searchInputContainer').addClass('active');
+			$('#edit-query').focus();
+			updateQuery();
+		},
+		onRoleChange: function () { updateQuery(); }
 	});
-
-	queryItem.append(queryDeleteItem);
 
 	$('.searchInputContainer input#edit-query').val('');
 	updateSuggestions();
@@ -419,6 +410,9 @@ function renderEntitiesSuggestions(inputValue, data) {
 			var suggestionItemSecondary = '';
 			var suggestionItemClass = 'suggestionItem entityPreview d-flex py-1';
 			var suggestionItemAttributes = 'data-type="'+ entityData.type +'" data-item-id="'+ entityData.id +'"';
+			if (entityData.type === 'person' && entityData.subtype) {
+				suggestionItemAttributes += ' data-subtype="'+ entityData.subtype +'"';
+			}
 			
 			// Handle person-specific data (faction/party indicator)
 			if (entityData.type === 'person' && entityData.faction) {
@@ -446,11 +440,12 @@ function renderEntitiesSuggestions(inputValue, data) {
 					secondaryText = $(this).find('.partyIndicator').text(),
 					factionID = $(this).find('.partyIndicator').attr('data-faction'),
 					itemID = $(this).attr('data-item-id'),
-					entityType = $(this).attr('data-type');
-				
+					entityType = $(this).attr('data-type'),
+					subtype = $(this).attr('data-subtype');
+
 				// Handle different entity types
 				if (entityType == 'person') {
-					addQueryItem('person', textValue, secondaryText, itemID, factionID);
+					addQueryItem('person', textValue, secondaryText, itemID, factionID, undefined, subtype);
 				} else {
 					// For non-person entities, add as entity type
 					addQueryItem(entityType, textValue, null, itemID);
@@ -540,7 +535,15 @@ function getInteractiveQueryValues(queryType) {
 	if (queryType == 'person' || queryType == 'organisation' || queryType == 'document' || queryType == 'term') {
 		var queryValue = [];
 		queryItems.each(function() {
-			queryValue.push( $(this).attr('data-item-id') );
+			var id = $(this).attr('data-item-id');
+			var role = $(this).attr('data-role');
+			// Only encode "<id>~<role>" when the role differs from the type default,
+			// keeping the common case of URLs/criteria clean.
+			if (role && role !== CriteriaChips.defaultRole(queryType)) {
+				queryValue.push(id + '~' + role);
+			} else {
+				queryValue.push(id);
+			}
 		});
 
 		return queryValue;
@@ -576,20 +579,24 @@ function initInteractiveQueryValues() {
 	
 	$('.searchInputContainer .queryItem').remove();
 
-	// Handle person entities
+	// Handle person entities. Hidden-input values may carry a per-entity role as
+	// "<id>~<role>"; split it off for the data lookup and pass the role to the chip.
 	if ($('[name="personID[]"]').length != 0) {
 		var personIDs = $.map($('[name="personID[]"]'), function(el) { return el.value; });
 		if (personIDs) {
 			if (typeof personDataFromRequest !== 'undefined') {
 				// Use server-side data if available
 				for (var i = personIDs.length - 1; i >= 0; i--) {
-					var label = personDataFromRequest[personIDs[i]].attributes.label;
-					if (personDataFromRequest[personIDs[i]].relationships.faction.data) {
-						var secondaryLabel = personDataFromRequest[personIDs[i]].relationships.faction.data.attributes.label;
-						var factionID = personDataFromRequest[personIDs[i]].relationships.faction.data.id;
-						addQueryItem('person', label, secondaryLabel, personIDs[i], factionID);
+					var personParts = CriteriaChips.splitRole(personIDs[i]);
+					var personID = personParts[0], personRole = personParts[1];
+					var label = personDataFromRequest[personID].attributes.label;
+					var personSubtype = personDataFromRequest[personID].attributes.type;
+					if (personDataFromRequest[personID].relationships.faction.data) {
+						var secondaryLabel = personDataFromRequest[personID].relationships.faction.data.attributes.label;
+						var factionID = personDataFromRequest[personID].relationships.faction.data.id;
+						addQueryItem('person', label, secondaryLabel, personID, factionID, personRole, personSubtype);
 					} else {
-						addQueryItem('person', label, false, personIDs[i]);
+						addQueryItem('person', label, false, personID, null, personRole, personSubtype);
 					}
 				}
 			} else {
@@ -605,15 +612,17 @@ function initInteractiveQueryValues() {
 		var entityType = entityTypes[t];
 		var paramName = entityType + 'ID[]';
 		var dataVarName = entityType + 'DataFromRequest';
-		
+
 		if ($('[name="' + paramName + '"]').length != 0) {
 			var entityIDs = $.map($('[name="' + paramName + '"]'), function(el) { return el.value; });
 			if (entityIDs) {
 				if (typeof window[dataVarName] !== 'undefined') {
 					// Use server-side data if available
 					for (var i = entityIDs.length - 1; i >= 0; i--) {
-						var label = window[dataVarName][entityIDs[i]].attributes.label;
-						addQueryItem(entityType, label, null, entityIDs[i]);
+						var entityParts = CriteriaChips.splitRole(entityIDs[i]);
+						var entityID = entityParts[0], entityRole = entityParts[1];
+						var label = window[dataVarName][entityID].attributes.label;
+						addQueryItem(entityType, label, null, entityID, null, entityRole);
 					}
 				} else {
 					// Fetch data via AJAX if server-side data not available
@@ -641,9 +650,10 @@ function initInteractiveQueryValues() {
  * Load entity data via AJAX and add query items when server-side data is not available
  */
 function loadEntityDataAndAddQueryItems(entityType, entityIDs) {
-	// Process each entity ID
+	// Process each entity ID (values may carry a "<id>~<role>" suffix).
 	for (var i = entityIDs.length - 1; i >= 0; i--) {
-		(function(currentEntityID, currentEntityType) {
+		var parts = CriteriaChips.splitRole(entityIDs[i]);
+		(function(currentEntityID, currentEntityRole, currentEntityType) {
 			$.ajax({
 				method: "POST",
 				url: config.dir.root + "/api/v1/",
@@ -655,27 +665,28 @@ function loadEntityDataAndAddQueryItems(entityType, entityIDs) {
 			}).done(function(response) {
 				if (response && response.data) {
 					var label = response.data.attributes.label;
-					
+
 					if (currentEntityType === 'person') {
+						var personSubtype = response.data.attributes.type;
 						// Handle person with potential faction data
 						if (response.data.relationships && response.data.relationships.faction && response.data.relationships.faction.data) {
 							var secondaryLabel = response.data.relationships.faction.data.attributes.label;
 							var factionID = response.data.relationships.faction.data.id;
-							addQueryItem('person', label, secondaryLabel, currentEntityID, factionID);
+							addQueryItem('person', label, secondaryLabel, currentEntityID, factionID, currentEntityRole, personSubtype);
 						} else {
-							addQueryItem('person', label, false, currentEntityID);
+							addQueryItem('person', label, false, currentEntityID, null, currentEntityRole, personSubtype);
 						}
 					} else {
 						// Handle other entity types
-						addQueryItem(currentEntityType, label, null, currentEntityID);
+						addQueryItem(currentEntityType, label, null, currentEntityID, null, currentEntityRole);
 					}
 				}
 			}).fail(function(err) {
 				console.warn('Failed to load ' + currentEntityType + ' data for ID:', currentEntityID, err);
 				// Add a fallback query item with just the ID as label
-				addQueryItem(currentEntityType, currentEntityID, null, currentEntityID);
+				addQueryItem(currentEntityType, currentEntityID, null, currentEntityID, null, currentEntityRole);
 			});
-		})(entityIDs[i], entityType);
+		})(parts[0], parts[1], entityType);
 	}
 }
 
@@ -898,9 +909,18 @@ function updateFilterBarVisibility() {
 		$('#filterbar').removeClass('nosearch');
 		$('.filterContainer').removeClass('d-none').addClass('d-md-block');
 		$('#toggleFilterContainer').removeClass('d-none').addClass('d-block');
+		// Landing intro (claim + examples) is hidden once a search is active
+		$('.homeIntro').addClass('d-none');
 	} else {
 		$('#filterbar').addClass('nosearch');
 		$('.filterContainer').removeClass('d-md-block').addClass('d-none');
 		$('#toggleFilterContainer').removeClass('d-block').addClass('d-none');
+		// Back to the home state: show the landing intro
+		$('.homeIntro').removeClass('d-none');
+		// Home state must never use the fixed/compact layout. The scroll handler
+		// only clears 'fixed' when scrolled back to the top, so reset it here in
+		// case we entered the home state while still scrolled down.
+		$('body').removeClass('fixed');
+		$('#speechListContainer').css('margin-top', 0);
 	}
 }

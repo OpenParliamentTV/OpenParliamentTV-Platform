@@ -1,18 +1,20 @@
-<?php
-include_once(__DIR__ . '/../../../../../modules/utilities/auth.php');
-include_once(__DIR__ . '/../../../../../modules/utilities/security.php');
-
-$auth = auth($_SESSION["userdata"]["id"], "requestPage", $pageType);
-
-if ($auth["meta"]["requestStatus"] != "success") {
-    $alertText = $auth["errors"][0]["detail"];
-    include_once (__DIR__."/../../../login/page.php");
-} else {
+<?php defined('OPTV') or die(); ?>
+<?php $this->layout('layout/admin') ?>
+<?php 
     $userData = $apiResult["data"];
     $isAdmin = $_SESSION["userdata"]["role"] === "admin";
     $isOwnProfile = $_SESSION["userdata"]["id"] == $_REQUEST["id"];
 
-    include_once(__DIR__ . '/../../../../header.php');
+    // Notification preferences are personal (the API always targets the session
+    // user), so the Notifications tab is only shown on one's own profile.
+    $showNotifications = $isOwnProfile && !empty($config["allow"]["notifications"]);
+    $notificationPref = ["emailEnabled" => true];
+    if ($showNotifications) {
+        require_once(__DIR__ . '/../../../../../api/v1/modules/notification.php');
+        $prefResp = notificationPreferences([]);
+        $notificationPref = ($prefResp["meta"]["requestStatus"] === "success") ? $prefResp["data"] : ["emailEnabled" => true];
+    }
+
 ?>
 
 <main class="container-fluid subpage">
@@ -25,6 +27,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
                         <li class="nav-item">
                             <a class="nav-link active" id="account-tab" data-bs-toggle="tab" data-bs-target="#account" role="tab" aria-controls="account" aria-selected="true"><span class="icon-cog"></span> Account</a>
                         </li>
+                        <?php if ($showNotifications): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications" role="tab" aria-controls="notifications" aria-selected="false"><span class="icon-megaphone"></span> <?= L::notificationSettingsTitle(); ?></a>
+                        </li>
+                        <?php endif; ?>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="account" role="tabpanel" aria-labelledby="account-tab">
@@ -137,6 +144,20 @@ if ($auth["meta"]["requestStatus"] != "success") {
                                 </div>
                             </form>
                         </div>
+                        <?php if ($showNotifications): ?>
+                        <div class="tab-pane bg-white fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                            <div class="p-3">
+                                <div class="form-check form-switch mb-2">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="prefEmailEnabled" <?= !empty($notificationPref["emailEnabled"]) ? "checked" : "" ?>>
+                                    <label class="form-check-label" for="prefEmailEnabled"><?= L::notificationEmailEnabled(); ?></label>
+                                </div>
+                                <div class="mt-3">
+                                    <a href="<?= $config["dir"]["root"] ?>/manage/alerts" class="btn btn-sm btn-outline-primary"><?= L::alertManageTitle(); ?></a>
+                                    <a href="<?= $config["dir"]["root"] ?>/notifications" class="btn btn-sm btn-outline"><?= L::notificationViewAll(); ?></a>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -339,10 +360,18 @@ $(function() {
             }
         });
     });
+
+    // Notification preferences (email toggle)
+    var prefEmailEnabled = document.getElementById("prefEmailEnabled");
+    if (prefEmailEnabled) {
+        prefEmailEnabled.addEventListener("change", function () {
+            var body = new URLSearchParams();
+            body.append("emailEnabled", prefEmailEnabled.checked);
+            fetch((config.dir.root || "") + "/api/v1/notification/preferences", { method: "POST", credentials: "same-origin", body: body })
+                .then(function (r) { return r.json(); })
+                .then(function () { if (window.AlertManager) { AlertManager.toast((localizedLabels.save || "Saved")); } });
+        });
+    }
 });
 </script>
 
-<?php
-    include_once (include_custom(realpath(__DIR__ . '/../../../../footer.php'),false));
-}
-?>

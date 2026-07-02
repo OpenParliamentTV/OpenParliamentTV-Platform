@@ -4,6 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
+require_once (__DIR__."/../../../modules/images/functions.php");
 
 
 
@@ -60,7 +61,7 @@ function personGetDataObject($item = false, $db = false) {
         $return["attributes"]["birthDate"] = $item["PersonBirthDate"];
         $return["attributes"]["gender"] = $item["PersonGender"];
         $return["attributes"]["abstract"] = $item["PersonAbstract"];
-        $return["attributes"]["thumbnailURI"] = $item["PersonThumbnailURI"];
+        $return["attributes"]["thumbnailURI"] = thumbnailCacheURL("person", $item["PersonID"], $item["PersonThumbnailURI"]);
         $return["attributes"]["thumbnailCreator"] = $item["PersonThumbnailCreator"] ? htmlentities($item["PersonThumbnailCreator"]) : null;
         $return["attributes"]["thumbnailLicense"] = $item["PersonThumbnailLicense"];
         $return["attributes"]["embedURI"] = $item["PersonEmbedURI"];
@@ -81,7 +82,7 @@ function personGetDataObject($item = false, $db = false) {
                 $return["relationships"]["party"]["data"]["id"] = $itemParty["OrganisationID"];
                 $return["relationships"]["party"]["data"]["attributes"]["label"] = $itemParty["OrganisationLabel"];
                 $return["relationships"]["party"]["data"]["attributes"]["labelAlternative"] = json_decode($itemParty["OrganisationLabelAlternative"],true);
-                $return["relationships"]["party"]["data"]["attributes"]["thumbnailURI"] = $itemParty["OrganisationThumbnailURI"];
+                $return["relationships"]["party"]["data"]["attributes"]["thumbnailURI"] = thumbnailCacheURL("organisation", $itemParty["OrganisationID"], $itemParty["OrganisationThumbnailURI"]);
                 $return["relationships"]["party"]["data"]["attributes"]["thumbnailCreator"] = $itemParty["OrganisationThumbnailCreator"];
                 $return["relationships"]["party"]["data"]["attributes"]["thumbnailLicense"] = $itemParty["OrganisationThumbnailLicense"];
                 $return["relationships"]["party"]["data"]["attributes"]["websiteURI"] = $itemParty["OrganisationWebsiteURI"];
@@ -109,7 +110,7 @@ function personGetDataObject($item = false, $db = false) {
                 $return["relationships"]["faction"]["data"]["id"] = $itemFaction["OrganisationID"];
                 $return["relationships"]["faction"]["data"]["attributes"]["label"] = $itemFaction["OrganisationLabel"];
                 $return["relationships"]["faction"]["data"]["attributes"]["labelAlternative"] = json_decode($itemFaction["OrganisationLabelAlternative"],true);
-                $return["relationships"]["faction"]["data"]["attributes"]["thumbnailURI"] = $itemFaction["OrganisationThumbnailURI"];
+                $return["relationships"]["faction"]["data"]["attributes"]["thumbnailURI"] = thumbnailCacheURL("organisation", $itemFaction["OrganisationID"], $itemFaction["OrganisationThumbnailURI"]);
                 $return["relationships"]["faction"]["data"]["attributes"]["thumbnailCreator"] = $itemFaction["OrganisationThumbnailCreator"];
                 $return["relationships"]["faction"]["data"]["attributes"]["thumbnailLicense"] = $itemFaction["OrganisationThumbnailLicense"];
                 $return["relationships"]["faction"]["data"]["attributes"]["websiteURI"] = $itemFaction["OrganisationWebsiteURI"];
@@ -643,6 +644,15 @@ function personGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = fa
             ON party.OrganisationID = per.PersonPartyOrganisationID
         LEFT JOIN ?n as faction
             ON faction.OrganisationID = per.PersonFactionOrganisationID WHERE ?p", $config["platform"]["sql"]["tbl"]["Person"], $config["platform"]["sql"]["tbl"]["Organisation"], $config["platform"]["sql"]["tbl"]["Organisation"], $queryPart);
+
+    // Route thumbnails through the local image cache (admin entity table).
+    if (is_array($return["data"])) {
+        foreach ($return["data"] as $k => $row) {
+            if (!empty($row["PersonThumbnailURI"])) {
+                $return["data"][$k]["PersonThumbnailURI"] = thumbnailCacheURL("person", $row["PersonID"], $row["PersonThumbnailURI"]);
+            }
+        }
+    }
     /*
         *
         * To add annotation count uncomment. But be aware this will take some time

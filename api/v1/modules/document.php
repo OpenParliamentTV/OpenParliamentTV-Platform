@@ -4,6 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
+require_once (__DIR__."/../../../modules/images/functions.php");
 
 
 
@@ -64,7 +65,7 @@ function documentGetDataObject($item = false, $db = false) {
         //$return["attributes"]["labelAlternative"] = str_replace(array("\r","\n"), " ", $item["DocumentLabelAlternative"]);
         $return["attributes"]["labelAlternative"] = json_decode($item["DocumentLabelAlternative"],true);
         $return["attributes"]["abstract"] = $item["DocumentAbstract"];
-        $return["attributes"]["thumbnailURI"] = $item["DocumentThumbnailURI"];
+        $return["attributes"]["thumbnailURI"] = thumbnailCacheURL("document", $item["DocumentID"], $item["DocumentThumbnailURI"]);
         $return["attributes"]["thumbnailCreator"] = $item["DocumentThumbnailCreator"];
         $return["attributes"]["thumbnailLicense"] = $item["DocumentThumbnailLicense"];
         $return["attributes"]["sourceURI"] = $item["DocumentSourceURI"];

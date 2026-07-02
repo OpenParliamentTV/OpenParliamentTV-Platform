@@ -1,4 +1,7 @@
 <?php
+// NOTE: direct-access AJAX endpoint (fetched by entity.form.php to render the
+// live entity preview) — must NOT have the OPTV guard; it bootstraps config via
+// security.php below.
 require_once(__DIR__ . '/../../modules/utilities/security.php');
 // Handle POST data for preview
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entity'])) {

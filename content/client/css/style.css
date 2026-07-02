@@ -964,7 +964,7 @@ body.darkmode .modal-content .btn-close {
 }
 
 .relationshipsList .entityPreview .entityContainer {
-    background: var(--primary-bg-color);
+    background: var(--secondary-bg-color);
     padding: 0px;
     display: block;
     margin-bottom: 10px;
@@ -1540,6 +1540,150 @@ body.fixed .searchContainer {
     box-shadow: 0 0 0 .2rem var(--border-color);
 }
 
+/* ---- Per-entity role control ("as:") — shared by filterbar + criteriaChips ---- */
+.queryRole {
+    display: inline-flex;
+    align-items: center;
+    padding-right: 4px;
+}
+.queryRole.queryRoleEditable {
+    position: relative;
+}
+.queryRole .queryRoleToggle {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    opacity: .65;
+}
+.queryRole.queryRoleEditable .queryRoleToggle:hover {
+    opacity: 1;
+}
+/* Small dropdown indicator (thin chevron) right of the role icon. */
+.queryRoleCaret {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-left: 4px;
+    border-right: 1px solid currentColor;
+    border-bottom: 1px solid currentColor;
+    transform: translateY(-1px) rotate(45deg);
+    opacity: .7;
+}
+.queryRoleMenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1090;
+    min-width: 190px;
+    margin-top: 4px;
+    padding: 4px 0;
+    background: var(--secondary-bg-color, #ffffff);
+    border: 1px solid var(--border-color, #cccccc);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px var(--shadow-color, rgba(0,0,0,.15));
+    white-space: nowrap;
+}
+.queryRoleMenu.show {
+    display: block;
+}
+.queryRoleMenuHeader {
+    display: block;
+    padding: 2px 12px;
+    font-size: 85%;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    opacity: .65;
+}
+.queryRoleOption {
+    display: flex;
+    align-items: center;
+    padding: 4px 12px;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    opacity: .9;
+}
+.queryRoleOption:hover {
+    background: var(--primary-bg-color, #f0f0f0);
+    opacity: 1;
+}
+.queryRoleOption.active {
+    font-weight: bolder;
+    border-left-color: var(--primary-fg-color);
+    opacity: 1;
+}
+
+/* The icon + label + party badge group is a link to the entity detail page. */
+.queryItem .queryItemLink,
+.queryItem .queryItemLabel {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+.queryItem .queryItemLabel {
+    cursor: default;
+}
+.queryItem .queryItemLink:hover,
+.queryItem .queryItemLink:hover .queryText {
+    text-decoration: none;
+}
+
+/* ---- Notifications: "Redebeitrag" cell. Reuses the result-grid .resultItem /
+   .resultSnippets styling (incl. `td em` highlight); only the compact head needs
+   a few tweaks. ---- */
+.notifMediaCard.resultItem {
+    padding: 0;
+}
+.notifMediaCard .notifMediaHead {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+}
+.notifMediaCard .notifMediaHead:hover .notifMediaSpeaker {
+    text-decoration: underline;
+}
+/* Weight is inherited from the row (fw-bolder when unread, normal when read). */
+.notifMediaCard .notifMediaMeta {
+    opacity: .7;
+}
+.notifMediaCard .resultSnippets {
+    margin-top: .35rem;
+}
+
+/* ---- Shared criteria chips (alert modal, /manage/alerts, /notifications) ---- */
+.criteriaChips {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.criteriaChips .queryItem {
+    position: relative;
+    padding: 2px 8px;
+    margin-right: 7px;
+    margin-bottom: 6px;
+    border: 1px solid #aaaaaa;
+    border-radius: 3px;
+    white-space: nowrap;
+    cursor: default;
+}
+.criteriaChips .queryItem .queryDeleteItem {
+    cursor: pointer;
+    opacity: .65;
+}
+.criteriaChips .queryItem .queryDeleteItem:hover {
+    opacity: 1;
+}
+.criteriaChips .partyIndicator {
+    display: inline-block;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    background: transparent;
+    white-space: nowrap;
+    font-size: 70%;
+    padding: 0px 5px;
+}
+
 .searchContainer .searchInputContainer input#edit-query,
 .searchContainer .searchInputContainer input#edit-query:focus,
 .searchContainer .searchInputContainer input#edit-query:focus-visible,
@@ -1686,6 +1830,10 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
         width: 60px;
         height: 60px;
     }
+}
+
+.donut-chart-tooltip {
+    top: 0px;
 }
 
 .filterContainer .form-group {
@@ -1897,8 +2045,26 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
 }
 
 .examplesContainer {
-    font-size: 1rem;
     line-height: 30px;
+}
+
+/* Landing claim shown at the top of the search bar's searchContainer (home state).
+   Scoped to .searchContainer so it doesn't affect the #introHint claim variant. */
+.searchContainer .introClaim {
+    font-size: 1.2rem;
+    margin-bottom: 1.4rem;
+    line-height: 1.4em;
+}
+@media (min-width:768px) {
+    .searchContainer .introClaim {
+        font-size: 1.4rem;
+        margin-bottom: 2rem;
+    }
+}
+@media (min-width:1500px) {
+    .searchContainer .introClaim {
+        margin-bottom: 2.8rem;
+    }
 }
 
 .detailsHeader {
@@ -2083,7 +2249,7 @@ table td.thumbnailColumn-organisation .rounded-circle img {
     text-decoration: none;
 }
 
-#speechListContainer .examplesContainer a, #interventionListContainer .examplesContainer a {
+#speechListContainer .examplesContainer a, #interventionListContainer .examplesContainer a, .searchContainer .examplesContainer a {
     float: left;
     width: auto;
     padding: 0px 8px;
@@ -2096,7 +2262,7 @@ table td.thumbnailColumn-organisation .rounded-circle img {
     line-height: 1.5;
 }
 
-#speechListContainer .examplesContainer a:hover, #interventionListContainer .examplesContainer a:hover {
+#speechListContainer .examplesContainer a:hover, #interventionListContainer .examplesContainer a:hover, .searchContainer .examplesContainer a:hover {
     border-color: var(--primary-fg-color);
 }
 

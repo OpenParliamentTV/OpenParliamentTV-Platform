@@ -1,7 +1,18 @@
 <?php
 
 /**
- * Version Number 
+ * OPTV bootstrap guard — prevents direct access to template files.
+ * Every template starts with: defined('OPTV') or die();
+ * config.php is required by all entry points (index.php, content.player.php,
+ * api/index.php, meta-image.php, …), so defining it here means any file that
+ * loads config automatically sets the constant.
+ */
+if (!defined('OPTV')) {
+    define('OPTV', true);
+}
+
+/**
+ * Version Number
  * (mostly used for refreshing cached resources of previous version)
  * Example: "1.5"
  * String
@@ -48,6 +59,14 @@ $config["allow"]["publicAccess"] = true;
 
 
 /**
+ * Enable the notifications & alerts feature (Plan B)
+ * Controls alert matching during imports and rendering of the bell / subscribe UI.
+ * true or false
+ */
+$config["allow"]["notifications"] = true;
+
+
+/**
  * A complicated string to salt the user account password hashes
  */
 $config["salt"] = "";
@@ -60,7 +79,8 @@ $acceptLang = array(
     "de"=>array(
         "short"=>"de",
         "name"=>"Deutsch",
-        "icon"=>""
+        "icon"=>"",
+        "default"=>true
     ),
     "en"=>array(
         "short"=>"en",
@@ -107,6 +127,13 @@ $config["ads"]["api"]["uri"] = "";
 $config["ads"]["api"]["key"] = "";
 
 /**
+ * Local cache directory (absolute filesystem path) for downloaded & optimized
+ * entity thumbnails (Wikimedia Commons images served via the local image proxy).
+ * Leave empty to use the default: <platform root>/cache/images
+ */
+$config["dir"]["imageCache"] = "";
+
+/**
  * Platform Database (mariadb/MySQL) information
  */
 $config["platform"]["sql"]["access"]["host"] = "";
@@ -122,6 +149,36 @@ $config["platform"]["sql"]["tbl"]["Auth"] = "auth";
 $config["platform"]["sql"]["tbl"]["Conflict"] = "conflict";
 $config["platform"]["sql"]["tbl"]["Entitysuggestion"] = "entitysuggestion";
 $config["platform"]["sql"]["tbl"]["User"] = "user";
+$config["platform"]["sql"]["tbl"]["Alert"] = "alert";
+$config["platform"]["sql"]["tbl"]["Notification"] = "notification";
+$config["platform"]["sql"]["tbl"]["SystemMessage"] = "system_message";
+$config["platform"]["sql"]["tbl"]["NotificationPreference"] = "notification_preference";
+$config["platform"]["sql"]["tbl"]["ApiRateLimit"] = "apiratelimit";
+$config["platform"]["sql"]["tbl"]["ApiKey"] = "apikey";
+
+/**
+ * Request rate limiting. Two independent surfaces, both DB-backed fixed-window
+ * (shared `apiratelimit` table, separate namespaces). Logged-in users and
+ * exemptIPs are exempt on both; the API also skips exemptActions.
+ *
+ * ["api"]   — external API HTTP entry (api/v1/index.php). Internal apiV1()
+ *             calls from page handlers are never limited.
+ * ["pages"] — web router entry (index.php). Static files, AJAX fragments and
+ *             the image proxy are served directly by Apache and NOT counted,
+ *             so this only caps true page navigations (coarse anti-scrape).
+ */
+$config["rateLimit"]["api"]["enabled"] = true;
+$config["rateLimit"]["api"]["window"] = 60;   // seconds
+$config["rateLimit"]["api"]["limit"] = 240;    // requests per window per client IP
+$config["rateLimit"]["api"]["trustProxy"] = false; // honor X-Forwarded-For / CF-Connecting-IP (only behind a trusted proxy)
+$config["rateLimit"]["api"]["exemptActions"] = ["autocomplete", "status", "lang", "systemMessage", "notification"];
+$config["rateLimit"]["api"]["exemptIPs"] = [];
+
+$config["rateLimit"]["pages"]["enabled"] = true;
+$config["rateLimit"]["pages"]["window"] = 60;   // seconds
+$config["rateLimit"]["pages"]["limit"] = 200;    // page requests per window per client IP
+$config["rateLimit"]["pages"]["trustProxy"] = false;
+$config["rateLimit"]["pages"]["exemptIPs"] = [];
 
 
 /**

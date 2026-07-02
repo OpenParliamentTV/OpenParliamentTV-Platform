@@ -1,0 +1,4 @@
+# Deny all web access to cached image files
+# These are served exclusively via the local image proxy (content/client/images/meta-image.php)
+Order Deny,Allow
+Deny from all

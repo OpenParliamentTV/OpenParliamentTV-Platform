@@ -146,10 +146,12 @@ function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search 
     
     // Get parliaments to search in
     $parliaments = $targetParliament ? [$targetParliament] : array_keys($config["parliament"]);
-    
+
+    $connectionFailed = false;
     foreach ($parliaments as $parliament) {
         $db = getApiDatabaseConnection('parliament', $parliament);
         if (!is_object($db)) {
+            $connectionFailed = true;
             continue; // Skip this parliament if connection fails
         }
         
@@ -252,7 +254,13 @@ function agendaItemGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search 
             continue; // Skip this parliament on error
         }
     }
-    
+
+    // Surface an unreachable parliament DB as a 503 error instead of a silent
+    // empty success (see sessionGetItemsFromDB for rationale).
+    if (empty($allResults) && $connectionFailed) {
+        return createApiErrorDatabaseConnection('parliament');
+    }
+
     return [
         "total" => $totalCount,
         "data" => $allResults

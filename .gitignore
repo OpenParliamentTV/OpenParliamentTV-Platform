@@ -42,6 +42,11 @@ CLAUDE.md
 langcache/*.php
 api/v1/cache/*.json
 api/v1/cache/*.meta
+cache/images/*.webp
+cache/images/*.png
+cache/images/*.jpg
+cache/images/*.src
+cache/meta-images/*.png
 
 # Data
 data/import-error-log.txt
@@ -54,7 +59,12 @@ modules/alignment/output/*.json
 modules/import/input/*.json
 modules/import/done/*.json
 config.php
-config-server.php
+config-*.php
+# ...but the meta-image module's config.php is layout config, not bootstrap config — keep it tracked.
+!modules/meta-image/config.php
+
+# Temporary one-off DB migration (not the canonical db/*.sql dumps)
+db/db_migration.sql
 
 # Custom content
 custom/*

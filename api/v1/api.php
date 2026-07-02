@@ -31,6 +31,18 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
         );
     }
 
+    // Content negotiation: serve IIIF Manifests from existing media/session URIs.
+    require_once (__DIR__."/modules/iiif.php");
+    if (isIIIFRequest()) {
+        $iiifResult = handleIIIFRequest($api_request);
+        if ($iiifResult !== null) {
+            header('Content-Type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"');
+            header('Access-Control-Allow-Origin: *'); // IIIF viewers fetch cross-origin
+            return $iiifResult;
+        }
+        // null => fall through to normal routing (produces proper error responses)
+    }
+
 
     switch ($api_request["action"]) {
 
@@ -73,6 +85,57 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/electoralPeriod.php");
                     $item = electoralPeriodGetByID($api_request["id"]);
                     return createApiResponse($item);
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
+        case "transcript":
+            require_once (__DIR__."/modules/transcript.php");
+            switch ($api_request["itemType"]) {
+                case "vtt":
+                    // Serves text/vtt directly and exits (bypasses JSON encoder).
+                    transcriptServeVTT(
+                        $api_request["id"] ?? "",
+                        $api_request["type"] ?? null,
+                        $api_request["lang"] ?? null
+                    );
+                    return; // unreachable; transcriptServeVTT exits
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
+        case "iiif":
+            require_once (__DIR__."/modules/iiif.php");
+            switch ($api_request["itemType"]) {
+                case "collection":
+                    $collection = iiifGenerateCollection(
+                        $api_request["parliament"] ?? "",
+                        $api_request["electoralPeriod"] ?? null
+                    );
+                    if ($collection === null) {
+                        return createApiResponse(
+                            createApiErrorInvalidParameter("parliament")
+                        );
+                    }
+                    header('Content-Type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"');
+                    header('Access-Control-Allow-Origin: *');
+                    return $collection;
+                case "search":
+                    $collection = iiifGenerateSearchCollection($api_request);
+                    if ($collection === null) {
+                        return createApiResponse(
+                            createApiErrorNotFound("media")
+                        );
+                    }
+                    header('Content-Type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"');
+                    header('Access-Control-Allow-Origin: *');
+                    return $collection;
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
@@ -173,8 +236,72 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             }
             break;
 
+        case "alert":
+            require_once (__DIR__."/modules/alert.php");
+            switch ($api_request["itemType"]) {
+                case "list":
+                    return createApiResponse(alertList($api_request));
+                case "get":
+                    return createApiResponse(alertGet($api_request));
+                case "create":
+                    return createApiResponse(alertCreate($api_request));
+                case "update":
+                    return createApiResponse(alertUpdate($api_request));
+                case "delete":
+                    return createApiResponse(alertDelete($api_request));
+                case "status":
+                    return createApiResponse(alertStatus($api_request));
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
+        case "systemMessage":
+            require_once (__DIR__."/modules/systemMessage.php");
+            switch ($api_request["itemType"]) {
+                case "list":
+                    return createApiResponse(systemMessageList($api_request));
+                case "create":
+                    return createApiResponse(systemMessageCreate($api_request));
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
+        case "notification":
+            require_once (__DIR__."/modules/notification.php");
+            switch ($api_request["itemType"]) {
+                case "list":
+                    return createApiResponse(notificationList($api_request));
+                case "unreadCount":
+                    return createApiResponse(notificationUnreadCount($api_request));
+                case "markRead":
+                    return createApiResponse(notificationMarkRead($api_request));
+                case "markUnread":
+                    return createApiResponse(notificationMarkUnread($api_request));
+                case "markAllRead":
+                    return createApiResponse(notificationMarkAllRead($api_request));
+                case "delete":
+                    return createApiResponse(notificationDelete($api_request));
+                case "preferences":
+                    return createApiResponse(notificationPreferences($api_request));
+                case "unsubscribe":
+                    return createApiResponse(notificationUnsubscribe($api_request));
+                case "runMatch":
+                    return createApiResponse(notificationRunMatch($api_request));
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
         case "lang":
-            global $acceptLang; 
+            global $acceptLang;
             switch ($api_request["itemType"]) {
                 case "set":
                     if (!empty($api_request["lang"]) && isset($acceptLang) && array_key_exists($api_request["lang"], $acceptLang)) {
@@ -361,6 +488,13 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
                     );
+            }
+
+            // A getItemsFromDB function may return a ready-made API error
+            // response (e.g. parliament DB unreachable) — pass it through
+            // instead of wrapping it as an empty success.
+            if (is_array($result) && (($result["meta"]["requestStatus"] ?? null) === "error")) {
+                return createApiResponse($result);
             }
 
             if ($result) {
