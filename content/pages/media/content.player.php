@@ -54,7 +54,9 @@ $relatedContentsPanel = ob_get_clean();
         ],
         'annotations': <?= json_encode(getFrametrailAnnotations($speech["annotations"]["data"], $speech["relationships"], $speech["attributes"]["videoFileURI"]))?>
     };
-    
+
+    currentMediaID = <?= json_encode($speech['id'], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
+
 </script>
 <div class="mediaContainer">
     <div class="d-flex flex-column flex-md-row-reverse">

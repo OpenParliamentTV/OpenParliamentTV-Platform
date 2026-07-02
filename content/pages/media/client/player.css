@@ -47,6 +47,32 @@ body.darkmode .frametrail-body.inFullscreen {
 	background: var(--primary-bg-color);
 }
 
+/* Fullscreen layout: '#content' is the FrameTrail fullscreenTarget (see
+   player.js). Drop the container padding/min-height so the player fills the
+   whole viewport, and let the player flex-grow into the freed space. */
+main#content:is(:fullscreen, :-webkit-full-screen) {
+	background: var(--secondary-bg-color);
+}
+
+main#content:is(:fullscreen, :-webkit-full-screen)::backdrop {
+	background: var(--secondary-bg-color);
+}
+
+main#content:is(:fullscreen, :-webkit-full-screen) .mediaContainer {
+	padding: 0;
+	height: 100vh;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+main#content:is(:fullscreen, :-webkit-full-screen) .frametrail-body {
+	flex: 1 1 auto;
+	height: auto;
+	min-height: 0;
+	border: 0;
+}
+
 @media (max-width: 768px) {
 	.frametrail-body {
 		height: calc(100vh - 245px);
@@ -459,10 +485,6 @@ body.darkmode .contentViewTab, body.darkmode .layoutArea .contentViewContainer, 
 }
 
 .layoutArea[data-area="areaLeft"] .layoutAreaTabs {
-	display: none !important;
-}
-
-.layoutArea[data-area="areaBottom"].closed .layoutAreaTabs {
 	display: none !important;
 }
 
