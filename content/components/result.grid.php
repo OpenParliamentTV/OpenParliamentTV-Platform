@@ -154,7 +154,6 @@ if ($totalResults != 0) {
 			<div class="d-block d-md-inline w-100 w-md-auto mt-2 mt-md-0">
 				<a href="<?= hAttr($rssHref) ?>" id="searchRssFeedLink" class="btn btn-sm btn-outline-primary rss-feed-link ms-2 align-middle" title="<?= hAttr(L::feedRssLinkTitle()) ?>" target="_blank">RSS<span class="icon-rss ms-1" aria-hidden="true"></span></a>
 				<!-- <a href="<?= hAttr($iiifHref) ?>" id="searchIiifCollectionLink" class="btn btn-sm btn-outline-primary ms-2 align-middle" title="<?= hAttr(L::iiifCollectionLinkTitle()) ?>" target="_blank">IIIF<span class="icon-data-structured ms-1" aria-hidden="true"></span></a> -->
-			</div>
 <?php
 			// "Save as alert" — logged-in only. Reuses the same criteria as the RSS
 			// link ($rssParams), so it appears on search and entity pages alike (the
@@ -211,11 +210,12 @@ if ($totalResults != 0) {
 				}
 				if ($hasAlertCriteria):
 ?>
-			<button type="button" id="saveAsAlertButton" class="btn btn-sm btn-outline-primary ms-2 align-middle" data-criteria="<?= hAttr(json_encode($alertCriteria, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>" title="<?= hAttr(L::alertSaveAsAlert()) ?>"><span class="saveAsAlertLabel"><?= L::alertSaveAsAlert() ?></span><span class="icon-bell-fill ms-1" aria-hidden="true"></span></button>
+				<button type="button" id="saveAsAlertButton" class="btn btn-sm btn-outline-primary ms-2 align-middle" data-criteria="<?= hAttr(json_encode($alertCriteria, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>" title="<?= hAttr(L::alertSaveAsAlert()) ?>"><span class="saveAsAlertLabel"><?= L::alertSaveAsAlert() ?></span><span class="icon-bell-fill ms-1" aria-hidden="true"></span></button>
 <?php
 				endif;
 			}
 ?>
+			</div>
 		</div>
 	</div>
 	<div class="resultList row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
