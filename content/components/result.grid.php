@@ -151,8 +151,10 @@ if ($totalResults != 0) {
 				<option value="duration-asc"><?= L::duration(); ?> (<?= L::sortByDurationAsc(); ?>)</option>
 				<option value="duration-desc"><?= L::duration(); ?> (<?= L::sortByDurationDesc(); ?>)</option>
 			</select>
-			<a href="<?= hAttr($rssHref) ?>" id="searchRssFeedLink" class="btn btn-sm btn-outline-primary rss-feed-link ms-2 align-middle" title="<?= hAttr(L::feedRssLinkTitle()) ?>" target="_blank">RSS<span class="icon-rss ms-1" aria-hidden="true"></span></a>
-			<a href="<?= hAttr($iiifHref) ?>" id="searchIiifCollectionLink" class="btn btn-sm btn-outline-primary ms-2 align-middle" title="<?= hAttr(L::iiifCollectionLinkTitle()) ?>" target="_blank">IIIF<span class="icon-data-structured ms-1" aria-hidden="true"></span></a>
+			<div class="d-block d-md-inline w-100 w-md-auto mt-2 mt-md-0">
+				<a href="<?= hAttr($rssHref) ?>" id="searchRssFeedLink" class="btn btn-sm btn-outline-primary rss-feed-link ms-2 align-middle" title="<?= hAttr(L::feedRssLinkTitle()) ?>" target="_blank">RSS<span class="icon-rss ms-1" aria-hidden="true"></span></a>
+				<!-- <a href="<?= hAttr($iiifHref) ?>" id="searchIiifCollectionLink" class="btn btn-sm btn-outline-primary ms-2 align-middle" title="<?= hAttr(L::iiifCollectionLinkTitle()) ?>" target="_blank">IIIF<span class="icon-data-structured ms-1" aria-hidden="true"></span></a> -->
+			</div>
 <?php
 			// "Save as alert" — logged-in only. Reuses the same criteria as the RSS
 			// link ($rssParams), so it appears on search and entity pages alike (the
