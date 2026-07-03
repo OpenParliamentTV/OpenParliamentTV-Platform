@@ -45,7 +45,7 @@ function renderQuoteImage($theme, $text, $author, $authorSecondary) {
 	imagefill($image, 0, 0, $bgColor);
 	
 	// Load logo
-	$logoPath = __DIR__ . '/optv-logo.png';
+	$logoPath = __DIR__ . '/optv-mark.png';
 	if (!file_exists($logoPath)) {
 		return false;
 	}

@@ -23,7 +23,7 @@ if (!isset($page)) {
 					$brandClass = "d-none d-lg-inline";
 				}
 				?>
-					<img src="<?= $config["dir"]["root"].((file_exists(__DIR__."/../custom/content/client/images/logo_small.png")) ? "/custom/content/client/images/logo_small.png" : "/content/client/images/optv-logo_small.png");?>"><span class="<?= $brandClass ?>"><?=$config["customization"]["wordmark"]?></span>
+					<img src="<?= $config["dir"]["root"].((file_exists(__DIR__."/../custom/content/client/images/optv-mark-compact.png")) ? "/custom/content/client/images/optv-mark-compact.png" : "/content/client/images/optv-mark-compact.png");?>"><span class="<?= $brandClass ?>"><?=$config["customization"]["wordmark"]?></span>
 				</a>
 				<?php 
 					if (isset($pageBreadcrumbs)) {

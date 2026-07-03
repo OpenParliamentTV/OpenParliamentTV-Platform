@@ -57,7 +57,7 @@ function metaImageCanvas($w, $h, array $bgRgb) {
 }
 
 /**
- * Draw the OPTV mark (optv-logo.png) scaled to $height, top-left at ($x,$y).
+ * Draw the OPTV mark (optv-mark.png) scaled to $height, top-left at ($x,$y).
  * Returns the rendered width (0 if the asset is missing).
  */
 function metaImageDrawMark($img, array $cfg, $x, $y, $height) {

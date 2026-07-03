@@ -147,7 +147,7 @@ function getFeedMeta($feedType, $params) {
         "language"       => $language,
         "lastBuildDate"  => date(DATE_RSS),
         "lastBuildAtom"  => date(DATE_ATOM),
-        "imageUrl"       => $baseUrl . "/content/client/images/optv-logo.png",
+        "imageUrl"       => $baseUrl . "/content/client/images/optv-mark.png",
         "imageLink"      => $baseUrl,
         "xslUrl"         => $baseUrl . "/content/client/feed.xsl",
         "brand"          => $brand,

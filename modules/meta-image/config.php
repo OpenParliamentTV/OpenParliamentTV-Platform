@@ -43,7 +43,7 @@ return [
     ],
 
     'logo' => [
-        'path' => __DIR__ . '/optv-logo.png',
+        'path' => __DIR__ . '/optv-mark.png',
     ],
 
     // FrameTrail icon glyph codepoints (hex), mirroring the icon-type-* CSS
