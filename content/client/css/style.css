@@ -150,7 +150,7 @@ header .navbar .navbar-text.brand img {
 }
 
 body.darkmode header .navbar .navbar-text.brand img {
-    filter: brightness(2);
+    filter: brightness(2.8);
 }
 
 header .navbar .navbar-text:hover, header .navbar .navbar-text:focus {
