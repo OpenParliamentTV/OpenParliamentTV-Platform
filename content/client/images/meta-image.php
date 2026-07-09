@@ -141,7 +141,7 @@ if ($type === 'quote') {
 
     $theme = (isset($_REQUEST['c']) && in_array($_REQUEST['c'], ['l', 'd'], true)) ? $_REQUEST['c'] : 'l';
 
-    $png = renderQuoteImage($theme, $quote, $author, $authorSecondary);
+    $png = renderQuoteImage($theme, $quote, $author, $authorSecondary, $mainSpeaker['id'] ?? '', $metaCfg);
     metaImageEmit($png, 'public, max-age=2592000, immutable');
     metaImageFallback($THUMBNAIL);
 }

@@ -1,7 +1,9 @@
 <?php
 require_once(__DIR__ . '/gd-text.php');
+// Shared GD helpers (metaImageDrawThumbnail: circular speaker photo / icon fallback).
+require_once(__DIR__ . '/render.php');
 
-function renderQuoteImage($theme, $text, $author, $authorSecondary) {
+function renderQuoteImage($theme, $text, $author, $authorSecondary, $speakerId = '', $cfg = null) {
 	// Ensure proper UTF-8 encoding
 	$text = mb_convert_encoding($text, 'UTF-8', 'auto');
 	$author = mb_convert_encoding($author, 'UTF-8', 'auto');
@@ -44,40 +46,60 @@ function renderQuoteImage($theme, $text, $author, $authorSecondary) {
 	}
 	imagefill($image, 0, 0, $bgColor);
 	
-	// Load logo
-	$logoPath = __DIR__ . '/optv-mark.png';
+	// Bottom row: the speaker thumbnail (far left) and the OPTV mark (far right)
+	// sit vertically centred on the same line as the author text.
+	$rowCenterY = 495;
+
+	// Load the compact OPTV mark (denser dome variant) — the white variant on the
+	// dark theme, the default (dark) mark on the light theme.
+	if ($theme === 'd') {
+		$logoPath = ($cfg['logo']['compactWhitePath'] ?? null) ?: (__DIR__ . '/../../content/client/images/optv-mark-compact-white.png');
+	} else {
+		$logoPath = ($cfg['logo']['compactPath'] ?? null) ?: (__DIR__ . '/../../content/client/images/optv-mark-compact.png');
+	}
 	if (!file_exists($logoPath)) {
-		return false;
+		$logoPath = __DIR__ . '/optv-mark.png';
 	}
 	$logo = imagecreatefrompng($logoPath);
 	if (!$logo) {
 		return false;
 	}
-	
+
 	// Enable alpha channel for logo
 	imagealphablending($logo, true);
 	imagesavealpha($logo, true);
-	
-	// Get logo dimensions and resize to 20% of original size
+
+	// Resize the mark, keeping the compact mark's aspect ratio.
 	$logoWidth = imagesx($logo);
 	$logoHeight = imagesy($logo);
-	$logoScale = 0.2;
-	$newLogoWidth = $logoWidth * $logoScale;
-	$newLogoHeight = $logoHeight * $logoScale;
-	
+	$newLogoWidth = 130;
+	$newLogoHeight = (int) round($newLogoWidth * $logoHeight / $logoWidth);
+
 	// Create resized logo
 	$logoResized = imagecreatetruecolor($newLogoWidth, $newLogoHeight);
 	imagealphablending($logoResized, false);
 	imagesavealpha($logoResized, true);
 	imagecopyresampled($logoResized, $logo, 0, 0, 0, 0, $newLogoWidth, $newLogoHeight, $logoWidth, $logoHeight);
-	
-	// Place logo in bottom right corner with padding
-	$logoX = $width - $newLogoWidth - 30;
-	$logoY = $height - $newLogoHeight;
+
+	// Place the mark bottom-right with generous right/bottom padding, centred on the row.
+	$logoX = $width - $newLogoWidth - 60;
+	$logoY = (int) round($rowCenterY - $newLogoHeight / 2);
 	imagecopy($image, $logoResized, $logoX, $logoY, 0, 0, $newLogoWidth, $newLogoHeight);
 	imagedestroy($logo);
 	imagedestroy($logoResized);
-	
+
+	// Speaker thumbnail (cached photo, else the person icon) at the far left,
+	// centred on the same row as the mark. The author text is shifted right to
+	// clear it; without config we fall back to the old full-width text column.
+	$textX = 60;
+	if ($cfg !== null && function_exists('metaImageDrawThumbnail')) {
+		$thumbD = 100;
+		$thumbX = 60;
+		$thumbY = (int) round($rowCenterY - $thumbD / 2);
+		metaImageDrawThumbnail($image, 'person', (string) $speakerId, $thumbX, $thumbY, $thumbD, $cfg);
+		$textX = $thumbX + $thumbD + 30;
+	}
+
 	// Load font
 	$fontPath = __DIR__ . '/OpenSans-Regular.ttf';
 	if (!file_exists($fontPath)) {
@@ -103,7 +125,7 @@ function renderQuoteImage($theme, $text, $author, $authorSecondary) {
 	$authorBox->setFontColor($textColor);
 	$authorBox->setFontSize(34);
 	$authorBox->setLineHeight($lineHeight);
-	$authorBox->setBox(60, ($height - 180), ($width - 300), 80);
+	$authorBox->setBox($textX, ($height - 180), ($width - $textX - 250), 80);
 	$authorBox->setTextAlign('left', 'bottom');
 	$authorBox->draw($author);
 	
@@ -112,7 +134,7 @@ function renderQuoteImage($theme, $text, $author, $authorSecondary) {
 	$authorSecondaryBox->setFontColor($textColor);
 	$authorSecondaryBox->setFontSize(34);
 	$authorSecondaryBox->setLineHeight($lineHeight);
-	$authorSecondaryBox->setBox(60, ($height - 120), ($width - 300), 80);
+	$authorSecondaryBox->setBox($textX, ($height - 120), ($width - $textX - 250), 80);
 	$authorSecondaryBox->setTextAlign('left', 'center');
 	$authorSecondaryBox->draw($authorSecondary);
 	

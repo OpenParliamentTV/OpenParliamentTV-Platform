@@ -44,6 +44,10 @@ return [
 
     'logo' => [
         'path' => __DIR__ . '/optv-mark.png',
+        // Compact mark (denser dome variant) — used by the quote card's bottom row.
+        // The white variant is used on the dark quote theme.
+        'compactPath'      => __DIR__ . '/../../content/client/images/optv-mark-compact.png',
+        'compactWhitePath' => __DIR__ . '/../../content/client/images/optv-mark-compact-white.png',
     ],
 
     // FrameTrail icon glyph codepoints (hex), mirroring the icon-type-* CSS
