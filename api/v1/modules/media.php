@@ -912,8 +912,28 @@ function processMediaItem($mediaData, $agendaItemID, $sessionID, $dateStart, $da
 }
 
 /**
+ * Normalize stray formatting whitespace in a speech sentence.
+ *
+ * Source proceedings (e.g. the Bundestag's pretty-printed XML) can carry a
+ * newline or tab plus indentation embedded mid-sentence (e.g.
+ * "wir\n            auf", "mehrjährigen\t Bundesinvestitionsfonds"). This
+ * collapses any whitespace run that contains a newline/CR/tab to a single
+ * space, keeping every persisted copy (DB Text.TextBody, and thus the search
+ * index and every downstream consumer: transcript, meta-image, WebVTT, feeds)
+ * clean. Benign runs of plain spaces are left untouched (not the reported
+ * defect, and they render fine). Safe for entities: NER annotations are keyed
+ * by wid + time, not by character offsets into the text.
+ *
+ * @param string $text Raw sentence text
+ * @return string Whitespace-normalized text
+ */
+function normalizeSpeechWhitespace($text) {
+    return preg_replace('/[ \t]*[\r\n\t]+[ \t]*/', ' ', (string) $text);
+}
+
+/**
  * Process text content for a media item
- * 
+ *
  * @param array $textContent Text content data
  * @param string $mediaID Media ID
  * @param array $sentence Sentence data
@@ -959,7 +979,15 @@ function processTextContent($textContent, $mediaID, $parliament, $dbp, $config, 
         
         foreach ($textBodyItem['sentences'] as $sentenceKey => $sentence) {
             $entities = [];
-            
+
+            // Normalize source pretty-print artifacts (newlines + indentation
+            // runs) in the sentence text, and write it back so both the stored
+            // sentences[] array and the rebuilt paragraph HTML below are clean.
+            if (is_array($sentence) && isset($sentence['text'])) {
+                $sentence['text'] = normalizeSpeechWhitespace($sentence['text']);
+                $textContent["textBody"][$textBodyIndex]["sentences"][$sentenceKey]["text"] = $sentence['text'];
+            }
+
             // Process entities if they exist
             if (is_array($sentence["entities"]) && count($sentence["entities"]) > 0) {
                 foreach ($sentence["entities"] as $entity) {
