@@ -23,9 +23,11 @@ function gitSyncLog($type, $msg) {
     file_put_contents(__DIR__."/cronUpdater.log", date("Y-m-d H:i:s")." - ".$type.": [git-sync] ".$msg."\n", FILE_APPEND);
 }
 
-function runGitSyncCommand($gitBin, $command) {
-    $output = shell_exec($gitBin . ' ' . $command . ' 2>&1');
-    return trim((string) $output);
+function runGitSyncCommand($gitBin, $command, &$exitCode = null) {
+    $output = [];
+    $exitCode = 0;
+    exec($gitBin . ' ' . $command . ' 2>&1', $output, $exitCode);
+    return trim(implode("\n", $output));
 }
 
 
@@ -97,18 +99,24 @@ function updateFilesFromGit($parliament = "DE") {
         throw new Exception('Git repository cloned but processed/ directory is missing for parliament ' . $parliament);
     }
 
-    $checkoutOutput = runGitSyncCommand($gitBin, '-C ' . escapeshellarg($realpath) . ' checkout -f HEAD');
+    $checkoutOutput = runGitSyncCommand($gitBin, '-C ' . escapeshellarg($realpath) . ' checkout -f HEAD', $checkoutExit);
     if ($checkoutOutput !== '') {
         gitSyncLog('info', 'checkout output: ' . $checkoutOutput);
+    }
+    if ($checkoutExit !== 0) {
+        throw new Exception('Git checkout failed for parliament ' . $parliament . ' (exit ' . $checkoutExit . '): ' . ($checkoutOutput !== '' ? $checkoutOutput : 'no output'));
     }
 
     //get all current files
     $currentFiles = getFilesWithDates($realpath."/processed/");
 
     //get all changes from git
-    $pullOutput = runGitSyncCommand($gitBin, '-C ' . escapeshellarg($realpath) . ' pull');
+    $pullOutput = runGitSyncCommand($gitBin, '-C ' . escapeshellarg($realpath) . ' pull', $pullExit);
     if ($pullOutput !== '') {
         gitSyncLog('info', 'pull output: ' . $pullOutput);
+    }
+    if ($pullExit !== 0) {
+        throw new Exception('Git pull failed for parliament ' . $parliament . ' (exit ' . $pullExit . '): ' . ($pullOutput !== '' ? $pullOutput : 'no output'));
     }
 
     //get all current files again
