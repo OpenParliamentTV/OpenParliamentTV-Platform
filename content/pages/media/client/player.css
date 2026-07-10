@@ -700,41 +700,13 @@ body.darkmode .layoutArea[data-area="areaBottom"][data-size="small"] .collection
 	background: var(--secondary-bg-color);
 }
 
-.resourceDetail .resourceOptions {
-	z-index: 11;
-	background: transparent;
-	bottom: auto;
-	top: 3px;
-	width: auto;
-	left: auto;
-	right: 6px;
-	padding: 0;
-	opacity: 1;
-	overflow: hidden;
-}
-
-.collectionElement.open .resourceDetail .resourceOptions {
-	display: block;
-}
-
-.resourceDetail .resourceOptions .resourceButtons .button {
+.resourceDetail .resourceButtons .button {
 	border-color: var(--border-color);
-	width: 27px;
-	height: 27px;
+	display: none !important;
 }
 
-.resourceDetail .resourceOptions .button span {
-	font-size: 23px;
-	line-height: 14px;
-	position: relative;
-	left: -7px;
-	top: -1px;
-}
-
-.resourceDetail .resourceOptions .button:focus {
-	color: var(--primary-bg-color);
-	outline: none;
-	box-shadow: none;
+.collectionElement.open .resourceDetail .resourceButtons .button {
+	display: flex !important;
 }
 
 .playerContainer .overlayTimeline {
