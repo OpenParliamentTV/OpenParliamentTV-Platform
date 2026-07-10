@@ -136,6 +136,32 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
 	border-bottom: none;
 }
 
+.ftTooltip[data-variant="resourceTitle"] {
+    background-color: var(--secondary-bg-color);
+    color: var(--primary-fg-color);
+    text-shadow: none;
+    min-width: 120px;
+    height: 22px;
+    line-height: 20px;
+    text-align: center;
+    padding: 1px 4px 0 4px;
+    box-sizing: border-box;
+}
+/* recolor the arrow to match, for whichever placement the tooltip uses */
+.ftTooltip[data-variant="resourceTitle"][data-placement="top"]::after,
+.ftTooltip[data-variant="resourceTitle"][data-placement^="above"]::after {
+    border-top-color: var(--secondary-bg-color);
+}
+.ftTooltip[data-variant="resourceTitle"][data-placement^="below"]::after {
+    border-bottom-color: var(--secondary-bg-color);
+}
+.ftTooltip[data-variant="resourceTitle"][data-placement="right"]::after {
+    border-right-color: var(--secondary-bg-color);
+}
+.ftTooltip[data-variant="resourceTitle"][data-placement="left"]::after {
+    border-left-color: var(--secondary-bg-color);
+}
+
 .playerTitle {
 	background: var(--primary-bg-color);
 	height: auto;
@@ -629,10 +655,6 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 	min-height: 88px;
 }
 
-.layoutArea[data-area="areaBottom"][data-size="small"] .contentViewContainer {
-	overflow: visible;
-}
-
 .layoutArea[data-area="areaBottom"][data-size="small"] .collectionElement {
 	opacity: 1;
 	background: transparent;
@@ -671,8 +693,11 @@ body.darkmode .layoutArea[data-area="areaBottom"][data-size="small"] .collection
 	font-size: 100%;
 }
 
-.layoutArea[data-area="areaBottom"][data-size="small"] .resourceThumb:hover .resourceTitle {
-	display: block !important;
+.layoutAreaDetails[data-area="areaBottom"] .collectionElement, 
+.layoutAreaDetails[data-area="areaBottom"] .collectionElement .detailsHeader, 
+.layoutAreaDetails[data-area="areaTop"] .collectionElement, 
+.layoutAreaDetails[data-area="areaTop"] .collectionElement .detailsHeader {
+	background: var(--secondary-bg-color);
 }
 
 .resourceDetail .resourceOptions {
