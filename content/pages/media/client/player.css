@@ -434,15 +434,6 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
 	min-width: 50%;
 }
 
-/* Small PLAYER widths — keyed to @container ft-root (the .frametrail-body
-   container's inline-size), matching FrameTrail v1.2.0's own breakpoint instead of
-   @media (viewport). v1.2.0 sets .areaLeftContainer{flex:0 0 100%!important} here (a
-   width rule for its flex-wrap layout); under our flex-direction:column that became a
-   HEIGHT rule, so the proceedings text took the full height and hid the video. We
-   override it with our own !important and stack video + transcript 50/50. The
-   video + transcript keep the full player height (playerContainer is pinned
-   below), and the bottom annotation/resource area flows underneath them so the
-   page scrolls down to reach it. */
 @container ft-root (max-width: 768px) {
 	.hypervideoContainer {
 		flex-direction: column;
@@ -685,8 +676,6 @@ body.darkmode .layoutArea .contentViewContainer .contentViewContents .customhtml
 	content: '\e8b4';
 }
 
-/* v1.2.0 sets the thumb as style="--thumb-bg:url(...); background-image:var(--thumb-bg)"
-   — no longer *starts* with background-image, so match "contains" instead. */
 .resourceThumb[style*="background-image"] .resourceOverlay {
 	display: none;
 }
@@ -786,9 +775,6 @@ body:not(.darkmode) .playerContainer .playerProgress {
 	background: var(--secondary-fg-color) !important;
 }
 
-/* Scope to the open state (.slide-pos-bottom/-top) to match FrameTrail v1.2.0's
-   own .viewVideo.slide-pos-* .area*Details rule (specificity 0,3,0) — a plain
-   .areaBottomDetails (0,1,0) loses to it and the panel balloons to clamp(...,450px). */
 .viewVideo.slide-pos-bottom .areaBottomDetails,
 .viewVideo.slide-pos-top .areaTopDetails {
     flex: 0 1 190px;
