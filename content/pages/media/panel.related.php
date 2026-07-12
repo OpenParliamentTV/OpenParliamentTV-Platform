@@ -240,6 +240,20 @@ if ($config["display"]["ner"]) {
             </a>
         </div>
         <div class="input-group mt-2">
+            <span class="input-group-text me-0" style="width: 7rem;">Akoma Ntoso</span>
+            <input id="aknLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= hAttr($speech["links"]["self"]) ?>?format=akomantoso">
+            <a href="<?= hAttr($speech["links"]["self"]) ?>?format=akomantoso" target="_blank" class="btn btn-sm input-group-text">
+                <span class="icon-right-open-big me-0"></span>
+            </a>
+        </div>
+        <div class="input-group mt-2">
+            <span class="input-group-text me-0" style="width: 7rem;">ParlaMint</span>
+            <input id="parlamintLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= hAttr($speech["links"]["self"]) ?>?format=parlamint">
+            <a href="<?= hAttr($speech["links"]["self"]) ?>?format=parlamint" target="_blank" class="btn btn-sm input-group-text">
+                <span class="icon-right-open-big me-0"></span>
+            </a>
+        </div>
+        <div class="input-group mt-2">
             <span class="input-group-text me-0" style="width: 7rem;">WebVTT</span>
             <input id="vttLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= hAttr($speech["links"]["self"]) ?>/transcript.vtt">
             <a href="<?= hAttr($speech["links"]["self"]) ?>/transcript.vtt" target="_blank" class="btn btn-sm input-group-text">

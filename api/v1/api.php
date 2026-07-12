@@ -43,6 +43,14 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
         // null => fall through to normal routing (produces proper error responses)
     }
 
+    // Content negotiation: Akoma Ntoso / TEI-ParlaMint XML exports from the
+    // same media/session URIs (?format=akomantoso|parlamint or Accept header).
+    // Serves the XML directly and exits; falls through on unavailable items.
+    require_once (__DIR__."/modules/export.php");
+    if (exportRequestedFormat($api_request) !== null) {
+        handleExportRequest($api_request);
+    }
+
 
     switch ($api_request["action"]) {
 

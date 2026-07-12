@@ -770,6 +770,17 @@ paths:
         **Content negotiation:** append `?format=iiif` (or send an `Accept` header of
         `application/ld+json`) to receive a IIIF Presentation API 3.0 **Manifest**
         (`application/ld+json`) instead of the default JSON:API response.
+
+        Two parliamentary exchange formats are served from the same URI:
+        `?format=akomantoso` (or `Accept: application/akn+xml`) returns an
+        **Akoma Ntoso 1.0** (OASIS LegalDocML) debate document; `?format=parlamint`
+        (or `Accept: application/tei+xml`) returns a **TEI** document following the
+        ParlaMint conventions (Parla-CLARIN), including sentence-level audio/video
+        alignment via a TEI timeline. For both XML formats, optional `type` and
+        `lang` parameters select among multiple transcripts (same semantics as the
+        WebVTT endpoint). The specific `application/akn+xml` / `application/tei+xml`
+        content types are only sent when explicitly requested via `Accept`; other
+        clients (e.g. browsers) receive `application/xml` so the document renders inline.
       parameters:
         - name: id
           in: path
@@ -779,14 +790,29 @@ paths:
             type: string
         - name: format
           in: query
-          description: Set to `iiif` to return a IIIF Presentation 3.0 Manifest instead of the default response
+          description: >-
+            Alternative response format: `iiif` (IIIF Presentation 3.0 Manifest),
+            `akomantoso` (Akoma Ntoso 1.0 XML, alias `akn`) or `parlamint`
+            (TEI/ParlaMint XML, alias `tei`)
           required: false
           schema:
             type: string
-            enum: [iiif]
+            enum: [iiif, akomantoso, parlamint]
+        - name: type
+          in: query
+          description: Transcript type for the XML export formats (e.g. `proceedings`, `generated`)
+          required: false
+          schema:
+            type: string
+        - name: lang
+          in: query
+          description: Transcript language for the XML export formats (BCP 47, e.g. `de`)
+          required: false
+          schema:
+            type: string
       responses:
         '200':
-          description: Successful response (JSON:API, or IIIF Manifest when `format=iiif`)
+          description: Successful response (JSON:API, IIIF Manifest, Akoma Ntoso or TEI depending on `format`)
           content:
             application/json:
               schema:
@@ -816,6 +842,14 @@ paths:
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/IIIFResource'
+            application/akn+xml:
+              schema:
+                type: string
+                description: Akoma Ntoso 1.0 debate document (XML)
+            application/tei+xml:
+              schema:
+                type: string
+                description: TEI document following the ParlaMint conventions (XML)
         '404':
           description: Media not found
           content:
@@ -1075,6 +1109,16 @@ paths:
 
         **Content negotiation:** append `?format=iiif` to receive a IIIF Presentation 3.0
         **Manifest** of the session (one Canvas per public speech, grouped into Ranges by agenda item).
+
+        Two parliamentary exchange formats are served from the same URI, covering all
+        public speeches of the sitting grouped by agenda item: `?format=akomantoso`
+        (or `Accept: application/akn+xml`) returns an **Akoma Ntoso 1.0** (OASIS
+        LegalDocML) debate record; `?format=parlamint` (or `Accept: application/tei+xml`)
+        returns a **TEI** document following the ParlaMint conventions (Parla-CLARIN),
+        including sentence-level audio/video alignment via TEI timelines. The specific
+        `application/akn+xml` / `application/tei+xml` content types are only sent when
+        explicitly requested via `Accept`; other clients (e.g. browsers) receive
+        `application/xml` so the document renders inline.
       parameters:
         - name: id
           in: path
@@ -1084,14 +1128,17 @@ paths:
             type: string
         - name: format
           in: query
-          description: Set to `iiif` to return a IIIF Presentation 3.0 Manifest of the session
+          description: >-
+            Alternative response format: `iiif` (IIIF Presentation 3.0 Manifest),
+            `akomantoso` (Akoma Ntoso 1.0 XML, alias `akn`) or `parlamint`
+            (TEI/ParlaMint XML, alias `tei`)
           required: false
           schema:
             type: string
-            enum: [iiif]
+            enum: [iiif, akomantoso, parlamint]
       responses:
         '200':
-          description: Successful response (JSON:API, or IIIF Manifest when `format=iiif`)
+          description: Successful response (JSON:API, IIIF Manifest, Akoma Ntoso or TEI depending on `format`)
           content:
             application/json:
               schema:
@@ -1120,6 +1167,14 @@ paths:
             application/ld+json:
               schema:
                 $ref: '#/components/schemas/IIIFResource'
+            application/akn+xml:
+              schema:
+                type: string
+                description: Akoma Ntoso 1.0 debate record of the sitting (XML)
+            application/tei+xml:
+              schema:
+                type: string
+                description: TEI document of the sitting following the ParlaMint conventions (XML)
         '404':
           description: Session not found
           content:
