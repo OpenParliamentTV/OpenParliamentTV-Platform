@@ -64,7 +64,7 @@ if ($page != 'media') {
 <?php
 } else {
 ?>
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@frametrail/frametrail@v1.2.5/frametrail.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@frametrail/frametrail@v1.2.6/frametrail.min.css">
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.css?v=<?= $config["version"] ?>" media="all" />
