@@ -2100,7 +2100,7 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
 table .rounded-circle {
     position: relative;
     overflow: hidden;
-    padding-bottom: 100%;
+    aspect-ratio: 1 / 1;
     background-color: #f9fafb;
     border: 1px solid var(--border-color);
 }

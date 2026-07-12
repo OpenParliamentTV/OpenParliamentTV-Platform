@@ -417,10 +417,6 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
 	border-bottom: none;
 }
 
-.areaLeftContainer {
-	border-right: 1px solid var(--border-color);
-}
-
 .areaLeftContainer .layoutAreaToggleCloseButton {
 	display: none;
 }
@@ -485,9 +481,13 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
 	/* Shrink the entity detail thumbnail (entity.preview.php sets 70x70 inline)
 	   to 50x50 in the annotation detail panel on small screens. */
 	.detailsThumbnailContainer {
-		width: 50px !important;
-		height: 50px !important;
-		flex-basis: 50px !important;
+		width: 52px !important;
+		height: 52px !important;
+		flex-basis: 52px !important;
+	}
+	/* fallback type icons are set to 28px inline alongside the 70x70 box */
+	.detailsThumbnailContainer .rounded-circle > [class^="icon-"] {
+		font-size: 18px !important;
 	}
 }
 @media (min-width:992px) {
