@@ -139,6 +139,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
 .ftTooltip[data-variant="resourceTitle"] {
     background-color: var(--secondary-bg-color);
     color: var(--primary-fg-color);
+	border: 1px solid var(--border-color);
     text-shadow: none;
     min-width: 120px;
     height: 22px;
@@ -150,16 +151,16 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
 /* recolor the arrow to match, for whichever placement the tooltip uses */
 .ftTooltip[data-variant="resourceTitle"][data-placement="top"]::after,
 .ftTooltip[data-variant="resourceTitle"][data-placement^="above"]::after {
-    border-top-color: var(--secondary-bg-color);
+    border-top-color: transparent;
 }
 .ftTooltip[data-variant="resourceTitle"][data-placement^="below"]::after {
-    border-bottom-color: var(--secondary-bg-color);
+    border-bottom-color: transparent;
 }
 .ftTooltip[data-variant="resourceTitle"][data-placement="right"]::after {
-    border-right-color: var(--secondary-bg-color);
+    border-right-color: transparent;
 }
 .ftTooltip[data-variant="resourceTitle"][data-placement="left"]::after {
-    border-left-color: var(--secondary-bg-color);
+    border-left-color: transparent;
 }
 
 .playerTitle {
