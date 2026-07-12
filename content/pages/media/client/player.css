@@ -74,9 +74,14 @@ main#content:is(:fullscreen, :-webkit-full-screen) .frametrail-body {
 }
 
 @media (max-width: 768px) {
+	/* Small screens: let the player grow taller than the viewport so the
+	   annotation/resource area can sit below the video + transcript and the page
+	   scrolls down to reach it (see the @container ft-root breakout below).
+	   min-height keeps the old fixed size as the floor when nothing is below. */
 	.frametrail-body {
-		height: calc(100vh - 245px);
-		height: calc(var(--vh, 1vh) * 100 - 245px);
+		height: auto;
+		min-height: calc(100vh - 245px);
+		min-height: calc(var(--vh, 1vh) * 100 - 245px);
 	}
 }
 
@@ -434,8 +439,10 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
    @media (viewport). v1.2.0 sets .areaLeftContainer{flex:0 0 100%!important} here (a
    width rule for its flex-wrap layout); under our flex-direction:column that became a
    HEIGHT rule, so the proceedings text took the full height and hid the video. We
-   override it with our own !important and stack video + transcript 50/50; the bottom
-   annotation/resource area is hidden at this size. */
+   override it with our own !important and stack video + transcript 50/50. The
+   video + transcript keep the full player height (playerContainer is pinned
+   below), and the bottom annotation/resource area flows underneath them so the
+   page scrolls down to reach it. */
 @container ft-root (max-width: 768px) {
 	.hypervideoContainer {
 		flex-direction: column;
@@ -453,10 +460,43 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
 		min-height: 50%;
 		height: 50%;
 	}
-	/* Annotations / resources (bottom area) are not shown at small sizes */
-	.areaBottomContainer,
-	.viewVideo.slide-pos-bottom .areaBottomDetails {
-		display: none !important;
+	/* Un-clip FrameTrail's fixed-height "slide" model so the bottom area can sit
+	   below the video + transcript and the player grows the page downwards
+	   instead of sliding the video off the top. Scoped to :not(:fullscreen) so
+	   fullscreen keeps FrameTrail's own fill + slide behaviour. */
+	main#content:not(:fullscreen) .mainContainer {
+		/* override FrameTrail's container-type:size (size containment would
+		   collapse the height) so it can grow with content */
+		container-type: inline-size;
+		height: auto;
+	}
+	main#content:not(:fullscreen) .viewVideo {
+		position: relative;
+		height: auto;
+		overflow: visible;
+	}
+	main#content:not(:fullscreen) .slideArea {
+		/* neutralise the inline margin-top / min-height that adjustLayout() keeps
+		   re-applying to slide the video — !important wins over inline styles */
+		margin-top: 0 !important;
+		min-height: 0 !important;
+		height: auto;
+		overflow: visible;
+	}
+	main#content:not(:fullscreen) .playerContainer {
+		/* pin the video + transcript + controls block to the old player height so
+		   they keep their current size; the bottom area flows below it */
+		flex: 0 0 auto;
+		height: calc(100vh - 255px);
+		height: calc(var(--vh, 1vh) * 100 - 255px);
+		margin-top: 0 !important;
+	}
+	/* Shrink the entity detail thumbnail (entity.preview.php sets 70x70 inline)
+	   to 50x50 in the annotation detail panel on small screens. */
+	.detailsThumbnailContainer {
+		width: 50px !important;
+		height: 50px !important;
+		flex-basis: 50px !important;
 	}
 }
 @media (min-width:992px) {
