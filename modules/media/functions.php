@@ -163,7 +163,7 @@ function getFrametrailAnnotations($annotations, $relationships, $mediaSource) {
                 $tmpItem["body"]["value"]                   = "";
                 $tmpItem["body"]["frametrail:name"]         = $relationship["attributes"]["label"];
                 $tmpItem["body"]["frametrail:thumb"]        = $relationship["attributes"]["thumbnailURI"];
-                $tmpItem["body"]["frametrail:resourceId"]   = null;
+                $tmpItem["body"]["frametrail:resourceId"]   = $annotation["id"];
                 $tmpItem["body"]["frametrail:attributes"]["text"] = htmlentities($annotationHTML);
                 array_push($return, $tmpItem);
                 break;
