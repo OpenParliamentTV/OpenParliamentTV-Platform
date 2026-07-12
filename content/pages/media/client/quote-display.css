@@ -31,7 +31,7 @@
     filter:drop-shadow(0 1px 3px rgba(0,0,0,.35));
     -webkit-animation: quote-popover-intro 0.3s;
     animation: quote-popover-intro 0.3s;
-    z-index: 10001;
+    z-index: 1001;
 }
 .quote-selection-popover::before {
     content: "";
