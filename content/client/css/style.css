@@ -910,6 +910,11 @@ body.darkmode .modal-content .btn-close {
     opacity: 1;
 }
 
+.alert {
+    --bs-alert-padding-x: 0.7rem;
+    --bs-alert-padding-y: 0.5rem;
+}
+
 .text-muted {
     color: var(--primary-fg-color) !important;
     text-shadow: 1px 1px 1px var(--primary-bg-color);
