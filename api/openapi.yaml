@@ -239,11 +239,16 @@ paths:
             minLength: 1
         - name: procedureID
           in: query
-          description: Procedure identifier
+          description: Procedure ID or array of IDs; matches the procedure references of official documents linked to the speech (documents.data.attributes.additionalInformation.procedureIDs)
           required: false
           schema:
-            type: string
-            minLength: 1
+            oneOf:
+              - type: string
+                minLength: 1
+              - type: array
+                items:
+                  type: string
+                  minLength: 1
         - name: agendaItemID
           in: query
           description: Agenda item ID (matches agendaItem.data.id)
@@ -656,6 +661,18 @@ paths:
           schema:
             type: string
             pattern: '^(Q|P)[0-9]+$'
+        - name: procedureID
+          in: query
+          description: Procedure ID or array of IDs; matches documents whose additionalInformation.procedureIDs contain the given procedure
+          required: false
+          schema:
+            oneOf:
+              - type: string
+                minLength: 1
+              - type: array
+                items:
+                  type: string
+                  minLength: 1
       responses:
         '200':
           description: Successful response

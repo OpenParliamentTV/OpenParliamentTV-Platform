@@ -139,6 +139,16 @@ function documentSearch($parameter, $db = false) {
         }
     }
 
+    // Validate procedureID parameter
+    if (isset($filteredParameters["procedureID"])) {
+        $tmpProcedureIDs = is_array($filteredParameters["procedureID"]) ? $filteredParameters["procedureID"] : [$filteredParameters["procedureID"]];
+        foreach ($tmpProcedureIDs as $tmpProcedureID) {
+            if (!is_string($tmpProcedureID) || mb_strlen($tmpProcedureID, "UTF-8") < 1) {
+                return createApiErrorInvalidParameter("procedureID");
+            }
+        }
+    }
+
     try {
         $query = "SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Document"];
         $conditions = [];
@@ -167,6 +177,17 @@ function documentSearch($parameter, $db = false) {
 
             if ($k == "wikidataID") {
                 $conditions[] = $db->parse("DocumentWikidataID = ?s", $para);
+            }
+
+            if ($k == "procedureID") {
+                if (is_array($para)) {
+                    $tmpStringArray = array_map(function($tmppara) use ($db) {
+                        return $db->parse("JSON_SEARCH(DocumentAdditionalInformation, 'one', ?s, NULL, '$.procedureIDs[*].id') IS NOT NULL", $tmppara);
+                    }, $para);
+                    $conditions[] = "(" . implode(" OR ", $tmpStringArray) . ")";
+                } else {
+                    $conditions[] = $db->parse("JSON_SEARCH(DocumentAdditionalInformation, 'one', ?s, NULL, '$.procedureIDs[*].id') IS NOT NULL", $para);
+                }
             }
         }
 

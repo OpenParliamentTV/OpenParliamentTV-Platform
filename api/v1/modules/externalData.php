@@ -265,6 +265,147 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
 
 }
 
+/**
+ * Bulk-enrich official documents via the ADS batch lookup (documentNumbers).
+ *
+ * Sends one ADS request for up to 100 documents (a single batched source
+ * lookup on the ADS side) instead of one request per document. Rows are
+ * matched back by the parliament-native document number derived from
+ * DocumentLabel; the DB update is keyed by DocumentID so a rewritten
+ * DocumentSourceURI cannot invalidate its own WHERE clause.
+ *
+ * @param array $documentRows [['DocumentID'=>..,'DocumentLabel'=>..,'DocumentSourceURI'=>..], ...] (max 100)
+ * @return array API response; data = ['updatedIDs'=>[], 'notFoundNumbers'=>[], 'failed'=>[]]
+ */
+function updateOfficialDocumentsBatchFromService(array $documentRows, $serviceAPI, $key, $parliament = null, $db = false) {
+
+    global $config;
+
+    if (empty($documentRows)) {
+        return createApiSuccessResponse(["updatedIDs" => [], "notFoundNumbers" => [], "failed" => []], ["message" => "No documents to update."]);
+    }
+
+    if (empty($db)) {
+
+        try {
+
+            $db = new SafeMySQL(array(
+                'host'    => $config["platform"]["sql"]["access"]["host"],
+                'user'    => $config["platform"]["sql"]["access"]["user"],
+                'pass'    => $config["platform"]["sql"]["access"]["passwd"],
+                'db'    => $config["platform"]["sql"]["db"]
+            ));
+
+        } catch (exception $e) {
+
+            return createApiErrorDatabaseConnection('platform');
+
+        }
+
+    }
+
+    $table = $config["platform"]["sql"]["tbl"]["Document"];
+    $parliament = _externalData_resolve_parliament($parliament);
+
+    $failed = [];
+    $numberToRow = [];
+    foreach ($documentRows as $row) {
+        if (empty($row["DocumentID"]) || empty($row["DocumentLabel"]) || !preg_match('#(\d+/\d+)$#', $row["DocumentLabel"], $m)) {
+            $failed[] = ["DocumentID" => $row["DocumentID"] ?? null, "error" => "Could not derive document number from label: " . ($row["DocumentLabel"] ?? "")];
+            continue;
+        }
+        $numberToRow[$m[1]] = $row;
+    }
+
+    if (empty($numberToRow)) {
+        return createApiSuccessResponse(["updatedIDs" => [], "notFoundNumbers" => [], "failed" => $failed], ["message" => "No parseable document numbers in batch."]);
+    }
+
+    try {
+
+        $url = _externalData_build_ads_url($serviceAPI, [
+            'key' => $key,
+            'type' => 'officialDocument',
+            'documentNumbers' => implode(",", array_keys($numberToRow)),
+            'parliament' => $parliament,
+        ]);
+        // Batch responses can take a while when the ADS resolves truncated
+        // procedure lists via per-document follow-up requests.
+        $context = stream_context_create(["http" => ["timeout" => 180]]);
+        $apiItem = json_decode(@file_get_contents($url, false, $context), true);
+
+    } catch (Exception $e) {
+
+        return createApiError("Could not get batch from AdditionalDataServiceAPI: ".$e->getMessage(), "EXTERNAL_API_ERROR");
+
+    }
+
+    if (empty($apiItem) || ($apiItem["meta"]["requestStatus"] ?? "") != "success" || !isset($apiItem["data"]) || !is_array($apiItem["data"])) {
+        $errorDetail = !empty($apiItem["errors"]) ? json_encode($apiItem["errors"]) : "no/invalid response";
+        return createApiError("Could not get batch from AdditionalDataServiceAPI: ".$errorDetail, "EXTERNAL_API_ERROR");
+    }
+
+    // Group returned items by document number: documentNumber is the exact
+    // value the batch was queried by; the label suffix parse is a fallback.
+    $itemsByNumber = [];
+    foreach ($apiItem["data"] as $item) {
+        $number = $item["documentNumber"] ?? null;
+        if ($number === null && !empty($item["label"]) && preg_match('#(\d+/\d+)$#', $item["label"], $m)) {
+            $number = $m[1];
+        }
+        if ($number === null) {
+            continue;
+        }
+        $itemsByNumber[$number][] = $item;
+    }
+
+    $updatedIDs = [];
+    $notFoundNumbers = [];
+
+    foreach ($numberToRow as $number => $row) {
+
+        if (empty($itemsByNumber[$number])) {
+            $notFoundNumbers[] = $number;
+            continue;
+        }
+
+        // Several source documents can share a number (e.g. corrected
+        // reprints): prefer the item whose sourceURI matches the stored one.
+        $item = $itemsByNumber[$number][0];
+        if (count($itemsByNumber[$number]) > 1) {
+            foreach ($itemsByNumber[$number] as $candidate) {
+                if (!empty($candidate["sourceURI"]) && $candidate["sourceURI"] === $row["DocumentSourceURI"]) {
+                    $item = $candidate;
+                    break;
+                }
+            }
+            error_log("updateOfficialDocumentsBatchFromService: multiple source documents for number ".$number."; using originID ".($item["additionalInformation"]["originID"] ?? "?"));
+        }
+
+        $updateArray = array(
+            "DocumentLabel"=>$item["label"],
+            "DocumentLabelAlternative"=>json_encode(($item["labelAlternative"] ?: array()), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+            "DocumentAbstract"=>"",
+            "DocumentSourceURI"=>(isset($item["sourceURI"]) ? $item["sourceURI"] : null),
+            "DocumentAdditionalInformation"=>json_encode($item["additionalInformation"], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+        );
+
+        try {
+            $db->query("UPDATE ?n SET ?u WHERE DocumentID = ?i", $table, $updateArray, $row["DocumentID"]);
+            $updatedIDs[] = (int)$row["DocumentID"];
+        } catch (Exception $e) {
+            $failed[] = ["DocumentID" => $row["DocumentID"], "error" => "Could not update Item in database: ".$e->getMessage()];
+        }
+
+    }
+
+    return createApiSuccessResponse(
+        ["updatedIDs" => $updatedIDs, "notFoundNumbers" => $notFoundNumbers, "failed" => $failed],
+        ["message" => count($updatedIDs)." documents updated, ".count($notFoundNumbers)." not found, ".count($failed)." failed."]
+    );
+
+}
+
 function externalDataGetInfo($api_request) {
     global $config;
 

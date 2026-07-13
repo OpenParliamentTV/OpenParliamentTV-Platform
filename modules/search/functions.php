@@ -561,7 +561,7 @@ function processRequestParameters($request, &$filter, $getAllResults = false) {
                 break;
                 
             case "procedureID":
-                processProcedureIDFilter($requestValue, $request, $filter, $shouldCount);
+                processProcedureIDFilter($requestValue, $filter, $shouldCount);
                 break;
                 
             case "id":
@@ -853,71 +853,49 @@ function createEntityIDNestedQuery($entityID, $resourceType, $context) {
 
 /**
  * Process procedure ID filter
- * 
+ *
  * This function adds a filter for procedure ID based on the request parameters.
- * 
- * @param mixed $requestValue The request value
- * @param array $request The full request array
+ *
+ * @param mixed $requestValue The request value (string or array of strings)
  * @param array &$filter The filter array to modify
  * @param int &$shouldCount The count of "should" conditions
  */
-function processProcedureIDFilter($requestValue, $request, &$filter, &$shouldCount) {
-    if (strlen($requestValue) < 1) {
-        return;
-    }
-    
+function processProcedureIDFilter($requestValue, &$filter, &$shouldCount) {
     if (is_array($requestValue)) {
-        foreach ($requestValue as $procedureID) {
-            $filter["should"][] = createProcedureIDNestedQuery(
-                $procedureID, 
-                $request["context"] ?? null
-            );
+        $procedureIDs = array_filter($requestValue, function($procedureID) {
+            return is_string($procedureID) && strlen($procedureID) > 0;
+        });
+        if (empty($procedureIDs)) {
+            return;
+        }
+        foreach ($procedureIDs as $procedureID) {
+            $filter["should"][] = createProcedureIDQuery($procedureID);
         }
         $shouldCount++;
     } else {
-        $filter["must"][] = createProcedureIDNestedQuery(
-            $requestValue, 
-            $request["context"] ?? null
-        );
+        if (strlen($requestValue) < 1) {
+            return;
+        }
+        $filter["must"][] = createProcedureIDQuery($requestValue);
     }
 }
 
 /**
- * Create a nested query for procedure ID
- * 
- * This function creates a nested query for procedure ID based on the context.
- * 
+ * Create a query for procedure ID
+ *
+ * Matches the procedure references of the official documents linked to a
+ * speech. These live in relationships.documents.data (a plain object array,
+ * not nested), populated from the document table at index time.
+ *
  * @param string $procedureID The procedure ID
- * @param string|null $context The context
- * @return array The nested query
+ * @return array The query
  */
-function createProcedureIDNestedQuery($procedureID, $context) {
-    $query = [
-        "nested" => [
-            "path" => "annotations.data",
-            "query" => [
-                "bool" => [
-                    "must" => [
-                        [
-                            "match" => [
-                                "annotations.data.attributes.additionalInformation.procedureIDs" => $procedureID
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+function createProcedureIDQuery($procedureID) {
+    return [
+        "term" => [
+            "relationships.documents.data.attributes.additionalInformation.procedureIDs.id.keyword" => (string)$procedureID
         ]
     ];
-    
-    if (isset($context) && strlen($context) > 2) {
-        $query["nested"]["query"]["bool"]["must"][] = [
-            "match_phrase" => [
-                "annotations.data.attributes.context" => $context
-            ]
-        ];
-    }
-    
-    return $query;
 }
 
 /**

@@ -89,7 +89,8 @@ $config["allowedSearchParams"] = [
         "filterable"
     ],
     "document" => [
-        "label", 
+        "label",
+        "procedureID",
         "type",
         "wikidataID"
     ],

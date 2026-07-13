@@ -20,7 +20,9 @@ ini_set('log_errors', '1');
  * If the lock file is older than $config["time"]["warning"] a mail will be send to $config["cronContactMail"]
  * If the lock file is older than $config["time"]["ignore"] the lock file will be removed. In this case we expect there was a crash
  *
- * TODO: IDs
+ * --ids (optional, officialDocument only): comma-separated DocumentIDs to
+ * (re-)enrich instead of the default missing-info selection. Batch requests
+ * always fetch fresh from the source, so this doubles as a manual refresh.
  */
 
 $config["time"]["warning"] = 30; //minutes
@@ -118,6 +120,210 @@ function _ads_resolve_parliament($requestedParliament = null) {
     }
 
     return 'DE';
+}
+
+/**
+ * Bulk enrichment path for officialDocument.
+ *
+ * Selects only documents that are missing enrichment info (no originID) or
+ * whose stored procedure list is shorter than the known count, fetches them
+ * from the ADS in batches via the documentNumbers lookup (one HTTP request per
+ * 50 documents instead of one per document), and finally re-indexes the media
+ * items referencing the updated documents. Progress reporting uses the same
+ * fields as the generic per-item path, written once per batch.
+ */
+function _ads_process_official_documents($db, $dbp, $parliament, $input, &$overallErrorsEncountered) {
+    global $config;
+
+    $type = "officialDocument";
+    $batchSize = 50;
+    $table = $config["platform"]["sql"]["tbl"]["Document"];
+
+    $typeSpecificErrors = false;
+    $processedItemsCount = 0;
+    $lastSuccessfullyProcessedId = null;
+    $updatedDocumentIDs = [];
+
+    logger("info", "[ADS] Selecting officialDocuments for bulk enrichment" . (!empty($input["ids"]) ? " (explicit ids)" : " (missing enrichment info)"));
+
+    try {
+        if (!empty($input["ids"])) {
+            // Explicit (re-)enrichment of specific documents; the batch lookup
+            // always fetches fresh from the source, so this is the refresh path.
+            $requestedIds = array_filter(array_map('trim', explode(",", $input["ids"])), 'strlen');
+            $rows = $db->getAll(
+                "SELECT DocumentID, DocumentLabel, DocumentSourceURI FROM ?n WHERE DocumentType = 'officialDocument' AND DocumentID IN (?a) ORDER BY DocumentID",
+                $table, $requestedIds
+            );
+        } else {
+            // Missing enrichment info: never enriched (NULL/''/'null'/invalid
+            // JSON/no originID) or an incomplete procedure list from a failed
+            // completeness fetch (procedureIDsCount > stored list length). The
+            // JSON_TYPE guard neutralizes JSON_LENGTH('null') = 1.
+            $rows = $db->getAll(
+                "SELECT DocumentID, DocumentLabel, DocumentSourceURI FROM ?n
+                 WHERE DocumentType = 'officialDocument'
+                   AND (
+                        DocumentAdditionalInformation IS NULL
+                     OR DocumentAdditionalInformation IN ('', 'null')
+                     OR NOT JSON_VALID(DocumentAdditionalInformation)
+                     OR JSON_VALUE(DocumentAdditionalInformation, '$.originID') IS NULL
+                     OR CAST(JSON_VALUE(DocumentAdditionalInformation, '$.procedureIDsCount') AS UNSIGNED)
+                        > COALESCE(IF(JSON_TYPE(JSON_QUERY(DocumentAdditionalInformation, '$.procedureIDs')) = 'ARRAY',
+                                      JSON_LENGTH(DocumentAdditionalInformation, '$.procedureIDs'), 0), 0)
+                   )
+                 ORDER BY DocumentID",
+                $table
+            );
+        }
+    } catch (Exception $e) {
+        $selectErrorMsg = "[ADS] Error selecting documents for type {$type}: " . $e->getMessage();
+        logger("error", $selectErrorMsg);
+
+        $progress = _ads_get_progress_data();
+        $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => $selectErrorMsg];
+        $progress['types'][$type]['statusDetails'] = "Error selecting documents. " . $e->getMessage();
+        $progress['types'][$type]['status'] = 'error';
+        _ads_save_progress_data($progress);
+
+        $overallErrorsEncountered = true;
+        return;
+    }
+
+    $totalItems = count($rows);
+    logger("info", "[ADS] Total items for type {$type}: {$totalItems}");
+
+    $progress = _ads_get_progress_data();
+    $progress['types'][$type]['status'] = 'running';
+    $progress['types'][$type]['totalItems'] = (int)$totalItems;
+    $progress['types'][$type]['processedItems'] = 0;
+    $progress['types'][$type]['startTime'] = date('c');
+    $progress['types'][$type]['endTime'] = null;
+    $progress['types'][$type]['statusDetails'] = "Starting processing. Total items: {$totalItems}";
+    $progress['types'][$type]['errors'] = [];
+    $progress['types'][$type]['lastSuccessfullyProcessedId'] = null;
+    _ads_save_progress_data($progress);
+
+    foreach (array_chunk($rows, $batchSize) as $chunk) {
+
+        $response = null;
+        try {
+            $response = updateOfficialDocumentsBatchFromService($chunk, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $parliament, $db);
+        } catch (Exception $e) {
+            $response = ["errors" => [["info" => $e->getMessage()]]];
+        }
+
+        if (!isset($response["meta"]["requestStatus"]) || $response["meta"]["requestStatus"] !== "success") {
+            $errorDetail = !empty($response["errors"]) ? json_encode($response["errors"]) : "Unknown API error";
+            $chunkErrorMsg = "[ADS] Batch error updating {$type} (documents " . $chunk[0]["DocumentID"] . "-" . $chunk[count($chunk)-1]["DocumentID"] . "): " . $errorDetail;
+            logger("error", $chunkErrorMsg);
+            $typeSpecificErrors = true;
+            $overallErrorsEncountered = true;
+
+            $progress = _ads_get_progress_data();
+            $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => "Batch failed for " . count($chunk) . " documents: " . mb_substr($errorDetail, 0, 300)];
+            _ads_save_progress_data($progress);
+        } else {
+            $result = $response["data"];
+
+            foreach (($result["updatedIDs"] ?? []) as $updatedID) {
+                $updatedDocumentIDs[] = $updatedID;
+                $lastSuccessfullyProcessedId = $updatedID;
+            }
+
+            foreach (($result["notFoundNumbers"] ?? []) as $notFoundNumber) {
+                logger("warn", "[ADS] Document number {$notFoundNumber} not found in source (type {$type}).");
+                $typeSpecificErrors = true;
+                $overallErrorsEncountered = true;
+                $progress = _ads_get_progress_data();
+                $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => "Document number {$notFoundNumber} not found in source."];
+                _ads_save_progress_data($progress);
+            }
+
+            foreach (($result["failed"] ?? []) as $failedItem) {
+                logger("error", "[ADS] Failed document update (type {$type}, ID " . ($failedItem["DocumentID"] ?? "?") . "): " . ($failedItem["error"] ?? "unknown"));
+                $typeSpecificErrors = true;
+                $overallErrorsEncountered = true;
+                $progress = _ads_get_progress_data();
+                $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => "Error on ID " . ($failedItem["DocumentID"] ?? "?") . ": " . ($failedItem["error"] ?? "unknown"), "itemId" => $failedItem["DocumentID"] ?? null];
+                _ads_save_progress_data($progress);
+            }
+        }
+
+        $processedItemsCount += count($chunk);
+
+        $progress = _ads_get_progress_data();
+        $progress['types'][$type]['processedItems'] = $processedItemsCount;
+        $progress['types'][$type]['lastSuccessfullyProcessedId'] = $lastSuccessfullyProcessedId;
+        $progress['types'][$type]['statusDetails'] = "Processing: {$processedItemsCount}/{$totalItems}";
+        $progress['types'][$type]['lastActivityTime'] = date('c');
+        _ads_save_progress_data($progress);
+
+    }
+
+    // Targeted reindex: document data inside media index entries is read from
+    // the document table only at index time, so the media referencing the
+    // updated documents must be re-indexed for the changes to reach search.
+    $reindexSummary = "";
+    if (!empty($updatedDocumentIDs)) {
+        logger("info", "[ADS] Reindexing media for " . count($updatedDocumentIDs) . " updated documents.");
+        try {
+            require_once(__DIR__ . "/../api/v1/modules/searchIndex.php");
+            $reindexResult = searchIndexUpdateForDocuments($updatedDocumentIDs, $parliament, $db, $dbp);
+            if (($reindexResult["meta"]["requestStatus"] ?? "") === "success") {
+                $reindexData = $reindexResult["data"];
+                $reindexSummary = " Reindexed " . ($reindexData["updated"] ?? 0) . " of " . ($reindexData["mediaTotal"] ?? 0) . " media items.";
+                if (!empty($reindexData["failed"])) {
+                    $reindexSummary .= " (" . $reindexData["failed"] . " media failed.)";
+                    $typeSpecificErrors = true;
+                    $overallErrorsEncountered = true;
+                    $progress = _ads_get_progress_data();
+                    $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => "Reindex: " . $reindexData["failed"] . " media items failed."];
+                    _ads_save_progress_data($progress);
+                }
+            } else {
+                $reindexErrorMsg = "[ADS] Media reindex failed: " . json_encode($reindexResult["errors"] ?? "unknown error");
+                logger("error", $reindexErrorMsg);
+                $reindexSummary = " Media reindex failed.";
+                $typeSpecificErrors = true;
+                $overallErrorsEncountered = true;
+                $progress = _ads_get_progress_data();
+                $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => $reindexErrorMsg];
+                _ads_save_progress_data($progress);
+            }
+        } catch (Exception $e) {
+            $reindexErrorMsg = "[ADS] Exception during media reindex: " . $e->getMessage();
+            logger("error", $reindexErrorMsg);
+            $reindexSummary = " Media reindex failed.";
+            $typeSpecificErrors = true;
+            $overallErrorsEncountered = true;
+            $progress = _ads_get_progress_data();
+            $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => $reindexErrorMsg];
+            _ads_save_progress_data($progress);
+        }
+        logger("info", "[ADS]" . $reindexSummary);
+    }
+
+    $typeFinishMsg = "Finished processing. Processed: {$processedItemsCount}/{$totalItems}. Updated: " . count($updatedDocumentIDs) . "." . $reindexSummary;
+    $finalTypeStatus = 'completed_successfully';
+
+    if ($typeSpecificErrors) {
+        $finalTypeStatus = 'partially_completed_with_errors';
+        $progress = _ads_get_progress_data();
+        $errorCount = isset($progress['types'][$type]['errors']) ? count($progress['types'][$type]['errors']) : 0;
+        $typeFinishMsg .= " | Errors: {$errorCount}";
+    }
+    logger("info", "[ADS] {$typeFinishMsg}");
+
+    $progress = _ads_get_progress_data();
+    $progress['types'][$type]['status'] = $finalTypeStatus;
+    $progress['types'][$type]['statusDetails'] = $typeFinishMsg;
+    $progress['types'][$type]['processedItems'] = $processedItemsCount;
+    $progress['types'][$type]['totalItems'] = max((int)($progress['types'][$type]['totalItems'] ?? 0), $processedItemsCount);
+    $progress['types'][$type]['endTime'] = date('c');
+    $progress['types'][$type]['lastActivityTime'] = date('c');
+    $progress['types'][$type]['lastSuccessfullyProcessedId'] = $lastSuccessfullyProcessedId;
+    _ads_save_progress_data($progress);
 }
 
 function _ads_record_startup_error($errorMessage, $entityType = null) {
@@ -346,6 +552,11 @@ if (is_cli()) {
             $progress['activeType'] = $type;
             _ads_save_progress_data($progress);
 
+            if ($type === "officialDocument") {
+                // Bulk path: batched ADS lookups + targeted media reindex.
+                _ads_process_official_documents($db, $dbp, $parliament, $input, $overallErrorsEncountered);
+                continue;
+            }
 
             logger("info", "[ADS] Attempting to get total count for type: {$type}");
             // Determine total items for this type for progress reporting
@@ -375,11 +586,7 @@ if (is_cli()) {
                         $idColumn = 'DocumentWikidataID';
                         $whereClause = $db->parse("WHERE DocumentType = 'legalDocument'");
                         break;
-                    case "officialDocument":
-                        $tableName = $config["platform"]["sql"]["tbl"]["Document"];
-                        $idColumn = 'DocumentSourceURI';
-                        $whereClause = $db->parse("WHERE DocumentType = 'officialDocument'");
-                        break;
+                    // officialDocument is handled by the bulk path above
                     case "term":
                         $tableName = $config["platform"]["sql"]["tbl"]["Term"];
                         $idColumn = 'TermID';

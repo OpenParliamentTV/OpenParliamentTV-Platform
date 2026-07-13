@@ -76,6 +76,28 @@ function getSearchIndexParameterBody() {
                     ))
                 ))
             )),
+            // Replicates the dynamic mapping of existing indices (text with
+            // .keyword subfield) so the media procedureID filter — a term
+            // query on ...procedureIDs.id.keyword — also works on fresh indices.
+            "documents" => array("properties" => array(
+                "data" => array("properties" => array(
+                    "attributes" => array("properties" => array(
+                        "additionalInformation" => array("properties" => array(
+                            "procedureIDs" => array("properties" => array(
+                                "id" => array(
+                                    "type" => "text",
+                                    "fields" => array(
+                                        "keyword" => array(
+                                            "type" => "keyword",
+                                            "ignore_above" => 256
+                                        )
+                                    )
+                                )
+                            ))
+                        ))
+                    ))
+                ))
+            )),
             "people" => array("properties" => array(
                 "data" => array(
                     "type" => "nested",
@@ -308,6 +330,99 @@ function searchIndexUpdate($api_request) {
     return createApiSuccessResponse(
         ['updated' => $updatedCount, 'failed' => $failedCount, 'errors' => $errorsEncountered],
         ['message' => $finalMessage]
+    );
+}
+
+/**
+ * Re-indexes all media items that reference the given documents.
+ *
+ * Document data inside media index entries (relationships.documents) is read
+ * from the document table only at index time, so document changes (e.g. ADS
+ * enrichment) do not reach the search index until the referencing media are
+ * re-indexed. This resolves the affected media via the annotation table and
+ * pushes them through searchIndexUpdate() in chunks.
+ *
+ * @param array $documentIDs Platform DocumentIDs whose data changed
+ * @param string $parliament Parliament code (e.g. "DE")
+ * @param object $db Platform database connection
+ * @param object $dbp Parliament database connection
+ * @param int $mediaChunkSize Media items per bulk index call
+ * @return array API response; data = ['mediaTotal'=>int, 'updated'=>int, 'failed'=>int, 'errors'=>[]]
+ */
+function searchIndexUpdateForDocuments(array $documentIDs, $parliament, $db, $dbp, $mediaChunkSize = 50) {
+    global $config;
+
+    if (empty($documentIDs)) {
+        return createApiSuccessResponse(['mediaTotal' => 0, 'updated' => 0, 'failed' => 0, 'errors' => []], ['message' => 'No documents given, nothing to reindex.']);
+    }
+    if (empty($parliament) || !isset($config['parliament'][$parliament])) {
+        return createApiErrorInvalidParameter('parliament', "Invalid parliament specified: {$parliament}");
+    }
+
+    // media.php requires this file itself, so load it lazily to avoid a
+    // circular top-level require.
+    require_once(__DIR__ . "/media.php");
+
+    $annotationTable = $config["parliament"][$parliament]["sql"]["tbl"]["Annotation"];
+
+    $mediaIDs = [];
+    try {
+        foreach (array_chunk($documentIDs, 1000) as $idChunk) {
+            $rows = $dbp->getCol("SELECT DISTINCT AnnotationMediaID FROM ?n WHERE AnnotationType = 'document' AND AnnotationResourceID IN (?a)", $annotationTable, $idChunk);
+            foreach ($rows as $mediaID) {
+                $mediaIDs[$mediaID] = true;
+            }
+        }
+    } catch (Exception $e) {
+        return createApiErrorDatabaseError("Could not resolve media for documents: " . $e->getMessage());
+    }
+    $mediaIDs = array_keys($mediaIDs);
+
+    $updated = 0;
+    $failed = 0;
+    $errors = [];
+
+    foreach (array_chunk($mediaIDs, max(1, (int)$mediaChunkSize)) as $mediaChunk) {
+        $items = [];
+        foreach ($mediaChunk as $mediaID) {
+            $mediaItem = mediaGetByID($mediaID, $db, $dbp);
+            if (!empty($mediaItem) && !isset($mediaItem["errors"]) && isset($mediaItem["data"]["id"])) {
+                $items[] = $mediaItem;
+            } else {
+                $failed++;
+                $errors[] = ['type' => 'media_fetch', 'id' => $mediaID, 'message' => 'Could not build media item for reindexing.'];
+            }
+        }
+        if (empty($items)) {
+            continue;
+        }
+
+        // skipAutoStatistics: statistics indices aggregate word frequencies
+        // from the media text, which document enrichment does not change —
+        // no statistics run is needed for this reindex. (Also, an unscoped
+        // incremental trigger would fall back to a full statistics rebuild.)
+        $result = searchIndexUpdate([
+            'parliament' => $parliament,
+            'items' => $items,
+            'initIndex' => false,
+            'skipAutoStatistics' => true
+        ]);
+
+        if (($result['meta']['requestStatus'] ?? '') === 'success') {
+            $updated += (int)($result['data']['updated'] ?? 0);
+            $failed += (int)($result['data']['failed'] ?? 0);
+            if (!empty($result['data']['errors'])) {
+                $errors = array_merge($errors, $result['data']['errors']);
+            }
+        } else {
+            $failed += count($items);
+            $errors[] = ['type' => 'bulk_index', 'message' => json_encode($result['errors'] ?? 'unknown error')];
+        }
+    }
+
+    return createApiSuccessResponse(
+        ['mediaTotal' => count($mediaIDs), 'updated' => $updated, 'failed' => $failed, 'errors' => $errors],
+        ['message' => "Reindexed {$updated} of " . count($mediaIDs) . " media items for " . count($documentIDs) . " updated documents."]
     );
 }
 
