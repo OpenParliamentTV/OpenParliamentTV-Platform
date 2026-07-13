@@ -44,7 +44,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
     }
 
     // Content negotiation: Akoma Ntoso / TEI-ParlaMint XML exports from the
-    // same media/session URIs (?format=akomantoso|parlamint or Accept header).
+    // same media/session URIs (?format=akn|parlamint or Accept header).
     // Serves the XML directly and exits; falls through on unavailable items.
     require_once (__DIR__."/modules/export.php");
     if (exportRequestedFormat($api_request) !== null) {

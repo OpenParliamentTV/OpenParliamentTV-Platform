@@ -77,8 +77,8 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<?php
 						$entityDataFormatLinks = [
 							"IIIF Manifest" => $apiResult["data"]["links"]["self"] . "?format=iiif",
-							"Akoma Ntoso" => $apiResult["data"]["links"]["self"] . "?format=akomantoso",
-							"ParlaMint (TEI)" => $apiResult["data"]["links"]["self"] . "?format=parlamint",
+							"Akoma Ntoso" => $apiResult["data"]["links"]["self"] . "?format=akn",
+							"ParlaMint" => $apiResult["data"]["links"]["self"] . "?format=parlamint",
 						];
 						include_once(__DIR__ . '/../../components/entity.data.php');
 						?>

@@ -577,6 +577,10 @@ textarea {
     color: inherit;
 }
 
+.input-group-text.fixed-width {
+    width: 7rem;
+}
+
 .bootstrap-table .fixed-table-container .table thead th .th-inner {
     font-weight: 400;
 }

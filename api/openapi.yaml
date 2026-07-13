@@ -772,7 +772,7 @@ paths:
         (`application/ld+json`) instead of the default JSON:API response.
 
         Two parliamentary exchange formats are served from the same URI:
-        `?format=akomantoso` (or `Accept: application/akn+xml`) returns an
+        `?format=akn` (or `Accept: application/akn+xml`) returns an
         **Akoma Ntoso 1.0** (OASIS LegalDocML) debate document; `?format=parlamint`
         (or `Accept: application/tei+xml`) returns a **TEI** document following the
         ParlaMint conventions (Parla-CLARIN), including sentence-level audio/video
@@ -792,12 +792,12 @@ paths:
           in: query
           description: >-
             Alternative response format: `iiif` (IIIF Presentation 3.0 Manifest),
-            `akomantoso` (Akoma Ntoso 1.0 XML, alias `akn`) or `parlamint`
+            `akn` (Akoma Ntoso 1.0 XML, alias `akomantoso`) or `parlamint`
             (TEI/ParlaMint XML, alias `tei`)
           required: false
           schema:
             type: string
-            enum: [iiif, akomantoso, parlamint]
+            enum: [iiif, akn, parlamint]
         - name: type
           in: query
           description: Transcript type for the XML export formats (e.g. `proceedings`, `generated`)
@@ -1111,7 +1111,7 @@ paths:
         **Manifest** of the session (one Canvas per public speech, grouped into Ranges by agenda item).
 
         Two parliamentary exchange formats are served from the same URI, covering all
-        public speeches of the sitting grouped by agenda item: `?format=akomantoso`
+        public speeches of the sitting grouped by agenda item: `?format=akn`
         (or `Accept: application/akn+xml`) returns an **Akoma Ntoso 1.0** (OASIS
         LegalDocML) debate record; `?format=parlamint` (or `Accept: application/tei+xml`)
         returns a **TEI** document following the ParlaMint conventions (Parla-CLARIN),
@@ -1130,12 +1130,12 @@ paths:
           in: query
           description: >-
             Alternative response format: `iiif` (IIIF Presentation 3.0 Manifest),
-            `akomantoso` (Akoma Ntoso 1.0 XML, alias `akn`) or `parlamint`
+            `akn` (Akoma Ntoso 1.0 XML, alias `akn`) or `parlamint`
             (TEI/ParlaMint XML, alias `tei`)
           required: false
           schema:
             type: string
-            enum: [iiif, akomantoso, parlamint]
+            enum: [iiif, akn, parlamint]
       responses:
         '200':
           description: Successful response (JSON:API, IIIF Manifest, Akoma Ntoso or TEI depending on `format`)

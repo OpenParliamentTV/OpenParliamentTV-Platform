@@ -17,7 +17,7 @@ require_once (__DIR__."/parlamint.php");
  * Two formats are served from the existing media/session URIs via content
  * negotiation, mirroring the IIIF module:
  *  - Akoma Ntoso 1.0 (OASIS LegalDocML) <debate> documents
- *      ?format=akomantoso (alias: akn)   /  Accept: application/akn+xml
+ *      ?format=akn (alias: akomantoso)   /  Accept: application/akn+xml
  *  - TEI following the ParlaMint conventions (Parla-CLARIN-aligned)
  *      ?format=parlamint (alias: tei)    /  Accept: application/tei+xml
  *
@@ -39,7 +39,7 @@ require_once (__DIR__."/parlamint.php");
  */
 function exportRequestedFormat(array $req): ?string {
     $format = strtolower(trim((string) ($req['format'] ?? '')));
-    if ($format === 'akomantoso' || $format === 'akn') {
+    if ($format === 'akn' || $format === 'akomantoso') {
         return 'akn';
     }
     if ($format === 'parlamint' || $format === 'tei') {
