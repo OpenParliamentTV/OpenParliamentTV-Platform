@@ -34,7 +34,7 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" id="entities-tab" data-bs-toggle="tab" data-bs-target="#entities" role="tab" aria-controls="entities" aria-selected="true"><span class="nav-item-label"><?= L::entities(); ?></span></a></li>
-					<li class="nav-item"><a class="nav-link" id="formats-tab" data-bs-toggle="tab" data-bs-target="#formats" role="tab" aria-controls="formats" aria-selected="true"><span class="nav-item-label">IIIF / WebVTT</span></a>
+					<li class="nav-item"><a class="nav-link" id="formats-tab" data-bs-toggle="tab" data-bs-target="#formats" role="tab" aria-controls="formats" aria-selected="true"><span class="nav-item-label">IIIF / Akoma Ntoso / ParlaMint / WebVTT</span></a>
 				</li>
 				<li class="nav-item d-none">
 					<a class="nav-link" id="statistics-tab" data-bs-toggle="tab" data-bs-target="#statistics" role="tab" aria-controls="statistics" aria-selected="true"><span class="nav-item-label">Statistics</span></a>
@@ -643,20 +643,9 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 					</div>
 				</div>
 				<div class="tab-pane fade bg-white" id="formats" role="tabpanel" aria-labelledby="formats-tab">
-						<div class="alert alert-info">Many endpoints are available in open, standardised formats. <b>IIIF</b> (International Image Interoperability Framework, <a href="https://iiif.io/api/presentation/3.0/" target="_blank">Presentation API 3.0</a>) manifests and collections open in viewers like <a href="https://projectmirador.org/" target="_blank">Mirador</a> or <a href="https://universalviewer.io/" target="_blank">Universal Viewer</a>. <b>WebVTT</b> provides timed transcripts for HTML5 <code>&lt;track&gt;</code> elements and media players. IIIF resources are served as JSON-LD (<code>application/ld+json</code>); both are CORS-enabled.</div>
-						<hr>
-						<h3><span class="icon-doc-text"></span> WebVTT Transcript</h3>
-						<p class="mb-2">Timed transcript of a speech as a WebVTT file (<code>text/vtt</code>). Optional query parameters: <code>type</code> (e.g. <code>proceedings</code>, <code>generated</code>) and <code>lang</code> (e.g. <code>de</code>). Without them the best available transcript is returned.</p>
-						<div><b>Endpoint</b>: <code>/api/v1/media/ID/transcript.vtt</code></div>
-						<div class="apiExampleContainer">
-							<div class="input-group">
-								<span class="input-group-text">URI</span>
-								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003/transcript.vtt" readonly>
-								<a href="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003/transcript.vtt" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
-							</div>
-						</div>
-						<hr>
-						<h3><span class="icon-hypervideo me-1"></span> IIIF Manifest - <?= L::speech(); ?></h3>
+						<h3 class="fw-bolder">IIIF (International Image Interoperability Framework)</h3>
+						<div class="alert alert-info"><b>IIIF</b> (International Image Interoperability Framework, <a href="https://iiif.io/api/presentation/3.0/" target="_blank">Presentation API 3.0</a>) describes speeches and sessions as Manifests and Collections that open directly in viewers like <a href="https://projectmirador.org/" target="_blank">Mirador</a> or <a href="https://universalviewer.io/" target="_blank">Universal Viewer</a>. Resources are served as JSON-LD (<code>application/ld+json</code>), CORS-enabled.</div>
+						<h4><span class="icon-hypervideo me-1"></span> IIIF Manifest - <?= L::speech(); ?></h4>
 						<p class="mb-2">IIIF Presentation 3.0 Manifest for a single speech (video, transcript annotations, named-entity annotations with time codes). Request via the <code>format=iiif</code> query parameter (or an <code>Accept: application/ld+json</code> header) on the media endpoint.</p>
 						<div><b>Endpoint</b>: <code>/api/v1/media/ID?format=iiif</code></div>
 						<div class="apiExampleContainer">
@@ -667,7 +656,7 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 							</div>
 						</div>
 						<hr>
-						<h3><span class="icon-group"></span> IIIF Manifest - <?= L::session(); ?></h3>
+						<h4><span class="icon-group"></span> IIIF Manifest - <?= L::session(); ?></h4>
 						<p class="mb-2">IIIF Manifest for a whole session: one Canvas per public speech, grouped into Ranges by agenda item.</p>
 						<div><b>Endpoint</b>: <code>/api/v1/session/ID?format=iiif</code></div>
 						<div class="apiExampleContainer">
@@ -678,7 +667,7 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 							</div>
 						</div>
 						<hr>
-						<h3><span class="icon-database"></span> IIIF Collection - Parliament / <?= L::electoralPeriod(); ?></h3>
+						<h4><span class="icon-database"></span> IIIF Collection - Parliament / <?= L::electoralPeriod(); ?></h4>
 						<p class="mb-2">IIIF Collection for a whole parliament (its electoral periods as sub-collections), or for a single electoral period (its sessions as Manifest references).</p>
 						<div><b>Endpoint</b>: <code>/api/v1/iiif/collection/PARLIAMENT</code> and <code>/api/v1/iiif/collection/PARLIAMENT/ELECTORALPERIOD</code></div>
 						<div class="apiExampleContainer">
@@ -689,8 +678,8 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 							</div>
 						</div>
 						<hr>
-						<h3><span class="icon-database"></span> IIIF Collection - <?= L::search(); ?></h3>
-						<p class="mb-2">A IIIF Collection built from a media search: its items are Manifest references to the matching speeches. Accepts the same query parameters as <code>/api/v1/search/media</code> (see the Search tab), including the per-entity <code>~context</code> suffix.</p>
+						<h4><span class="icon-database"></span> IIIF Collection - <?= L::search(); ?></h4>
+						<p class="mb-2">A IIIF Collection built from a media search: its items are Manifest references to the matching speeches. Accepts the same query parameters as <code>/api/v1/search/media</code> (see the Search tab).</p>
 						<div><b>Endpoint</b>: <code>/api/v1/iiif/search?PARAMETERS</code></div>
 						<div class="apiExampleContainer">
 							<div class="input-group">
@@ -698,6 +687,82 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/iiif/search?personID=Q567" readonly>
 								<a href="<?= $config["dir"]["root"]; ?>/api/v1/iiif/search?personID=Q567" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
 							</div>
+						</div>
+						<hr>
+						<h3 class="fw-bolder">Akoma Ntoso</h3>
+						<div class="alert alert-info"><b>Akoma Ntoso</b> (<a href="https://docs.oasis-open.org/legaldocml/akn-core/v1.0/os/akn-core-v1.0-os-part1-vocabulary.html" target="_blank">OASIS LegalDocML 1.0</a>) is the XML standard for legislative and parliamentary documents, used by parliaments and legal information systems to exchange debate records.</div>
+						<h4><?= L::speech(); ?> / <?= L::session(); ?></h4>
+						<p class="mb-2">Akoma Ntoso 1.0 <code>&lt;debate&gt;</code> document, requested via the <code>format=akn</code> query parameter (or an <code>Accept: application/akn+xml</code> header) on the media or session endpoint. A speech is returned as a debate record holding the one <code>&lt;debateSection&gt;</code> of its agenda item, a session as the whole sitting with one <code>&lt;debateSection&gt;</code> per agenda item. Every <code>&lt;speech&gt;</code> references its speaker and faction as TLC references (Wikidata QIDs) and carries absolute <code>startTime</code>/<code>endTime</code> attributes; interjections and other comments become <code>&lt;scene&gt;</code> elements. FRBR metadata in <code>&lt;meta&gt;</code> identifies work, expression and manifestation.</p>
+						<p class="mb-2"><b>Audio/video synchronisation</b>: Akoma Ntoso has no timeline or synchronisation mechanism, so the sentence-level alignment between transcript and video that underlies our data cannot be expressed in it. As a substitute, each <code>&lt;speech&gt;</code> carries absolute <code>startTime</code>/<code>endTime</code> timestamps and <code>refersTo</code> a W3C Media Fragment URI (<code>video.mp4#t=start,end</code>) that deep-links its exact clip segment — precise to the speech, but not to the sentence. For sentence-level alignment use the ParlaMint, IIIF or WebVTT representation below.</p>
+						<div><b>Endpoint</b>: <code>/api/v1/media/ID?format=akn</code> and <code>/api/v1/session/ID?format=akn</code></div>
+						<div class="apiExampleContainer">
+							<div class="input-group">
+								<span class="input-group-text fixed-width"><?= L::speech(); ?></span>
+								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003?format=akn" readonly>
+								<a href="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003?format=akn" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+							</div>
+							<div class="input-group mt-2">
+								<span class="input-group-text fixed-width"><?= L::session(); ?></span>
+								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/session/DE-0190061?format=akn" readonly>
+								<a href="<?= $config["dir"]["root"]; ?>/api/v1/session/DE-0190061?format=akn" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+							</div>
+						</div>
+						<hr>
+						<h3 class="fw-bolder">ParlaMint (TEI)</h3>
+						<div class="alert alert-info"><b>ParlaMint</b> (<a href="https://clarin-eric.github.io/ParlaMint/" target="_blank">TEI following the ParlaMint conventions</a>, a <a href="https://clarin-eric.github.io/parla-clarin/" target="_blank">Parla-CLARIN</a> specialisation) is the exchange format of the parliamentary corpus-linguistics community, used by comparable corpora of dozens of European parliaments. Unlike Akoma Ntoso it can express the full sentence-level audio/video alignment of our data, via a TEI <code>&lt;timeline&gt;</code>.</div>
+						<h4><?= L::speech(); ?> / <?= L::session(); ?></h4>
+						<p class="mb-2">TEI document following the ParlaMint conventions, requested via the <code>format=parlamint</code> query parameter (or an <code>Accept: application/tei+xml</code> header) on the media or session endpoint. Speeches become <code>&lt;u&gt;</code> utterances with <code>@who</code> (Wikidata QID) and <code>@ana</code> (<code>#chair</code> / <code>#regular</code>), one <code>&lt;seg&gt;</code> per paragraph, comments as <code>&lt;incident&gt;</code>, <code>&lt;kinesic&gt;</code> and <code>&lt;vocal&gt;</code>; the <code>&lt;teiHeader&gt;</code> carries the speakers and factions as <code>&lt;listPerson&gt;</code>/<code>&lt;listOrg&gt;</code>. The AV recording is declared in <code>&lt;recordingStmt&gt;</code> and aligned sentence by sentence to a TEI <code>&lt;timeline&gt;</code>.</p>
+						<div><b>Endpoint</b>: <code>/api/v1/media/ID?format=parlamint</code> and <code>/api/v1/session/ID?format=parlamint</code></div>
+						<div class="apiExampleContainer">
+							<div class="input-group">
+								<span class="input-group-text fixed-width"><?= L::speech(); ?></span>
+								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003?format=parlamint" readonly>
+								<a href="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003?format=parlamint" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+							</div>
+							<div class="input-group mt-2">
+								<span class="input-group-text fixed-width"><?= L::session(); ?></span>
+								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/session/DE-0190061?format=parlamint" readonly>
+								<a href="<?= $config["dir"]["root"]; ?>/api/v1/session/DE-0190061?format=parlamint" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+							</div>
+						</div>
+						<hr>
+						<h3 class="fw-bolder">WebVTT</h3>
+						<div class="alert alert-info"><b>WebVTT</b> is the <a href="https://www.w3.org/TR/webvtt1/" target="_blank">W3C standard</a> for timed text: cue-by-cue transcripts that any HTML5 <code>&lt;track&gt;</code> element or media player can display as subtitles, and the simplest way to consume our transcript timings.</div>
+						<h4><?= L::speech(); ?></h4>
+						<p class="mb-2">Timed transcript of a speech as a WebVTT file (<code>text/vtt</code>).</p>
+						<div><b>Endpoint</b>: <code>/api/v1/media/ID/transcript.vtt</code></div>
+						<div class="apiExampleContainer">
+							<div class="input-group">
+								<span class="input-group-text">URI</span>
+								<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003/transcript.vtt" readonly>
+								<a href="<?= $config["dir"]["root"]; ?>/api/v1/media/DE-0190061003/transcript.vtt" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+							</div>
+						</div>
+						<hr>
+						<h3><span class="icon-list"></span> Transcript Selection</h3>
+						<p class="mb-2">Speeches often carry several transcripts. The WebVTT, Akoma Ntoso and ParlaMint endpoints all accept the same two optional parameters to pick one; without them the best available transcript is used.</p>
+						<div class="table-responsive-lg">
+							<table class="table table-sm table-striped">
+								<thead>
+									<tr>
+										<th>Parameter</th>
+										<th>Description</th>
+										<th><?= L::example(); ?></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>type</code></td>
+										<td>Transcript type</td>
+										<td><code>proceedings</code>, <code>generated</code></td>
+									</tr>
+									<tr>
+										<td><code>lang</code></td>
+										<td>Transcript language (BCP 47)</td>
+										<td><code>de</code>, <code>en</code></td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 					</div>
 					<div class="tab-pane fade bg-white" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">

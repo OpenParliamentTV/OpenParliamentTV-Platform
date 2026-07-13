@@ -242,7 +242,7 @@ if ($config["display"]["ner"]) {
         <div class="input-group mt-2">
             <span class="input-group-text fixed-width me-0">Akoma Ntoso</span>
             <input id="aknLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= hAttr($speech["links"]["self"]) ?>?format=akn">
-            <a href="<?= hAttr($speech["links"]["self"]) ?>?format=akomantoso" target="_blank" class="btn btn-sm input-group-text">
+            <a href="<?= hAttr($speech["links"]["self"]) ?>?format=akn" target="_blank" class="btn btn-sm input-group-text">
                 <span class="icon-right-open-big me-0"></span>
             </a>
         </div>
