@@ -368,6 +368,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/term.php");
                     $addResponse = termAdd($api_request, $db, $dbp);
                     return createApiResponse($addResponse);
+                case "apiKey":
+                    require_once (__DIR__."/modules/apiKey.php");
+                    $addResponse = apiKeyAdd($api_request, $db);
+                    return createApiResponse($addResponse);
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
@@ -413,6 +417,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/user.php");
                     $item = userChange($api_request);
                     return createApiResponse($item);
+                case "apiKey":
+                    require_once (__DIR__."/modules/apiKey.php");
+                    $item = apiKeyChange($api_request, $db);
+                    return createApiResponse($item);
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
@@ -425,6 +433,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "entitySuggestion":
                     require_once (__DIR__."/modules/entitySuggestion.php");
                     $deleteResponse = entitySuggestionDelete($api_request["EntitysuggestionID"] ?? null, $db);
+                    return createApiResponse($deleteResponse);
+                case "apiKey":
+                    require_once (__DIR__."/modules/apiKey.php");
+                    $deleteResponse = apiKeyDelete($api_request, $db);
                     return createApiResponse($deleteResponse);
                 default:
                     return createApiResponse(
@@ -479,7 +491,11 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/user.php");
                     $result = userGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"]);
                     break;
-                case "conflict": 
+                case "apiKey":
+                    require_once (__DIR__."/modules/apiKey.php");
+                    $result = apiKeyGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"]);
+                    break;
+                case "conflict":
                     require_once (__DIR__."/modules/conflict.php");
                     // Handle conflict-specific parameters
                     $includeResolved = $api_request["includeResolved"] ?? false;

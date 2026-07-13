@@ -162,7 +162,12 @@ $config["platform"]["sql"]["tbl"]["ApiKey"] = "apikey";
  * exemptIPs are exempt on both; the API also skips exemptActions.
  *
  * ["api"]   — external API HTTP entry (api/v1/index.php). Internal apiV1()
- *             calls from page handlers are never limited.
+ *             calls from page handlers are never limited. A request carrying a
+ *             valid API key (X-API-Key header or ?apikey=) is counted per key
+ *             rather than per IP, at keyedLimit or the key's own ApiKeyRateLimit;
+ *             the session/exemptIPs exemptions do not apply to it. Keys are
+ *             issued under /manage/settings and only raise the limit — they grant
+ *             no additional access.
  * ["pages"] — web router entry (index.php). Static files, AJAX fragments and
  *             the image proxy are served directly by Apache and NOT counted,
  *             so this only caps true page navigations (coarse anti-scrape).
@@ -170,6 +175,7 @@ $config["platform"]["sql"]["tbl"]["ApiKey"] = "apikey";
 $config["rateLimit"]["api"]["enabled"] = true;
 $config["rateLimit"]["api"]["window"] = 60;   // seconds
 $config["rateLimit"]["api"]["limit"] = 240;    // requests per window per client IP
+$config["rateLimit"]["api"]["keyedLimit"] = 2000;  // requests per window for a request carrying a valid API key (used when ApiKeyRateLimit is NULL)
 $config["rateLimit"]["api"]["trustProxy"] = false; // honor X-Forwarded-For / CF-Connecting-IP (only behind a trusted proxy)
 $config["rateLimit"]["api"]["exemptActions"] = ["autocomplete", "status", "lang", "systemMessage", "notification"];
 $config["rateLimit"]["api"]["exemptIPs"] = [];

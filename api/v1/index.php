@@ -34,10 +34,11 @@ if ($auth["meta"]["requestStatus"] != "success") {
     require_once(__DIR__ . "/ratelimit.php");
 
     // Per-client rate limit for external API requests (internal apiV1() callers
-    // bypass this entry point entirely).
+    // bypass this entry point entirely). Rejects with 429 over the limit, or 403
+    // when an API key was presented but is unknown, revoked or expired.
     $rateLimitError = apiRateLimitCheck($_REQUEST["action"] ?? "");
     if ($rateLimitError !== null) {
-        http_response_code(429);
+        http_response_code((int) ($rateLimitError["errors"][0]["status"] ?? 429));
         $return = $rateLimitError;
     } else {
         $return = apiV1($_REQUEST);

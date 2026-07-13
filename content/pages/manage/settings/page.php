@@ -7,6 +7,10 @@
     require_once(__DIR__ . '/../../../../api/v1/modules/systemMessage.php');
     $systemMessagesResp = systemMessageList([]);
     $systemMessages = ($systemMessagesResp["meta"]["requestStatus"] === "success") ? $systemMessagesResp["data"] : [];
+
+    // Users offered as the optional owner of an API key.
+    $apiKeyUsersResp = apiV1(["action" => "getItemsFromDB", "itemType" => "user", "id" => "all", "limit" => 0, "offset" => 0]);
+    $apiKeyUsers = ($apiKeyUsersResp["meta"]["requestStatus"] === "success") ? ($apiKeyUsersResp["data"] ?? []) : [];
 ?>
 <main class="container-fluid subpage">
     <div class="row">
@@ -26,6 +30,9 @@
                             <a class="nav-link" id="settings-systemmessages-tab" data-bs-toggle="tab" data-bs-target="#settings-systemmessages" role="tab" aria-controls="systemmessages" aria-selected="false"><span class="icon-megaphone"></span> <?= L::systemMessages(); ?></a>
                         </li>
                         <?php endif; ?>
+                        <li class="nav-item">
+                            <a class="nav-link" id="settings-apikeys-tab" data-bs-toggle="tab" data-bs-target="#settings-apikeys" role="tab" aria-controls="apikeys" aria-selected="false"><span class="icon-key"></span> <?= L::apiKeys(); ?></a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="settings" role="tabpanel" aria-labelledby="settings-tab">
@@ -69,39 +76,39 @@
                             <div class="p-3">
                                 <div class="mb-3">
                                     <h5><?= L::notificationRunMatch(); ?></h5>
-                                    <p class="small text-muted">Run alert matching over the most recent media of a parliament to generate notifications for testing (no full import needed).</p>
+                                    <div class="alert alert-info">Run alert matching over the most recent media of a parliament to generate notifications for testing (no full import needed).</div>
                                     <div class="d-flex align-items-end gap-2 flex-wrap">
                                         <div>
-                                            <label class="form-label small mb-0" for="runMatchParliament">Parliament</label>
+                                            <label class="form-label mb-0" for="runMatchParliament">Parliament</label>
                                             <input type="text" class="form-control form-control-sm" id="runMatchParliament" value="DE" style="width:90px;">
                                         </div>
                                         <div>
-                                            <label class="form-label small mb-0" for="runMatchLast">Last N</label>
+                                            <label class="form-label mb-0" for="runMatchLast">Last N</label>
                                             <input type="number" class="form-control form-control-sm" id="runMatchLast" value="50" min="1" max="500" style="width:90px;">
                                         </div>
                                         <button type="button" id="runMatchBtn" class="btn btn-sm"><?= L::notificationRunMatch(); ?></button>
-                                        <span id="runMatchResult" class="small text-muted"></span>
+                                        <span id="runMatchResult" class="text-muted"></span>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="mb-3">
                                     <h5>New broadcast</h5>
-                                    <p class="small text-muted">Sends an in-app notification to every targeted active user. Optionally also queues an email.</p>
+                                    <div class="alert alert-info">Sends an in-app notification to every targeted active user. Optionally also queues an email.</div>
                                     <div class="mb-2">
-                                        <label class="form-label small mb-0" for="bcTitle">Title</label>
+                                        <label class="form-label mb-0" for="bcTitle">Title</label>
                                         <input type="text" class="form-control form-control-sm" id="bcTitle" maxlength="500">
                                     </div>
                                     <div class="mb-2">
-                                        <label class="form-label small mb-0" for="bcBody">Body</label>
+                                        <label class="form-label mb-0" for="bcBody">Body</label>
                                         <textarea class="form-control form-control-sm" id="bcBody" rows="3"></textarea>
                                     </div>
                                     <div class="mb-2">
-                                        <label class="form-label small mb-0" for="bcLink">Link (optional)</label>
+                                        <label class="form-label mb-0" for="bcLink">Link (optional)</label>
                                         <input type="text" class="form-control form-control-sm" id="bcLink">
                                     </div>
                                     <div class="d-flex align-items-end gap-3 flex-wrap mb-2">
                                         <div>
-                                            <label class="form-label small mb-0" for="bcTarget">Target</label>
+                                            <label class="form-label mb-0" for="bcTarget">Target</label>
                                             <select class="form-select form-select-sm" id="bcTarget" style="width:160px;">
                                                 <option value="">All users</option>
                                                 <option value="admin">Admins only</option>
@@ -110,17 +117,17 @@
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" id="bcSendEmail">
-                                            <label class="form-check-label small" for="bcSendEmail">Also send email</label>
+                                            <label class="form-check-label" for="bcSendEmail">Also send email</label>
                                         </div>
                                         <button type="button" id="bcSend" class="btn btn-sm">Send broadcast</button>
-                                        <span id="bcResult" class="small text-muted"></span>
+                                        <span id="bcResult" class="text-muted"></span>
                                     </div>
                                 </div>
                                 <hr>
                                 <div class="">
                                     <h5>Recent system messages</h5>
                                     <?php if (empty($systemMessages)): ?>
-                                        <div class="text-muted small">None yet.</div>
+                                        <div class="text-muted">None yet.</div>
                                     <?php else: ?>
                                         <table class="table table-sm mb-0">
                                             <thead><tr><th>Type</th><th>Title</th><th>Target</th><th>Email</th><th>Created</th></tr></thead>
@@ -131,7 +138,7 @@
                                                     <td><?= h($a["title"]) ?></td>
                                                     <td><?= h($a["targetRole"] ?: "all") ?></td>
                                                     <td><?= $a["sendEmail"] ? "yes" : "no" ?></td>
-                                                    <td class="small text-muted"><?= h(substr((string)$a["created"], 0, 16)) ?></td>
+                                                    <td class="text-muted"><?= h(substr((string)$a["created"], 0, 16)) ?></td>
                                                 </tr>
                                             <?php endforeach; ?>
                                             </tbody>
@@ -141,12 +148,66 @@
                             </div>
                         </div>
                         <?php endif; ?>
+                        <div class="tab-pane bg-white fade show" id="settings-apikeys" role="tabpanel" aria-labelledby="settings-apikeys-tab">
+                            <div class="p-3">
+                                <div class="alert alert-info"><?= L::apiKeyIntro(); ?></div>
+                                <form id="apiKeyForm" class="row g-2 align-items-end mb-3">
+                                    <div class="col-12 col-md-4">
+                                        <label class="form-label mb-0" for="apiKeyLabel"><?= L::label(); ?></label>
+                                        <input type="text" class="form-control form-control-sm" id="apiKeyLabel" name="ApiKeyLabel" maxlength="191" required>
+                                    </div>
+                                    <div class="col-6 col-md-3">
+                                        <label class="form-label mb-0" for="apiKeyOwner"><?= L::user(); ?></label>
+                                        <select class="form-select form-select-sm" id="apiKeyOwner" name="ApiKeyOwnerUserID">
+                                            <option value="">—</option>
+                                            <?php foreach ($apiKeyUsers as $apiKeyUser): ?>
+                                                <option value="<?= hAttr($apiKeyUser["UserID"]) ?>"><?= h($apiKeyUser["UserName"]) ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-6 col-md-2">
+                                        <label class="form-label mb-0" for="apiKeyRateLimit"><?= L::apiKeyRateLimit(); ?></label>
+                                        <input type="number" min="1" class="form-control form-control-sm" id="apiKeyRateLimit" name="ApiKeyRateLimit" placeholder="<?= hAttr(L::apiKeyRateLimitDefault()) ?>">
+                                    </div>
+                                    <div class="col-6 col-md-2">
+                                        <label class="form-label mb-0" for="apiKeyExpires"><?= L::apiKeyExpires(); ?></label>
+                                        <input type="date" class="form-control form-control-sm" id="apiKeyExpires" name="ApiKeyExpires">
+                                    </div>
+                                    <div class="col-6 col-md-1">
+                                        <button type="submit" class="btn btn-primary btn-sm w-100" id="apiKeyCreateBtn"><span class="icon-plus"></span></button>
+                                    </div>
+                                </form>
+                                <div id="apiKeyFormError" class="text-danger mb-2"></div>
+                                <table id="apiKeysTable"></table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+
+<div class="modal fade" id="apiKeyRevealModal" tabindex="-1" aria-labelledby="apiKeyRevealModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="apiKeyRevealModalLabel"><span class="icon-key"></span> <?= L::apiKeyCreatedTitle(); ?></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<?= hAttr(L::close()) ?>"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning"><span class="icon-attention"></span> <?= L::apiKeyShownOnceWarning(); ?></div>
+                <div class="input-group">
+                    <input type="text" class="form-control font-monospace" id="apiKeyRevealValue" readonly>
+                    <button class="btn btn-primary" type="button" id="apiKeyCopyBtn"><span class="icon-clipboard"></span> <?= L::apiKeyCopy(); ?></button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?= L::close(); ?></button>
+            </div>
+        </div>
+    </div>
+</div>
     <script>
 
         $(function() {
@@ -389,6 +450,257 @@
                 });
             }
         })();
+
+
+        // API Keys tab
+        $(function () {
+
+            const apiRoot = '<?= $config["dir"]["root"] ?>/api/v1/';
+
+            // Translations reach JS as JSON, not as raw interpolations: several of them
+            // contain apostrophes (e.g. the French strings) that would otherwise break
+            // the surrounding string literals.
+            const t = <?= json_encode([
+                "never" => L::apiKeyNever(),
+                "rateLimitDefault" => L::apiKeyRateLimitDefault(),
+                "copy" => L::apiKeyCopy(),
+                "copied" => L::apiKeyCopied(),
+                "confirmDelete" => L::apiKeyConfirmDelete(),
+                "delete" => L::delete(),
+                "prefix" => L::apiKeyPrefix(),
+                "label" => L::label(),
+                "user" => L::user(),
+                "rateLimit" => L::apiKeyRateLimit(),
+                "active" => L::active(),
+                "created" => L::apiKeyCreated(),
+                "expires" => L::apiKeyExpires(),
+                "lastUsed" => L::apiKeyLastUsed(),
+            ], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
+
+            // Labels and owner names are admin-supplied free text and are interpolated
+            // into cell markup by the formatters below, so they must be escaped.
+            function esc(value) {
+                return $('<div>').text(value === null || value === undefined ? '' : value).html();
+            }
+
+            function errorDetail(response, fallback) {
+                return (response && response.errors && response.errors[0] && response.errors[0].detail)
+                    ? response.errors[0].detail
+                    : fallback;
+            }
+
+            const formatters = {
+                dateFormatter: function (value) {
+                    if (!value) {
+                        return '-';
+                    }
+                    // MySQL DATETIME ("Y-m-d H:i:s") needs the T separator to parse reliably.
+                    const parsed = new Date(String(value).replace(' ', 'T'));
+                    return isNaN(parsed.getTime()) ? esc(value) : parsed.toLocaleString('de');
+                },
+
+                expiresFormatter: function (value) {
+                    return value ? formatters.dateFormatter(value) : esc(t.never);
+                },
+
+                rateLimitFormatter: function (value) {
+                    return (value === null || value === undefined || value === '')
+                        ? '<span class="text-muted">' + esc(t.rateLimitDefault) + '</span>'
+                        : esc(value);
+                },
+
+                prefixFormatter: function (value) {
+                    return '<code>' + esc(value) + '</code>';
+                },
+
+                textFormatter: function (value) {
+                    return value ? esc(value) : '-';
+                },
+
+                // The switch is the revoke control: off = revoked, on = active.
+                activeFormatter: function (value, row) {
+                    return '<div class="form-check form-switch">' +
+                        '<input class="form-check-input apikey-active-switch" type="checkbox" ' +
+                        'data-apikeyid="' + esc(row.ApiKeyID) + '" ' +
+                        (value ? 'checked' : '') + '>' +
+                        '</div>';
+                },
+
+                operateFormatter: function (value, row) {
+                    return '<div class="list-group list-group-horizontal">' +
+                        '<a class="list-group-item list-group-item-action apikey-delete" href="#" ' +
+                        'title="' + esc(t.delete) + '" data-apikeyid="' + esc(row.ApiKeyID) + '">' +
+                        '<span class="icon-trash"></span></a>' +
+                        '</div>';
+                }
+            };
+
+            $('#apiKeysTable').bootstrapTable({
+                url: apiRoot + '?action=getItemsFromDB&itemType=apiKey',
+                classes: "table table-striped",
+                locale: "<?= $lang; ?>",
+                search: true,
+                searchAlign: "left",
+                pagination: true,
+                pageSize: 25,
+                pageList: [10, 25, 50, 100, 'all'],
+                sidePagination: 'server',
+                sortName: 'ApiKeyCreated',
+                sortOrder: 'desc',
+                uniqueId: 'ApiKeyID',
+                columns: [
+                    {field: 'ApiKeyID', visible: false},
+                    {field: 'ApiKeyPrefix', sortable: true, title: t.prefix, formatter: formatters.prefixFormatter},
+                    {field: 'ApiKeyLabel', sortable: true, title: t.label, formatter: formatters.textFormatter},
+                    {field: 'ApiKeyOwnerName', sortable: true, title: t.user, formatter: formatters.textFormatter},
+                    {field: 'ApiKeyRateLimit', sortable: true, title: t.rateLimit, formatter: formatters.rateLimitFormatter},
+                    {field: 'ApiKeyActive', sortable: true, title: t.active, formatter: formatters.activeFormatter},
+                    {field: 'ApiKeyCreated', sortable: true, title: t.created, formatter: formatters.dateFormatter},
+                    {field: 'ApiKeyExpires', sortable: true, title: t.expires, formatter: formatters.expiresFormatter},
+                    {field: 'ApiKeyLastUsed', sortable: true, title: t.lastUsed, formatter: formatters.dateFormatter},
+                    {field: 'operate', title: '', formatter: formatters.operateFormatter, class: 'minWidthColumn'}
+                ],
+                queryParams: function (params) {
+                    return {
+                        limit: params.limit,
+                        offset: params.offset,
+                        sort: params.sort,
+                        order: params.order,
+                        search: params.search
+                    };
+                },
+                responseHandler: function (res) {
+                    if (!res || !res.data) {
+                        console.error('Invalid response format:', res);
+                        return {total: 0, rows: []};
+                    }
+                    return {total: res.total || 0, rows: res.data};
+                }
+            });
+
+            // Create a key. The raw secret comes back exactly once, in this response —
+            // it is not stored, so it has to be surfaced to the admin right here.
+            $('#apiKeyForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const $btn = $('#apiKeyCreateBtn');
+                const $error = $('#apiKeyFormError');
+                $error.text('');
+                $btn.prop('disabled', true);
+
+                $.ajax({
+                    url: apiRoot,
+                    method: 'POST',
+                    data: {
+                        action: 'addItem',
+                        itemType: 'apiKey',
+                        ApiKeyLabel: $('#apiKeyLabel').val(),
+                        ApiKeyOwnerUserID: $('#apiKeyOwner').val(),
+                        ApiKeyRateLimit: $('#apiKeyRateLimit').val(),
+                        ApiKeyExpires: $('#apiKeyExpires').val()
+                    },
+                    success: function (response) {
+                        $btn.prop('disabled', false);
+                        if (response && response.meta && response.meta.requestStatus === 'success' && response.data) {
+                            $('#apiKeyForm')[0].reset();
+                            $('#apiKeyRevealValue').val(response.data.attributes.key);
+                            new bootstrap.Modal(document.getElementById('apiKeyRevealModal')).show();
+                            $('#apiKeysTable').bootstrapTable('refresh');
+                        } else {
+                            $error.text(errorDetail(response, 'Failed to create API key'));
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        $btn.prop('disabled', false);
+                        console.error('Error creating API key:', error, xhr.responseText);
+                        $error.text(errorDetail(xhr.responseJSON, 'Error creating API key'));
+                    }
+                });
+            });
+
+            $('#apiKeyCopyBtn').on('click', function () {
+                const $btn = $(this);
+                const value = $('#apiKeyRevealValue').val();
+                const done = function () {
+                    $btn.html('<span class="icon-ok"></span> ' + esc(t.copied));
+                };
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(value).then(done);
+                } else {
+                    $('#apiKeyRevealValue').select();
+                    document.execCommand('copy');
+                    done();
+                }
+            });
+
+            $('#apiKeyRevealModal').on('hidden.bs.modal', function () {
+                // Do not leave the secret sitting in the DOM after the modal closes.
+                $('#apiKeyRevealValue').val('');
+                $('#apiKeyCopyBtn').html('<span class="icon-clipboard"></span> ' + esc(t.copy));
+            });
+
+            $(document).on('change', '.apikey-active-switch', function () {
+                const $switch = $(this);
+                const isActive = $switch.prop('checked');
+                $switch.prop('disabled', true);
+
+                $.ajax({
+                    url: apiRoot,
+                    method: 'POST',
+                    data: {
+                        action: 'changeItem',
+                        itemType: 'apiKey',
+                        id: $switch.data('apikeyid'),
+                        ApiKeyActive: isActive ? 1 : 0
+                    },
+                    success: function (response) {
+                        $switch.prop('disabled', false);
+                        if (response && response.meta && response.meta.requestStatus === 'success') {
+                            $('#apiKeysTable').bootstrapTable('refresh');
+                        } else {
+                            $switch.prop('checked', !isActive);
+                            alert(errorDetail(response, 'Failed to update API key'));
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        $switch.prop('disabled', false).prop('checked', !isActive);
+                        console.error('Error updating API key:', error, xhr.responseText);
+                        alert(errorDetail(xhr.responseJSON, 'Error updating API key'));
+                    }
+                });
+            });
+
+            $(document).on('click', '.apikey-delete', function (e) {
+                e.preventDefault();
+
+                if (!confirm(t.confirmDelete)) {
+                    return;
+                }
+
+                $.ajax({
+                    url: apiRoot,
+                    method: 'POST',
+                    data: {
+                        action: 'deleteItem',
+                        itemType: 'apiKey',
+                        id: $(this).data('apikeyid')
+                    },
+                    success: function (response) {
+                        if (response && response.meta && response.meta.requestStatus === 'success') {
+                            $('#apiKeysTable').bootstrapTable('refresh');
+                        } else {
+                            alert(errorDetail(response, 'Failed to delete API key'));
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error deleting API key:', error, xhr.responseText);
+                        alert(errorDetail(xhr.responseJSON, 'Error deleting API key'));
+                    }
+                });
+            });
+
+        });
 
 
     </script>

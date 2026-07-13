@@ -8,8 +8,21 @@ info:
     The API is free to use and requires **no API key**. To protect the service against
     scraping and automated bulk traffic, requests are **rate-limited per client IP**
     (a few requests per second; see the `429` responses below). Logged-in sessions and a
-    configurable IP allowlist are exempt. If you need higher or unlimited limits, please get
-    in touch — an API key can be issued on request.
+    configurable IP allowlist are exempt.
+
+    If you need a higher limit, please get in touch — an **API key** can be issued on request.
+    A key raises your rate limit; it is not a login and grants no additional access, so every
+    endpoint below stays available without one. Send it in the `X-API-Key` header:
+
+    ```
+    curl -H "X-API-Key: optv_..." https://de.openparliament.tv/api/v1/search/media?q=klima
+    ```
+
+    Requests carrying a valid key are counted against that key rather than your IP address.
+    Clients that cannot set headers may pass the key as an `?apikey=` query parameter instead,
+    at the cost of the key appearing in server access logs. A key that is unknown, revoked or
+    expired is rejected with `403`; the current limit is reported in the `X-RateLimit-Limit`
+    response header.
 
     If you want the complete raw dataset, do not scrape the API: all raw speech data imported
     into the platform is published in the Open Parliament TV GitHub data repositories
@@ -25,7 +38,8 @@ servers:
   - url: https://de.openparliament.tv/api/v1
     description: Production server (German Bundestag instance)
 
-# The public API requires no authentication (no API key). Rate limiting is applied per client IP.
+# The public API requires no authentication. An optional API key (ApiKeyAuth) only raises the
+# caller's rate limit — it unlocks no endpoint — so no operation declares it as required.
 security: []
 
 tags:
@@ -1480,9 +1494,22 @@ paths:
                     type: object
 
 components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: |
+        Optional API key raising the caller's rate limit. It is not an authentication
+        mechanism: it grants no additional access, and every endpoint remains available
+        without it. Requests carrying a valid key are counted per key instead of per IP.
+        Keys are issued on request. A key that is unknown, revoked or expired is rejected
+        with `403`. Clients unable to set headers may pass the key as an `?apikey=` query
+        parameter instead, at the cost of it appearing in server access logs.
+
   responses:
     RateLimited:
-      description: Too Many Requests — per-IP rate limit exceeded
+      description: Too Many Requests — rate limit exceeded (counted per API key when one is presented, otherwise per IP)
       headers:
         Retry-After:
           description: Seconds to wait before retrying

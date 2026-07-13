@@ -23,10 +23,17 @@
  *                          trustProxy/exemptIPs — see $config["rateLimit"][*]).
  * @param string $namespace Counter namespace ('api' | 'page') keeping the two
  *                          surfaces' windows independent for one client IP.
+ * @param string|null $identityOverride Bucket the window on this literal key
+ *                          instead of the client IP (the API layer passes
+ *                          'key:<ApiKeyID>' for an API-key holder). When set, the
+ *                          session and IP-allowlist exemptions are deliberately
+ *                          skipped: a key's tier must apply even when the caller
+ *                          also happens to hold a login session.
+ * @param int|null $limitOverride Per-window limit to apply instead of $cfg["limit"].
  * @return int|null The Retry-After seconds when the client exceeded the limit,
  *                  or null when the request is allowed.
  */
-function optvRateLimitExceeded(array $cfg, $namespace)
+function optvRateLimitExceeded(array $cfg, $namespace, $identityOverride = null, $limitOverride = null)
 {
     global $config;
 
@@ -34,22 +41,28 @@ function optvRateLimitExceeded(array $cfg, $namespace)
         return null;
     }
 
-    // Authenticated users (logged in) are exempt.
-    if (!empty($_SESSION["userdata"]["id"])) {
-        return null;
-    }
+    $keyed = ($identityOverride !== null && $identityOverride !== '');
 
-    $ip = optvRateLimitClientIp(!empty($cfg["trustProxy"]));
+    if (!$keyed) {
+        // Authenticated users (logged in) are exempt.
+        if (!empty($_SESSION["userdata"]["id"])) {
+            return null;
+        }
 
-    // Internal / allowlisted IPs are never limited.
-    if (in_array($ip, $cfg["exemptIPs"] ?? [], true)) {
-        return null;
+        $ip = optvRateLimitClientIp(!empty($cfg["trustProxy"]));
+
+        // Internal / allowlisted IPs are never limited.
+        if (in_array($ip, $cfg["exemptIPs"] ?? [], true)) {
+            return null;
+        }
     }
 
     $window = max(1, (int) ($cfg["window"] ?? 60));
-    $limit  = max(1, (int) ($cfg["limit"] ?? 240));
+    $limit  = max(1, (int) ($limitOverride !== null ? $limitOverride : ($cfg["limit"] ?? 240)));
     $windowStart = (int) (floor(time() / $window) * $window);
-    $key = sha1(($config["salt"] ?? '') . '|' . $namespace . '|' . $ip);
+    $key = $keyed
+        ? $identityOverride
+        : sha1(($config["salt"] ?? '') . '|' . $namespace . '|' . $ip);
 
     $db = getApiDatabaseConnection('platform');
     if (!($db instanceof SafeMySQL)) {
