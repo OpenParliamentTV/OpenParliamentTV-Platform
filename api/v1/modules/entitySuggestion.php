@@ -146,14 +146,15 @@ function entitySuggestionAdd($api_request, $db = false) {
             "content" => $entitysuggestionContent,
             "context" => $singleContextEntry // Original function passed the single context here
         ];
-        return reportConflict(
-            "Entitysuggestion", 
-            "Suggestion had no ID", 
-            "", 
-            "", 
-            json_encode($reportArray, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
-            $db // Pass the DB connection to reportConflict helper which then passes to apiV1
-        );
+        $itemInfos = getInfosFromStringID($singleContextEntry);
+        return reportConflict([
+            "type" => "entity-suggestion-missing-id",
+            "parliament" => ($itemInfos && !empty($itemInfos["parliament"])) ? $itemInfos["parliament"] : "",
+            "mediaID" => $singleContextEntry,
+            "entityType" => mb_strtolower((string)$entitysuggestionType),
+            "entityLabel" => $entitysuggestionLabel,
+            "data" => $reportArray
+        ], $db);
     }
 
     try {

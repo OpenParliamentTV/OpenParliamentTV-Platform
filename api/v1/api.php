@@ -421,6 +421,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/apiKey.php");
                     $item = apiKeyChange($api_request, $db);
                     return createApiResponse($item);
+                case "conflict":
+                    require_once (__DIR__."/modules/conflict.php");
+                    $item = conflictChange($api_request, $db);
+                    return createApiResponse($item);
                 default:
                     return createApiResponse(
                         createApiErrorInvalidParameter("itemType")
@@ -437,6 +441,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "apiKey":
                     require_once (__DIR__."/modules/apiKey.php");
                     $deleteResponse = apiKeyDelete($api_request, $db);
+                    return createApiResponse($deleteResponse);
+                case "conflict":
+                    require_once (__DIR__."/modules/conflict.php");
+                    $deleteResponse = conflictDelete($api_request, $db);
                     return createApiResponse($deleteResponse);
                 default:
                     return createApiResponse(
@@ -498,10 +506,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "conflict":
                     require_once (__DIR__."/modules/conflict.php");
                     // Handle conflict-specific parameters
-                    $includeResolved = $api_request["includeResolved"] ?? false;
+                    $status = $api_request["status"] ?? "open";
+                    $type = $api_request["type"] ?? false;
                     $getStats = $api_request["getStats"] ?? false;
-                    $result = conflictGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], $includeResolved, $getStats
-                    );
+                    $result = conflictGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], $status, $type, $getStats);
                     break;
                 case "entitySuggestion":
                     require_once (__DIR__."/modules/entitySuggestion.php");
@@ -618,6 +626,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "entity-suggestions":
                     require_once (__DIR__."/modules/entitySuggestion.php");
                     $cleanupResponse = entitySuggestionCleanup($db);
+                    return createApiResponse($cleanupResponse);
+                case "conflicts":
+                    require_once (__DIR__."/modules/conflict.php");
+                    $cleanupResponse = conflictCleanup($db);
                     return createApiResponse($cleanupResponse);
                 default:
                     return createApiResponse(

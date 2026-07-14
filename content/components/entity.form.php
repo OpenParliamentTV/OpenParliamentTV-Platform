@@ -589,12 +589,25 @@ applySecurityHeaders();
         // --- Initialization logic for this instance ---
         const initialWikidataID = $form.data('wikidata-id');
         const initialEntitySuggestionID = $form.data('entity-suggestion-id');
+        const initialEntityLabel = $form.data('entity-label');
 
         if (initialWikidataID) {
             $form.find('input[name="id"]').val(initialWikidataID);
         }
         if (initialEntitySuggestionID) {
             $form.find('input[name="sourceEntitySuggestionID"]').val(initialEntitySuggestionID);
+        }
+        // No Wikidata ID known (e.g. opened from a conflict): prefill the label
+        // and link a Wikidata search for it next to the ID field.
+        if (initialEntityLabel) {
+            $form.find('input[name="label"]').val(initialEntityLabel);
+            if (!initialWikidataID) {
+                const searchUrl = 'https://www.wikidata.org/w/index.php?search=' + encodeURIComponent(initialEntityLabel);
+                $('<div class="form-text"><a href="' + searchUrl + '" target="_blank">' +
+                    localizedLabels.searchWikidataForLabel.replace('{label}', $('<span>').text(initialEntityLabel).html()) +
+                    ' <span class="icon-link-ext"></span></a></div>')
+                    .insertAfter($form.find('input[name="id"]'));
+            }
         }
         
         // Initial call to set up form display based on any pre-selected radio or default state

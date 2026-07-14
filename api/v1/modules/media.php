@@ -855,16 +855,18 @@ function processMediaItem($mediaData, $agendaItemID, $sessionID, $dateStart, $da
                 json_encode($mediaData["additionalInformation"] ?? [])
             );
         } catch (Exception $e) {
-            reportConflict(
-                "Media",
-                "mediaAdd failed",
-                "",
-                "",
-                "Could not add Media with ID: originID: " . ($mediaData["originID"] ?? 'N/A') . 
-                ", originMediaID: " . ($mediaData["originMediaID"] ?? 'N/A') . 
-                " (new id:" . ($nextID ?? 'N/A') . ") Error:" . $e->getMessage(),
-                null
-            );
+            reportConflict([
+                "type" => "media-import-error",
+                "parliament" => $parliament,
+                "mediaID" => "origin:" . ($mediaData["originID"] ?? '') . "/" . ($mediaData["originMediaID"] ?? ''),
+                "entityKey" => "",
+                "data" => [
+                    "originID" => $mediaData["originID"] ?? null,
+                    "originMediaID" => $mediaData["originMediaID"] ?? null,
+                    "attemptedID" => $nextID ?? null,
+                    "message" => $e->getMessage()
+                ]
+            ]);
             throw $e;
         }
     } else {
@@ -1023,7 +1025,13 @@ function processTextContent($textContent, $mediaID, $parliament, $dbp, $config, 
                         try {
                             $dbp->query("INSERT INTO ?n SET ?u", $config["parliament"][$parliament]["sql"]["tbl"]["Annotation"], $tmpAnnotation);
                         } catch (exception $e) {
-                            reportConflict("Media", "mediaAdd Annotation", $mediaID, "", "Could not add Annotation to Media. TextItem: " . json_encode($tmpAnnotation) . " ||| Error:" . $e->getMessage(), $db);
+                            reportConflict([
+                                "type" => "annotation-import-error",
+                                "parliament" => $parliament,
+                                "mediaID" => $mediaID,
+                                "entityKey" => "",
+                                "data" => ["annotation" => $tmpAnnotation, "message" => $e->getMessage()]
+                            ]);
                         }
                     }
                 }
@@ -1082,14 +1090,18 @@ function processTextContent($textContent, $mediaID, $parliament, $dbp, $config, 
                 $textContent["language"]
             );
         } catch (Exception $e) {
-            reportConflict(
-                "Media",
-                "mediaAdd TextContent Add failed",
-                $mediaID,
-                "",
-                "Could not add Text to Media. TextItem: " . json_encode($textContent) . " ||| Error:" . $e->getMessage(),
-                null
-            );
+            reportConflict([
+                "type" => "text-import-error",
+                "parliament" => $parliament,
+                "mediaID" => $mediaID,
+                "entityKey" => "",
+                "data" => [
+                    "op" => "add",
+                    "textType" => $textContent["type"] ?? null,
+                    "language" => $textContent["language"] ?? null,
+                    "message" => $e->getMessage()
+                ]
+            ]);
             throw $e;
         }
     } else {
@@ -1131,14 +1143,18 @@ function processTextContent($textContent, $mediaID, $parliament, $dbp, $config, 
                 $tmpTextItem["TextID"]
             );
         } catch (Exception $e) {
-            reportConflict(
-                "Media",
-                "mediaAdd TextContent Update failed",
-                $mediaID,
-                "",
-                "Could not update Text of Media. TextItem: " . json_encode($textContent) . " ||| Error:" . $e->getMessage(),
-                null
-            );
+            reportConflict([
+                "type" => "text-import-error",
+                "parliament" => $parliament,
+                "mediaID" => $mediaID,
+                "entityKey" => "",
+                "data" => [
+                    "op" => "update",
+                    "textType" => $textContent["type"] ?? null,
+                    "language" => $textContent["language"] ?? null,
+                    "message" => $e->getMessage()
+                ]
+            ]);
             throw $e;
         }
     }
@@ -1183,7 +1199,14 @@ function processDocuments($itemDocuments, $mediaID, $parliament, $db, $dbp, $con
 
         foreach ($itemDocuments as $document) {
             if (!$document["sourceURI"]) {
-                reportConflict("Media", "mediaAdd document no sourceURI", $mediaID, "", "Could not add Document to Database because sourceURI was missing for MediaID " . $mediaID . " personJSON: " . json_encode($document), $db);
+                reportConflict([
+                    "type" => "document-missing-source-uri",
+                    "parliament" => $parliament,
+                    "mediaID" => $mediaID,
+                    "entityType" => "document",
+                    "entityLabel" => $document["label"] ?? null,
+                    "data" => $document
+                ], $db);
                 continue;
             } else {
                 $tmpDocument = $db->getRow("SELECT * FROM ?n WHERE DocumentSourceURI = ?s", $config["platform"]["sql"]["tbl"]["Document"], $document["sourceURI"]);
@@ -1316,13 +1339,22 @@ function processPeople($itemPeople, $mediaID, $parliament, $db, $dbp, $config, $
     }
 
     foreach ($itemPeople as $person) {
+        // Media metadata and proceedings disagree on the main speaker (the
+        // merger flags the proceedings-derived person as low-confidence) —
+        // skip the person silently; deliberately not recorded as a conflict.
         if ($person["context"] == "main-proceeding-speaker") {
-            reportConflict("Media", "mediaAdd main-proceeding-speaker found", $mediaID, "", $person["wid"] . " This person was not added because it has context main-proceeding-speaker: " . json_encode($person, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $db); // Changed back from helper_reportConflict
             continue;
         }
 
         if ((!$person["wid"]) || (!preg_match("/(Q|P)\d+/i", $person["wid"]))) {
-            reportConflict("Media", "mediaAdd person has no WikidataID", $mediaID, "", ($person["wid"] ?? 'N/A') . "This person has no or incorrect WikidataID:" . json_encode($person, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $db); // Changed back from helper_reportConflict
+            reportConflict([
+                "type" => "person-missing-wikidata-id",
+                "parliament" => $parliament,
+                "mediaID" => $mediaID,
+                "entityType" => "person",
+                "entityLabel" => $person["label"] ?? null,
+                "data" => $person
+            ], $db);
             continue;
         }
 
@@ -1336,7 +1368,15 @@ function processPeople($itemPeople, $mediaID, $parliament, $db, $dbp, $config, $
         $person["creator"] = ($_SESSION["userdata"]["UserID"]) ? $_SESSION["userdata"]["UserID"] : "system";
 
         if (!$person["context"]) {
-            reportConflict("Media", "mediaAdd person without context", $mediaID, "", "Person has no context - personJSON: " . json_encode($person), $db); // Changed back from helper_reportConflict
+            reportConflict([
+                "type" => "person-missing-context",
+                "parliament" => $parliament,
+                "mediaID" => $mediaID,
+                "entityType" => "person",
+                "entityWid" => $person["wid"],
+                "entityLabel" => $person["label"] ?? null,
+                "data" => $person
+            ], $db);
             $person["context"] = "unknown";
         }
 
@@ -1359,7 +1399,21 @@ function processPeople($itemPeople, $mediaID, $parliament, $db, $dbp, $config, $
 
         if ((array_key_exists("faction", $person)) && (is_array($person["faction"]))) {
             if ((!$person["faction"]["wid"]) || (!preg_match("/(Q|P)\d+/i", $person["faction"]["wid"]))) {
-                reportConflict("Media", "faction has no WikidataID", $mediaID, "", "This faction has no or incorrect WikidataID:" . json_encode($person, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), $db); // Changed back from helper_reportConflict
+                // An entirely empty faction object (no wid, no label) means the
+                // person legitimately has no faction here — e.g. speaking in a
+                // government role (minister) — so it is not a conflict. Only a
+                // named faction without a wid is one.
+                $factionLabel = trim((string)($person["faction"]["label"] ?? ""));
+                if ($factionLabel !== "") {
+                    reportConflict([
+                        "type" => "faction-missing-wikidata-id",
+                        "parliament" => $parliament,
+                        "mediaID" => $mediaID,
+                        "entityType" => "organisation",
+                        "entityLabel" => $factionLabel,
+                        "data" => $person
+                    ], $db);
+                }
                 continue;
             }
 
@@ -1391,14 +1445,19 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
     // Validate input parameters
     $validationResult = validateMediaAddParameters($item, $config);
     if ($validationResult !== true) {
-        reportConflict(
-            "Media",
-            "mediaAdd failed - required fields missing",
-            "",
-            "",
-            "Item: ".json_encode($item)." ||| Errors: ".json_encode($validationResult),
-            $db
-        );
+        $itemMedia = (is_array($item) && is_array($item["media"] ?? null)) ? $item["media"] : [];
+        reportConflict([
+            "type" => "media-validation-error",
+            "parliament" => (is_array($item) ? ($item["parliament"] ?? '') : ''),
+            "mediaID" => "origin:" . ($itemMedia["originID"] ?? '') . "/" . ($itemMedia["originMediaID"] ?? ''),
+            "entityKey" => "",
+            "data" => [
+                "errors" => $validationResult,
+                "originID" => $itemMedia["originID"] ?? null,
+                "originMediaID" => $itemMedia["originMediaID"] ?? null,
+                "agendaItemID" => (is_array($item) ? ($item["agendaItem"]["officialID"] ?? null) : null)
+            ]
+        ], $db);
         return $validationResult;
     }
 
@@ -1434,6 +1493,15 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
 
         // Process media item
         $nextID = processMediaItem($item["media"], $item["agendaItem"]["id"], $item["session"]["SessionID"], $item["dateStart"], $item["dateEnd"], $item["parliament"], $dbp, $config);
+
+        // Auto-clean: remove this media from all import-conflict groups. The
+        // processing below re-reports every conflict that still applies (which
+        // re-adds the media); groups left without any media are deleted.
+        require_once(__DIR__."/conflict.php");
+        conflictClearMedia([
+            $nextID,
+            "origin:" . ($item["media"]["originID"] ?? '') . "/" . ($item["media"]["originMediaID"] ?? '')
+        ], $db);
 
         /**
          * TODO TEMP

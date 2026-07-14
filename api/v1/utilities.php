@@ -428,33 +428,39 @@ function createApiResponse($moduleResponse) {
 }
 
 /**
- * Helper function to report a conflict via the internal API.
+ * Helper function to report a conflict via the internal API. Conflicts are
+ * aggregated per unique issue (see api/v1/modules/conflict.php): re-reporting
+ * the same issue merges the media into the existing group.
  *
- * @param string $entity
- * @param string $subject
- * @param string $identifier
- * @param string $rival
- * @param string $description
- * @param object|false $dbPlatform
+ * @param array $conflict Conflict fields:
+ *                        - type (string, required, one of CONFLICT_TYPES)
+ *                        - parliament (string, optional)
+ *                        - mediaID (string, optional; media ID or "origin:..." key)
+ *                        - entityType (string, optional)
+ *                        - entityLabel (string, optional)
+ *                        - entityWid (string, optional)
+ *                        - entityKey (string, optional; overrides the wid-or-label group key)
+ *                        - data (array, optional; sample payload for the detail view)
+ * @param object|false $dbPlatform Optional platform DB connection.
  * @return array The API response from apiV1 or an error structure.
  */
-function reportConflict($entity, $subject, $identifier = "", $rival = "", $description = "", $dbPlatform = false /* Kept for signature compatibility */) {
+function reportConflict(array $conflict, $dbPlatform = false) {
     global $config; // apiV1 might use it, or config within api.php scope
 
     // Ensure the main API file is loaded if apiV1 is not universally available.
-    // This might already be handled by the calling script's autoloader or includes.
-    // If apiV1 is in the global scope already, this require might not be strictly necessary
-    // but it's safer to ensure it's available.
     require_once (__DIR__."/api.php");
 
     $request_params = [
         'action' => 'addItem',
         'itemType' => 'conflict',
-        'ConflictEntity' => $entity,
-        'ConflictSubject' => $subject,
-        'ConflictIdentifier' => $identifier,
-        'ConflictRival' => $rival,
-        'ConflictDescription' => $description
+        'ConflictType' => $conflict['type'] ?? '',
+        'ConflictParliament' => $conflict['parliament'] ?? '',
+        'ConflictMediaID' => $conflict['mediaID'] ?? '',
+        'ConflictEntityType' => $conflict['entityType'] ?? null,
+        'ConflictEntityLabel' => $conflict['entityLabel'] ?? null,
+        'ConflictEntityWid' => $conflict['entityWid'] ?? null,
+        'ConflictEntityKey' => $conflict['entityKey'] ?? null,
+        'ConflictData' => $conflict['data'] ?? null
     ];
 
     try {

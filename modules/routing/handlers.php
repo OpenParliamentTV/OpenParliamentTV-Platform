@@ -433,19 +433,6 @@ function page_admin_detail(array $routeData, array $params, Engine $plates): voi
     }
 
     switch ($page) {
-        case 'manage-conflicts':
-            optvRenderPage($plates, 'pages/manage/conflicts/conflict-detail/page', [
-                'page' => 'manage-conflicts',
-                'pageType' => 'admin',
-                'pageTitle' => L::manageConflicts(),
-                'pageBreadcrumbs' => [
-                    $home,
-                    ['label' => L::manageConflicts(), 'path' => '/manage/conflicts'],
-                    ['label' => '<span class="icon-pencil"></span>'],
-                ],
-            ]);
-            return;
-
         case 'manage-media':
             optvRenderPage($plates, 'pages/manage/media/media-detail/page', [
                 'page' => 'manage-media',

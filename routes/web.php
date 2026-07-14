@@ -73,7 +73,6 @@ return function (RouteCollector $r) {
     $get('/notifications', 'page_admin', 'notifications', 'public', ['requireLogin' => true]);
 
     // ---- Admin / manage detail pages ----
-    $get('/manage/conflicts/{id}', 'page_admin_detail', 'manage-conflicts', 'admin');
     $get('/manage/media/{id}', 'page_admin_detail', 'manage-media', 'admin');
     $get('/manage/structure/{subpage}/{id}', 'page_admin_detail', 'manage-structure', 'admin');
     $get('/manage/users/{id}', 'page_admin_detail', 'manage-users', 'admin', [

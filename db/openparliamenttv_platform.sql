@@ -19,14 +19,22 @@ CREATE TABLE `auth` (
 
 CREATE TABLE `conflict` (
   `ConflictID` int(11) NOT NULL,
-  `ConflictEntity` varchar(255) NOT NULL,
-  `ConflictIdentifier` varchar(255) DEFAULT NULL,
-  `ConflictRival` varchar(255) DEFAULT NULL,
-  `ConflictSubject` varchar(255) NOT NULL,
-  `ConflictDescription` text DEFAULT NULL,
-  `ConflictDate` varchar(255) NOT NULL,
-  `ConflictTimestamp` int(11) DEFAULT NULL,
-  `ConflictResolved` int(1) NOT NULL DEFAULT 0
+  `ConflictType` varchar(64) NOT NULL DEFAULT '',
+  `ConflictGroupKey` varchar(64) DEFAULT NULL,
+  `ConflictEntityType` varchar(32) DEFAULT NULL,
+  `ConflictEntityLabel` varchar(255) DEFAULT NULL,
+  `ConflictEntityWid` varchar(64) DEFAULT NULL,
+  `ConflictParliament` varchar(16) DEFAULT NULL,
+  `ConflictData` longtext DEFAULT NULL,
+  `ConflictStatus` enum('open','ignored','resolved') NOT NULL DEFAULT 'open',
+  `ConflictFirstSeen` int(11) DEFAULT NULL,
+  `ConflictLastSeen` int(11) DEFAULT NULL,
+  `ConflictResolvedDate` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `conflict_media` (
+  `ConflictID` int(11) NOT NULL,
+  `MediaID` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE `document` (
@@ -209,7 +217,14 @@ ALTER TABLE `auth`
   ADD PRIMARY KEY (`AuthID`);
 
 ALTER TABLE `conflict`
-  ADD PRIMARY KEY (`ConflictID`);
+  ADD PRIMARY KEY (`ConflictID`),
+  ADD UNIQUE KEY `uniq_conflict_group` (`ConflictGroupKey`),
+  ADD KEY `idx_conflict_status` (`ConflictStatus`),
+  ADD KEY `idx_conflict_type` (`ConflictType`);
+
+ALTER TABLE `conflict_media`
+  ADD PRIMARY KEY (`ConflictID`,`MediaID`),
+  ADD KEY `idx_conflictmedia_media` (`MediaID`);
 
 ALTER TABLE `document`
   ADD PRIMARY KEY (`DocumentID`),
