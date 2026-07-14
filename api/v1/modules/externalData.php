@@ -44,7 +44,7 @@ function _optv_get_string_from_data($data_source, $key, $entity_type = 'unknown'
     return (string)$value;
 }
 
-function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de", $parliament = null, $db = false) {
+function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de", $parliament = null, $db = false, $forceRefresh = false) {
 
     /*if (($id == "Q2415493") || ($id == "Q4316268")) {
         //TODO: Add Blacklist
@@ -146,12 +146,18 @@ function updateEntityFromService($type, $id, $serviceAPI, $key, $language = "de"
     try {
 
         $parliament = _externalData_resolve_parliament($parliament);
-        $apiItem = json_decode(file_get_contents(_externalData_build_ads_url($serviceAPI, [
+        $adsParams = [
             'key' => $key,
             'type' => $type,
             $idLabelAPI => $id,
             'parliament' => $parliament,
-        ])), true);
+        ];
+        if ($forceRefresh) {
+            // Bypass ADS's own response cache (up to 24h TTL) so a manual
+            // "Update from ADS" click always reflects the current source data.
+            $adsParams['nocache'] = 1;
+        }
+        $apiItem = json_decode(file_get_contents(_externalData_build_ads_url($serviceAPI, $adsParams)), true);
 
     } catch (Exception $e) {
 
@@ -641,6 +647,9 @@ function externalDataUpdateEntities($api_request) {
     
     $language = $api_request["language"] ?? "de";
     $parliament = _externalData_resolve_parliament($api_request["parliament"] ?? null);
+    // Only the manual "Update from ADS" admin button sets this — bulk/cron
+    // enrichment relies on ADS's response cache and must not bypass it.
+    $forceRefresh = !empty($api_request["forceRefresh"]);
 
     $results = [];
     $errors = [];
@@ -648,8 +657,8 @@ function externalDataUpdateEntities($api_request) {
 
     foreach ($api_request["ids"] as $k => $id) {
         // The type for each ID comes from the parallel $api_request["type"] array
-        $current_type = $api_request["type"][$k]; 
-        $update_result = updateEntityFromService($current_type, $id, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $language, $parliament);
+        $current_type = $api_request["type"][$k];
+        $update_result = updateEntityFromService($current_type, $id, $config["ads"]["api"]["uri"], $config["ads"]["api"]["key"], $language, $parliament, false, $forceRefresh);
         
         if (isset($update_result["meta"]["requestStatus"]) && $update_result["meta"]["requestStatus"] == "success") {
             $results[] = $update_result; // Or a simplified success message

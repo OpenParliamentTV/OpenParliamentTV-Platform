@@ -145,7 +145,8 @@
 					"itemType": "update-entities",
 					"type": [adsType],
 					"ids": [entityId],
-					"language": "de"
+					"language": "de",
+					"forceRefresh": true
 				},
 				method: "post",
 				success: function(response) {
