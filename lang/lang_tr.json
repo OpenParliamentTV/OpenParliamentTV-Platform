@@ -459,5 +459,10 @@
 	"notificationFilterMessages": "Mesajlar",
 	"messageAlertCriteriaEmpty": "Lütfen uyarı için en az bir arama ölçütü girin.",
 	"messageAlertLimitTitle": "Uyarı sınırına ulaşıldı",
-	"messageAlertLimitDetail": "Maksimum uyarı sayısına ulaştınız."
+	"messageAlertLimitDetail": "Maksimum uyarı sayısına ulaştınız.",
+	"refresh": "Yenile",
+	"recalculate": "Yeniden hesapla",
+	"clearCaches": "Önbellekleri temizle",
+	"clearCachesConfirm": "OpenSearch fielddata, query ve request önbellekleri temizlenip dizinler flush edilsin mi? Bu, yığın belleğini hemen serbest bırakır ancak önbellekler sorgular çalıştıkça yeniden dolar.",
+	"clearCachesDone": "Önbellekler temizlendi ve dizinler flush edildi."
 }

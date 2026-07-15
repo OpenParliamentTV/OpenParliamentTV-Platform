@@ -459,5 +459,10 @@
 	"notificationFilterMessages": "Messages",
 	"messageAlertCriteriaEmpty": "Veuillez fournir au moins un critère de recherche pour l'alerte.",
 	"messageAlertLimitTitle": "Limite d'alertes atteinte",
-	"messageAlertLimitDetail": "Vous avez atteint le nombre maximum d'alertes."
+	"messageAlertLimitDetail": "Vous avez atteint le nombre maximum d'alertes.",
+	"refresh": "Actualiser",
+	"recalculate": "Recalculer",
+	"clearCaches": "Vider les caches",
+	"clearCachesConfirm": "Vider les caches fielddata, query et request d'OpenSearch et vider les index ? Cela libère immédiatement de la mémoire du tas, mais les caches se rempliront de nouveau au fil des requêtes.",
+	"clearCachesDone": "Caches vidés et index vidés."
 }

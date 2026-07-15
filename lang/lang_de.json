@@ -459,5 +459,10 @@
 	"notificationFilterMessages": "Mitteilungen",
 	"messageAlertCriteriaEmpty": "Bitte gib mindestens ein Suchkriterium für die Benachrichtigung an.",
 	"messageAlertLimitTitle": "Limit erreicht",
-	"messageAlertLimitDetail": "Du hast die maximale Anzahl an Benachrichtigungen erreicht."
+	"messageAlertLimitDetail": "Du hast die maximale Anzahl an Benachrichtigungen erreicht.",
+	"refresh": "Aktualisieren",
+	"recalculate": "Neu berechnen",
+	"clearCaches": "Caches leeren",
+	"clearCachesConfirm": "Die OpenSearch-Fielddata-, Query- und Request-Caches leeren und die Indizes flushen? Das gibt sofort Heap-Speicher frei, die Caches füllen sich jedoch bei neuen Abfragen wieder.",
+	"clearCachesDone": "Caches geleert und Indizes geflusht."
 }

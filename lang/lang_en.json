@@ -460,5 +460,10 @@
 	"notificationFilterMessages": "Messages",
 	"messageAlertCriteriaEmpty": "Please provide at least one search criterion for the alert.",
 	"messageAlertLimitTitle": "Alert limit reached",
-	"messageAlertLimitDetail": "You have reached the maximum number of alerts."
+	"messageAlertLimitDetail": "You have reached the maximum number of alerts.",
+	"refresh": "Refresh",
+	"recalculate": "Recalculate",
+	"clearCaches": "Clear Caches",
+	"clearCachesConfirm": "Clear the OpenSearch fielddata, query and request caches and flush the indices? This frees heap memory immediately, but the caches refill as queries run.",
+	"clearCachesDone": "Caches cleared and indices flushed."
 }

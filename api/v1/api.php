@@ -637,7 +637,23 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     );
             }
             break;
-        
+
+        case "system":
+            require_once (__DIR__."/modules/systemStatus.php");
+            switch ($api_request["itemType"]) {
+                case "status":
+                    return createApiResponse(systemStatusGet($api_request));
+                case "clear-caches":
+                    return createApiResponse(systemClearCaches($api_request));
+                case "storage-scan":
+                    return createApiResponse(systemStorageScan($api_request));
+                default:
+                    return createApiResponse(
+                        createApiErrorInvalidParameter("itemType")
+                    );
+            }
+            break;
+
         case "statistics":
             include_once(__DIR__."/modules/statistics.php");
             switch ($api_request["itemType"]) {

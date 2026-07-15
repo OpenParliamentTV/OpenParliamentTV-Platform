@@ -20,7 +20,7 @@
                 <div class="col-12">
 					<ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="settings-tab" data-bs-toggle="tab" data-bs-target="#settings" role="tab" aria-controls="people" aria-selected="true"><span class="icon-cog"></span> <?= L::settings(); ?></a>
+                            <a class="nav-link active" id="status-tab" data-bs-toggle="tab" data-bs-target="#status" role="tab" aria-controls="status" aria-selected="true"><span class="icon-gauge"></span> Status</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="settings-filterablefactions-tab" data-bs-toggle="tab" data-bs-target="#settings-filterablefactions" role="tab" aria-controls="filterablefactions" aria-selected="true"><span class="icon-filter"></span> <?= L::filterable() ?></a>
@@ -35,8 +35,102 @@
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane bg-white fade show active" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-							[CONTENT]
+                        <div class="tab-pane bg-white fade show active" id="status" role="tabpanel" aria-labelledby="status-tab">
+	<?php
+                            $sysParliaments = [];
+                            foreach (($config["parliament"] ?? []) as $pCode => $pCfg) {
+                                $sysParliaments[$pCode] = ($pCfg["label"] ?? $pCode) ?: $pCode;
+                            }
+                            ?>
+                            <div class="p-3" id="systemStatusPanel">
+                                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+                                    <h4 class="mb-0"><span class="icon-gauge"></span> System Status</h4>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="text-muted small" id="sysLastUpdated"></span>
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" id="sysRefreshBtn"><span class="icon-arrows-cw"></span> <?= L::refresh() ?></button>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3">
+                                    <!-- OpenSearch -->
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-header d-flex align-items-center justify-content-between">
+                                                <span><span class="icon-search"></span> OpenSearch</span>
+                                                <span id="sysOsHealthBadge" class="badge bg-secondary">Status</span>
+                                            </div>
+                                            <div class="card-body">
+                                                <div id="sysOsSummary" class="row row-cols-2 row-cols-md-5 g-2 text-center mb-3"></div>
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm align-middle mb-3">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Nodes</th>
+                                                                <th style="min-width:160px;">Heap Usage</th>
+                                                                <th>CPU Usage</th>
+                                                                <th>Disk Usage</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="sysOsNodes"></tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Index</th>
+                                                                <th class="text-end">Documents</th>
+                                                                <th class="text-end">Deleted</th>
+                                                                <th class="text-end">Size</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="sysOsIndices"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer d-flex align-items-center gap-2 flex-wrap">
+                                                <?php foreach ($sysParliaments as $pCode => $pLabel): ?>
+                                                    <button type="button" class="btn btn-outline-primary btn-sm sys-optimize-btn" data-parliament="<?= hAttr($pCode) ?>">
+                                                        <span class="icon-magic"></span> <?= L::optimizeIndices() ?> (<?= h($pCode) ?>)
+                                                    </button>
+                                                <?php endforeach; ?>
+                                                <button type="button" class="btn btn-outline btn-sm" id="sysClearCachesBtn"><span class="icon-eraser"></span> <?= L::clearCaches() ?></button>
+                                                <span class="text-muted small ms-1" id="sysActionResult"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Databases -->
+                                    <div class="col-12 col-xl-6">
+                                        <div class="card h-100">
+                                            <div class="card-header"><span class="icon-database"></span> Databases</div>
+                                            <div class="card-body">
+                                                <div id="sysDbServers" class="mb-3 small"></div>
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Database</th>
+                                                                <th class="text-end">Tables</th>
+                                                                <th class="text-end">Size</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="sysDbSchemas"></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Storage -->
+                                    <div class="col-12 col-xl-6">
+                                        <div class="card h-100">
+                                            <div class="card-header"><span class="icon-data-volume"></span> Storage</div>
+                                            <div class="card-body" id="sysStorageBody"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="tab-pane bg-white fade show" id="settings-filterablefactions" role="tabpanel" aria-labelledby="settings-filterablefactions-tab">
                             <?php
@@ -703,4 +797,226 @@
         });
 
 
+    </script>
+
+    <script>
+        // System Status tab: OpenSearch cluster / MySQL / storage monitoring,
+        // plus the Clear-caches action and the reused Optimize trigger.
+        (function () {
+            const sysApiRoot = (config.dir.root || "") + '/api/v1/';
+            const sysLocale = "<?= $lang; ?>";
+            const sysT = <?= json_encode([
+                "clearCachesConfirm" => L::clearCachesConfirm(),
+                "clearCachesDone"    => L::clearCachesDone(),
+            ], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
+
+            let sysPollTimer = null;
+            const optimizeRunning = {};
+
+            function escHtml(v) { return $('<div>').text(v === null || v === undefined ? '' : v).html(); }
+            function fmtInt(n) { return (n === null || n === undefined || isNaN(n)) ? '–' : Number(n).toLocaleString(sysLocale); }
+            function bytesToHuman(b) {
+                if (b === null || b === undefined || isNaN(b)) { return '–'; }
+                const u = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
+                let i = 0, n = Number(b);
+                while (n >= 1024 && i < u.length - 1) { n /= 1024; i++; }
+                return (i === 0 ? n : n.toFixed(1)) + ' ' + u[i];
+            }
+            function humanDuration(sec) {
+                sec = Number(sec);
+                const d = Math.floor(sec / 86400), h = Math.floor((sec % 86400) / 3600), m = Math.floor((sec % 3600) / 60);
+                if (d > 0) { return d + 'd ' + h + 'h'; }
+                if (h > 0) { return h + 'h ' + m + 'm'; }
+                return m + 'm';
+            }
+            function barColor(p) { if (p === null || p === undefined) { return 'bg-secondary'; } if (p < 75) { return 'bg-success'; } if (p < 90) { return 'bg-warning'; } return 'bg-danger'; }
+            function progressBar(pct, label) {
+                const w = (pct === null || pct === undefined) ? 0 : Math.min(100, Math.max(0, pct));
+                return '<div class="progress" style="height:18px;min-width:120px;">' +
+                    '<div class="progress-bar ' + barColor(pct) + '" role="progressbar" style="width:' + w + '%;">' +
+                    escHtml(label !== null && label !== undefined ? label : (pct === null ? '–' : pct + '%')) + '</div></div>';
+            }
+            function healthBadge(status) {
+                const map = { green: 'bg-success', yellow: 'bg-warning', red: 'bg-danger' };
+                $('#sysOsHealthBadge').attr('class', 'badge ' + (map[status] || 'bg-secondary'))
+                    .text(status ? status.toUpperCase() : '?');
+            }
+            function summaryTile(label, valueHtml) {
+                return '<div class="col"><div class="border rounded py-2 h-100"><div class="fs-5 fw-semibold">' +
+                    valueHtml + '</div><div class="text-muted small">' + escHtml(label) + '</div></div></div>';
+            }
+
+            function renderOpenSearch(os) {
+                if (!os || !os.available) {
+                    healthBadge(null);
+                    $('#sysOsSummary').html('<div class="col-12 text-danger">' + escHtml((os && os.error) || 'unavailable') + '</div>');
+                    $('#sysOsNodes').empty();
+                    $('#sysOsIndices').empty();
+                    return;
+                }
+                const c = os.cluster || {};
+                healthBadge(c.status);
+                $('#sysOsSummary').html(
+                    summaryTile("Status", escHtml(c.status || '–')) +
+                    summaryTile("Nodes", fmtInt(c.nodes)) +
+                    summaryTile("Active Shards", fmtInt(c.activeShards)) +
+                    summaryTile("Unassigned", fmtInt(c.unassignedShards)) +
+                    summaryTile("Store Size", bytesToHuman(os.totalStoreBytes))
+                );
+                $('#sysOsNodes').html((os.nodes || []).map(function (n) {
+                    const heapLabel = (n.heapUsedPercent === null || n.heapUsedPercent === undefined ? '–' : n.heapUsedPercent + '%') +
+                        ' · ' + bytesToHuman(n.heapUsedBytes) + ' / ' + bytesToHuman(n.heapMaxBytes);
+                    const fsUsedPct = (n.fsTotalBytes && n.fsAvailableBytes !== null && n.fsAvailableBytes !== undefined)
+                        ? Math.round((n.fsTotalBytes - n.fsAvailableBytes) / n.fsTotalBytes * 100) : null;
+                    const fsCell = fsUsedPct === null ? '–'
+                        : (bytesToHuman(n.fsAvailableBytes) + ' free / ' + bytesToHuman(n.fsTotalBytes));
+                    return '<tr><td>' + escHtml(n.name) + '</td><td>' + progressBar(n.heapUsedPercent, heapLabel) + '</td><td>' +
+                        (n.cpuPercent === null || n.cpuPercent === undefined ? '–' : n.cpuPercent + '%') + '</td><td>' + fsCell + '</td></tr>';
+                }).join('') || '<tr><td colspan="4" class="text-muted">–</td></tr>');
+                $('#sysOsIndices').html((os.indices || []).map(function (i) {
+                    return '<tr><td>' + escHtml(i.name) + '</td><td class="text-end">' + fmtInt(i.docs) +
+                        '</td><td class="text-end">' + fmtInt(i.deleted) + '</td><td class="text-end">' + bytesToHuman(i.sizeBytes) + '</td></tr>';
+                }).join('') || '<tr><td colspan="4" class="text-muted">–</td></tr>');
+            }
+
+            function renderDatabases(dbs) {
+                const servers = (dbs && dbs.servers) || [];
+                $('#sysDbServers').html(servers.map(function (s) {
+                    return '<div><strong>' + escHtml(s.host || '–') + '</strong> · Version: ' + escHtml(s.version || '–') +
+                        ' · Uptime: ' + (s.uptimeSeconds !== null && s.uptimeSeconds !== undefined ? humanDuration(s.uptimeSeconds) : '–') +
+                        ' · Connections: ' + fmtInt(s.threadsConnected) + '</div>';
+                }).join(''));
+                const schemas = (dbs && dbs.schemas) || [];
+                $('#sysDbSchemas').html(schemas.map(function (s) {
+                    const name = escHtml(s.label) + ' <span class="text-muted">(' + escHtml(s.database) + ')</span>';
+                    if (!s.reachable) { return '<tr><td>' + name + '</td><td class="text-end text-danger" colspan="2">unreachable</td></tr>'; }
+                    return '<tr><td>' + name + '</td><td class="text-end">' + fmtInt(s.tables) + '</td><td class="text-end">' + bytesToHuman(s.sizeBytes) + '</td></tr>';
+                }).join('') || '<tr><td colspan="3" class="text-muted">–</td></tr>');
+            }
+
+            function renderStorage(st) {
+                if (!st) { $('#sysStorageBody').html(''); return; }
+                const fs = st.filesystem || {}, dd = st.dataDir || {}, osfs = st.openSearchFs || {};
+                let html = '<div class="mb-2"><div class="d-flex justify-content-between small flex-wrap"><span>Disk Usage <span class="text-muted">' +
+                    escHtml(fs.path || '') + '</span></span><span>' + bytesToHuman(fs.usedBytes) + ' used · ' +
+                    bytesToHuman(fs.freeBytes) + ' free · ' + bytesToHuman(fs.totalBytes) + ' total</span></div>' +
+                    progressBar(fs.usedPercent, (fs.usedPercent === null || fs.usedPercent === undefined ? '–' : fs.usedPercent + '%')) + '</div>';
+                html += '<div class="row row-cols-2 g-2 small mt-2">';
+                html += '<div class="col"><div class="text-muted">Data Directory</div><div>' + bytesToHuman(dd.sizeBytes) +
+                    ' <button type="button" class="btn btn-outline btn-sm px-1 py-0 align-baseline" id="sysRecalcBtn"><?= L::recalculate() ?></button><br>' +
+                    (dd.computedAt ? ' <span class="text-muted">(' + escHtml(String(dd.computedAt).replace('T', ' ').slice(0, 16)) + ')</span>' : '') + '</div></div>';
+                html += '<div class="col"><div class="text-muted">Databases</div><div>' + bytesToHuman(st.databasesTotalBytes) + '</div></div>';
+                html += '<div class="col"><div class="text-muted">OpenSearch</div><div>' + bytesToHuman(st.openSearchTotalBytes) + '</div></div>';
+                html += '<div class="col"><div class="text-muted">OpenSearch · free</div><div>' +
+                    bytesToHuman(osfs.availableBytes) + ' / ' + bytesToHuman(osfs.totalBytes) + '</div></div>';
+                html += '</div>';
+                $('#sysStorageBody').html(html);
+            }
+
+            function loadSystemStatus() {
+                $.ajax({
+                    url: sysApiRoot, method: 'POST', data: { action: 'system', itemType: 'status' },
+                    success: function (res) {
+                        if (res && res.meta && res.meta.requestStatus === 'success' && res.data) {
+                            renderOpenSearch(res.data.openSearch);
+                            renderDatabases(res.data.databases);
+                            renderStorage(res.data.storage);
+                            $('#sysLastUpdated').text(new Date().toLocaleTimeString(sysLocale));
+                        }
+                    }
+                });
+            }
+
+            $(document).on('click', '#sysClearCachesBtn', function () {
+                if (!confirm(sysT.clearCachesConfirm)) { return; }
+                const $btn = $(this);
+                $btn.prop('disabled', true);
+                $('#sysActionResult').text('…');
+                $.ajax({
+                    url: sysApiRoot, method: 'POST', data: { action: 'system', itemType: 'clear-caches' },
+                    success: function (res) {
+                        $btn.prop('disabled', false);
+                        if (res && res.meta && res.meta.requestStatus === 'success') {
+                            const d = res.data || {};
+                            const heap = (d.heapBeforePercent !== null && d.heapBeforePercent !== undefined)
+                                ? ' (' + d.heapBeforePercent + '% → ' + d.heapAfterPercent + '%)' : '';
+                            $('#sysActionResult').text(sysT.clearCachesDone + heap);
+                            loadSystemStatus();
+                        } else {
+                            $('#sysActionResult').text((res && res.errors && res.errors[0]) ? res.errors[0].detail : 'error');
+                        }
+                    },
+                    error: function () { $btn.prop('disabled', false); $('#sysActionResult').text('error'); }
+                });
+            });
+
+            $(document).on('click', '#sysRecalcBtn', function () {
+                const $btn = $(this);
+                $btn.prop('disabled', true).text('…');
+                $.ajax({
+                    url: sysApiRoot, method: 'POST', data: { action: 'system', itemType: 'storage-scan' },
+                    success: function () { loadSystemStatus(); },
+                    error: function () { $btn.prop('disabled', false); }
+                });
+            });
+
+            // Optimize reuses the existing async index/optimize + optimization-status endpoints.
+            $(document).on('click', '.sys-optimize-btn', function () {
+                const $btn = $(this);
+                const p = $btn.data('parliament');
+                if (optimizeRunning[p]) { return; }
+                optimizeRunning[p] = true;
+                const orig = $btn.html();
+                $btn.prop('disabled', true).html('<span class="icon-arrows-cw"></span> …');
+                $.ajax({
+                    url: sysApiRoot, method: 'POST', data: { action: 'index', itemType: 'optimize', parliament: p },
+                    success: function (res) {
+                        if (res && res.meta && res.meta.requestStatus === 'success') {
+                            setTimeout(function () { pollOptimize(p, $btn, orig); }, 2000);
+                        } else {
+                            optimizeRunning[p] = false;
+                            $btn.prop('disabled', false).html(orig);
+                            $('#sysActionResult').text((res && res.errors && res.errors[0]) ? res.errors[0].detail : 'error');
+                        }
+                    },
+                    error: function (xhr) {
+                        optimizeRunning[p] = false;
+                        $btn.prop('disabled', false).html(orig);
+                        $('#sysActionResult').text((xhr.responseJSON && xhr.responseJSON.errors) ? xhr.responseJSON.errors[0].detail : 'error');
+                    }
+                });
+            });
+
+            function pollOptimize(p, $btn, orig) {
+                $.ajax({
+                    url: sysApiRoot, method: 'POST', data: { action: 'index', itemType: 'optimization-status', parliament: p },
+                    success: function (res) {
+                        const status = (res && res.data) ? res.data.status : null;
+                        if (status === 'running') {
+                            setTimeout(function () { pollOptimize(p, $btn, orig); }, 3000);
+                        } else {
+                            optimizeRunning[p] = false;
+                            $btn.prop('disabled', false).html(orig);
+                            $('#sysActionResult').text((res && res.data && res.data.statusDetails) || '');
+                            loadSystemStatus();
+                        }
+                    },
+                    error: function () { optimizeRunning[p] = false; $btn.prop('disabled', false).html(orig); }
+                });
+            }
+
+            $('#sysRefreshBtn').on('click', loadSystemStatus);
+
+            function startPolling() {
+                if (sysPollTimer) { return; }
+                sysPollTimer = setInterval(function () {
+                    const pane = document.getElementById('status');
+                    if (pane && pane.classList.contains('active') && document.visibilityState === 'visible') {
+                        loadSystemStatus();
+                    }
+                }, 20000);
+            }
+
+            $(function () { loadSystemStatus(); startPolling(); });
+        })();
     </script>
