@@ -7,8 +7,6 @@
 .directory
 
 # Logs
-logs
-_logs/
 *.log
 
 # Lock files
@@ -38,26 +36,13 @@ _planning/
 .cursor/
 CLAUDE.md
 
-# Cache
-langcache/*.php
-api/v1/cache/*.json
-api/v1/cache/*.meta
-cache/images/*.webp
-cache/images/*.png
-cache/images/*.jpg
-cache/images/*.src
-cache/meta-images/*.png
+# Runtime state (caches, logs, import working files, cloned data repositories).
+# Everything except the deny-all .htaccess that ships with the repo.
+/var/*
+!/var/.htaccess
 
 # Data
 data/import-error-log.txt
-data/input/*.json
-data/done/*.json
-data/progress/*.json
-data/repos/*
-modules/alignment/data/*.xml
-modules/alignment/output/*.json
-modules/import/input/*.json
-modules/import/done/*.json
 config.php
 config-*.php
 # ...but the meta-image module's config.php is layout config, not bootstrap config — keep it tracked.

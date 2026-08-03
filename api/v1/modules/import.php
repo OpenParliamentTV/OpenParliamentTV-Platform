@@ -15,10 +15,10 @@ function importRunCronUpdater($request) {
     // Validate parliament parameter
     $parliament = $request['parliament'] ?? null;
     if (empty($parliament)) {
-        return createApiErrorMissingParameter('parliament');
+        return apiErrorMissingParameter('parliament');
     }
     if (!isset($config['parliament'][$parliament])) {
-        return createApiErrorInvalidParameter('parliament', "Invalid parliament specified: {$parliament}");
+        return apiErrorInvalidParameter('parliament', "Invalid parliament specified: {$parliament}");
     }
     
     // Check if cronUpdater is already running for this parliament
@@ -37,7 +37,7 @@ function importRunCronUpdater($request) {
         if ($lockAge >= ($ignoreMinutes * 60)) {
             unlink($lockFile);
         } else {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 409, // Conflict
                 "CRON_ALREADY_RUNNING",
                 "messageErrorCronAlreadyRunningTitle",
@@ -55,7 +55,7 @@ function importRunCronUpdater($request) {
     }
     
     if (isPhpFunctionDisabled('exec')) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             500,
             "EXEC_DISABLED",
             "Could not start data import",
@@ -65,20 +65,20 @@ function importRunCronUpdater($request) {
     }
 
     $phpBinary = resolvePhpCliBinary($config["bin"]["php"] ?? "");
-    $cronScript = realpath(__DIR__ . "/../../../data/cronUpdater.php");
+    $cronScript = realpath(__DIR__ . "/../../../bin/import.php");
     if (!$cronScript || !is_file($cronScript)) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             500,
             "CRON_SCRIPT_NOT_FOUND",
             "Could not start data import",
-            "cronUpdater.php not found at the expected path.",
+            "bin/import.php not found at the expected path.",
             ["parliament" => $parliament]
         );
     }
 
-    $logFile = realpath(__DIR__ . "/../../../data/cronUpdater.log");
+    $logFile = realpath(optvVarFilePath("log", "cronUpdater.log"));
     if ($logFile === false) {
-        $logFile = __DIR__ . "/../../../data/cronUpdater.log";
+        $logFile = optvVarFilePath("log", "cronUpdater.log");
     }
 
     try {
@@ -86,7 +86,7 @@ function importRunCronUpdater($request) {
         file_put_contents($logFile, date('Y-m-d H:i:s') . " - info: [import-api] Spawning: {$command}\n", FILE_APPEND);
         executeAsyncShellCommand($command, $logFile);
         
-        return createApiSuccessResponse(
+        return apiSuccessResponse(
             [
                 "running" => true,
                 "startedAt" => date("Y-m-d H:i:s"),
@@ -96,7 +96,7 @@ function importRunCronUpdater($request) {
             []
         );
     } catch (Exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             500,
             "CRON_START_FAILED",
             "Could not start data import",
@@ -118,13 +118,13 @@ function importGetCronUpdaterStatus($request = []) {
     // Validate parliament parameter
     $parliament = $request['parliament'] ?? null;
     if (empty($parliament)) {
-        return createApiErrorMissingParameter('parliament');
+        return apiErrorMissingParameter('parliament');
     }
     if (!isset($config['parliament'][$parliament])) {
-        return createApiErrorInvalidParameter('parliament', "Invalid parliament specified: {$parliament}");
+        return apiErrorInvalidParameter('parliament', "Invalid parliament specified: {$parliament}");
     }
     
-    $progressFilePath = __DIR__ . "/../../../data/progress/cronUpdater_" . $parliament . ".json";
+    $progressFilePath = optvVarPath("data/progress") . "/cronUpdater_" . $parliament . ".json";
 
     if (!file_exists($progressFilePath)) {
         // Default status if progress file doesn't exist (e.g., never run or cleaned up)
@@ -152,17 +152,17 @@ function importGetCronUpdaterStatus($request = []) {
                 "processedMediaObjectsInFile" => 0
             ]
         ];
-        return createApiSuccessResponse($defaultStatus, ["message" => "CronUpdater progress file not found for parliament {$parliament}, returning default idle status."]);
+        return apiSuccessResponse($defaultStatus, ["message" => "CronUpdater progress file not found for parliament {$parliament}, returning default idle status."]);
     }
 
     $progressJson = @file_get_contents($progressFilePath);
     if ($progressJson === false) {
-        return createApiErrorResponse(500, 'PROGRESS_FILE_READ_ERROR', "Could not read the CronUpdater progress file.", "File exists at {$progressFilePath} but is unreadable.");
+        return apiErrorResponse(500, 'PROGRESS_FILE_READ_ERROR', "Could not read the CronUpdater progress file.", "File exists at {$progressFilePath} but is unreadable.");
     }
 
     $progressData = json_decode($progressJson, true);
     if (json_last_error() !== JSON_ERROR_NONE) {
-        return createApiErrorResponse(500, 'PROGRESS_FILE_CORRUPT', "CronUpdater progress file is corrupt or not valid JSON.", "JSON decode error: " . json_last_error_msg() . " in file {$progressFilePath}");
+        return apiErrorResponse(500, 'PROGRESS_FILE_CORRUPT', "CronUpdater progress file is corrupt or not valid JSON.", "JSON decode error: " . json_last_error_msg() . " in file {$progressFilePath}");
     }
 
     // Ensure all expected keys from the defaultStatus are present to prevent frontend errors
@@ -181,7 +181,7 @@ function importGetCronUpdaterStatus($request = []) {
     $progressData = array_merge($defaultKeysTemplate, $progressData);
 
     
-    return createApiSuccessResponse(
+    return apiSuccessResponse(
         $progressData,
         [
             "message" => "CronUpdater status retrieved successfully from progress file for parliament {$parliament}."
@@ -203,7 +203,7 @@ function reimportSessions($request_params, $db = false) {
     global $config; 
     
     if (empty($request_params['files']) || !is_array($request_params['files'])) {
-        return createApiErrorMissingParameter('files');
+        return apiErrorMissingParameter('files');
     }
 
     $filesToReimport = $request_params['files'];
@@ -212,21 +212,14 @@ function reimportSessions($request_params, $db = false) {
         'failed' => [],
         'skipped' => []
     ];
-    $projectRoot = realpath(__DIR__ . "/../../../"); // project_root
-
-    if (!$projectRoot) {
-        error_log("Critical error: Project root could not be determined in reimportSessions.");
-        return createApiErrorResponse(500, 'PROJECT_ROOT_ERROR', 'messageErrorInternal', 'Could not determine project root directory.');
-    }
-
     foreach ($filesToReimport as $parliament => $sessionFiles) {
         if (!is_array($sessionFiles)) {
             $results['failed'][] = ['parliament' => $parliament, 'file' => 'N/A', 'reason' => 'Invalid file list format for parliament.'];
             continue;
         }
         foreach ($sessionFiles as $file) {
-            $sourcePath = $projectRoot . "/data/repos/" . $parliament . "/processed/" . $file;
-            $destinationPath = $projectRoot . "/data/input/" . $file;
+            $sourcePath = optvVarPath("data/repos") . "/" . $parliament . "/processed/" . $file;
+            $destinationPath = optvVarPath("data/input") . "/" . $file;
 
             if (!is_file($sourcePath)) {
                 $results['skipped'][] = ['parliament' => $parliament, 'file' => $file, 'reason' => 'Source file not found or is not a file.'];
@@ -239,15 +232,12 @@ function reimportSessions($request_params, $db = false) {
                 continue;
             }
 
-            // Ensure destination directory exists or can be created (though /data/input/ should exist)
+            // optvVarPath() already created var/data/input; bail out if it could not.
             $destinationDir = dirname($destinationPath);
             if (!is_dir($destinationDir)) {
-                // Attempt to create if it doesn't exist, though this should ideally already be set up.
-                if (!mkdir($destinationDir, 0775, true)) {
-                    $results['failed'][] = ['parliament' => $parliament, 'file' => $file, 'reason' => 'Destination directory does not exist and could not be created.'];
-                    error_log("Reimport: Destination directory could not be created: " . $destinationDir);
-                    continue;
-                }
+                $results['failed'][] = ['parliament' => $parliament, 'file' => $file, 'reason' => 'Destination directory does not exist and could not be created.'];
+                error_log("Reimport: Destination directory could not be created: " . $destinationDir);
+                continue;
             }
 
             if (copy($sourcePath, $destinationPath)) {
@@ -259,7 +249,7 @@ function reimportSessions($request_params, $db = false) {
         }
     }
 
-    return createApiSuccessResponse(
+    return apiSuccessResponse(
         $results, 
         ['summary' => count($results['copied']) . ' file(s) scheduled for re-import, ' . count($results['failed']) . ' failed, ' . count($results['skipped']) . ' skipped.']);
 }

@@ -13,38 +13,13 @@
  * routes live in routes/web.php and handlers in modules/routing/handlers.php.
  */
 
-session_start();
+require_once(__DIR__ . "/bootstrap.php"); // session, config, headers, i18n, view globals
 
-require_once(__DIR__ . "/config.php"); // defines OPTV, $config, $acceptLang
-require_once(__DIR__ . "/vendor/autoload.php");
-require_once(__DIR__ . "/modules/utilities/security.php");
-applySecurityHeaders();
-
-if ($config["mode"] == "dev") {
-    error_reporting(E_ALL);
-} else {
-    error_reporting(E_ERROR);
-}
-ini_set('display_errors', '0');
-ini_set('log_errors', '1');
-
-require_once(__DIR__ . "/modules/i18n/language.php");
-require_once(__DIR__ . "/modules/utilities/functions.php");
 // Load search functions at global scope so the OpenSearch client global
-// ($ESClient, set at the top of search/functions.php) is available to the
+// ($ESClient, set at the top of search/opensearch.php) is available to the
 // search/media handlers — which now run in function scope rather than the old
 // global switch.
-require_once(__DIR__ . "/modules/search/functions.php");
-
-// Initialize language
-$lang = LanguageManager::getInstance()->getCurrentLang();
-$langJSONString = LanguageManager::getInstance()->getLangJSONString();
-
-$color_scheme = isset($_COOKIE["color_scheme"]) ? $_COOKIE["color_scheme"] : false;
-if ($color_scheme === false) $color_scheme = 'light';
-
-$useragent = $_SERVER['HTTP_USER_AGENT'] ?? '';
-$isMobile = (bool) preg_match('/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows (ce|phone)|xda|xiino/i', $useragent);
+require_once(__DIR__ . "/modules/search/opensearch.php");
 
 // Build the clean query-string ($paramStr) and result flag ($isResult) used by
 // header.php and RSS autodiscovery — reuses the same allow-list as before.
@@ -81,7 +56,7 @@ $pageRateLimit = $config["rateLimit"]["pages"] ?? null;
 if ($pageRateLimit) {
     $pageRetryAfter = optvRateLimitExceeded($pageRateLimit, 'page');
     if ($pageRetryAfter !== null) {
-        render_429($plates, $pageRetryAfter);
+        pageRender429($plates, $pageRetryAfter);
         exit;
     }
 }
@@ -107,12 +82,12 @@ $routeInfo = $dispatcher->dispatch($_SERVER['REQUEST_METHOD'], $uri);
 
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
-        render_404($plates);
+        pageRender404($plates);
         break;
 
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         http_response_code(405);
-        render_404($plates);
+        pageRender404($plates);
         break;
 
     case FastRoute\Dispatcher::FOUND:
@@ -138,7 +113,7 @@ switch ($routeInfo[0]) {
                 $access = $routeData['accessResolver']($params);
             }
 
-            $authResult = checkPageAuth($access);
+            $authResult = authCheckPage($access);
 
             // Some entity-typed pages (e.g. notifications) are public by page type
             // but still require an authenticated session — reproduces the old

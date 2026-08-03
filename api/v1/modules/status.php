@@ -3,7 +3,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
-require_once (__DIR__."/../../../modules/search/functions.php");
+require_once (__DIR__."/../../../modules/search/opensearch.php");
 
 // Helper function to format date strings to ISO 8601 (ATOM)
 function formatDateToISO8601($dateString = null) {
@@ -24,7 +24,7 @@ function formatDateToISO8601($dateString = null) {
 
 function getLocalRepoStatus($parliamentCode) {
     global $config;
-    $repoPath = __DIR__."/../../../data/repos/".$parliamentCode;
+    $repoPath = optvVarPath('data/repos')."/".$parliamentCode;
     $processedPath = $repoPath."/processed/";
     $status = [
         "lastUpdated" => null,
@@ -53,7 +53,6 @@ function getLocalRepoStatus($parliamentCode) {
 
 function getRemoteRepoDetails($repoUrl) {
     // Define cache settings
-    $cacheDir = __DIR__ . '/../cache/';
     $cacheLifetime = 600; // 10 minutes in seconds
 
     // Default response structure
@@ -65,15 +64,10 @@ function getRemoteRepoDetails($repoUrl) {
     if (empty($repoUrl) || !preg_match("~github\.com/([^/]+)/([^/.]+)(\.git)?~", $repoUrl, $matches)) {
         return $defaultDetails;
     }
-    
-    $cacheKey = md5($repoUrl) . '.json';
-    $cacheFile = $cacheDir . $cacheKey;
 
-    // Create cache directory if it doesn't exist
-    if (!is_dir($cacheDir)) {
-        // Use @ to suppress warnings if the directory already exists due to a race condition.
-        @mkdir($cacheDir, 0775, true);
-    }
+    // optvVarPath() creates the cache directory on first use.
+    $cacheKey = md5($repoUrl) . '.json';
+    $cacheFile = optvVarPath('cache/api') . '/' . $cacheKey;
 
     // Try to get data from cache
     if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheLifetime)) {
@@ -94,7 +88,7 @@ function getRemoteRepoDetails($repoUrl) {
     $repo = $matches[2];
 
     $commitsApiUrl = "https://api.github.com/repos/{$owner}/{$repo}/commits";
-    $commitsResponse = makeHttpRequest($commitsApiUrl, ['http' => ['user_agent' => 'OpenParliamentTV-Platform-Status']]);
+    $commitsResponse = optvHttpRequest($commitsApiUrl, ['http' => ['user_agent' => 'OpenParliamentTV-Platform-Status']]);
     if ($commitsResponse !== false) {
         $commitsData = json_decode($commitsResponse, true);
         if (is_array($commitsData) && !empty($commitsData)) {
@@ -104,7 +98,7 @@ function getRemoteRepoDetails($repoUrl) {
     }
 
     $contentsApiUrl = "https://api.github.com/repos/{$owner}/{$repo}/contents/processed";
-    $contentsResponse = makeHttpRequest($contentsApiUrl, ['http' => ['user_agent' => 'OpenParliamentTV-Platform-Status']]);
+    $contentsResponse = optvHttpRequest($contentsApiUrl, ['http' => ['user_agent' => 'OpenParliamentTV-Platform-Status']]);
 
     if ($contentsResponse !== false) {
         $contentsData = json_decode($contentsResponse, true);
@@ -280,7 +274,7 @@ function getStatus($request = []) {
         $statusOutput["attributes"]["parliaments"][] = $parliamentData;
     }
 
-    return createApiSuccessResponse($statusOutput["attributes"]);
+    return apiSuccessResponse($statusOutput["attributes"]);
 }
 
 ?> 

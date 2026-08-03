@@ -4,7 +4,7 @@
  *
  * Sets up the Plates engine with:
  * - content/ as the template root (templates stay where they live)
- * - A custom path resolver that reproduces the include_custom() override
+ * - A custom path resolver that reproduces the optvIncludeCustom() override
  *   convention so existing parliament-instance overrides keep working:
  *       custom/content/{name}.{lang}.php   ← language-specific override
  *       custom/content/{name}.php          ← generic override
@@ -21,7 +21,7 @@ use League\Plates\Exception\TemplateNotFound;
 
 /**
  * Resolves a Plates template name to a file path using the same priority chain
- * as include_custom() (modules/utilities/functions.php). The current language is
+ * as optvIncludeCustom() (modules/utilities/functions.php). The current language is
  * read live from $_SESSION['lang'] on every resolution, exactly like the legacy
  * helper, so language switching mid-session resolves the right override.
  */

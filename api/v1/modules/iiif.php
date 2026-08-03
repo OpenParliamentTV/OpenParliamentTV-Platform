@@ -2,7 +2,7 @@
 
 require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
-require_once (__DIR__."/../../../modules/utilities/functions.entities.php");
+require_once (__DIR__."/../../../modules/utilities/entities.php");
 require_once (__DIR__."/../../../modules/i18n/language.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
 require_once (__DIR__."/media.php");
@@ -456,7 +456,7 @@ function iiifGenerateSessionManifest(string $sessionID): ?array {
         return null;
     }
 
-    $idInfo = getInfosFromStringID($sessionID);
+    $idInfo = optvParseStringId($sessionID);
     if (!$idInfo || !array_key_exists($idInfo['parliament'], $config['parliament'])) {
         return null;
     }
@@ -648,7 +648,7 @@ function iiifGenerateCollection(string $parliamentCode, ?string $electoralPeriod
  * Dynamic Collection built from a media search — the IIIF counterpart to the
  * RSS search feed. Takes the same allowed media-search params (personID, termID,
  * q, dateFrom/To, context, …) and returns a Collection whose items are Manifest
- * references to the matching media items. Mirrors fetchFeedSpeeches() in the
+ * references to the matching media items. Mirrors feedFetchSpeeches() in the
  * feed module; like a Collection everywhere, items are lightweight references
  * (no per-item mediaGetByID). Returns null when there are no matches.
  */

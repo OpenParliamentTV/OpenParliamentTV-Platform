@@ -5,7 +5,7 @@
  *
  * Builds on the Box/Color text classes in gd-text.php (the same library the
  * quote renderer uses) and on the existing entity-thumbnail cache in
- * modules/images/functions.php (optvImageEnsureCached) so social cards composite
+ * modules/images/image-cache.php (optvImageEnsureCached) so social cards composite
  * the same locally-cached thumbnails the site already serves.
  */
 
@@ -427,7 +427,7 @@ function metaImageDrawCenteredTitleBlock($img, array $cfg, array $a) {
     $blockH   = $numLines * $titleLHpx + $secondaryH;
     $blockTop = $a['bandTop'] + ($a['bandHeight'] - $blockH) / 2;
     // Cap how high the block can rise: never above where a 2-line title would sit
-    // when centred. Taller blocks (e.g. very long agenda-item titles) then keep
+    // when centred. Taller blocks (e.g. very long agendaItem titles) then keep
     // this top and grow downward instead of pushing further up.
     $maxTop = $a['bandTop'] + ($a['bandHeight'] - 2 * $titleLHpx) / 2;
     if ($blockTop < $maxTop) {
@@ -574,7 +574,7 @@ function metaImageApplyCircleMask($thumb, $diameter) {
  *   - contain + center + scale (organisation): whole logo, padded, centered
  * Falls back to the entity icon when no cached thumbnail is available.
  *
- * Relies on optvImageEnsureCached() (modules/images/functions.php) which fetches
+ * Relies on optvImageEnsureCached() (modules/images/image-cache.php) which fetches
  * + caches the Wikimedia source on a miss, falling back to a stale/empty result.
  */
 function metaImageDrawThumbnail($img, $type, $id, $x, $y, $diameter, array $cfg) {

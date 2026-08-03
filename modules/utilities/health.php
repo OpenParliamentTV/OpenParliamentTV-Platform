@@ -11,6 +11,7 @@
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
 require_once(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/paths.php');
 
 /**
  * Aggregate service health for the current request.
@@ -18,7 +19,7 @@ require_once(__DIR__ . '/../../config.php');
  * @return array{searchAvailable: bool}
  */
 function optvServiceHealth() {
-    $cacheFile = __DIR__ . '/../../api/v1/cache/serviceHealth.json';
+    $cacheFile = optvVarFilePath('cache/api', 'serviceHealth.json');
     $cacheTtl  = 30; // seconds — banner can lag a recovery by at most this long
 
     if (file_exists($cacheFile) && (time() - filemtime($cacheFile) < $cacheTtl)) {
@@ -30,10 +31,7 @@ function optvServiceHealth() {
 
     $health = ["searchAvailable" => optvCheckSearchAvailable()];
 
-    $cacheDir = dirname($cacheFile);
-    if (!is_dir($cacheDir)) {
-        @mkdir($cacheDir, 0775, true);
-    }
+    // optvVarFilePath() already created the cache directory.
     @file_put_contents($cacheFile, json_encode($health));
 
     return $health;

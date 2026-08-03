@@ -1419,7 +1419,7 @@ paths:
       summary: Type-ahead suggestions
       description: |
         Returns suggestions for the given query. `entities` returns mixed people/organisations/
-        terms/documents; `text` returns full-text suggestions; `agendaItem` returns agenda-item
+        terms/documents; `text` returns full-text suggestions; `agendaItem` returns agendaItem
         suggestions. Matched substrings are wrapped in `<em>` tags in the returned labels.
       parameters:
         - name: type

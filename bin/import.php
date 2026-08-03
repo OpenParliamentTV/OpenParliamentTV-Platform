@@ -1,0 +1,570 @@
+<?php
+require_once(__DIR__ . "/../bootstrap-cli.php");
+
+ini_set('memory_limit', '512M');
+/**
+ * This script expects to be run via CLI only
+ *
+ * it can have the following parameter
+ * --parliament "DE" | default value will be "DE"
+ *
+ * --justUpdateSearchIndex "true" | (default not enabled) if this is set it will get all MediaItems from API or just the Items with given with following parameter (separeted IDs by comma)
+ * --ids "DE-0190002013,DE-0190002014" | (default not enabled) comma separated list of MediaIDs which get updated if --justUpdateSearchIndex = true too
+ * --triggerStatisticsAfterCompletion | (default not enabled) if this is set with --justUpdateSearchIndex, statistics indexing will be triggered asynchronously after main index completion
+ *
+ * --ignoreGit = "true" | (default not enabled) just processes session files from $meta["inputDir"] and dont do anything with git
+ *
+ * this script will exit if cronUpdater.lock file is present.
+ * If the lock file is older than $config["time"]["warning"] a mail will be send to $config["cronContactMail"]
+ * If the lock file is older than $config["time"]["ignore"] the lock file will be removed. In this case we expect there was a crash
+ *
+ *
+ */
+
+$config["time"]["warning"] = 30; //minutes
+$config["time"]["ignore"] = 90; //minutes
+$config["cronContactMail"] = ""; //minutes
+
+
+$meta["inputDir"] = optvVarPath("data/input") . "/";
+$meta["doneDir"] = optvVarPath("data/done") . "/";
+$meta["preserveFiles"] = true;
+
+// Define path for the progress file for the DATA IMPORT part
+// This will be set dynamically based on parliament
+
+/**
+ * @param string $type
+ * @param string $msg
+ *
+ * Writes to log file
+ */
+
+function logger($type = "info",$msg) {
+    file_put_contents(optvVarFilePath("log", "cronUpdater.log"),date("Y-m-d H:i:s")." - ".$type.": ".$msg."\n",FILE_APPEND );
+}
+
+/**
+ * Checks if this script is executed from CLI
+ */
+if (optvIsCli()) {
+
+    logger("info", "cronUpdater CLI invoked. argv=" . implode(' ', $_SERVER['argv'] ?? []));
+
+    //get CLI parameter to $input first to determine parliament
+    $input = getopt("", ["parliament:","justUpdateSearchIndex::","ids:","ignoreGit::","triggerStatisticsAfterCompletion::"]);
+    $parliament = ((!empty($input["parliament"])) ? $input["parliament"] : "DE");
+    
+    // Include functions needed for CLI operations early
+    require_once(__DIR__ . "/../api/v1/utilities.php");
+    
+    // Set parliament-specific progress file path
+    define("CRONUPDATER_PROGRESS_FILE", optvVarPath("data/progress") . "/cronUpdater_" . $parliament . ".json");
+    
+    /**
+     * Check if parliament-specific lock file exists and checks its age
+     */
+    $lockFile = optvVarPath("data/progress")."/cronUpdater_" . $parliament . ".lock";
+    if (file_exists($lockFile)) {
+
+        if (((time()-filemtime($lockFile)) >= ($config["time"]["warning"]*60)) && (time()-filemtime($lockFile)) <= ($config["time"]["ignore"]*60)) {
+
+            if (filter_var($config["cronContactMail"], FILTER_VALIDATE_EMAIL)) {
+                require_once(__DIR__.'/../modules/mail/mailer.php');
+                sendSimpleMail($config["cronContactMail"], "CronJob blocked for parliament $parliament", "CronJob was not executed for parliament $parliament. Its blocked now for over ".$config["time"]["warning"]." Minutes. Check the server and if its not running, remove the file: ".realpath($lockFile));
+                logger("warn", "CronJob was not executed for parliament $parliament and lock file is there for > ".$config["time"]["warning"]." Minutes already.");
+
+                exit;
+            }
+
+        } elseif ((time()-filemtime($lockFile)) >= ($config["time"]["ignore"]*60)) {
+
+            logger("warn", "CronJob was blocked for parliament $parliament for > ".$config["time"]["ignore"]." Minutes now. Decided to ignore it and run it anyways.");
+            unlink(realpath($lockFile));
+
+        } else {
+            logger("warn", "CronJob was blocked for parliament $parliament because its already running (for ".(time()-filemtime($lockFile))." seconds)");
+            cliLog("cronUpdater still running for parliament $parliament");
+            exit;
+
+        }
+
+    }
+
+    // Check if statistics indexing is running to prevent conflicts
+    $statisticsLockFile = optvVarPath("data/progress") . "/statisticsIndexer_" . $parliament . ".lock";
+    if (file_exists($statisticsLockFile)) {
+        $lockAge = time() - filemtime($statisticsLockFile);
+        
+        // Use 4 hour timeout (matches statisticsIndexer timeout for full rebuilds)
+        $timeout = 14400;
+        
+        if ($lockAge < $timeout) {
+            logger("warn", "Statistics indexing is running for $parliament. Skipping data import to prevent conflicts.");
+            cliLog("Statistics indexing running - data import blocked");
+            exit;
+        } else {
+            // Remove stale statistics lock
+            unlink($statisticsLockFile);
+            logger("info", "Removed stale statistics indexing lock file.");
+        }
+    }
+    
+    // Check if index optimization is running to prevent conflicts
+    $optimizationLockFile = optvVarPath("data/progress") . "/indexOptimization_" . $parliament . ".lock";
+    if (file_exists($optimizationLockFile)) {
+        $lockData = json_decode(file_get_contents($optimizationLockFile), true);
+        $lockAge = time() - ($lockData['timestamp'] ?? 0);
+        
+        // Optimization is typically short (1-2 minutes), use 10 minute timeout
+        if ($lockAge < 600) {
+            logger("warn", "Index optimization is running for $parliament. Skipping data import to prevent conflicts.");
+            cliLog("Index optimization running - data import blocked");
+            exit;
+        } else {
+            // Remove stale optimization lock
+            unlink($optimizationLockFile);
+            logger("info", "Removed stale index optimization lock file.");
+        }
+    }
+    
+    // create parliament-specific lock file
+    touch (optvVarPath("data/progress")."/cronUpdater_" . $parliament . ".lock");
+
+    $isDataImportMode = !isset($input["justUpdateSearchIndex"]);
+    $progressFinalized = false; // Flag for shutdown handler
+
+    // --- START: Define Search Index Progress File Path (used in search index mode) ---
+    // This helper function comes from the restored api/v1/modules/search-index.php but we need it here.
+    // To avoid including the whole file, we define a compatible version.
+    $searchIndexProgressFilePath = optvVarPath("data/progress") . "/searchIndex_" . strtoupper($parliament) . ".json";
+    // --- END: Define Search Index Progress File Path ---
+
+
+    // Register shutdown function to ensure lock and progress are handled.
+    register_shutdown_function(function() use ($isDataImportMode, &$progressFinalized, $searchIndexProgressFilePath, $parliament) {
+        
+        // Handle DATA IMPORT progress finalization on crash
+        if ($isDataImportMode && function_exists('optvProgressFinalize')) {
+            if (file_exists(CRONUPDATER_PROGRESS_FILE) && !$progressFinalized) {
+                $currentProgressJson = @file_get_contents(CRONUPDATER_PROGRESS_FILE);
+                $currentProgress = $currentProgressJson ? json_decode($currentProgressJson, true) : null;
+                if (is_array($currentProgress) && $currentProgress["status"] === "running") {
+                    $logMessageDetail = "CronUpdater (Data Import) exited unexpectedly while 'running'.";
+                    optvProgressLogError(CRONUPDATER_PROGRESS_FILE, $logMessageDetail, "CRASH");
+                    optvProgressFinalize(CRONUPDATER_PROGRESS_FILE, "error_shutdown", "Process terminated unexpectedly.");
+                    logger("error", "CronUpdater (Data Import) shutdown: " . $logMessageDetail);
+                }
+            }
+        } 
+        // Handle SEARCH INDEX progress finalization on crash
+        else if (!$isDataImportMode && function_exists('optvProgressFinalize')) {
+            if (file_exists($searchIndexProgressFilePath) && !$progressFinalized) {
+                 $currentProgressJson = @file_get_contents($searchIndexProgressFilePath);
+                 $currentProgress = $currentProgressJson ? json_decode($currentProgressJson, true) : null;
+                 if (is_array($currentProgress) && $currentProgress["status"] === "running") {
+                    $logMessageDetail = "CronUpdater (Search Index) exited unexpectedly while 'running'.";
+                    optvProgressLogError($searchIndexProgressFilePath, $logMessageDetail, "CRASH");
+                    optvProgressFinalize($searchIndexProgressFilePath, "error_shutdown", "Process terminated unexpectedly.");
+                    logger("error", "CronUpdater (Search Index) shutdown: " . $logMessageDetail);
+                }
+            }
+        }
+
+        // Always try to remove the parliament-specific lock file
+        if (file_exists(optvVarPath("data/progress")."/cronUpdater_" . $parliament . ".lock")) {
+            @unlink(optvVarPath("data/progress")."/cronUpdater_" . $parliament . ".lock");
+        }
+    });
+
+    logger("info","cronUpdater started in ". ($isDataImportMode ? 'Data Import' : 'Search Index Update') ." mode.");
+
+    require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
+    require_once(__DIR__ . "/../api/v1/api.php");
+    require_once(__DIR__ . "/../api/v1/modules/search-index.php");
+
+    if ($isDataImportMode) {
+        $lastSuccess = null;
+        if (file_exists(CRONUPDATER_PROGRESS_FILE)) {
+            $previousProgressJson = @file_get_contents(CRONUPDATER_PROGRESS_FILE);
+            if ($previousProgressJson) {
+                $previousProgress = json_decode($previousProgressJson, true);
+                if (isset($previousProgress['lastSuccessfullyProcessedFile'])) {
+                    $lastSuccess = $previousProgress['lastSuccessfullyProcessedFile'];
+                }
+            }
+        }
+
+        optvProgressInit(CRONUPDATER_PROGRESS_FILE, [
+            "processName" => "dataImport",
+            "statusDetails" => "Connecting to databases...",
+            "totalFiles" => 0,
+            "processedFiles" => 0,
+            "lastSuccessfullyProcessedFile" => $lastSuccess
+        ]);
+    }
+
+    $failDataImport = function ($message) use ($isDataImportMode, &$progressFinalized) {
+        logger("error", $message);
+        if ($isDataImportMode && function_exists('optvProgressFinalize')) {
+            optvProgressLogError(CRONUPDATER_PROGRESS_FILE, $message, "STARTUP");
+            optvProgressFinalize(CRONUPDATER_PROGRESS_FILE, "error_critical", $message);
+            $progressFinalized = true;
+        }
+        exit(1);
+    };
+
+    try {
+        $db = new SafeMySQL(['host' => $config["platform"]["sql"]["access"]["host"], 'user' => $config["platform"]["sql"]["access"]["user"], 'pass' => $config["platform"]["sql"]["access"]["passwd"], 'db' => $config["platform"]["sql"]["db"]]);
+    } catch (exception $e) {
+        $failDataImport("Platform database connection failed: " . $e->getMessage());
+    }
+    try {
+        $dbp = new SafeMySQL(['host' => $config["parliament"][$parliament]["sql"]["access"]["host"], 'user' => $config["parliament"][$parliament]["sql"]["access"]["user"], 'pass' => $config["parliament"][$parliament]["sql"]["access"]["passwd"], 'db' => $config["parliament"][$parliament]["sql"]["db"]]);
+    } catch (exception $e) {
+        $failDataImport("Parliament database connection failed for {$parliament}: " . $e->getMessage());
+    }
+
+    /**
+     *
+     * Just update the Search Index from API/Database
+     *
+     **/
+    if (isset($input["justUpdateSearchIndex"])) {
+
+        $ids = [];
+        if (!empty($input["ids"])) {
+            $tmpIDs = explode(",", $input["ids"]);
+            foreach ($tmpIDs as $tmpID) {
+                if (preg_match("/(".$parliament.")\\-\\d+/i", $tmpID)) {
+                    $ids[] = trim($tmpID);
+                }
+            }
+        } else {
+            $idObjects = $dbp->getAll("SELECT MediaID FROM ?n", $config["parliament"][$parliament]["sql"]["tbl"]["Media"]);
+            foreach ($idObjects as $idObject) {
+                $ids[] = $idObject['MediaID'];
+            }
+        }
+        
+        $totalItems = count($ids);
+        $batchSize = 10;
+        $totalBatches = ceil($totalItems / $batchSize);
+        logger("info", "Starting search index update for ".$totalItems." items for parliament: {$parliament}");
+        
+        $performanceStartTime = time();
+        
+        optvProgressInit($searchIndexProgressFilePath, [
+            'processName' => 'searchIndexFullUpdate',
+            'parliament' => $parliament,
+            'statusDetails' => "Starting to process {$totalItems} items in {$totalBatches} batches.",
+            'totalDbMediaItems' => $totalItems,
+            'processedMediaItems' => 0,
+            'itemsFailed' => 0,
+            'currentBatch' => 0,
+            'totalBatches' => $totalBatches,
+            'performance' => [
+                'start_time' => $performanceStartTime,
+                'avg_docs_per_second' => 0
+            ]
+        ]);
+
+        // Preflight: verify OpenSearch is actually reachable before grinding through
+        // thousands of batches. getApiOpenSearchClient() builds the client lazily and never
+        // opens a connection, so a dead server is only detected on the first real request.
+        // Without this check the loop below would call bulk() per batch, swallow each failure
+        // (0 updated / 0 failed), record nothing, and still finalize as "completed" having
+        // indexed zero documents. Fail loudly here instead.
+        $preflightClient = getApiOpenSearchClient();
+        $openSearchReachable = false;
+        if ($preflightClient && !(is_array($preflightClient) && isset($preflightClient["errors"]))) {
+            try {
+                $openSearchReachable = $preflightClient->ping();
+            } catch (Exception $e) {
+                logger("error", "OpenSearch ping threw: " . $e->getMessage());
+                $openSearchReachable = false;
+            }
+        }
+        unset($preflightClient);
+        if (!$openSearchReachable) {
+            $msg = "OpenSearch is not reachable. Aborting search index rebuild for {$parliament} before processing any of the {$totalItems} items.";
+            logger("error", $msg);
+            optvProgressLogError($searchIndexProgressFilePath, $msg, "OPENSEARCH_UNREACHABLE");
+            optvProgressFinalize($searchIndexProgressFilePath, "error_critical", $msg);
+            $progressFinalized = true;
+            exit(1);
+        }
+
+        $mediaItemsBatch = [];
+        $processedItemCount = 0;
+        $failedItemCount = 0;
+        $currentBatchNum = 0;
+
+        foreach ($ids as $index => $id) {
+            try {
+                $tmpMedia = apiV1(["action" => "getItem", "itemType" => "media", "id" => $id], $db, $dbp);
+                if (isset($tmpMedia['data']['id'])) {
+                    $mediaItemsBatch[] = $tmpMedia;
+                } else {
+                    $failedItemCount++;
+                    $errorMessage = "Failed to fetch valid data (item is empty or missing an ID) for MediaID: {$id}";
+                    logger("warn", $errorMessage);
+                    optvProgressLogError($searchIndexProgressFilePath, $errorMessage, $id);
+                }
+            } catch (Exception $e) {
+                $failedItemCount++;
+                $errorMessage = "Exception fetching MediaID {$id}: " . $e->getMessage();
+                logger("error", $errorMessage);
+                optvProgressLogError($searchIndexProgressFilePath, $errorMessage, $id, $e->getTraceAsString());
+            }
+
+            // Process batch when it's full or it's the last item
+            if (count($mediaItemsBatch) >= $batchSize || ($index + 1) === $totalItems) {
+                $currentBatchNum++;
+                $itemsInBatch = count($mediaItemsBatch);
+                $statusDetails = "Processing batch {$currentBatchNum}/{$totalBatches} ({$itemsInBatch} items)";
+                
+                optvProgressUpdate($searchIndexProgressFilePath, [
+                    'currentBatch' => $currentBatchNum,
+                    'statusDetails' => $statusDetails
+                ]);
+                
+                if (!empty($mediaItemsBatch)) {
+                    $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsBatch, "initIndex" => ($currentBatchNum === 1), "isFullRebuild" => true];
+                    $updateResult = searchIndexUpdate($updateRequest);
+
+                    // A failed searchIndexUpdate() returns an error response (meta.requestStatus
+                    // === 'error', no 'data' key) — e.g. OpenSearch went down mid-run, or the
+                    // bulk request threw. Reading 'data.updated'/'data.failed' with ?? 0 would
+                    // hide that: the run would march through every remaining batch indexing
+                    // nothing and still finalize as "completed". Detect it and abort loudly.
+                    if (isset($updateResult['meta']['requestStatus']) && $updateResult['meta']['requestStatus'] === 'error') {
+                        $errorDetail = $updateResult['errors'][0]['detail'] ?? ($updateResult['errors'][0]['title'] ?? 'Unknown indexing error');
+                        $msg = "Search index update failed at batch {$currentBatchNum}/{$totalBatches} (OpenSearch may be down): {$errorDetail}. Aborting after {$processedItemCount} indexed items.";
+                        logger("error", $msg);
+                        optvProgressLogError($searchIndexProgressFilePath, $msg, "BATCH_{$currentBatchNum}");
+                        optvProgressFinalize($searchIndexProgressFilePath, "error_critical", $msg);
+                        $progressFinalized = true;
+                        exit(1);
+                    }
+
+                    $updatedInBatch = $updateResult['data']['updated'] ?? 0;
+                    $failedInBatch = $updateResult['data']['failed'] ?? 0;
+                    
+                    $processedItemCount += $updatedInBatch;
+                    $failedItemCount += $failedInBatch;
+
+                    if ($failedInBatch > 0 && !empty($updateResult['data']['errors'])) {
+                        logger("error", "Search index update batch {$currentBatchNum} failed for {$failedInBatch} items.");
+                        foreach($updateResult['data']['errors'] as $error) {
+                             optvProgressLogError(
+                                 $searchIndexProgressFilePath, 
+                                 $error['message'] ?? 'Unknown indexing error', 
+                                 $error['id'] ?? "UNKNOWN_ITEM_ID_BATCH_{$currentBatchNum}"
+                            );
+                        }
+                    }
+                }
+                
+                // Calculate performance metrics
+                $elapsedTime = time() - $performanceStartTime;
+                $avgDocsPerSecond = $elapsedTime > 0 ? round($processedItemCount / $elapsedTime, 2) : 0;
+                
+                // Update progress after every batch, reflecting all successes and failures so far.
+                optvProgressUpdate($searchIndexProgressFilePath, [
+                    'processedMediaItems' => $processedItemCount, // Only successfully indexed items
+                    'itemsFailed' => $failedItemCount, // All failures (fetch + index)
+                    'performance' => [
+                        'start_time' => $performanceStartTime,
+                        'avg_docs_per_second' => $avgDocsPerSecond
+                    ]
+                ]);
+
+                // Explicitly free memory
+                unset($mediaItemsBatch, $updateRequest, $updateResult);
+                gc_collect_cycles(); // Force garbage collection
+
+                $mediaItemsBatch = []; // Reset batch for the next iteration
+            }
+        }
+        
+        $finalStatusDetails = "Search index update completed. Successfully indexed: {$processedItemCount}, Total failed: {$failedItemCount}.";
+        $finalStatus = ($failedItemCount > 0) ? "partially_completed_with_errors" : "completed_successfully";
+        if ($processedItemCount === 0 && $failedItemCount === $totalItems) {
+            $finalStatus = "error_all_items_failed";
+            $finalStatusDetails = "Search index update failed. All {$totalItems} items failed to process.";
+        }
+        
+        // Enhanced indices will be handled by the search index update process
+        // No need to build words index here anymore - using new enhanced indexing system
+        
+        optvProgressFinalize($searchIndexProgressFilePath, $finalStatus, $finalStatusDetails);
+        $progressFinalized = true;
+
+        logger("info", "cronUpdater finished: Search index update complete. Total: {$totalItems}, Processed: {$processedItemCount}, Failed: {$failedItemCount}.");
+        
+        // Trigger statistics indexing after successful completion if requested
+        if (isset($input["triggerStatisticsAfterCompletion"]) && $finalStatus === "completed_successfully") {
+            $statisticsScriptPath = realpath(__DIR__ . "/index-statistics.php");
+            if ($statisticsScriptPath && file_exists($statisticsScriptPath)) {
+                $statisticsCommand = $config["bin"]["php"] . " " . escapeshellarg($statisticsScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=200 > /dev/null 2>&1 &";
+                logger("info", "Triggering statistics indexing after main index completion");
+                exec($statisticsCommand);
+                logger("info", "Statistics indexing triggered successfully.");
+            } else {
+                logger("warn", "Statistics indexing script not found at: " . __DIR__ . "/index-statistics.php");
+            }
+        }
+        
+        exit;
+
+    } else {
+        // NORMAL DATA IMPORT MODE
+        try {
+            if (!is_dir($meta["inputDir"])) { mkdir($meta["inputDir"], 0775, true); }
+            if (($meta["preserveFiles"] == true) && (!is_dir($meta["doneDir"]))) { mkdir($meta["doneDir"], 0775, true); }
+
+            // Preserve the last successfully processed file name across runs.
+            $lastSuccess = null;
+            if (file_exists(CRONUPDATER_PROGRESS_FILE)) {
+                $previousProgressJson = @file_get_contents(CRONUPDATER_PROGRESS_FILE);
+                if ($previousProgressJson) {
+                    $previousProgress = json_decode($previousProgressJson, true);
+                    if (isset($previousProgress['lastSuccessfullyProcessedFile'])) {
+                        $lastSuccess = $previousProgress['lastSuccessfullyProcessedFile'];
+                    }
+                }
+            }
+
+            optvProgressUpdate(CRONUPDATER_PROGRESS_FILE, [
+                "statusDetails" => "Starting data import process...",
+                "lastSuccessfullyProcessedFile" => $lastSuccess
+            ]);
+            
+            // By default, sync from Git. The --ignoreGit flag prevents this.
+            if (!isset($input["ignoreGit"])) {
+                logger("info", "Running Git repository sync.");
+                require_once(__DIR__ . "/../modules/import/git-sync.php");
+                importGitSync($parliament);
+            } else {
+                logger("info", "Skipping Git repository sync due to --ignoreGit flag.");
+            }
+            
+            require_once(__DIR__ . "/../data/entity-dump/entity-dump.php");
+
+            $inputFiles = array_filter(scandir($meta["inputDir"]), function($file) use ($meta) {
+                return !is_dir($meta["inputDir"] . $file) && preg_match('/.*\.json$/DA', $file);
+            });
+            $totalFilesToProcess = count($inputFiles);
+            optvProgressUpdate(CRONUPDATER_PROGRESS_FILE, ["totalFiles" => $totalFilesToProcess]);
+            
+            // Collect all media IDs for batched statistics update at the end
+            $allProcessedMediaIds = [];
+
+            if (empty($inputFiles)) {
+                optvProgressFinalize(CRONUPDATER_PROGRESS_FILE, "completed_successfully", "No new files to process.");
+                $progressFinalized = true;
+                logger("info", "cronUpdater finished: No input files to process.");
+                exit;
+            }
+
+            $processedFileCount = 0;
+            $entityDump = getEntityDump(array("type" => "all", "wiki" => true, "wikikeys" => "true"), $db);
+            
+            foreach ($inputFiles as $file) {
+                cliLog("start processing file: " . $file);
+                optvProgressUpdate(CRONUPDATER_PROGRESS_FILE, ["currentFile" => $file, "statusDetails" => "Processing file: " . $file]);
+                
+                $json = json_decode(file_get_contents($meta["inputDir"] . $file), true);
+                if (!$json) {
+                    logger("ERROR", "Could not parse json from file: " . $file);
+                    continue;
+                }
+
+                $mediaItemsForSearchIndex = [];
+                foreach ($json["data"] as $media) {
+                    $media["action"] = "addItem";
+                    $media["itemType"] = "media";
+                    $media["meta"] = $json["meta"];
+                    
+                    $return = mediaAdd($media, $db, $dbp, $entityDump);
+                    if ($return["meta"]["requestStatus"] == "success") {
+                        $tmpMedia = apiV1(["action" => "getItem", "itemType" => "media", "id" => $return["data"]["id"]], $db, $dbp);
+                        if ($tmpMedia["meta"]["requestStatus"] == "success") {
+                            $mediaItemsForSearchIndex[] = $tmpMedia;
+
+                            // Alert matching (Plan B): fire notifications for newly-indexed
+                            // public speeches. Dedup on (AlertID, MediaID) makes re-imports
+                            // safe; wrapped so a matcher error never breaks the import.
+                            if (!empty($config["allow"]["notifications"])) {
+                                try {
+                                    require_once(__DIR__ . "/../modules/notifications/alert-matcher.php");
+                                    $matchCount = matchMediaItemAgainstAlerts($tmpMedia["data"], $parliament, $db);
+                                    if ($matchCount > 0) {
+                                        logger("info", "Alert matcher created " . $matchCount . " notification(s) for " . $return["data"]["id"]);
+                                    }
+                                } catch (Exception $e) {
+                                    logger("ERROR", "Alert matcher failed for " . ($return["data"]["id"] ?? "?") . ": " . $e->getMessage());
+                                }
+                            }
+                        }
+                    } else {
+                        logger("ERROR", "Could not add media from file " . $file . " | return: " . json_encode($return) . " | Item: " . json_encode($media));
+                    }
+                }
+                
+                cliLog("media database part for session finished. Updating " . count($mediaItemsForSearchIndex) . " Media Items at OpenSearch now.");
+                if ($meta["preserveFiles"] == true) { rename($meta["inputDir"] . $file, $meta["doneDir"] . $file); } 
+                else { unlink($meta["inputDir"] . $file); }
+                
+                if (!empty($mediaItemsForSearchIndex)) {
+                    // Update main search index (disable auto statistics trigger since we'll do batched trigger later)
+                    $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsForSearchIndex, "initIndex" => false, "skipAutoStatistics" => true];
+                    searchIndexUpdate($updateRequest);
+                    
+                    // Collect media IDs for batched statistics update at the end
+                    foreach ($mediaItemsForSearchIndex as $item) {
+                        if (isset($item['data']['id'])) {
+                            $allProcessedMediaIds[] = $item['data']['id'];
+                        }
+                    }
+                }
+                
+                $processedFileCount++;
+                optvProgressUpdate(CRONUPDATER_PROGRESS_FILE, [
+                    "processedFiles" => $processedFileCount, 
+                    "statusDetails" => "Finished file: " . $file,
+                    "lastSuccessfullyProcessedFile" => $file
+                ]);
+            }
+            
+            // Trigger batched statistics indexing for all processed media items
+            if (!empty($allProcessedMediaIds)) {
+                $uniqueMediaIds = array_values(array_unique($allProcessedMediaIds));
+                $statisticsScriptPath = realpath(__DIR__ . "/index-statistics.php");
+                if ($statisticsScriptPath && file_exists($statisticsScriptPath)) {
+                    $statisticsCommand = $config["bin"]["php"] . " " . escapeshellarg($statisticsScriptPath) . " --parliament=" . escapeshellarg($parliament) . " --batch-size=50 --media-ids=" . escapeshellarg(implode(',', $uniqueMediaIds)) . " > /dev/null 2>&1 &";
+                    logger("info", "Triggering incremental statistics indexing for " . count($uniqueMediaIds) . " items after all files processed");
+                    exec($statisticsCommand);
+                }
+            }
+            
+            // When finalizing, clear the currentFile since nothing is actively being processed.
+            optvProgressFinalize(CRONUPDATER_PROGRESS_FILE, "completed_successfully", "Data import finished. Processed {$processedFileCount}/{$totalFilesToProcess} files.");
+            optvProgressUpdate(CRONUPDATER_PROGRESS_FILE, ["currentFile" => null]);
+            $progressFinalized = true;
+            logger("info", "cronUpdater finished: File processing complete.");
+            exit;
+
+        } catch (Exception $e) {
+            $criticalErrorMsg = "CRITICAL unhandled exception in cronUpdater data import: " . $e->getMessage();
+            logger("CRITICAL", $criticalErrorMsg);
+            if(function_exists('optvProgressFinalize')) {
+                optvProgressFinalize(CRONUPDATER_PROGRESS_FILE, "error_critical", $criticalErrorMsg);
+            }
+            $progressFinalized = true;
+            exit(1);
+        }
+    }
+}
+?>

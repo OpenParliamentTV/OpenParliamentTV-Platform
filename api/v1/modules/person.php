@@ -4,7 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
-require_once (__DIR__."/../../../modules/images/functions.php");
+require_once (__DIR__."/../../../modules/images/image-cache.php");
 
 
 
@@ -16,12 +16,12 @@ function personGetByID($id = false, $db = false) {
     global $config;
 
     if (!$id) {
-        return createApiErrorMissingParameter('id');
+        return apiErrorMissingParameter('id');
     }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     try {
@@ -33,14 +33,14 @@ function personGetByID($id = false, $db = false) {
         if ($item) {
             $personDataObject = personGetDataObject($item, $db);
             if (!$personDataObject) {
-                return createApiErrorResponse(500, 1, "messageErrorDataTransformationTitle", "messageErrorDataTransformationDetail");
+                return apiErrorResponse(500, 1, "messageErrorDataTransformationTitle", "messageErrorDataTransformationDetail");
             }
-            return createApiSuccessResponse($personDataObject);
+            return apiSuccessResponse($personDataObject);
         } else {
-            return createApiErrorNotFound('person');
+            return apiErrorNotFound('person');
         }
     } catch (exception $e) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 }
 
@@ -61,7 +61,7 @@ function personGetDataObject($item = false, $db = false) {
         $return["attributes"]["birthDate"] = $item["PersonBirthDate"];
         $return["attributes"]["gender"] = $item["PersonGender"];
         $return["attributes"]["abstract"] = $item["PersonAbstract"];
-        $return["attributes"]["thumbnailURI"] = thumbnailCacheURL("person", $item["PersonID"], $item["PersonThumbnailURI"]);
+        $return["attributes"]["thumbnailURI"] = imageCacheUrl("person", $item["PersonID"], $item["PersonThumbnailURI"]);
         $return["attributes"]["thumbnailCreator"] = $item["PersonThumbnailCreator"] ? htmlentities($item["PersonThumbnailCreator"]) : null;
         $return["attributes"]["thumbnailLicense"] = $item["PersonThumbnailLicense"];
         $return["attributes"]["embedURI"] = $item["PersonEmbedURI"];
@@ -82,7 +82,7 @@ function personGetDataObject($item = false, $db = false) {
                 $return["relationships"]["party"]["data"]["id"] = $itemParty["OrganisationID"];
                 $return["relationships"]["party"]["data"]["attributes"]["label"] = $itemParty["OrganisationLabel"];
                 $return["relationships"]["party"]["data"]["attributes"]["labelAlternative"] = json_decode($itemParty["OrganisationLabelAlternative"],true);
-                $return["relationships"]["party"]["data"]["attributes"]["thumbnailURI"] = thumbnailCacheURL("organisation", $itemParty["OrganisationID"], $itemParty["OrganisationThumbnailURI"]);
+                $return["relationships"]["party"]["data"]["attributes"]["thumbnailURI"] = imageCacheUrl("organisation", $itemParty["OrganisationID"], $itemParty["OrganisationThumbnailURI"]);
                 $return["relationships"]["party"]["data"]["attributes"]["thumbnailCreator"] = $itemParty["OrganisationThumbnailCreator"];
                 $return["relationships"]["party"]["data"]["attributes"]["thumbnailLicense"] = $itemParty["OrganisationThumbnailLicense"];
                 $return["relationships"]["party"]["data"]["attributes"]["websiteURI"] = $itemParty["OrganisationWebsiteURI"];
@@ -110,7 +110,7 @@ function personGetDataObject($item = false, $db = false) {
                 $return["relationships"]["faction"]["data"]["id"] = $itemFaction["OrganisationID"];
                 $return["relationships"]["faction"]["data"]["attributes"]["label"] = $itemFaction["OrganisationLabel"];
                 $return["relationships"]["faction"]["data"]["attributes"]["labelAlternative"] = json_decode($itemFaction["OrganisationLabelAlternative"],true);
-                $return["relationships"]["faction"]["data"]["attributes"]["thumbnailURI"] = thumbnailCacheURL("organisation", $itemFaction["OrganisationID"], $itemFaction["OrganisationThumbnailURI"]);
+                $return["relationships"]["faction"]["data"]["attributes"]["thumbnailURI"] = imageCacheUrl("organisation", $itemFaction["OrganisationID"], $itemFaction["OrganisationThumbnailURI"]);
                 $return["relationships"]["faction"]["data"]["attributes"]["thumbnailCreator"] = $itemFaction["OrganisationThumbnailCreator"];
                 $return["relationships"]["faction"]["data"]["attributes"]["thumbnailLicense"] = $itemFaction["OrganisationThumbnailLicense"];
                 $return["relationships"]["faction"]["data"]["attributes"]["websiteURI"] = $itemFaction["OrganisationWebsiteURI"];
@@ -148,7 +148,7 @@ function personSearch($parameter, $db = false) {
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     $filteredParameters = filterAllowedSearchParams($parameter, 'person');
@@ -156,14 +156,14 @@ function personSearch($parameter, $db = false) {
     // Validate name length
     if (array_key_exists("name", $filteredParameters)) {
         if (mb_strlen($filteredParameters["name"], "UTF-8") < 3) {
-            return createApiErrorInvalidLength('name', 3);
+            return apiErrorInvalidLength('name', 3);
         }
     }
 
     // Validate type
     if (array_key_exists("type", $filteredParameters)) {
         if (!in_array($filteredParameters["type"], $config["entityTypes"]["person"])) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 422, 
                 2, 
                 "messageErrorInvalidValueTitle", 
@@ -178,11 +178,11 @@ function personSearch($parameter, $db = false) {
         if (is_array($filteredParameters["party"])) {
             foreach ($filteredParameters["party"] as $tmpParty) {
                 if (mb_strlen($tmpParty, "UTF-8") < 1) {
-                    return createApiErrorInvalidLength('party', 1);
+                    return apiErrorInvalidLength('party', 1);
                 }
             }
         } else if (mb_strlen($filteredParameters["party"], "UTF-8") < 1) {
-            return createApiErrorInvalidLength('party', 1);
+            return apiErrorInvalidLength('party', 1);
         }
     }
 
@@ -190,12 +190,12 @@ function personSearch($parameter, $db = false) {
     if (array_key_exists("partyID", $filteredParameters)) {
         if (is_array($filteredParameters["partyID"])) {
             foreach ($filteredParameters["partyID"] as $tmpPartyID) {
-                if (!validateWikidataID($tmpPartyID)) {
-                    return createApiErrorInvalidID("Party");
+                if (!optvValidateWikidataId($tmpPartyID)) {
+                    return apiErrorInvalidId("Party");
                 }
             }
-        } else if (!validateWikidataID($filteredParameters["partyID"])) {
-            return createApiErrorInvalidID("Party");
+        } else if (!optvValidateWikidataId($filteredParameters["partyID"])) {
+            return apiErrorInvalidId("Party");
         }
     }
 
@@ -204,11 +204,11 @@ function personSearch($parameter, $db = false) {
         if (is_array($filteredParameters["faction"])) {
             foreach ($filteredParameters["faction"] as $tmpFaction) {
                 if (mb_strlen($tmpFaction, "UTF-8") < 1) {
-                    return createApiErrorInvalidLength('faction', 1);
+                    return apiErrorInvalidLength('faction', 1);
                 }
             }
         } else if (mb_strlen($filteredParameters["faction"], "UTF-8") < 1) {
-            return createApiErrorInvalidLength('faction', 1);
+            return apiErrorInvalidLength('faction', 1);
         }
     }
 
@@ -216,31 +216,31 @@ function personSearch($parameter, $db = false) {
     if (array_key_exists("factionID", $filteredParameters)) {
         if (is_array($filteredParameters["factionID"])) {
             foreach ($filteredParameters["factionID"] as $tmpFactionID) {
-                if (!validateWikidataID($tmpFactionID)) {
-                    return createApiErrorInvalidID("Faction");
+                if (!optvValidateWikidataId($tmpFactionID)) {
+                    return apiErrorInvalidId("Faction");
                 }
             }
-        } else if (!validateWikidataID($filteredParameters["factionID"])) {
-            return createApiErrorInvalidID("Faction");
+        } else if (!optvValidateWikidataId($filteredParameters["factionID"])) {
+            return apiErrorInvalidId("Faction");
         }
     }
 
     // Validate organisationID
     if (array_key_exists("organisationID", $filteredParameters)) {
-        if (!validateWikidataID($filteredParameters["organisationID"])) {
-            return createApiErrorInvalidID("Organisation");
+        if (!optvValidateWikidataId($filteredParameters["organisationID"])) {
+            return apiErrorInvalidId("Organisation");
         }
     }
 
     // Validate degree
     if (array_key_exists("degree", $filteredParameters) && mb_strlen($filteredParameters["degree"], "UTF-8") < 1) {
-        return createApiErrorInvalidLength('degree', 1);
+        return apiErrorInvalidLength('degree', 1);
     }
 
     // Validate gender
     if (array_key_exists("gender", $filteredParameters)) {
         if (!in_array($filteredParameters["gender"], array("male", "female", "nonbinary"))) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 422, 
                 3, 
                 "messageErrorInvalidValueTitle", 
@@ -252,17 +252,17 @@ function personSearch($parameter, $db = false) {
 
     // Validate originID
     if (array_key_exists("originID", $filteredParameters) && mb_strlen($filteredParameters["originID"], "UTF-8") < 1) {
-        return createApiErrorInvalidLength('originID', 1);
+        return apiErrorInvalidLength('originID', 1);
     }
 
     // Validate abgeordnetenwatchID
     if (array_key_exists("abgeordnetenwatchID", $filteredParameters) && mb_strlen($filteredParameters["abgeordnetenwatchID"], "UTF-8") < 1) {
-        return createApiErrorInvalidLength('abgeordnetenwatchID', 1);
+        return apiErrorInvalidLength('abgeordnetenwatchID', 1);
     }
 
     // Validate fragDenStaatID
     if (array_key_exists("fragDenStaatID", $filteredParameters) && mb_strlen($filteredParameters["fragDenStaatID"], "UTF-8") < 1) {
-        return createApiErrorInvalidLength('fragDenStaatID', 1);
+        return apiErrorInvalidLength('fragDenStaatID', 1);
     }
 
     try {
@@ -389,7 +389,7 @@ function personSearch($parameter, $db = false) {
                 $config["platform"]["sql"]["tbl"]["Organisation"]
             );
 
-            return createApiSuccessResponse(
+            return apiSuccessResponse(
                 array_map(function($finding) use ($db) {
                     return personGetDataObject($finding, $db);
                 }, $findings),
@@ -403,7 +403,7 @@ function personSearch($parameter, $db = false) {
             );
 
         } else {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 404,
                 1,
                 "messageErrorParameterMissingTitle",
@@ -412,7 +412,7 @@ function personSearch($parameter, $db = false) {
         }
 
     } catch (exception $e) {
-        return createApiErrorDatabaseError($e->getMessage());
+        return apiErrorDatabaseError($e->getMessage());
     }
 }
 
@@ -425,19 +425,19 @@ function personAdd($api_request, $db = false, $dbp = false) {
 
     // Parameter validation
     if (empty($api_request["id"])) {
-        return createApiErrorMissingParameter("id");
+        return apiErrorMissingParameter("id");
     }
-    if (!validateWikidataID($api_request["id"])) {
-        return createApiErrorInvalidID("Wikidata");
+    if (!optvValidateWikidataId($api_request["id"])) {
+        return apiErrorInvalidId("Wikidata");
     }
     if (empty($api_request["type"])) {
-        return createApiErrorMissingParameter("type");
+        return apiErrorMissingParameter("type");
     }
     if (!in_array($api_request["type"], $config["entityTypes"]["person"])) {
-        return createApiErrorInvalidParameter("type", "messageErrorInvalidValueDetail", ["value" => $api_request["type"], "expected" => implode(" or ", $config["entityTypes"]["person"])]);
+        return apiErrorInvalidParameter("type", "messageErrorInvalidValueDetail", ["value" => $api_request["type"], "expected" => implode(" or ", $config["entityTypes"]["person"])]);
     }
     if (empty($api_request["label"])) {
-        return createApiErrorMissingParameter("label");
+        return apiErrorMissingParameter("label");
     }
 
     $db = getApiDatabaseConnection('platform');
@@ -448,7 +448,7 @@ function personAdd($api_request, $db = false, $dbp = false) {
     // Check for duplicates
     $existingPerson = $db->getOne("SELECT PersonID FROM ?n WHERE PersonID = ?s", $config["platform"]["sql"]["tbl"]["Person"], $api_request["id"]);
     if ($existingPerson) {
-        return createApiErrorDuplicate("Person", "id");
+        return apiErrorDuplicate("Person", "id");
     }
     
     $labelAlternative = !empty($api_request["labelAlternative"]) && is_array($api_request["labelAlternative"]) ? json_encode($api_request["labelAlternative"]) : json_encode([]);
@@ -538,7 +538,7 @@ function personAdd($api_request, $db = false, $dbp = false) {
                  // If any critical part failed, ensure an error is logged or an error response is formed
                 if ($postProcessingDetails['reimportStatus'] === 'error') {
                     // Construct a more specific error if reimport failed
-                     return createApiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Person"]);
+                     return apiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Person"]);
                 }
             }
 
@@ -552,7 +552,7 @@ function personAdd($api_request, $db = false, $dbp = false) {
             if (isset($personDataResponse["errors"])) {
                 return $personDataResponse; // It's already an API error response
             }
-            return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Person"]);
+            return apiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Person"]);
         }
         
         // If requestStatus is error, but we have some meta, form an error response
@@ -568,10 +568,10 @@ function personAdd($api_request, $db = false, $dbp = false) {
                  $errorDetail = "messageErrorItemCreationRetrievalFailedDetail";
             }
             // This error construction needs refinement based on which error to prioritize if multiple steps fail.
-            return createApiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Person"], null, $finalMeta);
+            return apiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Person"], null, $finalMeta);
         }
 
-        return createApiSuccessResponse($finalData, $finalMeta);
+        return apiSuccessResponse($finalData, $finalMeta);
 
     } catch (Exception $e) {
         error_log("Error in personAdd: " . $e->getMessage());
@@ -582,7 +582,7 @@ function personAdd($api_request, $db = false, $dbp = false) {
             'reimportStatus' => 'not_attempted',
             'suggestionDeleteStatus' => 'not_attempted'
         ];
-        return createApiErrorDatabaseError($e->getMessage(), $errorMeta); // Pass meta to be included in error
+        return apiErrorDatabaseError($e->getMessage(), $errorMeta); // Pass meta to be included in error
     }
 }
 
@@ -649,7 +649,7 @@ function personGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = fa
     if (is_array($return["data"])) {
         foreach ($return["data"] as $k => $row) {
             if (!empty($row["PersonThumbnailURI"])) {
-                $return["data"][$k]["PersonThumbnailURI"] = thumbnailCacheURL("person", $row["PersonID"], $row["PersonThumbnailURI"]);
+                $return["data"][$k]["PersonThumbnailURI"] = imageCacheUrl("person", $row["PersonID"], $row["PersonThumbnailURI"]);
             }
         }
     }
@@ -685,12 +685,12 @@ function personChange($parameter) {
     global $config;
 
     if (!$parameter["id"]) {
-        return createApiErrorMissingParameter("id");
+        return apiErrorMissingParameter("id");
     }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     // Check if person exists
@@ -700,7 +700,7 @@ function personChange($parameter) {
     );
     
     if (!$person) {
-        return createApiErrorNotFound("Person");
+        return apiErrorNotFound("Person");
     }
 
     // Define allowed parameters
@@ -730,7 +730,7 @@ function personChange($parameter) {
     }
 
     if (empty($updateParams)) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             422,
             1,
             "messageErrorParameterMissingTitle",
@@ -748,9 +748,9 @@ function personChange($parameter) {
             $parameter["id"]
         );
 
-        return createApiSuccessResponse();
+        return apiSuccessResponse();
     } catch (exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             503,
             1,
             "messageErrorDatabaseGeneric",

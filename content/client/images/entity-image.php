@@ -19,9 +19,11 @@
 // Never let warnings/notices corrupt the binary image output.
 ini_set('display_errors', '0');
 
-require_once(__DIR__ . '/../../../config.php');
+// bootstrap-core emits nothing — no session, no headers, no echo — so it is
+// safe ahead of raw image output. Deliberately NOT bootstrap.php.
+require_once(__DIR__ . '/../../../bootstrap-core.php');
 require_once(__DIR__ . '/../../../modules/utilities/safemysql.class.php');
-require_once(__DIR__ . '/../../../modules/images/functions.php');
+require_once(__DIR__ . '/../../../modules/images/image-cache.php');
 
 $type = isset($_GET['type']) ? (string) $_GET['type'] : '';
 $id   = isset($_GET['id']) ? (string) $_GET['id'] : '';

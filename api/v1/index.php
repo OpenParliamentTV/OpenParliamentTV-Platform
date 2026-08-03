@@ -1,18 +1,12 @@
 <?php
 
-session_start();
-
-require_once(__DIR__.'/../../config.php');
-require_once(__DIR__.'/../../modules/utilities/security.php');
-applySecurityHeaders();
-
-if ($config["mode"] == "dev") {
-    error_reporting(E_ALL);
-} else {
-    error_reporting(E_ERROR);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
-ini_set('display_errors', '0');
-ini_set('log_errors', '1');
+
+require_once(__DIR__ . '/../../bootstrap-core.php');
+
+applySecurityHeaders();
 
 header('Content-Type: application/json');
 // API JSON is reachable by crawlers/agents (the sanctioned machine path) but

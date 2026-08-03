@@ -887,10 +887,10 @@ function initializeSearchUI() {
 
 /**
  * Update filter bar visibility based on valid search criteria
- * This matches the logic in result.grid.php for consistency
+ * This matches the logic in result-grid.php for consistency
  */
 function updateFilterBarVisibility() {
-	// Use the same logic as result.grid.php to determine if we should show filters
+	// Use the same logic as result-grid.php to determine if we should show filters
 	// Only these parameters count as "valid search criteria" that warrant showing the filter bar
 	var requestQuery = getQueryVariable('q'),
 		requestPersonID = getQueryVariable('personID'),
@@ -898,7 +898,7 @@ function updateFilterBarVisibility() {
 		requestDocumentID = getQueryVariable('documentID'),
 		requestTermID = getQueryVariable('termID');
 	
-	// Match the exact logic from result.grid.php line 28
+	// Match the exact logic from result-grid.php line 28
 	var hasValidSearchCriteria = (requestQuery && requestQuery.length >= 2) || 
 								 requestPersonID || 
 								 requestOrganisationID || 

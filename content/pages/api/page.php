@@ -1150,4 +1150,4 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 		color: #50a14f;
 	}
 </style>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/api/client/apiResult.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/api/client/api-result.js?v=<?= $config["version"] ?>"></script>

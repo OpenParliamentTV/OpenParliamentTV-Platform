@@ -6,7 +6,7 @@
  */
 
 require_once(__DIR__ . "/../../config.php");
-require_once(__DIR__ . "/../send-mail/functions.php");
+require_once(__DIR__ . "/../mail/mailer.php");
 require_once(__DIR__ . "/../i18n/language.php");
 require_once(__DIR__ . "/templates/alert-realtime.php");
 require_once(__DIR__ . "/templates/alert-digest.php");

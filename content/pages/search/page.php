@@ -16,7 +16,7 @@
 	$showAdvancedFilters = false;
 	$showHomeIntro = true; // render claim + examples slots; JS toggles them with the search state
 	$homeIntroInitiallyHidden = $hasValidSearchCriteria; // avoid a flash when landing on a query
-	include_once(__DIR__ . '/../../components/search.filterbar.php'); 
+	include_once(__DIR__ . '/../../components/search-filterbar.php'); 
 	?>
 	<div class="row m-0" style="position: relative; z-index: 1">
 		<div id="speechListContainer" class="col">
@@ -27,7 +27,7 @@
 				if (!$hasValidSearchCriteria) {
 					$_REQUEST['showHome'] = 1;
 				}
-				include_once(__DIR__ . '/../../components/result.grid.php'); 
+				include_once(__DIR__ . '/../../components/result-grid.php'); 
 				?>
 			</div>
 			<div class="loadingIndicator">
@@ -37,6 +37,6 @@
 	</div>
 </main>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/filterController.js?v=<?= $config["version"] ?>"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/filter-controller.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/media-results.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/search/client/search.js?v=<?= $config["version"] ?>"></script>

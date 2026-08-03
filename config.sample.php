@@ -3,7 +3,7 @@
 /**
  * OPTV bootstrap guard — prevents direct access to template files.
  * Every template starts with: defined('OPTV') or die();
- * config.php is required by all entry points (index.php, content.player.php,
+ * config.php is required by all entry points (index.php, player.php,
  * api/index.php, meta-image.php, …), so defining it here means any file that
  * loads config automatically sets the constant.
  */
@@ -24,6 +24,15 @@ $config["version"] = "";
  * Example: https://de.openparliament.tv
  */
 $config["dir"]["root"] = "";
+
+/**
+ * Runtime state directory (absolute filesystem path). Holds everything the
+ * platform writes at runtime: caches, logs, import working files and the
+ * cloned parliament data repositories. Must be writable by the PHP user and
+ * is never served directly (it ships with a deny-all .htaccess).
+ * Leave empty to use the default: <platform root>/var
+ */
+$config["dir"]["var"] = "";
 
 /**
  * Display NER results in UI
@@ -112,7 +121,7 @@ $config["mail"]["smtp"]["password"] = "";
 $config["mail"]["smtp"]["encryption"] = "tls"; // "tls", "ssl", or "" for no encryption
 
 // Development Mode: When $config["mode"] is "dev", emails are saved to files instead of being sent
-$config["mail"]["dev"]["file_path"] = ""; // E.g. realpath(__DIR__."/logs/mail") - leave empty for default (logs/mail)
+$config["mail"]["dev"]["file_path"] = ""; // Leave empty for the default (<var>/log/mail)
 
 /**
  * Executables
@@ -129,7 +138,10 @@ $config["ads"]["api"]["key"] = "";
 /**
  * Local cache directory (absolute filesystem path) for downloaded & optimized
  * entity thumbnails (Wikimedia Commons images served via the local image proxy).
- * Leave empty to use the default: <platform root>/cache/images
+ * Leave empty to use the default: <var directory>/cache/images
+ *
+ * The generated meta-image cards are cached in a sibling directory
+ * (<imageCache>/../meta-images), so a custom path here moves both.
  */
 $config["dir"]["imageCache"] = "";
 
@@ -225,6 +237,6 @@ $config["customization"]["wordmark"] = ""; //e.g. "Open <b>Parliament TV</b>"
 
 
 // Include API config
-require_once(__DIR__."/api/v1/config.api.php");
+require_once(__DIR__."/api/v1/config-api.php");
 
 ?>

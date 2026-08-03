@@ -12,12 +12,12 @@
  */
 
 require_once(__DIR__ . "/../utilities.php");
-require_once(__DIR__ . "/../../../modules/notifications/functions.php");
+require_once(__DIR__ . "/../../../modules/notifications/notifications.php");
 
 function notificationRequireUser() {
     $userId = notificationCurrentUserId();
     if (!$userId) {
-        return createApiErrorResponse(401, 1, "messageAuthLoginRequiredTitle", "messageAuthLoginRequiredDetail");
+        return apiErrorResponse(401, 1, "messageAuthLoginRequiredTitle", "messageAuthLoginRequiredDetail");
     }
     return $userId;
 }
@@ -69,7 +69,7 @@ function notificationList($parameter = []) {
     }
     $total = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE NotificationUserID = ?i", $tbl, $userId);
     $out = array_map('notificationRowToObject', $rows ?: []);
-    return createApiSuccessResponse($out, [], null, null, $total);
+    return apiSuccessResponse($out, [], null, null, $total);
 }
 
 function notificationUnreadCount($parameter = []) {
@@ -82,7 +82,7 @@ function notificationUnreadCount($parameter = []) {
 
     $count = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE NotificationUserID = ?i AND NotificationRead = 0",
         $config["platform"]["sql"]["tbl"]["Notification"], $userId);
-    return createApiSuccessResponse(["unreadCount" => $count]);
+    return apiSuccessResponse(["unreadCount" => $count]);
 }
 
 /**
@@ -110,14 +110,14 @@ function notificationSetRead($parameter, $read) {
     if (is_array($userId)) { return $userId; }
 
     $ids = notificationParseIds($parameter);
-    if (empty($ids)) { return createApiErrorMissingParameter("id"); }
+    if (empty($ids)) { return apiErrorMissingParameter("id"); }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) { return $db; }
 
     $db->query("UPDATE ?n SET NotificationRead = ?i WHERE NotificationID IN (?a) AND NotificationUserID = ?i",
         $config["platform"]["sql"]["tbl"]["Notification"], $read ? 1 : 0, $ids, $userId);
-    return createApiSuccessResponse(["ids" => $ids, "read" => (bool)$read, "affected" => $db->affectedRows()]);
+    return apiSuccessResponse(["ids" => $ids, "read" => (bool)$read, "affected" => $db->affectedRows()]);
 }
 
 function notificationMarkRead($parameter = []) {
@@ -134,14 +134,14 @@ function notificationDelete($parameter = []) {
     if (is_array($userId)) { return $userId; }
 
     $ids = notificationParseIds($parameter);
-    if (empty($ids)) { return createApiErrorMissingParameter("id"); }
+    if (empty($ids)) { return apiErrorMissingParameter("id"); }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) { return $db; }
 
     $db->query("DELETE FROM ?n WHERE NotificationID IN (?a) AND NotificationUserID = ?i",
         $config["platform"]["sql"]["tbl"]["Notification"], $ids, $userId);
-    return createApiSuccessResponse(["ids" => $ids, "deleted" => $db->affectedRows()]);
+    return apiSuccessResponse(["ids" => $ids, "deleted" => $db->affectedRows()]);
 }
 
 function notificationMarkAllRead($parameter = []) {
@@ -154,7 +154,7 @@ function notificationMarkAllRead($parameter = []) {
 
     $db->query("UPDATE ?n SET NotificationRead = 1 WHERE NotificationUserID = ?i AND NotificationRead = 0",
         $config["platform"]["sql"]["tbl"]["Notification"], $userId);
-    return createApiSuccessResponse(["marked" => $db->affectedRows()]);
+    return apiSuccessResponse(["marked" => $db->affectedRows()]);
 }
 
 function notificationPreferences($parameter = []) {
@@ -190,7 +190,7 @@ function notificationPreferences($parameter = []) {
         }
     }
 
-    return createApiSuccessResponse([
+    return apiSuccessResponse([
         "emailEnabled" => (bool)$pref["NotificationPreferenceEmailEnabled"],
         "digestFrequency" => $pref["NotificationPreferenceDigestFrequency"],
         "digestDay" => (int)$pref["NotificationPreferenceDigestDay"],
@@ -203,18 +203,18 @@ function notificationPreferences($parameter = []) {
 function notificationUnsubscribe($parameter = []) {
     global $config;
     $token = isset($parameter["token"]) ? trim((string)$parameter["token"]) : "";
-    if ($token === "") { return createApiErrorMissingParameter("token"); }
+    if ($token === "") { return apiErrorMissingParameter("token"); }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) { return $db; }
 
     $tbl = $config["platform"]["sql"]["tbl"]["NotificationPreference"];
     $pref = $db->getRow("SELECT * FROM ?n WHERE NotificationPreferenceUnsubscribeToken = ?s", $tbl, $token);
-    if (!$pref) { return createApiErrorNotFound("notification_preference"); }
+    if (!$pref) { return apiErrorNotFound("notification_preference"); }
 
     $db->query("UPDATE ?n SET NotificationPreferenceEmailEnabled = 0 WHERE NotificationPreferenceUnsubscribeToken = ?s",
         $tbl, $token);
-    return createApiSuccessResponse(["unsubscribed" => true]);
+    return apiSuccessResponse(["unsubscribed" => true]);
 }
 
 /**
@@ -223,13 +223,13 @@ function notificationUnsubscribe($parameter = []) {
  */
 function notificationRunMatch($parameter = []) {
     if (!notificationCurrentUserIsAdmin()) {
-        return createApiErrorResponse(403, 1, "messageAuthNotPermittedTitle", "messageAuthNotPermittedDetail");
+        return apiErrorResponse(403, 1, "messageAuthNotPermittedTitle", "messageAuthNotPermittedDetail");
     }
     $parliament = isset($parameter["parliament"]) ? trim((string)$parameter["parliament"]) : "";
-    if ($parliament === "") { return createApiErrorMissingParameter("parliament"); }
+    if ($parliament === "") { return apiErrorMissingParameter("parliament"); }
     $last = isset($parameter["last"]) ? max(1, min(500, (int)$parameter["last"])) : 50;
 
     require_once(__DIR__ . "/../../../modules/notifications/alert-matcher.php");
     $result = runAlertMatchingForRecent($parliament, $last);
-    return createApiSuccessResponse($result);
+    return apiSuccessResponse($result);
 }

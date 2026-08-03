@@ -583,7 +583,7 @@
                 const modalBody = addEntityModal.querySelector('.modal-body');
                 modalBody.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
                 
-                const componentUrl = '<?= $config["dir"]["root"] ?>/content/components/entity.form.php';
+                const componentUrl = '<?= $config["dir"]["root"] ?>/content/components/entity-form.php';
                 const button = event.relatedTarget; // Button that triggered the modal (if any)
 
                 // Data to be set as attributes on the loaded form

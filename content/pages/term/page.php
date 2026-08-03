@@ -1,7 +1,7 @@
 <?php defined('OPTV') or die(); ?>
 <?php $this->layout('layout/default') ?>
 <?php
-require_once(__DIR__ . '/../../../modules/utilities/functions.entities.php');
+require_once(__DIR__ . '/../../../modules/utilities/entities.php');
 $flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <main class="container-fluid subpage">
@@ -38,7 +38,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				</div>
 			</div>
 			<div class="col-12 col-md-4 col-lg-3">
-				<?php include_once(__DIR__ . '/../../components/entity.links.php'); ?>
+				<?php include_once(__DIR__ . '/../../components/entity-links.php'); ?>
 			</div>
 			<div class="col-12">
 				<hr>
@@ -79,7 +79,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				?>
 				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
 					<div class="bg-white border p-3">
-						<?php include_once(__DIR__ . '/../../components/entity.data.php'); ?>
+						<?php include_once(__DIR__ . '/../../components/entity-data.php'); ?>
 					</div>
 				</div>
 			</div>
@@ -97,7 +97,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
         </div>
     </div>
 </div>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/media-results.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() {

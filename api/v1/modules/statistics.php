@@ -2,8 +2,8 @@
 
 require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
-require_once (__DIR__."/../../../modules/utilities/textArrayConverters.php");
-require_once (__DIR__."/../../../modules/statistics/functions.php");
+require_once (__DIR__."/../../../modules/utilities/text-array-converters.php");
+require_once (__DIR__."/../../../modules/statistics/statistics.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
 
 /**
@@ -165,7 +165,7 @@ function statisticsGetGeneral($request) {
         
         // Check if OpenSearch client is available
         if (!isset($GLOBALS['ESClient'])) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 500,
                 1,
                 "messageErrorStatisticsTitle",
@@ -176,7 +176,7 @@ function statisticsGetGeneral($request) {
         $stats = getGeneralStatistics($parliament);
         
         if ($stats === null) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 500,
                 1,
                 "messageErrorStatisticsTitle",
@@ -186,7 +186,7 @@ function statisticsGetGeneral($request) {
         
         // Process speaker statistics
         if (!isset($stats["speakers"]["filtered_speakers"])) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 500,
                 1,
                 "messageErrorStatisticsTitle",
@@ -289,7 +289,7 @@ function statisticsGetGeneral($request) {
             "attributes" => $attributes
         ];
 
-        $result = createApiSuccessResponse($data, [], [
+        $result = apiSuccessResponse($data, [], [
             "self" => $config["dir"]["api"]."/statistics/general"
         ]);
         
@@ -299,7 +299,7 @@ function statisticsGetGeneral($request) {
         return $result;
         
     } catch (Exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             500,
             1,
             "messageErrorStatisticsTitle",
@@ -319,7 +319,7 @@ function statisticsGetEntity($request) {
     
     try {
         if (empty($request["entityType"]) || empty($request["entityID"])) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 422,
                 1,
                 "messageErrorParameterMissingTitle",
@@ -334,7 +334,7 @@ function statisticsGetEntity($request) {
         // Get speaker vocabulary if this is a person entity
         $speakerVocabulary = null;
         if ($request["entityType"] === 'person') {
-            require_once(__DIR__ . "/../../../modules/search/functions.enhanced.php");
+            require_once(__DIR__ . "/../../../modules/search/query-builder.php");
             $vocabResult = getSpeakerVocabularyEnhanced($request["entityID"], 50, getParliamentOpenSearchSuffix($parliament));
             if ($vocabResult['success']) {
                 $speakerVocabulary = $vocabResult['data'];
@@ -342,7 +342,7 @@ function statisticsGetEntity($request) {
         }
         
         if ($stats === null) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 500,
                 1,
                 "messageErrorEntityStatsTitle",
@@ -434,12 +434,12 @@ function statisticsGetEntity($request) {
         $selfLink = $config["dir"]["api"]."/statistics/entity/".$request["entityType"]."/".$request["entityID"]
                  . "?" . http_build_query($params);
         
-        return createApiSuccessResponse($data, [], [
+        return apiSuccessResponse($data, [], [
             "self" => $selfLink
         ]);
         
     } catch (Exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             500,
             1,
             "messageErrorEntityStatsTitle",
@@ -462,7 +462,7 @@ function statisticsGetWordTrends($request) {
     
     try {
         if (empty($request["words"])) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 422,
                 1,
                 "messageErrorParameterMissingTitle",
@@ -479,11 +479,11 @@ function statisticsGetWordTrends($request) {
         $separateByFaction = isset($request["separateByFaction"]) && 
                            (strtolower($request["separateByFaction"]) === 'true' || $request["separateByFaction"] === '1' || $request["separateByFaction"] === true);
         
-        require_once(__DIR__ . "/../../../modules/search/functions.enhanced.php");
+        require_once(__DIR__ . "/../../../modules/search/query-builder.php");
         $trendsResult = getWordTrendsEnhanced($words, $startDate, $endDate, $parliamentCode, $factions, $separateByFaction);
         
         if (!$trendsResult['success']) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 500,
                 1,
                 "messageErrorWordTrendsTitle",
@@ -565,12 +565,12 @@ function statisticsGetWordTrends($request) {
             $data["attributes"]["factions"] = $factions;
         }
         
-        return createApiSuccessResponse($data, [], [
+        return apiSuccessResponse($data, [], [
             "self" => $config["dir"]["api"] . "/statistics/word-trends"
         ]);
         
     } catch (Exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             500,
             1,
             "messageErrorWordTrendsTitle",
@@ -585,7 +585,7 @@ function statisticsGetEntityCounts($request) {
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorResponse(503, 1, "Database connection error", "Connecting to platform database failed");
+        return apiErrorResponse(503, 1, "Database connection error", "Connecting to platform database failed");
     }
 
     $counts = [
@@ -625,7 +625,7 @@ function statisticsGetEntityCounts($request) {
         }
 
     } catch (Exception $e) {
-        return createApiErrorResponse(500, 1, "Database query error", $e->getMessage());
+        return apiErrorResponse(500, 1, "Database query error", $e->getMessage());
     }
 
     // Wrap in proper JSON:API structure
@@ -637,7 +637,7 @@ function statisticsGetEntityCounts($request) {
         ]
     ];
 
-    return createApiSuccessResponse($data, [], [
+    return apiSuccessResponse($data, [], [
         "self" => $config["dir"]["api"] . "/statistics/entity-counts"
     ]);
 }
@@ -650,7 +650,7 @@ function statisticsGetEntityCounts($request) {
  */
 function getGeneralStatisticsFromCache($parliament = null) {
     $parliament = resolveParliamentKey($parliament);
-    $cacheDir = __DIR__ . '/../cache/';
+    $cacheDir = optvVarPath('cache/api') . '/';
     $cacheKey = "general_statistics_{$parliament}.json";
     $cacheFile = $cacheDir . $cacheKey;
     $cacheMetaFile = $cacheDir . "general_statistics_{$parliament}.meta";
@@ -688,15 +688,12 @@ function getGeneralStatisticsFromCache($parliament = null) {
  */
 function cacheGeneralStatistics($result, $parliament = null) {
     $parliament = resolveParliamentKey($parliament);
-    $cacheDir = __DIR__ . '/../cache/';
+    $cacheDir = optvVarPath('cache/api') . '/';
     $cacheKey = "general_statistics_{$parliament}.json";
     $cacheFile = $cacheDir . $cacheKey;
     $cacheMetaFile = $cacheDir . "general_statistics_{$parliament}.meta";
     
     // Create cache directory if it doesn't exist
-    if (!is_dir($cacheDir)) {
-        @mkdir($cacheDir, 0775, true);
-    }
     
     // Get current index versions for validation
     $indexVersions = getCurrentIndexVersions($parliament);
@@ -718,7 +715,7 @@ function cacheGeneralStatistics($result, $parliament = null) {
  */
 function isGeneralStatisticsCacheValid($parliament = null) {
     $parliament = resolveParliamentKey($parliament);
-    $cacheDir = __DIR__ . '/../cache/';
+    $cacheDir = optvVarPath('cache/api') . '/';
     $cacheMetaFile = $cacheDir . "general_statistics_{$parliament}.meta";
     
     if (!file_exists($cacheMetaFile)) {
@@ -775,7 +772,7 @@ function getCurrentIndexVersions($parliament = null) {
  */
 function invalidateGeneralStatisticsCache($parliament = null) {
     $parliament = resolveParliamentKey($parliament);
-    $cacheDir = __DIR__ . '/../cache/';
+    $cacheDir = optvVarPath('cache/api') . '/';
     $cacheFile = $cacheDir . "general_statistics_{$parliament}.json";
     $cacheMetaFile = $cacheDir . "general_statistics_{$parliament}.meta";
     

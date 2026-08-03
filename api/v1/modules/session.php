@@ -13,24 +13,24 @@ function sessionGetByID($id = false) {
     global $config;
 
     if (!$id) {
-        return createApiErrorMissingParameter('id');
+        return apiErrorMissingParameter('id');
     }
 
-    $idInfo = getInfosFromStringID($id);
+    $idInfo = optvParseStringId($id);
     if (!$idInfo || $idInfo["type"] !== "session") {
-        return createApiErrorInvalidFormat('id', 'session');
+        return apiErrorInvalidFormat('id', 'session');
     }
 
     $parliament = $idInfo["parliament"];
     if (!$parliament || !isset($config["parliament"][$parliament])) {
-        return createApiErrorInvalidID("Session");
+        return apiErrorInvalidId("Session");
     }
 
     $parliamentLabel = $config["parliament"][$parliament]["label"];
 
     $db = getApiDatabaseConnection('parliament', $parliament);
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     try {
@@ -47,7 +47,7 @@ function sessionGetByID($id = false) {
                             $id);
 
         if (!$item) {
-            return createApiErrorNotFound("Session");
+            return apiErrorNotFound("Session");
         }
 
         $sessionNumericPartForAgendaLookup = $idInfo["id_part"];
@@ -116,10 +116,10 @@ function sessionGetByID($id = false) {
             ];
         }
 
-        return createApiSuccessResponse($sessionData);
+        return apiSuccessResponse($sessionData);
 
     } catch (exception $e) {
-        return createApiErrorDatabaseError($e->getMessage());
+        return apiErrorDatabaseError($e->getMessage());
     }
 }
 
@@ -144,7 +144,7 @@ function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = f
     
     $targetParliament = null;
     if ($id !== "all") {
-        $idInfo = getInfosFromStringID($id); // Used for $targetParliament
+        $idInfo = optvParseStringId($id); // Used for $targetParliament
         if (!$idInfo || !isset($config["parliament"][$idInfo["parliament"]])) {
             return [
                 "total" => 0,
@@ -263,7 +263,7 @@ function sessionGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = f
     // surface it as a 503 error rather than a silent empty success so the UI
     // can tell the user the database is down instead of showing empty tables.
     if (empty($allResults) && $connectionFailed) {
-        return createApiErrorDatabaseConnection('parliament');
+        return apiErrorDatabaseConnection('parliament');
     }
 
     return [
@@ -276,22 +276,22 @@ function sessionChange($params) {
     global $config;
 
     if (!isset($params["id"])) {
-        return createApiErrorMissingParameter("id");
+        return apiErrorMissingParameter("id");
     }
 
-    $idInfo = getInfosFromStringID($params["id"]); // Still useful for $parliament and $idInfo["id_part"] if needed for SessionNumber context
+    $idInfo = optvParseStringId($params["id"]); // Still useful for $parliament and $idInfo["id_part"] if needed for SessionNumber context
     if (!$idInfo || $idInfo["type"] !== "session") {
-        return createApiErrorInvalidFormat('id', 'session');
+        return apiErrorInvalidFormat('id', 'session');
     }
 
     $parliament = $idInfo["parliament"];
     if (!$parliament || !isset($config["parliament"][$parliament])) {
-        return createApiErrorInvalidID("Session");
+        return apiErrorInvalidId("Session");
     }
 
     $db = getApiDatabaseConnection('parliament', $parliament);
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     // Get the session to validate it exists. Query Session.SessionID as string.
@@ -300,14 +300,14 @@ function sessionChange($params) {
         $params["id"] // Use full $params["id"] string
     );
     if (!$session) {
-        return createApiErrorNotFound("Session");
+        return apiErrorNotFound("Session");
     }
 
     $updates = [];
     $values = [];
 
     if (isset($params['SessionNumber'])) {
-        $numberValidation = validateApiNumber($params['SessionNumber'], 'SessionNumber');
+        $numberValidation = apiValidateNumber($params['SessionNumber'], 'SessionNumber');
         if ($numberValidation !== true) {
             return $numberValidation;
         }
@@ -322,7 +322,7 @@ function sessionChange($params) {
             $params['id'] // Use full $params["id"] string for comparison
         );
         if ($existing) {
-            return createApiErrorDuplicate('session', 'number');
+            return apiErrorDuplicate('session', 'number');
         }
 
         $updates[] = "SessionNumber = ?i";
@@ -333,7 +333,7 @@ function sessionChange($params) {
         $startDate = isset($params['SessionDateStart']) ? $params['SessionDateStart'] : $session['SessionDateStart'];
         $endDate = isset($params['SessionDateEnd']) ? $params['SessionDateEnd'] : $session['SessionDateEnd'];
 
-        $dateValidation = validateApiDateRange($startDate, $endDate, 'SessionDateStart');
+        $dateValidation = apiValidateDateRange($startDate, $endDate, 'SessionDateStart');
         if ($dateValidation !== true) {
             return $dateValidation;
         }
@@ -350,9 +350,9 @@ function sessionChange($params) {
 
     if (isset($params['SessionElectoralPeriodID'])) {
         // $params['SessionElectoralPeriodID'] is expected to be a full string ID
-        $epInfo = getInfosFromStringID($params['SessionElectoralPeriodID']);
+        $epInfo = optvParseStringId($params['SessionElectoralPeriodID']);
         if (!$epInfo || $epInfo["type"] !== "electoralPeriod" || $epInfo["parliament"] !== $parliament) {
-            return createApiErrorInvalidFormat('SessionElectoralPeriodID', 'electoralPeriod');
+            return apiErrorInvalidFormat('SessionElectoralPeriodID', 'electoralPeriod');
         }
 
         $epExists = $db->getOne(
@@ -361,7 +361,7 @@ function sessionChange($params) {
             $params['SessionElectoralPeriodID'] // Use full string ID
         );
         if (!$epExists) {
-            return createApiErrorNotFound("ElectoralPeriod");
+            return apiErrorNotFound("ElectoralPeriod");
         }
 
         $updates[] = "SessionElectoralPeriodID = ?s"; // Store full string ID
@@ -380,12 +380,12 @@ function sessionChange($params) {
     try {
         $result = $db->query($query, ...$values);
         if (!$result) {
-            return createApiErrorDatabaseError("Failed to update session");
+            return apiErrorDatabaseError("Failed to update session");
         }
 
-        return createApiSuccessResponse(null, ["message" => "Session updated successfully"]);
+        return apiSuccessResponse(null, ["message" => "Session updated successfully"]);
     } catch (exception $e) {
-        return createApiErrorDatabaseError($e->getMessage());
+        return apiErrorDatabaseError($e->getMessage());
     }
 }
 

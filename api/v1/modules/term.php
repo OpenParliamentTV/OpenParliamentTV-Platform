@@ -4,7 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
-require_once (__DIR__."/../../../modules/images/functions.php");
+require_once (__DIR__."/../../../modules/images/image-cache.php");
 
 
 
@@ -17,17 +17,17 @@ function termGetByID($id = false) {
     global $config;
 
     if (!$id) {
-        return createApiErrorMissingParameter('id');
+        return apiErrorMissingParameter('id');
     }
 
     // Validate ID format (Q or P followed by numbers)
     if (!preg_match("/(Q|P)\d+/i", $id)) {
-        return createApiErrorInvalidID('term');
+        return apiErrorInvalidId('term');
     }
 
     $db = getApiDatabaseConnection();
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     try {
@@ -37,18 +37,18 @@ function termGetByID($id = false) {
         );
 
         if (!$item) {
-            return createApiErrorNotFound('term');
+            return apiErrorNotFound('term');
         }
 
         // termGetDataObject already returns the correct structure for the 'data' field
         $termDataObject = termGetDataObject($item, $db);
         if (!$termDataObject) { // Add a check in case termGetDataObject fails
-            return createApiErrorResponse(500, 1, "messageErrorDataTransformationTitle", "messageErrorDataTransformationDetail");
+            return apiErrorResponse(500, 1, "messageErrorDataTransformationTitle", "messageErrorDataTransformationDetail");
         }
-        return createApiSuccessResponse($termDataObject);
+        return apiSuccessResponse($termDataObject);
 
     } catch (exception $e) {
-        return createApiErrorDatabaseError($e->getMessage());
+        return apiErrorDatabaseError($e->getMessage());
     }
 }
 
@@ -80,7 +80,7 @@ function termGetDataObject($item = false, $db = false) {
                 "label" => $item["TermLabel"],
                 "labelAlternative" => $labelAlternative,
                 "abstract" => $item["TermAbstract"],
-                "thumbnailURI" => thumbnailCacheURL("term", $item["TermID"], $item["TermThumbnailURI"]),
+                "thumbnailURI" => imageCacheUrl("term", $item["TermID"], $item["TermThumbnailURI"]),
                 "thumbnailCreator" => $item["TermThumbnailCreator"],
                 "thumbnailLicense" => $item["TermThumbnailLicense"],
                 "websiteURI" => $item["TermWebsiteURI"],
@@ -114,7 +114,7 @@ function termSearch($parameter, $db = false) {
     if (!$db) {
         $db = getApiDatabaseConnection();
         if (!is_object($db)) {
-            return createApiErrorDatabaseConnection();
+            return apiErrorDatabaseConnection();
         }
     }
 
@@ -126,7 +126,7 @@ function termSearch($parameter, $db = false) {
         if (is_array($filteredParameters["label"])) {
             foreach ($filteredParameters["label"] as $label) {
                 if (mb_strlen($label, "UTF-8") < 3) {
-                    return createApiErrorResponse(
+                    return apiErrorResponse(
                         422,
                         1,
                         "messageErrorInvalidLengthTitle",
@@ -137,7 +137,7 @@ function termSearch($parameter, $db = false) {
                 }
             }
         } else if (mb_strlen($filteredParameters["label"], "UTF-8") < 3) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 422,
                 1,
                 "messageErrorInvalidLengthTitle",
@@ -150,7 +150,7 @@ function termSearch($parameter, $db = false) {
 
     // Validate type parameter
     if (isset($filteredParameters["type"]) && mb_strlen($filteredParameters["type"], "UTF-8") < 2) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             422,
             2,
             "messageErrorInvalidLengthTitle",
@@ -162,13 +162,13 @@ function termSearch($parameter, $db = false) {
 
     // Validate wikidataID parameter
     if (isset($filteredParameters["wikidataID"]) && !preg_match("/(Q|P)\d+/i", $filteredParameters["wikidataID"])) {
-        return createApiErrorInvalidID('term');
+        return apiErrorInvalidId('term');
     }
 
     // Validate page parameter
     $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
     if ($page < 1) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             422,
             4,
             "messageErrorInvalidValueTitle",
@@ -214,7 +214,7 @@ function termSearch($parameter, $db = false) {
         if (!empty($conditions)) {
             $query .= " WHERE " . implode(" AND ", $conditions);
         } else {
-            return createApiErrorMissingParameter();
+            return apiErrorMissingParameter();
         }
 
         // Get total count for pagination
@@ -230,7 +230,7 @@ function termSearch($parameter, $db = false) {
         $findings = $db->getAll($query, ...$params);
 
         // Build response with exact same format as before
-        return createApiSuccessResponse(
+        return apiSuccessResponse(
             array_map(function($item) use ($db) {
                 return termGetDataObject($item, $db);
             }, $findings),
@@ -244,7 +244,7 @@ function termSearch($parameter, $db = false) {
         );
 
     } catch (exception $e) {
-        return createApiErrorDatabaseError($e->getMessage());
+        return apiErrorDatabaseError($e->getMessage());
     }
 }
 
@@ -258,17 +258,17 @@ function termAdd($api_request, $db = false, $dbp = false) {
 
     // Parameter validation
     if (empty($api_request["id"])) {
-        return createApiErrorMissingParameter("id");
+        return apiErrorMissingParameter("id");
     }
-    if (!validateWikidataID($api_request["id"])) {
-        return createApiErrorInvalidID("Wikidata");
+    if (!optvValidateWikidataId($api_request["id"])) {
+        return apiErrorInvalidId("Wikidata");
     }
     if (empty($api_request["type"])) {
-        return createApiErrorMissingParameter("type");
+        return apiErrorMissingParameter("type");
     }
     // Add specific validation for term types if necessary
     if (empty($api_request["label"])) {
-        return createApiErrorMissingParameter("label");
+        return apiErrorMissingParameter("label");
     }
 
     $db = getApiDatabaseConnection('platform');
@@ -279,7 +279,7 @@ function termAdd($api_request, $db = false, $dbp = false) {
     // Check if term already exists
     $existingTerm = $db->getOne("SELECT TermID FROM ?n WHERE TermID = ?s", $config["platform"]["sql"]["tbl"]["Term"], $api_request["id"]);
     if ($existingTerm) {
-        return createApiErrorDuplicate("Term", "id");
+        return apiErrorDuplicate("Term", "id");
     }
 
     $labelAlternative = !empty($api_request["labelAlternative"]) && is_array($api_request["labelAlternative"]) ? json_encode($api_request["labelAlternative"]) : json_encode([]);
@@ -347,7 +347,7 @@ function termAdd($api_request, $db = false, $dbp = false) {
             } else {
                 $finalMeta['requestStatus'] = 'error';
                 if ($postProcessingDetails['reimportStatus'] === 'error') {
-                    return createApiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Term"]);
+                    return apiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Term"]);
                 }
             }
 
@@ -359,7 +359,7 @@ function termAdd($api_request, $db = false, $dbp = false) {
             if (isset($termDataResponse["errors"])) {
                 return $termDataResponse;
             }
-            return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Term"]);
+            return apiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Term"]);
         }
         
         if ($finalMeta['requestStatus'] === 'error') {
@@ -369,10 +369,10 @@ function termAdd($api_request, $db = false, $dbp = false) {
                  $errorTitle = "messageErrorItemCreationRetrievalFailedTitle";
                  $errorDetail = "messageErrorItemCreationRetrievalFailedDetail";
             }
-            return createApiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Term"], null, $finalMeta);
+            return apiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Term"], null, $finalMeta);
         }
 
-        return createApiSuccessResponse($finalData, $finalMeta);
+        return apiSuccessResponse($finalData, $finalMeta);
 
     } catch (Exception $e) {
         error_log("Error in termAdd: " . $e->getMessage());
@@ -382,7 +382,7 @@ function termAdd($api_request, $db = false, $dbp = false) {
             'reimportStatus' => 'not_attempted',
             'suggestionDeleteStatus' => 'not_attempted'
         ];
-        return createApiErrorDatabaseError($e->getMessage(), $errorMeta);
+        return apiErrorDatabaseError($e->getMessage(), $errorMeta);
     }
 }
 
@@ -423,7 +423,7 @@ function termGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = fals
         // Handle ID filtering
         if ($id !== "all") {
             if (!preg_match("/(Q|P)\d+/i", $id)) {
-                return createApiErrorInvalidID('term');
+                return apiErrorInvalidId('term');
             }
             $conditions[] = "TermID = ?s";
             $params[] = $id;
@@ -513,7 +513,7 @@ function termGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $search = fals
 
             // Route thumbnails through the local image cache (admin entity table).
             if (!empty($item["TermThumbnailURI"]) && isset($item["TermID"])) {
-                $item["TermThumbnailURI"] = thumbnailCacheURL("term", $item["TermID"], $item["TermThumbnailURI"]);
+                $item["TermThumbnailURI"] = imageCacheUrl("term", $item["TermID"], $item["TermThumbnailURI"]);
             }
         }
         unset($item);
@@ -536,17 +536,17 @@ function termChange($parameter) {
     global $config;
 
     if (!isset($parameter["id"])) {
-        return createApiErrorMissingParameter("id");
+        return apiErrorMissingParameter("id");
     }
 
     // Validate ID format
     if (!preg_match("/(Q|P)\d+/i", $parameter["id"])) {
-        return createApiErrorInvalidID("term");
+        return apiErrorInvalidId("term");
     }
 
     $db = getApiDatabaseConnection();
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     try {
@@ -557,7 +557,7 @@ function termChange($parameter) {
         );
 
         if (!$existingTerm) {
-            return createApiErrorNotFound("term");
+            return apiErrorNotFound("term");
         }
 
         // Define allowed fields and their validation rules
@@ -615,7 +615,7 @@ function termChange($parameter) {
             if (isset($parameter[$field])) {
                 // Validate required fields
                 if ($rules["required"] && (trim($parameter[$field]) === "")) {
-                    return createApiErrorResponse(
+                    return apiErrorResponse(
                         422,
                         1,
                         "messageErrorFieldRequiredTitle",
@@ -627,7 +627,7 @@ function termChange($parameter) {
 
                 // Validate string lengths
                 if (isset($rules["min"]) && mb_strlen($parameter[$field], "UTF-8") < $rules["min"]) {
-                    return createApiErrorResponse(
+                    return apiErrorResponse(
                         422,
                         1,
                         "messageErrorInvalidLengthTitle",
@@ -638,7 +638,7 @@ function termChange($parameter) {
                 }
 
                 if (isset($rules["max"]) && mb_strlen($parameter[$field], "UTF-8") > $rules["max"]) {
-                    return createApiErrorResponse(
+                    return apiErrorResponse(
                         422,
                         1,
                         "messageErrorInvalidLengthTitle",
@@ -651,7 +651,7 @@ function termChange($parameter) {
                 // Validate arrays
                 if (isset($rules["type"]) && $rules["type"] === "array") {
                     if (!is_array($parameter[$field])) {
-                        return createApiErrorResponse(
+                        return apiErrorResponse(
                             422,
                             1,
                             "messageErrorInvalidFormatTitle",
@@ -665,7 +665,7 @@ function termChange($parameter) {
                 // Validate URLs
                 else if (isset($rules["type"]) && $rules["type"] === "url") {
                     if ($parameter[$field] !== "" && !filter_var($parameter[$field], FILTER_VALIDATE_URL)) {
-                        return createApiErrorResponse(
+                        return apiErrorResponse(
                             422,
                             1,
                             "messageErrorInvalidURLTitle",
@@ -685,7 +685,7 @@ function termChange($parameter) {
 
         // If no valid fields to update
         if (empty($updateData)) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 422,
                 1,
                 "messageErrorParameterMissingTitle",
@@ -704,16 +704,16 @@ function termChange($parameter) {
         );
 
         if (!$result) {
-            return createApiErrorResponse(500, 1, "messageErrorDatabaseGeneric", "messageErrorTermUpdateFailedDetail");
+            return apiErrorResponse(500, 1, "messageErrorDatabaseGeneric", "messageErrorTermUpdateFailedDetail");
         }
 
         // Return success response with id
-        return createApiSuccessResponse(null, [
+        return apiSuccessResponse(null, [
             "id" => $parameter["id"]
         ]);
 
     } catch (Exception $e) {
-        return createApiErrorDatabaseError($e->getMessage());
+        return apiErrorDatabaseError($e->getMessage());
     }
 }
 

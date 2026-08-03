@@ -58,14 +58,14 @@ if (!isset($page)) {
 if ($page != 'media') {
 ?>
 
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/vendor/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 
 <?php
 } else {
 ?>
 	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@frametrail/frametrail@v1.2.7/frametrail.min.css">
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/vendor/bootstrap.min.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/style.css?v=<?= $config["version"] ?>" media="all" />
 	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/player.css?v=<?= $config["version"] ?>" media="all" />
   <link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/pages/media/client/quote-display.css?v=<?= $config["version"] ?>" media="all" />
@@ -76,7 +76,7 @@ if ($page != 'media') {
 <?php
 if ($pageType == 'admin' || $pageType == 'entity') {
 ?>
-	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/bootstrap-table.min.css?v=<?= $config["version"] ?>" />
+	<link type="text/css" rel="stylesheet" href="<?= $config["dir"]["root"] ?>/content/client/css/vendor/bootstrap-table.min.css?v=<?= $config["version"] ?>" />
 <?php
 }
 ?>
@@ -95,23 +95,23 @@ if (($page ?? '') == 'api') {
   let vh = window.innerHeight * 0.01;
   document.documentElement.style.setProperty('--vh', `${vh}px`);
 </script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery-3.4.1.min.js?v=<?= $config["version"] ?>"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery-ui.min.js?v=<?= $config["version"] ?>"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.ui.touch-punch.min.js?v=<?= $config["version"] ?>"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/jquery.form.min.js?v=<?= $config["version"] ?>"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/d3.min.js?v=<?= $config["version"] ?>"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap.bundle.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/vendor/jquery-3.4.1.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/vendor/jquery-ui.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/vendor/jquery.ui.touch-punch.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/vendor/jquery.form.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/vendor/d3.min.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/vendor/bootstrap.bundle.min.js?v=<?= $config["version"] ?>"></script>
 
 <?php
 if ($pageType == 'admin' || $pageType == 'entity') {
 ?>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table.min.js?v=<?= $config["version"] ?>"></script>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-de-DE.js?v=<?= $config["version"] ?>"></script>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-export.min.js?v=<?= $config["version"] ?>"></script>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/tableExport.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/vendor/bootstrap-table.min.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/vendor/bootstrap-table-de-DE.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/vendor/bootstrap-table-export.min.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/table-export.js?v=<?= $config["version"] ?>"></script>
   <!--<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/bootstrap-table-multi-toggle.min.js?v=<?= $config["version"] ?>"></script>-->
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/shim.min.js?v=<?= $config["version"] ?>"></script>
-  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/xlsx.full.min.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/vendor/shim.min.js?v=<?= $config["version"] ?>"></script>
+  <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/vendor/xlsx.full.min.js?v=<?= $config["version"] ?>"></script>
 <?php
 }
 ?>

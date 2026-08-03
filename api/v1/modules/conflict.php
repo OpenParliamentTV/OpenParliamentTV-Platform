@@ -88,7 +88,7 @@ function conflictAdd($item, $dbPlatform = false) {
     // into internal requests, so $item may carry unrelated request params.
     $type = $item["ConflictType"] ?? "";
     if (!in_array($type, CONFLICT_TYPES, true)) {
-        return createApiErrorInvalidParameter("ConflictType");
+        return apiErrorInvalidParameter("ConflictType");
     }
 
     $parliament = trim((string)($item["ConflictParliament"] ?? ""));
@@ -115,7 +115,7 @@ function conflictAdd($item, $dbPlatform = false) {
             return $dbPlatform;
         }
         if (!is_object($dbPlatform)) {
-            return createApiErrorDatabaseConnection();
+            return apiErrorDatabaseConnection();
         }
     }
 
@@ -179,10 +179,10 @@ function conflictAdd($item, $dbPlatform = false) {
             $dbPlatform->query("INSERT IGNORE INTO ?n SET ConflictID = ?i, MediaID = ?s", $tblMedia, $conflictID, $mediaID);
         }
 
-        return createApiSuccessResponse(["ConflictID" => $conflictID, "status" => $status]);
+        return apiSuccessResponse(["ConflictID" => $conflictID, "status" => $status]);
     } catch (Exception $e) {
         error_log("Error in conflictAdd: " . $e->getMessage());
-        return createApiErrorDatabaseError($e->getMessage());
+        return apiErrorDatabaseError($e->getMessage());
     }
 }
 
@@ -375,7 +375,7 @@ function conflictChange($api_request, $db = false) {
 
     $targetStatus = $api_request["status"] ?? "";
     if (!in_array($targetStatus, CONFLICT_STATUSES, true)) {
-        return createApiErrorInvalidParameter("status");
+        return apiErrorInvalidParameter("status");
     }
 
     if (!$db) {
@@ -384,7 +384,7 @@ function conflictChange($api_request, $db = false) {
             return $db;
         }
         if (!is_object($db)) {
-            return createApiErrorDatabaseConnection();
+            return apiErrorDatabaseConnection();
         }
     }
 
@@ -401,10 +401,10 @@ function conflictChange($api_request, $db = false) {
 
         $ids = conflictResolveSelector($selectorRequest, $db);
         if ($ids === false) {
-            return createApiErrorInvalidParameter("id");
+            return apiErrorInvalidParameter("id");
         }
         if (empty($ids)) {
-            return createApiSuccessResponse(["updatedCount" => 0]);
+            return apiSuccessResponse(["updatedCount" => 0]);
         }
 
         if ($targetStatus === "resolved") {
@@ -414,10 +414,10 @@ function conflictChange($api_request, $db = false) {
         }
         $updatedCount = $db->affectedRows();
 
-        return createApiSuccessResponse(["updatedCount" => $updatedCount]);
+        return apiSuccessResponse(["updatedCount" => $updatedCount]);
     } catch (Exception $e) {
         error_log("Error in conflictChange: " . $e->getMessage());
-        return createApiErrorDatabaseError($e->getMessage());
+        return apiErrorDatabaseError($e->getMessage());
     }
 }
 
@@ -438,7 +438,7 @@ function conflictDelete($api_request, $db = false) {
             return $db;
         }
         if (!is_object($db)) {
-            return createApiErrorDatabaseConnection();
+            return apiErrorDatabaseConnection();
         }
     }
 
@@ -448,20 +448,20 @@ function conflictDelete($api_request, $db = false) {
     try {
         $ids = conflictResolveSelector($api_request, $db);
         if ($ids === false) {
-            return createApiErrorInvalidParameter("id");
+            return apiErrorInvalidParameter("id");
         }
         if (empty($ids)) {
-            return createApiSuccessResponse(["deletedCount" => 0]);
+            return apiSuccessResponse(["deletedCount" => 0]);
         }
 
         $db->query("DELETE FROM ?n WHERE ConflictID IN (?a)", $tblMedia, $ids);
         $db->query("DELETE FROM ?n WHERE ConflictID IN (?a)", $tbl, $ids);
         $deletedCount = $db->affectedRows();
 
-        return createApiSuccessResponse(["deletedCount" => $deletedCount]);
+        return apiSuccessResponse(["deletedCount" => $deletedCount]);
     } catch (Exception $e) {
         error_log("Error in conflictDelete: " . $e->getMessage());
-        return createApiErrorDatabaseError($e->getMessage());
+        return apiErrorDatabaseError($e->getMessage());
     }
 }
 
@@ -483,7 +483,7 @@ function conflictCleanup($db = false) {
             return $db;
         }
         if (!is_object($db)) {
-            return createApiErrorDatabaseConnection();
+            return apiErrorDatabaseConnection();
         }
     }
 
@@ -518,10 +518,10 @@ function conflictCleanup($db = false) {
             }
         }
 
-        return createApiSuccessResponse(["cleanedCount" => $cleanedCount, "status" => "Cleanup completed."]);
+        return apiSuccessResponse(["cleanedCount" => $cleanedCount, "status" => "Cleanup completed."]);
     } catch (Exception $e) {
         error_log("Error in conflictCleanup: " . $e->getMessage());
-        return createApiErrorDatabaseError($e->getMessage());
+        return apiErrorDatabaseError($e->getMessage());
     }
 }
 

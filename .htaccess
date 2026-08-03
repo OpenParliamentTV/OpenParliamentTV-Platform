@@ -31,7 +31,7 @@
 
 	########################################
 	# Send all non-file, non-directory requests to index.php.
-	# Existing files (JS, CSS, images, content.player.php, share-image.php,
+	# Existing files (JS, CSS, images, player.php, share-image.php,
 	# api/…, etc.) are served directly by Apache and never hit the router.
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-f

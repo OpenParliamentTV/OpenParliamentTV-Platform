@@ -107,7 +107,7 @@ function updateContents(resultURL) {
 	}
 	updateAjax = $.ajax({
 		method: "POST",
-		url: "../content/pages/media/content.player.php?"+ ajaxURLParams
+		url: "../content/pages/media/components/player.php?"+ ajaxURLParams
 	}).done(function(data) {
 		$('#content').html($(data));
 		updatePlayer();

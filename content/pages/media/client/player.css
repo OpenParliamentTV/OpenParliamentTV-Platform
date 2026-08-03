@@ -478,7 +478,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
 		height: calc(var(--vh, 1vh) * 100 - 255px);
 		margin-top: 0 !important;
 	}
-	/* Shrink the entity detail thumbnail (entity.preview.php sets 70x70 inline)
+	/* Shrink the entity detail thumbnail (entity-preview.php sets 70x70 inline)
 	   to 50x50 in the annotation detail panel on small screens. */
 	.detailsThumbnailContainer {
 		width: 52px !important;

@@ -4,25 +4,25 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
-require_once (__DIR__."/../../../modules/search/functions.php");
-require_once (__DIR__."/../../../modules/images/functions.php");
+require_once (__DIR__."/../../../modules/search/opensearch.php");
+require_once (__DIR__."/../../../modules/images/image-cache.php");
 
 function fulltextAutocomplete($text) {
     if (!isset($text)) {
-        return createApiErrorMissingParameter('text');
+        return apiErrorMissingParameter('text');
     }
 
     if (strlen($text) <= 2) {
-        return createApiErrorInvalidLength('text', 3);
+        return apiErrorInvalidLength('text', 3);
     }
 
     try {
         // Use the original autocomplete function which already returns the right format
         $autocompleteResult = searchAutocomplete($text);
         
-        return createApiSuccessResponse($autocompleteResult);
+        return apiSuccessResponse($autocompleteResult);
     } catch (Exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             500,
             1,
             "messageErrorSearchGenericTitle",
@@ -35,18 +35,18 @@ function fulltextAutocomplete($text) {
 
 function agendaItemAutocomplete($query) {
     if (!isset($query)) {
-        return createApiErrorMissingParameter('q');
+        return apiErrorMissingParameter('q');
     }
 
     if (strlen($query) <= 2) {
-        return createApiErrorInvalidLength('q', 3);
+        return apiErrorInvalidLength('q', 3);
     }
 
     try {
         $autocompleteResult = searchAgendaItemAutocomplete($query);
-        return createApiSuccessResponse($autocompleteResult);
+        return apiSuccessResponse($autocompleteResult);
     } catch (Exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             500,
             1,
             "messageErrorSearchGenericTitle",
@@ -58,11 +58,11 @@ function agendaItemAutocomplete($query) {
 
 function entitiesAutocomplete($query) {
     if (!isset($query)) {
-        return createApiErrorMissingParameter('q');
+        return apiErrorMissingParameter('q');
     }
 
     if (strlen($query) <= 2) {
-        return createApiErrorInvalidLength('q', 3);
+        return apiErrorInvalidLength('q', 3);
     }
 
     try {
@@ -73,7 +73,7 @@ function entitiesAutocomplete($query) {
         // Get database connection
         $db = getApiDatabaseConnection('platform');
         if (!is_object($db)) {
-            return createApiErrorDatabaseConnection();
+            return apiErrorDatabaseConnection();
         }
         
         // Helper function to highlight search term in text
@@ -292,7 +292,7 @@ function entitiesAutocomplete($query) {
                         'subtype' => $person['PersonType'],
                         'label' => $highlightText($person['PersonLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => thumbnailCacheURL('person', $person['PersonID'], $person['PersonThumbnailURI'])
+                        'thumbnailURI' => imageCacheUrl('person', $person['PersonID'], $person['PersonThumbnailURI'])
                     ];
                     
                     // Add faction information if available
@@ -338,7 +338,7 @@ function entitiesAutocomplete($query) {
                         'subtype' => $person['PersonType'],
                         'label' => $highlightText($person['PersonLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => thumbnailCacheURL('person', $person['PersonID'], $person['PersonThumbnailURI'])
+                        'thumbnailURI' => imageCacheUrl('person', $person['PersonID'], $person['PersonThumbnailURI'])
                     ];
                     
                     // Add faction information if available
@@ -376,7 +376,7 @@ function entitiesAutocomplete($query) {
                         'type' => 'organisation',
                         'label' => $highlightText($org['OrganisationLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => thumbnailCacheURL('organisation', $org['OrganisationID'], $org['OrganisationThumbnailURI'])
+                        'thumbnailURI' => imageCacheUrl('organisation', $org['OrganisationID'], $org['OrganisationThumbnailURI'])
                     ];
                 }
             }
@@ -404,7 +404,7 @@ function entitiesAutocomplete($query) {
                         'type' => 'term',
                         'label' => $highlightText($term['TermLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => thumbnailCacheURL('term', $term['TermID'], $term['TermThumbnailURI'])
+                        'thumbnailURI' => imageCacheUrl('term', $term['TermID'], $term['TermThumbnailURI'])
                     ];
                 }
             }
@@ -432,16 +432,16 @@ function entitiesAutocomplete($query) {
                         'type' => 'document',
                         'label' => $highlightText($doc['DocumentLabel'], $query),
                         'labelAlternative' => $alternativeLabel,
-                        'thumbnailURI' => thumbnailCacheURL('document', $doc['DocumentID'], $doc['DocumentThumbnailURI'])
+                        'thumbnailURI' => imageCacheUrl('document', $doc['DocumentID'], $doc['DocumentThumbnailURI'])
                     ];
                 }
             }
         }
         
-        return createApiSuccessResponse($results);
+        return apiSuccessResponse($results);
         
     } catch (Exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             500,
             1,
             "messageErrorSearchGenericTitle",

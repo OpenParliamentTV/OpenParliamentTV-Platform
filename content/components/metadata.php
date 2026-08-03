@@ -208,7 +208,7 @@ switch ($page) {
             $videoJsonLd["duration"] = "PT" . intval($speech["attributes"]["duration"]) . "S";
         }
 
-        // Transcript — the key SEO property (clean raw HTML from include.media.php)
+        // Transcript — the key SEO property (clean raw HTML from bootstrap.php)
         if (!empty($textContentsHTMLRaw)) {
             $videoJsonLd["transcript"] = mb_substr(strip_tags($textContentsHTMLRaw), 0, 100000);
         }

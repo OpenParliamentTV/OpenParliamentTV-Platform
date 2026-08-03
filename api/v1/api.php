@@ -20,14 +20,14 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
     );
 
     if (empty($api_request["action"])) {
-        return createApiResponse(
-            createApiErrorMissingParameter("action")
+        return apiResponse(
+            apiErrorMissingParameter("action")
         );
     }
 
     if (empty($api_request["itemType"])) {
-        return createApiResponse(
-            createApiErrorMissingParameter("itemType")
+        return apiResponse(
+            apiErrorMissingParameter("itemType")
         );
     }
 
@@ -64,38 +64,38 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "organisation":
                     require_once (__DIR__."/modules/organisation.php");
                     $item = organisationGetByID($api_request["id"]);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "document":
                     require_once (__DIR__."/modules/document.php");
                     $item = documentGetByID($api_request["id"]);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "term":
                     require_once (__DIR__."/modules/term.php");
                     $item = termGetByID($api_request["id"]);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "person":
                     require_once (__DIR__."/modules/person.php");
                     $item = personGetByID($api_request["id"]);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "media":
                     require_once (__DIR__."/modules/media.php");
                     $item = mediaGetByID($api_request["id"], $db, $dbp);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "session":
                     require_once (__DIR__."/modules/session.php");
                     $item = sessionGetByID($api_request["id"]);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "agendaItem":
-                    require_once (__DIR__."/modules/agendaItem.php");
+                    require_once (__DIR__."/modules/agenda-item.php");
                     $item = agendaItemGetByID($api_request["id"]);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "electoralPeriod":
-                    require_once (__DIR__."/modules/electoralPeriod.php");
+                    require_once (__DIR__."/modules/electoral-period.php");
                     $item = electoralPeriodGetByID($api_request["id"]);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -112,8 +112,8 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     );
                     return; // unreachable; transcriptServeVTT exits
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -127,8 +127,8 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                         $api_request["electoralPeriod"] ?? null
                     );
                     if ($collection === null) {
-                        return createApiResponse(
-                            createApiErrorInvalidParameter("parliament")
+                        return apiResponse(
+                            apiErrorInvalidParameter("parliament")
                         );
                     }
                     header('Content-Type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"');
@@ -137,16 +137,16 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "search":
                     $collection = iiifGenerateSearchCollection($api_request);
                     if ($collection === null) {
-                        return createApiResponse(
-                            createApiErrorNotFound("media")
+                        return apiResponse(
+                            apiErrorNotFound("media")
                         );
                     }
                     header('Content-Type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"');
                     header('Access-Control-Allow-Origin: *');
                     return $collection;
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -156,10 +156,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             switch ($api_request["itemType"]) {
                 case "all":
                     $statusInfo = getStatus($api_request);
-                    return createApiResponse($statusInfo);
+                    return apiResponse($statusInfo);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -169,30 +169,30 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "people":
                     require_once (__DIR__."/modules/person.php");
                     $item = personSearch($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "organisations":
                     require_once (__DIR__."/modules/organisation.php");
                     $item = organisationSearch($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "documents":
                     require_once (__DIR__."/modules/document.php");
                     $item = documentSearch($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "terms":
                     require_once (__DIR__."/modules/term.php");
                     $item = termSearch($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "media":
                     require_once (__DIR__."/modules/media.php");
                     $item = mediaSearch($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "electoralPeriods":
-                    require_once (__DIR__."/modules/electoralPeriod.php");
+                    require_once (__DIR__."/modules/electoral-period.php");
                     $item = electoralPeriodSearch($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -202,16 +202,16 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             switch ($api_request["itemType"]) {
                 case "text": 
                     $item = fulltextAutocomplete($api_request["q"]);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "agendaItem": 
                     $item = agendaItemAutocomplete($api_request["q"]);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "entities": 
                     $item = entitiesAutocomplete($api_request["q"]);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -221,25 +221,25 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             switch ($api_request["itemType"]) {
                 case "login":
                     $result = userLogin($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "register":
                     $result = userRegister($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "logout":
                     $result = userLogout();
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "password-reset":
                     $result = userPasswordReset($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "password-reset-request":
                     $result = userPasswordResetRequest($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "confirm-registration":
                     $result = userConfirmRegistration($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -248,34 +248,34 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             require_once (__DIR__."/modules/alert.php");
             switch ($api_request["itemType"]) {
                 case "list":
-                    return createApiResponse(alertList($api_request));
+                    return apiResponse(alertList($api_request));
                 case "get":
-                    return createApiResponse(alertGet($api_request));
+                    return apiResponse(alertGet($api_request));
                 case "create":
-                    return createApiResponse(alertCreate($api_request));
+                    return apiResponse(alertCreate($api_request));
                 case "update":
-                    return createApiResponse(alertUpdate($api_request));
+                    return apiResponse(alertUpdate($api_request));
                 case "delete":
-                    return createApiResponse(alertDelete($api_request));
+                    return apiResponse(alertDelete($api_request));
                 case "status":
-                    return createApiResponse(alertStatus($api_request));
+                    return apiResponse(alertStatus($api_request));
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
 
         case "systemMessage":
-            require_once (__DIR__."/modules/systemMessage.php");
+            require_once (__DIR__."/modules/system-message.php");
             switch ($api_request["itemType"]) {
                 case "list":
-                    return createApiResponse(systemMessageList($api_request));
+                    return apiResponse(systemMessageList($api_request));
                 case "create":
-                    return createApiResponse(systemMessageCreate($api_request));
+                    return apiResponse(systemMessageCreate($api_request));
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -284,26 +284,26 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             require_once (__DIR__."/modules/notification.php");
             switch ($api_request["itemType"]) {
                 case "list":
-                    return createApiResponse(notificationList($api_request));
+                    return apiResponse(notificationList($api_request));
                 case "unreadCount":
-                    return createApiResponse(notificationUnreadCount($api_request));
+                    return apiResponse(notificationUnreadCount($api_request));
                 case "markRead":
-                    return createApiResponse(notificationMarkRead($api_request));
+                    return apiResponse(notificationMarkRead($api_request));
                 case "markUnread":
-                    return createApiResponse(notificationMarkUnread($api_request));
+                    return apiResponse(notificationMarkUnread($api_request));
                 case "markAllRead":
-                    return createApiResponse(notificationMarkAllRead($api_request));
+                    return apiResponse(notificationMarkAllRead($api_request));
                 case "delete":
-                    return createApiResponse(notificationDelete($api_request));
+                    return apiResponse(notificationDelete($api_request));
                 case "preferences":
-                    return createApiResponse(notificationPreferences($api_request));
+                    return apiResponse(notificationPreferences($api_request));
                 case "unsubscribe":
-                    return createApiResponse(notificationUnsubscribe($api_request));
+                    return apiResponse(notificationUnsubscribe($api_request));
                 case "runMatch":
-                    return createApiResponse(notificationRunMatch($api_request));
+                    return apiResponse(notificationRunMatch($api_request));
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -314,20 +314,20 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "set":
                     if (!empty($api_request["lang"]) && isset($acceptLang) && array_key_exists($api_request["lang"], $acceptLang)) {
                         $_SESSION["lang"] = $api_request["lang"];
-                        return createApiResponse(
-                            createApiSuccessResponse(
+                        return apiResponse(
+                            apiSuccessResponse(
                                 $api_request["lang"],
                                 ["requestStatus" => "success", "message" => "Language has been set to " . $api_request["lang"]]
                             )
                         );
                     } else {
-                        return createApiResponse(
-                            createApiErrorInvalidParameter("lang", "Invalid language code")
+                        return apiResponse(
+                            apiErrorInvalidParameter("lang", "Invalid language code")
                         );
                     }
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -343,38 +343,38 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "media":
                     require_once (__DIR__."/modules/media.php");
                     $addResponse = mediaAdd($api_request, $db, $dbp);
-                    return createApiResponse($addResponse);
+                    return apiResponse($addResponse);
                 case "conflict":
                     require_once (__DIR__."/modules/conflict.php");
                     $addResponse = conflictAdd($api_request, $db);
-                    return createApiResponse($addResponse);
+                    return apiResponse($addResponse);
                 case "entitySuggestion": 
-                    require_once (__DIR__."/modules/entitySuggestion.php");
+                    require_once (__DIR__."/modules/entity-suggestion.php");
                     $addResponse = entitySuggestionAdd($api_request, $db);
-                    return createApiResponse($addResponse);
+                    return apiResponse($addResponse);
                 case "person":
                     require_once (__DIR__."/modules/person.php");
                     $addResponse = personAdd($api_request, $db, $dbp);
-                    return createApiResponse($addResponse);
+                    return apiResponse($addResponse);
                 case "organisation":
                     require_once (__DIR__."/modules/organisation.php");
                     $addResponse = organisationAdd($api_request, $db, $dbp);
-                    return createApiResponse($addResponse);
+                    return apiResponse($addResponse);
                 case "document":
                     require_once (__DIR__."/modules/document.php");
                     $addResponse = documentAdd($api_request, $db, $dbp);
-                    return createApiResponse($addResponse);
+                    return apiResponse($addResponse);
                 case "term":
                     require_once (__DIR__."/modules/term.php");
                     $addResponse = termAdd($api_request, $db, $dbp);
-                    return createApiResponse($addResponse);
+                    return apiResponse($addResponse);
                 case "apiKey":
-                    require_once (__DIR__."/modules/apiKey.php");
+                    require_once (__DIR__."/modules/api-key.php");
                     $addResponse = apiKeyAdd($api_request, $db);
-                    return createApiResponse($addResponse);
+                    return apiResponse($addResponse);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -384,50 +384,50 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "organisation":
                     require_once (__DIR__."/modules/organisation.php");
                     $item = organisationChange($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "document":
                     require_once (__DIR__."/modules/document.php");
                     $item = documentChange($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "term":
                     require_once (__DIR__."/modules/term.php");
                     $item = termChange($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "person":
                     require_once (__DIR__."/modules/person.php");
                     $item = personChange($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "media":
                     require_once (__DIR__."/modules/media.php");
                     $item = mediaChange($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "session":
                     require_once (__DIR__."/modules/session.php");
                     $item = sessionChange($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "agendaItem":
-                    require_once (__DIR__."/modules/agendaItem.php");
+                    require_once (__DIR__."/modules/agenda-item.php");
                     $item = agendaItemChange($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "electoralPeriod":
-                    require_once (__DIR__."/modules/electoralPeriod.php");
+                    require_once (__DIR__."/modules/electoral-period.php");
                     $item = electoralPeriodChange($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "user":
                     require_once (__DIR__."/modules/user.php");
                     $item = userChange($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "apiKey":
-                    require_once (__DIR__."/modules/apiKey.php");
+                    require_once (__DIR__."/modules/api-key.php");
                     $item = apiKeyChange($api_request, $db);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "conflict":
                     require_once (__DIR__."/modules/conflict.php");
                     $item = conflictChange($api_request, $db);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -435,20 +435,20 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
         case "deleteItem":
             switch ($api_request["itemType"]) {
                 case "entitySuggestion":
-                    require_once (__DIR__."/modules/entitySuggestion.php");
+                    require_once (__DIR__."/modules/entity-suggestion.php");
                     $deleteResponse = entitySuggestionDelete($api_request["EntitysuggestionID"] ?? null, $db);
-                    return createApiResponse($deleteResponse);
+                    return apiResponse($deleteResponse);
                 case "apiKey":
-                    require_once (__DIR__."/modules/apiKey.php");
+                    require_once (__DIR__."/modules/api-key.php");
                     $deleteResponse = apiKeyDelete($api_request, $db);
-                    return createApiResponse($deleteResponse);
+                    return apiResponse($deleteResponse);
                 case "conflict":
                     require_once (__DIR__."/modules/conflict.php");
                     $deleteResponse = conflictDelete($api_request, $db);
-                    return createApiResponse($deleteResponse);
+                    return apiResponse($deleteResponse);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType", "Invalid itemType for deleteItem action.")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType", "Invalid itemType for deleteItem action.")
                     );
             }
             break;
@@ -484,7 +484,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     $result = termGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"]);
                     break;
                 case "electoralPeriod":
-                    require_once (__DIR__."/modules/electoralPeriod.php");
+                    require_once (__DIR__."/modules/electoral-period.php");
                     $result = electoralPeriodGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"]);
                     break;
                 case "session":
@@ -492,7 +492,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     $result = sessionGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], false, $api_request["electoralPeriodID"] ?? null);
                     break;
                 case "agendaItem":
-                    require_once (__DIR__."/modules/agendaItem.php");
+                    require_once (__DIR__."/modules/agenda-item.php");
                     $result = agendaItemGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], false, $api_request["electoralPeriodID"] ?? null, $api_request["sessionID"] ?? null);
                     break;
                 case "user":
@@ -500,7 +500,7 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     $result = userGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"]);
                     break;
                 case "apiKey":
-                    require_once (__DIR__."/modules/apiKey.php");
+                    require_once (__DIR__."/modules/api-key.php");
                     $result = apiKeyGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"]);
                     break;
                 case "conflict":
@@ -512,13 +512,13 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     $result = conflictGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], $status, $type, $getStats);
                     break;
                 case "entitySuggestion":
-                    require_once (__DIR__."/modules/entitySuggestion.php");
+                    require_once (__DIR__."/modules/entity-suggestion.php");
                     $idType = $api_request["idType"] ?? "external"; // Read idType, default to external
                     $result = entitySuggestionGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"], $idType);
                     break;
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
 
@@ -526,12 +526,12 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             // response (e.g. parliament DB unreachable) — pass it through
             // instead of wrapping it as an empty success.
             if (is_array($result) && (($result["meta"]["requestStatus"] ?? null) === "error")) {
-                return createApiResponse($result);
+                return apiResponse($result);
             }
 
             if ($result) {
-                return createApiResponse(
-                    createApiSuccessResponse(
+                return apiResponse(
+                    apiSuccessResponse(
                         $api_request["id"] !== "all" ? ($result["data"][0] ?? null) : $result["data"],
                         ["requestStatus" => "success"],
                         null,
@@ -540,42 +540,42 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     )
                 );
             } else {
-                return createApiResponse(
-                    createApiErrorDatabaseError()
+                return apiResponse(
+                    apiErrorDatabaseError()
                 );
             }
             break;
 
         case "index":
-            require_once (__DIR__."/modules/searchIndex.php");
+            require_once (__DIR__."/modules/search-index.php");
             switch ($api_request["itemType"]) {
                 case "update":
                     $result = searchIndexUpdate($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "full-update":
                     $result = searchIndexTriggerFullUpdate($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "delete":
                     $result = searchIndexDelete($api_request); 
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "status":
                     $result = searchIndexGetStatus($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "statistics-update":
                     $result = searchIndexTriggerStatisticsUpdate($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "statistics-status":
                     $result = searchIndexGetStatisticsStatus($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "optimize":
                     $result = searchIndexOptimize($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "optimization-status":
                     $result = searchIndexGetOptimizationStatus($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -585,71 +585,71 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             switch ($api_request["itemType"]) {
                 case "reimport-sessions":
                     $result = reimportSessions($api_request, $db);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "run":
                     $result = importRunCronUpdater($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "status":
                     $result = importGetCronUpdaterStatus($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType", "Invalid itemType for import action.")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType", "Invalid itemType for import action.")
                     );
             }
             break;
 
         case "externalData": 
-            require_once (__DIR__."/modules/externalData.php");
+            require_once (__DIR__."/modules/external-data.php");
             switch ($api_request["itemType"]) {
                 case "get-info": 
                     $result = externalDataGetInfo($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "update-entities": 
                     $result = externalDataUpdateEntities($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "full-update": 
                     $result = externalDataTriggerFullUpdate($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 case "status": 
                     $result = externalDataGetFullUpdateStatus($api_request);
-                    return createApiResponse($result);
+                    return apiResponse($result);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType", "Invalid itemType for externalData action.")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType", "Invalid itemType for externalData action.")
                     );
             }
             break;
         
         case "cleanup":
             switch ($api_request["itemType"]) {
-                case "entity-suggestions":
-                    require_once (__DIR__."/modules/entitySuggestion.php");
+                case "entitySuggestions":
+                    require_once (__DIR__."/modules/entity-suggestion.php");
                     $cleanupResponse = entitySuggestionCleanup($db);
-                    return createApiResponse($cleanupResponse);
+                    return apiResponse($cleanupResponse);
                 case "conflicts":
                     require_once (__DIR__."/modules/conflict.php");
                     $cleanupResponse = conflictCleanup($db);
-                    return createApiResponse($cleanupResponse);
+                    return apiResponse($cleanupResponse);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
 
         case "system":
-            require_once (__DIR__."/modules/systemStatus.php");
+            require_once (__DIR__."/modules/system-status.php");
             switch ($api_request["itemType"]) {
                 case "status":
-                    return createApiResponse(systemStatusGet($api_request));
+                    return apiResponse(systemStatusGet($api_request));
                 case "clear-caches":
-                    return createApiResponse(systemClearCaches($api_request));
+                    return apiResponse(systemClearCaches($api_request));
                 case "storage-scan":
-                    return createApiResponse(systemStorageScan($api_request));
+                    return apiResponse(systemStorageScan($api_request));
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
@@ -659,33 +659,33 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             switch ($api_request["itemType"]) {
                 case "general": 
                     $item = statisticsGetGeneral($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "entity":
                     $item = statisticsGetEntity($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "word-trends":
                     $item = statisticsGetWordTrends($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 case "entity-counts":
                     $item = statisticsGetEntityCounts($api_request);
-                    return createApiResponse($item);
+                    return apiResponse($item);
                 default:
-                    return createApiResponse(
-                        createApiErrorInvalidParameter("itemType")
+                    return apiResponse(
+                        apiErrorInvalidParameter("itemType")
                     );
             }
             break;
 
 
         default:
-            return createApiResponse(
-                createApiErrorInvalidParameter("action")
+            return apiResponse(
+                apiErrorInvalidParameter("action")
             );
     }
 
-    // Fallback for unknown actions or itemTypes handled by createApiErrorInvalidParameter
+    // Fallback for unknown actions or itemTypes handled by apiErrorInvalidParameter
     if (!isset($return)) {
-        $return = createApiErrorInvalidParameter("action or itemType");
+        $return = apiErrorInvalidParameter("action or itemType");
     }
 
     return $return;

@@ -1,17 +1,8 @@
 <?php
-require_once(__DIR__.'/../../config.php');
-require_once(__DIR__.'/../../modules/utilities/security.php');
+require_once(__DIR__.'/../../bootstrap-core.php');
 applySecurityHeaders();
 
-if ($config["mode"] == "dev") {
-    error_reporting(E_ALL);
-} else {
-    error_reporting(E_ERROR);
-}
-ini_set('display_errors', '0');
-ini_set('log_errors', '1');
-
-require_once(__DIR__.'/function.entityDump.php');
+require_once(__DIR__.'/entity-dump.php');
 
 
 if (!$_REQUEST["type"]) {

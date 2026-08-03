@@ -71,8 +71,8 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                     <i class="icon-attention me-2"></i>
                     <?= L::manageConflicts(); ?>
                 </a>
-                <a href="<?= $config["dir"]["root"] ?>/manage/entity-suggestions" 
-                   class="dropdown-item <?= ($page == "manage-entity-suggestions") ? "active" : "" ?>">
+                <a href="<?= $config["dir"]["root"] ?>/manage/entitySuggestions" 
+                   class="dropdown-item <?= ($page == "manage-entitySuggestions") ? "active" : "" ?>">
                     <i class="icon-lightbulb me-2"></i>
                     <?= L::manageEntitySuggestions(); ?>
                 </a>
@@ -178,8 +178,8 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="<?= $config["dir"]["root"] ?>/manage/entity-suggestions" 
-                       class="nav-link <?= ($page == "manage-entity-suggestions") ? "active" : "" ?>">
+                    <a href="<?= $config["dir"]["root"] ?>/manage/entitySuggestions" 
+                       class="nav-link <?= ($page == "manage-entitySuggestions") ? "active" : "" ?>">
                         <i class="icon-lightbulb me-2"></i>
                         <?= L::manageEntitySuggestions(); ?>
                     </a>

@@ -12,7 +12,7 @@
  *    (Server-level 403 enforcement for the same list lives in .htaccess.)
  */
 
-require_once(__DIR__ . '/config.php');
+require_once(__DIR__ . '/bootstrap-core.php');
 
 header('Content-Type: text/plain; charset=utf-8');
 header('Cache-Control: public, max-age=86400');

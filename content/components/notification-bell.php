@@ -2,7 +2,7 @@
 <?php
 /**
  * Notification bell. Rendered in the header for logged-in users only.
- * The dropdown list is populated client-side by notificationBell.js, which also
+ * The dropdown list is populated client-side by notification-bell.js, which also
  * polls the unread count.
  */
 if (empty($_SESSION["login"]) || empty($config["allow"]["notifications"])) {

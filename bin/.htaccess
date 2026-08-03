@@ -1,0 +1,17 @@
+########################################
+# CLI scripts — never served over HTTP.
+#
+# Every script here also refuses to run under a non-CLI SAPI (bootstrap-cli.php),
+# so this is defence in depth for servers where .htaccess is ignored.
+########################################
+
+# Apache 2.4
+<IfModule mod_authz_core.c>
+	Require all denied
+</IfModule>
+
+# Apache 2.2
+<IfModule !mod_authz_core.c>
+	Order allow,deny
+	Deny from all
+</IfModule>

@@ -2,7 +2,7 @@
 
 require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
-require_once (__DIR__."/../../../modules/utilities/functions.entities.php");
+require_once (__DIR__."/../../../modules/utilities/entities.php");
 require_once (__DIR__."/../../../modules/i18n/language.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
 require_once (__DIR__."/media.php");
@@ -183,7 +183,7 @@ function exportPrepareMedia(string $mediaID, ?string $type = null, ?string $lang
  *
  * The returned array:
  *  - id, session (sessionGetByID data), parliament, parliamentLabel, lang
- *  - sections: agenda-item groups, each
+ *  - sections: agendaItem groups, each
  *      ['agendaItemID', 'order', 'title', 'items' => [preparedMedia, ...]]
  */
 function exportPrepareSession(string $sessionID, ?string $type = null, ?string $lang = null): ?array {
@@ -195,7 +195,7 @@ function exportPrepareSession(string $sessionID, ?string $type = null, ?string $
     }
     $session = $resp['data'];
 
-    $idInfo = getInfosFromStringID($sessionID);
+    $idInfo = optvParseStringId($sessionID);
     if (!$idInfo || !array_key_exists($idInfo['parliament'], $config['parliament'])) {
         return null;
     }

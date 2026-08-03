@@ -2,7 +2,7 @@
 <?php
 /**
  * Alert create/edit modal (Plan B). Included once in the footer for logged-in
- * users; driven by alertManager.js. First cut exposes real-time frequency only.
+ * users; driven by alert-manager.js. First cut exposes real-time frequency only.
  */
 if (empty($_SESSION["login"]) || empty($config["allow"]["notifications"])) {
     return;

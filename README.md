@@ -60,10 +60,10 @@ modules/                  Domain logic: search, media, feed, notifications, imag
 api/v1/                   REST API (openapi.yaml; docs page served at /api)
 content/                  base.php, layout/, pages/, components/, and client assets (css/js/fonts/images)
 custom/                   Per-instance overrides (branding, content, hooks); see Customization
-data/                     Parliament data repositories and import/indexing scripts
+data/                     Import and indexing scripts
 db/                        SQL schema dumps (platform + parliament databases)
-lang/                     UI translations (de/en/fr/tr); langcache/ holds generated caches
-cache/images/             Cached entity thumbnails
+lang/                     UI translations (de/en/fr/tr)
+var/                      Runtime state (web-denied): caches, logs, import files, data repos
 config.php                Main configuration (copy from config.sample.php)
 ```
 
@@ -89,14 +89,18 @@ config.php                Main configuration (copy from config.sample.php)
    ```
    Fill in at least: `dir.root` (base URL) and `version` (cache busting); database credentials (`platform.sql.*`, `parliament.<code>.sql.*`, table names); OpenSearch hosts/auth/SSL and index prefixes; password `salt`; mail (PHP mail or SMTP); optional `ads.api.*` and `customization.wordmark`.
 4. **Load relational data**: import the schema dumps from `db/` — `db/openparliamenttv_platform.sql` into the platform database and `db/openparliamenttv_parliament.sql` into each parliament database (table names must match the config). The data model is documented conceptually in [PLATFORM-DB-SCHEMA.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/PLATFORM-DB-SCHEMA.md).
-5. **Set write permissions** for the PHP user:
-   - `langcache/` for generated i18n caches
-   - `api/v1/cache/` for API response caches
-   - `cache/images/` for the entity thumbnail cache
-   - the mail log path if `mail.dev.file_path` is used
+5. **Set write permissions** for the PHP user on `var/`. Everything the platform writes at runtime lives there and is created on demand:
+   - `var/cache/lang/` generated i18n caches
+   - `var/cache/api/` API-side caches (remote repo status, service health)
+   - `var/cache/images/` entity thumbnail cache (served via the image proxy)
+   - `var/cache/meta-images/` generated OG/social cards
+   - `var/log/` cron, worker and dev-mail output
+   - `var/data/{input,done,progress,repos}` import working files and cloned parliament data repositories
+
+   The directory ships with a deny-all `.htaccess`; nothing under it is served directly. Its location can be moved with `dir.var` in `config.php`.
 6. **Import and index parliament data** (creates the OpenSearch indices on first run):
    ```bash
-   php data/cronUpdater.php --parliament DE
+   php bin/import.php --parliament DE
    ```
    In production this is typically run via cron or triggered from the admin Import page rather than ad hoc.
 7. **Serve**: point Apache at the repository root.
@@ -140,7 +144,7 @@ content/{name}.php                 (default)
 - **Function hooks**: `custom/overriding.functions.php` may define hooks such as `overrideVideoSource($speech)`.
 - **Assets**: custom logos and images under `custom/content/client/images/`.
 
-Every template begins with `<?php defined('OPTV') or die(); ?>`; the `OPTV` constant is defined in `config.php`, so direct browser access to a template is blocked. A small set of components are fetched directly by JavaScript (`result.grid.php`, `result.table.php`, `entity.form.php`, `entity.preview.ads.php`, `content/pages/media/content.player.php`) and therefore do **not** carry the guard.
+Every template begins with `<?php defined('OPTV') or die(); ?>`; the `OPTV` constant is defined in `config.php`, so direct browser access to a template is blocked. A small set of components are fetched directly by JavaScript (`result-grid.php`, `result-table.php`, `entity-form.php`, `entity-preview-ads.php`, `content/pages/media/components/player.php`) and therefore do **not** carry the guard.
 
 ## Security
 

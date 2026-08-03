@@ -11,7 +11,7 @@ function userChange($parameter) {
 
     // Validate required ID
     if (empty($parameter["id"])) {
-        return createApiErrorMissingParameter("id");
+        return apiErrorMissingParameter("id");
     }
 
     // Get database connection
@@ -33,7 +33,7 @@ function userChange($parameter) {
     // Process UserName
     if (array_key_exists("UserName", $params)) {
         if (empty($params["UserName"])) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 422,
                 1,
                 "messageErrorFieldRequiredTitle",
@@ -50,7 +50,7 @@ function userChange($parameter) {
         // Only validate password if both password fields are present
         if (array_key_exists("UserPasswordConfirm", $parameter)) {
             if (empty($params["UserPassword"])) {
-                return createApiErrorResponse(
+                return apiErrorResponse(
                     422,
                     1,
                     "messageErrorFieldRequiredTitle",
@@ -60,7 +60,7 @@ function userChange($parameter) {
                 );
             }
 
-            $passwordValidation = validateApiPassword($params["UserPassword"], "UserPassword");
+            $passwordValidation = apiValidatePassword($params["UserPassword"], "UserPassword");
             if ($passwordValidation !== true) {
                 return $passwordValidation;
             }
@@ -95,7 +95,7 @@ function userChange($parameter) {
     if (array_key_exists("UserRole", $params)) {
         $allowedRoles = ["user", "admin"];
         if (!in_array($params["UserRole"], $allowedRoles)) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 422,
                 1,
                 "messageErrorInvalidRoleTitle",
@@ -109,7 +109,7 @@ function userChange($parameter) {
 
     // Validate that we have something to update
     if (empty($updateParams)) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             422,
             1,
             "messageErrorParameterMissingTitle",
@@ -121,14 +121,14 @@ function userChange($parameter) {
     $userUpdateQuery = "UPDATE ?n SET " . implode(", ", $updateParams) . " WHERE UserID = ?i";
     $db->query($userUpdateQuery, $config["platform"]["sql"]["tbl"]["User"], $parameter["id"]);
 
-    return createApiSuccessResponse();
+    return apiSuccessResponse();
 }
 
 function userLogin($parameter) {
     global $config;
 
     if (!$config["allow"]["login"]) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             403,
             1,
             "messageErrorLoginNotAllowedTitle",
@@ -140,12 +140,12 @@ function userLogin($parameter) {
     $requiredFields = ["UserMail", "UserPassword"];
     foreach ($requiredFields as $field) {
         if (empty($parameter[$field])) {
-            return createApiErrorMissingParameter($field);
+            return apiErrorMissingParameter($field);
         }
     }
 
     // Validate email format
-    $emailValidation = validateApiEmail($parameter["UserMail"], "UserMail");
+    $emailValidation = apiValidateEmail($parameter["UserMail"], "UserMail");
     if ($emailValidation !== true) {
         return $emailValidation;
     }
@@ -164,7 +164,7 @@ function userLogin($parameter) {
     );
 
     if (!$userdata) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             401,
             1,
             "messageAuthAccountNotFoundTitle",
@@ -176,7 +176,7 @@ function userLogin($parameter) {
 
     // Validate password
     if ($userdata["UserPasswordHash"] != hash("sha512", $userdata["UserPasswordPepper"].$parameter["UserPassword"].$config["salt"])) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             401,
             1,
             "messageAuthPasswordIncorrectTitle",
@@ -188,7 +188,7 @@ function userLogin($parameter) {
 
     // Check account status
     if (!$userdata["UserActive"]) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             403,
             1,
             "messageAuthAccountNotActiveTitle",
@@ -197,7 +197,7 @@ function userLogin($parameter) {
     }
 
     if ($userdata["UserBlocked"] == 1) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             403,
             1,
             "messageAuthAccountBlockedTitle",
@@ -218,7 +218,7 @@ function userLogin($parameter) {
     $_SESSION["userdata"]["id"] = $userdata["UserID"];
     $_SESSION["userdata"]["role"] = $userdata["UserRole"];
 
-    return createApiSuccessResponse([
+    return apiSuccessResponse([
         "message" => L::messageLoginSuccessGeneric(),
         "user" => [
             "id" => $userdata["UserID"],
@@ -233,7 +233,7 @@ function userRegister($parameter) {
     global $config;
 
     if (!$config["allow"]["register"]) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             403,
             1,
             "messageErrorRegistrationNotAllowedTitle",
@@ -245,18 +245,18 @@ function userRegister($parameter) {
     $requiredFields = ["UserMail", "UserPassword", "UserName"];
     foreach ($requiredFields as $field) {
         if (empty($parameter[$field])) {
-            return createApiErrorMissingParameter($field);
+            return apiErrorMissingParameter($field);
         }
     }
 
     // Validate email format
-    $emailValidation = validateApiEmail($parameter["UserMail"], "UserMail");
+    $emailValidation = apiValidateEmail($parameter["UserMail"], "UserMail");
     if ($emailValidation !== true) {
         return $emailValidation;
     }
 
     // Validate password strength
-    $passwordValidation = validateApiPassword($parameter["UserPassword"], "UserPassword");
+    $passwordValidation = apiValidatePassword($parameter["UserPassword"], "UserPassword");
     if ($passwordValidation !== true) {
         return $passwordValidation;
     }
@@ -275,7 +275,7 @@ function userRegister($parameter) {
     );
 
     if ($userdata) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             409,
             1,
             "messageErrorAccountExistsTitle",
@@ -314,7 +314,7 @@ function userRegister($parameter) {
     $registrationMailSubject = L::brand().': '.L::registerNewAccount();
     $registrationMailVerifyLink = $config['dir']['root'].'/registerConfirm?c='.$confirmationCode;
 
-    require_once(__DIR__.'/../../../modules/send-mail/functions.php');
+    require_once(__DIR__.'/../../../modules/mail/mailer.php');
     require_once(__DIR__.'/../../../modules/utilities/security.php');
     
     $message = '<html><body>';
@@ -327,7 +327,7 @@ function userRegister($parameter) {
 
     sendHtmlMail($mail, $registrationMailSubject, $message, $parameter["UserName"]);
 
-    return createApiSuccessResponse([
+    return apiSuccessResponse([
         "message" => L::messageRegisterSuccess(),
         "user" => [
             "id" => $userID,
@@ -342,7 +342,7 @@ function userLogout() {
     session_unset();
     session_destroy();
     
-    return createApiSuccessResponse([
+    return apiSuccessResponse([
         "message" => "Successfully logged out"
     ]);
 }
@@ -352,11 +352,11 @@ function userPasswordResetRequest($parameter) {
 
     // Validate required fields
     if (empty($parameter["UserMail"])) {
-        return createApiErrorMissingParameter("UserMail");
+        return apiErrorMissingParameter("UserMail");
     }
 
     // Validate email format
-    $emailValidation = validateApiEmail($parameter["UserMail"], "UserMail");
+    $emailValidation = apiValidateEmail($parameter["UserMail"], "UserMail");
     if ($emailValidation !== true) {
         return $emailValidation;
     }
@@ -375,7 +375,7 @@ function userPasswordResetRequest($parameter) {
     );
 
     if (!$userdata) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             404,
             1,
             "messageAuthAccountNotFoundTitle",
@@ -397,7 +397,7 @@ function userPasswordResetRequest($parameter) {
     $passwordresetMailSubject = L::brand().': '.L::resetPassword();
     $resetLink = $config["dir"]["root"] . "/password-reset?c=" . $confirmationCode;
 
-    require_once(__DIR__.'/../../../modules/send-mail/functions.php');
+    require_once(__DIR__.'/../../../modules/mail/mailer.php');
     require_once(__DIR__.'/../../../modules/utilities/security.php');
     
     $message = '<html><body>';
@@ -410,7 +410,7 @@ function userPasswordResetRequest($parameter) {
 
     sendHtmlMail($mail, $passwordresetMailSubject, $message, $userdata["UserName"]);
 
-    return createApiSuccessResponse([
+    return apiSuccessResponse([
         "message" => L::messagePasswordResetMailSent()
     ]);
 }
@@ -422,12 +422,12 @@ function userPasswordReset($parameter) {
     $requiredFields = ["ResetCode", "NewPassword"];
     foreach ($requiredFields as $field) {
         if (empty($parameter[$field])) {
-            return createApiErrorMissingParameter($field);
+            return apiErrorMissingParameter($field);
         }
     }
 
     // Validate password strength
-    $passwordValidation = validateApiPassword($parameter["NewPassword"], "NewPassword");
+    $passwordValidation = apiValidatePassword($parameter["NewPassword"], "NewPassword");
     if ($passwordValidation !== true) {
         return $passwordValidation;
     }
@@ -447,7 +447,7 @@ function userPasswordReset($parameter) {
     );
 
     if (!$userdata) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             400,
             1,
             "messageErrorInvalidResetCodeTitle",
@@ -468,7 +468,7 @@ function userPasswordReset($parameter) {
         $userdata["UserID"]
     );
 
-    return createApiSuccessResponse([
+    return apiSuccessResponse([
         "message" => L::messagePasswordResetSuccess()
     ]);
 }
@@ -478,7 +478,7 @@ function userConfirmRegistration($parameter) {
 
     // Validate required fields
     if (empty($parameter["ConfirmationCode"])) {
-        return createApiErrorMissingParameter("ConfirmationCode");
+        return apiErrorMissingParameter("ConfirmationCode");
     }
 
     // Get database connection
@@ -496,7 +496,7 @@ function userConfirmRegistration($parameter) {
     );
 
     if (!$userdata) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             400,
             1,
             "messageErrorInvalidConfirmationCodeTitle",
@@ -506,7 +506,7 @@ function userConfirmRegistration($parameter) {
 
     // Check if account is blocked
     if ($userdata["UserBlocked"] == 1) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             403,
             1,
             "messageAuthAccountBlockedTitle",
@@ -520,7 +520,7 @@ function userConfirmRegistration($parameter) {
         $userdata["UserID"]
     );
 
-    return createApiSuccessResponse([
+    return apiSuccessResponse([
         "message" => L::messageAccountActivationSuccess()
     ]);
 }

@@ -1,6 +1,10 @@
 <?php
 
-function array_diff_assoc_recursive($array1, $array2)
+// Runtime state paths (optvVarPath) — required here so every entry point that
+// loads the utilities can resolve var/ locations without its own include.
+require_once(__DIR__."/paths.php");
+
+function optvArrayDiffAssocRecursive($array1, $array2)
 {
 	foreach($array1 as $key => $value){
 
@@ -15,7 +19,7 @@ function array_diff_assoc_recursive($array1, $array2)
 			}
 			else
 			{
-				$new_diff = array_diff_assoc_recursive($value, $array2[$key]);
+				$new_diff = optvArrayDiffAssocRecursive($value, $array2[$key]);
 				if($new_diff != FALSE)
 				{
 					$difference[$key] = $new_diff;
@@ -30,13 +34,13 @@ function array_diff_assoc_recursive($array1, $array2)
 	return !isset($difference) ? 0 : $difference;
 }
 
-function arrayRecursiveDiff($aArray1, $aArray2) {
+function optvArrayRecursiveDiff($aArray1, $aArray2) {
 	$aReturn = array();
 
 	foreach ($aArray1 as $mKey => $mValue) {
 		if (array_key_exists($mKey, $aArray2)) {
 			if (is_array($mValue)) {
-				$aRecursiveDiff = arrayRecursiveDiff($mValue, $aArray2[$mKey]);
+				$aRecursiveDiff = optvArrayRecursiveDiff($mValue, $aArray2[$mKey]);
 				if (count($aRecursiveDiff)) { $aReturn[$mKey] = $aRecursiveDiff; }
 			} else {
 				if ($mValue != $aArray2[$mKey]) {
@@ -112,7 +116,7 @@ function passwordStrength($password = "") {
  * @param string $stringID
  * @return string
  */
-function getInfosFromStringID($stringID = "") {
+function optvParseStringId($stringID = "") {
 
 
     if ($stringID == "") {
@@ -352,7 +356,7 @@ function getURLParameterFromArray($array = array()) {
  * Check if current file is executed by a CLI or a browser
  */
 
-function is_cli()
+function optvIsCli()
 {
     if (defined('STDIN')) {
         return true;
@@ -366,7 +370,7 @@ function is_cli()
 }
 
 
-function isJson($string) {
+function optvIsJson($string) {
     $decoded = json_decode($string);
     if ( !is_object($decoded) && !is_array($decoded) ) {
         return false;
@@ -469,7 +473,7 @@ function filterAllowedSearchParams($data, $type, $caseSensitive = true) {
  *                       Default timeout is 5 seconds.
  * @return string|false The response body as a string, or false on failure.
  */
-function makeHttpRequest($url, $options = []) {
+function optvHttpRequest($url, $options = []) {
     $defaultOptions = [
         'http' => [
             'user_agent' => 'OpenParliamentTV-Platform-HTTPClient',
@@ -505,7 +509,7 @@ function makeHttpRequest($url, $options = []) {
  * @param string $id The ID to validate.
  * @return bool True if valid, false otherwise.
  */
-function validateWikidataID($id) {
+function optvValidateWikidataId($id) {
     if (empty($id)) {
         return false;
     }
@@ -521,7 +525,7 @@ function validateWikidataID($id) {
  * @param string $progressFilePath Full path to the progress file.
  * @return bool True if directory exists or was created, false otherwise.
  */
-function ensureProgressDirectoryExists($progressFilePath) {
+function optvProgressEnsureDir($progressFilePath) {
     $progressFileDir = dirname($progressFilePath);
     if (!is_dir($progressFileDir)) {
         // Attempt to create the directory recursively with 0775 permissions
@@ -543,8 +547,8 @@ function ensureProgressDirectoryExists($progressFilePath) {
  * @param array $initialData Associative array of initial progress data.
  * @return bool True on success, false on failure.
  */
-function initBaseProgressFile($progressFilePath, array $initialData) {
-    if (!ensureProgressDirectoryExists($progressFilePath)) {
+function optvProgressInit($progressFilePath, array $initialData) {
+    if (!optvProgressEnsureDir($progressFilePath)) {
         error_log("Cannot initialize progress file, directory creation failed for: " . $progressFilePath);
         return false;
     }
@@ -584,7 +588,7 @@ function initBaseProgressFile($progressFilePath, array $initialData) {
  * @param callable $mutator function(array $currentProgress): ?array
  * @return bool True on success, false on failure or if the file is not initialized.
  */
-function _atomicUpdateProgressFile($progressFilePath, callable $mutator) {
+function optvProgressAtomicUpdate($progressFilePath, callable $mutator) {
     if (!file_exists($progressFilePath)) {
         error_log("Cannot update progress file, it does not exist: " . $progressFilePath . ". Initialize it first.");
         return false;
@@ -644,8 +648,8 @@ function _atomicUpdateProgressFile($progressFilePath, callable $mutator) {
  * @param array $updateData Associative array of data to merge into the progress file.
  * @return bool True on success, false on failure to read/write or if file not init.
  */
-function updateBaseProgressFile($progressFilePath, array $updateData) {
-    return _atomicUpdateProgressFile($progressFilePath, function ($currentProgress) use ($updateData) {
+function optvProgressUpdate($progressFilePath, array $updateData) {
+    return optvProgressAtomicUpdate($progressFilePath, function ($currentProgress) use ($updateData) {
         $updateData["lastActivityTime"] = date('c'); // Always update last activity time
         return array_merge($currentProgress, $updateData);
     });
@@ -660,8 +664,8 @@ function updateBaseProgressFile($progressFilePath, array $updateData) {
  * @param mixed|null $errorDetail Optional additional details about the error.
  * @return bool True on success, false on failure.
  */
-function logErrorToBaseProgressFile($progressFilePath, $errorMessage, $itemId = null, $errorDetail = null) {
-    return _atomicUpdateProgressFile($progressFilePath, function ($currentProgress) use ($errorMessage, $itemId, $errorDetail) {
+function optvProgressLogError($progressFilePath, $errorMessage, $itemId = null, $errorDetail = null) {
+    return optvProgressAtomicUpdate($progressFilePath, function ($currentProgress) use ($errorMessage, $itemId, $errorDetail) {
         if (!isset($currentProgress["errors"]) || !is_array($currentProgress["errors"])) {
             $currentProgress["errors"] = [];
         }
@@ -692,8 +696,8 @@ function logErrorToBaseProgressFile($progressFilePath, $errorMessage, $itemId = 
  * @param string|null $finalStatusDetails Optional final status detail message.
  * @return bool True on success, false on failure.
  */
-function finalizeBaseProgressFile($progressFilePath, $finalStatus, $finalStatusDetails = null) {
-    return _atomicUpdateProgressFile($progressFilePath, function ($currentProgress) use ($finalStatus, $finalStatusDetails) {
+function optvProgressFinalize($progressFilePath, $finalStatus, $finalStatusDetails = null) {
+    return optvProgressAtomicUpdate($progressFilePath, function ($currentProgress) use ($finalStatus, $finalStatusDetails) {
         $currentProgress["status"] = $finalStatus;
         if ($finalStatusDetails !== null) {
             $currentProgress["statusDetails"] = $finalStatusDetails;
@@ -904,7 +908,7 @@ function getTimeDistanceString($options = []) {
  *
  */
 
-function include_custom($file, $include = true) {
+function optvIncludeCustom($file, $include = true) {
 
     $pathinfo = pathinfo($file);
     $selfpath = pathinfo(realpath(__DIR__."/../../index.php"));

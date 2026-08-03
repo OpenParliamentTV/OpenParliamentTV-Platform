@@ -10,14 +10,14 @@
  */
 
 require_once(__DIR__ . "/../utilities.php");
-require_once(__DIR__ . "/../../../modules/notifications/functions.php");
+require_once(__DIR__ . "/../../../modules/notifications/notifications.php");
 
 define("ALERT_MAX_PER_USER", 50);
 
 function alertRequireUser() {
     $userId = notificationCurrentUserId();
     if (!$userId) {
-        return createApiErrorResponse(401, 1, "messageAuthLoginRequiredTitle", "messageAuthLoginRequiredDetail");
+        return apiErrorResponse(401, 1, "messageAuthLoginRequiredTitle", "messageAuthLoginRequiredDetail");
     }
     return $userId;
 }
@@ -76,7 +76,7 @@ function alertList($parameter = []) {
         $config["platform"]["sql"]["tbl"]["Alert"], $userId
     );
     $out = array_map('alertRowToObject', $rows ?: []);
-    return createApiSuccessResponse($out, [], null, null, count($out));
+    return apiSuccessResponse($out, [], null, null, count($out));
 }
 
 function alertGet($parameter = []) {
@@ -85,7 +85,7 @@ function alertGet($parameter = []) {
     if (is_array($userId)) { return $userId; }
 
     $id = isset($parameter["id"]) ? (int)$parameter["id"] : 0;
-    if (!$id) { return createApiErrorMissingParameter("id"); }
+    if (!$id) { return apiErrorMissingParameter("id"); }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) { return $db; }
@@ -94,8 +94,8 @@ function alertGet($parameter = []) {
         "SELECT * FROM ?n WHERE AlertID = ?i AND AlertUserID = ?i",
         $config["platform"]["sql"]["tbl"]["Alert"], $id, $userId
     );
-    if (!$row) { return createApiErrorNotFound("alert"); }
-    return createApiSuccessResponse(alertRowToObject($row));
+    if (!$row) { return apiErrorNotFound("alert"); }
+    return apiSuccessResponse(alertRowToObject($row));
 }
 
 function alertCreate($parameter = []) {
@@ -109,14 +109,14 @@ function alertCreate($parameter = []) {
     $raw = alertExtractCriteria($parameter);
     $criteria = normalizeAlertCriteria($raw);
     if (empty($criteria)) {
-        return createApiErrorResponse(422, 1, "messageErrorMissingParameter", "messageAlertCriteriaEmpty");
+        return apiErrorResponse(422, 1, "messageErrorMissingParameter", "messageAlertCriteriaEmpty");
     }
 
     // Cap alerts per user.
     $count = (int)$db->getOne("SELECT COUNT(*) FROM ?n WHERE AlertUserID = ?i",
         $config["platform"]["sql"]["tbl"]["Alert"], $userId);
     if ($count >= ALERT_MAX_PER_USER) {
-        return createApiErrorResponse(429, 1, "messageAlertLimitTitle", "messageAlertLimitDetail");
+        return apiErrorResponse(429, 1, "messageAlertLimitTitle", "messageAlertLimitDetail");
     }
 
     $frequency = $parameter["frequency"] ?? "realtime";
@@ -140,7 +140,7 @@ function alertCreate($parameter = []) {
     ensureNotificationPreference($userId, $db);
 
     $row = $db->getRow("SELECT * FROM ?n WHERE AlertID = ?i", $config["platform"]["sql"]["tbl"]["Alert"], $newId);
-    return createApiSuccessResponse(alertRowToObject($row));
+    return apiSuccessResponse(alertRowToObject($row));
 }
 
 function alertUpdate($parameter = []) {
@@ -149,14 +149,14 @@ function alertUpdate($parameter = []) {
     if (is_array($userId)) { return $userId; }
 
     $id = isset($parameter["id"]) ? (int)$parameter["id"] : 0;
-    if (!$id) { return createApiErrorMissingParameter("id"); }
+    if (!$id) { return apiErrorMissingParameter("id"); }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) { return $db; }
 
     $row = $db->getRow("SELECT * FROM ?n WHERE AlertID = ?i AND AlertUserID = ?i",
         $config["platform"]["sql"]["tbl"]["Alert"], $id, $userId);
-    if (!$row) { return createApiErrorNotFound("alert"); }
+    if (!$row) { return apiErrorNotFound("alert"); }
 
     $set = [];
     if (isset($parameter["frequency"]) && in_array($parameter["frequency"], ["realtime", "daily", "weekly"], true)) {
@@ -174,20 +174,20 @@ function alertUpdate($parameter = []) {
     if (isset($parameter["criteria"])) {
         $raw = alertExtractCriteria($parameter);
         if (empty(normalizeAlertCriteria($raw))) {
-            return createApiErrorResponse(422, 1, "messageErrorMissingParameter", "messageAlertCriteriaEmpty");
+            return apiErrorResponse(422, 1, "messageErrorMissingParameter", "messageAlertCriteriaEmpty");
         }
         $set["AlertCriteria"] = alertCriteriaStorageJson($raw);
     }
 
     if (empty($set)) {
-        return createApiErrorMissingParameter("criteria");
+        return apiErrorMissingParameter("criteria");
     }
 
     $db->query("UPDATE ?n SET ?u WHERE AlertID = ?i AND AlertUserID = ?i",
         $config["platform"]["sql"]["tbl"]["Alert"], $set, $id, $userId);
 
     $row = $db->getRow("SELECT * FROM ?n WHERE AlertID = ?i", $config["platform"]["sql"]["tbl"]["Alert"], $id);
-    return createApiSuccessResponse(alertRowToObject($row));
+    return apiSuccessResponse(alertRowToObject($row));
 }
 
 function alertDelete($parameter = []) {
@@ -196,19 +196,19 @@ function alertDelete($parameter = []) {
     if (is_array($userId)) { return $userId; }
 
     $id = isset($parameter["id"]) ? (int)$parameter["id"] : 0;
-    if (!$id) { return createApiErrorMissingParameter("id"); }
+    if (!$id) { return apiErrorMissingParameter("id"); }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) { return $db; }
 
     $row = $db->getRow("SELECT * FROM ?n WHERE AlertID = ?i AND AlertUserID = ?i",
         $config["platform"]["sql"]["tbl"]["Alert"], $id, $userId);
-    if (!$row) { return createApiErrorNotFound("alert"); }
+    if (!$row) { return apiErrorNotFound("alert"); }
 
     $db->query("DELETE FROM ?n WHERE AlertID = ?i AND AlertUserID = ?i",
         $config["platform"]["sql"]["tbl"]["Alert"], $id, $userId);
 
-    return createApiSuccessResponse(["deleted" => $id]);
+    return apiSuccessResponse(["deleted" => $id]);
 }
 
 /**
@@ -222,7 +222,7 @@ function alertStatus($parameter = []) {
 
     $raw = alertExtractCriteria($parameter);
     if (empty(normalizeAlertCriteria($raw))) {
-        return createApiSuccessResponse(["subscribed" => false, "alertID" => null]);
+        return apiSuccessResponse(["subscribed" => false, "alertID" => null]);
     }
     $canonical = alertCriteriaCanonicalJson($raw);
 
@@ -243,7 +243,7 @@ function alertStatus($parameter = []) {
         }
     }
 
-    return createApiSuccessResponse([
+    return apiSuccessResponse([
         "subscribed" => $matchID ? true : false,
         "alertID" => $matchID,
     ]);

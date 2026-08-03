@@ -1,6 +1,6 @@
 <?php
 /**
- * Atom 1.0 template. Expects $meta and $items (see modules/feed/functions.php).
+ * Atom 1.0 template. Expects $meta and $items (see modules/feed/feed.php).
  */
 echo '<?xml version="1.0" encoding="utf-8"?>' . "\n";
 ?>

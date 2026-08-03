@@ -4,7 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
-require_once (__DIR__."/../../../modules/images/functions.php");
+require_once (__DIR__."/../../../modules/images/image-cache.php");
 
 
 
@@ -17,12 +17,12 @@ function documentGetByID($id = false) {
     global $config;
 
     if (!$id) {
-        return createApiErrorMissingParameter('id');
+        return apiErrorMissingParameter('id');
     }
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     try {
@@ -34,20 +34,20 @@ function documentGetByID($id = false) {
         if ($item) {
             $documentData = documentGetDataObject($item, $db);
             if (!$documentData) {
-                return createApiErrorResponse(
+                return apiErrorResponse(
                     500,
                     1,
                     "messageErrorDataTransformationTitle",
                     "messageErrorDataTransformationDetail"
                 );
             }
-            return createApiSuccessResponse($documentData);
+            return apiSuccessResponse($documentData);
         } else {
-            return createApiErrorNotFound('document');
+            return apiErrorNotFound('document');
         }
 
     } catch (exception $e) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 }
 
@@ -65,7 +65,7 @@ function documentGetDataObject($item = false, $db = false) {
         //$return["attributes"]["labelAlternative"] = str_replace(array("\r","\n"), " ", $item["DocumentLabelAlternative"]);
         $return["attributes"]["labelAlternative"] = json_decode($item["DocumentLabelAlternative"],true);
         $return["attributes"]["abstract"] = $item["DocumentAbstract"];
-        $return["attributes"]["thumbnailURI"] = thumbnailCacheURL("document", $item["DocumentID"], $item["DocumentThumbnailURI"]);
+        $return["attributes"]["thumbnailURI"] = imageCacheUrl("document", $item["DocumentID"], $item["DocumentThumbnailURI"]);
         $return["attributes"]["thumbnailCreator"] = $item["DocumentThumbnailCreator"];
         $return["attributes"]["thumbnailLicense"] = $item["DocumentThumbnailLicense"];
         $return["attributes"]["sourceURI"] = $item["DocumentSourceURI"];
@@ -91,7 +91,7 @@ function documentSearch($parameter, $db = false) {
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     $filteredParameters = filterAllowedSearchParams($parameter, 'document');
@@ -101,7 +101,7 @@ function documentSearch($parameter, $db = false) {
         if (is_array($filteredParameters["label"])) {
             foreach ($filteredParameters["label"] as $tmpNameID) {
                 if (mb_strlen($tmpNameID, "UTF-8") < 3) {
-                    return createApiErrorResponse(
+                    return apiErrorResponse(
                         400,
                         1,
                         "messageErrorSearchLabelTooShortTitle",
@@ -111,7 +111,7 @@ function documentSearch($parameter, $db = false) {
                 }
             }
         } else if (mb_strlen($filteredParameters["label"], "UTF-8") < 3) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 400,
                 1,
                 "messageErrorSearchLabelTooShortTitle",
@@ -123,7 +123,7 @@ function documentSearch($parameter, $db = false) {
 
     // Validate type parameter
     if (isset($filteredParameters["type"]) && mb_strlen($filteredParameters["type"], "UTF-8") < 2) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             400,
             2,
             "messageErrorSearchTypeTooShortTitle",
@@ -134,8 +134,8 @@ function documentSearch($parameter, $db = false) {
 
     // Validate wikidataID parameter
     if (isset($filteredParameters["wikidataID"])) {
-        if (!validateWikidataID($filteredParameters["wikidataID"])) {
-            return createApiErrorInvalidID("Wikidata");
+        if (!optvValidateWikidataId($filteredParameters["wikidataID"])) {
+            return apiErrorInvalidId("Wikidata");
         }
     }
 
@@ -144,7 +144,7 @@ function documentSearch($parameter, $db = false) {
         $tmpProcedureIDs = is_array($filteredParameters["procedureID"]) ? $filteredParameters["procedureID"] : [$filteredParameters["procedureID"]];
         foreach ($tmpProcedureIDs as $tmpProcedureID) {
             if (!is_string($tmpProcedureID) || mb_strlen($tmpProcedureID, "UTF-8") < 1) {
-                return createApiErrorInvalidParameter("procedureID");
+                return apiErrorInvalidParameter("procedureID");
             }
         }
     }
@@ -192,7 +192,7 @@ function documentSearch($parameter, $db = false) {
         }
 
         if (empty($conditions)) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 404,
                 1,
                 "messageErrorParameterMissingTitle",
@@ -214,7 +214,7 @@ function documentSearch($parameter, $db = false) {
             return $itemObj;
         }, $findings);
 
-        return createApiSuccessResponse(
+        return apiSuccessResponse(
             $data,
             [
                 "requestStatus" => "success",
@@ -227,7 +227,7 @@ function documentSearch($parameter, $db = false) {
         );
 
     } catch (exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             422,
             2,
             "messageErrorDatabaseGeneric",
@@ -251,18 +251,18 @@ function documentAdd($api_request, $db = false, $dbp = false) {
         // If sourceEntitySuggestionExternalID is present, it implies a wikidata ID was the source
         // For now, we will not enforce 'id' (meaning wikidata ID) for documents as it's optional in the table
     }
-    if (!empty($api_request["id"]) && !validateWikidataID($api_request["id"])) {
-        return createApiErrorInvalidID("Wikidata (optional)");
+    if (!empty($api_request["id"]) && !optvValidateWikidataId($api_request["id"])) {
+        return apiErrorInvalidId("Wikidata (optional)");
     }
     if (empty($api_request["type"])) {
-        return createApiErrorMissingParameter("type");
+        return apiErrorMissingParameter("type");
     }
     // Add specific validation for document types if necessary
     if (empty($api_request["label"])) {
-        return createApiErrorMissingParameter("label");
+        return apiErrorMissingParameter("label");
     }
     if (empty($api_request["sourceuri"])) {
-        return createApiErrorMissingParameter("sourceuri");
+        return apiErrorMissingParameter("sourceuri");
     }
 
     $db = getApiDatabaseConnection('platform');
@@ -342,7 +342,7 @@ function documentAdd($api_request, $db = false, $dbp = false) {
             } else {
                 $finalMeta['requestStatus'] = 'error';
                 if ($postProcessingDetails['reimportStatus'] === 'error') {
-                    return createApiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Document"]);
+                    return apiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Document"]);
                 }
             }
 
@@ -354,7 +354,7 @@ function documentAdd($api_request, $db = false, $dbp = false) {
             if (isset($documentDataResponse["errors"])) {
                 return $documentDataResponse;
             }
-            return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Document"]);
+            return apiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Document"]);
         }
         
         if ($finalMeta['requestStatus'] === 'error') {
@@ -364,10 +364,10 @@ function documentAdd($api_request, $db = false, $dbp = false) {
                  $errorTitle = "messageErrorItemCreationRetrievalFailedTitle";
                  $errorDetail = "messageErrorItemCreationRetrievalFailedDetail";
             }
-            return createApiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Document"], null, $finalMeta);
+            return apiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Document"], null, $finalMeta);
         }
 
-        return createApiSuccessResponse($finalData, $finalMeta);
+        return apiSuccessResponse($finalData, $finalMeta);
 
     } catch (Exception $e) {
         error_log("Error in documentAdd: " . $e->getMessage());
@@ -377,7 +377,7 @@ function documentAdd($api_request, $db = false, $dbp = false) {
             'reimportStatus' => 'not_attempted',
             'suggestionDeleteStatus' => 'not_attempted'
         ];
-        return createApiErrorDatabaseError($e->getMessage(), $errorMeta);
+        return apiErrorDatabaseError($e->getMessage(), $errorMeta);
     }
 }
 
@@ -460,14 +460,14 @@ function documentChange($parameter) {
     global $config;
 
     if (!$parameter["id"]) {
-        return createApiErrorMissingParameter('id');
+        return apiErrorMissingParameter('id');
     }
 
     $numericDocID = (int)$parameter["id"]; // Convert to int
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     // Check if document exists
@@ -477,7 +477,7 @@ function documentChange($parameter) {
     );
     
     if (!$document) {
-        return createApiErrorNotFound("Document");
+        return apiErrorNotFound("Document");
     }
 
     // Define allowed parameters
@@ -505,7 +505,7 @@ function documentChange($parameter) {
     }
 
     if (empty($updateParams)) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             422,
             1,
             "messageErrorParameterMissingTitle",
@@ -524,9 +524,9 @@ function documentChange($parameter) {
         );
 
         if ($result) {
-            return createApiSuccessResponse();
+            return apiSuccessResponse();
         } else {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 503,
                 1,
                 "messageErrorDatabaseGeneric",
@@ -534,7 +534,7 @@ function documentChange($parameter) {
             );
         }
     } catch (exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             503,
             1,
             "messageErrorDatabaseGeneric",

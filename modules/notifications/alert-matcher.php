@@ -4,14 +4,14 @@
  *
  * Pure matching logic plus the call wrappers used from three places:
  *   1. cronUpdater (per newly-indexed media item, real-time)
- *   2. data/notificationMatcher.php (standalone CLI)
+ *   2. bin/match-alerts.php (standalone CLI)
  *   3. notification/runMatch API (admin on-demand test trigger)
  *
  * Input is the JSON:API media *item* node (the `data` node from getItem):
  * { type, id, attributes:{public, parliament, textContents[]…}, relationships:{people,organisations,terms,documents,electoralPeriod} }
  */
 
-require_once(__DIR__ . "/functions.php");
+require_once(__DIR__ . "/notifications.php");
 
 /**
  * Build a flat index of matchable values from a media item.

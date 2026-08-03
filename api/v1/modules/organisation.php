@@ -4,7 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
-require_once (__DIR__."/../../../modules/images/functions.php");
+require_once (__DIR__."/../../../modules/images/image-cache.php");
 
 /**
  * @param string $id String of OrganisationID (= WikidataID)
@@ -14,7 +14,7 @@ function organisationGetByID($id = false) {
     global $config;
 
     if (!$id || !preg_match("/(Q|P)\d+/i", $id)) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             422,
             1,
             "messageErrorParameterMissingTitle",
@@ -25,7 +25,7 @@ function organisationGetByID($id = false) {
 
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     try {
@@ -35,7 +35,7 @@ function organisationGetByID($id = false) {
         );
 
         if (!$item) {
-            return createApiErrorNotFound("Organisation");
+            return apiErrorNotFound("Organisation");
         }
 
         $data = [
@@ -46,7 +46,7 @@ function organisationGetByID($id = false) {
                 "label" => $item["OrganisationLabel"],
                 "labelAlternative" => json_decode($item["OrganisationLabelAlternative"], true),
                 "abstract" => $item["OrganisationAbstract"],
-                "thumbnailURI" => thumbnailCacheURL("organisation", $item["OrganisationID"], $item["OrganisationThumbnailURI"]),
+                "thumbnailURI" => imageCacheUrl("organisation", $item["OrganisationID"], $item["OrganisationThumbnailURI"]),
                 "thumbnailCreator" => $item["OrganisationThumbnailCreator"],
                 "thumbnailLicense" => $item["OrganisationThumbnailLicense"],
                 "embedURI" => $item["OrganisationEmbedURI"],
@@ -76,10 +76,10 @@ function organisationGetByID($id = false) {
             ]
         ];
 
-        return createApiSuccessResponse($data, null, null, null);
+        return apiSuccessResponse($data, null, null, null);
 
     } catch (exception $e) {
-        return createApiErrorDatabaseError();
+        return apiErrorDatabaseError();
     }
 }
 
@@ -95,7 +95,7 @@ function organisationGetDataObject($item = false, $db = false) {
         $return["attributes"]["label"] = $item["OrganisationLabel"];
         $return["attributes"]["labelAlternative"] = json_decode($item["OrganisationLabelAlternative"],true);
         $return["attributes"]["abstract"] = $item["OrganisationAbstract"];
-        $return["attributes"]["thumbnailURI"] = thumbnailCacheURL("organisation", $item["OrganisationID"], $item["OrganisationThumbnailURI"]);
+        $return["attributes"]["thumbnailURI"] = imageCacheUrl("organisation", $item["OrganisationID"], $item["OrganisationThumbnailURI"]);
         $return["attributes"]["thumbnailCreator"] = $item["OrganisationThumbnailCreator"];
         $return["attributes"]["thumbnailLicense"] = $item["OrganisationThumbnailLicense"];
         $return["attributes"]["embedURI"] = $item["OrganisationEmbedURI"];
@@ -134,7 +134,7 @@ function organisationSearch($parameter, $noLimit = false) {
     
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
-        return createApiErrorDatabaseConnection();
+        return apiErrorDatabaseConnection();
     }
 
     $filteredParameters = filterAllowedSearchParams($parameter, 'organisation');
@@ -144,7 +144,7 @@ function organisationSearch($parameter, $noLimit = false) {
         if (is_array($filteredParameters["name"])) {
             foreach ($filteredParameters["name"] as $tmpName) {
                 if (mb_strlen($tmpName, "UTF-8") < 3) {
-                    return createApiErrorResponse(
+                    return apiErrorResponse(
                         400,
                         1,
                         "messageErrorSearchLabelTooShortTitle",
@@ -154,7 +154,7 @@ function organisationSearch($parameter, $noLimit = false) {
                 }
             }
         } else if (mb_strlen($filteredParameters["name"], "UTF-8") < 3) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 400,
                 1,
                 "messageErrorSearchLabelTooShortTitle",
@@ -221,7 +221,7 @@ function organisationSearch($parameter, $noLimit = false) {
             "self" => $config["dir"]["api"]."/search/organisations?".getURLParameterFromArray($filteredParameters)
         ];
 
-        return createApiSuccessResponse(
+        return apiSuccessResponse(
             $data,
             [
                 "page" => $page,
@@ -231,7 +231,7 @@ function organisationSearch($parameter, $noLimit = false) {
         );
 
     } catch (exception $e) {
-        return createApiErrorDatabaseError($e->getMessage());
+        return apiErrorDatabaseError($e->getMessage());
     }
 }
 
@@ -250,17 +250,17 @@ function organisationAdd($api_request, $db = false, $dbp = false) {
 
     // Validate required fields
     if (empty($api_request["id"])) {
-        return createApiErrorMissingParameter("id");
+        return apiErrorMissingParameter("id");
     }
-    if (!validateWikidataID($api_request["id"])) {
-        return createApiErrorInvalidID("Wikidata");
+    if (!optvValidateWikidataId($api_request["id"])) {
+        return apiErrorInvalidId("Wikidata");
     }
     if (empty($api_request["type"])) {
-        return createApiErrorMissingParameter("type");
+        return apiErrorMissingParameter("type");
     }
     // Add more specific type validation if needed, e.g., against a list of allowed types
     if (empty($api_request["label"])) {
-        return createApiErrorMissingParameter("label");
+        return apiErrorMissingParameter("label");
     }
 
     $db = getApiDatabaseConnection('platform');
@@ -271,7 +271,7 @@ function organisationAdd($api_request, $db = false, $dbp = false) {
     // Check if organisation already exists
     $existingOrganisation = $db->getOne("SELECT OrganisationID FROM ?n WHERE OrganisationID = ?s", $config["platform"]["sql"]["tbl"]["Organisation"], $api_request["id"]);
     if ($existingOrganisation) {
-        return createApiErrorDuplicate("Organisation", "id");
+        return apiErrorDuplicate("Organisation", "id");
     }
 
     $labelAlternative = !empty($api_request["labelAlternative"]) && is_array($api_request["labelAlternative"]) ? json_encode($api_request["labelAlternative"]) : json_encode([]);
@@ -342,7 +342,7 @@ function organisationAdd($api_request, $db = false, $dbp = false) {
             } else {
                 $finalMeta['requestStatus'] = 'error';
                 if ($postProcessingDetails['reimportStatus'] === 'error') {
-                    return createApiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Organisation"]);
+                    return apiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Organisation"]);
                 }
             }
 
@@ -354,7 +354,7 @@ function organisationAdd($api_request, $db = false, $dbp = false) {
             if (isset($organisationDataResponse["errors"])) {
                 return $organisationDataResponse;
             }
-            return createApiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Organisation"]);
+            return apiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Organisation"]);
         }
         
         if ($finalMeta['requestStatus'] === 'error') {
@@ -364,10 +364,10 @@ function organisationAdd($api_request, $db = false, $dbp = false) {
                  $errorTitle = "messageErrorItemCreationRetrievalFailedTitle";
                  $errorDetail = "messageErrorItemCreationRetrievalFailedDetail";
             }
-            return createApiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Organisation"], null, $finalMeta);
+            return apiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Organisation"], null, $finalMeta);
         }
 
-        return createApiSuccessResponse($finalData, $finalMeta);
+        return apiSuccessResponse($finalData, $finalMeta);
 
     } catch (Exception $e) {
         error_log("Error in organisationAdd: " . $e->getMessage());
@@ -377,7 +377,7 @@ function organisationAdd($api_request, $db = false, $dbp = false) {
             'reimportStatus' => 'not_attempted',
             'suggestionDeleteStatus' => 'not_attempted'
         ];
-        return createApiErrorDatabaseError($e->getMessage(), $errorMeta);
+        return apiErrorDatabaseError($e->getMessage(), $errorMeta);
     }
 }
 
@@ -461,7 +461,7 @@ function organisationGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $searc
         if (is_array($items)) {
             foreach ($items as $k => $row) {
                 if (!empty($row["OrganisationThumbnailURI"])) {
-                    $items[$k]["OrganisationThumbnailURI"] = thumbnailCacheURL("organisation", $row["OrganisationID"], $row["OrganisationThumbnailURI"]);
+                    $items[$k]["OrganisationThumbnailURI"] = imageCacheUrl("organisation", $row["OrganisationID"], $row["OrganisationThumbnailURI"]);
                 }
             }
         }
@@ -489,7 +489,7 @@ function organisationChange($parameter) {
     global $config;
 
     if (!isset($parameter["id"])) {
-        return createApiErrorMissingParameter("id");
+        return apiErrorMissingParameter("id");
     }
 
     $db = getApiDatabaseConnection('platform');
@@ -503,7 +503,7 @@ function organisationChange($parameter) {
         $parameter["id"]
     );
     if (!$organisation) {
-        return createApiErrorNotFound("Organisation");
+        return apiErrorNotFound("Organisation");
     }
 
     // Define allowed parameters
@@ -537,7 +537,7 @@ function organisationChange($parameter) {
         }
 
         if (empty($updateParams)) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 422,
                 1,
                 "messageErrorParameterMissingTitle",
@@ -555,7 +555,7 @@ function organisationChange($parameter) {
         );
 
         if (!$result) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 500,
                 1,
                 "messageErrorDatabaseGeneric",
@@ -563,10 +563,10 @@ function organisationChange($parameter) {
             );
         }
 
-        return createApiSuccessResponse(null, ["message" => "Organisation updated successfully"]);
+        return apiSuccessResponse(null, ["message" => "Organisation updated successfully"]);
 
     } catch (exception $e) {
-        return createApiErrorDatabaseError();
+        return apiErrorDatabaseError();
     }
 }
 ?>

@@ -4,7 +4,7 @@
 
     include_once (__DIR__."/../../../../api/v1/api.php");
 
-    require_once(__DIR__ . '/../../../../api/v1/modules/systemMessage.php');
+    require_once(__DIR__ . '/../../../../api/v1/modules/system-message.php');
     $systemMessagesResp = systemMessageList([]);
     $systemMessages = ($systemMessagesResp["meta"]["requestStatus"] === "success") ? $systemMessagesResp["data"] : [];
 

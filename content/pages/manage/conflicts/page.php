@@ -71,7 +71,12 @@
 			<div class="modal-body">
 				<div id="conflictDetailsDiv" class="contentContainer" style="display: none">
 					<div class="alert alert-secondary" id="conflictDetailsExplanation"></div>
-					<table class="col-12 table-striped" id="conflictDetails" data-toggle="table">
+					<!-- Plain key/value layout table, NOT a bootstrap-table grid: it has no
+					     thead and no data-field columns. Deliberately without the bootstrap-table
+					     auto-init attribute — with it, bootstrap-table initialises on this table,
+					     finds no column definitions, and trToData throws
+					     ("can't access property 'field'"). -->
+					<table class="col-12 table-striped" id="conflictDetails">
 						<tbody>
 							<tr>
 								<td><?= L::type(); ?></td>
@@ -584,7 +589,7 @@
 				const modalBody = addEntityModal.querySelector('.modal-body');
 				modalBody.innerHTML = '<div class="text-center"><div class="spinner-border" role="status"><span class="visually-hidden">Loading...</span></div></div>';
 
-				const componentUrl = '<?= $config["dir"]["root"] ?>/content/components/entity.form.php';
+				const componentUrl = '<?= $config["dir"]["root"] ?>/content/components/entity-form.php';
 				const button = event.relatedTarget;
 				const entityLabelFromButton = button && button.dataset.entityLabel ? button.dataset.entityLabel : null;
 

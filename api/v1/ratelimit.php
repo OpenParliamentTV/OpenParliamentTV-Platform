@@ -9,13 +9,13 @@
  *
  * An API key raises the caller's rate limit. It is not an authentication
  * mechanism: it grants no additional actions, and the public API remains usable
- * without one. See api/v1/modules/apiKey.php.
+ * without one. See api/v1/modules/api-key.php.
  *
- * Depends on createApiErrorResponse() (api/v1/utilities.php via api/v1/api.php).
+ * Depends on apiErrorResponse() (api/v1/utilities.php via api/v1/api.php).
  */
 
 require_once(__DIR__ . "/../../modules/utilities/ratelimit.php");
-require_once(__DIR__ . "/modules/apiKey.php");
+require_once(__DIR__ . "/modules/api-key.php");
 
 /**
  * The raw key presented by the client, or null when none was sent.
@@ -62,7 +62,7 @@ function apiRateLimitCheck($action)
             $apiKey = apiKeyResolve($rawKey, $db);
 
             if ($apiKey === null) {
-                return createApiErrorResponse(
+                return apiErrorResponse(
                     403,
                     "INVALID_API_KEY",
                     "messageErrorInvalidApiKeyTitle",
@@ -93,7 +93,7 @@ function apiRateLimitCheck($action)
     }
 
     header('Retry-After: ' . $retryAfter);
-    return createApiErrorResponse(
+    return apiErrorResponse(
         429,
         "RATE_LIMIT_EXCEEDED",
         "messageErrorRateLimited",

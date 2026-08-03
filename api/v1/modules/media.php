@@ -3,10 +3,10 @@
 require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
-require_once (__DIR__."/../../../modules/utilities/functions.entities.php");
-require_once (__DIR__."/../../../modules/utilities/textArrayConverters.php");
+require_once (__DIR__."/../../../modules/utilities/entities.php");
+require_once (__DIR__."/../../../modules/utilities/text-array-converters.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
-require_once (__DIR__."/../../../modules/images/functions.php");
+require_once (__DIR__."/../../../modules/images/image-cache.php");
 
 /**
  * Helper function to process document annotations
@@ -34,7 +34,7 @@ function processDocumentAnnotation($annotation, $db, $config) {
             "type" => $ditem["DocumentType"],
             "label" => str_replace(["\r","\n"], " ", $ditem["DocumentLabel"]),
             "labelAlternative" => json_decode($ditem["DocumentLabelAlternative"]),
-            "thumbnailURI" => thumbnailCacheURL("document", $annotation["AnnotationResourceID"], $ditem["DocumentThumbnailURI"]),
+            "thumbnailURI" => imageCacheUrl("document", $annotation["AnnotationResourceID"], $ditem["DocumentThumbnailURI"]),
             "thumbnailCreator" => $ditem["DocumentThumbnailCreator"],
             "thumbnailLicense" => $ditem["DocumentThumbnailLicense"],
             "additionalInformation" => json_decode($ditem["DocumentAdditionalInformation"], true) ?: [],
@@ -75,7 +75,7 @@ function processOrganisationAnnotation($annotation, $db, $config) {
             "type" => $ditem["OrganisationType"],
             "label" => $ditem["OrganisationLabel"],
             "labelAlternative" => json_decode($ditem["OrganisationLabelAlternative"]),
-            "thumbnailURI" => thumbnailCacheURL("organisation", $annotation["AnnotationResourceID"], $ditem["OrganisationThumbnailURI"]),
+            "thumbnailURI" => imageCacheUrl("organisation", $annotation["AnnotationResourceID"], $ditem["OrganisationThumbnailURI"]),
             "thumbnailCreator" => $ditem["OrganisationThumbnailCreator"],
             "thumbnailLicense" => $ditem["OrganisationThumbnailLicense"],
             "additionalInformation" => json_decode($ditem["OrganisationAdditionalInformation"] ?? "", true) ?: [],
@@ -114,7 +114,7 @@ function processTermAnnotation($annotation, $db, $config) {
             "label" => $ditem["TermLabel"],
             "labelAlternative" => json_decode($ditem["TermLabelAlternative"]),
             "websiteURI" => $ditem["TermWebsiteURI"],
-            "thumbnailURI" => thumbnailCacheURL("term", $annotation["AnnotationResourceID"], $ditem["TermThumbnailURI"]),
+            "thumbnailURI" => imageCacheUrl("term", $annotation["AnnotationResourceID"], $ditem["TermThumbnailURI"]),
             "thumbnailCreator" => $ditem["TermThumbnailCreator"],
             "thumbnailLicense" => $ditem["TermThumbnailLicense"],
             "additionalInformation" => json_decode($ditem["TermAdditionalInformation"], true) ?: []
@@ -168,7 +168,7 @@ function processPersonAnnotation($annotation, $db, $config) {
             "label" => $pitem["PersonLabel"],
             "labelAlternative" => json_decode($pitem["PersonLabelAlternative"]),
             "degree" => $pitem["PersonDegree"],
-            "thumbnailURI" => thumbnailCacheURL("person", $pitem["PersonID"], $pitem["PersonThumbnailURI"]),
+            "thumbnailURI" => imageCacheUrl("person", $pitem["PersonID"], $pitem["PersonThumbnailURI"]),
             "thumbnailCreator" => $pitem["PersonThumbnailCreator"],
             "thumbnailLicense" => $pitem["PersonThumbnailLicense"],
             "additionalInformation" => json_decode($pitem["PersonAdditionalInformation"], true) ?: [],
@@ -248,7 +248,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
     global $config;
 
     if (!$id) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             422,
             1,
             "messageErrorMissingParameter",
@@ -258,9 +258,9 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
     }
 
     // Parse and validate ID
-    $IDInfos = getInfosFromStringID($id);
+    $IDInfos = optvParseStringId($id);
     if (!$IDInfos) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             422,
             1,
             "messageErrorIDParseError",
@@ -271,7 +271,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
 
     $parliament = $IDInfos["parliament"];
     if (!array_key_exists($parliament, $config["parliament"])) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             422,
             1,
             "messageErrorInvalidID",
@@ -321,7 +321,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
     );
 
     if (!$item) {
-        return createApiErrorNotFound("Media");
+        return apiErrorNotFound("Media");
     }
 
     // Check media access permissions
@@ -330,8 +330,8 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
         $userRole = $_SESSION["userdata"]["role"];
     }
     
-    if (($item["MediaPublic"] == 0) && ($userRole != "admin") && (!is_cli())) {
-        return createApiErrorResponse(
+    if (($item["MediaPublic"] == 0) && ($userRole != "admin") && (!optvIsCli())) {
+        return apiErrorResponse(
             511,
             1,
             "messageAuthNotPermittedTitle",
@@ -527,7 +527,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
     $data["relationships"]["terms"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$data["id"]."&type=term";
     $data["relationships"]["people"]["links"]["self"] = $config["dir"]["api"]."/search/annotations?mediaID=".$data["id"]."&type=person";
 
-    return createApiSuccessResponse($data, null, null, null);
+    return apiSuccessResponse($data, null, null, null);
 }
 
 /**
@@ -544,7 +544,7 @@ function mediaGetByID($id = false, $db = false, $dbp = false) {
 function validateMediaAddParameters($item, $config) {
     // Validate parliament
     if (!array_key_exists($item["parliament"], $config["parliament"])) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             400,
             1,
             "messageErrorParameterMissingTitle",
@@ -555,7 +555,7 @@ function validateMediaAddParameters($item, $config) {
 
     // Validate electoral period number
     if (!is_numeric($item["electoralPeriod"]["number"])) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             400,
             1,
             "messageErrorParameterMissingTitle",
@@ -566,7 +566,7 @@ function validateMediaAddParameters($item, $config) {
 
     // Validate session number
     if (!is_numeric($item["session"]["number"])) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             400,
             1,
             "messageErrorParameterMissingTitle",
@@ -581,7 +581,7 @@ function validateMediaAddParameters($item, $config) {
 
     // Validate agenda item titles
     if (!$item["agendaItem"]["officialTitle"]) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             400,
             1,
             "messageErrorParameterMissingTitle",
@@ -591,7 +591,7 @@ function validateMediaAddParameters($item, $config) {
     }
 
     if (!$item["agendaItem"]["title"]) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             400,
             1,
             "messageErrorParameterMissingTitle",
@@ -602,7 +602,7 @@ function validateMediaAddParameters($item, $config) {
 
     // Validate media parameters
     if (!$item["media"]["videoFileURI"]) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             400,
             1,
             "messageErrorParameterMissingTitle",
@@ -612,7 +612,7 @@ function validateMediaAddParameters($item, $config) {
     }
 
     if (!$item["media"]["sourcePage"]) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             400,
             1,
             "messageErrorParameterMissingTitle",
@@ -623,7 +623,7 @@ function validateMediaAddParameters($item, $config) {
 
     // Validate date
     if (!$item["dateStart"]) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             400,
             1,
             "messageErrorParameterMissingTitle",
@@ -634,7 +634,7 @@ function validateMediaAddParameters($item, $config) {
 
     // Validate date range if both dates are provided
     if ($item["dateStart"] && $item["dateEnd"]) {
-        $dateRangeValidation = validateApiDateRange($item["dateStart"], $item["dateEnd"]);
+        $dateRangeValidation = apiValidateDateRange($item["dateStart"], $item["dateEnd"]);
         if ($dateRangeValidation !== true) {
             return $dateRangeValidation;
         }
@@ -1528,7 +1528,7 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
         $todoMapping = json_decode(ob_get_clean(),true);
 
         if (!$entityDump) {
-            require_once (__DIR__."/../../../data/entity-dump/function.entityDump.php");
+            require_once (__DIR__."/../../../data/entity-dump/entity-dump.php");
             $entityDump = getEntityDump(array("type"=>"all","wiki"=>true,"wikikeys"=>"true"),$db);
         }
         
@@ -1559,10 +1559,10 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
         // Process people
         processPeople($item["people"] ?? [], $nextID, $item["parliament"], $db, $dbp, $config, $entityDump);
 
-        return createApiSuccessResponse(["id" => $nextID]);
+        return apiSuccessResponse(["id" => $nextID]);
 
     } catch (Exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             503,
             2,
             "messageErrorDatabaseGeneric",
@@ -1576,13 +1576,13 @@ function mediaChange($parameter) {
     global $config;
 
     if (!$parameter["id"]) {
-        return createApiErrorMissingParameter("id");
+        return apiErrorMissingParameter("id");
     }
 
     // Parse parliament from ID
-    $IDInfos = getInfosFromStringID($parameter["id"]);
+    $IDInfos = optvParseStringId($parameter["id"]);
     if (!is_array($IDInfos) || !array_key_exists($IDInfos["parliament"], $config["parliament"])) {
-        return createApiErrorInvalidID("Media");
+        return apiErrorInvalidId("Media");
     }
 
     $parliament = $IDInfos["parliament"];
@@ -1600,7 +1600,7 @@ function mediaChange($parameter) {
     );
     
     if (!$media) {
-        return createApiErrorNotFound("Media");
+        return apiErrorNotFound("Media");
     }
 
     // Define allowed parameters
@@ -1642,7 +1642,7 @@ function mediaChange($parameter) {
     }
 
     if (empty($updateParams)) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             422,
             1,
             "messageErrorParameterMissingTitle",
@@ -1680,7 +1680,7 @@ function mediaChange($parameter) {
             
             if ($updatedMediaData && !isset($updatedMediaData["errors"])) {
                 // Include searchIndex module for the update function
-                require_once(__DIR__ . "/searchIndex.php");
+                require_once(__DIR__ . "/search-index.php");
                 
                 // Prepare data for OpenSearch indexing
                 $indexUpdateRequest = [
@@ -1704,7 +1704,7 @@ function mediaChange($parameter) {
         }
     }
 
-    return createApiSuccessResponse();
+    return apiSuccessResponse();
 }
 
 /**
@@ -1719,7 +1719,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
     global $config;
 
     require_once (__DIR__."/../../../modules/utilities/functions.php");
-    require_once (__DIR__."/../../../modules/search/functions.php");
+    require_once (__DIR__."/../../../modules/search/opensearch.php");
 
     $filteredParameters = filterAllowedSearchParams($parameter, 'media');
 
@@ -1732,7 +1732,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         // UI can show a "temporarily unavailable" notice instead of an empty
         // "no speeches found" result. Absent flag = available.
         if (isset($search["serviceAvailable"]) && $search["serviceAvailable"] === false) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 503,
                 3,
                 "messageErrorSearchGenericTitle",
@@ -1741,7 +1741,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         }
 
         if (!isset($search["hits"]["hits"])) {
-            return createApiErrorResponse(
+            return apiErrorResponse(
                 503,
                 3,
                 "messageErrorSearchGenericTitle",
@@ -1772,7 +1772,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
             $linksForIds = [
                 "self" => $config["dir"]["api"]."/search/media?".getURLParameterFromArray($filteredParameters)
             ];
-            return createApiSuccessResponse(
+            return apiSuccessResponse(
                 $idList,
                 $metaForIds,
                 $linksForIds
@@ -1828,7 +1828,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         }
         
         // Add electoral periods data for timeline visualization
-        require_once(__DIR__ . "/electoralPeriod.php");
+        require_once(__DIR__ . "/electoral-period.php");
         
         $electoralPeriodsData = electoralPeriodGetItemsFromDB("all");
         $electoralPeriods = [];
@@ -1853,14 +1853,14 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
         $return["meta"]["attributes"]["electoralPeriods"] = $electoralPeriods;
         
         // Now $return["meta"] and $return["links"] are fully populated
-        return createApiSuccessResponse(
+        return apiSuccessResponse(
             $return["data"],
             $return["meta"],
             $return["links"]
         );
 
     } catch (Exception $e) {
-        return createApiErrorResponse(
+        return apiErrorResponse(
             503,
             3,
             "messageErrorSearchGenericTitle",

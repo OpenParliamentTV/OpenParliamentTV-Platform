@@ -9,7 +9,7 @@
  * discoverable via internal links and carry their own VideoObject structured data.
  */
 
-require_once(__DIR__ . '/config.php');
+require_once(__DIR__ . '/bootstrap-core.php');
 require_once(__DIR__ . '/modules/utilities/safemysql.class.php');
 require_once(__DIR__ . '/api/v1/utilities.php'); // getApiDatabaseConnection()
 

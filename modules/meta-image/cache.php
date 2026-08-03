@@ -8,17 +8,17 @@
  * hash (label + thumbnail version + lang). When the underlying data changes the
  * version changes, a fresh file is written, and stale variants for the same
  * {type}_{id}_{lang} are pruned — so the cache stays at ~one file per entity per
- * language. Requires modules/images/functions.php for the cache-dir base.
+ * language. Requires modules/images/image-cache.php for the cache-dir base.
  */
 
-require_once(__DIR__ . '/../images/functions.php');
+require_once(__DIR__ . '/../images/image-cache.php');
 
 /**
  * Absolute path of the meta-image cache directory (sibling of the entity image
- * cache, e.g. <root>/cache/meta-images), no trailing slash.
+ * cache, e.g. <var>/cache/meta-images), no trailing slash.
  */
 function metaImageCacheDir() {
-    return dirname(optvImageCacheDir()) . '/meta-images';
+    return dirname(imageCacheDir()) . '/meta-images';
 }
 
 /**

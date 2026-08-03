@@ -1,7 +1,7 @@
 <?php defined('OPTV') or die(); ?>
 <?php $this->layout('layout/default') ?>
 <?php
-require_once(__DIR__ . '/../../../modules/utilities/functions.entities.php');
+require_once(__DIR__ . '/../../../modules/utilities/entities.php');
 $flatDataArray = flattenEntityJSON($apiResult["data"]);
 ?>
 <main class="container-fluid subpage">
@@ -80,7 +80,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 							"Akoma Ntoso" => $apiResult["data"]["links"]["self"] . "?format=akn",
 							"ParlaMint" => $apiResult["data"]["links"]["self"] . "?format=parlamint",
 						];
-						include_once(__DIR__ . '/../../components/entity.data.php');
+						include_once(__DIR__ . '/../../components/entity-data.php');
 						?>
 					</div>
 				</div>
@@ -88,7 +88,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 		</div>
 	</div>
 </main>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/media-results.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
 	$(document).ready( function() {
 		updateMediaList(<?= json_encode("sessionID=" . $apiResult["data"]["id"] . "&sort=topic-asc", JSON_HEX_QUOT | JSON_HEX_APOS) ?>);

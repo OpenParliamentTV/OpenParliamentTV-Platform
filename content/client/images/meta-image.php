@@ -25,8 +25,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-require_once(__DIR__ . '/../../../config.php');
-require_once(__DIR__ . '/../../../modules/utilities/security.php');
+// bootstrap-core emits nothing (no session, no headers), so it cannot corrupt
+// the image bytes. The session above is started first because meta images are
+// requested with the visitor's cookies.
+require_once(__DIR__ . '/../../../bootstrap-core.php');
 
 // Meta images always render in the configured default language (no per-language
 // variants). Force it via $_REQUEST['lang'] (highest priority in LanguageManager,
@@ -49,7 +51,7 @@ $_POST = [];
 
 require_once(__DIR__ . '/../../../modules/i18n/language.php'); // initialises L:: (default language)
 require_once(__DIR__ . '/../../../modules/utilities/safemysql.class.php');
-require_once(__DIR__ . '/../../../modules/images/functions.php');
+require_once(__DIR__ . '/../../../modules/images/image-cache.php');
 
 /**
  * Total speeches for an entity (search/media filtered by its id). Returns null
@@ -71,7 +73,7 @@ function metaImageCountText($type, $id) {
     return metaImageFormatCount($res['meta']['results']['total'] ?? null);
 }
 
-$metaCfg = require(__DIR__ . '/../../../modules/meta-image/config.php');
+$metaCfg = require(__DIR__ . '/../../../modules/meta-image/layouts.php');
 
 $ENTITY_TYPES = ['person', 'organisation', 'term', 'document'];
 $INFO_TYPES   = ['session', 'electoralPeriod', 'agendaItem']; // date/structural types, no photo
@@ -120,7 +122,7 @@ $lang = $metaImageLang;
 // QUOTE (existing behaviour; HTTP cache headers only, no disk cache)
 // =====================================================================
 if ($type === 'quote') {
-    require_once($ROOT_DIR . '/modules/media/include.media.php');
+    require_once($ROOT_DIR . '/modules/media/bootstrap.php');
     require_once($ROOT_DIR . '/modules/meta-image/quote.php');
 
     $quote = '';
@@ -269,7 +271,7 @@ if (in_array($type, $INFO_TYPES, true)) {
 // MEDIA (no quote selection)
 // =====================================================================
 if ($type === 'media') {
-    require_once($ROOT_DIR . '/modules/media/include.media.php');
+    require_once($ROOT_DIR . '/modules/media/bootstrap.php');
     if (!empty($emptyResult) || !isset($speech)) {
         metaImageFallback($THUMBNAIL);
     }
@@ -278,7 +280,7 @@ if ($type === 'media') {
         ?? ($mainSpeaker['attributes']['label'] ?? '');
 
     // Resolve the faction colour for the speaker's party badge (same source the
-    // entity/person cards use), since include.media.php doesn't carry it.
+    // entity/person cards use), since bootstrap.php doesn't carry it.
     $factionColor = '';
     if (!empty($mainFaction['id'])) {
         require_once($ROOT_DIR . '/api/v1/api.php');

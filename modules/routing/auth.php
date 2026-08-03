@@ -3,7 +3,7 @@
  * Route-level authentication helper.
  *
  * Replaces the 6-line auth() boilerplate that used to be duplicated in every
- * page template. The dispatcher calls checkPageAuth() BEFORE the handler runs;
+ * page template. The dispatcher calls authCheckPage() BEFORE the handler runs;
  * templates never check auth themselves.
  *
  * Access levels: routes declare an `access` level ('public'|'admin') — the AUTH
@@ -22,7 +22,7 @@ require_once(__DIR__ . '/../utilities/auth.php');
  * @param string $access One of: 'public', 'admin'
  * @return true|array True when authorized; an error array (alertText/title) otherwise.
  */
-function checkPageAuth(string $access)
+function authCheckPage(string $access)
 {
     $userId = $_SESSION['userdata']['id'] ?? null;
     // Map the access level onto auth()'s requestPage tokens: a whitelisted token

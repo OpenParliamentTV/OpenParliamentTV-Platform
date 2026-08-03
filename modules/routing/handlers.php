@@ -48,7 +48,7 @@ function optvRenderPage(Engine $plates, string $template, array $vars): void
 }
 
 /** Standard 404 response. */
-function render_404(Engine $plates): void
+function pageRender404(Engine $plates): void
 {
     http_response_code(404);
     optvRenderPage($plates, 'pages/404/page', [
@@ -60,7 +60,7 @@ function render_404(Engine $plates): void
 }
 
 /** Standard 429 (Too Many Requests) response for the page rate limiter. */
-function render_429(Engine $plates, int $retryAfter): void
+function pageRender429(Engine $plates, int $retryAfter): void
 {
     http_response_code(429);
     header('Retry-After: ' . $retryAfter);
@@ -89,9 +89,9 @@ function optvManageHomeCrumb(): array
  * RSS/Atom feed endpoint. Mirrors the old `case "feed"`: emits XML and exits
  * before any template machinery runs.
  */
-function page_feed(array $routeData, array $params, Engine $plates): void
+function pageFeed(array $routeData, array $params, Engine $plates): void
 {
-    require_once(__DIR__ . '/../../modules/feed/functions.php');
+    require_once(__DIR__ . '/../../modules/feed/feed.php');
 
     $feedType = $params['feedType'] ?? ($_REQUEST['feedType'] ?? 'media');
     if (isset($params['id'])) {
@@ -116,10 +116,27 @@ function page_feed(array $routeData, array $params, Engine $plates): void
 // =====================================================================
 
 /**
+ * Template directory for an entity type.
+ *
+ * Entity types are API itemType values and therefore frozen in camelCase, while
+ * template directories are kebab-case. The two only differ for the compound
+ * names, so everything else passes through unchanged. This mapping is why a
+ * bare `'pages/' . $entityType` would 500 on agendaItem and electoralPeriod.
+ */
+function pageTemplateDir(string $entityType): string
+{
+    static $map = [
+        'agendaItem'      => 'agenda-item',
+        'electoralPeriod' => 'electoral-period',
+    ];
+    return $map[$entityType] ?? $entityType;
+}
+
+/**
  * Entity detail handler.
  * Covers: person, organisation, term, document, session, electoralPeriod, agendaItem.
  */
-function page_entity(array $routeData, array $params, Engine $plates): void
+function pageEntity(array $routeData, array $params, Engine $plates): void
 {
     $entityType = $routeData['entityType'];
     $id = $params['id'] ?? ($_REQUEST['id'] ?? '');
@@ -131,13 +148,13 @@ function page_entity(array $routeData, array $params, Engine $plates): void
     ]);
 
     if ((!$apiResult) || ($apiResult['meta']['requestStatus'] ?? '') === 'error') {
-        render_404($plates);
+        pageRender404($plates);
         return;
     }
 
-    $meta = buildEntityMeta($entityType, $apiResult);
+    $meta = pageEntityMeta($entityType, $apiResult);
 
-    optvRenderPage($plates, 'pages/' . $entityType . '/page', [
+    optvRenderPage($plates, 'pages/' . pageTemplateDir($entityType) . '/page', [
         'page' => $entityType,
         'pageType' => 'entity',
         'pageTitle' => $meta['title'],
@@ -151,7 +168,7 @@ function page_entity(array $routeData, array $params, Engine $plates): void
 /**
  * Build per-entity-type title and description, reproducing the old switch cases.
  */
-function buildEntityMeta(string $type, array $apiResult): array
+function pageEntityMeta(string $type, array $apiResult): array
 {
     $attrs = $apiResult['data']['attributes'];
     $rels = $apiResult['data']['relationships'] ?? [];
@@ -200,20 +217,20 @@ function buildEntityMeta(string $type, array $apiResult): array
 // MEDIA PAGE
 // =====================================================================
 
-function page_media(array $routeData, array $params, Engine $plates): void
+function pageMedia(array $routeData, array $params, Engine $plates): void
 {
     $_REQUEST['id'] = $params['id'];
 
     // Sets $speech, $mainSpeaker, $mainFaction, $formattedDate, $textContentsHTML,
     // $emptyResult, $apiResult, $autoplayResults, $speechTitleShort, … from $_REQUEST.
-    require_once(__DIR__ . '/../../modules/media/include.media.php');
+    require_once(__DIR__ . '/../../modules/media/bootstrap.php');
 
     if (!empty($emptyResult)) {
-        render_404($plates);
+        pageRender404($plates);
         return;
     }
 
-    require_once(__DIR__ . '/../../modules/utilities/functions.entities.php');
+    require_once(__DIR__ . '/../../modules/utilities/entities.php');
     $flatDataArray = flattenEntityJSON($apiResult['data'][0] ?? $apiResult['data']);
 
     $pageTitle = $speechTitleShort;
@@ -222,9 +239,9 @@ function page_media(array $routeData, array $params, Engine $plates): void
         . L::by() . ' ' . ($mainSpeaker['attributes']['label'] ?? '')
         . ' (' . ($speech['attributes']['parliamentLabel'] ?? '') . ', ' . ($formattedDate ?? '') . ')';
 
-    // Pass through EVERY variable produced by include.media.php so the media
-    // template — and content.player.php, which it includes inline and whose own
-    // require_once(include.media.php) is a no-op once already loaded — see them
+    // Pass through EVERY variable produced by bootstrap.php so the media
+    // template — and player.php, which it includes inline and whose own
+    // require_once(bootstrap.php) is a no-op once already loaded — see them
     // in scope, exactly like the old global-scope flow did.
     $vars = get_defined_vars();
     unset($vars['routeData'], $vars['params'], $vars['plates']);
@@ -240,7 +257,7 @@ function page_media(array $routeData, array $params, Engine $plates): void
 // EMBED
 // =====================================================================
 
-function page_embed_entity(array $routeData, array $params, Engine $plates): void
+function pageEmbedEntity(array $routeData, array $params, Engine $plates): void
 {
     $apiResult = apiV1([
         'action' => 'getItem',
@@ -248,7 +265,7 @@ function page_embed_entity(array $routeData, array $params, Engine $plates): voi
         'id' => $_REQUEST['id'] ?? '',
     ]);
 
-    require_once(__DIR__ . '/../../modules/utilities/functions.entities.php');
+    require_once(__DIR__ . '/../../modules/utilities/entities.php');
     $flatDataArray = isset($apiResult['data']) ? flattenEntityJSON($apiResult['data']) : [];
 
     optvRenderPage($plates, 'pages/embed/entity/page', [
@@ -270,7 +287,7 @@ function page_embed_entity(array $routeData, array $params, Engine $plates): voi
  * Static public pages (about, imprint, datapolicy, press, login, register, …).
  * Title and template are derived from the legacy page key.
  */
-function page_static(array $routeData, array $params, Engine $plates): void
+function pageStatic(array $routeData, array $params, Engine $plates): void
 {
     $page = $routeData['page'];
 
@@ -297,7 +314,7 @@ function page_static(array $routeData, array $params, Engine $plates): void
 }
 
 /** Logout: clear the session via the API, then render the logout page. */
-function page_logout(array $routeData, array $params, Engine $plates): void
+function pageLogout(array $routeData, array $params, Engine $plates): void
 {
     apiV1(['action' => 'user', 'itemType' => 'logout']);
 
@@ -313,7 +330,7 @@ function page_logout(array $routeData, array $params, Engine $plates): void
 // SEARCH / HOME
 // =====================================================================
 
-function page_search(array $routeData, array $params, Engine $plates): void
+function pageSearch(array $routeData, array $params, Engine $plates): void
 {
     global $config;
 
@@ -363,7 +380,7 @@ function page_search(array $routeData, array $params, Engine $plates): void
         }
     }
 
-    require_once(__DIR__ . '/../../modules/search/include.search.php');
+    require_once(__DIR__ . '/../../modules/search/bootstrap.php');
 
     optvRenderPage($plates, 'pages/search/page', array_merge([
         'page' => $page,
@@ -382,7 +399,7 @@ function page_search(array $routeData, array $params, Engine $plates): void
  * Admin and manage list pages (and the entity-typed alerts / notifications
  * pages). Title, template, pageType and breadcrumbs come from a per-page map.
  */
-function page_admin(array $routeData, array $params, Engine $plates): void
+function pageAdmin(array $routeData, array $params, Engine $plates): void
 {
     $page = $routeData['page'];
     $home = optvManageHomeCrumb();
@@ -393,7 +410,7 @@ function page_admin(array $routeData, array $params, Engine $plates): void
         'manage-settings' => ['pages/manage/settings/page', L::platformSettings(), 'admin', 'home'],
         'manage-conflicts' => ['pages/manage/conflicts/page', L::manageConflicts(), 'admin', 'home'],
         'manage-entities' => ['pages/manage/entities/page', L::manageEntities(), 'admin', 'home'],
-        'manage-entity-suggestions' => ['pages/manage/entitySuggestions/page', L::manageEntitySuggestions(), 'admin', 'home'],
+        'manage-entitySuggestions' => ['pages/manage/entity-suggestions/page', L::manageEntitySuggestions(), 'admin', 'home'],
         'manage-import' => ['pages/manage/import/page', L::manageImport(), 'admin', 'home'],
         'manage-media' => ['pages/manage/media/page', L::manageMedia(), 'admin', 'home'],
         'manage-structure' => ['pages/manage/structure/page', L::manageStructure(), 'admin', 'home'],
@@ -404,7 +421,7 @@ function page_admin(array $routeData, array $params, Engine $plates): void
     ];
 
     if (!isset($map[$page])) {
-        render_404($plates);
+        pageRender404($plates);
         return;
     }
     [$template, $title, $pageType, $crumbStyle] = $map[$page];
@@ -423,7 +440,7 @@ function page_admin(array $routeData, array $params, Engine $plates): void
 // ADMIN DETAIL PAGES
 // =====================================================================
 
-function page_admin_detail(array $routeData, array $params, Engine $plates): void
+function pageAdminDetail(array $routeData, array $params, Engine $plates): void
 {
     $page = $routeData['page'];
     $home = optvManageHomeCrumb();
@@ -449,7 +466,7 @@ function page_admin_detail(array $routeData, array $params, Engine $plates): voi
         case 'manage-users':
             $apiResult = apiV1(['action' => 'getItemsFromDB', 'itemType' => 'user', 'id' => $id]);
             if (($apiResult['meta']['requestStatus'] ?? '') !== 'success') {
-                render_404($plates);
+                pageRender404($plates);
                 return;
             }
             // Presentation is always the admin/manage chrome here (table + form
@@ -477,16 +494,16 @@ function page_admin_detail(array $routeData, array $params, Engine $plates): voi
                 'agendaItem' => ['AgendaItemID', L::agendaItem()],
             ];
             if (!isset($structureMap[$subpage])) {
-                render_404($plates);
+                pageRender404($plates);
                 return;
             }
             [$idField, $typeLabel] = $structureMap[$subpage];
             $apiResult = apiV1(['action' => 'getItemsFromDB', 'itemType' => $subpage, 'id' => $id]);
             if ((!$apiResult) || ($apiResult['meta']['requestStatus'] ?? '') === 'error') {
-                render_404($plates);
+                pageRender404($plates);
                 return;
             }
-            optvRenderPage($plates, 'pages/manage/structure/' . $subpage . '-detail/page', [
+            optvRenderPage($plates, 'pages/manage/structure/' . pageTemplateDir($subpage) . '-detail/page', [
                 'page' => 'manage-structure-' . $subpage,
                 'pageType' => 'admin',
                 'pageTitle' => L::edit() . ': ' . $typeLabel,
@@ -500,5 +517,5 @@ function page_admin_detail(array $routeData, array $params, Engine $plates): voi
             return;
     }
 
-    render_404($plates);
+    pageRender404($plates);
 }

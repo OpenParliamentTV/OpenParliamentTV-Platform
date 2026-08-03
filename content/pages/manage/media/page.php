@@ -22,7 +22,7 @@
                                 $showDateRange = true;
                                 $showSearchSuggestions = true;
                                 $showAdvancedFilters = true;
-                                include_once(__DIR__ . '/../../../components/search.filterbar.php'); 
+                                include_once(__DIR__ . '/../../../components/search-filterbar.php'); 
                             ?>
                             <div id="speechListContainer" class="col">
                                 <div class="resultWrapper"></div>
@@ -46,8 +46,8 @@
 </style>
 
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/timeline.js?v=<?= $config["version"] ?>"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/filterController.js?v=<?= $config["version"] ?>"></script>
-<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/mediaResults.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/filter-controller.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/media-results.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript">
 $(document).ready(function() {
     // Initialize filter controller for manage/media page
