@@ -1,0 +1,3720 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "electoralPeriod",
+        "id": "DE-018",
+        "attributes": {
+            "number": 18,
+            "dateStart": "2013-10-22",
+            "dateEnd": "2017-10-24",
+            "parliament": "DE",
+            "parliamentLabel": "Deutscher Bundestag"
+        },
+        "links": {
+            "self": "https://optv.local/api/v1/electoralPeriod/DE-018"
+        },
+        "relationships": {
+            "media": {
+                "links": {
+                    "self": "https://optv.local/api/v1/search/media?electoralPeriodID=DE-018"
+                }
+            },
+            "sessions": {
+                "data": [
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180001",
+                            "attributes": {
+                                "dateStart": "2013-10-22T09:20:00.000Z",
+                                "dateEnd": "2013-10-22T13:01:00.000Z",
+                                "number": "1",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180001"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180002",
+                            "attributes": {
+                                "dateStart": "2013-11-18T12:40:00.000Z",
+                                "dateEnd": "2013-11-18T16:56:00.000Z",
+                                "number": "2",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180002"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180003",
+                            "attributes": {
+                                "dateStart": "2013-11-28T10:00:00+01:00",
+                                "dateEnd": "2013-11-28T21:28:00+01:00",
+                                "number": "3",
+                                "agendaItemCount": "17"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180003"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180004",
+                            "attributes": {
+                                "dateStart": "2013-12-17T09:00:00+01:00",
+                                "dateEnd": "2013-12-17T13:45:00+01:00",
+                                "number": "4",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180004"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180005",
+                            "attributes": {
+                                "dateStart": "2013-12-18T09:01:00+01:00",
+                                "dateEnd": "2013-12-18T12:40:00+01:00",
+                                "number": "5",
+                                "agendaItemCount": "4"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180005"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180006",
+                            "attributes": {
+                                "dateStart": "2013-12-19T10:07:00+01:00",
+                                "dateEnd": "2013-12-19T14:07:00+01:00",
+                                "number": "6",
+                                "agendaItemCount": "14"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180006"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180007",
+                            "attributes": {
+                                "dateStart": "2014-01-15T13:00:00+01:00",
+                                "dateEnd": "2014-01-15T16:53:00+01:00",
+                                "number": "7",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180007"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180008",
+                            "attributes": {
+                                "dateStart": "2014-01-16T09:00:00+01:00",
+                                "dateEnd": "2014-01-16T18:24:00+01:00",
+                                "number": "8",
+                                "agendaItemCount": "15"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180008"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180009",
+                            "attributes": {
+                                "dateStart": "2014-01-17T09:00:00+01:00",
+                                "dateEnd": "2014-01-17T13:58:00+01:00",
+                                "number": "9",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180009"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180010",
+                            "attributes": {
+                                "dateStart": "2014-01-29T11:00:00+01:00",
+                                "dateEnd": "2014-01-29T20:41:00+01:00",
+                                "number": "10",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180010"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180011",
+                            "attributes": {
+                                "dateStart": "2014-01-30T09:00:00+01:00",
+                                "dateEnd": "2014-01-30T22:47:00+01:00",
+                                "number": "11",
+                                "agendaItemCount": "13"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180011"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180012",
+                            "attributes": {
+                                "dateStart": "2014-01-31T09:01:00+01:00",
+                                "dateEnd": "2014-01-31T14:11:00+01:00",
+                                "number": "12",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180012"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180013",
+                            "attributes": {
+                                "dateStart": "02014T13:00:00+01:00",
+                                "dateEnd": "02014T17:04:00+01:00",
+                                "number": "13",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180013"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180014",
+                            "attributes": {
+                                "dateStart": "02014T09:00:00+01:00",
+                                "dateEnd": "02014T20:49:00+01:00",
+                                "number": "14",
+                                "agendaItemCount": "15"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180014"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180015",
+                            "attributes": {
+                                "dateStart": "02014T09:00:00+01:00",
+                                "dateEnd": "02014T13:39:00+01:00",
+                                "number": "15",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180015"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180016",
+                            "attributes": {
+                                "dateStart": "02014T13:00:00+01:00",
+                                "dateEnd": "02014T16:09:00+01:00",
+                                "number": "16",
+                                "agendaItemCount": "4"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180016"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180017",
+                            "attributes": {
+                                "dateStart": "02014T09:01:00+01:00",
+                                "dateEnd": "02014T22:41:00+01:00",
+                                "number": "17",
+                                "agendaItemCount": "21"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180017"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180018",
+                            "attributes": {
+                                "dateStart": "02014T09:00:00+01:00",
+                                "dateEnd": "02014T14:46:00+01:00",
+                                "number": "18",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180018"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180019",
+                            "attributes": {
+                                "dateStart": "2014-03-12T13:00:00+01:00",
+                                "dateEnd": "2014-03-12T17:18:00+01:00",
+                                "number": "19",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180019"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180020",
+                            "attributes": {
+                                "dateStart": "2014-03-14T09:00:00+01:00",
+                                "dateEnd": "2014-03-14T14:24:00+01:00",
+                                "number": "20",
+                                "agendaItemCount": "11"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180020"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180021",
+                            "attributes": {
+                                "dateStart": "2014-03-14T09:00:00+01:00",
+                                "dateEnd": "2014-03-14T14:24:00+01:00",
+                                "number": "21",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180021"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180022",
+                            "attributes": {
+                                "dateStart": "2014-03-19T13:00:00+01:00",
+                                "dateEnd": "2014-03-19T16:49:00+01:00",
+                                "number": "22",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180022"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180023",
+                            "attributes": {
+                                "dateStart": "2014-03-20T09:00:00+01:00",
+                                "dateEnd": "2014-03-20TERROR:+01:00",
+                                "number": "23",
+                                "agendaItemCount": "18"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180023"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180024",
+                            "attributes": {
+                                "dateStart": "2014-03-21T09:01:00+01:00",
+                                "dateEnd": "2014-03-21T13:40:00+01:00",
+                                "number": "24",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180024"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180025",
+                            "attributes": {
+                                "dateStart": "2014-04-02T13:00:00+02:00",
+                                "dateEnd": "2014-04-02T16:57:00+02:00",
+                                "number": "25",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180025"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180026",
+                            "attributes": {
+                                "dateStart": "2014-04-03T09:00:00+02:00",
+                                "dateEnd": "2014-04-03T22:19:00+02:00",
+                                "number": "26",
+                                "agendaItemCount": "20"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180026"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180027",
+                            "attributes": {
+                                "dateStart": "2014-04-04T09:01:00+02:00",
+                                "dateEnd": "2014-04-04T14:25:00+02:00",
+                                "number": "27",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180027"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180028",
+                            "attributes": {
+                                "dateStart": "2014-04-08T11:00:00+02:00",
+                                "dateEnd": "2014-04-08T19:50:00+02:00",
+                                "number": "28",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180028"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180029",
+                            "attributes": {
+                                "dateStart": "2014-04-09T09:00:00+02:00",
+                                "dateEnd": "2014-04-09T19:13:00+02:00",
+                                "number": "29",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180029"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180030",
+                            "attributes": {
+                                "dateStart": "2014-04-10T09:01:00+02:00",
+                                "dateEnd": "2014-04-10T21:51:00+02:00",
+                                "number": "30",
+                                "agendaItemCount": "12"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180030"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180031",
+                            "attributes": {
+                                "dateStart": "2014-04-11T09:01:00+02:00",
+                                "dateEnd": "2014-04-11T13:11:00+02:00",
+                                "number": "31",
+                                "agendaItemCount": "4"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180031"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180032",
+                            "attributes": {
+                                "dateStart": "2014-05-07T13:00:00+02:00",
+                                "dateEnd": "2014-05-07T18:25:00+02:00",
+                                "number": "32",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180032"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180033",
+                            "attributes": {
+                                "dateStart": "2014-05-08T09:02:00+02:00",
+                                "dateEnd": "2014-05-08T22:53:00+02:00",
+                                "number": "33",
+                                "agendaItemCount": "21"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180033"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180034",
+                            "attributes": {
+                                "dateStart": "2014-05-09T09:00:00+02:00",
+                                "dateEnd": "2014-05-09T14:57:00+02:00",
+                                "number": "34",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180034"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180035",
+                            "attributes": {
+                                "dateStart": "2014-05-21T13:00:00+02:00",
+                                "dateEnd": "2014-05-21T16:51:00+02:00",
+                                "number": "35",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180035"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180036",
+                            "attributes": {
+                                "dateStart": "2014-05-22T09:00:00+02:00",
+                                "dateEnd": "2014-05-22T22:48:00+02:00",
+                                "number": "36",
+                                "agendaItemCount": "21"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180036"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180037",
+                            "attributes": {
+                                "dateStart": "2014-05-23T10:45:00+02:00",
+                                "dateEnd": "2014-05-23T15:30:00+02:00",
+                                "number": "37",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180037"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180038",
+                            "attributes": {
+                                "dateStart": "2014-06-04T13:00:00+02:00",
+                                "dateEnd": "2014-06-04T17:16:00+02:00",
+                                "number": "38",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180038"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180039",
+                            "attributes": {
+                                "dateStart": "2014-06-05T09:02:00+02:00",
+                                "dateEnd": "2014-06-05T22:06:00+02:00",
+                                "number": "39",
+                                "agendaItemCount": "25"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180039"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180040",
+                            "attributes": {
+                                "dateStart": "2014-06-06T09:00:00+02:00",
+                                "dateEnd": "2014-06-06T15:23:00+02:00",
+                                "number": "40",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180040"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180041",
+                            "attributes": {
+                                "dateStart": "2014-06-24T10:01:00+02:00",
+                                "dateEnd": "2014-06-24T22:22:00+02:00",
+                                "number": "41",
+                                "agendaItemCount": "10"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180041"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180042",
+                            "attributes": {
+                                "dateStart": "2014-06-25T09:00:00+02:00",
+                                "dateEnd": "2014-06-25T22:17:00+02:00",
+                                "number": "42",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180042"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180043",
+                            "attributes": {
+                                "dateStart": "2014-06-26T09:00:00+02:00",
+                                "dateEnd": "2014-06-26T17:17:00+02:00",
+                                "number": "43",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180043"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180044",
+                            "attributes": {
+                                "dateStart": "2014-06-27T09:01:00+02:00",
+                                "dateEnd": "2014-06-27T15:41:00+02:00",
+                                "number": "44",
+                                "agendaItemCount": "10"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180044"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180045",
+                            "attributes": {
+                                "dateStart": "2014-07-02T13:00:00+02:00",
+                                "dateEnd": "2014-07-02T18:05:00+02:00",
+                                "number": "45",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180045"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180046",
+                            "attributes": {
+                                "dateStart": "2014-07-03T10:30:00+02:00",
+                                "dateEnd": "2014-07-03T23:31:00+02:00",
+                                "number": "46",
+                                "agendaItemCount": "29"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180046"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180047",
+                            "attributes": {
+                                "dateStart": "2014-07-04T09:00:00+02:00",
+                                "dateEnd": "2014-07-04T15:14:00+02:00",
+                                "number": "47",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180047"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180048",
+                            "attributes": {
+                                "dateStart": "2014-09-01T14:02:00+02:00",
+                                "dateEnd": "2014-09-01T17:04:00+02:00",
+                                "number": "48",
+                                "agendaItemCount": "3"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180048"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180049",
+                            "attributes": {
+                                "dateStart": "2014-09-09T10:00:00+02:00",
+                                "dateEnd": "2014-09-09T18:01:00+02:00",
+                                "number": "49",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180049"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180050",
+                            "attributes": {
+                                "dateStart": "2014-09-10T10:31:00+02:00",
+                                "dateEnd": "2014-09-10T20:59:00+02:00",
+                                "number": "50",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180050"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180051",
+                            "attributes": {
+                                "dateStart": "2014-09-11T09:02:00+02:00",
+                                "dateEnd": "2014-09-11T20:34:00+02:00",
+                                "number": "51",
+                                "agendaItemCount": "10"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180051"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180052",
+                            "attributes": {
+                                "dateStart": "2014-09-12T09:00:00+02:00",
+                                "dateEnd": "2014-09-12T12:27:00+02:00",
+                                "number": "52",
+                                "agendaItemCount": "4"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180052"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180053",
+                            "attributes": {
+                                "dateStart": "2014-09-24T13:00:00+02:00",
+                                "dateEnd": "2014-09-24T17:00:00+02:00",
+                                "number": "53",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180053"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180054",
+                            "attributes": {
+                                "dateStart": "2014-09-25T09:01:00+02:00",
+                                "dateEnd": "2014-09-25T22:12:00+02:00",
+                                "number": "54",
+                                "agendaItemCount": "21"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180054"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180055",
+                            "attributes": {
+                                "dateStart": "2014-09-26T09:00:00+02:00",
+                                "dateEnd": "2014-09-26T15:19:00+02:00",
+                                "number": "55",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180055"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180056",
+                            "attributes": {
+                                "dateStart": "2014-10-08T13:00:00+02:00",
+                                "dateEnd": "2014-10-08T17:56:00+02:00",
+                                "number": "56",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180056"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180057",
+                            "attributes": {
+                                "dateStart": "2014-10-09T09:01:00+02:00",
+                                "dateEnd": "2014-10-09T20:46:00+02:00",
+                                "number": "57",
+                                "agendaItemCount": "19"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180057"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180058",
+                            "attributes": {
+                                "dateStart": "2014-10-10T09:00:00+02:00",
+                                "dateEnd": "2014-10-10T15:38:00+02:00",
+                                "number": "58",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180058"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180059",
+                            "attributes": {
+                                "dateStart": "2014-10-15T13:01:00+02:00",
+                                "dateEnd": "2014-10-15T15:35:00+02:00",
+                                "number": "59",
+                                "agendaItemCount": "4"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180059"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180060",
+                            "attributes": {
+                                "dateStart": "2014-10-16T09:00:00+02:00",
+                                "dateEnd": "2014-10-16T21:27:00+02:00",
+                                "number": "60",
+                                "agendaItemCount": "21"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180060"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180061",
+                            "attributes": {
+                                "dateStart": "2014-10-17T09:00:00+02:00",
+                                "dateEnd": "2014-10-17T15:34:00+02:00",
+                                "number": "61",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180061"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180062",
+                            "attributes": {
+                                "dateStart": "2014-11-05T13:00:00+01:00",
+                                "dateEnd": "2014-11-05T16:58:00+01:00",
+                                "number": "62",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180062"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180063",
+                            "attributes": {
+                                "dateStart": "2014-11-06T09:02:00+01:00",
+                                "dateEnd": "2014-11-06T21:34:00+01:00",
+                                "number": "63",
+                                "agendaItemCount": "29"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180063"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180064",
+                            "attributes": {
+                                "dateStart": "2014-11-07T09:00:00+01:00",
+                                "dateEnd": "2014-11-07T16:03:00+01:00",
+                                "number": "64",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180064"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180065",
+                            "attributes": {
+                                "dateStart": "2014-11-12T13:00:00+01:00",
+                                "dateEnd": "2014-11-12T16:51:00+01:00",
+                                "number": "65",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180065"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180066",
+                            "attributes": {
+                                "dateStart": "2014-11-13T09:01:00+01:00",
+                                "dateEnd": "2014-11-13T23:04:00+01:00",
+                                "number": "66",
+                                "agendaItemCount": "23"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180066"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180067",
+                            "attributes": {
+                                "dateStart": "2014-11-14T09:00:00+01:00",
+                                "dateEnd": "2014-11-14T15:10:00+01:00",
+                                "number": "67",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180067"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180068",
+                            "attributes": {
+                                "dateStart": "2014-11-25T10:01:00+01:00",
+                                "dateEnd": "2014-11-25T17:25:00+01:00",
+                                "number": "68",
+                                "agendaItemCount": "10"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180068"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180069",
+                            "attributes": {
+                                "dateStart": "2014-11-26T09:00:00+01:00",
+                                "dateEnd": "2014-11-26T18:54:00+01:00",
+                                "number": "69",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180069"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180070",
+                            "attributes": {
+                                "dateStart": "2014-11-27T09:00:00+01:00",
+                                "dateEnd": "2014-11-27T21:14:00+01:00",
+                                "number": "70",
+                                "agendaItemCount": "10"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180070"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180071",
+                            "attributes": {
+                                "dateStart": "2014-11-28T09:00:00+01:00",
+                                "dateEnd": "2014-11-28T13:04:00+01:00",
+                                "number": "71",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180071"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180072",
+                            "attributes": {
+                                "dateStart": "2014-12-03T13:00:00+01:00",
+                                "dateEnd": "2014-12-03T17:48:00+01:00",
+                                "number": "72",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180072"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180073",
+                            "attributes": {
+                                "dateStart": "2014-12-04T09:00:00+01:00",
+                                "dateEnd": "2014-12-04T22:17:00+01:00",
+                                "number": "73",
+                                "agendaItemCount": "26"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180073"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180074",
+                            "attributes": {
+                                "dateStart": "2014-12-05T09:00:00+01:00",
+                                "dateEnd": "2014-12-05T15:49:00+01:00",
+                                "number": "74",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180074"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180075",
+                            "attributes": {
+                                "dateStart": "2014-12-17T13:00:00+01:00",
+                                "dateEnd": "2014-12-17T16:45:00+01:00",
+                                "number": "75",
+                                "agendaItemCount": "4"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180075"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180076",
+                            "attributes": {
+                                "dateStart": "2014-12-18T09:01:00+01:00",
+                                "dateEnd": "2014-12-18T22:27:00+01:00",
+                                "number": "76",
+                                "agendaItemCount": "24"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180076"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180077",
+                            "attributes": {
+                                "dateStart": "2014-12-19T09:00:00+01:00",
+                                "dateEnd": "2014-12-19T12:54:00+01:00",
+                                "number": "77",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180077"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180078",
+                            "attributes": {
+                                "dateStart": "2015-01-14T13:00:00+01:00",
+                                "dateEnd": "2015-01-14T16:52:00+01:00",
+                                "number": "78",
+                                "agendaItemCount": "4"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180078"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180079",
+                            "attributes": {
+                                "dateStart": "2015-01-15T09:00:00+01:00",
+                                "dateEnd": "2015-01-15T21:39:00+01:00",
+                                "number": "79",
+                                "agendaItemCount": "20"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180079"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180080",
+                            "attributes": {
+                                "dateStart": "2015-01-16T09:00:00+01:00",
+                                "dateEnd": "2015-01-16T14:27:00+01:00",
+                                "number": "80",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180080"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180081",
+                            "attributes": {
+                                "dateStart": "2015-01-28T13:00:00+01:00",
+                                "dateEnd": "2015-01-28T16:44:00+01:00",
+                                "number": "81",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180081"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180082",
+                            "attributes": {
+                                "dateStart": "2015-01-29T09:00:00+01:00",
+                                "dateEnd": "2015-01-29T20:40:00+01:00",
+                                "number": "82",
+                                "agendaItemCount": "17"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180082"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180083",
+                            "attributes": {
+                                "dateStart": "2015-01-30T09:01:00+01:00",
+                                "dateEnd": "2015-01-30T15:39:00+01:00",
+                                "number": "83",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180083"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180084",
+                            "attributes": {
+                                "dateStart": "2015-02-04T13:01:00+01:00",
+                                "dateEnd": "2015-02-04T14:48:00+01:00",
+                                "number": "84",
+                                "agendaItemCount": "4"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180084"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180085",
+                            "attributes": {
+                                "dateStart": "2015-02-05T09:00:00+01:00",
+                                "dateEnd": "2015-02-05T20:21:00+01:00",
+                                "number": "85",
+                                "agendaItemCount": "16"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180085"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180086",
+                            "attributes": {
+                                "dateStart": "2015-02-06T09:00:00+01:00",
+                                "dateEnd": "2015-02-06T14:48:00+01:00",
+                                "number": "86",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180086"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180087",
+                            "attributes": {
+                                "dateStart": "2015-02-25T13:00:00+01:00",
+                                "dateEnd": "2015-02-25T16:51:00+01:00",
+                                "number": "87",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180087"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180088",
+                            "attributes": {
+                                "dateStart": "2015-02-26T09:01:00+01:00",
+                                "dateEnd": "2015-02-26T21:41:00+01:00",
+                                "number": "88",
+                                "agendaItemCount": "19"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180088"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180089",
+                            "attributes": {
+                                "dateStart": "2015-02-27T09:01:00+01:00",
+                                "dateEnd": "2015-02-27T16:17:00+01:00",
+                                "number": "89",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180089"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180090",
+                            "attributes": {
+                                "dateStart": "2015-03-04T13:01:00+01:00",
+                                "dateEnd": "2015-03-04T16:45:00+01:00",
+                                "number": "90",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180090"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180091",
+                            "attributes": {
+                                "dateStart": "2015-03-05T09:00:00+01:00",
+                                "dateEnd": "2015-03-05T21:44:00+01:00",
+                                "number": "91",
+                                "agendaItemCount": "19"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180091"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180092",
+                            "attributes": {
+                                "dateStart": "2015-03-06T09:00:00+01:00",
+                                "dateEnd": "2015-03-06T15:09:00+01:00",
+                                "number": "92",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180092"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180093",
+                            "attributes": {
+                                "dateStart": "2015-03-18T13:00:00+01:00",
+                                "dateEnd": "2015-03-18T17:59:00+01:00",
+                                "number": "93",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180093"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180094",
+                            "attributes": {
+                                "dateStart": "2015-03-19T09:00:00+01:00",
+                                "dateEnd": "2015-03-19T21:53:00+01:00",
+                                "number": "94",
+                                "agendaItemCount": "19"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180094"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180095",
+                            "attributes": {
+                                "dateStart": "2015-03-20T09:00:00+01:00",
+                                "dateEnd": "2015-03-20T14:26:00+01:00",
+                                "number": "95",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180095"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180096",
+                            "attributes": {
+                                "dateStart": "2015-03-25T13:01:00+01:00",
+                                "dateEnd": "2015-03-25T16:46:00+01:00",
+                                "number": "96",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180096"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180097",
+                            "attributes": {
+                                "dateStart": "2015-03-26T09:01:00+01:00",
+                                "dateEnd": "2015-03-26T20:37:00+01:00",
+                                "number": "97",
+                                "agendaItemCount": "21"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180097"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180098",
+                            "attributes": {
+                                "dateStart": "2015-03-27T09:00:00+01:00",
+                                "dateEnd": "2015-03-27T14:51:00+01:00",
+                                "number": "98",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180098"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180099",
+                            "attributes": {
+                                "dateStart": "2015-04-22T13:00:00+02:00",
+                                "dateEnd": "2015-04-22T16:20:00+02:00",
+                                "number": "99",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180099"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180100",
+                            "attributes": {
+                                "dateStart": "2015-04-23T09:01:00+02:00",
+                                "dateEnd": "2015-04-23T21:20:00+02:00",
+                                "number": "100",
+                                "agendaItemCount": "23"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180100"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180101",
+                            "attributes": {
+                                "dateStart": "2015-04-24T09:00:00+02:00",
+                                "dateEnd": "2015-04-24T16:17:00+02:00",
+                                "number": "101",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180101"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180102",
+                            "attributes": {
+                                "dateStart": "2015-05-06T13:00:00+02:00",
+                                "dateEnd": "2015-05-06T16:49:00+02:00",
+                                "number": "102",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180102"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180103",
+                            "attributes": {
+                                "dateStart": "2015-05-07T09:00:00+02:00",
+                                "dateEnd": "2015-05-07T20:33:00+02:00",
+                                "number": "103",
+                                "agendaItemCount": "20"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180103"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180104",
+                            "attributes": {
+                                "dateStart": "2015-05-08T10:30:00+02:00",
+                                "dateEnd": "2015-05-08T14:45:00+02:00",
+                                "number": "104",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180104"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180105",
+                            "attributes": {
+                                "dateStart": "2015-05-20T13:01:00+02:00",
+                                "dateEnd": "2015-05-20T17:02:00+02:00",
+                                "number": "105",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180105"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180106",
+                            "attributes": {
+                                "dateStart": "2015-05-21T09:00:00+02:00",
+                                "dateEnd": "2015-05-21T22:59:00+02:00",
+                                "number": "106",
+                                "agendaItemCount": "26"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180106"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180107",
+                            "attributes": {
+                                "dateStart": "2015-05-22T09:00:00+02:00",
+                                "dateEnd": "2015-05-22T16:41:00+02:00",
+                                "number": "107",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180107"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180108",
+                            "attributes": {
+                                "dateStart": "2015-06-10T09:00:00+02:00",
+                                "dateEnd": "2015-06-10T16:45:00+02:00",
+                                "number": "108",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180108"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180109",
+                            "attributes": {
+                                "dateStart": "2015-06-11T09:02:00+02:00",
+                                "dateEnd": "2015-06-11T22:10:00+02:00",
+                                "number": "109",
+                                "agendaItemCount": "24"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180109"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180110",
+                            "attributes": {
+                                "dateStart": "2015-06-12T09:00:00+02:00",
+                                "dateEnd": "2015-06-12T15:44:00+02:00",
+                                "number": "110",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180110"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180111",
+                            "attributes": {
+                                "dateStart": "2015-06-17T13:00:00+02:00",
+                                "dateEnd": "2015-06-17T17:47:00+02:00",
+                                "number": "111",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180111"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180112",
+                            "attributes": {
+                                "dateStart": "2015-06-18T09:01:00+02:00",
+                                "dateEnd": "2015-06-18T22:32:00+02:00",
+                                "number": "112",
+                                "agendaItemCount": "27"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180112"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180113",
+                            "attributes": {
+                                "dateStart": "2015-06-19T09:00:00+02:00",
+                                "dateEnd": "2015-06-19T14:34:00+02:00",
+                                "number": "113",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180113"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180114",
+                            "attributes": {
+                                "dateStart": "2015-07-01T13:00:00+02:00",
+                                "dateEnd": "2015-07-01T18:36:00+02:00",
+                                "number": "114",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180114"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180115",
+                            "attributes": {
+                                "dateStart": "2015-07-02T09:02:00+02:00",
+                                "dateEnd": "2015-07-02T23:05:00+02:00",
+                                "number": "115",
+                                "agendaItemCount": "31"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180115"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180116",
+                            "attributes": {
+                                "dateStart": "2015-07-03T09:01:00+02:00",
+                                "dateEnd": "2015-07-03T14:33:00+02:00",
+                                "number": "116",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180116"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180117",
+                            "attributes": {
+                                "dateStart": "2015-07-17T10:00:00+02:00",
+                                "dateEnd": "2015-07-17T13:58:00+02:00",
+                                "number": "117",
+                                "agendaItemCount": "3"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180117"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180118",
+                            "attributes": {
+                                "dateStart": "2015-08-19T09:01:00+02:00",
+                                "dateEnd": "2015-08-19T12:10:00+02:00",
+                                "number": "118",
+                                "agendaItemCount": "3"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180118"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180119",
+                            "attributes": {
+                                "dateStart": "2015-09-08T10:00:00+02:00",
+                                "dateEnd": "2015-09-08T18:06:00+02:00",
+                                "number": "119",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180119"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180120",
+                            "attributes": {
+                                "dateStart": "2015-09-09T09:00:00+02:00",
+                                "dateEnd": "2015-09-09T18:33:00+02:00",
+                                "number": "120",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180120"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180121",
+                            "attributes": {
+                                "dateStart": "2015-09-10T09:00:00+02:00",
+                                "dateEnd": "2015-09-10T18:49:00+02:00",
+                                "number": "121",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180121"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180122",
+                            "attributes": {
+                                "dateStart": "2015-09-11T09:01:00+02:00",
+                                "dateEnd": "2015-09-11T14:38:00+02:00",
+                                "number": "122",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180122"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180123",
+                            "attributes": {
+                                "dateStart": "2015-09-23T13:00:00+02:00",
+                                "dateEnd": "2015-09-23T16:56:00+02:00",
+                                "number": "123",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180123"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180124",
+                            "attributes": {
+                                "dateStart": "2015-09-24T09:00:00+02:00",
+                                "dateEnd": "2015-09-24T22:39:00+02:00",
+                                "number": "124",
+                                "agendaItemCount": "23"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180124"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180125",
+                            "attributes": {
+                                "dateStart": "2015-09-25T09:01:00+02:00",
+                                "dateEnd": "2015-09-25T16:08:00+02:00",
+                                "number": "125",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180125"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180126",
+                            "attributes": {
+                                "dateStart": "2015-09-30T13:00:00+02:00",
+                                "dateEnd": "2015-09-30T16:32:00+02:00",
+                                "number": "126",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180126"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180127",
+                            "attributes": {
+                                "dateStart": "2015-10-01T09:00:00+02:00",
+                                "dateEnd": "2015-10-01T21:04:00+02:00",
+                                "number": "127",
+                                "agendaItemCount": "17"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180127"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180128",
+                            "attributes": {
+                                "dateStart": "2015-10-02T09:00:00+02:00",
+                                "dateEnd": "2015-10-02T15:14:00+02:00",
+                                "number": "128",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180128"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180129",
+                            "attributes": {
+                                "dateStart": "2015-10-14T13:00:00+02:00",
+                                "dateEnd": "2015-10-14T17:40:00+02:00",
+                                "number": "129",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180129"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180130",
+                            "attributes": {
+                                "dateStart": "2015-10-15T09:00:00+02:00",
+                                "dateEnd": "2015-10-15T21:55:00+02:00",
+                                "number": "130",
+                                "agendaItemCount": "27"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180130"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180131",
+                            "attributes": {
+                                "dateStart": "2015-10-16T09:00:00+02:00",
+                                "dateEnd": "2015-10-16T14:13:00+02:00",
+                                "number": "131",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180131"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180132",
+                            "attributes": {
+                                "dateStart": "2015-11-04T13:00:00+01:00",
+                                "dateEnd": "2015-11-04T16:52:00+01:00",
+                                "number": "132",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180132"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180133",
+                            "attributes": {
+                                "dateStart": "2015-11-05T09:00:00+01:00",
+                                "dateEnd": "2015-11-05T21:32:00+01:00",
+                                "number": "133",
+                                "agendaItemCount": "27"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180133"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180134",
+                            "attributes": {
+                                "dateStart": "2015-11-06T09:00:00+01:00",
+                                "dateEnd": "2015-11-06T15:40:00+01:00",
+                                "number": "134",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180134"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180135",
+                            "attributes": {
+                                "dateStart": "2015-11-11T13:00:00+01:00",
+                                "dateEnd": "2015-11-11T17:17:00+01:00",
+                                "number": "135",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180135"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180136",
+                            "attributes": {
+                                "dateStart": "2015-11-12T09:02:00+01:00",
+                                "dateEnd": "2015-11-12T21:44:00+01:00",
+                                "number": "136",
+                                "agendaItemCount": "27"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180136"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180137",
+                            "attributes": {
+                                "dateStart": "2015-11-13T09:01:00+01:00",
+                                "dateEnd": "2015-11-13T15:25:00+01:00",
+                                "number": "137",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180137"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180138",
+                            "attributes": {
+                                "dateStart": "2015-11-24T10:00:00+01:00",
+                                "dateEnd": "2015-11-24T19:23:00+01:00",
+                                "number": "138",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180138"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180139",
+                            "attributes": {
+                                "dateStart": "2015-11-25T09:01:00+01:00",
+                                "dateEnd": "2015-11-25T18:53:00+01:00",
+                                "number": "139",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180139"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180140",
+                            "attributes": {
+                                "dateStart": "2015-11-26T09:01:00+01:00",
+                                "dateEnd": "2015-11-26T20:23:00+01:00",
+                                "number": "140",
+                                "agendaItemCount": "10"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180140"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180141",
+                            "attributes": {
+                                "dateStart": "2015-11-27T09:00:00+01:00",
+                                "dateEnd": "2015-11-27T12:59:00+01:00",
+                                "number": "141",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180141"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180142",
+                            "attributes": {
+                                "dateStart": "2015-12-02T12:30:00+01:00",
+                                "dateEnd": "2015-12-02T16:36:00+01:00",
+                                "number": "142",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180142"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180143",
+                            "attributes": {
+                                "dateStart": "2015-12-03T09:00:00+01:00",
+                                "dateEnd": "2015-12-03T21:54:00+01:00",
+                                "number": "143",
+                                "agendaItemCount": "26"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180143"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180144",
+                            "attributes": {
+                                "dateStart": "2015-12-04T09:00:00+01:00",
+                                "dateEnd": "2015-12-04T15:51:00+01:00",
+                                "number": "144",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180144"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180145",
+                            "attributes": {
+                                "dateStart": "2015-12-16T13:01:00+01:00",
+                                "dateEnd": "2015-12-16T17:29:00+01:00",
+                                "number": "145",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180145"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180146",
+                            "attributes": {
+                                "dateStart": "2015-12-17T09:00:00+01:00",
+                                "dateEnd": "2015-12-17T21:31:00+01:00",
+                                "number": "146",
+                                "agendaItemCount": "24"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180146"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180147",
+                            "attributes": {
+                                "dateStart": "2015-12-18T09:00:00+01:00",
+                                "dateEnd": "2015-12-18T13:36:00+01:00",
+                                "number": "147",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180147"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180148",
+                            "attributes": {
+                                "dateStart": "2016-01-13T13:00:00+01:00",
+                                "dateEnd": "2016-01-13T17:39:00+01:00",
+                                "number": "148",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180148"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180149",
+                            "attributes": {
+                                "dateStart": "2016-01-14T09:00:00+01:00",
+                                "dateEnd": "2016-01-14T20:41:00+01:00",
+                                "number": "149",
+                                "agendaItemCount": "17"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180149"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180150",
+                            "attributes": {
+                                "dateStart": "2016-01-15T09:00:00+01:00",
+                                "dateEnd": "2016-01-15T14:11:00+01:00",
+                                "number": "150",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180150"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180151",
+                            "attributes": {
+                                "dateStart": "2016-01-27T13:31:00+01:00",
+                                "dateEnd": "2016-01-27T16:51:00+01:00",
+                                "number": "151",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180151"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180152",
+                            "attributes": {
+                                "dateStart": "2016-01-28T09:02:00+01:00",
+                                "dateEnd": "2016-01-28T21:39:00+01:00",
+                                "number": "152",
+                                "agendaItemCount": "23"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180152"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180153",
+                            "attributes": {
+                                "dateStart": "2016-01-29T09:01:00+01:00",
+                                "dateEnd": "2016-01-29T14:48:00+01:00",
+                                "number": "153",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180153"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180154",
+                            "attributes": {
+                                "dateStart": "2016-02-17T13:30:00+01:00",
+                                "dateEnd": "2016-02-17T18:30:00+01:00",
+                                "number": "154",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180154"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180155",
+                            "attributes": {
+                                "dateStart": "2016-02-18T09:01:00+01:00",
+                                "dateEnd": "2016-02-18T20:58:00+01:00",
+                                "number": "155",
+                                "agendaItemCount": "18"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180155"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180156",
+                            "attributes": {
+                                "dateStart": "2016-02-19T09:00:00+01:00",
+                                "dateEnd": "2016-02-19T14:19:00+01:00",
+                                "number": "156",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180156"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180157",
+                            "attributes": {
+                                "dateStart": "2016-02-24T13:00:00+01:00",
+                                "dateEnd": "2016-02-24T16:21:00+01:00",
+                                "number": "157",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180157"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180158",
+                            "attributes": {
+                                "dateStart": "2016-02-25T09:00:00+01:00",
+                                "dateEnd": "2016-02-25T21:16:00+01:00",
+                                "number": "158",
+                                "agendaItemCount": "21"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180158"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180159",
+                            "attributes": {
+                                "dateStart": "2016-02-26T09:01:00+01:00",
+                                "dateEnd": "2016-02-26T15:08:00+01:00",
+                                "number": "159",
+                                "agendaItemCount": "10"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180159"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180160",
+                            "attributes": {
+                                "dateStart": "2016-03-16T13:01:00+01:00",
+                                "dateEnd": "2016-03-16T17:33:00+01:00",
+                                "number": "160",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180160"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180161",
+                            "attributes": {
+                                "dateStart": "2016-03-17T09:02:00+01:00",
+                                "dateEnd": "2016-03-17T21:00:00+01:00",
+                                "number": "161",
+                                "agendaItemCount": "19"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180161"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180162",
+                            "attributes": {
+                                "dateStart": "2016-03-18T09:00:00+01:00",
+                                "dateEnd": "2016-03-18T13:34:00+01:00",
+                                "number": "162",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180162"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180163",
+                            "attributes": {
+                                "dateStart": "2016-04-13T13:00:00+02:00",
+                                "dateEnd": "2016-04-13T17:42:00+02:00",
+                                "number": "163",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180163"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180164",
+                            "attributes": {
+                                "dateStart": "2016-04-14T09:01:00+02:00",
+                                "dateEnd": "2016-04-14T21:56:00+02:00",
+                                "number": "164",
+                                "agendaItemCount": "22"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180164"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180165",
+                            "attributes": {
+                                "dateStart": "2016-04-15T09:00:00+02:00",
+                                "dateEnd": "2016-04-15T15:05:00+02:00",
+                                "number": "165",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180165"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180166",
+                            "attributes": {
+                                "dateStart": "2016-04-27T13:00:00+02:00",
+                                "dateEnd": "2016-04-27T16:45:00+02:00",
+                                "number": "166",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180166"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180167",
+                            "attributes": {
+                                "dateStart": "2016-04-28T09:01:00+02:00",
+                                "dateEnd": "2016-04-28T22:01:00+02:00",
+                                "number": "167",
+                                "agendaItemCount": "25"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180167"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180168",
+                            "attributes": {
+                                "dateStart": "2016-04-29T09:00:00+02:00",
+                                "dateEnd": "2016-04-29T14:02:00+02:00",
+                                "number": "168",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180168"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180169",
+                            "attributes": {
+                                "dateStart": "2016-05-11T13:01:00+02:00",
+                                "dateEnd": "2016-05-11T16:59:00+02:00",
+                                "number": "169",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180169"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180170",
+                            "attributes": {
+                                "dateStart": "2016-05-12T09:01:00+02:00",
+                                "dateEnd": "2016-05-12T22:11:00+02:00",
+                                "number": "170",
+                                "agendaItemCount": "19"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180170"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180171",
+                            "attributes": {
+                                "dateStart": "2016-05-13T09:00:00+02:00",
+                                "dateEnd": "2016-05-13T14:49:00+02:00",
+                                "number": "171",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180171"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180172",
+                            "attributes": {
+                                "dateStart": "2016-06-01T13:00:00+02:00",
+                                "dateEnd": "2016-06-01T17:02:00+02:00",
+                                "number": "172",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180172"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180173",
+                            "attributes": {
+                                "dateStart": "2016-06-02T09:00:00+02:00",
+                                "dateEnd": "2016-06-02T22:08:00+02:00",
+                                "number": "173",
+                                "agendaItemCount": "27"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180173"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180174",
+                            "attributes": {
+                                "dateStart": "2016-06-03T09:00:00+02:00",
+                                "dateEnd": "2016-06-03T14:05:00+02:00",
+                                "number": "174",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180174"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180175",
+                            "attributes": {
+                                "dateStart": "2016-06-08T13:00:00+02:00",
+                                "dateEnd": "2016-06-08T17:02:00+02:00",
+                                "number": "175",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180175"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180176",
+                            "attributes": {
+                                "dateStart": "2016-06-09T09:00:00+02:00",
+                                "dateEnd": "2016-06-09T20:30:00+02:00",
+                                "number": "176",
+                                "agendaItemCount": "26"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180176"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180177",
+                            "attributes": {
+                                "dateStart": "2016-06-10T09:00:00+02:00",
+                                "dateEnd": "2016-06-10T12:16:00+02:00",
+                                "number": "177",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180177"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180178",
+                            "attributes": {
+                                "dateStart": "2016-06-22T13:00:00+02:00",
+                                "dateEnd": "2016-06-22T17:45:00+02:00",
+                                "number": "178",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180178"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180179",
+                            "attributes": {
+                                "dateStart": "2016-06-23T09:00:00+02:00",
+                                "dateEnd": "2016-06-23T22:15:00+02:00",
+                                "number": "179",
+                                "agendaItemCount": "26"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180179"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180180",
+                            "attributes": {
+                                "dateStart": "2016-06-24T09:01:00+02:00",
+                                "dateEnd": "2016-06-24T17:50:00+02:00",
+                                "number": "180",
+                                "agendaItemCount": "11"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180180"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180181",
+                            "attributes": {
+                                "dateStart": "2016-06-28T10:30:00+02:00",
+                                "dateEnd": "2016-06-28T12:21:00+02:00",
+                                "number": "181",
+                                "agendaItemCount": "3"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180181"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180182",
+                            "attributes": {
+                                "dateStart": "2016-07-06T13:00:00+02:00",
+                                "dateEnd": "2016-07-06T17:39:00+02:00",
+                                "number": "182",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180182"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180183",
+                            "attributes": {
+                                "dateStart": "2016-07-07T09:01:00+02:00",
+                                "dateEnd": "2016-07-07T21:18:00+02:00",
+                                "number": "183",
+                                "agendaItemCount": "33"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180183"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180184",
+                            "attributes": {
+                                "dateStart": "2016-07-08T09:01:00+02:00",
+                                "dateEnd": "2016-07-08T14:57:00+02:00",
+                                "number": "184",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180184"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180185",
+                            "attributes": {
+                                "dateStart": "2016-09-06T10:02:00+02:00",
+                                "dateEnd": "2016-09-06T18:26:00+02:00",
+                                "number": "185",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180185"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180186",
+                            "attributes": {
+                                "dateStart": "2016-09-07T09:00:00+02:00",
+                                "dateEnd": "2016-09-07T21:29:00+02:00",
+                                "number": "186",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180186"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180187",
+                            "attributes": {
+                                "dateStart": "2016-09-08T09:01:00+02:00",
+                                "dateEnd": "2016-09-08T18:42:00+02:00",
+                                "number": "187",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180187"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180188",
+                            "attributes": {
+                                "dateStart": "2016-09-09T09:00:00+02:00",
+                                "dateEnd": "2016-09-09T14:14:00+02:00",
+                                "number": "188",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180188"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180189",
+                            "attributes": {
+                                "dateStart": "2016-09-21T13:00:00+02:00",
+                                "dateEnd": "2016-09-21T16:46:00+02:00",
+                                "number": "189",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180189"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180190",
+                            "attributes": {
+                                "dateStart": "2016-09-22T09:01:00+02:00",
+                                "dateEnd": "2016-09-22T22:02:00+02:00",
+                                "number": "190",
+                                "agendaItemCount": "40"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180190"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180191",
+                            "attributes": {
+                                "dateStart": "2016-09-23T09:01:00+02:00",
+                                "dateEnd": "2016-09-23T14:02:00+02:00",
+                                "number": "191",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180191"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180192",
+                            "attributes": {
+                                "dateStart": "2016-09-28T13:01:00+02:00",
+                                "dateEnd": "2016-09-28T16:49:00+02:00",
+                                "number": "192",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180192"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180193",
+                            "attributes": {
+                                "dateStart": "2016-09-29T09:01:00+02:00",
+                                "dateEnd": "2016-09-29T21:10:00+02:00",
+                                "number": "193",
+                                "agendaItemCount": "24"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180193"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180194",
+                            "attributes": {
+                                "dateStart": "2016-09-30T09:01:00+02:00",
+                                "dateEnd": "2016-09-30T13:37:00+02:00",
+                                "number": "194",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180194"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180195",
+                            "attributes": {
+                                "dateStart": "2016-10-19T13:00:00+02:00",
+                                "dateEnd": "2016-10-19T16:47:00+02:00",
+                                "number": "195",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180195"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180196",
+                            "attributes": {
+                                "dateStart": "2016-10-20T09:00:00+02:00",
+                                "dateEnd": "2016-10-20T22:26:00+02:00",
+                                "number": "196",
+                                "agendaItemCount": "30"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180196"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180197",
+                            "attributes": {
+                                "dateStart": "2016-10-21T09:00:00+02:00",
+                                "dateEnd": "2016-10-21T15:38:00+02:00",
+                                "number": "197",
+                                "agendaItemCount": "10"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180197"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180198",
+                            "attributes": {
+                                "dateStart": "2016-11-09T13:01:00+01:00",
+                                "dateEnd": "2016-11-09T17:06:00+01:00",
+                                "number": "198",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180198"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180199",
+                            "attributes": {
+                                "dateStart": "2016-11-10T09:02:00+01:00",
+                                "dateEnd": "2016-11-10T23:26:00+01:00",
+                                "number": "199",
+                                "agendaItemCount": "36"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180199"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180200",
+                            "attributes": {
+                                "dateStart": "2016-11-11T09:02:00+01:00",
+                                "dateEnd": "2016-11-11T12:58:00+01:00",
+                                "number": "200",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180200"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180201",
+                            "attributes": {
+                                "dateStart": "2016-11-22T10:01:00+01:00",
+                                "dateEnd": "2016-11-22T19:23:00+01:00",
+                                "number": "201",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180201"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180202",
+                            "attributes": {
+                                "dateStart": "2016-11-23T09:00:00+01:00",
+                                "dateEnd": "2016-11-23T18:31:00+01:00",
+                                "number": "202",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180202"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180203",
+                            "attributes": {
+                                "dateStart": "2016-11-24T09:00:00+01:00",
+                                "dateEnd": "2016-11-24T19:44:00+01:00",
+                                "number": "203",
+                                "agendaItemCount": "10"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180203"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180204",
+                            "attributes": {
+                                "dateStart": "2016-11-25T09:00:00+01:00",
+                                "dateEnd": "2016-11-25T13:04:00+01:00",
+                                "number": "204",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180204"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180205",
+                            "attributes": {
+                                "dateStart": "2016-11-30T13:00:00+01:00",
+                                "dateEnd": "2016-11-30T16:50:00+01:00",
+                                "number": "205",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180205"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180206",
+                            "attributes": {
+                                "dateStart": "2016-12-01T10:02:00+01:00",
+                                "dateEnd": "2016-12-01T23:06:00+01:00",
+                                "number": "206",
+                                "agendaItemCount": "30"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180206"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180207",
+                            "attributes": {
+                                "dateStart": "2016-12-02T09:00:00+01:00",
+                                "dateEnd": "2016-12-02T14:08:00+01:00",
+                                "number": "207",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180207"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180208",
+                            "attributes": {
+                                "dateStart": "2016-12-14T13:00:00+01:00",
+                                "dateEnd": "2016-12-14T16:47:00+01:00",
+                                "number": "208",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180208"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180209",
+                            "attributes": {
+                                "dateStart": "2016-12-15T09:01:00+01:00",
+                                "dateEnd": "2016-12-15T22:05:00+01:00",
+                                "number": "209",
+                                "agendaItemCount": "32"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180209"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180210",
+                            "attributes": {
+                                "dateStart": "2016-12-16T09:02:00+01:00",
+                                "dateEnd": "2016-12-16T16:14:00+01:00",
+                                "number": "210",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180210"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180211",
+                            "attributes": {
+                                "dateStart": "2017-01-18T13:08:00+01:00",
+                                "dateEnd": "2017-01-18T17:14:00+01:00",
+                                "number": "211",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180211"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180212",
+                            "attributes": {
+                                "dateStart": "2017-01-19T09:00:00+01:00",
+                                "dateEnd": "2017-01-19T20:19:00+01:00",
+                                "number": "212",
+                                "agendaItemCount": "23"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180212"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180213",
+                            "attributes": {
+                                "dateStart": "2017-01-20T09:02:00+01:00",
+                                "dateEnd": "2017-01-20T14:40:00+01:00",
+                                "number": "213",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180213"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180214",
+                            "attributes": {
+                                "dateStart": "2017-01-25T13:00:00+01:00",
+                                "dateEnd": "2017-01-25T15:06:00+01:00",
+                                "number": "214",
+                                "agendaItemCount": "4"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180214"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180215",
+                            "attributes": {
+                                "dateStart": "2017-01-26T09:02:00+01:00",
+                                "dateEnd": "2017-01-26T21:18:00+01:00",
+                                "number": "215",
+                                "agendaItemCount": "28"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180215"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180216",
+                            "attributes": {
+                                "dateStart": "2017-01-27T10:30:00+01:00",
+                                "dateEnd": "2017-01-27T15:08:00+01:00",
+                                "number": "216",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180216"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180217",
+                            "attributes": {
+                                "dateStart": "2017-02-15T13:00:00+01:00",
+                                "dateEnd": "2017-02-15T16:47:00+01:00",
+                                "number": "217",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180217"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180218",
+                            "attributes": {
+                                "dateStart": "2017-02-16T09:01:00+01:00",
+                                "dateEnd": "2017-02-16T20:50:00+01:00",
+                                "number": "218",
+                                "agendaItemCount": "24"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180218"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180219",
+                            "attributes": {
+                                "dateStart": "2017-02-17T09:00:00+01:00",
+                                "dateEnd": "2017-02-17T14:36:00+01:00",
+                                "number": "219",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180219"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180220",
+                            "attributes": {
+                                "dateStart": "2017-03-08T13:00:00+01:00",
+                                "dateEnd": "2017-03-08T16:49:00+01:00",
+                                "number": "220",
+                                "agendaItemCount": "7"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180220"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180221",
+                            "attributes": {
+                                "dateStart": "2017-03-09T09:00:00+01:00",
+                                "dateEnd": "2017-03-10T01:40:00+01:00",
+                                "number": "221",
+                                "agendaItemCount": "49"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180221"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180222",
+                            "attributes": {
+                                "dateStart": "2017-03-10T09:00:00+01:00",
+                                "dateEnd": "2017-03-10T14:06:00+01:00",
+                                "number": "222",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180222"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180223",
+                            "attributes": {
+                                "dateStart": "2017-03-22T12:00:00+01:00",
+                                "dateEnd": "2017-03-22T13:18:00+01:00",
+                                "number": "223",
+                                "agendaItemCount": "3"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180223"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180224",
+                            "attributes": {
+                                "dateStart": "2017-03-22T14:30:00+01:00",
+                                "dateEnd": "2017-03-22T16:37:00+01:00",
+                                "number": "224",
+                                "agendaItemCount": "5"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180224"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180225",
+                            "attributes": {
+                                "dateStart": "2017-03-23T09:01:00+01:00",
+                                "dateEnd": "2017-03-23T22:23:00+01:00",
+                                "number": "225",
+                                "agendaItemCount": "30"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180225"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180226",
+                            "attributes": {
+                                "dateStart": "2017-03-24T09:01:00+01:00",
+                                "dateEnd": "2017-03-24T15:29:00+01:00",
+                                "number": "226",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180226"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180227",
+                            "attributes": {
+                                "dateStart": "2017-03-29T13:00:00+02:00",
+                                "dateEnd": "2017-03-29T15:36:00+02:00",
+                                "number": "227",
+                                "agendaItemCount": "4"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180227"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180228",
+                            "attributes": {
+                                "dateStart": "2017-03-30T09:03:00+02:00",
+                                "dateEnd": "2017-03-30T23:37:00+02:00",
+                                "number": "228",
+                                "agendaItemCount": "36"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180228"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180229",
+                            "attributes": {
+                                "dateStart": "2017-03-31T09:00:00+02:00",
+                                "dateEnd": "2017-03-31T13:41:00+02:00",
+                                "number": "229",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180229"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180230",
+                            "attributes": {
+                                "dateStart": "2017-04-26T13:00:00+02:00",
+                                "dateEnd": "2017-04-26T15:18:00+02:00",
+                                "number": "230",
+                                "agendaItemCount": "4"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180230"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180231",
+                            "attributes": {
+                                "dateStart": "2017-04-27T09:00:00+02:00",
+                                "dateEnd": "2017-04-27T23:52:00+02:00",
+                                "number": "231",
+                                "agendaItemCount": "35"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180231"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180232",
+                            "attributes": {
+                                "dateStart": "2017-04-28T09:00:00+02:00",
+                                "dateEnd": "2017-04-28T14:56:00+02:00",
+                                "number": "232",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180232"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180233",
+                            "attributes": {
+                                "dateStart": "2017-05-17T13:00:00+02:00",
+                                "dateEnd": "2017-05-17T19:20:00+02:00",
+                                "number": "233",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180233"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180234",
+                            "attributes": {
+                                "dateStart": "2017-05-18T09:29:00+02:00",
+                                "dateEnd": "2017-05-19T00:25:00+02:00",
+                                "number": "234",
+                                "agendaItemCount": "38"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180234"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180235",
+                            "attributes": {
+                                "dateStart": "2017-05-19T09:01:00+02:00",
+                                "dateEnd": "2017-05-19T14:27:00+02:00",
+                                "number": "235",
+                                "agendaItemCount": "8"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180235"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180236",
+                            "attributes": {
+                                "dateStart": "2017-05-31T13:01:00+02:00",
+                                "dateEnd": "2017-05-31T17:50:00+02:00",
+                                "number": "236",
+                                "agendaItemCount": "10"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180236"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180237",
+                            "attributes": {
+                                "dateStart": "2017-06-01T09:02:00+02:00",
+                                "dateEnd": "2017-06-02T02:01:00+02:00",
+                                "number": "237",
+                                "agendaItemCount": "35"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180237"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180238",
+                            "attributes": {
+                                "dateStart": "2017-06-02T09:00:00+02:00",
+                                "dateEnd": "2017-06-02T15:10:00+02:00",
+                                "number": "238",
+                                "agendaItemCount": "10"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180238"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180239",
+                            "attributes": {
+                                "dateStart": "2017-06-21T13:00:00+02:00",
+                                "dateEnd": "2017-06-21T19:27:00+02:00",
+                                "number": "239",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180239"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180240",
+                            "attributes": {
+                                "dateStart": "2017-06-22T09:00:00+02:00",
+                                "dateEnd": "2017-06-23T00:42:00+02:00",
+                                "number": "240",
+                                "agendaItemCount": "28"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180240"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180241",
+                            "attributes": {
+                                "dateStart": "2017-06-23T09:00:00+02:00",
+                                "dateEnd": "2017-06-23T16:00:00+02:00",
+                                "number": "241",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180241"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180242",
+                            "attributes": {
+                                "dateStart": "2017-06-28T13:02:00+02:00",
+                                "dateEnd": "2017-06-28T20:06:00+02:00",
+                                "number": "242",
+                                "agendaItemCount": "9"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180242"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180243",
+                            "attributes": {
+                                "dateStart": "2017-06-29T09:00:00+02:00",
+                                "dateEnd": "2017-06-30T00:57:00+02:00",
+                                "number": "243",
+                                "agendaItemCount": "30"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180243"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180244",
+                            "attributes": {
+                                "dateStart": "2017-06-30T08:00:00+02:00",
+                                "dateEnd": "2017-06-30T16:56:00+02:00",
+                                "number": "244",
+                                "agendaItemCount": "14"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180244"
+                            }
+                        }
+                    },
+                    {
+                        "data": {
+                            "type": "session",
+                            "id": "DE-0180245",
+                            "attributes": {
+                                "dateStart": "2017-09-05T09:01:00+02:00",
+                                "dateEnd": "2017-09-05T14:21:00+02:00",
+                                "number": "245",
+                                "agendaItemCount": "6"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/session/DE-0180245"
+                            }
+                        }
+                    }
+                ],
+                "links": {
+                    "self": "https://optv.local/api/v1/search/session?electoralPeriodID=DE-018"
+                }
+            }
+        }
+    }
+}

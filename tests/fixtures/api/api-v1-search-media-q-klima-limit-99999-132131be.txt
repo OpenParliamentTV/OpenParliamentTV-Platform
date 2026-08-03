@@ -1,0 +1,25 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "error"
+    },
+    "errors": [
+        {
+            "status": 503,
+            "code": 3,
+            "title": "Suchfehler",
+            "detail": "Der Suchindex ist gerade nicht erreichbar oder überlastet. Bitte versuche es in einigen Momenten erneut."
+        }
+    ]
+}

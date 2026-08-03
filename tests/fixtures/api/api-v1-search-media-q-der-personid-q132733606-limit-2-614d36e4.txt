@@ -1,0 +1,1589 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success",
+        "attributes": {
+            "speechFirstDateStr": "2025-05-16T08:53:30.000Z",
+            "speechFirstDateTimestamp": 1747385610000,
+            "speechLastDateStr": "2025-09-12T12:05:31.000Z",
+            "speechLastDateTimestamp": 1757678731000,
+            "resultsPerFaction": {
+                "Q1826856": 4
+            },
+            "days": {
+                "2025-05-16": {
+                    "key_as_string": "2025-05-16",
+                    "key": 1747353600000,
+                    "doc_count": 1
+                },
+                "2025-06-05": {
+                    "key_as_string": "2025-06-05",
+                    "key": 1749081600000,
+                    "doc_count": 1
+                },
+                "2025-07-10": {
+                    "key_as_string": "2025-07-10",
+                    "key": 1752105600000,
+                    "doc_count": 1
+                },
+                "2025-09-12": {
+                    "key_as_string": "2025-09-12",
+                    "key": 1757635200000,
+                    "doc_count": 1
+                }
+            },
+            "electoralPeriods": [
+                {
+                    "type": "electoralPeriod",
+                    "id": "DE-018",
+                    "attributes": {
+                        "number": 18,
+                        "dateStart": "2013-10-22",
+                        "dateEnd": "2017-10-24",
+                        "parliament": "DE",
+                        "parliamentLabel": "Deutscher Bundestag"
+                    }
+                },
+                {
+                    "type": "electoralPeriod",
+                    "id": "DE-019",
+                    "attributes": {
+                        "number": 19,
+                        "dateStart": "2017-10-24",
+                        "dateEnd": "2021-10-26",
+                        "parliament": "DE",
+                        "parliamentLabel": "Deutscher Bundestag"
+                    }
+                },
+                {
+                    "type": "electoralPeriod",
+                    "id": "DE-020",
+                    "attributes": {
+                        "number": 20,
+                        "dateStart": "2021-10-26",
+                        "dateEnd": "2025-03-25",
+                        "parliament": "DE",
+                        "parliamentLabel": "Deutscher Bundestag"
+                    }
+                },
+                {
+                    "type": "electoralPeriod",
+                    "id": "DE-021",
+                    "attributes": {
+                        "number": 21,
+                        "dateStart": "2025-03-25",
+                        "dateEnd": null,
+                        "parliament": "DE",
+                        "parliamentLabel": "Deutscher Bundestag"
+                    }
+                }
+            ]
+        },
+        "results": {
+            "count": 2,
+            "total": 4,
+            "totalHits": 0
+        }
+    },
+    "data": [
+        {
+            "type": "media",
+            "id": "DE-0210005029",
+            "attributes": {
+                "originID": null,
+                "originMediaID": "7631493",
+                "creator": "Deutscher Bundestag",
+                "license": "&lt;a href=&quot;https://www.bundestag.de/nutzungsbedingungen&quot; target=&quot;_blank&quot;&gt;Nutzungsbedingungen&lt;/a&gt;",
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag",
+                "order": 0,
+                "public": true,
+                "aligned": true,
+                "dateStartTimestamp": 1747385610,
+                "dateStart": "2025-05-16T10:53:30+02:00",
+                "dateEnd": "2025-05-16T10:55:59+02:00",
+                "duration": "<<NORMALIZED>>",
+                "videoFileURI": "https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7631493/7631493_h264_1280_720_3000kb_baseline_de_3000.mp4",
+                "audioFileURI": "https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7631493/7631493_mp3_128kb_stereo_de_128.mp3",
+                "sourcePage": "http://dbtg.tv/fvid/7631493",
+                "thumbnailURI": null,
+                "thumbnailCreator": null,
+                "thumbnailLicense": null,
+                "additionalInformation": [],
+                "lastChanged": "2025-06-16 08:47:09",
+                "lastChangedTimestamp": 1750056429,
+                "textContents": [
+                    {
+                        "id": "65062",
+                        "type": "proceedings",
+                        "textBody": [
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"12.640\">Frau Präsidentin! </span><span class=\"timebased\" data-start=\"12.640\" data-end=\"15.840\">Werte Kolleginnen und Kollegen! </span><span class=\"timebased\" data-start=\"15.840\" data-end=\"29.160\">Die Rechtspolitik der Bundesregierung ist keine Politik für alle, wie vorgestern durch den Bundeskanzler angekündigt, sondern eine Politik gegen die Menschen, die ihr Einkommen hart erarbeiten müssen. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Frau Präsidentin!",
+                                        "timeStart": "1.000",
+                                        "timeEnd": "12.640"
+                                    },
+                                    {
+                                        "text": "Werte Kolleginnen und Kollegen!",
+                                        "timeStart": "12.640",
+                                        "timeEnd": "15.840"
+                                    },
+                                    {
+                                        "text": "Die Rechtspolitik der Bundesregierung ist keine Politik für alle, wie vorgestern durch den Bundeskanzler angekündigt, sondern eine Politik gegen die Menschen, die ihr Einkommen hart erarbeiten müssen.",
+                                        "timeStart": "15.840",
+                                        "timeEnd": "29.160"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"15.840\" data-end=\"37.880\">(Beifall bei der Linken) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der Linken)",
+                                        "timeStart": "15.840",
+                                        "timeEnd": "37.880"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"29.160\" data-end=\"37.880\">Die Vorhaben dieser Regierung sind gut für die Starken, für Großkonzerne und Großkanzleien, aber nicht für diejenigen, die auf Schutz angewiesen sind. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Die Vorhaben dieser Regierung sind gut für die Starken, für Großkonzerne und Großkanzleien, aber nicht für diejenigen, die auf Schutz angewiesen sind.",
+                                        "timeStart": "29.160",
+                                        "timeEnd": "37.880"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"29.160\" data-end=\"46.400\">(Beifall bei der Linken) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der Linken)",
+                                        "timeStart": "29.160",
+                                        "timeEnd": "46.400"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"37.880\" data-end=\"46.400\">Der Plan, den Amtsermittlungsgrundsatz im Asyl- und Aufenthaltsrecht abzuschaffen, ist nichts anderes als widerwärtig. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Der Plan, den Amtsermittlungsgrundsatz im Asyl- und Aufenthaltsrecht abzuschaffen, ist nichts anderes als widerwärtig.",
+                                        "timeStart": "37.880",
+                                        "timeEnd": "46.400"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"37.880\" data-end=\"55.540\">(Beifall bei der Linken) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der Linken)",
+                                        "timeStart": "37.880",
+                                        "timeEnd": "55.540"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"46.400\" data-end=\"55.540\">Es ist die Abschaffung des Schutzwalls für alle Geflüchteten, die ihr Recht gegenüber dem Staat erstreiten müssen. </span><span class=\"timebased\" data-start=\"55.540\" data-end=\"61.820\">Es ist die Abschaffung eines zentralen rechtsstaatlichen Elements in verwaltungsgerichtlichen Verfahren. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Es ist die Abschaffung des Schutzwalls für alle Geflüchteten, die ihr Recht gegenüber dem Staat erstreiten müssen.",
+                                        "timeStart": "46.400",
+                                        "timeEnd": "55.540"
+                                    },
+                                    {
+                                        "text": "Es ist die Abschaffung eines zentralen rechtsstaatlichen Elements in verwaltungsgerichtlichen Verfahren.",
+                                        "timeStart": "55.540",
+                                        "timeEnd": "61.820"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"61.820\" data-end=\"64.560\">Auch das Lieferkettengesetz soll abgeschafft werden. </span><span class=\"timebased\" data-start=\"64.560\" data-end=\"68.520\">Dieses Gesetz schützt vor Menschenrechtsverletzungen und Umweltzerstörungen. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Auch das Lieferkettengesetz soll abgeschafft werden.",
+                                        "timeStart": "61.820",
+                                        "timeEnd": "64.560"
+                                    },
+                                    {
+                                        "text": "Dieses Gesetz schützt vor Menschenrechtsverletzungen und Umweltzerstörungen.",
+                                        "timeStart": "64.560",
+                                        "timeEnd": "68.520"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"64.560\" data-end=\"77.560\">(Beifall bei der Linken) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der Linken)",
+                                        "timeStart": "64.560",
+                                        "timeEnd": "77.560"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"68.520\" data-end=\"77.560\">Unternehmen können Menschenrechte und Umweltstandards missachten, ohne Konsequenzen fürchten zu müssen. </span><span class=\"timebased\" data-start=\"77.560\" data-end=\"81.760\">Das ist ein Freifahrtschein für Ausbeutung und Umweltzerstörung. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Unternehmen können Menschenrechte und Umweltstandards missachten, ohne Konsequenzen fürchten zu müssen.",
+                                        "timeStart": "68.520",
+                                        "timeEnd": "77.560"
+                                    },
+                                    {
+                                        "text": "Das ist ein Freifahrtschein für Ausbeutung und Umweltzerstörung.",
+                                        "timeStart": "77.560",
+                                        "timeEnd": "81.760"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"77.560\" data-end=\"89.440\">(Beifall bei der Linken) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der Linken)",
+                                        "timeStart": "77.560",
+                                        "timeEnd": "89.440"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"81.760\" data-end=\"89.440\">Ihr Sofortprogramm für Demokratieabbau ist nichts anderes als staatlich organisierte Verantwortungslosigkeit. </span><span class=\"timebased\" data-start=\"89.440\" data-end=\"93.280\">Für Die Linke gilt aber: Menschenrechte sind nicht verhandelbar. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Ihr Sofortprogramm für Demokratieabbau ist nichts anderes als staatlich organisierte Verantwortungslosigkeit.",
+                                        "timeStart": "81.760",
+                                        "timeEnd": "89.440"
+                                    },
+                                    {
+                                        "text": "Für Die Linke gilt aber: Menschenrechte sind nicht verhandelbar.",
+                                        "timeStart": "89.440",
+                                        "timeEnd": "93.280"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"89.440\" data-end=\"100.320\">(Beifall bei der Linken) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der Linken)",
+                                        "timeStart": "89.440",
+                                        "timeEnd": "100.320"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"93.280\" data-end=\"100.320\">Diese Rechtspolitik ist ein Spiegel dessen, was in der Gesellschaft grundsätzlich falsch läuft. </span><span class=\"timebased\" data-start=\"100.320\" data-end=\"104.040\">Der Rechtsstaat wird zum Dienstleister für die Reichen. </span><span class=\"timebased\" data-start=\"104.040\" data-end=\"111.920\">Die Stärkung der Rechte von Arbeitnehmerinnen und Arbeitsnehmern, Mieterinnen und Mietern, Studierenden oder Auszubildenden wie mir sucht man vergeblich. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Diese Rechtspolitik ist ein Spiegel dessen, was in der Gesellschaft grundsätzlich falsch läuft.",
+                                        "timeStart": "93.280",
+                                        "timeEnd": "100.320"
+                                    },
+                                    {
+                                        "text": "Der Rechtsstaat wird zum Dienstleister für die Reichen.",
+                                        "timeStart": "100.320",
+                                        "timeEnd": "104.040"
+                                    },
+                                    {
+                                        "text": "Die Stärkung der Rechte von Arbeitnehmerinnen und Arbeitsnehmern, Mieterinnen und Mietern, Studierenden oder Auszubildenden wie mir sucht man vergeblich.",
+                                        "timeStart": "104.040",
+                                        "timeEnd": "111.920"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"104.040\" data-end=\"116.560\">(Beifall bei der Linken – Zuruf von der AfD: Auszubildende!) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der Linken – Zuruf von der AfD: Auszubildende!)",
+                                        "timeStart": "104.040",
+                                        "timeEnd": "116.560"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"111.920\" data-end=\"116.560\">Die Rechtspolitik muss den Menschen dienen und nicht dem Markt. </span><span class=\"timebased\" data-start=\"116.560\" data-end=\"118.760\">Sie muss stärken und nicht strafen. </span><span class=\"timebased\" data-start=\"118.760\" data-end=\"123.480\">Sie muss verhindern, bevor sie verfolgt, und sie muss schützen und nicht abschrecken. </span><span class=\"timebased\" data-start=\"123.480\" data-end=\"142.240\">Eins versichere ich der Regierung und dem rechten Flügel dieses Parlaments: den erbitterten Widerstand von mir, meinen Genossinnen und meiner Fraktion gegen diese organisierte Unmenschlichkeit. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Die Rechtspolitik muss den Menschen dienen und nicht dem Markt.",
+                                        "timeStart": "111.920",
+                                        "timeEnd": "116.560"
+                                    },
+                                    {
+                                        "text": "Sie muss stärken und nicht strafen.",
+                                        "timeStart": "116.560",
+                                        "timeEnd": "118.760"
+                                    },
+                                    {
+                                        "text": "Sie muss verhindern, bevor sie verfolgt, und sie muss schützen und nicht abschrecken.",
+                                        "timeStart": "118.760",
+                                        "timeEnd": "123.480"
+                                    },
+                                    {
+                                        "text": "Eins versichere ich der Regierung und dem rechten Flügel dieses Parlaments: den erbitterten Widerstand von mir, meinen Genossinnen und meiner Fraktion gegen diese organisierte Unmenschlichkeit.",
+                                        "timeStart": "123.480",
+                                        "timeEnd": "142.240"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"123.480\" data-end=\"143.080\">(Stephan Brandner [AfD]: Ich habe jetzt schon Angst!) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Stephan Brandner [AfD]: Ich habe jetzt schon Angst!)",
+                                        "timeStart": "123.480",
+                                        "timeEnd": "143.080"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"142.240\" data-end=\"143.080\">Danke schön. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Danke schön.",
+                                        "timeStart": "142.240",
+                                        "timeEnd": "143.080"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"142.240\" data-end=\"148.960\">(Beifall bei der Linken – Tobias Matthias Peterka [AfD]: Haben Sie Ihren Hammer dabei?) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der Linken – Tobias Matthias Peterka [AfD]: Haben Sie Ihren Hammer dabei?)",
+                                        "timeStart": "142.240",
+                                        "timeEnd": "148.960"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "speech",
+                                "speaker": "Julia Klöckner",
+                                "speakerstatus": "president",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"143.080\" data-end=\"148.960\">Für die SPD-Fraktion hat nun die Abgeordnete Sonja Eichwede das Wort. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Für die SPD-Fraktion hat nun die Abgeordnete Sonja Eichwede das Wort.",
+                                        "timeStart": "143.080",
+                                        "timeEnd": "148.960"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID21502100",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"143.080\" data-end=\"148.960\">(Beifall bei der SPD sowie bei Abgeordneten der CDU/CSU) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der SPD sowie bei Abgeordneten der CDU/CSU)",
+                                        "timeStart": "143.080",
+                                        "timeEnd": "148.960"
+                                    }
+                                ]
+                            }
+                        ],
+                        "textHTML": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"12.640\">Frau Präsidentin! </span><span class=\"timebased\" data-start=\"12.640\" data-end=\"15.840\">Werte Kolleginnen und Kollegen! </span><span class=\"timebased\" data-start=\"15.840\" data-end=\"29.160\">Die Rechtspolitik der Bundesregierung ist keine Politik für alle, wie vorgestern durch den Bundeskanzler angekündigt, sondern eine Politik gegen die Menschen, die ihr Einkommen hart erarbeiten müssen. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"15.840\" data-end=\"37.880\">(Beifall bei der Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"29.160\" data-end=\"37.880\">Die Vorhaben dieser Regierung sind gut für die Starken, für Großkonzerne und Großkanzleien, aber nicht für diejenigen, die auf Schutz angewiesen sind. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"29.160\" data-end=\"46.400\">(Beifall bei der Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"37.880\" data-end=\"46.400\">Der Plan, den Amtsermittlungsgrundsatz im Asyl- und Aufenthaltsrecht abzuschaffen, ist nichts anderes als widerwärtig. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"37.880\" data-end=\"55.540\">(Beifall bei der Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"46.400\" data-end=\"55.540\">Es ist die Abschaffung des Schutzwalls für alle Geflüchteten, die ihr Recht gegenüber dem Staat erstreiten müssen. </span><span class=\"timebased\" data-start=\"55.540\" data-end=\"61.820\">Es ist die Abschaffung eines zentralen rechtsstaatlichen Elements in verwaltungsgerichtlichen Verfahren. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"61.820\" data-end=\"64.560\">Auch das Lieferkettengesetz soll abgeschafft werden. </span><span class=\"timebased\" data-start=\"64.560\" data-end=\"68.520\">Dieses Gesetz schützt vor Menschenrechtsverletzungen und Umweltzerstörungen. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"64.560\" data-end=\"77.560\">(Beifall bei der Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"68.520\" data-end=\"77.560\">Unternehmen können Menschenrechte und Umweltstandards missachten, ohne Konsequenzen fürchten zu müssen. </span><span class=\"timebased\" data-start=\"77.560\" data-end=\"81.760\">Das ist ein Freifahrtschein für Ausbeutung und Umweltzerstörung. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"77.560\" data-end=\"89.440\">(Beifall bei der Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"81.760\" data-end=\"89.440\">Ihr Sofortprogramm für Demokratieabbau ist nichts anderes als staatlich organisierte Verantwortungslosigkeit. </span><span class=\"timebased\" data-start=\"89.440\" data-end=\"93.280\">Für Die Linke gilt aber: Menschenrechte sind nicht verhandelbar. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"89.440\" data-end=\"100.320\">(Beifall bei der Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"93.280\" data-end=\"100.320\">Diese Rechtspolitik ist ein Spiegel dessen, was in der Gesellschaft grundsätzlich falsch läuft. </span><span class=\"timebased\" data-start=\"100.320\" data-end=\"104.040\">Der Rechtsstaat wird zum Dienstleister für die Reichen. </span><span class=\"timebased\" data-start=\"104.040\" data-end=\"111.920\">Die Stärkung der Rechte von Arbeitnehmerinnen und Arbeitsnehmern, Mieterinnen und Mietern, Studierenden oder Auszubildenden wie mir sucht man vergeblich. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"104.040\" data-end=\"116.560\">(Beifall bei der Linken – Zuruf von der AfD: Auszubildende!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"111.920\" data-end=\"116.560\">Die Rechtspolitik muss den Menschen dienen und nicht dem Markt. </span><span class=\"timebased\" data-start=\"116.560\" data-end=\"118.760\">Sie muss stärken und nicht strafen. </span><span class=\"timebased\" data-start=\"118.760\" data-end=\"123.480\">Sie muss verhindern, bevor sie verfolgt, und sie muss schützen und nicht abschrecken. </span><span class=\"timebased\" data-start=\"123.480\" data-end=\"142.240\">Eins versichere ich der Regierung und dem rechten Flügel dieses Parlaments: den erbitterten Widerstand von mir, meinen Genossinnen und meiner Fraktion gegen diese organisierte Unmenschlichkeit. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"123.480\" data-end=\"143.080\">(Stephan Brandner [AfD]: Ich habe jetzt schon Angst!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"142.240\" data-end=\"143.080\">Danke schön. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"142.240\" data-end=\"148.960\">(Beifall bei der Linken – Tobias Matthias Peterka [AfD]: Haben Sie Ihren Hammer dabei?) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"143.080\" data-end=\"148.960\">Für die SPD-Fraktion hat nun die Abgeordnete Sonja Eichwede das Wort. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"143.080\" data-end=\"148.960\">(Beifall bei der SPD sowie bei Abgeordneten der CDU/CSU) </span></p>",
+                        "sourceURI": "https://www.bundestag.de/resource/blob/1067754/21005.xml",
+                        "creator": "Deutscher Bundestag",
+                        "license": "Public Domain",
+                        "language": "DE-de",
+                        "originTextID": "ID21502100",
+                        "lastChanged": "2025-06-16 08:47:09"
+                    }
+                ],
+                "textContentsCount": 1
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/media/DE-0210005029"
+            },
+            "relationships": {
+                "electoralPeriod": {
+                    "data": {
+                        "type": "electoralPeriod",
+                        "id": "DE-021",
+                        "attributes": {
+                            "number": 21,
+                            "dateStart": null,
+                            "dateEnd": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/electoralPeriod/DE-021"
+                        }
+                    }
+                },
+                "session": {
+                    "data": {
+                        "type": "session",
+                        "id": "DE-0210005",
+                        "attributes": {
+                            "number": 5
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/session/DE-0210005"
+                        }
+                    }
+                },
+                "agendaItem": {
+                    "data": {
+                        "type": "agendaItem",
+                        "id": "9721",
+                        "attributes": {
+                            "officialTitle": "Tagesordnungspunkt 2.14",
+                            "title": "Recht und Verbraucherschutz"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-9721"
+                        }
+                    }
+                },
+                "people": {
+                    "data": [
+                        {
+                            "type": "person",
+                            "id": "Q132733606",
+                            "attributes": {
+                                "type": "memberOfParliament",
+                                "label": "Aaron Valent",
+                                "labelAlternative": [],
+                                "degree": "",
+                                "thumbnailURI": "",
+                                "thumbnailCreator": "",
+                                "thumbnailLicense": "",
+                                "additionalInformation": {
+                                    "wikipedia": {
+                                        "title": "Aaron Valent",
+                                        "url": "https://de.wikipedia.org/wiki/Aaron_Valent"
+                                    },
+                                    "abgeordnetenwatchID": "183231"
+                                },
+                                "party": {
+                                    "id": "Q49764",
+                                    "label": "DIE LINKE",
+                                    "labelAlternative": [
+                                        "Linkspartei"
+                                    ]
+                                },
+                                "faction": {
+                                    "id": "Q1826856",
+                                    "label": "DIE LINKE",
+                                    "labelAlternative": [
+                                        "Bundestagsfraktion Die Linke"
+                                    ]
+                                }
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q132733606"
+                            }
+                        },
+                        {
+                            "type": "person",
+                            "id": "Q88158",
+                            "attributes": {
+                                "type": "memberOfParliament",
+                                "label": "Julia Klöckner",
+                                "labelAlternative": [
+                                    "Julia Kloeckner"
+                                ],
+                                "degree": "",
+                                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q88158&v=09dc9d9c",
+                                "thumbnailCreator": "Olaf Kosinsky",
+                                "thumbnailLicense": "CC-BY-SA-3.0-DE",
+                                "additionalInformation": {
+                                    "wikipedia": {
+                                        "title": "Julia Klöckner",
+                                        "url": "https://de.wikipedia.org/wiki/Julia_Kl%C3%B6ckner"
+                                    },
+                                    "abgeordnetenwatchID": "110066"
+                                },
+                                "party": {
+                                    "id": "Q49762",
+                                    "label": "CDU",
+                                    "labelAlternative": [
+                                        "Christlich Demokratische Union Deutschlands"
+                                    ]
+                                },
+                                "faction": {
+                                    "id": "Q1023134",
+                                    "label": "CDU/CSU",
+                                    "labelAlternative": [
+                                        "CDU/CSU-Bundestagsfraktion",
+                                        "CDU/CSU-Fraktion",
+                                        "Unionsfraktion",
+                                        "CDU-Fraktion"
+                                    ]
+                                }
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q88158"
+                            }
+                        }
+                    ],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0210005029&type=person"
+                    }
+                },
+                "organisations": {
+                    "data": [
+                        {
+                            "type": "organisation",
+                            "id": "Q1826856",
+                            "attributes": {
+                                "context": "main-speaker-faction",
+                                "type": "faction",
+                                "label": "DIE LINKE",
+                                "labelAlternative": [
+                                    "Bundestagsfraktion Die Linke"
+                                ],
+                                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1826856&v=e5a9c45f",
+                                "thumbnailCreator": "Fraktion DIE LINKE. im Bundestag",
+                                "thumbnailLicense": "PD textlogo",
+                                "additionalInformation": {
+                                    "wikipedia": {
+                                        "title": "Fraktion Die Linke im Bundestag",
+                                        "url": "https://de.wikipedia.org/wiki/Fraktion_Die_Linke_im_Bundestag"
+                                    }
+                                },
+                                "color": null
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q1826856"
+                            }
+                        }
+                    ],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0210005029&type=organisation"
+                    }
+                },
+                "documents": {
+                    "data": [],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0210005029&type=document"
+                    }
+                },
+                "terms": {
+                    "data": [],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0210005029&type=term"
+                    }
+                }
+            },
+            "annotations": {
+                "data": [
+                    {
+                        "type": "person",
+                        "id": "Q132733606",
+                        "attributes": {
+                            "timeStart": null,
+                            "timeEnd": null,
+                            "context": "main-speaker",
+                            "additionalInformation": {
+                                "role": null
+                            }
+                        }
+                    },
+                    {
+                        "type": "person",
+                        "id": "Q88158",
+                        "attributes": {
+                            "timeStart": null,
+                            "timeEnd": null,
+                            "context": "president",
+                            "additionalInformation": {
+                                "role": null
+                            }
+                        }
+                    },
+                    {
+                        "type": "organisation",
+                        "id": "Q1826856",
+                        "attributes": {
+                            "timeStart": null,
+                            "timeEnd": null,
+                            "context": "main-speaker-faction",
+                            "additionalInformation": null
+                        }
+                    }
+                ]
+            },
+            "_score": 0.035951503000000002707725599293553386814892292022705078125,
+            "_highlight": {
+                "attributes.textContents.textHTML": [
+                    "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"12.640\">Frau Präsidentin! </span><span class=\"timebased\" data-start=\"12.640\" data-end=\"15.840\">Werte Kolleginnen und Kollegen! </span><span class=\"timebased\" data-start=\"15.840\" data-end=\"29.160\">Die Rechtspolitik <em>der</em> Bundesregierung ist keine Politik für alle, wie vorgestern durch den Bundeskanzler angekündigt, sondern eine Politik gegen die Menschen, die ihr Einkommen hart erarbeiten müssen. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"15.840\" data-end=\"37.880\">(Beifall bei <em>der</em> Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"29.160\" data-end=\"37.880\">Die Vorhaben dieser Regierung sind gut für die Starken, für Großkonzerne und Großkanzleien, aber nicht für diejenigen, die auf Schutz angewiesen sind. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"29.160\" data-end=\"46.400\">(Beifall bei <em>der</em> Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"37.880\" data-end=\"46.400\"><em>Der</em> Plan, den Amtsermittlungsgrundsatz im Asyl- und Aufenthaltsrecht abzuschaffen, ist nichts anderes als widerwärtig. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"37.880\" data-end=\"55.540\">(Beifall bei <em>der</em> Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"46.400\" data-end=\"55.540\">Es ist die Abschaffung des Schutzwalls für alle Geflüchteten, die ihr Recht gegenüber dem Staat erstreiten müssen. </span><span class=\"timebased\" data-start=\"55.540\" data-end=\"61.820\">Es ist die Abschaffung eines zentralen rechtsstaatlichen Elements in verwaltungsgerichtlichen Verfahren. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"61.820\" data-end=\"64.560\">Auch das Lieferkettengesetz soll abgeschafft werden. </span><span class=\"timebased\" data-start=\"64.560\" data-end=\"68.520\">Dieses Gesetz schützt vor Menschenrechtsverletzungen und Umweltzerstörungen. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"64.560\" data-end=\"77.560\">(Beifall bei <em>der</em> Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"68.520\" data-end=\"77.560\">Unternehmen können Menschenrechte und Umweltstandards missachten, ohne Konsequenzen fürchten zu müssen. </span><span class=\"timebased\" data-start=\"77.560\" data-end=\"81.760\">Das ist ein Freifahrtschein für Ausbeutung und Umweltzerstörung. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"77.560\" data-end=\"89.440\">(Beifall bei <em>der</em> Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"81.760\" data-end=\"89.440\">Ihr Sofortprogramm für Demokratieabbau ist nichts anderes als staatlich organisierte Verantwortungslosigkeit. </span><span class=\"timebased\" data-start=\"89.440\" data-end=\"93.280\">Für Die Linke gilt aber: Menschenrechte sind nicht verhandelbar. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"89.440\" data-end=\"100.320\">(Beifall bei <em>der</em> Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"93.280\" data-end=\"100.320\">Diese Rechtspolitik ist ein Spiegel dessen, was in <em>der</em> Gesellschaft grundsätzlich falsch läuft. </span><span class=\"timebased\" data-start=\"100.320\" data-end=\"104.040\"><em>Der</em> Rechtsstaat wird zum Dienstleister für die Reichen. </span><span class=\"timebased\" data-start=\"104.040\" data-end=\"111.920\">Die Stärkung <em>der</em> Rechte von Arbeitnehmerinnen und Arbeitsnehmern, Mieterinnen und Mietern, Studierenden oder Auszubildenden wie mir sucht man vergeblich. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"104.040\" data-end=\"116.560\">(Beifall bei <em>der</em> Linken – Zuruf von <em>der</em> AfD: Auszubildende!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"111.920\" data-end=\"116.560\">Die Rechtspolitik muss den Menschen dienen und nicht dem Markt. </span><span class=\"timebased\" data-start=\"116.560\" data-end=\"118.760\">Sie muss stärken und nicht strafen. </span><span class=\"timebased\" data-start=\"118.760\" data-end=\"123.480\">Sie muss verhindern, bevor sie verfolgt, und sie muss schützen und nicht abschrecken. </span><span class=\"timebased\" data-start=\"123.480\" data-end=\"142.240\">Eins versichere ich <em>der</em> Regierung und dem rechten Flügel dieses Parlaments: den erbitterten Widerstand von mir, meinen Genossinnen und meiner Fraktion gegen diese organisierte Unmenschlichkeit. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"123.480\" data-end=\"143.080\">(Stephan Brandner [AfD]: Ich habe jetzt schon Angst!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"142.240\" data-end=\"143.080\">Danke schön. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"142.240\" data-end=\"148.960\">(Beifall bei <em>der</em> Linken – Tobias Matthias Peterka [AfD]: Haben Sie Ihren Hammer dabei?) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"143.080\" data-end=\"148.960\">Für die SPD-Fraktion hat nun die Abgeordnete Sonja Eichwede das Wort. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"143.080\" data-end=\"148.960\">(Beifall bei <em>der</em> SPD sowie bei Abgeordneten <em>der</em> CDU/CSU) </span></p>"
+                ]
+            },
+            "_finds": [
+                {
+                    "data-start": "15.840",
+                    "data-end": "29.160",
+                    "class": "timebased",
+                    "context": "Die Rechtspolitik <em>der</em> Bundesregierung ist keine Politik für alle, wie vorgestern durch den Bundeskanzler angekündigt, sondern eine Politik gegen die Menschen, die ihr Einkommen hart erarbeiten müssen. "
+                },
+                {
+                    "data-start": "15.840",
+                    "data-end": "37.880",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> Linken) "
+                },
+                {
+                    "data-start": "29.160",
+                    "data-end": "46.400",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> Linken) "
+                },
+                {
+                    "data-start": "37.880",
+                    "data-end": "46.400",
+                    "class": "timebased",
+                    "context": "<em>Der</em> Plan, den Amtsermittlungsgrundsatz im Asyl- und Aufenthaltsrecht abzuschaffen, ist nichts anderes als widerwärtig. "
+                },
+                {
+                    "data-start": "37.880",
+                    "data-end": "55.540",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> Linken) "
+                },
+                {
+                    "data-start": "64.560",
+                    "data-end": "77.560",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> Linken) "
+                },
+                {
+                    "data-start": "77.560",
+                    "data-end": "89.440",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> Linken) "
+                },
+                {
+                    "data-start": "89.440",
+                    "data-end": "100.320",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> Linken) "
+                },
+                {
+                    "data-start": "93.280",
+                    "data-end": "100.320",
+                    "class": "timebased",
+                    "context": "Diese Rechtspolitik ist ein Spiegel dessen, was in <em>der</em> Gesellschaft grundsätzlich falsch läuft. "
+                },
+                {
+                    "data-start": "100.320",
+                    "data-end": "104.040",
+                    "class": "timebased",
+                    "context": "<em>Der</em> Rechtsstaat wird zum Dienstleister für die Reichen. "
+                },
+                {
+                    "data-start": "104.040",
+                    "data-end": "111.920",
+                    "class": "timebased",
+                    "context": "Die Stärkung <em>der</em> Rechte von Arbeitnehmerinnen und Arbeitsnehmern, Mieterinnen und Mietern, Studierenden oder Auszubildenden wie mir sucht man vergeblich. "
+                },
+                {
+                    "data-start": "104.040",
+                    "data-end": "116.560",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> Linken – Zuruf von <em>der</em> AfD: Auszubildende!) "
+                },
+                {
+                    "data-start": "123.480",
+                    "data-end": "142.240",
+                    "class": "timebased",
+                    "context": "Eins versichere ich <em>der</em> Regierung und dem rechten Flügel dieses Parlaments: den erbitterten Widerstand von mir, meinen Genossinnen und meiner Fraktion gegen diese organisierte Unmenschlichkeit. "
+                },
+                {
+                    "data-start": "142.240",
+                    "data-end": "148.960",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> Linken – Tobias Matthias Peterka [AfD]: Haben Sie Ihren Hammer dabei?) "
+                },
+                {
+                    "data-start": "143.080",
+                    "data-end": "148.960",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> SPD sowie bei Abgeordneten <em>der</em> CDU/CSU) "
+                }
+            ],
+            "highlight_count": 17
+        },
+        {
+            "type": "media",
+            "id": "DE-0210022085",
+            "attributes": {
+                "originID": null,
+                "originMediaID": "7635534",
+                "creator": "Deutscher Bundestag",
+                "license": "&lt;a href=&quot;https://www.bundestag.de/nutzungsbedingungen&quot; target=&quot;_blank&quot;&gt;Nutzungsbedingungen&lt;/a&gt;",
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag",
+                "order": 0,
+                "public": true,
+                "aligned": true,
+                "dateStartTimestamp": 1757678532,
+                "dateStart": "2025-09-12T14:02:12+02:00",
+                "dateEnd": "2025-09-12T14:05:31+02:00",
+                "duration": "<<NORMALIZED>>",
+                "videoFileURI": "https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7635534/7635534_h264_1280_720_3000kb_baseline_de_3000.mp4",
+                "audioFileURI": "https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7635534/7635534_mp3_128kb_stereo_de_128.mp3",
+                "sourcePage": "http://dbtg.tv/fvid/7635534",
+                "thumbnailURI": null,
+                "thumbnailCreator": null,
+                "thumbnailLicense": null,
+                "additionalInformation": [],
+                "lastChanged": "2025-09-30 12:37:51",
+                "lastChangedTimestamp": 1759228671,
+                "textContents": [
+                    {
+                        "id": "66735",
+                        "type": "proceedings",
+                        "textBody": [
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"3.120\">Frau Präsidentin! </span><span class=\"timebased\" data-start=\"8.280\" data-end=\"11.660\">Liebe Kolleginnen und Kollegen! </span><span class=\"timebased\" data-start=\"11.660\" data-end=\"14.760\">Digitalisierung in der Justiz ist Fortschritt. </span><span class=\"timebased\" data-start=\"14.760\" data-end=\"18.000\">Richtig umgesetzt, kann sie den Zugang zum Recht erleichtern. </span><span class=\"timebased\" data-start=\"18.000\" data-end=\"19.760\">Sie kann Verfahren beschleunigen. </span><span class=\"timebased\" data-start=\"19.760\" data-end=\"24.560\">Aber das darf nicht auf Kosten zentraler rechtsstaatlicher Prinzipien passieren. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Frau Präsidentin!",
+                                        "timeStart": "1.000",
+                                        "timeEnd": "3.120"
+                                    },
+                                    {
+                                        "text": "Liebe Kolleginnen und Kollegen!",
+                                        "timeStart": "8.280",
+                                        "timeEnd": "11.660"
+                                    },
+                                    {
+                                        "text": "Digitalisierung in der Justiz ist Fortschritt.",
+                                        "timeStart": "11.660",
+                                        "timeEnd": "14.760"
+                                    },
+                                    {
+                                        "text": "Richtig umgesetzt, kann sie den Zugang zum Recht erleichtern.",
+                                        "timeStart": "14.760",
+                                        "timeEnd": "18.000"
+                                    },
+                                    {
+                                        "text": "Sie kann Verfahren beschleunigen.",
+                                        "timeStart": "18.000",
+                                        "timeEnd": "19.760"
+                                    },
+                                    {
+                                        "text": "Aber das darf nicht auf Kosten zentraler rechtsstaatlicher Prinzipien passieren.",
+                                        "timeStart": "19.760",
+                                        "timeEnd": "24.560"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"19.760\" data-end=\"29.080\">(Beifall bei der Linken) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der Linken)",
+                                        "timeStart": "19.760",
+                                        "timeEnd": "29.080"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"24.560\" data-end=\"29.080\">Der Kern des Zivilverfahrens ist die mündliche Verhandlung. </span><span class=\"timebased\" data-start=\"29.080\" data-end=\"33.540\">Die Regierung will diese bei Onlineverfahren nur noch zur Ausnahme machen. </span><span class=\"timebased\" data-start=\"33.540\" data-end=\"39.300\">Sie wird nicht länger garantiert, sondern Beteiligte müssen mündliche Verhandlungen nun extra beantragen. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Der Kern des Zivilverfahrens ist die mündliche Verhandlung.",
+                                        "timeStart": "24.560",
+                                        "timeEnd": "29.080"
+                                    },
+                                    {
+                                        "text": "Die Regierung will diese bei Onlineverfahren nur noch zur Ausnahme machen.",
+                                        "timeStart": "29.080",
+                                        "timeEnd": "33.540"
+                                    },
+                                    {
+                                        "text": "Sie wird nicht länger garantiert, sondern Beteiligte müssen mündliche Verhandlungen nun extra beantragen.",
+                                        "timeStart": "33.540",
+                                        "timeEnd": "39.300"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"39.300\" data-end=\"48.720\">Ein weiteres zentrales rechtliches Prinzip, das mit diesem Entwurf unter Beschuss gerät, ist die Unmittelbarkeit im Verfahren. </span><span class=\"timebased\" data-start=\"48.720\" data-end=\"55.820\">Im Gerichtssaal können Sie dem Verfahren direkt folgen, Argumente vorbringen, Fragen stellen. </span><span class=\"timebased\" data-start=\"55.820\" data-end=\"59.240\">Nun stellen Sie sich vor: Das alles ist nicht mehr gegeben. </span><span class=\"timebased\" data-start=\"59.240\" data-end=\"62.040\">Sie können nur noch im Nachhinein schriftlich Stellung beziehen. </span><span class=\"timebased\" data-start=\"62.040\" data-end=\"65.600\">Sie können bei der Beweisaufnahme selber nichts mehr beitragen. </span><span class=\"timebased\" data-start=\"65.600\" data-end=\"74.060\">Missverständnisse und Fehlentscheidungen sind hier vorprogrammiert, und Sie können sich nicht mehr unmittelbar verteidigen. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Ein weiteres zentrales rechtliches Prinzip, das mit diesem Entwurf unter Beschuss gerät, ist die Unmittelbarkeit im Verfahren.",
+                                        "timeStart": "39.300",
+                                        "timeEnd": "48.720"
+                                    },
+                                    {
+                                        "text": "Im Gerichtssaal können Sie dem Verfahren direkt folgen, Argumente vorbringen, Fragen stellen.",
+                                        "timeStart": "48.720",
+                                        "timeEnd": "55.820"
+                                    },
+                                    {
+                                        "text": "Nun stellen Sie sich vor: Das alles ist nicht mehr gegeben.",
+                                        "timeStart": "55.820",
+                                        "timeEnd": "59.240"
+                                    },
+                                    {
+                                        "text": "Sie können nur noch im Nachhinein schriftlich Stellung beziehen.",
+                                        "timeStart": "59.240",
+                                        "timeEnd": "62.040"
+                                    },
+                                    {
+                                        "text": "Sie können bei der Beweisaufnahme selber nichts mehr beitragen.",
+                                        "timeStart": "62.040",
+                                        "timeEnd": "65.600"
+                                    },
+                                    {
+                                        "text": "Missverständnisse und Fehlentscheidungen sind hier vorprogrammiert, und Sie können sich nicht mehr unmittelbar verteidigen.",
+                                        "timeStart": "65.600",
+                                        "timeEnd": "74.060"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"65.600\" data-end=\"78.840\">(Abg. Dr. Martin Plum [CDU/CSU] meldet sich zu einer Zwischenfrage) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Abg. Dr. Martin Plum [CDU/CSU] meldet sich zu einer Zwischenfrage)",
+                                        "timeStart": "65.600",
+                                        "timeEnd": "78.840"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"74.060\" data-end=\"78.840\">Durch diesen Vorschlag werden absolute Grundsätze infrage gestellt. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Durch diesen Vorschlag werden absolute Grundsätze infrage gestellt.",
+                                        "timeStart": "74.060",
+                                        "timeEnd": "78.840"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Andrea Lindholz",
+                                "speakerstatus": "vice-president",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"78.840\" data-end=\"87.520\">Herr Kollege, es gibt den Wunsch nach einer Zwischenfrage aus der Unionsfraktion. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Herr Kollege, es gibt den Wunsch nach einer Zwischenfrage aus der Unionsfraktion.",
+                                        "timeStart": "78.840",
+                                        "timeEnd": "87.520"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"87.520\" data-end=\"88.840\">Nein, danke. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Nein, danke.",
+                                        "timeStart": "87.520",
+                                        "timeEnd": "88.840"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"87.520\" data-end=\"94.800\">(Dr. Martin Plum [CDU/CSU]: Schwach! – Felix Schreiner [CDU/CSU]: Schwach!) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Dr. Martin Plum [CDU/CSU]: Schwach! – Felix Schreiner [CDU/CSU]: Schwach!)",
+                                        "timeStart": "87.520",
+                                        "timeEnd": "94.800"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"88.840\" data-end=\"94.800\">Wer so etwas fordert, schwächt nicht nur die Rechte der Betroffenen; er schwächt das Vertrauen in die Justiz selbst. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Wer so etwas fordert, schwächt nicht nur die Rechte der Betroffenen; er schwächt das Vertrauen in die Justiz selbst.",
+                                        "timeStart": "88.840",
+                                        "timeEnd": "94.800"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"94.800\" data-end=\"97.540\">Dann dieser Testzeitraum: zehn Jahre. </span><span class=\"timebased\" data-start=\"97.540\" data-end=\"101.340\">Zehn Jahre ein halbfertiges Verfahren ausprobieren, das ist absurd. </span><span class=\"timebased\" data-start=\"101.340\" data-end=\"105.040\">Schauen Sie sich die Entwicklung gerade im digitalen Bereich doch mal an! </span><span class=\"timebased\" data-start=\"105.040\" data-end=\"110.300\">Vor zehn Jahren hat Angela Merkel das Internet noch als „Neuland“ für uns alle bezeichnet. </span><span class=\"timebased\" data-start=\"110.300\" data-end=\"113.820\">Heute kann ich mit KI in Sekundenschnelle ganze Bücher schreiben. </span><span class=\"timebased\" data-start=\"113.820\" data-end=\"119.820\">Stellen Sie sich vor, wie sich auch die Technik im Justizbereich in zehn Jahren verändert haben wird! </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Dann dieser Testzeitraum: zehn Jahre.",
+                                        "timeStart": "94.800",
+                                        "timeEnd": "97.540"
+                                    },
+                                    {
+                                        "text": "Zehn Jahre ein halbfertiges Verfahren ausprobieren, das ist absurd.",
+                                        "timeStart": "97.540",
+                                        "timeEnd": "101.340"
+                                    },
+                                    {
+                                        "text": "Schauen Sie sich die Entwicklung gerade im digitalen Bereich doch mal an!",
+                                        "timeStart": "101.340",
+                                        "timeEnd": "105.040"
+                                    },
+                                    {
+                                        "text": "Vor zehn Jahren hat Angela Merkel das Internet noch als „Neuland“ für uns alle bezeichnet.",
+                                        "timeStart": "105.040",
+                                        "timeEnd": "110.300"
+                                    },
+                                    {
+                                        "text": "Heute kann ich mit KI in Sekundenschnelle ganze Bücher schreiben.",
+                                        "timeStart": "110.300",
+                                        "timeEnd": "113.820"
+                                    },
+                                    {
+                                        "text": "Stellen Sie sich vor, wie sich auch die Technik im Justizbereich in zehn Jahren verändert haben wird!",
+                                        "timeStart": "113.820",
+                                        "timeEnd": "119.820"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"119.820\" data-end=\"128.280\">Mit diesem Entwurf zwingt die Regierung von heute den Gerichten der Zukunft eine komplett überholte und altmodische Technologie auf. </span><span class=\"timebased\" data-start=\"128.280\" data-end=\"132.080\">Und dann treten wir weiterhin bei der Digitalisierung auf der Stelle. </span><span class=\"timebased\" data-start=\"132.080\" data-end=\"135.000\">Das kann sich Deutschland so nicht leisten. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Mit diesem Entwurf zwingt die Regierung von heute den Gerichten der Zukunft eine komplett überholte und altmodische Technologie auf.",
+                                        "timeStart": "119.820",
+                                        "timeEnd": "128.280"
+                                    },
+                                    {
+                                        "text": "Und dann treten wir weiterhin bei der Digitalisierung auf der Stelle.",
+                                        "timeStart": "128.280",
+                                        "timeEnd": "132.080"
+                                    },
+                                    {
+                                        "text": "Das kann sich Deutschland so nicht leisten.",
+                                        "timeStart": "132.080",
+                                        "timeEnd": "135.000"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"132.080\" data-end=\"142.920\">(Beifall bei der Linken) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der Linken)",
+                                        "timeStart": "132.080",
+                                        "timeEnd": "142.920"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"135.000\" data-end=\"142.920\">Liebe Kolleginnen und Kollegen, meine Redezeit reicht gar nicht aus, um alle Mängel dieses Gesetzentwurfs aufzuzeigen. </span><span class=\"timebased\" data-start=\"142.920\" data-end=\"145.000\">Was ist zum Beispiel mit dem Thema Datenschutz? </span><span class=\"timebased\" data-start=\"145.000\" data-end=\"146.880\">Was ist zum Beispiel mit der Evaluation? </span><span class=\"timebased\" data-start=\"146.880\" data-end=\"150.240\">Was ist mit den Arbeitsbedingungen für Dolmetscher/-innen bei Gericht? </span><span class=\"timebased\" data-start=\"150.240\" data-end=\"152.840\">Alles das wird im Entwurf nicht geregelt. </span><span class=\"timebased\" data-start=\"152.840\" data-end=\"155.800\">Wir als Linke wollen Digitalisierung in der Justiz. </span><span class=\"timebased\" data-start=\"155.800\" data-end=\"164.700\">Aber wir wollen sie richtig: Wir wollen sie sozial, wir wollen sie transparent, und wir wollen sie so, dass sie das Vertrauen in den Rechtsstaat stärkt und Barrieren abbaut. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Liebe Kolleginnen und Kollegen, meine Redezeit reicht gar nicht aus, um alle Mängel dieses Gesetzentwurfs aufzuzeigen.",
+                                        "timeStart": "135.000",
+                                        "timeEnd": "142.920"
+                                    },
+                                    {
+                                        "text": "Was ist zum Beispiel mit dem Thema Datenschutz?",
+                                        "timeStart": "142.920",
+                                        "timeEnd": "145.000"
+                                    },
+                                    {
+                                        "text": "Was ist zum Beispiel mit der Evaluation?",
+                                        "timeStart": "145.000",
+                                        "timeEnd": "146.880"
+                                    },
+                                    {
+                                        "text": "Was ist mit den Arbeitsbedingungen für Dolmetscher/-innen bei Gericht?",
+                                        "timeStart": "146.880",
+                                        "timeEnd": "150.240"
+                                    },
+                                    {
+                                        "text": "Alles das wird im Entwurf nicht geregelt.",
+                                        "timeStart": "150.240",
+                                        "timeEnd": "152.840"
+                                    },
+                                    {
+                                        "text": "Wir als Linke wollen Digitalisierung in der Justiz.",
+                                        "timeStart": "152.840",
+                                        "timeEnd": "155.800"
+                                    },
+                                    {
+                                        "text": "Aber wir wollen sie richtig: Wir wollen sie sozial, wir wollen sie transparent, und wir wollen sie so, dass sie das Vertrauen in den Rechtsstaat stärkt und Barrieren abbaut.",
+                                        "timeStart": "155.800",
+                                        "timeEnd": "164.700"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"164.700\" data-end=\"168.520\">Der vorliegende Entwurf erfüllt alle diese Kriterien nicht. </span><span class=\"timebased\" data-start=\"168.520\" data-end=\"173.280\">Er schwächt die mündliche Verhandlung, er setzt auf veraltete Technik, und er hat immense Regelungslücken. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Der vorliegende Entwurf erfüllt alle diese Kriterien nicht.",
+                                        "timeStart": "164.700",
+                                        "timeEnd": "168.520"
+                                    },
+                                    {
+                                        "text": "Er schwächt die mündliche Verhandlung, er setzt auf veraltete Technik, und er hat immense Regelungslücken.",
+                                        "timeStart": "168.520",
+                                        "timeEnd": "173.280"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"168.520\" data-end=\"186.880\">(Dr. Martin Plum [CDU/CSU]: Er regelt doch gar nicht die Technik!) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Dr. Martin Plum [CDU/CSU]: Er regelt doch gar nicht die Technik!)",
+                                        "timeStart": "168.520",
+                                        "timeEnd": "186.880"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"175.400\" data-end=\"186.880\">Darum sage ich klar: Wir lehnen diesen Gesetzentwurf nicht ab, weil wir die Digitalisierung blockieren wollen, sondern weil wir sie besser machen wollen, weil wir sie rechtsstaatlich machen wollen, sozial und zukunftssicher. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Darum sage ich klar: Wir lehnen diesen Gesetzentwurf nicht ab, weil wir die Digitalisierung blockieren wollen, sondern weil wir sie besser machen wollen, weil wir sie rechtsstaatlich machen wollen, sozial und zukunftssicher.",
+                                        "timeStart": "175.400",
+                                        "timeEnd": "186.880"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Aaron Valent",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"186.880\" data-end=\"187.580\">Danke. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Danke.",
+                                        "timeStart": "186.880",
+                                        "timeEnd": "187.580"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"186.880\" data-end=\"198.960\">(Beifall bei der Linken) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der Linken)",
+                                        "timeStart": "186.880",
+                                        "timeEnd": "198.960"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "speech",
+                                "speaker": "Andrea Lindholz",
+                                "speakerstatus": "vice-president",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"187.580\" data-end=\"198.960\">Der nächste Redner in der Debatte: für die SPD-Fraktion Daniel Rinkert. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Der nächste Redner in der Debatte: für die SPD-Fraktion Daniel Rinkert.",
+                                        "timeStart": "187.580",
+                                        "timeEnd": "198.960"
+                                    }
+                                ]
+                            },
+                            {
+                                "speech_id": "ID212206800",
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"187.580\" data-end=\"198.960\">(Beifall bei der SPD sowie bei Abgeordneten der CDU/CSU) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der SPD sowie bei Abgeordneten der CDU/CSU)",
+                                        "timeStart": "187.580",
+                                        "timeEnd": "198.960"
+                                    }
+                                ]
+                            }
+                        ],
+                        "textHTML": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"3.120\">Frau Präsidentin! </span><span class=\"timebased\" data-start=\"8.280\" data-end=\"11.660\">Liebe Kolleginnen und Kollegen! </span><span class=\"timebased\" data-start=\"11.660\" data-end=\"14.760\">Digitalisierung in der Justiz ist Fortschritt. </span><span class=\"timebased\" data-start=\"14.760\" data-end=\"18.000\">Richtig umgesetzt, kann sie den Zugang zum Recht erleichtern. </span><span class=\"timebased\" data-start=\"18.000\" data-end=\"19.760\">Sie kann Verfahren beschleunigen. </span><span class=\"timebased\" data-start=\"19.760\" data-end=\"24.560\">Aber das darf nicht auf Kosten zentraler rechtsstaatlicher Prinzipien passieren. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"19.760\" data-end=\"29.080\">(Beifall bei der Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"24.560\" data-end=\"29.080\">Der Kern des Zivilverfahrens ist die mündliche Verhandlung. </span><span class=\"timebased\" data-start=\"29.080\" data-end=\"33.540\">Die Regierung will diese bei Onlineverfahren nur noch zur Ausnahme machen. </span><span class=\"timebased\" data-start=\"33.540\" data-end=\"39.300\">Sie wird nicht länger garantiert, sondern Beteiligte müssen mündliche Verhandlungen nun extra beantragen. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"39.300\" data-end=\"48.720\">Ein weiteres zentrales rechtliches Prinzip, das mit diesem Entwurf unter Beschuss gerät, ist die Unmittelbarkeit im Verfahren. </span><span class=\"timebased\" data-start=\"48.720\" data-end=\"55.820\">Im Gerichtssaal können Sie dem Verfahren direkt folgen, Argumente vorbringen, Fragen stellen. </span><span class=\"timebased\" data-start=\"55.820\" data-end=\"59.240\">Nun stellen Sie sich vor: Das alles ist nicht mehr gegeben. </span><span class=\"timebased\" data-start=\"59.240\" data-end=\"62.040\">Sie können nur noch im Nachhinein schriftlich Stellung beziehen. </span><span class=\"timebased\" data-start=\"62.040\" data-end=\"65.600\">Sie können bei der Beweisaufnahme selber nichts mehr beitragen. </span><span class=\"timebased\" data-start=\"65.600\" data-end=\"74.060\">Missverständnisse und Fehlentscheidungen sind hier vorprogrammiert, und Sie können sich nicht mehr unmittelbar verteidigen. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"65.600\" data-end=\"78.840\">(Abg. Dr. Martin Plum [CDU/CSU] meldet sich zu einer Zwischenfrage) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"74.060\" data-end=\"78.840\">Durch diesen Vorschlag werden absolute Grundsätze infrage gestellt. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"78.840\" data-end=\"87.520\">Herr Kollege, es gibt den Wunsch nach einer Zwischenfrage aus der Unionsfraktion. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"87.520\" data-end=\"88.840\">Nein, danke. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"87.520\" data-end=\"94.800\">(Dr. Martin Plum [CDU/CSU]: Schwach! – Felix Schreiner [CDU/CSU]: Schwach!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"88.840\" data-end=\"94.800\">Wer so etwas fordert, schwächt nicht nur die Rechte der Betroffenen; er schwächt das Vertrauen in die Justiz selbst. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"94.800\" data-end=\"97.540\">Dann dieser Testzeitraum: zehn Jahre. </span><span class=\"timebased\" data-start=\"97.540\" data-end=\"101.340\">Zehn Jahre ein halbfertiges Verfahren ausprobieren, das ist absurd. </span><span class=\"timebased\" data-start=\"101.340\" data-end=\"105.040\">Schauen Sie sich die Entwicklung gerade im digitalen Bereich doch mal an! </span><span class=\"timebased\" data-start=\"105.040\" data-end=\"110.300\">Vor zehn Jahren hat Angela Merkel das Internet noch als „Neuland“ für uns alle bezeichnet. </span><span class=\"timebased\" data-start=\"110.300\" data-end=\"113.820\">Heute kann ich mit KI in Sekundenschnelle ganze Bücher schreiben. </span><span class=\"timebased\" data-start=\"113.820\" data-end=\"119.820\">Stellen Sie sich vor, wie sich auch die Technik im Justizbereich in zehn Jahren verändert haben wird! </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"119.820\" data-end=\"128.280\">Mit diesem Entwurf zwingt die Regierung von heute den Gerichten der Zukunft eine komplett überholte und altmodische Technologie auf. </span><span class=\"timebased\" data-start=\"128.280\" data-end=\"132.080\">Und dann treten wir weiterhin bei der Digitalisierung auf der Stelle. </span><span class=\"timebased\" data-start=\"132.080\" data-end=\"135.000\">Das kann sich Deutschland so nicht leisten. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"132.080\" data-end=\"142.920\">(Beifall bei der Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"135.000\" data-end=\"142.920\">Liebe Kolleginnen und Kollegen, meine Redezeit reicht gar nicht aus, um alle Mängel dieses Gesetzentwurfs aufzuzeigen. </span><span class=\"timebased\" data-start=\"142.920\" data-end=\"145.000\">Was ist zum Beispiel mit dem Thema Datenschutz? </span><span class=\"timebased\" data-start=\"145.000\" data-end=\"146.880\">Was ist zum Beispiel mit der Evaluation? </span><span class=\"timebased\" data-start=\"146.880\" data-end=\"150.240\">Was ist mit den Arbeitsbedingungen für Dolmetscher/-innen bei Gericht? </span><span class=\"timebased\" data-start=\"150.240\" data-end=\"152.840\">Alles das wird im Entwurf nicht geregelt. </span><span class=\"timebased\" data-start=\"152.840\" data-end=\"155.800\">Wir als Linke wollen Digitalisierung in der Justiz. </span><span class=\"timebased\" data-start=\"155.800\" data-end=\"164.700\">Aber wir wollen sie richtig: Wir wollen sie sozial, wir wollen sie transparent, und wir wollen sie so, dass sie das Vertrauen in den Rechtsstaat stärkt und Barrieren abbaut. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"164.700\" data-end=\"168.520\">Der vorliegende Entwurf erfüllt alle diese Kriterien nicht. </span><span class=\"timebased\" data-start=\"168.520\" data-end=\"173.280\">Er schwächt die mündliche Verhandlung, er setzt auf veraltete Technik, und er hat immense Regelungslücken. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"168.520\" data-end=\"186.880\">(Dr. Martin Plum [CDU/CSU]: Er regelt doch gar nicht die Technik!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"175.400\" data-end=\"186.880\">Darum sage ich klar: Wir lehnen diesen Gesetzentwurf nicht ab, weil wir die Digitalisierung blockieren wollen, sondern weil wir sie besser machen wollen, weil wir sie rechtsstaatlich machen wollen, sozial und zukunftssicher. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"186.880\" data-end=\"187.580\">Danke. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"186.880\" data-end=\"198.960\">(Beifall bei der Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"187.580\" data-end=\"198.960\">Der nächste Redner in der Debatte: für die SPD-Fraktion Daniel Rinkert. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"187.580\" data-end=\"198.960\">(Beifall bei der SPD sowie bei Abgeordneten der CDU/CSU) </span></p>",
+                        "sourceURI": "https://www.bundestag.de/resource/blob/1108798/21022.xml",
+                        "creator": "Deutscher Bundestag",
+                        "license": "Public Domain",
+                        "language": "DE-de",
+                        "originTextID": "ID212206800",
+                        "lastChanged": "2025-09-30 12:37:51"
+                    }
+                ],
+                "textContentsCount": 1
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/media/DE-0210022085"
+            },
+            "relationships": {
+                "electoralPeriod": {
+                    "data": {
+                        "type": "electoralPeriod",
+                        "id": "DE-021",
+                        "attributes": {
+                            "number": 21,
+                            "dateStart": "2025-03-25",
+                            "dateEnd": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/electoralPeriod/DE-021"
+                        }
+                    }
+                },
+                "session": {
+                    "data": {
+                        "type": "session",
+                        "id": "DE-0210022",
+                        "attributes": {
+                            "number": 22
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/session/DE-0210022"
+                        }
+                    }
+                },
+                "agendaItem": {
+                    "data": {
+                        "type": "agendaItem",
+                        "id": "9937",
+                        "attributes": {
+                            "officialTitle": "Tagesordnungspunkt 31",
+                            "title": "Online-Verfahren in der Zivilgerichtsbarkeit"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-9937"
+                        }
+                    }
+                },
+                "people": {
+                    "data": [
+                        {
+                            "type": "person",
+                            "id": "Q132733606",
+                            "attributes": {
+                                "type": "memberOfParliament",
+                                "label": "Aaron Valent",
+                                "labelAlternative": [],
+                                "degree": "",
+                                "thumbnailURI": "",
+                                "thumbnailCreator": "",
+                                "thumbnailLicense": "",
+                                "additionalInformation": {
+                                    "wikipedia": {
+                                        "title": "Aaron Valent",
+                                        "url": "https://de.wikipedia.org/wiki/Aaron_Valent"
+                                    },
+                                    "abgeordnetenwatchID": "183231"
+                                },
+                                "party": {
+                                    "id": "Q49764",
+                                    "label": "DIE LINKE",
+                                    "labelAlternative": [
+                                        "Linkspartei"
+                                    ]
+                                },
+                                "faction": {
+                                    "id": "Q1826856",
+                                    "label": "DIE LINKE",
+                                    "labelAlternative": [
+                                        "Bundestagsfraktion Die Linke"
+                                    ]
+                                }
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q132733606"
+                            }
+                        },
+                        {
+                            "type": "person",
+                            "id": "Q15644594",
+                            "attributes": {
+                                "type": "memberOfParliament",
+                                "label": "Andrea Lindholz",
+                                "labelAlternative": [
+                                    "Andrea Milnik"
+                                ],
+                                "degree": "",
+                                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q15644594&v=6d4edc48",
+                                "thumbnailCreator": "<a href=\"http://commons.wikimedia.org/w/index.php?title=User:Lindholz&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:Lindholz (page does not exist)\">Lindholz</a>",
+                                "thumbnailLicense": "CC-BY-SA-4.0",
+                                "additionalInformation": {
+                                    "wikipedia": {
+                                        "title": "Andrea Lindholz",
+                                        "url": "https://de.wikipedia.org/wiki/Andrea_Lindholz"
+                                    },
+                                    "abgeordnetenwatchID": "79192"
+                                },
+                                "party": {
+                                    "id": "Q49763",
+                                    "label": "CSU",
+                                    "labelAlternative": [
+                                        "Christlich-Soziale Union in Bayern",
+                                        "Christlich-Soziale Union in Bayern e. V.",
+                                        "Christlich-Soziale Union in Bayern e.V."
+                                    ]
+                                },
+                                "faction": {
+                                    "id": "Q1023134",
+                                    "label": "CDU/CSU",
+                                    "labelAlternative": [
+                                        "CDU/CSU-Bundestagsfraktion",
+                                        "CDU/CSU-Fraktion",
+                                        "Unionsfraktion",
+                                        "CDU-Fraktion"
+                                    ]
+                                }
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q15644594"
+                            }
+                        }
+                    ],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0210022085&type=person"
+                    }
+                },
+                "organisations": {
+                    "data": [
+                        {
+                            "type": "organisation",
+                            "id": "Q1826856",
+                            "attributes": {
+                                "context": "main-speaker-faction",
+                                "type": "faction",
+                                "label": "DIE LINKE",
+                                "labelAlternative": [
+                                    "Bundestagsfraktion Die Linke"
+                                ],
+                                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1826856&v=e5a9c45f",
+                                "thumbnailCreator": "Fraktion DIE LINKE. im Bundestag",
+                                "thumbnailLicense": "PD textlogo",
+                                "additionalInformation": {
+                                    "wikipedia": {
+                                        "title": "Fraktion Die Linke im Bundestag",
+                                        "url": "https://de.wikipedia.org/wiki/Fraktion_Die_Linke_im_Bundestag"
+                                    }
+                                },
+                                "color": null
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q1826856"
+                            }
+                        }
+                    ],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0210022085&type=organisation"
+                    }
+                },
+                "documents": {
+                    "data": [],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0210022085&type=document"
+                    }
+                },
+                "terms": {
+                    "data": [],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0210022085&type=term"
+                    }
+                }
+            },
+            "annotations": {
+                "data": [
+                    {
+                        "type": "person",
+                        "id": "Q132733606",
+                        "attributes": {
+                            "timeStart": null,
+                            "timeEnd": null,
+                            "context": "main-speaker",
+                            "additionalInformation": {
+                                "role": null
+                            }
+                        }
+                    },
+                    {
+                        "type": "person",
+                        "id": "Q15644594",
+                        "attributes": {
+                            "timeStart": null,
+                            "timeEnd": null,
+                            "context": "vice-president",
+                            "additionalInformation": {
+                                "role": null
+                            }
+                        }
+                    },
+                    {
+                        "type": "organisation",
+                        "id": "Q1826856",
+                        "attributes": {
+                            "timeStart": null,
+                            "timeEnd": null,
+                            "context": "main-speaker-faction",
+                            "additionalInformation": null
+                        }
+                    }
+                ]
+            },
+            "_score": 0.0356305700000000002969358092741458676755428314208984375,
+            "_highlight": {
+                "attributes.textContents.textHTML": [
+                    "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"3.120\">Frau Präsidentin! </span><span class=\"timebased\" data-start=\"8.280\" data-end=\"11.660\">Liebe Kolleginnen und Kollegen! </span><span class=\"timebased\" data-start=\"11.660\" data-end=\"14.760\">Digitalisierung in <em>der</em> Justiz ist Fortschritt. </span><span class=\"timebased\" data-start=\"14.760\" data-end=\"18.000\">Richtig umgesetzt, kann sie den Zugang zum Recht erleichtern. </span><span class=\"timebased\" data-start=\"18.000\" data-end=\"19.760\">Sie kann Verfahren beschleunigen. </span><span class=\"timebased\" data-start=\"19.760\" data-end=\"24.560\">Aber das darf nicht auf Kosten zentraler rechtsstaatlicher Prinzipien passieren. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"19.760\" data-end=\"29.080\">(Beifall bei <em>der</em> Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"24.560\" data-end=\"29.080\"><em>Der</em> Kern des Zivilverfahrens ist die mündliche Verhandlung. </span><span class=\"timebased\" data-start=\"29.080\" data-end=\"33.540\">Die Regierung will diese bei Onlineverfahren nur noch zur Ausnahme machen. </span><span class=\"timebased\" data-start=\"33.540\" data-end=\"39.300\">Sie wird nicht länger garantiert, sondern Beteiligte müssen mündliche Verhandlungen nun extra beantragen. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"39.300\" data-end=\"48.720\">Ein weiteres zentrales rechtliches Prinzip, das mit diesem Entwurf unter Beschuss gerät, ist die Unmittelbarkeit im Verfahren. </span><span class=\"timebased\" data-start=\"48.720\" data-end=\"55.820\">Im Gerichtssaal können Sie dem Verfahren direkt folgen, Argumente vorbringen, Fragen stellen. </span><span class=\"timebased\" data-start=\"55.820\" data-end=\"59.240\">Nun stellen Sie sich vor: Das alles ist nicht mehr gegeben. </span><span class=\"timebased\" data-start=\"59.240\" data-end=\"62.040\">Sie können nur noch im Nachhinein schriftlich Stellung beziehen. </span><span class=\"timebased\" data-start=\"62.040\" data-end=\"65.600\">Sie können bei <em>der</em> Beweisaufnahme selber nichts mehr beitragen. </span><span class=\"timebased\" data-start=\"65.600\" data-end=\"74.060\">Missverständnisse und Fehlentscheidungen sind hier vorprogrammiert, und Sie können sich nicht mehr unmittelbar verteidigen. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"65.600\" data-end=\"78.840\">(Abg. Dr. Martin Plum [CDU/CSU] meldet sich zu einer Zwischenfrage) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"74.060\" data-end=\"78.840\">Durch diesen Vorschlag werden absolute Grundsätze infrage gestellt. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"78.840\" data-end=\"87.520\">Herr Kollege, es gibt den Wunsch nach einer Zwischenfrage aus <em>der</em> Unionsfraktion. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"87.520\" data-end=\"88.840\">Nein, danke. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"87.520\" data-end=\"94.800\">(Dr. Martin Plum [CDU/CSU]: Schwach! – Felix Schreiner [CDU/CSU]: Schwach!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"88.840\" data-end=\"94.800\">Wer so etwas fordert, schwächt nicht nur die Rechte <em>der</em> Betroffenen; er schwächt das Vertrauen in die Justiz selbst. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"94.800\" data-end=\"97.540\">Dann dieser Testzeitraum: zehn Jahre. </span><span class=\"timebased\" data-start=\"97.540\" data-end=\"101.340\">Zehn Jahre ein halbfertiges Verfahren ausprobieren, das ist absurd. </span><span class=\"timebased\" data-start=\"101.340\" data-end=\"105.040\">Schauen Sie sich die Entwicklung gerade im digitalen Bereich doch mal an! </span><span class=\"timebased\" data-start=\"105.040\" data-end=\"110.300\">Vor zehn Jahren hat Angela Merkel das Internet noch als „Neuland“ für uns alle bezeichnet. </span><span class=\"timebased\" data-start=\"110.300\" data-end=\"113.820\">Heute kann ich mit KI in Sekundenschnelle ganze Bücher schreiben. </span><span class=\"timebased\" data-start=\"113.820\" data-end=\"119.820\">Stellen Sie sich vor, wie sich auch die Technik im Justizbereich in zehn Jahren verändert haben wird! </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"119.820\" data-end=\"128.280\">Mit diesem Entwurf zwingt die Regierung von heute den Gerichten <em>der</em> Zukunft eine komplett überholte und altmodische Technologie auf. </span><span class=\"timebased\" data-start=\"128.280\" data-end=\"132.080\">Und dann treten wir weiterhin bei <em>der</em> Digitalisierung auf <em>der</em> Stelle. </span><span class=\"timebased\" data-start=\"132.080\" data-end=\"135.000\">Das kann sich Deutschland so nicht leisten. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"132.080\" data-end=\"142.920\">(Beifall bei <em>der</em> Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"135.000\" data-end=\"142.920\">Liebe Kolleginnen und Kollegen, meine Redezeit reicht gar nicht aus, um alle Mängel dieses Gesetzentwurfs aufzuzeigen. </span><span class=\"timebased\" data-start=\"142.920\" data-end=\"145.000\">Was ist zum Beispiel mit dem Thema Datenschutz? </span><span class=\"timebased\" data-start=\"145.000\" data-end=\"146.880\">Was ist zum Beispiel mit <em>der</em> Evaluation? </span><span class=\"timebased\" data-start=\"146.880\" data-end=\"150.240\">Was ist mit den Arbeitsbedingungen für Dolmetscher/-innen bei Gericht? </span><span class=\"timebased\" data-start=\"150.240\" data-end=\"152.840\">Alles das wird im Entwurf nicht geregelt. </span><span class=\"timebased\" data-start=\"152.840\" data-end=\"155.800\">Wir als Linke wollen Digitalisierung in <em>der</em> Justiz. </span><span class=\"timebased\" data-start=\"155.800\" data-end=\"164.700\">Aber wir wollen sie richtig: Wir wollen sie sozial, wir wollen sie transparent, und wir wollen sie so, dass sie das Vertrauen in den Rechtsstaat stärkt und Barrieren abbaut. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"164.700\" data-end=\"168.520\"><em>Der</em> vorliegende Entwurf erfüllt alle diese Kriterien nicht. </span><span class=\"timebased\" data-start=\"168.520\" data-end=\"173.280\">Er schwächt die mündliche Verhandlung, er setzt auf veraltete Technik, und er hat immense Regelungslücken. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"168.520\" data-end=\"186.880\">(Dr. Martin Plum [CDU/CSU]: Er regelt doch gar nicht die Technik!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"175.400\" data-end=\"186.880\">Darum sage ich klar: Wir lehnen diesen Gesetzentwurf nicht ab, weil wir die Digitalisierung blockieren wollen, sondern weil wir sie besser machen wollen, weil wir sie rechtsstaatlich machen wollen, sozial und zukunftssicher. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"186.880\" data-end=\"187.580\">Danke. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"186.880\" data-end=\"198.960\">(Beifall bei <em>der</em> Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"187.580\" data-end=\"198.960\"><em>Der</em> nächste Redner in <em>der</em> Debatte: für die SPD-Fraktion Daniel Rinkert. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"187.580\" data-end=\"198.960\">(Beifall bei <em>der</em> SPD sowie bei Abgeordneten <em>der</em> CDU/CSU) </span></p>"
+                ]
+            },
+            "_finds": [
+                {
+                    "data-start": "11.660",
+                    "data-end": "14.760",
+                    "class": "timebased",
+                    "context": "Digitalisierung in <em>der</em> Justiz ist Fortschritt. "
+                },
+                {
+                    "data-start": "19.760",
+                    "data-end": "29.080",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> Linken) "
+                },
+                {
+                    "data-start": "24.560",
+                    "data-end": "29.080",
+                    "class": "timebased",
+                    "context": "<em>Der</em> Kern des Zivilverfahrens ist die mündliche Verhandlung. "
+                },
+                {
+                    "data-start": "62.040",
+                    "data-end": "65.600",
+                    "class": "timebased",
+                    "context": "Sie können bei <em>der</em> Beweisaufnahme selber nichts mehr beitragen. "
+                },
+                {
+                    "data-start": "78.840",
+                    "data-end": "87.520",
+                    "class": "timebased",
+                    "context": "Herr Kollege, es gibt den Wunsch nach einer Zwischenfrage aus <em>der</em> Unionsfraktion. "
+                },
+                {
+                    "data-start": "88.840",
+                    "data-end": "94.800",
+                    "class": "timebased",
+                    "context": "Wer so etwas fordert, schwächt nicht nur die Rechte <em>der</em> Betroffenen; er schwächt das Vertrauen in die Justiz selbst. "
+                },
+                {
+                    "data-start": "119.820",
+                    "data-end": "128.280",
+                    "class": "timebased",
+                    "context": "Mit diesem Entwurf zwingt die Regierung von heute den Gerichten <em>der</em> Zukunft eine komplett überholte und altmodische Technologie auf. "
+                },
+                {
+                    "data-start": "128.280",
+                    "data-end": "132.080",
+                    "class": "timebased",
+                    "context": "Und dann treten wir weiterhin bei <em>der</em> Digitalisierung auf <em>der</em> Stelle. "
+                },
+                {
+                    "data-start": "132.080",
+                    "data-end": "142.920",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> Linken) "
+                },
+                {
+                    "data-start": "145.000",
+                    "data-end": "146.880",
+                    "class": "timebased",
+                    "context": "Was ist zum Beispiel mit <em>der</em> Evaluation? "
+                },
+                {
+                    "data-start": "152.840",
+                    "data-end": "155.800",
+                    "class": "timebased",
+                    "context": "Wir als Linke wollen Digitalisierung in <em>der</em> Justiz. "
+                },
+                {
+                    "data-start": "164.700",
+                    "data-end": "168.520",
+                    "class": "timebased",
+                    "context": "<em>Der</em> vorliegende Entwurf erfüllt alle diese Kriterien nicht. "
+                },
+                {
+                    "data-start": "186.880",
+                    "data-end": "198.960",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> Linken) "
+                },
+                {
+                    "data-start": "187.580",
+                    "data-end": "198.960",
+                    "class": "timebased",
+                    "context": "<em>Der</em> nächste Redner in <em>der</em> Debatte: für die SPD-Fraktion Daniel Rinkert. "
+                },
+                {
+                    "data-start": "187.580",
+                    "data-end": "198.960",
+                    "class": "timebased",
+                    "context": "(Beifall bei <em>der</em> SPD sowie bei Abgeordneten <em>der</em> CDU/CSU) "
+                }
+            ],
+            "highlight_count": 18
+        }
+    ],
+    "links": {
+        "self": "https://optv.local/api/v1/search/media?q=der&personID=Q132733606&limit=2"
+    }
+}

@@ -1,0 +1,99 @@
+HTTP 200
+content-type: application/xml; charset=utf-8
+x-robots-tag: noindex
+
+<?xml version="1.0" encoding="UTF-8"?>
+<akomaNtoso xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0">
+  <debate name="debateRecord">
+    <meta>
+      <identification source="#openparliamenttv">
+        <FRBRWork>
+          <FRBRthis value="/akn/de/debate/2024-06-06/DE-0200172058/!main"/>
+          <FRBRuri value="/akn/de/debate/2024-06-06/DE-0200172058"/>
+          <FRBRdate date="NORMALIZED" name="sitting"/>
+          <FRBRauthor href="#parliament"/>
+          <FRBRcountry value="de"/>
+        </FRBRWork>
+        <FRBRExpression>
+          <FRBRthis value="/akn/de/debate/2024-06-06/DE-0200172058/deu@/!main"/>
+          <FRBRuri value="/akn/de/debate/2024-06-06/DE-0200172058/deu@"/>
+          <FRBRdate date="NORMALIZED" name="sitting"/>
+          <FRBRauthor href="#parliament"/>
+          <FRBRlanguage language="deu"/>
+        </FRBRExpression>
+        <FRBRManifestation>
+          <FRBRthis value="https://optv.local/api/v1/media/DE-0200172058?format=akn"/>
+          <FRBRuri value="https://optv.local/api/v1/media/DE-0200172058?format=akn"/>
+          <FRBRdate date="NORMALIZED" name="generation"/>
+          <FRBRauthor href="#openparliamenttv"/>
+          <FRBRformat value="application/akn+xml"/>
+        </FRBRManifestation>
+      </identification>
+      <references source="#openparliamenttv">
+        <TLCOrganization eId="openparliamenttv" href="https://optv.local" showAs="Open Parliament TV"/>
+        <TLCOrganization eId="parliament" href="https://optv.local" showAs="Deutscher Bundestag"/>
+        <TLCOrganization eId="org-Q1023134" href="https://www.wikidata.org/entity/Q1023134" showAs="CDU/CSU"/>
+        <TLCOrganization eId="org-Q1007353" href="https://www.wikidata.org/entity/Q1007353" showAs="DIE GRÜNEN"/>
+        <TLCPerson eId="person-Q15783504" href="https://www.wikidata.org/entity/Q15783504" showAs="Anja Karliczek"/>
+        <TLCPerson eId="person-Q48967" href="https://www.wikidata.org/entity/Q48967" showAs="Katrin Göring-Eckardt"/>
+        <TLCRole eId="chair" href="https://www.wikidata.org/entity/Q140686" showAs="Chair"/>
+        <TLCObject eId="mediaFragment_1" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_h264_720_400_2000kb_baseline_de_2192.mp4#t=1,37.3" showAs="Video 1s–37.3s"/>
+        <TLCObject eId="mediaFragment_2" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_h264_720_400_2000kb_baseline_de_2192.mp4#t=37.3,41.8" showAs="Video 37.3s–41.8s"/>
+        <TLCObject eId="mediaFragment_3" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_h264_720_400_2000kb_baseline_de_2192.mp4#t=41.8,81.8" showAs="Video 41.8s–81.8s"/>
+        <TLCObject eId="mediaFragment_4" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_h264_720_400_2000kb_baseline_de_2192.mp4#t=81.8,190.64" showAs="Video 81.8s–190.64s"/>
+        <TLCObject eId="mediaFragment_5" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_h264_720_400_2000kb_baseline_de_2192.mp4#t=190.64,248.96" showAs="Video 190.64s–248.96s"/>
+        <TLCObject eId="mediaFragment_6" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_h264_720_400_2000kb_baseline_de_2192.mp4#t=248.96,256.96" showAs="Video 248.96s–256.96s"/>
+        <TLCObject eId="media-video-DE-0200172058" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0200172058"/>
+        <TLCObject eId="media-audio-DE-0200172058" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0200172058"/>
+        <TLCObject eId="source-DE-0200172058" href="http://dbtg.tv/fvid/7611894" showAs="Quelle DE-0200172058"/>
+      </references>
+    </meta>
+    <preface>
+      <p>
+        <docTitle>Anja Karliczek, CDU/CSU | 2024-06-06 | Immissionsschutzrechtliche Genehmigungsverfahren</docTitle>
+      </p>
+      <p>Deutscher Bundestag — Nutzungsbedingungen (Open Parliament TV, https://optv.local/media/DE-0200172058)</p>
+    </preface>
+    <debateBody>
+      <debateSection name="agendaItem" eId="dbsect_1">
+        <heading>Immissionsschutzrechtliche Genehmigungsverfahren</heading>
+        <speech eId="spch_1" by="#person-Q15783504" refersTo="#mediaFragment_1" startTime="2024-06-06T13:47:44+02:00" endTime="2024-06-06T13:48:20+02:00">
+          <from>Anja Karliczek</from>
+          <p>Sehr geehrte Frau Präsidentin! Liebe Kolleginnen und Kollegen! Liebe Ampelkollegen, ich will Ihnen zugestehen, dass die Novelle zum Bundes-Immissionsschutzgesetz wirklich einige gute Ideen enthält, die grundsätzlich sogar geeignet sind, Planungs- und Genehmigungsverfahren für erneuerbare Energien an Land zu beschleunigen. Und ich bin auch sehr froh, dass die Bundesländer so tatkräftig daran mitgewirkt haben. Denn als Genehmigungsbehörden wissen die Landes- und Kreisverwaltungen häufig viel besser als der Bund, wie sich die Regelungen in der Praxis auswirken.</p>
+        </speech>
+        <scene>(Andreas Bleck [AfD]: Richtig!)</scene>
+        <speech eId="spch_2" by="#person-Q15783504" refersTo="#mediaFragment_2" startTime="2024-06-06T13:48:20+02:00" endTime="2024-06-06T13:48:25+02:00">
+          <from>Anja Karliczek</from>
+          <p>Ich möchte auch vorab klarstellen, bevor hier wieder irgendwelche Gerüchte aufkommen:</p>
+        </speech>
+        <scene>(Zurufe von der SPD)</scene>
+        <speech eId="spch_3" by="#person-Q15783504" refersTo="#mediaFragment_3" startTime="2024-06-06T13:48:25+02:00" endTime="2024-06-06T13:49:05+02:00">
+          <from>Anja Karliczek</from>
+          <p>Die Unionsfraktion will ambitionierten Klimaschutz. Aber wir wollen auch echte Beschleunigung, und zwar jeglicher Verfahren. Denn das halten wir für einen wichtigen Hebel beim Klimaschutz im Industriebereich.</p>
+          <p>Ich will auf einen wesentlichen Punkt kommen, der uns am Ende genau bewogen hat, das Gesetz abzulehnen, so wie Sie es jetzt umsetzen wollen. Sie wollen das Klima als Schutzgut in dieses Gesetz aufnehmen. Und ich will bewusst sagen: Es gibt schon eine Reihe von Schutzgütern, die explizit genannt werden: Menschen, Tiere, Pflanzen, Boden, Wasser, Atmosphäre, Kultur und sonstige Sachgüter.</p>
+        </speech>
+        <scene>(Zuruf des Abg. Daniel Rinkert [SPD])</scene>
+        <speech eId="spch_4" by="#person-Q15783504" refersTo="#mediaFragment_4" startTime="2024-06-06T13:49:05+02:00" endTime="2024-06-06T13:50:54+02:00">
+          <from>Anja Karliczek</from>
+          <p>Und jetzt soll es halt noch das Klima als weiteres Schutzgut sein.</p>
+          <p>Das Ganze hat allerdings einen Haken. Sie wollen bei Planung und Genehmigung von Anlagen schneller werden. Das ist Ihr Ziel. Aber wenn Sie jetzt neben den bekannten Schutzgütern auch noch das Klima aufnehmen, dann wird das dazu führen, dass sich genau bei diesem Punkt neue Fragen ergeben, die Sie auch beantworten müssen.</p>
+          <p>Ich sage Ihnen voraus: Keine Genehmigungsbehörde wird ohne eine klare und eindeutige Definition und Formulierung des Schutzgutes Klima mutig eine Genehmigung erteilen. Keiner wird ohne ein weiteres Gutachten das Risiko auf sich nehmen. Sie werden alle sagen: Wir lassen ein Gutachten machen, dann sind wir juristisch nicht angreifbar. – Das kann ich übrigens auch verstehen. Nur ist es am Ende genau dann mit der Beschleunigung schon wieder vorbei.</p>
+          <p>Ich mache Ihnen jetzt einen Vorschlag, der die Ziele Klimaschutz und Beschleunigung in Einklang bringt: Sie lassen den Begriff „Klima“ aus Ihrer Novelle raus, damit wir dem Klima wirklich was Gutes tun können, nämlich schneller klimafreundliche Energieanlagen bauen.</p>
+          <p>Ich mache Ihnen noch einen weiteren Vorschlag: Sie machen bei der Beschleunigung keinen Unterschied zwischen Anlagen für erneuerbare Energie und anderen Industrieanlagen. Denn wie wollen Sie eigentlich den Menschen erklären, dass Sie zum Beispiel die Direktreduktionsanlage von thyssenkrupp, die jährlich bis zu 3,5 Millionen Tonnen CO2 einspart, nicht auch beschleunigt bauen wollen? Auch Industrieansiedlungen wie die von Intel in Magdeburg mit 17 Milliarden Euro Investitionsvolumen und 3 000 geplanten zusätzlichen Arbeitsplätzen könnten durch die geplante Stichtagsregelung deutlich profitieren. Beispiele wie diese gibt es viele. Umso wichtiger ist es, diese wichtigen Transformationsprozesse gänzlich zu unterstützen.</p>
+        </speech>
+        <scene>(Beifall bei der CDU/CSU)</scene>
+        <speech eId="spch_5" by="#person-Q15783504" refersTo="#mediaFragment_5" startTime="2024-06-06T13:50:54+02:00" endTime="2024-06-06T13:51:52+02:00">
+          <from>Anja Karliczek</from>
+          <p>Ermöglichen Sie der Industrie, alle Industrieanlagen schneller und leichter zu errichten! Trauen Sie unserer Wirtschaft das zu! Trauen Sie der Industrie zu, dass sie weiß, was sie tut!</p>
+          <p>Liebe Koalition, das Kernziel dieser Novelle liegt in der Beschleunigung von Planungs- und Genehmigungsverfahren. Auf der einen Seite haben Sie teilweise durch Aufnahme der MPK-Beschlüsse nachgebessert. Auf der anderen Seite werden die Vorteile, die beispielsweise der vorzeitige Baubeginn bringen könnte, durch das zusätzliche Schutzgut Klima wieder konterkariert. Sie sind nicht konsequent. Deshalb fordern wir Sie in unserem Entschließungsantrag auf, auf die Aufnahme des nicht klar eingrenzbaren Schutzgutes Klima in das Bundes-Immissionsschutzgesetz zu verzichten. In den Fachgesetzen, dem Bundes-Klimaschutzgesetz, dem Treibhausgas-Emissionshandelsgesetz usw., können Sie das regeln. Liebe Koalition, was Sie wollen, werden Sie so nicht erreichen. Schade.</p>
+        </speech>
+        <scene>(Beifall bei der CDU/CSU – Daniel Rinkert [SPD]: Sie hat es einfach nicht verstanden!)</scene>
+        <speech eId="spch_6" by="#person-Q48967" as="#chair" refersTo="#mediaFragment_6" startTime="2024-06-06T13:51:52+02:00" endTime="2024-06-06T13:52:00+02:00">
+          <from>Katrin Göring-Eckardt</from>
+          <p>Das Wort hat der Kollege Dr. Jan-Niclas Gesenhues für die Bundesregierung.</p>
+        </speech>
+        <scene>(Beifall beim BÜNDNIS 90/DIE GRÜNEN und bei der SPD)</scene>
+      </debateSection>
+    </debateBody>
+  </debate>
+</akomaNtoso>

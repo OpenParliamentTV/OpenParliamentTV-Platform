@@ -1,0 +1,4293 @@
+HTTP 200
+content-type: text/html; charset=UTF-8
+
+	<div class="filterSummary row">
+		<div class="col-12 col-sm-6 mb-3 mb-sm-0 px-0 px-sm-2">
+			<label class="col-form-label px-0 me-0 me-sm-1 col-12 col-sm-auto text-center text-sm-left"><strong>> 10000</strong> Redebeiträge gefunden</label>
+		</div>
+		<div class="col-12 col-sm-6 pr-0 pr-sm-2" style="text-align: right;">
+			<label class="col-form-label" for="sort">Sortieren nach</label>
+			<select style="width: auto;" class="form-select form-select-sm ms-1 d-inline-block" id="sort" name="sort">
+				<option value="relevance" selected>Relevanz</option>
+				<option value="topic-asc">Thema (Älteste zuerst)</option>
+				<option value="topic-desc">Thema (Neueste zuerst)</option>
+				<option value="date-asc">Datum (Älteste zuerst)</option>
+				<option value="date-desc">Datum (Neueste zuerst)</option>
+				<option value="duration-asc">Dauer (Kürzeste zuerst)</option>
+							</select>
+		</div>
+	</div>
+	<div class="resultList row">
+		<div class="table-responsive bootstrap-table">
+			<div class="fixed-table-container">
+				<table id="manageMediaOverviewTable" class="table table-striped">
+					<thead>
+						<tr>
+							<th>
+								<div class="th-inner">Sitzung</div>
+							</th>
+							<th>
+								<div class="th-inner">Datum</div>
+							</th>
+							<th>
+								<div class="th-inner">Tagesordnungspunkt</div>
+							</th>
+							<th>
+								<div class="th-inner">Hauptredner:in</div>
+							</th>
+							<th>
+								<div class="th-inner">Dauer</div>
+							</th>
+							<th>
+								<div class="th-inner">Letzte Änderung</div>
+							</th>
+														<th>
+								<div class="th-inner"></div>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr class="resultItem" data-speech-id="DE-0180001007" data-faction="Q1023134">
+	<td>18 / 1</td>
+	<td>22.10.2013</td>
+	<td>Festlegung der Zahl der Vizepräsidenten</td>
+	<td>Michael Grosse-Brömer (CDU/CSU)</td>
+	<td>04:12</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001007" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001007" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180001008" data-faction="Q1826856">
+	<td>18 / 1</td>
+	<td>22.10.2013</td>
+	<td>Festlegung der Zahl der Vizepräsidenten</td>
+	<td>Petra Sitte (DIE LINKE)</td>
+	<td>06:06</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001008" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001008" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180001010" data-faction="Q1007353">
+	<td>18 / 1</td>
+	<td>22.10.2013</td>
+	<td>Festlegung der Zahl der Vizepräsidenten</td>
+	<td>Britta Haßelmann (DIE GRÜNEN)</td>
+	<td>05:24</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001010" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001010" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002005" data-faction="Q1826856">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td>Dietmar Bartsch (DIE LINKE)</td>
+	<td>11:34</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002005" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002005" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002009" data-faction="Q2207512">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td>Michael Roth (SPD)</td>
+	<td>08:22</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002009" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002009" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002010" data-faction="Q1007353">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td>Marieluise Beck (DIE GRÜNEN)</td>
+	<td>05:23</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002010" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002010" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002011" data-faction="">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td></td>
+	<td>10:00</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002011" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002011" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002013" data-faction="Q1023134">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td>Thomas Silberhorn (CDU/CSU)</td>
+	<td>13:33</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002013" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002013" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002015" data-faction="">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td>Norbert Lammert (Bundestagspräsident)</td>
+	<td>01:14</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002015" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002015" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002019" data-faction="Q1826856">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Gregor Gysi (DIE LINKE)</td>
+	<td>13:05</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002019" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002019" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002020" data-faction="Q1007353">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Hans-Christian Ströbele (DIE GRÜNEN)</td>
+	<td>09:44</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002020" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002020" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002021" data-faction="Q1023134">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Michael Grosse-Brömer (CDU/CSU)</td>
+	<td>13:32</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002021" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002021" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002022" data-faction="Q2207512">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Thomas Oppermann (SPD)</td>
+	<td>10:57</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002022" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002022" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002023" data-faction="Q1007353">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Konstantin von Notz (DIE GRÜNEN)</td>
+	<td>05:00</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002023" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002023" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002024" data-faction="Q1023134">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Günter Krings (CDU/CSU)</td>
+	<td>13:31</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002024" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002024" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002026" data-faction="Q1023134">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Hans-Peter Uhl (CDU/CSU)</td>
+	<td>08:12</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002026" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002026" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002027" data-faction="Q2207512">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Lars Klingbeil (SPD)</td>
+	<td>05:33</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002027" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002027" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002029" data-faction="">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Edelgard Bulmahn (Bundestagsvizepräsidentin)</td>
+	<td>01:25</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002029" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002029" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002030" data-faction="Q1007353">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Britta Haßelmann (DIE GRÜNEN)</td>
+	<td>05:05</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002030" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002030" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002031" data-faction="Q1826856">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Jan Korte (DIE LINKE)</td>
+	<td>05:11</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002031" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002031" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002032" data-faction="Q2207512">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Thomas Oppermann (SPD)</td>
+	<td>02:26</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002032" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002032" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002033" data-faction="">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Edelgard Bulmahn (Bundestagsvizepräsidentin)</td>
+	<td>00:37</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002033" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002033" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003004" data-faction="Q1023134">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Einsetzung eines Hauptausschusses</td>
+	<td>Michael Grosse-Brömer (CDU/CSU)</td>
+	<td>03:39</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003004" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003004" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003005" data-faction="Q1826856">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Einsetzung eines Hauptausschusses</td>
+	<td>Petra Sitte (DIE LINKE)</td>
+	<td>05:17</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003005" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003005" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003006" data-faction="Q2207512">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Einsetzung eines Hauptausschusses</td>
+	<td>Thomas Oppermann (SPD)</td>
+	<td>05:20</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003006" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003006" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003007" data-faction="Q1007353">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Einsetzung eines Hauptausschusses</td>
+	<td>Britta Haßelmann (DIE GRÜNEN)</td>
+	<td>06:05</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003007" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003007" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003009" data-faction="">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
+	<td>Norbert Lammert (Bundestagspräsident)</td>
+	<td>00:45</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003009" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003009" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003011" data-faction="Q2207512">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
+	<td>Christoph Strässer (SPD)</td>
+	<td>10:38</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003011" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003011" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003012" data-faction="Q1826856">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
+	<td>Christine Buchholz (DIE LINKE)</td>
+	<td>05:36</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003012" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003012" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003014" data-faction="">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
+	<td></td>
+	<td>06:33</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003014" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003014" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003015" data-faction="Q1023134">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
+	<td>Norbert Lammert (CDU/CSU)</td>
+	<td>01:30</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003015" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003015" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003016" data-faction="Q1023134">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
+	<td>Reinhard Brandl (CDU/CSU)</td>
+	<td>05:32</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003016" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003016" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003018" data-faction="">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Finanzierung der Kinderbetreuung</td>
+	<td>Norbert Lammert (Bundestagspräsident)</td>
+	<td>00:25</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003018" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003018" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003021" data-faction="">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Finanzierung der Kinderbetreuung</td>
+	<td>Norbert Lammert (Bundestagspräsident)</td>
+	<td>00:40</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003021" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003021" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003023" data-faction="Q2207512">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Finanzierung der Kinderbetreuung</td>
+	<td>Caren Marks (SPD)</td>
+	<td>06:10</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003023" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003023" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003025" data-faction="Q1023134">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Finanzierung der Kinderbetreuung</td>
+	<td>Dorothee Bär (CDU/CSU)</td>
+	<td>08:00</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003025" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003025" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003026" data-faction="">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Finanzierung der Kinderbetreuung</td>
+	<td>Norbert Lammert (Bundestagspräsident)</td>
+	<td>01:14</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003026" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003026" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003027" data-faction="Q1007353">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Finanzierung der Kinderbetreuung</td>
+	<td>Britta Haßelmann (DIE GRÜNEN)</td>
+	<td>03:04</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003027" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003027" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003028" data-faction="Q2207512">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Finanzierung der Kinderbetreuung</td>
+	<td>Thomas Oppermann (SPD)</td>
+	<td>01:53</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003028" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003028" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180003029" data-faction="Q1826856">
+	<td>18 / 3</td>
+	<td>28.11.2013</td>
+	<td>Finanzierung der Kinderbetreuung</td>
+	<td>Petra Sitte (DIE LINKE)</td>
+	<td>01:43</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003029" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003029" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr>					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+        <script type="text/javascript">
+        
+        resultsAttributes = {
+    "speechFirstDateStr": "2013-10-22T10:52:31.000Z",
+    "speechFirstDateTimestamp": 1382439151000,
+    "speechLastDateStr": "2025-09-26T09:04:09.000Z",
+    "speechLastDateTimestamp": 1758877449000,
+    "resultsPerFaction": {
+        "Q1023134": 15886,
+        "Q2207512": 12984,
+        "Q1007353": 8430,
+        "Q1826856": 6826,
+        "Q42575708": 6125,
+        "Q1387991": 5329,
+        "Q4316268": 648,
+        "Q127785176": 145
+    },
+    "days": {
+        "2013-10-22": {
+            "key_as_string": "2013-10-22",
+            "key": 1382400000000,
+            "doc_count": 8
+        },
+        "2013-11-18": {
+            "key_as_string": "2013-11-18",
+            "key": 1384732800000,
+            "doc_count": 33
+        },
+        "2013-11-28": {
+            "key_as_string": "2013-11-28",
+            "key": 1385596800000,
+            "doc_count": 117
+        },
+        "2013-12-17": {
+            "key_as_string": "2013-12-17",
+            "key": 1387238400000,
+            "doc_count": 5
+        },
+        "2013-12-18": {
+            "key_as_string": "2013-12-18",
+            "key": 1387324800000,
+            "doc_count": 26
+        },
+        "2013-12-19": {
+            "key_as_string": "2013-12-19",
+            "key": 1387411200000,
+            "doc_count": 55
+        },
+        "2014-01-15": {
+            "key_as_string": "2014-01-15",
+            "key": 1389744000000,
+            "doc_count": 14
+        },
+        "2014-01-16": {
+            "key_as_string": "2014-01-16",
+            "key": 1389830400000,
+            "doc_count": 103
+        },
+        "2014-01-17": {
+            "key_as_string": "2014-01-17",
+            "key": 1389916800000,
+            "doc_count": 34
+        },
+        "2014-01-29": {
+            "key_as_string": "2014-01-29",
+            "key": 1390953600000,
+            "doc_count": 63
+        },
+        "2014-01-30": {
+            "key_as_string": "2014-01-30",
+            "key": 1391040000000,
+            "doc_count": 116
+        },
+        "2014-01-31": {
+            "key_as_string": "2014-01-31",
+            "key": 1391126400000,
+            "doc_count": 54
+        },
+        "2014-02-12": {
+            "key_as_string": "2014-02-12",
+            "key": 1392163200000,
+            "doc_count": 16
+        },
+        "2014-02-13": {
+            "key_as_string": "2014-02-13",
+            "key": 1392249600000,
+            "doc_count": 112
+        },
+        "2014-02-14": {
+            "key_as_string": "2014-02-14",
+            "key": 1392336000000,
+            "doc_count": 45
+        },
+        "2014-02-19": {
+            "key_as_string": "2014-02-19",
+            "key": 1392768000000,
+            "doc_count": 14
+        },
+        "2014-02-20": {
+            "key_as_string": "2014-02-20",
+            "key": 1392854400000,
+            "doc_count": 151
+        },
+        "2014-02-21": {
+            "key_as_string": "2014-02-21",
+            "key": 1392940800000,
+            "doc_count": 54
+        },
+        "2014-03-12": {
+            "key_as_string": "2014-03-12",
+            "key": 1394582400000,
+            "doc_count": 14
+        },
+        "2014-03-13": {
+            "key_as_string": "2014-03-13",
+            "key": 1394668800000,
+            "doc_count": 79
+        },
+        "2014-03-14": {
+            "key_as_string": "2014-03-14",
+            "key": 1394755200000,
+            "doc_count": 53
+        },
+        "2014-03-19": {
+            "key_as_string": "2014-03-19",
+            "key": 1395187200000,
+            "doc_count": 14
+        },
+        "2014-03-20": {
+            "key_as_string": "2014-03-20",
+            "key": 1395273600000,
+            "doc_count": 121
+        },
+        "2014-03-21": {
+            "key_as_string": "2014-03-21",
+            "key": 1395360000000,
+            "doc_count": 42
+        },
+        "2014-04-02": {
+            "key_as_string": "2014-04-02",
+            "key": 1396396800000,
+            "doc_count": 15
+        },
+        "2014-04-03": {
+            "key_as_string": "2014-04-03",
+            "key": 1396483200000,
+            "doc_count": 146
+        },
+        "2014-04-04": {
+            "key_as_string": "2014-04-04",
+            "key": 1396569600000,
+            "doc_count": 50
+        },
+        "2014-04-08": {
+            "key_as_string": "2014-04-08",
+            "key": 1396915200000,
+            "doc_count": 71
+        },
+        "2014-04-09": {
+            "key_as_string": "2014-04-09",
+            "key": 1397001600000,
+            "doc_count": 70
+        },
+        "2014-04-10": {
+            "key_as_string": "2014-04-10",
+            "key": 1397088000000,
+            "doc_count": 111
+        },
+        "2014-04-11": {
+            "key_as_string": "2014-04-11",
+            "key": 1397174400000,
+            "doc_count": 31
+        },
+        "2014-05-07": {
+            "key_as_string": "2014-05-07",
+            "key": 1399420800000,
+            "doc_count": 30
+        },
+        "2014-05-08": {
+            "key_as_string": "2014-05-08",
+            "key": 1399507200000,
+            "doc_count": 154
+        },
+        "2014-05-09": {
+            "key_as_string": "2014-05-09",
+            "key": 1399593600000,
+            "doc_count": 57
+        },
+        "2014-05-21": {
+            "key_as_string": "2014-05-21",
+            "key": 1400630400000,
+            "doc_count": 15
+        },
+        "2014-05-22": {
+            "key_as_string": "2014-05-22",
+            "key": 1400716800000,
+            "doc_count": 139
+        },
+        "2014-05-23": {
+            "key_as_string": "2014-05-23",
+            "key": 1400803200000,
+            "doc_count": 49
+        },
+        "2014-06-04": {
+            "key_as_string": "2014-06-04",
+            "key": 1401840000000,
+            "doc_count": 19
+        },
+        "2014-06-05": {
+            "key_as_string": "2014-06-05",
+            "key": 1401926400000,
+            "doc_count": 155
+        },
+        "2014-06-06": {
+            "key_as_string": "2014-06-06",
+            "key": 1402012800000,
+            "doc_count": 64
+        },
+        "2014-06-24": {
+            "key_as_string": "2014-06-24",
+            "key": 1403568000000,
+            "doc_count": 86
+        },
+        "2014-06-25": {
+            "key_as_string": "2014-06-25",
+            "key": 1403654400000,
+            "doc_count": 103
+        },
+        "2014-06-26": {
+            "key_as_string": "2014-06-26",
+            "key": 1403740800000,
+            "doc_count": 65
+        },
+        "2014-06-27": {
+            "key_as_string": "2014-06-27",
+            "key": 1403827200000,
+            "doc_count": 59
+        },
+        "2014-07-02": {
+            "key_as_string": "2014-07-02",
+            "key": 1404259200000,
+            "doc_count": 31
+        },
+        "2014-07-03": {
+            "key_as_string": "2014-07-03",
+            "key": 1404345600000,
+            "doc_count": 146
+        },
+        "2014-07-04": {
+            "key_as_string": "2014-07-04",
+            "key": 1404432000000,
+            "doc_count": 57
+        },
+        "2014-09-01": {
+            "key_as_string": "2014-09-01",
+            "key": 1409529600000,
+            "doc_count": 16
+        },
+        "2014-09-09": {
+            "key_as_string": "2014-09-09",
+            "key": 1410220800000,
+            "doc_count": 60
+        },
+        "2014-09-10": {
+            "key_as_string": "2014-09-10",
+            "key": 1410307200000,
+            "doc_count": 65
+        },
+        "2014-09-11": {
+            "key_as_string": "2014-09-11",
+            "key": 1410393600000,
+            "doc_count": 101
+        },
+        "2014-09-12": {
+            "key_as_string": "2014-09-12",
+            "key": 1410480000000,
+            "doc_count": 28
+        },
+        "2014-09-24": {
+            "key_as_string": "2014-09-24",
+            "key": 1411516800000,
+            "doc_count": 15
+        },
+        "2014-09-25": {
+            "key_as_string": "2014-09-25",
+            "key": 1411603200000,
+            "doc_count": 145
+        },
+        "2014-09-26": {
+            "key_as_string": "2014-09-26",
+            "key": 1411689600000,
+            "doc_count": 64
+        },
+        "2014-10-08": {
+            "key_as_string": "2014-10-08",
+            "key": 1412726400000,
+            "doc_count": 24
+        },
+        "2014-10-09": {
+            "key_as_string": "2014-10-09",
+            "key": 1412812800000,
+            "doc_count": 128
+        },
+        "2014-10-10": {
+            "key_as_string": "2014-10-10",
+            "key": 1412899200000,
+            "doc_count": 64
+        },
+        "2014-10-16": {
+            "key_as_string": "2014-10-16",
+            "key": 1413417600000,
+            "doc_count": 134
+        },
+        "2014-10-17": {
+            "key_as_string": "2014-10-17",
+            "key": 1413504000000,
+            "doc_count": 59
+        },
+        "2014-11-05": {
+            "key_as_string": "2014-11-05",
+            "key": 1415145600000,
+            "doc_count": 12
+        },
+        "2014-11-06": {
+            "key_as_string": "2014-11-06",
+            "key": 1415232000000,
+            "doc_count": 136
+        },
+        "2014-11-07": {
+            "key_as_string": "2014-11-07",
+            "key": 1415318400000,
+            "doc_count": 62
+        },
+        "2014-11-12": {
+            "key_as_string": "2014-11-12",
+            "key": 1415750400000,
+            "doc_count": 16
+        },
+        "2014-11-13": {
+            "key_as_string": "2014-11-13",
+            "key": 1415836800000,
+            "doc_count": 148
+        },
+        "2014-11-14": {
+            "key_as_string": "2014-11-14",
+            "key": 1415923200000,
+            "doc_count": 64
+        },
+        "2014-11-25": {
+            "key_as_string": "2014-11-25",
+            "key": 1416873600000,
+            "doc_count": 61
+        },
+        "2014-11-26": {
+            "key_as_string": "2014-11-26",
+            "key": 1416960000000,
+            "doc_count": 63
+        },
+        "2014-11-27": {
+            "key_as_string": "2014-11-27",
+            "key": 1417046400000,
+            "doc_count": 91
+        },
+        "2014-11-28": {
+            "key_as_string": "2014-11-28",
+            "key": 1417132800000,
+            "doc_count": 32
+        },
+        "2014-12-03": {
+            "key_as_string": "2014-12-03",
+            "key": 1417564800000,
+            "doc_count": 25
+        },
+        "2014-12-04": {
+            "key_as_string": "2014-12-04",
+            "key": 1417651200000,
+            "doc_count": 144
+        },
+        "2014-12-05": {
+            "key_as_string": "2014-12-05",
+            "key": 1417737600000,
+            "doc_count": 68
+        },
+        "2014-12-17": {
+            "key_as_string": "2014-12-17",
+            "key": 1418774400000,
+            "doc_count": 15
+        },
+        "2014-12-18": {
+            "key_as_string": "2014-12-18",
+            "key": 1418860800000,
+            "doc_count": 132
+        },
+        "2014-12-19": {
+            "key_as_string": "2014-12-19",
+            "key": 1418947200000,
+            "doc_count": 43
+        },
+        "2015-01-14": {
+            "key_as_string": "2015-01-14",
+            "key": 1421193600000,
+            "doc_count": 15
+        },
+        "2015-01-15": {
+            "key_as_string": "2015-01-15",
+            "key": 1421280000000,
+            "doc_count": 141
+        },
+        "2015-01-16": {
+            "key_as_string": "2015-01-16",
+            "key": 1421366400000,
+            "doc_count": 48
+        },
+        "2015-01-28": {
+            "key_as_string": "2015-01-28",
+            "key": 1422403200000,
+            "doc_count": 14
+        },
+        "2015-01-29": {
+            "key_as_string": "2015-01-29",
+            "key": 1422489600000,
+            "doc_count": 126
+        },
+        "2015-01-30": {
+            "key_as_string": "2015-01-30",
+            "key": 1422576000000,
+            "doc_count": 66
+        },
+        "2015-02-05": {
+            "key_as_string": "2015-02-05",
+            "key": 1423094400000,
+            "doc_count": 122
+        },
+        "2015-02-06": {
+            "key_as_string": "2015-02-06",
+            "key": 1423180800000,
+            "doc_count": 52
+        },
+        "2015-02-25": {
+            "key_as_string": "2015-02-25",
+            "key": 1424822400000,
+            "doc_count": 15
+        },
+        "2015-02-26": {
+            "key_as_string": "2015-02-26",
+            "key": 1424908800000,
+            "doc_count": 142
+        },
+        "2015-02-27": {
+            "key_as_string": "2015-02-27",
+            "key": 1424995200000,
+            "doc_count": 76
+        },
+        "2015-03-04": {
+            "key_as_string": "2015-03-04",
+            "key": 1425427200000,
+            "doc_count": 14
+        },
+        "2015-03-05": {
+            "key_as_string": "2015-03-05",
+            "key": 1425513600000,
+            "doc_count": 148
+        },
+        "2015-03-06": {
+            "key_as_string": "2015-03-06",
+            "key": 1425600000000,
+            "doc_count": 61
+        },
+        "2015-03-18": {
+            "key_as_string": "2015-03-18",
+            "key": 1426636800000,
+            "doc_count": 24
+        },
+        "2015-03-19": {
+            "key_as_string": "2015-03-19",
+            "key": 1426723200000,
+            "doc_count": 144
+        },
+        "2015-03-20": {
+            "key_as_string": "2015-03-20",
+            "key": 1426809600000,
+            "doc_count": 48
+        },
+        "2015-03-25": {
+            "key_as_string": "2015-03-25",
+            "key": 1427241600000,
+            "doc_count": 14
+        },
+        "2015-03-26": {
+            "key_as_string": "2015-03-26",
+            "key": 1427328000000,
+            "doc_count": 138
+        },
+        "2015-03-27": {
+            "key_as_string": "2015-03-27",
+            "key": 1427414400000,
+            "doc_count": 55
+        },
+        "2015-04-22": {
+            "key_as_string": "2015-04-22",
+            "key": 1429660800000,
+            "doc_count": 13
+        },
+        "2015-04-23": {
+            "key_as_string": "2015-04-23",
+            "key": 1429747200000,
+            "doc_count": 141
+        },
+        "2015-04-24": {
+            "key_as_string": "2015-04-24",
+            "key": 1429833600000,
+            "doc_count": 74
+        },
+        "2015-05-06": {
+            "key_as_string": "2015-05-06",
+            "key": 1430870400000,
+            "doc_count": 14
+        },
+        "2015-05-07": {
+            "key_as_string": "2015-05-07",
+            "key": 1430956800000,
+            "doc_count": 127
+        },
+        "2015-05-08": {
+            "key_as_string": "2015-05-08",
+            "key": 1431043200000,
+            "doc_count": 44
+        },
+        "2015-05-20": {
+            "key_as_string": "2015-05-20",
+            "key": 1432080000000,
+            "doc_count": 16
+        },
+        "2015-05-21": {
+            "key_as_string": "2015-05-21",
+            "key": 1432166400000,
+            "doc_count": 152
+        },
+        "2015-05-22": {
+            "key_as_string": "2015-05-22",
+            "key": 1432252800000,
+            "doc_count": 81
+        },
+        "2015-06-10": {
+            "key_as_string": "2015-06-10",
+            "key": 1433894400000,
+            "doc_count": 14
+        },
+        "2015-06-11": {
+            "key_as_string": "2015-06-11",
+            "key": 1433980800000,
+            "doc_count": 146
+        },
+        "2015-06-12": {
+            "key_as_string": "2015-06-12",
+            "key": 1434067200000,
+            "doc_count": 67
+        },
+        "2015-06-17": {
+            "key_as_string": "2015-06-17",
+            "key": 1434499200000,
+            "doc_count": 24
+        },
+        "2015-06-18": {
+            "key_as_string": "2015-06-18",
+            "key": 1434585600000,
+            "doc_count": 153
+        },
+        "2015-06-19": {
+            "key_as_string": "2015-06-19",
+            "key": 1434672000000,
+            "doc_count": 67
+        },
+        "2015-07-01": {
+            "key_as_string": "2015-07-01",
+            "key": 1435708800000,
+            "doc_count": 28
+        },
+        "2015-07-02": {
+            "key_as_string": "2015-07-02",
+            "key": 1435795200000,
+            "doc_count": 161
+        },
+        "2015-07-03": {
+            "key_as_string": "2015-07-03",
+            "key": 1435881600000,
+            "doc_count": 49
+        },
+        "2015-07-17": {
+            "key_as_string": "2015-07-17",
+            "key": 1437091200000,
+            "doc_count": 23
+        },
+        "2015-08-19": {
+            "key_as_string": "2015-08-19",
+            "key": 1439942400000,
+            "doc_count": 20
+        },
+        "2015-09-08": {
+            "key_as_string": "2015-09-08",
+            "key": 1441670400000,
+            "doc_count": 54
+        },
+        "2015-09-09": {
+            "key_as_string": "2015-09-09",
+            "key": 1441756800000,
+            "doc_count": 57
+        },
+        "2015-09-10": {
+            "key_as_string": "2015-09-10",
+            "key": 1441843200000,
+            "doc_count": 75
+        },
+        "2015-09-11": {
+            "key_as_string": "2015-09-11",
+            "key": 1441929600000,
+            "doc_count": 41
+        },
+        "2015-09-23": {
+            "key_as_string": "2015-09-23",
+            "key": 1442966400000,
+            "doc_count": 15
+        },
+        "2015-09-24": {
+            "key_as_string": "2015-09-24",
+            "key": 1443052800000,
+            "doc_count": 151
+        },
+        "2015-09-25": {
+            "key_as_string": "2015-09-25",
+            "key": 1443139200000,
+            "doc_count": 71
+        },
+        "2015-09-30": {
+            "key_as_string": "2015-09-30",
+            "key": 1443571200000,
+            "doc_count": 13
+        },
+        "2015-10-01": {
+            "key_as_string": "2015-10-01",
+            "key": 1443657600000,
+            "doc_count": 135
+        },
+        "2015-10-02": {
+            "key_as_string": "2015-10-02",
+            "key": 1443744000000,
+            "doc_count": 58
+        },
+        "2015-10-14": {
+            "key_as_string": "2015-10-14",
+            "key": 1444780800000,
+            "doc_count": 26
+        },
+        "2015-10-15": {
+            "key_as_string": "2015-10-15",
+            "key": 1444867200000,
+            "doc_count": 145
+        },
+        "2015-10-16": {
+            "key_as_string": "2015-10-16",
+            "key": 1444953600000,
+            "doc_count": 55
+        },
+        "2015-11-04": {
+            "key_as_string": "2015-11-04",
+            "key": 1446595200000,
+            "doc_count": 16
+        },
+        "2015-11-05": {
+            "key_as_string": "2015-11-05",
+            "key": 1446681600000,
+            "doc_count": 151
+        },
+        "2015-11-06": {
+            "key_as_string": "2015-11-06",
+            "key": 1446768000000,
+            "doc_count": 63
+        },
+        "2015-11-11": {
+            "key_as_string": "2015-11-11",
+            "key": 1447200000000,
+            "doc_count": 24
+        },
+        "2015-11-12": {
+            "key_as_string": "2015-11-12",
+            "key": 1447286400000,
+            "doc_count": 146
+        },
+        "2015-11-13": {
+            "key_as_string": "2015-11-13",
+            "key": 1447372800000,
+            "doc_count": 69
+        },
+        "2015-11-24": {
+            "key_as_string": "2015-11-24",
+            "key": 1448323200000,
+            "doc_count": 76
+        },
+        "2015-11-25": {
+            "key_as_string": "2015-11-25",
+            "key": 1448409600000,
+            "doc_count": 64
+        },
+        "2015-11-26": {
+            "key_as_string": "2015-11-26",
+            "key": 1448496000000,
+            "doc_count": 81
+        },
+        "2015-11-27": {
+            "key_as_string": "2015-11-27",
+            "key": 1448582400000,
+            "doc_count": 33
+        },
+        "2015-12-02": {
+            "key_as_string": "2015-12-02",
+            "key": 1449014400000,
+            "doc_count": 13
+        },
+        "2015-12-03": {
+            "key_as_string": "2015-12-03",
+            "key": 1449100800000,
+            "doc_count": 152
+        },
+        "2015-12-04": {
+            "key_as_string": "2015-12-04",
+            "key": 1449187200000,
+            "doc_count": 65
+        },
+        "2015-12-16": {
+            "key_as_string": "2015-12-16",
+            "key": 1450224000000,
+            "doc_count": 14
+        },
+        "2015-12-17": {
+            "key_as_string": "2015-12-17",
+            "key": 1450310400000,
+            "doc_count": 153
+        },
+        "2015-12-18": {
+            "key_as_string": "2015-12-18",
+            "key": 1450396800000,
+            "doc_count": 46
+        },
+        "2016-01-13": {
+            "key_as_string": "2016-01-13",
+            "key": 1452643200000,
+            "doc_count": 26
+        },
+        "2016-01-14": {
+            "key_as_string": "2016-01-14",
+            "key": 1452729600000,
+            "doc_count": 133
+        },
+        "2016-01-15": {
+            "key_as_string": "2016-01-15",
+            "key": 1452816000000,
+            "doc_count": 54
+        },
+        "2016-01-27": {
+            "key_as_string": "2016-01-27",
+            "key": 1453852800000,
+            "doc_count": 14
+        },
+        "2016-01-28": {
+            "key_as_string": "2016-01-28",
+            "key": 1453939200000,
+            "doc_count": 148
+        },
+        "2016-01-29": {
+            "key_as_string": "2016-01-29",
+            "key": 1454025600000,
+            "doc_count": 64
+        },
+        "2016-02-17": {
+            "key_as_string": "2016-02-17",
+            "key": 1455667200000,
+            "doc_count": 27
+        },
+        "2016-02-18": {
+            "key_as_string": "2016-02-18",
+            "key": 1455753600000,
+            "doc_count": 134
+        },
+        "2016-02-19": {
+            "key_as_string": "2016-02-19",
+            "key": 1455840000000,
+            "doc_count": 48
+        },
+        "2016-02-24": {
+            "key_as_string": "2016-02-24",
+            "key": 1456272000000,
+            "doc_count": 19
+        },
+        "2016-02-25": {
+            "key_as_string": "2016-02-25",
+            "key": 1456358400000,
+            "doc_count": 145
+        },
+        "2016-02-26": {
+            "key_as_string": "2016-02-26",
+            "key": 1456444800000,
+            "doc_count": 69
+        },
+        "2016-03-16": {
+            "key_as_string": "2016-03-16",
+            "key": 1458086400000,
+            "doc_count": 14
+        },
+        "2016-03-17": {
+            "key_as_string": "2016-03-17",
+            "key": 1458172800000,
+            "doc_count": 140
+        },
+        "2016-03-18": {
+            "key_as_string": "2016-03-18",
+            "key": 1458259200000,
+            "doc_count": 44
+        },
+        "2016-04-13": {
+            "key_as_string": "2016-04-13",
+            "key": 1460505600000,
+            "doc_count": 17
+        },
+        "2016-04-14": {
+            "key_as_string": "2016-04-14",
+            "key": 1460592000000,
+            "doc_count": 144
+        },
+        "2016-04-15": {
+            "key_as_string": "2016-04-15",
+            "key": 1460678400000,
+            "doc_count": 67
+        },
+        "2016-04-27": {
+            "key_as_string": "2016-04-27",
+            "key": 1461715200000,
+            "doc_count": 15
+        },
+        "2016-04-28": {
+            "key_as_string": "2016-04-28",
+            "key": 1461801600000,
+            "doc_count": 148
+        },
+        "2016-04-29": {
+            "key_as_string": "2016-04-29",
+            "key": 1461888000000,
+            "doc_count": 52
+        },
+        "2016-05-11": {
+            "key_as_string": "2016-05-11",
+            "key": 1462924800000,
+            "doc_count": 16
+        },
+        "2016-05-12": {
+            "key_as_string": "2016-05-12",
+            "key": 1463011200000,
+            "doc_count": 156
+        },
+        "2016-05-13": {
+            "key_as_string": "2016-05-13",
+            "key": 1463097600000,
+            "doc_count": 61
+        },
+        "2016-06-01": {
+            "key_as_string": "2016-06-01",
+            "key": 1464739200000,
+            "doc_count": 15
+        },
+        "2016-06-02": {
+            "key_as_string": "2016-06-02",
+            "key": 1464825600000,
+            "doc_count": 163
+        },
+        "2016-06-03": {
+            "key_as_string": "2016-06-03",
+            "key": 1464912000000,
+            "doc_count": 52
+        },
+        "2016-06-08": {
+            "key_as_string": "2016-06-08",
+            "key": 1465344000000,
+            "doc_count": 16
+        },
+        "2016-06-09": {
+            "key_as_string": "2016-06-09",
+            "key": 1465430400000,
+            "doc_count": 130
+        },
+        "2016-06-10": {
+            "key_as_string": "2016-06-10",
+            "key": 1465516800000,
+            "doc_count": 35
+        },
+        "2016-06-22": {
+            "key_as_string": "2016-06-22",
+            "key": 1466553600000,
+            "doc_count": 12
+        },
+        "2016-06-23": {
+            "key_as_string": "2016-06-23",
+            "key": 1466640000000,
+            "doc_count": 157
+        },
+        "2016-06-24": {
+            "key_as_string": "2016-06-24",
+            "key": 1466726400000,
+            "doc_count": 82
+        },
+        "2016-06-28": {
+            "key_as_string": "2016-06-28",
+            "key": 1467072000000,
+            "doc_count": 13
+        },
+        "2016-07-06": {
+            "key_as_string": "2016-07-06",
+            "key": 1467763200000,
+            "doc_count": 25
+        },
+        "2016-07-07": {
+            "key_as_string": "2016-07-07",
+            "key": 1467849600000,
+            "doc_count": 145
+        },
+        "2016-07-08": {
+            "key_as_string": "2016-07-08",
+            "key": 1467936000000,
+            "doc_count": 65
+        },
+        "2016-09-06": {
+            "key_as_string": "2016-09-06",
+            "key": 1473120000000,
+            "doc_count": 63
+        },
+        "2016-09-07": {
+            "key_as_string": "2016-09-07",
+            "key": 1473206400000,
+            "doc_count": 63
+        },
+        "2016-09-08": {
+            "key_as_string": "2016-09-08",
+            "key": 1473292800000,
+            "doc_count": 82
+        },
+        "2016-09-09": {
+            "key_as_string": "2016-09-09",
+            "key": 1473379200000,
+            "doc_count": 42
+        },
+        "2016-09-21": {
+            "key_as_string": "2016-09-21",
+            "key": 1474416000000,
+            "doc_count": 16
+        },
+        "2016-09-22": {
+            "key_as_string": "2016-09-22",
+            "key": 1474502400000,
+            "doc_count": 161
+        },
+        "2016-09-23": {
+            "key_as_string": "2016-09-23",
+            "key": 1474588800000,
+            "doc_count": 50
+        },
+        "2016-09-28": {
+            "key_as_string": "2016-09-28",
+            "key": 1475020800000,
+            "doc_count": 15
+        },
+        "2016-09-29": {
+            "key_as_string": "2016-09-29",
+            "key": 1475107200000,
+            "doc_count": 142
+        },
+        "2016-09-30": {
+            "key_as_string": "2016-09-30",
+            "key": 1475193600000,
+            "doc_count": 52
+        },
+        "2016-10-19": {
+            "key_as_string": "2016-10-19",
+            "key": 1476835200000,
+            "doc_count": 15
+        },
+        "2016-10-20": {
+            "key_as_string": "2016-10-20",
+            "key": 1476921600000,
+            "doc_count": 173
+        },
+        "2016-10-21": {
+            "key_as_string": "2016-10-21",
+            "key": 1477008000000,
+            "doc_count": 79
+        },
+        "2016-11-09": {
+            "key_as_string": "2016-11-09",
+            "key": 1478649600000,
+            "doc_count": 17
+        },
+        "2016-11-10": {
+            "key_as_string": "2016-11-10",
+            "key": 1478736000000,
+            "doc_count": 173
+        },
+        "2016-11-11": {
+            "key_as_string": "2016-11-11",
+            "key": 1478822400000,
+            "doc_count": 44
+        },
+        "2016-11-22": {
+            "key_as_string": "2016-11-22",
+            "key": 1479772800000,
+            "doc_count": 86
+        },
+        "2016-11-23": {
+            "key_as_string": "2016-11-23",
+            "key": 1479859200000,
+            "doc_count": 66
+        },
+        "2016-11-24": {
+            "key_as_string": "2016-11-24",
+            "key": 1479945600000,
+            "doc_count": 94
+        },
+        "2016-11-25": {
+            "key_as_string": "2016-11-25",
+            "key": 1480032000000,
+            "doc_count": 33
+        },
+        "2016-11-30": {
+            "key_as_string": "2016-11-30",
+            "key": 1480464000000,
+            "doc_count": 15
+        },
+        "2016-12-01": {
+            "key_as_string": "2016-12-01",
+            "key": 1480550400000,
+            "doc_count": 157
+        },
+        "2016-12-02": {
+            "key_as_string": "2016-12-02",
+            "key": 1480636800000,
+            "doc_count": 53
+        },
+        "2016-12-14": {
+            "key_as_string": "2016-12-14",
+            "key": 1481673600000,
+            "doc_count": 15
+        },
+        "2016-12-15": {
+            "key_as_string": "2016-12-15",
+            "key": 1481760000000,
+            "doc_count": 165
+        },
+        "2016-12-16": {
+            "key_as_string": "2016-12-16",
+            "key": 1481846400000,
+            "doc_count": 77
+        },
+        "2017-01-18": {
+            "key_as_string": "2017-01-18",
+            "key": 1484697600000,
+            "doc_count": 16
+        },
+        "2017-01-19": {
+            "key_as_string": "2017-01-19",
+            "key": 1484784000000,
+            "doc_count": 123
+        },
+        "2017-01-20": {
+            "key_as_string": "2017-01-20",
+            "key": 1484870400000,
+            "doc_count": 63
+        },
+        "2017-01-26": {
+            "key_as_string": "2017-01-26",
+            "key": 1485388800000,
+            "doc_count": 154
+        },
+        "2017-01-27": {
+            "key_as_string": "2017-01-27",
+            "key": 1485475200000,
+            "doc_count": 54
+        },
+        "2017-02-15": {
+            "key_as_string": "2017-02-15",
+            "key": 1487116800000,
+            "doc_count": 14
+        },
+        "2017-02-16": {
+            "key_as_string": "2017-02-16",
+            "key": 1487203200000,
+            "doc_count": 143
+        },
+        "2017-02-17": {
+            "key_as_string": "2017-02-17",
+            "key": 1487289600000,
+            "doc_count": 66
+        },
+        "2017-03-08": {
+            "key_as_string": "2017-03-08",
+            "key": 1488931200000,
+            "doc_count": 15
+        },
+        "2017-03-09": {
+            "key_as_string": "2017-03-09",
+            "key": 1489017600000,
+            "doc_count": 198
+        },
+        "2017-03-10": {
+            "key_as_string": "2017-03-10",
+            "key": 1489104000000,
+            "doc_count": 72
+        },
+        "2017-03-22": {
+            "key_as_string": "2017-03-22",
+            "key": 1490140800000,
+            "doc_count": 8
+        },
+        "2017-03-23": {
+            "key_as_string": "2017-03-23",
+            "key": 1490227200000,
+            "doc_count": 159
+        },
+        "2017-03-24": {
+            "key_as_string": "2017-03-24",
+            "key": 1490313600000,
+            "doc_count": 66
+        },
+        "2017-03-30": {
+            "key_as_string": "2017-03-30",
+            "key": 1490832000000,
+            "doc_count": 177
+        },
+        "2017-03-31": {
+            "key_as_string": "2017-03-31",
+            "key": 1490918400000,
+            "doc_count": 56
+        },
+        "2017-04-27": {
+            "key_as_string": "2017-04-27",
+            "key": 1493251200000,
+            "doc_count": 172
+        },
+        "2017-04-28": {
+            "key_as_string": "2017-04-28",
+            "key": 1493337600000,
+            "doc_count": 67
+        },
+        "2017-05-17": {
+            "key_as_string": "2017-05-17",
+            "key": 1494979200000,
+            "doc_count": 60
+        },
+        "2017-05-18": {
+            "key_as_string": "2017-05-18",
+            "key": 1495065600000,
+            "doc_count": 183
+        },
+        "2017-05-19": {
+            "key_as_string": "2017-05-19",
+            "key": 1495152000000,
+            "doc_count": 60
+        },
+        "2017-05-31": {
+            "key_as_string": "2017-05-31",
+            "key": 1496188800000,
+            "doc_count": 37
+        },
+        "2017-06-01": {
+            "key_as_string": "2017-06-01",
+            "key": 1496275200000,
+            "doc_count": 170
+        },
+        "2017-06-02": {
+            "key_as_string": "2017-06-02",
+            "key": 1496361600000,
+            "doc_count": 69
+        },
+        "2017-06-21": {
+            "key_as_string": "2017-06-21",
+            "key": 1498003200000,
+            "doc_count": 53
+        },
+        "2017-06-22": {
+            "key_as_string": "2017-06-22",
+            "key": 1498089600000,
+            "doc_count": 174
+        },
+        "2017-06-23": {
+            "key_as_string": "2017-06-23",
+            "key": 1498176000000,
+            "doc_count": 72
+        },
+        "2017-06-28": {
+            "key_as_string": "2017-06-28",
+            "key": 1498608000000,
+            "doc_count": 48
+        },
+        "2017-06-29": {
+            "key_as_string": "2017-06-29",
+            "key": 1498694400000,
+            "doc_count": 160
+        },
+        "2017-06-30": {
+            "key_as_string": "2017-06-30",
+            "key": 1498780800000,
+            "doc_count": 107
+        },
+        "2017-09-05": {
+            "key_as_string": "2017-09-05",
+            "key": 1504569600000,
+            "doc_count": 29
+        },
+        "2017-10-24": {
+            "key_as_string": "2017-10-24",
+            "key": 1508803200000,
+            "doc_count": 13
+        },
+        "2017-11-21": {
+            "key_as_string": "2017-11-21",
+            "key": 1511222400000,
+            "doc_count": 124
+        },
+        "2017-11-22": {
+            "key_as_string": "2017-11-22",
+            "key": 1511308800000,
+            "doc_count": 68
+        },
+        "2017-12-12": {
+            "key_as_string": "2017-12-12",
+            "key": 1513036800000,
+            "doc_count": 132
+        },
+        "2017-12-13": {
+            "key_as_string": "2017-12-13",
+            "key": 1513123200000,
+            "doc_count": 107
+        },
+        "2018-01-17": {
+            "key_as_string": "2018-01-17",
+            "key": 1516147200000,
+            "doc_count": 3
+        },
+        "2018-01-18": {
+            "key_as_string": "2018-01-18",
+            "key": 1516233600000,
+            "doc_count": 117
+        },
+        "2018-01-19": {
+            "key_as_string": "2018-01-19",
+            "key": 1516320000000,
+            "doc_count": 65
+        },
+        "2018-01-22": {
+            "key_as_string": "2018-01-22",
+            "key": 1516579200000,
+            "doc_count": 18
+        },
+        "2018-01-31": {
+            "key_as_string": "2018-01-31",
+            "key": 1517356800000,
+            "doc_count": 16
+        },
+        "2018-02-01": {
+            "key_as_string": "2018-02-01",
+            "key": 1517443200000,
+            "doc_count": 125
+        },
+        "2018-02-02": {
+            "key_as_string": "2018-02-02",
+            "key": 1517529600000,
+            "doc_count": 70
+        },
+        "2018-02-21": {
+            "key_as_string": "2018-02-21",
+            "key": 1519171200000,
+            "doc_count": 14
+        },
+        "2018-02-22": {
+            "key_as_string": "2018-02-22",
+            "key": 1519257600000,
+            "doc_count": 156
+        },
+        "2018-02-23": {
+            "key_as_string": "2018-02-23",
+            "key": 1519344000000,
+            "doc_count": 78
+        },
+        "2018-02-28": {
+            "key_as_string": "2018-02-28",
+            "key": 1519776000000,
+            "doc_count": 15
+        },
+        "2018-03-01": {
+            "key_as_string": "2018-03-01",
+            "key": 1519862400000,
+            "doc_count": 126
+        },
+        "2018-03-02": {
+            "key_as_string": "2018-03-02",
+            "key": 1519948800000,
+            "doc_count": 77
+        },
+        "2018-03-14": {
+            "key_as_string": "2018-03-14",
+            "key": 1520985600000,
+            "doc_count": 5
+        },
+        "2018-03-15": {
+            "key_as_string": "2018-03-15",
+            "key": 1521072000000,
+            "doc_count": 154
+        },
+        "2018-03-16": {
+            "key_as_string": "2018-03-16",
+            "key": 1521158400000,
+            "doc_count": 57
+        },
+        "2018-03-21": {
+            "key_as_string": "2018-03-21",
+            "key": 1521590400000,
+            "doc_count": 77
+        },
+        "2018-03-22": {
+            "key_as_string": "2018-03-22",
+            "key": 1521676800000,
+            "doc_count": 159
+        },
+        "2018-03-23": {
+            "key_as_string": "2018-03-23",
+            "key": 1521763200000,
+            "doc_count": 80
+        },
+        "2018-04-18": {
+            "key_as_string": "2018-04-18",
+            "key": 1524009600000,
+            "doc_count": 18
+        },
+        "2018-04-19": {
+            "key_as_string": "2018-04-19",
+            "key": 1524096000000,
+            "doc_count": 197
+        },
+        "2018-04-20": {
+            "key_as_string": "2018-04-20",
+            "key": 1524182400000,
+            "doc_count": 70
+        },
+        "2018-04-25": {
+            "key_as_string": "2018-04-25",
+            "key": 1524614400000,
+            "doc_count": 18
+        },
+        "2018-04-26": {
+            "key_as_string": "2018-04-26",
+            "key": 1524700800000,
+            "doc_count": 205
+        },
+        "2018-04-27": {
+            "key_as_string": "2018-04-27",
+            "key": 1524787200000,
+            "doc_count": 58
+        },
+        "2018-05-15": {
+            "key_as_string": "2018-05-15",
+            "key": 1526342400000,
+            "doc_count": 76
+        },
+        "2018-05-16": {
+            "key_as_string": "2018-05-16",
+            "key": 1526428800000,
+            "doc_count": 85
+        },
+        "2018-05-17": {
+            "key_as_string": "2018-05-17",
+            "key": 1526515200000,
+            "doc_count": 102
+        },
+        "2018-05-18": {
+            "key_as_string": "2018-05-18",
+            "key": 1526601600000,
+            "doc_count": 54
+        },
+        "2018-06-06": {
+            "key_as_string": "2018-06-06",
+            "key": 1528243200000,
+            "doc_count": 15
+        },
+        "2018-06-07": {
+            "key_as_string": "2018-06-07",
+            "key": 1528329600000,
+            "doc_count": 206
+        },
+        "2018-06-08": {
+            "key_as_string": "2018-06-08",
+            "key": 1528416000000,
+            "doc_count": 117
+        },
+        "2018-06-13": {
+            "key_as_string": "2018-06-13",
+            "key": 1528848000000,
+            "doc_count": 16
+        },
+        "2018-06-14": {
+            "key_as_string": "2018-06-14",
+            "key": 1528934400000,
+            "doc_count": 173
+        },
+        "2018-06-15": {
+            "key_as_string": "2018-06-15",
+            "key": 1529020800000,
+            "doc_count": 103
+        },
+        "2018-06-27": {
+            "key_as_string": "2018-06-27",
+            "key": 1530057600000,
+            "doc_count": 18
+        },
+        "2018-06-28": {
+            "key_as_string": "2018-06-28",
+            "key": 1530144000000,
+            "doc_count": 201
+        },
+        "2018-06-29": {
+            "key_as_string": "2018-06-29",
+            "key": 1530230400000,
+            "doc_count": 106
+        },
+        "2018-07-03": {
+            "key_as_string": "2018-07-03",
+            "key": 1530576000000,
+            "doc_count": 115
+        },
+        "2018-07-04": {
+            "key_as_string": "2018-07-04",
+            "key": 1530662400000,
+            "doc_count": 91
+        },
+        "2018-07-05": {
+            "key_as_string": "2018-07-05",
+            "key": 1530748800000,
+            "doc_count": 122
+        },
+        "2018-09-11": {
+            "key_as_string": "2018-09-11",
+            "key": 1536624000000,
+            "doc_count": 82
+        },
+        "2018-09-12": {
+            "key_as_string": "2018-09-12",
+            "key": 1536710400000,
+            "doc_count": 88
+        },
+        "2018-09-13": {
+            "key_as_string": "2018-09-13",
+            "key": 1536796800000,
+            "doc_count": 103
+        },
+        "2018-09-14": {
+            "key_as_string": "2018-09-14",
+            "key": 1536883200000,
+            "doc_count": 55
+        },
+        "2018-09-26": {
+            "key_as_string": "2018-09-26",
+            "key": 1537920000000,
+            "doc_count": 16
+        },
+        "2018-09-27": {
+            "key_as_string": "2018-09-27",
+            "key": 1538006400000,
+            "doc_count": 190
+        },
+        "2018-09-28": {
+            "key_as_string": "2018-09-28",
+            "key": 1538092800000,
+            "doc_count": 119
+        },
+        "2018-10-10": {
+            "key_as_string": "2018-10-10",
+            "key": 1539129600000,
+            "doc_count": 16
+        },
+        "2018-10-11": {
+            "key_as_string": "2018-10-11",
+            "key": 1539216000000,
+            "doc_count": 241
+        },
+        "2018-10-12": {
+            "key_as_string": "2018-10-12",
+            "key": 1539302400000,
+            "doc_count": 107
+        },
+        "2018-10-17": {
+            "key_as_string": "2018-10-17",
+            "key": 1539734400000,
+            "doc_count": 22
+        },
+        "2018-10-18": {
+            "key_as_string": "2018-10-18",
+            "key": 1539820800000,
+            "doc_count": 205
+        },
+        "2018-10-19": {
+            "key_as_string": "2018-10-19",
+            "key": 1539907200000,
+            "doc_count": 93
+        },
+        "2018-11-07": {
+            "key_as_string": "2018-11-07",
+            "key": 1541548800000,
+            "doc_count": 43
+        },
+        "2018-11-08": {
+            "key_as_string": "2018-11-08",
+            "key": 1541635200000,
+            "doc_count": 203
+        },
+        "2018-11-09": {
+            "key_as_string": "2018-11-09",
+            "key": 1541721600000,
+            "doc_count": 121
+        },
+        "2018-11-20": {
+            "key_as_string": "2018-11-20",
+            "key": 1542672000000,
+            "doc_count": 101
+        },
+        "2018-11-21": {
+            "key_as_string": "2018-11-21",
+            "key": 1542758400000,
+            "doc_count": 86
+        },
+        "2018-11-22": {
+            "key_as_string": "2018-11-22",
+            "key": 1542844800000,
+            "doc_count": 107
+        },
+        "2018-11-23": {
+            "key_as_string": "2018-11-23",
+            "key": 1542931200000,
+            "doc_count": 39
+        },
+        "2018-11-28": {
+            "key_as_string": "2018-11-28",
+            "key": 1543363200000,
+            "doc_count": 56
+        },
+        "2018-11-29": {
+            "key_as_string": "2018-11-29",
+            "key": 1543449600000,
+            "doc_count": 194
+        },
+        "2018-11-30": {
+            "key_as_string": "2018-11-30",
+            "key": 1543536000000,
+            "doc_count": 117
+        },
+        "2018-12-13": {
+            "key_as_string": "2018-12-13",
+            "key": 1544659200000,
+            "doc_count": 176
+        },
+        "2018-12-14": {
+            "key_as_string": "2018-12-14",
+            "key": 1544745600000,
+            "doc_count": 78
+        },
+        "2019-01-17": {
+            "key_as_string": "2019-01-17",
+            "key": 1547683200000,
+            "doc_count": 190
+        },
+        "2019-01-18": {
+            "key_as_string": "2019-01-18",
+            "key": 1547769600000,
+            "doc_count": 85
+        },
+        "2019-01-30": {
+            "key_as_string": "2019-01-30",
+            "key": 1548806400000,
+            "doc_count": 15
+        },
+        "2019-01-31": {
+            "key_as_string": "2019-01-31",
+            "key": 1548892800000,
+            "doc_count": 174
+        },
+        "2019-02-01": {
+            "key_as_string": "2019-02-01",
+            "key": 1548979200000,
+            "doc_count": 99
+        },
+        "2019-02-13": {
+            "key_as_string": "2019-02-13",
+            "key": 1550016000000,
+            "doc_count": 16
+        },
+        "2019-02-14": {
+            "key_as_string": "2019-02-14",
+            "key": 1550102400000,
+            "doc_count": 187
+        },
+        "2019-02-15": {
+            "key_as_string": "2019-02-15",
+            "key": 1550188800000,
+            "doc_count": 93
+        },
+        "2019-02-20": {
+            "key_as_string": "2019-02-20",
+            "key": 1550620800000,
+            "doc_count": 15
+        },
+        "2019-02-21": {
+            "key_as_string": "2019-02-21",
+            "key": 1550707200000,
+            "doc_count": 224
+        },
+        "2019-02-22": {
+            "key_as_string": "2019-02-22",
+            "key": 1550793600000,
+            "doc_count": 60
+        },
+        "2019-03-13": {
+            "key_as_string": "2019-03-13",
+            "key": 1552435200000,
+            "doc_count": 16
+        },
+        "2019-03-14": {
+            "key_as_string": "2019-03-14",
+            "key": 1552521600000,
+            "doc_count": 204
+        },
+        "2019-03-15": {
+            "key_as_string": "2019-03-15",
+            "key": 1552608000000,
+            "doc_count": 97
+        },
+        "2019-03-20": {
+            "key_as_string": "2019-03-20",
+            "key": 1553040000000,
+            "doc_count": 27
+        },
+        "2019-03-21": {
+            "key_as_string": "2019-03-21",
+            "key": 1553126400000,
+            "doc_count": 190
+        },
+        "2019-03-22": {
+            "key_as_string": "2019-03-22",
+            "key": 1553212800000,
+            "doc_count": 82
+        },
+        "2019-04-03": {
+            "key_as_string": "2019-04-03",
+            "key": 1554249600000,
+            "doc_count": 15
+        },
+        "2019-04-04": {
+            "key_as_string": "2019-04-04",
+            "key": 1554336000000,
+            "doc_count": 198
+        },
+        "2019-04-05": {
+            "key_as_string": "2019-04-05",
+            "key": 1554422400000,
+            "doc_count": 98
+        },
+        "2019-04-10": {
+            "key_as_string": "2019-04-10",
+            "key": 1554854400000,
+            "doc_count": 26
+        },
+        "2019-04-11": {
+            "key_as_string": "2019-04-11",
+            "key": 1554940800000,
+            "doc_count": 218
+        },
+        "2019-04-12": {
+            "key_as_string": "2019-04-12",
+            "key": 1555027200000,
+            "doc_count": 82
+        },
+        "2019-05-08": {
+            "key_as_string": "2019-05-08",
+            "key": 1557273600000,
+            "doc_count": 17
+        },
+        "2019-05-09": {
+            "key_as_string": "2019-05-09",
+            "key": 1557360000000,
+            "doc_count": 224
+        },
+        "2019-05-10": {
+            "key_as_string": "2019-05-10",
+            "key": 1557446400000,
+            "doc_count": 87
+        },
+        "2019-05-15": {
+            "key_as_string": "2019-05-15",
+            "key": 1557878400000,
+            "doc_count": 34
+        },
+        "2019-05-16": {
+            "key_as_string": "2019-05-16",
+            "key": 1557964800000,
+            "doc_count": 197
+        },
+        "2019-05-17": {
+            "key_as_string": "2019-05-17",
+            "key": 1558051200000,
+            "doc_count": 115
+        },
+        "2019-06-05": {
+            "key_as_string": "2019-06-05",
+            "key": 1559692800000,
+            "doc_count": 16
+        },
+        "2019-06-06": {
+            "key_as_string": "2019-06-06",
+            "key": 1559779200000,
+            "doc_count": 216
+        },
+        "2019-06-07": {
+            "key_as_string": "2019-06-07",
+            "key": 1559865600000,
+            "doc_count": 118
+        },
+        "2019-06-26": {
+            "key_as_string": "2019-06-26",
+            "key": 1561507200000,
+            "doc_count": 40
+        },
+        "2019-06-27": {
+            "key_as_string": "2019-06-27",
+            "key": 1561593600000,
+            "doc_count": 222
+        },
+        "2019-06-28": {
+            "key_as_string": "2019-06-28",
+            "key": 1561680000000,
+            "doc_count": 114
+        },
+        "2019-07-24": {
+            "key_as_string": "2019-07-24",
+            "key": 1563926400000,
+            "doc_count": 15
+        },
+        "2019-09-10": {
+            "key_as_string": "2019-09-10",
+            "key": 1568073600000,
+            "doc_count": 77
+        },
+        "2019-09-11": {
+            "key_as_string": "2019-09-11",
+            "key": 1568160000000,
+            "doc_count": 78
+        },
+        "2019-09-12": {
+            "key_as_string": "2019-09-12",
+            "key": 1568246400000,
+            "doc_count": 97
+        },
+        "2019-09-13": {
+            "key_as_string": "2019-09-13",
+            "key": 1568332800000,
+            "doc_count": 54
+        },
+        "2019-09-25": {
+            "key_as_string": "2019-09-25",
+            "key": 1569369600000,
+            "doc_count": 15
+        },
+        "2019-09-26": {
+            "key_as_string": "2019-09-26",
+            "key": 1569456000000,
+            "doc_count": 240
+        },
+        "2019-09-27": {
+            "key_as_string": "2019-09-27",
+            "key": 1569542400000,
+            "doc_count": 111
+        },
+        "2019-10-16": {
+            "key_as_string": "2019-10-16",
+            "key": 1571184000000,
+            "doc_count": 17
+        },
+        "2019-10-17": {
+            "key_as_string": "2019-10-17",
+            "key": 1571270400000,
+            "doc_count": 229
+        },
+        "2019-10-18": {
+            "key_as_string": "2019-10-18",
+            "key": 1571356800000,
+            "doc_count": 103
+        },
+        "2019-10-23": {
+            "key_as_string": "2019-10-23",
+            "key": 1571788800000,
+            "doc_count": 15
+        },
+        "2019-10-24": {
+            "key_as_string": "2019-10-24",
+            "key": 1571875200000,
+            "doc_count": 225
+        },
+        "2019-10-25": {
+            "key_as_string": "2019-10-25",
+            "key": 1571961600000,
+            "doc_count": 111
+        },
+        "2019-11-06": {
+            "key_as_string": "2019-11-06",
+            "key": 1572998400000,
+            "doc_count": 14
+        },
+        "2019-11-07": {
+            "key_as_string": "2019-11-07",
+            "key": 1573084800000,
+            "doc_count": 192
+        },
+        "2019-11-08": {
+            "key_as_string": "2019-11-08",
+            "key": 1573171200000,
+            "doc_count": 142
+        },
+        "2019-11-13": {
+            "key_as_string": "2019-11-13",
+            "key": 1573603200000,
+            "doc_count": 40
+        },
+        "2019-11-14": {
+            "key_as_string": "2019-11-14",
+            "key": 1573689600000,
+            "doc_count": 211
+        },
+        "2019-11-15": {
+            "key_as_string": "2019-11-15",
+            "key": 1573776000000,
+            "doc_count": 104
+        },
+        "2019-11-26": {
+            "key_as_string": "2019-11-26",
+            "key": 1574726400000,
+            "doc_count": 105
+        },
+        "2019-11-27": {
+            "key_as_string": "2019-11-27",
+            "key": 1574812800000,
+            "doc_count": 86
+        },
+        "2019-11-28": {
+            "key_as_string": "2019-11-28",
+            "key": 1574899200000,
+            "doc_count": 102
+        },
+        "2019-11-29": {
+            "key_as_string": "2019-11-29",
+            "key": 1574985600000,
+            "doc_count": 38
+        },
+        "2019-12-11": {
+            "key_as_string": "2019-12-11",
+            "key": 1576022400000,
+            "doc_count": 72
+        },
+        "2019-12-12": {
+            "key_as_string": "2019-12-12",
+            "key": 1576108800000,
+            "doc_count": 165
+        },
+        "2019-12-13": {
+            "key_as_string": "2019-12-13",
+            "key": 1576195200000,
+            "doc_count": 110
+        },
+        "2019-12-18": {
+            "key_as_string": "2019-12-18",
+            "key": 1576627200000,
+            "doc_count": 66
+        },
+        "2019-12-19": {
+            "key_as_string": "2019-12-19",
+            "key": 1576713600000,
+            "doc_count": 190
+        },
+        "2019-12-20": {
+            "key_as_string": "2019-12-20",
+            "key": 1576800000000,
+            "doc_count": 93
+        },
+        "2020-01-15": {
+            "key_as_string": "2020-01-15",
+            "key": 1579046400000,
+            "doc_count": 66
+        },
+        "2020-01-16": {
+            "key_as_string": "2020-01-16",
+            "key": 1579132800000,
+            "doc_count": 151
+        },
+        "2020-01-17": {
+            "key_as_string": "2020-01-17",
+            "key": 1579219200000,
+            "doc_count": 105
+        },
+        "2020-01-29": {
+            "key_as_string": "2020-01-29",
+            "key": 1580256000000,
+            "doc_count": 70
+        },
+        "2020-01-30": {
+            "key_as_string": "2020-01-30",
+            "key": 1580342400000,
+            "doc_count": 135
+        },
+        "2020-01-31": {
+            "key_as_string": "2020-01-31",
+            "key": 1580428800000,
+            "doc_count": 87
+        },
+        "2020-02-12": {
+            "key_as_string": "2020-02-12",
+            "key": 1581465600000,
+            "doc_count": 65
+        },
+        "2020-02-13": {
+            "key_as_string": "2020-02-13",
+            "key": 1581552000000,
+            "doc_count": 155
+        },
+        "2020-02-14": {
+            "key_as_string": "2020-02-14",
+            "key": 1581638400000,
+            "doc_count": 90
+        },
+        "2020-03-04": {
+            "key_as_string": "2020-03-04",
+            "key": 1583280000000,
+            "doc_count": 66
+        },
+        "2020-03-05": {
+            "key_as_string": "2020-03-05",
+            "key": 1583366400000,
+            "doc_count": 166
+        },
+        "2020-03-06": {
+            "key_as_string": "2020-03-06",
+            "key": 1583452800000,
+            "doc_count": 128
+        },
+        "2020-03-11": {
+            "key_as_string": "2020-03-11",
+            "key": 1583884800000,
+            "doc_count": 56
+        },
+        "2020-03-12": {
+            "key_as_string": "2020-03-12",
+            "key": 1583971200000,
+            "doc_count": 120
+        },
+        "2020-03-13": {
+            "key_as_string": "2020-03-13",
+            "key": 1584057600000,
+            "doc_count": 99
+        },
+        "2020-03-25": {
+            "key_as_string": "2020-03-25",
+            "key": 1585094400000,
+            "doc_count": 69
+        },
+        "2020-04-22": {
+            "key_as_string": "2020-04-22",
+            "key": 1587513600000,
+            "doc_count": 57
+        },
+        "2020-04-23": {
+            "key_as_string": "2020-04-23",
+            "key": 1587600000000,
+            "doc_count": 133
+        },
+        "2020-05-06": {
+            "key_as_string": "2020-05-06",
+            "key": 1588723200000,
+            "doc_count": 74
+        },
+        "2020-05-07": {
+            "key_as_string": "2020-05-07",
+            "key": 1588809600000,
+            "doc_count": 168
+        },
+        "2020-05-13": {
+            "key_as_string": "2020-05-13",
+            "key": 1589328000000,
+            "doc_count": 70
+        },
+        "2020-05-14": {
+            "key_as_string": "2020-05-14",
+            "key": 1589414400000,
+            "doc_count": 214
+        },
+        "2020-05-15": {
+            "key_as_string": "2020-05-15",
+            "key": 1589500800000,
+            "doc_count": 131
+        },
+        "2020-05-27": {
+            "key_as_string": "2020-05-27",
+            "key": 1590537600000,
+            "doc_count": 75
+        },
+        "2020-05-28": {
+            "key_as_string": "2020-05-28",
+            "key": 1590624000000,
+            "doc_count": 172
+        },
+        "2020-05-29": {
+            "key_as_string": "2020-05-29",
+            "key": 1590710400000,
+            "doc_count": 122
+        },
+        "2020-06-17": {
+            "key_as_string": "2020-06-17",
+            "key": 1592352000000,
+            "doc_count": 88
+        },
+        "2020-06-18": {
+            "key_as_string": "2020-06-18",
+            "key": 1592438400000,
+            "doc_count": 199
+        },
+        "2020-06-19": {
+            "key_as_string": "2020-06-19",
+            "key": 1592524800000,
+            "doc_count": 126
+        },
+        "2020-06-29": {
+            "key_as_string": "2020-06-29",
+            "key": 1593388800000,
+            "doc_count": 22
+        },
+        "2020-07-01": {
+            "key_as_string": "2020-07-01",
+            "key": 1593561600000,
+            "doc_count": 66
+        },
+        "2020-07-02": {
+            "key_as_string": "2020-07-02",
+            "key": 1593648000000,
+            "doc_count": 204
+        },
+        "2020-07-03": {
+            "key_as_string": "2020-07-03",
+            "key": 1593734400000,
+            "doc_count": 126
+        },
+        "2020-09-09": {
+            "key_as_string": "2020-09-09",
+            "key": 1599609600000,
+            "doc_count": 67
+        },
+        "2020-09-10": {
+            "key_as_string": "2020-09-10",
+            "key": 1599696000000,
+            "doc_count": 199
+        },
+        "2020-09-11": {
+            "key_as_string": "2020-09-11",
+            "key": 1599782400000,
+            "doc_count": 130
+        },
+        "2020-09-16": {
+            "key_as_string": "2020-09-16",
+            "key": 1600214400000,
+            "doc_count": 66
+        },
+        "2020-09-17": {
+            "key_as_string": "2020-09-17",
+            "key": 1600300800000,
+            "doc_count": 195
+        },
+        "2020-09-18": {
+            "key_as_string": "2020-09-18",
+            "key": 1600387200000,
+            "doc_count": 139
+        },
+        "2020-09-29": {
+            "key_as_string": "2020-09-29",
+            "key": 1601337600000,
+            "doc_count": 82
+        },
+        "2020-09-30": {
+            "key_as_string": "2020-09-30",
+            "key": 1601424000000,
+            "doc_count": 80
+        },
+        "2020-10-01": {
+            "key_as_string": "2020-10-01",
+            "key": 1601510400000,
+            "doc_count": 125
+        },
+        "2020-10-02": {
+            "key_as_string": "2020-10-02",
+            "key": 1601596800000,
+            "doc_count": 59
+        },
+        "2020-10-07": {
+            "key_as_string": "2020-10-07",
+            "key": 1602028800000,
+            "doc_count": 66
+        },
+        "2020-10-08": {
+            "key_as_string": "2020-10-08",
+            "key": 1602115200000,
+            "doc_count": 203
+        },
+        "2020-10-09": {
+            "key_as_string": "2020-10-09",
+            "key": 1602201600000,
+            "doc_count": 122
+        },
+        "2020-10-28": {
+            "key_as_string": "2020-10-28",
+            "key": 1603843200000,
+            "doc_count": 71
+        },
+        "2020-10-29": {
+            "key_as_string": "2020-10-29",
+            "key": 1603929600000,
+            "doc_count": 190
+        },
+        "2020-10-30": {
+            "key_as_string": "2020-10-30",
+            "key": 1604016000000,
+            "doc_count": 118
+        },
+        "2020-11-04": {
+            "key_as_string": "2020-11-04",
+            "key": 1604448000000,
+            "doc_count": 55
+        },
+        "2020-11-05": {
+            "key_as_string": "2020-11-05",
+            "key": 1604534400000,
+            "doc_count": 203
+        },
+        "2020-11-06": {
+            "key_as_string": "2020-11-06",
+            "key": 1604620800000,
+            "doc_count": 99
+        },
+        "2020-11-18": {
+            "key_as_string": "2020-11-18",
+            "key": 1605657600000,
+            "doc_count": 67
+        },
+        "2020-11-19": {
+            "key_as_string": "2020-11-19",
+            "key": 1605744000000,
+            "doc_count": 185
+        },
+        "2020-11-20": {
+            "key_as_string": "2020-11-20",
+            "key": 1605830400000,
+            "doc_count": 106
+        },
+        "2020-11-25": {
+            "key_as_string": "2020-11-25",
+            "key": 1606262400000,
+            "doc_count": 60
+        },
+        "2020-11-26": {
+            "key_as_string": "2020-11-26",
+            "key": 1606348800000,
+            "doc_count": 169
+        },
+        "2020-11-27": {
+            "key_as_string": "2020-11-27",
+            "key": 1606435200000,
+            "doc_count": 98
+        },
+        "2020-12-08": {
+            "key_as_string": "2020-12-08",
+            "key": 1607385600000,
+            "doc_count": 100
+        },
+        "2020-12-09": {
+            "key_as_string": "2020-12-09",
+            "key": 1607472000000,
+            "doc_count": 88
+        },
+        "2020-12-10": {
+            "key_as_string": "2020-12-10",
+            "key": 1607558400000,
+            "doc_count": 109
+        },
+        "2020-12-11": {
+            "key_as_string": "2020-12-11",
+            "key": 1607644800000,
+            "doc_count": 44
+        },
+        "2020-12-16": {
+            "key_as_string": "2020-12-16",
+            "key": 1608076800000,
+            "doc_count": 70
+        },
+        "2020-12-17": {
+            "key_as_string": "2020-12-17",
+            "key": 1608163200000,
+            "doc_count": 186
+        },
+        "2021-01-13": {
+            "key_as_string": "2021-01-13",
+            "key": 1610496000000,
+            "doc_count": 73
+        },
+        "2021-01-14": {
+            "key_as_string": "2021-01-14",
+            "key": 1610582400000,
+            "doc_count": 183
+        },
+        "2021-01-27": {
+            "key_as_string": "2021-01-27",
+            "key": 1611705600000,
+            "doc_count": 74
+        },
+        "2021-01-28": {
+            "key_as_string": "2021-01-28",
+            "key": 1611792000000,
+            "doc_count": 199
+        },
+        "2021-01-29": {
+            "key_as_string": "2021-01-29",
+            "key": 1611878400000,
+            "doc_count": 117
+        },
+        "2021-02-10": {
+            "key_as_string": "2021-02-10",
+            "key": 1612915200000,
+            "doc_count": 42
+        },
+        "2021-02-11": {
+            "key_as_string": "2021-02-11",
+            "key": 1613001600000,
+            "doc_count": 180
+        },
+        "2021-02-12": {
+            "key_as_string": "2021-02-12",
+            "key": 1613088000000,
+            "doc_count": 103
+        },
+        "2021-02-24": {
+            "key_as_string": "2021-02-24",
+            "key": 1614124800000,
+            "doc_count": 59
+        },
+        "2021-02-25": {
+            "key_as_string": "2021-02-25",
+            "key": 1614211200000,
+            "doc_count": 145
+        },
+        "2021-02-26": {
+            "key_as_string": "2021-02-26",
+            "key": 1614297600000,
+            "doc_count": 102
+        },
+        "2021-03-03": {
+            "key_as_string": "2021-03-03",
+            "key": 1614729600000,
+            "doc_count": 77
+        },
+        "2021-03-04": {
+            "key_as_string": "2021-03-04",
+            "key": 1614816000000,
+            "doc_count": 203
+        },
+        "2021-03-05": {
+            "key_as_string": "2021-03-05",
+            "key": 1614902400000,
+            "doc_count": 137
+        },
+        "2021-03-24": {
+            "key_as_string": "2021-03-24",
+            "key": 1616544000000,
+            "doc_count": 72
+        },
+        "2021-03-25": {
+            "key_as_string": "2021-03-25",
+            "key": 1616630400000,
+            "doc_count": 222
+        },
+        "2021-03-26": {
+            "key_as_string": "2021-03-26",
+            "key": 1616716800000,
+            "doc_count": 132
+        },
+        "2021-04-14": {
+            "key_as_string": "2021-04-14",
+            "key": 1618358400000,
+            "doc_count": 53
+        },
+        "2021-04-15": {
+            "key_as_string": "2021-04-15",
+            "key": 1618444800000,
+            "doc_count": 209
+        },
+        "2021-04-16": {
+            "key_as_string": "2021-04-16",
+            "key": 1618531200000,
+            "doc_count": 106
+        },
+        "2021-04-21": {
+            "key_as_string": "2021-04-21",
+            "key": 1618963200000,
+            "doc_count": 114
+        },
+        "2021-04-22": {
+            "key_as_string": "2021-04-22",
+            "key": 1619049600000,
+            "doc_count": 224
+        },
+        "2021-04-23": {
+            "key_as_string": "2021-04-23",
+            "key": 1619136000000,
+            "doc_count": 126
+        },
+        "2021-05-05": {
+            "key_as_string": "2021-05-05",
+            "key": 1620172800000,
+            "doc_count": 65
+        },
+        "2021-05-06": {
+            "key_as_string": "2021-05-06",
+            "key": 1620259200000,
+            "doc_count": 224
+        },
+        "2021-05-07": {
+            "key_as_string": "2021-05-07",
+            "key": 1620345600000,
+            "doc_count": 119
+        },
+        "2021-05-19": {
+            "key_as_string": "2021-05-19",
+            "key": 1621382400000,
+            "doc_count": 89
+        },
+        "2021-05-20": {
+            "key_as_string": "2021-05-20",
+            "key": 1621468800000,
+            "doc_count": 230
+        },
+        "2021-05-21": {
+            "key_as_string": "2021-05-21",
+            "key": 1621555200000,
+            "doc_count": 146
+        },
+        "2021-06-09": {
+            "key_as_string": "2021-06-09",
+            "key": 1623196800000,
+            "doc_count": 81
+        },
+        "2021-06-10": {
+            "key_as_string": "2021-06-10",
+            "key": 1623283200000,
+            "doc_count": 206
+        },
+        "2021-06-11": {
+            "key_as_string": "2021-06-11",
+            "key": 1623369600000,
+            "doc_count": 149
+        },
+        "2021-06-23": {
+            "key_as_string": "2021-06-23",
+            "key": 1624406400000,
+            "doc_count": 64
+        },
+        "2021-06-24": {
+            "key_as_string": "2021-06-24",
+            "key": 1624492800000,
+            "doc_count": 205
+        },
+        "2021-06-25": {
+            "key_as_string": "2021-06-25",
+            "key": 1624579200000,
+            "doc_count": 125
+        },
+        "2021-08-25": {
+            "key_as_string": "2021-08-25",
+            "key": 1629849600000,
+            "doc_count": 66
+        },
+        "2021-09-07": {
+            "key_as_string": "2021-09-07",
+            "key": 1630972800000,
+            "doc_count": 54
+        },
+        "2021-10-26": {
+            "key_as_string": "2021-10-26",
+            "key": 1635206400000,
+            "doc_count": 14
+        },
+        "2021-11-11": {
+            "key_as_string": "2021-11-11",
+            "key": 1636588800000,
+            "doc_count": 95
+        },
+        "2021-11-18": {
+            "key_as_string": "2021-11-18",
+            "key": 1637193600000,
+            "doc_count": 83
+        },
+        "2021-12-07": {
+            "key_as_string": "2021-12-07",
+            "key": 1638835200000,
+            "doc_count": 19
+        },
+        "2021-12-08": {
+            "key_as_string": "2021-12-08",
+            "key": 1638921600000,
+            "doc_count": 5
+        },
+        "2021-12-09": {
+            "key_as_string": "2021-12-09",
+            "key": 1639008000000,
+            "doc_count": 76
+        },
+        "2021-12-10": {
+            "key_as_string": "2021-12-10",
+            "key": 1639094400000,
+            "doc_count": 18
+        },
+        "2021-12-15": {
+            "key_as_string": "2021-12-15",
+            "key": 1639526400000,
+            "doc_count": 21
+        },
+        "2021-12-16": {
+            "key_as_string": "2021-12-16",
+            "key": 1639612800000,
+            "doc_count": 106
+        },
+        "2022-01-12": {
+            "key_as_string": "2022-01-12",
+            "key": 1641945600000,
+            "doc_count": 67
+        },
+        "2022-01-13": {
+            "key_as_string": "2022-01-13",
+            "key": 1642032000000,
+            "doc_count": 156
+        },
+        "2022-01-14": {
+            "key_as_string": "2022-01-14",
+            "key": 1642118400000,
+            "doc_count": 80
+        },
+        "2022-01-26": {
+            "key_as_string": "2022-01-26",
+            "key": 1643155200000,
+            "doc_count": 46
+        },
+        "2022-01-27": {
+            "key_as_string": "2022-01-27",
+            "key": 1643241600000,
+            "doc_count": 113
+        },
+        "2022-01-28": {
+            "key_as_string": "2022-01-28",
+            "key": 1643328000000,
+            "doc_count": 67
+        },
+        "2022-02-13": {
+            "key_as_string": "2022-02-13",
+            "key": 1644710400000,
+            "doc_count": 6
+        },
+        "2022-02-16": {
+            "key_as_string": "2022-02-16",
+            "key": 1644969600000,
+            "doc_count": 16
+        },
+        "2022-02-17": {
+            "key_as_string": "2022-02-17",
+            "key": 1645056000000,
+            "doc_count": 199
+        },
+        "2022-02-18": {
+            "key_as_string": "2022-02-18",
+            "key": 1645142400000,
+            "doc_count": 107
+        },
+        "2022-02-27": {
+            "key_as_string": "2022-02-27",
+            "key": 1645920000000,
+            "doc_count": 28
+        },
+        "2022-03-16": {
+            "key_as_string": "2022-03-16",
+            "key": 1647388800000,
+            "doc_count": 74
+        },
+        "2022-03-17": {
+            "key_as_string": "2022-03-17",
+            "key": 1647475200000,
+            "doc_count": 194
+        },
+        "2022-03-18": {
+            "key_as_string": "2022-03-18",
+            "key": 1647561600000,
+            "doc_count": 104
+        },
+        "2022-03-22": {
+            "key_as_string": "2022-03-22",
+            "key": 1647907200000,
+            "doc_count": 85
+        },
+        "2022-03-23": {
+            "key_as_string": "2022-03-23",
+            "key": 1647993600000,
+            "doc_count": 87
+        },
+        "2022-03-24": {
+            "key_as_string": "2022-03-24",
+            "key": 1648080000000,
+            "doc_count": 134
+        },
+        "2022-03-25": {
+            "key_as_string": "2022-03-25",
+            "key": 1648166400000,
+            "doc_count": 71
+        },
+        "2022-04-06": {
+            "key_as_string": "2022-04-06",
+            "key": 1649203200000,
+            "doc_count": 57
+        },
+        "2022-04-07": {
+            "key_as_string": "2022-04-07",
+            "key": 1649289600000,
+            "doc_count": 194
+        },
+        "2022-04-08": {
+            "key_as_string": "2022-04-08",
+            "key": 1649376000000,
+            "doc_count": 65
+        },
+        "2022-04-27": {
+            "key_as_string": "2022-04-27",
+            "key": 1651017600000,
+            "doc_count": 61
+        },
+        "2022-04-28": {
+            "key_as_string": "2022-04-28",
+            "key": 1651104000000,
+            "doc_count": 181
+        },
+        "2022-04-29": {
+            "key_as_string": "2022-04-29",
+            "key": 1651190400000,
+            "doc_count": 72
+        },
+        "2022-05-11": {
+            "key_as_string": "2022-05-11",
+            "key": 1652227200000,
+            "doc_count": 58
+        },
+        "2022-05-12": {
+            "key_as_string": "2022-05-12",
+            "key": 1652313600000,
+            "doc_count": 236
+        },
+        "2022-05-13": {
+            "key_as_string": "2022-05-13",
+            "key": 1652400000000,
+            "doc_count": 102
+        },
+        "2022-05-18": {
+            "key_as_string": "2022-05-18",
+            "key": 1652832000000,
+            "doc_count": 73
+        },
+        "2022-05-19": {
+            "key_as_string": "2022-05-19",
+            "key": 1652918400000,
+            "doc_count": 220
+        },
+        "2022-05-20": {
+            "key_as_string": "2022-05-20",
+            "key": 1653004800000,
+            "doc_count": 69
+        },
+        "2022-05-31": {
+            "key_as_string": "2022-05-31",
+            "key": 1653955200000,
+            "doc_count": 113
+        },
+        "2022-06-01": {
+            "key_as_string": "2022-06-01",
+            "key": 1654041600000,
+            "doc_count": 94
+        },
+        "2022-06-02": {
+            "key_as_string": "2022-06-02",
+            "key": 1654128000000,
+            "doc_count": 137
+        },
+        "2022-06-03": {
+            "key_as_string": "2022-06-03",
+            "key": 1654214400000,
+            "doc_count": 89
+        },
+        "2022-06-22": {
+            "key_as_string": "2022-06-22",
+            "key": 1655856000000,
+            "doc_count": 53
+        },
+        "2022-06-23": {
+            "key_as_string": "2022-06-23",
+            "key": 1655942400000,
+            "doc_count": 221
+        },
+        "2022-06-24": {
+            "key_as_string": "2022-06-24",
+            "key": 1656028800000,
+            "doc_count": 116
+        },
+        "2022-07-06": {
+            "key_as_string": "2022-07-06",
+            "key": 1657065600000,
+            "doc_count": 72
+        },
+        "2022-07-07": {
+            "key_as_string": "2022-07-07",
+            "key": 1657152000000,
+            "doc_count": 231
+        },
+        "2022-07-08": {
+            "key_as_string": "2022-07-08",
+            "key": 1657238400000,
+            "doc_count": 120
+        },
+        "2022-09-06": {
+            "key_as_string": "2022-09-06",
+            "key": 1662422400000,
+            "doc_count": 111
+        },
+        "2022-09-07": {
+            "key_as_string": "2022-09-07",
+            "key": 1662508800000,
+            "doc_count": 91
+        },
+        "2022-09-08": {
+            "key_as_string": "2022-09-08",
+            "key": 1662595200000,
+            "doc_count": 178
+        },
+        "2022-09-09": {
+            "key_as_string": "2022-09-09",
+            "key": 1662681600000,
+            "doc_count": 43
+        },
+        "2022-09-21": {
+            "key_as_string": "2022-09-21",
+            "key": 1663718400000,
+            "doc_count": 71
+        },
+        "2022-09-22": {
+            "key_as_string": "2022-09-22",
+            "key": 1663804800000,
+            "doc_count": 223
+        },
+        "2022-09-23": {
+            "key_as_string": "2022-09-23",
+            "key": 1663891200000,
+            "doc_count": 109
+        },
+        "2022-09-28": {
+            "key_as_string": "2022-09-28",
+            "key": 1664323200000,
+            "doc_count": 64
+        },
+        "2022-09-29": {
+            "key_as_string": "2022-09-29",
+            "key": 1664409600000,
+            "doc_count": 207
+        },
+        "2022-09-30": {
+            "key_as_string": "2022-09-30",
+            "key": 1664496000000,
+            "doc_count": 82
+        },
+        "2022-10-12": {
+            "key_as_string": "2022-10-12",
+            "key": 1665532800000,
+            "doc_count": 62
+        },
+        "2022-10-13": {
+            "key_as_string": "2022-10-13",
+            "key": 1665619200000,
+            "doc_count": 211
+        },
+        "2022-10-14": {
+            "key_as_string": "2022-10-14",
+            "key": 1665705600000,
+            "doc_count": 98
+        },
+        "2022-10-19": {
+            "key_as_string": "2022-10-19",
+            "key": 1666137600000,
+            "doc_count": 67
+        },
+        "2022-10-20": {
+            "key_as_string": "2022-10-20",
+            "key": 1666224000000,
+            "doc_count": 194
+        },
+        "2022-10-21": {
+            "key_as_string": "2022-10-21",
+            "key": 1666310400000,
+            "doc_count": 92
+        },
+        "2022-11-09": {
+            "key_as_string": "2022-11-09",
+            "key": 1667952000000,
+            "doc_count": 71
+        },
+        "2022-11-10": {
+            "key_as_string": "2022-11-10",
+            "key": 1668038400000,
+            "doc_count": 242
+        },
+        "2022-11-11": {
+            "key_as_string": "2022-11-11",
+            "key": 1668124800000,
+            "doc_count": 111
+        },
+        "2022-11-22": {
+            "key_as_string": "2022-11-22",
+            "key": 1669075200000,
+            "doc_count": 127
+        },
+        "2022-11-23": {
+            "key_as_string": "2022-11-23",
+            "key": 1669161600000,
+            "doc_count": 88
+        },
+        "2022-11-24": {
+            "key_as_string": "2022-11-24",
+            "key": 1669248000000,
+            "doc_count": 170
+        },
+        "2022-11-25": {
+            "key_as_string": "2022-11-25",
+            "key": 1669334400000,
+            "doc_count": 65
+        },
+        "2022-11-30": {
+            "key_as_string": "2022-11-30",
+            "key": 1669766400000,
+            "doc_count": 60
+        },
+        "2022-12-01": {
+            "key_as_string": "2022-12-01",
+            "key": 1669852800000,
+            "doc_count": 239
+        },
+        "2022-12-02": {
+            "key_as_string": "2022-12-02",
+            "key": 1669939200000,
+            "doc_count": 121
+        },
+        "2022-12-14": {
+            "key_as_string": "2022-12-14",
+            "key": 1670976000000,
+            "doc_count": 85
+        },
+        "2022-12-15": {
+            "key_as_string": "2022-12-15",
+            "key": 1671062400000,
+            "doc_count": 216
+        },
+        "2022-12-16": {
+            "key_as_string": "2022-12-16",
+            "key": 1671148800000,
+            "doc_count": 94
+        },
+        "2023-01-18": {
+            "key_as_string": "2023-01-18",
+            "key": 1674000000000,
+            "doc_count": 67
+        },
+        "2023-01-19": {
+            "key_as_string": "2023-01-19",
+            "key": 1674086400000,
+            "doc_count": 178
+        },
+        "2023-01-20": {
+            "key_as_string": "2023-01-20",
+            "key": 1674172800000,
+            "doc_count": 96
+        },
+        "2023-01-25": {
+            "key_as_string": "2023-01-25",
+            "key": 1674604800000,
+            "doc_count": 55
+        },
+        "2023-01-26": {
+            "key_as_string": "2023-01-26",
+            "key": 1674691200000,
+            "doc_count": 179
+        },
+        "2023-01-27": {
+            "key_as_string": "2023-01-27",
+            "key": 1674777600000,
+            "doc_count": 64
+        },
+        "2023-02-08": {
+            "key_as_string": "2023-02-08",
+            "key": 1675814400000,
+            "doc_count": 59
+        },
+        "2023-02-09": {
+            "key_as_string": "2023-02-09",
+            "key": 1675900800000,
+            "doc_count": 202
+        },
+        "2023-02-10": {
+            "key_as_string": "2023-02-10",
+            "key": 1675987200000,
+            "doc_count": 101
+        },
+        "2023-03-01": {
+            "key_as_string": "2023-03-01",
+            "key": 1677628800000,
+            "doc_count": 50
+        },
+        "2023-03-02": {
+            "key_as_string": "2023-03-02",
+            "key": 1677715200000,
+            "doc_count": 185
+        },
+        "2023-03-03": {
+            "key_as_string": "2023-03-03",
+            "key": 1677801600000,
+            "doc_count": 104
+        },
+        "2023-03-15": {
+            "key_as_string": "2023-03-15",
+            "key": 1678838400000,
+            "doc_count": 59
+        },
+        "2023-03-16": {
+            "key_as_string": "2023-03-16",
+            "key": 1678924800000,
+            "doc_count": 204
+        },
+        "2023-03-17": {
+            "key_as_string": "2023-03-17",
+            "key": 1679011200000,
+            "doc_count": 108
+        },
+        "2023-03-29": {
+            "key_as_string": "2023-03-29",
+            "key": 1680048000000,
+            "doc_count": 56
+        },
+        "2023-03-30": {
+            "key_as_string": "2023-03-30",
+            "key": 1680134400000,
+            "doc_count": 164
+        },
+        "2023-03-31": {
+            "key_as_string": "2023-03-31",
+            "key": 1680220800000,
+            "doc_count": 104
+        },
+        "2023-04-19": {
+            "key_as_string": "2023-04-19",
+            "key": 1681862400000,
+            "doc_count": 56
+        },
+        "2023-04-20": {
+            "key_as_string": "2023-04-20",
+            "key": 1681948800000,
+            "doc_count": 204
+        },
+        "2023-04-21": {
+            "key_as_string": "2023-04-21",
+            "key": 1682035200000,
+            "doc_count": 83
+        },
+        "2023-04-26": {
+            "key_as_string": "2023-04-26",
+            "key": 1682467200000,
+            "doc_count": 68
+        },
+        "2023-04-27": {
+            "key_as_string": "2023-04-27",
+            "key": 1682553600000,
+            "doc_count": 188
+        },
+        "2023-04-28": {
+            "key_as_string": "2023-04-28",
+            "key": 1682640000000,
+            "doc_count": 83
+        },
+        "2023-05-10": {
+            "key_as_string": "2023-05-10",
+            "key": 1683676800000,
+            "doc_count": 64
+        },
+        "2023-05-11": {
+            "key_as_string": "2023-05-11",
+            "key": 1683763200000,
+            "doc_count": 216
+        },
+        "2023-05-12": {
+            "key_as_string": "2023-05-12",
+            "key": 1683849600000,
+            "doc_count": 106
+        },
+        "2023-05-24": {
+            "key_as_string": "2023-05-24",
+            "key": 1684886400000,
+            "doc_count": 72
+        },
+        "2023-05-25": {
+            "key_as_string": "2023-05-25",
+            "key": 1684972800000,
+            "doc_count": 188
+        },
+        "2023-05-26": {
+            "key_as_string": "2023-05-26",
+            "key": 1685059200000,
+            "doc_count": 115
+        },
+        "2023-06-14": {
+            "key_as_string": "2023-06-14",
+            "key": 1686700800000,
+            "doc_count": 58
+        },
+        "2023-06-15": {
+            "key_as_string": "2023-06-15",
+            "key": 1686787200000,
+            "doc_count": 244
+        },
+        "2023-06-16": {
+            "key_as_string": "2023-06-16",
+            "key": 1686873600000,
+            "doc_count": 92
+        },
+        "2023-06-21": {
+            "key_as_string": "2023-06-21",
+            "key": 1687305600000,
+            "doc_count": 75
+        },
+        "2023-06-22": {
+            "key_as_string": "2023-06-22",
+            "key": 1687392000000,
+            "doc_count": 197
+        },
+        "2023-06-23": {
+            "key_as_string": "2023-06-23",
+            "key": 1687478400000,
+            "doc_count": 152
+        },
+        "2023-07-05": {
+            "key_as_string": "2023-07-05",
+            "key": 1688515200000,
+            "doc_count": 55
+        },
+        "2023-07-06": {
+            "key_as_string": "2023-07-06",
+            "key": 1688601600000,
+            "doc_count": 159
+        },
+        "2023-07-07": {
+            "key_as_string": "2023-07-07",
+            "key": 1688688000000,
+            "doc_count": 94
+        },
+        "2023-09-05": {
+            "key_as_string": "2023-09-05",
+            "key": 1693872000000,
+            "doc_count": 119
+        },
+        "2023-09-06": {
+            "key_as_string": "2023-09-06",
+            "key": 1693958400000,
+            "doc_count": 98
+        },
+        "2023-09-07": {
+            "key_as_string": "2023-09-07",
+            "key": 1694044800000,
+            "doc_count": 151
+        },
+        "2023-09-08": {
+            "key_as_string": "2023-09-08",
+            "key": 1694131200000,
+            "doc_count": 73
+        },
+        "2023-09-20": {
+            "key_as_string": "2023-09-20",
+            "key": 1695168000000,
+            "doc_count": 71
+        },
+        "2023-09-21": {
+            "key_as_string": "2023-09-21",
+            "key": 1695254400000,
+            "doc_count": 261
+        },
+        "2023-09-22": {
+            "key_as_string": "2023-09-22",
+            "key": 1695340800000,
+            "doc_count": 101
+        },
+        "2023-09-27": {
+            "key_as_string": "2023-09-27",
+            "key": 1695772800000,
+            "doc_count": 63
+        },
+        "2023-09-28": {
+            "key_as_string": "2023-09-28",
+            "key": 1695859200000,
+            "doc_count": 218
+        },
+        "2023-09-29": {
+            "key_as_string": "2023-09-29",
+            "key": 1695945600000,
+            "doc_count": 75
+        },
+        "2023-10-11": {
+            "key_as_string": "2023-10-11",
+            "key": 1696982400000,
+            "doc_count": 61
+        },
+        "2023-10-12": {
+            "key_as_string": "2023-10-12",
+            "key": 1697068800000,
+            "doc_count": 229
+        },
+        "2023-10-13": {
+            "key_as_string": "2023-10-13",
+            "key": 1697155200000,
+            "doc_count": 96
+        },
+        "2023-10-18": {
+            "key_as_string": "2023-10-18",
+            "key": 1697587200000,
+            "doc_count": 63
+        },
+        "2023-10-19": {
+            "key_as_string": "2023-10-19",
+            "key": 1697673600000,
+            "doc_count": 233
+        },
+        "2023-10-20": {
+            "key_as_string": "2023-10-20",
+            "key": 1697760000000,
+            "doc_count": 91
+        },
+        "2023-11-08": {
+            "key_as_string": "2023-11-08",
+            "key": 1699401600000,
+            "doc_count": 61
+        },
+        "2023-11-09": {
+            "key_as_string": "2023-11-09",
+            "key": 1699488000000,
+            "doc_count": 236
+        },
+        "2023-11-10": {
+            "key_as_string": "2023-11-10",
+            "key": 1699574400000,
+            "doc_count": 105
+        },
+        "2023-11-15": {
+            "key_as_string": "2023-11-15",
+            "key": 1700006400000,
+            "doc_count": 74
+        },
+        "2023-11-16": {
+            "key_as_string": "2023-11-16",
+            "key": 1700092800000,
+            "doc_count": 228
+        },
+        "2023-11-17": {
+            "key_as_string": "2023-11-17",
+            "key": 1700179200000,
+            "doc_count": 166
+        },
+        "2023-11-28": {
+            "key_as_string": "2023-11-28",
+            "key": 1701129600000,
+            "doc_count": 21
+        },
+        "2023-11-29": {
+            "key_as_string": "2023-11-29",
+            "key": 1701216000000,
+            "doc_count": 51
+        },
+        "2023-11-30": {
+            "key_as_string": "2023-11-30",
+            "key": 1701302400000,
+            "doc_count": 204
+        },
+        "2023-12-01": {
+            "key_as_string": "2023-12-01",
+            "key": 1701388800000,
+            "doc_count": 104
+        },
+        "2023-12-13": {
+            "key_as_string": "2023-12-13",
+            "key": 1702425600000,
+            "doc_count": 70
+        },
+        "2023-12-14": {
+            "key_as_string": "2023-12-14",
+            "key": 1702512000000,
+            "doc_count": 181
+        },
+        "2023-12-15": {
+            "key_as_string": "2023-12-15",
+            "key": 1702598400000,
+            "doc_count": 92
+        },
+        "2024-01-17": {
+            "key_as_string": "2024-01-17",
+            "key": 1705449600000,
+            "doc_count": 70
+        },
+        "2024-01-18": {
+            "key_as_string": "2024-01-18",
+            "key": 1705536000000,
+            "doc_count": 226
+        },
+        "2024-01-19": {
+            "key_as_string": "2024-01-19",
+            "key": 1705622400000,
+            "doc_count": 83
+        },
+        "2024-01-22": {
+            "key_as_string": "2024-01-22",
+            "key": 1705881600000,
+            "doc_count": 6
+        },
+        "2024-01-30": {
+            "key_as_string": "2024-01-30",
+            "key": 1706572800000,
+            "doc_count": 149
+        },
+        "2024-01-31": {
+            "key_as_string": "2024-01-31",
+            "key": 1706659200000,
+            "doc_count": 116
+        },
+        "2024-02-01": {
+            "key_as_string": "2024-02-01",
+            "key": 1706745600000,
+            "doc_count": 159
+        },
+        "2024-02-02": {
+            "key_as_string": "2024-02-02",
+            "key": 1706832000000,
+            "doc_count": 47
+        },
+        "2024-02-21": {
+            "key_as_string": "2024-02-21",
+            "key": 1708473600000,
+            "doc_count": 62
+        },
+        "2024-02-22": {
+            "key_as_string": "2024-02-22",
+            "key": 1708560000000,
+            "doc_count": 242
+        },
+        "2024-02-23": {
+            "key_as_string": "2024-02-23",
+            "key": 1708646400000,
+            "doc_count": 129
+        },
+        "2024-03-13": {
+            "key_as_string": "2024-03-13",
+            "key": 1710288000000,
+            "doc_count": 53
+        },
+        "2024-03-14": {
+            "key_as_string": "2024-03-14",
+            "key": 1710374400000,
+            "doc_count": 195
+        },
+        "2024-03-15": {
+            "key_as_string": "2024-03-15",
+            "key": 1710460800000,
+            "doc_count": 69
+        },
+        "2024-03-20": {
+            "key_as_string": "2024-03-20",
+            "key": 1710892800000,
+            "doc_count": 66
+        },
+        "2024-03-21": {
+            "key_as_string": "2024-03-21",
+            "key": 1710979200000,
+            "doc_count": 228
+        },
+        "2024-03-22": {
+            "key_as_string": "2024-03-22",
+            "key": 1711065600000,
+            "doc_count": 84
+        },
+        "2024-04-10": {
+            "key_as_string": "2024-04-10",
+            "key": 1712707200000,
+            "doc_count": 66
+        },
+        "2024-04-11": {
+            "key_as_string": "2024-04-11",
+            "key": 1712793600000,
+            "doc_count": 197
+        },
+        "2024-04-12": {
+            "key_as_string": "2024-04-12",
+            "key": 1712880000000,
+            "doc_count": 116
+        },
+        "2024-04-24": {
+            "key_as_string": "2024-04-24",
+            "key": 1713916800000,
+            "doc_count": 74
+        },
+        "2024-04-25": {
+            "key_as_string": "2024-04-25",
+            "key": 1714003200000,
+            "doc_count": 199
+        },
+        "2024-04-26": {
+            "key_as_string": "2024-04-26",
+            "key": 1714089600000,
+            "doc_count": 95
+        },
+        "2024-05-15": {
+            "key_as_string": "2024-05-15",
+            "key": 1715731200000,
+            "doc_count": 65
+        },
+        "2024-05-16": {
+            "key_as_string": "2024-05-16",
+            "key": 1715817600000,
+            "doc_count": 247
+        },
+        "2024-05-17": {
+            "key_as_string": "2024-05-17",
+            "key": 1715904000000,
+            "doc_count": 98
+        },
+        "2024-06-05": {
+            "key_as_string": "2024-06-05",
+            "key": 1717545600000,
+            "doc_count": 45
+        },
+        "2024-06-06": {
+            "key_as_string": "2024-06-06",
+            "key": 1717632000000,
+            "doc_count": 218
+        },
+        "2024-06-07": {
+            "key_as_string": "2024-06-07",
+            "key": 1717718400000,
+            "doc_count": 85
+        },
+        "2024-06-11": {
+            "key_as_string": "2024-06-11",
+            "key": 1718064000000,
+            "doc_count": 2
+        },
+        "2024-06-12": {
+            "key_as_string": "2024-06-12",
+            "key": 1718150400000,
+            "doc_count": 71
+        },
+        "2024-06-13": {
+            "key_as_string": "2024-06-13",
+            "key": 1718236800000,
+            "doc_count": 196
+        },
+        "2024-06-14": {
+            "key_as_string": "2024-06-14",
+            "key": 1718323200000,
+            "doc_count": 114
+        },
+        "2024-06-26": {
+            "key_as_string": "2024-06-26",
+            "key": 1719360000000,
+            "doc_count": 75
+        },
+        "2024-06-27": {
+            "key_as_string": "2024-06-27",
+            "key": 1719446400000,
+            "doc_count": 226
+        },
+        "2024-06-28": {
+            "key_as_string": "2024-06-28",
+            "key": 1719532800000,
+            "doc_count": 96
+        },
+        "2024-07-03": {
+            "key_as_string": "2024-07-03",
+            "key": 1719964800000,
+            "doc_count": 71
+        },
+        "2024-07-04": {
+            "key_as_string": "2024-07-04",
+            "key": 1720051200000,
+            "doc_count": 214
+        },
+        "2024-07-05": {
+            "key_as_string": "2024-07-05",
+            "key": 1720137600000,
+            "doc_count": 108
+        },
+        "2024-09-10": {
+            "key_as_string": "2024-09-10",
+            "key": 1725926400000,
+            "doc_count": 93
+        },
+        "2024-09-11": {
+            "key_as_string": "2024-09-11",
+            "key": 1726012800000,
+            "doc_count": 97
+        },
+        "2024-09-12": {
+            "key_as_string": "2024-09-12",
+            "key": 1726099200000,
+            "doc_count": 169
+        },
+        "2024-09-13": {
+            "key_as_string": "2024-09-13",
+            "key": 1726185600000,
+            "doc_count": 69
+        },
+        "2024-09-25": {
+            "key_as_string": "2024-09-25",
+            "key": 1727222400000,
+            "doc_count": 61
+        },
+        "2024-09-26": {
+            "key_as_string": "2024-09-26",
+            "key": 1727308800000,
+            "doc_count": 249
+        },
+        "2024-09-27": {
+            "key_as_string": "2024-09-27",
+            "key": 1727395200000,
+            "doc_count": 105
+        },
+        "2024-10-09": {
+            "key_as_string": "2024-10-09",
+            "key": 1728432000000,
+            "doc_count": 64
+        },
+        "2024-10-10": {
+            "key_as_string": "2024-10-10",
+            "key": 1728518400000,
+            "doc_count": 229
+        },
+        "2024-10-11": {
+            "key_as_string": "2024-10-11",
+            "key": 1728604800000,
+            "doc_count": 77
+        },
+        "2024-10-16": {
+            "key_as_string": "2024-10-16",
+            "key": 1729036800000,
+            "doc_count": 71
+        },
+        "2024-10-17": {
+            "key_as_string": "2024-10-17",
+            "key": 1729123200000,
+            "doc_count": 252
+        },
+        "2024-10-18": {
+            "key_as_string": "2024-10-18",
+            "key": 1729209600000,
+            "doc_count": 95
+        },
+        "2024-11-06": {
+            "key_as_string": "2024-11-06",
+            "key": 1730851200000,
+            "doc_count": 59
+        },
+        "2024-11-07": {
+            "key_as_string": "2024-11-07",
+            "key": 1730937600000,
+            "doc_count": 46
+        },
+        "2024-11-08": {
+            "key_as_string": "2024-11-08",
+            "key": 1731024000000,
+            "doc_count": 46
+        },
+        "2024-11-13": {
+            "key_as_string": "2024-11-13",
+            "key": 1731456000000,
+            "doc_count": 69
+        },
+        "2024-11-14": {
+            "key_as_string": "2024-11-14",
+            "key": 1731542400000,
+            "doc_count": 33
+        },
+        "2024-11-15": {
+            "key_as_string": "2024-11-15",
+            "key": 1731628800000,
+            "doc_count": 25
+        },
+        "2024-12-04": {
+            "key_as_string": "2024-12-04",
+            "key": 1733270400000,
+            "doc_count": 66
+        },
+        "2024-12-05": {
+            "key_as_string": "2024-12-05",
+            "key": 1733356800000,
+            "doc_count": 238
+        },
+        "2024-12-06": {
+            "key_as_string": "2024-12-06",
+            "key": 1733443200000,
+            "doc_count": 116
+        },
+        "2024-12-16": {
+            "key_as_string": "2024-12-16",
+            "key": 1734307200000,
+            "doc_count": 23
+        },
+        "2024-12-18": {
+            "key_as_string": "2024-12-18",
+            "key": 1734480000000,
+            "doc_count": 64
+        },
+        "2024-12-19": {
+            "key_as_string": "2024-12-19",
+            "key": 1734566400000,
+            "doc_count": 237
+        },
+        "2024-12-20": {
+            "key_as_string": "2024-12-20",
+            "key": 1734652800000,
+            "doc_count": 108
+        },
+        "2025-01-29": {
+            "key_as_string": "2025-01-29",
+            "key": 1738108800000,
+            "doc_count": 92
+        },
+        "2025-01-30": {
+            "key_as_string": "2025-01-30",
+            "key": 1738195200000,
+            "doc_count": 219
+        },
+        "2025-01-31": {
+            "key_as_string": "2025-01-31",
+            "key": 1738281600000,
+            "doc_count": 158
+        },
+        "2025-02-11": {
+            "key_as_string": "2025-02-11",
+            "key": 1739232000000,
+            "doc_count": 26
+        },
+        "2025-03-13": {
+            "key_as_string": "2025-03-13",
+            "key": 1741824000000,
+            "doc_count": 33
+        },
+        "2025-03-18": {
+            "key_as_string": "2025-03-18",
+            "key": 1742256000000,
+            "doc_count": 57
+        },
+        "2025-03-25": {
+            "key_as_string": "2025-03-25",
+            "key": 1742860800000,
+            "doc_count": 18
+        },
+        "2025-05-06": {
+            "key_as_string": "2025-05-06",
+            "key": 1746489600000,
+            "doc_count": 5
+        },
+        "2025-05-08": {
+            "key_as_string": "2025-05-08",
+            "key": 1746662400000,
+            "doc_count": 7
+        },
+        "2025-05-14": {
+            "key_as_string": "2025-05-14",
+            "key": 1747180800000,
+            "doc_count": 68
+        },
+        "2025-05-15": {
+            "key_as_string": "2025-05-15",
+            "key": 1747267200000,
+            "doc_count": 171
+        },
+        "2025-05-16": {
+            "key_as_string": "2025-05-16",
+            "key": 1747353600000,
+            "doc_count": 74
+        },
+        "2025-05-21": {
+            "key_as_string": "2025-05-21",
+            "key": 1747785600000,
+            "doc_count": 45
+        },
+        "2025-05-22": {
+            "key_as_string": "2025-05-22",
+            "key": 1747872000000,
+            "doc_count": 139
+        },
+        "2025-05-23": {
+            "key_as_string": "2025-05-23",
+            "key": 1747958400000,
+            "doc_count": 93
+        },
+        "2025-06-04": {
+            "key_as_string": "2025-06-04",
+            "key": 1748995200000,
+            "doc_count": 46
+        },
+        "2025-06-05": {
+            "key_as_string": "2025-06-05",
+            "key": 1749081600000,
+            "doc_count": 190
+        },
+        "2025-06-06": {
+            "key_as_string": "2025-06-06",
+            "key": 1749168000000,
+            "doc_count": 82
+        },
+        "2025-06-24": {
+            "key_as_string": "2025-06-24",
+            "key": 1750723200000,
+            "doc_count": 20
+        },
+        "2025-06-25": {
+            "key_as_string": "2025-06-25",
+            "key": 1750809600000,
+            "doc_count": 60
+        },
+        "2025-06-26": {
+            "key_as_string": "2025-06-26",
+            "key": 1750896000000,
+            "doc_count": 258
+        },
+        "2025-06-27": {
+            "key_as_string": "2025-06-27",
+            "key": 1750982400000,
+            "doc_count": 90
+        },
+        "2025-07-08": {
+            "key_as_string": "2025-07-08",
+            "key": 1751932800000,
+            "doc_count": 143
+        },
+        "2025-07-09": {
+            "key_as_string": "2025-07-09",
+            "key": 1752019200000,
+            "doc_count": 99
+        },
+        "2025-07-10": {
+            "key_as_string": "2025-07-10",
+            "key": 1752105600000,
+            "doc_count": 181
+        },
+        "2025-07-11": {
+            "key_as_string": "2025-07-11",
+            "key": 1752192000000,
+            "doc_count": 69
+        },
+        "2025-09-04": {
+            "key_as_string": "2025-09-04",
+            "key": 1756944000000,
+            "doc_count": 13
+        },
+        "2025-09-10": {
+            "key_as_string": "2025-09-10",
+            "key": 1757462400000,
+            "doc_count": 56
+        },
+        "2025-09-11": {
+            "key_as_string": "2025-09-11",
+            "key": 1757548800000,
+            "doc_count": 220
+        },
+        "2025-09-12": {
+            "key_as_string": "2025-09-12",
+            "key": 1757635200000,
+            "doc_count": 105
+        },
+        "2025-09-16": {
+            "key_as_string": "2025-09-16",
+            "key": 1757980800000,
+            "doc_count": 169
+        },
+        "2025-09-17": {
+            "key_as_string": "2025-09-17",
+            "key": 1758067200000,
+            "doc_count": 167
+        },
+        "2025-09-18": {
+            "key_as_string": "2025-09-18",
+            "key": 1758153600000,
+            "doc_count": 65
+        },
+        "2025-09-23": {
+            "key_as_string": "2025-09-23",
+            "key": 1758585600000,
+            "doc_count": 120
+        },
+        "2025-09-24": {
+            "key_as_string": "2025-09-24",
+            "key": 1758672000000,
+            "doc_count": 101
+        },
+        "2025-09-25": {
+            "key_as_string": "2025-09-25",
+            "key": 1758758400000,
+            "doc_count": 134
+        },
+        "2025-09-26": {
+            "key_as_string": "2025-09-26",
+            "key": 1758844800000,
+            "doc_count": 30
+        }
+    },
+    "electoralPeriods": [
+        {
+            "type": "electoralPeriod",
+            "id": "DE-018",
+            "attributes": {
+                "number": 18,
+                "dateStart": "2013-10-22",
+                "dateEnd": "2017-10-24",
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag"
+            }
+        },
+        {
+            "type": "electoralPeriod",
+            "id": "DE-019",
+            "attributes": {
+                "number": 19,
+                "dateStart": "2017-10-24",
+                "dateEnd": "2021-10-26",
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag"
+            }
+        },
+        {
+            "type": "electoralPeriod",
+            "id": "DE-020",
+            "attributes": {
+                "number": 20,
+                "dateStart": "2021-10-26",
+                "dateEnd": "2025-03-25",
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag"
+            }
+        },
+        {
+            "type": "electoralPeriod",
+            "id": "DE-021",
+            "attributes": {
+                "number": 21,
+                "dateStart": "2025-03-25",
+                "dateEnd": null,
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag"
+            }
+        }
+    ]
+}
+    </script>
+	<nav aria-label="Paginierung" style="margin-top: 30px;">
+	<ul class="pagination justify-content-center">
+		<li class="page-item disabled">
+							<a class="page-link" href='search?page=0' aria-label="Vorherige">
+							<span aria-hidden="true">&laquo;</span>
+				<span class="visually-hidden">Vorherige Seite</span>
+			</a>
+		</li>
+						<li class="page-item active">
+											<a class="page-link" href='search?'>1</a>
+									</li>
+										<li class="page-item ">
+											<a class="page-link" href='search?page=2'>2</a>
+									</li>
+										<li class="page-item ">
+											<a class="page-link" href='search?page=3'>3</a>
+									</li>
+										<li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						<li class="page-item ">
+											<a class="page-link" href='search?page=249'>249</a>
+									</li>
+										<li class="page-item ">
+											<a class="page-link" href='search?page=250'>250</a>
+									</li>
+								<li class="page-item ">
+							<a class="page-link" href='search?page=2' aria-label="Nächste">
+							<span aria-hidden="true">&raquo;</span>
+				<span class="visually-hidden">Nächste Seite</span>
+			</a>
+		</li>
+	</ul>
+</nav>

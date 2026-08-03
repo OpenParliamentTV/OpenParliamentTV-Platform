@@ -1,0 +1,17 @@
+########################################
+# Test corpus and fixtures — not part of the served application.
+#
+# Nothing here is secret (it is committed to the repo), but the docroot is the
+# project root, so without this the fixtures would be fetchable over HTTP.
+########################################
+
+# Apache 2.4
+<IfModule mod_authz_core.c>
+	Require all denied
+</IfModule>
+
+# Apache 2.2
+<IfModule !mod_authz_core.c>
+	Order allow,deny
+	Deny from all
+</IfModule>

@@ -1,0 +1,60 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "statistics",
+        "id": "entity-counts",
+        "attributes": {
+            "entityCounts": {
+                "person": {
+                    "total": 1364,
+                    "subtypes": {
+                        "memberOfParliament": 1317,
+                        "person": 47
+                    }
+                },
+                "organisation": {
+                    "total": 179,
+                    "subtypes": {
+                        "party": 11,
+                        "faction": 8,
+                        "government": 0,
+                        "company": 0,
+                        "ngo": 0,
+                        "otherOrganisation": 160
+                    }
+                },
+                "document": {
+                    "total": 12388,
+                    "subtypes": {
+                        "officialDocument": 12354,
+                        "legalDocument": 34,
+                        "otherDocument": 0
+                    }
+                },
+                "term": {
+                    "total": 223,
+                    "subtypes": {
+                        "otherTerm": 223
+                    }
+                }
+            }
+        }
+    },
+    "links": {
+        "self": "https://optv.local/api/v1/statistics/entity-counts"
+    }
+}

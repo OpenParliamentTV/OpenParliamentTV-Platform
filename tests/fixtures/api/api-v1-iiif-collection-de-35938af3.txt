@@ -1,0 +1,82 @@
+HTTP 200
+content-type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"
+x-robots-tag: noindex
+
+{
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://optv.local/api/v1/iiif/collection/DE",
+    "type": "Collection",
+    "label": {
+        "de": [
+            "Deutscher Bundestag"
+        ]
+    },
+    "requiredStatement": {
+        "label": {
+            "de": [
+                "Open Parliament TV"
+            ]
+        },
+        "value": {
+            "de": [
+                "Open Parliament TV — Deutscher Bundestag"
+            ]
+        }
+    },
+    "provider": [
+        {
+            "id": "https://optv.local",
+            "type": "Agent",
+            "label": {
+                "de": [
+                    "Open Parliament TV"
+                ]
+            },
+            "homepage": [
+                {
+                    "id": "https://optv.local",
+                    "type": "Text",
+                    "format": "text/html"
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://optv.local/api/v1/iiif/collection/DE/DE-021",
+            "type": "Collection",
+            "label": {
+                "de": [
+                    "Wahlperiode 21"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/iiif/collection/DE/DE-020",
+            "type": "Collection",
+            "label": {
+                "de": [
+                    "Wahlperiode 20"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/iiif/collection/DE/DE-019",
+            "type": "Collection",
+            "label": {
+                "de": [
+                    "Wahlperiode 19"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/iiif/collection/DE/DE-018",
+            "type": "Collection",
+            "label": {
+                "de": [
+                    "Wahlperiode 18"
+                ]
+            }
+        }
+    ]
+}

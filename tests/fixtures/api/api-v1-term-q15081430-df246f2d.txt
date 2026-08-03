@@ -1,0 +1,56 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "term",
+        "id": "Q15081430",
+        "attributes": {
+            "type": "otherTerm",
+            "label": "18. Deutscher Bundestag",
+            "labelAlternative": [
+                "18. WP des DBT",
+                "18. Wahlperiode des Deutschen Bundestages",
+                "18. Bundestag",
+                "18. WP des DBT",
+                "18. Wahlperiode des Deutschen Bundestages",
+                "18. Bundestag"
+            ],
+            "abstract": "Der 18. Deutsche Bundestag bestand vom 22. Oktober 2013 bis zum 24. Oktober 2017. Er wurde durch die Bundestagswahl 2013 vom 22. September 2013 gewählt. Dabei wurde erstmals das neue Bundestagswahlrecht angewendet, das negatives Stimmgewicht verhindern soll und damit das Urteil des Bundesverfassungsgerichts zum Wahlrecht von 2012 umsetzt. Die konstituierende Sitzung des 18. Bundestages fand am 22. Oktober 2013 statt, dem letztmöglichen Termin gemäß Art. 39 Absatz 2 des Grundgesetzes.",
+            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q15081430&v=51a48281",
+            "thumbnailCreator": "<a href=\"http://commons.wikimedia.org/w/index.php?title=User:ToKo&amp;action=edit&amp;redlink=1\" class=\"new\" title=\"User:ToKo (page does not exist)\">Tobias Koch</a>",
+            "thumbnailLicense": "CC-BY-SA-3.0-DE",
+            "websiteURI": "",
+            "embedURI": null,
+            "additionalInformation": {
+                "wikipedia": {
+                    "title": "18. Deutscher Bundestag",
+                    "url": "https://de.wikipedia.org/wiki/18._Deutscher_Bundestag"
+                }
+            },
+            "lastChanged": "2025-05-21 21:18:14"
+        },
+        "links": {
+            "self": "https://optv.local/api/v1/term/Q15081430"
+        },
+        "relationships": {
+            "media": {
+                "links": {
+                    "self": "https://optv.local/api/v1/search/media?termID=Q15081430"
+                }
+            }
+        }
+    }
+}

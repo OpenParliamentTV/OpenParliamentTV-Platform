@@ -1,0 +1,67 @@
+HTTP 200
+content-type: text/html; charset=UTF-8
+
+<div class="row justify-content-center mt-5 mb-2">
+	<div class="col-12 col-md-6 col-xl-4 mt-4 mt-xl-0 d-flex align-items-stretch">
+		<div class="card w-100 border-0">
+			<div class="card-body p-0" style="background: rgba(135, 152, 220, .1)">
+				<h4 class="p-3 mb-0 fw-bolder" style="color: #8798dc;"><span class="icon-search me-2"></span>Debatten durchsuchen</h4>
+				<div class="px-3">
+					<div><b><span class="countup">76072</span> Redebeiträge</b> im Deutschen Bundestag</div>
+					<ul>
+						<li><b>synchronisiert</b> mit den Plenarprotokollen</li>
+						<li>Wort für Wort <b>durchsuchbar</b></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-md-6 col-xl-4 mt-4 mt-xl-0 d-flex align-items-stretch">
+		<div class="card w-100 border-0">
+			<div class="card-body p-0" style="background: rgba(121, 169, 185, .1)">
+				<h4 class="p-3 mb-0 fw-bolder" style="color: #79a9b9;"><span class="icon-quote-left me-2"></span>Zitate teilen</h4>
+				<ul class="">
+					<li><b>Aussagen zitieren</b> und in andere Plattformen einbinden</li>
+					<li><b>Zeitpunkte</b> im Video <b>direkt verlinken</b></li>
+					<li><b>Interaktives Transkript</b> springt direkt zum Zitat</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-md-6 col-xl-4 mt-4 mt-xl-0 d-flex align-items-stretch">
+		<div class="card w-100 border-0">
+			<div class="card-body p-0" style="background: rgba(200, 162, 89, .1)">
+				<h4 class="p-3 mb-0 fw-bolder" style="color: #c8a259;"><span class="icon-tag me-2"></span>Zusatzinformationen</h4>
+				<ul class="">
+					<li>Redebeiträge verknüpft mit Informationen zu <b>Personen</b>, <b>Organisationen</b>, <b>Dokumenten</b> und <b>Begriffen</b></li>
+					<li>Anzeige <b>direkt im Videoplayer</b></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="introHintRow row justify-content-center mt-5 mb-2">
+	<div class="col-12 col-md-6 mt-4 mt-xl-0 d-flex align-items-stretch">
+		<div class="card w-100 border-0">
+			<div class="card-body">
+				<h4 class="fw-bolder"><span class="icon-help me-2"></span>Warum</h4>
+				<hr>
+				<div>In Videos von Parlamentsdebatten steckt ein großes ungenutztes Potential für die Digitale Demokratie. Sie sind greifbarer als Textdokumente oder Abstimmungslisten und ein leicht zugängliches „Fenster“ zur Arbeit der Parlamente. Wir stärken mit Open Parliament TV das <b>Vertrauen in die parlamentarische Demokratie</b>, indem wir Parlamentsdebatten <b>transparenter</b> und <b>besser nutzbar</b> machen, und dem Parlamentsgeschehen insgesamt <b>mehr Sichtbarkeit</b> verschaffen. </div>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-md-6 mt-4 mt-xl-0 d-flex align-items-stretch">
+		<div class="card w-100 border-0">
+			<div class="card-body">
+				<h4 class="fw-bolder"><span class="icon-development me-2"></span>Wie</h4>
+				<hr>
+				<div>Durch einen radikalen <b>Open Source</b> & <b>Open Data</b> Ansatz und einen Fokus auf <b>Interoperabilität</b> machen wir politische Diskurse <b>über Parlaments-, Landes- und Sprachgrenzen hinweg</b> durchsuchbar, zitierbar und verknüpfbar. Alle Bausteine des Projekts sind unter freien Lizenzen veröffentlicht. Neue Parlamente sind dezentral implementierbar und können über offene Schnittstellen integriert werden: <br><a href="api" target="_blank" class="text-decoration-underline fw-bolder">Open Data API</a> | <a href="https://github.com/OpenParliamentTV" target="_blank" class="icon-github-circled text-decoration-underline fw-bolder text-nowrap">github.com/OpenParliamentTV</a> </div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row mt-4 mb-5 justify-content-center justify-content-xl-end">
+	<div class="col-12 col-md-auto">
+		<a href="https://openparliament.tv" target="_blank" class="btn d-block py-2"><span class="icon-right-open-big me-1"></span>mehr Infos zu Open <b>Parliament TV</b></a>
+	</div>
+</div>

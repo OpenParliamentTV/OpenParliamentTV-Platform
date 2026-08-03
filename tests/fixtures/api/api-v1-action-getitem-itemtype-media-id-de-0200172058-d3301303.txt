@@ -1,0 +1,1048 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "media",
+        "id": "DE-0200172058",
+        "attributes": {
+            "originID": null,
+            "originMediaID": "7611894",
+            "creator": "Deutscher Bundestag",
+            "license": "&lt;a href=&quot;https://www.bundestag.de/nutzungsbedingungen&quot; target=&quot;_blank&quot;&gt;Nutzungsbedingungen&lt;/a&gt;",
+            "parliament": "DE",
+            "parliamentLabel": "Deutscher Bundestag",
+            "order": 0,
+            "public": true,
+            "aligned": true,
+            "dateStartTimestamp": 1717674463,
+            "dateStart": "2024-06-06T13:47:43+02:00",
+            "dateEnd": "2024-06-06T13:52:00+02:00",
+            "duration": "<<NORMALIZED>>",
+            "videoFileURI": "https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_h264_720_400_2000kb_baseline_de_2192.mp4",
+            "audioFileURI": "https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_mp3_128kb_stereo_de_128.mp3",
+            "sourcePage": "http://dbtg.tv/fvid/7611894",
+            "thumbnailURI": null,
+            "thumbnailCreator": null,
+            "thumbnailLicense": null,
+            "additionalInformation": [],
+            "lastChanged": "2025-06-12 09:41:09",
+            "lastChangedTimestamp": 1749714069,
+            "textContents": [
+                {
+                    "id": "60804",
+                    "type": "proceedings",
+                    "textBody": [
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Anja Karliczek",
+                            "speakerstatus": "main-speaker",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"3.600\">Sehr geehrte Frau Präsidentin! </span><span class=\"timebased\" data-start=\"3.600\" data-end=\"8.240\">Liebe Kolleginnen und Kollegen! </span><span class=\"timebased\" data-start=\"8.240\" data-end=\"23.160\">Liebe Ampelkollegen, ich will Ihnen zugestehen, dass die Novelle zum Bundes-Immissionsschutzgesetz wirklich einige gute Ideen enthält, die grundsätzlich sogar geeignet sind, Planungs- und Genehmigungsverfahren für erneuerbare Energien an Land zu beschleunigen. </span><span class=\"timebased\" data-start=\"23.160\" data-end=\"28.520\">Und ich bin auch sehr froh, dass die Bundesländer so tatkräftig daran mitgewirkt haben. </span><span class=\"timebased\" data-start=\"28.520\" data-end=\"37.300\">Denn als Genehmigungsbehörden wissen die Landes- und Kreisverwaltungen häufig viel besser als der Bund, wie sich die Regelungen in der Praxis auswirken. </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Sehr geehrte Frau Präsidentin!",
+                                    "timeStart": "1.000",
+                                    "timeEnd": "3.600"
+                                },
+                                {
+                                    "text": "Liebe Kolleginnen und Kollegen!",
+                                    "timeStart": "3.600",
+                                    "timeEnd": "8.240"
+                                },
+                                {
+                                    "text": "Liebe Ampelkollegen, ich will Ihnen zugestehen, dass die Novelle zum Bundes-Immissionsschutzgesetz wirklich einige gute Ideen enthält, die grundsätzlich sogar geeignet sind, Planungs- und Genehmigungsverfahren für erneuerbare Energien an Land zu beschleunigen.",
+                                    "timeStart": "8.240",
+                                    "timeEnd": "23.160"
+                                },
+                                {
+                                    "text": "Und ich bin auch sehr froh, dass die Bundesländer so tatkräftig daran mitgewirkt haben.",
+                                    "timeStart": "23.160",
+                                    "timeEnd": "28.520"
+                                },
+                                {
+                                    "text": "Denn als Genehmigungsbehörden wissen die Landes- und Kreisverwaltungen häufig viel besser als der Bund, wie sich die Regelungen in der Praxis auswirken.",
+                                    "timeStart": "28.520",
+                                    "timeEnd": "37.300"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "comment",
+                            "speaker": null,
+                            "speakerstatus": null,
+                            "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"28.520\" data-end=\"41.800\">(Andreas Bleck [AfD]: Richtig!) </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "(Andreas Bleck [AfD]: Richtig!)",
+                                    "timeStart": "28.520",
+                                    "timeEnd": "41.800"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Anja Karliczek",
+                            "speakerstatus": "main-speaker",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"37.300\" data-end=\"41.800\">Ich möchte auch vorab klarstellen, bevor hier wieder irgendwelche Gerüchte aufkommen: </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Ich möchte auch vorab klarstellen, bevor hier wieder irgendwelche Gerüchte aufkommen:",
+                                    "timeStart": "37.300",
+                                    "timeEnd": "41.800"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "comment",
+                            "speaker": null,
+                            "speakerstatus": null,
+                            "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"37.300\" data-end=\"47.200\">(Zurufe von der SPD) </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "(Zurufe von der SPD)",
+                                    "timeStart": "37.300",
+                                    "timeEnd": "47.200"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Anja Karliczek",
+                            "speakerstatus": "main-speaker",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"41.800\" data-end=\"47.200\">Die Unionsfraktion will ambitionierten Klimaschutz. </span><span class=\"timebased\" data-start=\"47.200\" data-end=\"53.560\">Aber wir wollen auch echte Beschleunigung, und zwar jeglicher Verfahren. </span><span class=\"timebased\" data-start=\"53.560\" data-end=\"58.560\">Denn das halten wir für einen wichtigen Hebel beim Klimaschutz im Industriebereich. </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Die Unionsfraktion will ambitionierten Klimaschutz.",
+                                    "timeStart": "41.800",
+                                    "timeEnd": "47.200"
+                                },
+                                {
+                                    "text": "Aber wir wollen auch echte Beschleunigung, und zwar jeglicher Verfahren.",
+                                    "timeStart": "47.200",
+                                    "timeEnd": "53.560"
+                                },
+                                {
+                                    "text": "Denn das halten wir für einen wichtigen Hebel beim Klimaschutz im Industriebereich.",
+                                    "timeStart": "53.560",
+                                    "timeEnd": "58.560"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Anja Karliczek",
+                            "speakerstatus": "main-speaker",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"58.560\" data-end=\"66.700\">Ich will auf einen wesentlichen Punkt kommen, der uns am Ende genau bewogen hat, das Gesetz abzulehnen, so wie Sie es jetzt umsetzen wollen. </span><span class=\"timebased\" data-start=\"66.700\" data-end=\"70.940\">Sie wollen das Klima als Schutzgut in dieses Gesetz aufnehmen. </span><span class=\"timebased\" data-start=\"70.940\" data-end=\"81.800\">Und ich will bewusst sagen: Es gibt schon eine Reihe von Schutzgütern, die explizit genannt werden: Menschen, Tiere, Pflanzen, Boden, Wasser, Atmosphäre, Kultur und sonstige Sachgüter. </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Ich will auf einen wesentlichen Punkt kommen, der uns am Ende genau bewogen hat, das Gesetz abzulehnen, so wie Sie es jetzt umsetzen wollen.",
+                                    "timeStart": "58.560",
+                                    "timeEnd": "66.700"
+                                },
+                                {
+                                    "text": "Sie wollen das Klima als Schutzgut in dieses Gesetz aufnehmen.",
+                                    "timeStart": "66.700",
+                                    "timeEnd": "70.940"
+                                },
+                                {
+                                    "text": "Und ich will bewusst sagen: Es gibt schon eine Reihe von Schutzgütern, die explizit genannt werden: Menschen, Tiere, Pflanzen, Boden, Wasser, Atmosphäre, Kultur und sonstige Sachgüter.",
+                                    "timeStart": "70.940",
+                                    "timeEnd": "81.800"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "comment",
+                            "speaker": null,
+                            "speakerstatus": null,
+                            "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"70.940\" data-end=\"85.300\">(Zuruf des Abg. Daniel Rinkert [SPD]) </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "(Zuruf des Abg. Daniel Rinkert [SPD])",
+                                    "timeStart": "70.940",
+                                    "timeEnd": "85.300"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Anja Karliczek",
+                            "speakerstatus": "main-speaker",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"81.800\" data-end=\"85.300\">Und jetzt soll es halt noch das Klima als weiteres Schutzgut sein. </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Und jetzt soll es halt noch das Klima als weiteres Schutzgut sein.",
+                                    "timeStart": "81.800",
+                                    "timeEnd": "85.300"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Anja Karliczek",
+                            "speakerstatus": "main-speaker",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"85.300\" data-end=\"88.340\">Das Ganze hat allerdings einen Haken. </span><span class=\"timebased\" data-start=\"88.340\" data-end=\"92.520\">Sie wollen bei Planung und Genehmigung von Anlagen schneller werden. </span><span class=\"timebased\" data-start=\"92.520\" data-end=\"93.680\">Das ist Ihr Ziel. </span><span class=\"timebased\" data-start=\"93.680\" data-end=\"105.000\">Aber wenn Sie jetzt neben den bekannten Schutzgütern auch noch das Klima aufnehmen, dann wird das dazu führen, dass sich genau bei diesem Punkt neue Fragen ergeben, die Sie auch beantworten müssen. </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Das Ganze hat allerdings einen Haken.",
+                                    "timeStart": "85.300",
+                                    "timeEnd": "88.340"
+                                },
+                                {
+                                    "text": "Sie wollen bei Planung und Genehmigung von Anlagen schneller werden.",
+                                    "timeStart": "88.340",
+                                    "timeEnd": "92.520"
+                                },
+                                {
+                                    "text": "Das ist Ihr Ziel.",
+                                    "timeStart": "92.520",
+                                    "timeEnd": "93.680"
+                                },
+                                {
+                                    "text": "Aber wenn Sie jetzt neben den bekannten Schutzgütern auch noch das Klima aufnehmen, dann wird das dazu führen, dass sich genau bei diesem Punkt neue Fragen ergeben, die Sie auch beantworten müssen.",
+                                    "timeStart": "93.680",
+                                    "timeEnd": "105.000"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Anja Karliczek",
+                            "speakerstatus": "main-speaker",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"105.000\" data-end=\"116.960\">Ich sage Ihnen voraus: Keine Genehmigungsbehörde wird ohne eine klare und eindeutige Definition und Formulierung des Schutzgutes Klima mutig eine Genehmigung erteilen. </span><span class=\"timebased\" data-start=\"116.960\" data-end=\"120.480\">Keiner wird ohne ein weiteres Gutachten das Risiko auf sich nehmen. </span><span class=\"timebased\" data-start=\"120.480\" data-end=\"127.280\">Sie werden alle sagen: Wir lassen ein Gutachten machen, dann sind wir juristisch nicht angreifbar. </span><span class=\"timebased\" data-start=\"127.280\" data-end=\"129.300\">– Das kann ich übrigens auch verstehen. </span><span class=\"timebased\" data-start=\"129.300\" data-end=\"133.740\">Nur ist es am Ende genau dann mit der Beschleunigung schon wieder vorbei. </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Ich sage Ihnen voraus: Keine Genehmigungsbehörde wird ohne eine klare und eindeutige Definition und Formulierung des Schutzgutes Klima mutig eine Genehmigung erteilen.",
+                                    "timeStart": "105.000",
+                                    "timeEnd": "116.960"
+                                },
+                                {
+                                    "text": "Keiner wird ohne ein weiteres Gutachten das Risiko auf sich nehmen.",
+                                    "timeStart": "116.960",
+                                    "timeEnd": "120.480"
+                                },
+                                {
+                                    "text": "Sie werden alle sagen: Wir lassen ein Gutachten machen, dann sind wir juristisch nicht angreifbar.",
+                                    "timeStart": "120.480",
+                                    "timeEnd": "127.280"
+                                },
+                                {
+                                    "text": "– Das kann ich übrigens auch verstehen.",
+                                    "timeStart": "127.280",
+                                    "timeEnd": "129.300"
+                                },
+                                {
+                                    "text": "Nur ist es am Ende genau dann mit der Beschleunigung schon wieder vorbei.",
+                                    "timeStart": "129.300",
+                                    "timeEnd": "133.740"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Anja Karliczek",
+                            "speakerstatus": "main-speaker",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"133.740\" data-end=\"147.860\">Ich mache Ihnen jetzt einen Vorschlag, der die Ziele Klimaschutz und Beschleunigung in Einklang bringt: Sie lassen den Begriff „Klima“ aus Ihrer Novelle raus, damit wir dem Klima wirklich was Gutes tun können, nämlich schneller klimafreundliche Energieanlagen bauen. </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Ich mache Ihnen jetzt einen Vorschlag, der die Ziele Klimaschutz und Beschleunigung in Einklang bringt: Sie lassen den Begriff „Klima“ aus Ihrer Novelle raus, damit wir dem Klima wirklich was Gutes tun können, nämlich schneller klimafreundliche Energieanlagen bauen.",
+                                    "timeStart": "133.740",
+                                    "timeEnd": "147.860"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Anja Karliczek",
+                            "speakerstatus": "main-speaker",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"147.860\" data-end=\"156.500\">Ich mache Ihnen noch einen weiteren Vorschlag: Sie machen bei der Beschleunigung keinen Unterschied zwischen Anlagen für erneuerbare Energie und anderen Industrieanlagen. </span><span class=\"timebased\" data-start=\"156.500\" data-end=\"169.020\">Denn wie wollen Sie eigentlich den Menschen erklären, dass Sie zum Beispiel die Direktreduktionsanlage von thyssenkrupp, die jährlich bis zu 3,5 Millionen Tonnen CO2 einspart, nicht auch beschleunigt bauen wollen? </span><span class=\"timebased\" data-start=\"169.020\" data-end=\"182.600\">Auch Industrieansiedlungen wie die von Intel in Magdeburg mit 17 Milliarden Euro Investitionsvolumen und 3 000 geplanten zusätzlichen Arbeitsplätzen könnten durch die geplante Stichtagsregelung deutlich profitieren. </span><span class=\"timebased\" data-start=\"182.600\" data-end=\"184.920\">Beispiele wie diese gibt es viele. </span><span class=\"timebased\" data-start=\"184.920\" data-end=\"190.640\">Umso wichtiger ist es, diese wichtigen Transformationsprozesse gänzlich zu unterstützen. </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Ich mache Ihnen noch einen weiteren Vorschlag: Sie machen bei der Beschleunigung keinen Unterschied zwischen Anlagen für erneuerbare Energie und anderen Industrieanlagen.",
+                                    "timeStart": "147.860",
+                                    "timeEnd": "156.500"
+                                },
+                                {
+                                    "text": "Denn wie wollen Sie eigentlich den Menschen erklären, dass Sie zum Beispiel die Direktreduktionsanlage von thyssenkrupp, die jährlich bis zu 3,5 Millionen Tonnen CO2 einspart, nicht auch beschleunigt bauen wollen?",
+                                    "timeStart": "156.500",
+                                    "timeEnd": "169.020"
+                                },
+                                {
+                                    "text": "Auch Industrieansiedlungen wie die von Intel in Magdeburg mit 17 Milliarden Euro Investitionsvolumen und 3 000 geplanten zusätzlichen Arbeitsplätzen könnten durch die geplante Stichtagsregelung deutlich profitieren.",
+                                    "timeStart": "169.020",
+                                    "timeEnd": "182.600"
+                                },
+                                {
+                                    "text": "Beispiele wie diese gibt es viele.",
+                                    "timeStart": "182.600",
+                                    "timeEnd": "184.920"
+                                },
+                                {
+                                    "text": "Umso wichtiger ist es, diese wichtigen Transformationsprozesse gänzlich zu unterstützen.",
+                                    "timeStart": "184.920",
+                                    "timeEnd": "190.640"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "comment",
+                            "speaker": null,
+                            "speakerstatus": null,
+                            "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"184.920\" data-end=\"198.400\">(Beifall bei der CDU/CSU) </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "(Beifall bei der CDU/CSU)",
+                                    "timeStart": "184.920",
+                                    "timeEnd": "198.400"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Anja Karliczek",
+                            "speakerstatus": "main-speaker",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"190.640\" data-end=\"198.400\">Ermöglichen Sie der Industrie, alle Industrieanlagen schneller und leichter zu errichten! </span><span class=\"timebased\" data-start=\"198.400\" data-end=\"200.440\">Trauen Sie unserer Wirtschaft das zu! </span><span class=\"timebased\" data-start=\"200.440\" data-end=\"203.500\">Trauen Sie der Industrie zu, dass sie weiß, was sie tut! </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Ermöglichen Sie der Industrie, alle Industrieanlagen schneller und leichter zu errichten!",
+                                    "timeStart": "190.640",
+                                    "timeEnd": "198.400"
+                                },
+                                {
+                                    "text": "Trauen Sie unserer Wirtschaft das zu!",
+                                    "timeStart": "198.400",
+                                    "timeEnd": "200.440"
+                                },
+                                {
+                                    "text": "Trauen Sie der Industrie zu, dass sie weiß, was sie tut!",
+                                    "timeStart": "200.440",
+                                    "timeEnd": "203.500"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Anja Karliczek",
+                            "speakerstatus": "main-speaker",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"203.500\" data-end=\"210.720\">Liebe Koalition, das Kernziel dieser Novelle liegt in der Beschleunigung von Planungs- und Genehmigungsverfahren. </span><span class=\"timebased\" data-start=\"210.720\" data-end=\"215.680\">Auf der einen Seite haben Sie teilweise durch Aufnahme der MPK-Beschlüsse nachgebessert. </span><span class=\"timebased\" data-start=\"215.680\" data-end=\"224.880\">Auf der anderen Seite werden die Vorteile, die beispielsweise der vorzeitige Baubeginn bringen könnte, durch das zusätzliche Schutzgut Klima wieder konterkariert. </span><span class=\"timebased\" data-start=\"224.880\" data-end=\"226.920\">Sie sind nicht konsequent. </span><span class=\"timebased\" data-start=\"226.920\" data-end=\"236.200\">Deshalb fordern wir Sie in unserem Entschließungsantrag auf, auf die Aufnahme des nicht klar eingrenzbaren Schutzgutes Klima in das Bundes-Immissionsschutzgesetz zu verzichten. </span><span class=\"timebased\" data-start=\"236.200\" data-end=\"243.280\">In den Fachgesetzen, dem Bundes-Klimaschutzgesetz, dem Treibhausgas-Emissionshandelsgesetz usw., können Sie das regeln. </span><span class=\"timebased\" data-start=\"243.280\" data-end=\"247.600\">Liebe Koalition, was Sie wollen, werden Sie so nicht erreichen. </span><span class=\"timebased\" data-start=\"247.600\" data-end=\"248.960\">Schade. </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Liebe Koalition, das Kernziel dieser Novelle liegt in der Beschleunigung von Planungs- und Genehmigungsverfahren.",
+                                    "timeStart": "203.500",
+                                    "timeEnd": "210.720"
+                                },
+                                {
+                                    "text": "Auf der einen Seite haben Sie teilweise durch Aufnahme der MPK-Beschlüsse nachgebessert.",
+                                    "timeStart": "210.720",
+                                    "timeEnd": "215.680"
+                                },
+                                {
+                                    "text": "Auf der anderen Seite werden die Vorteile, die beispielsweise der vorzeitige Baubeginn bringen könnte, durch das zusätzliche Schutzgut Klima wieder konterkariert.",
+                                    "timeStart": "215.680",
+                                    "timeEnd": "224.880"
+                                },
+                                {
+                                    "text": "Sie sind nicht konsequent.",
+                                    "timeStart": "224.880",
+                                    "timeEnd": "226.920"
+                                },
+                                {
+                                    "text": "Deshalb fordern wir Sie in unserem Entschließungsantrag auf, auf die Aufnahme des nicht klar eingrenzbaren Schutzgutes Klima in das Bundes-Immissionsschutzgesetz zu verzichten.",
+                                    "timeStart": "226.920",
+                                    "timeEnd": "236.200"
+                                },
+                                {
+                                    "text": "In den Fachgesetzen, dem Bundes-Klimaschutzgesetz, dem Treibhausgas-Emissionshandelsgesetz usw., können Sie das regeln.",
+                                    "timeStart": "236.200",
+                                    "timeEnd": "243.280"
+                                },
+                                {
+                                    "text": "Liebe Koalition, was Sie wollen, werden Sie so nicht erreichen.",
+                                    "timeStart": "243.280",
+                                    "timeEnd": "247.600"
+                                },
+                                {
+                                    "text": "Schade.",
+                                    "timeStart": "247.600",
+                                    "timeEnd": "248.960"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "comment",
+                            "speaker": null,
+                            "speakerstatus": null,
+                            "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"247.600\" data-end=\"256.960\">(Beifall bei der CDU/CSU – Daniel Rinkert [SPD]: Sie hat es einfach nicht verstanden!) </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "(Beifall bei der CDU/CSU – Daniel Rinkert [SPD]: Sie hat es einfach nicht verstanden!)",
+                                    "timeStart": "247.600",
+                                    "timeEnd": "256.960"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "speech",
+                            "speaker": "Katrin Göring-Eckardt",
+                            "speakerstatus": "vice-president",
+                            "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"248.960\" data-end=\"256.960\">Das Wort hat der Kollege Dr. Jan-Niclas Gesenhues für die Bundesregierung. </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "Das Wort hat der Kollege Dr. Jan-Niclas Gesenhues für die Bundesregierung.",
+                                    "timeStart": "248.960",
+                                    "timeEnd": "256.960"
+                                }
+                            ]
+                        },
+                        {
+                            "speech_id": "ID2017204800",
+                            "type": "comment",
+                            "speaker": null,
+                            "speakerstatus": null,
+                            "text": "<p data-type=\"comment\"><span class=\"timebased\" data-start=\"248.960\" data-end=\"256.960\">(Beifall beim BÜNDNIS 90/DIE GRÜNEN und bei der SPD) </span></p>",
+                            "sentences": [
+                                {
+                                    "text": "(Beifall beim BÜNDNIS 90/DIE GRÜNEN und bei der SPD)",
+                                    "timeStart": "248.960",
+                                    "timeEnd": "256.960"
+                                }
+                            ]
+                        }
+                    ],
+                    "textHTML": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"3.600\">Sehr geehrte Frau Präsidentin! </span><span class=\"timebased\" data-start=\"3.600\" data-end=\"8.240\">Liebe Kolleginnen und Kollegen! </span><span class=\"timebased\" data-start=\"8.240\" data-end=\"23.160\">Liebe Ampelkollegen, ich will Ihnen zugestehen, dass die Novelle zum Bundes-Immissionsschutzgesetz wirklich einige gute Ideen enthält, die grundsätzlich sogar geeignet sind, Planungs- und Genehmigungsverfahren für erneuerbare Energien an Land zu beschleunigen. </span><span class=\"timebased\" data-start=\"23.160\" data-end=\"28.520\">Und ich bin auch sehr froh, dass die Bundesländer so tatkräftig daran mitgewirkt haben. </span><span class=\"timebased\" data-start=\"28.520\" data-end=\"37.300\">Denn als Genehmigungsbehörden wissen die Landes- und Kreisverwaltungen häufig viel besser als der Bund, wie sich die Regelungen in der Praxis auswirken. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"28.520\" data-end=\"41.800\">(Andreas Bleck [AfD]: Richtig!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"37.300\" data-end=\"41.800\">Ich möchte auch vorab klarstellen, bevor hier wieder irgendwelche Gerüchte aufkommen: </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"37.300\" data-end=\"47.200\">(Zurufe von der SPD) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"41.800\" data-end=\"47.200\">Die Unionsfraktion will ambitionierten Klimaschutz. </span><span class=\"timebased\" data-start=\"47.200\" data-end=\"53.560\">Aber wir wollen auch echte Beschleunigung, und zwar jeglicher Verfahren. </span><span class=\"timebased\" data-start=\"53.560\" data-end=\"58.560\">Denn das halten wir für einen wichtigen Hebel beim Klimaschutz im Industriebereich. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"58.560\" data-end=\"66.700\">Ich will auf einen wesentlichen Punkt kommen, der uns am Ende genau bewogen hat, das Gesetz abzulehnen, so wie Sie es jetzt umsetzen wollen. </span><span class=\"timebased\" data-start=\"66.700\" data-end=\"70.940\">Sie wollen das Klima als Schutzgut in dieses Gesetz aufnehmen. </span><span class=\"timebased\" data-start=\"70.940\" data-end=\"81.800\">Und ich will bewusst sagen: Es gibt schon eine Reihe von Schutzgütern, die explizit genannt werden: Menschen, Tiere, Pflanzen, Boden, Wasser, Atmosphäre, Kultur und sonstige Sachgüter. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"70.940\" data-end=\"85.300\">(Zuruf des Abg. Daniel Rinkert [SPD]) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"81.800\" data-end=\"85.300\">Und jetzt soll es halt noch das Klima als weiteres Schutzgut sein. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"85.300\" data-end=\"88.340\">Das Ganze hat allerdings einen Haken. </span><span class=\"timebased\" data-start=\"88.340\" data-end=\"92.520\">Sie wollen bei Planung und Genehmigung von Anlagen schneller werden. </span><span class=\"timebased\" data-start=\"92.520\" data-end=\"93.680\">Das ist Ihr Ziel. </span><span class=\"timebased\" data-start=\"93.680\" data-end=\"105.000\">Aber wenn Sie jetzt neben den bekannten Schutzgütern auch noch das Klima aufnehmen, dann wird das dazu führen, dass sich genau bei diesem Punkt neue Fragen ergeben, die Sie auch beantworten müssen. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"105.000\" data-end=\"116.960\">Ich sage Ihnen voraus: Keine Genehmigungsbehörde wird ohne eine klare und eindeutige Definition und Formulierung des Schutzgutes Klima mutig eine Genehmigung erteilen. </span><span class=\"timebased\" data-start=\"116.960\" data-end=\"120.480\">Keiner wird ohne ein weiteres Gutachten das Risiko auf sich nehmen. </span><span class=\"timebased\" data-start=\"120.480\" data-end=\"127.280\">Sie werden alle sagen: Wir lassen ein Gutachten machen, dann sind wir juristisch nicht angreifbar. </span><span class=\"timebased\" data-start=\"127.280\" data-end=\"129.300\">– Das kann ich übrigens auch verstehen. </span><span class=\"timebased\" data-start=\"129.300\" data-end=\"133.740\">Nur ist es am Ende genau dann mit der Beschleunigung schon wieder vorbei. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"133.740\" data-end=\"147.860\">Ich mache Ihnen jetzt einen Vorschlag, der die Ziele Klimaschutz und Beschleunigung in Einklang bringt: Sie lassen den Begriff „Klima“ aus Ihrer Novelle raus, damit wir dem Klima wirklich was Gutes tun können, nämlich schneller klimafreundliche Energieanlagen bauen. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"147.860\" data-end=\"156.500\">Ich mache Ihnen noch einen weiteren Vorschlag: Sie machen bei der Beschleunigung keinen Unterschied zwischen Anlagen für erneuerbare Energie und anderen Industrieanlagen. </span><span class=\"timebased\" data-start=\"156.500\" data-end=\"169.020\">Denn wie wollen Sie eigentlich den Menschen erklären, dass Sie zum Beispiel die Direktreduktionsanlage von thyssenkrupp, die jährlich bis zu 3,5 Millionen Tonnen CO2 einspart, nicht auch beschleunigt bauen wollen? </span><span class=\"timebased\" data-start=\"169.020\" data-end=\"182.600\">Auch Industrieansiedlungen wie die von Intel in Magdeburg mit 17 Milliarden Euro Investitionsvolumen und 3 000 geplanten zusätzlichen Arbeitsplätzen könnten durch die geplante Stichtagsregelung deutlich profitieren. </span><span class=\"timebased\" data-start=\"182.600\" data-end=\"184.920\">Beispiele wie diese gibt es viele. </span><span class=\"timebased\" data-start=\"184.920\" data-end=\"190.640\">Umso wichtiger ist es, diese wichtigen Transformationsprozesse gänzlich zu unterstützen. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"184.920\" data-end=\"198.400\">(Beifall bei der CDU/CSU) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"190.640\" data-end=\"198.400\">Ermöglichen Sie der Industrie, alle Industrieanlagen schneller und leichter zu errichten! </span><span class=\"timebased\" data-start=\"198.400\" data-end=\"200.440\">Trauen Sie unserer Wirtschaft das zu! </span><span class=\"timebased\" data-start=\"200.440\" data-end=\"203.500\">Trauen Sie der Industrie zu, dass sie weiß, was sie tut! </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"203.500\" data-end=\"210.720\">Liebe Koalition, das Kernziel dieser Novelle liegt in der Beschleunigung von Planungs- und Genehmigungsverfahren. </span><span class=\"timebased\" data-start=\"210.720\" data-end=\"215.680\">Auf der einen Seite haben Sie teilweise durch Aufnahme der MPK-Beschlüsse nachgebessert. </span><span class=\"timebased\" data-start=\"215.680\" data-end=\"224.880\">Auf der anderen Seite werden die Vorteile, die beispielsweise der vorzeitige Baubeginn bringen könnte, durch das zusätzliche Schutzgut Klima wieder konterkariert. </span><span class=\"timebased\" data-start=\"224.880\" data-end=\"226.920\">Sie sind nicht konsequent. </span><span class=\"timebased\" data-start=\"226.920\" data-end=\"236.200\">Deshalb fordern wir Sie in unserem Entschließungsantrag auf, auf die Aufnahme des nicht klar eingrenzbaren Schutzgutes Klima in das Bundes-Immissionsschutzgesetz zu verzichten. </span><span class=\"timebased\" data-start=\"236.200\" data-end=\"243.280\">In den Fachgesetzen, dem Bundes-Klimaschutzgesetz, dem Treibhausgas-Emissionshandelsgesetz usw., können Sie das regeln. </span><span class=\"timebased\" data-start=\"243.280\" data-end=\"247.600\">Liebe Koalition, was Sie wollen, werden Sie so nicht erreichen. </span><span class=\"timebased\" data-start=\"247.600\" data-end=\"248.960\">Schade. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"247.600\" data-end=\"256.960\">(Beifall bei der CDU/CSU – Daniel Rinkert [SPD]: Sie hat es einfach nicht verstanden!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"248.960\" data-end=\"256.960\">Das Wort hat der Kollege Dr. Jan-Niclas Gesenhues für die Bundesregierung. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"248.960\" data-end=\"256.960\">(Beifall beim BÜNDNIS 90/DIE GRÜNEN und bei der SPD) </span></p>",
+                    "sourceURI": "https://www.bundestag.de/resource/blob/1006872/865980e1a3830893fcb983c51c084343/20172.xml",
+                    "creator": "Deutscher Bundestag",
+                    "license": "Public Domain",
+                    "language": "de",
+                    "originTextID": "ID2017204800",
+                    "lastChanged": "2026-06-25 19:59:49"
+                }
+            ],
+            "textContentsCount": 1
+        },
+        "links": {
+            "self": "https://optv.local/api/v1/media/DE-0200172058"
+        },
+        "relationships": {
+            "electoralPeriod": {
+                "data": {
+                    "type": "electoralPeriod",
+                    "id": "DE-020",
+                    "attributes": {
+                        "number": 20,
+                        "dateStart": "2021-10-26",
+                        "dateEnd": "2025-03-25"
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/electoralPeriod/DE-020"
+                    }
+                }
+            },
+            "session": {
+                "data": {
+                    "type": "session",
+                    "id": "DE-0200172",
+                    "attributes": {
+                        "number": 172
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/session/DE-0200172"
+                    }
+                }
+            },
+            "agendaItem": {
+                "data": {
+                    "type": "agendaItem",
+                    "id": "9168",
+                    "attributes": {
+                        "officialTitle": "Tagesordnungspunkt 23",
+                        "title": "Immissionsschutzrechtliche Genehmigungsverfahren"
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/agendaItem/DE-9168"
+                    }
+                }
+            },
+            "people": {
+                "data": [
+                    {
+                        "type": "person",
+                        "id": "Q15783504",
+                        "attributes": {
+                            "type": "memberOfParliament",
+                            "label": "Anja Karliczek",
+                            "labelAlternative": [
+                                "Anja Maria-Antonia Karliczek",
+                                "Anja Kerssen",
+                                "Anja Maria-Antonia Kerssen"
+                            ],
+                            "degree": "",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q15783504&v=137322f5",
+                            "thumbnailCreator": "Foto-AG Gymnasium Melle",
+                            "thumbnailLicense": "CC-BY-SA",
+                            "additionalInformation": {
+                                "wikipedia": {
+                                    "title": "Anja Karliczek",
+                                    "url": "https://de.wikipedia.org/wiki/Anja_Karliczek"
+                                },
+                                "abgeordnetenwatchID": "79249"
+                            },
+                            "party": {
+                                "id": "Q49762",
+                                "label": "CDU",
+                                "labelAlternative": [
+                                    "Christlich Demokratische Union Deutschlands"
+                                ]
+                            },
+                            "faction": {
+                                "id": "Q1023134",
+                                "label": "CDU/CSU",
+                                "labelAlternative": [
+                                    "CDU/CSU-Bundestagsfraktion",
+                                    "CDU/CSU-Fraktion",
+                                    "Unionsfraktion",
+                                    "CDU-Fraktion"
+                                ]
+                            }
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q15783504"
+                        }
+                    },
+                    {
+                        "type": "person",
+                        "id": "Q48967",
+                        "attributes": {
+                            "type": "memberOfParliament",
+                            "label": "Katrin Göring-Eckardt",
+                            "labelAlternative": [
+                                "Katrin Dagmar Göring-Eckardt",
+                                "Göring-Eckardt",
+                                "Katrin Dagmar Eckardt",
+                                "Katrin Eckardt",
+                                "KGE"
+                            ],
+                            "degree": "",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q48967&v=91f73b84",
+                            "thumbnailCreator": "<a href=\"http://commons.wikimedia.org/wiki/User:Raymond\" title=\"User:Raymond\">Raimond Spekking</a>",
+                            "thumbnailLicense": "CC-BY-SA-4.0",
+                            "additionalInformation": {
+                                "wikipedia": {
+                                    "title": "Katrin Göring-Eckardt",
+                                    "url": "https://de.wikipedia.org/wiki/Katrin_G%C3%B6ring-Eckardt"
+                                },
+                                "abgeordnetenwatchID": "78886"
+                            },
+                            "party": {
+                                "id": null,
+                                "label": null,
+                                "labelAlternative": null
+                            },
+                            "faction": {
+                                "id": "Q1007353",
+                                "label": "DIE GRÜNEN",
+                                "labelAlternative": [
+                                    "Bundestagsfraktion Bündnis 90/Die Grünen",
+                                    "Bündnis 90/Die Grünen Bundestagsfraktion",
+                                    "BÜNDNIS 90/DIE GRÜNEN"
+                                ]
+                            }
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q48967"
+                        }
+                    },
+                    {
+                        "type": "person",
+                        "id": "Q114134624",
+                        "attributes": {
+                            "type": "memberOfParliament",
+                            "label": "Daniel Rinkert",
+                            "labelAlternative": [],
+                            "degree": "",
+                            "thumbnailURI": "",
+                            "thumbnailCreator": "",
+                            "thumbnailLicense": "",
+                            "additionalInformation": {
+                                "wikipedia": {
+                                    "title": "Daniel Rinkert",
+                                    "url": "https://de.wikipedia.org/wiki/Daniel_Rinkert"
+                                },
+                                "abgeordnetenwatchID": "146806"
+                            },
+                            "party": {
+                                "id": "Q49768",
+                                "label": "SPD",
+                                "labelAlternative": [
+                                    "Sozialdemokratische Partei Deutschlands"
+                                ]
+                            },
+                            "faction": {
+                                "id": "Q2207512",
+                                "label": "SPD",
+                                "labelAlternative": [
+                                    "SPD-Bundestagsfraktion",
+                                    "SPD-Fraktion"
+                                ]
+                            }
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q114134624"
+                        }
+                    },
+                    {
+                        "type": "person",
+                        "id": "Q40979188",
+                        "attributes": {
+                            "type": "memberOfParliament",
+                            "label": "Andreas Bleck",
+                            "labelAlternative": [],
+                            "degree": "",
+                            "thumbnailURI": null,
+                            "thumbnailCreator": null,
+                            "thumbnailLicense": null,
+                            "additionalInformation": {
+                                "wikipedia": {
+                                    "title": "Andreas Bleck",
+                                    "url": "https://de.wikipedia.org/wiki/Andreas_Bleck"
+                                },
+                                "abgeordnetenwatchID": "145789"
+                            },
+                            "party": {
+                                "id": "Q49762",
+                                "label": "CDU",
+                                "labelAlternative": [
+                                    "Christlich Demokratische Union Deutschlands"
+                                ]
+                            },
+                            "faction": {
+                                "id": "Q42575708",
+                                "label": "AfD",
+                                "labelAlternative": [
+                                    "AfD-Bundestagsfraktion",
+                                    "AfD-Fraktion"
+                                ]
+                            }
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q40979188"
+                        }
+                    }
+                ],
+                "links": {
+                    "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0200172058&type=person"
+                }
+            },
+            "organisations": {
+                "data": [
+                    {
+                        "type": "organisation",
+                        "id": "Q1007353",
+                        "attributes": {
+                            "context": "NER",
+                            "type": "faction",
+                            "label": "DIE GRÜNEN",
+                            "labelAlternative": [
+                                "Bundestagsfraktion Bündnis 90/Die Grünen",
+                                "Bündnis 90/Die Grünen Bundestagsfraktion",
+                                "BÜNDNIS 90/DIE GRÜNEN"
+                            ],
+                            "thumbnailURI": "",
+                            "thumbnailCreator": "",
+                            "thumbnailLicense": "",
+                            "additionalInformation": {
+                                "wikipedia": {
+                                    "title": "Bundestagsfraktion Bündnis 90/Die Grünen",
+                                    "url": "https://de.wikipedia.org/wiki/Bundestagsfraktion_B%C3%BCndnis_90/Die_Gr%C3%BCnen"
+                                }
+                            },
+                            "color": "#4a932b"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/organisation/Q1007353"
+                        }
+                    },
+                    {
+                        "type": "organisation",
+                        "id": "Q1023134",
+                        "attributes": {
+                            "context": "NER",
+                            "type": "faction",
+                            "label": "CDU/CSU",
+                            "labelAlternative": [
+                                "CDU/CSU-Bundestagsfraktion",
+                                "CDU/CSU-Fraktion",
+                                "Unionsfraktion",
+                                "CDU-Fraktion"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1023134&v=ac7ab215",
+                            "thumbnailCreator": "CDU/CSU-Fraktion im Deutschen Bundestag",
+                            "thumbnailLicense": "PD textlogo",
+                            "additionalInformation": {
+                                "wikipedia": {
+                                    "title": "CDU/CSU-Fraktion im Deutschen Bundestag",
+                                    "url": "https://de.wikipedia.org/wiki/CDU/CSU-Fraktion_im_Deutschen_Bundestag"
+                                }
+                            },
+                            "color": "#000000"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/organisation/Q1023134"
+                        }
+                    },
+                    {
+                        "type": "organisation",
+                        "id": "Q2207512",
+                        "attributes": {
+                            "context": "NER",
+                            "type": "faction",
+                            "label": "SPD",
+                            "labelAlternative": [
+                                "SPD-Bundestagsfraktion",
+                                "SPD-Fraktion"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q2207512&v=4e041713",
+                            "thumbnailCreator": "SPD-Bundestagsfraktion",
+                            "thumbnailLicense": "PD textlogo",
+                            "additionalInformation": {
+                                "wikipedia": {
+                                    "title": "SPD-Bundestagsfraktion",
+                                    "url": "https://de.wikipedia.org/wiki/SPD-Bundestagsfraktion"
+                                }
+                            },
+                            "color": "#df0b25"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/organisation/Q2207512"
+                        }
+                    },
+                    {
+                        "type": "organisation",
+                        "id": "Q42575708",
+                        "attributes": {
+                            "context": "NER",
+                            "type": "faction",
+                            "label": "AfD",
+                            "labelAlternative": [
+                                "AfD-Bundestagsfraktion",
+                                "AfD-Fraktion"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q42575708&v=592f6f4c",
+                            "thumbnailCreator": "AfD-Bundestagsfraktion",
+                            "thumbnailLicense": "PD textlogo",
+                            "additionalInformation": {
+                                "wikipedia": {
+                                    "title": "AfD-Fraktion im Deutschen Bundestag",
+                                    "url": "https://de.wikipedia.org/wiki/AfD-Fraktion_im_Deutschen_Bundestag"
+                                }
+                            },
+                            "color": "#1a9fdd"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/organisation/Q42575708"
+                        }
+                    }
+                ],
+                "links": {
+                    "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0200172058&type=organisation"
+                }
+            },
+            "documents": {
+                "data": [
+                    {
+                        "type": "document",
+                        "id": "7674",
+                        "attributes": {
+                            "context": "NER",
+                            "type": "legalDocument",
+                            "label": "KSG",
+                            "labelAlternative": [
+                                "Bundes-Klimaschutzgesetz"
+                            ],
+                            "thumbnailURI": "",
+                            "thumbnailCreator": "",
+                            "thumbnailLicense": "",
+                            "additionalInformation": {
+                                "wikipedia": {
+                                    "title": "Bundes-Klimaschutzgesetz",
+                                    "url": "https://de.wikipedia.org/wiki/Bundes-Klimaschutzgesetz"
+                                }
+                            },
+                            "sourceURI": "",
+                            "embedURI": "https://de.m.wikipedia.org/wiki/Bundes-Klimaschutzgesetz"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/document/7674"
+                        }
+                    },
+                    {
+                        "type": "document",
+                        "id": "7678",
+                        "attributes": {
+                            "context": "NER",
+                            "type": "legalDocument",
+                            "label": "BImSchG",
+                            "labelAlternative": [
+                                "Bundes-Immissionsschutzgesetz",
+                                "Bundesimmissionsschutzgesetz",
+                                "BImSchG",
+                                "Abgasvorschriften",
+                                "Immissionsschutzgesetz",
+                                "Immissionsrecht",
+                                "Immissionsschutzrecht",
+                                "Gesetz zum Schutz vor schädlichen Umwelteinwirkungen durch Luftverunreinigungen, Geräusche, Erschütterungen und ähnlichen Vorgängen",
+                                "Gesetz zum Schutz vor schädlichen Umwelteinwirkungen durch Luftverunreinigungen, Geräusche, Erschütterungen und ähnliche Vorgänge"
+                            ],
+                            "thumbnailURI": "",
+                            "thumbnailCreator": "",
+                            "thumbnailLicense": "",
+                            "additionalInformation": {
+                                "wikipedia": {
+                                    "title": "Bundes-Immissionsschutzgesetz",
+                                    "url": "https://de.wikipedia.org/wiki/Bundes-Immissionsschutzgesetz"
+                                }
+                            },
+                            "sourceURI": "http://www.gesetze-im-internet.de/bimschg/",
+                            "embedURI": "https://de.m.wikipedia.org/wiki/Bundes-Immissionsschutzgesetz"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/document/7678"
+                        }
+                    }
+                ],
+                "links": {
+                    "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0200172058&type=document"
+                }
+            },
+            "terms": {
+                "data": [],
+                "links": {
+                    "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0200172058&type=term"
+                }
+            }
+        },
+        "annotations": {
+            "data": [
+                {
+                    "type": "person",
+                    "id": "Q15783504",
+                    "attributes": {
+                        "timeStart": null,
+                        "timeEnd": null,
+                        "context": "main-speaker",
+                        "additionalInformation": {
+                            "role": null
+                        }
+                    }
+                },
+                {
+                    "type": "person",
+                    "id": "Q48967",
+                    "attributes": {
+                        "timeStart": null,
+                        "timeEnd": null,
+                        "context": "vice-president",
+                        "additionalInformation": {
+                            "role": null
+                        }
+                    }
+                },
+                {
+                    "type": "person",
+                    "id": "Q114134624",
+                    "attributes": {
+                        "timeStart": "70.94",
+                        "timeEnd": "85.3",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.97529999999999994475530229465221054852008819580078125
+                        }
+                    }
+                },
+                {
+                    "type": "person",
+                    "id": "Q114134624",
+                    "attributes": {
+                        "timeStart": "247.6",
+                        "timeEnd": "256.96",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.97529999999999994475530229465221054852008819580078125
+                        }
+                    }
+                },
+                {
+                    "type": "person",
+                    "id": "Q40979188",
+                    "attributes": {
+                        "timeStart": "28.52",
+                        "timeEnd": "41.8",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.99109999999999998099298181841732002794742584228515625
+                        }
+                    }
+                },
+                {
+                    "type": "document",
+                    "id": "7674",
+                    "attributes": {
+                        "timeStart": "236.2",
+                        "timeEnd": "243.28",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.9903999999999999470645661858725361526012420654296875
+                        }
+                    }
+                },
+                {
+                    "type": "document",
+                    "id": "7678",
+                    "attributes": {
+                        "timeStart": "8.24",
+                        "timeEnd": "23.16",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.99480000000000001758593271006247960031032562255859375
+                        }
+                    }
+                },
+                {
+                    "type": "document",
+                    "id": "7678",
+                    "attributes": {
+                        "timeStart": "226.92",
+                        "timeEnd": "236.2",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.99480000000000001758593271006247960031032562255859375
+                        }
+                    }
+                },
+                {
+                    "type": "organisation",
+                    "id": "Q1007353",
+                    "attributes": {
+                        "timeStart": "248.96",
+                        "timeEnd": "256.96",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.36470000000000002415845301584340631961822509765625
+                        }
+                    }
+                },
+                {
+                    "type": "organisation",
+                    "id": "Q1023134",
+                    "attributes": {
+                        "timeStart": "247.6",
+                        "timeEnd": "256.96",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.584799999999999986499688020558096468448638916015625
+                        }
+                    }
+                },
+                {
+                    "type": "organisation",
+                    "id": "Q1023134",
+                    "attributes": {
+                        "timeStart": null,
+                        "timeEnd": null,
+                        "context": "main-speaker-faction",
+                        "additionalInformation": null
+                    }
+                },
+                {
+                    "type": "organisation",
+                    "id": "Q2207512",
+                    "attributes": {
+                        "timeStart": "37.3",
+                        "timeEnd": "47.2",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.375500000000000000444089209850062616169452667236328125
+                        }
+                    }
+                },
+                {
+                    "type": "organisation",
+                    "id": "Q2207512",
+                    "attributes": {
+                        "timeStart": "70.94",
+                        "timeEnd": "85.3",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.6730000000000000426325641456060111522674560546875
+                        }
+                    }
+                },
+                {
+                    "type": "organisation",
+                    "id": "Q2207512",
+                    "attributes": {
+                        "timeStart": "247.6",
+                        "timeEnd": "256.96",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.6730000000000000426325641456060111522674560546875
+                        }
+                    }
+                },
+                {
+                    "type": "organisation",
+                    "id": "Q2207512",
+                    "attributes": {
+                        "timeStart": "248.96",
+                        "timeEnd": "256.96",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.375500000000000000444089209850062616169452667236328125
+                        }
+                    }
+                },
+                {
+                    "type": "organisation",
+                    "id": "Q42575708",
+                    "attributes": {
+                        "timeStart": "28.52",
+                        "timeEnd": "41.8",
+                        "context": "NER",
+                        "additionalInformation": {
+                            "confidence": 0.6875
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

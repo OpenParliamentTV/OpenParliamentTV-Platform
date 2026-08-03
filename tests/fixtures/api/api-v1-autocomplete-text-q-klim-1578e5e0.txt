@@ -1,0 +1,73 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": [
+        {
+            "text": "<em>klim</em>aschutz",
+            "score": 7712,
+            "freq": 7712,
+            "type": "prefix"
+        },
+        {
+            "text": "<em>klim</em>a",
+            "score": 3315,
+            "freq": 3315,
+            "type": "prefix"
+        },
+        {
+            "text": "<em>klim</em>awandel",
+            "score": 2355,
+            "freq": 2355,
+            "type": "prefix"
+        },
+        {
+            "text": "<em>klim</em>akrise",
+            "score": 1434,
+            "freq": 1434,
+            "type": "prefix"
+        },
+        {
+            "text": "<em>klim</em>aziele",
+            "score": 1017,
+            "freq": 1017,
+            "type": "prefix"
+        },
+        {
+            "text": "<em>klim</em>apolitik",
+            "score": 1010,
+            "freq": 1010,
+            "type": "prefix"
+        },
+        {
+            "text": "<em>klim</em>awandels",
+            "score": 700,
+            "freq": 700,
+            "type": "prefix"
+        },
+        {
+            "text": "<em>klim</em>aschutzgesetz",
+            "score": 672,
+            "freq": 672,
+            "type": "prefix"
+        },
+        {
+            "text": "<em>klim</em>aneutralität",
+            "score": 535,
+            "freq": 535,
+            "type": "prefix"
+        }
+    ]
+}

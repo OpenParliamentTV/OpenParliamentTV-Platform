@@ -1,0 +1,1846 @@
+HTTP 200
+content-type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"
+x-robots-tag: noindex
+
+{
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://optv.local/api/v1/iiif/search?q=klima",
+    "type": "Collection",
+    "label": {
+        "de": [
+            "Open Parliament TV — Suchen"
+        ]
+    },
+    "requiredStatement": {
+        "label": {
+            "de": [
+                "Open Parliament TV"
+            ]
+        },
+        "value": {
+            "de": [
+                "Open Parliament TV — Deutscher Bundestag"
+            ]
+        }
+    },
+    "provider": [
+        {
+            "id": "https://optv.local",
+            "type": "Agent",
+            "label": {
+                "de": [
+                    "Open Parliament TV"
+                ]
+            },
+            "homepage": [
+                {
+                    "id": "https://optv.local",
+                    "type": "Text",
+                    "format": "text/html"
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210027101?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wirtschaftliche Zusammenarbeit und Entwicklung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210027086?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jamila Schäfer (DIE GRÜNEN) — Wirtschaftliche Zusammenarbeit und Entwicklung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210027084?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wirtschaftliche Zusammenarbeit und Entwicklung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210027083?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Reem Alabali-Radovan — Wirtschaftliche Zusammenarbeit und Entwicklung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210027058?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Auswärtiges Amt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210027004?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Friedrich Merz — Bundeskanzler und Bundeskanzleramt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210027003?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Tino Chrupalla (AfD) — Bundeskanzler und Bundeskanzleramt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210026114?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Niklas Wagener (DIE GRÜNEN) — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210026103?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Esther Dilcher (SPD) — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210026101?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Alois Rainer — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210026062?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Marc Bernhard (AfD) — Wohnen, Stadtentwicklung und Bauwesen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210026060?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wohnen, Stadtentwicklung und Bauwesen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210026059?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Lisa Paus (DIE GRÜNEN) — Wohnen, Stadtentwicklung und Bauwesen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210026056?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Verena Hubertz — Wohnen, Stadtentwicklung und Bauwesen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210026031?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Allgemeine Finanzdebatte"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210026025?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wolfgang Wiehle (AfD) — Allgemeine Finanzdebatte"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210026017?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Thorsten Rudolph (SPD) — Allgemeine Finanzdebatte"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210026010?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Lars Klingbeil — Einbringung Haushaltsgesetz 2026, Finanzplan des Bundes 2025 bis 2029"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210025062?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wolfgang Wiehle (AfD) — Haushaltsbegleitgesetz 2025, Sondervermögen, Haushaltsgesetz 2025 (3. Beratung)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210025060?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sebastian Schäfer (DIE GRÜNEN) — Haushaltsbegleitgesetz 2025, Sondervermögen, Haushaltsgesetz 2025 (3. Beratung)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210025058?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Haushaltsbegleitgesetz 2025, Sondervermögen, Haushaltsgesetz 2025 (3. Beratung)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210025057?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Bettina Hagedorn (SPD) — Haushaltsbegleitgesetz 2025, Sondervermögen, Haushaltsgesetz 2025 (3. Beratung)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210025056?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Katrin Uhlig (DIE GRÜNEN) — Haushaltsbegleitgesetz 2025, Sondervermögen, Haushaltsgesetz 2025 (3. Beratung)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210025055?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Florian Oßner (CDU/CSU) — Haushaltsbegleitgesetz 2025, Sondervermögen, Haushaltsgesetz 2025 (3. Beratung)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210025053?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Lars Klingbeil — Haushaltsbegleitgesetz 2025, Sondervermögen, Haushaltsgesetz 2025 (3. Beratung)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210025048?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Thorsten Rudolph (SPD) — Haushaltsbegleitgesetz 2025, Sondervermögen, Haushaltsgesetz 2025 (3. Beratung)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210024102?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wirtschaftliche Zusammenarbeit und Entwicklung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210024084?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jamila Schäfer (DIE GRÜNEN) — Wirtschaftliche Zusammenarbeit und Entwicklung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210024082?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wirtschaftliche Zusammenarbeit und Entwicklung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210024003?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Alice Weidel (AfD) — Bundeskanzler und Bundeskanzleramt, Unabhängiger Kontrollrat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023122?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Isabel Mackensen-Geis (SPD) — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023121?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Peter Felser (AfD) — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023116?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Julian Schmidt (AfD) — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023112?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Leon Eckert (DIE GRÜNEN) — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023110?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Danny Meiners (AfD) — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023105?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023104?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Julia Schneider (DIE GRÜNEN) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023098?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023095?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jan-Niclas Gesenhues (DIE GRÜNEN) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023092?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jakob Blankenburg (SPD) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023090?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Uwe Feiler (CDU/CSU) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023088?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Bettina Hagedorn (SPD) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023063?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wohnen, Stadtentwicklung und Bauwesen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023038?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wirtschaft und Energie"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023016?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Christian Haase (CDU/CSU) — Finanzen, Bundesrechnungshof"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210023009?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Michael Espendiller (AfD) — Finanzen, Bundesrechnungshof"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022103?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Andreas Bleck (AfD) — Aktuelle Stunde - Herbst des Klimaschutzes"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022102?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Aktuelle Stunde - Herbst des Klimaschutzes"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022097?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Aktuelle Stunde - Herbst des Klimaschutzes"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022095?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Carsten Schneider — Aktuelle Stunde - Herbst des Klimaschutzes"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022093?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Thomas Gebhart (CDU/CSU) — Aktuelle Stunde - Herbst des Klimaschutzes"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022092?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Julia Verlinden (DIE GRÜNEN) — Aktuelle Stunde - Herbst des Klimaschutzes"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022071?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Helge Limburg (DIE GRÜNEN) — Gesetz zur Abschaffung des Paragraf 188 des Strafgesetzbuch"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022056?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Julia Klöckner — Energiewende, Verbrenner-Aus, Bundesimmissionsschutz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022055?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Energiewende, Verbrenner-Aus, Bundesimmissionsschutz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022048?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Julia Verlinden (DIE GRÜNEN) — Energiewende, Verbrenner-Aus, Bundesimmissionsschutz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022047?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Julia Klöckner — Energiewende, Verbrenner-Aus, Bundesimmissionsschutz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022044?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Tobias Peterka (AfD) — Neufassung der Geschäftsordnung des Bundestages"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022031?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Mehrwertsteuerbefreiungen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022023?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Doris Maria Achelwilm (DIE LINKE) — Mehrwertsteuerbefreiungen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210022009?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Carolin Bachmann (AfD) — Infrastrukturinvestitionen von Ländern und Kommunen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210021179?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Mareike Hermeier (DIE LINKE) — Batterierecht-EU-Anpassungsgesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210021156?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Michael Kellner (DIE GRÜNEN) — Kohlendioxid-Speicherungsgesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210021154?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Malte Kaufmann (AfD) — Kohlendioxid-Speicherungsgesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210021152?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Andrea Lindholz — Kohlendioxid-Speicherungsgesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210021088?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Mirze Edis (DIE LINKE) — Energiewirtschaftsrecht, EU-Erneuerbaren-Richtlinie"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210021087?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Energiewirtschaftsrecht, EU-Erneuerbaren-Richtlinie"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210021085?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Steffen Kotré (AfD) — Energiewirtschaftsrecht, EU-Erneuerbaren-Richtlinie"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210021077?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Claudia Müller (DIE GRÜNEN) — Aktuelle Stunde - Hightech Agenda Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210021069?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Dorothee Bär — Aktuelle Stunde - Hightech Agenda Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210019064?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Katrin Uhlig (DIE GRÜNEN) — Schlussrunde HG 2025, Sondervermögen Infrastruktur\nu. Klimaneutralität"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210018139?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jamila Schäfer (DIE GRÜNEN) — Bildung, Familie, Senioren, Frauen und Jugend"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210018090?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Nicole Höchst (AfD) — Forschung, Technologie und Raumfahrt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210018089?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Dorothee Bär — Forschung, Technologie und Raumfahrt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210018074?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Lorenz Beutin (DIE LINKE) — Zulassungsverfahren nach d. Bundes-ImmissionsschutzG"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210018064?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wohnungsbau und Wohnraumsicherung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210018061?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Marc Bernhard (AfD) — Wohnungsbau und Wohnraumsicherung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210018046?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Andrea Lindholz — Überweisungen im vereinfachten Verfahren"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210018014?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Christian Wirth (AfD) — Inneres"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210017096?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Schahina Gambir (DIE GRÜNEN) — Wirtschaftliche Zusammenarbeit und Entwicklung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210017087?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sascha H. Wagner (DIE LINKE) — Wirtschaftliche Zusammenarbeit und Entwicklung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210017086?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jamila Schäfer (DIE GRÜNEN) — Wirtschaftliche Zusammenarbeit und Entwicklung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210017051?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Deborah Düring (DIE GRÜNEN) — Auswärtiges Amt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210017024?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Thorsten Rudolph (SPD) — Bundeskanzler und Bundeskanzleramt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210017015?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Alexander Hoffmann (CDU/CSU) — Bundeskanzler und Bundeskanzleramt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210017011?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Tino Chrupalla (AfD) — Bundeskanzler und Bundeskanzleramt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210017005?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Katharina Dröge (DIE GRÜNEN) — Bundeskanzler und Bundeskanzleramt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016138?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Isabel Mackensen-Geis (SPD) — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016124?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Alois Rainer — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016121?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Uwe Feiler (CDU/CSU) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016120?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016119?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Klaus Mack (CDU/CSU) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016114?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Lisa Badum (DIE GRÜNEN) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016110?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016109?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Esra Limbacher (SPD) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016107?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Julia Verlinden (DIE GRÜNEN) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016101?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Claudia Müller (DIE GRÜNEN) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016100?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Mark Helfrich (CDU/CSU) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016099?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016096?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Carsten Schneider — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016072?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Patrick Schnieder — Verkehr"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016069?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Mechthilde Wittmann (CDU/CSU) — Wohnen, Stadtentwicklung und Bauwesen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016064?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Marc Bernhard (AfD) — Wohnen, Stadtentwicklung und Bauwesen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016055?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Marc Bernhard (AfD) — Wohnen, Stadtentwicklung und Bauwesen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016052?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Lisa Paus (DIE GRÜNEN) — Wohnen, Stadtentwicklung und Bauwesen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016045?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Malte Kaufmann (AfD) — Wirtschaft und Energie"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016036?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Janine Wissler (DIE LINKE) — Wirtschaft und Energie"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016034?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Dunja Kreiser (SPD) — Wirtschaft und Energie"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016033?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wolfgang Wiehle (AfD) — Wirtschaft und Energie"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016019?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jamila Schäfer (DIE GRÜNEN) — Allgemeine Finanzdebatte, Haushaltsbegleitgesetz 2025"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016017?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Wolfgang Wiehle (AfD) — Allgemeine Finanzdebatte, Haushaltsbegleitgesetz 2025"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016016?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Florian Oßner (CDU/CSU) — Allgemeine Finanzdebatte, Haushaltsbegleitgesetz 2025"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016014?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Andreas Audretsch (DIE GRÜNEN) — Allgemeine Finanzdebatte, Haushaltsbegleitgesetz 2025"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016013?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Thorsten Rudolph (SPD) — Allgemeine Finanzdebatte, Haushaltsbegleitgesetz 2025"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016008?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sebastian Schäfer (DIE GRÜNEN) — Allgemeine Finanzdebatte, Haushaltsbegleitgesetz 2025"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210016003?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Lars Klingbeil — Einbringung Haushaltsgesetz 2025, Finanzplan des Bundes 2024 bis 2028"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210015054?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Mehrwertsteuerbefreiungen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210015010?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Marcel Emmerich (DIE GRÜNEN) — Aussetzung des Familiennachzugs"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210014175?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Christian Zaum (AfD) — Investitionsprogramm Ganztagsausbau"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210014171?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Investitionsprogramm Ganztagsausbau"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210014095?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Roderich Kiesewetter (CDU/CSU) — Aktuelle Stunde: Lage im Nahen und Mittleren Osten"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210014070?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Dunja Kreiser (SPD) — Klimaschutzfolgenbereinigungsgesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210014065?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Nina Scheer (SPD) — Klimaschutzfolgenbereinigungsgesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210014064?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Klimaschutzfolgenbereinigungsgesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210014062?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Karsten Hilse (AfD) — Klimaschutzfolgenbereinigungsgesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210014053?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jan-Marco Luczak (CDU/CSU) — Zulässige Miethöhe, Mietpreisbremse"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210014006?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Franziska Brantner (DIE GRÜNEN) — Wirtschaftsstandort Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210012006?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Tino Chrupalla (AfD) — Regierungserklärung zum NATO-Gipfel u. EU-Rat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011082?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011081?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jakob Blankenburg (SPD) — Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011078?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jan-Niclas Gesenhues (DIE GRÜNEN) — Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011077?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Esra Limbacher (SPD) — Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011076?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Karsten Hilse (AfD) — Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011075?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Thomas Gebhart (CDU/CSU) — Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011074?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Fabian Fahl (DIE LINKE) — Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011073?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Carsten Schneider — Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011072?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Rainer Kraft (AfD) — Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011071?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Mark Helfrich (CDU/CSU) — Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011070?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Felix Banaszak (DIE GRÜNEN) — Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011054?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Franziska Kersten (SPD) — GAP-Direktzahlungen-Gesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210011005?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Rasha Nasr (SPD) — Aussetzung des Familiennachzugs"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210010174?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Frühjahrsdürre und Hitzeprognosen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210010167?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Frühjahrsdürre und Hitzeprognosen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210010140?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Anja Troff-Schaffarzyk (SPD) — Allgemeines Eisenbahngesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210010047?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Frauke Heiligenstadt (SPD) — Steuerliches Investitionsprogramm"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210010032?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Aufhebung des Lieferkettensorgfaltspflichtengesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210010028?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Claudia Roth (DIE GRÜNEN) — Aufhebung des Lieferkettensorgfaltspflichtengesetz"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210009024?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Beatrix von Storch (AfD) — Aktuelle Stunde zur Lage der transatlantischen Beziehungen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008091?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Bernd Schattner (AfD) — Aktuelle Stunde zur Dürre in Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008090?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Aktuelle Stunde zur Dürre in Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008089?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Julia Schneider (DIE GRÜNEN) — Aktuelle Stunde zur Dürre in Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008088?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Isabel Mackensen-Geis (SPD) — Aktuelle Stunde zur Dürre in Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008087?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Aktuelle Stunde zur Dürre in Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008086?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Aktuelle Stunde zur Dürre in Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008082?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Aktuelle Stunde zur Dürre in Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008081?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Klaus Mack (CDU/CSU) — Aktuelle Stunde zur Dürre in Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008080?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Julia Verlinden (DIE GRÜNEN) — Aktuelle Stunde zur Dürre in Deutschland"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008028?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Fabian Fahl (DIE LINKE) — Kohlenstoffdioxid-Bepreisung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008027?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Katrin Uhlig (DIE GRÜNEN) — Kohlenstoffdioxid-Bepreisung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008021?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Lisa Badum (DIE GRÜNEN) — Kohlenstoffdioxid-Bepreisung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210008020?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Thomas Gebhart (CDU/CSU) — Kohlenstoffdioxid-Bepreisung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210007134?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "GG-Änderung (Entlastung der Kommunen von Altschulden)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210007082?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Aktuelle Stunde zur Gewalt gegen Sicherheitskräfte"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210007081?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jürgen Hardt (CDU/CSU) — Aktuelle Stunde zur Gewalt gegen Sicherheitskräfte"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210007038?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Agnieszka Brugger (DIE GRÜNEN) — Erneuerbare Energien"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210007004?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Christian Zaum (AfD) — Investitionsprogramm Ganztagsausbau"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210005074?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Steffen Kotré (AfD) — Wirtschaft und Energie"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210005065?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Andreas Audretsch (DIE GRÜNEN) — Wirtschaft und Energie"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004165?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Michael Kaufmann (AfD) — Forschung, Technologie und Raumfahrt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004147?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Marc Bernhard (AfD) — Wohnen, Stadtentwicklung, Bauwesen und Kommunen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004144?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Kassem Taher Saleh (DIE GRÜNEN) — Wohnen, Stadtentwicklung, Bauwesen und Kommunen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004141?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Marc Bernhard (AfD) — Wohnen, Stadtentwicklung, Bauwesen und Kommunen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004132?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Franziska Kersten (SPD) — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004131?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Peter Felser (AfD) — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004125?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Esra Limbacher (SPD) — Landwirtschaft, Ernährung und Heimat"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004099?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Alexander Engelhard (CDU/CSU) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004096?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Thomas Gebhart (CDU/CSU) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004095?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Violetta Bock (DIE LINKE) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004091?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004088?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Esra Limbacher (SPD) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004085?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Andreas Jung (CDU/CSU) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004084?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Karsten Hilse (AfD) — Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004069?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Simone Borchardt (CDU/CSU) — Gesundheit"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004039?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Steffen Bilger (CDU/CSU) — Einsetzung von Ausschüssen"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004029?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Verkehr"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210004006?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Felix Banaszak (DIE GRÜNEN) — Finanzen und Haushalt"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210003064?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Claudia Roth (DIE GRÜNEN) — Wirtschaftliche Zusammenarbeit und Entwicklung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210003053?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Jan Nolte (AfD) — Verteidigung"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210003024?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Chantal Kopf (DIE GRÜNEN) — Abgabe einer Regierungserklärung durch den Bundeskanzler"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0210001008?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Gregor Gysi — Eröffnung der Sitzung durch den Alterspräsidenten"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200214049?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Stefan Seidler (fraktionslos) — Änderung des Grundgesetzes (Artikel 109, 115, 143h, 87a)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200214037?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sören Pellmann (DIE LINKE) — Änderung des Grundgesetzes (Artikel 109, 115, 143h, 87a)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200214030?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Agnieszka Brugger (DIE GRÜNEN) — Änderung des Grundgesetzes (Artikel 109, 115, 143h, 87a)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200214022?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Franziska Brantner (DIE GRÜNEN) — Änderung des Grundgesetzes (Artikel 109, 115, 143h, 87a)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200214015?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Britta Haßelmann (DIE GRÜNEN) — Änderung des Grundgesetzes (Artikel 109, 115, 143h, 87a)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200214013?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Lars Klingbeil (SPD) — Änderung des Grundgesetzes (Artikel 109, 115, 143h, 87a)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200213038?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Reem Alabali-Radovan (SPD) — Änderung des Grundgesetzes (Artikel 109, 115, 143h)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200213027?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Andreas Audretsch (DIE GRÜNEN) — Änderung des Grundgesetzes (Artikel 109, 115, 143h)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200213023?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Felix Banaszak (DIE GRÜNEN) — Änderung des Grundgesetzes (Artikel 109, 115, 143h)"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200213012?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Friedrich Merz (CDU/CSU) — Änderung des Grundgesetzes (Artikel 109, 115, 143h)"
+                ]
+            }
+        }
+    ]
+}

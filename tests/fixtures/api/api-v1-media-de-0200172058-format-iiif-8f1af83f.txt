@@ -1,0 +1,560 @@
+HTTP 200
+content-type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"
+x-robots-tag: noindex
+
+{
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://optv.local/api/v1/media/DE-0200172058?format=iiif",
+    "type": "Manifest",
+    "label": {
+        "de": [
+            "Anja Karliczek, CDU/CSU | 06.06.2024 | Immissionsschutzrechtliche Genehmigungsverfahren"
+        ]
+    },
+    "metadata": [
+        {
+            "label": {
+                "de": [
+                    "Parlament"
+                ]
+            },
+            "value": {
+                "de": [
+                    "Deutscher Bundestag"
+                ]
+            }
+        },
+        {
+            "label": {
+                "de": [
+                    "Wahlperiode"
+                ]
+            },
+            "value": {
+                "de": [
+                    "20"
+                ]
+            }
+        },
+        {
+            "label": {
+                "de": [
+                    "Sitzung"
+                ]
+            },
+            "value": {
+                "de": [
+                    "172"
+                ]
+            }
+        },
+        {
+            "label": {
+                "de": [
+                    "Datum"
+                ]
+            },
+            "value": {
+                "de": [
+                    "2024-06-06"
+                ]
+            }
+        },
+        {
+            "label": {
+                "de": [
+                    "Hauptredner:in"
+                ]
+            },
+            "value": {
+                "de": [
+                    "Anja Karliczek"
+                ]
+            }
+        },
+        {
+            "label": {
+                "de": [
+                    "Fraktion/Gruppe"
+                ]
+            },
+            "value": {
+                "de": [
+                    "CDU/CSU"
+                ]
+            }
+        },
+        {
+            "label": {
+                "de": [
+                    "Tagesordnungspunkt"
+                ]
+            },
+            "value": {
+                "de": [
+                    "Immissionsschutzrechtliche Genehmigungsverfahren"
+                ]
+            }
+        }
+    ],
+    "requiredStatement": {
+        "label": {
+            "de": [
+                "Open Parliament TV"
+            ]
+        },
+        "value": {
+            "de": [
+                "Open Parliament TV — Deutscher Bundestag"
+            ]
+        }
+    },
+    "provider": [
+        {
+            "id": "https://optv.local",
+            "type": "Agent",
+            "label": {
+                "de": [
+                    "Open Parliament TV"
+                ]
+            },
+            "homepage": [
+                {
+                    "id": "https://optv.local",
+                    "type": "Text",
+                    "format": "text/html"
+                }
+            ]
+        }
+    ],
+    "items": [
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+            "type": "Canvas",
+            "label": {
+                "de": [
+                    "Anja Karliczek, CDU/CSU"
+                ]
+            },
+            "duration": "<<NORMALIZED>>",
+            "items": [
+                {
+                    "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/page",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/page/video",
+                            "type": "Annotation",
+                            "motivation": "painting",
+                            "body": {
+                                "id": "https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_h264_720_400_2000kb_baseline_de_2192.mp4",
+                                "type": "Video",
+                                "format": "video/mp4",
+                                "duration": "<<NORMALIZED>>"
+                            },
+                            "target": "https://optv.local/api/v1/media/DE-0200172058/canvas"
+                        }
+                    ]
+                }
+            ],
+            "annotations": [
+                {
+                    "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/transcripts",
+                    "type": "AnnotationPage",
+                    "items": [
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/transcript/proceedings-de",
+                            "type": "Annotation",
+                            "motivation": "supplementing",
+                            "label": {
+                                "de": [
+                                    "Protokoll"
+                                ]
+                            },
+                            "body": {
+                                "id": "https://optv.local/api/v1/media/DE-0200172058/transcript.vtt?type=proceedings&lang=de",
+                                "type": "Text",
+                                "format": "text/vtt",
+                                "label": {
+                                    "de": [
+                                        "Protokoll"
+                                    ]
+                                },
+                                "language": "de"
+                            },
+                            "target": "https://optv.local/api/v1/media/DE-0200172058/canvas"
+                        }
+                    ]
+                },
+                {
+                    "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entities",
+                    "type": "AnnotationPage",
+                    "label": {
+                        "de": [
+                            "Entitäten"
+                        ]
+                    },
+                    "items": [
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/1",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": [
+                                {
+                                    "type": "TextualBody",
+                                    "value": "Daniel Rinkert",
+                                    "format": "text/plain"
+                                },
+                                {
+                                    "id": "http://www.wikidata.org/entity/Q114134624",
+                                    "type": "Text",
+                                    "format": "text/html"
+                                }
+                            ],
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=70.94,85.3"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/2",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": [
+                                {
+                                    "type": "TextualBody",
+                                    "value": "Daniel Rinkert",
+                                    "format": "text/plain"
+                                },
+                                {
+                                    "id": "http://www.wikidata.org/entity/Q114134624",
+                                    "type": "Text",
+                                    "format": "text/html"
+                                }
+                            ],
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=247.6,256.96"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/3",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": [
+                                {
+                                    "type": "TextualBody",
+                                    "value": "Andreas Bleck",
+                                    "format": "text/plain"
+                                },
+                                {
+                                    "id": "http://www.wikidata.org/entity/Q40979188",
+                                    "type": "Text",
+                                    "format": "text/html"
+                                }
+                            ],
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=28.52,41.8"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/4",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": {
+                                "type": "TextualBody",
+                                "value": "KSG",
+                                "format": "text/plain"
+                            },
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=236.2,243.28"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/5",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": {
+                                "type": "TextualBody",
+                                "value": "BImSchG",
+                                "format": "text/plain"
+                            },
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=8.24,23.16"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/6",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": {
+                                "type": "TextualBody",
+                                "value": "BImSchG",
+                                "format": "text/plain"
+                            },
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=226.92,236.2"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/7",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": [
+                                {
+                                    "type": "TextualBody",
+                                    "value": "DIE GRÜNEN",
+                                    "format": "text/plain"
+                                },
+                                {
+                                    "id": "http://www.wikidata.org/entity/Q1007353",
+                                    "type": "Text",
+                                    "format": "text/html"
+                                }
+                            ],
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=248.96,256.96"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/8",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": [
+                                {
+                                    "type": "TextualBody",
+                                    "value": "CDU/CSU",
+                                    "format": "text/plain"
+                                },
+                                {
+                                    "id": "http://www.wikidata.org/entity/Q1023134",
+                                    "type": "Text",
+                                    "format": "text/html"
+                                }
+                            ],
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=247.6,256.96"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/9",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": [
+                                {
+                                    "type": "TextualBody",
+                                    "value": "SPD",
+                                    "format": "text/plain"
+                                },
+                                {
+                                    "id": "http://www.wikidata.org/entity/Q2207512",
+                                    "type": "Text",
+                                    "format": "text/html"
+                                }
+                            ],
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=37.3,47.2"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/10",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": [
+                                {
+                                    "type": "TextualBody",
+                                    "value": "SPD",
+                                    "format": "text/plain"
+                                },
+                                {
+                                    "id": "http://www.wikidata.org/entity/Q2207512",
+                                    "type": "Text",
+                                    "format": "text/html"
+                                }
+                            ],
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=70.94,85.3"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/11",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": [
+                                {
+                                    "type": "TextualBody",
+                                    "value": "SPD",
+                                    "format": "text/plain"
+                                },
+                                {
+                                    "id": "http://www.wikidata.org/entity/Q2207512",
+                                    "type": "Text",
+                                    "format": "text/html"
+                                }
+                            ],
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=247.6,256.96"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/12",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": [
+                                {
+                                    "type": "TextualBody",
+                                    "value": "SPD",
+                                    "format": "text/plain"
+                                },
+                                {
+                                    "id": "http://www.wikidata.org/entity/Q2207512",
+                                    "type": "Text",
+                                    "format": "text/html"
+                                }
+                            ],
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=248.96,256.96"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/media/DE-0200172058/canvas/annotations/entity/13",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": [
+                                {
+                                    "type": "TextualBody",
+                                    "value": "AfD",
+                                    "format": "text/plain"
+                                },
+                                {
+                                    "id": "http://www.wikidata.org/entity/Q42575708",
+                                    "type": "Text",
+                                    "format": "text/html"
+                                }
+                            ],
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/media/DE-0200172058/canvas",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=28.52,41.8"
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "homepage": [
+        {
+            "id": "https://optv.local/media/DE-0200172058",
+            "type": "Text",
+            "format": "text/html",
+            "label": {
+                "de": [
+                    "Open Parliament TV"
+                ]
+            }
+        }
+    ],
+    "seeAlso": [
+        {
+            "id": "https://optv.local/api/v1/media/DE-0200172058",
+            "type": "Dataset",
+            "format": "application/json",
+            "label": {
+                "de": [
+                    "Open Parliament TV"
+                ]
+            }
+        }
+    ],
+    "summary": {
+        "de": [
+            "Immissionsschutzrechtliche Genehmigungsverfahren"
+        ]
+    },
+    "partOf": [
+        {
+            "id": "https://optv.local/api/v1/session/DE-0200172?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 172"
+                ]
+            }
+        }
+    ]
+}

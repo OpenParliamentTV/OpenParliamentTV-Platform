@@ -1,0 +1,62 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": [
+        {
+            "id": "Q1717353",
+            "type": "person",
+            "subtype": "memberOfParliament",
+            "label": "Jürgen <em>Klim</em>ke",
+            "labelAlternative": null,
+            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q1717353&v=fd460f58"
+        },
+        {
+            "id": "Q488589",
+            "type": "organisation",
+            "label": "BMWK",
+            "labelAlternative": "Bundesministerium für Wirtschaft und <em>Klim</em>aschutz",
+            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q488589&v=473aed24"
+        },
+        {
+            "id": "Q110027193",
+            "type": "term",
+            "label": "Ausschuss für <em>Klim</em>aschutz und Energie",
+            "labelAlternative": null,
+            "thumbnailURI": null
+        },
+        {
+            "id": "Q1774424",
+            "type": "term",
+            "label": "<em>Klim</em>aneutralität",
+            "labelAlternative": null,
+            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q1774424&v=960d239c"
+        },
+        {
+            "id": "7674",
+            "type": "document",
+            "label": "KSG",
+            "labelAlternative": "Bundes-<em>Klim</em>aschutzgesetz",
+            "thumbnailURI": ""
+        },
+        {
+            "id": "318",
+            "type": "document",
+            "label": "Drucksache 18/10370",
+            "labelAlternative": "<em>Klim</em>aschutzplan 2050 - <em>Klim</em>aschutzpolitische...",
+            "thumbnailURI": null
+        }
+    ]
+}

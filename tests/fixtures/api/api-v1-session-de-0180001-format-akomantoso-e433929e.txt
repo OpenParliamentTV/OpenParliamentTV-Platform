@@ -1,0 +1,433 @@
+HTTP 200
+content-type: application/xml; charset=utf-8
+x-robots-tag: noindex
+
+<?xml version="1.0" encoding="UTF-8"?>
+<akomaNtoso xmlns="http://docs.oasis-open.org/legaldocml/ns/akn/3.0">
+  <debate name="debateRecord">
+    <meta>
+      <identification source="#openparliamenttv">
+        <FRBRWork>
+          <FRBRthis value="/akn/de/debate/2013-10-22/DE-0180001/!main"/>
+          <FRBRuri value="/akn/de/debate/2013-10-22/DE-0180001"/>
+          <FRBRdate date="NORMALIZED" name="sitting"/>
+          <FRBRauthor href="#parliament"/>
+          <FRBRcountry value="de"/>
+        </FRBRWork>
+        <FRBRExpression>
+          <FRBRthis value="/akn/de/debate/2013-10-22/DE-0180001/deu@/!main"/>
+          <FRBRuri value="/akn/de/debate/2013-10-22/DE-0180001/deu@"/>
+          <FRBRdate date="NORMALIZED" name="sitting"/>
+          <FRBRauthor href="#parliament"/>
+          <FRBRlanguage language="deu"/>
+        </FRBRExpression>
+        <FRBRManifestation>
+          <FRBRthis value="https://optv.local/api/v1/session/DE-0180001?format=akn"/>
+          <FRBRuri value="https://optv.local/api/v1/session/DE-0180001?format=akn"/>
+          <FRBRdate date="NORMALIZED" name="generation"/>
+          <FRBRauthor href="#openparliamenttv"/>
+          <FRBRformat value="application/akn+xml"/>
+        </FRBRManifestation>
+      </identification>
+      <references source="#openparliamenttv">
+        <TLCOrganization eId="openparliamenttv" href="https://optv.local" showAs="Open Parliament TV"/>
+        <TLCOrganization eId="parliament" href="https://optv.local" showAs="Deutscher Bundestag"/>
+        <TLCOrganization eId="org-Q1023134" href="https://www.wikidata.org/entity/Q1023134" showAs="CDU/CSU"/>
+        <TLCOrganization eId="org-Q1826856" href="https://www.wikidata.org/entity/Q1826856" showAs="DIE LINKE"/>
+        <TLCOrganization eId="org-Q1007353" href="https://www.wikidata.org/entity/Q1007353" showAs="DIE GRÜNEN"/>
+        <TLCPerson eId="person-Q73951" href="https://www.wikidata.org/entity/Q73951" showAs="Heinz Riesenhuber"/>
+        <TLCPerson eId="person-Q57474" href="https://www.wikidata.org/entity/Q57474" showAs="Norbert Lammert"/>
+        <TLCPerson eId="person-Q1770968" href="https://www.wikidata.org/entity/Q1770968" showAs="Michael Grosse-Brömer"/>
+        <TLCPerson eId="person-Q1748314" href="https://www.wikidata.org/entity/Q1748314" showAs="Petra Sitte"/>
+        <TLCPerson eId="person-Q90833" href="https://www.wikidata.org/entity/Q90833" showAs="Thomas Oppermann"/>
+        <TLCPerson eId="person-Q920726" href="https://www.wikidata.org/entity/Q920726" showAs="Britta Haßelmann"/>
+        <TLCRole eId="chair" href="https://www.wikidata.org/entity/Q140686" showAs="Chair"/>
+        <TLCObject eId="mediaFragment_1" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2783343/2783343_h264_720_400_2000kb_baseline_de_2192.mp4#t=1,1674" showAs="Video 1s–1674s"/>
+        <TLCObject eId="media-video-DE-0180001001" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2783343/2783343_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001001"/>
+        <TLCObject eId="media-audio-DE-0180001001" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2783343/2783343_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001001"/>
+        <TLCObject eId="source-DE-0180001001" href="http://dbtg.tv/fvid/2783343" showAs="Quelle DE-0180001001"/>
+        <TLCObject eId="media-video-DE-0180001002" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784086/2784086_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001002"/>
+        <TLCObject eId="media-audio-DE-0180001002" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784086/2784086_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001002"/>
+        <TLCObject eId="source-DE-0180001002" href="http://dbtg.tv/fvid/2784086" showAs="Quelle DE-0180001002"/>
+        <TLCObject eId="media-video-DE-0180001003" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784156/2784156_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001003"/>
+        <TLCObject eId="media-audio-DE-0180001003" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784156/2784156_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001003"/>
+        <TLCObject eId="source-DE-0180001003" href="http://dbtg.tv/fvid/2784156" showAs="Quelle DE-0180001003"/>
+        <TLCObject eId="mediaFragment_2" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784197/2784197_h264_720_400_2000kb_baseline_de_2192.mp4#t=1,42.96" showAs="Video 1s–42.96s"/>
+        <TLCObject eId="media-video-DE-0180001005" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784197/2784197_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001005"/>
+        <TLCObject eId="media-audio-DE-0180001005" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784197/2784197_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001005"/>
+        <TLCObject eId="source-DE-0180001005" href="http://dbtg.tv/fvid/2784197" showAs="Quelle DE-0180001005"/>
+        <TLCObject eId="mediaFragment_3" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784198/2784198_h264_720_400_2000kb_baseline_de_2192.mp4#t=1,50" showAs="Video 1s–50s"/>
+        <TLCObject eId="media-video-DE-0180001006" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784198/2784198_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001006"/>
+        <TLCObject eId="media-audio-DE-0180001006" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784198/2784198_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001006"/>
+        <TLCObject eId="source-DE-0180001006" href="http://dbtg.tv/fvid/2784198" showAs="Quelle DE-0180001006"/>
+        <TLCObject eId="mediaFragment_4" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784196/2784196_h264_720_400_2000kb_baseline_de_2192.mp4#t=1,72.6" showAs="Video 1s–72.6s"/>
+        <TLCObject eId="mediaFragment_5" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784196/2784196_h264_720_400_2000kb_baseline_de_2192.mp4#t=72.6,82.06" showAs="Video 72.6s–82.06s"/>
+        <TLCObject eId="mediaFragment_6" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784196/2784196_h264_720_400_2000kb_baseline_de_2192.mp4#t=82.06,163.86" showAs="Video 82.06s–163.86s"/>
+        <TLCObject eId="mediaFragment_7" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784196/2784196_h264_720_400_2000kb_baseline_de_2192.mp4#t=163.86,244.48" showAs="Video 163.86s–244.48s"/>
+        <TLCObject eId="mediaFragment_8" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784196/2784196_h264_720_400_2000kb_baseline_de_2192.mp4#t=244.48,252" showAs="Video 244.48s–252s"/>
+        <TLCObject eId="media-video-DE-0180001007" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784196/2784196_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001007"/>
+        <TLCObject eId="media-audio-DE-0180001007" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784196/2784196_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001007"/>
+        <TLCObject eId="source-DE-0180001007" href="http://dbtg.tv/fvid/2784196" showAs="Quelle DE-0180001007"/>
+        <TLCObject eId="mediaFragment_9" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=1,38.8" showAs="Video 1s–38.8s"/>
+        <TLCObject eId="mediaFragment_10" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=38.8,61.24" showAs="Video 38.8s–61.24s"/>
+        <TLCObject eId="mediaFragment_11" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=61.24,96.28" showAs="Video 61.24s–96.28s"/>
+        <TLCObject eId="mediaFragment_12" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=96.28,127.16" showAs="Video 96.28s–127.16s"/>
+        <TLCObject eId="mediaFragment_13" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=127.16,145.16" showAs="Video 127.16s–145.16s"/>
+        <TLCObject eId="mediaFragment_14" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=145.16,147.52" showAs="Video 145.16s–147.52s"/>
+        <TLCObject eId="mediaFragment_15" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=147.52,169.4" showAs="Video 147.52s–169.4s"/>
+        <TLCObject eId="mediaFragment_16" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=169.4,172.8" showAs="Video 169.4s–172.8s"/>
+        <TLCObject eId="mediaFragment_17" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=172.8,180.08" showAs="Video 172.8s–180.08s"/>
+        <TLCObject eId="mediaFragment_18" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=180.08,267.96" showAs="Video 180.08s–267.96s"/>
+        <TLCObject eId="mediaFragment_19" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=267.96,289.04" showAs="Video 267.96s–289.04s"/>
+        <TLCObject eId="mediaFragment_20" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=289.04,305.28" showAs="Video 289.04s–305.28s"/>
+        <TLCObject eId="mediaFragment_21" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=305.28,320.68" showAs="Video 305.28s–320.68s"/>
+        <TLCObject eId="mediaFragment_22" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=320.68,321.12" showAs="Video 320.68s–321.12s"/>
+        <TLCObject eId="mediaFragment_23" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=321.12,355.96" showAs="Video 321.12s–355.96s"/>
+        <TLCObject eId="mediaFragment_24" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4#t=355.96,366" showAs="Video 355.96s–366s"/>
+        <TLCObject eId="media-video-DE-0180001008" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001008"/>
+        <TLCObject eId="media-audio-DE-0180001008" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784205/2784205_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001008"/>
+        <TLCObject eId="source-DE-0180001008" href="http://dbtg.tv/fvid/2784205" showAs="Quelle DE-0180001008"/>
+        <TLCObject eId="mediaFragment_25" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784206/2784206_h264_720_400_2000kb_baseline_de_2192.mp4#t=1,41.96" showAs="Video 1s–41.96s"/>
+        <TLCObject eId="mediaFragment_26" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784206/2784206_h264_720_400_2000kb_baseline_de_2192.mp4#t=41.96,113.96" showAs="Video 41.96s–113.96s"/>
+        <TLCObject eId="mediaFragment_27" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784206/2784206_h264_720_400_2000kb_baseline_de_2192.mp4#t=113.96,173.24" showAs="Video 113.96s–173.24s"/>
+        <TLCObject eId="mediaFragment_28" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784206/2784206_h264_720_400_2000kb_baseline_de_2192.mp4#t=173.24,220.76" showAs="Video 173.24s–220.76s"/>
+        <TLCObject eId="mediaFragment_29" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784206/2784206_h264_720_400_2000kb_baseline_de_2192.mp4#t=220.76,234.08" showAs="Video 220.76s–234.08s"/>
+        <TLCObject eId="mediaFragment_30" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784206/2784206_h264_720_400_2000kb_baseline_de_2192.mp4#t=234.08,238.96" showAs="Video 234.08s–238.96s"/>
+        <TLCObject eId="media-video-DE-0180001009" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784206/2784206_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001009"/>
+        <TLCObject eId="media-audio-DE-0180001009" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784206/2784206_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001009"/>
+        <TLCObject eId="source-DE-0180001009" href="http://dbtg.tv/fvid/2784206" showAs="Quelle DE-0180001009"/>
+        <TLCObject eId="mediaFragment_31" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784219/2784219_h264_720_400_2000kb_baseline_de_2192.mp4#t=1,31.68" showAs="Video 1s–31.68s"/>
+        <TLCObject eId="mediaFragment_32" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784219/2784219_h264_720_400_2000kb_baseline_de_2192.mp4#t=31.68,73.04" showAs="Video 31.68s–73.04s"/>
+        <TLCObject eId="mediaFragment_33" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784219/2784219_h264_720_400_2000kb_baseline_de_2192.mp4#t=73.04,83.32" showAs="Video 73.04s–83.32s"/>
+        <TLCObject eId="mediaFragment_34" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784219/2784219_h264_720_400_2000kb_baseline_de_2192.mp4#t=83.32,100.92" showAs="Video 83.32s–100.92s"/>
+        <TLCObject eId="mediaFragment_35" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784219/2784219_h264_720_400_2000kb_baseline_de_2192.mp4#t=100.92,113.12" showAs="Video 100.92s–113.12s"/>
+        <TLCObject eId="mediaFragment_36" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784219/2784219_h264_720_400_2000kb_baseline_de_2192.mp4#t=113.12,247.08" showAs="Video 113.12s–247.08s"/>
+        <TLCObject eId="mediaFragment_37" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784219/2784219_h264_720_400_2000kb_baseline_de_2192.mp4#t=247.08,288.32" showAs="Video 247.08s–288.32s"/>
+        <TLCObject eId="mediaFragment_38" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784219/2784219_h264_720_400_2000kb_baseline_de_2192.mp4#t=288.32,324" showAs="Video 288.32s–324s"/>
+        <TLCObject eId="media-video-DE-0180001010" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784219/2784219_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001010"/>
+        <TLCObject eId="media-audio-DE-0180001010" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784219/2784219_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001010"/>
+        <TLCObject eId="source-DE-0180001010" href="http://dbtg.tv/fvid/2784219" showAs="Quelle DE-0180001010"/>
+        <TLCObject eId="mediaFragment_39" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784220/2784220_h264_720_400_2000kb_baseline_de_2192.mp4#t=1,33" showAs="Video 1s–33s"/>
+        <TLCObject eId="media-video-DE-0180001011" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784220/2784220_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001011"/>
+        <TLCObject eId="media-audio-DE-0180001011" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784220/2784220_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001011"/>
+        <TLCObject eId="source-DE-0180001011" href="http://dbtg.tv/fvid/2784220" showAs="Quelle DE-0180001011"/>
+        <TLCObject eId="mediaFragment_40" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784360/2784360_h264_720_400_2000kb_baseline_de_2192.mp4#t=1,6340" showAs="Video 1s–6340s"/>
+        <TLCObject eId="media-video-DE-0180001012" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784360/2784360_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001012"/>
+        <TLCObject eId="media-audio-DE-0180001012" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784360/2784360_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001012"/>
+        <TLCObject eId="source-DE-0180001012" href="http://dbtg.tv/fvid/2784360" showAs="Quelle DE-0180001012"/>
+        <TLCObject eId="media-video-DE-0180001013" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784370/2784370_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001013"/>
+        <TLCObject eId="media-audio-DE-0180001013" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784370/2784370_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001013"/>
+        <TLCObject eId="source-DE-0180001013" href="http://dbtg.tv/fvid/2784370" showAs="Quelle DE-0180001013"/>
+        <TLCObject eId="media-video-DE-0180001014" href="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784369/2784369_h264_720_400_2000kb_baseline_de_2192.mp4" showAs="Video DE-0180001014"/>
+        <TLCObject eId="media-audio-DE-0180001014" href="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784369/2784369_mp3_128kb_stereo_de_128.mp3" showAs="Audio DE-0180001014"/>
+        <TLCObject eId="source-DE-0180001014" href="http://dbtg.tv/fvid/2784369" showAs="Quelle DE-0180001014"/>
+      </references>
+    </meta>
+    <preface>
+      <p>
+        <docTitle>Sitzung 1, Wahlperiode 18 — Deutscher Bundestag</docTitle>
+      </p>
+      <p>Deutscher Bundestag — Nutzungsbedingungen (Open Parliament TV, https://optv.local/session/DE-0180001)</p>
+    </preface>
+    <debateBody>
+      <debateSection name="agendaItem" eId="dbsect_1">
+        <heading>Sitzungseröffnung</heading>
+        <speech eId="spch_1" by="#person-Q73951" as="#chair" refersTo="#mediaFragment_1" startTime="2013-10-22T11:00:09+02:00" endTime="2013-10-22T11:28:02+02:00">
+          <from>Heinz Riesenhuber</from>
+          <p>Guten Morgen, meine Damen und Herren!</p>
+          <p>Meine sehr verehrten Damen und Herren, ich begrüße Sie zur konstituierenden Sitzung des 18. Deutschen Bundestages.</p>
+          <p>Parlamentarischer Brauch ist es, dass der Älteste, die Älteste die Versammlung eröffnet und die Leitung übernimmt, bis der Bundestag seinen neuen Präsidenten gewählt hat. § 1 Abs. 2 der Geschäftsordnung des Deutschen Bundestages sieht dies vor. Ich bin geboren am 1. Dezember 1935, dem ersten Adventssonntag. So darf ich Sie fragen: Ist jemand früher geboren als ich?</p>
+          <p>– Hier im Haus. Vielen Dank! Ein wichtiger Hinweis. Ich hatte schon zahlreiche Vorfahren.</p>
+          <p>Ist hier im Haus jemand früher geboren? – Wenn dies nicht der Fall ist, kommen wir zu Punkt 1 der Tagesordnung:</p>
+          <p>Ich habe die Ehre und die Freude, mit Ihnen zusammen in meiner Eigenschaft als Alterspräsident die erste Sitzung der 18. Wahlperiode zu eröffnen.</p>
+          <p>Ich begrüße den Herrn Bundespräsidenten. Herr Bundespräsident, wir freuen uns, dass Sie bei uns sind.</p>
+          <p>Des Weiteren begrüße ich den Herrn Präsidenten des Bundesverfassungsgerichts.</p>
+          <p>Ich begrüße den Altbundespräsidenten, Herrn Dr. Horst Köhler.</p>
+          <p>Ich begrüße herzlich die ehemalige Präsidentin unseres Deutschen Bundestages, Frau Dr. Rita Süssmuth.</p>
+          <p>Es ist mir eine ganz besondere Freude, den ehemaligen Präsidenten des Deutschen Bundestages, Herrn Dr. Wolfgang Thierse, zu begrüßen, der heute mit uns seinen 70. Geburtstag feiert.</p>
+          <p>Lieber Herr Thierse, wir haben diesen Termin nicht gewählt, weil Sie Geburtstag haben. Aber es ist wahrscheinlich die schönste und angemessenste Form für einen ehemaligen Präsidenten, seinen Geburtstag mit der Gesamtheit des Parlaments zu feiern, das ihm applaudiert.</p>
+          <p>Meine sehr verehrten Damen und Herren, ich begrüße herzlich die zahlreichen Gäste auf der Tribüne.</p>
+          <p>Bis zur Beschlussfassung über die Geschäftsordnung, die sich der 18. Deutsche Bundestag nach der Wahl des Bundestagspräsidenten geben wird, verfahren wir nach den Regeln, die für den 17. Deutschen Bundestag gegolten haben.</p>
+          <p>Nach Absprache mit den Fraktionen benenne ich als vorläufige Schriftführerinnen und Schriftführer die Damen und Herren Abgeordnete – es dauert jetzt ein bisschen –: Frau Doris Barnett, Herrn Klaus Brähmig, Frau Petra Crone, Frau Elvira Drobinski-Weiß, Herrn Harald Ebner, Herrn Dr. Thomas Feist, Herrn Ingo Gädechens, Herrn Markus Grübel, Herrn Florian Hahn, Herrn Volkmar Klein, Herrn Jens Koeppen, Frau Daniela Kolbe, Herrn Paul Lehrieder, Frau Sabine Leidig, Herrn Steffen-Claudio Lemme, Herrn Thomas Lutze, Frau Karin Maag, Frau Maria Michalk, Frau Beate Müller-Gemmeke, Herrn Eckhard Pols, Herrn Stefan Rebmann, Frau Annette Sawade, Frau Marianne Schieder, Frau Nadine Schön, Frau Carola Stauche, Frau Kerstin Tack, Frau Kathrin Vogler, Frau Sabine Weiss und Herrn Peter Wichtel.</p>
+          <p>Die Abgeordneten Jens Koeppen und Doris Barnett bitte ich, zu meiner Rechten und zu meiner Linken Platz zu nehmen. Sind Sie da?</p>
+          <p>– Na also. Ich war schon in Sorge. Herzlich willkommen!</p>
+          <p>Meine sehr verehrten Damen und Herren, damit kommen wir gemäß altem Brauch zu einer kleinen Rede des Alterspräsidenten, wobei mir mein Fraktionsvorsitzender dringend empfohlen hat, die Nähe des Mikrofons nicht zu verlassen.</p>
+          <p>Das ist eine kritische Einschränkung, die der ganzen Rede ein höheres Maß an Formalität verleihen wird. Aber der Würde der Stunde ist es vermutlich gemäß.</p>
+          <p>Meine sehr verehrten Damen und Herren! Es ist mir eine Ehre und eine Freude, mit Ihnen den 18. Deutschen Bundestag zu eröffnen. Ich begrüße alle: die, die schon viele Jahre unsere Mitstreiter gewesen sind, und die, die neu dazugekommen sind und in eine faszinierende Arbeit starten. Ich denke auch an die Kollegen, die nicht mehr hier im Parlament sind. Die FDP hat seit Beginn der Bundesrepublik aus dem Parlament heraus den liberalen Geist deutscher Politik mitgestaltet. Sie ist nicht mehr vertreten.</p>
+          <p>Alle ehemaligen Kollegen bleiben uns aber in Freundschaft und in Herzlichkeit verbunden. Alle Ehemaligen gehören genauso zu unserer Gemeinschaft. Wir danken ihnen für die Arbeit, die sie über Jahre für uns und mit uns geleistet haben.</p>
+          <p>Unsere Arbeit beginnen wir heute in einer unübersichtlichen Zeit. Aber Deutschland ist stark in der Gemeinschaft Europas. Wir haben kritische Jahre bestanden. Wir haben mehr Arbeitsplätze, als wir jemals zuvor hatten. Unsere Industrie ist stark, innovationsstark auf den Weltmärkten. Die Schuldenbremse, wie wir sie ins Grundgesetz geschrieben haben, beginnt zu wirken. Über alldem ist es uns gelungen, in schwieriger Zeit den sozialen Frieden in unserem Land zu bewahren.</p>
+          <p>Unsere politische und gesellschaftliche Kultur hat sich in diesen Jahren bewährt. Wir haben eine Tarifpartnerschaft, die aus Konflikten gemeinsame Lösungen erarbeitet. Wir haben inzwischen eine Wissenschaft, die sich in die öffentliche Debatte einbringt: zu Klima und Umwelt, zu den Finanzmärkten, zum Umgang mit menschlichem Erbgut. Wir haben eine Qualitätspresse, die jenseits von Twitter und 30-Sekunden-Statements Orientierungswissen erarbeitet, mit dem man sich auseinandersetzen kann. Wir haben einen Rechtsstaat und eine tüchtige Verwaltung. Und wir haben diese repräsentative Demokratie, dieses Parlament mit Männern und Frauen aller Altersstufen aus unterschiedlichen Berufen, von verschiedener Herkunft, mit verschiedenen Interessen, mit verschiedenen Neigungen und mit verschiedenen Wertesystemen. Dieses Parlament ist so vielfältig wie das deutsche Volk. Ihm ist anvertraut, in den nächsten Jahren unsere Zukunft zu bauen.</p>
+          <p>In einer idealen Welt könnte man sich vorstellen, dass hier vielleicht noch einige Naturwissenschaftler oder Betriebsräte oder Unternehmer mehr dabei wären. Auch sie alle sollten wissen, dass hier über die Zukunft ihrer eigenen Arbeit mitentschieden wird. Aber wir sind jetzt so gewählt, wie wir hier sind, und so werden wir die Arbeit angehen.</p>
+          <p>Jeder von uns hat einzelne Themen, die ihm besonders am Herzen liegen. Ich freue mich, dass in vielen Wahlprogrammen die steuerliche Forschungsförderung, die Förderung von Unternehmensgründungen und die Schaffung von schnellem Breitband für alle Gemeinden in unserem Land steht. Da darf man sich doch freuen und dankbar sein. Jetzt müssen wir es nur machen, gell?</p>
+          <p>Die Schönheit eines Programms darf sich nicht am Wahltag erschöpfen. Dann geht es erst los, und zwar mit fröhlichem Unternehmungsgeist.</p>
+          <p>Zugleich stehen wir vor übergeordneten Herausforderungen komplexester Art, von denen ich nur einige ganz wenige ansprechen kann; es gibt viele jenseits dessen, was ich berühre.</p>
+          <p>Den demografischen Wandel als Chance begreifen – da sind wir noch nicht ganz fertig. Den demografischen Wandel als Möglichkeit eines reicheren und vielfältigeren Lebens zu verstehen, eine neue Lebensphase, die uns geschenkt ist, oft bei Gesundheit, hoffentlich bei hellem Geist – das ist eine Chance neuer Art. Da kann man reisen, da kann man angeln.</p>
+          <p>Es gibt Leute, die ein Ehrenamt übernehmen. Schauen Sie sich in Ihren Vereinen, in Ihren Gemeinden, in Ihren Nachbarschaften um: Es sind die Älteren, Frauen und Männer, die die Vereine zusammenhalten und die Nachbarschaften menschlich gestalten.</p>
+          <p>Wenn es einer mag, soll es auch möglich sein, jenseits einer Rentengrenze zu arbeiten – ein exotischer Einfall, wie ich zugebe. Aber es gibt viele Wissenschaftler und Mittelständler, es soll sogar Abgeordnete geben, die Freude daran haben, jeden Tag wieder aufzustehen und das, was sie gelernt haben, zu verwirklichen in einer Gesellschaft, die aus ihrer Vielfalt lebt und durch ihre Vielfalt reich ist. Das soll auch die Grundlage für unser Denken über die Grenzen des einzelnen Fachs hinaus sein.</p>
+          <p>Der demografische Wandel stellt auch unser Bildungssystem in einen neuen Zusammenhang, den wir bedenken müssen. Wenn über 6 Prozent eines Jahrgangs die Schule ohne Abschluss verlassen, ist das nicht nur eine Frage des Fachkräftenachwuchses oder der volkswirtschaftlichen Statistiken; es ist auch eine Frage der Lebenschancen von Menschen, ihrer Chancen, aus eigener Tüchtigkeit und in eigener Verantwortung ihre Zukunft aufzubauen und in eigener Verantwortung in unserer Gemeinschaft zu leben.</p>
+          <p>Und das müssen wir ermöglichen. Da geht es nicht um ein einziges Rezept; da geht es um die Frage der menschlichen Gestaltung unserer Gesellschaft; daran haben wir zu bauen. Denn das große Versprechen der sozialen Marktwirtschaft ist immer der Aufstieg gewesen, die Chance zum Aufstieg. Dem müssen wir gerecht werden. Deshalb arbeiten wir an leichteren Übergängen in der Ausbildung. Deshalb werben wir für lebenslanges Lernen; denn fast jeder wird in seinem Leben den Beruf öfter mal wechseln und sich neu erfinden müssen.</p>
+          <p>Wir haben bei den Frauen die höchste Beschäftigungsquote in Europa nach Schweden. Aufstieg und Durchlässigkeit zu ermöglichen, dafür zu sorgen, dass Familie und Beruf besser vereinbart werden können, die Voraussetzungen dafür zu schaffen, dass hier eine echte und lebendige Wahlfreiheit herrscht – auch das gehört hier dazu. Wir wollen sie auch mehr für die technischen Berufe gewinnen; denn hier werden die Gehälter doch noch etwas besser sein als in anderen Bereichen. Männer und Frauen sollen gleichermaßen die Chance haben, das zu verwirklichen, was sie können, und ihr Leben zu bauen.</p>
+          <p>All das hilft, Wachstum, Wohlstand und Arbeitsplätze zu schaffen. Aber vor allem: Es dient der freien Wahl, den eigenen Chancen auf Lebensglück, auf Lebensgestaltung, auf Gestaltung der eigenen Zukunft.</p>
+          <p>Ein Zweites. Wir haben die Energiewende beschlossen. Vielleicht war sich nicht jeder darüber klar, was für ein Riesenprojekt wir hier angegangen sind, aber es ist entschieden. Der Streit um Kerntechnik ist entschieden, und jetzt haben wir konkrete Aufgaben: kurzfristig, innerhalb von zehn Jahren, aus der Kernenergie und mittelfristig aus Kohle und Öl auszusteigen, massiv Energie einzusparen, das Reich der erneuerbaren Energien zu errichten – das ist eine Aufgabe von äußerster Komplexität. Wenn uns dieses in der knappen Frist, die wir uns gesetzt haben, gelingt, wenn dies uns bei erträglichen Kosten gelingt, dann hat unsere Industrie auf den Weltmärkten eine einzigartige Chance. Einige erinnern sich noch: In den 90er-Jahren ist uns dies in einem anderen Bereich, der Umwelttechnik, geglückt. Hieran zu arbeiten, dass Wirtschaft und Umwelt nicht nur versöhnt, sondern in eins gegossen werden, sodass insgesamt mit einer einzigen Strategie erfolgreich Zukunft gestaltet werden kann, wird eine Aufgabe sein, mit der wir uns in der kommenden Periode mit größter Intensität befassen müssen.</p>
+          <p>Ein Drittes. Wir müssen Europa zusammenhalten und wieder stark machen; denn nur dann bleibt auch Deutschland stark in der globalisierten Welt. Im Ziel sind wir uns da alle einig. Der heilige Thomas sagt: Es wird schwierig, wenn es konkret wird, gell? – Wir haben in den vergangenen Jahren in schwierigsten Debatten Schritt für Schritt vernünftige Entscheidungen herbeigeführt. Dafür gibt es keinen Masterplan, dafür gibt es keine einfachen Lösungen, aber es gibt die Notwendigkeit, aus Prinzipien und grundsätzlichen Überlegungen die Gemeinschaft wieder neu zu erfinden.</p>
+          <p>Deutschland hilft. Und wir haben uns mit durchaus erheblichen Belastungen und Risiken, die den Bürgern Sorgen machen, in diese Diskussion begeben. Aber solange das Prinzip steht, dass die Hilfe nur dann wirksam wird, wenn jeder der Staaten, die in einer schwierigen Situation sind, zugleich mit größten Anstrengungen Möglichkeiten sucht, sich selbst aus eigener Kraft wieder aus dieser herauszubringen, um eigenverantwortlich seine Zukunft zu gestalten, damit er wieder Partner in unserem gemeinsamen Europa wird und Seit an Seit mit uns gemeinsam in die Zukunft schreitet, werden wir es schaffen, Europa wieder zu dem zu machen, was es sein soll. Es ist kein Konzept einer dauerhaften Wohltat, es ist ein Konzept der Investition in eine Zukunft, die wir brauchen und die die Menschen in unseren Ländern brauchen; und da gehören wir alle dazu.</p>
+          <p>Es ist nämlich nicht nur eine Frage unserer Wirtschaft und unserer Arbeitsplätze und der Stabilität des Euro. Es ist auch die Frage des Erhalts der großen Vielfalt der europäischen Kultur, die zum Wohle der Menschheit vieles beigetragen hat: zur Demokratie, zu Menschenrechten, zur Wissenschaft, zur Technik, zum Verständnis unserer Welt und zur Gestaltung unserer Zukunft aus Verantwortung.</p>
+          <p>Ein Letztes, wenn ich dies sagen darf: Wir müssen die Wissensgesellschaft so aufbauen, wie wir sie in den vergangenen Jahren schon angelegt haben. Wir haben Milliarden investiert – zusätzlich – in Bildung und Forschung. Wir haben neue Paradigmen aufgestellt. Wir haben die Idee des Wettbewerbs mit immer größerer Kraft mitten in die wissenschaftliche Community getragen. Unsere Wissenschaft ist besser geworden. Aber wir befinden uns in einem Wettlauf in einer offenen Welt, und den Innovationswettlauf kann nur der gewinnen, der Wachstum auf Intelligenz begründet. Wir können nicht billiger sein, und wir wollen es nicht. Daher müssen wir schneller und besser sein als andere. Der Wettlauf optimiert die Tüchtigkeit, aber man muss sie instand halten, und daran werden wir zu arbeiten haben, auch im Gespräch mit den Bundesländern, gell? Hier könnten einige interessante Paragrafen anstehen, auch Artikel im Grundgesetz.</p>
+          <p>Ich sehe mit großer Faszination diesen zukunftsweisenden Gesprächen entgegen, in denen wir aus Überzeugungskraft und mit einem gemeinsamen Ziel Deutschland so neu erfinden, dass mit verteilten Rollen, aber gemeinsamer Verantwortung die Zukunft unter unseren Händen entsteht. Dazu müssen wir immer neue Problemlösungen erfinden: neue Produkte, neue Verfahren, neue Märkte. Daraus müssen wir Zukunft gestalten und Arbeit und Wohlstand und soziale Gerechtigkeit in unserem Land erhalten. Das gelingt, wenn wir an den Grundlagen festhalten und jeden mitnehmen. Das gelingt, wenn der Unternehmungsgeist und die Schaffenskraft, die wir in unseren Instituten und in unseren Unternehmen immer wieder finden, ausstrahlen in die Gesellschaft.</p>
+          <p>Manchmal scheint mir die Gesellschaft insgesamt entspannter, manchmal scheint sie mir etwas verzagter zu sein als die Bereiche, in denen wirklich Zukunft geschaffen wird. Diese Tatbereitschaft weiter zu verbreiten, ist nicht nur die Aufgabe der Politik. Politiker sind nicht immer überzeugend. Unser Ansehen in der Öffentlichkeit ist noch nicht oberhalb von dem der Bischöfe, gell? Daran müssen wir noch arbeiten.</p>
+          <p>Aber wir haben durchaus die Pflicht, alle anderen, die die Öffentlichkeit prägen und Meinungen bilden, dafür zu gewinnen, im gleichen Geist zu arbeiten. Wir müssen jeden mitnehmen in diese neue Welt, die wir hoffentlich schaffen können, in der realen Welt und in der virtuellen Welt. Dabei gibt es für die Jungen ganz andere Herausforderungen als für die Alten.</p>
+          <p>Meine sehr verehrten Damen und Herren, liebe Kollegen, so wollen wir die Legislaturperiode beginnen mit Tatkraft und Zuversicht, im Bundestag mit dem Willen zur rechtzeitigen Entscheidung, mit der Bereitschaft zum Streit, wenn der Streit die Sache klärt, mit der Fähigkeit zum Kompromiss, denn Stillstand darf nicht sein. Das gilt hier im Bundestag, aber wir leben auch drüben, in unserer Deutschen Parlamentarischen Gesellschaft, im Reichstagspräsidentenpalais, in diesem einzigartigen – wir haben es nachgeprüft; so etwas gibt es weltweit nicht noch einmal – Klub der Parlamentarier, wo die offene Rede und das ungeschützte Wort erlaubt sind, wo man nicht wägen muss, ob einem ein anderer irgendetwas nachredet, wo man gemeinsam arbeiten kann und gemeinsam feiern kann, wo sich die Kollegen jenseits der Grenzen der Parteien treffen. Es ist gut für Deutschland, wenn fraktionsübergreifend die Abgeordneten Deutschlands auch ein Bier miteinander trinken. Das kann hilfreich sein für die Zukunft unseres Landes jenseits des Biers.</p>
+          <p>So lassen Sie uns die Legislaturperiode beginnen, wenn ich dies sagen darf, auch mit dem Dank gegenüber unseren Lebenspartnern. Wir haben eine seltsame Art der Arbeit: zeitlich chaotisch, in den Überraschungen ziemlich einmalig. Nicht immer steht man so fröhlich auf, wie man ins Bett gegangen ist.</p>
+          <p>– Das ist die Wahrheit. – Dass unsere Partnerinnen und Partner dieses ertragen – mit Geduld, oft mit Sanftmut, meist mit Verständnis, durchaus auch mit Liebe –, das ist eine der großen Leistungen, die es uns erst möglich macht, das zu tun, was wir tun wollen. Meine Frau, die oben auf der Tribüne sitzt, weiß genau, wovon ich rede.</p>
+          <p>So lassen Sie uns diese Periode beginnen im ständigen Gespräch mit den Bürgerinnen und Bürgern, damit der Populismus simpler Lösungen nicht Raum greift, im Bewusstsein unserer Verantwortung vor Gott und den Menschen, wie das Grundgesetz es sagt, in einem Geist von Tatkraft und Gestaltungsfreude, der vom Bundestag in unser Land ausstrahlt – daran müssen wir vielleicht noch ein bisschen arbeiten.</p>
+          <p>Lassen Sie uns daran arbeiten, dass Deutschland auch in den kommenden vier Jahren ein guter Ort ist, zu leben, zu arbeiten und Kinder großzuziehen, und dass Deutschland auch in Zukunft ein guter Partner ist für die vielen unterschiedlichen Nationen in einer offenen Welt. Ich kenne keine schönere Aufgabe denn als Abgeordneter mit den Kolleginnen und Kollegen, mit den Bürgerinnen und Bürgern an dieser Aufgabe zu arbeiten. So möge es uns wiederum gelingen, in unterschiedlicher Rolle, in gleicher Leidenschaft für die Sache und in gemeinsamer Verantwortung.</p>
+          <p>Ich danke Ihnen.</p>
+          <p>Meine sehr verehrten Damen und Herren! Aus den Höhen des Geistes kehren wir zurück zu unserem demütigen Dienst.</p>
+          <p>Ich rufe den Tagesordnungspunkt 2 auf:</p>
+        </speech>
+      </debateSection>
+      <debateSection name="agendaItem" eId="dbsect_2">
+        <heading>Sitzungseröffnung durch den Alterspräsidenten</heading>
+      </debateSection>
+      <debateSection name="agendaItem" eId="dbsect_3">
+        <heading>Wahl des Bundestagspräsidenten</heading>
+      </debateSection>
+      <debateSection name="agendaItem" eId="dbsect_4">
+        <heading>Beschlussfassung über Geschäftsordnungen</heading>
+        <speech eId="spch_2" by="#person-Q57474" as="#chair" refersTo="#mediaFragment_2" startTime="2013-10-22T12:52:32+02:00" endTime="2013-10-22T12:53:14+02:00">
+          <from>Norbert Lammert</from>
+          <p>Wer stimmt für den Antrag auf der Drucksache 18/1 dieser Legislaturperiode? – Wer stimmt dagegen? – Wer enthält sich? – Damit ist dieser Antrag mit großer Mehrheit bei Stimmenthaltung der Fraktion Bündnis 90/Die Grünen und einiger Mitglieder der Fraktion Die Linke angenommen.</p>
+          <p>Ich rufe den Tagesordnungspunkt 5 auf:</p>
+        </speech>
+      </debateSection>
+      <debateSection name="agendaItem" eId="dbsect_5">
+        <heading>Festlegung der Zahl der Vizepräsidenten</heading>
+        <speech eId="spch_3" by="#person-Q57474" as="#chair" refersTo="#mediaFragment_3" startTime="2013-10-22T12:53:15+02:00" endTime="2013-10-22T12:54:04+02:00">
+          <from>Norbert Lammert</from>
+          <p>Nach unserer Geschäftsordnung soll im Präsidium des Deutschen Bundestages jede Fraktion mindestens mit einem Mitglied vertreten sein. Hierzu liegt ein Antrag der Fraktionen der CDU/CSU und SPD vor, sechs Stellvertreter zu wählen, wobei die stärkste Fraktion sowie die nächstgrößere Fraktion jeweils zwei Stellvertreter des Präsidenten stellen.</p>
+          <p>Interfraktionell ist zu diesem Tagesordnungspunkt eine Diskussionsrunde vereinbart worden. – Dazu darf ich Ihr Einvernehmen feststellen. Dann ist das so beschlossen.</p>
+          <p>Wer möchte zunächst dazu das Wort ergreifen? – Die Opposition ist sich interessanterweise nicht einig. Dann beginnt der Kollege Grosse-Brömer. Bitte schön.</p>
+        </speech>
+        <speech eId="spch_4" by="#person-Q1770968" refersTo="#mediaFragment_4" startTime="2013-10-22T12:54:05+02:00" endTime="2013-10-22T12:55:17+02:00">
+          <from>Michael Grosse-Brömer</from>
+          <p>Sehr geehrter Herr Präsident! Liebe Kolleginnen und Kollegen! Wir haben heute auch die Aufgabe, dem frisch gewählten Präsidenten entsprechende Stellvertreter zur Seite zu stellen, damit der weitere, aber auch der künftige Ablauf hier im Deutschen Bundestag in mehrfacher Hinsicht gewährleistet ist.</p>
+          <p>Ihnen liegt dazu ein Antrag der CDU/CSU und der SPD vor, mit dem Inhalt, den der Präsident gerade skizziert hat. Wir schlagen darin vor, der SPD zwei Stellvertreter zuzuweisen, der Unionsfraktion ebenso und den beiden anderen Fraktionen, der Fraktion der Linken und der Grünen, jeweils einen Stellvertreter.</p>
+          <p>Dieser Antrag entspricht dem Repräsentationsprinzip, das wir hier seit Jahrzehnten pflegen. Ich erinnere an 1994, als den Grünen kein Stellvertreter des Bundestagspräsidenten zugewiesen wurde und sich insbesondere meine Fraktion dafür eingesetzt hat, dass auch sie einen Stellvertreter stellen sollen.</p>
+        </speech>
+        <scene>(Claudia Roth [Augsburg] [BÜNDNIS 90/DIE GRÜNEN]: Schäuble!)</scene>
+        <speech eId="spch_5" by="#person-Q1770968" refersTo="#mediaFragment_5" startTime="2013-10-22T12:55:17+02:00" endTime="2013-10-22T12:55:26+02:00">
+          <from>Michael Grosse-Brömer</from>
+          <p>Denn wir waren der Auffassung: Jede Fraktion soll entsprechend ihrer Größe im Deutschen Bundestag im Präsidium vertreten sein.</p>
+        </speech>
+        <scene>(Britta Haßelmann [BÜNDNIS 90/DIE GRÜNEN]: Gut, dass wir schon ein bisschen weiter sind!)</scene>
+        <speech eId="spch_6" by="#person-Q1770968" refersTo="#mediaFragment_6" startTime="2013-10-22T12:55:26+02:00" endTime="2013-10-22T12:56:48+02:00">
+          <from>Michael Grosse-Brömer</from>
+          <p>Infolgedessen bezieht sich unser Antrag auch auf die Mehrheitsverhältnisse im Deutschen Bundestag, die ja letztlich den Wählerwillen repräsentieren, und somit beinhaltet er jeweils zwei Stellvertreterpositionen für die Unionsfraktion und für die SPD.</p>
+          <p>Ich möchte gerne darauf hinweisen, dass wir alle ein Interesse an einem starken Präsidium haben müssen. Das Bundestagspräsidium ist ein wichtiger Teil des Selbstverständnisses dieses Parlamentes. Gerade dann, wenn wir eine starke Regierung haben werden, muss es ein starkes Parlament zur Kontrolle und ein starkes Präsidium zur Leitung und zur Begleitung dieser Kontrolle geben. Die Aufgaben des Präsidiums sind vielfältig: Rechtsaufsicht, Repräsentation im In- und Ausland, Sitzungsleitung, Leitung von Kommissionen und nicht zuletzt natürlich auch das klare Wort, wie wir es vorhin auch in der Ansprache des frisch gewählten Präsidenten gehört haben.</p>
+          <p>Die Kritik, die ich schon im Vorwege gehört habe, halte ich für falsch und ein Stück weit für kleinlich. Sieben stellvertretende Präsidenten in diesem Deutschen Bundestag sind nichts Neues; wir hatten sie in der vorletzten Legislaturperiode auch schon.</p>
+        </speech>
+        <scene>(Claudia Roth [Augsburg] [BÜNDNIS 90/DIE GRÜNEN]: Sechs!)</scene>
+        <speech eId="spch_7" by="#person-Q1770968" refersTo="#mediaFragment_7" startTime="2013-10-22T12:56:48+02:00" endTime="2013-10-22T12:58:08+02:00">
+          <from>Michael Grosse-Brömer</from>
+          <p>– Sechs stellvertretende Präsidenten, pardon; insgesamt sieben Mitglieder des Präsidiums.</p>
+          <p>Ich will auch darauf hinweisen, dass nach meiner Einschätzung – dies ging auch aus der Ansprache unseres frisch gewählten Bundestagspräsidenten hervor – weder die Arbeitsbelastung noch die Probleme, vor denen wir stehen, kleiner werden. Infolgedessen macht es Sinn, ein starkes Präsidium zu haben. Das bezieht sich auf den Umfang. Das bezieht sich auch auf die Persönlichkeiten, die sich hier zur Verfügung stellen. Ich sage es fraktionsübergreifend: Ich bin der Auffassung, dass wir nachher sehr respektable Kandidaten zur Auswahl haben.</p>
+          <p>Deswegen bitte ich abschließend darum, diesem Antrag zuzustimmen. Lassen Sie uns gerne intensiv streiten über die richtigen Wege, über die richtige Politik in diesem Hause. Lassen Sie uns aber nicht um einen stellvertretenden Präsidentenposten streiten. Es gibt Wichtigeres: Die Aufgaben, die vor uns liegen, sind größer. Darüber müssen wir nicht nur ins Gespräch kommen, darüber müssen wir auch in Streit kommen – ich freue mich darauf –: unter der Führung und Leitung eines starken und guten Präsidiums.</p>
+          <p>Herzlichen Dank.</p>
+        </speech>
+        <scene>(Beifall bei der CDU/CSU sowie bei Abgeordneten der SPD)</scene>
+        <speech eId="spch_8" by="#person-Q57474" as="#chair" refersTo="#mediaFragment_8" startTime="2013-10-22T12:58:08+02:00" endTime="2013-10-22T12:58:16+02:00">
+          <from>Norbert Lammert</from>
+          <p>Das Wort hat nun die Kollegin Petra Sitte für die Fraktion Die Linke.</p>
+        </speech>
+        <scene>(Beifall bei der LINKEN)</scene>
+        <speech eId="spch_9" by="#person-Q1748314" refersTo="#mediaFragment_9" startTime="2013-10-22T12:58:17+02:00" endTime="2013-10-22T12:58:55+02:00">
+          <from>Petra Sitte</from>
+          <p>Danke. – Herr Präsident! Meine Damen und Herren! Herr Grosse-Brömer, Sie streuen hier Brotkrumen und locken uns ein bisschen in die falsche Richtung im Paragrafenwald der Geschäftsordnung. Sie haben quasi am Tag vor der konstituierenden Sitzung des Bundestages öffentlich bekannt gegeben, dass es mehr Vizepräsidentinnen und -präsidenten geben soll. Das wiederum war der Tag nach dem Beschluss über die Aufnahme von Koalitionsverhandlungen. Nun kann ich, was die öffentliche Wahrnehmung angeht, es manchen nicht verübeln, dass das als Geschmäckle, als Deal wahrgenommen wird.</p>
+        </speech>
+        <scene>(Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN)</scene>
+        <speech eId="spch_10" by="#person-Q1748314" refersTo="#mediaFragment_10" startTime="2013-10-22T12:58:55+02:00" endTime="2013-10-22T12:59:17+02:00">
+          <from>Petra Sitte</from>
+          <p>Das Zweite. Dies fällt mitten in die Debatte über die Sicherung der Minderheitenrechte der Opposition in diesem Parlament. Ich bedanke mich sehr herzlich für die klaren Worte des Bundestagspräsidenten zu diesen Fragen. Aber Ihre Geste wird von uns nicht als vertrauensbildende Maßnahme wahrgenommen.</p>
+        </speech>
+        <scene>(Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN)</scene>
+        <speech eId="spch_11" by="#person-Q1748314" refersTo="#mediaFragment_11" startTime="2013-10-22T12:59:17+02:00" endTime="2013-10-22T12:59:52+02:00">
+          <from>Petra Sitte</from>
+          <p>Festzuhalten bleibt doch – es ist eben gesagt worden –: Der Bundestag wird zurzeit nicht wesentlich größer. Die Aufgaben der Koalition werden nicht wesentlich größer. Im Gegenteil, Sie haben sogar den Vorzug, sich bezüglich ihrer Aufgaben eine wunderbare Arbeitsteilung zu schaffen. Aber die Aufgaben der Opposition werden gewaltig sein, und das bei weniger Abgeordneten.</p>
+        </speech>
+        <scene>(Beifall bei der LINKEN und dem BÜNDNIS 90/DIE GRÜNEN)</scene>
+        <speech eId="spch_12" by="#person-Q1748314" refersTo="#mediaFragment_12" startTime="2013-10-22T12:59:52+02:00" endTime="2013-10-22T13:00:23+02:00">
+          <from>Petra Sitte</from>
+          <p>Mithin hat das Bundesverfassungsgericht mehrfach – das ist schon erwähnt worden – die besondere Rolle der Opposition für die Wahrung der freiheitlich-demokratischen Grundordnung betont. Es wird sogar von einer herausgehobenen Stellung der Opposition gesprochen. Das sollten wir uns vor diesem Hintergrund in diesem Hause noch einmal vergegenwärtigen.</p>
+          <p>Nun senden Sie ein fragwürdiges Signal. Es geht nicht nur um einen Vizepräsidentenposten mehr. Es ist Ihr politischer Wille, von der bewährten Praxis in diesem Hause abzuweichen.</p>
+        </speech>
+        <scene>(Michael Grosse-Brömer [CDU/CSU]: Nein!)</scene>
+        <speech eId="spch_13" by="#person-Q1748314" refersTo="#mediaFragment_13" startTime="2013-10-22T13:00:23+02:00" endTime="2013-10-22T13:00:41+02:00">
+          <from>Petra Sitte</from>
+          <p>Sie sagen, die Mehrheitsverhältnisse im Parlament sollten sich im Präsidium abbilden. Das könnte man so hinnehmen. Aber genau in dem entsprechenden Paragrafen der Geschäftsordnung des Bundestages wird überhaupt nicht darauf abgehoben, dass sich im Präsidium das Stärkeverhältnis der Fraktionen abbilden soll.</p>
+        </speech>
+        <scene>(Dr. Günter Krings [CDU/CSU]: Doch!)</scene>
+        <speech eId="spch_14" by="#person-Q1748314" refersTo="#mediaFragment_14" startTime="2013-10-22T13:00:41+02:00" endTime="2013-10-22T13:00:44+02:00">
+          <from>Petra Sitte</from>
+          <p>Das ist in dem entsprechenden Paragrafen nicht enthalten.</p>
+        </speech>
+        <scene>(Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN – Michael Grosse-Brömer [CDU/CSU]: Doch!)</scene>
+        <speech eId="spch_15" by="#person-Q1748314" refersTo="#mediaFragment_15" startTime="2013-10-22T13:00:44+02:00" endTime="2013-10-22T13:01:05+02:00">
+          <from>Petra Sitte</from>
+          <p>– Nein, Sie können gerne noch einmal nachlesen. Darüber können wir uns im Ältestenrat gerne streiten.</p>
+          <p>Es gibt keinen Bezug auf das Berechnungsverfahren. Es gibt nur die Feststellung, die sich aus der sogenannten Grundmandatsregelung ergibt, dass jede Fraktion mit einem Vizepräsidenten im Präsidium vertreten sein soll.</p>
+        </speech>
+        <scene>(Michael Grosse-Brömer [CDU/CSU]: Mindestens!)</scene>
+        <speech eId="spch_16" by="#person-Q1748314" refersTo="#mediaFragment_16" startTime="2013-10-22T13:01:05+02:00" endTime="2013-10-22T13:01:09+02:00">
+          <from>Petra Sitte</from>
+          <p>Das ist seit Jahren geübte Praxis in diesem Hause.</p>
+        </speech>
+        <scene>(Volker Kauder [CDU/CSU]: Nein, das stimmt nicht!)</scene>
+        <speech eId="spch_17" by="#person-Q1748314" refersTo="#mediaFragment_17" startTime="2013-10-22T13:01:09+02:00" endTime="2013-10-22T13:01:16+02:00">
+          <from>Petra Sitte</from>
+          <p>Es geht um die Repräsentation des gesamten Hauses. Deshalb ist diese Praxis besser und demokratischer.</p>
+        </speech>
+        <scene>(Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN)</scene>
+        <speech eId="spch_18" by="#person-Q1748314" refersTo="#mediaFragment_18" startTime="2013-10-22T13:01:16+02:00" endTime="2013-10-22T13:02:44+02:00">
+          <from>Petra Sitte</from>
+          <p>Sie selber haben es vorhin erwähnt: Das, was wir infrage stellen, ist in der 13. Legislaturperiode auf Antrag der Bündnisgrünen eingeführt worden. Auch Sie haben damals als CDU/CDU und FDP ausdrücklich beantragt, dass die Anzahl der Stellvertreterinnen und Stellvertreter bzw. der Vizepräsidentinnen und Vizepräsidenten der Anzahl der Fraktionen entsprechen soll.</p>
+          <p>Nun zur geübten Praxis. Abgesehen von der 1. Legislaturperiode, ist das Präsidium von der 2. bis einschließlich zur 15. Legislaturperiode mit fünf Mitgliedern besetzt gewesen. In der 14. Legislaturperiode waren es sechs. Damals gab es einen Präsidenten, zwei Vizepräsidenten der Koalition und drei Vizepräsidenten der Opposition. Erst in der 16. Legislaturperiode, also zur Zeit der Großen Koalition, ist man davon abgewichen, und es hat einen Vizepräsidenten bzw. eine Vizepräsidentin mehr gegeben. Nun nehmen Sie ausschließlich Bezug auf diese 16. Wahlperiode und gehen von dem zuvor – auch in der letzten Legislaturperiode – angewendeten Prinzip ab und wollen wieder sechs Stellvertreter. Auch damals hatte die SPD zwei Stellvertreter. So richtig geholfen hat es nicht. Das Wahlergebnis der SPD war nicht ganz überzeugend.</p>
+        </speech>
+        <scene>(Heiterkeit und Beifall bei Abgeordneten der LINKEN)</scene>
+        <speech eId="spch_19" by="#person-Q1748314" refersTo="#mediaFragment_19" startTime="2013-10-22T13:02:44+02:00" endTime="2013-10-22T13:03:05+02:00">
+          <from>Petra Sitte</from>
+          <p>Gerade erklären Sie von der SPD Ihrer Mitgliederschaft tapfer, dass erst das Ergebnis der Koalitionsverhandlungen darüber entscheidet, ob Sie eine Große Koalition eingehen. Aber den Vizepräsidentenposten wollen Sie schon heute in Anspruch nehmen.</p>
+        </speech>
+        <scene>(Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN)</scene>
+        <speech eId="spch_20" by="#person-Q1748314" refersTo="#mediaFragment_20" startTime="2013-10-22T13:03:05+02:00" endTime="2013-10-22T13:03:21+02:00">
+          <from>Petra Sitte</from>
+          <p>Was passiert denn dann, wenn Ihre Basis am Ende sagt: „Der Inhalt der Koalitionsvereinbarung reicht uns nicht; wir wollen keine Große Koalition eingehen“, mit diesem zusätzlichen Vizepräsidentenposten? Diese Frage sollte erlaubt sein.</p>
+        </speech>
+        <scene>(Widerspruch bei der SPD – Michael Grosse- Brömer [CDU/CSU]: Präsidium ist unabhängig davon!)</scene>
+        <speech eId="spch_21" by="#person-Q1748314" refersTo="#mediaFragment_21" startTime="2013-10-22T13:03:21+02:00" endTime="2013-10-22T13:03:37+02:00">
+          <from>Petra Sitte</from>
+          <p>Wie Sie merken, ist vieles in diesem Zusammenhang unklar. Außerdem entsteht der Eindruck, dass es sich hier um eine willkürliche Praxis handelt. Sie klopfen sich sozusagen auf Ihre parlamentarische Brust und warten auf Großraumgeräusche. Wir finden das ziemlich kleingeistig.</p>
+        </speech>
+        <scene>(Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN)</scene>
+        <speech eId="spch_22" by="#person-Q57474" as="#chair" refersTo="#mediaFragment_22" startTime="2013-10-22T13:03:37+02:00" endTime="2013-10-22T13:03:37+02:00">
+          <from>Norbert Lammert</from>
+          <p>Frau Sitte.</p>
+        </speech>
+        <speech eId="spch_23" by="#person-Q1748314" refersTo="#mediaFragment_23" startTime="2013-10-22T13:03:37+02:00" endTime="2013-10-22T13:04:12+02:00">
+          <from>Petra Sitte</from>
+          <p>Ich bin sofort fertig. – Dabei hatte Herr Riesenhuber heute schon von den Höhen des Geistes in diesem Haus gesprochen.</p>
+          <p>Ich finde, wir sollten an die gute parlamentarische Praxis anknüpfen. Es besteht auch aufgrund der konkreten Erfahrungen derjenigen, die schon Mitglied des Bundestages waren, überhaupt keine Veranlassung, die Zahl der Vizepräsidenten zu erhöhen. Die demokratische Führung der bisherigen Präsidien nach dem alten Prinzip war gut.</p>
+          <p>Danke schön.</p>
+        </speech>
+        <scene>(Beifall bei der LINKEN und dem BÜNDNIS 90/DIE GRÜNEN)</scene>
+        <speech eId="spch_24" by="#person-Q57474" as="#chair" refersTo="#mediaFragment_24" startTime="2013-10-22T13:04:12+02:00" endTime="2013-10-22T13:04:22+02:00">
+          <from>Norbert Lammert</from>
+          <p>Für die SPD-Fraktion hat nun der Kollege Thomas Oppermann das Wort.</p>
+        </speech>
+        <speech eId="spch_25" by="#person-Q90833" refersTo="#mediaFragment_25" startTime="2013-10-22T13:04:23+02:00" endTime="2013-10-22T13:05:04+02:00">
+          <from>Thomas Oppermann</from>
+          <p>Herr Präsident! Meine Damen und Herren! Natürlich kann man darüber diskutieren, ob ein Präsidium zu groß oder zu klein ist; aber ich finde, dass ein Präsidium, das aus dem Präsidenten und den Stellvertretern besteht, also in diesem Fall aus sieben Personen bestehen soll, dass also ein siebenköpfiges Präsidium nicht unangemessen groß ist für ein Parlament aus 631 Abgeordneten.</p>
+        </speech>
+        <scene>(Beifall bei der SPD und der CDU/CSU)</scene>
+        <speech eId="spch_26" by="#person-Q90833" refersTo="#mediaFragment_26" startTime="2013-10-22T13:05:04+02:00" endTime="2013-10-22T13:06:16+02:00">
+          <from>Thomas Oppermann</from>
+          <p>Bei der Bildung eines Präsidiums gibt es eigentlich drei Regeln, zwei ungeschriebene und eine, die in unserer Geschäftsordnung steht. In der Geschäftsordnung steht die Grundmandatsklausel. Die erste ungeschriebene Regel ist: Die stärkste Fraktion soll den Präsidenten stellen. Das ist eine Übung im Deutschen Bundestag, der wir immer gefolgt sind. Auch heute haben wir das gemacht.</p>
+          <p>Die geschriebene Regel in der Geschäftsordnung des Deutschen Bundestages, die wir inzwischen angenommen haben, besagt: Jede Fraktion soll unabhängig von ihrer Größe einen Platz im Präsidium bekommen, also ein Grundmandat. Dieses Grundmandat schützt die kleinen Fraktionen. Es ist, wenn man so will, praktizierter Minderheitenschutz. Würde es diese Grundmandatsklausel übrigens nicht geben, wäre auch bei nur fünf Stellvertretern die Verteilung: CDU/CSU zwei, SPD zwei, Linke einer und Grüne null. Mit anderen Worten: Mit der Grundmandatsklausel sichern wir erst einmal die Beteiligung aller Fraktionen im Präsidium.</p>
+        </speech>
+        <scene>(Widerspruch bei der LINKEN – Volker Kauder [CDU/CSU]: Ja! So ist es!)</scene>
+        <speech eId="spch_27" by="#person-Q90833" refersTo="#mediaFragment_27" startTime="2013-10-22T13:06:16+02:00" endTime="2013-10-22T13:07:15+02:00">
+          <from>Thomas Oppermann</from>
+          <p>Die dritte Regel ist, dass natürlich das Präsidium auch die Mehrheitsverhältnisse im Parlament abbilden muss. Deshalb werden manchmal ein, manchmal zwei Vizepräsidenten hinzugenommen, um diese Mehrheit darzustellen. Genau das ist hier der Fall: drei für die Union, zwei für die SPD und je einer für die Grünen und für die Linke. Wenn jetzt die geschätzten Kollegen und Kolleginnen von den Grünen sagen, dass im Verhältnis zu ihnen der SPD kein zweiter Vizepräsident zukommen solle, dann kann ich nur sagen: Wir haben beide wirklich nicht gut abgeschnitten bei der Bundestagswahl, aber 25,7 Prozent sind immer noch erkennbar mehr als 8,4 Prozent. Das muss ich den Grünen schon einmal sagen.</p>
+        </speech>
+        <scene>(Beifall bei der SPD und der CDU/CSU)</scene>
+        <speech eId="spch_28" by="#person-Q90833" refersTo="#mediaFragment_28" startTime="2013-10-22T13:07:15+02:00" endTime="2013-10-22T13:08:03+02:00">
+          <from>Thomas Oppermann</from>
+          <p>Ungleiches gleich zu behandeln, ist kein Minderheitenschutz. Aber ich bin schon der Meinung – ich kann das hier für die SPD-Bundestagsfraktion erklären –: Wir sind ohne Einschränkungen gesprächsbereit, wenn es darum geht, die Rechte von Minderheiten im Deutschen Bundestag sicherzustellen, auch wenn wir im Falle der Bildung einer Großen Koalition nur zwei kleine Oppositionsfraktionen haben sollten. Eine parlamentarische Demokratie, die funktioniert, braucht nicht nur eine handlungsfähige Regierung, sondern auch eine effektive Opposition. Für mich ist völlig undenkbar, dass die Opposition nicht in der Lage sein sollte, Anhörungen zu beantragen, Untersuchungsausschüsse auf den Weg zu bringen oder ausreichend Redezeit zu bekommen.</p>
+        </speech>
+        <scene>(Beifall bei der SPD sowie bei Abgeordneten der CDU/CSU)</scene>
+        <speech eId="spch_29" by="#person-Q90833" refersTo="#mediaFragment_29" startTime="2013-10-22T13:08:03+02:00" endTime="2013-10-22T13:08:16+02:00">
+          <from>Thomas Oppermann</from>
+          <p>Wir werden darüber reden, und wir werden einen Konsens bekommen.</p>
+          <p>Vielen Dank.</p>
+        </speech>
+        <scene>(Beifall bei der SPD und der CDU/CSU)</scene>
+        <speech eId="spch_30" by="#person-Q57474" as="#chair" refersTo="#mediaFragment_30" startTime="2013-10-22T13:08:16+02:00" endTime="2013-10-22T13:08:21+02:00">
+          <from>Norbert Lammert</from>
+          <p>Nun erhält noch die Kollegin Britta Haßelmann für die Fraktion Bündnis 90/Die Grünen das Wort.</p>
+        </speech>
+        <speech eId="spch_31" by="#person-Q920726" refersTo="#mediaFragment_31" startTime="2013-10-22T13:08:22+02:00" endTime="2013-10-22T13:08:53+02:00">
+          <from>Britta Haßelmann</from>
+          <p>Sehr geehrter Herr Präsident! Meine Damen und Herren! Liebe Kolleginnen und Kollegen, vor allen Dingen auch liebe neue Kolleginnen und Kollegen! Lassen Sie mich drei Vorbemerkungen machen. Zum einen gratulieren wir Ihnen, Herr Präsident, ganz herzlich zu Ihrem Ergebnis. Wir freuen uns auf die weitere gemeinsame Arbeit mit Ihnen und möchten das im Namen unserer Fraktion deutlich machen.</p>
+        </speech>
+        <scene>(Beifall beim BÜNDNIS 90/DIE GRÜNEN sowie bei Abgeordneten der CDU/CSU und der SPD)</scene>
+        <speech eId="spch_32" by="#person-Q920726" refersTo="#mediaFragment_32" startTime="2013-10-22T13:08:53+02:00" endTime="2013-10-22T13:09:34+02:00">
+          <from>Britta Haßelmann</from>
+          <p>Wir bedanken uns auch dafür, dass Sie das Thema Minderheitenrechte angesprochen haben. Das ist ein für uns wichtiges Thema. Deshalb meine zweite kurze Vorbemerkung: Lieber Gregor Gysi, mich hat schon erstaunt, dass, wenn wir öffentlich die große Welle machen und auch wichtige Themen ansprechen, wie zum Beispiel das Thema Minderheitenschutz, Sie der Geschäftsordnung heute hier zustimmen. Das irritiert mich doch; denn ich finde, dass es allen Grund gibt, dieser Geschäftsordnung in der jetzigen Situation nicht zuzustimmen, weil wir bislang keine Garantie dafür haben, dass die Punkte, die Sie, Herr Präsident, zu den Minderheitenrechten angesprochen haben, sich in einer künftigen Geschäftsordnung wiederfinden.</p>
+        </speech>
+        <scene>(Beifall beim BÜNDNIS 90/DIE GRÜNEN)</scene>
+        <speech eId="spch_33" by="#person-Q920726" refersTo="#mediaFragment_33" startTime="2013-10-22T13:09:34+02:00" endTime="2013-10-22T13:09:44+02:00">
+          <from>Britta Haßelmann</from>
+          <p>Dritte kurze Vorbemerkung. Lieber Thomas Oppermann, der Schalter ist aber schnell umgelegt, oder?</p>
+        </speech>
+        <scene>(Beifall beim BÜNDNIS 90/DIE GRÜNEN)</scene>
+        <speech eId="spch_34" by="#person-Q920726" refersTo="#mediaFragment_34" startTime="2013-10-22T13:09:44+02:00" endTime="2013-10-22T13:10:02+02:00">
+          <from>Britta Haßelmann</from>
+          <p>Das hat mich schon irritiert. Ein Grundmandat als praktizierten Minderheitenschutz darzustellen – Mannomann! Zunächst habe ich mir das angehört, was Herr Grosse- Brömer nach dem Motto „Damals, 1994, haben wir den Grünen einmal etwas zugestanden“ gesagt hat.</p>
+        </speech>
+        <scene>(Michael Grosse-Brömer [CDU/CSU]: Das war doch nett!)</scene>
+        <speech eId="spch_35" by="#person-Q920726" refersTo="#mediaFragment_35" startTime="2013-10-22T13:10:02+02:00" endTime="2013-10-22T13:10:14+02:00">
+          <from>Britta Haßelmann</from>
+          <p>Ich finde, in der Angelegenheit mit dem Grundmandat als praktiziertem Minderheitenschutz haben Sie sich vergaloppiert.</p>
+        </speech>
+        <scene>(Beifall beim BÜNDNIS 90/DIE GRÜNEN sowie bei Abgeordneten der LINKEN – Zuruf des Abg. Ulrich Kelber [SPD])</scene>
+        <speech eId="spch_36" by="#person-Q920726" refersTo="#mediaFragment_36" startTime="2013-10-22T13:10:14+02:00" endTime="2013-10-22T13:12:28+02:00">
+          <from>Britta Haßelmann</from>
+          <p>Nun zur Sache selbst. Die bisherige parlamentarische Praxis entspricht der Tatsache, dass wir einen Präsidenten haben und jede Fraktion je eine Stellvertreterin oder einen Stellvertreter stellt; so war zumindest die Vereinbarung in der letzten Legislaturperiode und vielen weiteren Legislaturperioden. Meine Kollegin Sitte hat darauf rekurriert.</p>
+          <p>Im neuen Bundestag sind nur vier Fraktionen vertreten, und man kann sich mit einigem Recht fragen, warum das Präsidium zusätzlich zum Präsidenten sechs Vizepräsidentinnen bzw. -präsidenten enthalten soll. Das ist eine ganz legitime Frage, über die wir hätten diskutieren können. Wir haben darüber im Vorfeld aber nicht diskutiert. Wir sind am Montag, nachdem Sie Ihren Sondierungsgipfel hinter sich gebracht hatten, mit dieser Frage konfrontiert worden. Dabei ging es aber nicht um die Arbeitssituation im Parlament oder um die Frage, was wir vielleicht unter dem Aspekt, von Kommissionen oder der Erörterung von bestimmten Fragen, die an Vizepräsidentinnen und -präsidenten zu delegieren sind zu klären ist. Darüber hätte man ja sprechen können, und man hätte zu dem Ergebnis kommen können, es gebe vielleicht eine Rechtfertigung dafür, dass wir das Präsidium um eine Position erweitern. Aber mitnichten! Sie beide haben mich wunderbarerweise am Montagvormittag darüber informiert, dass Sie beide für sich beanspruchen – das Ergebnis der Koalitionsverhandlungen, die Bildung einer Großen Koalition, vorwegnehmend –, dass die Anzahl der Stellvertreter ausgeweitet wird.</p>
+          <p>Ich könnte mir sogar noch vorstellen, dass von Ihrer Seite das Argument kommt: Wir sind eine Fraktion, die über 41 Prozent der Sitze im Deutschen Bundestag hat. Es gibt durch die 631 Abgeordneten mehr zu tun, auch für die Vizepräsidentinnen und -präsidenten. – Aber jetzt, liebe Kolleginnen und Kollegen von der SPD, argumentieren Sie nach dem Motto: Wir müssen auf Augenhöhe mit der CDU/CSU sein, und deshalb sorgen wir jetzt für eine Gleichziehung bei der Anzahl der Stellvertreter. Ich bitte Sie! Wir können doch die Frage der Anzahl der Vizepräsidentinnen und -präsidenten nicht danach beantworten, was Sie in Ihren Koalitionsverhandlungen möglicherweise besprechen.</p>
+        </speech>
+        <scene>(Beifall beim BÜNDNIS 90/DIE GRÜNEN und bei der LINKEN)</scene>
+        <speech eId="spch_37" by="#person-Q920726" refersTo="#mediaFragment_37" startTime="2013-10-22T13:12:28+02:00" endTime="2013-10-22T13:13:09+02:00">
+          <from>Britta Haßelmann</from>
+          <p>Das Signal an die Öffentlichkeit ist eben nicht: Die Erweiterung des Präsidiums rechtfertigt sich aus sachlichen Gründen. Wenn ich ein Argument wie „Augenhöhe mit der CDU/CSU“ lese, denke ich, das ist doch keine sachliche Begründung. Die Ausweitung des Präsidiums ist für die Öffentlichkeit eigentlich nur dahin gehend eine Bestätigung, dass man denkt: Große Koalition bedeutet, das kostet etwas. – Damit werden wir doch in der Öffentlichkeit konfrontiert.</p>
+        </speech>
+        <scene>(Beifall bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN)</scene>
+        <speech eId="spch_38" by="#person-Q920726" refersTo="#mediaFragment_38" startTime="2013-10-22T13:13:09+02:00" endTime="2013-10-22T13:13:45+02:00">
+          <from>Britta Haßelmann</from>
+          <p>Sie treten heute hier den Beweis dafür an.</p>
+          <p>Wir lehnen diesen Antrag ab. Selbstverständlich ist das keine Entscheidung gegen die einzelnen Personen, die hier vorgeschlagen werden; um auch das in aller Deutlichkeit zu sagen.</p>
+          <p>Vielen Dank für die Aufmerksamkeit.</p>
+        </speech>
+        <speech eId="spch_39" by="#person-Q57474" as="#chair" refersTo="#mediaFragment_39" startTime="2013-10-22T13:13:46+02:00" endTime="2013-10-22T13:14:18+02:00">
+          <from>Norbert Lammert</from>
+          <p>Ich lasse nun über den Antrag der CDU/CSU-Fraktion und der SPD-Fraktion auf Drucksache 18/2 abstimmen. Wer diesem Antrag zustimmt, den bitte ich um das Handzeichen. – Wer stimmt dagegen? – Wer enthält sich der Stimme? – Damit ist dieser Antrag mit den Stimmen der antragstellenden Fraktionen gegen die Stimmen der Fraktionen Bündnis 90/Die Grünen und Die Linke angenommen. Damit ist die Zahl der Stellvertreter des Präsidenten auf sechs festgelegt.</p>
+          <p>Damit kommen wir nun zum Tagesordnungspunkt 6:</p>
+        </speech>
+      </debateSection>
+      <debateSection name="agendaItem" eId="dbsect_6">
+        <heading>Wahl der Vizepräsidenten</heading>
+        <speech eId="spch_40" by="#person-Q57474" as="#chair" refersTo="#mediaFragment_40" startTime="2013-10-22T13:14:19+02:00" endTime="2013-10-22T14:59:58+02:00">
+          <from>Norbert Lammert</from>
+          <p>Nach unserer Geschäftsordnung erfolgt auch die Wahl der Vizepräsidenten geheim. Interfraktionell haben wir vereinbart, die Wahlen der Kandidatinnen und Kandidaten mit Wahlausweis und einer Stimmkarte durchzuführen, auf der alle vorgeschlagenen Kandidatinnen und Kandidaten aufgeführt sind. Erhebt sich dagegen Widerspruch? – Das ist offensichtlich nicht der Fall. Dann können wir so verfahren.</p>
+          <p>Mir liegen folgende Vorschläge der Fraktionen vor: von der Fraktion der CDU/CSU die Kollegen Peter Hintze und Johannes Singhammer, von der Fraktion der SPD die Kolleginnen Edelgard Bulmahn und Ulla Schmidt, von der Fraktion Die Linke die Kollegin Petra Pau sowie von der Fraktion Bündnis 90/Die Grünen die Kollegin Claudia Roth. Werden weitere Vorschläge gemacht? – Das ist nicht der Fall.</p>
+          <p>Ich darf auch hier einige wenige Hinweise zum Ablauf der Wahl geben. Gewählt ist, wer die Stimmen der Mehrheit der Mitglieder des Bundestags erhält; das sind 316 Stimmen. Für diesen Wahlgang sind Stimmkarte und Wahlausweis grün. Frau Kollegin Haßelmann, Sie sehen, dass ich keine Gelegenheit auslasse, meine Aufgeschlossenheit für Minderheitsinteressen zum Ausdruck zu bringen, auch schon durch die Farbgebung bei Wahlgängen.</p>
+          <p>Den Wahlausweis können Sie wieder, soweit noch nicht erfolgt, Ihren Stimmkartenfächern in der Lobby entnehmen.</p>
+          <p>Die Prozedur ist die gleiche, wie vorhin schon einmal erläutert. Auf der Stimmkarte sind alle vorgeschlagenen Kandidatinnen und Kandidaten aufgeführt. Sie können und sollten bitte auch zu jedem einzelnen der aufgeführten Kandidaten und zu jeder einzelnen der aufgeführten Kandidatinnen jeweils mit „ja“, „nein“ oder „Enthaltung“ votieren. Wenn bei einem Namen mehr als ein Kreuz oder gar kein Kreuz zu erkennen ist oder wenn andere Namen oder Zusätze auf der Stimmkarte eingetragen sind, ist diese Stimme ungültig. Bevor Sie die Stimmkarte einwerfen, geben Sie auch jetzt wieder bitte dem Schriftführer an der Wahlurne Ihren Wahlausweis.</p>
+          <p>Den Hinweis darauf, welche Gänge genutzt werden sollten, brauche ich gar nicht mehr zu geben, weil der größere Teil der Wahlberechtigten sich schon in der Nähe der Kabinen aufhält. Dort sind hoffentlich auch schon die Schriftführerinnen und Schriftführer.</p>
+          <p>Ich darf bereits jetzt darauf aufmerksam machen, dass ich nach Schließen des Wahlgangs die Sitzung für die Auszählung der Stimmen unterbrechen werde. Stellen Sie sich bitte darauf ein, dass das etwa eine Stunde dauern kann, weil ja ein doch relativ komplexer Wahlgang ausgezählt werden muss.</p>
+          <p>Ich eröffne die Wahl.</p>
+          <p>Liebe Kolleginnen und Kollegen, darf ich fragen, ob jemand im Saal ist, der seine Stimme noch nicht abgegeben hat? Oder hat jemand einen gesehen, den er dann nicht mehr gesehen hat und der seine Stimme noch abgeben könnte? – Dann schließe ich diesen Wahlgang und unterbreche die Sitzung bis zur Bekanntgabe des Ergebnisses der Wahl. Wir werden den Wiederbeginn der Sitzung rechtzeitig durch entsprechende akustische und optische Signale in den Immobilien des Bundestages ankündigen. Stellen Sie sich bitte darauf ein, dass es etwa eine Stunde dauern kann, bis wir diesen ja doch umfangreichen Wahlgang mit der gebotenen Sorgfalt ausgezählt haben.</p>
+          <p>Die Sitzung ist unterbrochen.</p>
+          <p>Die unterbrochene Sitzung ist wieder eröffnet.</p>
+          <p>Liebe Kolleginnen und Kollegen, ich kann Ihnen das Ergebnis der Wahl der Stellvertreterinnen und Stellvertreter des Präsidenten bekannt geben: abgegebene Stimmkarten 626. Alle abgegebenen Stimmen waren gültig.</p>
+          <p>Von den abgegebenen Stimmen sind entfallen auf Peter Hintze 449 Jastimmen, 122 Neinstimmen und 51 Enthaltungen. In diesem Falle, was mich ein bisschen überrascht, waren 4 Stimmen ungültig. Das heißt, es gibt keine Stimmkarte, die insgesamt ungültig war, was ja doch auf eine gewisse Pfiffigkeit der neuen wie der alten Kollegen schließen lässt, aber bei einzelnen Wahlgängen ist das offenkundig anders. Noch einmal: 449 Jastimmen, 122 Neinstimmen, 51 Enthaltungen. Ich darf das mit Ihrem Einverständnis gleich mit der Frage an die jeweiligen Kolleginnen und Kollegen verbinden, ob sie die Wahl annehmen. Ich darf den Kollegen Hintze, der damit die notwendige Mehrheit erkennbar erreicht hat, fragen, ob er die Wahl annimmt.</p>
+        </speech>
+      </debateSection>
+      <debateSection name="agendaItem" eId="dbsect_7">
+        <heading>Nationalhymne</heading>
+      </debateSection>
+      <debateSection name="agendaItem" eId="dbsect_8">
+        <heading>Sitzungsende</heading>
+      </debateSection>
+    </debateBody>
+  </debate>
+</akomaNtoso>

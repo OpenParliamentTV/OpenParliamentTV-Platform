@@ -1,0 +1,115 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "openSearch": {
+            "available": true,
+            "cluster": {
+                "status": "green",
+                "nodes": 2,
+                "dataNodes": 2,
+                "activeShards": 174,
+                "relocatingShards": 0,
+                "initializingShards": 0,
+                "unassignedShards": 0,
+                "activeShardsPercent": 100
+            },
+            "nodes": [
+                {
+                    "name": "opensearch-node1",
+                    "heapUsedPercent": "<<NORMALIZED>>",
+                    "heapUsedBytes": "<<NORMALIZED>>",
+                    "heapMaxBytes": 536870912,
+                    "cpuPercent": "<<NORMALIZED>>",
+                    "fsTotalBytes": 62671097856,
+                    "fsAvailableBytes": "<<NORMALIZED>>"
+                },
+                {
+                    "name": "opensearch-node2",
+                    "heapUsedPercent": "<<NORMALIZED>>",
+                    "heapUsedBytes": "<<NORMALIZED>>",
+                    "heapMaxBytes": 536870912,
+                    "cpuPercent": "<<NORMALIZED>>",
+                    "fsTotalBytes": 62671097856,
+                    "fsAvailableBytes": "<<NORMALIZED>>"
+                }
+            ],
+            "indices": [
+                {
+                    "name": "openparliamenttv_de",
+                    "docs": 2568634,
+                    "deleted": 1269,
+                    "sizeBytes": 2259463916
+                },
+                {
+                    "name": "optv_statistics_de",
+                    "docs": 29091146,
+                    "deleted": 7520626,
+                    "sizeBytes": 3890619616
+                }
+            ],
+            "totalStoreBytes": 6150083532
+        },
+        "databases": {
+            "servers": [
+                {
+                    "host": "localhost",
+                    "version": "10.4.28-MariaDB",
+                    "uptimeSeconds": "<<NORMALIZED>>",
+                    "threadsConnected": 1
+                }
+            ],
+            "schemas": [
+                {
+                    "label": "Platform",
+                    "database": "openparliamenttv",
+                    "host": "localhost",
+                    "sizeBytes": 18202624,
+                    "tables": 15,
+                    "reachable": true
+                },
+                {
+                    "label": "Deutscher Bundestag",
+                    "database": "openparliamenttv_de",
+                    "host": "localhost",
+                    "sizeBytes": 2594619392,
+                    "tables": 6,
+                    "reachable": true
+                }
+            ]
+        },
+        "storage": {
+            "filesystem": {
+                "path": "/Users/joscha/Projects/OpenParliamentTV/_SERVER/OpenParliamentTV-Platform/var",
+                "totalBytes": 494384795648,
+                "freeBytes": "<<NORMALIZED>>",
+                "usedBytes": "<<NORMALIZED>>",
+                "usedPercent": "<<NORMALIZED>>"
+            },
+            "dataDir": {
+                "path": "/Users/joscha/Projects/OpenParliamentTV/_SERVER/OpenParliamentTV-Platform/var",
+                "sizeBytes": 3275411456,
+                "computedAt": "2026-07-15T09:43:13+02:00"
+            },
+            "databasesTotalBytes": 2612822016,
+            "openSearchTotalBytes": 6150083532,
+            "openSearchFs": {
+                "totalBytes": 62671097856,
+                "availableBytes": "<<NORMALIZED>>"
+            }
+        }
+    }
+}

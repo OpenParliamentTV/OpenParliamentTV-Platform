@@ -1,0 +1,17 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "requestStatus": "error"
+    },
+    "errors": [
+        {
+            "status": "503",
+            "code": "1",
+            "title": "Parameter fehlen",
+            "detail": "Ein oder mehrere erforderliche Parameter fehlen"
+        }
+    ]
+}

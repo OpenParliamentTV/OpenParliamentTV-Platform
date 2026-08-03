@@ -1,0 +1,108 @@
+# API regression corpus for bin/api-diff.php
+#
+# One request per line. "@admin" prefixes an entry that is sent with the
+# --session cookie. "#" starts a comment.
+#
+# The invariant these entries defend: external API responses stay byte-identical
+# across the restructuring. Both URL styles are covered on purpose — the pretty
+# paths (rewritten by api/v1/.htaccess) and the raw ?action=&itemType= form that
+# Phase 5g's FastRoute must keep answering.
+#
+# Entity ids are real rows in the DE dev dataset; if the dataset is rebuilt the
+# fixtures must be re-recorded.
+
+# --- getItem, all eight entity types (pretty path) ---------------------------
+/api/v1/person/Q132733606
+/api/v1/organisation/Q56034
+/api/v1/term/Q15081430
+/api/v1/document/7726
+/api/v1/media/DE-0200172058
+/api/v1/session/DE-0180001
+/api/v1/agendaItem/5204
+/api/v1/electoralPeriod/DE-018
+
+# --- getItem, legacy query form (must match the pretty path byte for byte) ---
+/api/v1/?action=getItem&itemType=person&id=Q132733606
+/api/v1/?action=getItem&itemType=organisation&id=Q56034
+/api/v1/?action=getItem&itemType=media&id=DE-0200172058
+/api/v1/?action=getItem&itemType=session&id=DE-0180001
+/api/v1/?action=getItem&itemType=agendaItem&id=5204
+/api/v1/?action=getItem&itemType=electoralPeriod&id=DE-018
+
+# --- search, every itemType --------------------------------------------------
+/api/v1/search/media?q=klima&limit=2
+/api/v1/search/people?q=meier&limit=2
+/api/v1/search/organisations?q=fraktion&limit=2
+/api/v1/search/documents?q=gesetz&limit=2
+/api/v1/search/terms?q=klima&limit=2
+/api/v1/search/electoralPeriods?limit=2
+/api/v1/?action=search&itemType=media&q=klima&limit=2
+
+# --- search with filters + paging (the handler most at risk in 5a) -----------
+/api/v1/search/media?q=der&personID=Q132733606&limit=2
+/api/v1/search/media?q=klima&limit=2&page=2
+/api/v1/search/media?dateFrom=2020-01-01&dateTo=2020-12-31&limit=2
+
+# --- autocomplete ------------------------------------------------------------
+/api/v1/autocomplete/text?q=klim
+/api/v1/autocomplete/entities?q=klim
+/api/v1/autocomplete/agendaItem?q=klim
+
+# --- status ------------------------------------------------------------------
+/api/v1/status?parliament=DE
+/api/v1/status/all?parliament=DE
+/api/v1/?action=status&itemType=all&parliament=DE
+
+# --- content negotiation on media/session URIs -------------------------------
+/api/v1/media/DE-0200172058?format=iiif
+/api/v1/media/DE-0200172058?format=akomantoso
+/api/v1/media/DE-0200172058?format=parlamint
+/api/v1/session/DE-0180001?format=iiif
+/api/v1/session/DE-0180001?format=akomantoso
+/api/v1/media/DE-0200172058/transcript.vtt
+/api/v1/?action=transcript&itemType=vtt&id=DE-0200172058
+
+# --- IIIF collections --------------------------------------------------------
+/api/v1/iiif/collection/DE
+/api/v1/iiif/collection/DE/DE-019
+/api/v1/iiif/search?q=klima&limit=2
+/api/v1/?action=iiif&itemType=collection&parliament=DE
+
+# --- session-gated actions: anonymous (403) and with an admin session --------
+/api/v1/statistics/general?parliament=DE
+@admin /api/v1/statistics/general?parliament=DE
+@admin /api/v1/statistics/entity?entityType=person&entityID=Q132733606
+@admin /api/v1/statistics/word-trends?parliament=DE&word=klima
+@admin /api/v1/statistics/entity-counts?parliament=DE
+/api/v1/?action=getItemsFromDB&itemType=conflict
+@admin /api/v1/?action=getItemsFromDB&itemType=conflict&getStats=true
+@admin /api/v1/import/status?parliament=DE
+@admin /api/v1/index/status?parliament=DE
+@admin /api/v1/index/statistics-status?parliament=DE
+# system/status reports storage from var/ — pinned so a runtime-path change shows up
+@admin /api/v1/?action=system&itemType=status
+/api/v1/?action=system&itemType=status
+
+# --- notifications / alerts / system messages (public action, module-gated) --
+/api/v1/alert/list
+/api/v1/notification/unreadCount
+/api/v1/systemMessage/list
+
+# --- error cases -------------------------------------------------------------
+/api/v1/person/Q00000000000
+/api/v1/media/NOT-A-REAL-ID
+/api/v1/person/not-a-qid
+/api/v1/?action=getItem&itemType=person
+/api/v1/?action=getItem&id=Q132733606
+/api/v1/?action=nosuchaction&itemType=person
+/api/v1/?action=getItem&itemType=nosuchtype&id=Q1
+/api/v1/search/media?q=klima&limit=99999
+/api/v1/?itemType=person&id=Q132733606
+
+# --- direct-served AJAX fragments -------------------------------------------
+# These are fetched by JS, not by the router, and their URLs are string-built in
+# JS (`result-${view}.php`), so no static check catches a rename breaking them.
+# A refactor that renames a fragment must keep these green.
+/content/components/result-grid.php?a=search&queryOnly=1&paginationMode=url-driven&baseUrl=/search&showHome=1
+/content/components/result-table.php?a=search&queryOnly=1
+/content/pages/media/components/player.php?id=DE-0200172058

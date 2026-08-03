@@ -1,0 +1,2208 @@
+HTTP 200
+content-type: application/ld+json;profile="http://iiif.io/api/presentation/3/context.json"
+x-robots-tag: noindex
+
+{
+    "@context": "http://iiif.io/api/presentation/3/context.json",
+    "id": "https://optv.local/api/v1/iiif/collection/DE/DE-019",
+    "type": "Collection",
+    "label": {
+        "de": [
+            "Wahlperiode 19"
+        ]
+    },
+    "requiredStatement": {
+        "label": {
+            "de": [
+                "Open Parliament TV"
+            ]
+        },
+        "value": {
+            "de": [
+                "Open Parliament TV — Deutscher Bundestag"
+            ]
+        }
+    },
+    "provider": [
+        {
+            "id": "https://optv.local",
+            "type": "Agent",
+            "label": {
+                "de": [
+                    "Open Parliament TV"
+                ]
+            },
+            "homepage": [
+                {
+                    "id": "https://optv.local",
+                    "type": "Text",
+                    "format": "text/html"
+                }
+            ]
+        }
+    ],
+    "partOf": [
+        {
+            "id": "https://optv.local/api/v1/iiif/collection/DE",
+            "type": "Collection",
+            "label": {
+                "de": [
+                    "Deutscher Bundestag"
+                ]
+            }
+        }
+    ],
+    "items": [
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190001?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 1"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190002?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 2"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190003?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 3"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190004?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 4"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190005?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 5"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190006?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 6"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190007?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 7"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190008?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 8"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190009?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 9"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190010?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 10"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190011?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 11"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190012?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 12"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190013?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 13"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190014?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 14"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190015?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 15"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190016?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 16"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190017?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 17"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190018?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 18"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190019?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 19"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190020?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 20"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190021?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 21"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190022?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 22"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190023?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 23"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190024?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 24"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190025?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 25"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190026?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 26"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190027?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 27"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190028?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 28"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190029?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 29"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190030?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 30"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190031?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 31"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190032?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 32"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190033?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 33"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190034?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 34"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190035?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 35"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190036?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 36"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190037?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 37"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190038?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 38"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190039?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 39"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190040?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 40"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190041?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 41"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190042?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 42"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190043?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 43"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190044?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 44"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190045?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 45"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190046?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 46"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190047?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 47"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190048?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 48"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190049?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 49"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190050?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 50"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190051?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 51"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190052?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 52"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190053?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 53"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190054?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 54"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190055?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 55"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190056?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 56"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190057?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 57"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190058?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 58"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190059?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 59"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190060?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 60"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190061?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 61"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190062?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 62"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190063?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 63"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190064?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 64"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190065?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 65"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190066?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 66"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190067?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 67"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190068?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 68"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190069?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 69"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190070?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 70"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190071?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 71"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190072?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 72"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190073?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 73"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190074?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 74"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190075?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 75"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190076?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 76"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190077?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 77"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190078?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 78"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190079?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 79"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190080?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 80"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190081?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 81"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190082?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 82"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190083?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 83"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190084?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 84"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190085?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 85"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190086?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 86"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190087?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 87"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190088?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 88"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190089?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 89"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190090?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 90"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190091?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 91"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190092?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 92"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190093?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 93"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190094?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 94"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190095?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 95"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190096?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 96"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190097?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 97"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190098?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 98"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190099?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 99"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190100?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 100"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190101?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 101"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190102?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 102"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190103?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 103"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190104?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 104"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190105?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 105"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190106?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 106"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190107?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 107"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190108?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 108"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190109?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 109"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190110?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 110"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190111?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 111"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190112?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 112"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190113?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 113"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190114?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 114"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190115?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 115"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190116?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 116"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190117?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 117"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190118?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 118"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190119?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 119"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190120?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 120"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190121?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 121"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190122?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 122"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190123?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 123"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190124?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 124"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190125?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 125"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190126?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 126"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190127?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 127"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190128?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 128"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190129?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 129"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190130?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 130"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190131?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 131"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190132?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 132"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190133?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 133"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190134?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 134"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190135?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 135"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190136?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 136"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190137?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 137"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190138?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 138"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190139?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 139"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190140?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 140"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190141?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 141"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190142?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 142"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190143?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 143"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190144?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 144"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190145?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 145"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190146?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 146"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190147?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 147"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190148?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 148"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190149?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 149"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190150?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 150"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190151?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 151"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190152?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 152"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190153?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 153"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190154?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 154"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190155?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 155"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190156?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 156"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190157?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 157"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190158?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 158"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190159?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 159"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190160?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 160"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190161?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 161"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190162?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 162"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190163?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 163"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190164?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 164"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190165?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 165"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190166?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 166"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190167?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 167"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190168?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 168"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190169?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 169"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190170?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 170"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190171?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 171"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190172?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 172"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190173?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 173"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190174?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 174"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190175?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 175"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190176?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 176"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190177?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 177"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190178?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 178"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190179?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 179"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190180?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 180"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190181?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 181"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190182?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 182"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190183?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 183"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190184?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 184"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190185?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 185"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190186?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 186"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190187?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 187"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190188?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 188"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190189?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 189"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190190?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 190"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190191?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 191"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190192?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 192"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190193?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 193"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190194?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 194"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190195?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 195"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190196?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 196"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190197?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 197"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190198?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 198"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190199?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 199"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190200?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 200"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190201?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 201"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190202?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 202"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190203?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 203"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190204?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 204"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190205?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 205"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190206?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 206"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190207?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 207"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190208?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 208"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190209?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 209"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190210?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 210"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190211?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 211"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190212?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 212"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190213?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 213"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190214?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 214"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190215?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 215"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190216?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 216"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190217?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 217"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190218?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 218"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190219?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 219"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190220?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 220"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190221?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 221"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190222?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 222"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190223?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 223"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190224?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 224"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190225?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 225"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190226?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 226"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190227?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 227"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190228?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 228"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190229?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 229"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190230?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 230"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190231?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 231"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190232?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 232"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190233?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 233"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190234?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 234"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190235?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 235"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190236?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 236"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190237?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 237"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190238?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 238"
+                ]
+            }
+        },
+        {
+            "id": "https://optv.local/api/v1/session/DE-0190239?format=iiif",
+            "type": "Manifest",
+            "label": {
+                "de": [
+                    "Sitzung 239"
+                ]
+            }
+        }
+    ]
+}

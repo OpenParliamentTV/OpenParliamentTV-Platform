@@ -1,0 +1,250 @@
+HTTP 200
+content-type: application/xml; charset=utf-8
+x-robots-tag: noindex
+
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="DE-0200172058" xml:lang="de">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title type="main" xml:lang="de">Anja Karliczek, CDU/CSU | 2024-06-06 | Immissionsschutzrechtliche Genehmigungsverfahren</title>
+        <meeting ana="#parla.term" n="20">Wahlperiode 20</meeting>
+        <meeting ana="#parla.sitting" n="172">Sitzung 172</meeting>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Open Parliament TV</publisher>
+        <idno type="URI">https://optv.local/media/DE-0200172058</idno>
+        <idno type="URI" subtype="api">https://optv.local/api/v1/media/DE-0200172058?format=parlamint</idno>
+        <availability status="unknown">
+          <licence target="https://www.bundestag.de/nutzungsbedingungen">Nutzungsbedingungen</licence>
+          <p>Deutscher Bundestag</p>
+        </availability>
+        <date when="NORMALIZED">2026-08-03</date>
+      </publicationStmt>
+      <sourceDesc>
+        <bibl>
+          <title type="main">Deutscher Bundestag</title>
+          <publisher>Deutscher Bundestag</publisher>
+          <idno type="URI">http://dbtg.tv/fvid/7611894</idno>
+          <date when="NORMALIZED">2024-06-06</date>
+        </bibl>
+        <recordingStmt>
+          <recording xml:id="rec.DE-0200172058.video" type="video" dur-iso="PT257S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0200172058.audio" type="audio" dur-iso="PT257S">
+            <media mimeType="audio/mpeg" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7611894/7611894_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+        </recordingStmt>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <projectDesc>
+        <p xml:lang="en">Exported from Open Parliament TV (https://optv.local). Encoded following the ParlaMint conventions (Parla-CLARIN TEI). Sentence-level audio/video alignment is provided via timeline/@synch as recommended by Parla-CLARIN for spoken corpora.</p>
+      </projectDesc>
+      <classDecl>
+        <taxonomy xml:id="speaker_types">
+          <desc xml:lang="en">Types of speakers</desc>
+          <category xml:id="chair">
+            <catDesc xml:lang="en">Chairperson: speaker chairing the meeting</catDesc>
+          </category>
+          <category xml:id="regular">
+            <catDesc xml:lang="en">Regular: a regular speaker at the meeting</catDesc>
+          </category>
+        </taxonomy>
+        <taxonomy xml:id="parla.legislature">
+          <desc xml:lang="en">Legislature</desc>
+          <category xml:id="parla.term">
+            <catDesc xml:lang="en">Legislative period</catDesc>
+          </category>
+          <category xml:id="parla.sitting">
+            <catDesc xml:lang="en">Sitting: a session on a given day</catDesc>
+          </category>
+        </taxonomy>
+      </classDecl>
+    </encodingDesc>
+    <profileDesc>
+      <settingDesc>
+        <setting>
+          <name type="org">Deutscher Bundestag</name>
+          <date when="NORMALIZED" ana="#parla.sitting">2024-06-06</date>
+        </setting>
+      </settingDesc>
+      <particDesc>
+        <listOrg>
+          <org xml:id="parliament" role="parliament">
+            <orgName full="yes">Deutscher Bundestag</orgName>
+          </org>
+          <org xml:id="Q1023134" role="parliamentaryGroup">
+            <orgName full="yes">CDU/CSU</orgName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q1023134</idno>
+          </org>
+          <org xml:id="Q1007353" role="parliamentaryGroup">
+            <orgName full="yes">DIE GRÜNEN</orgName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q1007353</idno>
+          </org>
+        </listOrg>
+        <listPerson>
+          <person xml:id="Q15783504">
+            <persName>Anja Karliczek</persName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q15783504</idno>
+            <affiliation ref="#Q1023134" role="member"/>
+          </person>
+          <person xml:id="Q48967">
+            <persName>Katrin Göring-Eckardt</persName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q48967</idno>
+            <affiliation ref="#Q1007353" role="member"/>
+          </person>
+        </listPerson>
+      </particDesc>
+      <langUsage>
+        <language ident="de">de</language>
+      </langUsage>
+    </profileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div type="debateSection">
+        <head>Immissionsschutzrechtliche Genehmigungsverfahren</head>
+        <timeline unit="s" origin="#DE-0200172058.origin" corresp="#rec.DE-0200172058.video">
+          <when xml:id="DE-0200172058.origin" absolute="2024-06-06T13:47:43+02:00"/>
+          <when xml:id="DE-0200172058.T1" interval="1" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T3.6" interval="3.6" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T8.24" interval="8.24" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T23.16" interval="23.16" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T28.52" interval="28.52" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T37.3" interval="37.3" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T41.8" interval="41.8" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T47.2" interval="47.2" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T53.56" interval="53.56" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T58.56" interval="58.56" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T66.7" interval="66.7" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T70.94" interval="70.94" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T81.8" interval="81.8" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T85.3" interval="85.3" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T88.34" interval="88.34" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T92.52" interval="92.52" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T93.68" interval="93.68" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T105" interval="105" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T116.96" interval="116.96" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T120.48" interval="120.48" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T127.28" interval="127.28" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T129.3" interval="129.3" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T133.74" interval="133.74" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T147.86" interval="147.86" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T156.5" interval="156.5" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T169.02" interval="169.02" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T182.6" interval="182.6" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T184.92" interval="184.92" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T190.64" interval="190.64" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T198.4" interval="198.4" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T200.44" interval="200.44" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T203.5" interval="203.5" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T210.72" interval="210.72" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T215.68" interval="215.68" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T224.88" interval="224.88" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T226.92" interval="226.92" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T236.2" interval="236.2" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T243.28" interval="243.28" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T247.6" interval="247.6" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T248.96" interval="248.96" since="#DE-0200172058.origin"/>
+          <when xml:id="DE-0200172058.T256.96" interval="256.96" since="#DE-0200172058.origin"/>
+        </timeline>
+        <u xml:id="DE-0200172058.u1" who="#Q15783504" ana="#regular" start="#DE-0200172058.T1" end="#DE-0200172058.T37.3">
+          <seg xml:id="DE-0200172058.u1.seg1">
+            <s xml:id="DE-0200172058.u1.seg1.s1" synch="#DE-0200172058.T1 #DE-0200172058.T3.6">Sehr geehrte Frau Präsidentin!</s>
+            <s xml:id="DE-0200172058.u1.seg1.s2" synch="#DE-0200172058.T3.6 #DE-0200172058.T8.24">Liebe Kolleginnen und Kollegen!</s>
+            <s xml:id="DE-0200172058.u1.seg1.s3" synch="#DE-0200172058.T8.24 #DE-0200172058.T23.16">Liebe Ampelkollegen, ich will Ihnen zugestehen, dass die Novelle zum Bundes-Immissionsschutzgesetz wirklich einige gute Ideen enthält, die grundsätzlich sogar geeignet sind, Planungs- und Genehmigungsverfahren für erneuerbare Energien an Land zu beschleunigen.</s>
+            <s xml:id="DE-0200172058.u1.seg1.s4" synch="#DE-0200172058.T23.16 #DE-0200172058.T28.52">Und ich bin auch sehr froh, dass die Bundesländer so tatkräftig daran mitgewirkt haben.</s>
+            <s xml:id="DE-0200172058.u1.seg1.s5" synch="#DE-0200172058.T28.52 #DE-0200172058.T37.3">Denn als Genehmigungsbehörden wissen die Landes- und Kreisverwaltungen häufig viel besser als der Bund, wie sich die Regelungen in der Praxis auswirken.</s>
+          </seg>
+        </u>
+        <incident>
+          <desc>Andreas Bleck [AfD]: Richtig!</desc>
+        </incident>
+        <u xml:id="DE-0200172058.u2" who="#Q15783504" ana="#regular" start="#DE-0200172058.T37.3" end="#DE-0200172058.T41.8">
+          <seg xml:id="DE-0200172058.u2.seg1">
+            <s xml:id="DE-0200172058.u2.seg1.s1" synch="#DE-0200172058.T37.3 #DE-0200172058.T41.8">Ich möchte auch vorab klarstellen, bevor hier wieder irgendwelche Gerüchte aufkommen:</s>
+          </seg>
+        </u>
+        <vocal type="interruption">
+          <desc>Zurufe von der SPD</desc>
+        </vocal>
+        <u xml:id="DE-0200172058.u3" who="#Q15783504" ana="#regular" start="#DE-0200172058.T41.8" end="#DE-0200172058.T81.8">
+          <seg xml:id="DE-0200172058.u3.seg1">
+            <s xml:id="DE-0200172058.u3.seg1.s1" synch="#DE-0200172058.T41.8 #DE-0200172058.T47.2">Die Unionsfraktion will ambitionierten Klimaschutz.</s>
+            <s xml:id="DE-0200172058.u3.seg1.s2" synch="#DE-0200172058.T47.2 #DE-0200172058.T53.56">Aber wir wollen auch echte Beschleunigung, und zwar jeglicher Verfahren.</s>
+            <s xml:id="DE-0200172058.u3.seg1.s3" synch="#DE-0200172058.T53.56 #DE-0200172058.T58.56">Denn das halten wir für einen wichtigen Hebel beim Klimaschutz im Industriebereich.</s>
+          </seg>
+          <seg xml:id="DE-0200172058.u3.seg2">
+            <s xml:id="DE-0200172058.u3.seg2.s1" synch="#DE-0200172058.T58.56 #DE-0200172058.T66.7">Ich will auf einen wesentlichen Punkt kommen, der uns am Ende genau bewogen hat, das Gesetz abzulehnen, so wie Sie es jetzt umsetzen wollen.</s>
+            <s xml:id="DE-0200172058.u3.seg2.s2" synch="#DE-0200172058.T66.7 #DE-0200172058.T70.94">Sie wollen das Klima als Schutzgut in dieses Gesetz aufnehmen.</s>
+            <s xml:id="DE-0200172058.u3.seg2.s3" synch="#DE-0200172058.T70.94 #DE-0200172058.T81.8">Und ich will bewusst sagen: Es gibt schon eine Reihe von Schutzgütern, die explizit genannt werden: Menschen, Tiere, Pflanzen, Boden, Wasser, Atmosphäre, Kultur und sonstige Sachgüter.</s>
+          </seg>
+        </u>
+        <vocal type="interruption">
+          <desc>Zuruf des Abg. Daniel Rinkert [SPD]</desc>
+        </vocal>
+        <u xml:id="DE-0200172058.u4" who="#Q15783504" ana="#regular" start="#DE-0200172058.T81.8" end="#DE-0200172058.T190.64">
+          <seg xml:id="DE-0200172058.u4.seg1">
+            <s xml:id="DE-0200172058.u4.seg1.s1" synch="#DE-0200172058.T81.8 #DE-0200172058.T85.3">Und jetzt soll es halt noch das Klima als weiteres Schutzgut sein.</s>
+          </seg>
+          <seg xml:id="DE-0200172058.u4.seg2">
+            <s xml:id="DE-0200172058.u4.seg2.s1" synch="#DE-0200172058.T85.3 #DE-0200172058.T88.34">Das Ganze hat allerdings einen Haken.</s>
+            <s xml:id="DE-0200172058.u4.seg2.s2" synch="#DE-0200172058.T88.34 #DE-0200172058.T92.52">Sie wollen bei Planung und Genehmigung von Anlagen schneller werden.</s>
+            <s xml:id="DE-0200172058.u4.seg2.s3" synch="#DE-0200172058.T92.52 #DE-0200172058.T93.68">Das ist Ihr Ziel.</s>
+            <s xml:id="DE-0200172058.u4.seg2.s4" synch="#DE-0200172058.T93.68 #DE-0200172058.T105">Aber wenn Sie jetzt neben den bekannten Schutzgütern auch noch das Klima aufnehmen, dann wird das dazu führen, dass sich genau bei diesem Punkt neue Fragen ergeben, die Sie auch beantworten müssen.</s>
+          </seg>
+          <seg xml:id="DE-0200172058.u4.seg3">
+            <s xml:id="DE-0200172058.u4.seg3.s1" synch="#DE-0200172058.T105 #DE-0200172058.T116.96">Ich sage Ihnen voraus: Keine Genehmigungsbehörde wird ohne eine klare und eindeutige Definition und Formulierung des Schutzgutes Klima mutig eine Genehmigung erteilen.</s>
+            <s xml:id="DE-0200172058.u4.seg3.s2" synch="#DE-0200172058.T116.96 #DE-0200172058.T120.48">Keiner wird ohne ein weiteres Gutachten das Risiko auf sich nehmen.</s>
+            <s xml:id="DE-0200172058.u4.seg3.s3" synch="#DE-0200172058.T120.48 #DE-0200172058.T127.28">Sie werden alle sagen: Wir lassen ein Gutachten machen, dann sind wir juristisch nicht angreifbar.</s>
+            <s xml:id="DE-0200172058.u4.seg3.s4" synch="#DE-0200172058.T127.28 #DE-0200172058.T129.3">– Das kann ich übrigens auch verstehen.</s>
+            <s xml:id="DE-0200172058.u4.seg3.s5" synch="#DE-0200172058.T129.3 #DE-0200172058.T133.74">Nur ist es am Ende genau dann mit der Beschleunigung schon wieder vorbei.</s>
+          </seg>
+          <seg xml:id="DE-0200172058.u4.seg4">
+            <s xml:id="DE-0200172058.u4.seg4.s1" synch="#DE-0200172058.T133.74 #DE-0200172058.T147.86">Ich mache Ihnen jetzt einen Vorschlag, der die Ziele Klimaschutz und Beschleunigung in Einklang bringt: Sie lassen den Begriff „Klima“ aus Ihrer Novelle raus, damit wir dem Klima wirklich was Gutes tun können, nämlich schneller klimafreundliche Energieanlagen bauen.</s>
+          </seg>
+          <seg xml:id="DE-0200172058.u4.seg5">
+            <s xml:id="DE-0200172058.u4.seg5.s1" synch="#DE-0200172058.T147.86 #DE-0200172058.T156.5">Ich mache Ihnen noch einen weiteren Vorschlag: Sie machen bei der Beschleunigung keinen Unterschied zwischen Anlagen für erneuerbare Energie und anderen Industrieanlagen.</s>
+            <s xml:id="DE-0200172058.u4.seg5.s2" synch="#DE-0200172058.T156.5 #DE-0200172058.T169.02">Denn wie wollen Sie eigentlich den Menschen erklären, dass Sie zum Beispiel die Direktreduktionsanlage von thyssenkrupp, die jährlich bis zu 3,5 Millionen Tonnen CO2 einspart, nicht auch beschleunigt bauen wollen?</s>
+            <s xml:id="DE-0200172058.u4.seg5.s3" synch="#DE-0200172058.T169.02 #DE-0200172058.T182.6">Auch Industrieansiedlungen wie die von Intel in Magdeburg mit 17 Milliarden Euro Investitionsvolumen und 3 000 geplanten zusätzlichen Arbeitsplätzen könnten durch die geplante Stichtagsregelung deutlich profitieren.</s>
+            <s xml:id="DE-0200172058.u4.seg5.s4" synch="#DE-0200172058.T182.6 #DE-0200172058.T184.92">Beispiele wie diese gibt es viele.</s>
+            <s xml:id="DE-0200172058.u4.seg5.s5" synch="#DE-0200172058.T184.92 #DE-0200172058.T190.64">Umso wichtiger ist es, diese wichtigen Transformationsprozesse gänzlich zu unterstützen.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der CDU/CSU</desc>
+        </kinesic>
+        <u xml:id="DE-0200172058.u5" who="#Q15783504" ana="#regular" start="#DE-0200172058.T190.64" end="#DE-0200172058.T248.96">
+          <seg xml:id="DE-0200172058.u5.seg1">
+            <s xml:id="DE-0200172058.u5.seg1.s1" synch="#DE-0200172058.T190.64 #DE-0200172058.T198.4">Ermöglichen Sie der Industrie, alle Industrieanlagen schneller und leichter zu errichten!</s>
+            <s xml:id="DE-0200172058.u5.seg1.s2" synch="#DE-0200172058.T198.4 #DE-0200172058.T200.44">Trauen Sie unserer Wirtschaft das zu!</s>
+            <s xml:id="DE-0200172058.u5.seg1.s3" synch="#DE-0200172058.T200.44 #DE-0200172058.T203.5">Trauen Sie der Industrie zu, dass sie weiß, was sie tut!</s>
+          </seg>
+          <seg xml:id="DE-0200172058.u5.seg2">
+            <s xml:id="DE-0200172058.u5.seg2.s1" synch="#DE-0200172058.T203.5 #DE-0200172058.T210.72">Liebe Koalition, das Kernziel dieser Novelle liegt in der Beschleunigung von Planungs- und Genehmigungsverfahren.</s>
+            <s xml:id="DE-0200172058.u5.seg2.s2" synch="#DE-0200172058.T210.72 #DE-0200172058.T215.68">Auf der einen Seite haben Sie teilweise durch Aufnahme der MPK-Beschlüsse nachgebessert.</s>
+            <s xml:id="DE-0200172058.u5.seg2.s3" synch="#DE-0200172058.T215.68 #DE-0200172058.T224.88">Auf der anderen Seite werden die Vorteile, die beispielsweise der vorzeitige Baubeginn bringen könnte, durch das zusätzliche Schutzgut Klima wieder konterkariert.</s>
+            <s xml:id="DE-0200172058.u5.seg2.s4" synch="#DE-0200172058.T224.88 #DE-0200172058.T226.92">Sie sind nicht konsequent.</s>
+            <s xml:id="DE-0200172058.u5.seg2.s5" synch="#DE-0200172058.T226.92 #DE-0200172058.T236.2">Deshalb fordern wir Sie in unserem Entschließungsantrag auf, auf die Aufnahme des nicht klar eingrenzbaren Schutzgutes Klima in das Bundes-Immissionsschutzgesetz zu verzichten.</s>
+            <s xml:id="DE-0200172058.u5.seg2.s6" synch="#DE-0200172058.T236.2 #DE-0200172058.T243.28">In den Fachgesetzen, dem Bundes-Klimaschutzgesetz, dem Treibhausgas-Emissionshandelsgesetz usw., können Sie das regeln.</s>
+            <s xml:id="DE-0200172058.u5.seg2.s7" synch="#DE-0200172058.T243.28 #DE-0200172058.T247.6">Liebe Koalition, was Sie wollen, werden Sie so nicht erreichen.</s>
+            <s xml:id="DE-0200172058.u5.seg2.s8" synch="#DE-0200172058.T247.6 #DE-0200172058.T248.96">Schade.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der CDU/CSU – Daniel Rinkert [SPD]: Sie hat es einfach nicht verstanden!</desc>
+        </kinesic>
+        <u xml:id="DE-0200172058.u6" who="#Q48967" ana="#chair" start="#DE-0200172058.T248.96" end="#DE-0200172058.T256.96">
+          <seg xml:id="DE-0200172058.u6.seg1">
+            <s xml:id="DE-0200172058.u6.seg1.s1" synch="#DE-0200172058.T248.96 #DE-0200172058.T256.96">Das Wort hat der Kollege Dr. Jan-Niclas Gesenhues für die Bundesregierung.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall beim BÜNDNIS 90/DIE GRÜNEN und bei der SPD</desc>
+        </kinesic>
+      </div>
+    </body>
+  </text>
+</TEI>

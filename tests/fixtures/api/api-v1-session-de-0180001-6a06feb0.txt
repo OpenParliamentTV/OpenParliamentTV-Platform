@@ -1,0 +1,167 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "session",
+        "id": "DE-0180001",
+        "attributes": {
+            "number": 1,
+            "dateStart": "2013-10-22T09:20:00.000Z",
+            "dateEnd": "2013-10-22T13:01:00.000Z",
+            "parliament": "DE",
+            "parliamentLabel": "Deutscher Bundestag"
+        },
+        "links": {
+            "self": "https://optv.local/api/v1/session/DE-0180001"
+        },
+        "relationships": {
+            "media": {
+                "links": {
+                    "self": "https://optv.local/api/v1/search/media?sessionID=DE-0180001"
+                }
+            },
+            "electoralPeriod": {
+                "data": {
+                    "type": "electoralPeriod",
+                    "id": "DE-018",
+                    "attributes": {
+                        "number": "18",
+                        "dateStart": "2013-10-22",
+                        "dateEnd": "2017-10-24"
+                    }
+                },
+                "links": {
+                    "self": "https://optv.local/api/v1/electoralPeriod/DE-018"
+                }
+            },
+            "agendaItems": {
+                "data": [
+                    {
+                        "type": "agendaItem",
+                        "id": "5204",
+                        "attributes": {
+                            "officialTitle": "TOP ",
+                            "title": "Sitzungseröffnung",
+                            "order": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-5204"
+                        }
+                    },
+                    {
+                        "type": "agendaItem",
+                        "id": "5205",
+                        "attributes": {
+                            "officialTitle": "Tagesordnungspunkt 1",
+                            "title": "Sitzungseröffnung durch den Alterspräsidenten",
+                            "order": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-5205"
+                        }
+                    },
+                    {
+                        "type": "agendaItem",
+                        "id": "5206",
+                        "attributes": {
+                            "officialTitle": "Tagesordnungspunkt 2",
+                            "title": "Wahl des Bundestagspräsidenten",
+                            "order": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-5206"
+                        }
+                    },
+                    {
+                        "type": "agendaItem",
+                        "id": "5207",
+                        "attributes": {
+                            "officialTitle": "Tagesordnungspunkt 3",
+                            "title": "Amtsübernahme durch den Präsidenten",
+                            "order": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-5207"
+                        }
+                    },
+                    {
+                        "type": "agendaItem",
+                        "id": "5208",
+                        "attributes": {
+                            "officialTitle": "Tagesordnungspunkt 4",
+                            "title": "Beschlussfassung über Geschäftsordnungen",
+                            "order": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-5208"
+                        }
+                    },
+                    {
+                        "type": "agendaItem",
+                        "id": "5209",
+                        "attributes": {
+                            "officialTitle": "Tagesordnungspunkt 5",
+                            "title": "Festlegung der Zahl der Vizepräsidenten",
+                            "order": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-5209"
+                        }
+                    },
+                    {
+                        "type": "agendaItem",
+                        "id": "5210",
+                        "attributes": {
+                            "officialTitle": "Tagesordnungspunkt 6",
+                            "title": "Wahl der Vizepräsidenten",
+                            "order": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-5210"
+                        }
+                    },
+                    {
+                        "type": "agendaItem",
+                        "id": "5211",
+                        "attributes": {
+                            "officialTitle": "Tagesordnungspunkt 7",
+                            "title": "Nationalhymne",
+                            "order": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-5211"
+                        }
+                    },
+                    {
+                        "type": "agendaItem",
+                        "id": "5212",
+                        "attributes": {
+                            "officialTitle": "TOP ",
+                            "title": "Sitzungsende",
+                            "order": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-5212"
+                        }
+                    }
+                ],
+                "links": {
+                    "self": "https://optv.local/api/v1/search/agendaItem?sessionID=DE-0180001"
+                }
+            }
+        }
+    }
+}

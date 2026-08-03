@@ -1,0 +1,80 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "organisation",
+        "id": "Q56034",
+        "attributes": {
+            "type": "otherOrganisation",
+            "label": "AA",
+            "labelAlternative": [
+                "Auswärtiges Amt"
+            ],
+            "abstract": "Das Auswärtige Amt ist eines der Ministerien der Bundesrepublik Deutschland und als solches eine oberste Bundesbehörde. Es hat seinen Hauptsitz in Berlin und einen Nebensitz in der Bundesstadt Bonn.",
+            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q56034&v=7666e21d",
+            "thumbnailCreator": "Presse- und Informationsamt der Bundesregierung",
+            "thumbnailLicense": "PD Coa Germany",
+            "embedURI": "",
+            "websiteURI": "https://www.auswaertiges-amt.de/",
+            "socialMediaIDs": [
+                {
+                    "label": "Instagram",
+                    "id": "auswaertigesamt"
+                },
+                {
+                    "label": "Facebook",
+                    "id": "AuswaertigesAmt"
+                },
+                {
+                    "label": "Twitter",
+                    "id": "AuswaertigesAmt"
+                },
+                {
+                    "label": "Mastodon",
+                    "id": "AuswaertigesAmt@social.bund.de"
+                },
+                {
+                    "label": "Youtube",
+                    "id": "UCpYp9GcXspUXMjsKeVdmlvA"
+                }
+            ],
+            "color": "",
+            "additionalInformation": {
+                "fragDenStaatID": "43",
+                "wikipedia": {
+                    "title": "Auswärtiges Amt",
+                    "url": "https://de.wikipedia.org/wiki/Ausw%C3%A4rtiges_Amt"
+                }
+            },
+            "lastChanged": "2023-03-14 22:21:51"
+        },
+        "links": {
+            "self": "https://optv.local/api/v1/organisation/Q56034"
+        },
+        "relationships": {
+            "media": {
+                "links": {
+                    "self": "https://optv.local/api/v1/search/media?organisationID=Q56034"
+                }
+            },
+            "people": {
+                "links": {
+                    "self": "https://optv.local/api/v1/search/people?organisationID=Q56034"
+                }
+            }
+        }
+    }
+}
