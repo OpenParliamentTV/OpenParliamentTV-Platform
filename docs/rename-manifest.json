@@ -471,6 +471,12 @@
       "new": "modules/database/connections.php",
       "phase": "5f",
       "note": "getApiDatabaseConnection -> optvDbConnection. Deliberately NOT a `functions` entry: the old name is still a live envelope-returning compat wrapper, so --check must not flag callers of it. Add it when the wrapper is removed."
+    },
+    {
+      "old": "api/v1/api.php",
+      "new": "api/v1/registry.php",
+      "phase": "5g",
+      "note": "the action switch became the registry table; apiV1() stays as the internal facade over it"
     }
   ],
   "functions": [

@@ -42,7 +42,7 @@ Note that `--selftest` fetches each URL twice back to back, which is deliberatel
 
 `getItem` for all eight entity types · `search` for every itemType, plus filtered and paged variants · `autocomplete` · `status` · content negotiation (`?format=iiif|akomantoso|parlamint`, `transcript.vtt`) · IIIF collection and search paths · the `entityDump` bulk export in both URL forms, plus the `/data/entity-dump` redirect · session-gated actions recorded **both** anonymously and with a session · error cases (unknown id, malformed id, missing `action`/`itemType`, unknown action/itemType, out-of-range limit).
 
-Every one of these is exercised through **both URL styles** — the pretty paths that `api/v1/.htaccess` rewrites, and the raw `?action=&itemType=` form. Phase 5g replaces that rewriting with FastRoute and must keep answering both.
+Every one of these is exercised through **both URL styles** — the pretty paths (resolved by `routes/api.php` via FastRoute) and the raw `?action=&itemType=` form, which no route matches and which the query string carries on its own. Both must keep answering.
 
 ### Normalization
 

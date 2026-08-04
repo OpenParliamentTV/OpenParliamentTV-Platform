@@ -145,28 +145,14 @@ function auth($userID, $action, $entity, $db = false) {
 		break;
 
         case "apiV1":
-            $whitelist = array(
-                "getItem",
-                "search",
-                "autocomplete",
-                "user",
-                "status",
-                "lang",
-                // Public, read-only IIIF Manifests/Collections and WebVTT transcripts
-                "iiif",
-                "transcript",
-                // Bulk entity export consumed by NEL pipelines; public since it
-                // was served from /data/entity-dump.
-                "entityDump",
-                // Notifications & alerts: the action passes the central gate; each
-                // module enforces "logged-in" (and admin where needed) itself, so
-                // anonymous callers get an auth error from the module, not here.
-                "alert",
-                "notification",
-                "systemMessage"
-            );
+            // The action's public/admin metadata lives in the shared dispatch
+            // registry (api/v1/registry.php) together with the handler, so the
+            // two cannot drift apart the way a separate whitelist here did.
+            // Reaching this point means the user is not an admin (admins
+            // returned success above), so only 'public' actions may proceed.
+            require_once(__DIR__ . "/../../api/v1/registry.php");
 
-            if (in_array($entity, $whitelist)) {
+            if (apiRegistryIsPublicAction($entity)) {
 
                 $return["meta"]["requestStatus"] = "success";
                 $return["meta"]["detail"] = "Action permitted";

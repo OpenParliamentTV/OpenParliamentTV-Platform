@@ -17,8 +17,8 @@
  *   php bin/migrate-conflicts.php --drop-legacy-columns  # drop the legacy columns
  *                                                        # (only allowed when 0 legacy rows remain)
  *
- * Run db/db_migration.sql (section 5) and deploy the new code BEFORE running
- * this script.
+ * Apply the migrations (php bin/migrate.php --apply, which includes
+ * 0006_conflict_aggregation) and deploy the new code BEFORE running this script.
  */
 
 if (php_sapi_name() !== 'cli') {

@@ -1,0 +1,17 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "requestStatus": "error"
+    },
+    "errors": [
+        {
+            "status": "403",
+            "code": "1",
+            "title": "Nicht erlaubt",
+            "detail": "Du hast keine Berechtigung diese Seite aufzurufen oder diese Aktion durchzuführen."
+        }
+    ]
+}

@@ -166,3 +166,19 @@
 /api/v1/?action=getItem&itemType=electoralPeriod
 /api/v1/electoralPeriod/XX-018
 /api/v1/electoralPeriod/DE-099
+
+# --- URL-shape edge cases the .htaccess rewrites produce (5g) ----------------
+# Several rewrite rules are deliberately unanchored, so trailing junk is ignored
+# rather than 404'd, and a bare action segment yields action-without-itemType.
+# FastRoute is strict by default, so every one of these is a way the routing
+# cutover could silently change behaviour. Recorded against the .htaccess rules.
+/api/v1/person/Q77195/junk
+/api/v1/search/media/extra?q=klima&limit=1
+/api/v1/search
+/api/v1/status/all
+/api/v1/nosuchthing
+/api/v1/nosuchthing/x
+/api/v1/statistics/entity/person
+/api/v1/entityDump/x/y
+@admin /api/v1/statistics/entity/person/Q132733606
+@admin /api/v1/statistics/entity/person/Q132733606/junk

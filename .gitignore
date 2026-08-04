@@ -48,7 +48,6 @@ config-*.php
 !modules/meta-image/config.php
 
 # Temporary one-off DB migration (not the canonical db/*.sql dumps)
-db/db_migration.sql
 
 # Custom content
 custom/*

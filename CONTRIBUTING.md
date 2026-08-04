@@ -84,10 +84,12 @@ Never mix a rename with a logic change. A rename commit's diff must be reviewabl
 
 ```bash
 php bin/api-diff.php --session=$SID          # must be green — renames change no output
-php bin/migrate-customizations.php --check --core
+php bin/migrate-customizations.php --check   # no old name left in an instance custom/ tree
 ```
 
-The second command greps the tree for any old name that should no longer exist. See `tests/README.md` for the API harness and how to mint an admin session.
+See `tests/README.md` for the API harness and how to mint an admin session.
+
+`--check --core` runs the same grep over the core tree, but is **not** usable as a gate today: the manifest records partial/split moves whose old path legitimately still exists, and its `STALE FILE` rule matches on basename rather than path, so everything it reports is a false positive.
 
 ### Instance customizations
 
@@ -95,4 +97,13 @@ Instances keep their overrides in a separate `custom/` tree that is synced into 
 
 ## Schema changes
 
-Every schema change ships as a numbered, forward-only migration under `migrations/` and is applied with `php bin/migrate.php`. The dumps in `db/` are the fresh-install baseline, not a migration path.
+Every schema change ships **twice**:
+
+1. into the fresh-install dump in `db/`, so new instances get it;
+2. as a numbered, forward-only file under `migrations/platform/` or `migrations/parliament/`, for instances that already exist.
+
+Applied with `php bin/migrate.php --apply`, which records each file in a `_migrations` table per database and visits the platform database plus every configured parliament. Run it with no flags first — the default is a dry run.
+
+Every migration must be **safe to re-run** (`CREATE TABLE IF NOT EXISTS`, `ADD COLUMN IF NOT EXISTS`, `INSERT IGNORE`): instances predating the runner had files applied by hand, so the first `--apply` re-applies them.
+
+The dumps in `db/` are the baseline, never a migration path, and a local gitignored SQL file is not a delivery mechanism — it never reaches a server. See `migrations/README.md`.

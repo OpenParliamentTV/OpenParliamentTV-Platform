@@ -1,0 +1,47 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "parliaments": [
+            {
+                "code": "DE",
+                "label": "Deutscher Bundestag",
+                "repository": {
+                    "location": "https://github.com/OpenParliamentTV/OpenParliamentTV-Data-DE.git",
+                    "remote": {
+                        "lastUpdated": "<<NORMALIZED>>",
+                        "numberOfSessions": "<<NORMALIZED>>"
+                    },
+                    "local": {
+                        "lastUpdated": "2026-07-14T23:41:22+02:00",
+                        "numberOfSessions": 1055
+                    }
+                },
+                "database": {
+                    "lastUpdated": "2025-09-30T12:37:55+02:00",
+                    "lastSpeechDate": "2025-09-26T11:03:34+02:00",
+                    "numberOfSessions": 739,
+                    "numberOfSpeeches": 76072
+                },
+                "index": {
+                    "lastUpdated": "2025-09-30T12:37:55+02:00",
+                    "lastSpeechDate": "2025-09-26T11:03:34+02:00",
+                    "numberOfSpeeches": 76072
+                }
+            }
+        ]
+    }
+}

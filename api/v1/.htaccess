@@ -1,18 +1,23 @@
 ########################################
 # API Rewrite Rules
+#
+# Routing now lives in routes/api.php (FastRoute), dispatched by index.php, so
+# all the per-endpoint rewrites this file used to carry are gone. What is left
+# is what only Apache can do: normalise the trailing slash, and hand every
+# non-file request to the front controller.
+#
+# index.php reconstructs the path from REQUEST_URI, so no parameters are passed
+# through the rewrite — which also removes the [QSA] precedence subtlety that
+# used to decide whether a path segment or a query parameter won.
 ########################################
 <IfModule mod_rewrite.c>
 	Options +FollowSymLinks
 	########################################
-	# Try to fix conflicting rewrite rules 
+	# Try to fix conflicting rewrite rules
 	# set by Wordpress etc:
 	########################################
 	RewriteEngine Off
 	RewriteEngine On
-	########################################
-	# Set Rewrite Base
-	########################################
-	#RewriteBase /api/v1
 	########################################
 	# Always remove trailing slash
 	########################################
@@ -20,58 +25,9 @@
 	RewriteCond %{REQUEST_URI} (.+)/$
 	RewriteRule ^ %1 [L,R]
 	########################################
-	# Statistics Rewrites
+	# Front controller
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(statistics)/(entity)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2&entityType=$3&entityID=$4 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(statistics)/(entity)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2&entityType=$3 [QSA,L]
-	########################################
-	# IIIF / Transcript Rewrites
-	########################################
-	# WebVTT transcript download for a media item
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^media/([a-zA-Z0-9_-]+)/transcript\.vtt$ index.php?action=transcript&itemType=vtt&id=$1 [QSA,L]
-	# IIIF Collection for a parliament instance
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^iiif/collection/([a-zA-Z0-9_-]+)/?$ index.php?action=iiif&itemType=collection&parliament=$1 [QSA,L]
-	# IIIF Collection for an electoral period within a parliament
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^iiif/collection/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ index.php?action=iiif&itemType=collection&parliament=$1&electoralPeriod=$2 [QSA,L]
-	# IIIF Collection built from a media search (mirrors the RSS search feed)
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^iiif/search/?$ index.php?action=iiif&itemType=search [QSA,L]
-	########################################
-	# Entity Dump Rewrites
-	########################################
-	# Bulk entity export. The entity selector is the path segment, mapped onto
-	# itemType; the bare path defaults to "all". The legacy ?type= parameter
-	# still wins, so the redirect from /data/entity-dump keeps working.
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^entityDump/([a-zA-Z0-9_-]+)/?$ index.php?action=entityDump&itemType=$1 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^entityDump/?$ index.php?action=entityDump&itemType=all [QSA,L]
-	########################################
-	# Generic URL Rewrites
-	########################################
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(search|autocomplete|statistics|user|index|status|lang|import|externalData|alert|notification|systemMessage)/([a-zA-Z0-9_-]+)? index.php?action=$1&itemType=$2 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^(status)/? index.php?action=$1&itemType=all [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)? index.php?action=getItem&itemType=$1&id=$2 [QSA,L]
-	RewriteCond %{REQUEST_FILENAME} !-f
-	RewriteCond %{REQUEST_FILENAME} !-d
-	RewriteRule ^([a-zA-Z0-9_-]+)? index.php?action=$1 [QSA]
+	RewriteRule ^ index.php [QSA,L]
 </IfModule>
