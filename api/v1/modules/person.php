@@ -410,7 +410,8 @@ function personAdd($api_request, $db = false, $dbp = false) {
             }
             
             // Now call post-processing with the resolved internal suggestion ID (if any) and the reimport flag
-            $postProcessingDetails = handleEntitySuggestionPostProcessing($reimportAffectedSessions, $actualSuggestionInternalIDToProcess, $db);
+            require_once(__DIR__ . "/entity-suggestion.php");
+            $postProcessingDetails = entitySuggestionPostProcess($reimportAffectedSessions, $actualSuggestionInternalIDToProcess, $db);
             
             $finalMeta['reimportStatus'] = $postProcessingDetails['reimportStatus'];
             $finalMeta['reimportSummary'] = $postProcessingDetails['reimportSummary'];

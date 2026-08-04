@@ -220,21 +220,22 @@ function apiError($message, $code = "GENERIC_ERROR", $status = 500) {
 }
 
 /**
- * Database connection with standardized error handling
+ * Database connection with standardized error handling.
+ *
+ * Envelope wrapper over optvDbConnection() (modules/database/connections.php):
+ * returns a SafeMySQL on success and an error *array* on failure, which is why
+ * ~113 call sites test `is_object($db)` and pass `$db` straight back out. That
+ * contract is what keeps this wrapper around — extracted modules call
+ * optvDbConnection() directly and catch instead.
  */
 function getApiDatabaseConnection($type = 'platform', $parliament = null) {
-    global $config;
+    require_once(__DIR__ . "/../../modules/database/connections.php");
 
     try {
-        if ($type === 'platform') {
-            return new SafeMySQL([
-                'host' => $config["platform"]["sql"]["access"]["host"],
-                'user' => $config["platform"]["sql"]["access"]["user"],
-                'pass' => $config["platform"]["sql"]["access"]["passwd"],
-                'db' => $config["platform"]["sql"]["db"]
-            ]);
-        } else if ($parliament) {
-            if (!isset($config["parliament"][$parliament])) {
+        return optvDbConnection($type, $parliament);
+    } catch (OptvDbException $e) {
+        switch ($e->getReason()) {
+            case 'unknown-parliament':
                 return apiErrorResponse(
                     422,
                     1,
@@ -242,26 +243,19 @@ function getApiDatabaseConnection($type = 'platform', $parliament = null) {
                     "messageErrorInvalidParameter",
                     ["param" => "parliament"]
                 );
-            }
-
-            return new SafeMySQL([
-                'host' => $config["parliament"][$parliament]["sql"]["access"]["host"],
-                'user' => $config["parliament"][$parliament]["sql"]["access"]["user"],
-                'pass' => $config["parliament"][$parliament]["sql"]["access"]["passwd"],
-                'db' => $config["parliament"][$parliament]["sql"]["db"]
-            ]);
+            case 'missing-parliament':
+                return apiErrorResponse(
+                    422,
+                    1,
+                    "messageErrorMissingParameter",
+                    "messageErrorMissingParameter",
+                    ["param" => "parliament"]
+                );
+            default:
+                // Reports the scope the caller asked for, as before.
+                return apiErrorDatabaseConnection($type);
         }
-    } catch (exception $e) {
-        return apiErrorDatabaseConnection($type);
     }
-
-    return apiErrorResponse(
-        422,
-        1,
-        "messageErrorMissingParameter",
-        "messageErrorMissingParameter",
-        ["param" => "parliament"]
-    );
 }
 
 /**
@@ -535,141 +529,4 @@ function cliLog($message) {
     if (ob_get_level() > 0) {
         ob_flush();
     }
-}
-
-/**
- * Handles post-processing for entity suggestions after an entity has been added.
- * This includes re-importing affected sessions and deleting the original suggestion.
- *
- * @param bool $reimportAffectedSessionsFlag Indicates if re-import should be attempted.
- * @param string|int|null $sourceEntitySuggestionID The internal ID of the entity suggestion.
- * @param object $db The platform database connection.
- * @return array An array containing post-processing status and data:
- *               [
- *                 'reimportStatus' => string ("success", "error", "not_attempted", "no_sessions_to_reimport"),
- *                 'reimportSummary' => string|null,
- *                 'affectedSessions' => array|null (list of successfully re-imported session files),
- *                 'affectedSpeeches' => array|null (list of speech IDs from EntitysuggestionContext),
- *                 'suggestionDeleteStatus' => string ("success", "error", "not_attempted")
- *               ]
- */
-function handleEntitySuggestionPostProcessing($reimportAffectedSessionsFlag, $sourceEntitySuggestionID, $db) {
-    global $config; // Required for apiV1 and optvParseStringId
-
-    // Ensure the main API file is loaded for apiV1 calls
-    // and functions.php for optvParseStringId
-    require_once (__DIR__."/api.php");
-
-    $postProcessingResult = [
-        'reimportStatus' => 'not_attempted',
-        'reimportSummary' => null,
-        'affectedSessions' => null,
-        'affectedSpeeches' => null,
-        'suggestionDeleteStatus' => 'not_attempted'
-    ];
-
-    if (!$reimportAffectedSessionsFlag || empty($sourceEntitySuggestionID)) {
-        // If no re-import is flagged or no suggestion ID, reimportStatus remains 'not_attempted'
-        // and suggestionDeleteStatus also remains 'not_attempted'
-        return $postProcessingResult;
-    }
-
-    // 1. Fetch Entity Suggestion Details
-    $suggestionApiResponse = apiV1([
-        "action" => "getItemsFromDB",
-        "itemType" => "entitySuggestion",
-        "id" => $sourceEntitySuggestionID,
-        "idType" => "internal"
-    ], $db);
-
-    if (!isset($suggestionApiResponse["meta"]["requestStatus"]) || $suggestionApiResponse["meta"]["requestStatus"] !== "success" || empty($suggestionApiResponse["data"])) {
-        error_log("handleEntitySuggestionPostProcessing: Failed to fetch entity suggestion ID: " . $sourceEntitySuggestionID);
-        $postProcessingResult['reimportStatus'] = 'error'; // Cannot proceed with re-import
-        $postProcessingResult['suggestionDeleteStatus'] = 'error'; // Cannot proceed with delete if suggestion not fetched
-        return $postProcessingResult;
-    }
-
-    $entitySuggestionItem = is_array($suggestionApiResponse["data"]) && isset($suggestionApiResponse["data"][0]) ? $suggestionApiResponse["data"][0] : $suggestionApiResponse["data"];
-
-    if (isset($entitySuggestionItem["EntitysuggestionContext"]) && is_array($entitySuggestionItem["EntitysuggestionContext"])) {
-        $postProcessingResult['affectedSpeeches'] = array_keys($entitySuggestionItem["EntitysuggestionContext"]);
-    } else {
-        // No context found, so no sessions to reimport for this suggestion.
-        $postProcessingResult['reimportStatus'] = 'success'; // No sessions to reimport is a success state for reimport
-        $postProcessingResult['affectedSpeeches'] = []; // Ensure it's an empty array
-        // Proceed to attempt deletion as the suggestion might still exist and needs cleanup.
-    }
-
-    // 2. Prepare filesToReimport array
-    $filesToReimport = [];
-    if (!empty($postProcessingResult['affectedSpeeches'])) {
-        foreach ($entitySuggestionItem["EntitysuggestionContext"] as $contextKey => $contextValue) {
-            $itemInfos = optvParseStringId($contextKey);
-            if ($itemInfos && isset($itemInfos["parliament"]) && isset($itemInfos["electoralPeriodNumber"]) && isset($itemInfos["sessionNumber"])) {
-                $parliament = trim($itemInfos["parliament"]);
-                $electoralPeriod = trim(substr($itemInfos["electoralPeriodNumber"], 1));
-                $sessionNum = trim(substr($itemInfos["sessionNumber"], 1));
-                $tmpFileName = $electoralPeriod . $sessionNum . "-session.json";
-                if (!isset($filesToReimport[$parliament])) {
-                    $filesToReimport[$parliament] = [];
-                }
-                $filesToReimport[$parliament][] = $tmpFileName;
-            }
-        }
-    }
-
-    // 3. Trigger Re-import
-    if (!empty($filesToReimport)) {
-        $reimportResponse = apiV1([
-            "action" => "import",
-            "itemType" => "reimport-sessions",
-            "files" => $filesToReimport
-        ], $db);
-
-        if (isset($reimportResponse["meta"]["requestStatus"]) && $reimportResponse["meta"]["requestStatus"] === "success") {
-            $postProcessingResult['reimportStatus'] = 'success';
-            if (isset($reimportResponse["meta"]["summary"])) {
-                $postProcessingResult['reimportSummary'] = $reimportResponse["meta"]["summary"];
-            }
-            if (isset($reimportResponse["data"]["copied"])) {
-                $postProcessingResult['affectedSessions'] = $reimportResponse["data"]["copied"];
-            }
-        } else {
-            error_log("handleEntitySuggestionPostProcessing: Re-import failed for suggestion ID: " . $sourceEntitySuggestionID . " - Response: " . json_encode($reimportResponse));
-            $postProcessingResult['reimportStatus'] = 'error';
-            // Do not attempt to delete the suggestion if re-import failed, to allow for manual retry/investigation
-            return $postProcessingResult; // Exit early
-        }
-    } else if (empty($postProcessingResult['affectedSpeeches'])) {
-        // This means EntitysuggestionContext was empty or null, so reimport is successful as there was nothing to do.
-        $postProcessingResult['reimportStatus'] = 'success';
-    } else {
-        // Context was present but resulted in no valid files (e.g., optvParseStringId failed for all)
-        // This is also considered a success for re-import as there were no valid sessions to process.
-        $postProcessingResult['reimportStatus'] = 'success';
-        $postProcessingResult['reimportSummary'] = 'No valid session files derived from context to re-import.';
-    }
-
-    // 4. (Attempt to) Delete Entity Suggestion if re-import was successful
-    if ($postProcessingResult['reimportStatus'] === 'success') {
-        $deleteSuggestionResponse = apiV1([
-            "action" => "deleteItem", // This action needs to be added to api.php
-            "itemType" => "entitySuggestion",
-            "EntitysuggestionID" => $sourceEntitySuggestionID
-        ], $db);
-
-        if (isset($deleteSuggestionResponse["meta"]["requestStatus"]) && $deleteSuggestionResponse["meta"]["requestStatus"] === "success") {
-            $postProcessingResult['suggestionDeleteStatus'] = 'success';
-        } else {
-            error_log("handleEntitySuggestionPostProcessing: Failed to delete entity suggestion ID: " . $sourceEntitySuggestionID . " - Response: " . json_encode($deleteSuggestionResponse));
-            $postProcessingResult['suggestionDeleteStatus'] = 'error';
-            // Note: The overall process might still be considered a success for the user if entity add + reimport worked,
-            // but an error for suggestion deletion should be logged for admin attention.
-        }
-    } else {
-        // If re-import was not successful, don't attempt to delete the suggestion.
-        $postProcessingResult['suggestionDeleteStatus'] = 'not_attempted';
-    }
-
-    return $postProcessingResult;
 }

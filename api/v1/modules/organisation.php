@@ -240,7 +240,8 @@ function organisationAdd($api_request, $db = false, $dbp = false) {
                 }
             }
             
-            $postProcessingDetails = handleEntitySuggestionPostProcessing($reimportAffectedSessions, $actualSuggestionInternalIDToProcess, $db);
+            require_once(__DIR__ . "/entity-suggestion.php");
+            $postProcessingDetails = entitySuggestionPostProcess($reimportAffectedSessions, $actualSuggestionInternalIDToProcess, $db);
             
             $finalMeta['reimportStatus'] = $postProcessingDetails['reimportStatus'];
             $finalMeta['reimportSummary'] = $postProcessingDetails['reimportSummary'];

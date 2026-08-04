@@ -17,7 +17,7 @@ require_once(__DIR__ . "/../../config.php");
 require_once(__DIR__ . "/../utilities/functions.php");
 require_once(__DIR__ . "/../utilities/safemysql.class.php");
 require_once(__DIR__ . "/../images/image-cache.php");
-require_once(__DIR__ . "/../../api/v1/utilities.php"); // getApiDatabaseConnection()
+require_once(__DIR__ . "/../database/connections.php"); // optvDbConnection()
 
 /**
  * @param string $id PersonID (a Wikidata id).
@@ -34,8 +34,9 @@ function personGetNode($id, $db = false)
     }
 
     if (!is_object($db)) {
-        $db = getApiDatabaseConnection('platform');
-        if (!is_object($db)) {
+        try {
+            $db = optvDbConnection('platform');
+        } catch (OptvDbException $e) {
             throw new OptvEntityException("Platform database unavailable.");
         }
     }

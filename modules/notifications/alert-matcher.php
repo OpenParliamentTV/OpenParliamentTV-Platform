@@ -241,14 +241,16 @@ function matchMediaItemAgainstAlerts($mediaItem, $parliament, $db) {
 function runAlertMatchingForRecent($parliament, $n = 50) {
     global $config;
     require_once(__DIR__ . "/../entities/media.php");
+    require_once(__DIR__ . "/../database/connections.php");
 
     if (!isset($config["parliament"][$parliament])) {
         return ["error" => "unknown parliament", "parliament" => $parliament];
     }
 
-    $db = getApiDatabaseConnection('platform');
-    $dbp = getApiDatabaseConnection('parliament', $parliament);
-    if (!is_object($db) || !is_object($dbp)) {
+    try {
+        $db = optvDbConnection('platform');
+        $dbp = optvDbConnection('parliament', $parliament);
+    } catch (OptvDbException $e) {
         return ["error" => "database connection failed", "parliament" => $parliament];
     }
 

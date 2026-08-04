@@ -1,6 +1,6 @@
 <?php
 
-require_once (__DIR__."/export.php");
+require_once (__DIR__."/prepare.php");
 
 /**
  * TEI export following the ParlaMint conventions (Parla-CLARIN-aligned).

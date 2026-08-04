@@ -59,6 +59,11 @@
 /api/v1/media/DE-0200172058?format=parlamint
 /api/v1/session/DE-0180001?format=iiif
 /api/v1/session/DE-0180001?format=akomantoso
+/api/v1/session/DE-0180001?format=parlamint
+# Explicit transcript selection exercises transcriptResolve()'s type/lang
+# branches rather than its default pick.
+/api/v1/media/DE-0200172058/transcript.vtt?type=proceedings&lang=de
+/api/v1/media/DE-0200172058/transcript.vtt?type=nosuchtype
 /api/v1/media/DE-0200172058/transcript.vtt
 /api/v1/?action=transcript&itemType=vtt&id=DE-0200172058
 

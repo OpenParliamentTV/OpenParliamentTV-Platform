@@ -1,0 +1,1449 @@
+HTTP 200
+content-type: application/xml; charset=utf-8
+x-robots-tag: noindex
+
+<?xml version="1.0" encoding="UTF-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:id="DE-0180001" xml:lang="de">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title type="main" xml:lang="de">Sitzung 1, Wahlperiode 18 — Deutscher Bundestag</title>
+        <meeting ana="#parla.term" n="18">Wahlperiode 18</meeting>
+        <meeting ana="#parla.sitting" n="1">Sitzung 1</meeting>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Open Parliament TV</publisher>
+        <idno type="URI">https://optv.local/session/DE-0180001</idno>
+        <idno type="URI" subtype="api">https://optv.local/api/v1/session/DE-0180001?format=parlamint</idno>
+        <availability status="unknown">
+          <licence target="https://www.bundestag.de/nutzungsbedingungen">Nutzungsbedingungen</licence>
+          <p>Deutscher Bundestag</p>
+        </availability>
+        <date when="NORMALIZED">NORMALIZED</date>
+      </publicationStmt>
+      <sourceDesc>
+        <bibl>
+          <title type="main">Deutscher Bundestag</title>
+          <publisher>Deutscher Bundestag</publisher>
+          <date when="2013-10-22">2013-10-22</date>
+        </bibl>
+        <recordingStmt>
+          <recording xml:id="rec.DE-0180001001.video" type="video" dur-iso="PT26S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2783343/2783343_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001001.audio" type="audio" dur-iso="PT26S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2783343/2783343_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001002.video" type="video" dur-iso="PT1674S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784086/2784086_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001002.audio" type="audio" dur-iso="PT1674S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784086/2784086_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001003.video" type="video" dur-iso="PT3511S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784156/2784156_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001003.audio" type="audio" dur-iso="PT3511S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784156/2784156_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001005.video" type="video" dur-iso="PT43S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784197/2784197_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001005.audio" type="audio" dur-iso="PT43S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784197/2784197_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001006.video" type="video" dur-iso="PT50S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784198/2784198_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001006.audio" type="audio" dur-iso="PT50S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784198/2784198_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001007.video" type="video" dur-iso="PT252S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784196/2784196_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001007.audio" type="audio" dur-iso="PT252S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784196/2784196_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001008.video" type="video" dur-iso="PT366S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784205/2784205_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001008.audio" type="audio" dur-iso="PT366S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784205/2784205_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001009.video" type="video" dur-iso="PT239S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784206/2784206_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001009.audio" type="audio" dur-iso="PT239S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784206/2784206_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001010.video" type="video" dur-iso="PT324S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784219/2784219_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001010.audio" type="audio" dur-iso="PT324S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784219/2784219_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001011.video" type="video" dur-iso="PT33S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784220/2784220_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001011.audio" type="audio" dur-iso="PT33S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784220/2784220_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001012.video" type="video" dur-iso="PT6340S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784360/2784360_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001012.audio" type="audio" dur-iso="PT6340S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784360/2784360_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001013.video" type="video" dur-iso="PT67S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784370/2784370_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001013.audio" type="audio" dur-iso="PT67S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784370/2784370_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001014.video" type="video" dur-iso="PT25S">
+            <media mimeType="video/mp4" url="https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/2784369/2784369_h264_720_400_2000kb_baseline_de_2192.mp4"/>
+          </recording>
+          <recording xml:id="rec.DE-0180001014.audio" type="audio" dur-iso="PT25S">
+            <media mimeType="audio/mpeg" url="https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/2784369/2784369_mp3_128kb_stereo_de_128.mp3"/>
+          </recording>
+        </recordingStmt>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <projectDesc>
+        <p xml:lang="en">Exported from Open Parliament TV (https://optv.local). Encoded following the ParlaMint conventions (Parla-CLARIN TEI). Sentence-level audio/video alignment is provided via timeline/@synch as recommended by Parla-CLARIN for spoken corpora.</p>
+      </projectDesc>
+      <classDecl>
+        <taxonomy xml:id="speaker_types">
+          <desc xml:lang="en">Types of speakers</desc>
+          <category xml:id="chair">
+            <catDesc xml:lang="en">Chairperson: speaker chairing the meeting</catDesc>
+          </category>
+          <category xml:id="regular">
+            <catDesc xml:lang="en">Regular: a regular speaker at the meeting</catDesc>
+          </category>
+        </taxonomy>
+        <taxonomy xml:id="parla.legislature">
+          <desc xml:lang="en">Legislature</desc>
+          <category xml:id="parla.term">
+            <catDesc xml:lang="en">Legislative period</catDesc>
+          </category>
+          <category xml:id="parla.sitting">
+            <catDesc xml:lang="en">Sitting: a session on a given day</catDesc>
+          </category>
+        </taxonomy>
+      </classDecl>
+    </encodingDesc>
+    <profileDesc>
+      <settingDesc>
+        <setting>
+          <name type="org">Deutscher Bundestag</name>
+          <date when="2013-10-22" ana="#parla.sitting">2013-10-22</date>
+        </setting>
+      </settingDesc>
+      <particDesc>
+        <listOrg>
+          <org xml:id="parliament" role="parliament">
+            <orgName full="yes">Deutscher Bundestag</orgName>
+          </org>
+          <org xml:id="Q1023134" role="parliamentaryGroup">
+            <orgName full="yes">CDU/CSU</orgName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q1023134</idno>
+          </org>
+          <org xml:id="Q1826856" role="parliamentaryGroup">
+            <orgName full="yes">DIE LINKE</orgName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q1826856</idno>
+          </org>
+          <org xml:id="Q1007353" role="parliamentaryGroup">
+            <orgName full="yes">DIE GRÜNEN</orgName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q1007353</idno>
+          </org>
+        </listOrg>
+        <listPerson>
+          <person xml:id="Q73951">
+            <persName>Heinz Riesenhuber</persName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q73951</idno>
+          </person>
+          <person xml:id="Q57474">
+            <persName>Norbert Lammert</persName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q57474</idno>
+          </person>
+          <person xml:id="Q1770968">
+            <persName>Michael Grosse-Brömer</persName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q1770968</idno>
+            <affiliation ref="#Q1023134" role="member"/>
+          </person>
+          <person xml:id="Q1748314">
+            <persName>Petra Sitte</persName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q1748314</idno>
+            <affiliation ref="#Q1826856" role="member"/>
+          </person>
+          <person xml:id="Q90833">
+            <persName>Thomas Oppermann</persName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q90833</idno>
+          </person>
+          <person xml:id="Q920726">
+            <persName>Britta Haßelmann</persName>
+            <idno type="URI" subtype="wikimedia">https://www.wikidata.org/entity/Q920726</idno>
+            <affiliation ref="#Q1007353" role="member"/>
+          </person>
+        </listPerson>
+      </particDesc>
+      <langUsage>
+        <language ident="de">de</language>
+      </langUsage>
+    </profileDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div type="debateSection">
+        <head>Sitzungseröffnung</head>
+        <timeline unit="s" origin="#DE-0180001001.origin" corresp="#rec.DE-0180001001.video">
+          <when xml:id="DE-0180001001.origin" absolute="2013-10-22T11:00:08+02:00"/>
+          <when xml:id="DE-0180001001.T1" interval="1" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T6.68" interval="6.68" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T10.44" interval="10.44" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T20.46" interval="20.46" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T37.84" interval="37.84" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T46.76" interval="46.76" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T54.16" interval="54.16" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T60.28" interval="60.28" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T61.88" interval="61.88" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T63.48" interval="63.48" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T65.56" interval="65.56" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T68.46" interval="68.46" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T72.34" interval="72.34" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T76" interval="76" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T85.66" interval="85.66" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T95.44" interval="95.44" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T109.76" interval="109.76" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T120.52" interval="120.52" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T132.4" interval="132.4" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T140.46" interval="140.46" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T159.48" interval="159.48" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T180.54" interval="180.54" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T191.14" interval="191.14" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T198.48" interval="198.48" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T201.16" interval="201.16" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T216.44" interval="216.44" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T218.84" interval="218.84" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T284.08" interval="284.08" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T286.32" interval="286.32" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T294.26" interval="294.26" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T295.84" interval="295.84" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T302.76" interval="302.76" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T303.52" interval="303.52" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T304.36" interval="304.36" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T305.74" interval="305.74" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T312.24" interval="312.24" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T337.32" interval="337.32" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T349.38" interval="349.38" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T352.9" interval="352.9" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T356.38" interval="356.38" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T363.66" interval="363.66" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T376.58" interval="376.58" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T381.48" interval="381.48" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T383.6" interval="383.6" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T392.3" interval="392.3" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T394.9" interval="394.9" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T402.66" interval="402.66" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T406.74" interval="406.74" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T414.8" interval="414.8" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T429.92" interval="429.92" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T431.92" interval="431.92" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T436.72" interval="436.72" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T439.56" interval="439.56" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T441.08" interval="441.08" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T443.24" interval="443.24" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T446.38" interval="446.38" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T452.14" interval="452.14" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T458.8" interval="458.8" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T465.64" interval="465.64" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T468.8" interval="468.8" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T473.4" interval="473.4" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T476.56" interval="476.56" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T482" interval="482" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T484.6" interval="484.6" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T499.48" interval="499.48" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T501.88" interval="501.88" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T513.2" interval="513.2" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T515.2" interval="515.2" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T517.44" interval="517.44" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T519.44" interval="519.44" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T538.82" interval="538.82" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T540.96" interval="540.96" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T543.4" interval="543.4" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T548.28" interval="548.28" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T550.76" interval="550.76" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T560.82" interval="560.82" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T569.72" interval="569.72" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T571.96" interval="571.96" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T580.36" interval="580.36" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T583.8" interval="583.8" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T587.52" interval="587.52" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T601.22" interval="601.22" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T605.98" interval="605.98" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T610.4" interval="610.4" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T617.94" interval="617.94" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T624.64" interval="624.64" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T637.96" interval="637.96" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T640.52" interval="640.52" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T647.22" interval="647.22" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T669.6" interval="669.6" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T671.84" interval="671.84" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T674.42" interval="674.42" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T676.6" interval="676.6" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T679" interval="679" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T692.92" interval="692.92" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T696.88" interval="696.88" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T707.98" interval="707.98" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T728.86" interval="728.86" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T745.18" interval="745.18" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T752.24" interval="752.24" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T756.16" interval="756.16" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T786.98" interval="786.98" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T789.36" interval="789.36" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T791.36" interval="791.36" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T800.72" interval="800.72" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T802.96" interval="802.96" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T810.9" interval="810.9" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T813.16" interval="813.16" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T815.2" interval="815.2" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T820.3" interval="820.3" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T832.16" interval="832.16" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T834.68" interval="834.68" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T838.78" interval="838.78" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T855.78" interval="855.78" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T870.52" interval="870.52" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T886.6" interval="886.6" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T892.44" interval="892.44" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T894.72" interval="894.72" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T909.12" interval="909.12" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T911.24" interval="911.24" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T912.62" interval="912.62" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T916" interval="916" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T918.12" interval="918.12" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T928.26" interval="928.26" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T955.64" interval="955.64" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T958.68" interval="958.68" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T972.94" interval="972.94" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T982.46" interval="982.46" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1007.32" interval="1007.32" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1009.52" interval="1009.52" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1010.16" interval="1010.16" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1012.48" interval="1012.48" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1021" interval="1021" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1023.12" interval="1023.12" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1025.18" interval="1025.18" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1030.18" interval="1030.18" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1038.94" interval="1038.94" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1052.6" interval="1052.6" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1054.96" interval="1054.96" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1057.76" interval="1057.76" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1067.3" interval="1067.3" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1101.08" interval="1101.08" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1122.12" interval="1122.12" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1127.74" interval="1127.74" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1153.96" interval="1153.96" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1157.32" interval="1157.32" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1169.16" interval="1169.16" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1171.64" interval="1171.64" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1178.7" interval="1178.7" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1182.14" interval="1182.14" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1191.34" interval="1191.34" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1195.06" interval="1195.06" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1210.72" interval="1210.72" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1213.04" interval="1213.04" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1215.78" interval="1215.78" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1218.8" interval="1218.8" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1221.48" interval="1221.48" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1233.34" interval="1233.34" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1243.04" interval="1243.04" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1262.96" interval="1262.96" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1267.64" interval="1267.64" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1276.72" interval="1276.72" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1280" interval="1280" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1287.3" interval="1287.3" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1292.92" interval="1292.92" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1294.92" interval="1294.92" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1310.16" interval="1310.16" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1312.92" interval="1312.92" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1326.96" interval="1326.96" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1336.24" interval="1336.24" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1340.3" interval="1340.3" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1346.36" interval="1346.36" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1353.02" interval="1353.02" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1366.48" interval="1366.48" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1370.44" interval="1370.44" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1382.7" interval="1382.7" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1387.38" interval="1387.38" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1412.46" interval="1412.46" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1454.78" interval="1454.78" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1465.9" interval="1465.9" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1480" interval="1480" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1489.3" interval="1489.3" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1500.62" interval="1500.62" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1505.46" interval="1505.46" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1513.84" interval="1513.84" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1538.7" interval="1538.7" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1543.08" interval="1543.08" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1581.42" interval="1581.42" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1599.88" interval="1599.88" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1602.52" interval="1602.52" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1617.78" interval="1617.78" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1655.68" interval="1655.68" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1656.24" interval="1656.24" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1658.7" interval="1658.7" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1663.44" interval="1663.44" since="#DE-0180001001.origin"/>
+          <when xml:id="DE-0180001001.T1674" interval="1674" since="#DE-0180001001.origin"/>
+        </timeline>
+        <u xml:id="DE-0180001001.u1" who="#Q73951" ana="#chair" start="#DE-0180001001.T1" end="#DE-0180001001.T1674">
+          <seg xml:id="DE-0180001001.u1.seg1">
+            <s xml:id="DE-0180001001.u1.seg1.s1" synch="#DE-0180001001.T1 #DE-0180001001.T6.68">Guten Morgen, meine Damen und Herren!</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg2">
+            <s xml:id="DE-0180001001.u1.seg2.s1" synch="#DE-0180001001.T10.44 #DE-0180001001.T20.46">Meine sehr verehrten Damen und Herren, ich begrüße Sie zur konstituierenden Sitzung des 18. Deutschen Bundestages.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg3">
+            <s xml:id="DE-0180001001.u1.seg3.s1" synch="#DE-0180001001.T20.46 #DE-0180001001.T37.84">Parlamentarischer Brauch ist es, dass der Älteste, die Älteste die Versammlung eröffnet und die Leitung übernimmt, bis der Bundestag seinen neuen Präsidenten gewählt hat. §</s>
+            <s xml:id="DE-0180001001.u1.seg3.s2" synch="#DE-0180001001.T37.84 #DE-0180001001.T46.76">1 Abs. 2 der Geschäftsordnung des Deutschen Bundestages sieht dies vor.</s>
+            <s xml:id="DE-0180001001.u1.seg3.s3" synch="#DE-0180001001.T46.76 #DE-0180001001.T54.16">Ich bin geboren am 1. Dezember 1935, dem ersten Adventssonntag.</s>
+            <s xml:id="DE-0180001001.u1.seg3.s4" synch="#DE-0180001001.T54.16 #DE-0180001001.T60.28">So darf ich Sie fragen: Ist jemand früher geboren als ich?</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg4">
+            <s xml:id="DE-0180001001.u1.seg4.s1" synch="#DE-0180001001.T60.28 #DE-0180001001.T61.88">– Hier im Haus.</s>
+            <s xml:id="DE-0180001001.u1.seg4.s2" synch="#DE-0180001001.T61.88 #DE-0180001001.T63.48">Vielen Dank!</s>
+            <s xml:id="DE-0180001001.u1.seg4.s3" synch="#DE-0180001001.T63.48 #DE-0180001001.T65.56">Ein wichtiger Hinweis.</s>
+            <s xml:id="DE-0180001001.u1.seg4.s4" synch="#DE-0180001001.T65.56 #DE-0180001001.T68.46">Ich hatte schon zahlreiche Vorfahren.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg5">
+            <s xml:id="DE-0180001001.u1.seg5.s1" synch="#DE-0180001001.T68.46 #DE-0180001001.T72.34">Ist hier im Haus jemand früher geboren? –</s>
+            <s xml:id="DE-0180001001.u1.seg5.s2" synch="#DE-0180001001.T72.34 #DE-0180001001.T76">Wenn dies nicht der Fall ist, kommen wir zu Punkt 1 der Tagesordnung:</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg6">
+            <s xml:id="DE-0180001001.u1.seg6.s1" synch="#DE-0180001001.T76 #DE-0180001001.T85.66">Ich habe die Ehre und die Freude, mit Ihnen zusammen in meiner Eigenschaft als Alterspräsident die erste Sitzung der 18. Wahlperiode zu eröffnen.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg7">
+            <s xml:id="DE-0180001001.u1.seg7.s1" synch="#DE-0180001001.T85.66 #DE-0180001001.T95.44">Ich begrüße den Herrn Bundespräsidenten.</s>
+            <s xml:id="DE-0180001001.u1.seg7.s2" synch="#DE-0180001001.T95.44 #DE-0180001001.T109.76">Herr Bundespräsident, wir freuen uns, dass Sie bei uns sind.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg8">
+            <s xml:id="DE-0180001001.u1.seg8.s1" synch="#DE-0180001001.T109.76 #DE-0180001001.T120.52">Des Weiteren begrüße ich den Herrn Präsidenten des Bundesverfassungsgerichts.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg9">
+            <s xml:id="DE-0180001001.u1.seg9.s1" synch="#DE-0180001001.T120.52 #DE-0180001001.T132.4">Ich begrüße den Altbundespräsidenten, Herrn Dr. Horst Köhler.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg10">
+            <s xml:id="DE-0180001001.u1.seg10.s1" synch="#DE-0180001001.T132.4 #DE-0180001001.T140.46">Ich begrüße herzlich die ehemalige Präsidentin unseres Deutschen Bundestages, Frau Dr. Rita Süssmuth.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg11">
+            <s xml:id="DE-0180001001.u1.seg11.s1" synch="#DE-0180001001.T140.46 #DE-0180001001.T159.48">Es ist mir eine ganz besondere Freude, den ehemaligen Präsidenten des Deutschen Bundestages, Herrn Dr. Wolfgang Thierse, zu begrüßen, der heute mit uns seinen 70. Geburtstag feiert.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg12">
+            <s xml:id="DE-0180001001.u1.seg12.s1" synch="#DE-0180001001.T159.48 #DE-0180001001.T180.54">Lieber Herr Thierse, wir haben diesen Termin nicht gewählt, weil Sie Geburtstag haben.</s>
+            <s xml:id="DE-0180001001.u1.seg12.s2" synch="#DE-0180001001.T180.54 #DE-0180001001.T191.14">Aber es ist wahrscheinlich die schönste und angemessenste Form für einen ehemaligen Präsidenten, seinen Geburtstag mit der Gesamtheit des Parlaments zu feiern, das ihm applaudiert.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg13">
+            <s xml:id="DE-0180001001.u1.seg13.s1" synch="#DE-0180001001.T191.14 #DE-0180001001.T198.48">Meine sehr verehrten Damen und Herren, ich begrüße herzlich die zahlreichen Gäste auf der Tribüne.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg14">
+            <s xml:id="DE-0180001001.u1.seg14.s1" synch="#DE-0180001001.T201.16 #DE-0180001001.T216.44">Bis zur Beschlussfassung über die Geschäftsordnung, die sich der 18. Deutsche Bundestag nach der Wahl des Bundestagspräsidenten geben wird, verfahren wir nach den Regeln, die für den 17. Deutschen Bundestag gegolten haben.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg15">
+            <s xml:id="DE-0180001001.u1.seg15.s1" synch="#DE-0180001001.T218.84 #DE-0180001001.T284.08">Nach Absprache mit den Fraktionen benenne ich als vorläufige Schriftführerinnen und Schriftführer die Damen und Herren Abgeordnete – es dauert jetzt ein bisschen –: Frau Doris Barnett, Herrn Klaus Brähmig, Frau Petra Crone, Frau Elvira Drobinski-Weiß, Herrn Harald Ebner, Herrn Dr. Thomas Feist, Herrn Ingo Gädechens, Herrn Markus Grübel, Herrn Florian Hahn, Herrn Volkmar Klein, Herrn Jens Koeppen, Frau Daniela Kolbe, Herrn Paul Lehrieder, Frau Sabine Leidig, Herrn Steffen-Claudio Lemme, Herrn Thomas Lutze, Frau Karin Maag, Frau Maria Michalk, Frau Beate Müller-Gemmeke, Herrn Eckhard Pols, Herrn Stefan Rebmann, Frau Annette Sawade, Frau Marianne Schieder, Frau Nadine Schön, Frau Carola Stauche, Frau Kerstin Tack, Frau Kathrin Vogler, Frau Sabine Weiss und Herrn Peter Wichtel.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg16">
+            <s xml:id="DE-0180001001.u1.seg16.s1" synch="#DE-0180001001.T286.32 #DE-0180001001.T294.26">Die Abgeordneten Jens Koeppen und Doris Barnett bitte ich, zu meiner Rechten und zu meiner Linken Platz zu nehmen.</s>
+            <s xml:id="DE-0180001001.u1.seg16.s2" synch="#DE-0180001001.T294.26 #DE-0180001001.T295.84">Sind Sie da?</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg17">
+            <s xml:id="DE-0180001001.u1.seg17.s1" synch="#DE-0180001001.T302.76 #DE-0180001001.T303.52">– Na also.</s>
+            <s xml:id="DE-0180001001.u1.seg17.s2" synch="#DE-0180001001.T303.52 #DE-0180001001.T304.36">Ich war schon in Sorge.</s>
+            <s xml:id="DE-0180001001.u1.seg17.s3" synch="#DE-0180001001.T304.36 #DE-0180001001.T305.74">Herzlich willkommen!</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg18">
+            <s xml:id="DE-0180001001.u1.seg18.s1" synch="#DE-0180001001.T312.24 #DE-0180001001.T337.32">Meine sehr verehrten Damen und Herren, damit kommen wir gemäß altem Brauch zu einer kleinen Rede des Alterspräsidenten, wobei mir mein Fraktionsvorsitzender dringend empfohlen hat, die Nähe des Mikrofons nicht zu verlassen.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg19">
+            <s xml:id="DE-0180001001.u1.seg19.s1" synch="#DE-0180001001.T337.32 #DE-0180001001.T349.38">Das ist eine kritische Einschränkung, die der ganzen Rede ein höheres Maß an Formalität verleihen wird.</s>
+            <s xml:id="DE-0180001001.u1.seg19.s2" synch="#DE-0180001001.T349.38 #DE-0180001001.T352.9">Aber der Würde der Stunde ist es vermutlich gemäß.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg20">
+            <s xml:id="DE-0180001001.u1.seg20.s1" synch="#DE-0180001001.T352.9 #DE-0180001001.T356.38">Meine sehr verehrten Damen und Herren!</s>
+            <s xml:id="DE-0180001001.u1.seg20.s2" synch="#DE-0180001001.T356.38 #DE-0180001001.T363.66">Es ist mir eine Ehre und eine Freude, mit Ihnen den 18. Deutschen Bundestag zu eröffnen.</s>
+            <s xml:id="DE-0180001001.u1.seg20.s3" synch="#DE-0180001001.T363.66 #DE-0180001001.T376.58">Ich begrüße alle: die, die schon viele Jahre unsere Mitstreiter gewesen sind, und die, die neu dazugekommen sind und in eine faszinierende Arbeit starten.</s>
+            <s xml:id="DE-0180001001.u1.seg20.s4" synch="#DE-0180001001.T376.58 #DE-0180001001.T381.48">Ich denke auch an die Kollegen, die nicht mehr hier im Parlament sind.</s>
+            <s xml:id="DE-0180001001.u1.seg20.s5" synch="#DE-0180001001.T383.6 #DE-0180001001.T392.3">Die FDP hat seit Beginn der Bundesrepublik aus dem Parlament heraus den liberalen Geist deutscher Politik mitgestaltet.</s>
+            <s xml:id="DE-0180001001.u1.seg20.s6" synch="#DE-0180001001.T392.3 #DE-0180001001.T394.9">Sie ist nicht mehr vertreten.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg21">
+            <s xml:id="DE-0180001001.u1.seg21.s1" synch="#DE-0180001001.T394.9 #DE-0180001001.T402.66">Alle ehemaligen Kollegen bleiben uns aber in Freundschaft und in Herzlichkeit verbunden.</s>
+            <s xml:id="DE-0180001001.u1.seg21.s2" synch="#DE-0180001001.T402.66 #DE-0180001001.T406.74">Alle Ehemaligen gehören genauso zu unserer Gemeinschaft.</s>
+            <s xml:id="DE-0180001001.u1.seg21.s3" synch="#DE-0180001001.T406.74 #DE-0180001001.T414.8">Wir danken ihnen für die Arbeit, die sie über Jahre für uns und mit uns geleistet haben.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg22">
+            <s xml:id="DE-0180001001.u1.seg22.s1" synch="#DE-0180001001.T414.8 #DE-0180001001.T429.92">Unsere Arbeit beginnen wir heute in einer unübersichtlichen Zeit.</s>
+            <s xml:id="DE-0180001001.u1.seg22.s2" synch="#DE-0180001001.T431.92 #DE-0180001001.T436.72">Aber Deutschland ist stark in der Gemeinschaft Europas.</s>
+            <s xml:id="DE-0180001001.u1.seg22.s3" synch="#DE-0180001001.T439.56 #DE-0180001001.T441.08">Wir haben kritische Jahre bestanden.</s>
+            <s xml:id="DE-0180001001.u1.seg22.s4" synch="#DE-0180001001.T443.24 #DE-0180001001.T446.38">Wir haben mehr Arbeitsplätze, als wir jemals zuvor hatten.</s>
+            <s xml:id="DE-0180001001.u1.seg22.s5" synch="#DE-0180001001.T446.38 #DE-0180001001.T452.14">Unsere Industrie ist stark, innovationsstark auf den Weltmärkten.</s>
+            <s xml:id="DE-0180001001.u1.seg22.s6" synch="#DE-0180001001.T452.14 #DE-0180001001.T458.8">Die Schuldenbremse, wie wir sie ins Grundgesetz geschrieben haben, beginnt zu wirken.</s>
+            <s xml:id="DE-0180001001.u1.seg22.s7" synch="#DE-0180001001.T458.8 #DE-0180001001.T465.64">Über alldem ist es uns gelungen, in schwieriger Zeit den sozialen Frieden in unserem Land zu bewahren.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg23">
+            <s xml:id="DE-0180001001.u1.seg23.s1" synch="#DE-0180001001.T468.8 #DE-0180001001.T473.4">Unsere politische und gesellschaftliche Kultur hat sich in diesen Jahren bewährt.</s>
+            <s xml:id="DE-0180001001.u1.seg23.s2" synch="#DE-0180001001.T476.56 #DE-0180001001.T482">Wir haben eine Tarifpartnerschaft, die aus Konflikten gemeinsame Lösungen erarbeitet.</s>
+            <s xml:id="DE-0180001001.u1.seg23.s3" synch="#DE-0180001001.T484.6 #DE-0180001001.T499.48">Wir haben inzwischen eine Wissenschaft, die sich in die öffentliche Debatte einbringt: zu Klima und Umwelt, zu den Finanzmärkten, zum Umgang mit menschlichem Erbgut.</s>
+            <s xml:id="DE-0180001001.u1.seg23.s4" synch="#DE-0180001001.T501.88 #DE-0180001001.T513.2">Wir haben eine Qualitätspresse, die jenseits von Twitter und 30-Sekunden-Statements Orientierungswissen erarbeitet, mit dem man sich auseinandersetzen kann.</s>
+            <s xml:id="DE-0180001001.u1.seg23.s5" synch="#DE-0180001001.T515.2 #DE-0180001001.T517.44">Wir haben einen Rechtsstaat und eine tüchtige Verwaltung.</s>
+            <s xml:id="DE-0180001001.u1.seg23.s6" synch="#DE-0180001001.T519.44 #DE-0180001001.T538.82">Und wir haben diese repräsentative Demokratie, dieses Parlament mit Männern und Frauen aller Altersstufen aus unterschiedlichen Berufen, von verschiedener Herkunft, mit verschiedenen Interessen, mit verschiedenen Neigungen und mit verschiedenen Wertesystemen.</s>
+            <s xml:id="DE-0180001001.u1.seg23.s7" synch="#DE-0180001001.T538.82 #DE-0180001001.T540.96">Dieses Parlament ist so vielfältig wie das deutsche Volk.</s>
+            <s xml:id="DE-0180001001.u1.seg23.s8" synch="#DE-0180001001.T543.4 #DE-0180001001.T548.28">Ihm ist anvertraut, in den nächsten Jahren unsere Zukunft zu bauen.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg24">
+            <s xml:id="DE-0180001001.u1.seg24.s1" synch="#DE-0180001001.T550.76 #DE-0180001001.T560.82">In einer idealen Welt könnte man sich vorstellen, dass hier vielleicht noch einige Naturwissenschaftler oder Betriebsräte oder Unternehmer mehr dabei wären.</s>
+            <s xml:id="DE-0180001001.u1.seg24.s2" synch="#DE-0180001001.T560.82 #DE-0180001001.T569.72">Auch sie alle sollten wissen, dass hier über die Zukunft ihrer eigenen Arbeit mitentschieden wird.</s>
+            <s xml:id="DE-0180001001.u1.seg24.s3" synch="#DE-0180001001.T571.96 #DE-0180001001.T580.36">Aber wir sind jetzt so gewählt, wie wir hier sind, und so werden wir die Arbeit angehen.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg25">
+            <s xml:id="DE-0180001001.u1.seg25.s1" synch="#DE-0180001001.T580.36 #DE-0180001001.T583.8">Jeder von uns hat einzelne Themen, die ihm besonders am Herzen liegen.</s>
+            <s xml:id="DE-0180001001.u1.seg25.s2" synch="#DE-0180001001.T587.52 #DE-0180001001.T601.22">Ich freue mich, dass in vielen Wahlprogrammen die steuerliche Forschungsförderung, die Förderung von Unternehmensgründungen und die Schaffung von schnellem Breitband für alle Gemeinden in unserem Land steht.</s>
+            <s xml:id="DE-0180001001.u1.seg25.s3" synch="#DE-0180001001.T601.22 #DE-0180001001.T605.98">Da darf man sich doch freuen und dankbar sein.</s>
+            <s xml:id="DE-0180001001.u1.seg25.s4" synch="#DE-0180001001.T605.98 #DE-0180001001.T610.4">Jetzt müssen wir es nur machen, gell?</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg26">
+            <s xml:id="DE-0180001001.u1.seg26.s1" synch="#DE-0180001001.T610.4 #DE-0180001001.T617.94">Die Schönheit eines Programms darf sich nicht am Wahltag erschöpfen.</s>
+            <s xml:id="DE-0180001001.u1.seg26.s2" synch="#DE-0180001001.T617.94 #DE-0180001001.T624.64">Dann geht es erst los, und zwar mit fröhlichem Unternehmungsgeist.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg27">
+            <s xml:id="DE-0180001001.u1.seg27.s1" synch="#DE-0180001001.T624.64 #DE-0180001001.T637.96">Zugleich stehen wir vor übergeordneten Herausforderungen komplexester Art, von denen ich nur einige ganz wenige ansprechen kann; es gibt viele jenseits dessen, was ich berühre.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg28">
+            <s xml:id="DE-0180001001.u1.seg28.s1" synch="#DE-0180001001.T640.52 #DE-0180001001.T647.22">Den demografischen Wandel als Chance begreifen – da sind wir noch nicht ganz fertig.</s>
+            <s xml:id="DE-0180001001.u1.seg28.s2" synch="#DE-0180001001.T647.22 #DE-0180001001.T669.6">Den demografischen Wandel als Möglichkeit eines reicheren und vielfältigeren Lebens zu verstehen, eine neue Lebensphase, die uns geschenkt ist, oft bei Gesundheit, hoffentlich bei hellem Geist – das ist eine Chance neuer Art.</s>
+            <s xml:id="DE-0180001001.u1.seg28.s3" synch="#DE-0180001001.T671.84 #DE-0180001001.T674.42">Da kann man reisen, da kann man angeln.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg29">
+            <s xml:id="DE-0180001001.u1.seg29.s1" synch="#DE-0180001001.T674.42 #DE-0180001001.T676.6">Es gibt Leute, die ein Ehrenamt übernehmen.</s>
+            <s xml:id="DE-0180001001.u1.seg29.s2" synch="#DE-0180001001.T679 #DE-0180001001.T692.92">Schauen Sie sich in Ihren Vereinen, in Ihren Gemeinden, in Ihren Nachbarschaften um: Es sind die Älteren, Frauen und Männer, die die Vereine zusammenhalten und die Nachbarschaften menschlich gestalten.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg30">
+            <s xml:id="DE-0180001001.u1.seg30.s1" synch="#DE-0180001001.T696.88 #DE-0180001001.T707.98">Wenn es einer mag, soll es auch möglich sein, jenseits einer Rentengrenze zu arbeiten – ein exotischer Einfall, wie ich zugebe.</s>
+            <s xml:id="DE-0180001001.u1.seg30.s2" synch="#DE-0180001001.T707.98 #DE-0180001001.T728.86">Aber es gibt viele Wissenschaftler und Mittelständler, es soll sogar Abgeordnete geben, die Freude daran haben, jeden Tag wieder aufzustehen und das, was sie gelernt haben, zu verwirklichen in einer Gesellschaft, die aus ihrer Vielfalt lebt und durch ihre Vielfalt reich ist.</s>
+            <s xml:id="DE-0180001001.u1.seg30.s3" synch="#DE-0180001001.T728.86 #DE-0180001001.T745.18">Das soll auch die Grundlage für unser Denken über die Grenzen des einzelnen Fachs hinaus sein.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg31">
+            <s xml:id="DE-0180001001.u1.seg31.s1" synch="#DE-0180001001.T745.18 #DE-0180001001.T752.24">Der demografische Wandel stellt auch unser Bildungssystem in einen neuen Zusammenhang, den wir bedenken müssen.</s>
+            <s xml:id="DE-0180001001.u1.seg31.s2" synch="#DE-0180001001.T756.16 #DE-0180001001.T786.98">Wenn über 6 Prozent eines Jahrgangs die Schule ohne Abschluss verlassen, ist das nicht nur eine Frage des Fachkräftenachwuchses oder der volkswirtschaftlichen Statistiken; es ist auch eine Frage der Lebenschancen von Menschen, ihrer Chancen, aus eigener Tüchtigkeit und in eigener Verantwortung ihre Zukunft aufzubauen und in eigener Verantwortung in unserer Gemeinschaft zu leben.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg32">
+            <s xml:id="DE-0180001001.u1.seg32.s1" synch="#DE-0180001001.T786.98 #DE-0180001001.T789.36">Und das müssen wir ermöglichen.</s>
+            <s xml:id="DE-0180001001.u1.seg32.s2" synch="#DE-0180001001.T791.36 #DE-0180001001.T800.72">Da geht es nicht um ein einziges Rezept; da geht es um die Frage der menschlichen Gestaltung unserer Gesellschaft; daran haben wir zu bauen.</s>
+            <s xml:id="DE-0180001001.u1.seg32.s3" synch="#DE-0180001001.T802.96 #DE-0180001001.T810.9">Denn das große Versprechen der sozialen Marktwirtschaft ist immer der Aufstieg gewesen, die Chance zum Aufstieg.</s>
+            <s xml:id="DE-0180001001.u1.seg32.s4" synch="#DE-0180001001.T810.9 #DE-0180001001.T813.16">Dem müssen wir gerecht werden.</s>
+            <s xml:id="DE-0180001001.u1.seg32.s5" synch="#DE-0180001001.T815.2 #DE-0180001001.T820.3">Deshalb arbeiten wir an leichteren Übergängen in der Ausbildung.</s>
+            <s xml:id="DE-0180001001.u1.seg32.s6" synch="#DE-0180001001.T820.3 #DE-0180001001.T832.16">Deshalb werben wir für lebenslanges Lernen; denn fast jeder wird in seinem Leben den Beruf öfter mal wechseln und sich neu erfinden müssen.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg33">
+            <s xml:id="DE-0180001001.u1.seg33.s1" synch="#DE-0180001001.T834.68 #DE-0180001001.T838.78">Wir haben bei den Frauen die höchste Beschäftigungsquote in Europa nach Schweden.</s>
+            <s xml:id="DE-0180001001.u1.seg33.s2" synch="#DE-0180001001.T838.78 #DE-0180001001.T855.78">Aufstieg und Durchlässigkeit zu ermöglichen, dafür zu sorgen, dass Familie und Beruf besser vereinbart werden können, die Voraussetzungen dafür zu schaffen, dass hier eine echte und lebendige Wahlfreiheit herrscht – auch das gehört hier dazu.</s>
+            <s xml:id="DE-0180001001.u1.seg33.s3" synch="#DE-0180001001.T855.78 #DE-0180001001.T870.52">Wir wollen sie auch mehr für die technischen Berufe gewinnen; denn hier werden die Gehälter doch noch etwas besser sein als in anderen Bereichen.</s>
+            <s xml:id="DE-0180001001.u1.seg33.s4" synch="#DE-0180001001.T870.52 #DE-0180001001.T886.6">Männer und Frauen sollen gleichermaßen die Chance haben, das zu verwirklichen, was sie können, und ihr Leben zu bauen.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg34">
+            <s xml:id="DE-0180001001.u1.seg34.s1" synch="#DE-0180001001.T886.6 #DE-0180001001.T892.44">All das hilft, Wachstum, Wohlstand und Arbeitsplätze zu schaffen.</s>
+            <s xml:id="DE-0180001001.u1.seg34.s2" synch="#DE-0180001001.T894.72 #DE-0180001001.T909.12">Aber vor allem: Es dient der freien Wahl, den eigenen Chancen auf Lebensglück, auf Lebensgestaltung, auf Gestaltung der eigenen Zukunft.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg35">
+            <s xml:id="DE-0180001001.u1.seg35.s1" synch="#DE-0180001001.T911.24 #DE-0180001001.T912.62">Ein Zweites.</s>
+            <s xml:id="DE-0180001001.u1.seg35.s2" synch="#DE-0180001001.T912.62 #DE-0180001001.T916">Wir haben die Energiewende beschlossen.</s>
+            <s xml:id="DE-0180001001.u1.seg35.s3" synch="#DE-0180001001.T918.12 #DE-0180001001.T928.26">Vielleicht war sich nicht jeder darüber klar, was für ein Riesenprojekt wir hier angegangen sind, aber es ist entschieden.</s>
+            <s xml:id="DE-0180001001.u1.seg35.s4" synch="#DE-0180001001.T928.26 #DE-0180001001.T955.64">Der Streit um Kerntechnik ist entschieden, und jetzt haben wir konkrete Aufgaben: kurzfristig, innerhalb von zehn Jahren, aus der Kernenergie und mittelfristig aus Kohle und Öl auszusteigen, massiv Energie einzusparen, das Reich der erneuerbaren Energien zu errichten – das ist eine Aufgabe von äußerster Komplexität.</s>
+            <s xml:id="DE-0180001001.u1.seg35.s5" synch="#DE-0180001001.T958.68 #DE-0180001001.T972.94">Wenn uns dieses in der knappen Frist, die wir uns gesetzt haben, gelingt, wenn dies uns bei erträglichen Kosten gelingt, dann hat unsere Industrie auf den Weltmärkten eine einzigartige Chance.</s>
+            <s xml:id="DE-0180001001.u1.seg35.s6" synch="#DE-0180001001.T972.94 #DE-0180001001.T982.46">Einige erinnern sich noch: In den 90er-Jahren ist uns dies in einem anderen Bereich, der Umwelttechnik, geglückt.</s>
+            <s xml:id="DE-0180001001.u1.seg35.s7" synch="#DE-0180001001.T982.46 #DE-0180001001.T1007.32">Hieran zu arbeiten, dass Wirtschaft und Umwelt nicht nur versöhnt, sondern in eins gegossen werden, sodass insgesamt mit einer einzigen Strategie erfolgreich Zukunft gestaltet werden kann, wird eine Aufgabe sein, mit der wir uns in der kommenden Periode mit größter Intensität befassen müssen.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg36">
+            <s xml:id="DE-0180001001.u1.seg36.s1" synch="#DE-0180001001.T1009.52 #DE-0180001001.T1010.16">Ein Drittes.</s>
+            <s xml:id="DE-0180001001.u1.seg36.s2" synch="#DE-0180001001.T1012.48 #DE-0180001001.T1021">Wir müssen Europa zusammenhalten und wieder stark machen; denn nur dann bleibt auch Deutschland stark in der globalisierten Welt.</s>
+            <s xml:id="DE-0180001001.u1.seg36.s3" synch="#DE-0180001001.T1023.12 #DE-0180001001.T1025.18">Im Ziel sind wir uns da alle einig.</s>
+            <s xml:id="DE-0180001001.u1.seg36.s4" synch="#DE-0180001001.T1025.18 #DE-0180001001.T1030.18">Der heilige Thomas sagt: Es wird schwierig, wenn es konkret wird, gell? –</s>
+            <s xml:id="DE-0180001001.u1.seg36.s5" synch="#DE-0180001001.T1030.18 #DE-0180001001.T1038.94">Wir haben in den vergangenen Jahren in schwierigsten Debatten Schritt für Schritt vernünftige Entscheidungen herbeigeführt.</s>
+            <s xml:id="DE-0180001001.u1.seg36.s6" synch="#DE-0180001001.T1038.94 #DE-0180001001.T1052.6">Dafür gibt es keinen Masterplan, dafür gibt es keine einfachen Lösungen, aber es gibt die Notwendigkeit, aus Prinzipien und grundsätzlichen Überlegungen die Gemeinschaft wieder neu zu erfinden.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg37">
+            <s xml:id="DE-0180001001.u1.seg37.s1" synch="#DE-0180001001.T1054.96 #DE-0180001001.T1057.76">Deutschland hilft.</s>
+            <s xml:id="DE-0180001001.u1.seg37.s2" synch="#DE-0180001001.T1057.76 #DE-0180001001.T1067.3">Und wir haben uns mit durchaus erheblichen Belastungen und Risiken, die den Bürgern Sorgen machen, in diese Diskussion begeben.</s>
+            <s xml:id="DE-0180001001.u1.seg37.s3" synch="#DE-0180001001.T1067.3 #DE-0180001001.T1101.08">Aber solange das Prinzip steht, dass die Hilfe nur dann wirksam wird, wenn jeder der Staaten, die in einer schwierigen Situation sind, zugleich mit größten Anstrengungen Möglichkeiten sucht, sich selbst aus eigener Kraft wieder aus dieser herauszubringen, um eigenverantwortlich seine Zukunft zu gestalten, damit er wieder Partner in unserem gemeinsamen Europa wird und Seit an Seit mit uns gemeinsam in die Zukunft schreitet, werden wir es schaffen, Europa wieder zu dem zu machen, was es sein soll.</s>
+            <s xml:id="DE-0180001001.u1.seg37.s4" synch="#DE-0180001001.T1101.08 #DE-0180001001.T1122.12">Es ist kein Konzept einer dauerhaften Wohltat, es ist ein Konzept der Investition in eine Zukunft, die wir brauchen und die die Menschen in unseren Ländern brauchen; und da gehören wir alle dazu.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg38">
+            <s xml:id="DE-0180001001.u1.seg38.s1" synch="#DE-0180001001.T1122.12 #DE-0180001001.T1127.74">Es ist nämlich nicht nur eine Frage unserer Wirtschaft und unserer Arbeitsplätze und der Stabilität des Euro.</s>
+            <s xml:id="DE-0180001001.u1.seg38.s2" synch="#DE-0180001001.T1127.74 #DE-0180001001.T1153.96">Es ist auch die Frage des Erhalts der großen Vielfalt der europäischen Kultur, die zum Wohle der Menschheit vieles beigetragen hat: zur Demokratie, zu Menschenrechten, zur Wissenschaft, zur Technik, zum Verständnis unserer Welt und zur Gestaltung unserer Zukunft aus Verantwortung.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg39">
+            <s xml:id="DE-0180001001.u1.seg39.s1" synch="#DE-0180001001.T1157.32 #DE-0180001001.T1169.16">Ein Letztes, wenn ich dies sagen darf: Wir müssen die Wissensgesellschaft so aufbauen, wie wir sie in den vergangenen Jahren schon angelegt haben.</s>
+            <s xml:id="DE-0180001001.u1.seg39.s2" synch="#DE-0180001001.T1171.64 #DE-0180001001.T1178.7">Wir haben Milliarden investiert – zusätzlich – in Bildung und Forschung.</s>
+            <s xml:id="DE-0180001001.u1.seg39.s3" synch="#DE-0180001001.T1178.7 #DE-0180001001.T1182.14">Wir haben neue Paradigmen aufgestellt.</s>
+            <s xml:id="DE-0180001001.u1.seg39.s4" synch="#DE-0180001001.T1182.14 #DE-0180001001.T1191.34">Wir haben die Idee des Wettbewerbs mit immer größerer Kraft mitten in die wissenschaftliche Community getragen.</s>
+            <s xml:id="DE-0180001001.u1.seg39.s5" synch="#DE-0180001001.T1191.34 #DE-0180001001.T1195.06">Unsere Wissenschaft ist besser geworden.</s>
+            <s xml:id="DE-0180001001.u1.seg39.s6" synch="#DE-0180001001.T1195.06 #DE-0180001001.T1210.72">Aber wir befinden uns in einem Wettlauf in einer offenen Welt, und den Innovationswettlauf kann nur der gewinnen, der Wachstum auf Intelligenz begründet.</s>
+            <s xml:id="DE-0180001001.u1.seg39.s7" synch="#DE-0180001001.T1213.04 #DE-0180001001.T1215.78">Wir können nicht billiger sein, und wir wollen es nicht.</s>
+            <s xml:id="DE-0180001001.u1.seg39.s8" synch="#DE-0180001001.T1215.78 #DE-0180001001.T1218.8">Daher müssen wir schneller und besser sein als andere.</s>
+            <s xml:id="DE-0180001001.u1.seg39.s9" synch="#DE-0180001001.T1221.48 #DE-0180001001.T1233.34">Der Wettlauf optimiert die Tüchtigkeit, aber man muss sie instand halten, und daran werden wir zu arbeiten haben, auch im Gespräch mit den Bundesländern, gell?</s>
+            <s xml:id="DE-0180001001.u1.seg39.s10" synch="#DE-0180001001.T1233.34 #DE-0180001001.T1243.04">Hier könnten einige interessante Paragrafen anstehen, auch Artikel im Grundgesetz.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg40">
+            <s xml:id="DE-0180001001.u1.seg40.s1" synch="#DE-0180001001.T1243.04 #DE-0180001001.T1262.96">Ich sehe mit großer Faszination diesen zukunftsweisenden Gesprächen entgegen, in denen wir aus Überzeugungskraft und mit einem gemeinsamen Ziel Deutschland so neu erfinden, dass mit verteilten Rollen, aber gemeinsamer Verantwortung die Zukunft unter unseren Händen entsteht.</s>
+            <s xml:id="DE-0180001001.u1.seg40.s2" synch="#DE-0180001001.T1267.64 #DE-0180001001.T1276.72">Dazu müssen wir immer neue Problemlösungen erfinden: neue Produkte, neue Verfahren, neue Märkte.</s>
+            <s xml:id="DE-0180001001.u1.seg40.s3" synch="#DE-0180001001.T1280 #DE-0180001001.T1287.3">Daraus müssen wir Zukunft gestalten und Arbeit und Wohlstand und soziale Gerechtigkeit in unserem Land erhalten.</s>
+            <s xml:id="DE-0180001001.u1.seg40.s4" synch="#DE-0180001001.T1287.3 #DE-0180001001.T1292.92">Das gelingt, wenn wir an den Grundlagen festhalten und jeden mitnehmen.</s>
+            <s xml:id="DE-0180001001.u1.seg40.s5" synch="#DE-0180001001.T1294.92 #DE-0180001001.T1310.16">Das gelingt, wenn der Unternehmungsgeist und die Schaffenskraft, die wir in unseren Instituten und in unseren Unternehmen immer wieder finden, ausstrahlen in die Gesellschaft.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg41">
+            <s xml:id="DE-0180001001.u1.seg41.s1" synch="#DE-0180001001.T1312.92 #DE-0180001001.T1326.96">Manchmal scheint mir die Gesellschaft insgesamt entspannter, manchmal scheint sie mir etwas verzagter zu sein als die Bereiche, in denen wirklich Zukunft geschaffen wird.</s>
+            <s xml:id="DE-0180001001.u1.seg41.s2" synch="#DE-0180001001.T1326.96 #DE-0180001001.T1336.24">Diese Tatbereitschaft weiter zu verbreiten, ist nicht nur die Aufgabe der Politik.</s>
+            <s xml:id="DE-0180001001.u1.seg41.s3" synch="#DE-0180001001.T1336.24 #DE-0180001001.T1340.3">Politiker sind nicht immer überzeugend.</s>
+            <s xml:id="DE-0180001001.u1.seg41.s4" synch="#DE-0180001001.T1340.3 #DE-0180001001.T1346.36">Unser Ansehen in der Öffentlichkeit ist noch nicht oberhalb von dem der Bischöfe, gell?</s>
+            <s xml:id="DE-0180001001.u1.seg41.s5" synch="#DE-0180001001.T1346.36 #DE-0180001001.T1353.02">Daran müssen wir noch arbeiten.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg42">
+            <s xml:id="DE-0180001001.u1.seg42.s1" synch="#DE-0180001001.T1353.02 #DE-0180001001.T1366.48">Aber wir haben durchaus die Pflicht, alle anderen, die die Öffentlichkeit prägen und Meinungen bilden, dafür zu gewinnen, im gleichen Geist zu arbeiten.</s>
+            <s xml:id="DE-0180001001.u1.seg42.s2" synch="#DE-0180001001.T1370.44 #DE-0180001001.T1382.7">Wir müssen jeden mitnehmen in diese neue Welt, die wir hoffentlich schaffen können, in der realen Welt und in der virtuellen Welt.</s>
+            <s xml:id="DE-0180001001.u1.seg42.s3" synch="#DE-0180001001.T1382.7 #DE-0180001001.T1387.38">Dabei gibt es für die Jungen ganz andere Herausforderungen als für die Alten.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg43">
+            <s xml:id="DE-0180001001.u1.seg43.s1" synch="#DE-0180001001.T1387.38 #DE-0180001001.T1412.46">Meine sehr verehrten Damen und Herren, liebe Kollegen, so wollen wir die Legislaturperiode beginnen mit Tatkraft und Zuversicht, im Bundestag mit dem Willen zur rechtzeitigen Entscheidung, mit der Bereitschaft zum Streit, wenn der Streit die Sache klärt, mit der Fähigkeit zum Kompromiss, denn Stillstand darf nicht sein.</s>
+            <s xml:id="DE-0180001001.u1.seg43.s2" synch="#DE-0180001001.T1412.46 #DE-0180001001.T1454.78">Das gilt hier im Bundestag, aber wir leben auch drüben, in unserer Deutschen Parlamentarischen Gesellschaft, im Reichstagspräsidentenpalais, in diesem einzigartigen – wir haben es nachgeprüft; so etwas gibt es weltweit nicht noch einmal – Klub der Parlamentarier, wo die offene Rede und das ungeschützte Wort erlaubt sind, wo man nicht wägen muss, ob einem ein anderer irgendetwas nachredet, wo man gemeinsam arbeiten kann und gemeinsam feiern kann, wo sich die Kollegen jenseits der Grenzen der Parteien treffen.</s>
+            <s xml:id="DE-0180001001.u1.seg43.s3" synch="#DE-0180001001.T1454.78 #DE-0180001001.T1465.9">Es ist gut für Deutschland, wenn fraktionsübergreifend die Abgeordneten Deutschlands auch ein Bier miteinander trinken.</s>
+            <s xml:id="DE-0180001001.u1.seg43.s4" synch="#DE-0180001001.T1465.9 #DE-0180001001.T1480">Das kann hilfreich sein für die Zukunft unseres Landes jenseits des Biers.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg44">
+            <s xml:id="DE-0180001001.u1.seg44.s1" synch="#DE-0180001001.T1480 #DE-0180001001.T1489.3">So lassen Sie uns die Legislaturperiode beginnen, wenn ich dies sagen darf, auch mit dem Dank gegenüber unseren Lebenspartnern.</s>
+            <s xml:id="DE-0180001001.u1.seg44.s2" synch="#DE-0180001001.T1489.3 #DE-0180001001.T1500.62">Wir haben eine seltsame Art der Arbeit: zeitlich chaotisch, in den Überraschungen ziemlich einmalig.</s>
+            <s xml:id="DE-0180001001.u1.seg44.s3" synch="#DE-0180001001.T1500.62 #DE-0180001001.T1505.46">Nicht immer steht man so fröhlich auf, wie man ins Bett gegangen ist.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg45">
+            <s xml:id="DE-0180001001.u1.seg45.s1" synch="#DE-0180001001.T1505.46 #DE-0180001001.T1513.84">– Das ist die Wahrheit. –</s>
+            <s xml:id="DE-0180001001.u1.seg45.s2" synch="#DE-0180001001.T1513.84 #DE-0180001001.T1538.7">Dass unsere Partnerinnen und Partner dieses ertragen – mit Geduld, oft mit Sanftmut, meist mit Verständnis, durchaus auch mit Liebe –, das ist eine der großen Leistungen, die es uns erst möglich macht, das zu tun, was wir tun wollen.</s>
+            <s xml:id="DE-0180001001.u1.seg45.s3" synch="#DE-0180001001.T1538.7 #DE-0180001001.T1543.08">Meine Frau, die oben auf der Tribüne sitzt, weiß genau, wovon ich rede.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg46">
+            <s xml:id="DE-0180001001.u1.seg46.s1" synch="#DE-0180001001.T1543.08 #DE-0180001001.T1581.42">So lassen Sie uns diese Periode beginnen im ständigen Gespräch mit den Bürgerinnen und Bürgern, damit der Populismus simpler Lösungen nicht Raum greift, im Bewusstsein unserer Verantwortung vor Gott und den Menschen, wie das Grundgesetz es sagt, in einem Geist von Tatkraft und Gestaltungsfreude, der vom Bundestag in unser Land ausstrahlt – daran müssen wir vielleicht noch ein bisschen arbeiten.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg47">
+            <s xml:id="DE-0180001001.u1.seg47.s1" synch="#DE-0180001001.T1581.42 #DE-0180001001.T1599.88">Lassen Sie uns daran arbeiten, dass Deutschland auch in den kommenden vier Jahren ein guter Ort ist, zu leben, zu arbeiten und Kinder großzuziehen, und dass Deutschland auch in Zukunft ein guter Partner ist für die vielen unterschiedlichen Nationen in einer offenen Welt.</s>
+            <s xml:id="DE-0180001001.u1.seg47.s2" synch="#DE-0180001001.T1602.52 #DE-0180001001.T1617.78">Ich kenne keine schönere Aufgabe denn als Abgeordneter mit den Kolleginnen und Kollegen, mit den Bürgerinnen und Bürgern an dieser Aufgabe zu arbeiten.</s>
+            <s xml:id="DE-0180001001.u1.seg47.s3" synch="#DE-0180001001.T1617.78 #DE-0180001001.T1655.68">So möge es uns wiederum gelingen, in unterschiedlicher Rolle, in gleicher Leidenschaft für die Sache und in gemeinsamer Verantwortung.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg48">
+            <s xml:id="DE-0180001001.u1.seg48.s1" synch="#DE-0180001001.T1655.68 #DE-0180001001.T1656.24">Ich danke Ihnen.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg49">
+            <s xml:id="DE-0180001001.u1.seg49.s1" synch="#DE-0180001001.T1656.24 #DE-0180001001.T1658.7">Meine sehr verehrten Damen und Herren!</s>
+            <s xml:id="DE-0180001001.u1.seg49.s2" synch="#DE-0180001001.T1658.7 #DE-0180001001.T1663.44">Aus den Höhen des Geistes kehren wir zurück zu unserem demütigen Dienst.</s>
+          </seg>
+          <seg xml:id="DE-0180001001.u1.seg50">
+            <s xml:id="DE-0180001001.u1.seg50.s1" synch="#DE-0180001001.T1663.44 #DE-0180001001.T1674">Ich rufe den Tagesordnungspunkt 2 auf:</s>
+          </seg>
+        </u>
+      </div>
+      <div type="debateSection">
+        <head>Sitzungseröffnung durch den Alterspräsidenten</head>
+      </div>
+      <div type="debateSection">
+        <head>Wahl des Bundestagspräsidenten</head>
+      </div>
+      <div type="debateSection">
+        <head>Beschlussfassung über Geschäftsordnungen</head>
+        <timeline unit="s" origin="#DE-0180001005.origin" corresp="#rec.DE-0180001005.video">
+          <when xml:id="DE-0180001005.origin" absolute="2013-10-22T12:52:31+02:00"/>
+          <when xml:id="DE-0180001005.T1" interval="1" since="#DE-0180001005.origin"/>
+          <when xml:id="DE-0180001005.T13.98" interval="13.98" since="#DE-0180001005.origin"/>
+          <when xml:id="DE-0180001005.T19.24" interval="19.24" since="#DE-0180001005.origin"/>
+          <when xml:id="DE-0180001005.T22.92" interval="22.92" since="#DE-0180001005.origin"/>
+          <when xml:id="DE-0180001005.T28.84" interval="28.84" since="#DE-0180001005.origin"/>
+          <when xml:id="DE-0180001005.T40.36" interval="40.36" since="#DE-0180001005.origin"/>
+          <when xml:id="DE-0180001005.T42.96" interval="42.96" since="#DE-0180001005.origin"/>
+        </timeline>
+        <u xml:id="DE-0180001005.u1" who="#Q57474" ana="#chair" start="#DE-0180001005.T1" end="#DE-0180001005.T42.96">
+          <seg xml:id="DE-0180001005.u1.seg1">
+            <s xml:id="DE-0180001005.u1.seg1.s1" synch="#DE-0180001005.T1 #DE-0180001005.T13.98">Wer stimmt für den Antrag auf der Drucksache 18/1 dieser Legislaturperiode? –</s>
+            <s xml:id="DE-0180001005.u1.seg1.s2" synch="#DE-0180001005.T13.98 #DE-0180001005.T19.24">Wer stimmt dagegen? –</s>
+            <s xml:id="DE-0180001005.u1.seg1.s3" synch="#DE-0180001005.T22.92 #DE-0180001005.T28.84">Wer enthält sich? –</s>
+            <s xml:id="DE-0180001005.u1.seg1.s4" synch="#DE-0180001005.T28.84 #DE-0180001005.T40.36">Damit ist dieser Antrag mit großer Mehrheit bei Stimmenthaltung der Fraktion Bündnis 90/Die Grünen und einiger Mitglieder der Fraktion Die Linke angenommen.</s>
+          </seg>
+          <seg xml:id="DE-0180001005.u1.seg2">
+            <s xml:id="DE-0180001005.u1.seg2.s1" synch="#DE-0180001005.T40.36 #DE-0180001005.T42.96">Ich rufe den Tagesordnungspunkt 5 auf:</s>
+          </seg>
+        </u>
+      </div>
+      <div type="debateSection">
+        <head>Festlegung der Zahl der Vizepräsidenten</head>
+        <timeline unit="s" origin="#DE-0180001006.origin" corresp="#rec.DE-0180001006.video">
+          <when xml:id="DE-0180001006.origin" absolute="2013-10-22T12:53:14+02:00"/>
+          <when xml:id="DE-0180001006.T1" interval="1" since="#DE-0180001006.origin"/>
+          <when xml:id="DE-0180001006.T9.82" interval="9.82" since="#DE-0180001006.origin"/>
+          <when xml:id="DE-0180001006.T22.62" interval="22.62" since="#DE-0180001006.origin"/>
+          <when xml:id="DE-0180001006.T29.38" interval="29.38" since="#DE-0180001006.origin"/>
+          <when xml:id="DE-0180001006.T32.16" interval="32.16" since="#DE-0180001006.origin"/>
+          <when xml:id="DE-0180001006.T33.84" interval="33.84" since="#DE-0180001006.origin"/>
+          <when xml:id="DE-0180001006.T35.88" interval="35.88" since="#DE-0180001006.origin"/>
+          <when xml:id="DE-0180001006.T39.72" interval="39.72" since="#DE-0180001006.origin"/>
+          <when xml:id="DE-0180001006.T42.08" interval="42.08" since="#DE-0180001006.origin"/>
+          <when xml:id="DE-0180001006.T45.18" interval="45.18" since="#DE-0180001006.origin"/>
+          <when xml:id="DE-0180001006.T48.08" interval="48.08" since="#DE-0180001006.origin"/>
+          <when xml:id="DE-0180001006.T50" interval="50" since="#DE-0180001006.origin"/>
+        </timeline>
+        <u xml:id="DE-0180001006.u1" who="#Q57474" ana="#chair" start="#DE-0180001006.T1" end="#DE-0180001006.T50">
+          <seg xml:id="DE-0180001006.u1.seg1">
+            <s xml:id="DE-0180001006.u1.seg1.s1" synch="#DE-0180001006.T1 #DE-0180001006.T9.82">Nach unserer Geschäftsordnung soll im Präsidium des Deutschen Bundestages jede Fraktion mindestens mit einem Mitglied vertreten sein.</s>
+            <s xml:id="DE-0180001006.u1.seg1.s2" synch="#DE-0180001006.T9.82 #DE-0180001006.T22.62">Hierzu liegt ein Antrag der Fraktionen der CDU/CSU und SPD vor, sechs Stellvertreter zu wählen, wobei die stärkste Fraktion sowie die nächstgrößere Fraktion jeweils zwei Stellvertreter des Präsidenten stellen.</s>
+          </seg>
+          <seg xml:id="DE-0180001006.u1.seg2">
+            <s xml:id="DE-0180001006.u1.seg2.s1" synch="#DE-0180001006.T22.62 #DE-0180001006.T29.38">Interfraktionell ist zu diesem Tagesordnungspunkt eine Diskussionsrunde vereinbart worden. –</s>
+            <s xml:id="DE-0180001006.u1.seg2.s2" synch="#DE-0180001006.T29.38 #DE-0180001006.T32.16">Dazu darf ich Ihr Einvernehmen feststellen.</s>
+            <s xml:id="DE-0180001006.u1.seg2.s3" synch="#DE-0180001006.T32.16 #DE-0180001006.T33.84">Dann ist das so beschlossen.</s>
+          </seg>
+          <seg xml:id="DE-0180001006.u1.seg3">
+            <s xml:id="DE-0180001006.u1.seg3.s1" synch="#DE-0180001006.T35.88 #DE-0180001006.T39.72">Wer möchte zunächst dazu das Wort ergreifen? –</s>
+            <s xml:id="DE-0180001006.u1.seg3.s2" synch="#DE-0180001006.T42.08 #DE-0180001006.T45.18">Die Opposition ist sich interessanterweise nicht einig.</s>
+            <s xml:id="DE-0180001006.u1.seg3.s3" synch="#DE-0180001006.T45.18 #DE-0180001006.T48.08">Dann beginnt der Kollege Grosse-Brömer.</s>
+            <s xml:id="DE-0180001006.u1.seg3.s4" synch="#DE-0180001006.T48.08 #DE-0180001006.T50">Bitte schön.</s>
+          </seg>
+        </u>
+        <timeline unit="s" origin="#DE-0180001007.origin" corresp="#rec.DE-0180001007.video">
+          <when xml:id="DE-0180001007.origin" absolute="2013-10-22T12:54:04+02:00"/>
+          <when xml:id="DE-0180001007.T1" interval="1" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T5.26" interval="5.26" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T9.3" interval="9.3" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T27.94" interval="27.94" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T37.34" interval="37.34" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T51.94" interval="51.94" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T59.14" interval="59.14" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T72.6" interval="72.6" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T82.06" interval="82.06" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T104" interval="104" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T110.34" interval="110.34" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T117.8" interval="117.8" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T130.26" interval="130.26" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T144.82" interval="144.82" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T154.5" interval="154.5" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T163.86" interval="163.86" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T173" interval="173" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T189.94" interval="189.94" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T195.12" interval="195.12" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T197.42" interval="197.42" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T202" interval="202" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T211.42" interval="211.42" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T216.06" interval="216.06" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T224.62" interval="224.62" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T229.56" interval="229.56" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T233.72" interval="233.72" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T243.2" interval="243.2" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T244.48" interval="244.48" since="#DE-0180001007.origin"/>
+          <when xml:id="DE-0180001007.T252" interval="252" since="#DE-0180001007.origin"/>
+        </timeline>
+        <u xml:id="DE-0180001007.u1" who="#Q1770968" ana="#regular" start="#DE-0180001007.T1" end="#DE-0180001007.T72.6">
+          <seg xml:id="DE-0180001007.u1.seg1">
+            <s xml:id="DE-0180001007.u1.seg1.s1" synch="#DE-0180001007.T1 #DE-0180001007.T5.26">Sehr geehrter Herr Präsident!</s>
+            <s xml:id="DE-0180001007.u1.seg1.s2" synch="#DE-0180001007.T5.26 #DE-0180001007.T9.3">Liebe Kolleginnen und Kollegen!</s>
+            <s xml:id="DE-0180001007.u1.seg1.s3" synch="#DE-0180001007.T9.3 #DE-0180001007.T27.94">Wir haben heute auch die Aufgabe, dem frisch gewählten Präsidenten entsprechende Stellvertreter zur Seite zu stellen, damit der weitere, aber auch der künftige Ablauf hier im Deutschen Bundestag in mehrfacher Hinsicht gewährleistet ist.</s>
+          </seg>
+          <seg xml:id="DE-0180001007.u1.seg2">
+            <s xml:id="DE-0180001007.u1.seg2.s1" synch="#DE-0180001007.T27.94 #DE-0180001007.T37.34">Ihnen liegt dazu ein Antrag der CDU/CSU und der SPD vor, mit dem Inhalt, den der Präsident gerade skizziert hat.</s>
+            <s xml:id="DE-0180001007.u1.seg2.s2" synch="#DE-0180001007.T37.34 #DE-0180001007.T51.94">Wir schlagen darin vor, der SPD zwei Stellvertreter zuzuweisen, der Unionsfraktion ebenso und den beiden anderen Fraktionen, der Fraktion der Linken und der Grünen, jeweils einen Stellvertreter.</s>
+          </seg>
+          <seg xml:id="DE-0180001007.u1.seg3">
+            <s xml:id="DE-0180001007.u1.seg3.s1" synch="#DE-0180001007.T51.94 #DE-0180001007.T59.14">Dieser Antrag entspricht dem Repräsentationsprinzip, das wir hier seit Jahrzehnten pflegen.</s>
+            <s xml:id="DE-0180001007.u1.seg3.s2" synch="#DE-0180001007.T59.14 #DE-0180001007.T72.6">Ich erinnere an 1994, als den Grünen kein Stellvertreter des Bundestagspräsidenten zugewiesen wurde und sich insbesondere meine Fraktion dafür eingesetzt hat, dass auch sie einen Stellvertreter stellen sollen.</s>
+          </seg>
+        </u>
+        <incident>
+          <desc>Claudia Roth [Augsburg] [BÜNDNIS 90/DIE GRÜNEN]: Schäuble!</desc>
+        </incident>
+        <u xml:id="DE-0180001007.u2" who="#Q1770968" ana="#regular" start="#DE-0180001007.T72.6" end="#DE-0180001007.T82.06">
+          <seg xml:id="DE-0180001007.u2.seg1">
+            <s xml:id="DE-0180001007.u2.seg1.s1" synch="#DE-0180001007.T72.6 #DE-0180001007.T82.06">Denn wir waren der Auffassung: Jede Fraktion soll entsprechend ihrer Größe im Deutschen Bundestag im Präsidium vertreten sein.</s>
+          </seg>
+        </u>
+        <incident>
+          <desc>Britta Haßelmann [BÜNDNIS 90/DIE GRÜNEN]: Gut, dass wir schon ein bisschen weiter sind!</desc>
+        </incident>
+        <u xml:id="DE-0180001007.u3" who="#Q1770968" ana="#regular" start="#DE-0180001007.T82.06" end="#DE-0180001007.T163.86">
+          <seg xml:id="DE-0180001007.u3.seg1">
+            <s xml:id="DE-0180001007.u3.seg1.s1" synch="#DE-0180001007.T82.06 #DE-0180001007.T104">Infolgedessen bezieht sich unser Antrag auch auf die Mehrheitsverhältnisse im Deutschen Bundestag, die ja letztlich den Wählerwillen repräsentieren, und somit beinhaltet er jeweils zwei Stellvertreterpositionen für die Unionsfraktion und für die SPD.</s>
+          </seg>
+          <seg xml:id="DE-0180001007.u3.seg2">
+            <s xml:id="DE-0180001007.u3.seg2.s1" synch="#DE-0180001007.T104 #DE-0180001007.T110.34">Ich möchte gerne darauf hinweisen, dass wir alle ein Interesse an einem starken Präsidium haben müssen.</s>
+            <s xml:id="DE-0180001007.u3.seg2.s2" synch="#DE-0180001007.T110.34 #DE-0180001007.T117.8">Das Bundestagspräsidium ist ein wichtiger Teil des Selbstverständnisses dieses Parlamentes.</s>
+            <s xml:id="DE-0180001007.u3.seg2.s3" synch="#DE-0180001007.T117.8 #DE-0180001007.T130.26">Gerade dann, wenn wir eine starke Regierung haben werden, muss es ein starkes Parlament zur Kontrolle und ein starkes Präsidium zur Leitung und zur Begleitung dieser Kontrolle geben.</s>
+            <s xml:id="DE-0180001007.u3.seg2.s4" synch="#DE-0180001007.T130.26 #DE-0180001007.T144.82">Die Aufgaben des Präsidiums sind vielfältig: Rechtsaufsicht, Repräsentation im In- und Ausland, Sitzungsleitung, Leitung von Kommissionen und nicht zuletzt natürlich auch das klare Wort, wie wir es vorhin auch in der Ansprache des frisch gewählten Präsidenten gehört haben.</s>
+          </seg>
+          <seg xml:id="DE-0180001007.u3.seg3">
+            <s xml:id="DE-0180001007.u3.seg3.s1" synch="#DE-0180001007.T144.82 #DE-0180001007.T154.5">Die Kritik, die ich schon im Vorwege gehört habe, halte ich für falsch und ein Stück weit für kleinlich.</s>
+            <s xml:id="DE-0180001007.u3.seg3.s2" synch="#DE-0180001007.T154.5 #DE-0180001007.T163.86">Sieben stellvertretende Präsidenten in diesem Deutschen Bundestag sind nichts Neues; wir hatten sie in der vorletzten Legislaturperiode auch schon.</s>
+          </seg>
+        </u>
+        <incident>
+          <desc>Claudia Roth [Augsburg] [BÜNDNIS 90/DIE GRÜNEN]: Sechs!</desc>
+        </incident>
+        <u xml:id="DE-0180001007.u4" who="#Q1770968" ana="#regular" start="#DE-0180001007.T163.86" end="#DE-0180001007.T244.48">
+          <seg xml:id="DE-0180001007.u4.seg1">
+            <s xml:id="DE-0180001007.u4.seg1.s1" synch="#DE-0180001007.T163.86 #DE-0180001007.T173">– Sechs stellvertretende Präsidenten, pardon; insgesamt sieben Mitglieder des Präsidiums.</s>
+          </seg>
+          <seg xml:id="DE-0180001007.u4.seg2">
+            <s xml:id="DE-0180001007.u4.seg2.s1" synch="#DE-0180001007.T173 #DE-0180001007.T189.94">Ich will auch darauf hinweisen, dass nach meiner Einschätzung – dies ging auch aus der Ansprache unseres frisch gewählten Bundestagspräsidenten hervor – weder die Arbeitsbelastung noch die Probleme, vor denen wir stehen, kleiner werden.</s>
+            <s xml:id="DE-0180001007.u4.seg2.s2" synch="#DE-0180001007.T189.94 #DE-0180001007.T195.12">Infolgedessen macht es Sinn, ein starkes Präsidium zu haben.</s>
+            <s xml:id="DE-0180001007.u4.seg2.s3" synch="#DE-0180001007.T195.12 #DE-0180001007.T197.42">Das bezieht sich auf den Umfang.</s>
+            <s xml:id="DE-0180001007.u4.seg2.s4" synch="#DE-0180001007.T197.42 #DE-0180001007.T202">Das bezieht sich auch auf die Persönlichkeiten, die sich hier zur Verfügung stellen.</s>
+            <s xml:id="DE-0180001007.u4.seg2.s5" synch="#DE-0180001007.T202 #DE-0180001007.T211.42">Ich sage es fraktionsübergreifend: Ich bin der Auffassung, dass wir nachher sehr respektable Kandidaten zur Auswahl haben.</s>
+          </seg>
+          <seg xml:id="DE-0180001007.u4.seg3">
+            <s xml:id="DE-0180001007.u4.seg3.s1" synch="#DE-0180001007.T211.42 #DE-0180001007.T216.06">Deswegen bitte ich abschließend darum, diesem Antrag zuzustimmen.</s>
+            <s xml:id="DE-0180001007.u4.seg3.s2" synch="#DE-0180001007.T216.06 #DE-0180001007.T224.62">Lassen Sie uns gerne intensiv streiten über die richtigen Wege, über die richtige Politik in diesem Hause.</s>
+            <s xml:id="DE-0180001007.u4.seg3.s3" synch="#DE-0180001007.T224.62 #DE-0180001007.T229.56">Lassen Sie uns aber nicht um einen stellvertretenden Präsidentenposten streiten.</s>
+            <s xml:id="DE-0180001007.u4.seg3.s4" synch="#DE-0180001007.T229.56 #DE-0180001007.T233.72">Es gibt Wichtigeres: Die Aufgaben, die vor uns liegen, sind größer.</s>
+            <s xml:id="DE-0180001007.u4.seg3.s5" synch="#DE-0180001007.T233.72 #DE-0180001007.T243.2">Darüber müssen wir nicht nur ins Gespräch kommen, darüber müssen wir auch in Streit kommen – ich freue mich darauf –: unter der Führung und Leitung eines starken und guten Präsidiums.</s>
+          </seg>
+          <seg xml:id="DE-0180001007.u4.seg4">
+            <s xml:id="DE-0180001007.u4.seg4.s1" synch="#DE-0180001007.T243.2 #DE-0180001007.T244.48">Herzlichen Dank.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der CDU/CSU sowie bei Abgeordneten der SPD</desc>
+        </kinesic>
+        <u xml:id="DE-0180001007.u5" who="#Q57474" ana="#chair" start="#DE-0180001007.T244.48" end="#DE-0180001007.T252">
+          <seg xml:id="DE-0180001007.u5.seg1">
+            <s xml:id="DE-0180001007.u5.seg1.s1" synch="#DE-0180001007.T244.48 #DE-0180001007.T252">Das Wort hat nun die Kollegin Petra Sitte für die Fraktion Die Linke.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der LINKEN</desc>
+        </kinesic>
+        <timeline unit="s" origin="#DE-0180001008.origin" corresp="#rec.DE-0180001008.video">
+          <when xml:id="DE-0180001008.origin" absolute="2013-10-22T12:58:16+02:00"/>
+          <when xml:id="DE-0180001008.T1" interval="1" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T2.72" interval="2.72" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T4.68" interval="4.68" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T6.08" interval="6.08" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T14.32" interval="14.32" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T24.36" interval="24.36" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T30.36" interval="30.36" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T38.8" interval="38.8" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T45" interval="45" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T50.64" interval="50.64" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T56.04" interval="56.04" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T61.24" interval="61.24" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T73.84" interval="73.84" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T77.6" interval="77.6" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T86.04" interval="86.04" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T96.28" interval="96.28" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T104.72" interval="104.72" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T109.6" interval="109.6" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T114.72" interval="114.72" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T117.2" interval="117.2" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T122.08" interval="122.08" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T127.16" interval="127.16" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T132.28" interval="132.28" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T133.84" interval="133.84" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T145.16" interval="145.16" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T147.52" interval="147.52" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T151.64" interval="151.64" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T155.16" interval="155.16" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T158.24" interval="158.24" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T169.4" interval="169.4" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T172.8" interval="172.8" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T176.48" interval="176.48" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T180.08" interval="180.08" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T198.2" interval="198.2" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T214.6" interval="214.6" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T216.64" interval="216.64" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T226.72" interval="226.72" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T230.68" interval="230.68" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T235.84" interval="235.84" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T246.44" interval="246.44" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T258.96" interval="258.96" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T262.16" interval="262.16" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T263.68" interval="263.68" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T267.96" interval="267.96" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T277.92" interval="277.92" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T289.04" interval="289.04" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T300.92" interval="300.92" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T305.28" interval="305.28" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T309.24" interval="309.24" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T314" interval="314" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T319.2" interval="319.2" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T320.68" interval="320.68" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T321.12" interval="321.12" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T323.08" interval="323.08" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T335.68" interval="335.68" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T339.04" interval="339.04" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T351.36" interval="351.36" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T355.64" interval="355.64" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T355.96" interval="355.96" since="#DE-0180001008.origin"/>
+          <when xml:id="DE-0180001008.T366" interval="366" since="#DE-0180001008.origin"/>
+        </timeline>
+        <u xml:id="DE-0180001008.u1" who="#Q1748314" ana="#regular" start="#DE-0180001008.T1" end="#DE-0180001008.T38.8">
+          <seg xml:id="DE-0180001008.u1.seg1">
+            <s xml:id="DE-0180001008.u1.seg1.s1" synch="#DE-0180001008.T1 #DE-0180001008.T2.72">Danke. –</s>
+            <s xml:id="DE-0180001008.u1.seg1.s2" synch="#DE-0180001008.T2.72 #DE-0180001008.T4.68">Herr Präsident!</s>
+            <s xml:id="DE-0180001008.u1.seg1.s3" synch="#DE-0180001008.T4.68 #DE-0180001008.T6.08">Meine Damen und Herren!</s>
+            <s xml:id="DE-0180001008.u1.seg1.s4" synch="#DE-0180001008.T6.08 #DE-0180001008.T14.32">Herr Grosse-Brömer, Sie streuen hier Brotkrumen und locken uns ein bisschen in die falsche Richtung im Paragrafenwald der Geschäftsordnung.</s>
+            <s xml:id="DE-0180001008.u1.seg1.s5" synch="#DE-0180001008.T14.32 #DE-0180001008.T24.36">Sie haben quasi am Tag vor der konstituierenden Sitzung des Bundestages öffentlich bekannt gegeben, dass es mehr Vizepräsidentinnen und -präsidenten geben soll.</s>
+            <s xml:id="DE-0180001008.u1.seg1.s6" synch="#DE-0180001008.T24.36 #DE-0180001008.T30.36">Das wiederum war der Tag nach dem Beschluss über die Aufnahme von Koalitionsverhandlungen.</s>
+            <s xml:id="DE-0180001008.u1.seg1.s7" synch="#DE-0180001008.T30.36 #DE-0180001008.T38.8">Nun kann ich, was die öffentliche Wahrnehmung angeht, es manchen nicht verübeln, dass das als Geschmäckle, als Deal wahrgenommen wird.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001008.u2" who="#Q1748314" ana="#regular" start="#DE-0180001008.T38.8" end="#DE-0180001008.T61.24">
+          <seg xml:id="DE-0180001008.u2.seg1">
+            <s xml:id="DE-0180001008.u2.seg1.s1" synch="#DE-0180001008.T38.8 #DE-0180001008.T45">Das Zweite.</s>
+            <s xml:id="DE-0180001008.u2.seg1.s2" synch="#DE-0180001008.T45 #DE-0180001008.T50.64">Dies fällt mitten in die Debatte über die Sicherung der Minderheitenrechte der Opposition in diesem Parlament.</s>
+            <s xml:id="DE-0180001008.u2.seg1.s3" synch="#DE-0180001008.T50.64 #DE-0180001008.T56.04">Ich bedanke mich sehr herzlich für die klaren Worte des Bundestagspräsidenten zu diesen Fragen.</s>
+            <s xml:id="DE-0180001008.u2.seg1.s4" synch="#DE-0180001008.T56.04 #DE-0180001008.T61.24">Aber Ihre Geste wird von uns nicht als vertrauensbildende Maßnahme wahrgenommen.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001008.u3" who="#Q1748314" ana="#regular" start="#DE-0180001008.T61.24" end="#DE-0180001008.T96.28">
+          <seg xml:id="DE-0180001008.u3.seg1">
+            <s xml:id="DE-0180001008.u3.seg1.s1" synch="#DE-0180001008.T61.24 #DE-0180001008.T73.84">Festzuhalten bleibt doch – es ist eben gesagt worden –: Der Bundestag wird zurzeit nicht wesentlich größer.</s>
+            <s xml:id="DE-0180001008.u3.seg1.s2" synch="#DE-0180001008.T73.84 #DE-0180001008.T77.6">Die Aufgaben der Koalition werden nicht wesentlich größer.</s>
+            <s xml:id="DE-0180001008.u3.seg1.s3" synch="#DE-0180001008.T77.6 #DE-0180001008.T86.04">Im Gegenteil, Sie haben sogar den Vorzug, sich bezüglich ihrer Aufgaben eine wunderbare Arbeitsteilung zu schaffen.</s>
+            <s xml:id="DE-0180001008.u3.seg1.s4" synch="#DE-0180001008.T86.04 #DE-0180001008.T96.28">Aber die Aufgaben der Opposition werden gewaltig sein, und das bei weniger Abgeordneten.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der LINKEN und dem BÜNDNIS 90/DIE GRÜNEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001008.u4" who="#Q1748314" ana="#regular" start="#DE-0180001008.T96.28" end="#DE-0180001008.T127.16">
+          <seg xml:id="DE-0180001008.u4.seg1">
+            <s xml:id="DE-0180001008.u4.seg1.s1" synch="#DE-0180001008.T96.28 #DE-0180001008.T104.72">Mithin hat das Bundesverfassungsgericht mehrfach – das ist schon erwähnt worden – die besondere Rolle der Opposition für die Wahrung der freiheitlich-demokratischen Grundordnung betont.</s>
+            <s xml:id="DE-0180001008.u4.seg1.s2" synch="#DE-0180001008.T104.72 #DE-0180001008.T109.6">Es wird sogar von einer herausgehobenen Stellung der Opposition gesprochen.</s>
+            <s xml:id="DE-0180001008.u4.seg1.s3" synch="#DE-0180001008.T109.6 #DE-0180001008.T114.72">Das sollten wir uns vor diesem Hintergrund in diesem Hause noch einmal vergegenwärtigen.</s>
+          </seg>
+          <seg xml:id="DE-0180001008.u4.seg2">
+            <s xml:id="DE-0180001008.u4.seg2.s1" synch="#DE-0180001008.T114.72 #DE-0180001008.T117.2">Nun senden Sie ein fragwürdiges Signal.</s>
+            <s xml:id="DE-0180001008.u4.seg2.s2" synch="#DE-0180001008.T117.2 #DE-0180001008.T122.08">Es geht nicht nur um einen Vizepräsidentenposten mehr.</s>
+            <s xml:id="DE-0180001008.u4.seg2.s3" synch="#DE-0180001008.T122.08 #DE-0180001008.T127.16">Es ist Ihr politischer Wille, von der bewährten Praxis in diesem Hause abzuweichen.</s>
+          </seg>
+        </u>
+        <incident>
+          <desc>Michael Grosse-Brömer [CDU/CSU]: Nein!</desc>
+        </incident>
+        <u xml:id="DE-0180001008.u5" who="#Q1748314" ana="#regular" start="#DE-0180001008.T127.16" end="#DE-0180001008.T145.16">
+          <seg xml:id="DE-0180001008.u5.seg1">
+            <s xml:id="DE-0180001008.u5.seg1.s1" synch="#DE-0180001008.T127.16 #DE-0180001008.T132.28">Sie sagen, die Mehrheitsverhältnisse im Parlament sollten sich im Präsidium abbilden.</s>
+            <s xml:id="DE-0180001008.u5.seg1.s2" synch="#DE-0180001008.T132.28 #DE-0180001008.T133.84">Das könnte man so hinnehmen.</s>
+            <s xml:id="DE-0180001008.u5.seg1.s3" synch="#DE-0180001008.T133.84 #DE-0180001008.T145.16">Aber genau in dem entsprechenden Paragrafen der Geschäftsordnung des Bundestages wird überhaupt nicht darauf abgehoben, dass sich im Präsidium das Stärkeverhältnis der Fraktionen abbilden soll.</s>
+          </seg>
+        </u>
+        <incident>
+          <desc>Dr. Günter Krings [CDU/CSU]: Doch!</desc>
+        </incident>
+        <u xml:id="DE-0180001008.u6" who="#Q1748314" ana="#regular" start="#DE-0180001008.T145.16" end="#DE-0180001008.T147.52">
+          <seg xml:id="DE-0180001008.u6.seg1">
+            <s xml:id="DE-0180001008.u6.seg1.s1" synch="#DE-0180001008.T145.16 #DE-0180001008.T147.52">Das ist in dem entsprechenden Paragrafen nicht enthalten.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN – Michael Grosse-Brömer [CDU/CSU]: Doch!</desc>
+        </kinesic>
+        <u xml:id="DE-0180001008.u7" who="#Q1748314" ana="#regular" start="#DE-0180001008.T147.52" end="#DE-0180001008.T169.4">
+          <seg xml:id="DE-0180001008.u7.seg1">
+            <s xml:id="DE-0180001008.u7.seg1.s1" synch="#DE-0180001008.T147.52 #DE-0180001008.T151.64">– Nein, Sie können gerne noch einmal nachlesen.</s>
+            <s xml:id="DE-0180001008.u7.seg1.s2" synch="#DE-0180001008.T151.64 #DE-0180001008.T155.16">Darüber können wir uns im Ältestenrat gerne streiten.</s>
+          </seg>
+          <seg xml:id="DE-0180001008.u7.seg2">
+            <s xml:id="DE-0180001008.u7.seg2.s1" synch="#DE-0180001008.T155.16 #DE-0180001008.T158.24">Es gibt keinen Bezug auf das Berechnungsverfahren.</s>
+            <s xml:id="DE-0180001008.u7.seg2.s2" synch="#DE-0180001008.T158.24 #DE-0180001008.T169.4">Es gibt nur die Feststellung, die sich aus der sogenannten Grundmandatsregelung ergibt, dass jede Fraktion mit einem Vizepräsidenten im Präsidium vertreten sein soll.</s>
+          </seg>
+        </u>
+        <incident>
+          <desc>Michael Grosse-Brömer [CDU/CSU]: Mindestens!</desc>
+        </incident>
+        <u xml:id="DE-0180001008.u8" who="#Q1748314" ana="#regular" start="#DE-0180001008.T169.4" end="#DE-0180001008.T172.8">
+          <seg xml:id="DE-0180001008.u8.seg1">
+            <s xml:id="DE-0180001008.u8.seg1.s1" synch="#DE-0180001008.T169.4 #DE-0180001008.T172.8">Das ist seit Jahren geübte Praxis in diesem Hause.</s>
+          </seg>
+        </u>
+        <incident>
+          <desc>Volker Kauder [CDU/CSU]: Nein, das stimmt nicht!</desc>
+        </incident>
+        <u xml:id="DE-0180001008.u9" who="#Q1748314" ana="#regular" start="#DE-0180001008.T172.8" end="#DE-0180001008.T180.08">
+          <seg xml:id="DE-0180001008.u9.seg1">
+            <s xml:id="DE-0180001008.u9.seg1.s1" synch="#DE-0180001008.T172.8 #DE-0180001008.T176.48">Es geht um die Repräsentation des gesamten Hauses.</s>
+            <s xml:id="DE-0180001008.u9.seg1.s2" synch="#DE-0180001008.T176.48 #DE-0180001008.T180.08">Deshalb ist diese Praxis besser und demokratischer.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001008.u10" who="#Q1748314" ana="#regular" start="#DE-0180001008.T180.08" end="#DE-0180001008.T267.96">
+          <seg xml:id="DE-0180001008.u10.seg1">
+            <s xml:id="DE-0180001008.u10.seg1.s1" synch="#DE-0180001008.T180.08 #DE-0180001008.T198.2">Sie selber haben es vorhin erwähnt: Das, was wir infrage stellen, ist in der 13. Legislaturperiode auf Antrag der Bündnisgrünen eingeführt worden.</s>
+            <s xml:id="DE-0180001008.u10.seg1.s2" synch="#DE-0180001008.T198.2 #DE-0180001008.T214.6">Auch Sie haben damals als CDU/CDU und FDP ausdrücklich beantragt, dass die Anzahl der Stellvertreterinnen und Stellvertreter bzw. der Vizepräsidentinnen und Vizepräsidenten der Anzahl der Fraktionen entsprechen soll.</s>
+          </seg>
+          <seg xml:id="DE-0180001008.u10.seg2">
+            <s xml:id="DE-0180001008.u10.seg2.s1" synch="#DE-0180001008.T214.6 #DE-0180001008.T216.64">Nun zur geübten Praxis.</s>
+            <s xml:id="DE-0180001008.u10.seg2.s2" synch="#DE-0180001008.T216.64 #DE-0180001008.T226.72">Abgesehen von der 1. Legislaturperiode, ist das Präsidium von der 2. bis einschließlich zur 15. Legislaturperiode mit fünf Mitgliedern besetzt gewesen.</s>
+            <s xml:id="DE-0180001008.u10.seg2.s3" synch="#DE-0180001008.T226.72 #DE-0180001008.T230.68">In der 14. Legislaturperiode waren es sechs.</s>
+            <s xml:id="DE-0180001008.u10.seg2.s4" synch="#DE-0180001008.T230.68 #DE-0180001008.T235.84">Damals gab es einen Präsidenten, zwei Vizepräsidenten der Koalition und drei Vizepräsidenten der Opposition.</s>
+            <s xml:id="DE-0180001008.u10.seg2.s5" synch="#DE-0180001008.T235.84 #DE-0180001008.T246.44">Erst in der 16. Legislaturperiode, also zur Zeit der Großen Koalition, ist man davon abgewichen, und es hat einen Vizepräsidenten bzw. eine Vizepräsidentin mehr gegeben.</s>
+            <s xml:id="DE-0180001008.u10.seg2.s6" synch="#DE-0180001008.T246.44 #DE-0180001008.T258.96">Nun nehmen Sie ausschließlich Bezug auf diese 16. Wahlperiode und gehen von dem zuvor – auch in der letzten Legislaturperiode – angewendeten Prinzip ab und wollen wieder sechs Stellvertreter.</s>
+            <s xml:id="DE-0180001008.u10.seg2.s7" synch="#DE-0180001008.T258.96 #DE-0180001008.T262.16">Auch damals hatte die SPD zwei Stellvertreter.</s>
+            <s xml:id="DE-0180001008.u10.seg2.s8" synch="#DE-0180001008.T262.16 #DE-0180001008.T263.68">So richtig geholfen hat es nicht.</s>
+            <s xml:id="DE-0180001008.u10.seg2.s9" synch="#DE-0180001008.T263.68 #DE-0180001008.T267.96">Das Wahlergebnis der SPD war nicht ganz überzeugend.</s>
+          </seg>
+        </u>
+        <kinesic type="laughter">
+          <desc>Heiterkeit und Beifall bei Abgeordneten der LINKEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001008.u11" who="#Q1748314" ana="#regular" start="#DE-0180001008.T267.96" end="#DE-0180001008.T289.04">
+          <seg xml:id="DE-0180001008.u11.seg1">
+            <s xml:id="DE-0180001008.u11.seg1.s1" synch="#DE-0180001008.T267.96 #DE-0180001008.T277.92">Gerade erklären Sie von der SPD Ihrer Mitgliederschaft tapfer, dass erst das Ergebnis der Koalitionsverhandlungen darüber entscheidet, ob Sie eine Große Koalition eingehen.</s>
+            <s xml:id="DE-0180001008.u11.seg1.s2" synch="#DE-0180001008.T277.92 #DE-0180001008.T289.04">Aber den Vizepräsidentenposten wollen Sie schon heute in Anspruch nehmen.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001008.u12" who="#Q1748314" ana="#regular" start="#DE-0180001008.T289.04" end="#DE-0180001008.T305.28">
+          <seg xml:id="DE-0180001008.u12.seg1">
+            <s xml:id="DE-0180001008.u12.seg1.s1" synch="#DE-0180001008.T289.04 #DE-0180001008.T300.92">Was passiert denn dann, wenn Ihre Basis am Ende sagt: „Der Inhalt der Koalitionsvereinbarung reicht uns nicht; wir wollen keine Große Koalition eingehen“, mit diesem zusätzlichen Vizepräsidentenposten?</s>
+            <s xml:id="DE-0180001008.u12.seg1.s2" synch="#DE-0180001008.T300.92 #DE-0180001008.T305.28">Diese Frage sollte erlaubt sein.</s>
+          </seg>
+        </u>
+        <vocal type="interruption">
+          <desc>Widerspruch bei der SPD – Michael Grosse- Brömer [CDU/CSU]: Präsidium ist unabhängig davon!</desc>
+        </vocal>
+        <u xml:id="DE-0180001008.u13" who="#Q1748314" ana="#regular" start="#DE-0180001008.T305.28" end="#DE-0180001008.T320.68">
+          <seg xml:id="DE-0180001008.u13.seg1">
+            <s xml:id="DE-0180001008.u13.seg1.s1" synch="#DE-0180001008.T305.28 #DE-0180001008.T309.24">Wie Sie merken, ist vieles in diesem Zusammenhang unklar.</s>
+            <s xml:id="DE-0180001008.u13.seg1.s2" synch="#DE-0180001008.T309.24 #DE-0180001008.T314">Außerdem entsteht der Eindruck, dass es sich hier um eine willkürliche Praxis handelt.</s>
+            <s xml:id="DE-0180001008.u13.seg1.s3" synch="#DE-0180001008.T314 #DE-0180001008.T319.2">Sie klopfen sich sozusagen auf Ihre parlamentarische Brust und warten auf Großraumgeräusche.</s>
+            <s xml:id="DE-0180001008.u13.seg1.s4" synch="#DE-0180001008.T319.2 #DE-0180001008.T320.68">Wir finden das ziemlich kleingeistig.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der LINKEN sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001008.u14" who="#Q57474" ana="#chair" start="#DE-0180001008.T320.68" end="#DE-0180001008.T321.12">
+          <seg xml:id="DE-0180001008.u14.seg1">
+            <s xml:id="DE-0180001008.u14.seg1.s1" synch="#DE-0180001008.T320.68 #DE-0180001008.T321.12">Frau Sitte.</s>
+          </seg>
+        </u>
+        <u xml:id="DE-0180001008.u15" who="#Q1748314" ana="#regular" start="#DE-0180001008.T321.12" end="#DE-0180001008.T355.96">
+          <seg xml:id="DE-0180001008.u15.seg1">
+            <s xml:id="DE-0180001008.u15.seg1.s1" synch="#DE-0180001008.T321.12 #DE-0180001008.T323.08">Ich bin sofort fertig. –</s>
+            <s xml:id="DE-0180001008.u15.seg1.s2" synch="#DE-0180001008.T323.08 #DE-0180001008.T335.68">Dabei hatte Herr Riesenhuber heute schon von den Höhen des Geistes in diesem Haus gesprochen.</s>
+          </seg>
+          <seg xml:id="DE-0180001008.u15.seg2">
+            <s xml:id="DE-0180001008.u15.seg2.s1" synch="#DE-0180001008.T335.68 #DE-0180001008.T339.04">Ich finde, wir sollten an die gute parlamentarische Praxis anknüpfen.</s>
+            <s xml:id="DE-0180001008.u15.seg2.s2" synch="#DE-0180001008.T339.04 #DE-0180001008.T351.36">Es besteht auch aufgrund der konkreten Erfahrungen derjenigen, die schon Mitglied des Bundestages waren, überhaupt keine Veranlassung, die Zahl der Vizepräsidenten zu erhöhen.</s>
+            <s xml:id="DE-0180001008.u15.seg2.s3" synch="#DE-0180001008.T351.36 #DE-0180001008.T355.64">Die demokratische Führung der bisherigen Präsidien nach dem alten Prinzip war gut.</s>
+          </seg>
+          <seg xml:id="DE-0180001008.u15.seg3">
+            <s xml:id="DE-0180001008.u15.seg3.s1" synch="#DE-0180001008.T355.64 #DE-0180001008.T355.96">Danke schön.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der LINKEN und dem BÜNDNIS 90/DIE GRÜNEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001008.u16" who="#Q57474" ana="#chair" start="#DE-0180001008.T355.96" end="#DE-0180001008.T366">
+          <seg xml:id="DE-0180001008.u16.seg1">
+            <s xml:id="DE-0180001008.u16.seg1.s1" synch="#DE-0180001008.T355.96 #DE-0180001008.T366">Für die SPD-Fraktion hat nun der Kollege Thomas Oppermann das Wort.</s>
+          </seg>
+        </u>
+        <timeline unit="s" origin="#DE-0180001009.origin" corresp="#rec.DE-0180001009.video">
+          <when xml:id="DE-0180001009.origin" absolute="2013-10-22T13:04:22+02:00"/>
+          <when xml:id="DE-0180001009.T1" interval="1" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T2.62" interval="2.62" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T8.48" interval="8.48" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T10.66" interval="10.66" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T41.96" interval="41.96" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T51.06" interval="51.06" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T54.88" interval="54.88" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T60.68" interval="60.68" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T64.36" interval="64.36" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T66.66" interval="66.66" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T83.92" interval="83.92" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T87.8" interval="87.8" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T91.04" interval="91.04" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T104.8" interval="104.8" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T113.96" interval="113.96" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T121.72" interval="121.72" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T130.36" interval="130.36" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T141.12" interval="141.12" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T163.6" interval="163.6" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T173.24" interval="173.24" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T176.76" interval="176.76" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T199.38" interval="199.38" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T208.72" interval="208.72" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T220.76" interval="220.76" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T225.28" interval="225.28" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T234.08" interval="234.08" since="#DE-0180001009.origin"/>
+          <when xml:id="DE-0180001009.T238.96" interval="238.96" since="#DE-0180001009.origin"/>
+        </timeline>
+        <u xml:id="DE-0180001009.u1" who="#Q90833" ana="#regular" start="#DE-0180001009.T1" end="#DE-0180001009.T41.96">
+          <seg xml:id="DE-0180001009.u1.seg1">
+            <s xml:id="DE-0180001009.u1.seg1.s1" synch="#DE-0180001009.T1 #DE-0180001009.T2.62">Herr Präsident!</s>
+            <s xml:id="DE-0180001009.u1.seg1.s2" synch="#DE-0180001009.T8.48 #DE-0180001009.T10.66">Meine Damen und Herren!</s>
+            <s xml:id="DE-0180001009.u1.seg1.s3" synch="#DE-0180001009.T10.66 #DE-0180001009.T41.96">Natürlich kann man darüber diskutieren, ob ein Präsidium zu groß oder zu klein ist; aber ich finde, dass ein Präsidium, das aus dem Präsidenten und den Stellvertretern besteht, also in diesem Fall aus sieben Personen bestehen soll, dass also ein siebenköpfiges Präsidium nicht unangemessen groß ist für ein Parlament aus 631 Abgeordneten.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der SPD und der CDU/CSU</desc>
+        </kinesic>
+        <u xml:id="DE-0180001009.u2" who="#Q90833" ana="#regular" start="#DE-0180001009.T41.96" end="#DE-0180001009.T113.96">
+          <seg xml:id="DE-0180001009.u2.seg1">
+            <s xml:id="DE-0180001009.u2.seg1.s1" synch="#DE-0180001009.T41.96 #DE-0180001009.T51.06">Bei der Bildung eines Präsidiums gibt es eigentlich drei Regeln, zwei ungeschriebene und eine, die in unserer Geschäftsordnung steht.</s>
+            <s xml:id="DE-0180001009.u2.seg1.s2" synch="#DE-0180001009.T51.06 #DE-0180001009.T54.88">In der Geschäftsordnung steht die Grundmandatsklausel.</s>
+            <s xml:id="DE-0180001009.u2.seg1.s3" synch="#DE-0180001009.T54.88 #DE-0180001009.T60.68">Die erste ungeschriebene Regel ist: Die stärkste Fraktion soll den Präsidenten stellen.</s>
+            <s xml:id="DE-0180001009.u2.seg1.s4" synch="#DE-0180001009.T60.68 #DE-0180001009.T64.36">Das ist eine Übung im Deutschen Bundestag, der wir immer gefolgt sind.</s>
+            <s xml:id="DE-0180001009.u2.seg1.s5" synch="#DE-0180001009.T64.36 #DE-0180001009.T66.66">Auch heute haben wir das gemacht.</s>
+          </seg>
+          <seg xml:id="DE-0180001009.u2.seg2">
+            <s xml:id="DE-0180001009.u2.seg2.s1" synch="#DE-0180001009.T66.66 #DE-0180001009.T83.92">Die geschriebene Regel in der Geschäftsordnung des Deutschen Bundestages, die wir inzwischen angenommen haben, besagt: Jede Fraktion soll unabhängig von ihrer Größe einen Platz im Präsidium bekommen, also ein Grundmandat.</s>
+            <s xml:id="DE-0180001009.u2.seg2.s2" synch="#DE-0180001009.T83.92 #DE-0180001009.T87.8">Dieses Grundmandat schützt die kleinen Fraktionen.</s>
+            <s xml:id="DE-0180001009.u2.seg2.s3" synch="#DE-0180001009.T87.8 #DE-0180001009.T91.04">Es ist, wenn man so will, praktizierter Minderheitenschutz.</s>
+            <s xml:id="DE-0180001009.u2.seg2.s4" synch="#DE-0180001009.T91.04 #DE-0180001009.T104.8">Würde es diese Grundmandatsklausel übrigens nicht geben, wäre auch bei nur fünf Stellvertretern die Verteilung: CDU/CSU zwei, SPD zwei, Linke einer und Grüne null.</s>
+            <s xml:id="DE-0180001009.u2.seg2.s5" synch="#DE-0180001009.T104.8 #DE-0180001009.T113.96">Mit anderen Worten: Mit der Grundmandatsklausel sichern wir erst einmal die Beteiligung aller Fraktionen im Präsidium.</s>
+          </seg>
+        </u>
+        <vocal type="interruption">
+          <desc>Widerspruch bei der LINKEN – Volker Kauder [CDU/CSU]: Ja! So ist es!</desc>
+        </vocal>
+        <u xml:id="DE-0180001009.u3" who="#Q90833" ana="#regular" start="#DE-0180001009.T113.96" end="#DE-0180001009.T173.24">
+          <seg xml:id="DE-0180001009.u3.seg1">
+            <s xml:id="DE-0180001009.u3.seg1.s1" synch="#DE-0180001009.T113.96 #DE-0180001009.T121.72">Die dritte Regel ist, dass natürlich das Präsidium auch die Mehrheitsverhältnisse im Parlament abbilden muss.</s>
+            <s xml:id="DE-0180001009.u3.seg1.s2" synch="#DE-0180001009.T121.72 #DE-0180001009.T130.36">Deshalb werden manchmal ein, manchmal zwei Vizepräsidenten hinzugenommen, um diese Mehrheit darzustellen.</s>
+            <s xml:id="DE-0180001009.u3.seg1.s3" synch="#DE-0180001009.T130.36 #DE-0180001009.T141.12">Genau das ist hier der Fall: drei für die Union, zwei für die SPD und je einer für die Grünen und für die Linke.</s>
+            <s xml:id="DE-0180001009.u3.seg1.s4" synch="#DE-0180001009.T141.12 #DE-0180001009.T163.6">Wenn jetzt die geschätzten Kollegen und Kolleginnen von den Grünen sagen, dass im Verhältnis zu ihnen der SPD kein zweiter Vizepräsident zukommen solle, dann kann ich nur sagen: Wir haben beide wirklich nicht gut abgeschnitten bei der Bundestagswahl, aber 25,7 Prozent sind immer noch erkennbar mehr als 8,4 Prozent.</s>
+            <s xml:id="DE-0180001009.u3.seg1.s5" synch="#DE-0180001009.T163.6 #DE-0180001009.T173.24">Das muss ich den Grünen schon einmal sagen.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der SPD und der CDU/CSU</desc>
+        </kinesic>
+        <u xml:id="DE-0180001009.u4" who="#Q90833" ana="#regular" start="#DE-0180001009.T173.24" end="#DE-0180001009.T220.76">
+          <seg xml:id="DE-0180001009.u4.seg1">
+            <s xml:id="DE-0180001009.u4.seg1.s1" synch="#DE-0180001009.T173.24 #DE-0180001009.T176.76">Ungleiches gleich zu behandeln, ist kein Minderheitenschutz.</s>
+            <s xml:id="DE-0180001009.u4.seg1.s2" synch="#DE-0180001009.T176.76 #DE-0180001009.T199.38">Aber ich bin schon der Meinung – ich kann das hier für die SPD-Bundestagsfraktion erklären –: Wir sind ohne Einschränkungen gesprächsbereit, wenn es darum geht, die Rechte von Minderheiten im Deutschen Bundestag sicherzustellen, auch wenn wir im Falle der Bildung einer Großen Koalition nur zwei kleine Oppositionsfraktionen haben sollten.</s>
+            <s xml:id="DE-0180001009.u4.seg1.s3" synch="#DE-0180001009.T199.38 #DE-0180001009.T208.72">Eine parlamentarische Demokratie, die funktioniert, braucht nicht nur eine handlungsfähige Regierung, sondern auch eine effektive Opposition.</s>
+            <s xml:id="DE-0180001009.u4.seg1.s4" synch="#DE-0180001009.T208.72 #DE-0180001009.T220.76">Für mich ist völlig undenkbar, dass die Opposition nicht in der Lage sein sollte, Anhörungen zu beantragen, Untersuchungsausschüsse auf den Weg zu bringen oder ausreichend Redezeit zu bekommen.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der SPD sowie bei Abgeordneten der CDU/CSU</desc>
+        </kinesic>
+        <u xml:id="DE-0180001009.u5" who="#Q90833" ana="#regular" start="#DE-0180001009.T220.76" end="#DE-0180001009.T234.08">
+          <seg xml:id="DE-0180001009.u5.seg1">
+            <s xml:id="DE-0180001009.u5.seg1.s1" synch="#DE-0180001009.T220.76 #DE-0180001009.T225.28">Wir werden darüber reden, und wir werden einen Konsens bekommen.</s>
+          </seg>
+          <seg xml:id="DE-0180001009.u5.seg2">
+            <s xml:id="DE-0180001009.u5.seg2.s1" synch="#DE-0180001009.T225.28 #DE-0180001009.T234.08">Vielen Dank.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei der SPD und der CDU/CSU</desc>
+        </kinesic>
+        <u xml:id="DE-0180001009.u6" who="#Q57474" ana="#chair" start="#DE-0180001009.T234.08" end="#DE-0180001009.T238.96">
+          <seg xml:id="DE-0180001009.u6.seg1">
+            <s xml:id="DE-0180001009.u6.seg1.s1" synch="#DE-0180001009.T234.08 #DE-0180001009.T238.96">Nun erhält noch die Kollegin Britta Haßelmann für die Fraktion Bündnis 90/Die Grünen das Wort.</s>
+          </seg>
+        </u>
+        <timeline unit="s" origin="#DE-0180001010.origin" corresp="#rec.DE-0180001010.video">
+          <when xml:id="DE-0180001010.origin" absolute="2013-10-22T13:08:21+02:00"/>
+          <when xml:id="DE-0180001010.T1" interval="1" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T11.64" interval="11.64" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T12.96" interval="12.96" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T17.52" interval="17.52" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T19.4" interval="19.4" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T23.92" interval="23.92" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T31.68" interval="31.68" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T37.08" interval="37.08" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T39.68" interval="39.68" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T53.84" interval="53.84" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T73.04" interval="73.04" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T74.28" interval="74.28" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T83.32" interval="83.32" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T85.04" interval="85.04" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T91.88" interval="91.88" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T100.92" interval="100.92" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T113.12" interval="113.12" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T114.6" interval="114.6" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T132.72" interval="132.72" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T135.64" interval="135.64" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T150.96" interval="150.96" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T154.96" interval="154.96" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T158.56" interval="158.56" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T166.28" interval="166.28" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T180" interval="180" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T189.48" interval="189.48" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T190.76" interval="190.76" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T206.12" interval="206.12" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T216.8" interval="216.8" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T224.08" interval="224.08" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T235.68" interval="235.68" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T236.24" interval="236.24" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T247.08" interval="247.08" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T260.08" interval="260.08" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T269.64" interval="269.64" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T283.64" interval="283.64" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T288.32" interval="288.32" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T292.6" interval="292.6" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T296.4" interval="296.4" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T323.08" interval="323.08" since="#DE-0180001010.origin"/>
+          <when xml:id="DE-0180001010.T324" interval="324" since="#DE-0180001010.origin"/>
+        </timeline>
+        <u xml:id="DE-0180001010.u1" who="#Q920726" ana="#regular" start="#DE-0180001010.T1" end="#DE-0180001010.T31.68">
+          <seg xml:id="DE-0180001010.u1.seg1">
+            <s xml:id="DE-0180001010.u1.seg1.s1" synch="#DE-0180001010.T1 #DE-0180001010.T11.64">Sehr geehrter Herr Präsident!</s>
+            <s xml:id="DE-0180001010.u1.seg1.s2" synch="#DE-0180001010.T11.64 #DE-0180001010.T12.96">Meine Damen und Herren!</s>
+            <s xml:id="DE-0180001010.u1.seg1.s3" synch="#DE-0180001010.T12.96 #DE-0180001010.T17.52">Liebe Kolleginnen und Kollegen, vor allen Dingen auch liebe neue Kolleginnen und Kollegen!</s>
+            <s xml:id="DE-0180001010.u1.seg1.s4" synch="#DE-0180001010.T17.52 #DE-0180001010.T19.4">Lassen Sie mich drei Vorbemerkungen machen.</s>
+            <s xml:id="DE-0180001010.u1.seg1.s5" synch="#DE-0180001010.T19.4 #DE-0180001010.T23.92">Zum einen gratulieren wir Ihnen, Herr Präsident, ganz herzlich zu Ihrem Ergebnis.</s>
+            <s xml:id="DE-0180001010.u1.seg1.s6" synch="#DE-0180001010.T23.92 #DE-0180001010.T31.68">Wir freuen uns auf die weitere gemeinsame Arbeit mit Ihnen und möchten das im Namen unserer Fraktion deutlich machen.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall beim BÜNDNIS 90/DIE GRÜNEN sowie bei Abgeordneten der CDU/CSU und der SPD</desc>
+        </kinesic>
+        <u xml:id="DE-0180001010.u2" who="#Q920726" ana="#regular" start="#DE-0180001010.T31.68" end="#DE-0180001010.T73.04">
+          <seg xml:id="DE-0180001010.u2.seg1">
+            <s xml:id="DE-0180001010.u2.seg1.s1" synch="#DE-0180001010.T31.68 #DE-0180001010.T37.08">Wir bedanken uns auch dafür, dass Sie das Thema Minderheitenrechte angesprochen haben.</s>
+            <s xml:id="DE-0180001010.u2.seg1.s2" synch="#DE-0180001010.T37.08 #DE-0180001010.T39.68">Das ist ein für uns wichtiges Thema.</s>
+            <s xml:id="DE-0180001010.u2.seg1.s3" synch="#DE-0180001010.T39.68 #DE-0180001010.T53.84">Deshalb meine zweite kurze Vorbemerkung: Lieber Gregor Gysi, mich hat schon erstaunt, dass, wenn wir öffentlich die große Welle machen und auch wichtige Themen ansprechen, wie zum Beispiel das Thema Minderheitenschutz, Sie der Geschäftsordnung heute hier zustimmen.</s>
+            <s xml:id="DE-0180001010.u2.seg1.s4" synch="#DE-0180001010.T53.84 #DE-0180001010.T73.04">Das irritiert mich doch; denn ich finde, dass es allen Grund gibt, dieser Geschäftsordnung in der jetzigen Situation nicht zuzustimmen, weil wir bislang keine Garantie dafür haben, dass die Punkte, die Sie, Herr Präsident, zu den Minderheitenrechten angesprochen haben, sich in einer künftigen Geschäftsordnung wiederfinden.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall beim BÜNDNIS 90/DIE GRÜNEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001010.u3" who="#Q920726" ana="#regular" start="#DE-0180001010.T73.04" end="#DE-0180001010.T83.32">
+          <seg xml:id="DE-0180001010.u3.seg1">
+            <s xml:id="DE-0180001010.u3.seg1.s1" synch="#DE-0180001010.T73.04 #DE-0180001010.T74.28">Dritte kurze Vorbemerkung.</s>
+            <s xml:id="DE-0180001010.u3.seg1.s2" synch="#DE-0180001010.T74.28 #DE-0180001010.T83.32">Lieber Thomas Oppermann, der Schalter ist aber schnell umgelegt, oder?</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall beim BÜNDNIS 90/DIE GRÜNEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001010.u4" who="#Q920726" ana="#regular" start="#DE-0180001010.T83.32" end="#DE-0180001010.T100.92">
+          <seg xml:id="DE-0180001010.u4.seg1">
+            <s xml:id="DE-0180001010.u4.seg1.s1" synch="#DE-0180001010.T83.32 #DE-0180001010.T85.04">Das hat mich schon irritiert.</s>
+            <s xml:id="DE-0180001010.u4.seg1.s2" synch="#DE-0180001010.T85.04 #DE-0180001010.T91.88">Ein Grundmandat als praktizierten Minderheitenschutz darzustellen – Mannomann!</s>
+            <s xml:id="DE-0180001010.u4.seg1.s3" synch="#DE-0180001010.T91.88 #DE-0180001010.T100.92">Zunächst habe ich mir das angehört, was Herr Grosse- Brömer nach dem Motto „Damals, 1994, haben wir den Grünen einmal etwas zugestanden“ gesagt hat.</s>
+          </seg>
+        </u>
+        <incident>
+          <desc>Michael Grosse-Brömer [CDU/CSU]: Das war doch nett!</desc>
+        </incident>
+        <u xml:id="DE-0180001010.u5" who="#Q920726" ana="#regular" start="#DE-0180001010.T100.92" end="#DE-0180001010.T113.12">
+          <seg xml:id="DE-0180001010.u5.seg1">
+            <s xml:id="DE-0180001010.u5.seg1.s1" synch="#DE-0180001010.T100.92 #DE-0180001010.T113.12">Ich finde, in der Angelegenheit mit dem Grundmandat als praktiziertem Minderheitenschutz haben Sie sich vergaloppiert.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall beim BÜNDNIS 90/DIE GRÜNEN sowie bei Abgeordneten der LINKEN – Zuruf des Abg. Ulrich Kelber [SPD]</desc>
+        </kinesic>
+        <u xml:id="DE-0180001010.u6" who="#Q920726" ana="#regular" start="#DE-0180001010.T113.12" end="#DE-0180001010.T247.08">
+          <seg xml:id="DE-0180001010.u6.seg1">
+            <s xml:id="DE-0180001010.u6.seg1.s1" synch="#DE-0180001010.T113.12 #DE-0180001010.T114.6">Nun zur Sache selbst.</s>
+            <s xml:id="DE-0180001010.u6.seg1.s2" synch="#DE-0180001010.T114.6 #DE-0180001010.T132.72">Die bisherige parlamentarische Praxis entspricht der Tatsache, dass wir einen Präsidenten haben und jede Fraktion je eine Stellvertreterin oder einen Stellvertreter stellt; so war zumindest die Vereinbarung in der letzten Legislaturperiode und vielen weiteren Legislaturperioden.</s>
+            <s xml:id="DE-0180001010.u6.seg1.s3" synch="#DE-0180001010.T132.72 #DE-0180001010.T135.64">Meine Kollegin Sitte hat darauf rekurriert.</s>
+          </seg>
+          <seg xml:id="DE-0180001010.u6.seg2">
+            <s xml:id="DE-0180001010.u6.seg2.s1" synch="#DE-0180001010.T135.64 #DE-0180001010.T150.96">Im neuen Bundestag sind nur vier Fraktionen vertreten, und man kann sich mit einigem Recht fragen, warum das Präsidium zusätzlich zum Präsidenten sechs Vizepräsidentinnen bzw. -präsidenten enthalten soll.</s>
+            <s xml:id="DE-0180001010.u6.seg2.s2" synch="#DE-0180001010.T150.96 #DE-0180001010.T154.96">Das ist eine ganz legitime Frage, über die wir hätten diskutieren können.</s>
+            <s xml:id="DE-0180001010.u6.seg2.s3" synch="#DE-0180001010.T154.96 #DE-0180001010.T158.56">Wir haben darüber im Vorfeld aber nicht diskutiert.</s>
+            <s xml:id="DE-0180001010.u6.seg2.s4" synch="#DE-0180001010.T158.56 #DE-0180001010.T166.28">Wir sind am Montag, nachdem Sie Ihren Sondierungsgipfel hinter sich gebracht hatten, mit dieser Frage konfrontiert worden.</s>
+            <s xml:id="DE-0180001010.u6.seg2.s5" synch="#DE-0180001010.T166.28 #DE-0180001010.T180">Dabei ging es aber nicht um die Arbeitssituation im Parlament oder um die Frage, was wir vielleicht unter dem Aspekt, von Kommissionen oder der Erörterung von bestimmten Fragen, die an Vizepräsidentinnen und -präsidenten zu delegieren sind zu klären ist.</s>
+            <s xml:id="DE-0180001010.u6.seg2.s6" synch="#DE-0180001010.T180 #DE-0180001010.T189.48">Darüber hätte man ja sprechen können, und man hätte zu dem Ergebnis kommen können, es gebe vielleicht eine Rechtfertigung dafür, dass wir das Präsidium um eine Position erweitern.</s>
+            <s xml:id="DE-0180001010.u6.seg2.s7" synch="#DE-0180001010.T189.48 #DE-0180001010.T190.76">Aber mitnichten!</s>
+            <s xml:id="DE-0180001010.u6.seg2.s8" synch="#DE-0180001010.T190.76 #DE-0180001010.T206.12">Sie beide haben mich wunderbarerweise am Montagvormittag darüber informiert, dass Sie beide für sich beanspruchen – das Ergebnis der Koalitionsverhandlungen, die Bildung einer Großen Koalition, vorwegnehmend –, dass die Anzahl der Stellvertreter ausgeweitet wird.</s>
+          </seg>
+          <seg xml:id="DE-0180001010.u6.seg3">
+            <s xml:id="DE-0180001010.u6.seg3.s1" synch="#DE-0180001010.T206.12 #DE-0180001010.T216.8">Ich könnte mir sogar noch vorstellen, dass von Ihrer Seite das Argument kommt: Wir sind eine Fraktion, die über 41 Prozent der Sitze im Deutschen Bundestag hat.</s>
+            <s xml:id="DE-0180001010.u6.seg3.s2" synch="#DE-0180001010.T216.8 #DE-0180001010.T224.08">Es gibt durch die 631 Abgeordneten mehr zu tun, auch für die Vizepräsidentinnen und -präsidenten. –</s>
+            <s xml:id="DE-0180001010.u6.seg3.s3" synch="#DE-0180001010.T224.08 #DE-0180001010.T235.68">Aber jetzt, liebe Kolleginnen und Kollegen von der SPD, argumentieren Sie nach dem Motto: Wir müssen auf Augenhöhe mit der CDU/CSU sein, und deshalb sorgen wir jetzt für eine Gleichziehung bei der Anzahl der Stellvertreter.</s>
+            <s xml:id="DE-0180001010.u6.seg3.s4" synch="#DE-0180001010.T235.68 #DE-0180001010.T236.24">Ich bitte Sie!</s>
+            <s xml:id="DE-0180001010.u6.seg3.s5" synch="#DE-0180001010.T236.24 #DE-0180001010.T247.08">Wir können doch die Frage der Anzahl der Vizepräsidentinnen und -präsidenten nicht danach beantworten, was Sie in Ihren Koalitionsverhandlungen möglicherweise besprechen.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall beim BÜNDNIS 90/DIE GRÜNEN und bei der LINKEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001010.u7" who="#Q920726" ana="#regular" start="#DE-0180001010.T247.08" end="#DE-0180001010.T288.32">
+          <seg xml:id="DE-0180001010.u7.seg1">
+            <s xml:id="DE-0180001010.u7.seg1.s1" synch="#DE-0180001010.T247.08 #DE-0180001010.T260.08">Das Signal an die Öffentlichkeit ist eben nicht: Die Erweiterung des Präsidiums rechtfertigt sich aus sachlichen Gründen.</s>
+            <s xml:id="DE-0180001010.u7.seg1.s2" synch="#DE-0180001010.T260.08 #DE-0180001010.T269.64">Wenn ich ein Argument wie „Augenhöhe mit der CDU/CSU“ lese, denke ich, das ist doch keine sachliche Begründung.</s>
+            <s xml:id="DE-0180001010.u7.seg1.s3" synch="#DE-0180001010.T269.64 #DE-0180001010.T283.64">Die Ausweitung des Präsidiums ist für die Öffentlichkeit eigentlich nur dahin gehend eine Bestätigung, dass man denkt: Große Koalition bedeutet, das kostet etwas. –</s>
+            <s xml:id="DE-0180001010.u7.seg1.s4" synch="#DE-0180001010.T283.64 #DE-0180001010.T288.32">Damit werden wir doch in der Öffentlichkeit konfrontiert.</s>
+          </seg>
+        </u>
+        <kinesic type="applause">
+          <desc>Beifall bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN</desc>
+        </kinesic>
+        <u xml:id="DE-0180001010.u8" who="#Q920726" ana="#regular" start="#DE-0180001010.T288.32" end="#DE-0180001010.T324">
+          <seg xml:id="DE-0180001010.u8.seg1">
+            <s xml:id="DE-0180001010.u8.seg1.s1" synch="#DE-0180001010.T288.32 #DE-0180001010.T292.6">Sie treten heute hier den Beweis dafür an.</s>
+          </seg>
+          <seg xml:id="DE-0180001010.u8.seg2">
+            <s xml:id="DE-0180001010.u8.seg2.s1" synch="#DE-0180001010.T292.6 #DE-0180001010.T296.4">Wir lehnen diesen Antrag ab.</s>
+            <s xml:id="DE-0180001010.u8.seg2.s2" synch="#DE-0180001010.T296.4 #DE-0180001010.T323.08">Selbstverständlich ist das keine Entscheidung gegen die einzelnen Personen, die hier vorgeschlagen werden; um auch das in aller Deutlichkeit zu sagen.</s>
+          </seg>
+          <seg xml:id="DE-0180001010.u8.seg3">
+            <s xml:id="DE-0180001010.u8.seg3.s1" synch="#DE-0180001010.T323.08 #DE-0180001010.T324">Vielen Dank für die Aufmerksamkeit.</s>
+          </seg>
+        </u>
+        <timeline unit="s" origin="#DE-0180001011.origin" corresp="#rec.DE-0180001011.video">
+          <when xml:id="DE-0180001011.origin" absolute="2013-10-22T13:13:45+02:00"/>
+          <when xml:id="DE-0180001011.T1" interval="1" since="#DE-0180001011.origin"/>
+          <when xml:id="DE-0180001011.T5.96" interval="5.96" since="#DE-0180001011.origin"/>
+          <when xml:id="DE-0180001011.T8.66" interval="8.66" since="#DE-0180001011.origin"/>
+          <when xml:id="DE-0180001011.T11.7" interval="11.7" since="#DE-0180001011.origin"/>
+          <when xml:id="DE-0180001011.T14.28" interval="14.28" since="#DE-0180001011.origin"/>
+          <when xml:id="DE-0180001011.T24.2" interval="24.2" since="#DE-0180001011.origin"/>
+          <when xml:id="DE-0180001011.T29.48" interval="29.48" since="#DE-0180001011.origin"/>
+          <when xml:id="DE-0180001011.T33" interval="33" since="#DE-0180001011.origin"/>
+        </timeline>
+        <u xml:id="DE-0180001011.u1" who="#Q57474" ana="#chair" start="#DE-0180001011.T1" end="#DE-0180001011.T33">
+          <seg xml:id="DE-0180001011.u1.seg1">
+            <s xml:id="DE-0180001011.u1.seg1.s1" synch="#DE-0180001011.T1 #DE-0180001011.T5.96">Ich lasse nun über den Antrag der CDU/CSU-Fraktion und der SPD-Fraktion auf Drucksache 18/2 abstimmen.</s>
+            <s xml:id="DE-0180001011.u1.seg1.s2" synch="#DE-0180001011.T5.96 #DE-0180001011.T8.66">Wer diesem Antrag zustimmt, den bitte ich um das Handzeichen. –</s>
+            <s xml:id="DE-0180001011.u1.seg1.s3" synch="#DE-0180001011.T8.66 #DE-0180001011.T11.7">Wer stimmt dagegen? –</s>
+            <s xml:id="DE-0180001011.u1.seg1.s4" synch="#DE-0180001011.T11.7 #DE-0180001011.T14.28">Wer enthält sich der Stimme? –</s>
+            <s xml:id="DE-0180001011.u1.seg1.s5" synch="#DE-0180001011.T14.28 #DE-0180001011.T24.2">Damit ist dieser Antrag mit den Stimmen der antragstellenden Fraktionen gegen die Stimmen der Fraktionen Bündnis 90/Die Grünen und Die Linke angenommen.</s>
+            <s xml:id="DE-0180001011.u1.seg1.s6" synch="#DE-0180001011.T24.2 #DE-0180001011.T29.48">Damit ist die Zahl der Stellvertreter des Präsidenten auf sechs festgelegt.</s>
+          </seg>
+          <seg xml:id="DE-0180001011.u1.seg2">
+            <s xml:id="DE-0180001011.u1.seg2.s1" synch="#DE-0180001011.T29.48 #DE-0180001011.T33">Damit kommen wir nun zum Tagesordnungspunkt 6:</s>
+          </seg>
+        </u>
+      </div>
+      <div type="debateSection">
+        <head>Wahl der Vizepräsidenten</head>
+        <timeline unit="s" origin="#DE-0180001012.origin" corresp="#rec.DE-0180001012.video">
+          <when xml:id="DE-0180001012.origin" absolute="2013-10-22T13:14:18+02:00"/>
+          <when xml:id="DE-0180001012.T1" interval="1" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T7.78" interval="7.78" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T22.62" interval="22.62" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T24.8" interval="24.8" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T27.34" interval="27.34" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T29.28" interval="29.28" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T51.18" interval="51.18" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T54.86" interval="54.86" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T56.54" interval="56.54" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T61.88" interval="61.88" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T67.44" interval="67.44" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T73.04" interval="73.04" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T86.44" interval="86.44" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T91.88" interval="91.88" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T96.46" interval="96.46" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T102.36" interval="102.36" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T141.28" interval="141.28" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T145" interval="145" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T174.16" interval="174.16" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T1641.64" interval="1641.64" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T1684.88" interval="1684.88" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T5916.54" interval="5916.54" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T5955.6" interval="5955.6" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T5975.16" interval="5975.16" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T5976.48" interval="5976.48" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6004.2" interval="6004.2" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6013.88" interval="6013.88" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6029.8" interval="6029.8" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6054.2" interval="6054.2" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6056.32" interval="6056.32" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6081.72" interval="6081.72" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6084.68" interval="6084.68" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6099.6" interval="6099.6" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6153.92" interval="6153.92" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6192.52" interval="6192.52" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6202.4" interval="6202.4" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6287.78" interval="6287.78" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6305.4" interval="6305.4" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6321.28" interval="6321.28" since="#DE-0180001012.origin"/>
+          <when xml:id="DE-0180001012.T6340" interval="6340" since="#DE-0180001012.origin"/>
+        </timeline>
+        <u xml:id="DE-0180001012.u1" who="#Q57474" ana="#chair" start="#DE-0180001012.T1" end="#DE-0180001012.T6340">
+          <seg xml:id="DE-0180001012.u1.seg1">
+            <s xml:id="DE-0180001012.u1.seg1.s1" synch="#DE-0180001012.T1 #DE-0180001012.T7.78">Nach unserer Geschäftsordnung erfolgt auch die Wahl der Vizepräsidenten geheim.</s>
+            <s xml:id="DE-0180001012.u1.seg1.s2" synch="#DE-0180001012.T7.78 #DE-0180001012.T22.62">Interfraktionell haben wir vereinbart, die Wahlen der Kandidatinnen und Kandidaten mit Wahlausweis und einer Stimmkarte durchzuführen, auf der alle vorgeschlagenen Kandidatinnen und Kandidaten aufgeführt sind.</s>
+            <s xml:id="DE-0180001012.u1.seg1.s3" synch="#DE-0180001012.T22.62 #DE-0180001012.T24.8">Erhebt sich dagegen Widerspruch? –</s>
+            <s xml:id="DE-0180001012.u1.seg1.s4" synch="#DE-0180001012.T24.8 #DE-0180001012.T27.34">Das ist offensichtlich nicht der Fall.</s>
+            <s xml:id="DE-0180001012.u1.seg1.s5" synch="#DE-0180001012.T27.34 #DE-0180001012.T29.28">Dann können wir so verfahren.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg2">
+            <s xml:id="DE-0180001012.u1.seg2.s1" synch="#DE-0180001012.T29.28 #DE-0180001012.T51.18">Mir liegen folgende Vorschläge der Fraktionen vor: von der Fraktion der CDU/CSU die Kollegen Peter Hintze und Johannes Singhammer, von der Fraktion der SPD die Kolleginnen Edelgard Bulmahn und Ulla Schmidt, von der Fraktion Die Linke die Kollegin Petra Pau sowie von der Fraktion Bündnis 90/Die Grünen die Kollegin Claudia Roth.</s>
+            <s xml:id="DE-0180001012.u1.seg2.s2" synch="#DE-0180001012.T51.18 #DE-0180001012.T54.86">Werden weitere Vorschläge gemacht? –</s>
+            <s xml:id="DE-0180001012.u1.seg2.s3" synch="#DE-0180001012.T54.86 #DE-0180001012.T56.54">Das ist nicht der Fall.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg3">
+            <s xml:id="DE-0180001012.u1.seg3.s1" synch="#DE-0180001012.T56.54 #DE-0180001012.T61.88">Ich darf auch hier einige wenige Hinweise zum Ablauf der Wahl geben.</s>
+            <s xml:id="DE-0180001012.u1.seg3.s2" synch="#DE-0180001012.T61.88 #DE-0180001012.T67.44">Gewählt ist, wer die Stimmen der Mehrheit der Mitglieder des Bundestags erhält; das sind 316 Stimmen.</s>
+            <s xml:id="DE-0180001012.u1.seg3.s3" synch="#DE-0180001012.T67.44 #DE-0180001012.T73.04">Für diesen Wahlgang sind Stimmkarte und Wahlausweis grün.</s>
+            <s xml:id="DE-0180001012.u1.seg3.s4" synch="#DE-0180001012.T73.04 #DE-0180001012.T86.44">Frau Kollegin Haßelmann, Sie sehen, dass ich keine Gelegenheit auslasse, meine Aufgeschlossenheit für Minderheitsinteressen zum Ausdruck zu bringen, auch schon durch die Farbgebung bei Wahlgängen.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg4">
+            <s xml:id="DE-0180001012.u1.seg4.s1" synch="#DE-0180001012.T86.44 #DE-0180001012.T91.88">Den Wahlausweis können Sie wieder, soweit noch nicht erfolgt, Ihren Stimmkartenfächern in der Lobby entnehmen.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg5">
+            <s xml:id="DE-0180001012.u1.seg5.s1" synch="#DE-0180001012.T91.88 #DE-0180001012.T96.46">Die Prozedur ist die gleiche, wie vorhin schon einmal erläutert.</s>
+            <s xml:id="DE-0180001012.u1.seg5.s2" synch="#DE-0180001012.T96.46 #DE-0180001012.T102.36">Auf der Stimmkarte sind alle vorgeschlagenen Kandidatinnen und Kandidaten aufgeführt.</s>
+            <s xml:id="DE-0180001012.u1.seg5.s3" synch="#DE-0180001012.T102.36 #DE-0180001012.T141.28">Sie können und sollten bitte auch zu jedem einzelnen der aufgeführten Kandidaten und zu jeder einzelnen der aufgeführten Kandidatinnen jeweils mit „ja“, „nein“ oder „Enthaltung“ votieren.</s>
+            <s xml:id="DE-0180001012.u1.seg5.s4" synch="#DE-0180001012.T145 #DE-0180001012.T174.16">Wenn bei einem Namen mehr als ein Kreuz oder gar kein Kreuz zu erkennen ist oder wenn andere Namen oder Zusätze auf der Stimmkarte eingetragen sind, ist diese Stimme ungültig.</s>
+            <s xml:id="DE-0180001012.u1.seg5.s5" synch="#DE-0180001012.T174.16 #DE-0180001012.T1641.64">Bevor Sie die Stimmkarte einwerfen, geben Sie auch jetzt wieder bitte dem Schriftführer an der Wahlurne Ihren Wahlausweis.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg6">
+            <s xml:id="DE-0180001012.u1.seg6.s1" synch="#DE-0180001012.T1641.64 #DE-0180001012.T1684.88">Den Hinweis darauf, welche Gänge genutzt werden sollten, brauche ich gar nicht mehr zu geben, weil der größere Teil der Wahlberechtigten sich schon in der Nähe der Kabinen aufhält.</s>
+            <s xml:id="DE-0180001012.u1.seg6.s2" synch="#DE-0180001012.T1684.88 #DE-0180001012.T5916.54">Dort sind hoffentlich auch schon die Schriftführerinnen und Schriftführer.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg7">
+            <s xml:id="DE-0180001012.u1.seg7.s1" synch="#DE-0180001012.T5916.54 #DE-0180001012.T5955.6">Ich darf bereits jetzt darauf aufmerksam machen, dass ich nach Schließen des Wahlgangs die Sitzung für die Auszählung der Stimmen unterbrechen werde.</s>
+            <s xml:id="DE-0180001012.u1.seg7.s2" synch="#DE-0180001012.T5955.6 #DE-0180001012.T5975.16">Stellen Sie sich bitte darauf ein, dass das etwa eine Stunde dauern kann, weil ja ein doch relativ komplexer Wahlgang ausgezählt werden muss.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg8">
+            <s xml:id="DE-0180001012.u1.seg8.s1" synch="#DE-0180001012.T5975.16 #DE-0180001012.T5976.48">Ich eröffne die Wahl.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg9">
+            <s xml:id="DE-0180001012.u1.seg9.s1" synch="#DE-0180001012.T5976.48 #DE-0180001012.T6004.2">Liebe Kolleginnen und Kollegen, darf ich fragen, ob jemand im Saal ist, der seine Stimme noch nicht abgegeben hat?</s>
+            <s xml:id="DE-0180001012.u1.seg9.s2" synch="#DE-0180001012.T6004.2 #DE-0180001012.T6013.88">Oder hat jemand einen gesehen, den er dann nicht mehr gesehen hat und der seine Stimme noch abgeben könnte? –</s>
+            <s xml:id="DE-0180001012.u1.seg9.s3" synch="#DE-0180001012.T6013.88 #DE-0180001012.T6029.8">Dann schließe ich diesen Wahlgang und unterbreche die Sitzung bis zur Bekanntgabe des Ergebnisses der Wahl.</s>
+            <s xml:id="DE-0180001012.u1.seg9.s4" synch="#DE-0180001012.T6029.8 #DE-0180001012.T6054.2">Wir werden den Wiederbeginn der Sitzung rechtzeitig durch entsprechende akustische und optische Signale in den Immobilien des Bundestages ankündigen.</s>
+            <s xml:id="DE-0180001012.u1.seg9.s5" synch="#DE-0180001012.T6056.32 #DE-0180001012.T6081.72">Stellen Sie sich bitte darauf ein, dass es etwa eine Stunde dauern kann, bis wir diesen ja doch umfangreichen Wahlgang mit der gebotenen Sorgfalt ausgezählt haben.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg10">
+            <s xml:id="DE-0180001012.u1.seg10.s1" synch="#DE-0180001012.T6081.72 #DE-0180001012.T6084.68">Die Sitzung ist unterbrochen.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg11">
+            <s xml:id="DE-0180001012.u1.seg11.s1" synch="#DE-0180001012.T6084.68 #DE-0180001012.T6099.6">Die unterbrochene Sitzung ist wieder eröffnet.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg12">
+            <s xml:id="DE-0180001012.u1.seg12.s1" synch="#DE-0180001012.T6099.6 #DE-0180001012.T6153.92">Liebe Kolleginnen und Kollegen, ich kann Ihnen das Ergebnis der Wahl der Stellvertreterinnen und Stellvertreter des Präsidenten bekannt geben: abgegebene Stimmkarten 626. Alle abgegebenen Stimmen waren gültig.</s>
+          </seg>
+          <seg xml:id="DE-0180001012.u1.seg13">
+            <s xml:id="DE-0180001012.u1.seg13.s1" synch="#DE-0180001012.T6153.92 #DE-0180001012.T6192.52">Von den abgegebenen Stimmen sind entfallen auf Peter Hintze 449 Jastimmen, 122 Neinstimmen und 51 Enthaltungen.</s>
+            <s xml:id="DE-0180001012.u1.seg13.s2" synch="#DE-0180001012.T6192.52 #DE-0180001012.T6202.4">In diesem Falle, was mich ein bisschen überrascht, waren 4 Stimmen ungültig.</s>
+            <s xml:id="DE-0180001012.u1.seg13.s3" synch="#DE-0180001012.T6202.4 #DE-0180001012.T6287.78">Das heißt, es gibt keine Stimmkarte, die insgesamt ungültig war, was ja doch auf eine gewisse Pfiffigkeit der neuen wie der alten Kollegen schließen lässt, aber bei einzelnen Wahlgängen ist das offenkundig anders.</s>
+            <s xml:id="DE-0180001012.u1.seg13.s4" synch="#DE-0180001012.T6287.78 #DE-0180001012.T6305.4">Noch einmal: 449 Jastimmen, 122 Neinstimmen, 51 Enthaltungen.</s>
+            <s xml:id="DE-0180001012.u1.seg13.s5" synch="#DE-0180001012.T6305.4 #DE-0180001012.T6321.28">Ich darf das mit Ihrem Einverständnis gleich mit der Frage an die jeweiligen Kolleginnen und Kollegen verbinden, ob sie die Wahl annehmen.</s>
+            <s xml:id="DE-0180001012.u1.seg13.s6" synch="#DE-0180001012.T6321.28 #DE-0180001012.T6340">Ich darf den Kollegen Hintze, der damit die notwendige Mehrheit erkennbar erreicht hat, fragen, ob er die Wahl annimmt.</s>
+          </seg>
+        </u>
+      </div>
+      <div type="debateSection">
+        <head>Nationalhymne</head>
+      </div>
+      <div type="debateSection">
+        <head>Sitzungsende</head>
+      </div>
+    </body>
+  </text>
+</TEI>

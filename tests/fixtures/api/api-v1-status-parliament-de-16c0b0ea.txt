@@ -20,13 +20,13 @@ x-robots-tag: noindex
                 "code": "DE",
                 "label": "Deutscher Bundestag",
                 "repository": {
-                    "location": "",
+                    "location": "https://github.com/OpenParliamentTV/OpenParliamentTV-Data-DE.git",
                     "remote": {
-                        "lastUpdated": null,
-                        "numberOfSessions": 0
+                        "lastUpdated": "<<NORMALIZED>>",
+                        "numberOfSessions": "<<NORMALIZED>>"
                     },
                     "local": {
-                        "lastUpdated": null,
+                        "lastUpdated": "2026-07-14T23:41:22+02:00",
                         "numberOfSessions": 1055
                     }
                 },

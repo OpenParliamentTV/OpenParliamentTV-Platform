@@ -88,6 +88,23 @@ const API_DIFF_ROUNDED_KEYS = [
 ];
 
 /**
+ * Keys that are volatile only underneath a particular parent key, as
+ * parent => [child, ...]. Blanked exactly like API_DIFF_VOLATILE_KEYS, but
+ * scoped, because the same key name elsewhere in the same payload is real
+ * coverage.
+ *
+ * `repository.remote` in action=status is fetched live from the data
+ * repository's forge, so both its values move whenever anyone commits to that
+ * repository — nothing to do with this codebase. A blanket `lastUpdated` rule
+ * would also blank `repository.local`, `database` and `index`, which are the
+ * ones a refactor can actually break. `location` stays pinned: it is config,
+ * not network.
+ */
+const API_DIFF_VOLATILE_NESTED_KEYS = [
+    'remote' => ['lastUpdated', 'numberOfSessions'],
+];
+
+/**
  * Regexes applied to raw (non-JSON) bodies — VTT, XML exports, HTML.
  * Each pair is [pattern, replacement].
  */
@@ -108,17 +125,23 @@ const API_DIFF_HEADERS = ['content-type', 'x-robots-tag', 'location'];
 /**
  * Recursively replace volatile values so two runs of unchanged code compare equal.
  */
-function apiDiffNormalizeJson($node) {
+function apiDiffNormalizeJson($node, $parentKey = null) {
     if (is_array($node)) {
+        $scoped = (is_string($parentKey) && isset(API_DIFF_VOLATILE_NESTED_KEYS[$parentKey]))
+            ? API_DIFF_VOLATILE_NESTED_KEYS[$parentKey]
+            : [];
+
         $out = [];
         foreach ($node as $k => $v) {
             if (is_string($k) && isset(API_DIFF_ROUNDED_KEYS[$k]) && is_numeric($v)) {
                 $out[$k] = round((float) $v, API_DIFF_ROUNDED_KEYS[$k]);
                 continue;
             }
-            $out[$k] = (is_string($k) && in_array($k, API_DIFF_VOLATILE_KEYS, true) && !is_array($v))
-                ? '<<NORMALIZED>>'
-                : apiDiffNormalizeJson($v);
+            $volatile = is_string($k)
+                && !is_array($v)
+                && (in_array($k, API_DIFF_VOLATILE_KEYS, true) || in_array($k, $scoped, true));
+
+            $out[$k] = $volatile ? '<<NORMALIZED>>' : apiDiffNormalizeJson($v, $k);
         }
         return $out;
     }

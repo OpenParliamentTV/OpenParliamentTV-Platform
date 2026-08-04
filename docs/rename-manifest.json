@@ -437,6 +437,40 @@
       "new": "modules/entities/media.php",
       "phase": "5d.2",
       "note": "main-speaker/faction/role helpers only; flattenEntityJSON + translateContextValue stay"
+    },
+    {
+      "old": "api/v1/modules/iiif.php",
+      "new": "modules/iiif/helpers.php",
+      "phase": "5e",
+      "note": "split into helpers/manifest/collection; isIIIFRequest + handleIIIFRequest stay at the API boundary"
+    },
+    {
+      "old": "api/v1/modules/transcript.php",
+      "new": "modules/transcript/vtt.php",
+      "phase": "5e",
+      "note": "generation only; transcriptServeVTT + transcriptSend404 stay at the API boundary"
+    },
+    {
+      "old": "api/v1/modules/export.php",
+      "new": "modules/export/prepare.php",
+      "phase": "5e",
+      "note": "data shaping only; exportRequestedFormat/handleExportRequest/exportServeXML stay at the API boundary"
+    },
+    {
+      "old": "api/v1/modules/akomantoso.php",
+      "new": "modules/export/akomantoso.php",
+      "phase": "5e"
+    },
+    {
+      "old": "api/v1/modules/parlamint.php",
+      "new": "modules/export/parlamint.php",
+      "phase": "5e"
+    },
+    {
+      "old": "api/v1/utilities.php",
+      "new": "modules/database/connections.php",
+      "phase": "5f",
+      "note": "getApiDatabaseConnection -> optvDbConnection. Deliberately NOT a `functions` entry: the old name is still a live envelope-returning compat wrapper, so --check must not flag callers of it. Add it when the wrapper is removed."
     }
   ],
   "functions": [
@@ -860,6 +894,11 @@
       "new": "iiifMediaNode",
       "phase": "5d.2",
       "note": "split into iiifMediaNode()/iiifSessionNode(); the envelope unwrap is gone"
+    },
+    {
+      "old": "handleEntitySuggestionPostProcessing",
+      "new": "entitySuggestionPostProcess",
+      "phase": "5f"
     }
   ]
 }

@@ -1,6 +1,6 @@
 <?php
 
-require_once (__DIR__."/export.php");
+require_once (__DIR__."/prepare.php");
 
 /**
  * Akoma Ntoso 1.0 (OASIS LegalDocML) <debate> generation.

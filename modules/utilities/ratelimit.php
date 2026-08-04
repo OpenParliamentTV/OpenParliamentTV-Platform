@@ -11,10 +11,11 @@
  * Fails open: if the limiter or its DB has any problem, traffic is allowed.
  * The namespace keeps each surface's counters separate for the same client IP.
  *
- * Depends on getApiDatabaseConnection() + SafeMySQL, loaded via api/v1/api.php
- * (which api/v1/index.php includes, and index.php pulls in through
- * modules/routing/handlers.php).
+ * Opens its own platform connection through optvDbConnection(), so it no longer
+ * depends on api/v1/api.php having been loaded first.
  */
+
+require_once(__DIR__ . "/../database/connections.php");
 
 /**
  * Consume one request against the given config block within its namespace.
@@ -64,8 +65,9 @@ function optvRateLimitExceeded(array $cfg, $namespace, $identityOverride = null,
         ? $identityOverride
         : sha1(($config["salt"] ?? '') . '|' . $namespace . '|' . $ip);
 
-    $db = getApiDatabaseConnection('platform');
-    if (!($db instanceof SafeMySQL)) {
+    try {
+        $db = optvDbConnection('platform');
+    } catch (OptvDbException $e) {
         return null; // fail open
     }
     $tbl = $config["platform"]["sql"]["tbl"]["ApiRateLimit"] ?? "apiratelimit";

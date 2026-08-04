@@ -14,7 +14,7 @@ require_once(__DIR__ . "/errors.php");
 require_once(__DIR__ . "/../../config.php");
 require_once(__DIR__ . "/../utilities/functions.php"); // optvParseStringId()
 require_once(__DIR__ . "/../utilities/safemysql.class.php");
-require_once(__DIR__ . "/../../api/v1/utilities.php"); // getApiDatabaseConnection()
+require_once(__DIR__ . "/../database/connections.php"); // optvDbConnection()
 
 /**
  * @param string $id ElectoralPeriodID, e.g. "DE-020".
@@ -39,8 +39,9 @@ function electoralPeriodGetNode($id, $dbp = false)
     $parliamentLabel = $config["parliament"][$parliament]["label"];
 
     if (!is_object($dbp)) {
-        $dbp = getApiDatabaseConnection('parliament', $parliament);
-        if (!is_object($dbp)) {
+        try {
+            $dbp = optvDbConnection('parliament', $parliament);
+        } catch (OptvDbException $e) {
             throw new OptvEntityException("Parliament database unavailable.", "parliament");
         }
     }
