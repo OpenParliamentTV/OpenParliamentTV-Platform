@@ -33,6 +33,9 @@
                         <li class="nav-item">
                             <a class="nav-link" id="settings-apikeys-tab" data-bs-toggle="tab" data-bs-target="#settings-apikeys" role="tab" aria-controls="apikeys" aria-selected="false"><span class="icon-key"></span> <?= L::apiKeys(); ?></a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="settings-entityremap-tab" data-bs-toggle="tab" data-bs-target="#settings-entityremap" role="tab" aria-controls="entityremap" aria-selected="false"><span class="icon-exchange"></span> <?= L::entityRemap(); ?></a>
+                        </li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane bg-white fade show active" id="status" role="tabpanel" aria-labelledby="status-tab">
@@ -273,6 +276,41 @@
                                 </form>
                                 <div id="apiKeyFormError" class="text-danger mb-2"></div>
                                 <table id="apiKeysTable"></table>
+                            </div>
+                        </div>
+                        <div class="tab-pane bg-white fade show" id="settings-entityremap" role="tabpanel" aria-labelledby="settings-entityremap-tab">
+                            <div class="p-3">
+                                <div class="alert alert-info"><?= L::entityRemapIntro(); ?></div>
+                                <form id="entityRemapForm" class="row g-2 align-items-end mb-3">
+                                    <input type="hidden" id="entityRemapId" name="id" value="">
+                                    <div class="col-6 col-md-2">
+                                        <label class="form-label mb-0" for="entityRemapParliament"><?= L::parliament(); ?></label>
+                                        <select class="form-select form-select-sm" id="entityRemapParliament" name="EntityRemapParliament">
+                                            <?php foreach (($config["parliament"] ?? []) as $pCode => $pCfg): ?>
+                                                <option value="<?= hAttr($pCode) ?>"><?= h(($pCfg["label"] ?? $pCode) ?: $pCode) ?></option>
+                                            <?php endforeach; ?>
+                                            <option value=""><?= L::entityRemapAllParliaments(); ?></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6 col-md-2">
+                                        <label class="form-label mb-0" for="entityRemapSource"><?= L::entityRemapSource(); ?></label>
+                                        <input type="text" class="form-control form-control-sm font-monospace" id="entityRemapSource" name="EntityRemapSourceID" maxlength="64" placeholder="Q49766" required>
+                                    </div>
+                                    <div class="col-6 col-md-2">
+                                        <label class="form-label mb-0" for="entityRemapTarget"><?= L::entityRemapTarget(); ?></label>
+                                        <input type="text" class="form-control form-control-sm font-monospace" id="entityRemapTarget" name="EntityRemapTargetID" maxlength="64" placeholder="Q1007353" required>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <label class="form-label mb-0" for="entityRemapNote"><?= L::entityRemapNote(); ?></label>
+                                        <input type="text" class="form-control form-control-sm" id="entityRemapNote" name="EntityRemapDescription" maxlength="255">
+                                    </div>
+                                    <div class="col-6 col-md-2">
+                                        <button type="submit" class="btn btn-primary btn-sm w-100" id="entityRemapSaveBtn"><span class="icon-plus"></span></button>
+                                        <button type="button" class="btn btn-secondary btn-sm w-100 mt-1 d-none" id="entityRemapCancelBtn"><?= L::cancel(); ?></button>
+                                    </div>
+                                </form>
+                                <div id="entityRemapFormError" class="text-danger mb-2"></div>
+                                <table id="entityRemapTable"></table>
                             </div>
                         </div>
                     </div>
@@ -790,6 +828,210 @@
                     error: function (xhr, status, error) {
                         console.error('Error deleting API key:', error, xhr.responseText);
                         alert(errorDetail(xhr.responseJSON, 'Error deleting API key'));
+                    }
+                });
+            });
+
+        });
+
+        // Entity remapping tab: CRUD over the entity_remap table. The create form
+        // doubles as the edit form — the pencil fills it and sets the hidden id,
+        // which switches the submit from addItem to changeItem.
+        $(function () {
+
+            const remapApiRoot = '<?= $config["dir"]["root"] ?>/api/v1/';
+
+            // Translations reach JS as JSON, not as raw interpolations: several of
+            // them contain apostrophes (e.g. the French strings) that would
+            // otherwise break the surrounding string literals.
+            const rt = <?= json_encode([
+                "parliament"      => L::parliament(),
+                "source"          => L::entityRemapSource(),
+                "target"          => L::entityRemapTarget(),
+                "note"            => L::entityRemapNote(),
+                "allParliaments"  => L::entityRemapAllParliaments(),
+                "confirmDelete"   => L::entityRemapConfirmDelete(),
+                "edit"            => L::edit(),
+                "delete"          => L::delete(),
+                "save"            => L::save(),
+            ], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
+
+            // Wikidata ids, notes and parliament codes are admin-supplied free text
+            // and are interpolated into cell markup below, so they must be escaped.
+            function resc(value) {
+                return $('<div>').text(value === null || value === undefined ? '' : value).html();
+            }
+
+            function remapError(response, fallback) {
+                return (response && response.errors && response.errors[0] && response.errors[0].detail)
+                    ? response.errors[0].detail
+                    : fallback;
+            }
+
+            function remapResetForm() {
+                $('#entityRemapForm')[0].reset();
+                $('#entityRemapId').val('');
+                $('#entityRemapFormError').text('');
+                $('#entityRemapSaveBtn').html('<span class="icon-plus"></span>');
+                $('#entityRemapCancelBtn').addClass('d-none');
+            }
+
+            const remapFormatters = {
+                parliamentFormatter: function (value) {
+                    return value
+                        ? resc(value)
+                        : '<span class="text-muted">' + resc(rt.allParliaments) + '</span>';
+                },
+
+                idFormatter: function (value) {
+                    // Link out to Wikidata so an admin can check what an id actually is.
+                    return '<a class="font-monospace" target="_blank" rel="noopener" href="https://www.wikidata.org/wiki/'
+                        + encodeURIComponent(value) + '">' + resc(value) + '</a>';
+                },
+
+                noteFormatter: function (value) {
+                    return value ? resc(value) : '-';
+                },
+
+                operateFormatter: function (value, row) {
+                    return '<div class="list-group list-group-horizontal">' +
+                        '<a class="list-group-item list-group-item-action entityremap-edit" href="#" ' +
+                        'title="' + resc(rt.edit) + '" data-remapid="' + resc(row.EntityRemapID) + '">' +
+                        '<span class="icon-pencil"></span></a>' +
+                        '<a class="list-group-item list-group-item-action entityremap-delete" href="#" ' +
+                        'title="' + resc(rt.delete) + '" data-remapid="' + resc(row.EntityRemapID) + '">' +
+                        '<span class="icon-trash"></span></a>' +
+                        '</div>';
+                }
+            };
+
+            $('#entityRemapTable').bootstrapTable({
+                url: remapApiRoot + '?action=getItemsFromDB&itemType=entityRemap',
+                classes: "table table-striped",
+                locale: "<?= $lang; ?>",
+                search: true,
+                searchAlign: "left",
+                pagination: true,
+                pageSize: 25,
+                pageList: [10, 25, 50, 100, 'all'],
+                sidePagination: 'server',
+                uniqueId: 'EntityRemapID',
+                columns: [
+                    {field: 'EntityRemapID', visible: false},
+                    {field: 'EntityRemapParliament', sortable: true, title: rt.parliament, formatter: remapFormatters.parliamentFormatter},
+                    {field: 'EntityRemapSourceID', sortable: true, title: rt.source, formatter: remapFormatters.idFormatter},
+                    {field: 'EntityRemapTargetID', sortable: true, title: rt.target, formatter: remapFormatters.idFormatter},
+                    {field: 'EntityRemapDescription', sortable: true, title: rt.note, formatter: remapFormatters.noteFormatter},
+                    {field: 'operate', title: '', formatter: remapFormatters.operateFormatter, class: 'minWidthColumn'}
+                ],
+                queryParams: function (params) {
+                    return {
+                        limit: params.limit,
+                        offset: params.offset,
+                        sort: params.sort,
+                        order: params.order,
+                        search: params.search
+                    };
+                },
+                responseHandler: function (res) {
+                    if (!res || !res.data) {
+                        console.error('Invalid response format:', res);
+                        return {total: 0, rows: []};
+                    }
+                    return {total: res.total || 0, rows: res.data};
+                }
+            });
+
+            $('#entityRemapForm').on('submit', function (e) {
+                e.preventDefault();
+
+                const $btn = $('#entityRemapSaveBtn');
+                const $error = $('#entityRemapFormError');
+                const id = $('#entityRemapId').val();
+                $error.text('');
+                $btn.prop('disabled', true);
+
+                const payload = {
+                    action: id ? 'changeItem' : 'addItem',
+                    itemType: 'entityRemap',
+                    EntityRemapParliament: $('#entityRemapParliament').val(),
+                    EntityRemapSourceID: $('#entityRemapSource').val(),
+                    EntityRemapTargetID: $('#entityRemapTarget').val(),
+                    EntityRemapDescription: $('#entityRemapNote').val()
+                };
+                if (id) {
+                    payload.id = id;
+                }
+
+                $.ajax({
+                    url: remapApiRoot,
+                    method: 'POST',
+                    data: payload,
+                    success: function (response) {
+                        $btn.prop('disabled', false);
+                        if (response && response.meta && response.meta.requestStatus === 'success') {
+                            remapResetForm();
+                            $('#entityRemapTable').bootstrapTable('refresh');
+                        } else {
+                            $error.text(remapError(response, 'Failed to save mapping'));
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        $btn.prop('disabled', false);
+                        console.error('Error saving entity remapping:', error, xhr.responseText);
+                        $error.text(remapError(xhr.responseJSON, 'Error saving mapping'));
+                    }
+                });
+            });
+
+            $('#entityRemapCancelBtn').on('click', remapResetForm);
+
+            $(document).on('click', '.entityremap-edit', function (e) {
+                e.preventDefault();
+
+                const row = $('#entityRemapTable').bootstrapTable('getRowByUniqueId', $(this).data('remapid'));
+                if (!row) {
+                    return;
+                }
+
+                $('#entityRemapId').val(row.EntityRemapID);
+                $('#entityRemapParliament').val(row.EntityRemapParliament || '');
+                $('#entityRemapSource').val(row.EntityRemapSourceID);
+                $('#entityRemapTarget').val(row.EntityRemapTargetID);
+                $('#entityRemapNote').val(row.EntityRemapDescription);
+                $('#entityRemapFormError').text('');
+                $('#entityRemapSaveBtn').html('<span class="icon-ok"></span> ' + resc(rt.save));
+                $('#entityRemapCancelBtn').removeClass('d-none');
+                $('#entityRemapSource').trigger('focus');
+            });
+
+            $(document).on('click', '.entityremap-delete', function (e) {
+                e.preventDefault();
+
+                if (!confirm(rt.confirmDelete)) {
+                    return;
+                }
+
+                const id = $(this).data('remapid');
+
+                $.ajax({
+                    url: remapApiRoot,
+                    method: 'POST',
+                    data: {action: 'deleteItem', itemType: 'entityRemap', id: id},
+                    success: function (response) {
+                        if (response && response.meta && response.meta.requestStatus === 'success') {
+                            // The row being edited just vanished — drop the edit state.
+                            if (String($('#entityRemapId').val()) === String(id)) {
+                                remapResetForm();
+                            }
+                            $('#entityRemapTable').bootstrapTable('refresh');
+                        } else {
+                            alert(remapError(response, 'Failed to delete mapping'));
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error deleting entity remapping:', error, xhr.responseText);
+                        alert(remapError(xhr.responseJSON, 'Error deleting mapping'));
                     }
                 });
             });

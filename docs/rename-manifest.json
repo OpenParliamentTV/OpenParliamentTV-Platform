@@ -223,8 +223,8 @@
     },
     {
       "old": "data/entity-dump/function.entityDump.php",
-      "new": "data/entity-dump/entity-dump.php",
-      "phase": "4.3c"
+      "new": "api/v1/modules/entity-dump.php",
+      "phase": "5.1"
     },
     {
       "old": "content/pages/media/content.player.php",
@@ -667,6 +667,11 @@
       "old": "getFilesWithDates",
       "new": "importGitSyncSessionFiles",
       "phase": "3"
+    },
+    {
+      "old": "getEntityDump",
+      "new": "entityDumpGet",
+      "phase": "5.1"
     }
   ]
 }

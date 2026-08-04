@@ -99,6 +99,22 @@
 /api/v1/search/media?q=klima&limit=99999
 /api/v1/?itemType=person&id=Q132733606
 
+# --- admin-only itemTypes stay admin-only ----------------------------------
+# Only the anonymous 403 is pinned, not an admin row dump: entity_remap rows are
+# operator-edited data, so a fixture of them would fail on every legitimate edit.
+# What must not drift is that the action is refused without an admin session.
+/api/v1/?action=getItemsFromDB&itemType=entityRemap
+
+# --- entity dump ------------------------------------------------------------
+# Bulk export consumed by external NEL pipelines, which parse the body verbatim.
+# Served outside the JSON envelope with its own encoder flags (JSON_HEX_QUOT |
+# JSON_HEX_APOS), so only a byte comparison catches drift. The legacy
+# /data/entity-dump path 301s here and is pinned too.
+/api/v1/entityDump/organisation
+/api/v1/entityDump/term
+/api/v1/entityDump?type=organisation
+/data/entity-dump/?type=organisation
+
 # --- direct-served AJAX fragments -------------------------------------------
 # These are fetched by JS, not by the router, and their URLs are string-built in
 # JS (`result-${view}.php`), so no static check catches a rename breaking them.

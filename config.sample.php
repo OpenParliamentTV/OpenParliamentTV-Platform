@@ -168,6 +168,7 @@ $config["platform"]["sql"]["tbl"]["SystemMessage"] = "system_message";
 $config["platform"]["sql"]["tbl"]["NotificationPreference"] = "notification_preference";
 $config["platform"]["sql"]["tbl"]["ApiRateLimit"] = "apiratelimit";
 $config["platform"]["sql"]["tbl"]["ApiKey"] = "apikey";
+$config["platform"]["sql"]["tbl"]["EntityRemap"] = "entity_remap";
 
 /**
  * Request rate limiting. Two independent surfaces, both DB-backed fixed-window

@@ -968,10 +968,10 @@ function processTextContentSentence($sentence, $entities = []) {
  * @param SafeMySQL $dbp Parliament database connection
  * @param array $config Global config
  * @param array $entityDump Entity dump
- * @param array $todoMapping Todo mapping
+ * @param array $entityRemap Wikidata id corrections (source id => target id)
  * @return void
  */
-function processTextContent($textContent, $mediaID, $parliament, $dbp, $config, $entityDump, $todoMapping) {
+function processTextContent($textContent, $mediaID, $parliament, $dbp, $config, $entityDump, $entityRemap) {
     if (gettype($textContent["textBody"]) == "string") {
         $textContent["textBody"] = json_decode($textContent["textBody"], true);
     }
@@ -997,9 +997,11 @@ function processTextContent($textContent, $mediaID, $parliament, $dbp, $config, 
                         continue;
                     }
 
-                    //TODO: As long as NER is mapping factions to wrong wids this is a hotfix
-                    if (array_key_exists($entity["wid"], $todoMapping)) {
-                        $entity["wid"] = $todoMapping[$entity["wid"]]["routing"];
+                    // Correct known NER mis-resolutions (party id where the
+                    // faction is meant, regional variant where the platform
+                    // tracks the national entity).
+                    if (isset($entityRemap[$entity["wid"]])) {
+                        $entity["wid"] = $entityRemap[$entity["wid"]];
                     }
 
                     if (!array_key_exists($entity["wid"], $entityDump["data"])) {
@@ -1169,16 +1171,16 @@ function processTextContent($textContent, $mediaID, $parliament, $dbp, $config, 
  * @param SafeMySQL $dbp Parliament database connection
  * @param array $config Global config
  * @param array $entityDump Entity dump
- * @param array $todoMapping Todo mapping
+ * @param array $entityRemap Wikidata id corrections (source id => target id)
  * @return void
  */
-function processTextContents($textContents, $mediaID, $parliament, $dbp, $config, $entityDump, $todoMapping) {
+function processTextContents($textContents, $mediaID, $parliament, $dbp, $config, $entityDump, $entityRemap) {
     if (!is_array($textContents)) {
         return;
     }
 
     foreach ($textContents as $textContent) {
-        processTextContent($textContent, $mediaID, $parliament, $dbp, $config, $entityDump, $todoMapping);
+        processTextContent($textContent, $mediaID, $parliament, $dbp, $config, $entityDump, $entityRemap);
     }
 }
 
@@ -1522,14 +1524,14 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
         }
         */
 
-        //TODO: As long as NER is mapping factions to wrong wids this is a hotfix
-        ob_start();
-        include(__DIR__."/../../../data/ner-matching.php");
-        $todoMapping = json_decode(ob_get_clean(),true);
+        // NER regularly returns a party id where the speech means the faction —
+        // the entity_remap table corrects those before annotations are written.
+        require_once (__DIR__."/entity-remap.php");
+        $entityRemap = entityRemapGetMap($item["parliament"], $db);
 
         if (!$entityDump) {
-            require_once (__DIR__."/../../../data/entity-dump/entity-dump.php");
-            $entityDump = getEntityDump(array("type"=>"all","wiki"=>true,"wikikeys"=>"true"),$db);
+            require_once (__DIR__."/entity-dump.php");
+            $entityDump = entityDumpGet(array("type"=>"all","wiki"=>true,"wikikeys"=>"true"),$db);
         }
         
         // DE alignment pipeline: only import text when media-speech link is confident.
@@ -1550,7 +1552,7 @@ function mediaAdd($item = false, $db = false, $dbp = false, $entityDump = false)
             );
 
             // Process text contents
-            processTextContents($item["textContents"], $nextID, $item["parliament"], $dbp, $config, $entityDump, $todoMapping);
+            processTextContents($item["textContents"], $nextID, $item["parliament"], $dbp, $config, $entityDump, $entityRemap);
         }
 
         // Process documents if provided

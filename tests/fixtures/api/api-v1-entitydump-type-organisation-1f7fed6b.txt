@@ -1,0 +1,1736 @@
+HTTP 200
+content-type: application/json; charset=utf-8
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "organisations_count": 179,
+        "total_count": 179
+    },
+    "data": [
+        {
+            "id": "Q1005427",
+            "label": "BBK",
+            "labelAlternative": [
+                "Bundesamt für Bevölkerungsschutz und Katastrophenhilfe",
+                "Bundesamt für Katastrophenhilfe",
+                "Fachinformationsstelle Zivil- und Katastrophenschutz"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1005444",
+            "label": "BfJ",
+            "labelAlternative": [
+                "Bundesamt für Justiz",
+                "Bundesjustizamt"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1005470",
+            "label": "BAMF",
+            "labelAlternative": [
+                "Bundesamt für Migration und Flüchtlinge",
+                "Bundesamt für die Anerkennung ausländischer Flüchtlinge",
+                "BAFI"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1005535",
+            "label": "BImA",
+            "labelAlternative": [
+                "Bundesanstalt für Immobilienaufgaben"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1006215",
+            "label": "BfArM",
+            "labelAlternative": [
+                "Bundesinstitut für Arzneimittel und Medizinprodukte",
+                "Bfarm",
+                "Deutsche Arzneimittel- und Medizinprodukteagentur"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1007353",
+            "label": "DIE GRÜNEN",
+            "labelAlternative": [
+                "Bundestagsfraktion Bündnis 90/Die Grünen",
+                "Bündnis 90/Die Grünen Bundestagsfraktion",
+                "BÜNDNIS 90/DIE GRÜNEN"
+            ],
+            "type": "organisation",
+            "subType": "faction"
+        },
+        {
+            "id": "Q1009321",
+            "label": "BZgA",
+            "labelAlternative": [
+                "Bundeszentrale für gesundheitliche Aufklärung",
+                "BZGA",
+                "Gib Aids keine Chance",
+                "Machs mit",
+                "Mach's mit",
+                "Bundeszentrale für Gesundheitliche Aufklärung"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1023134",
+            "label": "CDU/CSU",
+            "labelAlternative": [
+                "CDU/CSU-Bundestagsfraktion",
+                "CDU/CSU-Fraktion",
+                "Unionsfraktion",
+                "CDU-Fraktion"
+            ],
+            "type": "organisation",
+            "subType": "faction"
+        },
+        {
+            "id": "Q102673",
+            "label": "Gazprom",
+            "labelAlternative": [
+                "PAO Gazprom"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1065",
+            "label": "UNO",
+            "labelAlternative": [
+                "Vereinte Nationen",
+                "UN",
+                "VN",
+                "Völkergemeinschaft",
+                "????????"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1130098",
+            "label": "ESM",
+            "labelAlternative": [
+                "Europäischer Stabilitätsmechanismus"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1144473",
+            "label": "CureVac",
+            "labelAlternative": [
+                "CureVac GmbH"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1203253",
+            "label": "DKG",
+            "labelAlternative": [
+                "Deutsche Krankenhausgesellschaft"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1203773",
+            "label": "DRV",
+            "labelAlternative": [
+                "Deutsche Rentenversicherung"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1204319",
+            "label": "DUH",
+            "labelAlternative": [
+                "Deutsche Umwelthilfe e. V.",
+                "Deutsche Umwelthilfe"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1204738",
+            "label": "Deutscher Ethikrat",
+            "labelAlternative": [
+                "Nationaler Ethikrat",
+                "Ethikrat",
+                "Nationaler Ethikrat Deutschlands"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1205114",
+            "label": "Deutscher Mieterbund",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1205732",
+            "label": "DIMR",
+            "labelAlternative": [
+                "Deutsches Institut für Menschenrechte"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q122880",
+            "label": "EGMR",
+            "labelAlternative": [
+                "Europäischer Gerichtshof für Menschenrechte"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q127785176",
+            "label": "BSW",
+            "labelAlternative": [
+                "Gruppe BSW",
+                "Gruppe BSW im Bundestag",
+                "BSW (Gruppe)",
+                "BSW Gruppe"
+            ],
+            "type": "organisation",
+            "subType": "faction"
+        },
+        {
+            "id": "Q128781",
+            "label": "Wehrmacht",
+            "labelAlternative": [
+                "Deutsche Wehrmacht"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q13124",
+            "label": "FDP",
+            "labelAlternative": [
+                "Freie Demokratische Partei",
+                "F.D.P.",
+                "Freie Demokraten",
+                "Die Liberalen"
+            ],
+            "type": "organisation",
+            "subType": "party"
+        },
+        {
+            "id": "Q132551",
+            "label": "UNHCR",
+            "labelAlternative": [
+                "Hoher Flüchtlingskommissar der Vereinten Nationen"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q138133",
+            "label": "RWE AG",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1387991",
+            "label": "FDP",
+            "labelAlternative": [
+                "FDP-Bundestagsfraktion",
+                "FDP-Fraktion",
+                "Fraktion der Freien Demokraten"
+            ],
+            "type": "organisation",
+            "subType": "faction"
+        },
+        {
+            "id": "Q1423161",
+            "label": "KBA",
+            "labelAlternative": [
+                "Kraftfahrt-Bundesamt",
+                "Kraftfahrtbundesamt"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1476836",
+            "label": "PEI",
+            "labelAlternative": [
+                "Paul-Ehrlich-Institut"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1478016",
+            "label": "BA",
+            "labelAlternative": [
+                "Bundesagentur für Arbeit",
+                "Arbeitsagentur",
+                "Bundesanstalt für Arbeit",
+                "Arbeitsamt",
+                "Agentur für Arbeit"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1518827",
+            "label": "EuGH",
+            "labelAlternative": [
+                "Europäischer Gerichtshof"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q152554",
+            "label": "PDS",
+            "labelAlternative": [
+                "Partei des Demokratischen Sozialismus",
+                "Linkspartei.PDS",
+                "Die Linkspartei.",
+                "SED/PDS",
+                "Die Linke.PDS",
+                "Die Linkspartei.PDS",
+                "Die Linkspartei. e. V."
+            ],
+            "type": "organisation",
+            "subType": "party"
+        },
+        {
+            "id": "Q153770",
+            "label": "DW",
+            "labelAlternative": [
+                "Deutsche Welle"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q153846",
+            "label": "Ministerium für Staatssicherheit",
+            "labelAlternative": [
+                "Stasi"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q155228",
+            "label": "DIW",
+            "labelAlternative": [
+                "Deutsches Institut für Wirtschaftsforschung"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q157033",
+            "label": "Goethe-Institut",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q157617",
+            "label": "Commerzbank AG",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q157645",
+            "label": "Deutsche Post AG",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q158085",
+            "label": "Max-Planck-Gesellschaft",
+            "labelAlternative": [
+                "Max-Planck-Gesellschaft zur Förderung der Wissenschaften"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q160120",
+            "label": "Huawei",
+            "labelAlternative": [
+                "Huawei Technologies"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q161057",
+            "label": "Fraunhofer-Gesellschaft",
+            "labelAlternative": [
+                "Fraunhofer-Gesellschaft zur Förderung der angewandten Forschung"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q161544",
+            "label": "Rheinmetall AG",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q161545",
+            "label": "SSW",
+            "labelAlternative": [
+                "Südschleswigscher Wählerverband",
+                "Partei der dänischen Minderheit",
+                "Süd Schleswigscher Wählerverband",
+                "Söödschlaswiksche Wäälerferbånd",
+                "Sydslesvigsk Vælgerforening"
+            ],
+            "type": "organisation",
+            "subType": "party"
+        },
+        {
+            "id": "Q162222",
+            "label": "Deutsche Bundesbank",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q162684",
+            "label": "Charité",
+            "labelAlternative": [
+                "Charité  – Universitätsmedizin Berlin"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q166020",
+            "label": "BMFSFJ",
+            "labelAlternative": [
+                "Bundesministerium für Familie, Senioren, Frauen und Jugend",
+                "Bundesfamilienministerium",
+                "Bundesministerium für Frauen und Jugend"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1664805",
+            "label": "IAB",
+            "labelAlternative": [
+                "Institut für Arbeitsmarkt- und Berufsforschung"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q171183",
+            "label": "IPCC",
+            "labelAlternative": [
+                "Intergovernmental Panel on Climate Change"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1826856",
+            "label": "DIE LINKE",
+            "labelAlternative": [
+                "Bundestagsfraktion Die Linke"
+            ],
+            "type": "organisation",
+            "subType": "faction"
+        },
+        {
+            "id": "Q190742",
+            "label": "ZdJ",
+            "labelAlternative": [
+                "Zentralrat der Juden in Deutschland"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q192247",
+            "label": "EIB",
+            "labelAlternative": [
+                "Europäische Investitionsbank",
+                "European Investment Bank"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q1968237",
+            "label": "NKR",
+            "labelAlternative": [
+                "Nationaler Normenkontrollrat"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q19839259",
+            "label": "Uniper SE",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q205650",
+            "label": "UN-Menschenrechtsrat",
+            "labelAlternative": [
+                "UN Human Rights Council",
+                "United Nations Human Rights Council"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q206921",
+            "label": "Pfizer",
+            "labelAlternative": [
+                "Pfizer Inc."
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q212900",
+            "label": "Lehman Brothers",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q21786841",
+            "label": "Frontex",
+            "labelAlternative": [
+                "Europäische Agentur für die Grenz- und Küstenwache"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q219635",
+            "label": "BlackRock",
+            "labelAlternative": [
+                "BlackRock, Inc."
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q2207512",
+            "label": "SPD",
+            "labelAlternative": [
+                "SPD-Bundestagsfraktion",
+                "SPD-Fraktion"
+            ],
+            "type": "organisation",
+            "subType": "faction"
+        },
+        {
+            "id": "Q22748",
+            "label": "Die PARTEI",
+            "labelAlternative": [
+                "Partei für Arbeit, Rechtsstaat, Tierschutz, Elitenförderung und basisdemokratische Initiative"
+            ],
+            "type": "organisation",
+            "subType": "party"
+        },
+        {
+            "id": "Q22868",
+            "label": "RT",
+            "labelAlternative": [
+                "Russia Today"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q2311",
+            "label": "Airbus",
+            "labelAlternative": [
+                "Airbus SE"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q23317",
+            "label": "Audi",
+            "labelAlternative": [
+                "Audi AG"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q2360189",
+            "label": "STIKO",
+            "labelAlternative": [
+                "Ständige Impfkommission"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q2415493",
+            "label": "parteilos",
+            "labelAlternative": [
+                "parteilos"
+            ],
+            "type": "organisation",
+            "subType": "party"
+        },
+        {
+            "id": "Q2429253",
+            "label": "IS",
+            "labelAlternative": [
+                "Islamischer Staat"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q246",
+            "label": "VW",
+            "labelAlternative": [
+                "Volkswagen"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q2491722",
+            "label": "UBA",
+            "labelAlternative": [
+                "Umweltbundesamt"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q2514275",
+            "label": "Verbraucherzentrale",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q257906",
+            "label": "BSI",
+            "labelAlternative": [
+                "Bundesamt für Sicherheit in der Informationstechnik"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q2586210",
+            "label": "Wissenschaftliche Dienste des Deutschen Bundestages",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q26678",
+            "label": "BMW",
+            "labelAlternative": [
+                "Bayerische Motoren Werke AG"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q269138",
+            "label": "BNetzA",
+            "labelAlternative": [
+                "Bundesnetzagentur",
+                "Bundesnetzagentur für Elektrizität, Gas, Telekommunikation, Post und Eisenbahnen",
+                "Regulierungsbehörde für Telekommunikation und Post",
+                "RegTP"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q272969",
+            "label": "BND",
+            "labelAlternative": [
+                "Bundesnachrichtendienst"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q289953",
+            "label": "ADAC",
+            "labelAlternative": [
+                "Allgemeiner Deutscher Automobil-Club",
+                "Allgemeiner Deutscher Automobil-Club e. V."
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q29325",
+            "label": "NSU",
+            "labelAlternative": [
+                "Nationalsozialistischer Untergrund"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q30256699",
+            "label": "BioNTech",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q310522",
+            "label": "BfV",
+            "labelAlternative": [
+                "Bundesamt für Verfassungsschutz",
+                "Bundesverfassungsschutz"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q312",
+            "label": "Apple",
+            "labelAlternative": [
+                "Apple Computer Inc.",
+                "Apple Computer Incorporated",
+                "Apple Incorporated",
+                "Apple Computer, Inc.",
+                "Apple Computer Inc",
+                "Apple Computer",
+                "Apple Inc."
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q314055",
+            "label": "Toll Collect GmbH",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q314211",
+            "label": "BaFin",
+            "labelAlternative": [
+                "Bundesanstalt für Finanzdienstleistungsaufsicht"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q314296",
+            "label": "DPMA",
+            "labelAlternative": [
+                "Deutsches Patent- und Markenamt"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q317027",
+            "label": "BKAmt",
+            "labelAlternative": [
+                "Bundeskanzleramt"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q317555",
+            "label": "Bertelsmann Stiftung",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q319539",
+            "label": "BdSt",
+            "labelAlternative": [
+                "Bund der Steuerzahler",
+                "Steuerzahlerbund",
+                "Bund der Steuerzahler Deutschland e. V."
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q323728",
+            "label": "DOSB",
+            "labelAlternative": [
+                "Deutscher Olympischer Sportbund"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q325778",
+            "label": "GEW",
+            "labelAlternative": [
+                "Gewerkschaft Erziehung und Wissenschaft"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q329301",
+            "label": "BDI",
+            "labelAlternative": [
+                "Bundesverband der Deutschen Industrie e. V.",
+                "Bundesverband der Deutschen Industrie"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q34490",
+            "label": "Al-Qaida",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q37470",
+            "label": "Weltsicherheitsrat",
+            "labelAlternative": [
+                "Sicherheitsrat der Vereinten Nationen"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q38799",
+            "label": "Hamas",
+            "labelAlternative": [
+                "Harakat al-Muqawama al-Islamiya"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q3884",
+            "label": "Amazon",
+            "labelAlternative": [
+                "Amazon.com, Inc.",
+                "Amazon.com"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q41053",
+            "label": "Hisbollah",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q41550",
+            "label": "OECD",
+            "labelAlternative": [
+                "Organisation für wirtschaftliche Zusammenarbeit und Entwicklung",
+                "Organisation for Economic Co-operation and Development",
+                "Organisation für Europäische Wirtschaftliche Zusammenarbeit"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q42418",
+            "label": "Taliban",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q42575708",
+            "label": "AfD",
+            "labelAlternative": [
+                "AfD-Bundestagsfraktion",
+                "AfD-Fraktion"
+            ],
+            "type": "organisation",
+            "subType": "faction"
+        },
+        {
+            "id": "Q42970",
+            "label": "Amnesty International",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q4316268",
+            "label": "fraktionslos",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "faction"
+        },
+        {
+            "id": "Q450394",
+            "label": "BKartA",
+            "labelAlternative": [
+                "Bundeskartellamt"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q451778",
+            "label": "Amadeu Antonio Stiftung",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q457241",
+            "label": "Warburg Bank",
+            "labelAlternative": [
+                "M. M. Warburg & CO"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q458",
+            "label": "EU",
+            "labelAlternative": [
+                "Europäische Union"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q462763",
+            "label": "GIZ",
+            "labelAlternative": [
+                "Deutsche Gesellschaft für Internationale Zusammenarbeit GmbH",
+                "Deutsche Gesellschaft für Internationale Zusammenarbeit"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q47488",
+            "label": "Internationaler Strafgerichtshof",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q488589",
+            "label": "BMWK",
+            "labelAlternative": [
+                "Bundesministerium für Wirtschaft und Klimaschutz",
+                "Bundesministerium für Wirtschaft und Energie",
+                "Bundesministerium für Wirtschaft",
+                "Bundesministerium für Wirtschaft und Arbeit",
+                "Bundesministerium für Wirtschaft und Technologie",
+                "Bundeswirtschaftsministerium",
+                "BMWi",
+                "Wirtschaftsministerium Deutschland"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q48989",
+            "label": "ZDF",
+            "labelAlternative": [
+                "Zweites Deutsches Fernsehen"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q491566",
+            "label": "BMG",
+            "labelAlternative": [
+                "Bundesministerium für Gesundheit",
+                "Bundesgesundheitsministerium",
+                "Bundesministerium für Gesundheit und Soziale Sicherung",
+                "Bundesgesundheitsminister",
+                "Bundesministerium für Gesundheitswesen"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q491578",
+            "label": "BMAS",
+            "labelAlternative": [
+                "Bundesministerium für Arbeit und Soziales",
+                "Bundesarbeitsministerium",
+                "Bundesministerium für Arbeit und Sozialordnung",
+                "Bundessozialministerium",
+                "Bundesministerium für Arbeit"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q491637",
+            "label": "BMDV",
+            "labelAlternative": [
+                "Bundesministerium für Digitales und Verkehr",
+                "Bundesministerium für Verkehr und digitale Infrastruktur",
+                "Bundesministerium für Raumordnung, Bauwesen und Städtebau",
+                "Bundesministerium für Verkehr, Bau- und Wohnungswesen",
+                "Bundesminister für Verkehr",
+                "Bundesbauminister",
+                "Bundesverkehrsministerium",
+                "Bundesministerium für Verkehr",
+                "Bundesverkehrsminister",
+                "Bundesbauministerium",
+                "Bundesminister für Verkehr, Bau- und Wohnungswesen",
+                "Bundesministerium für Verkehr, Bau und Stadtentwicklung",
+                "BMVI",
+                "BMVB",
+                "BMVBS",
+                "BMVBW"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q492234",
+            "label": "BMBF",
+            "labelAlternative": [
+                "Bundesministerium für Bildung und Forschung",
+                "BMBW",
+                "Bundesministerium für Wissenschaft, Forschung und Kunst",
+                "Bundesministerium für Forschung und Technologie",
+                "Bundesministerium für wissenschaftliche Forschung",
+                "BMFT",
+                "Bundesministerium für Forschung",
+                "Bundesbildungsminister",
+                "Bundesministerium für Atomfragen",
+                "Bundesministerium für Bildung, Wissenschaft, Forschung und Technologie",
+                "Bundesforschungsminister",
+                "Atomministerium",
+                "Bundesministerium für Atomkernenergie",
+                "Bundesministerium für Atomkernenergie und Wasserwirtschaft",
+                "Bundesbildungsministerium",
+                "Bundesministerium für Bildung und Wissenschaft"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q493344",
+            "label": "BMUV",
+            "labelAlternative": [
+                "Bundesministerium für Umwelt, Naturschutz, nukleare Sicherheit und Verbraucherschutz",
+                "Bundesministerium für Umwelt, Naturschutz, Bau und Reaktorsicherheit",
+                "Bundesministerium für Umwelt, Naturschutz und Reaktorsicherheit",
+                "Bundesumweltministerium",
+                "BMUB",
+                "Bundesumwelt- und Bauministerium",
+                "Bundesministerium für Umwelt, Naturschutz und nukleare Sicherheit",
+                "BMU"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q493353",
+            "label": "BMVg",
+            "labelAlternative": [
+                "Bundesministerium der Verteidigung",
+                "Bundesverteidigungsministerium",
+                "Bundesministerium für Angelegenheiten des Bundesverteidigungsrates",
+                "Bundesminister für Verteidigung",
+                "Bundesministerium für Verteidigung"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q49653",
+            "label": "ARD",
+            "labelAlternative": [
+                "Arbeitsgemeinschaft der öffentlich-rechtlichen Rundfunkanstalten der Bundesrepublik Deutschland"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q49750",
+            "label": "SED",
+            "labelAlternative": [
+                "Sozialistische Einheitspartei Deutschlands"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q49762",
+            "label": "CDU",
+            "labelAlternative": [
+                "Christlich Demokratische Union Deutschlands"
+            ],
+            "type": "organisation",
+            "subType": "party"
+        },
+        {
+            "id": "Q49763",
+            "label": "CSU",
+            "labelAlternative": [
+                "Christlich-Soziale Union in Bayern",
+                "Christlich-Soziale Union in Bayern e. V.",
+                "Christlich-Soziale Union in Bayern e.V."
+            ],
+            "type": "organisation",
+            "subType": "party"
+        },
+        {
+            "id": "Q49764",
+            "label": "DIE LINKE",
+            "labelAlternative": [
+                "Linkspartei"
+            ],
+            "type": "organisation",
+            "subType": "party"
+        },
+        {
+            "id": "Q49766",
+            "label": "GRÜNE",
+            "labelAlternative": [
+                "Bündnis 90/Die Grünen",
+                "Bündnisgrüne",
+                "B'90/Grüne",
+                "Die Grünen",
+                "Bündnis 90/Die Grünen, GRÜNE",
+                "Die Gruenen",
+                "B90/GR"
+            ],
+            "type": "organisation",
+            "subType": "party"
+        },
+        {
+            "id": "Q49768",
+            "label": "SPD",
+            "labelAlternative": [
+                "Sozialdemokratische Partei Deutschlands"
+            ],
+            "type": "organisation",
+            "subType": "party"
+        },
+        {
+            "id": "Q498251",
+            "label": "BMJ",
+            "labelAlternative": [
+                "Bundesministerium der Justiz",
+                "Bundesministerium der Justiz und für Verbraucherschutz",
+                "Bundesjustizministerium"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q499118",
+            "label": "BMF",
+            "labelAlternative": [
+                "Bundesministerium der Finanzen",
+                "Bundesfinanzministerium"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q502698",
+            "label": "BMI",
+            "labelAlternative": [
+                "Bundesministerium des Inneren",
+                "Bundesinnenministerium",
+                "Innenministerium",
+                "Bundesministerium des Innern, für Bau und Heimat",
+                "Bundesministerium des Innern",
+                "Bundesministerium des Innern und für Heimat"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q509708",
+            "label": "Stiftung Warentest",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q51726888",
+            "label": "BMBau",
+            "labelAlternative": [
+                "Bundesministerium für Raumordnung, Bauwesen und Städtebau",
+                "Bundesministerium für Wiederaufbau",
+                "Bundesministerium für Wohnungsbau",
+                "Bundesministerium für Wohnungswesen, Städtebau und Raumordnung",
+                "Bundesministerium für Wohnungswesen und Städtebau",
+                "Bundesministerium für Städtebau und Wohnungswesen"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q520524",
+            "label": "BpB",
+            "labelAlternative": [
+                "Bundeszentrale für politische Bildung",
+                "Bundeszentrale für Heimatdienst",
+                "Bundeszentralstelle für Heimatdienst",
+                "bpb"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q543804",
+            "label": "Leopoldina",
+            "labelAlternative": [
+                "Deutsche Akademie der Naturforscher Leopoldina – Nationale Akademie der Wissenschaften"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q547951",
+            "label": "Ver.di",
+            "labelAlternative": [
+                "Vereinte Dienstleistungsgewerkschaft",
+                "Verdi",
+                "ver.di"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q56010",
+            "label": "Bundeswehr",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q56025",
+            "label": "BVerfG",
+            "labelAlternative": [
+                "Bundesverfassungsgericht"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q56026",
+            "label": "BPOL",
+            "labelAlternative": [
+                "Bundespolizei"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q56030",
+            "label": "BKA",
+            "labelAlternative": [
+                "Bundeskriminalamt"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q56033",
+            "label": "BRH",
+            "labelAlternative": [
+                "Bundesrechnungshof"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q56034",
+            "label": "AA",
+            "labelAlternative": [
+                "Auswärtiges Amt"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q586581",
+            "label": "DGB",
+            "labelAlternative": [
+                "Deutscher Gewerkschaftsbund"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q587325",
+            "label": "Wirecard AG",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q60674974",
+            "label": "Fridays for Future",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q658270",
+            "label": "KfW",
+            "labelAlternative": [
+                "Kreditanstalt für Wiederaufbau"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q66048",
+            "label": "Deutsche Bank",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q6721203",
+            "label": "AfD",
+            "labelAlternative": [
+                "Alternative für Deutschland"
+            ],
+            "type": "organisation",
+            "subType": "party"
+        },
+        {
+            "id": "Q679041",
+            "label": "RKI",
+            "labelAlternative": [
+                "Robert Koch-Institut"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q684357",
+            "label": "BMZ",
+            "labelAlternative": [
+                "Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung",
+                "Ministerium für Entwicklungshilfe",
+                "Entwicklungshilfeminister",
+                "Entwicklungshilfeministerin",
+                "Entwicklungshilfeministerium",
+                "Bundesministerium für wirtschaftliche Zusammenarbeit"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q685753",
+            "label": "BArch",
+            "labelAlternative": [
+                "Deutsches Bundesarchiv"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q687323",
+            "label": "BGH",
+            "labelAlternative": [
+                "Bundesgerichtshof"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q690370",
+            "label": "Jusos",
+            "labelAlternative": [
+                "Arbeitsgemeinschaft der Jungsozialistinnen und Jungsozialisten in der SPD"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q694821",
+            "label": "IG Metall",
+            "labelAlternative": [
+                "Industriegewerkschaft Metall"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q695328",
+            "label": "DLF",
+            "labelAlternative": [
+                "Deutschlandfunk"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q696935",
+            "label": "DAAD",
+            "labelAlternative": [
+                "Deutscher Akademischer Austauschdienst e. V.",
+                "Deutscher Akademischer Austauschdienst"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q697698",
+            "label": "THW",
+            "labelAlternative": [
+                "Technisches Hilfswerk",
+                "Bundesanstalt Technisches Hilfswerk"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q699656",
+            "label": "BMEL",
+            "labelAlternative": [
+                "Bundesministerium für Ernährung und Landwirtschaft",
+                "Bundesministerium für Ernährung, Landwirtschaft und Forsten",
+                "BMVEL",
+                "Bundesministerium für Verbraucherschutz, Ernährung und Landwirtschaft",
+                "BMELF",
+                "BMELV",
+                "Verbraucherministerium",
+                "Bundeslandwirtschaftsministerium",
+                "Bundesministerium für Ernährung, Landwirtschaft und Verbraucherschutz"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q702415",
+            "label": "BFH",
+            "labelAlternative": [
+                "Bundesfinanzhof"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q702424",
+            "label": "BVerwG",
+            "labelAlternative": [
+                "Bundesverwaltungsgericht",
+                "Bundesverwaltungsgericht Leipzig"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q706524",
+            "label": "KSK",
+            "labelAlternative": [
+                "Kommando Spezialkräfte"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q7159",
+            "label": "AU",
+            "labelAlternative": [
+                "Afrikanische Union",
+                "UA",
+                "African Union",
+                "Union africaine"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q7164",
+            "label": "Weltbank",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q7178",
+            "label": "IRCRCM",
+            "labelAlternative": [
+                "Internationale Rotkreuz- und Rothalbmond-Bewegung",
+                "Rotkreuz"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q7184",
+            "label": "NATO",
+            "labelAlternative": [
+                "North Atlantic Treaty Organization",
+                "Organisation des Nordatlantikvertrags",
+                "OTAN",
+                "Nordatlantikpakt-Organisation",
+                "Atlantisches Bündnis"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q731938",
+            "label": "AstraZeneca",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q740308",
+            "label": "UNICEF",
+            "labelAlternative": [
+                "United Nations International Children's Emergency Fund"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q764739",
+            "label": "DESTATIS",
+            "labelAlternative": [
+                "Statistisches Bundesamt",
+                "StBA",
+                "Destatis"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q7804",
+            "label": "IWF",
+            "labelAlternative": [
+                "Internationaler Währungsfonds",
+                "International Monetary Fund",
+                "Fonds monétaire international",
+                "Internationaler Währungs-Fonds",
+                "Fonds monetaire international",
+                "IMF"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q7817",
+            "label": "WHO",
+            "labelAlternative": [
+                "Weltgesundheitsorganisation",
+                "World Health Organization",
+                "Weltgesundheitsorganisation der Vereinten Nationen",
+                "World Health Organisation"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q782391",
+            "label": "Deutscher Anwaltverein",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q7825",
+            "label": "WTO",
+            "labelAlternative": [
+                "Welthandelsorganisation",
+                "World Trade Organization"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q81230",
+            "label": "Siemens AG",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q81299",
+            "label": "OSZE",
+            "labelAlternative": [
+                "Organisation für Sicherheit und Zusammenarbeit in Europa"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q81307",
+            "label": "Greenpeace",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q836469",
+            "label": "FES",
+            "labelAlternative": [
+                "Friedrich-Ebert-Stiftung",
+                "Internationale Politik und Gesellschaft",
+                "Friedrich Ebert Stiftung",
+                "Friedrich-Ebert-Stiftung e. V."
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q85338368",
+            "label": "Deutsche Stiftung für Engagement und Ehrenamt",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q880067",
+            "label": "Deutscher Richterbund",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q8880",
+            "label": "EU-Kommission",
+            "labelAlternative": [
+                "Europäische Kommission"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q8886",
+            "label": "Europäischer Rat",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q8889",
+            "label": "EU-Parlament",
+            "labelAlternative": [
+                "Europäisches Parlament"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q8896",
+            "label": "Rat der Europäischen Union",
+            "labelAlternative": [
+                "EU-Ministerrat"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q8901",
+            "label": "EZB",
+            "labelAlternative": [
+                "Europäische Zentralbank"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q8908",
+            "label": "Europarat",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q8919",
+            "label": "Euratom",
+            "labelAlternative": [
+                "Europäische Atomgemeinschaft"
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q9322",
+            "label": "Deutsche Bahn AG",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q9325",
+            "label": "Lufthansa AG",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q932728",
+            "label": "Peschmerga",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q9401",
+            "label": "BASF SE",
+            "labelAlternative": [],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        },
+        {
+            "id": "Q958316",
+            "label": "Institut der deutschen Wirtschaft",
+            "labelAlternative": [
+                "Institut der deutschen Wirtschaft Köln e.V."
+            ],
+            "type": "organisation",
+            "subType": "otherOrganisation"
+        }
+    ]
+}

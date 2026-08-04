@@ -41,8 +41,7 @@ CLAUDE.md
 /var/*
 !/var/.htaccess
 
-# Data
-data/import-error-log.txt
+# Config
 config.php
 config-*.php
 # ...but the meta-image module's config.php is layout config, not bootstrap config — keep it tracked.

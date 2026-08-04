@@ -10,7 +10,7 @@ This repository is the **presentation and API layer**: it ingests the unified, e
 
 - **[OpenParliamentTV-Tools](https://github.com/OpenParliamentTV/OpenParliamentTV-Tools)** is the data import pipeline. It fetches parliamentary proceedings and media feeds, parses them into a unified per-session JSON format, and enriches them with named-entity linking, sentence-level audio alignment, and named-entity recognition.
 - **[OpenParliamentTV-Architecture](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture)** holds the system design and data-format specifications, for example [PIPELINE.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/PIPELINE.md), [STAGE2-FORMAT.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/STAGE2-FORMAT.md), [DATA-STRUCTURES.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/DATA-STRUCTURES.md), and [PLATFORM-DB-SCHEMA.md](https://github.com/OpenParliamentTV/OpenParliamentTV-Architecture/blob/main/PLATFORM-DB-SCHEMA.md) (the conceptual database schema).
-- **Parliament data repositories**: one published data repository per parliament (for example [OpenParliamentTV-Data-DE](https://github.com/OpenParliamentTV/OpenParliamentTV-Data-DE)). The platform clones these under `data/` and imports them into MariaDB and OpenSearch.
+- **Parliament data repositories**: one published data repository per parliament (for example [OpenParliamentTV-Data-DE](https://github.com/OpenParliamentTV/OpenParliamentTV-Data-DE)). The platform clones these under `var/data/repos/` and imports them into MariaDB and OpenSearch.
 
 The flow is: Tools produces per-session JSON, which is published to the Data repositories, which this Platform ingests, indexes, and serves.
 
@@ -60,8 +60,9 @@ modules/                  Domain logic: search, media, feed, notifications, imag
 api/v1/                   REST API (openapi.yaml; docs page served at /api)
 content/                  base.php, layout/, pages/, components/, and client assets (css/js/fonts/images)
 custom/                   Per-instance overrides (branding, content, hooks); see Customization
-data/                     Import and indexing scripts
-db/                        SQL schema dumps (platform + parliament databases)
+bin/                      CLI and cron entry points (import, indexing, notifications)
+db/                       SQL schema dumps (platform + parliament databases)
+migrations/               Numbered forward-only schema migrations
 lang/                     UI translations (de/en/fr/tr)
 var/                      Runtime state (web-denied): caches, logs, import files, data repos
 config.php                Main configuration (copy from config.sample.php)

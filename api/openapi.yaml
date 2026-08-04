@@ -55,6 +55,8 @@ tags:
     description: Type-ahead suggestion endpoints
   - name: System
     description: Service status
+  - name: Bulk
+    description: Full-dataset exports
 
 paths:
   /search/media:
@@ -1493,6 +1495,100 @@ paths:
                   links:
                     type: object
 
+  /entityDump:
+    get:
+      tags:
+        - Bulk
+      summary: Bulk export of all platform entities
+      description: |
+        Returns every person, organisation, term and document the platform holds, as a flat
+        list of `id` / `label` / `labelAlternative` / `type` / `subType` records. Intended for
+        named-entity-linking pipelines that need the full label set offline; use `/search/*`
+        for ordinary lookups.
+
+        The response is **not** wrapped in the standard envelope — the body is a bare
+        `{meta, data}` object whose `meta` carries per-type counts.
+
+        `/entityDump/{type}` and `?type={type}` are equivalent; `?type=` wins if both are given.
+        The pre-1.0 path `/data/entity-dump` permanently redirects here.
+      parameters:
+        - name: type
+          in: query
+          description: Entity type to export. `all` combines every type.
+          required: false
+          schema:
+            type: string
+            enum: [all, person, organisation, term, document]
+            default: all
+        - name: exclude_person
+          in: query
+          description: With `type=all`, omit people. Same for `exclude_organisation`, `exclude_term`, `exclude_document`.
+          required: false
+          schema:
+            type: boolean
+        - name: wiki
+          in: query
+          description: Restrict the result to entities whose id is a Wikidata id
+          required: false
+          schema:
+            type: boolean
+        - name: wikikeys
+          in: query
+          description: With `wiki`, return `data` as an object keyed by Wikidata id instead of an array
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Entity dump
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    description: Per-type counts (`people_count`, `organisations_count`, `terms_count`, `documents_count`) and `total_count`
+                  data:
+                    oneOf:
+                      - type: array
+                        items:
+                          $ref: '#/components/schemas/EntityDumpItem'
+                      - type: object
+                        additionalProperties:
+                          $ref: '#/components/schemas/EntityDumpItem'
+
+  /entityDump/{type}:
+    get:
+      tags:
+        - Bulk
+      summary: Bulk export of one entity type
+      description: Path-segment form of `/entityDump?type={type}`.
+      parameters:
+        - name: type
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [all, person, organisation, term, document]
+        - name: wiki
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: wikikeys
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Entity dump
+          content:
+            application/json:
+              schema:
+                type: object
+
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -1537,6 +1633,39 @@ components:
                   retryAfter: 42
 
   schemas:
+    EntityDumpItem:
+      type: object
+      description: One record in the bulk entity export. `id` is a Wikidata id, except for
+        documents, where it may be empty and `optvID` carries the platform id.
+      properties:
+        id:
+          type: string
+        label:
+          type: string
+        labelAlternative:
+          type: array
+          items:
+            type: string
+          nullable: true
+        type:
+          type: string
+          enum: [person, organisation, term, document]
+        subType:
+          type: string
+          nullable: true
+        firstname:
+          type: string
+          nullable: true
+          description: People only
+        lastname:
+          type: string
+          nullable: true
+          description: People only
+        optvID:
+          type: integer
+          nullable: true
+          description: Documents only — the platform-internal document id
+
     MediaSearchResponse:
       type: object
       description: |

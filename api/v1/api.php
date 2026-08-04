@@ -118,6 +118,15 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             }
             break;
 
+        case "entityDump":
+            // Bulk entity export for NEL pipelines. Serves the dump directly
+            // and exits (bypasses the JSON envelope + encoder), because the
+            // body must stay byte-identical to the pre-API /data/entity-dump
+            // response that those pipelines already parse.
+            require_once (__DIR__."/modules/entity-dump.php");
+            entityDumpServe($api_request, $db);
+            return; // unreachable; entityDumpServe exits
+
         case "iiif":
             require_once (__DIR__."/modules/iiif.php");
             switch ($api_request["itemType"]) {
@@ -372,6 +381,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/api-key.php");
                     $addResponse = apiKeyAdd($api_request, $db);
                     return apiResponse($addResponse);
+                case "entityRemap":
+                    require_once (__DIR__."/modules/entity-remap.php");
+                    $addResponse = entityRemapAdd($api_request, $db);
+                    return apiResponse($addResponse);
                 default:
                     return apiResponse(
                         apiErrorInvalidParameter("itemType")
@@ -421,6 +434,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                     require_once (__DIR__."/modules/api-key.php");
                     $item = apiKeyChange($api_request, $db);
                     return apiResponse($item);
+                case "entityRemap":
+                    require_once (__DIR__."/modules/entity-remap.php");
+                    $item = entityRemapChange($api_request, $db);
+                    return apiResponse($item);
                 case "conflict":
                     require_once (__DIR__."/modules/conflict.php");
                     $item = conflictChange($api_request, $db);
@@ -441,6 +458,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "apiKey":
                     require_once (__DIR__."/modules/api-key.php");
                     $deleteResponse = apiKeyDelete($api_request, $db);
+                    return apiResponse($deleteResponse);
+                case "entityRemap":
+                    require_once (__DIR__."/modules/entity-remap.php");
+                    $deleteResponse = entityRemapDelete($api_request, $db);
                     return apiResponse($deleteResponse);
                 case "conflict":
                     require_once (__DIR__."/modules/conflict.php");
@@ -502,6 +523,10 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
                 case "apiKey":
                     require_once (__DIR__."/modules/api-key.php");
                     $result = apiKeyGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"]);
+                    break;
+                case "entityRemap":
+                    require_once (__DIR__."/modules/entity-remap.php");
+                    $result = entityRemapGetItemsFromDB($api_request["id"], $api_request["limit"], $api_request["offset"], $api_request["search"], $api_request["sort"], $api_request["order"]);
                     break;
                 case "conflict":
                     require_once (__DIR__."/modules/conflict.php");

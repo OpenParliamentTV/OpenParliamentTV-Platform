@@ -36,6 +36,9 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 					<a class="nav-link" id="entities-tab" data-bs-toggle="tab" data-bs-target="#entities" role="tab" aria-controls="entities" aria-selected="true"><span class="nav-item-label"><?= L::entities(); ?></span></a></li>
 					<li class="nav-item"><a class="nav-link" id="formats-tab" data-bs-toggle="tab" data-bs-target="#formats" role="tab" aria-controls="formats" aria-selected="true"><span class="nav-item-label">IIIF / Akoma Ntoso / ParlaMint / WebVTT</span></a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link" id="bulk-tab" data-bs-toggle="tab" data-bs-target="#bulk" role="tab" aria-controls="bulk" aria-selected="true"><span class="nav-item-label">Bulk Export</span></a>
+				</li>
 				<li class="nav-item d-none">
 					<a class="nav-link" id="statistics-tab" data-bs-toggle="tab" data-bs-target="#statistics" role="tab" aria-controls="statistics" aria-selected="true"><span class="nav-item-label">Statistics</span></a>
 				</li>
@@ -765,6 +768,52 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 							</table>
 						</div>
 					</div>
+				<div class="tab-pane fade bg-white" id="bulk" role="tabpanel" aria-labelledby="bulk-tab">
+					<div class="alert alert-info">The <b>entity dump</b> is a single response containing every entity the platform holds — people, organisations, terms and documents — with their labels and alternative labels. It exists for <b>named-entity linking</b>: a pipeline that has to resolve names in a transcript needs the whole label set locally, not one lookup per name. For ordinary lookups use the Search and Entities endpoints instead.</div>
+					<h3 class="fw-bolder"><span class="icon-database"></span> Entity Dump</h3>
+					<p class="mb-2">Unlike every other endpoint, the dump is <b>not</b> wrapped in the JSON:API envelope: the body is a bare <code>{meta, data}</code> object, where <code>meta</code> carries the per-type counts and <code>data</code> is the flat list of records (<code>id</code>, <code>label</code>, <code>labelAlternative</code>, <code>type</code>, <code>subType</code>). Consumers parse it verbatim, so the shape is fixed.</p>
+					<div><b>Endpoint</b>: <code>/api/v1/entityDump/TYPE</code> and <code>/api/v1/entityDump?type=TYPE</code></div>
+					<div class="apiExampleContainer">
+						<div class="input-group">
+							<span class="input-group-text">URI</span>
+							<input type="text" class="form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/entityDump/organisation" readonly>
+							<a href="<?= $config["dir"]["root"]; ?>/api/v1/entityDump/organisation" target="_blank" class="btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></a>
+						</div>
+					</div>
+					<div class="tableContainer table-responsive">
+						<table class="table table-sm">
+							<thead>
+								<tr>
+									<th>Parameter</th>
+									<th><?= L::description(); ?></th>
+									<th>Values</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><code>type</code></td>
+									<td>Entity type to export; <code>all</code> combines every type. Equivalent to the path segment, and wins if both are given.</td>
+									<td><code>all</code>, <code>person</code>, <code>organisation</code>, <code>term</code>, <code>document</code></td>
+								</tr>
+								<tr>
+									<td><code>exclude_TYPE</code></td>
+									<td>With <code>type=all</code>, leave one type out.</td>
+									<td><code>exclude_document=true</code></td>
+								</tr>
+								<tr>
+									<td><code>wiki</code></td>
+									<td>Return only entities whose id is a Wikidata id.</td>
+									<td><code>true</code></td>
+								</tr>
+								<tr>
+									<td><code>wikikeys</code></td>
+									<td>With <code>wiki</code>, return <code>data</code> as an object keyed by Wikidata id instead of an array.</td>
+									<td><code>true</code></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
 					<div class="tab-pane fade bg-white" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">
 					<div class="alert alert-info">Statistics endpoints provide aggregated insights into parliamentary data, including speaker activity, word frequency analysis, entity relationships, and political discourse patterns. </div>
 					<ul class="nav nav-tabs" role="tablist">

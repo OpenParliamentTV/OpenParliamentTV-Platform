@@ -10,14 +10,14 @@ x-robots-tag: noindex
         <FRBRWork>
           <FRBRthis value="/akn/de/debate/2013-10-22/DE-0180001/!main"/>
           <FRBRuri value="/akn/de/debate/2013-10-22/DE-0180001"/>
-          <FRBRdate date="NORMALIZED" name="sitting"/>
+          <FRBRdate date="2013-10-22" name="sitting"/>
           <FRBRauthor href="#parliament"/>
           <FRBRcountry value="de"/>
         </FRBRWork>
         <FRBRExpression>
           <FRBRthis value="/akn/de/debate/2013-10-22/DE-0180001/deu@/!main"/>
           <FRBRuri value="/akn/de/debate/2013-10-22/DE-0180001/deu@"/>
-          <FRBRdate date="NORMALIZED" name="sitting"/>
+          <FRBRdate date="2013-10-22" name="sitting"/>
           <FRBRauthor href="#parliament"/>
           <FRBRlanguage language="deu"/>
         </FRBRExpression>

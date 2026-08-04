@@ -21,11 +21,11 @@ x-robots-tag: noindex
                 "status": "green",
                 "nodes": 2,
                 "dataNodes": 2,
-                "activeShards": 174,
-                "relocatingShards": 0,
-                "initializingShards": 0,
-                "unassignedShards": 0,
-                "activeShardsPercent": 100
+                "activeShards": "<<NORMALIZED>>",
+                "relocatingShards": "<<NORMALIZED>>",
+                "initializingShards": "<<NORMALIZED>>",
+                "unassignedShards": "<<NORMALIZED>>",
+                "activeShardsPercent": "<<NORMALIZED>>"
             },
             "nodes": [
                 {
@@ -52,13 +52,13 @@ x-robots-tag: noindex
                     "name": "openparliamenttv_de",
                     "docs": 2568634,
                     "deleted": 1269,
-                    "sizeBytes": 2259463916
+                    "sizeBytes": "<<NORMALIZED>>"
                 },
                 {
                     "name": "optv_statistics_de",
                     "docs": 29091146,
                     "deleted": 7520626,
-                    "sizeBytes": 3890619616
+                    "sizeBytes": "<<NORMALIZED>>"
                 }
             ],
             "totalStoreBytes": 6150083532
@@ -77,15 +77,15 @@ x-robots-tag: noindex
                     "label": "Platform",
                     "database": "openparliamenttv",
                     "host": "localhost",
-                    "sizeBytes": 18202624,
-                    "tables": 15,
+                    "sizeBytes": "<<NORMALIZED>>",
+                    "tables": 16,
                     "reachable": true
                 },
                 {
                     "label": "Deutscher Bundestag",
                     "database": "openparliamenttv_de",
                     "host": "localhost",
-                    "sizeBytes": 2594619392,
+                    "sizeBytes": "<<NORMALIZED>>",
                     "tables": 6,
                     "reachable": true
                 }
@@ -94,20 +94,20 @@ x-robots-tag: noindex
         "storage": {
             "filesystem": {
                 "path": "/Users/joscha/Projects/OpenParliamentTV/_SERVER/OpenParliamentTV-Platform/var",
-                "totalBytes": 494384795648,
+                "totalBytes": "<<NORMALIZED>>",
                 "freeBytes": "<<NORMALIZED>>",
                 "usedBytes": "<<NORMALIZED>>",
                 "usedPercent": "<<NORMALIZED>>"
             },
             "dataDir": {
                 "path": "/Users/joscha/Projects/OpenParliamentTV/_SERVER/OpenParliamentTV-Platform/var",
-                "sizeBytes": 3275411456,
-                "computedAt": "2026-07-15T09:43:13+02:00"
+                "sizeBytes": "<<NORMALIZED>>",
+                "computedAt": "<<NORMALIZED>>"
             },
-            "databasesTotalBytes": 2612822016,
-            "openSearchTotalBytes": 6150083532,
+            "databasesTotalBytes": "<<NORMALIZED>>",
+            "openSearchTotalBytes": "<<NORMALIZED>>",
             "openSearchFs": {
-                "totalBytes": 62671097856,
+                "totalBytes": "<<NORMALIZED>>",
                 "availableBytes": "<<NORMALIZED>>"
             }
         }

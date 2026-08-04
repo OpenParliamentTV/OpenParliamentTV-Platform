@@ -40,7 +40,7 @@ Note that `--selftest` fetches each URL twice back to back, which is deliberatel
 
 ### What the corpus covers
 
-`getItem` for all eight entity types · `search` for every itemType, plus filtered and paged variants · `autocomplete` · `status` · content negotiation (`?format=iiif|akomantoso|parlamint`, `transcript.vtt`) · IIIF collection and search paths · session-gated actions recorded **both** anonymously and with a session · error cases (unknown id, malformed id, missing `action`/`itemType`, unknown action/itemType, out-of-range limit).
+`getItem` for all eight entity types · `search` for every itemType, plus filtered and paged variants · `autocomplete` · `status` · content negotiation (`?format=iiif|akomantoso|parlamint`, `transcript.vtt`) · IIIF collection and search paths · the `entityDump` bulk export in both URL forms, plus the `/data/entity-dump` redirect · session-gated actions recorded **both** anonymously and with a session · error cases (unknown id, malformed id, missing `action`/`itemType`, unknown action/itemType, out-of-range limit).
 
 Every one of these is exercised through **both URL styles** — the pretty paths that `api/v1/.htaccess` rewrites, and the raw `?action=&itemType=` form. Phase 5g replaces that rewriting with FastRoute and must keep answering both.
 
@@ -48,8 +48,8 @@ Every one of these is exercised through **both URL styles** — the pretty paths
 
 Two mechanisms, both in `bin/api-diff.php`:
 
-- `API_DIFF_VOLATILE_KEYS` — JSON keys replaced with `<<NORMALIZED>>` at any depth (timestamps, `took`, durations, cache ages).
-- `API_DIFF_VOLATILE_PATTERNS` — regexes for non-JSON bodies (RSS `lastBuildDate`, Akoma Ntoso / TEI generation dates).
+- `API_DIFF_VOLATILE_KEYS` — JSON keys replaced with `<<NORMALIZED>>` at any depth (timestamps, `took`, durations, cache ages, and the live gauges in `action=system&itemType=status`: disk/index/database byte counts, shard counts, heap and CPU). Structural values in the same payload — `tables`, `nodes`, the reported labels, paths and hosts — stay pinned, because those are what a refactor can actually break.
+- `API_DIFF_VOLATILE_PATTERNS` — regexes for non-JSON bodies (RSS `lastBuildDate`, and the render-time generation date in Akoma Ntoso / TEI exports). Both XML rules are scoped to the generation date specifically: `FRBRdate` by `name="generation"`, TEI `<date>` by its position in `<publicationStmt>`. Sitting dates are content and stay pinned.
 
 Image responses are pinned by byte length + sha256 rather than content, so fixtures stay small and readable.
 

@@ -19,14 +19,14 @@ x-robots-tag: noindex
           <licence target="https://www.bundestag.de/nutzungsbedingungen">Nutzungsbedingungen</licence>
           <p>Deutscher Bundestag</p>
         </availability>
-        <date when="NORMALIZED">2026-08-03</date>
+        <date when="NORMALIZED">NORMALIZED</date>
       </publicationStmt>
       <sourceDesc>
         <bibl>
           <title type="main">Deutscher Bundestag</title>
           <publisher>Deutscher Bundestag</publisher>
           <idno type="URI">http://dbtg.tv/fvid/7611894</idno>
-          <date when="NORMALIZED">2024-06-06</date>
+          <date when="2024-06-06">2024-06-06</date>
         </bibl>
         <recordingStmt>
           <recording xml:id="rec.DE-0200172058.video" type="video" dur-iso="PT257S">
@@ -67,7 +67,7 @@ x-robots-tag: noindex
       <settingDesc>
         <setting>
           <name type="org">Deutscher Bundestag</name>
-          <date when="NORMALIZED" ana="#parla.sitting">2024-06-06</date>
+          <date when="2024-06-06" ana="#parla.sitting">2024-06-06</date>
         </setting>
       </settingDesc>
       <particDesc>

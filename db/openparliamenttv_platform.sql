@@ -213,6 +213,50 @@ CREATE TABLE `apikey` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+CREATE TABLE `entity_remap` (
+  `EntityRemapID` int(10) unsigned NOT NULL,
+  `EntityRemapParliament` varchar(16) NOT NULL DEFAULT '',
+  `EntityRemapSourceID` varchar(64) NOT NULL,
+  `EntityRemapTargetID` varchar(64) NOT NULL,
+  `EntityRemapDescription` varchar(255) NOT NULL DEFAULT '',
+  `EntityRemapLastChanged` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Shipped defaults: Bundestag party ids that NER returns where the speech
+-- means the parliamentary group. Parliament-scoped, so they never apply to
+-- another parliament's imports.
+INSERT INTO `entity_remap` (`EntityRemapID`, `EntityRemapParliament`, `EntityRemapSourceID`, `EntityRemapTargetID`, `EntityRemapDescription`) VALUES
+(1, 'DE', 'Q49766', 'Q1007353', 'Die Grünen Partei to Faction'),
+(2, 'DE', 'Q49764', 'Q1826856', 'Die Linke Partei to Faction'),
+(3, 'DE', 'Q49768', 'Q2207512', 'SPD Partei to Faction'),
+(4, 'DE', 'Q13124', 'Q1387991', 'FDP Partei to Faction'),
+(5, 'DE', 'Q6721203', 'Q42575708', 'AfD Partei to Faction'),
+(6, 'DE', 'Q49762', 'Q1023134', 'CDU Partei to Faction'),
+(7, 'DE', 'Q49763', 'Q1023134', 'CSU Partei to Faction'),
+(8, 'DE', 'Q446007', 'Q1007353', 'BÜNDNIS 90'),
+(9, 'DE', 'Q1020847', 'Q1007353', 'Bündnis 90/Die Grünen (Niedersachsen)'),
+(10, 'DE', 'Q1020838', 'Q1007353', 'Bündnis 90/Die Grünen (Berlin)'),
+(11, 'DE', 'Q1020837', 'Q1007353', 'Bündnis 90/Die Grünen (Bayern)'),
+(12, 'DE', 'Q193178', 'Q1007353', 'GRÜNEN'),
+(13, 'DE', 'Q1517627', 'Q1007353', 'Geschichte von Bündnis 90/Die Grünen'),
+(14, 'DE', 'Q708725', 'Q1023134', 'Unionsparteien (wir gehen davon aus, dass Fraktion gemeint wurde)'),
+(15, 'DE', 'Q1023141', 'Q1023134', 'CDU-Fraktion Hamburg'),
+(16, 'DE', 'Q1023137', 'Q1023134', 'CDU-Fraktion Berlin'),
+(17, 'DE', 'Q18334483', 'Q42575708', 'Landesverband der Partei Alternative für Deutschland in Thüringen'),
+(18, 'DE', 'Q24706445', 'Q42575708', 'Landesverband der Partei Alternative für Deutschland in Mecklenburg-Vorpommern'),
+(19, 'DE', 'Q31838339', 'Q1826856', 'Die Linke Niedersachsen'),
+(20, 'DE', 'Q164597', 'Q1826856', 'weltanschauliche Strömungen des linken Flügels im politischen Spektrum'),
+(21, 'DE', 'Q2207521', 'Q2207512', 'SPD Berlin'),
+(22, 'DE', 'Q1386226', 'Q2207512', 'SPD Bayern'),
+(23, 'DE', 'Q202638', 'Q1387991', 'FDP liberale Partei in der Schweiz'),
+(24, 'DE', 'Q13850128', 'Q1387991', 'Freisinnig-Demokratische Partei der Schweiz'),
+(25, 'DE', 'Q1388017', 'Q1387991', 'FDP Nordrhein-Westfalen'),
+(26, 'DE', 'Q1388006', 'Q1387991', 'FDP Hessen'),
+(27, 'DE', 'Q1387996', 'Q1387991', 'Swiss parliamentary group'),
+(28, 'DE', 'Q1241288', 'Q488589', 'Allgemeines Wirtschaftsministerium auf Deutsches Ministerium'),
+(29, 'DE', 'Q1519799', 'Q491566', 'Allgemeines Gesundheitsministerium auf Deutsches Ministerium');
+
+
 ALTER TABLE `auth`
   ADD PRIMARY KEY (`AuthID`);
 
@@ -295,6 +339,11 @@ ALTER TABLE `apikey`
   ADD KEY `idx_apikey_owner` (`ApiKeyOwnerUserID`);
 
 
+ALTER TABLE `entity_remap`
+  ADD PRIMARY KEY (`EntityRemapID`),
+  ADD UNIQUE KEY `uniq_entityremap_source` (`EntityRemapParliament`,`EntityRemapSourceID`);
+
+
 ALTER TABLE `auth`
   MODIFY `AuthID` int(8) NOT NULL AUTO_INCREMENT;
 
@@ -324,6 +373,9 @@ ALTER TABLE `notification_preference`
 
 ALTER TABLE `apikey`
   MODIFY `ApiKeyID` int(10) unsigned NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `entity_remap`
+  MODIFY `EntityRemapID` int(10) unsigned NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

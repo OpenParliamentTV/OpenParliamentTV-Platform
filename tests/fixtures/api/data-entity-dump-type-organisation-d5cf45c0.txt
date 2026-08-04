@@ -1,0 +1,11 @@
+HTTP 301
+content-type: text/html; charset=iso-8859-1
+location: https://optv.local/api/v1/entityDump?type=organisation
+
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="https://optv.local/api/v1/entityDump?type=organisation">here</a>.</p>
+</body></html>

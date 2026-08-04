@@ -10,14 +10,14 @@ x-robots-tag: noindex
         <FRBRWork>
           <FRBRthis value="/akn/de/debate/2024-06-06/DE-0200172058/!main"/>
           <FRBRuri value="/akn/de/debate/2024-06-06/DE-0200172058"/>
-          <FRBRdate date="NORMALIZED" name="sitting"/>
+          <FRBRdate date="2024-06-06" name="sitting"/>
           <FRBRauthor href="#parliament"/>
           <FRBRcountry value="de"/>
         </FRBRWork>
         <FRBRExpression>
           <FRBRthis value="/akn/de/debate/2024-06-06/DE-0200172058/deu@/!main"/>
           <FRBRuri value="/akn/de/debate/2024-06-06/DE-0200172058/deu@"/>
-          <FRBRdate date="NORMALIZED" name="sitting"/>
+          <FRBRdate date="2024-06-06" name="sitting"/>
           <FRBRauthor href="#parliament"/>
           <FRBRlanguage language="deu"/>
         </FRBRExpression>

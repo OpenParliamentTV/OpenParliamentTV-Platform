@@ -17,6 +17,18 @@
 	RewriteRule ^ - [F,L]
 
 	########################################
+	# The entity dump moved into the API. Permanent redirect because external
+	# NEL pipelines have this URL in their parliament manifests; the query
+	# string carries the selection (?type=…&wiki=…) and is preserved.
+	# Must precede the trailing-slash rule so the common form with the slash
+	# lands on the API in one hop.
+	########################################
+	# %1 is the URI prefix the app is mounted under ("" at the docroot), taken
+	# from REQUEST_URI so the target stays absolute without a RewriteBase.
+	RewriteCond %{REQUEST_URI} ^(.*)/data/entity-dump/?$
+	RewriteRule ^data/entity-dump/?$ %1/api/v1/entityDump [QSA,R=301,L]
+
+	########################################
 	# Always remove trailing slash (except for real directories)
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-d

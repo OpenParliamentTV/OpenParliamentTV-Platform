@@ -450,7 +450,7 @@ if (optvIsCli()) {
                 logger("info", "Skipping Git repository sync due to --ignoreGit flag.");
             }
             
-            require_once(__DIR__ . "/../data/entity-dump/entity-dump.php");
+            require_once(__DIR__ . "/../api/v1/modules/entity-dump.php");
 
             $inputFiles = array_filter(scandir($meta["inputDir"]), function($file) use ($meta) {
                 return !is_dir($meta["inputDir"] . $file) && preg_match('/.*\.json$/DA', $file);
@@ -469,7 +469,7 @@ if (optvIsCli()) {
             }
 
             $processedFileCount = 0;
-            $entityDump = getEntityDump(array("type" => "all", "wiki" => true, "wikikeys" => "true"), $db);
+            $entityDump = entityDumpGet(array("type" => "all", "wiki" => true, "wikikeys" => "true"), $db);
             
             foreach ($inputFiles as $file) {
                 cliLog("start processing file: " . $file);

@@ -1,0 +1,1884 @@
+HTTP 200
+content-type: application/json; charset=utf-8
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "terms_count": 223,
+        "total_count": 223
+    },
+    "data": [
+        {
+            "id": "Q1007356",
+            "label": "Bundestagswahl",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q10184",
+            "label": "FAZ",
+            "labelAlternative": [
+                "Frankfurter Allgemeine Zeitung",
+                "Frankfurter Allgemeine"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q10189",
+            "label": "Tagesspiegel",
+            "labelAlternative": [
+                "Der Tagesspiegel"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q102112271",
+            "label": "Altpartei",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1021664",
+            "label": "Bürokratieabbau",
+            "labelAlternative": [
+                "Entbürokratisierung"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q104696754",
+            "label": "Kohleausstieg",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1049511",
+            "label": "WhatsApp",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1057250",
+            "label": "Grundsteuer",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1069706",
+            "label": "UN BRK",
+            "labelAlternative": [
+                "UN-Konvention über die Rechte von Menschen mit Behinderungen",
+                "UN-BRK",
+                "Übereinkommen über Rechte von Behinderten",
+                "UN-Konvention über Rechte von Menschen mit Behinderungen",
+                "UN-Behindertenrechtskonvention"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q10820",
+            "label": "A 49",
+            "labelAlternative": [
+                "Bundesautobahn 49"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q11000047",
+            "label": "Gesundheitssystem",
+            "labelAlternative": [
+                "Gesundheitswesen"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q110027193",
+            "label": "Ausschuss für Klimaschutz und Energie",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q110586381",
+            "label": "Nord Stream",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q110999040",
+            "label": "Ukraine-Krieg",
+            "labelAlternative": [
+                "Krieg in der Ukraine seit 2022"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q111033906",
+            "label": "Sondervermögen",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q11128",
+            "label": "AEUV",
+            "labelAlternative": [
+                "Vertrag über die Arbeitsweise der Europäischen Union",
+                "AEU-Vertrag"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q111647263",
+            "label": "9-Euro-Ticket",
+            "labelAlternative": [
+                "Neun-Euro-Ticket"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1121969",
+            "label": "CETA",
+            "labelAlternative": [
+                "Umfassendes Wirtschafts- und Handelsabkommen EU-Kanada",
+                "Umfassendes Wirtschafts- und Handelsabkommen"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q112975919",
+            "label": "Rechtssicherheit",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1130259",
+            "label": "EU-Haushalt",
+            "labelAlternative": [
+                "Haushalt der Europäischen Union"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q115042232",
+            "label": "Gaspreisbremse",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q115042233",
+            "label": "Strompreisbremse",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q11660",
+            "label": "KI",
+            "labelAlternative": [
+                "künstliche Intelligenz"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q11696",
+            "label": "US-Präsident",
+            "labelAlternative": [
+                "Präsident der Vereinigten Staaten"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1172506",
+            "label": "DSGVO",
+            "labelAlternative": [
+                "Datenschutz-Grundverordnung",
+                "General Data Protection Regulation",
+                "Règlement général sur la protection des données",
+                "RGPD",
+                "GDPR",
+                "Datenschutzgrundverordnung",
+                "Verordnung (EU) 2016/679"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q12223",
+            "label": "Kurden",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q12525579",
+            "label": "MINUSMA",
+            "labelAlternative": [
+                "United Nations Multidimensional Integrated Stabilization Mission in Mali"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q12757",
+            "label": "Verbrennungsmotor",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q128635",
+            "label": "Mehrwertsteuer",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q129238",
+            "label": "Startup-Unternehmen",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1297203",
+            "label": "Geringfügige Beschäftigung",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1310186",
+            "label": "Einzelplan",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1312371",
+            "label": "Gesundheitsamt",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1327007",
+            "label": "Elektromobilität",
+            "labelAlternative": [
+                "E-Mobilität",
+                "E-Mobility"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1334077",
+            "label": "Elterngeld",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1341376",
+            "label": "Energiekrise",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1343626",
+            "label": "Enquete-Kommission",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q134447",
+            "label": "Kernkraftwerk",
+            "labelAlternative": [
+                "Atomkraftwerk"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1345380",
+            "label": "Entschließungsantrag",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1374470",
+            "label": "Euro-Rettungsschirm",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1391399",
+            "label": "Fachkräftemangel",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1469663",
+            "label": "UN-Mandat",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1471921",
+            "label": "Sprach-Kitas",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1479682",
+            "label": "Föderalismusreform",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q15081430",
+            "label": "18. Deutscher Bundestag",
+            "labelAlternative": [
+                "18. WP des DBT",
+                "18. Wahlperiode des Deutschen Bundestages",
+                "18. Bundestag",
+                "18. WP des DBT",
+                "18. Wahlperiode des Deutschen Bundestages",
+                "18. Bundestag"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q151384",
+            "label": "Eurofighter",
+            "labelAlternative": [
+                "Eurofighter EF 2000 Typhoon",
+                "Eurofighter EF 2000",
+                "EF-2000",
+                "Euro Fighter",
+                "Eurofighter",
+                "EF-2000 Eurofighter",
+                "Typhoon"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1516163",
+            "label": "Gesamtsozialversicherungsbeitrag",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1523508",
+            "label": "Gießkannenprinzip",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q155718",
+            "label": "DAX",
+            "labelAlternative": [
+                "Deutscher Aktienindex"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q15792194",
+            "label": "Ausschuss für Arbeit und Soziales",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q15792195",
+            "label": "Ausschuss für Ernährung und Landwirtschaft",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q15792196",
+            "label": "Ausschuss für Gesundheit",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q15792200",
+            "label": "Ausschuss für Verkehr und digitale Infrastruktur",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q15792201",
+            "label": "Ausschuss für Wirtschaft und Energie",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q15841951",
+            "label": "Regelbedarf",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q15860072",
+            "label": "Russisch-Ukrainischer Krieg",
+            "labelAlternative": [
+                "Militärintervention in der Ukraine ab 2014"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q158870",
+            "label": "SZ",
+            "labelAlternative": [
+                "Süddeutsche Zeitung",
+                "sz.de"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1591172",
+            "label": "Haushaltsgesetz",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q159470",
+            "label": "KFOR",
+            "labelAlternative": [
+                "Kosovo Force"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q159535",
+            "label": "Verschwörungstheorie",
+            "labelAlternative": [
+                "Verschwörungserzählung"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q160805",
+            "label": "United Nations Interim Force in Lebanon",
+            "labelAlternative": [
+                "Interimstruppe der Vereinten Nationen im Libanon",
+                "UNIFIL",
+                "FINUL",
+                "Interimstruppe der Vereinten Nationen in Libanon"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1617306",
+            "label": "Hidden Champion",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q161837",
+            "label": "Daseinsvorsorge",
+            "labelAlternative": [
+                "Öffentliche Dienstleistung"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q16218983",
+            "label": "Mütterrente",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q163820",
+            "label": "Silicon Valley",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1663880",
+            "label": "Ausschuss für Inneres und Heimat",
+            "labelAlternative": [
+                "Innenausschuß",
+                "Innenausschuss"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1671764",
+            "label": "Investitionsstau",
+            "labelAlternative": [
+                "Modernisierungsstau"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q169401",
+            "label": "INF-Vertrag",
+            "labelAlternative": [
+                "Intermediate Range Nuclear Forces",
+                "Washingtoner Vertrag über nukleare Mittelstreckensysteme"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q16957",
+            "label": "DDR",
+            "labelAlternative": [
+                "Deutsche Demokratische Republik",
+                "Ostdeutschland",
+                "RDA",
+                "Deutsche Demokratische Republik (DDR)",
+                "GDR",
+                "DD",
+                "Ost-Deutschland"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1697391",
+            "label": "Istanbul-Konvention",
+            "labelAlternative": [
+                "Übereinkommen des Europarats zur Verhütung und Bekämpfung von Gewalt gegen Frauen und häuslicher Gewalt"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q17078081",
+            "label": "Mietpreisbindung",
+            "labelAlternative": [
+                "Mietpreisbremse",
+                "Mietpreisstopp",
+                "Mietenstopp"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q171328",
+            "label": "UN-Charta",
+            "labelAlternative": [
+                "Charta der Vereinten Nationen"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q17354133",
+            "label": "Steuer-IdNr.",
+            "labelAlternative": [
+                "Steueridentifikationsnummer"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1741804",
+            "label": "Kindergeld in Deutschland",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1741933",
+            "label": "Kinderzuschlag",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1774424",
+            "label": "Klimaneutralität",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q178790",
+            "label": "Gewerkschaft",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q178810",
+            "label": "Bürgerkrieg in Syrien",
+            "labelAlternative": [
+                "Bürgerkrieg in Syrien seit 2011",
+                "Syrischer Bürgerkrieg",
+                "Stellvertreterkrieg in Syrien 2011/2012",
+                "Revolte in Syrien 2011",
+                "Aufstand in Syrien",
+                "Proteste in Syrien 2011",
+                "Aufstand in Syrien 2011",
+                "Aufstand in Syrien 2011/2012"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q17884",
+            "label": "LGBTQ",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1824206",
+            "label": "Lieferkette",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q185252",
+            "label": "Radioaktiver Abfall",
+            "labelAlternative": [
+                "Atommüll"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q185441",
+            "label": "EU-Mitgliedstaat",
+            "labelAlternative": [
+                "Mitgliedstaat der Europäischen Union"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q186228",
+            "label": "Mindestlohn",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q18651204",
+            "label": "Resolute Support",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1881523",
+            "label": "MINT-Fächer",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q189656",
+            "label": "Desinformation",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q192127",
+            "label": "Photovoltaik",
+            "labelAlternative": [
+                "Fotovoltaik",
+                "PV"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1932283",
+            "label": "Mietspiegel",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q193692",
+            "label": "Elektroauto",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1942046",
+            "label": "Modernisierungsumlage",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q19771",
+            "label": "G20",
+            "labelAlternative": [
+                "Gruppe der zwanzig wichtigsten Industrie- und Schwellenländer"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1988850",
+            "label": "Niedriglohn",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q19943686",
+            "label": "Operation SOPHIA",
+            "labelAlternative": [
+                "European Union Naval Force - Mediterranean"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q1997",
+            "label": "Kohlenstoffdioxid",
+            "labelAlternative": [
+                "Kohlendioxid",
+                "CO2"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q2029382",
+            "label": "Ordnungsruf",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q204344",
+            "label": "Welternährungsprogramm",
+            "labelAlternative": [
+                "Welternährungsprogramm der Vereinten Nationen"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q204481",
+            "label": "Rechtsextremismus",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q20514253",
+            "label": "Blockchain",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q2052880",
+            "label": "Parlamentarisches Kontrollgremium",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q20681009",
+            "label": "CO2-Preis",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q208202",
+            "label": "Europarecht",
+            "labelAlternative": [
+                "Europäisches Gemeinschaftsrecht",
+                "Europäisches Recht",
+                "Recht der Europäischen Union",
+                "EU-Rechtsprechung"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q21000630",
+            "label": "VW-Abgasskandal",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q21074109",
+            "label": "Schlüsseltechnologie",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q2111092",
+            "label": "PKV",
+            "labelAlternative": [
+                "private Krankenversicherung",
+                "Verband Privater Krankenkassen",
+                "Krankenversicherungen",
+                "Pkv",
+                "privater Krankenversicherer"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q212141",
+            "label": "EWWU",
+            "labelAlternative": [
+                "Europäische Wirtschafts- und Währungsunion",
+                "Wirtschaftspolitik der Europäischen Union",
+                "Wirtschafts- und Finanzenpolitik der Europäischen Union",
+                "Euro-Land",
+                "EWU",
+                "Europäische Währungsunion",
+                "Europäische Wirtschaftsunion"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q2135461",
+            "label": "Rechtsausschuss des Deutschen Bundestages",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q2152549",
+            "label": "Riester-Rente",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q21707860",
+            "label": "Pariser Abkommen",
+            "labelAlternative": [
+                "Übereinkommen von Paris"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q217690",
+            "label": "Inzidenz",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q2184704",
+            "label": "Große Koalition",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q219409",
+            "label": "Risikokapital",
+            "labelAlternative": [
+                "Wagniskapital"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q2250876",
+            "label": "Schuldenbremse in Deutschland",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q22649",
+            "label": "Antisemitismus",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q2360193",
+            "label": "PESCO",
+            "labelAlternative": [
+                "Ständige Strukturierte Zusammenarbeit"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q23607365",
+            "label": "Cyber-Grooming",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q240141",
+            "label": "EU-Verordnung",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q24704111",
+            "label": "Deutsche Nachhaltigkeitsstrategie",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q2516977",
+            "label": "Verlustvortrag",
+            "labelAlternative": [
+                "Verlustrücktrag"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q254168",
+            "label": "Erasmus-Programm",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q260487",
+            "label": "EG ",
+            "labelAlternative": [
+                "Europäische Gemeinschaft"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q26102",
+            "label": "Whistleblower",
+            "labelAlternative": [
+                "Hinweisgeber"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q26398",
+            "label": "ÖRR",
+            "labelAlternative": [
+                "öffentlich-rechtlicher Rundfunk"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q271855",
+            "label": "Haushaltsplan",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q272051",
+            "label": "Steueroase",
+            "labelAlternative": [
+                "Steuerparadies"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q274811",
+            "label": "Élysée-Vertrag",
+            "labelAlternative": [
+                "Deutsch-Französischer Vertrag",
+                "Deutsch-französischer Freundschaftsvertrag",
+                "Elysee-Vertrag",
+                "Elysée-Vertrag",
+                "Vertrag zwischen der Bundesrepublik Deutschland und der Französischen Republik über die deutsch-französische Zusammenarbeit"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q2763",
+            "label": "Holocaust",
+            "labelAlternative": [
+                "Schoah"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q28549308",
+            "label": "Fake News",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q288401",
+            "label": "CO₂-Steuer",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q3072998",
+            "label": "Digitalsteuer",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q308905",
+            "label": "EU-Ratspräsidentschaft",
+            "labelAlternative": [
+                "Vorsitz im Rat der Europäischen Union"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q309901",
+            "label": "Open Data",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q313827",
+            "label": "Bundesregierung",
+            "labelAlternative": [
+                "Bundeskabinett"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q316025",
+            "label": "Kurzarbeit",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q318161",
+            "label": "KSZE",
+            "labelAlternative": [
+                "Konferenz über Sicherheit und Zusammenarbeit in Europa"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q3316800",
+            "label": "EUTM Mali",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q351850",
+            "label": "Lohnnebenkosten",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q355",
+            "label": "Facebook",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q3550618",
+            "label": "TTIP",
+            "labelAlternative": [
+                "Transatlantisches Freihandelsabkommen",
+                "TAFTA",
+                "Transatlantische Handels- und Investitionspartnerschaft",
+                "Transatlantic Trade and Investment Partnership",
+                "Trans-Atlantic Free Trade Agreement",
+                "T-TIP"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q35637",
+            "label": "Friedensnobelpreis",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q358333",
+            "label": "LNG",
+            "labelAlternative": [
+                "Flüssigerdgas",
+                "Liquified natural gas",
+                "Liquefied Natural Gas"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q361",
+            "label": "Erster Weltkrieg",
+            "labelAlternative": [
+                "1. Weltkrieg",
+                "The Great War",
+                "I. Weltkrieg",
+                "Großer Krieg",
+                "Grosser Krieg"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q364005",
+            "label": "Kita",
+            "labelAlternative": [
+                "Kindertagesstätte"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q384535",
+            "label": "UNAMID",
+            "labelAlternative": [
+                "African Union/United Nations Hybrid Operation in Darfur",
+                "United Nations African Union Mission in Darfur",
+                "Hybrider Einsatz der Afrikanischen Union und der Vereinten Nationen in Darfur",
+                "United Nations - African Union Mission in Darfur",
+                "United Nations – African Union Mission in Darfur"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q38964",
+            "label": "Internationaler Frauentag",
+            "labelAlternative": [
+                "Weltfrauentag"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q392563",
+            "label": "Agenda 2010",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q407232",
+            "label": "Glyphosat",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q41304",
+            "label": "Weimarer Republik",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q424418",
+            "label": "Stickoxide",
+            "labelAlternative": [
+                "Stickstoffoxide"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q4264",
+            "label": "MERCOSUL",
+            "labelAlternative": [
+                "Mercosur",
+                "Mercosul",
+                "Gemeinsamer Markt Südamerikas"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q43055745",
+            "label": "Erklärung EU-Türkei vom 18. März 2016",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q432",
+            "label": "Islam",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q438994",
+            "label": "Altersvorsorge in Deutschland",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q4394526",
+            "label": "Völkerrecht",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q466087",
+            "label": "UN KRK",
+            "labelAlternative": [
+                "Kinderrechtskonvention",
+                "Kinderrechts-Konvention",
+                "Konvention über Kinderrechte",
+                "UN-Konvention für die Rechte der Kinder",
+                "Übereinkommen über die Rechte des Kindes"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q47232",
+            "label": "EU-Erweiterung",
+            "labelAlternative": [
+                "Erweiterung der Europäischen Union"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q482752",
+            "label": "Scharia",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q49833",
+            "label": "Windkraftanlage",
+            "labelAlternative": [
+                "Windenergieanlage"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q5086",
+            "label": "Berliner Mauer",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q5284043",
+            "label": "Cum-Ex",
+            "labelAlternative": [
+                "Dividendenstripping"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q52843",
+            "label": "Vertrag von Lissabon",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q5358016",
+            "label": "E-Fuel",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q543406",
+            "label": "Existenzminimum",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q55935160",
+            "label": "Operation Sea Guardian",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q56039",
+            "label": "Deutsche Wiedervereinigung",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q562307",
+            "label": "Rot-grüne Koalition",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q56296300",
+            "label": "Upload-Filter",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q565507",
+            "label": "Münchner Sicherheitskonferenz",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q566910",
+            "label": "Hartz-Konzept",
+            "labelAlternative": [
+                "Hartz-Arbeitsmarktreform",
+                "Kommission Moderne Dienstleistungen am Arbeitsmarkt. Arbeitsmarktpolitik. Reform",
+                "Hartz-Reform",
+                "Hartz-Konzepte",
+                "Hartz-Reformen",
+                "Hartz-Gesetze"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q59504247",
+            "label": "Digitalpakt",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q60727566",
+            "label": "Vertrag von Aachen",
+            "labelAlternative": [
+                "Vertrag über die deutsch-französische Zusammenarbeit und Integration",
+                "Aachener Vertrag"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q61081837",
+            "label": "Antifa in Deutschland",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q61415302",
+            "label": "Pakt für den Rechtsstaat",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q6223",
+            "label": "Faschismus",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q622439",
+            "label": "KMU",
+            "labelAlternative": [
+                "kleine und mittlere Unternehmen",
+                "Kleinbetrieb",
+                "Mittelbetrieb",
+                "Mittelstandsunternehmen",
+                "Kleinunternehmen",
+                "Kleinstunternehmen",
+                "Kleinst- und Kleinunternehmen",
+                "Klein- und Mittelbetriebe",
+                "mittelständisches Unternehmen",
+                "kleine und mittlere Betriebe",
+                "kleine und mittelständische Unternehmen",
+                "SME",
+                "KMB"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q628562",
+            "label": "ALG I",
+            "labelAlternative": [
+                "Arbeitslosengeld I"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q628569",
+            "label": "ALG II",
+            "labelAlternative": [
+                "Arbeitslosengeld II"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q653347",
+            "label": "Hassrede",
+            "labelAlternative": [
+                "Hatespeech"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q6558431",
+            "label": "Kohlekraftwerk",
+            "labelAlternative": [
+                "Steinkohlekraftwerk"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q670434",
+            "label": "UNMISS",
+            "labelAlternative": [
+                "United Nations Mission in the Republic of South Sudan",
+                "Mission der Vereinten Nationen in Südsudan",
+                "Mission der Vereinten Nationen in der Republik Südsudan"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q671974",
+            "label": "Betriebsrat",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q672788",
+            "label": "Gemeinsame Außen- und Sicherheitspolitik",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q698771",
+            "label": "Operation Atalanta",
+            "labelAlternative": [
+                "EU NAVFOR Somalia - Operation Atalanta",
+                "OP Atalanta",
+                "EU NAVFOR Somalia",
+                "NAVFOR Atalanta"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q69977833",
+            "label": "Deutschlandtakt",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q703907",
+            "label": "Tagesschau",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q7310",
+            "label": "Nationalsozialismus",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q7319",
+            "label": "Zeit des Nationalsozialismus",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q744775",
+            "label": "EU-Konvergenzkriterien",
+            "labelAlternative": [
+                "Maastricht-Kriterien"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q7649586",
+            "label": "SDGs",
+            "labelAlternative": [
+                "Ziele für nachhaltige Entwicklung",
+                "Sustainable Development Goals",
+                "UN-Nachhaltigkeitsziele",
+                "Agenda 2030",
+                "Transformation unserer Welt: die Agenda 2030 für nachhaltige Entwicklung",
+                "2030-Agenda",
+                "Ziele für nachhaltige Entwicklung, globale Nachhaltigkeitsagenda",
+                "Post-2015-Entwicklungsagenda",
+                "Weltzukunftsvertrag",
+                "globale Ziele der UN",
+                "17 Ziele"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q766328",
+            "label": "Artenschutz",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q778939",
+            "label": "Wohngeld",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q780100",
+            "label": "Ausschuss für Bildung, Forschung und Technikfolgenabschätzung",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q780113",
+            "label": "Ausschuss für Familie, Senioren, Frauen und Jugend",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q780136",
+            "label": "Ausschuss für Kultur und Medien",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q780139",
+            "label": "Ausschuss für Menschenrechte und humanitäre Hilfe",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q780156",
+            "label": "Ausschuss für Wahlprüfung, Immunität und Geschäftsordnung",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q780215",
+            "label": "Ausschuss für wirtschaftliche Zusammenarbeit und Entwicklung",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q7813",
+            "label": "UDHR",
+            "labelAlternative": [
+                "Allgemeine Erklärung der Menschenrechte",
+                "AEMR",
+                "Menschenrechte der Vereinten Nationen",
+                "AEdMR",
+                "Deklaration der Menschenrechte",
+                "UN-Menschenrechtscharta",
+                "UNO-Menschenrechtsdeklaration"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q784265",
+            "label": "Auswärtiger Ausschuss",
+            "labelAlternative": [
+                "Ausschuss für Auswärtige Angelegenheiten"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q7888194",
+            "label": "Brexit",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q79198143",
+            "label": "European Green Deal",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q7942",
+            "label": "Globale Erwärmung",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q81066",
+            "label": "UN-Generalsekretär",
+            "labelAlternative": [
+                "Generalsekretär der Vereinten Nationen"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q81068910",
+            "label": "COVID-19-Pandemie",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q82069695",
+            "label": "SARS-CoV-2",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q8268",
+            "label": "Eurozone",
+            "labelAlternative": [
+                "Euro-Währungsgebiet",
+                "Euroraum"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q827451",
+            "label": "Eigenkapital",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q84263196",
+            "label": "COVID-19",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q8452",
+            "label": "Schwangerschaftsabbruch",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q8461287",
+            "label": "Länderfinanzausgleich",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q858810",
+            "label": "Big Data",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q866",
+            "label": "YouTube",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q8683",
+            "label": "Kalter Krieg",
+            "labelAlternative": [
+                "Ost-West-Konflikt"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q86901049",
+            "label": "Corona-Test",
+            "labelAlternative": [
+                "COVID-19 Tests"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q890794",
+            "label": "Fracking",
+            "labelAlternative": [
+                "Hydraulic Fracturing"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q89268270",
+            "label": "Ausschuss für Bau, Wohnen, Stadtentwicklung und Kommunen",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q918",
+            "label": "Twitter",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q9366",
+            "label": "Google",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q939743",
+            "label": "PVER",
+            "labelAlternative": [
+                "Parlamentarische Versammlung des Europarates",
+                "Europa-Versammlung",
+                "Parlamentarische Versammlung des Europarats",
+                "PACE"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q955276",
+            "label": "Europäischer Binnenmarkt",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q962695",
+            "label": "Rechtsgut",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q96279247",
+            "label": "Lieferkettengesetz",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q980",
+            "label": "Bayern",
+            "labelAlternative": [
+                "Freistaat Bayern",
+                "DE-BY",
+                "BY"
+            ],
+            "type": "term",
+            "subType": "otherTerm"
+        },
+        {
+            "id": "Q99513382",
+            "label": "Grüner Wasserstoff",
+            "labelAlternative": [],
+            "type": "term",
+            "subType": "otherTerm"
+        }
+    ]
+}

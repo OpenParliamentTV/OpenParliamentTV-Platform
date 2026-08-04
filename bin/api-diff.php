@@ -61,6 +61,13 @@ const API_DIFF_VOLATILE_KEYS = [
     // refactor could actually break.
     'freeBytes', 'usedBytes', 'usedPercent', 'availableBytes', 'uptimeSeconds',
     'fsAvailableBytes', 'heapUsedBytes', 'heapUsedPercent', 'cpuPercent',
+    // Same section: index/database/filesystem sizes and shard counts grow with
+    // ordinary operation (and with any schema migration), so pinning the
+    // numbers just produces noise. `tables`, `nodes` and the reported
+    // labels/paths/hosts around them stay pinned.
+    'sizeBytes', 'totalBytes', 'databasesTotalBytes', 'openSearchTotalBytes',
+    'computedAt', 'activeShards', 'relocatingShards', 'initializingShards',
+    'unassignedShards', 'activeShardsPercent',
 ];
 
 /**
@@ -71,9 +78,11 @@ const API_DIFF_VOLATILE_PATTERNS = [
     // RFC-822 / ISO-8601 timestamps emitted at render time
     ['/<lastBuildDate>[^<]*<\/lastBuildDate>/', '<lastBuildDate>NORMALIZED</lastBuildDate>'],
     ['/<updated>[^<]*<\/updated>/', '<updated>NORMALIZED</updated>'],
-    // Akoma Ntoso / TEI carry a generation date in their metadata blocks
-    ['/(<FRBRdate[^>]*\bdate=")[^"]*(")/', '$1NORMALIZED$2'],
-    ['/(<date[^>]*\bwhen=")[^"]*(")/', '$1NORMALIZED$2'],
+    // Akoma Ntoso / TEI carry a generation date in their metadata blocks. Both
+    // rules are scoped to the render-time date only — the sitting date is
+    // stable content and stays pinned.
+    ['/(<FRBRdate\b[^>]*\bdate=")[^"]*("[^>]*\bname="generation")/', '$1NORMALIZED$2'],
+    ['/(<publicationStmt>.*?<date\b[^>]*\bwhen=")[^"]*(">)[^<]*(<\/date>)/s', '$1NORMALIZED$2NORMALIZED$3'],
 ];
 
 /** Response headers worth pinning. Everything else is transport noise. */

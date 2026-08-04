@@ -505,7 +505,7 @@ function externalDataTriggerFullUpdate($api_request) {
         return apiErrorMissingParameter("type");
     }
 
-    $lockFile = __DIR__ . "/../../../data/cronAdditionalDataService.lock";
+    $lockFile = optvVarFilePath("data/progress", "cronAdditionalDataService.lock");
     $logFile = optvVarFilePath("log", "cronAdditionalDataService.log"); // For logging API-side checks
 
     if (file_exists($lockFile)) {

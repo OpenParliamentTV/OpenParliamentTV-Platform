@@ -1,9 +1,24 @@
 <?php
-require_once(__DIR__.'/../../config.php');
-require_once(__DIR__."/../../modules/utilities/safemysql.class.php");
-require_once(__DIR__."/../../modules/utilities/functions.php");
+require_once(__DIR__."/../../../config.php");
+require_once(__DIR__."/../../../modules/utilities/safemysql.class.php");
+require_once(__DIR__."/../../../modules/utilities/functions.php");
 
-function getEntityDump($parameter, $db = false) {
+/**
+ * Bulk export of every platform entity (people, organisations, terms,
+ * documents) as a flat list of id/label/labelAlternative/type records.
+ *
+ * Two consumers:
+ *  - the NEL stage of the Tools pipeline, which fetches it over HTTP
+ *    (action=entityDump) and writes it to its metadata/entities.json;
+ *  - the importer, which calls this function directly to resolve a NER wid
+ *    to its entity type (bin/import.php, mediaAdd()).
+ *
+ * @param array $parameter Selection: type (person|organisation|term|document|all),
+ *                         exclude_<type> alongside type=all, wiki (Wikidata-id
+ *                         items only), wikikeys (key the list by Wikidata id).
+ * @param SafeMySQL|false $db Platform connection; opened here when not supplied.
+ */
+function entityDumpGet($parameter, $db = false) {
 
     global $config;
 
@@ -125,5 +140,32 @@ function getEntityDump($parameter, $db = false) {
     return $response;
 
 
+}
+
+/**
+ * Serves the dump directly and exits, bypassing the standard JSON envelope and
+ * encoder — the body is a bare {meta, data} object, byte-for-byte what the
+ * pre-API /data/entity-dump endpoint returned (same key order, same encoder
+ * flags). NEL pipelines parse it verbatim, so the shape is fixed.
+ *
+ * The entity selector arrives either as the path segment mapped to itemType
+ * (/api/v1/entityDump/person) or as the legacy ?type= query parameter that the
+ * /data/entity-dump redirect preserves; ?type= wins when both are present.
+ *
+ * @param array $parameter The merged API request.
+ * @param SafeMySQL|false $db Platform connection, when the caller already has one.
+ */
+function entityDumpServe($parameter, $db = false)
+{
+    $parameter["type"] = (isset($parameter["type"]) && $parameter["type"] !== "")
+        ? $parameter["type"]
+        : ($parameter["itemType"] ?? "all");
+
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(
+        entityDumpGet($parameter, $db),
+        JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT | JSON_HEX_APOS
+    );
+    exit;
 }
 ?>

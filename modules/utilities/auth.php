@@ -155,6 +155,9 @@ function auth($userID, $action, $entity, $db = false) {
                 // Public, read-only IIIF Manifests/Collections and WebVTT transcripts
                 "iiif",
                 "transcript",
+                // Bulk entity export consumed by NEL pipelines; public since it
+                // was served from /data/entity-dump.
+                "entityDump",
                 // Notifications & alerts: the action passes the central gate; each
                 // module enforces "logged-in" (and admin where needed) itself, so
                 // anonymous callers get an auth error from the module, not here.

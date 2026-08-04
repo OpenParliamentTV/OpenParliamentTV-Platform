@@ -48,6 +48,18 @@
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule ^iiif/search/?$ index.php?action=iiif&itemType=search [QSA,L]
 	########################################
+	# Entity Dump Rewrites
+	########################################
+	# Bulk entity export. The entity selector is the path segment, mapped onto
+	# itemType; the bare path defaults to "all". The legacy ?type= parameter
+	# still wins, so the redirect from /data/entity-dump keeps working.
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^entityDump/([a-zA-Z0-9_-]+)/?$ index.php?action=entityDump&itemType=$1 [QSA,L]
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule ^entityDump/?$ index.php?action=entityDump&itemType=all [QSA,L]
+	########################################
 	# Generic URL Rewrites
 	########################################
 	RewriteCond %{REQUEST_FILENAME} !-f

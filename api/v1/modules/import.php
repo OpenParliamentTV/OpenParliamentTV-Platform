@@ -22,7 +22,7 @@ function importRunCronUpdater($request) {
     }
     
     // Check if cronUpdater is already running for this parliament
-    $lockFile = __DIR__ . "/../../../data/cronUpdater_" . $parliament . ".lock";
+    $lockFile = optvVarFilePath("data/progress", "cronUpdater_" . $parliament . ".lock");
     if (file_exists($lockFile)) {
         $lockAge = time() - filemtime($lockFile);
 
