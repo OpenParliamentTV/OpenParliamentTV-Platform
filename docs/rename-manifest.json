@@ -764,6 +764,26 @@
       "old": "processPeople",
       "new": "importWritePeople",
       "phase": "5c"
+    },
+    {
+      "old": "personGetDataObject",
+      "new": "personBuildNode",
+      "phase": "5d.1"
+    },
+    {
+      "old": "organisationGetDataObject",
+      "new": "organisationBuildNode",
+      "phase": "5d.1"
+    },
+    {
+      "old": "documentGetDataObject",
+      "new": "documentBuildNode",
+      "phase": "5d.1"
+    },
+    {
+      "old": "termGetDataObject",
+      "new": "termBuildNode",
+      "phase": "5d.1"
     }
   ]
 }

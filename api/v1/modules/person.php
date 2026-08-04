@@ -4,143 +4,33 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
+require_once (__DIR__."/../../../modules/entities/person.php");
 require_once (__DIR__."/../../../modules/images/image-cache.php");
 
 
 
 /**
- * @param string $id PersonID (= WikidataID)
- * @return array
+ * Envelope wrapper over personGetNode() (modules/entities/person.php).
  */
 function personGetByID($id = false, $db = false) {
-    global $config;
-
     if (!$id) {
         return apiErrorMissingParameter('id');
     }
 
-    $db = getApiDatabaseConnection('platform');
-    if (!is_object($db)) {
-        return apiErrorDatabaseConnection();
-    }
-
     try {
-        $item = $db->getRow("SELECT * FROM ?n WHERE PersonID=?s",
-            $config["platform"]["sql"]["tbl"]["Person"],
-            $id
-        );
-
-        if ($item) {
-            $personDataObject = personGetDataObject($item, $db);
-            if (!$personDataObject) {
-                return apiErrorResponse(500, 1, "messageErrorDataTransformationTitle", "messageErrorDataTransformationDetail");
-            }
-            return apiSuccessResponse($personDataObject);
-        } else {
-            return apiErrorNotFound('person');
-        }
-    } catch (exception $e) {
+        $node = personGetNode($id, $db);
+    } catch (OptvInvalidIdException $e) {
+        return apiErrorMissingParameter('id');
+    } catch (Exception $e) {
         return apiErrorDatabaseConnection();
     }
-}
 
-function personGetDataObject($item = false, $db = false) {
-
-    global $config;
-
-    if ((is_array($item)) && $db) {
-
-        $return["type"] = "person";
-        $return["id"] = $item["PersonID"];
-        $return["attributes"]["type"] = $item["PersonType"];
-        $return["attributes"]["label"] = $item["PersonLabel"];
-        $return["attributes"]["labelAlternative"] = json_decode($item["PersonLabelAlternative"],true);
-        $return["attributes"]["firstName"] = $item["PersonFirstName"];
-        $return["attributes"]["lastName"] = $item["PersonLastName"];
-        $return["attributes"]["degree"] = $item["PersonDegree"];
-        $return["attributes"]["birthDate"] = $item["PersonBirthDate"];
-        $return["attributes"]["gender"] = $item["PersonGender"];
-        $return["attributes"]["abstract"] = $item["PersonAbstract"];
-        $return["attributes"]["thumbnailURI"] = imageCacheUrl("person", $item["PersonID"], $item["PersonThumbnailURI"]);
-        $return["attributes"]["thumbnailCreator"] = $item["PersonThumbnailCreator"] ? htmlentities($item["PersonThumbnailCreator"]) : null;
-        $return["attributes"]["thumbnailLicense"] = $item["PersonThumbnailLicense"];
-        $return["attributes"]["embedURI"] = $item["PersonEmbedURI"];
-        $return["attributes"]["websiteURI"] = $item["PersonWebsiteURI"];
-        $return["attributes"]["originID"] = $item["PersonOriginID"];
-        $return["attributes"]["socialMediaIDs"] = json_decode($item["PersonSocialMediaIDs"],true);
-        $return["attributes"]["additionalInformation"] = json_decode($item["PersonAdditionalInformation"],true);
-        $return["attributes"]["lastChanged"] = $item["PersonLastChanged"];
-        $return["links"]["self"] = $config["dir"]["api"]."/".$return["type"]."/".$return["id"];
-
-        if ($item["PersonPartyOrganisationID"]) {
-
-            $itemParty = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Organisation"]." WHERE OrganisationID=?s",$item["PersonPartyOrganisationID"]);
-
-            if ($itemParty) {
-
-                $return["relationships"]["party"]["data"]["type"] = "organisation";
-                $return["relationships"]["party"]["data"]["id"] = $itemParty["OrganisationID"];
-                $return["relationships"]["party"]["data"]["attributes"]["label"] = $itemParty["OrganisationLabel"];
-                $return["relationships"]["party"]["data"]["attributes"]["labelAlternative"] = json_decode($itemParty["OrganisationLabelAlternative"],true);
-                $return["relationships"]["party"]["data"]["attributes"]["thumbnailURI"] = imageCacheUrl("organisation", $itemParty["OrganisationID"], $itemParty["OrganisationThumbnailURI"]);
-                $return["relationships"]["party"]["data"]["attributes"]["thumbnailCreator"] = $itemParty["OrganisationThumbnailCreator"];
-                $return["relationships"]["party"]["data"]["attributes"]["thumbnailLicense"] = $itemParty["OrganisationThumbnailLicense"];
-                $return["relationships"]["party"]["data"]["attributes"]["websiteURI"] = $itemParty["OrganisationWebsiteURI"];
-                $return["relationships"]["party"]["links"]["self"] = $config["dir"]["api"]."/"."organisation/".$return["relationships"]["party"]["data"]["id"];
-
-            } else {
-
-                $return["relationships"]["party"] = array();
-
-            }
-
-        } else {
-
-            $return["relationships"]["party"] = array();
-
-        }
-
-        if ($item["PersonFactionOrganisationID"]) {
-
-            $itemFaction = $db->getRow("SELECT * FROM ".$config["platform"]["sql"]["tbl"]["Organisation"]." WHERE OrganisationID=?s",$item["PersonFactionOrganisationID"]);
-
-            if ($itemFaction) {
-
-                $return["relationships"]["faction"]["data"]["type"] = "organisation";
-                $return["relationships"]["faction"]["data"]["id"] = $itemFaction["OrganisationID"];
-                $return["relationships"]["faction"]["data"]["attributes"]["label"] = $itemFaction["OrganisationLabel"];
-                $return["relationships"]["faction"]["data"]["attributes"]["labelAlternative"] = json_decode($itemFaction["OrganisationLabelAlternative"],true);
-                $return["relationships"]["faction"]["data"]["attributes"]["thumbnailURI"] = imageCacheUrl("organisation", $itemFaction["OrganisationID"], $itemFaction["OrganisationThumbnailURI"]);
-                $return["relationships"]["faction"]["data"]["attributes"]["thumbnailCreator"] = $itemFaction["OrganisationThumbnailCreator"];
-                $return["relationships"]["faction"]["data"]["attributes"]["thumbnailLicense"] = $itemFaction["OrganisationThumbnailLicense"];
-                $return["relationships"]["faction"]["data"]["attributes"]["websiteURI"] = $itemFaction["OrganisationWebsiteURI"];
-                $return["relationships"]["faction"]["links"]["self"] = $config["dir"]["api"]."/"."organisation/".$return["relationships"]["faction"]["data"]["id"];
-
-            } else {
-
-                $return["relationships"]["faction"] = array();
-
-            }
-
-        } else {
-
-            $return["relationships"]["faction"] = array();
-
-        }
-
-        $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/search/media?personID=".$return["id"];
-
-    } else {
-
-        $return = false;
-
+    if ($node === null) {
+        return apiErrorNotFound('person');
     }
 
-    return $return;
-
-
+    return apiSuccessResponse($node);
 }
-
 function personSearch($parameter, $db = false) {
     global $config;
 
@@ -391,7 +281,7 @@ function personSearch($parameter, $db = false) {
 
             return apiSuccessResponse(
                 array_map(function($finding) use ($db) {
-                    return personGetDataObject($finding, $db);
+                    return personBuildNode($finding, $db);
                 }, $findings),
                 [
                     "page" => $page,

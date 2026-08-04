@@ -4,109 +4,39 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
+require_once (__DIR__."/../../../modules/entities/term.php");
 require_once (__DIR__."/../../../modules/images/image-cache.php");
 
 
 
 
 /**
- * @param string $id TermID
- * @return array
+ * Envelope wrapper over termGetNode() (modules/entities/term.php).
  */
 function termGetByID($id = false) {
-    global $config;
-
     if (!$id) {
         return apiErrorMissingParameter('id');
     }
-
-    // Validate ID format (Q or P followed by numbers)
     if (!preg_match("/(Q|P)\d+/i", $id)) {
         return apiErrorInvalidId('term');
     }
 
-    $db = getApiDatabaseConnection();
-    if (!is_object($db)) {
-        return apiErrorDatabaseConnection();
-    }
-
     try {
-        $item = $db->getRow("SELECT * FROM ?n WHERE TermID=?s",
-            $config["platform"]["sql"]["tbl"]["Term"],
-            $id
-        );
-
-        if (!$item) {
-            return apiErrorNotFound('term');
-        }
-
-        // termGetDataObject already returns the correct structure for the 'data' field
-        $termDataObject = termGetDataObject($item, $db);
-        if (!$termDataObject) { // Add a check in case termGetDataObject fails
-            return apiErrorResponse(500, 1, "messageErrorDataTransformationTitle", "messageErrorDataTransformationDetail");
-        }
-        return apiSuccessResponse($termDataObject);
-
-    } catch (exception $e) {
+        $node = termGetNode($id);
+    } catch (OptvInvalidIdException $e) {
+        return apiErrorInvalidId('term');
+    } catch (OptvEntityException $e) {
+        return apiErrorDatabaseConnection();
+    } catch (Exception $e) {
         return apiErrorDatabaseError($e->getMessage());
     }
-}
 
-
-function termGetDataObject($item = false, $db = false) {
-    global $config;
-
-    if (!is_array($item) || !$db || !is_object($db)) {
-        return false;
+    if ($node === null) {
+        return apiErrorNotFound('term');
     }
 
-    try {
-        // Safely decode JSON fields with fallback to empty arrays
-        $labelAlternative = json_decode($item["TermLabelAlternative"], true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            $labelAlternative = [];
-        }
-
-        $additionalInfo = json_decode($item["TermAdditionalInformation"], true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            $additionalInfo = [];
-        }
-
-        return [
-            "type" => "term",
-            "id" => $item["TermID"],
-            "attributes" => [
-                "type" => $item["TermType"],
-                "label" => $item["TermLabel"],
-                "labelAlternative" => $labelAlternative,
-                "abstract" => $item["TermAbstract"],
-                "thumbnailURI" => imageCacheUrl("term", $item["TermID"], $item["TermThumbnailURI"]),
-                "thumbnailCreator" => $item["TermThumbnailCreator"],
-                "thumbnailLicense" => $item["TermThumbnailLicense"],
-                "websiteURI" => $item["TermWebsiteURI"],
-                "embedURI" => $item["TermEmbedURI"],
-                "additionalInformation" => $additionalInfo,
-                "lastChanged" => $item["TermLastChanged"]
-            ],
-            "links" => [
-                "self" => $config["dir"]["api"]."/term/".$item["TermID"]
-            ],
-            "relationships" => [
-                "media" => [
-                    "links" => [
-                        "self" => $config["dir"]["api"]."/search/media?termID=".$item["TermID"]
-                    ]
-                ]
-            ]
-        ];
-
-    } catch (Exception $e) {
-        error_log("Error in termGetDataObject: " . $e->getMessage());
-        return false;
-    }
+    return apiSuccessResponse($node);
 }
-
-
 function termSearch($parameter, $db = false) {
     global $config;
     $outputLimit = 25;
@@ -232,7 +162,7 @@ function termSearch($parameter, $db = false) {
         // Build response with exact same format as before
         return apiSuccessResponse(
             array_map(function($item) use ($db) {
-                return termGetDataObject($item, $db);
+                return termBuildNode($item, $db);
             }, $findings),
             [
                 "page" => $page,

@@ -4,16 +4,16 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
+require_once (__DIR__."/../../../modules/entities/organisation.php");
 require_once (__DIR__."/../../../modules/images/image-cache.php");
 
 /**
- * @param string $id String of OrganisationID (= WikidataID)
- * @return array Original format: ["meta"]["requestStatus"] and ["data"] or ["errors"]
+ * Envelope wrapper over organisationGetNode() (modules/entities/organisation.php).
  */
 function organisationGetByID($id = false) {
-    global $config;
-
-    if (!$id || !preg_match("/(Q|P)\d+/i", $id)) {
+    try {
+        $node = organisationGetNode($id);
+    } catch (OptvInvalidIdException $e) {
         return apiErrorResponse(
             422,
             1,
@@ -21,105 +21,18 @@ function organisationGetByID($id = false) {
             "messageErrorMissingOrInvalidIDDetail",
             ["parameter" => "id"]
         );
-    }
-
-    $db = getApiDatabaseConnection('platform');
-    if (!is_object($db)) {
+    } catch (OptvEntityException $e) {
         return apiErrorDatabaseConnection();
-    }
-
-    try {
-        $item = $db->getRow("SELECT * FROM ?n WHERE OrganisationID=?s",
-            $config["platform"]["sql"]["tbl"]["Organisation"],
-            $id
-        );
-
-        if (!$item) {
-            return apiErrorNotFound("Organisation");
-        }
-
-        $data = [
-            "type" => "organisation",
-            "id" => $item["OrganisationID"],
-            "attributes" => [
-                "type" => $item["OrganisationType"],
-                "label" => $item["OrganisationLabel"],
-                "labelAlternative" => json_decode($item["OrganisationLabelAlternative"], true),
-                "abstract" => $item["OrganisationAbstract"],
-                "thumbnailURI" => imageCacheUrl("organisation", $item["OrganisationID"], $item["OrganisationThumbnailURI"]),
-                "thumbnailCreator" => $item["OrganisationThumbnailCreator"],
-                "thumbnailLicense" => $item["OrganisationThumbnailLicense"],
-                "embedURI" => $item["OrganisationEmbedURI"],
-                "websiteURI" => $item["OrganisationWebsiteURI"],
-                "socialMediaIDs" => json_decode($item["OrganisationSocialMediaIDs"], true),
-                "color" => $item["OrganisationColor"],
-                "additionalInformation" => json_decode($item["OrganisationAdditionalInformation"], true),
-                "lastChanged" => $item["OrganisationLastChanged"]
-            ]
-        ];
-
-        // Add links and relationships directly to the $data array
-        $data["links"] = [
-            "self" => $config["dir"]["api"]."/".$data["type"]."/".$data["id"]
-        ];
-
-        $data["relationships"] = [
-            "media" => [
-                "links" => [
-                    "self" => $config["dir"]["api"]."/"."search/media?organisationID=".$data["id"]
-                ]
-            ],
-            "people" => [
-                "links" => [
-                    "self" => $config["dir"]["api"]."/"."search/people?organisationID=".$data["id"]
-                ]
-            ]
-        ];
-
-        return apiSuccessResponse($data, null, null, null);
-
-    } catch (exception $e) {
+    } catch (Exception $e) {
         return apiErrorDatabaseError();
     }
-}
 
-function organisationGetDataObject($item = false, $db = false) {
-
-    global $config;
-
-    if ((is_array($item)) && $db) {
-
-        $return["type"] = "organisation";
-        $return["id"] = $item["OrganisationID"];
-        $return["attributes"]["type"] = $item["OrganisationType"];
-        $return["attributes"]["label"] = $item["OrganisationLabel"];
-        $return["attributes"]["labelAlternative"] = json_decode($item["OrganisationLabelAlternative"],true);
-        $return["attributes"]["abstract"] = $item["OrganisationAbstract"];
-        $return["attributes"]["thumbnailURI"] = imageCacheUrl("organisation", $item["OrganisationID"], $item["OrganisationThumbnailURI"]);
-        $return["attributes"]["thumbnailCreator"] = $item["OrganisationThumbnailCreator"];
-        $return["attributes"]["thumbnailLicense"] = $item["OrganisationThumbnailLicense"];
-        $return["attributes"]["embedURI"] = $item["OrganisationEmbedURI"];
-        $return["attributes"]["websiteURI"] = $item["OrganisationWebsiteURI"];
-        $return["attributes"]["socialMediaIDs"] = json_decode($item["OrganisationSocialMediaIDs"],true);
-        $return["attributes"]["color"] = $item["OrganisationColor"];
-        $return["attributes"]["order"] = $item["OrganisationOrder"];
-        $return["attributes"]["filterable"] = $item["OrganisationFilterable"];
-        $return["attributes"]["additionalInformation"] = json_decode($item["OrganisationAdditionalInformation"],true);
-        $return["attributes"]["lastChanged"] = $item["OrganisationLastChanged"];
-        $return["links"]["self"] = $config["dir"]["api"]."/".$return["type"]."/".$return["id"];
-        $return["relationships"]["media"]["links"]["self"] = $config["dir"]["api"]."/"."search/media?organisationID=".$return["id"];
-        $return["relationships"]["people"]["links"]["self"] = $config["dir"]["api"]."/"."search/people?organisationID=".$return["id"];
-
-    } else {
-
-        $return = false;
-
+    if ($node === null) {
+        return apiErrorNotFound("Organisation");
     }
 
-    return $return;
-
+    return apiSuccessResponse($node, null, null, null);
 }
-
 /**
  * Search for organisations with various filters
  * 
@@ -214,7 +127,7 @@ function organisationSearch($parameter, $noLimit = false) {
         
         // Format results
         $data = array_map(function($finding) use ($db) {
-            return organisationGetDataObject($finding, $db);
+            return organisationBuildNode($finding, $db);
         }, $findings);
 
         $links = [
