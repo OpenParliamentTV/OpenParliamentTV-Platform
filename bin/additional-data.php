@@ -259,27 +259,17 @@ function _ads_process_official_documents($db, $dbp, $parliament, $input, &$overa
     if (!empty($updatedDocumentIDs)) {
         logger("info", "[ADS] Reindexing media for " . count($updatedDocumentIDs) . " updated documents.");
         try {
-            require_once(__DIR__ . "/../api/v1/modules/search-index.php");
-            $reindexResult = searchIndexUpdateForDocuments($updatedDocumentIDs, $parliament, $db, $dbp);
-            if (($reindexResult["meta"]["requestStatus"] ?? "") === "success") {
-                $reindexData = $reindexResult["data"];
-                $reindexSummary = " Reindexed " . ($reindexData["updated"] ?? 0) . " of " . ($reindexData["mediaTotal"] ?? 0) . " media items.";
-                if (!empty($reindexData["failed"])) {
-                    $reindexSummary .= " (" . $reindexData["failed"] . " media failed.)";
-                    $typeSpecificErrors = true;
-                    $overallErrorsEncountered = true;
-                    $progress = _ads_get_progress_data();
-                    $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => "Reindex: " . $reindexData["failed"] . " media items failed."];
-                    _ads_save_progress_data($progress);
-                }
-            } else {
-                $reindexErrorMsg = "[ADS] Media reindex failed: " . json_encode($reindexResult["errors"] ?? "unknown error");
-                logger("error", $reindexErrorMsg);
-                $reindexSummary = " Media reindex failed.";
+            require_once(__DIR__ . "/../modules/search-index/jobs.php");
+            // Throws on failure; the catch below records it. Per-media failures
+            // come back in the return value instead, as a partial success.
+            $reindexData = searchIndexUpdateForDocumentIDs($updatedDocumentIDs, $parliament, $db, $dbp);
+            $reindexSummary = " Reindexed " . ($reindexData["updated"] ?? 0) . " of " . ($reindexData["mediaTotal"] ?? 0) . " media items.";
+            if (!empty($reindexData["failed"])) {
+                $reindexSummary .= " (" . $reindexData["failed"] . " media failed.)";
                 $typeSpecificErrors = true;
                 $overallErrorsEncountered = true;
                 $progress = _ads_get_progress_data();
-                $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => $reindexErrorMsg];
+                $progress['types'][$type]['errors'][] = ["timestamp" => date('c'), "message" => "Reindex: " . $reindexData["failed"] . " media items failed."];
                 _ads_save_progress_data($progress);
             }
         } catch (Exception $e) {

@@ -8,7 +8,7 @@
 
 require_once(__DIR__ . "/../bootstrap-cli.php");
 
-require_once(__DIR__ . "/../api/v1/modules/search-index.php");
+require_once(__DIR__ . "/../modules/search-index/jobs.php");
 
 function logger($type = "info", $msg) {
     file_put_contents(optvVarFilePath("log", "indexOptimizer.log"), date("Y-m-d H:i:s") . " - " . $type . ": " . $msg . "\n", FILE_APPEND);
@@ -25,7 +25,7 @@ if (optvIsCli()) {
     logger("info", "Index optimization started for parliament: {$parliament}");
     
     // Perform the optimization
-    $success = performIndexOptimization($parliament);
+    $success = searchIndexRunOptimization($parliament);
     
     if ($success) {
         logger("info", "Index optimization completed successfully for parliament: {$parliament}");

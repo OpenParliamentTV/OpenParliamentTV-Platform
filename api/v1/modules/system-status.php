@@ -47,7 +47,7 @@ function systemDataDirSizeCachePath() {
 /**
  * Build the list of OpenSearch indices this instance owns: the main speech
  * index plus the statistics index for every configured parliament. Computed
- * inline (same shape as performIndexOptimization) to avoid pulling in the whole
+ * inline (same shape as searchIndexOptimizeIndices) to avoid pulling in the whole
  * search stack just for two string builders.
  *
  * @return string[]

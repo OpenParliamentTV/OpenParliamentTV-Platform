@@ -49,11 +49,16 @@ Every one of these is exercised through **both URL styles** — the pretty paths
 Two mechanisms, both in `bin/api-diff.php`:
 
 - `API_DIFF_VOLATILE_KEYS` — JSON keys replaced with `<<NORMALIZED>>` at any depth (timestamps, `took`, durations, cache ages, and the live gauges in `action=system&itemType=status`: disk/index/database byte counts, shard counts, heap and CPU). Structural values in the same payload — `tables`, `nodes`, the reported labels, paths and hosts — stay pinned, because those are what a refactor can actually break.
+- `API_DIFF_ROUNDED_KEYS` — keys rounded instead of blanked. Only `_score` so far: BM25 relevance shifts in the 5th decimal when OpenSearch merges segments, so full precision makes every index optimize look like a relevance regression, while blanking it would stop catching a real one. Rounding keeps ranking and magnitude pinned.
 - `API_DIFF_VOLATILE_PATTERNS` — regexes for non-JSON bodies (RSS `lastBuildDate`, and the render-time generation date in Akoma Ntoso / TEI exports). Both XML rules are scoped to the generation date specifically: `FRBRdate` by `name="generation"`, TEI `<date>` by its position in `<publicationStmt>`. Sitting dates are content and stay pinned.
 
 Image responses are pinned by byte length + sha256 rather than content, so fixtures stay small and readable.
 
 Only the status line and a few pinned headers (`content-type`, `x-robots-tag`, `location`) are compared. `Date`, `Set-Cookie`, `ETag` and `Content-Length` are transport noise.
+
+### Corpus entries must be deterministic
+
+Anything unsorted is a trap. `result-table.php?a=search&queryOnly=1` originally had no `sort`, and unfiltered `match_all` ordering over 2.5M documents is shard- and segment-dependent — a single index optimize reshuffled which 40 rows came back and produced a 638-line diff with no code change behind it. It now carries `&sort=date-asc`. When adding an entry that lists results, pin the order explicitly.
 
 ### Direct-served AJAX fragments are in the corpus on purpose
 

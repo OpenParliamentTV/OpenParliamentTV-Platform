@@ -1,0 +1,3640 @@
+HTTP 200
+content-type: text/html; charset=UTF-8
+
+	<div class="filterSummary row">
+		<div class="col-12 col-sm-6 mb-3 mb-sm-0 px-0 px-sm-2"><label class="col-form-label px-0 me-0 me-sm-1 col-12 col-sm-auto text-center text-sm-left"><strong>2583</strong> Redebeiträge gefunden</label>
+			<button type="button" id="play-submit" class="btn btn-sm btn-outline-primary rounded-pill col-12 col-sm-auto">Alle automatisch abspielen<span class="icon-play-1"></span></button>
+		</div>
+		<div class="col-12 col-sm-6 pr-0 pr-sm-2" style="text-align: right;">
+			<label class="col-form-label" for="sort">Sortieren nach</label>
+			<select style="width: auto;" class="form-select form-select-sm ms-1 d-inline-block align-middle" id="sort" name="sort">
+				<option value="relevance" selected>Relevanz</option>
+				<option value="topic-asc">Thema (Älteste zuerst)</option>
+				<option value="topic-desc">Thema (Neueste zuerst)</option>
+				<option value="date-asc">Datum (Älteste zuerst)</option>
+				<option value="date-desc">Datum (Neueste zuerst)</option>
+				<option value="duration-asc">Dauer (Kürzeste zuerst)</option>
+				<option value="duration-desc">Dauer (Längste zuerst)</option>
+			</select>
+			<div class="d-block d-md-inline w-100 w-md-auto">
+				<a href="https://optv.local/feed/search?q=klima" id="searchRssFeedLink" class="btn btn-sm btn-outline-primary rss-feed-link ms-2 mt-2 mt-md-0 align-middle" title="Per RSS abonnieren" target="_blank">RSS<span class="icon-rss ms-1" aria-hidden="true"></span></a>
+				<!-- <a href="https://optv.local/api/v1/iiif/search?q=klima" id="searchIiifCollectionLink" class="btn btn-sm btn-outline-primary ms-2 mt-2 mt-md-0 align-middle" title="Als IIIF-Sammlung öffnen" target="_blank">IIIF<span class="icon-data-structured ms-1" aria-hidden="true"></span></a> -->
+			</div>
+		</div>
+	</div>
+	<div class="resultList row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+		<article class="resultItem col snippets" data-speech-id="DE-0190158018" data-faction="Q1387991">
+	<div class="resultContent partyIndicator" data-faction="Q1387991">
+		<a style="display: block;" href='https://optv.local/media/DE-0190158018?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">04:34</div>
+			<div class="resultDate">07.05.2020</div>
+			<div class="resultMeta">
+				Grigorios Aggelidis <span class="partyIndicator partyIndicatorInline" data-faction="Q1387991">FDP</span>			</div>
+			<hr>
+							<div class="resultTitle">Elterngeld und Hilfe für Familien				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190158018?q=klima&amp;page=3&amp;t=192.560' title="▶ Ausschnitt direkt abspielen">Sie haben das gesellschaftliche <em>Klima</em> mitverursacht, in dem Schilder mit der Aufschrift „Kein Zutritt für Kinder“ auftauchen. </a>
+								<a class="resultSnippet" href='media/DE-0190158018?q=klima&amp;page=3&amp;t=214.800' title="▶ Ausschnitt direkt abspielen">Sie sind für genau dieses familienfeindliche <em>Klima</em> mitverantwortlich. </a>
+								<a class="resultSnippet" href='media/DE-0190158018?q=klima&amp;page=3&amp;t=249.040' title="▶ Ausschnitt direkt abspielen">Und schaffen Sie endlich ein kinder- und familienfreundliches <em>Klima</em>. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 70.277372262774%; width: 2.8175182481752%;"></div>
+										<div class="hit" style="left: 78.394160583942%; width: 1.8175182481752%;"></div>
+										<div class="hit" style="left: 90.890510948905%; width: 1.3284671532847%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200132055" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a style="display: block;" href='https://optv.local/media/DE-0200132055?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">04:14</div>
+			<div class="resultDate">20.10.2023</div>
+			<div class="resultMeta">
+				Jürgen Braun <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+			<hr>
+							<div class="resultTitle">Auswirkungen der EU-Verpackungsverordnung				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200132055?q=klima&amp;page=3&amp;t=82.040' title="▶ Ausschnitt direkt abspielen">Der irreale, durchgeknallte Green Deal der EU wird begrüßt, der nur ein primitives Mantra kennt: <em>Klima</em>, <em>Klima</em>, <em>Klima</em>. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 32.299212598425%; width: 4.5354330708661%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200041135" data-faction="Q1007353">
+	<div class="resultContent partyIndicator" data-faction="Q1007353">
+		<a style="display: block;" href='https://optv.local/media/DE-0200041135?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">04:32</div>
+			<div class="resultDate">02.06.2022</div>
+			<div class="resultMeta">
+				Laura Kraft <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+			<hr>
+							<div class="resultTitle">Bildung und Forschung				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200041135?q=klima&amp;page=3&amp;t=132.120' title="▶ Ausschnitt direkt abspielen">Das ist zum Beispiel die <em>Klima</em>- und Nachhaltigkeitsforschung zur Bekämpfung der Klimakrise. </a>
+								<a class="resultSnippet" href='media/DE-0200041135?q=klima&amp;page=3&amp;t=185.800' title="▶ Ausschnitt direkt abspielen">Deutschland kann bedeutsame Spitzenforschung vorantreiben und gleichzeitig die Voraussetzung für evidenzbasierte <em>Klima</em>- und Energiepolitik schaffen. </a>
+								<a class="resultSnippet" href='media/DE-0200041135?q=klima&amp;page=3&amp;t=195.560' title="▶ Ausschnitt direkt abspielen"><em>Klima</em>- und Nachhaltigkeitsforschung ist die Zukunftsforschung. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 48.573529411765%; width: 1.7058823529412%;"></div>
+										<div class="hit" style="left: 68.308823529412%; width: 3.5882352941176%;"></div>
+										<div class="hit" style="left: 71.897058823529%; width: 1.9558823529412%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190178065" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a style="display: block;" href='https://optv.local/media/DE-0190178065?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">07:15</div>
+			<div class="resultDate">29.09.2020</div>
+			<div class="resultMeta">
+				Ingo Gädechens <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+							<div class="resultTitle">Umwelt, Naturschutz und nukleare Sicherheit				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190178065?q=klima&amp;page=3&amp;t=238.520' title="▶ Ausschnitt direkt abspielen">Damit werden wir Kurs halten und die notwendigen Mittel für Umwelt-, <em>Klima</em>- und Naturschutz bereitstellen. </a>
+								<a class="resultSnippet" href='media/DE-0190178065?q=klima&amp;page=3&amp;t=245.700' title="▶ Ausschnitt direkt abspielen">In diesem Sinne kann ich Ihnen, Frau Ministerin, nur zustimmen: Mit dem Bundeshaushalt 2021 sind Investitionen in den <em>Klima</em>- und Umweltschutz in beachtlicher Höhe geplant. </a>
+								<a class="resultSnippet" href='media/DE-0190178065?q=klima&amp;page=3&amp;t=295.060' title="▶ Ausschnitt direkt abspielen">Neben den Bereichen Umwelt-, <em>Klima</em>- und Naturschutz haben wir aber noch ein etwas ungeliebtes Stiefkind, um das wir uns gerade mit Blick auf die Haushaltsauswirkungen intensiv kümmern müssen. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 54.832183908046%; width: 1.6505747126437%;"></div>
+										<div class="hit" style="left: 56.48275862069%; width: 3.3609195402299%;"></div>
+										<div class="hit" style="left: 67.829885057471%; width: 3.6551724137931%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200125109" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a style="display: block;" href='https://optv.local/media/DE-0200125109?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">04:37</div>
+			<div class="resultDate">28.09.2023</div>
+			<div class="resultMeta">
+				Jürgen Braun <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+			<hr>
+							<div class="resultTitle">50 Jahre Deutschland in den Vereinten Nationen				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200125109?q=klima&amp;page=3&amp;t=231.420' title="▶ Ausschnitt direkt abspielen">Thema: <em>Klima</em>, <em>Klima</em>, <em>Klima</em>. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 83.545126353791%; width: 1.2779783393502%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190176097" data-faction="Q1387991">
+	<div class="resultContent partyIndicator" data-faction="Q1387991">
+		<a style="display: block;" href='https://optv.local/media/DE-0190176097?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">04:21</div>
+			<div class="resultDate">17.09.2020</div>
+			<div class="resultMeta">
+				Hagen Reinhold <span class="partyIndicator partyIndicatorInline" data-faction="Q1387991">FDP</span>			</div>
+			<hr>
+							<div class="resultTitle">Nachhaltig leben und konsumieren				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190176097?q=klima&amp;page=3&amp;t=23.240' title="▶ Ausschnitt direkt abspielen">Und so, wie ich wenige Abgeordnete kenne, mir eigentlich gar keiner persönlich bekannt ist, der morgens aufsteht und sagt: „Heute mache ich aber ein besonders schlechtes Gesetz, das mit Sicherheit vor dem Verfassungsgericht scheitert“, kenne ich auch keinen Menschen, der morgens aufsteht und sagt: Aber heute zerstöre ich mal so richtig meine Heimat; heute zerstöre ich die Umwelt, die Natur, und versaue das <em>Klima</em> so sehr, dass meine Kinder darunter leiden. </a>
+								<a class="resultSnippet" href='media/DE-0190176097?q=klima&amp;page=3&amp;t=58.080' title="▶ Ausschnitt direkt abspielen">Denn sie tun nichts anderes, als den Leuten, die jeden Morgen aufstehen und die Umwelt und ihre Heimat genauso schützen, vorzuwerfen: „Nur wir tun was für das <em>Klima</em>, und andere tun das eben nicht.“ </a>
+								<a class="resultSnippet" href='media/DE-0190176097?q=klima&amp;page=3&amp;t=183.240' title="▶ Ausschnitt direkt abspielen">Ressourcen sind uns wichtig, <em>Klima</em> und Umwelt. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 8.904214559387%; width: 7.4942528735632%;"></div>
+										<div class="hit" style="left: 22.252873563218%; width: 3.8314176245211%;"></div>
+										<div class="hit" style="left: 70.206896551724%; width: 1.0114942528736%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190193006" data-faction="Q1387991">
+	<div class="resultContent partyIndicator" data-faction="Q1387991">
+		<a style="display: block;" href='https://optv.local/media/DE-0190193006?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">05:24</div>
+			<div class="resultDate">20.11.2020</div>
+			<div class="resultMeta">
+				Marco Buschmann <span class="partyIndicator partyIndicatorInline" data-faction="Q1387991">FDP</span>			</div>
+			<hr>
+							<div class="resultTitle">Aktuelle Stunde - Bedrängung von Abgeordneten verurteilen				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190193006?q=klima&amp;page=3&amp;t=34.640' title="▶ Ausschnitt direkt abspielen">Schon während der AfD-Fraktionsvorsitzende, Alexander Gauland, das mit großer Vehemenz von sich gewiesen hat, waren sie schon hier im Hause unterwegs: die Unruhestifter, die Ihre Abgeordneten hier ins Haus gelassen haben, die Unruhestifter, die Mitglieder der Bundesregierung und Mitglieder dieses Hauses und unsere Mitarbeiter bedrängt haben, die sich Zutritt in Räume verschafft haben, wo sie nicht hingehören, und die hier ein <em>Klima</em> der Bedrängung und der Bedrohung erzeugen wollten. </a>
+								<a class="resultSnippet" href='media/DE-0190193006?q=klima&amp;page=3&amp;t=69.440' title="▶ Ausschnitt direkt abspielen">Sie wollten ein <em>Klima</em> der Bedrohung in dieses Haus tragen. </a>
+								<a class="resultSnippet" href='media/DE-0190193006?q=klima&amp;page=3&amp;t=172.620' title="▶ Ausschnitt direkt abspielen">Die physische Obstruktion soll durch Lärm, durch Gewalt und durch ein <em>Klima</em> der Bedrohung die Parlamentarier selbst von ihrer Arbeit abhalten. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 10.691358024691%; width: 10.740740740741%;"></div>
+										<div class="hit" style="left: 21.432098765432%; width: 1.1851851851852%;"></div>
+										<div class="hit" style="left: 53.277777777778%; width: 3.4753086419753%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200027074" data-faction="Q1007353">
+	<div class="resultContent partyIndicator" data-faction="Q1007353">
+		<a style="display: block;" href='https://optv.local/media/DE-0200027074?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">02:35</div>
+			<div class="resultDate">06.04.2022</div>
+			<div class="resultMeta">
+				Nyke Slawik <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+			<hr>
+							<div class="resultTitle">Steuerliche Entlastung für Bürger und Mittelstand				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200027074?q=klima&amp;page=3&amp;t=66.680' title="▶ Ausschnitt direkt abspielen">Deswegen ist das, was Sie hier vorschlagen, weder sozial gerecht, noch nutzt es dem <em>Klima</em>. </a>
+								<a class="resultSnippet" href='media/DE-0200027074?q=klima&amp;page=3&amp;t=116.560' title="▶ Ausschnitt direkt abspielen">Lassen Sie mich damit schließen: Wer Öffis statt Auto fährt, hilft dem <em>Klima</em> und reduziert unsere Abhängigkeit von Putins Öl. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 43.01935483871%; width: 4.9290322580645%;"></div>
+										<div class="hit" style="left: 75.2%; width: 6.1677419354839%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190095026" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a style="display: block;" href='https://optv.local/media/DE-0190095026?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">02:39</div>
+			<div class="resultDate">11.04.2019</div>
+			<div class="resultMeta">
+				Beatrix von Storch <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+			<hr>
+							<div class="resultTitle">Vereinbarte Debatte - Vorgeburtliche genetische Bluttests				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190095026?q=klima&amp;page=3&amp;t=52.320' title="▶ Ausschnitt direkt abspielen">Doch die Debatte über die pränatale Diagnostik schafft ein gesellschaftliches <em>Klima</em>, das die Berechtigung, sich für ein behindertes Kind zu entscheiden, mehr und mehr infrage stellt; das fürchte ich. </a>
+								<a class="resultSnippet" href='media/DE-0190095026?q=klima&amp;page=3&amp;t=138.160' title="▶ Ausschnitt direkt abspielen">Dieses <em>Klima</em> wird sich ausbreiten; auf jeden Fall fürchte ich das. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 32.905660377358%; width: 7.6477987421384%;"></div>
+										<div class="hit" style="left: 86.893081761006%; width: 2.6415094339623%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200066027" data-faction="Q1007353">
+	<div class="resultContent partyIndicator" data-faction="Q1007353">
+		<a style="display: block;" href='https://optv.local/media/DE-0200066027?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">01:41</div>
+			<div class="resultDate">10.11.2022</div>
+			<div class="resultMeta">
+				Irene Mihalic <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+			<hr>
+							<div class="resultTitle">Strafen für Straßenblockierer und Museumsrandalierer				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200066027?q=klima&amp;page=3&amp;t=7.640' title="▶ Ausschnitt direkt abspielen">(Beifall beim BÜNDNIS 90/DIE GRÜNEN, bei der SPD, der FDP und der LINKEN – Alexander Dobrindt [CDU/CSU]: Wollen Sie eine <em>Klima</em>-RAF verhindern?) </a>
+								<a class="resultSnippet" href='media/DE-0200066027?q=klima&amp;page=3&amp;t=30.320' title="▶ Ausschnitt direkt abspielen">(Alexander Dobrindt [CDU/CSU]: Wollen Sie eine <em>Klima</em>-RAF verhindern?) </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 7.5643564356436%; width: 18.653465346535%;"></div>
+										<div class="hit" style="left: 30.019801980198%; width: 16.514851485149%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190042018" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a style="display: block;" href='https://optv.local/media/DE-0190042018?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">00:44</div>
+			<div class="resultDate">28.06.2018</div>
+			<div class="resultMeta">
+				Thomas Oppermann			</div>
+			<hr>
+							<div class="resultTitle">Klima- und Energiepolitik				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190042018?q=klima&amp;page=3&amp;t=11.340' title="▶ Ausschnitt direkt abspielen">Aufgabe der Energie- und Klimaschutz-Zwischenziele 2030 des Energiekonzeptes 2010 – Für eine faktenbasierte <em>Klima</em>- und Energiepolitik </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">1</span> -->
+								<div class="hit" style="left: 25.772727272727%; width: 31.090909090909%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200030035" data-faction="Q2207512">
+	<div class="resultContent partyIndicator" data-faction="Q2207512">
+		<a style="display: block;" href='https://optv.local/media/DE-0200030035?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">05:53</div>
+			<div class="resultDate">27.04.2022</div>
+			<div class="resultMeta">
+				Robin Mesarosch <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
+			<hr>
+							<div class="resultTitle">Aktuelle Stunde - Warnung der Wissenschaft vor gravierenden Folgen des Klimawandels				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200030035?q=klima&amp;page=3&amp;t=52.920' title="▶ Ausschnitt direkt abspielen">Diese Leute sind nicht das Problem für das <em>Klima</em>. </a>
+								<a class="resultSnippet" href='media/DE-0200030035?q=klima&amp;page=3&amp;t=103.080' title="▶ Ausschnitt direkt abspielen">Damit das gelingen kann, müssen wir aber unbedingt unser <em>Klima</em> schützen; das sagt uns der Bericht des Weltklimarats. </a>
+								<a class="resultSnippet" href='media/DE-0200030035?q=klima&amp;page=3&amp;t=112.600' title="▶ Ausschnitt direkt abspielen">Schützen wir unser <em>Klima</em> nicht, erwarten uns in den nächsten Jahrzehnten regelmäßig und oft Naturkatastrophen. </a>
+								<a class="resultSnippet" href='media/DE-0200030035?q=klima&amp;page=3&amp;t=287.800' title="▶ Ausschnitt direkt abspielen">Unser Ziel muss daher sein: In jedem Laden in Deutschland kriegen wir ausschließlich <em>klima</em>- und sozialverträglich hergestellte Produkte. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">4</span> -->
+								<div class="hit" style="left: 14.991501416431%; width: 0.96317280453258%;"></div>
+										<div class="hit" style="left: 29.201133144476%; width: 2.6968838526912%;"></div>
+										<div class="hit" style="left: 31.898016997167%; width: 1.9036827195467%;"></div>
+										<div class="hit" style="left: 81.529745042493%; width: 2.2322946175637%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190044010" data-faction="Q1007353">
+	<div class="resultContent partyIndicator" data-faction="Q1007353">
+		<a style="display: block;" href='https://optv.local/media/DE-0190044010?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">05:46</div>
+			<div class="resultDate">03.07.2018</div>
+			<div class="resultMeta">
+				Sven-Christian Kindler <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+			<hr>
+							<div class="resultTitle">Finanzen, Bundesrechungshof				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190044010?q=klima&amp;page=3&amp;t=196.000' title="▶ Ausschnitt direkt abspielen">Es gibt große Lücken beim <em>Klima</em>, bei Gerechtigkeit und Frieden. </a>
+								<a class="resultSnippet" href='media/DE-0190044010?q=klima&amp;page=3&amp;t=272.840' title="▶ Ausschnitt direkt abspielen">Beim <em>Klima</em> haben Sie ein großes Schweigekartell gebildet. </a>
+								<a class="resultSnippet" href='media/DE-0190044010?q=klima&amp;page=3&amp;t=284.920' title="▶ Ausschnitt direkt abspielen">(Volker Kauder [CDU/CSU]: Unser <em>Klima</em> ist wieder super!) </a>
+								<a class="resultSnippet" href='media/DE-0190044010?q=klima&amp;page=3&amp;t=331.840' title="▶ Ausschnitt direkt abspielen">bei <em>Klima</em>, Gerechtigkeit, Frieden. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">4</span> -->
+								<div class="hit" style="left: 56.647398843931%; width: 0.98265895953757%;"></div>
+										<div class="hit" style="left: 78.85549132948%; width: 1.6878612716763%;"></div>
+										<div class="hit" style="left: 82.346820809249%; width: 6.1156069364162%;"></div>
+										<div class="hit" style="left: 95.907514450867%; width: 0.83236994219655%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0180057030" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a style="display: block;" href='https://optv.local/media/DE-0180057030?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">10:51</div>
+			<div class="resultDate">09.10.2014</div>
+			<div class="resultMeta">
+				Anja Weisgerber <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+							<div class="resultTitle">Klimapolitik				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0180057030?q=klima&amp;page=3&amp;t=90.420' title="▶ Ausschnitt direkt abspielen">Der bereits viel zitierte Bericht der „Globalen Kommission für Wirtschaft und <em>Klima</em>“ unter Mitwirkung des ehemaligen Chefökonoms der Weltbank Nicholas Stern hat uns jetzt aktuell vor Augen geführt: Entscheidend ist, wie stark wir in den nächsten 10 bis 15 Jahren in mehr Energieeffizienz und den Umbau zu klimaschonenderen Technologien investieren, und zwar bei uns und in anderen Ländern der Welt. </a>
+								<a class="resultSnippet" href='media/DE-0180057030?q=klima&amp;page=3&amp;t=197.720' title="▶ Ausschnitt direkt abspielen">Es gilt nach wie vor: Alleine in Deutschland können wir das <em>Klima</em> nicht retten. </a>
+								<a class="resultSnippet" href='media/DE-0180057030?q=klima&amp;page=3&amp;t=387.240' title="▶ Ausschnitt direkt abspielen">Wenn wir die Forderungen bezüglich der europäischen <em>Klima</em>- und Energieziele zu niedrig ansetzen, ist Europa nicht ambitioniert genug, und wir brauchen ein gutes Ergebnis auf europäischer Ebene, damit wir in Lima und Paris mit dem entsprechenden Rückenwind verhandeln können. </a>
+								<a class="resultSnippet" href='media/DE-0180057030?q=klima&amp;page=3&amp;t=439.800' title="▶ Ausschnitt direkt abspielen">Im Übrigen muss ich auch sagen: Die Umsetzung des Vorschlags der Grünen, dem <em>Klima</em>- und Energiepaket 2030 nicht zuzustimmen, sollten die Ziele nicht ambitioniert genug sein, kommt letztendlich einem Genickbruch gleich. </a>
+								<a class="resultSnippet" href='media/DE-0180057030?q=klima&amp;page=3&amp;t=614.520' title="▶ Ausschnitt direkt abspielen">Dem <em>Klima</em> ist damit unter dem Strich nicht geholfen. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">5</span> -->
+								<div class="hit" style="left: 13.889400921659%; width: 4.3072196620584%;"></div>
+										<div class="hit" style="left: 30.371735791091%; width: 0.94009216589862%;"></div>
+										<div class="hit" style="left: 59.483870967742%; width: 2.3410138248848%;"></div>
+										<div class="hit" style="left: 67.557603686636%; width: 2.863287250384%;"></div>
+										<div class="hit" style="left: 94.396313364055%; width: 0.67281105990783%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190118034" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a style="display: block;" href='https://optv.local/media/DE-0190118034?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">00:39</div>
+			<div class="resultDate">17.10.2019</div>
+			<div class="resultMeta">
+				Petra Pau			</div>
+			<hr>
+							<div class="resultTitle">Klima- und Energiepolitik				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190118034?q=klima&amp;page=3&amp;t=12.720' title="▶ Ausschnitt direkt abspielen">Echten Umweltschutz betreiben – Aufgabe aller Klimaschutz- und Energiewendeziele, für eine faktenbasierte <em>Klima</em>- und Energiepolitik </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">1</span> -->
+								<div class="hit" style="left: 32.615384615385%; width: 13.948717948718%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0210021152" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a style="display: block;" href='https://optv.local/media/DE-0210021152?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">00:40</div>
+			<div class="resultDate">11.09.2025</div>
+			<div class="resultMeta">
+				Andrea Lindholz			</div>
+			<hr>
+							<div class="resultTitle">Kohlendioxid-Speicherungsgesetz				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0210021152?q=klima&amp;page=3&amp;t=15.800' title="▶ Ausschnitt direkt abspielen">Zukunft sichern, <em>Klima</em> schützen – Naturverträgliche Lösungen vor Verfahren zur CO2-Abscheidung und -Speicherung </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">1</span> -->
+								<div class="hit" style="left: 39.5%; width: 15.7%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200117022" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a style="display: block;" href='https://optv.local/media/DE-0200117022?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">03:27</div>
+			<div class="resultDate">05.09.2023</div>
+			<div class="resultMeta">
+				Karsten Hilse <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+			<hr>
+							<div class="resultTitle">Allgemeine Finanzdebatte				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200117022?q=klima&amp;page=3&amp;t=117.880' title="▶ Ausschnitt direkt abspielen">Behauptet doch das Finanzministerium unverfroren, das Sondervermögen „<em>Klima</em>- und Transformationsfonds“ ermöglicht zusätzliche Programmausgaben zur „Förderung einer umweltschonenden, zuverlässigen und bezahlbaren Energieversorgung“ und zum „Klimaschutz“. </a>
+								<a class="resultSnippet" href='media/DE-0200117022?q=klima&amp;page=3&amp;t=173.640' title="▶ Ausschnitt direkt abspielen">Wir fordern, den <em>Klima</em>- und Transformationsfonds mit immerhin circa 70 Milliarden Euro aufzulösen, alle CO </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 56.946859903382%; width: 5.9710144927536%;"></div>
+										<div class="hit" style="left: 83.884057971014%; width: 4.463768115942%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200045094" data-faction="Q1007353">
+	<div class="resultContent partyIndicator" data-faction="Q1007353">
+		<a style="display: block;" href='https://optv.local/media/DE-0200045094?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">03:44</div>
+			<div class="resultDate">24.06.2022</div>
+			<div class="resultMeta">
+				Harald Ebner <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+			<hr>
+							<div class="resultTitle">Ausbau von Windenergieanlagen				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200045094?q=klima&amp;page=3&amp;t=42.180' title="▶ Ausschnitt direkt abspielen">Wir müssen deshalb beides tun: <em>Klima</em> schützen und Artenvielfalt retten. </a>
+								<a class="resultSnippet" href='media/DE-0200045094?q=klima&amp;page=3&amp;t=192.200' title="▶ Ausschnitt direkt abspielen"><em>Klima</em>- und Artenkrise müssen gemeinsam gelöst werden. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 18.830357142857%; width: 2.8303571428571%;"></div>
+										<div class="hit" style="left: 85.803571428571%; width: 2.4464285714286%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190176093" data-faction="Q1007353">
+	<div class="resultContent partyIndicator" data-faction="Q1007353">
+		<a style="display: block;" href='https://optv.local/media/DE-0190176093?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">04:08</div>
+			<div class="resultDate">17.09.2020</div>
+			<div class="resultMeta">
+				Gerhard Zickenheiner <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+			<hr>
+							<div class="resultTitle">Nachhaltig leben und konsumieren				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190176093?q=klima&amp;page=3&amp;t=8.700' title="▶ Ausschnitt direkt abspielen">Städte und Kommunen könnten das leisten, was Sie hier auf der Regierungsbank schlichtweg überhaupt nicht hinbekommen: <em>Klima</em>-, Umweltschutz und Nachhaltigkeit. </a>
+								<a class="resultSnippet" href='media/DE-0190176093?q=klima&amp;page=3&amp;t=35.480' title="▶ Ausschnitt direkt abspielen">In Kommunen gibt es willige Akteure über fast alle Fraktionen hinweg, die wissen, was für <em>Klima</em>, Nachhaltigkeit und Resilienz zu tun ist. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 3.508064516129%; width: 7.0887096774194%;"></div>
+										<div class="hit" style="left: 14.306451612903%; width: 3.2903225806452%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200156040" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a style="display: block;" href='https://optv.local/media/DE-0200156040?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">03:07</div>
+			<div class="resultDate">13.03.2024</div>
+			<div class="resultMeta">
+				Gitta Connemann <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+							<div class="resultTitle">Wissenschaftskommunikation				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200156040?q=klima&amp;page=3&amp;t=85.640' title="▶ Ausschnitt direkt abspielen">Es geht um das <em>Klima</em>; Herr Kollege Dr. Seiter hat es angesprochen. </a>
+								<a class="resultSnippet" href='media/DE-0200156040?q=klima&amp;page=3&amp;t=90.480' title="▶ Ausschnitt direkt abspielen">Forschende Unternehmen beklagen die überbordende Regulatorik, das innovationsfeindliche <em>Klima</em>. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 45.79679144385%; width: 2.5882352941176%;"></div>
+										<div class="hit" style="left: 48.385026737968%; width: 3.3582887700535%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200063073" data-faction="Q1007353">
+	<div class="resultContent partyIndicator" data-faction="Q1007353">
+		<a style="display: block;" href='https://optv.local/media/DE-0200063073?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">03:26</div>
+			<div class="resultDate">20.10.2022</div>
+			<div class="resultMeta">
+				Katrin Uhlig <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+			<hr>
+							<div class="resultTitle">Enquete-Kommission &quot;Sicherstellung der Energieversorgung&quot;				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200063073?q=klima&amp;page=3&amp;t=102.080' title="▶ Ausschnitt direkt abspielen">Wir wissen auch, weil dies wissenschaftlich erforscht ist, welche massiven Auswirkungen die Gewinnung von Strom und Wärme aus fossilen Energieträgern für unser <em>Klima</em>, unsere Umwelt, unser Wasser, unsere Luft haben, und wir haben gute Vorstellungen davon, welche Auswirkungen die Klimakrise auf unser Leben haben wird. </a>
+								<a class="resultSnippet" href='media/DE-0200063073?q=klima&amp;page=3&amp;t=173.960' title="▶ Ausschnitt direkt abspielen">Denn wenn wir die Versorgungssicherheit langfristig gewährleisten wollen, wenn wir unser <em>Klima</em> und unsere Gesundheit schützen wollen, wenn wir die Sicherheit Europas stärken wollen, wenn wir uns von fossilen Importen unabhängig machen wollen, wenn wir den Industriestandort erhalten und zukunftsfähige Arbeitsplätze schaffen wollen, wenn wir bezahlbare Energiepreise haben wollen, dann brauchen wir keine Enquete-Kommission, dann müssen wir einfach die erneuerbaren Energien schneller ausbauen. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 49.553398058252%; width: 10.669902912621%;"></div>
+										<div class="hit" style="left: 84.446601941748%; width: 14.271844660194%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190206084" data-faction="Q2207512">
+	<div class="resultContent partyIndicator" data-faction="Q2207512">
+		<a style="display: block;" href='https://optv.local/media/DE-0190206084?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">04:27</div>
+			<div class="resultDate">28.01.2021</div>
+			<div class="resultMeta">
+				Florian Post <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
+			<hr>
+							<div class="resultTitle">Aktuelle Stunde: Big Tech und die Meinungsfreiheit im Internet				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190206084?q=klima&amp;page=3&amp;t=' title="▶ Ausschnitt direkt abspielen">Es ist nämlich auch so, dass gerade diejenigen von einem gesellschaftlichen <em>Klima</em> profitieren, die dieses gesellschaftliche <em>Klima</em> der Angst durch ihren Hass und ihre im Internet verbreitete Hetze erst erzeugen und sich danach auf die Meinungsfreiheit berufen. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 0%; width: 0%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0180152090" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a style="display: block;" href='https://optv.local/media/DE-0180152090?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">01:19</div>
+			<div class="resultDate">28.01.2016</div>
+			<div class="resultMeta">
+				Claudia Roth			</div>
+			<hr>
+							<div class="resultTitle">Programm für Klima- und Klimafolgenforschung				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0180152090?q=klima&amp;page=3&amp;t=30.040' title="▶ Ausschnitt direkt abspielen">Für ein Rahmenprogramm für <em>Klima</em>- und Klimafolgenforschung </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">1</span> -->
+								<div class="hit" style="left: 38.025316455696%; width: 11.088607594937%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190125057" data-faction="Q1387991">
+	<div class="resultContent partyIndicator" data-faction="Q1387991">
+		<a style="display: block;" href='https://optv.local/media/DE-0190125057?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">03:17</div>
+			<div class="resultDate">08.11.2019</div>
+			<div class="resultMeta">
+				Wieland Schinnenburg <span class="partyIndicator partyIndicatorInline" data-faction="Q1387991">FDP</span>			</div>
+			<hr>
+							<div class="resultTitle">Pflegeversicherung				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190125057?q=klima&amp;page=3&amp;t=27.800' title="▶ Ausschnitt direkt abspielen">Die Grünen sagen doch ständig, das <em>Klima</em> sei das wichtigste Thema, und entwerfen apokalyptischste Szenarien. </a>
+								<a class="resultSnippet" href='media/DE-0190125057?q=klima&amp;page=3&amp;t=33.520' title="▶ Ausschnitt direkt abspielen">Wenn dem so ist, müssen wir doch jeden verfügbaren Euro dafür ausgeben, das <em>Klima</em> zu retten. </a>
+								<a class="resultSnippet" href='media/DE-0190125057?q=klima&amp;page=3&amp;t=46.720' title="▶ Ausschnitt direkt abspielen">(Harald Weinberg [DIE LINKE]: Pflege gegen <em>Klima</em> – das ist toll!) </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 14.111675126904%; width: 2.9035532994924%;"></div>
+										<div class="hit" style="left: 17.015228426396%; width: 2.0304568527919%;"></div>
+										<div class="hit" style="left: 23.715736040609%; width: 1.1776649746193%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190104177" data-faction="Q1826856">
+	<div class="resultContent partyIndicator" data-faction="Q1826856">
+		<a style="display: block;" href='https://optv.local/media/DE-0190104177?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">04:57</div>
+			<div class="resultDate">06.06.2019</div>
+			<div class="resultMeta">
+				Lorenz Beutin <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
+			<hr>
+							<div class="resultTitle">Erreichung der Klimaziele				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190104177?q=klima&amp;page=3&amp;t=15.640' title="▶ Ausschnitt direkt abspielen">Lieber Kollege Köhler, Sie sagen, Sie wollen das <em>Klima</em> retten. </a>
+								<a class="resultSnippet" href='media/DE-0190104177?q=klima&amp;page=3&amp;t=188.720' title="▶ Ausschnitt direkt abspielen">Das heißt, 10 Prozent der Weltbevölkerung schaden unserem <em>Klima</em> und sind gleichzeitig im Besitz des größten Vermögens dieser Welt. </a>
+								<a class="resultSnippet" href='media/DE-0190104177?q=klima&amp;page=3&amp;t=271.200' title="▶ Ausschnitt direkt abspielen">– Ja, ich weiß nicht, ob es da wirklich um das <em>Klima</em> geht; da bin ich mir nicht so sicher. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 5.2659932659933%; width: 1.9124579124579%;"></div>
+										<div class="hit" style="left: 63.542087542088%; width: 3.043771043771%;"></div>
+										<div class="hit" style="left: 91.313131313131%; width: 2.3164983164983%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200172091" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a style="display: block;" href='https://optv.local/media/DE-0200172091?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">05:18</div>
+			<div class="resultDate">06.06.2024</div>
+			<div class="resultMeta">
+				Karsten Hilse <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+			<hr>
+							<div class="resultTitle">Aktuelle Stunde: Expertenrat für Klimafragen – Bundesregierung verfehlt Klimaziel				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200172091?q=klima&amp;page=3&amp;t=86.760' title="▶ Ausschnitt direkt abspielen">– dramatische Folgen für das <em>Klima</em> zu verhindern. </a>
+								<a class="resultSnippet" href='media/DE-0200172091?q=klima&amp;page=3&amp;t=89.680' title="▶ Ausschnitt direkt abspielen">Sollte die durch keinen einzigen wissenschaftlichen Beweis belegte Hypothese stimmen, dass die menschengemachten CO2-Emissionen das <em>Klima</em> maßgeblich beeinflussen, könnte Deutschland damit die vermutete Erderwärmung um 0,0001 Grad Celsius verringern. </a>
+								<a class="resultSnippet" href='media/DE-0200172091?q=klima&amp;page=3&amp;t=133.760' title="▶ Ausschnitt direkt abspielen">Zeitgleich sagt der zuvor bereits erwähnte Lindner, dass im <em>Klima</em>- und Transformationsfonds nunmehr ein Loch von knapp 10 Milliarden Euro entstehe, also Geld, das vom Bund geliehen wird, um damit irgendwelche Brandlöcher zuzuschütten. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 27.283018867925%; width: 0.91823899371069%;"></div>
+										<div class="hit" style="left: 28.201257861635%; width: 5.7861635220126%;"></div>
+										<div class="hit" style="left: 42.062893081761%; width: 4.2389937106918%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0210008091" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a style="display: block;" href='https://optv.local/media/DE-0210008091?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">05:21</div>
+			<div class="resultDate">23.05.2025</div>
+			<div class="resultMeta">
+				Bernd Schattner <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+			<hr>
+							<div class="resultTitle">Aktuelle Stunde zur Dürre in Deutschland				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0210008091?q=klima&amp;page=3&amp;t=18.000' title="▶ Ausschnitt direkt abspielen">Dabei ist doch eines wissenschaftlich längst unstrittig: Das <em>Klima</em> hat sich seit Anbeginn der Erdgeschichte gewandelt, lange bevor irgendein Mensch in die Natur eingreifen konnte. </a>
+								<a class="resultSnippet" href='media/DE-0210008091?q=klima&amp;page=3&amp;t=29.000' title="▶ Ausschnitt direkt abspielen">Die absurde Idee, wir könnten mit planwirtschaftlichen Maßnahmen das <em>Klima</em> retten, ist genauso vermessen wie realitätsfern. </a>
+								<a class="resultSnippet" href='media/DE-0210008091?q=klima&amp;page=3&amp;t=259.160' title="▶ Ausschnitt direkt abspielen">Ihre Politik rettet nicht das <em>Klima</em>, sondern zerstört die Zukunft unseres Landes. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 5.607476635514%; width: 3.4267912772586%;"></div>
+										<div class="hit" style="left: 9.0342679127726%; width: 2.2554517133956%;"></div>
+										<div class="hit" style="left: 80.735202492212%; width: 1.7694704049844%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0210011075" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a style="display: block;" href='https://optv.local/media/DE-0210011075?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">05:00</div>
+			<div class="resultDate">06.06.2025</div>
+			<div class="resultMeta">
+				Thomas Gebhart <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+							<div class="resultTitle">Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0210011075?q=klima&amp;page=3&amp;t=113.660' title="▶ Ausschnitt direkt abspielen">Wenn wir auf dem Weg hin zur Klimaneutralität die Wettbewerbsfähigkeit unserer heimischen Unternehmen verlieren würden, dann hätten wir mit Blick auf das <em>Klima</em> überhaupt nichts gewonnen. </a>
+								<a class="resultSnippet" href='media/DE-0210011075?q=klima&amp;page=3&amp;t=124.200' title="▶ Ausschnitt direkt abspielen">Wenn am Ende Produktionsverlagerungen stattfinden und die Fertigprodukte zu uns geliefert werden, dann ist das ein Rückschritt mit Blick auf das <em>Klima</em>; das ist wirtschaftlich gesehen ein Rückschritt und sorgt für soziale Verwerfungen bei uns im Land. </a>
+								<a class="resultSnippet" href='media/DE-0210011075?q=klima&amp;page=3&amp;t=233.200' title="▶ Ausschnitt direkt abspielen">Das ist gut für das <em>Klima</em>, das ist gut für faire Wettbewerbsbedingungen, und es hilft, dass einseitige Kostenbelastungen für Bürger und Unternehmen in Deutschland reduziert und beseitigt werden. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 37.886666666667%; width: 3.5133333333333%;"></div>
+										<div class="hit" style="left: 41.4%; width: 4.6533333333333%;"></div>
+										<div class="hit" style="left: 77.733333333333%; width: 4.1%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0210016119" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a style="display: block;" href='https://optv.local/media/DE-0210016119?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">05:15</div>
+			<div class="resultDate">08.07.2025</div>
+			<div class="resultMeta">
+				Klaus Mack <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+							<div class="resultTitle">Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0210016119?q=klima&amp;page=3&amp;t=34.360' title="▶ Ausschnitt direkt abspielen">Insgesamt werden 2025 über 115 Milliarden Euro in <em>Klima</em>, Umwelt und Infrastruktur investiert. </a>
+								<a class="resultSnippet" href='media/DE-0210016119?q=klima&amp;page=3&amp;t=54.260' title="▶ Ausschnitt direkt abspielen">Der <em>Klima</em>- und Transformationsfonds ist das zentrale Instrument für unser Ziel der Klimaneutralität bis 2045 – klug ausgestattet, solide finanziert und ohne Rückgriff auf den Kernhaushalt. </a>
+								<a class="resultSnippet" href='media/DE-0210016119?q=klima&amp;page=3&amp;t=80.840' title="▶ Ausschnitt direkt abspielen">Was den <em>Klima</em>- und Transformationsfonds betrifft, so unterscheiden wir uns grundlegend von unserer Vorgängerregierung. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 10.907936507937%; width: 2.6031746031746%;"></div>
+										<div class="hit" style="left: 17.225396825397%; width: 4.4888888888889%;"></div>
+										<div class="hit" style="left: 25.663492063492%; width: 2.5015873015873%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190092080" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a style="display: block;" href='https://optv.local/media/DE-0190092080?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">05:31</div>
+			<div class="resultDate">04.04.2019</div>
+			<div class="resultMeta">
+				Carsten Müller <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+							<div class="resultTitle">Aktuelle Stunde zu steigenden Strompreisen				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190092080?q=klima&amp;page=3&amp;t=58.080' title="▶ Ausschnitt direkt abspielen">Im Jahr 2002 haben 61 Prozent der bundesdeutschen Bevölkerung gesagt, sie seien bereit, Strompreisaufschläge für eine <em>Klima</em>- und Umweltschutzpolitik, für einen Ausbau der Erneuerbaren zu akzeptieren. </a>
+								<a class="resultSnippet" href='media/DE-0190092080?q=klima&amp;page=3&amp;t=78.600' title="▶ Ausschnitt direkt abspielen">Interessant hierbei ist, dass eine überdurchschnittliche Bereitschaft, so etwas zu akzeptieren, bei Anhängern der FDP vorhanden war, und – meine Damen und Herren, man glaubt es kaum; die Kolleginnen und Kollegen von der AfD können es jetzt nicht verfolgen – selbst bei 50 Prozent der Anhänger der sogenannten AfD – Sie wissen ja selbst, dass 50 Prozent eine magische Größenordnung sind – besteht die Bereitschaft, solche Investitionen in <em>Klima</em>- und Umweltschutz zu akzeptieren. </a>
+								<a class="resultSnippet" href='media/DE-0190092080?q=klima&amp;page=3&amp;t=254.640' title="▶ Ausschnitt direkt abspielen">Das ist Politik für die Menschen, und das ist <em>Klima</em>- und Umweltschutzpolitik, und das ist auch Wirtschaftspolitik. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 17.546827794562%; width: 3.7583081570997%;"></div>
+										<div class="hit" style="left: 23.746223564955%; width: 8.02416918429%;"></div>
+										<div class="hit" style="left: 76.930513595166%; width: 2.0664652567976%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200128077" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a style="display: block;" href='https://optv.local/media/DE-0200128077?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">00:26</div>
+			<div class="resultDate">12.10.2023</div>
+			<div class="resultMeta">
+				Wolfgang Kubicki			</div>
+			<hr>
+							<div class="resultTitle">Meeresverschmutzung, CO2-Speicherung und -Nutzung				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200128077?q=klima&amp;page=3&amp;t=8.640' title="▶ Ausschnitt direkt abspielen">CO2-Abscheidung und -Speicherung, CO2-Nutzung sowie Negativemissionen – Chancen für <em>Klima</em>, Industrie und Wohlstand </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">1</span> -->
+								<div class="hit" style="left: 33.230769230769%; width: 22%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0180057020" data-faction="Q1826856">
+	<div class="resultContent partyIndicator" data-faction="Q1826856">
+		<a style="display: block;" href='https://optv.local/media/DE-0180057020?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">08:11</div>
+			<div class="resultDate">09.10.2014</div>
+			<div class="resultMeta">
+				Eva Bulling-Schröter <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
+			<hr>
+							<div class="resultTitle">Klimapolitik				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0180057020?q=klima&amp;page=3&amp;t=35.180' title="▶ Ausschnitt direkt abspielen">Die Bilanz für das <em>Klima</em> ist heute weder nachhaltig noch wirtschaftlich vernünftig. </a>
+								<a class="resultSnippet" href='media/DE-0180057020?q=klima&amp;page=3&amp;t=258.660' title="▶ Ausschnitt direkt abspielen">Dass diese CO 2 - Schleudern in Form von Kraftwerken großen Schaden anrichten, nicht nur beim <em>Klima</em>, auch am Menschen, ist bekannt. </a>
+								<a class="resultSnippet" href='media/DE-0180057020?q=klima&amp;page=3&amp;t=369.420' title="▶ Ausschnitt direkt abspielen">Auch mit dem neuen EU-Kommissar für Energie und <em>Klima</em>, Miguel Cañete, der nicht nur im spanischen Ölgeschäft mitmischt, sondern auch noch frauenfeindliche Sprüche klopft, hat das Regierungslager kein Problem. </a>
+								<a class="resultSnippet" href='media/DE-0180057020?q=klima&amp;page=3&amp;t=396.780' title="▶ Ausschnitt direkt abspielen">Endlich seien Energie und <em>Klima</em> in einer Hand. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">4</span> -->
+								<div class="hit" style="left: 7.1649694501018%; width: 1.3441955193483%;"></div>
+										<div class="hit" style="left: 52.680244399185%; width: 2.1751527494908%;"></div>
+										<div class="hit" style="left: 75.238289205703%; width: 3.4663951120163%;"></div>
+										<div class="hit" style="left: 80.810590631365%; width: 0.55804480651731%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190071079" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a style="display: block;" href='https://optv.local/media/DE-0190071079?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">09:17</div>
+			<div class="resultDate">13.12.2018</div>
+			<div class="resultMeta">
+				Heiko Maas			</div>
+			<hr>
+							<div class="resultTitle">70 Jahre Allgemeine Erklärung der Menschenrechte				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190071079?q=klima&amp;page=3&amp;t=317.820' title="▶ Ausschnitt direkt abspielen">Das <em>Klima</em> der Welt verändert sich rasant, auch wenn mancher noch immer <em>Klima</em> und Wetter verwechselt. </a>
+								<a class="resultSnippet" href='media/DE-0190071079?q=klima&amp;page=3&amp;t=367.640' title="▶ Ausschnitt direkt abspielen">Die Verbindung von <em>Klima</em> und Sicherheit ist darunter eines, das wir zu einem Schwerpunktthema unserer Mitgliedschaft im Sicherheitsrat der Vereinten Nationen erklärt haben. </a>
+								<a class="resultSnippet" href='media/DE-0190071079?q=klima&amp;page=3&amp;t=375.880' title="▶ Ausschnitt direkt abspielen">Liebe Kolleginnen und Kollegen, diese Entwicklung, der Zusammenhang zwischen <em>Klima</em> und Sicherheit, führt unweigerlich dazu, dass es mehr Migration geben wird. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">4</span> -->
+								<div class="hit" style="left: 57.059245960503%; width: 1.6660682226212%;"></div>
+										<div class="hit" style="left: 66.003590664273%; width: 1.4793536804309%;"></div>
+										<div class="hit" style="left: 67.482944344704%; width: 2.9622980251347%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200141199" data-faction="Q2207512">
+	<div class="resultContent partyIndicator" data-faction="Q2207512">
+		<a style="display: block;" href='https://optv.local/media/DE-0200141199?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">06:12</div>
+			<div class="resultDate">30.11.2023</div>
+			<div class="resultMeta">
+				Andreas Mehltretter <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
+			<hr>
+							<div class="resultTitle">Abschaffung der CO2-Bepreisung, EU-Gebäuderichtlinie				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200141199?q=klima&amp;page=3&amp;t=201.000' title="▶ Ausschnitt direkt abspielen">Meine Damen und Herren, wir sind beim <em>Klima</em> maximal drei Schritte vom Abgrund entfernt. </a>
+								<a class="resultSnippet" href='media/DE-0200141199?q=klima&amp;page=3&amp;t=308.540' title="▶ Ausschnitt direkt abspielen">Wir wollen das <em>Klima</em> schützen. </a>
+								<a class="resultSnippet" href='media/DE-0200141199?q=klima&amp;page=3&amp;t=308.540' title="▶ Ausschnitt direkt abspielen">(Enrico Komning [AfD]: Wie soll man denn ein <em>Klima</em> schützen? Was ist denn das für ein Blödsinn! „Das <em>Klima</em> schützen“!) </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">4</span> -->
+								<div class="hit" style="left: 54.032258064516%; width: 1.8548387096774%;"></div>
+										<div class="hit" style="left: 82.940860215054%; width: 0.58602150537635%;"></div>
+										<div class="hit" style="left: 82.940860215054%; width: 1.1451612903226%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0200080087" data-faction="Q1826856">
+	<div class="resultContent partyIndicator" data-faction="Q1826856">
+		<a style="display: block;" href='https://optv.local/media/DE-0200080087?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">05:57</div>
+			<div class="resultDate">20.01.2023</div>
+			<div class="resultMeta">
+				Janine Wissler <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
+			<hr>
+							<div class="resultTitle">Aktuelle Stunde - Lützerath				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0200080087?q=klima&amp;page=3&amp;t=160.080' title="▶ Ausschnitt direkt abspielen">Wir retten doch das <em>Klima</em> nicht durch schöne Worte, sondern durch entschlossene Taten, meine Damen und Herren. </a>
+								<a class="resultSnippet" href='media/DE-0200080087?q=klima&amp;page=3&amp;t=171.280' title="▶ Ausschnitt direkt abspielen">Aber entscheidend für das <em>Klima</em> ist doch nicht einfach nur das Ausstiegsdatum, sondern wie viel CO2 bis dahin noch in die Atmosphäre geblasen wird. </a>
+								<a class="resultSnippet" href='media/DE-0200080087?q=klima&amp;page=3&amp;t=171.280' title="▶ Ausschnitt direkt abspielen">(Beatrix von Storch [AfD]: Entscheidend für das <em>Klima</em> sind vor allem China und Indien!) </a>
+								<a class="resultSnippet" href='media/DE-0200080087?q=klima&amp;page=3&amp;t=287.960' title="▶ Ausschnitt direkt abspielen">die sich um das <em>Klima</em>, um kommende Generationen, um die Demokratie sorgen, die sich mit den Bauern in der Region und den Anwohnern zusammengetan haben, die friedlich für eine lebenswerte Zukunft kämpfen – sozial gerecht, mit zukunftssicheren Arbeitsplätzen, meine Damen und Herren. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">4</span> -->
+								<div class="hit" style="left: 44.840336134454%; width: 1.4005602240896%;"></div>
+										<div class="hit" style="left: 47.977591036415%; width: 2.4089635854342%;"></div>
+										<div class="hit" style="left: 47.977591036415%; width: 3.7086834733894%;"></div>
+										<div class="hit" style="left: 80.66106442577%; width: 3.8543417366947%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190226048" data-faction="Q1387991">
+	<div class="resultContent partyIndicator" data-faction="Q1387991">
+		<a style="display: block;" href='https://optv.local/media/DE-0190226048?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">03:22</div>
+			<div class="resultDate">05.05.2021</div>
+			<div class="resultMeta">
+				Linda Teuteberg <span class="partyIndicator partyIndicatorInline" data-faction="Q1387991">FDP</span>			</div>
+			<hr>
+							<div class="resultTitle">Linksextremistische Gewalt				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190226048?q=klima&amp;page=3&amp;t=34.360' title="▶ Ausschnitt direkt abspielen">Denn die Polizistinnen und Polizisten und die anderen Beamtinnen und Beamten in unseren Sicherheitsbehörden verrichten ihre Arbeit in einem <em>Klima</em>, das Menschen mit politischer Verantwortung und medialer Reichweite schaffen. </a>
+								<a class="resultSnippet" href='media/DE-0190226048?q=klima&amp;page=3&amp;t=61.000' title="▶ Ausschnitt direkt abspielen">Wir müssen bei unseren Worten genau deshalb achtgeben, nicht ein <em>Klima</em> zu schaffen, das es den Beamtinnen und Beamten, die für unsere freiheitlich-demokratische Grundordnung einstehen und die für uns die Knochen hinhalten, schwer macht, gegen jeden Extremismus vorzugehen. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 17.009900990099%; width: 6.0990099009901%;"></div>
+										<div class="hit" style="left: 30.19801980198%; width: 8.3069306930693%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190239030" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a style="display: block;" href='https://optv.local/media/DE-0190239030?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">04:54</div>
+			<div class="resultDate">07.09.2021</div>
+			<div class="resultMeta">
+				Rüdiger Lucassen <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+			<hr>
+							<div class="resultTitle">Sondervermögen &quot;Aufbauhilfe 2021&quot;				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190239030?q=klima&amp;page=3&amp;t=168.500' title="▶ Ausschnitt direkt abspielen">Ja, <em>Klima</em> wandelt sich, schon immer. </a>
+								<a class="resultSnippet" href='media/DE-0190239030?q=klima&amp;page=3&amp;t=180.060' title="▶ Ausschnitt direkt abspielen">Aber für den Hochwasserschutz, für Rückhaltebecken, für Aufforstungen, für Sirenen, für digitale Warnsysteme sind die Regierungen in Bund und Ländern zuständig und nicht das <em>Klima</em>. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 57.312925170068%; width: 1.5374149659864%;"></div>
+										<div class="hit" style="left: 61.244897959184%; width: 6.9727891156463%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190224072" data-faction="Q4316268">
+	<div class="resultContent partyIndicator" data-faction="Q4316268">
+		<a style="display: block;" href='https://optv.local/media/DE-0190224072?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">03:37</div>
+			<div class="resultDate">22.04.2021</div>
+			<div class="resultMeta">
+				Marco Bülow <span class="partyIndicator partyIndicatorInline" data-faction="Q4316268">fraktionslos</span>			</div>
+			<hr>
+							<div class="resultTitle">Klima- und Entwicklungspolitik				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190224072?q=klima&amp;page=3&amp;t=8.500' title="▶ Ausschnitt direkt abspielen">Wir diskutieren ja heute über mehr als 25 Vorlagen, Anträge usw., die alle irgendwie mit Umwelt und <em>Klima</em> zu tun haben. </a>
+								<a class="resultSnippet" href='media/DE-0190224072?q=klima&amp;page=3&amp;t=85.520' title="▶ Ausschnitt direkt abspielen">Gucken wir uns doch die Fakten gerade auch in Deutschland beim <em>Klima</em>- und Umweltschutz mal an – beides gehört ja in vielen Bereichen zusammen; dabei wird jedoch meist das Thema Biodiversität und Artenvielfalt nicht behandelt –: Es sterben jeden Tag 150 Arten aus. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 3.9170506912442%; width: 8.2119815668203%;"></div>
+										<div class="hit" style="left: 39.410138248848%; width: 7.9078341013825%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190230105" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a style="display: block;" href='https://optv.local/media/DE-0190230105?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">03:43</div>
+			<div class="resultDate">20.05.2021</div>
+			<div class="resultMeta">
+				Steffen Kotré <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+			<hr>
+							<div class="resultTitle">Demokratie und Wohlstand				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190230105?q=klima&amp;page=3&amp;t=29.240' title="▶ Ausschnitt direkt abspielen">Digitalisierung, <em>Klima</em>- und Coronahysterie, Energiewende und missbrauchte Jugendliche werden benutzt, um ideologische Konzepte umzusetzen. </a>
+								<a class="resultSnippet" href='media/DE-0190230105?q=klima&amp;page=3&amp;t=56.880' title="▶ Ausschnitt direkt abspielen">Es sollen nur noch Unternehmen unterstützt werden, die sogenannt <em>klima</em>- und umweltfreundlich sind. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">2</span> -->
+								<div class="hit" style="left: 13.112107623318%; width: 4.8430493273543%;"></div>
+										<div class="hit" style="left: 25.506726457399%; width: 3.2825112107623%;"></div>
+					</div>	</div>
+</article><article class="resultItem col snippets" data-speech-id="DE-0190092072" data-faction="Q1387991">
+	<div class="resultContent partyIndicator" data-faction="Q1387991">
+		<a style="display: block;" href='https://optv.local/media/DE-0190092072?q=klima&amp;page=3'>
+			<div class="icon-play-1"></div>
+			<div class="resultDuration">05:54</div>
+			<div class="resultDate">04.04.2019</div>
+			<div class="resultMeta">
+				Christian Dürr <span class="partyIndicator partyIndicatorInline" data-faction="Q1387991">FDP</span>			</div>
+			<hr>
+							<div class="resultTitle">Aktuelle Stunde zu steigenden Strompreisen				</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href='media/DE-0190092072?q=klima&amp;page=3&amp;t=184.400' title="▶ Ausschnitt direkt abspielen">Stattdessen streben Sie einen superteuren Kohleausstieg an; über 80 Milliarden Euro für einen symbolischen Kohleausstieg, der dem <em>Klima</em> überhaupt nichts bringt. </a>
+								<a class="resultSnippet" href='media/DE-0190092072?q=klima&amp;page=3&amp;t=306.280' title="▶ Ausschnitt direkt abspielen">Mich ärgert in diesen Tagen wirklich, dass von der Linkspartei bis hin zur Union in Sonntagsreden die Demonstration vom Freitag gelobt wird, aber ab Montag wird dann eine Klimaschutzpolitik gemacht, die dem <em>Klima</em> auf der Welt einen Bärendienst erweist. </a>
+								<a class="resultSnippet" href='media/DE-0190092072?q=klima&amp;page=3&amp;t=327.280' title="▶ Ausschnitt direkt abspielen">Sie nehmen die Schüler nicht ernst, die am Freitag sagen: Wir müssen das <em>Klima</em> retten. </a>
+				</div><div class="hitTimeline">			<!-- <span class="termFrequency badge badge-primary badge-pill">3</span> -->
+								<div class="hit" style="left: 52.090395480226%; width: 2.8700564971751%;"></div>
+										<div class="hit" style="left: 86.519774011299%; width: 5.5254237288136%;"></div>
+										<div class="hit" style="left: 92.45197740113%; width: 1.2090395480226%;"></div>
+					</div>	</div>
+</article>	</div>
+        <script type="text/javascript">
+                resultsAttributes = {
+    "speechFirstDateStr": "2013-11-28T12:19:48.000Z",
+    "speechFirstDateTimestamp": 1385641188000,
+    "speechLastDateStr": "2025-09-24T15:50:12.000Z",
+    "speechLastDateTimestamp": 1758729012000,
+    "resultsPerFaction": {
+        "Q1023134": 585,
+        "Q1007353": 522,
+        "Q2207512": 473,
+        "Q42575708": 321,
+        "Q1826856": 255,
+        "Q1387991": 181,
+        "Q4316268": 26
+    },
+    "days": {
+        "2013-11-28": {
+            "key_as_string": "2013-11-28",
+            "key": 1385596800000,
+            "doc_count": 3
+        },
+        "2013-12-19": {
+            "key_as_string": "2013-12-19",
+            "key": 1387411200000,
+            "doc_count": 1
+        },
+        "2014-01-16": {
+            "key_as_string": "2014-01-16",
+            "key": 1389830400000,
+            "doc_count": 1
+        },
+        "2014-01-17": {
+            "key_as_string": "2014-01-17",
+            "key": 1389916800000,
+            "doc_count": 3
+        },
+        "2014-01-29": {
+            "key_as_string": "2014-01-29",
+            "key": 1390953600000,
+            "doc_count": 1
+        },
+        "2014-01-30": {
+            "key_as_string": "2014-01-30",
+            "key": 1391040000000,
+            "doc_count": 3
+        },
+        "2014-01-31": {
+            "key_as_string": "2014-01-31",
+            "key": 1391126400000,
+            "doc_count": 1
+        },
+        "2014-02-20": {
+            "key_as_string": "2014-02-20",
+            "key": 1392854400000,
+            "doc_count": 4
+        },
+        "2014-02-21": {
+            "key_as_string": "2014-02-21",
+            "key": 1392940800000,
+            "doc_count": 1
+        },
+        "2014-03-12": {
+            "key_as_string": "2014-03-12",
+            "key": 1394582400000,
+            "doc_count": 1
+        },
+        "2014-03-20": {
+            "key_as_string": "2014-03-20",
+            "key": 1395273600000,
+            "doc_count": 2
+        },
+        "2014-03-21": {
+            "key_as_string": "2014-03-21",
+            "key": 1395360000000,
+            "doc_count": 2
+        },
+        "2014-04-02": {
+            "key_as_string": "2014-04-02",
+            "key": 1396396800000,
+            "doc_count": 3
+        },
+        "2014-04-03": {
+            "key_as_string": "2014-04-03",
+            "key": 1396483200000,
+            "doc_count": 1
+        },
+        "2014-04-04": {
+            "key_as_string": "2014-04-04",
+            "key": 1396569600000,
+            "doc_count": 1
+        },
+        "2014-04-08": {
+            "key_as_string": "2014-04-08",
+            "key": 1396915200000,
+            "doc_count": 3
+        },
+        "2014-04-09": {
+            "key_as_string": "2014-04-09",
+            "key": 1397001600000,
+            "doc_count": 3
+        },
+        "2014-04-10": {
+            "key_as_string": "2014-04-10",
+            "key": 1397088000000,
+            "doc_count": 3
+        },
+        "2014-05-08": {
+            "key_as_string": "2014-05-08",
+            "key": 1399507200000,
+            "doc_count": 1
+        },
+        "2014-05-21": {
+            "key_as_string": "2014-05-21",
+            "key": 1400630400000,
+            "doc_count": 1
+        },
+        "2014-05-22": {
+            "key_as_string": "2014-05-22",
+            "key": 1400716800000,
+            "doc_count": 3
+        },
+        "2014-06-04": {
+            "key_as_string": "2014-06-04",
+            "key": 1401840000000,
+            "doc_count": 4
+        },
+        "2014-06-05": {
+            "key_as_string": "2014-06-05",
+            "key": 1401926400000,
+            "doc_count": 4
+        },
+        "2014-06-06": {
+            "key_as_string": "2014-06-06",
+            "key": 1402012800000,
+            "doc_count": 2
+        },
+        "2014-06-24": {
+            "key_as_string": "2014-06-24",
+            "key": 1403568000000,
+            "doc_count": 9
+        },
+        "2014-06-25": {
+            "key_as_string": "2014-06-25",
+            "key": 1403654400000,
+            "doc_count": 2
+        },
+        "2014-06-26": {
+            "key_as_string": "2014-06-26",
+            "key": 1403740800000,
+            "doc_count": 3
+        },
+        "2014-06-27": {
+            "key_as_string": "2014-06-27",
+            "key": 1403827200000,
+            "doc_count": 3
+        },
+        "2014-07-04": {
+            "key_as_string": "2014-07-04",
+            "key": 1404432000000,
+            "doc_count": 2
+        },
+        "2014-09-10": {
+            "key_as_string": "2014-09-10",
+            "key": 1410307200000,
+            "doc_count": 3
+        },
+        "2014-09-11": {
+            "key_as_string": "2014-09-11",
+            "key": 1410393600000,
+            "doc_count": 5
+        },
+        "2014-09-25": {
+            "key_as_string": "2014-09-25",
+            "key": 1411603200000,
+            "doc_count": 2
+        },
+        "2014-09-26": {
+            "key_as_string": "2014-09-26",
+            "key": 1411689600000,
+            "doc_count": 2
+        },
+        "2014-10-09": {
+            "key_as_string": "2014-10-09",
+            "key": 1412812800000,
+            "doc_count": 11
+        },
+        "2014-10-16": {
+            "key_as_string": "2014-10-16",
+            "key": 1413417600000,
+            "doc_count": 10
+        },
+        "2014-10-17": {
+            "key_as_string": "2014-10-17",
+            "key": 1413504000000,
+            "doc_count": 1
+        },
+        "2014-11-06": {
+            "key_as_string": "2014-11-06",
+            "key": 1415232000000,
+            "doc_count": 4
+        },
+        "2014-11-07": {
+            "key_as_string": "2014-11-07",
+            "key": 1415318400000,
+            "doc_count": 1
+        },
+        "2014-11-13": {
+            "key_as_string": "2014-11-13",
+            "key": 1415836800000,
+            "doc_count": 8
+        },
+        "2014-11-14": {
+            "key_as_string": "2014-11-14",
+            "key": 1415923200000,
+            "doc_count": 1
+        },
+        "2014-11-25": {
+            "key_as_string": "2014-11-25",
+            "key": 1416873600000,
+            "doc_count": 3
+        },
+        "2014-11-26": {
+            "key_as_string": "2014-11-26",
+            "key": 1416960000000,
+            "doc_count": 5
+        },
+        "2014-11-27": {
+            "key_as_string": "2014-11-27",
+            "key": 1417046400000,
+            "doc_count": 6
+        },
+        "2014-11-28": {
+            "key_as_string": "2014-11-28",
+            "key": 1417132800000,
+            "doc_count": 1
+        },
+        "2014-12-03": {
+            "key_as_string": "2014-12-03",
+            "key": 1417564800000,
+            "doc_count": 1
+        },
+        "2014-12-04": {
+            "key_as_string": "2014-12-04",
+            "key": 1417651200000,
+            "doc_count": 11
+        },
+        "2014-12-18": {
+            "key_as_string": "2014-12-18",
+            "key": 1418860800000,
+            "doc_count": 1
+        },
+        "2014-12-19": {
+            "key_as_string": "2014-12-19",
+            "key": 1418947200000,
+            "doc_count": 4
+        },
+        "2015-01-15": {
+            "key_as_string": "2015-01-15",
+            "key": 1421280000000,
+            "doc_count": 4
+        },
+        "2015-01-29": {
+            "key_as_string": "2015-01-29",
+            "key": 1422489600000,
+            "doc_count": 6
+        },
+        "2015-01-30": {
+            "key_as_string": "2015-01-30",
+            "key": 1422576000000,
+            "doc_count": 1
+        },
+        "2015-02-05": {
+            "key_as_string": "2015-02-05",
+            "key": 1423094400000,
+            "doc_count": 4
+        },
+        "2015-02-06": {
+            "key_as_string": "2015-02-06",
+            "key": 1423180800000,
+            "doc_count": 1
+        },
+        "2015-02-26": {
+            "key_as_string": "2015-02-26",
+            "key": 1424908800000,
+            "doc_count": 5
+        },
+        "2015-03-04": {
+            "key_as_string": "2015-03-04",
+            "key": 1425427200000,
+            "doc_count": 8
+        },
+        "2015-03-05": {
+            "key_as_string": "2015-03-05",
+            "key": 1425513600000,
+            "doc_count": 3
+        },
+        "2015-03-06": {
+            "key_as_string": "2015-03-06",
+            "key": 1425600000000,
+            "doc_count": 4
+        },
+        "2015-03-19": {
+            "key_as_string": "2015-03-19",
+            "key": 1426723200000,
+            "doc_count": 3
+        },
+        "2015-03-20": {
+            "key_as_string": "2015-03-20",
+            "key": 1426809600000,
+            "doc_count": 2
+        },
+        "2015-03-26": {
+            "key_as_string": "2015-03-26",
+            "key": 1427328000000,
+            "doc_count": 8
+        },
+        "2015-05-07": {
+            "key_as_string": "2015-05-07",
+            "key": 1430956800000,
+            "doc_count": 1
+        },
+        "2015-05-08": {
+            "key_as_string": "2015-05-08",
+            "key": 1431043200000,
+            "doc_count": 1
+        },
+        "2015-05-21": {
+            "key_as_string": "2015-05-21",
+            "key": 1432166400000,
+            "doc_count": 6
+        },
+        "2015-05-22": {
+            "key_as_string": "2015-05-22",
+            "key": 1432252800000,
+            "doc_count": 6
+        },
+        "2015-06-11": {
+            "key_as_string": "2015-06-11",
+            "key": 1433980800000,
+            "doc_count": 2
+        },
+        "2015-06-12": {
+            "key_as_string": "2015-06-12",
+            "key": 1434067200000,
+            "doc_count": 1
+        },
+        "2015-06-18": {
+            "key_as_string": "2015-06-18",
+            "key": 1434585600000,
+            "doc_count": 3
+        },
+        "2015-06-19": {
+            "key_as_string": "2015-06-19",
+            "key": 1434672000000,
+            "doc_count": 2
+        },
+        "2015-07-02": {
+            "key_as_string": "2015-07-02",
+            "key": 1435795200000,
+            "doc_count": 3
+        },
+        "2015-07-03": {
+            "key_as_string": "2015-07-03",
+            "key": 1435881600000,
+            "doc_count": 1
+        },
+        "2015-09-10": {
+            "key_as_string": "2015-09-10",
+            "key": 1441843200000,
+            "doc_count": 4
+        },
+        "2015-09-11": {
+            "key_as_string": "2015-09-11",
+            "key": 1441929600000,
+            "doc_count": 6
+        },
+        "2015-09-24": {
+            "key_as_string": "2015-09-24",
+            "key": 1443052800000,
+            "doc_count": 3
+        },
+        "2015-09-25": {
+            "key_as_string": "2015-09-25",
+            "key": 1443139200000,
+            "doc_count": 3
+        },
+        "2015-10-01": {
+            "key_as_string": "2015-10-01",
+            "key": 1443657600000,
+            "doc_count": 1
+        },
+        "2015-10-02": {
+            "key_as_string": "2015-10-02",
+            "key": 1443744000000,
+            "doc_count": 2
+        },
+        "2015-10-14": {
+            "key_as_string": "2015-10-14",
+            "key": 1444780800000,
+            "doc_count": 1
+        },
+        "2015-10-15": {
+            "key_as_string": "2015-10-15",
+            "key": 1444867200000,
+            "doc_count": 7
+        },
+        "2015-11-04": {
+            "key_as_string": "2015-11-04",
+            "key": 1446595200000,
+            "doc_count": 1
+        },
+        "2015-11-06": {
+            "key_as_string": "2015-11-06",
+            "key": 1446768000000,
+            "doc_count": 1
+        },
+        "2015-11-11": {
+            "key_as_string": "2015-11-11",
+            "key": 1447200000000,
+            "doc_count": 1
+        },
+        "2015-11-12": {
+            "key_as_string": "2015-11-12",
+            "key": 1447286400000,
+            "doc_count": 4
+        },
+        "2015-11-24": {
+            "key_as_string": "2015-11-24",
+            "key": 1448323200000,
+            "doc_count": 2
+        },
+        "2015-11-25": {
+            "key_as_string": "2015-11-25",
+            "key": 1448409600000,
+            "doc_count": 2
+        },
+        "2015-11-26": {
+            "key_as_string": "2015-11-26",
+            "key": 1448496000000,
+            "doc_count": 7
+        },
+        "2015-12-03": {
+            "key_as_string": "2015-12-03",
+            "key": 1449100800000,
+            "doc_count": 7
+        },
+        "2015-12-04": {
+            "key_as_string": "2015-12-04",
+            "key": 1449187200000,
+            "doc_count": 4
+        },
+        "2015-12-17": {
+            "key_as_string": "2015-12-17",
+            "key": 1450310400000,
+            "doc_count": 5
+        },
+        "2015-12-18": {
+            "key_as_string": "2015-12-18",
+            "key": 1450396800000,
+            "doc_count": 5
+        },
+        "2016-01-28": {
+            "key_as_string": "2016-01-28",
+            "key": 1453939200000,
+            "doc_count": 8
+        },
+        "2016-02-17": {
+            "key_as_string": "2016-02-17",
+            "key": 1455667200000,
+            "doc_count": 1
+        },
+        "2016-02-18": {
+            "key_as_string": "2016-02-18",
+            "key": 1455753600000,
+            "doc_count": 4
+        },
+        "2016-02-24": {
+            "key_as_string": "2016-02-24",
+            "key": 1456272000000,
+            "doc_count": 2
+        },
+        "2016-02-25": {
+            "key_as_string": "2016-02-25",
+            "key": 1456358400000,
+            "doc_count": 2
+        },
+        "2016-02-26": {
+            "key_as_string": "2016-02-26",
+            "key": 1456444800000,
+            "doc_count": 1
+        },
+        "2016-03-17": {
+            "key_as_string": "2016-03-17",
+            "key": 1458172800000,
+            "doc_count": 1
+        },
+        "2016-04-14": {
+            "key_as_string": "2016-04-14",
+            "key": 1460592000000,
+            "doc_count": 2
+        },
+        "2016-04-15": {
+            "key_as_string": "2016-04-15",
+            "key": 1460678400000,
+            "doc_count": 1
+        },
+        "2016-04-27": {
+            "key_as_string": "2016-04-27",
+            "key": 1461715200000,
+            "doc_count": 1
+        },
+        "2016-04-28": {
+            "key_as_string": "2016-04-28",
+            "key": 1461801600000,
+            "doc_count": 5
+        },
+        "2016-05-12": {
+            "key_as_string": "2016-05-12",
+            "key": 1463011200000,
+            "doc_count": 2
+        },
+        "2016-06-02": {
+            "key_as_string": "2016-06-02",
+            "key": 1464825600000,
+            "doc_count": 2
+        },
+        "2016-06-03": {
+            "key_as_string": "2016-06-03",
+            "key": 1464912000000,
+            "doc_count": 1
+        },
+        "2016-06-08": {
+            "key_as_string": "2016-06-08",
+            "key": 1465344000000,
+            "doc_count": 1
+        },
+        "2016-06-09": {
+            "key_as_string": "2016-06-09",
+            "key": 1465430400000,
+            "doc_count": 2
+        },
+        "2016-06-10": {
+            "key_as_string": "2016-06-10",
+            "key": 1465516800000,
+            "doc_count": 1
+        },
+        "2016-06-23": {
+            "key_as_string": "2016-06-23",
+            "key": 1466640000000,
+            "doc_count": 7
+        },
+        "2016-06-24": {
+            "key_as_string": "2016-06-24",
+            "key": 1466726400000,
+            "doc_count": 1
+        },
+        "2016-07-07": {
+            "key_as_string": "2016-07-07",
+            "key": 1467849600000,
+            "doc_count": 3
+        },
+        "2016-07-08": {
+            "key_as_string": "2016-07-08",
+            "key": 1467936000000,
+            "doc_count": 3
+        },
+        "2016-09-06": {
+            "key_as_string": "2016-09-06",
+            "key": 1473120000000,
+            "doc_count": 3
+        },
+        "2016-09-07": {
+            "key_as_string": "2016-09-07",
+            "key": 1473206400000,
+            "doc_count": 3
+        },
+        "2016-09-08": {
+            "key_as_string": "2016-09-08",
+            "key": 1473292800000,
+            "doc_count": 1
+        },
+        "2016-09-09": {
+            "key_as_string": "2016-09-09",
+            "key": 1473379200000,
+            "doc_count": 5
+        },
+        "2016-09-21": {
+            "key_as_string": "2016-09-21",
+            "key": 1474416000000,
+            "doc_count": 1
+        },
+        "2016-09-22": {
+            "key_as_string": "2016-09-22",
+            "key": 1474502400000,
+            "doc_count": 6
+        },
+        "2016-09-23": {
+            "key_as_string": "2016-09-23",
+            "key": 1474588800000,
+            "doc_count": 2
+        },
+        "2016-09-29": {
+            "key_as_string": "2016-09-29",
+            "key": 1475107200000,
+            "doc_count": 2
+        },
+        "2016-10-20": {
+            "key_as_string": "2016-10-20",
+            "key": 1476921600000,
+            "doc_count": 3
+        },
+        "2016-10-21": {
+            "key_as_string": "2016-10-21",
+            "key": 1477008000000,
+            "doc_count": 3
+        },
+        "2016-11-10": {
+            "key_as_string": "2016-11-10",
+            "key": 1478736000000,
+            "doc_count": 7
+        },
+        "2016-11-11": {
+            "key_as_string": "2016-11-11",
+            "key": 1478822400000,
+            "doc_count": 3
+        },
+        "2016-11-22": {
+            "key_as_string": "2016-11-22",
+            "key": 1479772800000,
+            "doc_count": 7
+        },
+        "2016-11-24": {
+            "key_as_string": "2016-11-24",
+            "key": 1479945600000,
+            "doc_count": 3
+        },
+        "2016-12-01": {
+            "key_as_string": "2016-12-01",
+            "key": 1480550400000,
+            "doc_count": 1
+        },
+        "2016-12-02": {
+            "key_as_string": "2016-12-02",
+            "key": 1480636800000,
+            "doc_count": 1
+        },
+        "2016-12-14": {
+            "key_as_string": "2016-12-14",
+            "key": 1481673600000,
+            "doc_count": 1
+        },
+        "2016-12-15": {
+            "key_as_string": "2016-12-15",
+            "key": 1481760000000,
+            "doc_count": 1
+        },
+        "2017-01-19": {
+            "key_as_string": "2017-01-19",
+            "key": 1484784000000,
+            "doc_count": 2
+        },
+        "2017-01-20": {
+            "key_as_string": "2017-01-20",
+            "key": 1484870400000,
+            "doc_count": 1
+        },
+        "2017-01-27": {
+            "key_as_string": "2017-01-27",
+            "key": 1485475200000,
+            "doc_count": 2
+        },
+        "2017-02-16": {
+            "key_as_string": "2017-02-16",
+            "key": 1487203200000,
+            "doc_count": 3
+        },
+        "2017-02-17": {
+            "key_as_string": "2017-02-17",
+            "key": 1487289600000,
+            "doc_count": 1
+        },
+        "2017-03-09": {
+            "key_as_string": "2017-03-09",
+            "key": 1489017600000,
+            "doc_count": 2
+        },
+        "2017-03-22": {
+            "key_as_string": "2017-03-22",
+            "key": 1490140800000,
+            "doc_count": 1
+        },
+        "2017-03-23": {
+            "key_as_string": "2017-03-23",
+            "key": 1490227200000,
+            "doc_count": 3
+        },
+        "2017-03-30": {
+            "key_as_string": "2017-03-30",
+            "key": 1490832000000,
+            "doc_count": 1
+        },
+        "2017-03-31": {
+            "key_as_string": "2017-03-31",
+            "key": 1490918400000,
+            "doc_count": 2
+        },
+        "2017-04-27": {
+            "key_as_string": "2017-04-27",
+            "key": 1493251200000,
+            "doc_count": 5
+        },
+        "2017-05-17": {
+            "key_as_string": "2017-05-17",
+            "key": 1494979200000,
+            "doc_count": 1
+        },
+        "2017-05-18": {
+            "key_as_string": "2017-05-18",
+            "key": 1495065600000,
+            "doc_count": 4
+        },
+        "2017-05-19": {
+            "key_as_string": "2017-05-19",
+            "key": 1495152000000,
+            "doc_count": 2
+        },
+        "2017-05-31": {
+            "key_as_string": "2017-05-31",
+            "key": 1496188800000,
+            "doc_count": 1
+        },
+        "2017-06-01": {
+            "key_as_string": "2017-06-01",
+            "key": 1496275200000,
+            "doc_count": 1
+        },
+        "2017-06-21": {
+            "key_as_string": "2017-06-21",
+            "key": 1498003200000,
+            "doc_count": 1
+        },
+        "2017-06-22": {
+            "key_as_string": "2017-06-22",
+            "key": 1498089600000,
+            "doc_count": 5
+        },
+        "2017-06-23": {
+            "key_as_string": "2017-06-23",
+            "key": 1498176000000,
+            "doc_count": 2
+        },
+        "2017-06-29": {
+            "key_as_string": "2017-06-29",
+            "key": 1498694400000,
+            "doc_count": 1
+        },
+        "2017-06-30": {
+            "key_as_string": "2017-06-30",
+            "key": 1498780800000,
+            "doc_count": 1
+        },
+        "2017-11-21": {
+            "key_as_string": "2017-11-21",
+            "key": 1511222400000,
+            "doc_count": 2
+        },
+        "2017-12-12": {
+            "key_as_string": "2017-12-12",
+            "key": 1513036800000,
+            "doc_count": 1
+        },
+        "2017-12-13": {
+            "key_as_string": "2017-12-13",
+            "key": 1513123200000,
+            "doc_count": 1
+        },
+        "2018-01-18": {
+            "key_as_string": "2018-01-18",
+            "key": 1516233600000,
+            "doc_count": 3
+        },
+        "2018-01-19": {
+            "key_as_string": "2018-01-19",
+            "key": 1516320000000,
+            "doc_count": 1
+        },
+        "2018-02-01": {
+            "key_as_string": "2018-02-01",
+            "key": 1517443200000,
+            "doc_count": 1
+        },
+        "2018-02-02": {
+            "key_as_string": "2018-02-02",
+            "key": 1517529600000,
+            "doc_count": 3
+        },
+        "2018-02-21": {
+            "key_as_string": "2018-02-21",
+            "key": 1519171200000,
+            "doc_count": 1
+        },
+        "2018-02-22": {
+            "key_as_string": "2018-02-22",
+            "key": 1519257600000,
+            "doc_count": 6
+        },
+        "2018-03-01": {
+            "key_as_string": "2018-03-01",
+            "key": 1519862400000,
+            "doc_count": 3
+        },
+        "2018-03-02": {
+            "key_as_string": "2018-03-02",
+            "key": 1519948800000,
+            "doc_count": 1
+        },
+        "2018-03-15": {
+            "key_as_string": "2018-03-15",
+            "key": 1521072000000,
+            "doc_count": 1
+        },
+        "2018-03-21": {
+            "key_as_string": "2018-03-21",
+            "key": 1521590400000,
+            "doc_count": 3
+        },
+        "2018-03-22": {
+            "key_as_string": "2018-03-22",
+            "key": 1521676800000,
+            "doc_count": 4
+        },
+        "2018-03-23": {
+            "key_as_string": "2018-03-23",
+            "key": 1521763200000,
+            "doc_count": 6
+        },
+        "2018-04-19": {
+            "key_as_string": "2018-04-19",
+            "key": 1524096000000,
+            "doc_count": 2
+        },
+        "2018-04-25": {
+            "key_as_string": "2018-04-25",
+            "key": 1524614400000,
+            "doc_count": 7
+        },
+        "2018-04-27": {
+            "key_as_string": "2018-04-27",
+            "key": 1524787200000,
+            "doc_count": 2
+        },
+        "2018-05-15": {
+            "key_as_string": "2018-05-15",
+            "key": 1526342400000,
+            "doc_count": 12
+        },
+        "2018-05-16": {
+            "key_as_string": "2018-05-16",
+            "key": 1526428800000,
+            "doc_count": 1
+        },
+        "2018-05-17": {
+            "key_as_string": "2018-05-17",
+            "key": 1526515200000,
+            "doc_count": 8
+        },
+        "2018-06-07": {
+            "key_as_string": "2018-06-07",
+            "key": 1528329600000,
+            "doc_count": 2
+        },
+        "2018-06-08": {
+            "key_as_string": "2018-06-08",
+            "key": 1528416000000,
+            "doc_count": 4
+        },
+        "2018-06-14": {
+            "key_as_string": "2018-06-14",
+            "key": 1528934400000,
+            "doc_count": 2
+        },
+        "2018-06-15": {
+            "key_as_string": "2018-06-15",
+            "key": 1529020800000,
+            "doc_count": 4
+        },
+        "2018-06-28": {
+            "key_as_string": "2018-06-28",
+            "key": 1530144000000,
+            "doc_count": 9
+        },
+        "2018-07-03": {
+            "key_as_string": "2018-07-03",
+            "key": 1530576000000,
+            "doc_count": 11
+        },
+        "2018-07-04": {
+            "key_as_string": "2018-07-04",
+            "key": 1530662400000,
+            "doc_count": 3
+        },
+        "2018-07-05": {
+            "key_as_string": "2018-07-05",
+            "key": 1530748800000,
+            "doc_count": 3
+        },
+        "2018-09-11": {
+            "key_as_string": "2018-09-11",
+            "key": 1536624000000,
+            "doc_count": 10
+        },
+        "2018-09-12": {
+            "key_as_string": "2018-09-12",
+            "key": 1536710400000,
+            "doc_count": 4
+        },
+        "2018-09-13": {
+            "key_as_string": "2018-09-13",
+            "key": 1536796800000,
+            "doc_count": 8
+        },
+        "2018-09-14": {
+            "key_as_string": "2018-09-14",
+            "key": 1536883200000,
+            "doc_count": 1
+        },
+        "2018-09-27": {
+            "key_as_string": "2018-09-27",
+            "key": 1538006400000,
+            "doc_count": 8
+        },
+        "2018-09-28": {
+            "key_as_string": "2018-09-28",
+            "key": 1538092800000,
+            "doc_count": 3
+        },
+        "2018-10-10": {
+            "key_as_string": "2018-10-10",
+            "key": 1539129600000,
+            "doc_count": 4
+        },
+        "2018-10-11": {
+            "key_as_string": "2018-10-11",
+            "key": 1539216000000,
+            "doc_count": 1
+        },
+        "2018-10-12": {
+            "key_as_string": "2018-10-12",
+            "key": 1539302400000,
+            "doc_count": 1
+        },
+        "2018-10-18": {
+            "key_as_string": "2018-10-18",
+            "key": 1539820800000,
+            "doc_count": 1
+        },
+        "2018-10-19": {
+            "key_as_string": "2018-10-19",
+            "key": 1539907200000,
+            "doc_count": 2
+        },
+        "2018-11-08": {
+            "key_as_string": "2018-11-08",
+            "key": 1541635200000,
+            "doc_count": 5
+        },
+        "2018-11-09": {
+            "key_as_string": "2018-11-09",
+            "key": 1541721600000,
+            "doc_count": 1
+        },
+        "2018-11-20": {
+            "key_as_string": "2018-11-20",
+            "key": 1542672000000,
+            "doc_count": 7
+        },
+        "2018-11-21": {
+            "key_as_string": "2018-11-21",
+            "key": 1542758400000,
+            "doc_count": 4
+        },
+        "2018-11-22": {
+            "key_as_string": "2018-11-22",
+            "key": 1542844800000,
+            "doc_count": 5
+        },
+        "2018-11-23": {
+            "key_as_string": "2018-11-23",
+            "key": 1542931200000,
+            "doc_count": 1
+        },
+        "2018-11-29": {
+            "key_as_string": "2018-11-29",
+            "key": 1543449600000,
+            "doc_count": 6
+        },
+        "2018-11-30": {
+            "key_as_string": "2018-11-30",
+            "key": 1543536000000,
+            "doc_count": 3
+        },
+        "2018-12-13": {
+            "key_as_string": "2018-12-13",
+            "key": 1544659200000,
+            "doc_count": 3
+        },
+        "2018-12-14": {
+            "key_as_string": "2018-12-14",
+            "key": 1544745600000,
+            "doc_count": 1
+        },
+        "2019-01-17": {
+            "key_as_string": "2019-01-17",
+            "key": 1547683200000,
+            "doc_count": 5
+        },
+        "2019-01-18": {
+            "key_as_string": "2019-01-18",
+            "key": 1547769600000,
+            "doc_count": 5
+        },
+        "2019-01-30": {
+            "key_as_string": "2019-01-30",
+            "key": 1548806400000,
+            "doc_count": 1
+        },
+        "2019-01-31": {
+            "key_as_string": "2019-01-31",
+            "key": 1548892800000,
+            "doc_count": 7
+        },
+        "2019-02-01": {
+            "key_as_string": "2019-02-01",
+            "key": 1548979200000,
+            "doc_count": 2
+        },
+        "2019-02-13": {
+            "key_as_string": "2019-02-13",
+            "key": 1550016000000,
+            "doc_count": 3
+        },
+        "2019-02-14": {
+            "key_as_string": "2019-02-14",
+            "key": 1550102400000,
+            "doc_count": 5
+        },
+        "2019-02-15": {
+            "key_as_string": "2019-02-15",
+            "key": 1550188800000,
+            "doc_count": 2
+        },
+        "2019-02-20": {
+            "key_as_string": "2019-02-20",
+            "key": 1550620800000,
+            "doc_count": 1
+        },
+        "2019-02-21": {
+            "key_as_string": "2019-02-21",
+            "key": 1550707200000,
+            "doc_count": 2
+        },
+        "2019-03-14": {
+            "key_as_string": "2019-03-14",
+            "key": 1552521600000,
+            "doc_count": 3
+        },
+        "2019-03-15": {
+            "key_as_string": "2019-03-15",
+            "key": 1552608000000,
+            "doc_count": 8
+        },
+        "2019-03-21": {
+            "key_as_string": "2019-03-21",
+            "key": 1553126400000,
+            "doc_count": 3
+        },
+        "2019-03-22": {
+            "key_as_string": "2019-03-22",
+            "key": 1553212800000,
+            "doc_count": 3
+        },
+        "2019-04-04": {
+            "key_as_string": "2019-04-04",
+            "key": 1554336000000,
+            "doc_count": 4
+        },
+        "2019-04-05": {
+            "key_as_string": "2019-04-05",
+            "key": 1554422400000,
+            "doc_count": 6
+        },
+        "2019-04-10": {
+            "key_as_string": "2019-04-10",
+            "key": 1554854400000,
+            "doc_count": 1
+        },
+        "2019-04-11": {
+            "key_as_string": "2019-04-11",
+            "key": 1554940800000,
+            "doc_count": 6
+        },
+        "2019-04-12": {
+            "key_as_string": "2019-04-12",
+            "key": 1555027200000,
+            "doc_count": 3
+        },
+        "2019-05-08": {
+            "key_as_string": "2019-05-08",
+            "key": 1557273600000,
+            "doc_count": 2
+        },
+        "2019-05-09": {
+            "key_as_string": "2019-05-09",
+            "key": 1557360000000,
+            "doc_count": 14
+        },
+        "2019-05-10": {
+            "key_as_string": "2019-05-10",
+            "key": 1557446400000,
+            "doc_count": 1
+        },
+        "2019-05-15": {
+            "key_as_string": "2019-05-15",
+            "key": 1557878400000,
+            "doc_count": 1
+        },
+        "2019-05-16": {
+            "key_as_string": "2019-05-16",
+            "key": 1557964800000,
+            "doc_count": 1
+        },
+        "2019-05-17": {
+            "key_as_string": "2019-05-17",
+            "key": 1558051200000,
+            "doc_count": 5
+        },
+        "2019-06-05": {
+            "key_as_string": "2019-06-05",
+            "key": 1559692800000,
+            "doc_count": 5
+        },
+        "2019-06-06": {
+            "key_as_string": "2019-06-06",
+            "key": 1559779200000,
+            "doc_count": 8
+        },
+        "2019-06-07": {
+            "key_as_string": "2019-06-07",
+            "key": 1559865600000,
+            "doc_count": 5
+        },
+        "2019-06-26": {
+            "key_as_string": "2019-06-26",
+            "key": 1561507200000,
+            "doc_count": 1
+        },
+        "2019-06-27": {
+            "key_as_string": "2019-06-27",
+            "key": 1561593600000,
+            "doc_count": 13
+        },
+        "2019-06-28": {
+            "key_as_string": "2019-06-28",
+            "key": 1561680000000,
+            "doc_count": 11
+        },
+        "2019-07-24": {
+            "key_as_string": "2019-07-24",
+            "key": 1563926400000,
+            "doc_count": 1
+        },
+        "2019-09-10": {
+            "key_as_string": "2019-09-10",
+            "key": 1568073600000,
+            "doc_count": 17
+        },
+        "2019-09-11": {
+            "key_as_string": "2019-09-11",
+            "key": 1568160000000,
+            "doc_count": 15
+        },
+        "2019-09-12": {
+            "key_as_string": "2019-09-12",
+            "key": 1568246400000,
+            "doc_count": 10
+        },
+        "2019-09-13": {
+            "key_as_string": "2019-09-13",
+            "key": 1568332800000,
+            "doc_count": 4
+        },
+        "2019-09-26": {
+            "key_as_string": "2019-09-26",
+            "key": 1569456000000,
+            "doc_count": 15
+        },
+        "2019-09-27": {
+            "key_as_string": "2019-09-27",
+            "key": 1569542400000,
+            "doc_count": 5
+        },
+        "2019-10-17": {
+            "key_as_string": "2019-10-17",
+            "key": 1571270400000,
+            "doc_count": 21
+        },
+        "2019-10-18": {
+            "key_as_string": "2019-10-18",
+            "key": 1571356800000,
+            "doc_count": 5
+        },
+        "2019-10-23": {
+            "key_as_string": "2019-10-23",
+            "key": 1571788800000,
+            "doc_count": 1
+        },
+        "2019-10-24": {
+            "key_as_string": "2019-10-24",
+            "key": 1571875200000,
+            "doc_count": 2
+        },
+        "2019-10-25": {
+            "key_as_string": "2019-10-25",
+            "key": 1571961600000,
+            "doc_count": 10
+        },
+        "2019-11-06": {
+            "key_as_string": "2019-11-06",
+            "key": 1572998400000,
+            "doc_count": 3
+        },
+        "2019-11-07": {
+            "key_as_string": "2019-11-07",
+            "key": 1573084800000,
+            "doc_count": 3
+        },
+        "2019-11-08": {
+            "key_as_string": "2019-11-08",
+            "key": 1573171200000,
+            "doc_count": 6
+        },
+        "2019-11-13": {
+            "key_as_string": "2019-11-13",
+            "key": 1573603200000,
+            "doc_count": 1
+        },
+        "2019-11-14": {
+            "key_as_string": "2019-11-14",
+            "key": 1573689600000,
+            "doc_count": 3
+        },
+        "2019-11-15": {
+            "key_as_string": "2019-11-15",
+            "key": 1573776000000,
+            "doc_count": 5
+        },
+        "2019-11-26": {
+            "key_as_string": "2019-11-26",
+            "key": 1574726400000,
+            "doc_count": 14
+        },
+        "2019-11-27": {
+            "key_as_string": "2019-11-27",
+            "key": 1574812800000,
+            "doc_count": 9
+        },
+        "2019-11-28": {
+            "key_as_string": "2019-11-28",
+            "key": 1574899200000,
+            "doc_count": 5
+        },
+        "2019-11-29": {
+            "key_as_string": "2019-11-29",
+            "key": 1574985600000,
+            "doc_count": 4
+        },
+        "2019-12-11": {
+            "key_as_string": "2019-12-11",
+            "key": 1576022400000,
+            "doc_count": 1
+        },
+        "2019-12-12": {
+            "key_as_string": "2019-12-12",
+            "key": 1576108800000,
+            "doc_count": 4
+        },
+        "2019-12-13": {
+            "key_as_string": "2019-12-13",
+            "key": 1576195200000,
+            "doc_count": 10
+        },
+        "2019-12-19": {
+            "key_as_string": "2019-12-19",
+            "key": 1576713600000,
+            "doc_count": 15
+        },
+        "2020-01-15": {
+            "key_as_string": "2020-01-15",
+            "key": 1579046400000,
+            "doc_count": 2
+        },
+        "2020-01-16": {
+            "key_as_string": "2020-01-16",
+            "key": 1579132800000,
+            "doc_count": 8
+        },
+        "2020-01-17": {
+            "key_as_string": "2020-01-17",
+            "key": 1579219200000,
+            "doc_count": 10
+        },
+        "2020-01-29": {
+            "key_as_string": "2020-01-29",
+            "key": 1580256000000,
+            "doc_count": 3
+        },
+        "2020-01-30": {
+            "key_as_string": "2020-01-30",
+            "key": 1580342400000,
+            "doc_count": 5
+        },
+        "2020-01-31": {
+            "key_as_string": "2020-01-31",
+            "key": 1580428800000,
+            "doc_count": 5
+        },
+        "2020-02-12": {
+            "key_as_string": "2020-02-12",
+            "key": 1581465600000,
+            "doc_count": 2
+        },
+        "2020-02-13": {
+            "key_as_string": "2020-02-13",
+            "key": 1581552000000,
+            "doc_count": 3
+        },
+        "2020-02-14": {
+            "key_as_string": "2020-02-14",
+            "key": 1581638400000,
+            "doc_count": 6
+        },
+        "2020-03-05": {
+            "key_as_string": "2020-03-05",
+            "key": 1583366400000,
+            "doc_count": 7
+        },
+        "2020-03-06": {
+            "key_as_string": "2020-03-06",
+            "key": 1583452800000,
+            "doc_count": 5
+        },
+        "2020-03-11": {
+            "key_as_string": "2020-03-11",
+            "key": 1583884800000,
+            "doc_count": 1
+        },
+        "2020-03-12": {
+            "key_as_string": "2020-03-12",
+            "key": 1583971200000,
+            "doc_count": 3
+        },
+        "2020-03-13": {
+            "key_as_string": "2020-03-13",
+            "key": 1584057600000,
+            "doc_count": 1
+        },
+        "2020-03-25": {
+            "key_as_string": "2020-03-25",
+            "key": 1585094400000,
+            "doc_count": 1
+        },
+        "2020-04-23": {
+            "key_as_string": "2020-04-23",
+            "key": 1587600000000,
+            "doc_count": 2
+        },
+        "2020-05-07": {
+            "key_as_string": "2020-05-07",
+            "key": 1588809600000,
+            "doc_count": 3
+        },
+        "2020-05-14": {
+            "key_as_string": "2020-05-14",
+            "key": 1589414400000,
+            "doc_count": 2
+        },
+        "2020-05-27": {
+            "key_as_string": "2020-05-27",
+            "key": 1590537600000,
+            "doc_count": 1
+        },
+        "2020-05-29": {
+            "key_as_string": "2020-05-29",
+            "key": 1590710400000,
+            "doc_count": 3
+        },
+        "2020-06-18": {
+            "key_as_string": "2020-06-18",
+            "key": 1592438400000,
+            "doc_count": 9
+        },
+        "2020-06-19": {
+            "key_as_string": "2020-06-19",
+            "key": 1592524800000,
+            "doc_count": 6
+        },
+        "2020-07-01": {
+            "key_as_string": "2020-07-01",
+            "key": 1593561600000,
+            "doc_count": 1
+        },
+        "2020-07-02": {
+            "key_as_string": "2020-07-02",
+            "key": 1593648000000,
+            "doc_count": 1
+        },
+        "2020-07-03": {
+            "key_as_string": "2020-07-03",
+            "key": 1593734400000,
+            "doc_count": 8
+        },
+        "2020-09-09": {
+            "key_as_string": "2020-09-09",
+            "key": 1599609600000,
+            "doc_count": 3
+        },
+        "2020-09-10": {
+            "key_as_string": "2020-09-10",
+            "key": 1599696000000,
+            "doc_count": 2
+        },
+        "2020-09-11": {
+            "key_as_string": "2020-09-11",
+            "key": 1599782400000,
+            "doc_count": 2
+        },
+        "2020-09-16": {
+            "key_as_string": "2020-09-16",
+            "key": 1600214400000,
+            "doc_count": 7
+        },
+        "2020-09-17": {
+            "key_as_string": "2020-09-17",
+            "key": 1600300800000,
+            "doc_count": 21
+        },
+        "2020-09-18": {
+            "key_as_string": "2020-09-18",
+            "key": 1600387200000,
+            "doc_count": 4
+        },
+        "2020-09-29": {
+            "key_as_string": "2020-09-29",
+            "key": 1601337600000,
+            "doc_count": 14
+        },
+        "2020-09-30": {
+            "key_as_string": "2020-09-30",
+            "key": 1601424000000,
+            "doc_count": 6
+        },
+        "2020-10-01": {
+            "key_as_string": "2020-10-01",
+            "key": 1601510400000,
+            "doc_count": 2
+        },
+        "2020-10-02": {
+            "key_as_string": "2020-10-02",
+            "key": 1601596800000,
+            "doc_count": 2
+        },
+        "2020-10-07": {
+            "key_as_string": "2020-10-07",
+            "key": 1602028800000,
+            "doc_count": 2
+        },
+        "2020-10-08": {
+            "key_as_string": "2020-10-08",
+            "key": 1602115200000,
+            "doc_count": 8
+        },
+        "2020-10-09": {
+            "key_as_string": "2020-10-09",
+            "key": 1602201600000,
+            "doc_count": 4
+        },
+        "2020-10-28": {
+            "key_as_string": "2020-10-28",
+            "key": 1603843200000,
+            "doc_count": 5
+        },
+        "2020-10-29": {
+            "key_as_string": "2020-10-29",
+            "key": 1603929600000,
+            "doc_count": 3
+        },
+        "2020-10-30": {
+            "key_as_string": "2020-10-30",
+            "key": 1604016000000,
+            "doc_count": 3
+        },
+        "2020-11-04": {
+            "key_as_string": "2020-11-04",
+            "key": 1604448000000,
+            "doc_count": 4
+        },
+        "2020-11-05": {
+            "key_as_string": "2020-11-05",
+            "key": 1604534400000,
+            "doc_count": 6
+        },
+        "2020-11-19": {
+            "key_as_string": "2020-11-19",
+            "key": 1605744000000,
+            "doc_count": 2
+        },
+        "2020-11-20": {
+            "key_as_string": "2020-11-20",
+            "key": 1605830400000,
+            "doc_count": 3
+        },
+        "2020-11-25": {
+            "key_as_string": "2020-11-25",
+            "key": 1606262400000,
+            "doc_count": 1
+        },
+        "2020-11-26": {
+            "key_as_string": "2020-11-26",
+            "key": 1606348800000,
+            "doc_count": 7
+        },
+        "2020-11-27": {
+            "key_as_string": "2020-11-27",
+            "key": 1606435200000,
+            "doc_count": 1
+        },
+        "2020-12-08": {
+            "key_as_string": "2020-12-08",
+            "key": 1607385600000,
+            "doc_count": 11
+        },
+        "2020-12-09": {
+            "key_as_string": "2020-12-09",
+            "key": 1607472000000,
+            "doc_count": 3
+        },
+        "2020-12-10": {
+            "key_as_string": "2020-12-10",
+            "key": 1607558400000,
+            "doc_count": 1
+        },
+        "2020-12-11": {
+            "key_as_string": "2020-12-11",
+            "key": 1607644800000,
+            "doc_count": 1
+        },
+        "2020-12-17": {
+            "key_as_string": "2020-12-17",
+            "key": 1608163200000,
+            "doc_count": 3
+        },
+        "2021-01-13": {
+            "key_as_string": "2021-01-13",
+            "key": 1610496000000,
+            "doc_count": 6
+        },
+        "2021-01-14": {
+            "key_as_string": "2021-01-14",
+            "key": 1610582400000,
+            "doc_count": 6
+        },
+        "2021-01-27": {
+            "key_as_string": "2021-01-27",
+            "key": 1611705600000,
+            "doc_count": 5
+        },
+        "2021-01-28": {
+            "key_as_string": "2021-01-28",
+            "key": 1611792000000,
+            "doc_count": 5
+        },
+        "2021-02-10": {
+            "key_as_string": "2021-02-10",
+            "key": 1612915200000,
+            "doc_count": 1
+        },
+        "2021-02-11": {
+            "key_as_string": "2021-02-11",
+            "key": 1613001600000,
+            "doc_count": 2
+        },
+        "2021-02-12": {
+            "key_as_string": "2021-02-12",
+            "key": 1613088000000,
+            "doc_count": 1
+        },
+        "2021-02-24": {
+            "key_as_string": "2021-02-24",
+            "key": 1614124800000,
+            "doc_count": 3
+        },
+        "2021-02-25": {
+            "key_as_string": "2021-02-25",
+            "key": 1614211200000,
+            "doc_count": 1
+        },
+        "2021-03-03": {
+            "key_as_string": "2021-03-03",
+            "key": 1614729600000,
+            "doc_count": 1
+        },
+        "2021-03-04": {
+            "key_as_string": "2021-03-04",
+            "key": 1614816000000,
+            "doc_count": 3
+        },
+        "2021-03-05": {
+            "key_as_string": "2021-03-05",
+            "key": 1614902400000,
+            "doc_count": 3
+        },
+        "2021-03-25": {
+            "key_as_string": "2021-03-25",
+            "key": 1616630400000,
+            "doc_count": 2
+        },
+        "2021-03-26": {
+            "key_as_string": "2021-03-26",
+            "key": 1616716800000,
+            "doc_count": 5
+        },
+        "2021-04-15": {
+            "key_as_string": "2021-04-15",
+            "key": 1618444800000,
+            "doc_count": 2
+        },
+        "2021-04-16": {
+            "key_as_string": "2021-04-16",
+            "key": 1618531200000,
+            "doc_count": 2
+        },
+        "2021-04-21": {
+            "key_as_string": "2021-04-21",
+            "key": 1618963200000,
+            "doc_count": 3
+        },
+        "2021-04-22": {
+            "key_as_string": "2021-04-22",
+            "key": 1619049600000,
+            "doc_count": 12
+        },
+        "2021-04-23": {
+            "key_as_string": "2021-04-23",
+            "key": 1619136000000,
+            "doc_count": 3
+        },
+        "2021-05-05": {
+            "key_as_string": "2021-05-05",
+            "key": 1620172800000,
+            "doc_count": 2
+        },
+        "2021-05-06": {
+            "key_as_string": "2021-05-06",
+            "key": 1620259200000,
+            "doc_count": 5
+        },
+        "2021-05-07": {
+            "key_as_string": "2021-05-07",
+            "key": 1620345600000,
+            "doc_count": 7
+        },
+        "2021-05-19": {
+            "key_as_string": "2021-05-19",
+            "key": 1621382400000,
+            "doc_count": 1
+        },
+        "2021-05-20": {
+            "key_as_string": "2021-05-20",
+            "key": 1621468800000,
+            "doc_count": 13
+        },
+        "2021-05-21": {
+            "key_as_string": "2021-05-21",
+            "key": 1621555200000,
+            "doc_count": 8
+        },
+        "2021-06-10": {
+            "key_as_string": "2021-06-10",
+            "key": 1623283200000,
+            "doc_count": 14
+        },
+        "2021-06-11": {
+            "key_as_string": "2021-06-11",
+            "key": 1623369600000,
+            "doc_count": 5
+        },
+        "2021-06-23": {
+            "key_as_string": "2021-06-23",
+            "key": 1624406400000,
+            "doc_count": 2
+        },
+        "2021-06-24": {
+            "key_as_string": "2021-06-24",
+            "key": 1624492800000,
+            "doc_count": 13
+        },
+        "2021-06-25": {
+            "key_as_string": "2021-06-25",
+            "key": 1624579200000,
+            "doc_count": 2
+        },
+        "2021-08-25": {
+            "key_as_string": "2021-08-25",
+            "key": 1629849600000,
+            "doc_count": 4
+        },
+        "2021-09-07": {
+            "key_as_string": "2021-09-07",
+            "key": 1630972800000,
+            "doc_count": 6
+        },
+        "2021-11-11": {
+            "key_as_string": "2021-11-11",
+            "key": 1636588800000,
+            "doc_count": 6
+        },
+        "2021-12-09": {
+            "key_as_string": "2021-12-09",
+            "key": 1639008000000,
+            "doc_count": 2
+        },
+        "2021-12-15": {
+            "key_as_string": "2021-12-15",
+            "key": 1639526400000,
+            "doc_count": 3
+        },
+        "2021-12-16": {
+            "key_as_string": "2021-12-16",
+            "key": 1639612800000,
+            "doc_count": 8
+        },
+        "2022-01-12": {
+            "key_as_string": "2022-01-12",
+            "key": 1641945600000,
+            "doc_count": 5
+        },
+        "2022-01-13": {
+            "key_as_string": "2022-01-13",
+            "key": 1642032000000,
+            "doc_count": 7
+        },
+        "2022-01-14": {
+            "key_as_string": "2022-01-14",
+            "key": 1642118400000,
+            "doc_count": 9
+        },
+        "2022-01-26": {
+            "key_as_string": "2022-01-26",
+            "key": 1643155200000,
+            "doc_count": 1
+        },
+        "2022-01-27": {
+            "key_as_string": "2022-01-27",
+            "key": 1643241600000,
+            "doc_count": 9
+        },
+        "2022-01-28": {
+            "key_as_string": "2022-01-28",
+            "key": 1643328000000,
+            "doc_count": 2
+        },
+        "2022-02-16": {
+            "key_as_string": "2022-02-16",
+            "key": 1644969600000,
+            "doc_count": 3
+        },
+        "2022-02-17": {
+            "key_as_string": "2022-02-17",
+            "key": 1645056000000,
+            "doc_count": 8
+        },
+        "2022-02-18": {
+            "key_as_string": "2022-02-18",
+            "key": 1645142400000,
+            "doc_count": 5
+        },
+        "2022-02-27": {
+            "key_as_string": "2022-02-27",
+            "key": 1645920000000,
+            "doc_count": 3
+        },
+        "2022-03-16": {
+            "key_as_string": "2022-03-16",
+            "key": 1647388800000,
+            "doc_count": 2
+        },
+        "2022-03-17": {
+            "key_as_string": "2022-03-17",
+            "key": 1647475200000,
+            "doc_count": 4
+        },
+        "2022-03-18": {
+            "key_as_string": "2022-03-18",
+            "key": 1647561600000,
+            "doc_count": 2
+        },
+        "2022-03-22": {
+            "key_as_string": "2022-03-22",
+            "key": 1647907200000,
+            "doc_count": 15
+        },
+        "2022-03-23": {
+            "key_as_string": "2022-03-23",
+            "key": 1647993600000,
+            "doc_count": 6
+        },
+        "2022-03-24": {
+            "key_as_string": "2022-03-24",
+            "key": 1648080000000,
+            "doc_count": 21
+        },
+        "2022-03-25": {
+            "key_as_string": "2022-03-25",
+            "key": 1648166400000,
+            "doc_count": 3
+        },
+        "2022-04-06": {
+            "key_as_string": "2022-04-06",
+            "key": 1649203200000,
+            "doc_count": 2
+        },
+        "2022-04-07": {
+            "key_as_string": "2022-04-07",
+            "key": 1649289600000,
+            "doc_count": 3
+        },
+        "2022-04-08": {
+            "key_as_string": "2022-04-08",
+            "key": 1649376000000,
+            "doc_count": 4
+        },
+        "2022-04-27": {
+            "key_as_string": "2022-04-27",
+            "key": 1651017600000,
+            "doc_count": 3
+        },
+        "2022-04-28": {
+            "key_as_string": "2022-04-28",
+            "key": 1651104000000,
+            "doc_count": 6
+        },
+        "2022-04-29": {
+            "key_as_string": "2022-04-29",
+            "key": 1651190400000,
+            "doc_count": 2
+        },
+        "2022-05-11": {
+            "key_as_string": "2022-05-11",
+            "key": 1652227200000,
+            "doc_count": 1
+        },
+        "2022-05-12": {
+            "key_as_string": "2022-05-12",
+            "key": 1652313600000,
+            "doc_count": 9
+        },
+        "2022-05-13": {
+            "key_as_string": "2022-05-13",
+            "key": 1652400000000,
+            "doc_count": 1
+        },
+        "2022-05-18": {
+            "key_as_string": "2022-05-18",
+            "key": 1652832000000,
+            "doc_count": 2
+        },
+        "2022-05-19": {
+            "key_as_string": "2022-05-19",
+            "key": 1652918400000,
+            "doc_count": 8
+        },
+        "2022-05-20": {
+            "key_as_string": "2022-05-20",
+            "key": 1653004800000,
+            "doc_count": 1
+        },
+        "2022-05-31": {
+            "key_as_string": "2022-05-31",
+            "key": 1653955200000,
+            "doc_count": 14
+        },
+        "2022-06-01": {
+            "key_as_string": "2022-06-01",
+            "key": 1654041600000,
+            "doc_count": 10
+        },
+        "2022-06-02": {
+            "key_as_string": "2022-06-02",
+            "key": 1654128000000,
+            "doc_count": 10
+        },
+        "2022-06-03": {
+            "key_as_string": "2022-06-03",
+            "key": 1654214400000,
+            "doc_count": 8
+        },
+        "2022-06-22": {
+            "key_as_string": "2022-06-22",
+            "key": 1655856000000,
+            "doc_count": 3
+        },
+        "2022-06-23": {
+            "key_as_string": "2022-06-23",
+            "key": 1655942400000,
+            "doc_count": 1
+        },
+        "2022-06-24": {
+            "key_as_string": "2022-06-24",
+            "key": 1656028800000,
+            "doc_count": 5
+        },
+        "2022-07-06": {
+            "key_as_string": "2022-07-06",
+            "key": 1657065600000,
+            "doc_count": 1
+        },
+        "2022-07-07": {
+            "key_as_string": "2022-07-07",
+            "key": 1657152000000,
+            "doc_count": 9
+        },
+        "2022-07-08": {
+            "key_as_string": "2022-07-08",
+            "key": 1657238400000,
+            "doc_count": 3
+        },
+        "2022-09-06": {
+            "key_as_string": "2022-09-06",
+            "key": 1662422400000,
+            "doc_count": 11
+        },
+        "2022-09-07": {
+            "key_as_string": "2022-09-07",
+            "key": 1662508800000,
+            "doc_count": 4
+        },
+        "2022-09-08": {
+            "key_as_string": "2022-09-08",
+            "key": 1662595200000,
+            "doc_count": 13
+        },
+        "2022-09-09": {
+            "key_as_string": "2022-09-09",
+            "key": 1662681600000,
+            "doc_count": 1
+        },
+        "2022-09-21": {
+            "key_as_string": "2022-09-21",
+            "key": 1663718400000,
+            "doc_count": 2
+        },
+        "2022-09-22": {
+            "key_as_string": "2022-09-22",
+            "key": 1663804800000,
+            "doc_count": 4
+        },
+        "2022-09-23": {
+            "key_as_string": "2022-09-23",
+            "key": 1663891200000,
+            "doc_count": 2
+        },
+        "2022-09-28": {
+            "key_as_string": "2022-09-28",
+            "key": 1664323200000,
+            "doc_count": 2
+        },
+        "2022-09-29": {
+            "key_as_string": "2022-09-29",
+            "key": 1664409600000,
+            "doc_count": 11
+        },
+        "2022-09-30": {
+            "key_as_string": "2022-09-30",
+            "key": 1664496000000,
+            "doc_count": 2
+        },
+        "2022-10-13": {
+            "key_as_string": "2022-10-13",
+            "key": 1665619200000,
+            "doc_count": 6
+        },
+        "2022-10-14": {
+            "key_as_string": "2022-10-14",
+            "key": 1665705600000,
+            "doc_count": 5
+        },
+        "2022-10-19": {
+            "key_as_string": "2022-10-19",
+            "key": 1666137600000,
+            "doc_count": 1
+        },
+        "2022-10-20": {
+            "key_as_string": "2022-10-20",
+            "key": 1666224000000,
+            "doc_count": 17
+        },
+        "2022-10-21": {
+            "key_as_string": "2022-10-21",
+            "key": 1666310400000,
+            "doc_count": 9
+        },
+        "2022-11-09": {
+            "key_as_string": "2022-11-09",
+            "key": 1667952000000,
+            "doc_count": 4
+        },
+        "2022-11-10": {
+            "key_as_string": "2022-11-10",
+            "key": 1668038400000,
+            "doc_count": 12
+        },
+        "2022-11-11": {
+            "key_as_string": "2022-11-11",
+            "key": 1668124800000,
+            "doc_count": 8
+        },
+        "2022-11-22": {
+            "key_as_string": "2022-11-22",
+            "key": 1669075200000,
+            "doc_count": 12
+        },
+        "2022-11-23": {
+            "key_as_string": "2022-11-23",
+            "key": 1669161600000,
+            "doc_count": 7
+        },
+        "2022-11-24": {
+            "key_as_string": "2022-11-24",
+            "key": 1669248000000,
+            "doc_count": 9
+        },
+        "2022-11-25": {
+            "key_as_string": "2022-11-25",
+            "key": 1669334400000,
+            "doc_count": 12
+        },
+        "2022-11-30": {
+            "key_as_string": "2022-11-30",
+            "key": 1669766400000,
+            "doc_count": 1
+        },
+        "2022-12-01": {
+            "key_as_string": "2022-12-01",
+            "key": 1669852800000,
+            "doc_count": 12
+        },
+        "2022-12-02": {
+            "key_as_string": "2022-12-02",
+            "key": 1669939200000,
+            "doc_count": 7
+        },
+        "2022-12-14": {
+            "key_as_string": "2022-12-14",
+            "key": 1670976000000,
+            "doc_count": 4
+        },
+        "2022-12-15": {
+            "key_as_string": "2022-12-15",
+            "key": 1671062400000,
+            "doc_count": 3
+        },
+        "2022-12-16": {
+            "key_as_string": "2022-12-16",
+            "key": 1671148800000,
+            "doc_count": 5
+        },
+        "2023-01-18": {
+            "key_as_string": "2023-01-18",
+            "key": 1674000000000,
+            "doc_count": 8
+        },
+        "2023-01-19": {
+            "key_as_string": "2023-01-19",
+            "key": 1674086400000,
+            "doc_count": 3
+        },
+        "2023-01-20": {
+            "key_as_string": "2023-01-20",
+            "key": 1674172800000,
+            "doc_count": 6
+        },
+        "2023-01-25": {
+            "key_as_string": "2023-01-25",
+            "key": 1674604800000,
+            "doc_count": 1
+        },
+        "2023-01-26": {
+            "key_as_string": "2023-01-26",
+            "key": 1674691200000,
+            "doc_count": 17
+        },
+        "2023-01-27": {
+            "key_as_string": "2023-01-27",
+            "key": 1674777600000,
+            "doc_count": 1
+        },
+        "2023-02-08": {
+            "key_as_string": "2023-02-08",
+            "key": 1675814400000,
+            "doc_count": 7
+        },
+        "2023-02-09": {
+            "key_as_string": "2023-02-09",
+            "key": 1675900800000,
+            "doc_count": 7
+        },
+        "2023-02-10": {
+            "key_as_string": "2023-02-10",
+            "key": 1675987200000,
+            "doc_count": 3
+        },
+        "2023-03-01": {
+            "key_as_string": "2023-03-01",
+            "key": 1677628800000,
+            "doc_count": 2
+        },
+        "2023-03-02": {
+            "key_as_string": "2023-03-02",
+            "key": 1677715200000,
+            "doc_count": 3
+        },
+        "2023-03-03": {
+            "key_as_string": "2023-03-03",
+            "key": 1677801600000,
+            "doc_count": 5
+        },
+        "2023-03-15": {
+            "key_as_string": "2023-03-15",
+            "key": 1678838400000,
+            "doc_count": 1
+        },
+        "2023-03-16": {
+            "key_as_string": "2023-03-16",
+            "key": 1678924800000,
+            "doc_count": 8
+        },
+        "2023-03-30": {
+            "key_as_string": "2023-03-30",
+            "key": 1680134400000,
+            "doc_count": 5
+        },
+        "2023-03-31": {
+            "key_as_string": "2023-03-31",
+            "key": 1680220800000,
+            "doc_count": 7
+        },
+        "2023-04-19": {
+            "key_as_string": "2023-04-19",
+            "key": 1681862400000,
+            "doc_count": 3
+        },
+        "2023-04-20": {
+            "key_as_string": "2023-04-20",
+            "key": 1681948800000,
+            "doc_count": 8
+        },
+        "2023-04-21": {
+            "key_as_string": "2023-04-21",
+            "key": 1682035200000,
+            "doc_count": 2
+        },
+        "2023-04-26": {
+            "key_as_string": "2023-04-26",
+            "key": 1682467200000,
+            "doc_count": 1
+        },
+        "2023-04-27": {
+            "key_as_string": "2023-04-27",
+            "key": 1682553600000,
+            "doc_count": 19
+        },
+        "2023-04-28": {
+            "key_as_string": "2023-04-28",
+            "key": 1682640000000,
+            "doc_count": 4
+        },
+        "2023-05-10": {
+            "key_as_string": "2023-05-10",
+            "key": 1683676800000,
+            "doc_count": 7
+        },
+        "2023-05-11": {
+            "key_as_string": "2023-05-11",
+            "key": 1683763200000,
+            "doc_count": 5
+        },
+        "2023-05-12": {
+            "key_as_string": "2023-05-12",
+            "key": 1683849600000,
+            "doc_count": 4
+        },
+        "2023-05-24": {
+            "key_as_string": "2023-05-24",
+            "key": 1684886400000,
+            "doc_count": 1
+        },
+        "2023-05-25": {
+            "key_as_string": "2023-05-25",
+            "key": 1684972800000,
+            "doc_count": 6
+        },
+        "2023-05-26": {
+            "key_as_string": "2023-05-26",
+            "key": 1685059200000,
+            "doc_count": 3
+        },
+        "2023-06-15": {
+            "key_as_string": "2023-06-15",
+            "key": 1686787200000,
+            "doc_count": 5
+        },
+        "2023-06-16": {
+            "key_as_string": "2023-06-16",
+            "key": 1686873600000,
+            "doc_count": 5
+        },
+        "2023-06-21": {
+            "key_as_string": "2023-06-21",
+            "key": 1687305600000,
+            "doc_count": 1
+        },
+        "2023-06-22": {
+            "key_as_string": "2023-06-22",
+            "key": 1687392000000,
+            "doc_count": 5
+        },
+        "2023-06-23": {
+            "key_as_string": "2023-06-23",
+            "key": 1687478400000,
+            "doc_count": 5
+        },
+        "2023-07-05": {
+            "key_as_string": "2023-07-05",
+            "key": 1688515200000,
+            "doc_count": 3
+        },
+        "2023-07-06": {
+            "key_as_string": "2023-07-06",
+            "key": 1688601600000,
+            "doc_count": 8
+        },
+        "2023-07-07": {
+            "key_as_string": "2023-07-07",
+            "key": 1688688000000,
+            "doc_count": 2
+        },
+        "2023-09-05": {
+            "key_as_string": "2023-09-05",
+            "key": 1693872000000,
+            "doc_count": 21
+        },
+        "2023-09-06": {
+            "key_as_string": "2023-09-06",
+            "key": 1693958400000,
+            "doc_count": 8
+        },
+        "2023-09-07": {
+            "key_as_string": "2023-09-07",
+            "key": 1694044800000,
+            "doc_count": 13
+        },
+        "2023-09-08": {
+            "key_as_string": "2023-09-08",
+            "key": 1694131200000,
+            "doc_count": 4
+        },
+        "2023-09-20": {
+            "key_as_string": "2023-09-20",
+            "key": 1695168000000,
+            "doc_count": 2
+        },
+        "2023-09-21": {
+            "key_as_string": "2023-09-21",
+            "key": 1695254400000,
+            "doc_count": 3
+        },
+        "2023-09-22": {
+            "key_as_string": "2023-09-22",
+            "key": 1695340800000,
+            "doc_count": 7
+        },
+        "2023-09-27": {
+            "key_as_string": "2023-09-27",
+            "key": 1695772800000,
+            "doc_count": 3
+        },
+        "2023-09-28": {
+            "key_as_string": "2023-09-28",
+            "key": 1695859200000,
+            "doc_count": 6
+        },
+        "2023-09-29": {
+            "key_as_string": "2023-09-29",
+            "key": 1695945600000,
+            "doc_count": 1
+        },
+        "2023-10-11": {
+            "key_as_string": "2023-10-11",
+            "key": 1696982400000,
+            "doc_count": 3
+        },
+        "2023-10-12": {
+            "key_as_string": "2023-10-12",
+            "key": 1697068800000,
+            "doc_count": 16
+        },
+        "2023-10-13": {
+            "key_as_string": "2023-10-13",
+            "key": 1697155200000,
+            "doc_count": 4
+        },
+        "2023-10-18": {
+            "key_as_string": "2023-10-18",
+            "key": 1697587200000,
+            "doc_count": 2
+        },
+        "2023-10-19": {
+            "key_as_string": "2023-10-19",
+            "key": 1697673600000,
+            "doc_count": 6
+        },
+        "2023-10-20": {
+            "key_as_string": "2023-10-20",
+            "key": 1697760000000,
+            "doc_count": 9
+        },
+        "2023-11-08": {
+            "key_as_string": "2023-11-08",
+            "key": 1699401600000,
+            "doc_count": 1
+        },
+        "2023-11-09": {
+            "key_as_string": "2023-11-09",
+            "key": 1699488000000,
+            "doc_count": 1
+        },
+        "2023-11-10": {
+            "key_as_string": "2023-11-10",
+            "key": 1699574400000,
+            "doc_count": 6
+        },
+        "2023-11-15": {
+            "key_as_string": "2023-11-15",
+            "key": 1700006400000,
+            "doc_count": 5
+        },
+        "2023-11-16": {
+            "key_as_string": "2023-11-16",
+            "key": 1700092800000,
+            "doc_count": 17
+        },
+        "2023-11-17": {
+            "key_as_string": "2023-11-17",
+            "key": 1700179200000,
+            "doc_count": 2
+        },
+        "2023-11-28": {
+            "key_as_string": "2023-11-28",
+            "key": 1701129600000,
+            "doc_count": 6
+        },
+        "2023-11-29": {
+            "key_as_string": "2023-11-29",
+            "key": 1701216000000,
+            "doc_count": 6
+        },
+        "2023-11-30": {
+            "key_as_string": "2023-11-30",
+            "key": 1701302400000,
+            "doc_count": 13
+        },
+        "2023-12-01": {
+            "key_as_string": "2023-12-01",
+            "key": 1701388800000,
+            "doc_count": 14
+        },
+        "2023-12-13": {
+            "key_as_string": "2023-12-13",
+            "key": 1702425600000,
+            "doc_count": 3
+        },
+        "2023-12-14": {
+            "key_as_string": "2023-12-14",
+            "key": 1702512000000,
+            "doc_count": 2
+        },
+        "2023-12-15": {
+            "key_as_string": "2023-12-15",
+            "key": 1702598400000,
+            "doc_count": 4
+        },
+        "2024-01-17": {
+            "key_as_string": "2024-01-17",
+            "key": 1705449600000,
+            "doc_count": 6
+        },
+        "2024-01-18": {
+            "key_as_string": "2024-01-18",
+            "key": 1705536000000,
+            "doc_count": 6
+        },
+        "2024-01-19": {
+            "key_as_string": "2024-01-19",
+            "key": 1705622400000,
+            "doc_count": 3
+        },
+        "2024-01-30": {
+            "key_as_string": "2024-01-30",
+            "key": 1706572800000,
+            "doc_count": 10
+        },
+        "2024-01-31": {
+            "key_as_string": "2024-01-31",
+            "key": 1706659200000,
+            "doc_count": 5
+        },
+        "2024-02-01": {
+            "key_as_string": "2024-02-01",
+            "key": 1706745600000,
+            "doc_count": 23
+        },
+        "2024-02-02": {
+            "key_as_string": "2024-02-02",
+            "key": 1706832000000,
+            "doc_count": 3
+        },
+        "2024-02-21": {
+            "key_as_string": "2024-02-21",
+            "key": 1708473600000,
+            "doc_count": 1
+        },
+        "2024-02-22": {
+            "key_as_string": "2024-02-22",
+            "key": 1708560000000,
+            "doc_count": 6
+        },
+        "2024-02-23": {
+            "key_as_string": "2024-02-23",
+            "key": 1708646400000,
+            "doc_count": 2
+        },
+        "2024-03-13": {
+            "key_as_string": "2024-03-13",
+            "key": 1710288000000,
+            "doc_count": 3
+        },
+        "2024-03-14": {
+            "key_as_string": "2024-03-14",
+            "key": 1710374400000,
+            "doc_count": 2
+        },
+        "2024-03-20": {
+            "key_as_string": "2024-03-20",
+            "key": 1710892800000,
+            "doc_count": 2
+        },
+        "2024-03-21": {
+            "key_as_string": "2024-03-21",
+            "key": 1710979200000,
+            "doc_count": 4
+        },
+        "2024-03-22": {
+            "key_as_string": "2024-03-22",
+            "key": 1711065600000,
+            "doc_count": 4
+        },
+        "2024-04-10": {
+            "key_as_string": "2024-04-10",
+            "key": 1712707200000,
+            "doc_count": 1
+        },
+        "2024-04-11": {
+            "key_as_string": "2024-04-11",
+            "key": 1712793600000,
+            "doc_count": 12
+        },
+        "2024-04-12": {
+            "key_as_string": "2024-04-12",
+            "key": 1712880000000,
+            "doc_count": 2
+        },
+        "2024-04-24": {
+            "key_as_string": "2024-04-24",
+            "key": 1713916800000,
+            "doc_count": 1
+        },
+        "2024-04-25": {
+            "key_as_string": "2024-04-25",
+            "key": 1714003200000,
+            "doc_count": 1
+        },
+        "2024-04-26": {
+            "key_as_string": "2024-04-26",
+            "key": 1714089600000,
+            "doc_count": 8
+        },
+        "2024-05-16": {
+            "key_as_string": "2024-05-16",
+            "key": 1715817600000,
+            "doc_count": 3
+        },
+        "2024-06-05": {
+            "key_as_string": "2024-06-05",
+            "key": 1717545600000,
+            "doc_count": 1
+        },
+        "2024-06-06": {
+            "key_as_string": "2024-06-06",
+            "key": 1717632000000,
+            "doc_count": 10
+        },
+        "2024-06-07": {
+            "key_as_string": "2024-06-07",
+            "key": 1717718400000,
+            "doc_count": 4
+        },
+        "2024-06-12": {
+            "key_as_string": "2024-06-12",
+            "key": 1718150400000,
+            "doc_count": 3
+        },
+        "2024-06-14": {
+            "key_as_string": "2024-06-14",
+            "key": 1718323200000,
+            "doc_count": 8
+        },
+        "2024-06-27": {
+            "key_as_string": "2024-06-27",
+            "key": 1719446400000,
+            "doc_count": 7
+        },
+        "2024-06-28": {
+            "key_as_string": "2024-06-28",
+            "key": 1719532800000,
+            "doc_count": 2
+        },
+        "2024-07-03": {
+            "key_as_string": "2024-07-03",
+            "key": 1719964800000,
+            "doc_count": 3
+        },
+        "2024-07-04": {
+            "key_as_string": "2024-07-04",
+            "key": 1720051200000,
+            "doc_count": 4
+        },
+        "2024-07-05": {
+            "key_as_string": "2024-07-05",
+            "key": 1720137600000,
+            "doc_count": 7
+        },
+        "2024-09-10": {
+            "key_as_string": "2024-09-10",
+            "key": 1725926400000,
+            "doc_count": 14
+        },
+        "2024-09-11": {
+            "key_as_string": "2024-09-11",
+            "key": 1726012800000,
+            "doc_count": 2
+        },
+        "2024-09-12": {
+            "key_as_string": "2024-09-12",
+            "key": 1726099200000,
+            "doc_count": 10
+        },
+        "2024-09-13": {
+            "key_as_string": "2024-09-13",
+            "key": 1726185600000,
+            "doc_count": 8
+        },
+        "2024-09-25": {
+            "key_as_string": "2024-09-25",
+            "key": 1727222400000,
+            "doc_count": 1
+        },
+        "2024-09-26": {
+            "key_as_string": "2024-09-26",
+            "key": 1727308800000,
+            "doc_count": 5
+        },
+        "2024-09-27": {
+            "key_as_string": "2024-09-27",
+            "key": 1727395200000,
+            "doc_count": 7
+        },
+        "2024-10-09": {
+            "key_as_string": "2024-10-09",
+            "key": 1728432000000,
+            "doc_count": 1
+        },
+        "2024-10-10": {
+            "key_as_string": "2024-10-10",
+            "key": 1728518400000,
+            "doc_count": 9
+        },
+        "2024-10-16": {
+            "key_as_string": "2024-10-16",
+            "key": 1729036800000,
+            "doc_count": 3
+        },
+        "2024-11-06": {
+            "key_as_string": "2024-11-06",
+            "key": 1730851200000,
+            "doc_count": 5
+        },
+        "2024-11-07": {
+            "key_as_string": "2024-11-07",
+            "key": 1730937600000,
+            "doc_count": 1
+        },
+        "2024-11-08": {
+            "key_as_string": "2024-11-08",
+            "key": 1731024000000,
+            "doc_count": 1
+        },
+        "2024-11-13": {
+            "key_as_string": "2024-11-13",
+            "key": 1731456000000,
+            "doc_count": 2
+        },
+        "2024-11-14": {
+            "key_as_string": "2024-11-14",
+            "key": 1731542400000,
+            "doc_count": 5
+        },
+        "2024-12-04": {
+            "key_as_string": "2024-12-04",
+            "key": 1733270400000,
+            "doc_count": 2
+        },
+        "2024-12-05": {
+            "key_as_string": "2024-12-05",
+            "key": 1733356800000,
+            "doc_count": 6
+        },
+        "2024-12-06": {
+            "key_as_string": "2024-12-06",
+            "key": 1733443200000,
+            "doc_count": 8
+        },
+        "2024-12-16": {
+            "key_as_string": "2024-12-16",
+            "key": 1734307200000,
+            "doc_count": 4
+        },
+        "2024-12-19": {
+            "key_as_string": "2024-12-19",
+            "key": 1734566400000,
+            "doc_count": 6
+        },
+        "2024-12-20": {
+            "key_as_string": "2024-12-20",
+            "key": 1734652800000,
+            "doc_count": 4
+        },
+        "2025-01-29": {
+            "key_as_string": "2025-01-29",
+            "key": 1738108800000,
+            "doc_count": 2
+        },
+        "2025-01-30": {
+            "key_as_string": "2025-01-30",
+            "key": 1738195200000,
+            "doc_count": 3
+        },
+        "2025-01-31": {
+            "key_as_string": "2025-01-31",
+            "key": 1738281600000,
+            "doc_count": 3
+        },
+        "2025-02-11": {
+            "key_as_string": "2025-02-11",
+            "key": 1739232000000,
+            "doc_count": 1
+        },
+        "2025-03-13": {
+            "key_as_string": "2025-03-13",
+            "key": 1741824000000,
+            "doc_count": 5
+        },
+        "2025-03-18": {
+            "key_as_string": "2025-03-18",
+            "key": 1742256000000,
+            "doc_count": 6
+        },
+        "2025-03-25": {
+            "key_as_string": "2025-03-25",
+            "key": 1742860800000,
+            "doc_count": 1
+        },
+        "2025-05-14": {
+            "key_as_string": "2025-05-14",
+            "key": 1747180800000,
+            "doc_count": 3
+        },
+        "2025-05-15": {
+            "key_as_string": "2025-05-15",
+            "key": 1747267200000,
+            "doc_count": 18
+        },
+        "2025-05-16": {
+            "key_as_string": "2025-05-16",
+            "key": 1747353600000,
+            "doc_count": 2
+        },
+        "2025-05-22": {
+            "key_as_string": "2025-05-22",
+            "key": 1747872000000,
+            "doc_count": 5
+        },
+        "2025-05-23": {
+            "key_as_string": "2025-05-23",
+            "key": 1747958400000,
+            "doc_count": 13
+        },
+        "2025-06-04": {
+            "key_as_string": "2025-06-04",
+            "key": 1748995200000,
+            "doc_count": 1
+        },
+        "2025-06-05": {
+            "key_as_string": "2025-06-05",
+            "key": 1749081600000,
+            "doc_count": 6
+        },
+        "2025-06-06": {
+            "key_as_string": "2025-06-06",
+            "key": 1749168000000,
+            "doc_count": 13
+        },
+        "2025-06-24": {
+            "key_as_string": "2025-06-24",
+            "key": 1750723200000,
+            "doc_count": 1
+        },
+        "2025-06-26": {
+            "key_as_string": "2025-06-26",
+            "key": 1750896000000,
+            "doc_count": 9
+        },
+        "2025-06-27": {
+            "key_as_string": "2025-06-27",
+            "key": 1750982400000,
+            "doc_count": 2
+        },
+        "2025-07-08": {
+            "key_as_string": "2025-07-08",
+            "key": 1751932800000,
+            "doc_count": 29
+        },
+        "2025-07-09": {
+            "key_as_string": "2025-07-09",
+            "key": 1752019200000,
+            "doc_count": 8
+        },
+        "2025-07-10": {
+            "key_as_string": "2025-07-10",
+            "key": 1752105600000,
+            "doc_count": 8
+        },
+        "2025-07-11": {
+            "key_as_string": "2025-07-11",
+            "key": 1752192000000,
+            "doc_count": 1
+        },
+        "2025-09-11": {
+            "key_as_string": "2025-09-11",
+            "key": 1757548800000,
+            "doc_count": 9
+        },
+        "2025-09-12": {
+            "key_as_string": "2025-09-12",
+            "key": 1757635200000,
+            "doc_count": 15
+        },
+        "2025-09-16": {
+            "key_as_string": "2025-09-16",
+            "key": 1757980800000,
+            "doc_count": 16
+        },
+        "2025-09-17": {
+            "key_as_string": "2025-09-17",
+            "key": 1758067200000,
+            "doc_count": 4
+        },
+        "2025-09-18": {
+            "key_as_string": "2025-09-18",
+            "key": 1758153600000,
+            "doc_count": 8
+        },
+        "2025-09-23": {
+            "key_as_string": "2025-09-23",
+            "key": 1758585600000,
+            "doc_count": 11
+        },
+        "2025-09-24": {
+            "key_as_string": "2025-09-24",
+            "key": 1758672000000,
+            "doc_count": 7
+        }
+    },
+    "electoralPeriods": [
+        {
+            "type": "electoralPeriod",
+            "id": "DE-018",
+            "attributes": {
+                "number": 18,
+                "dateStart": "2013-10-22",
+                "dateEnd": "2017-10-24",
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag"
+            }
+        },
+        {
+            "type": "electoralPeriod",
+            "id": "DE-019",
+            "attributes": {
+                "number": 19,
+                "dateStart": "2017-10-24",
+                "dateEnd": "2021-10-26",
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag"
+            }
+        },
+        {
+            "type": "electoralPeriod",
+            "id": "DE-020",
+            "attributes": {
+                "number": 20,
+                "dateStart": "2021-10-26",
+                "dateEnd": "2025-03-25",
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag"
+            }
+        },
+        {
+            "type": "electoralPeriod",
+            "id": "DE-021",
+            "attributes": {
+                "number": 21,
+                "dateStart": "2025-03-25",
+                "dateEnd": null,
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag"
+            }
+        }
+    ]
+}
+    </script>
+	<nav aria-label="Paginierung" style="margin-top: 30px;">
+	<ul class="pagination justify-content-center">
+		<li class="page-item ">
+							<a class="page-link" href='search?q=klima&amp;page=2' aria-label="Vorherige">
+							<span aria-hidden="true">&laquo;</span>
+				<span class="visually-hidden">Vorherige Seite</span>
+			</a>
+		</li>
+						<li class="page-item ">
+											<a class="page-link" href='search?q=klima'>1</a>
+									</li>
+										<li class="page-item ">
+											<a class="page-link" href='search?q=klima&amp;page=2'>2</a>
+									</li>
+										<li class="page-item active">
+											<a class="page-link" href='search?q=klima&amp;page=3'>3</a>
+									</li>
+										<li class="page-item ">
+											<a class="page-link" href='search?q=klima&amp;page=4'>4</a>
+									</li>
+										<li class="page-item ">
+											<a class="page-link" href='search?q=klima&amp;page=5'>5</a>
+									</li>
+										<li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+																																																																																																																																																																																					<li class="page-item ">
+											<a class="page-link" href='search?q=klima&amp;page=64'>64</a>
+									</li>
+										<li class="page-item ">
+											<a class="page-link" href='search?q=klima&amp;page=65'>65</a>
+									</li>
+								<li class="page-item ">
+							<a class="page-link" href='search?q=klima&amp;page=4' aria-label="Nächste">
+							<span aria-hidden="true">&raquo;</span>
+				<span class="visually-hidden">Nächste Seite</span>
+			</a>
+		</li>
+	</ul>
+</nav>

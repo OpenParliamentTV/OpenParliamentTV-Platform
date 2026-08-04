@@ -203,6 +203,7 @@
 	"messageAuthLoginRequiredTitle": "Anmeldung erfolderlich",
 	"messageAuthNotPermittedDetail": "Du hast keine Berechtigung diese Seite aufzurufen oder diese Aktion durchzuführen.",
 	"messageAuthNotPermittedTitle": "Nicht erlaubt",
+	"messageAuthPasswordIncorrectTitle": "Passwort nicht korrekt",
 	"messageAutomaticallyDetected": "Diese <b>Personen, Organisationen, Gesetze und Begriffe</b> wurden durch ein sog. <b>Named Entity Recognition</b> Verfahren im Volltext der Plenarprotokolle erkannt. <br><br>Hierbei handelt es sich um ein vollständig automatisiertes Verfahren, welches sich noch in der Testphase befindet. <br><br><b>Die erkannten Entitäten wurden nicht manuell überprüft und können Fehler enthalten.</b>",
 	"messageCleanupSuccess": "Erfolgreich {count} Elemente bereinigt",
 	"messageEditError": "Änderungen konnten nicht gespeichert werden",

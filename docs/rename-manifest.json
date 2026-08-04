@@ -395,6 +395,18 @@
       "old": "content/client/css/bootstrap.min.css.map",
       "new": "content/client/css/vendor/bootstrap.min.css.map",
       "phase": "4.3k"
+    },
+    {
+      "old": "api/v1/modules/search-index.php",
+      "new": "modules/search-index/indexer.php",
+      "phase": "5b",
+      "note": "split; the API path keeps envelope wrappers under the same name"
+    },
+    {
+      "old": "api/v1/modules/media.php",
+      "new": "modules/import/media-writer.php",
+      "phase": "5c",
+      "note": "write path only; mediaAdd stays as an envelope wrapper, read path stays until 5d"
     }
   ],
   "functions": [
@@ -672,6 +684,86 @@
       "old": "getEntityDump",
       "new": "entityDumpGet",
       "phase": "5.1"
+    },
+    {
+      "old": "getSearchIndexParameterBody",
+      "new": "searchIndexMappingBody",
+      "phase": "5b"
+    },
+    {
+      "old": "getSearchIndexProgressFilePath",
+      "new": "searchIndexProgressFilePath",
+      "phase": "5b"
+    },
+    {
+      "old": "performIndexOptimization",
+      "new": "searchIndexRunOptimization",
+      "phase": "5b"
+    },
+    {
+      "old": "triggerStatisticsIndexing",
+      "new": "statsIndexTriggerRun",
+      "phase": "5b"
+    },
+    {
+      "old": "triggerStatisticsIndexUpdate",
+      "new": "statsIndexTriggerForItems",
+      "phase": "5b"
+    },
+    {
+      "old": "validateMediaAddParameters",
+      "new": "importMediaValidate",
+      "phase": "5c"
+    },
+    {
+      "old": "processElectoralPeriod",
+      "new": "importWriteElectoralPeriod",
+      "phase": "5c"
+    },
+    {
+      "old": "processSession",
+      "new": "importWriteSession",
+      "phase": "5c"
+    },
+    {
+      "old": "processAgendaItem",
+      "new": "importWriteAgendaItem",
+      "phase": "5c"
+    },
+    {
+      "old": "processMediaItem",
+      "new": "importWriteMediaItem",
+      "phase": "5c"
+    },
+    {
+      "old": "processTextContents",
+      "new": "importWriteTextContents",
+      "phase": "5c"
+    },
+    {
+      "old": "processTextContent",
+      "new": "importWriteTextContent",
+      "phase": "5c"
+    },
+    {
+      "old": "processTextContentSentence",
+      "new": "importRenderSentence",
+      "phase": "5c"
+    },
+    {
+      "old": "normalizeSpeechWhitespace",
+      "new": "importNormalizeWhitespace",
+      "phase": "5c"
+    },
+    {
+      "old": "processDocuments",
+      "new": "importWriteDocuments",
+      "phase": "5c"
+    },
+    {
+      "old": "processPeople",
+      "new": "importWritePeople",
+      "phase": "5c"
     }
   ]
 }

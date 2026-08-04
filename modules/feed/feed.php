@@ -174,9 +174,9 @@ function feedEntityLabel($feedType, $id) {
 /**
  * Fetch the most recent media items for a speech feed and map them to feed items.
  *
- * Calls mediaSearch() directly with a controlled parameter array (rather than
- * apiV1(), which force-merges $_GET) so the entity feed's ?id= does not leak
- * into the media search as a media-ID filter.
+ * Calls mediaSearch() directly with a controlled parameter array, built from an
+ * allowlist of the caller's params minus everything that would override the feed's
+ * own presentation (limit/page/sort/...).
  */
 function feedFetchSpeeches($feedType, $params) {
     $request = [];

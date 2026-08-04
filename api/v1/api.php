@@ -8,16 +8,36 @@ require_once (__DIR__."/../../modules/utilities/security.php");
 applySecurityHeaders();
 
 
+/**
+ * @param array|false $request_param The request. Pass an array for an internal
+ *        call: it is used verbatim and the superglobals are ignored. Pass
+ *        nothing (false) only from the external HTTP entry point, which is
+ *        where the $_GET/$_POST/php://input merge belongs.
+ */
 function apiV1($request_param = false, $db = false, $dbp = false) {
     global $config;
 
-    // Merge all request sources with proper precedence
-    $api_request = array_merge(
-        $_GET,                                                      // Lowest precedence
-        $_POST,                                                     // Overwrites GET if keys clash
-        json_decode(file_get_contents('php://input'), true) ?: [],   // Overwrites POST if keys clash (usually one or the other is empty)
-        $request_param ?: []                                        // Highest precedence, for internal calls
-    );
+    if ($request_param === false) {
+        // External HTTP entry point (api/v1/index.php). php://input carries
+        // JSON request bodies, which $_REQUEST does not see.
+        $api_request = array_merge(
+            $_GET,                                                     // Lowest precedence
+            $_POST,                                                    // Overwrites GET if keys clash
+            json_decode(file_get_contents('php://input'), true) ?: []  // Overwrites POST if keys clash
+        );
+    } else {
+        // Internal call: exactly what the caller asked for, nothing else.
+        //
+        // These calls run inside an ordinary page or API request, so merging the
+        // superglobals in used to hand the target action every query parameter
+        // the visitor happened to send. Explicit params won on a key clash, but
+        // any parameter the caller did NOT set leaked through — and a search is
+        // steered by dozens of optional filters. Two live consequences, both
+        // fixed by this: ?q=/&dateTo= on /api/v1/status silently filtered the
+        // internal searches behind lastUpdated/lastSpeechDate, and /search?page=3
+        // asked for page 3 of the 8-row faction list, emptying the filter bar.
+        $api_request = $request_param;
+    }
 
     if (empty($api_request["action"])) {
         return apiResponse(

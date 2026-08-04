@@ -134,11 +134,9 @@ if (optvIsCli()) {
     $isDataImportMode = !isset($input["justUpdateSearchIndex"]);
     $progressFinalized = false; // Flag for shutdown handler
 
-    // --- START: Define Search Index Progress File Path (used in search index mode) ---
-    // This helper function comes from the restored api/v1/modules/search-index.php but we need it here.
-    // To avoid including the whole file, we define a compatible version.
-    $searchIndexProgressFilePath = optvVarPath("data/progress") . "/searchIndex_" . strtoupper($parliament) . ".json";
-    // --- END: Define Search Index Progress File Path ---
+    require_once(__DIR__ . "/../modules/search-index/jobs.php");
+    require_once(__DIR__ . "/../modules/import/media-writer.php");
+    $searchIndexProgressFilePath = searchIndexProgressFilePath($parliament);
 
 
     // Register shutdown function to ensure lock and progress are handled.
@@ -181,7 +179,6 @@ if (optvIsCli()) {
 
     require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
     require_once(__DIR__ . "/../api/v1/api.php");
-    require_once(__DIR__ . "/../api/v1/modules/search-index.php");
 
     if ($isDataImportMode) {
         $lastSuccess = null;
@@ -330,17 +327,17 @@ if (optvIsCli()) {
                 ]);
                 
                 if (!empty($mediaItemsBatch)) {
-                    $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsBatch, "initIndex" => ($currentBatchNum === 1), "isFullRebuild" => true];
-                    $updateResult = searchIndexUpdate($updateRequest);
-
-                    // A failed searchIndexUpdate() returns an error response (meta.requestStatus
-                    // === 'error', no 'data' key) — e.g. OpenSearch went down mid-run, or the
-                    // bulk request threw. Reading 'data.updated'/'data.failed' with ?? 0 would
-                    // hide that: the run would march through every remaining batch indexing
-                    // nothing and still finalize as "completed". Detect it and abort loudly.
-                    if (isset($updateResult['meta']['requestStatus']) && $updateResult['meta']['requestStatus'] === 'error') {
-                        $errorDetail = $updateResult['errors'][0]['detail'] ?? ($updateResult['errors'][0]['title'] ?? 'Unknown indexing error');
-                        $msg = "Search index update failed at batch {$currentBatchNum}/{$totalBatches} (OpenSearch may be down): {$errorDetail}. Aborting after {$processedItemCount} indexed items.";
+                    // A batch failure — OpenSearch down mid-run, or the bulk
+                    // request throwing — must abort loudly. Swallowing it would
+                    // march through every remaining batch indexing nothing and
+                    // still finalize the run as "completed".
+                    try {
+                        $updateResult = searchIndexUpdateItems($parliament, $mediaItemsBatch, [
+                            "initIndex" => ($currentBatchNum === 1),
+                            "isFullRebuild" => true
+                        ]);
+                    } catch (Exception $e) {
+                        $msg = "Search index update failed at batch {$currentBatchNum}/{$totalBatches} (OpenSearch may be down): " . $e->getMessage() . ". Aborting after {$processedItemCount} indexed items.";
                         logger("error", $msg);
                         optvProgressLogError($searchIndexProgressFilePath, $msg, "BATCH_{$currentBatchNum}");
                         optvProgressFinalize($searchIndexProgressFilePath, "error_critical", $msg);
@@ -348,15 +345,15 @@ if (optvIsCli()) {
                         exit(1);
                     }
 
-                    $updatedInBatch = $updateResult['data']['updated'] ?? 0;
-                    $failedInBatch = $updateResult['data']['failed'] ?? 0;
+                    $updatedInBatch = $updateResult['updated'] ?? 0;
+                    $failedInBatch = $updateResult['failed'] ?? 0;
                     
                     $processedItemCount += $updatedInBatch;
                     $failedItemCount += $failedInBatch;
 
-                    if ($failedInBatch > 0 && !empty($updateResult['data']['errors'])) {
+                    if ($failedInBatch > 0 && !empty($updateResult['errors'])) {
                         logger("error", "Search index update batch {$currentBatchNum} failed for {$failedInBatch} items.");
-                        foreach($updateResult['data']['errors'] as $error) {
+                        foreach($updateResult['errors'] as $error) {
                              optvProgressLogError(
                                  $searchIndexProgressFilePath, 
                                  $error['message'] ?? 'Unknown indexing error', 
@@ -381,7 +378,7 @@ if (optvIsCli()) {
                 ]);
 
                 // Explicitly free memory
-                unset($mediaItemsBatch, $updateRequest, $updateResult);
+                unset($mediaItemsBatch, $updateResult);
                 gc_collect_cycles(); // Force garbage collection
 
                 $mediaItemsBatch = []; // Reset batch for the next iteration
@@ -487,29 +484,35 @@ if (optvIsCli()) {
                     $media["itemType"] = "media";
                     $media["meta"] = $json["meta"];
                     
-                    $return = mediaAdd($media, $db, $dbp, $entityDump);
-                    if ($return["meta"]["requestStatus"] == "success") {
-                        $tmpMedia = apiV1(["action" => "getItem", "itemType" => "media", "id" => $return["data"]["id"]], $db, $dbp);
-                        if ($tmpMedia["meta"]["requestStatus"] == "success") {
-                            $mediaItemsForSearchIndex[] = $tmpMedia;
+                    // Plain call into the import module: returns the new media
+                    // id, throws on failure. One unimportable speech must not
+                    // abandon the rest of the file — the writer has already
+                    // recorded it as a conflict, so log and move on.
+                    try {
+                        $newMediaID = importMediaWrite($media, $db, $dbp, $entityDump);
+                    } catch (Exception $e) {
+                        logger("ERROR", "Could not add media from file " . $file . " | error: " . $e->getMessage() . " | Item: " . json_encode($media));
+                        continue;
+                    }
 
-                            // Alert matching (Plan B): fire notifications for newly-indexed
-                            // public speeches. Dedup on (AlertID, MediaID) makes re-imports
-                            // safe; wrapped so a matcher error never breaks the import.
-                            if (!empty($config["allow"]["notifications"])) {
-                                try {
-                                    require_once(__DIR__ . "/../modules/notifications/alert-matcher.php");
-                                    $matchCount = matchMediaItemAgainstAlerts($tmpMedia["data"], $parliament, $db);
-                                    if ($matchCount > 0) {
-                                        logger("info", "Alert matcher created " . $matchCount . " notification(s) for " . $return["data"]["id"]);
-                                    }
-                                } catch (Exception $e) {
-                                    logger("ERROR", "Alert matcher failed for " . ($return["data"]["id"] ?? "?") . ": " . $e->getMessage());
+                    $tmpMedia = apiV1(["action" => "getItem", "itemType" => "media", "id" => $newMediaID], $db, $dbp);
+                    if ($tmpMedia["meta"]["requestStatus"] == "success") {
+                        $mediaItemsForSearchIndex[] = $tmpMedia;
+
+                        // Alert matching (Plan B): fire notifications for newly-indexed
+                        // public speeches. Dedup on (AlertID, MediaID) makes re-imports
+                        // safe; wrapped so a matcher error never breaks the import.
+                        if (!empty($config["allow"]["notifications"])) {
+                            try {
+                                require_once(__DIR__ . "/../modules/notifications/alert-matcher.php");
+                                $matchCount = matchMediaItemAgainstAlerts($tmpMedia["data"], $parliament, $db);
+                                if ($matchCount > 0) {
+                                    logger("info", "Alert matcher created " . $matchCount . " notification(s) for " . $newMediaID);
                                 }
+                            } catch (Exception $e) {
+                                logger("ERROR", "Alert matcher failed for " . $newMediaID . ": " . $e->getMessage());
                             }
                         }
-                    } else {
-                        logger("ERROR", "Could not add media from file " . $file . " | return: " . json_encode($return) . " | Item: " . json_encode($media));
                     }
                 }
                 
@@ -519,8 +522,7 @@ if (optvIsCli()) {
                 
                 if (!empty($mediaItemsForSearchIndex)) {
                     // Update main search index (disable auto statistics trigger since we'll do batched trigger later)
-                    $updateRequest = ["parliament" => $parliament, "items" => $mediaItemsForSearchIndex, "initIndex" => false, "skipAutoStatistics" => true];
-                    searchIndexUpdate($updateRequest);
+                    searchIndexUpdateItems($parliament, $mediaItemsForSearchIndex, ["skipAutoStatistics" => true]);
                     
                     // Collect media IDs for batched statistics update at the end
                     foreach ($mediaItemsForSearchIndex as $item) {

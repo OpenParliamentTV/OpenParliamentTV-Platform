@@ -35,7 +35,10 @@ if ($auth["meta"]["requestStatus"] != "success") {
         http_response_code((int) ($rateLimitError["errors"][0]["status"] ?? 429));
         $return = $rateLimitError;
     } else {
-        $return = apiV1($_REQUEST);
+        // No argument: this is the external HTTP entry point, so apiV1() does the
+        // $_GET/$_POST/php://input merge itself. Passing $_REQUEST here instead
+        // would take the internal-call path and drop JSON request bodies.
+        $return = apiV1();
     }
 
 }

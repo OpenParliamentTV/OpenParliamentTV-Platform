@@ -42,12 +42,6 @@ if (isset($acceptLang) && is_array($acceptLang)) {
 }
 $_REQUEST['lang'] = $metaImageLang;
 
-// Internal apiV1() calls merge $_GET/$_POST into their request params. Clear them
-// so this request's own query params (notably the entity `id`) don't leak in as
-// stray media-search filters. The endpoint reads its own params from $_REQUEST,
-// which is a separate superglobal and keeps its values.
-$_GET = [];
-$_POST = [];
 
 require_once(__DIR__ . '/../../../modules/i18n/language.php'); // initialises L:: (default language)
 require_once(__DIR__ . '/../../../modules/utilities/safemysql.class.php');

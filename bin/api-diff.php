@@ -66,8 +66,25 @@ const API_DIFF_VOLATILE_KEYS = [
     // numbers just produces noise. `tables`, `nodes` and the reported
     // labels/paths/hosts around them stay pinned.
     'sizeBytes', 'totalBytes', 'databasesTotalBytes', 'openSearchTotalBytes',
-    'computedAt', 'activeShards', 'relocatingShards', 'initializingShards',
-    'unassignedShards', 'activeShardsPercent',
+    'totalStoreBytes', 'computedAt', 'activeShards', 'relocatingShards',
+    'initializingShards', 'unassignedShards', 'activeShardsPercent',
+    // Deleted-document counts are a segment-merge artifact: they climb with
+    // every write and drop to near zero after an optimize run. `docs` stays
+    // pinned — that one only moves when data really is added or removed.
+    'deleted',
+];
+
+/**
+ * JSON keys rounded rather than blanked, with the number of decimals to keep.
+ *
+ * `_score` is BM25 relevance. It depends on segment-level term statistics, so a
+ * forcemerge shifts it in the 5th decimal while the ranking is unchanged. Full
+ * precision would make every optimize run look like a relevance regression;
+ * blanking it would stop catching one. Rounding keeps ordering and magnitude
+ * pinned and drops only the merge noise.
+ */
+const API_DIFF_ROUNDED_KEYS = [
+    '_score' => 4,
 ];
 
 /**
@@ -95,6 +112,10 @@ function apiDiffNormalizeJson($node) {
     if (is_array($node)) {
         $out = [];
         foreach ($node as $k => $v) {
+            if (is_string($k) && isset(API_DIFF_ROUNDED_KEYS[$k]) && is_numeric($v)) {
+                $out[$k] = round((float) $v, API_DIFF_ROUNDED_KEYS[$k]);
+                continue;
+            }
             $out[$k] = (is_string($k) && in_array($k, API_DIFF_VOLATILE_KEYS, true) && !is_array($v))
                 ? '<<NORMALIZED>>'
                 : apiDiffNormalizeJson($v);

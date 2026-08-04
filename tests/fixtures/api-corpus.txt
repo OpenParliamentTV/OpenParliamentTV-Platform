@@ -99,6 +99,17 @@
 /api/v1/search/media?q=klima&limit=99999
 /api/v1/?itemType=person&id=Q132733606
 
+# --- internal calls must not inherit the caller's query string (5a) ----------
+# status runs two internal media searches for lastUpdated/lastSpeechDate. While
+# apiV1() merged the superglobals into internal calls, any filter the client
+# appended steered those searches, so this had to stay byte-identical to
+# /api/v1/status?parliament=DE above.
+/api/v1/status?parliament=DE&q=klima&dateTo=2015-01-01&personID=Q77195
+# The faction lookups behind the filter bar and the factionColors JS map pass no
+# paging params. Under the merge, ?page=3 asked for page 3 of the 8-row faction
+# list and emptied both. Pins resultsPerFaction on a non-first page.
+/content/components/result-grid.php?a=search&queryOnly=1&q=klima&page=3
+
 # --- admin-only itemTypes stay admin-only ----------------------------------
 # Only the anonymous 403 is pinned, not an admin row dump: entity_remap rows are
 # operator-edited data, so a fixture of them would fail on every legitimate edit.
@@ -120,5 +131,9 @@
 # JS (`result-${view}.php`), so no static check catches a rename breaking them.
 # A refactor that renames a fragment must keep these green.
 /content/components/result-grid.php?a=search&queryOnly=1&paginationMode=url-driven&baseUrl=/search&showHome=1
-/content/components/result-table.php?a=search&queryOnly=1
+# sort=date-asc is load-bearing: unsorted, unfiltered match_all ordering across
+# 2.5M docs is shard- and segment-dependent, so an index optimize or import
+# reshuffles which 40 rows come back and the fixture diffs by hundreds of lines
+# for no code reason.
+/content/components/result-table.php?a=search&queryOnly=1&sort=date-asc
 /content/pages/media/components/player.php?id=DE-0200172058

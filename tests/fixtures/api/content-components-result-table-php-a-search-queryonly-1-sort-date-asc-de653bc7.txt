@@ -47,7 +47,33 @@ content-type: text/html; charset=UTF-8
 						</tr>
 					</thead>
 					<tbody>
-					<tr class="resultItem" data-speech-id="DE-0180001007" data-faction="Q1023134">
+					<tr class="resultItem" data-speech-id="DE-0180001005" data-faction="Q1023134">
+	<td>18 / 1</td>
+	<td>22.10.2013</td>
+	<td>Beschlussfassung über Geschäftsordnungen</td>
+	<td>Norbert Lammert (CDU/CSU)</td>
+	<td>00:43</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001005" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001005" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180001006" data-faction="Q1023134">
+	<td>18 / 1</td>
+	<td>22.10.2013</td>
+	<td>Festlegung der Zahl der Vizepräsidenten</td>
+	<td>Norbert Lammert (CDU/CSU)</td>
+	<td>00:50</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001006" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001006" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180001007" data-faction="Q1023134">
 	<td>18 / 1</td>
 	<td>22.10.2013</td>
 	<td>Festlegung der Zahl der Vizepräsidenten</td>
@@ -73,6 +99,19 @@ content-type: text/html; charset=UTF-8
 			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001008" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180001009" data-faction="Q2207512">
+	<td>18 / 1</td>
+	<td>22.10.2013</td>
+	<td>Festlegung der Zahl der Vizepräsidenten</td>
+	<td>Thomas Oppermann (SPD)</td>
+	<td>03:59</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001009" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001009" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
 </tr><tr class="resultItem" data-speech-id="DE-0180001010" data-faction="Q1007353">
 	<td>18 / 1</td>
 	<td>22.10.2013</td>
@@ -86,6 +125,45 @@ content-type: text/html; charset=UTF-8
 			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001010" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180001011" data-faction="Q1023134">
+	<td>18 / 1</td>
+	<td>22.10.2013</td>
+	<td>Festlegung der Zahl der Vizepräsidenten</td>
+	<td>Norbert Lammert (CDU/CSU)</td>
+	<td>00:33</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001011" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001011" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180001013" data-faction="Q1023134">
+	<td>18 / 1</td>
+	<td>22.10.2013</td>
+	<td>Nationalhymne</td>
+	<td>Norbert Lammert (CDU/CSU)</td>
+	<td>01:07</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001013" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001013" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002004" data-faction="">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td>Norbert Lammert (Bundestagspräsident)</td>
+	<td>00:33</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002004" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002004" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
 </tr><tr class="resultItem" data-speech-id="DE-0180002005" data-faction="Q1826856">
 	<td>18 / 2</td>
 	<td>18.11.2013</td>
@@ -97,6 +175,45 @@ content-type: text/html; charset=UTF-8
 		<div class="list-group list-group-horizontal">
 			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002005" target="_blank"><span class="icon-eye"></span></a>
 			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002005" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002006" data-faction="">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td></td>
+	<td>10:51</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002006" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002006" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002007" data-faction="Q1007353">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td>Anton Hofreiter (DIE GRÜNEN)</td>
+	<td>08:21</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002007" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002007" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002008" data-faction="Q1023134">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td>Volker Kauder (CDU/CSU)</td>
+	<td>11:39</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002008" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002008" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
 </tr><tr class="resultItem" data-speech-id="DE-0180002009" data-faction="Q2207512">
@@ -138,6 +255,19 @@ content-type: text/html; charset=UTF-8
 			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002011" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002012" data-faction="Q2207512">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td>Katarina Barley (SPD)</td>
+	<td>07:20</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002012" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002012" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
 </tr><tr class="resultItem" data-speech-id="DE-0180002013" data-faction="Q1023134">
 	<td>18 / 2</td>
 	<td>18.11.2013</td>
@@ -151,6 +281,19 @@ content-type: text/html; charset=UTF-8
 			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002013" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002014" data-faction="">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
+	<td></td>
+	<td>08:59</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002014" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002014" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
 </tr><tr class="resultItem" data-speech-id="DE-0180002015" data-faction="">
 	<td>18 / 2</td>
 	<td>18.11.2013</td>
@@ -162,6 +305,45 @@ content-type: text/html; charset=UTF-8
 		<div class="list-group list-group-horizontal">
 			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002015" target="_blank"><span class="icon-eye"></span></a>
 			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002015" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002016" data-faction="">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Norbert Lammert (Bundestagspräsident)</td>
+	<td>00:29</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002016" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002016" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002017" data-faction="Q1023134">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Hans-Peter Friedrich (CDU/CSU)</td>
+	<td>13:57</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002017" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002017" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002018" data-faction="">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td></td>
+	<td>12:49</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002018" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002018" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
 </tr><tr class="resultItem" data-speech-id="DE-0180002019" data-faction="Q1826856">
@@ -242,6 +424,19 @@ content-type: text/html; charset=UTF-8
 			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002024" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002025" data-faction="Q2207512">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Eva Högl (SPD)</td>
+	<td>05:54</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002025" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002025" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
 </tr><tr class="resultItem" data-speech-id="DE-0180002026" data-faction="Q1023134">
 	<td>18 / 2</td>
 	<td>18.11.2013</td>
@@ -266,6 +461,19 @@ content-type: text/html; charset=UTF-8
 		<div class="list-group list-group-horizontal">
 			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002027" target="_blank"><span class="icon-eye"></span></a>
 			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002027" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002028" data-faction="Q1023134">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
+	<td>Peter Beyer (CDU/CSU)</td>
+	<td>08:19</td>
+	<td>2025-06-05 21:46:14</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002028" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002028" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
 </tr><tr class="resultItem" data-speech-id="DE-0180002029" data-faction="">
@@ -333,238 +541,30 @@ content-type: text/html; charset=UTF-8
 			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002033" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003004" data-faction="Q1023134">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Einsetzung eines Hauptausschusses</td>
-	<td>Michael Grosse-Brömer (CDU/CSU)</td>
-	<td>03:39</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003004" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003004" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003005" data-faction="Q1826856">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Einsetzung eines Hauptausschusses</td>
-	<td>Petra Sitte (DIE LINKE)</td>
-	<td>05:17</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003005" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003005" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003006" data-faction="Q2207512">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Einsetzung eines Hauptausschusses</td>
-	<td>Thomas Oppermann (SPD)</td>
-	<td>05:20</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003006" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003006" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003007" data-faction="Q1007353">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Einsetzung eines Hauptausschusses</td>
-	<td>Britta Haßelmann (DIE GRÜNEN)</td>
-	<td>06:05</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003007" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003007" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003009" data-faction="">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
-	<td>Norbert Lammert (Bundestagspräsident)</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002034" data-faction="">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Einsetzung von Ausschüssen</td>
+	<td>Edelgard Bulmahn (Bundestagsvizepräsidentin)</td>
 	<td>00:45</td>
 	<td>2025-06-05 21:46:14</td>
 		<td>
 		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003009" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003009" target="_blank"><span class="icon-code"></span></a>
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002034" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002034" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003011" data-faction="Q2207512">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
-	<td>Christoph Strässer (SPD)</td>
-	<td>10:38</td>
+</tr><tr class="resultItem" data-speech-id="DE-0180002035" data-faction="">
+	<td>18 / 2</td>
+	<td>18.11.2013</td>
+	<td>Stellenanteile der Fraktionen</td>
+	<td>Edelgard Bulmahn (Bundestagsvizepräsidentin)</td>
+	<td>00:27</td>
 	<td>2025-06-05 21:46:14</td>
 		<td>
 		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003011" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003011" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003012" data-faction="Q1826856">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
-	<td>Christine Buchholz (DIE LINKE)</td>
-	<td>05:36</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003012" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003012" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003014" data-faction="">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
-	<td></td>
-	<td>06:33</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003014" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003014" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003015" data-faction="Q1023134">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
-	<td>Norbert Lammert (CDU/CSU)</td>
-	<td>01:30</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003015" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003015" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003016" data-faction="Q1023134">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Bundeswehreinsatz in Südsudan (UNMISS)</td>
-	<td>Reinhard Brandl (CDU/CSU)</td>
-	<td>05:32</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003016" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003016" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003018" data-faction="">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Finanzierung der Kinderbetreuung</td>
-	<td>Norbert Lammert (Bundestagspräsident)</td>
-	<td>00:25</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003018" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003018" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003021" data-faction="">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Finanzierung der Kinderbetreuung</td>
-	<td>Norbert Lammert (Bundestagspräsident)</td>
-	<td>00:40</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003021" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003021" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003023" data-faction="Q2207512">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Finanzierung der Kinderbetreuung</td>
-	<td>Caren Marks (SPD)</td>
-	<td>06:10</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003023" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003023" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003025" data-faction="Q1023134">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Finanzierung der Kinderbetreuung</td>
-	<td>Dorothee Bär (CDU/CSU)</td>
-	<td>08:00</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003025" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003025" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003026" data-faction="">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Finanzierung der Kinderbetreuung</td>
-	<td>Norbert Lammert (Bundestagspräsident)</td>
-	<td>01:14</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003026" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003026" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003027" data-faction="Q1007353">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Finanzierung der Kinderbetreuung</td>
-	<td>Britta Haßelmann (DIE GRÜNEN)</td>
-	<td>03:04</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003027" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003027" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003028" data-faction="Q2207512">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Finanzierung der Kinderbetreuung</td>
-	<td>Thomas Oppermann (SPD)</td>
-	<td>01:53</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003028" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003028" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180003029" data-faction="Q1826856">
-	<td>18 / 3</td>
-	<td>28.11.2013</td>
-	<td>Finanzierung der Kinderbetreuung</td>
-	<td>Petra Sitte (DIE LINKE)</td>
-	<td>01:43</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180003029" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180003029" target="_blank"><span class="icon-code"></span></a>
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002035" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002035" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
 </tr>					</tbody>
@@ -4262,29 +4262,29 @@ content-type: text/html; charset=UTF-8
 	<nav aria-label="Paginierung" style="margin-top: 30px;">
 	<ul class="pagination justify-content-center">
 		<li class="page-item disabled">
-							<a class="page-link" href='search?page=0' aria-label="Vorherige">
+							<a class="page-link" href='search?sort=date-asc&amp;page=0' aria-label="Vorherige">
 							<span aria-hidden="true">&laquo;</span>
 				<span class="visually-hidden">Vorherige Seite</span>
 			</a>
 		</li>
 						<li class="page-item active">
-											<a class="page-link" href='search?'>1</a>
+											<a class="page-link" href='search?sort=date-asc'>1</a>
 									</li>
 										<li class="page-item ">
-											<a class="page-link" href='search?page=2'>2</a>
+											<a class="page-link" href='search?sort=date-asc&amp;page=2'>2</a>
 									</li>
 										<li class="page-item ">
-											<a class="page-link" href='search?page=3'>3</a>
+											<a class="page-link" href='search?sort=date-asc&amp;page=3'>3</a>
 									</li>
 										<li class="page-item disabled"><a class="page-link" href="#">...</a></li>
 																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																						<li class="page-item ">
-											<a class="page-link" href='search?page=249'>249</a>
+											<a class="page-link" href='search?sort=date-asc&amp;page=249'>249</a>
 									</li>
 										<li class="page-item ">
-											<a class="page-link" href='search?page=250'>250</a>
+											<a class="page-link" href='search?sort=date-asc&amp;page=250'>250</a>
 									</li>
 								<li class="page-item ">
-							<a class="page-link" href='search?page=2' aria-label="Nächste">
+							<a class="page-link" href='search?sort=date-asc&amp;page=2' aria-label="Nächste">
 							<span aria-hidden="true">&raquo;</span>
 				<span class="visually-hidden">Nächste Seite</span>
 			</a>

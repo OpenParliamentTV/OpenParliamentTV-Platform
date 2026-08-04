@@ -51,17 +51,17 @@ x-robots-tag: noindex
                 {
                     "name": "openparliamenttv_de",
                     "docs": 2568634,
-                    "deleted": 1269,
+                    "deleted": "<<NORMALIZED>>",
                     "sizeBytes": "<<NORMALIZED>>"
                 },
                 {
                     "name": "optv_statistics_de",
                     "docs": 29091146,
-                    "deleted": 7520626,
+                    "deleted": "<<NORMALIZED>>",
                     "sizeBytes": "<<NORMALIZED>>"
                 }
             ],
-            "totalStoreBytes": 6150083532
+            "totalStoreBytes": "<<NORMALIZED>>"
         },
         "databases": {
             "servers": [

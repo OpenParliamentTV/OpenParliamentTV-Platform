@@ -203,6 +203,7 @@
 	"messageAuthLoginRequiredTitle": "Connexion requise",
 	"messageAuthNotPermittedDetail": "Vous n'êtes pas autorisé à accéder à cette page ou à effectuer cette action.",
 	"messageAuthNotPermittedTitle": "Non autorisé",
+	"messageAuthPasswordIncorrectTitle": "Mot de passe incorrect",
 	"messageAutomaticallyDetected": "Ces <b>personnes, organisations, lois et termes</b> ont été détectés via la <b>Reconnaissance d'entités nommées</b> dans le texte intégral du procès-verbal. <br><br>Il s'agit d'un processus entièrement automatisé qui est actuellement en cours de test. <br><br><b>Les entités détectées n'ont pas été vérifiées manuellement et peuvent contenir des erreurs.</b>",
 	"messageCleanupSuccess": "Succès de la suppression de {count} éléments",
 	"messageEditError": "Les modifications n'ont pas pu être enregistrées",

@@ -203,6 +203,7 @@
 	"messageAuthLoginRequiredTitle": "Giriş gerekli",
 	"messageAuthNotPermittedDetail": "Bu sayfaya erişme veya bu işlemi gerçekleştirme izniniz yok.",
 	"messageAuthNotPermittedTitle": "İzin verilmedi",
+	"messageAuthPasswordIncorrectTitle": "Şifre yanlış",
 	"messageAutomaticallyDetected": "Bu <b>kişiler, kuruluşlar, yasalar ve terimler</b> tutanakların tam metninde <b>İsimli Varlık Tanıma</b> yoluyla tespit edilmiştir. <br><br>Bu şu anda test edilen tamamen otomatik bir süreçtir. <br><br><b>Tespit edilen varlıklar manuel olarak kontrol edilmemiştir ve hatalar içerebilir.</b>",
 	"messageCleanupSuccess": "{count} öğe temizlendi",
 	"messageEditError": "Değişiklikler kaydedilemedi",
