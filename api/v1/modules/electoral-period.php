@@ -4,17 +4,26 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
+require_once (__DIR__."/../../../modules/entities/electoral-period.php");
 
 /**
+ * Envelope wrapper over electoralPeriodGetNode()
+ * (modules/entities/electoral-period.php).
+ *
+ * Note there is deliberately no missing-id branch: an absent id falls through
+ * to the parse error, as it always has.
+ *
  * @param string $id ElectoralPeriodID
  * @return array
  */
 function electoralPeriodGetByID($id = false) {
-    global $config;
 
-    // Parse and validate ID
-    $idInfo = optvParseStringId($id);
-    if (!$idInfo || $idInfo["type"] !== "electoralPeriod") {
+    try {
+        $node = electoralPeriodGetNode($id);
+    } catch (OptvInvalidIdException $e) {
+        if ($e->getReason() === "parliament") {
+            return apiErrorInvalidId("ElectoralPeriod");
+        }
         return apiErrorResponse(
             422,
             1,
@@ -22,96 +31,9 @@ function electoralPeriodGetByID($id = false) {
             "messageErrorIDParseError",
             ["type" => "ElectoralPeriod"]
         );
-    }
-
-    // Validate parliament
-    $parliament = $idInfo["parliament"];
-    if (!isset($config["parliament"][$parliament])) {
-        return apiErrorInvalidId("ElectoralPeriod");
-    }
-
-    $parliamentLabel = $config["parliament"][$parliament]["label"];
-
-    // Get database connection
-    $db = getApiDatabaseConnection('parliament', $parliament);
-    if (!is_object($db)) {
-        return $db; // Error response from getApiDatabaseConnection
-    }
-
-    try {
-        // Get electoral period data
-        $item = $db->getRow("SELECT * FROM ?n WHERE ElectoralPeriodID=?s", 
-            $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"], 
-            $id
-        );
-
-        if (!$item) {
-            return apiErrorNotFound("ElectoralPeriod");
-        }
-
-        // Get associated sessions
-        $sessionItems = $db->getAll("SELECT sess.*, COUNT(ai.AgendaItemID) AS AgendaItemCount
-            FROM ?n AS sess 
-            LEFT JOIN ?n as ai
-                ON ai.AgendaItemSessionID=sess.SessionID
-            WHERE SessionElectoralPeriodID=?s
-            GROUP BY sess.SessionID",
-            $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-            $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
-            $id
-        );
-
-        // Build response data
-        $data = [
-            "type" => "electoralPeriod",
-            "id" => $item["ElectoralPeriodID"],
-            "attributes" => [
-                "number" => (int)$item["ElectoralPeriodNumber"],
-                "dateStart" => $item["ElectoralPeriodDateStart"],
-                "dateEnd" => $item["ElectoralPeriodDateEnd"],
-                "parliament" => $parliament,
-                "parliamentLabel" => $parliamentLabel
-            ],
-            "links" => [
-                "self" => $config["dir"]["api"]."/electoralPeriod/".$item["ElectoralPeriodID"]
-            ],
-            "relationships" => [
-                "media" => [
-                    "links" => [
-                        "self" => $config["dir"]["api"]."/search/media?electoralPeriodID=".$item["ElectoralPeriodID"]
-                    ]
-                ],
-                "sessions" => [
-                    "data" => [],
-                    "links" => [
-                        "self" => $config["dir"]["api"]."/search/session?electoralPeriodID=".$item["ElectoralPeriodID"]
-                    ]
-                ]
-            ]
-        ];
-
-        // Add session data
-        foreach ($sessionItems as $sessionItem) {
-            $data["relationships"]["sessions"]["data"][] = [
-                "data" => [
-                    "type" => "session",
-                    "id" => $sessionItem["SessionID"],
-                    "attributes" => [
-                        "dateStart" => $sessionItem["SessionDateStart"],
-                        "dateEnd" => $sessionItem["SessionDateEnd"],
-                        "number" => $sessionItem["SessionNumber"],
-                        "agendaItemCount" => $sessionItem["AgendaItemCount"]
-                    ],
-                    "links" => [
-                        "self" => $config["dir"]["api"]."/session/".$sessionItem["SessionID"]
-                    ]
-                ]
-            ];
-        }
-
-        return apiSuccessResponse($data);
-
-    } catch (exception $e) {
+    } catch (OptvEntityException $e) {
+        return apiErrorDatabaseConnection($e->getReason());
+    } catch (Exception $e) {
         return apiErrorResponse(
             500,
             1,
@@ -119,6 +41,12 @@ function electoralPeriodGetByID($id = false) {
             "messageErrorDatabaseRequest"
         );
     }
+
+    if ($node === null) {
+        return apiErrorNotFound("ElectoralPeriod");
+    }
+
+    return apiSuccessResponse($node);
 }
 
 /**

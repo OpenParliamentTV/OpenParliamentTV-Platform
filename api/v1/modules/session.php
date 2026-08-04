@@ -4,123 +4,37 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/safemysql.class.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
+require_once (__DIR__."/../../../modules/entities/session.php");
 
 /**
+ * Envelope wrapper over sessionGetNode() (modules/entities/session.php).
+ *
  * @param string $id SessionID
  * @return array
  */
 function sessionGetByID($id = false) {
-    global $config;
 
     if (!$id) {
         return apiErrorMissingParameter('id');
     }
 
-    $idInfo = optvParseStringId($id);
-    if (!$idInfo || $idInfo["type"] !== "session") {
-        return apiErrorInvalidFormat('id', 'session');
-    }
-
-    $parliament = $idInfo["parliament"];
-    if (!$parliament || !isset($config["parliament"][$parliament])) {
-        return apiErrorInvalidId("Session");
-    }
-
-    $parliamentLabel = $config["parliament"][$parliament]["label"];
-
-    $db = getApiDatabaseConnection('parliament', $parliament);
-    if (!is_object($db)) {
-        return apiErrorDatabaseConnection();
-    }
-
     try {
-        $item = $db->getRow("SELECT
-                            sess.*,
-                            ep.*
-                          FROM ?n AS sess
-                          LEFT JOIN ?n as ep
-                          ON
-                            sess.SessionElectoralPeriodID=ep.ElectoralPeriodID
-                          WHERE sess.SessionID=?s",
-                            $config["parliament"][$parliament]["sql"]["tbl"]["Session"],
-                            $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"],
-                            $id);
-
-        if (!$item) {
-            return apiErrorNotFound("Session");
-        }
-
-        $sessionNumericPartForAgendaLookup = $idInfo["id_part"];
-        $agendaItems = $db->getAll("SELECT * FROM ?n WHERE AgendaItemSessionID=?s",
-            $config["parliament"][$parliament]["sql"]["tbl"]["AgendaItem"],
-            $id // Use the full session ID string
-        );
-
-        $sessionData = [
-            "type" => "session",
-            "id" => $id,
-            "attributes" => [
-                "number" => (int)$item["SessionNumber"],
-                "dateStart" => $item["SessionDateStart"],
-                "dateEnd" => $item["SessionDateEnd"],
-                "parliament" => $parliament,
-                "parliamentLabel" => $parliamentLabel
-            ],
-            "links" => [
-                "self" => $config["dir"]["api"]."/session/".$id
-            ],
-            "relationships" => [
-                "media" => [
-                    "links" => [
-                        "self" => $config["dir"]["api"]."/search/media?sessionID=".$id
-                    ]
-                ],
-                "electoralPeriod" => [
-                    "data" => [
-                        "type" => "electoralPeriod",
-                        "id" => $item["ElectoralPeriodID"],
-                        "attributes" => [
-                            "number" => $item["ElectoralPeriodNumber"],
-                            "dateStart" => $item["ElectoralPeriodDateStart"],
-                            "dateEnd" => $item["ElectoralPeriodDateEnd"]
-                        ]
-                    ],
-                    "links" => [
-                        "self" => $config["dir"]["api"]."/electoralPeriod/".$item["ElectoralPeriodID"]
-                    ]
-                ]
-            ]
-        ];
-
-        if ($agendaItems) {
-            $sessionData["relationships"]["agendaItems"] = [
-                "data" => array_map(function($agendaItem) use ($config, $parliament) {
-                    // Harmonize AgendaItemID construction with agendaItem.php (use "-")
-                    $fullAgendaItemID = $parliament . "-" . $agendaItem["AgendaItemID"];
-                    return [
-                        "type" => "agendaItem",
-                        "id" => $agendaItem["AgendaItemID"],
-                        "attributes" => [
-                            "officialTitle" => $agendaItem["AgendaItemOfficialTitle"],
-                            "title" => $agendaItem["AgendaItemTitle"],
-                            "order" => $agendaItem["AgendaItemOrder"]
-                        ],
-                        "links" => [
-                            "self" => $config["dir"]["api"]."/agendaItem/".$fullAgendaItemID
-                        ]
-                    ];
-                }, $agendaItems),
-                "links" => [
-                    "self" => $config["dir"]["api"]."/search/agendaItem?sessionID=".$id
-                ]
-            ];
-        }
-
-        return apiSuccessResponse($sessionData);
-
-    } catch (exception $e) {
+        $node = sessionGetNode($id);
+    } catch (OptvInvalidIdException $e) {
+        return $e->getReason() === "parliament"
+            ? apiErrorInvalidId("Session")
+            : apiErrorInvalidFormat('id', 'session');
+    } catch (OptvEntityException $e) {
+        return apiErrorDatabaseConnection();
+    } catch (Exception $e) {
         return apiErrorDatabaseError($e->getMessage());
     }
+
+    if ($node === null) {
+        return apiErrorNotFound("Session");
+    }
+
+    return apiSuccessResponse($node);
 }
 
 /**

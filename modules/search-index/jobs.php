@@ -13,6 +13,7 @@ require_once(__DIR__ . "/errors.php");
 require_once(__DIR__ . "/indexer.php");
 require_once(__DIR__ . "/../statistics-index/jobs.php");
 require_once(__DIR__ . "/../utilities/functions.php"); // optvVarPath()
+require_once(__DIR__ . "/../entities/media.php"); // mediaGetNode()
 
 /** Progress file the importer writes while rebuilding the index. */
 function searchIndexProgressFilePath($parliamentCode)
@@ -141,10 +142,6 @@ function searchIndexUpdateForDocumentIDs(array $documentIDs, $parliament, $db, $
 
     searchIndexRequireParliament($parliament);
 
-    // media.php requires the API search-index wrapper itself, so load it lazily
-    // to avoid a circular top-level require.
-    require_once(__DIR__ . "/../../api/v1/modules/media.php");
-
     $annotationTable = $config["parliament"][$parliament]["sql"]["tbl"]["Annotation"];
 
     $mediaIDs = [];
@@ -167,9 +164,13 @@ function searchIndexUpdateForDocumentIDs(array $documentIDs, $parliament, $db, $
     foreach (array_chunk($mediaIDs, max(1, (int) $mediaChunkSize)) as $mediaChunk) {
         $items = [];
         foreach ($mediaChunk as $mediaID) {
-            $mediaItem = mediaGetByID($mediaID, $db, $dbp);
-            if (!empty($mediaItem) && !isset($mediaItem["errors"]) && isset($mediaItem["data"]["id"])) {
-                $items[] = $mediaItem;
+            try {
+                $node = mediaGetNode($mediaID, $db, $dbp);
+            } catch (Exception $e) {
+                $node = null;
+            }
+            if ($node !== null && isset($node["id"])) {
+                $items[] = ["data" => $node];
             } else {
                 $failed++;
                 $errors[] = ["type" => "media_fetch", "id" => $mediaID, "message" => "Could not build media item for reindexing."];

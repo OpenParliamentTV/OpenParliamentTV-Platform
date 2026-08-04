@@ -4,7 +4,7 @@ require_once (__DIR__."/../../../config.php");
 require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/i18n/language.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
-require_once (__DIR__."/media.php");
+require_once (__DIR__."/../../../modules/entities/media.php");
 
 /**
  * Standalone WebVTT transcript generation for media items.
@@ -236,15 +236,19 @@ function transcriptServeVTT(string $mediaID, ?string $type = null, ?string $lang
         transcriptSend404();
     }
 
-    $resp = mediaGetByID($mediaID);
+    try {
+        $speech = mediaGetNode($mediaID);
+    } catch (Exception $e) {
+        // Covers non-public media (mediaGetNode enforces access), unusable ids
+        // and database outages.
+        $speech = null;
+    }
 
-    $isSuccess = isset($resp['meta']['requestStatus']) && $resp['meta']['requestStatus'] === 'success';
-    if (!$isSuccess || empty($resp['data']['attributes'])) {
-        // Covers not-found and non-public media (mediaGetByID enforces access).
+    if ($speech === null || empty($speech['attributes'])) {
         transcriptSend404();
     }
 
-    $textContents = $resp['data']['attributes']['textContents'] ?? [];
+    $textContents = $speech['attributes']['textContents'] ?? [];
     $defaultLang = LanguageManager::getDefaultLang();
 
     $textContent = transcriptResolve($textContents, $type, $lang, $defaultLang);

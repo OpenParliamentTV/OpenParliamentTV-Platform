@@ -13,6 +13,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 } else {
 
 require_once(__DIR__.'/../../modules/utilities/entities.php');
+require_once(__DIR__.'/../../modules/entities/media.php');
 require_once(__DIR__."/../../modules/search/bootstrap.php");
 require_once(__DIR__."/../../api/v1/api.php");
 
@@ -236,8 +237,8 @@ if ($totalResults != 0) {
 
 			$formattedDate = date("d.m.Y", strtotime($result_item["attributes"]["dateStart"]));
 			
-			$mainSpeaker = getMainSpeakerFromPeopleArray($result_item["annotations"]['data'], $result_item["relationships"]["people"]['data']);
-			$mainFaction = getMainFactionFromOrganisationsArray($result_item["annotations"]['data'], $result_item["relationships"]["organisations"]['data']);
+			$mainSpeaker = mediaMainSpeaker($result_item["annotations"]['data'], $result_item["relationships"]["people"]['data']);
+			$mainFaction = mediaMainFaction($result_item["annotations"]['data'], $result_item["relationships"]["organisations"]['data']);
 
 			if ($sortFactor == 'topic' && $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"] != $currentAgendaItem) {
 				echo '<div class="sortDivider"><b>'.h($formattedDate).' - '.h($result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"]).'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';

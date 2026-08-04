@@ -5,8 +5,8 @@ require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/entities.php");
 require_once (__DIR__."/../../../modules/i18n/language.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
-require_once (__DIR__."/media.php");
-require_once (__DIR__."/session.php");
+require_once (__DIR__."/../../../modules/entities/media.php");
+require_once (__DIR__."/../../../modules/entities/session.php");
 require_once (__DIR__."/transcript.php");
 require_once (__DIR__."/akomantoso.php");
 require_once (__DIR__."/parlamint.php");
@@ -132,7 +132,7 @@ function exportServeXML(string $xml, string $format, string $id): void {
  * Returns null when the item is unavailable (not found / non-public).
  *
  * The returned array:
- *  - id, attr, rel, annotations: straight from mediaGetByID
+ *  - id, attr, rel, annotations: straight from mediaGetNode
  *  - textContent: the transcript entry selected via transcriptResolve(), or null
  *  - lang: primary language subtag of the transcript (fallback: instance default)
  *  - groups: see exportBuildUtteranceGroups(), each utterance annotated with
@@ -140,11 +140,15 @@ function exportServeXML(string $xml, string $format, string $id): void {
  *  - mainSpeaker / mainFaction: for titles and metadata
  */
 function exportPrepareMedia(string $mediaID, ?string $type = null, ?string $lang = null): ?array {
-    $resp = mediaGetByID($mediaID);
-    if (!is_array($resp) || ($resp['meta']['requestStatus'] ?? '') !== 'success' || empty($resp['data'])) {
+    try {
+        $speech = mediaGetNode($mediaID);
+    } catch (Exception $e) {
+        // Unusable id, non-public speech, database outage: all unexportable.
         return null;
     }
-    $speech = $resp['data'];
+    if ($speech === null) {
+        return null;
+    }
     $attr = $speech['attributes'] ?? [];
     $rel = $speech['relationships'] ?? [];
     $annotations = $speech['annotations']['data'] ?? [];
@@ -171,8 +175,8 @@ function exportPrepareMedia(string $mediaID, ?string $type = null, ?string $lang
         'textContent' => is_array($tc) ? $tc : null,
         'lang' => $langCode,
         'groups' => $groups,
-        'mainSpeaker' => getMainSpeakerFromPeopleArray($annotations, $rel['people']['data'] ?? []),
-        'mainFaction' => getMainFactionFromOrganisationsArray($annotations, $rel['organisations']['data'] ?? []),
+        'mainSpeaker' => mediaMainSpeaker($annotations, $rel['people']['data'] ?? []),
+        'mainFaction' => mediaMainFaction($annotations, $rel['organisations']['data'] ?? []),
     ];
 }
 
@@ -182,18 +186,21 @@ function exportPrepareMedia(string $mediaID, ?string $type = null, ?string $lang
  * has no exportable speeches.
  *
  * The returned array:
- *  - id, session (sessionGetByID data), parliament, parliamentLabel, lang
+ *  - id, session (sessionGetNode data), parliament, parliamentLabel, lang
  *  - sections: agendaItem groups, each
  *      ['agendaItemID', 'order', 'title', 'items' => [preparedMedia, ...]]
  */
 function exportPrepareSession(string $sessionID, ?string $type = null, ?string $lang = null): ?array {
     global $config;
 
-    $resp = sessionGetByID($sessionID);
-    if (!is_array($resp) || ($resp['meta']['requestStatus'] ?? '') !== 'success' || empty($resp['data'])) {
+    try {
+        $session = sessionGetNode($sessionID);
+    } catch (Exception $e) {
         return null;
     }
-    $session = $resp['data'];
+    if ($session === null) {
+        return null;
+    }
 
     $idInfo = optvParseStringId($sessionID);
     if (!$idInfo || !array_key_exists($idInfo['parliament'], $config['parliament'])) {

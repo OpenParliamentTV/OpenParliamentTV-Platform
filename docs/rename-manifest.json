@@ -407,6 +407,36 @@
       "new": "modules/import/media-writer.php",
       "phase": "5c",
       "note": "write path only; mediaAdd stays as an envelope wrapper, read path stays until 5d"
+    },
+    {
+      "old": "api/v1/modules/media.php",
+      "new": "modules/entities/media.php",
+      "phase": "5d.2",
+      "note": "read path; mediaGetByID stays as an envelope wrapper, mediaSearch/mediaChange stay"
+    },
+    {
+      "old": "api/v1/modules/session.php",
+      "new": "modules/entities/session.php",
+      "phase": "5d.2",
+      "note": "sessionGetByID stays as an envelope wrapper; GetItemsFromDB/Change stay"
+    },
+    {
+      "old": "api/v1/modules/agenda-item.php",
+      "new": "modules/entities/agenda-item.php",
+      "phase": "5d.2",
+      "note": "agendaItemGetByID stays as an envelope wrapper"
+    },
+    {
+      "old": "api/v1/modules/electoral-period.php",
+      "new": "modules/entities/electoral-period.php",
+      "phase": "5d.2",
+      "note": "electoralPeriodGetByID stays as an envelope wrapper"
+    },
+    {
+      "old": "modules/utilities/entities.php",
+      "new": "modules/entities/media.php",
+      "phase": "5d.2",
+      "note": "main-speaker/faction/role helpers only; flattenEntityJSON + translateContextValue stay"
     }
   ],
   "functions": [
@@ -784,6 +814,52 @@
       "old": "termGetDataObject",
       "new": "termBuildNode",
       "phase": "5d.1"
+    },
+    {
+      "old": "processDocumentAnnotation",
+      "new": "mediaAnnotationDocument",
+      "phase": "5d.2"
+    },
+    {
+      "old": "processOrganisationAnnotation",
+      "new": "mediaAnnotationOrganisation",
+      "phase": "5d.2"
+    },
+    {
+      "old": "processTermAnnotation",
+      "new": "mediaAnnotationTerm",
+      "phase": "5d.2"
+    },
+    {
+      "old": "processPersonAnnotation",
+      "new": "mediaAnnotationPerson",
+      "phase": "5d.2"
+    },
+    {
+      "old": "annotationRawSortByMainSpeaker",
+      "new": "mediaSortAnnotations",
+      "phase": "5d.2"
+    },
+    {
+      "old": "getMainSpeakerFromPeopleArray",
+      "new": "mediaMainSpeaker",
+      "phase": "5d.2"
+    },
+    {
+      "old": "getMainFactionFromOrganisationsArray",
+      "new": "mediaMainFaction",
+      "phase": "5d.2"
+    },
+    {
+      "old": "getRoleFromMainSpeakerAnnotation",
+      "new": "mediaMainSpeakerRole",
+      "phase": "5d.2"
+    },
+    {
+      "old": "iiifResponseData",
+      "new": "iiifMediaNode",
+      "phase": "5d.2",
+      "note": "split into iiifMediaNode()/iiifSessionNode(); the envelope unwrap is gone"
     }
   ]
 }

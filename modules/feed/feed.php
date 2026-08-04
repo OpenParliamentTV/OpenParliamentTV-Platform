@@ -10,11 +10,17 @@
  * "includeAll" on the search request (see modules/search/opensearch.php).
  */
 
-require_once(__DIR__ . "/../../api/v1/api.php");
-require_once(__DIR__ . "/../../api/v1/modules/media.php");
-require_once(__DIR__ . "/../../api/v1/modules/session.php");
+require_once(__DIR__ . "/../../api/v1/modules/media.php");   // mediaSearch()
+require_once(__DIR__ . "/../../api/v1/modules/session.php"); // sessionGetItemsFromDB()
 require_once(__DIR__ . "/../utilities/functions.php");
 require_once(__DIR__ . "/../utilities/entities.php");
+require_once(__DIR__ . "/../entities/media.php");
+require_once(__DIR__ . "/../entities/session.php");
+require_once(__DIR__ . "/../entities/agenda-item.php");
+require_once(__DIR__ . "/../entities/person.php");
+require_once(__DIR__ . "/../entities/organisation.php");
+require_once(__DIR__ . "/../entities/document.php");
+require_once(__DIR__ . "/../entities/term.php");
 require_once(__DIR__ . "/../i18n/language.php");
 
 /** Number of items per feed. */
@@ -155,14 +161,28 @@ function getFeedMeta($feedType, $params) {
 }
 
 /**
- * Resolve a human-readable label for an entity feed via the existing API.
+ * Resolve a human-readable label for an entity feed. Falls back to the id
+ * whenever the entity cannot be loaded — a feed title is not worth failing over.
  */
 function feedEntityLabel($feedType, $id) {
-    $item = apiV1(["action" => "getItem", "itemType" => $feedType, "id" => $id]);
-    if (!is_array($item) || ($item["meta"]["requestStatus"] ?? "") === "error") {
+    try {
+        switch ($feedType) {
+            case "person":       $node = personGetNode($id); break;
+            case "organisation": $node = organisationGetNode($id); break;
+            case "document":     $node = documentGetNode($id); break;
+            case "term":         $node = termGetNode($id); break;
+            case "session":      $node = sessionGetNode($id); break;
+            case "agendaItem":   $node = agendaItemGetNode($id); break;
+            default:             return $id;
+        }
+    } catch (Exception $e) {
         return $id;
     }
-    $attr = $item["data"]["attributes"] ?? [];
+    if ($node === null) {
+        return $id;
+    }
+
+    $attr = $node["attributes"] ?? [];
     if (!empty($attr["label"]))  return $attr["label"];
     if (!empty($attr["title"]))  return $attr["title"];
     if ($feedType === "session" && isset($attr["number"])) {
@@ -221,8 +241,8 @@ function mapMediaItemToFeed($d, $baseUrl) {
     $rel   = $d["relationships"] ?? [];
     $annos = $d["annotations"]["data"] ?? [];
 
-    $mainSpeaker = getMainSpeakerFromPeopleArray($annos, $rel["people"]["data"] ?? []);
-    $mainFaction = getMainFactionFromOrganisationsArray($annos, $rel["organisations"]["data"] ?? []);
+    $mainSpeaker = mediaMainSpeaker($annos, $rel["people"]["data"] ?? []);
+    $mainFaction = mediaMainFaction($annos, $rel["organisations"]["data"] ?? []);
 
     $speakerName = $mainSpeaker ? ($mainSpeaker["attributes"]["label"] ?? "") : "";
     $factionName = $mainFaction ? ($mainFaction["attributes"]["label"] ?? "") : "";

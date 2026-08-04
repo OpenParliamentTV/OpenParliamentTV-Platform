@@ -32,62 +32,6 @@ function flattenEntityJSON($array, $prefix = '') {
     return $flat;
 }
 
-function getMainSpeakerFromPeopleArray($annotationsArray, $peopleArray) {
-
-    if (!is_array($annotationsArray) || !is_array($peopleArray)) {
-        return null;
-    }
-
-    foreach ($annotationsArray as $annotation) {
-        if ($annotation["attributes"]["context"] == "main-speaker") {
-            foreach ($peopleArray as $person) {
-                if ($person["id"] == $annotation["id"]) {
-                    return $person;
-                }
-            }
-        }
-    }
-
-    return null;
-}
-
-function getMainFactionFromOrganisationsArray($annotationsArray, $organisationsArray) {
-
-    if (!is_array($annotationsArray) || !is_array($organisationsArray)) {
-        return null;
-    }
-
-    foreach ($annotationsArray as $annotation) {
-        if ($annotation["attributes"]["context"] == "main-speaker-faction") {
-            foreach ($organisationsArray as $organisation) {
-                if ($organisation["id"] == $annotation["id"]) {
-                    return $organisation;
-                }
-            }
-        }
-    }
-
-    return null;
-}
-
-function getRoleFromMainSpeakerAnnotation($annotationsArray) {
-
-    if (!is_array($annotationsArray)) {
-        return null;
-    }
-
-    foreach ($annotationsArray as $annotation) {
-        if ($annotation["attributes"]["context"] == "main-speaker") {
-            if (isset($annotation["attributes"]["additionalInformation"]["role"]) && 
-                !empty($annotation["attributes"]["additionalInformation"]["role"])) {
-                return $annotation["attributes"]["additionalInformation"]["role"];
-            }
-        }
-    }
-
-    return null;
-}
-
 function translateContextValue($value, $prefix = 'context') {
     if (!$value) {
         return null;

@@ -235,12 +235,12 @@ function matchMediaItemAgainstAlerts($mediaItem, $parliament, $db) {
 
 /**
  * On-demand matcher used by the CLI and the admin "run matching" button.
- * Re-fetches the most recent N public media of a parliament via getItem and runs
- * the matcher over each. Returns a small summary array.
+ * Re-fetches the most recent N public media of a parliament and runs the matcher
+ * over each. Returns a small summary array.
  */
 function runAlertMatchingForRecent($parliament, $n = 50) {
     global $config;
-    require_once(__DIR__ . "/../../api/v1/api.php");
+    require_once(__DIR__ . "/../entities/media.php");
 
     if (!isset($config["parliament"][$parliament])) {
         return ["error" => "unknown parliament", "parliament" => $parliament];
@@ -261,12 +261,16 @@ function runAlertMatchingForRecent($parliament, $n = 50) {
     $scanned = 0;
     $created = 0;
     foreach ($ids ?: [] as $id) {
-        $resp = apiV1(["action" => "getItem", "itemType" => "media", "id" => $id], $db, $dbp);
-        if (($resp["meta"]["requestStatus"] ?? "") !== "success" || empty($resp["data"])) {
+        try {
+            $node = mediaGetNode($id, $db, $dbp);
+        } catch (Exception $e) {
+            continue;
+        }
+        if ($node === null) {
             continue;
         }
         $scanned++;
-        $created += matchMediaItemAgainstAlerts($resp["data"], $parliament, $db);
+        $created += matchMediaItemAgainstAlerts($node, $parliament, $db);
     }
 
     return [

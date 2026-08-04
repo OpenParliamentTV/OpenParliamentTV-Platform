@@ -13,6 +13,7 @@ if ($auth["meta"]["requestStatus"] != "success") {
 } else {
 
 	require_once(__DIR__.'/../../modules/utilities/entities.php');
+	require_once(__DIR__.'/../../modules/entities/media.php');
 	require_once(__DIR__."/../../modules/search/bootstrap.php");
 	require_once(__DIR__."/../../api/v1/api.php");
 
@@ -137,9 +138,9 @@ if ($auth["meta"]["requestStatus"] != "success") {
 
 						$formattedDate = date("d.m.Y", strtotime($result_item["attributes"]["dateStart"]));
 						
-						$mainSpeaker = getMainSpeakerFromPeopleArray($result_item["annotations"]['data'] ?? [], $result_item["relationships"]["people"]['data'] ?? []);
-						$mainFaction = getMainFactionFromOrganisationsArray($result_item["annotations"]['data'] ?? [], $result_item["relationships"]["organisations"]['data'] ?? []);
-						$mainSpeakerRole = getRoleFromMainSpeakerAnnotation($result_item["annotations"]['data'] ?? []);
+						$mainSpeaker = mediaMainSpeaker($result_item["annotations"]['data'] ?? [], $result_item["relationships"]["people"]['data'] ?? []);
+						$mainFaction = mediaMainFaction($result_item["annotations"]['data'] ?? [], $result_item["relationships"]["organisations"]['data'] ?? []);
+						$mainSpeakerRole = mediaMainSpeakerRole($result_item["annotations"]['data'] ?? []);
 
 						$speakerName = $mainSpeaker ? $mainSpeaker['attributes']['label'] : '';
 						$factionName = $mainFaction ? $mainFaction['attributes']['label'] : '';

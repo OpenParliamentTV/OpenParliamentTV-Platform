@@ -136,6 +136,7 @@ if (optvIsCli()) {
 
     require_once(__DIR__ . "/../modules/search-index/jobs.php");
     require_once(__DIR__ . "/../modules/import/media-writer.php");
+    require_once(__DIR__ . "/../modules/entities/media.php");
     $searchIndexProgressFilePath = searchIndexProgressFilePath($parliament);
 
 
@@ -178,7 +179,6 @@ if (optvIsCli()) {
     logger("info","cronUpdater started in ". ($isDataImportMode ? 'Data Import' : 'Search Index Update') ." mode.");
 
     require_once(__DIR__ . "/../modules/utilities/safemysql.class.php");
-    require_once(__DIR__ . "/../api/v1/api.php");
 
     if ($isDataImportMode) {
         $lastSuccess = null;
@@ -299,9 +299,9 @@ if (optvIsCli()) {
 
         foreach ($ids as $index => $id) {
             try {
-                $tmpMedia = apiV1(["action" => "getItem", "itemType" => "media", "id" => $id], $db, $dbp);
-                if (isset($tmpMedia['data']['id'])) {
-                    $mediaItemsBatch[] = $tmpMedia;
+                $tmpMedia = mediaGetNode($id, $db, $dbp);
+                if ($tmpMedia !== null && isset($tmpMedia['id'])) {
+                    $mediaItemsBatch[] = ["data" => $tmpMedia];
                 } else {
                     $failedItemCount++;
                     $errorMessage = "Failed to fetch valid data (item is empty or missing an ID) for MediaID: {$id}";
@@ -495,9 +495,18 @@ if (optvIsCli()) {
                         continue;
                     }
 
-                    $tmpMedia = apiV1(["action" => "getItem", "itemType" => "media", "id" => $newMediaID], $db, $dbp);
-                    if ($tmpMedia["meta"]["requestStatus"] == "success") {
-                        $mediaItemsForSearchIndex[] = $tmpMedia;
+                    // Read the row back for the search index. Same rule as the
+                    // write above: a speech that cannot be read back is logged
+                    // and skipped, never allowed to abandon the rest of the file.
+                    try {
+                        $tmpMedia = mediaGetNode($newMediaID, $db, $dbp);
+                    } catch (Exception $e) {
+                        logger("ERROR", "Could not read back media " . $newMediaID . " for indexing | error: " . $e->getMessage());
+                        $tmpMedia = null;
+                    }
+
+                    if ($tmpMedia !== null) {
+                        $mediaItemsForSearchIndex[] = ["data" => $tmpMedia];
 
                         // Alert matching (Plan B): fire notifications for newly-indexed
                         // public speeches. Dedup on (AlertID, MediaID) makes re-imports
@@ -505,7 +514,7 @@ if (optvIsCli()) {
                         if (!empty($config["allow"]["notifications"])) {
                             try {
                                 require_once(__DIR__ . "/../modules/notifications/alert-matcher.php");
-                                $matchCount = matchMediaItemAgainstAlerts($tmpMedia["data"], $parliament, $db);
+                                $matchCount = matchMediaItemAgainstAlerts($tmpMedia, $parliament, $db);
                                 if ($matchCount > 0) {
                                     logger("info", "Alert matcher created " . $matchCount . " notification(s) for " . $newMediaID);
                                 }

@@ -137,3 +137,27 @@
 # for no code reason.
 /content/components/result-table.php?a=search&queryOnly=1&sort=date-asc
 /content/pages/media/components/player.php?id=DE-0200172058
+
+# --- entity node builder error branches (5d) ---------------------------------
+# Every getItem error path of the four parliament-scoped entities. The node
+# builders in modules/entities/ signal these as exceptions and the api/v1
+# wrappers translate them back, and the four entities deliberately disagree
+# about which envelope each case gets — a malformed session id is a parse error
+# while a malformed electoralPeriod id with a good parliament is too, an unknown
+# parliament is an invalid-id error everywhere, and only media has a 511. That
+# spread is frozen, so pin one request per branch.
+/api/v1/media/XX-0200172058
+/api/v1/media/DE-0209999999
+# Non-public speech: mediaGetNode() enforces the access check for every consumer
+# (transcript, export, IIIF, feeds), so this must stay a 511 and its .vtt a 404.
+/api/v1/media/DE-0180001004
+/api/v1/media/DE-0180001004/transcript.vtt
+/api/v1/media/DE-0180001004?format=iiif
+/api/v1/session/DE-020
+/api/v1/session/XX-0200172
+/api/v1/session/DE-0209999
+/api/v1/agendaItem/XX-5204
+/api/v1/agendaItem/DE-99999999
+/api/v1/?action=getItem&itemType=electoralPeriod
+/api/v1/electoralPeriod/XX-018
+/api/v1/electoralPeriod/DE-099

@@ -255,45 +255,6 @@ function convertAccentsAndSpecialToNormal($string) {
 }
 
 
-function annotationRawSortByMainSpeaker($array = array()){
-    usort($array, function($a, $b) {
-        $a_val = 0;
-        $b_val = 0;
-
-        if(isset($a['AnnotationContext'])) {
-            if($a['AnnotationContext'] === 'main-speaker') {
-                $a_val = 2;
-            } elseif($a['AnnotationContext'] === 'president' || $a['AnnotationContext'] === 'vice-president') {
-                $a_val = 1;
-            }
-        }
-
-        if(isset($b['AnnotationContext'])) {
-            if($b['AnnotationContext'] === 'main-speaker') {
-                $b_val = 2;
-            } elseif(($b['AnnotationContext'] === 'vice-president') || ($b['AnnotationContext'] === 'president')) {
-                $b_val = 1;
-            }
-        }
-
-        if($a_val === $b_val) {
-            if($a['AnnotationType'] === 'person' && $b['AnnotationType'] === 'person') {
-                $a_id = isset($a['id']) ? $a['id'] : '';
-                $b_id = isset($b['id']) ? $b['id'] : '';
-                return strcmp($a_id, $b_id);
-            } elseif($a['AnnotationType'] === 'person') {
-                return -1;
-            } elseif($b['AnnotationType'] === 'person') {
-                return 1;
-            } else {
-                return 0;
-            }
-        } else {
-            return $b_val - $a_val;
-        }
-    });
-    return $array;
-}
 /*
 function annotationSortByMainspeaker($array = array()){
     usort($array, function($a, $b) {

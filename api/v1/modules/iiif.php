@@ -5,8 +5,9 @@ require_once (__DIR__."/../../../modules/utilities/functions.php");
 require_once (__DIR__."/../../../modules/utilities/entities.php");
 require_once (__DIR__."/../../../modules/i18n/language.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
-require_once (__DIR__."/media.php");
-require_once (__DIR__."/session.php");
+require_once (__DIR__."/media.php"); // mediaSearch()
+require_once (__DIR__."/../../../modules/entities/media.php");
+require_once (__DIR__."/../../../modules/entities/session.php");
 require_once (__DIR__."/transcript.php");
 
 /**
@@ -80,12 +81,28 @@ function iiifLangMap($text, ?string $lang = null): array {
     return [$lang => $values];
 }
 
-/** Validate a module response envelope and return its data, or null on error. */
-function iiifResponseData($resp): ?array {
-    if (!is_array($resp) || ($resp['meta']['requestStatus'] ?? '') !== 'success') {
+/**
+ * Load a media node for a Manifest, or null when there is nothing to serve.
+ *
+ * modules/entities returns null for "no such item" and throws for everything
+ * else — a non-public speech, an unusable id, a database outage. IIIF answers
+ * 404 to all of those alike, so they collapse into one null here.
+ */
+function iiifMediaNode(string $mediaID): ?array {
+    try {
+        return mediaGetNode($mediaID);
+    } catch (Exception $e) {
         return null;
     }
-    return $resp['data'] ?? null;
+}
+
+/** Load a session node for a Manifest, or null when there is nothing to serve. */
+function iiifSessionNode(string $sessionID): ?array {
+    try {
+        return sessionGetNode($sessionID);
+    } catch (Exception $e) {
+        return null;
+    }
 }
 
 /** Build one metadata entry, or null when the value is empty. */
@@ -140,8 +157,8 @@ function iiifBuildCanvas(array $speech, string $canvasID): array {
     $annotationsData = $speech['annotations']['data'] ?? [];
     $relationships = $speech['relationships'] ?? [];
 
-    $speaker = getMainSpeakerFromPeopleArray($annotationsData, $relationships['people']['data'] ?? []);
-    $faction = getMainFactionFromOrganisationsArray($annotationsData, $relationships['organisations']['data'] ?? []);
+    $speaker = mediaMainSpeaker($annotationsData, $relationships['people']['data'] ?? []);
+    $faction = mediaMainFaction($annotationsData, $relationships['organisations']['data'] ?? []);
     $speakerLabel = $speaker['attributes']['label'] ?? '';
     $factionLabel = $faction['attributes']['label'] ?? '';
     $canvasLabel = trim($speakerLabel . ($speakerLabel && $factionLabel ? ', ' : '') . $factionLabel);
@@ -346,7 +363,7 @@ function iiifBuildEntityAnnotations(array $speech, string $canvasID): array {
 function iiifGenerateMediaManifest(string $mediaID): ?array {
     global $config;
 
-    $speech = iiifResponseData(mediaGetByID($mediaID));
+    $speech = iiifMediaNode($mediaID);
     if ($speech === null) {
         return null;
     }
@@ -362,8 +379,8 @@ function iiifGenerateMediaManifest(string $mediaID): ?array {
     $agendaTitle = $rel['agendaItem']['data']['attributes']['title'] ?? '';
     $formattedDate = !empty($attr['dateStart']) ? date('d.m.Y', strtotime($attr['dateStart'])) : '';
 
-    $speaker = getMainSpeakerFromPeopleArray($speech['annotations']['data'] ?? [], $rel['people']['data'] ?? []);
-    $faction = getMainFactionFromOrganisationsArray($speech['annotations']['data'] ?? [], $rel['organisations']['data'] ?? []);
+    $speaker = mediaMainSpeaker($speech['annotations']['data'] ?? [], $rel['people']['data'] ?? []);
+    $faction = mediaMainFaction($speech['annotations']['data'] ?? [], $rel['organisations']['data'] ?? []);
     $speakerLabel = $speaker['attributes']['label'] ?? '';
     $factionLabel = $faction['attributes']['label'] ?? '';
 
@@ -428,8 +445,8 @@ function iiifBuildMediaMetadata(array $speech): array {
     $attr = $speech['attributes'] ?? [];
     $rel = $speech['relationships'] ?? [];
 
-    $speaker = getMainSpeakerFromPeopleArray($speech['annotations']['data'] ?? [], $rel['people']['data'] ?? []);
-    $faction = getMainFactionFromOrganisationsArray($speech['annotations']['data'] ?? [], $rel['organisations']['data'] ?? []);
+    $speaker = mediaMainSpeaker($speech['annotations']['data'] ?? [], $rel['people']['data'] ?? []);
+    $faction = mediaMainFaction($speech['annotations']['data'] ?? [], $rel['organisations']['data'] ?? []);
 
     $entries = [
         iiifMetaEntry(L::parliament(), $attr['parliamentLabel'] ?? ''),
@@ -451,7 +468,7 @@ function iiifBuildMediaMetadata(array $speech): array {
 function iiifGenerateSessionManifest(string $sessionID): ?array {
     global $config;
 
-    $session = iiifResponseData(sessionGetByID($sessionID));
+    $session = iiifSessionNode($sessionID);
     if ($session === null) {
         return null;
     }
@@ -490,7 +507,7 @@ function iiifGenerateSessionManifest(string $sessionID): ?array {
 
     foreach ($rows as $row) {
         $mediaID = $row['MediaID'];
-        $speech = iiifResponseData(mediaGetByID($mediaID));
+        $speech = iiifMediaNode($mediaID);
         if ($speech === null) {
             continue;
         }
@@ -692,8 +709,8 @@ function iiifGenerateSearchCollection(array $params): ?array {
             $parliamentLabel = $attr['parliamentLabel'];
         }
 
-        $speaker = getMainSpeakerFromPeopleArray($annos, $rel['people']['data'] ?? []);
-        $faction = getMainFactionFromOrganisationsArray($annos, $rel['organisations']['data'] ?? []);
+        $speaker = mediaMainSpeaker($annos, $rel['people']['data'] ?? []);
+        $faction = mediaMainFaction($annos, $rel['organisations']['data'] ?? []);
         $speakerLabel = $speaker['attributes']['label'] ?? '';
         $factionLabel = $faction['attributes']['label'] ?? '';
         $agendaTitle  = $rel['agendaItem']['data']['attributes']['title'] ?? '';

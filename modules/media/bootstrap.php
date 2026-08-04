@@ -1,6 +1,7 @@
 <?php
 	require_once(__DIR__."/media.php");
 	require_once(__DIR__."/../utilities/entities.php");
+	require_once(__DIR__."/../entities/media.php");
 	require_once(__DIR__."/../../api/v1/api.php");
 
     require_once(__DIR__."/../i18n/language.php");
@@ -25,9 +26,9 @@
 
         $speech = $apiResult["data"][0];
 
-        $mainSpeaker = getMainSpeakerFromPeopleArray($speech["annotations"]["data"] ?? [], $speech["relationships"]["people"]['data'] ?? []);
-        $mainFaction = getMainFactionFromOrganisationsArray($speech["annotations"]['data'] ?? [], $speech["relationships"]["organisations"]['data'] ?? []);
-        $mainSpeakerRole = getRoleFromMainSpeakerAnnotation($speech["annotations"]["data"] ?? []);
+        $mainSpeaker = mediaMainSpeaker($speech["annotations"]["data"] ?? [], $speech["relationships"]["people"]['data'] ?? []);
+        $mainFaction = mediaMainFaction($speech["annotations"]['data'] ?? [], $speech["relationships"]["organisations"]['data'] ?? []);
+        $mainSpeakerRole = mediaMainSpeakerRole($speech["annotations"]["data"] ?? []);
 
         $textContents = $speech["attributes"]['textContents'] ?? [];
         $lastTextContents = end($textContents);
