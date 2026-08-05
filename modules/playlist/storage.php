@@ -14,9 +14,14 @@
  */
 
 require_once(__DIR__ . "/segments.php");
+require_once(__DIR__ . "/criteria.php");
 require_once(__DIR__ . "/../database/connections.php");
-require_once(__DIR__ . "/../search/opensearch.php");   // searchMediaByIds()
+require_once(__DIR__ . "/../search/opensearch.php");   // searchMediaByIds(), searchSpeeches()
 require_once(__DIR__ . "/../entities/media.php");      // mediaQueueNode()
+require_once(__DIR__ . "/../utilities/paths.php");     // optvVarPath()
+
+/** How long a resolved live playlist stays cached, in seconds. */
+define("PLAYLIST_LIVE_CACHE_TTL", 300);
 
 /** Playlists a single user may own. */
 define("PLAYLIST_MAX_PER_USER", 50);
@@ -196,6 +201,110 @@ function playlistResolveItems($rows) {
     }
 
     return $items;
+}
+
+/**
+ * Resolve a live playlist's stored criteria into queue items.
+ *
+ * One search, not a paging loop: `getAllResults` returns the whole ordered set,
+ * and highlighting stays on throughout searchSpeeches(), so the hits come back as
+ * segments in the same call. `fields=queue` caps the response at
+ * OPTV_QUEUE_MAX_RESULTS; PLAYLIST_MAX_ITEMS is applied here as well so a live and
+ * a custom playlist can never differ in length limit.
+ *
+ * A criteria set with no `q` (pure entity filters) naturally yields no segments,
+ * which is the player's "play the whole speech" case — the same as a custom item
+ * stored without segments.
+ *
+ * @param array $criteria Stored criteria
+ * @return array|null Queue items, or null when the search service is unavailable
+ */
+function playlistResolveCriteria($criteria) {
+    $params = playlistCriteriaSearchParams($criteria);
+    if (empty($params)) {
+        return [];
+    }
+
+    // Same allow-list the HTTP search goes through, so stored criteria can never
+    // reach the query builder with a parameter a request could not have sent
+    // (it also strips `public`/`includeAll` for non-admins).
+    $params = filterAllowedSearchParams($params, 'media');
+    $params["fields"] = "queue";
+
+    // searchSpeeches() + mediaQueueNode() directly rather than mediaSearch():
+    // this file must not depend on api/v1/. It is the same pair mediaSearch()
+    // uses for its fields=queue branch, so the items are identical.
+    $search = searchSpeeches($params, true);
+
+    if ((isset($search["serviceAvailable"]) && $search["serviceAvailable"] === false)
+        || !isset($search["hits"]["hits"])) {
+        return null;
+    }
+
+    $items = [];
+    foreach ($search["hits"]["hits"] as $hit) {
+        if (count($items) >= PLAYLIST_MAX_ITEMS) {
+            break;
+        }
+        $node = $hit["_source"];
+        $node["_finds"] = $hit["finds"] ?? [];
+        $items[] = mediaQueueNode($node);
+    }
+
+    return $items;
+}
+
+/**
+ * Cache path for one resolved live playlist.
+ *
+ * Keyed by criteria hash rather than by playlist id, so editing the criteria
+ * invalidates the entry by simply not matching it any more.
+ */
+function playlistLiveCachePath($playlistId, $criteria) {
+    return optvVarFilePath('cache/api', 'playlist-' . (int)$playlistId . '-' . playlistCriteriaHash($criteria) . '.json');
+}
+
+/**
+ * Resolve a live playlist, through a short-lived cache.
+ *
+ * A live playlist is re-resolved on every player navigation, so an uncached
+ * version would run a full search per skipped speech. Cache failures degrade to
+ * resolving directly — a slow queue beats a broken one.
+ *
+ * @param int   $playlistId
+ * @param array $criteria
+ * @return array|null Queue items, or null when the search service is unavailable
+ */
+function playlistResolveLive($playlistId, $criteria) {
+    $path = playlistLiveCachePath($playlistId, $criteria);
+
+    if (is_readable($path) && (time() - filemtime($path)) < PLAYLIST_LIVE_CACHE_TTL) {
+        $cached = json_decode((string)file_get_contents($path), true);
+        if (is_array($cached)) {
+            return $cached;
+        }
+    }
+
+    $items = playlistResolveCriteria($criteria);
+    if ($items === null) {
+        return null;
+    }
+
+    @file_put_contents($path, json_encode($items, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES), LOCK_EX);
+
+    return $items;
+}
+
+/**
+ * Drop any cached resolve for a playlist (after its criteria change, or on delete).
+ *
+ * @param int $playlistId
+ * @return void
+ */
+function playlistClearLiveCache($playlistId) {
+    foreach (glob(optvVarPath('cache/api') . '/playlist-' . (int)$playlistId . '-*.json') ?: [] as $file) {
+        @unlink($file);
+    }
 }
 
 /**

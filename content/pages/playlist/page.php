@@ -7,6 +7,10 @@
     // access-checked. $playlist["owner"] is the caller's relationship to it, and
     // is what gates every editing affordance below.
     $isOwner = !empty($playlist["owner"]);
+    // A live playlist derives its items from a saved search, so per-item editing
+    // is meaningless on it — the API refuses those calls too.
+    $isLive = ($playlist["playlistType"] ?? 'custom') === 'live';
+    $canEditItems = $isOwner && !$isLive;
     $shareUrl = $config["dir"]["root"] . '/playlist/' . $playlist["token"];
     $firstItem = $items[0] ?? null;
     $playUrl = $firstItem
@@ -22,7 +26,15 @@
         <?php endif; ?>
         <p class="playlistMeta text-muted">
             <?= h(count($items)) ?> <?= L::speeches(); ?>
+            <?php if ($isLive): ?>
+                · <span class="playlistTypeBadge" title="<?= hAttr(L::playlistTypeLiveHint()) ?>"><span class="icon-search"></span> <?= L::playlistTypeLive(); ?></span>
+            <?php endif; ?>
         </p>
+
+        <?php if ($isLive && $isOwner && !empty($playlist["criteria"])): ?>
+            <div id="playlistCriteriaChips" class="playlistCriteria mb-2"></div>
+            <small class="d-block text-muted"><?= L::playlistTypeLiveHint(); ?></small>
+        <?php endif; ?>
 
         <div class="playlistActions">
             <?php if ($playUrl): ?>
@@ -35,6 +47,16 @@
                 <button type="button" class="btn btn-sm btn-outline-primary" id="playlistRenameButton">
                     <span class="icon-pencil"></span> <?= L::edit(); ?>
                 </button>
+                <?php if ($isLive): ?>
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="playlistConvertButton" title="<?= hAttr(L::playlistConvertConfirm()) ?>">
+                        <span class="icon-doc-text-1"></span> <?= L::playlistConvert(); ?>
+                    </button>
+                    <?php if (!empty($config["allow"]["notifications"])): ?>
+                        <button type="button" class="btn btn-sm btn-outline-primary" id="playlistCreateAlertButton" title="<?= hAttr(L::playlistCreateAlertHint()) ?>">
+                            <span class="icon-bell-fill"></span> <?= L::playlistCreateAlert(); ?>
+                        </button>
+                    <?php endif; ?>
+                <?php endif; ?>
                 <button type="button" class="btn btn-sm btn-outline-danger" id="playlistDeleteButton">
                     <span class="icon-trash"></span> <?= L::delete(); ?>
                 </button>
@@ -85,7 +107,7 @@
                             <?php endif; ?>
                         </span>
                     </a>
-                    <?php if ($isOwner): ?>
+                    <?php if ($canEditItems): ?>
                         <span class="playlistItemActions">
                             <button type="button" class="btn btn-sm playlistItemUp" title="<?= hAttr(L::playlistMoveUp()) ?>"><span class="icon-up-open-big"></span></button>
                             <button type="button" class="btn btn-sm playlistItemDown" title="<?= hAttr(L::playlistMoveDown()) ?>"><span class="icon-down-open-big"></span></button>
@@ -103,6 +125,8 @@
         "id" => $playlist["id"] ?? null,
         "token" => $playlist["token"],
         "owner" => $isOwner,
+        "live" => $isLive,
+        "criteria" => $playlist["criteria"] ?? null,
     ], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?>;
 </script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/pages/playlist/client/playlist-page.js?v=<?= $config["version"] ?>"></script>

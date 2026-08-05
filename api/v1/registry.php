@@ -215,6 +215,8 @@ function apiRegistry()
             'itemAdd'       => $req(null, 'playlistItemAdd'),
             'itemRemove'    => $req(null, 'playlistItemRemove'),
             'itemsReorder'  => $req(null, 'playlistItemsReorder'),
+            'convert'       => $req(null, 'playlistConvert'),
+            'createAlert'   => $req(null, 'playlistCreateAlert'),
         ]],
 
         'systemMessage' => ['access' => 'public', 'file' => 'modules/system-message.php', 'itemTypes' => [

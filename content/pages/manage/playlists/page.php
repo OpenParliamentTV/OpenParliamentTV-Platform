@@ -51,7 +51,10 @@ $(function () {
 
     var formatters = {
         titleFormatter: function (value, row) {
-            return '<a href="' + row.url + '">' + value + '</a>';
+            var badge = row.playlistType === 'live'
+                ? ' <span class="badge bg-light text-dark" title="' + t("playlistTypeLiveHint", "") + '">' + t("playlistTypeLive", "Live") + '</span>'
+                : '';
+            return '<a href="' + row.url + '">' + value + '</a>' + badge;
         },
         sharedFormatter: function (value) {
             return value

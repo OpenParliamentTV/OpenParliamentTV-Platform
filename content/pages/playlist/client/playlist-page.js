@@ -33,6 +33,11 @@
 		}).then(function (r) { return r.json(); });
 	}
 
+	/** The API's own message for a failed call, when it sent one. */
+	function errorDetail(response) {
+		return (response && response.errors && response.errors[0]) ? response.errors[0].detail : null;
+	}
+
 	function toast(message) {
 		var el = document.createElement("div");
 		el.className = "alert alert-success shadow-sm";
@@ -82,6 +87,57 @@
 			field.select();
 			navigator.clipboard.writeText(field.value).then(function () {
 				copyButton.textContent = t("apiKeyCopied", "Copied");
+			});
+		});
+	}
+
+	// ---- live playlists -------------------------------------------------------
+
+	// Render the saved search as the same chips the alerts UI uses.
+	//
+	// Deferred to DOMContentLoaded on purpose: the layout inserts core-scripts
+	// (which loads criteria-chips.js) *after* the page content, so CriteriaChips
+	// does not exist yet while this file is being parsed.
+	if (data.live && data.criteria) {
+		var renderChips = function () {
+			if (window.CriteriaChips) {
+				CriteriaChips.render(data.criteria, "#playlistCriteriaChips", { editable: false });
+			}
+		};
+		if (document.readyState === "loading") {
+			document.addEventListener("DOMContentLoaded", renderChips);
+		} else {
+			renderChips();
+		}
+	}
+
+	var convertButton = document.getElementById("playlistConvertButton");
+	if (convertButton) {
+		convertButton.addEventListener("click", function () {
+			if (!window.confirm(t("playlistConvertConfirm", "Save the current results as a fixed list?"))) { return; }
+			convertButton.disabled = true;
+			post("/playlist/convert", { id: data.id }).then(function (response) {
+				if (response && response.meta && response.meta.requestStatus === "success") {
+					// The page shape changes with the type, so reload rather than
+					// patching item rows and buttons in place.
+					window.location.reload();
+				} else {
+					convertButton.disabled = false;
+					toast(errorDetail(response) || t("playlistConvert", "Convert"));
+				}
+			});
+		});
+	}
+
+	var createAlertButton = document.getElementById("playlistCreateAlertButton");
+	if (createAlertButton) {
+		createAlertButton.addEventListener("click", function () {
+			createAlertButton.disabled = true;
+			post("/playlist/createAlert", { id: data.id }).then(function (response) {
+				createAlertButton.disabled = false;
+				toast(response && response.meta && response.meta.requestStatus === "success"
+					? t("playlistAlertCreated", "Alert created")
+					: (errorDetail(response) || t("playlistCreateAlert", "Create alert")));
 			});
 		});
 	}

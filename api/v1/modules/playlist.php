@@ -111,6 +111,33 @@ function playlistAppendItems($playlistId, $items, $db, $position = null) {
 }
 
 /**
+ * Read a criteria array off a request (JSON string or array), falling back to
+ * search-style parameters sent at the top level — the same two shapes
+ * alertExtractCriteria() accepts.
+ *
+ * @param array $parameter
+ * @return array Raw criteria (normalization happens in the playlist module)
+ */
+function playlistExtractCriteria($parameter) {
+    if (isset($parameter["criteria"])) {
+        $raw = is_array($parameter["criteria"])
+            ? $parameter["criteria"]
+            : json_decode((string)$parameter["criteria"], true);
+
+        return is_array($raw) ? $raw : [];
+    }
+
+    $raw = [];
+    foreach (array_merge(alertCriteriaEntityKeys(), alertCriteriaScalarKeys(), playlistCriteriaExtraKeys()) as $key) {
+        if (isset($parameter[$key])) {
+            $raw[$key] = $parameter[$key];
+        }
+    }
+
+    return $raw;
+}
+
+/**
  * Read an items array off a request (JSON string or array).
  *
  * @param array $parameter
@@ -205,8 +232,13 @@ function playlistResolve($parameter = []) {
         return apiErrorNotFound("playlist");
     }
 
-    $rows = playlistGetItemRows($row["PlaylistID"], $db);
-    $items = playlistResolveItems($rows);
+    // Custom playlists own their items; live ones re-run their saved search.
+    if ($row["PlaylistType"] === "live") {
+        $criteria = json_decode((string)$row["PlaylistCriteria"], true);
+        $items = is_array($criteria) ? playlistResolveLive($row["PlaylistID"], $criteria) : [];
+    } else {
+        $items = playlistResolveItems(playlistGetItemRows($row["PlaylistID"], $db));
+    }
 
     if ($items === null) {
         return apiErrorResponse(503, 3, "messageErrorSearchGenericTitle", "messageServiceSearchUnavailable");
@@ -248,6 +280,16 @@ function playlistCreate($parameter = []) {
 
     $type = ($parameter["playlistType"] ?? $parameter["type"] ?? "custom") === "live" ? "live" : "custom";
 
+    // A live playlist *is* its criteria — without them it would resolve to an
+    // empty queue with no way to fill it, so it is refused rather than created.
+    $criteriaJson = null;
+    if ($type === "live") {
+        $criteriaJson = playlistCriteriaJson(playlistExtractCriteria($parameter));
+        if ($criteriaJson === null) {
+            return apiErrorResponse(422, 1, "messageErrorMissingParameter", "messagePlaylistCriteriaEmpty");
+        }
+    }
+
     $db->query("INSERT INTO ?n SET ?u", playlistTable("Playlist"), [
         "PlaylistUserID" => $userId,
         "PlaylistType" => $type,
@@ -255,10 +297,12 @@ function playlistCreate($parameter = []) {
         "PlaylistDescription" => isset($parameter["description"]) ? (string)$parameter["description"] : null,
         "PlaylistToken" => playlistGenerateToken(),
         "PlaylistShared" => isset($parameter["shared"]) ? (int)(bool)json_decode((string)$parameter["shared"]) : 0,
+        "PlaylistCriteria" => $criteriaJson,
     ]);
     $newId = $db->insertId();
 
-    $items = playlistExtractItems($parameter);
+    // Items belong to custom playlists; a live one derives them from its query.
+    $items = ($type === "live") ? [] : playlistExtractItems($parameter);
     $written = empty($items) ? 0 : playlistAppendItems($newId, $items, $db);
 
     $row = $db->getRow("SELECT * FROM ?n WHERE PlaylistID = ?i", playlistTable("Playlist"), $newId);
@@ -295,11 +339,26 @@ function playlistUpdate($parameter = []) {
     if (isset($parameter["shared"])) {
         $set["PlaylistShared"] = (int)(bool)json_decode((string)$parameter["shared"]);
     }
+    if (isset($parameter["criteria"])) {
+        if ($row["PlaylistType"] !== "live") {
+            return apiErrorInvalidParameter("criteria", "messagePlaylistCriteriaCustom");
+        }
+        $criteriaJson = playlistCriteriaJson(playlistExtractCriteria($parameter));
+        if ($criteriaJson === null) {
+            return apiErrorResponse(422, 1, "messageErrorMissingParameter", "messagePlaylistCriteriaEmpty");
+        }
+        $set["PlaylistCriteria"] = $criteriaJson;
+    }
 
     if (empty($set)) { return apiErrorMissingParameter("title"); }
 
     $db->query("UPDATE ?n SET ?u WHERE PlaylistID = ?i AND PlaylistUserID = ?i",
         playlistTable("Playlist"), $set, $row["PlaylistID"], $userId);
+
+    // New criteria mean the cached resolve is for a query that no longer exists.
+    if (isset($set["PlaylistCriteria"])) {
+        playlistClearLiveCache($row["PlaylistID"]);
+    }
 
     $row = $db->getRow("SELECT * FROM ?n WHERE PlaylistID = ?i", playlistTable("Playlist"), $row["PlaylistID"]);
 
@@ -321,8 +380,105 @@ function playlistDelete($parameter = []) {
         playlistTable("PlaylistItem"), $row["PlaylistID"]);
     $db->query("DELETE FROM ?n WHERE PlaylistID = ?i AND PlaylistUserID = ?i",
         playlistTable("Playlist"), $row["PlaylistID"], $userId);
+    playlistClearLiveCache($row["PlaylistID"]);
 
     return apiSuccessResponse();
+}
+
+/**
+ * Convert a live playlist into a custom one.
+ *
+ * Materializes what the saved search resolves to *now* into item rows and flips
+ * the type. From then on it is an ordinary editable playlist and the criteria are
+ * dropped — keeping them would suggest the list still follows the search.
+ *
+ * One-way on purpose: going back would mean guessing which query produced a set
+ * of hand-edited items.
+ */
+function playlistConvert($parameter = []) {
+    $userId = playlistRequireUser();
+    if (is_array($userId)) { return $userId; }
+
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) { return $db; }
+
+    $row = playlistOwnedRow($parameter["id"] ?? 0, $userId, $db);
+    if (!$row) { return apiErrorNotFound("playlist"); }
+
+    if ($row["PlaylistType"] !== "live") {
+        return apiErrorInvalidParameter("id", "messagePlaylistNotLive");
+    }
+
+    $criteria = json_decode((string)$row["PlaylistCriteria"], true);
+    $items = is_array($criteria) ? playlistResolveLive($row["PlaylistID"], $criteria) : [];
+
+    if ($items === null) {
+        return apiErrorResponse(503, 3, "messageErrorSearchGenericTitle", "messageServiceSearchUnavailable");
+    }
+
+    // Shape the resolved queue nodes into what playlistAppendItems() writes.
+    $toWrite = array_map(function ($item) {
+        return [
+            "mediaID" => $item["id"],
+            "parliament" => $item["attributes"]["parliament"] ?? "",
+            "segments" => $item["segments"] ?? null,
+        ];
+    }, $items);
+
+    $written = playlistAppendItems($row["PlaylistID"], $toWrite, $db);
+
+    $db->query("UPDATE ?n SET ?u WHERE PlaylistID = ?i AND PlaylistUserID = ?i",
+        playlistTable("Playlist"),
+        ["PlaylistType" => "custom", "PlaylistCriteria" => null],
+        $row["PlaylistID"], $userId);
+    playlistClearLiveCache($row["PlaylistID"]);
+
+    $row = $db->getRow("SELECT * FROM ?n WHERE PlaylistID = ?i", playlistTable("Playlist"), $row["PlaylistID"]);
+
+    return apiSuccessResponse(playlistRowToObject($row, true, $written));
+}
+
+/**
+ * Create an alert from a live playlist's criteria.
+ *
+ * A **copy**, not a link: the alert gets the subset of the criteria alerts can
+ * represent (ordering and the media-only filters are dropped, see
+ * playlistCriteriaForAlert), and the two then live entirely separate lives.
+ * Editing or deleting either leaves the other alone.
+ */
+function playlistCreateAlert($parameter = []) {
+    global $config;
+
+    $userId = playlistRequireUser();
+    if (is_array($userId)) { return $userId; }
+
+    if (empty($config["allow"]["notifications"])) {
+        return apiErrorResponse(404, 1, "messageErrorNotFoundTitle", "messageErrorNotFoundDetail");
+    }
+
+    $db = getApiDatabaseConnection('platform');
+    if (!is_object($db)) { return $db; }
+
+    $row = playlistOwnedRow($parameter["id"] ?? 0, $userId, $db);
+    if (!$row) { return apiErrorNotFound("playlist"); }
+
+    if ($row["PlaylistType"] !== "live") {
+        return apiErrorInvalidParameter("id", "messagePlaylistNotLive");
+    }
+
+    $criteria = json_decode((string)$row["PlaylistCriteria"], true);
+    $alertCriteria = playlistCriteriaForAlert(is_array($criteria) ? $criteria : []);
+
+    if (empty($alertCriteria)) {
+        return apiErrorResponse(422, 1, "messageErrorInvalidParameter", "messagePlaylistCriteriaNotAlertable");
+    }
+
+    require_once(__DIR__ . "/alert.php");
+
+    return alertCreate([
+        "criteria" => json_encode($alertCriteria, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),
+        "frequency" => $parameter["frequency"] ?? "realtime",
+    ]);
 }
 
 function playlistItemAdd($parameter = []) {

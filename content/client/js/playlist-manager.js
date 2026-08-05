@@ -152,6 +152,8 @@
 	function saveSearchAsPlaylist(criteria, title) {
 		var query = new URLSearchParams();
 		Object.keys(criteria || {}).forEach(function (key) {
+			// _labels is a presentation sidecar for live playlists, not a filter.
+			if (key === "_labels") { return; }
 			var value = criteria[key];
 			if (Array.isArray(value)) {
 				value.forEach(function (v) { query.append(key + "[]", v); });
@@ -177,6 +179,33 @@
 				};
 			});
 			saveResults(items, title);
+		});
+	}
+
+	/**
+	 * Save the criteria themselves as a live playlist.
+	 *
+	 * Nothing is resolved here — the server stores the query and re-runs it on
+	 * every play, so the list follows the search instead of freezing it.
+	 *
+	 * @param {Object} criteria Search params, as the RSS/alert links use them
+	 * @param {string} title
+	 */
+	function saveSearchAsLivePlaylist(criteria, title) {
+		var params = {
+			title: title,
+			playlistType: "live",
+			criteria: JSON.stringify(criteria || {})
+		};
+
+		request("/playlist/create", params).then(function (response) {
+			if (response && response.data) {
+				toast(t("playlistAdded", "Added to playlist"));
+				document.dispatchEvent(new CustomEvent("playlistsChanged"));
+			} else {
+				var error = (response && response.errors && response.errors[0]) ? response.errors[0].detail : null;
+				toast(error || t("playlistSaveResultsLive", "Save as live playlist"), true);
+			}
 		});
 	}
 
@@ -218,14 +247,31 @@
 	// Delegated: result grids and the player fragment are swapped by AJAX, so a
 	// handler bound to the elements themselves would not survive navigation.
 	document.addEventListener("click", function (event) {
-		var saveButton = event.target.closest ? event.target.closest("#saveAsPlaylistButton") : null;
-		if (saveButton) {
+		// The toolbar offers two ways to keep a result set: a snapshot of the
+		// speeches as they match right now, or a live playlist that re-runs the
+		// query every time it is played.
+		var saveItem = event.target.closest
+			? event.target.closest(".savePlaylistSnapshot, .savePlaylistLive")
+			: null;
+		if (saveItem) {
 			event.preventDefault();
+
+			var live = saveItem.classList.contains("savePlaylistLive");
+			var toolbarButton = document.getElementById("saveAsPlaylistButton");
 			var criteria = {};
-			try { criteria = JSON.parse(saveButton.getAttribute("data-criteria")) || {}; } catch (e) { criteria = {}; }
-			var title = window.prompt(t("playlistSaveResults", "Save results as playlist"), criteria.q || t("playlists", "Playlists"));
+			try { criteria = JSON.parse(toolbarButton.getAttribute("data-criteria")) || {}; } catch (e) { criteria = {}; }
+
+			var title = window.prompt(
+				live ? t("playlistSaveResultsLive", "Save as live playlist") : t("playlistSaveResults", "Save results as playlist"),
+				criteria.q || t("playlists", "Playlists")
+			);
 			if (title === null || title.trim() === "") { return; }
-			saveSearchAsPlaylist(criteria, title.trim());
+
+			if (live) {
+				saveSearchAsLivePlaylist(criteria, title.trim());
+			} else {
+				saveSearchAsPlaylist(criteria, title.trim());
+			}
 			return;
 		}
 
@@ -249,7 +295,9 @@
 
 	window.PlaylistManager = {
 		openAdd: openAdd,
-		saveResults: saveResults
+		saveResults: saveResults,
+		saveSearchAsPlaylist: saveSearchAsPlaylist,
+		saveSearchAsLivePlaylist: saveSearchAsLivePlaylist
 	};
 
 }());

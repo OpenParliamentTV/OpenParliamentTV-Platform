@@ -147,6 +147,42 @@ if ($totalResults != 0) {
 				<a href="<?= hAttr($rssHref) ?>" id="searchRssFeedLink" class="btn btn-sm btn-outline-primary rss-feed-link ms-2 mt-2 mt-md-0 align-middle" title="<?= hAttr(L::feedRssLinkTitle()) ?>" target="_blank">RSS<span class="icon-rss ms-1" aria-hidden="true"></span></a>
 				<!-- <a href="<?= hAttr($iiifHref) ?>" id="searchIiifCollectionLink" class="btn btn-sm btn-outline-primary ms-2 mt-2 mt-md-0 align-middle" title="<?= hAttr(L::iiifCollectionLinkTitle()) ?>" target="_blank">IIIF<span class="icon-data-structured ms-1" aria-hidden="true"></span></a> -->
 <?php
+			// Snapshot entity labels (+ faction/colour) for a criteria set, so lists
+			// and chips render names instead of raw IDs. Entity tokens may carry a
+			// "~role" suffix — resolve by the bare id. Shared by the alert and the
+			// live-playlist buttons below, both of which persist the snapshot.
+			$optvResolveCriteriaLabels = function ($criteria) {
+				$labels = [];
+				$resolve = function ($type, $ids) use (&$labels) {
+					foreach ((array)$ids as $token) {
+						$id = strtok((string)$token, "~");
+						if ($id === "" || isset($labels[$id])) { continue; }
+						$r = apiV1(["action" => "getItem", "itemType" => $type, "id" => $id]);
+						$d = $r["data"] ?? null;
+						if (!$d) { continue; }
+						$entry = ["label" => $d["attributes"]["label"] ?? $id];
+						if ($type === "person") {
+							$entry["type"] = $d["attributes"]["type"] ?? null; // subtype: memberOfParliament / person
+							if (!empty($d["relationships"]["faction"]["data"])) {
+								$entry["faction"] = $d["relationships"]["faction"]["data"]["id"];
+								$entry["factionLabel"] = $d["relationships"]["faction"]["data"]["attributes"]["label"] ?? "";
+							}
+						}
+						if ($type === "organisation" && !empty($d["attributes"]["color"])) {
+							$entry["color"] = $d["attributes"]["color"];
+						}
+						$labels[$id] = $entry;
+					}
+				};
+				$resolve("person", $criteria["personID"] ?? []);
+				$resolve("organisation", $criteria["organisationID"] ?? []);
+				$resolve("organisation", $criteria["factionID"] ?? []);
+				$resolve("term", $criteria["termID"] ?? []);
+				$resolve("document", $criteria["documentID"] ?? []);
+
+				return $labels;
+			};
+
 			// "Save as alert" — logged-in only. Reuses the same criteria as the RSS
 			// link ($rssParams), so it appears on search and entity pages alike (the
 			// grid is AJAX-fetched into both). The alert API normalizes the criteria.
@@ -165,37 +201,8 @@ if ($totalResults != 0) {
 				$hasAlertCriteria = isset($alertCriteria["personID"]) || isset($alertCriteria["organisationID"])
 					|| isset($alertCriteria["factionID"]) || isset($alertCriteria["termID"])
 					|| isset($alertCriteria["documentID"]) || isset($alertCriteria["q"]);
-				// Snapshot entity labels (+ faction/colour) so the alert modal and the
-				// alert/notification lists render names instead of raw IDs. Entity tokens
-				// may carry a "~role" suffix — resolve by the bare id.
 				if ($hasAlertCriteria) {
-					$alertLabels = [];
-					$resolveAlertLabels = function ($type, $ids) use (&$alertLabels) {
-						foreach ((array)$ids as $token) {
-							$id = strtok((string)$token, "~");
-							if ($id === "" || isset($alertLabels[$id])) { continue; }
-							$r = apiV1(["action" => "getItem", "itemType" => $type, "id" => $id]);
-							$d = $r["data"] ?? null;
-							if (!$d) { continue; }
-							$entry = ["label" => $d["attributes"]["label"] ?? $id];
-							if ($type === "person") {
-								$entry["type"] = $d["attributes"]["type"] ?? null; // subtype: memberOfParliament / person
-								if (!empty($d["relationships"]["faction"]["data"])) {
-									$entry["faction"] = $d["relationships"]["faction"]["data"]["id"];
-									$entry["factionLabel"] = $d["relationships"]["faction"]["data"]["attributes"]["label"] ?? "";
-								}
-							}
-							if ($type === "organisation" && !empty($d["attributes"]["color"])) {
-								$entry["color"] = $d["attributes"]["color"];
-							}
-							$alertLabels[$id] = $entry;
-						}
-					};
-					$resolveAlertLabels("person", $alertCriteria["personID"] ?? []);
-					$resolveAlertLabels("organisation", $alertCriteria["organisationID"] ?? []);
-					$resolveAlertLabels("organisation", $alertCriteria["factionID"] ?? []);
-					$resolveAlertLabels("term", $alertCriteria["termID"] ?? []);
-					$resolveAlertLabels("document", $alertCriteria["documentID"] ?? []);
+					$alertLabels = $optvResolveCriteriaLabels($alertCriteria);
 					if (!empty($alertLabels)) {
 						$alertCriteria["_labels"] = $alertLabels;
 					}
@@ -207,12 +214,25 @@ if ($totalResults != 0) {
 				endif;
 			}
 
-			// "Save results as playlist" — snapshots the current result set with
-			// each speech's hits as its segments. Uses the same criteria as the
-			// RSS/alert links, resolved server-side on click.
+			// "Save results as playlist" — either a snapshot of the current result
+			// set (each speech with its hits as segments) or a live playlist that
+			// re-runs this query on every play. Same criteria as the RSS/alert
+			// links, carrying the label snapshot so a live playlist's criteria
+			// render as names rather than Q-ids.
 			if (!empty($_SESSION["login"]) && !empty($config["allow"]["playlists"])) {
+				$playlistCriteria = $rssParams;
+				$playlistLabels = $optvResolveCriteriaLabels($playlistCriteria);
+				if (!empty($playlistLabels)) {
+					$playlistCriteria["_labels"] = $playlistLabels;
+				}
 ?>
-				<button type="button" id="saveAsPlaylistButton" class="btn btn-sm btn-outline-primary ms-2 mt-2 mt-md-0 align-middle" data-criteria="<?= hAttr(json_encode($rssParams, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>" title="<?= hAttr(L::playlistSaveResults()) ?>"><span class="saveAsPlaylistLabel"><?= L::playlistSaveResults() ?></span><span class="icon-list-numbered ms-1" aria-hidden="true"></span></button>
+				<div class="dropdown d-inline-block ms-2 mt-2 mt-md-0 align-middle">
+					<button type="button" id="saveAsPlaylistButton" class="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-criteria="<?= hAttr(json_encode($playlistCriteria, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>" title="<?= hAttr(L::playlistSaveResults()) ?>"><span class="saveAsPlaylistLabel"><?= L::playlistSaveResults() ?></span><span class="icon-list-numbered ms-1" aria-hidden="true"></span></button>
+					<ul class="dropdown-menu dropdown-menu-end">
+						<li><button type="button" class="dropdown-item savePlaylistSnapshot"><?= L::playlistSaveResults() ?></button></li>
+						<li><button type="button" class="dropdown-item savePlaylistLive" title="<?= hAttr(L::playlistTypeLiveHint()) ?>"><?= L::playlistSaveResultsLive() ?></button></li>
+					</ul>
+				</div>
 <?php
 			}
 ?>

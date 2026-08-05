@@ -133,6 +133,9 @@
 /api/v1/playlist/resolve?token=not-a-token
 @admin /api/v1/playlist/get?id=999999
 /api/v1/?action=playlist&itemType=list
+# live-playlist actions reject a non-existent id the same way
+@admin /api/v1/playlist/convert?id=999999
+@admin /api/v1/playlist/createAlert?id=999999
 
 # --- error cases -------------------------------------------------------------
 /api/v1/person/Q00000000000
