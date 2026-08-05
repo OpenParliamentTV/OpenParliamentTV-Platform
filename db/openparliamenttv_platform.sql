@@ -213,6 +213,31 @@ CREATE TABLE `apikey` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
+CREATE TABLE `playlist` (
+  `PlaylistID` int(10) NOT NULL,
+  `PlaylistUserID` int(10) NOT NULL,
+  `PlaylistType` enum('custom','live') NOT NULL DEFAULT 'custom',
+  `PlaylistTitle` varchar(200) NOT NULL,
+  `PlaylistDescription` text DEFAULT NULL,
+  `PlaylistToken` char(32) NOT NULL,
+  `PlaylistShared` tinyint(1) NOT NULL DEFAULT 0,
+  `PlaylistCriteria` text DEFAULT NULL,
+  `PlaylistCreated` timestamp NOT NULL DEFAULT current_timestamp(),
+  `PlaylistLastChanged` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `playlist_item` (
+  `PlaylistItemID` int(10) NOT NULL,
+  `PlaylistItemPlaylistID` int(10) NOT NULL,
+  `PlaylistItemParliament` varchar(16) NOT NULL,
+  `PlaylistItemMediaID` varchar(255) NOT NULL,
+  `PlaylistItemSegments` text DEFAULT NULL,
+  `PlaylistItemPosition` int(10) NOT NULL DEFAULT 0,
+  `PlaylistItemCreated` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
 CREATE TABLE `entity_remap` (
   `EntityRemapID` int(10) unsigned NOT NULL,
   `EntityRemapParliament` varchar(16) NOT NULL DEFAULT '',
@@ -313,6 +338,15 @@ ALTER TABLE `alert`
   ADD KEY `idx_alert_user` (`AlertUserID`),
   ADD KEY `idx_alert_active` (`AlertActive`);
 
+ALTER TABLE `playlist`
+  ADD PRIMARY KEY (`PlaylistID`),
+  ADD UNIQUE KEY `idx_playlist_token` (`PlaylistToken`),
+  ADD KEY `idx_playlist_user` (`PlaylistUserID`);
+
+ALTER TABLE `playlist_item`
+  ADD PRIMARY KEY (`PlaylistItemID`),
+  ADD KEY `idx_playlist_item_playlist` (`PlaylistItemPlaylistID`,`PlaylistItemPosition`);
+
 ALTER TABLE `notification`
   ADD PRIMARY KEY (`NotificationID`),
   ADD UNIQUE KEY `idx_notif_dedup` (`NotificationAlertID`,`NotificationMediaID`),
@@ -373,6 +407,12 @@ ALTER TABLE `notification_preference`
 
 ALTER TABLE `apikey`
   MODIFY `ApiKeyID` int(10) unsigned NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `playlist`
+  MODIFY `PlaylistID` int(10) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `playlist_item`
+  MODIFY `PlaylistItemID` int(10) NOT NULL AUTO_INCREMENT;
 
 ALTER TABLE `entity_remap`
   MODIFY `EntityRemapID` int(10) unsigned NOT NULL AUTO_INCREMENT;

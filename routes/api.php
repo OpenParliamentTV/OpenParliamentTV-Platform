@@ -23,7 +23,7 @@
 use FastRoute\RouteCollector;
 
 /** Actions addressed as `/{action}/{itemType}`; everything else is a getItem. */
-const API_ROUTE_ACTIONS = 'search|autocomplete|statistics|user|index|status|lang|import|externalData|alert|notification|systemMessage|migration';
+const API_ROUTE_ACTIONS = 'search|autocomplete|statistics|user|index|status|lang|import|externalData|alert|notification|playlist|systemMessage|migration';
 
 return function (RouteCollector $r) {
 

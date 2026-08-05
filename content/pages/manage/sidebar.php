@@ -30,6 +30,13 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                     <?= L::alertManageTitle(); ?>
                 </a>
                 <?php endif; ?>
+                <?php if (!empty($config["allow"]["playlists"])): ?>
+                <a href="<?= $config["dir"]["root"] ?>/manage/playlists"
+                   class="dropdown-item <?= ($page == "manage-playlists") ? "active" : "" ?>">
+                    <i class="icon-list-numbered me-2"></i>
+                    <?= L::playlistManageTitle(); ?>
+                </a>
+                <?php endif; ?>
                 <a href="<?= $config["dir"]["root"] ?>/manage/users/<?= $_SESSION["userdata"]["id"] ?>"
                    class="dropdown-item <?= ($page == "manage-users" && isset($_REQUEST["id"]) && (string)$_REQUEST["id"] === (string)$_SESSION["userdata"]["id"]) ? "active" : "" ?>">
                     <i class="icon-user me-2"></i>
@@ -109,6 +116,15 @@ require_once(__DIR__ . '/../../../modules/utilities/security.php');
                        class="nav-link <?= ($page == "manage-alerts") ? "active" : "" ?>">
                         <i class="icon-bell-fill me-2"></i>
                         <?= L::alertManageTitle(); ?>
+                    </a>
+                </li>
+                <?php endif; ?>
+                <?php if (!empty($config["allow"]["playlists"])): ?>
+                <li class="nav-item">
+                    <a href="<?= $config["dir"]["root"] ?>/manage/playlists"
+                       class="nav-link <?= ($page == "manage-playlists") ? "active" : "" ?>">
+                        <i class="icon-list-numbered me-2"></i>
+                        <?= L::playlistManageTitle(); ?>
                     </a>
                 </li>
                 <?php endif; ?>

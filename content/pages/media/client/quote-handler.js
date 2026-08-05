@@ -4,7 +4,12 @@
  *************************************************/
 
 var quoteSelector = window.QuoteSelector,
-	start, end, prefix, suffix, quoteURL;
+	start, end, prefix, suffix, quoteURL,
+	// The current selection's timecodes, lifted out of getSelectionMediaFragment()
+	// so the "add to playlist" popover action can read the same word-aligned
+	// range the quote URL is built from.
+	selectionStart = null,
+	selectionEnd = null;
 
 $(document).ready( function() {
 	initQuoteDisplay();
@@ -22,15 +27,40 @@ function initQuoteDisplay() {
 	
 	processQuery();
 
+	// The popover offers one action per entry. "Add to playlist" only appears
+	// where playlists are actually available — the manager is loaded for
+	// logged-in users only, so its presence is the check.
+	var sharers = [{
+		'render': function() {
+			return '<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#quoteDisplayModal"><span class="icon-share"></span> '+ localizedLabels.quoteDisplay +'</button>'
+		},
+		'name': 'OPTV'
+	}];
+
+	if (window.PlaylistManager) {
+		sharers.push({
+			'render': function() {
+				return '<button type="button" class="btn btn-sm"><span class="icon-plus"></span> '+ localizedLabels.playlistAddTo +'</button>'
+			},
+			'name': 'OPTV_PLAYLIST',
+			'action': function() {
+				// getSelectionMediaFragment() has already run for this selection
+				// (both are driven by the same mouseup), so the timecodes are
+				// the word-aligned range the quote URL uses.
+				if (selectionStart === null || selectionEnd === null) { return; }
+				PlaylistManager.openAdd({
+					mediaID: currentMediaID,
+					parliament: (typeof playlistParliament !== "undefined") ? playlistParliament : "",
+					segments: [{ start: selectionStart, end: selectionEnd }]
+				});
+			}
+		});
+	}
+
 	const quoteSelection = quoteSelector({
 		selector: "#proceedings",
 		popoverClass: 'quote-selection-popover',
-		sharers: [{
-			'render': function() {
-				return '<button type="button" class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#quoteDisplayModal"><span class="icon-share"></span> '+ localizedLabels.quoteDisplay +'</button>'
-			},
-			'name': 'OPTV' 
-		}]
+		sharers: sharers
 	});
 
 	quoteSelection.init();
@@ -253,6 +283,9 @@ function getSelectionMediaFragment() {
 
 		// fragment = "#t=" + nodeStart + "," + (Math.round((nodeStart + nodeDuration) * 10) / 10);
 		var nodeEnd = nodeStart + nodeDuration;
+
+		selectionStart = nodeStart;
+		selectionEnd = nodeEnd;
 		if (prefix && suffix) {
 			
 			var baseURL = window.location.toString(),

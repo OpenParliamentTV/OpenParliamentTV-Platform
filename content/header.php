@@ -46,7 +46,7 @@ if (!isset($page)) {
 			if (isset($_REQUEST["a"]) && $_REQUEST["a"] == "media" && isset($isResult) && $isResult) {
 				$autoplayResultsClass = (isset($_REQUEST['playresults']) && boolval($_REQUEST['playresults'])) ? "active" : "";
 				// Remove unwanted parameters and rebuild clean parameter string
-				$backParamStr = preg_replace('/[?&](playresults=[0-1]|context=[^&]+|id=[^&]+)/', '', $paramStr);
+				$backParamStr = preg_replace('/[?&](playresults=[0-1]|context=[^&]+|id=[^&]+|playlist=[^&]+)/', '', $paramStr);
 				$backParamStr = preg_replace('/^&|&&+/', '&', $backParamStr);
 				// Strip a leading '?' or '&' (the removed id/playresults param may or
 				// may not have been the first one) before re-prepending a single '?'.
@@ -56,7 +56,16 @@ if (!isset($page)) {
 				}
 			?>
 				<div class="navbarCenterOptions">
+					<?php
+					// Playing through a playlist? Then "back" belongs to the
+					// playlist, not to a search that was never run.
+					$queuePlaylistToken = $_REQUEST["playlist"] ?? null;
+					if ($queuePlaylistToken):
+					?>
+					<a href='<?= $config["dir"]["root"]."/playlist/".hAttr($queuePlaylistToken) ?>' class="btn btn-sm border-end-0 rounded-0 rounded-start"><span class="icon-left-open-big"></span><span class="icon-list-numbered"></span><span class="visually-hidden"><?= L::playlists(); ?></span></a>
+					<?php else: ?>
 					<a href='<?= $config["dir"]["root"]."/search".$backParamStr ?>' class="btn btn-sm border-end-0 rounded-0 rounded-start"><span class="icon-left-open-big"></span><span class="icon-search"></span><span class="visually-hidden"><?= L::backToResults(); ?></span></a>
+					<?php endif; ?>
 					<div id="prevResultVideoButton" class="btn btn-sm border-end-0 rounded-0" disabled="true" title="<?= hAttr(L::previousResult()) ?>"><span class="icon-fast-bw"></span><span class="visually-hidden"><?= L::previousResult(); ?></span></div>
 					<div id="prevResultSnippetButton" class="btn btn-sm border-end-0 rounded-0" disabled="true" title="<?= hAttr(L::previousSpeech()) ?>"><span class="icon-left-open-big"></span><span class="visually-hidden"><?= L::previousSpeech(); ?></span></div>
 					<div id="nextResultSnippetButton" class="btn btn-sm border-end-0 rounded-0" disabled="true" title="<?= hAttr(L::nextSpeech()) ?>"><span class="icon-right-open-big"></span><span class="visually-hidden"><?= L::nextSpeech(); ?></span></div>

@@ -26,6 +26,9 @@
 	var listEl = null,
 		observer = null,
 		renderedCount = 0,
+		// A resolved playlist arrives complete — display metadata and segments
+		// included — so there is nothing to page in afterwards.
+		metadataIncluded = false,
 		requestedChunks = {},
 		loadedChunks = {},
 		rowsById = {};
@@ -69,7 +72,15 @@
 
 		var title = document.createElement("span");
 		title.className = "queuePanelTitle";
-		title.textContent = t("queuePanelTitle", "Queue");
+		if (queuePlaylist && queuePlaylist.title) {
+			// A stored playlist names itself; a search queue is just "Queue".
+			var link = document.createElement("a");
+			link.href = config.dir.root + "/playlist/" + queuePlaylist.token;
+			link.textContent = queuePlaylist.title;
+			title.appendChild(link);
+		} else {
+			title.textContent = t("queuePanelTitle", "Queue");
+		}
 		header.appendChild(title);
 
 		var count = document.createElement("span");
@@ -188,7 +199,7 @@
 	 * lookup is needed — it is literally the same search, paged.
 	 */
 	function loadChunk(chunk) {
-		if (requestedChunks[chunk]) { return; }
+		if (metadataIncluded || requestedChunks[chunk]) { return; }
 		requestedChunks[chunk] = true;
 
 		var params = window.location.search.split("?")[1],
@@ -228,7 +239,11 @@
 
 		var fragment = document.createDocumentFragment();
 		for (var i = renderedCount; i < target; i++) {
-			fragment.appendChild(buildRow(resultList[i], i));
+			var row = buildRow(resultList[i], i);
+			if (metadataIncluded) {
+				fillRow(row, resultList[i]);
+			}
+			fragment.appendChild(row);
 		}
 		listEl.appendChild(fragment);
 		renderedCount = target;
@@ -341,6 +356,7 @@
 		loadedChunks = {};
 		rowsById = {};
 		renderedCount = 0;
+		metadataIncluded = !!(resultList[0] && resultList[0].attributes);
 
 		buildShell();
 

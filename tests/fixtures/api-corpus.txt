@@ -121,6 +121,19 @@
 /api/v1/notification/unreadCount
 /api/v1/systemMessage/list
 
+# --- playlists (public action, module-gated; resolve is the anonymous surface) -
+# Stateless entries only. A logged-in list is deliberately absent: it would pin
+# whatever playlists the session user happens to own, and fail as soon as they
+# make one.
+/api/v1/playlist/list
+/api/v1/playlist/resolve
+# A well-formed token that matches nothing, and a malformed one — both 404, so a
+# token cannot be used to tell "private" from "does not exist".
+/api/v1/playlist/resolve?token=00000000000000000000000000000000
+/api/v1/playlist/resolve?token=not-a-token
+@admin /api/v1/playlist/get?id=999999
+/api/v1/?action=playlist&itemType=list
+
 # --- error cases -------------------------------------------------------------
 /api/v1/person/Q00000000000
 /api/v1/media/NOT-A-REAL-ID

@@ -26,6 +26,40 @@
 
         $speech = $apiResult["data"][0];
 
+        // Playing through a playlist: the stored segments for *this* speech take
+        // the place of the search finds, in the same shape, so snippet arrows,
+        // FrameTrail code snippets and autoplay all behave exactly as they do for
+        // a search. An item stored without segments yields no finds at all, which
+        // is already the player's "play the whole speech" case.
+        //
+        // data-end carries the +0.3 that player.php subtracts again, so a segment
+        // captured from a search hit plays back over the identical range.
+        if (!empty($_REQUEST['playlist'])) {
+            require_once(__DIR__."/../playlist/storage.php");
+
+            $playlistResult = apiV1([
+                "action" => "playlist",
+                "itemType" => "resolve",
+                "token" => $_REQUEST['playlist'],
+            ]);
+
+            $speech['_finds'] = [];
+            if (($playlistResult["meta"]["requestStatus"] ?? '') === 'success') {
+                foreach ($playlistResult["data"] as $playlistItem) {
+                    if ($playlistItem["id"] !== $speech["id"]) {
+                        continue;
+                    }
+                    foreach (($playlistItem["segments"] ?? []) as $segment) {
+                        $speech['_finds'][] = [
+                            "data-start" => $segment["start"],
+                            "data-end" => $segment["end"] + 0.3,
+                        ];
+                    }
+                    break;
+                }
+            }
+        }
+
         $mainSpeaker = mediaMainSpeaker($speech["annotations"]["data"] ?? [], $speech["relationships"]["people"]['data'] ?? []);
         $mainFaction = mediaMainFaction($speech["annotations"]['data'] ?? [], $speech["relationships"]["organisations"]['data'] ?? []);
         $mainSpeakerRole = mediaMainSpeakerRole($speech["annotations"]["data"] ?? []);

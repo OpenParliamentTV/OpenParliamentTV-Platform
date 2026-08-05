@@ -9,3 +9,7 @@
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/alert-manager.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/notification-bell.js?v=<?= $config["version"] ?>"></script>
 <?php endif; ?>
+<?php if (!empty($_SESSION["login"]) && !empty($config["allow"]["playlists"])): ?>
+<?php include(__DIR__ . '/playlist-add-modal.php'); ?>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/playlist-manager.js?v=<?= $config["version"] ?>"></script>
+<?php endif; ?>

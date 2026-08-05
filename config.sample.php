@@ -76,6 +76,16 @@ $config["allow"]["notifications"] = true;
 
 
 /**
+ * Enable playlists
+ * Controls the playlist API, the /playlist and /manage/playlists pages and
+ * every "add to playlist" affordance. The player's queue panel is unaffected —
+ * it works for search results with or without this flag.
+ * true or false
+ */
+$config["allow"]["playlists"] = true;
+
+
+/**
  * A complicated string to salt the user account password hashes
  */
 $config["salt"] = "";
@@ -169,6 +179,8 @@ $config["platform"]["sql"]["tbl"]["NotificationPreference"] = "notification_pref
 $config["platform"]["sql"]["tbl"]["ApiRateLimit"] = "apiratelimit";
 $config["platform"]["sql"]["tbl"]["ApiKey"] = "apikey";
 $config["platform"]["sql"]["tbl"]["EntityRemap"] = "entity_remap";
+$config["platform"]["sql"]["tbl"]["Playlist"] = "playlist";
+$config["platform"]["sql"]["tbl"]["PlaylistItem"] = "playlist_item";
 
 /**
  * Request rate limiting. Two independent surfaces, both DB-backed fixed-window

@@ -166,6 +166,43 @@ function pageEntity(array $routeData, array $params, Engine $plates): void
 }
 
 /**
+ * Playlist page, addressed by share token.
+ *
+ * playlistResolve does the access work: it answers "not found" for a token that
+ * does not exist, for a private playlist the caller does not own, and when the
+ * feature is switched off — all three collapse to the same 404 here, so the page
+ * cannot be used to probe for playlists that exist but are not shared.
+ */
+function pagePlaylist(array $routeData, array $params, Engine $plates): void
+{
+    $token = $params['token'] ?? '';
+
+    $apiResult = apiV1([
+        'action' => 'playlist',
+        'itemType' => 'resolve',
+        'token' => $token,
+    ]);
+
+    if ((!$apiResult) || ($apiResult['meta']['requestStatus'] ?? '') === 'error') {
+        pageRender404($plates);
+        return;
+    }
+
+    $playlist = $apiResult['meta']['playlist'];
+
+    optvRenderPage($plates, 'pages/playlist/page', [
+        'page' => 'playlist',
+        'pageType' => 'entity',
+        'pageTitle' => $playlist['title'],
+        'pageDescription' => $playlist['description'] ?: L::playlists(),
+        'pageBreadcrumbs' => [['label' => $playlist['title']]],
+        'apiResult' => $apiResult,
+        'playlist' => $playlist,
+        'items' => $apiResult['data'],
+    ]);
+}
+
+/**
  * Build per-entity-type title and description, reproducing the old switch cases.
  */
 function pageEntityMeta(string $type, array $apiResult): array
@@ -417,6 +454,7 @@ function pageAdmin(array $routeData, array $params, Engine $plates): void
         'manage-users' => ['pages/manage/users/page', L::manageUsers(), 'admin', 'home'],
         'statistics' => ['pages/statistics/page', 'Statistics', 'admin', null],
         'manage-alerts' => ['pages/manage/alerts/page', L::alertManageTitle(), 'entity', 'home'],
+        'manage-playlists' => ['pages/manage/playlists/page', L::playlistManageTitle(), 'entity', 'home'],
         'notifications' => ['pages/notifications/page', L::notifications(), 'entity', null],
     ];
 
@@ -424,6 +462,14 @@ function pageAdmin(array $routeData, array $params, Engine $plates): void
         pageRender404($plates);
         return;
     }
+
+    // A page for a switched-off feature should not exist, rather than render an
+    // empty shell of itself.
+    if ($page === 'manage-playlists' && empty($GLOBALS['config']['allow']['playlists'])) {
+        pageRender404($plates);
+        return;
+    }
+
     [$template, $title, $pageType, $crumbStyle] = $map[$page];
 
     $breadcrumbs = ($crumbStyle === 'home') ? [$home, ['label' => $title]] : [['label' => $title]];

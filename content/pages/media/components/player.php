@@ -60,6 +60,8 @@ $relatedContentsPanel = ob_get_clean();
     };
 
     currentMediaID = <?= json_encode($speech['id'], JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
+    // Read by quote-handler.js when adding a transcript selection to a playlist.
+    var playlistParliament = <?= json_encode($speech["attributes"]["parliament"] ?? '', JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE) ?>;
 
 </script>
 <div class="mediaContainer">
@@ -72,6 +74,18 @@ $relatedContentsPanel = ob_get_clean();
                 } elseif ($mainSpeakerRole) {
                 ?><span class="partyIndicator d-inline-block text-truncate align-text-top" style="max-width: 200px;" title="<?= h(translateContextValue($mainSpeakerRole)) ?>"><?= h(translateContextValue($mainSpeakerRole)) ?></span><?php 
                 } ?> - <?= h($speech["relationships"]["agendaItem"]["data"]["attributes"]["title"]) ?></h3>
+            <?php
+            // Adds the whole speech. Narrowing to a passage is the transcript
+            // selection popover's job. The flag/login check is inline because
+            // this file is also fetched directly as an AJAX fragment, so it
+            // cannot rely on the surrounding page having made it.
+            if (!empty($_SESSION["login"]) && !empty($config["allow"]["playlists"])):
+            ?>
+            <button type="button" class="btn btn-sm btn-outline-primary addToPlaylistButton playerAddToPlaylist"
+                    data-media-id="<?= hAttr($speech["id"]) ?>"
+                    data-parliament="<?= hAttr($speech["attributes"]["parliament"] ?? '') ?>"
+                    title="<?= hAttr(L::playlistAddTo()) ?>"><span class="icon-plus"></span> <?= L::playlistAddTo(); ?></button>
+            <?php endif; ?>
         </div>
         <div class="playerTabs">
             <ul class="nav nav-tabs flex-nowrap" role="tablist">

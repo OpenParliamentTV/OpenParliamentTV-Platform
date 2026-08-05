@@ -71,6 +71,11 @@ return function (RouteCollector $r) {
     // login on the data itself (notifications additionally needs a session here).
     $get('/manage/alerts', 'pageAdmin', 'manage-alerts');
     $get('/notifications', 'pageAdmin', 'notifications', 'public', ['requireLogin' => true]);
+    $get('/manage/playlists', 'pageAdmin', 'manage-playlists', 'public', ['requireLogin' => true]);
+
+    // A playlist is addressed only by its share token, and the handler 404s
+    // unless the row is shared or the caller owns it — so this stays public.
+    $get('/playlist/{token}', 'pagePlaylist', 'playlist');
 
     // ---- Admin / manage detail pages ----
     $get('/manage/media/{id}', 'pageAdminDetail', 'manage-media', 'admin');

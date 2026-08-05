@@ -78,7 +78,7 @@ x-robots-tag: noindex
                     "database": "openparliamenttv",
                     "host": "localhost",
                     "sizeBytes": "<<NORMALIZED>>",
-                    "tables": 17,
+                    "tables": 19,
                     "reachable": true
                 },
                 {

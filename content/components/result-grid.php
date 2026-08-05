@@ -206,6 +206,15 @@ if ($totalResults != 0) {
 <?php
 				endif;
 			}
+
+			// "Save results as playlist" — snapshots the current result set with
+			// each speech's hits as its segments. Uses the same criteria as the
+			// RSS/alert links, resolved server-side on click.
+			if (!empty($_SESSION["login"]) && !empty($config["allow"]["playlists"])) {
+?>
+				<button type="button" id="saveAsPlaylistButton" class="btn btn-sm btn-outline-primary ms-2 mt-2 mt-md-0 align-middle" data-criteria="<?= hAttr(json_encode($rssParams, JSON_HEX_QUOT | JSON_HEX_APOS | JSON_UNESCAPED_UNICODE)) ?>" title="<?= hAttr(L::playlistSaveResults()) ?>"><span class="saveAsPlaylistLabel"><?= L::playlistSaveResults() ?></span><span class="icon-list-numbered ms-1" aria-hidden="true"></span></button>
+<?php
+			}
 ?>
 			</div>
 		</div>

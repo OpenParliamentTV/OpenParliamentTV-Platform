@@ -35,7 +35,33 @@ $paramStr = preg_replace('/(%5B)\d+(%5D=)/i', '$1$2', http_build_query($allowedP
 			}
 			?>
 		</a>
-		<?php 
+		<?php
+		// Add-to-playlist: snapshots this speech with its current search hits as
+		// segments, so the playlist replays exactly the passages that matched.
+		if (!empty($_SESSION["login"]) && !empty($config["allow"]["playlists"])) {
+			// Built with sprintf rather than json_encode: this instance runs
+			// serialize_precision=100, which would spell every timecode out to
+			// 50 digits inside the attribute. Milliseconds are ample here.
+			$itemSegments = [];
+			foreach (($snippets ?: []) as $snippet) {
+				if (isset($snippet['data-start'], $snippet['data-end'])) {
+					$itemSegments[] = sprintf(
+						'{"start":%.3F,"end":%.3F}',
+						(float)$snippet['data-start'],
+						(float)$snippet['data-end'] - 0.3
+					);
+				}
+			}
+			$itemSegmentsJson = $itemSegments ? '[' . implode(',', $itemSegments) . ']' : '';
+			?>
+			<button type="button" class="btn btn-sm addToPlaylistButton resultAddToPlaylist"
+					data-media-id="<?= hAttr($result_item["id"]) ?>"
+					data-parliament="<?= hAttr($result_item["attributes"]["parliament"] ?? '') ?>"
+					<?= $itemSegmentsJson ? 'data-segments="'.hAttr($itemSegmentsJson).'"' : '' ?>
+					title="<?= hAttr(L::playlistAddTo()) ?>"><span class="icon-plus"></span></button>
+			<?php
+		}
+
 		if ($snippets) {
 			echo '<div class="resultSnippets">';
 		}

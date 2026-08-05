@@ -608,3 +608,84 @@ function mediaMainSpeakerRole($annotationsArray) {
 
     return null;
 }
+
+/**
+ * Convert a search hit's `_finds` into the player's segment shape.
+ *
+ * Finds arrive from OpenSearch highlighting as {data-start, data-end, class,
+ * context} with string timecodes; the player wants {start, end} floats. The
+ * 0.3s pulled off the end reproduces what player.php has always done, so a
+ * segment stored from a search hit plays back exactly like the search hit did.
+ *
+ * @param array $finds node["_finds"]
+ * @return array|null Ordered [{start, end}, …], or null when there are none
+ */
+function mediaFindsToSegments($finds) {
+
+    if (!is_array($finds) || empty($finds)) {
+        return null;
+    }
+
+    $segments = [];
+    foreach ($finds as $find) {
+        if (!isset($find["data-start"]) || $find["data-start"] === null) {
+            continue;
+        }
+        $segments[] = [
+            "start" => (float)$find["data-start"],
+            "end" => (float)$find["data-end"] - 0.3,
+        ];
+    }
+
+    if (empty($segments)) {
+        return null;
+    }
+
+    usort($segments, function ($a, $b) { return $a["start"] <=> $b["start"]; });
+
+    return $segments;
+}
+
+/**
+ * Build the compact queue node behind `fields=queue`.
+ *
+ * One row of the player's queue panel: who spoke, for which faction, on which
+ * agenda item, how long, when — plus the segments to jump between. Everything
+ * the full search result carries beyond that (transcripts above all) is dropped
+ * here rather than shipped to the browser.
+ *
+ * Consumed by mediaSearch() for a search-derived queue and by
+ * playlistResolveItems() for a stored one, so both render identically.
+ *
+ * @param array $hit A processed search hit (projected _source plus _finds)
+ * @return array Queue node
+ */
+function mediaQueueNode($hit) {
+
+    $annotations = $hit["annotations"]["data"] ?? [];
+    $speaker = mediaMainSpeaker($annotations, $hit["relationships"]["people"]["data"] ?? []);
+    $faction = mediaMainFaction($annotations, $hit["relationships"]["organisations"]["data"] ?? []);
+    $role = mediaMainSpeakerRole($annotations);
+    $segments = mediaFindsToSegments($hit["_finds"] ?? []);
+
+    // No colour here on purpose: faction colours are generated as CSS keyed on
+    // data-faction (content/head.php), so consumers colour themselves from
+    // factionID the same way .partyIndicator does everywhere else.
+    return [
+        "type" => "media",
+        "id" => $hit["id"] ?? null,
+        "attributes" => [
+            "parliament" => $hit["attributes"]["parliament"] ?? null,
+            "dateStart" => $hit["attributes"]["dateStart"] ?? null,
+            "duration" => isset($hit["attributes"]["duration"]) ? (float)$hit["attributes"]["duration"] : null,
+            "title" => $hit["relationships"]["agendaItem"]["data"]["attributes"]["title"] ?? null,
+            "speaker" => $speaker["attributes"]["label"] ?? null,
+            "speakerID" => $speaker["id"] ?? null,
+            "speakerRole" => $role === null ? null : translateContextValue($role),
+            "faction" => $faction["attributes"]["label"] ?? null,
+            "factionID" => $faction["id"] ?? null,
+            "findCount" => $segments === null ? 0 : count($segments),
+        ],
+        "segments" => $segments,
+    ];
+}

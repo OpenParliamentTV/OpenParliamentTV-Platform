@@ -201,6 +201,22 @@ function apiRegistry()
             'status' => $req(null, 'alertStatus'),
         ]],
 
+        // Playlists: same arrangement as alerts — the action passes the central
+        // gate and the module enforces the feature flag plus "logged-in" itself.
+        // `resolve` is deliberately reachable anonymously; it checks the share
+        // flag on the row rather than the session.
+        'playlist' => ['access' => 'public', 'file' => 'modules/playlist.php', 'itemTypes' => [
+            'list'          => $req(null, 'playlistList'),
+            'get'           => $req(null, 'playlistGet'),
+            'resolve'       => $req(null, 'playlistResolve'),
+            'create'        => $req(null, 'playlistCreate'),
+            'update'        => $req(null, 'playlistUpdate'),
+            'delete'        => $req(null, 'playlistDelete'),
+            'itemAdd'       => $req(null, 'playlistItemAdd'),
+            'itemRemove'    => $req(null, 'playlistItemRemove'),
+            'itemsReorder'  => $req(null, 'playlistItemsReorder'),
+        ]],
+
         'systemMessage' => ['access' => 'public', 'file' => 'modules/system-message.php', 'itemTypes' => [
             'list'   => $req(null, 'systemMessageList'),
             'create' => $req(null, 'systemMessageCreate'),

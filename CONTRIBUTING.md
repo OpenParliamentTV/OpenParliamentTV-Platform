@@ -4,6 +4,14 @@
 
 One rule set governs every new file, function and variable. It has also been applied retroactively across the codebase.
 
+**Check it before you commit — the mechanically decidable rules are enforced by a script:**
+
+```bash
+php bin/check-naming.php     # exit 0 clean, 1 on violations
+```
+
+It covers the rules a machine can decide: the `functions.php` ban, dots in base names, lowercase and kebab-case file names, and snake_case PHP function names. It knows the exemptions below (vendor code, frozen `config-*.php`, the `NNNN_snake_case.sql` migration scheme) and carries a short list of pre-existing violations so it is green today and fails on anything *new*. The module-prefix table further down is deliberately **not** machine-checked — it has too many legitimate shapes to encode without flagging correct code — so that one stays a review matter.
+
 ### Directories and files
 
 - **kebab-case, all lowercase**, for every directory and file: PHP, templates, JS, CSS, JSON — `search-index/`, `electoralPeriod.php`, `result-grid.php`, `criteria-chips.js`, `en.json`.
@@ -46,6 +54,7 @@ One rule set governs every new file, function and variable. It has also been app
 | `modules/feed` | `feed` | `feedFetchSpeeches` |
 | `modules/notifications` | `alert` / `notification` | `alertMatchMedia`, `notificationSendEmail` |
 | `modules/import` | `import` | `importGitSync`, `importMediaWrite` |
+| `modules/playlist` | `playlist` | `playlistResolveItems`, `playlistNormalizeSegments` |
 | `api/v1` (envelope + validation) | `api` | `apiSuccessResponse`, `apiValidateNumber` |
 | `api/v1/modules` (thin wrappers) | `{entity}` | `mediaGetByID` — distinct verb from the node builder's `mediaGetNode` |
 
@@ -83,6 +92,7 @@ Never mix a rename with a logic change. A rename commit's diff must be reviewabl
 ### Required gates before pushing a rename
 
 ```bash
+php bin/check-naming.php                     # the new name must satisfy the rules
 php bin/api-diff.php --session=$SID          # must be green — renames change no output
 ```
 

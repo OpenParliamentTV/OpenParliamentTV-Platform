@@ -75,10 +75,11 @@ $(document).ready( function() {
 /**
  * Fetch the queue the player is playing through.
  *
- * Today that is always the current search's result set, carried over from
- * location.search exactly as the search page built it. fields=id keeps the
- * response to an ordered id list — the queue panel fetches display metadata for
- * the rows it actually shows.
+ * Two sources, one shape. A `playlist` token in the URL resolves a stored
+ * playlist — items already carry their display metadata and segments, so the
+ * panel needs no follow-up requests. Otherwise the queue is the current search's
+ * result set, and fields=id keeps that response to an ordered id list which the
+ * panel fills in a page at a time.
  */
 function getQueue(queueCallback) {
 	if(resultListAjax && resultListAjax.readyState != 4){
@@ -90,7 +91,10 @@ function getQueue(queueCallback) {
 		ajaxURLParams += '&' + resultURLParts[1]; // Ensure leading & for subsequent params
 	}
 
-	var apiUrl = config.dir.root + "/api/v1/search/media?fields=id&getAllResults=1" + ajaxURLParams;
+	var playlistToken = getQueryVariable('playlist'),
+		apiUrl = playlistToken
+			? config.dir.root + "/api/v1/playlist/resolve?token=" + encodeURIComponent(playlistToken)
+			: config.dir.root + "/api/v1/search/media?fields=id&getAllResults=1" + ajaxURLParams;
 
 	function emptyQueue() {
 		return { source: 'virtual', playlist: null, items: [], total: 0 };
@@ -101,18 +105,19 @@ function getQueue(queueCallback) {
 		url: apiUrl
 	}).done(function(apiResponse) {
 		if (apiResponse && apiResponse.data) {
+			var meta = apiResponse.meta || {};
 			queueCallback({
-				source: 'virtual',
-				playlist: null,
+				source: playlistToken ? 'playlist' : 'virtual',
+				playlist: meta.playlist || null,
 				items: apiResponse.data,
-				total: (apiResponse.meta && apiResponse.meta.results) ? apiResponse.meta.results.total : apiResponse.data.length
+				total: (meta.results) ? meta.results.total : apiResponse.data.length
 			});
 		} else {
-			console.error("Error fetching or parsing media ID list from API:", apiResponse);
+			console.error("Error fetching queue:", apiResponse);
 			queueCallback(emptyQueue());
 		}
 	}).fail(function(err) {
-		console.error("Failed to get media ID list:", err);
+		console.error("Failed to get queue:", err);
 		queueCallback(emptyQueue());
 	});
 }

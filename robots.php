@@ -54,6 +54,7 @@ Disallow: /password-reset
 Disallow: /logout
 Disallow: /embed/
 Disallow: /notifications
+Disallow: /playlist/
 
 <?php foreach ($blockedBots as $bot): ?>
 User-agent: <?= $bot ?>
