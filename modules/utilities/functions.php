@@ -408,6 +408,10 @@ function filterAllowedSearchParams($data, $type, $caseSensitive = true) {
 
     $allowedParams = $config["allowedSearchParams"];
 
+    if (!isset($allowedParams[$type])) {
+        return array();
+    }
+
     // `includeAll` and `public` switch off the non-public-media filter in
     // applyDefaultFilters(), so they are admin-only. Only /manage/media sends
     // them.
@@ -416,9 +420,6 @@ function filterAllowedSearchParams($data, $type, $caseSensitive = true) {
         $allowedParams[$type] = array_diff($allowedParams[$type], ["includeAll", "public"]);
     }
 
-    if (!isset($allowedParams[$type])) {
-        return array();
-    }
     if ($caseSensitive) {
         return array_filter($data, function($key) use ($allowedParams, $type) {
             return in_array($key, $allowedParams[$type]);

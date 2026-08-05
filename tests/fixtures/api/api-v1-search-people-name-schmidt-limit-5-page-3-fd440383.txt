@@ -1,0 +1,336 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success",
+        "page": 3,
+        "pageTotal": 3
+    },
+    "data": [
+        {
+            "type": "person",
+            "id": "Q40998233",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Stefan Schmidt",
+                "labelAlternative": [],
+                "firstName": "Stefan",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1981-05-19",
+                "gender": "male",
+                "abstract": "Stefan Schmidt ist ein deutscher Politiker und Lehrer. Er gehört seit 2017, der 19. Wahlperiode, dem Deutschen Bundestag an.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q40998233&v=a7b322fa",
+                "thumbnailCreator": "Rafael P. D. Suppmann",
+                "thumbnailLicense": "CC-BY-SA-4.0",
+                "embedURI": null,
+                "websiteURI": "",
+                "originID": null,
+                "socialMediaIDs": [
+                    {
+                        "label": "Facebook",
+                        "id": "schmidt.regensburg"
+                    },
+                    {
+                        "label": "Twitter",
+                        "id": "Schmidt_MdB"
+                    }
+                ],
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Stefan Schmidt (Politiker)",
+                        "url": "https://de.wikipedia.org/wiki/Stefan_Schmidt_(Politiker)"
+                    },
+                    "abgeordnetenwatchID": "121977"
+                },
+                "lastChanged": "2023-03-11 04:39:07"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q40998233"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q49766",
+                        "attributes": {
+                            "label": "GRÜNE",
+                            "labelAlternative": [
+                                "Bündnis 90/Die Grünen",
+                                "Bündnisgrüne",
+                                "B'90/Grüne",
+                                "Die Grünen",
+                                "Bündnis 90/Die Grünen, GRÜNE",
+                                "Die Gruenen",
+                                "B90/GR"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q49766&v=087fb71b",
+                            "thumbnailCreator": "Bündnis 90/Die Grünen",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.gruene.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q49766"
+                    }
+                },
+                "faction": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q1007353",
+                        "attributes": {
+                            "label": "DIE GRÜNEN",
+                            "labelAlternative": [
+                                "Bundestagsfraktion Bündnis 90/Die Grünen",
+                                "Bündnis 90/Die Grünen Bundestagsfraktion",
+                                "BÜNDNIS 90/DIE GRÜNEN"
+                            ],
+                            "thumbnailURI": "",
+                            "thumbnailCreator": "",
+                            "thumbnailLicense": "",
+                            "websiteURI": "https://www.gruene-bundestag.de/"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q1007353"
+                    }
+                },
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q40998233"
+                    }
+                }
+            }
+        },
+        {
+            "type": "person",
+            "id": "Q61307",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Ulla Schmidt",
+                "labelAlternative": [
+                    "Ursula Schmidt",
+                    "Ursula Radermacher",
+                    "Ursula \"Ulla\" Schmidt"
+                ],
+                "firstName": "Ursula",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1949-06-13",
+                "gender": "female",
+                "abstract": "Ursula „Ulla“ Schmidt ist eine ehemalige deutsche Politikerin (SPD). Sie war von Januar 2001 bis zum Oktober 2009 Bundesministerin für Gesundheit und ist mit acht Jahren und neun Monaten Amtszeit die bisher am längsten amtierende Bundesministerin für Gesundheit. Von 2013 bis 2017 war sie Vizepräsidentin des Deutschen Bundestages.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q61307&v=80e668bc",
+                "thumbnailCreator": "&lt;a href=&quot;http://commons.wikimedia.org/wiki/User:%D7%90&quot; title=&quot;User:א&quot;&gt;א (Aleph)&lt;/a&gt;",
+                "thumbnailLicense": "CC-BY-SA-2.5",
+                "embedURI": null,
+                "websiteURI": "http://www.ulla-schmidt.de/",
+                "originID": null,
+                "socialMediaIDs": [
+                    {
+                        "label": "Facebook",
+                        "id": "ullafueraachen"
+                    }
+                ],
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Ulla Schmidt (Politikerin, 1949)",
+                        "url": "https://de.wikipedia.org/wiki/Ulla_Schmidt_(Politikerin,_1949)"
+                    },
+                    "abgeordnetenwatchID": "79013"
+                },
+                "lastChanged": "2023-03-14 17:57:04"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q61307"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q49768",
+                        "attributes": {
+                            "label": "SPD",
+                            "labelAlternative": [
+                                "Sozialdemokratische Partei Deutschlands"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q49768&v=9b01d328",
+                            "thumbnailCreator": "Sozialdemokratische Partei Deutschlands (SPD)",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.spd.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q49768"
+                    }
+                },
+                "faction": [],
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q61307"
+                    }
+                }
+            }
+        },
+        {
+            "type": "person",
+            "id": "Q20243187",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Uwe Schmidt",
+                "labelAlternative": [],
+                "firstName": "Uwe",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1966-02-14",
+                "gender": "male",
+                "abstract": "Uwe Schmidt ist ein deutscher Politiker (SPD) und Hafenfacharbeiter. Er wurde 2015 zum Abgeordneten der Bremischen Bürgerschaft und 2017 sowie 2021 zum Mitglied des Bundestages gewählt. Seit September 2021 ist er Sprecher des Seeheimer Kreises der SPD-Bundestagsfraktion.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q20243187&v=6bfe5ca4",
+                "thumbnailCreator": "Foto-AG Melle",
+                "thumbnailLicense": "CC-BY-SA-4.0",
+                "embedURI": null,
+                "websiteURI": "",
+                "originID": null,
+                "socialMediaIDs": [],
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Uwe Schmidt (Politiker, 1966)",
+                        "url": "https://de.wikipedia.org/wiki/Uwe_Schmidt_(Politiker,_1966)"
+                    },
+                    "abgeordnetenwatchID": "140944"
+                },
+                "lastChanged": "2023-03-11 04:32:11"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q20243187"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q49768",
+                        "attributes": {
+                            "label": "SPD",
+                            "labelAlternative": [
+                                "Sozialdemokratische Partei Deutschlands"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q49768&v=9b01d328",
+                            "thumbnailCreator": "Sozialdemokratische Partei Deutschlands (SPD)",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.spd.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q49768"
+                    }
+                },
+                "faction": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q2207512",
+                        "attributes": {
+                            "label": "SPD",
+                            "labelAlternative": [
+                                "SPD-Bundestagsfraktion",
+                                "SPD-Fraktion"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q2207512&v=4e041713",
+                            "thumbnailCreator": "SPD-Bundestagsfraktion",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.spdfraktion.de/"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q2207512"
+                    }
+                },
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q20243187"
+                    }
+                }
+            }
+        },
+        {
+            "type": "person",
+            "id": "Q40974933",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Claudia Schmidtke",
+                "labelAlternative": [],
+                "firstName": "Claudia",
+                "lastName": null,
+                "degree": "Prof.",
+                "birthDate": "1966-03-29",
+                "gender": "female",
+                "abstract": "Claudia Schmidtke ist Fachärztin für Herzchirurgie und Politikerin (CDU). Sie war von 2017 bis 2021 Mitglied des Deutschen Bundestages und von 2019 bis 2021 Beauftragte der Bundesregierung für die Belange der Patientinnen und Patienten.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q40974933&v=791cd4bb",
+                "thumbnailCreator": "CDU/Jan Kopetzky",
+                "thumbnailLicense": "CC-BY-SA-3.0",
+                "embedURI": null,
+                "websiteURI": "",
+                "originID": null,
+                "socialMediaIDs": [
+                    {
+                        "label": "Twitter",
+                        "id": "prof_schmidtke"
+                    }
+                ],
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Claudia Schmidtke",
+                        "url": "https://de.wikipedia.org/wiki/Claudia_Schmidtke"
+                    },
+                    "abgeordnetenwatchID": "145861"
+                },
+                "lastChanged": "2023-03-14 17:52:22"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q40974933"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q49762",
+                        "attributes": {
+                            "label": "CDU",
+                            "labelAlternative": [
+                                "Christlich Demokratische Union Deutschlands"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q49762&v=2cced7fb",
+                            "thumbnailCreator": "Unknown authorUnknown author",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.cdu.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q49762"
+                    }
+                },
+                "faction": [],
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q40974933"
+                    }
+                }
+            }
+        }
+    ],
+    "links": {
+        "self": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=3",
+        "first": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=1",
+        "prev": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=2",
+        "next": null,
+        "last": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=3"
+    }
+}

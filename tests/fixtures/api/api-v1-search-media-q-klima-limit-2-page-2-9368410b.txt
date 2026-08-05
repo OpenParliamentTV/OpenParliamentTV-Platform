@@ -4429,6 +4429,10 @@ x-robots-tag: noindex
         }
     ],
     "links": {
-        "self": "https://optv.local/api/v1/search/media?q=klima&limit=2&page=2"
+        "self": "https://optv.local/api/v1/search/media?q=klima&limit=2&page=2",
+        "first": "https://optv.local/api/v1/search/media?q=klima&limit=2&page=1",
+        "prev": "https://optv.local/api/v1/search/media?q=klima&limit=2&page=1",
+        "next": "https://optv.local/api/v1/search/media?q=klima&limit=2&page=3",
+        "last": "https://optv.local/api/v1/search/media?q=klima&limit=2&page=1292"
     }
 }

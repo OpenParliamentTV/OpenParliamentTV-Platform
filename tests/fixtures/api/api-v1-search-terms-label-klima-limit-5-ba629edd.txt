@@ -1,0 +1,190 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success",
+        "page": 1,
+        "pageTotal": 3
+    },
+    "data": [
+        {
+            "type": "term",
+            "id": "Q7942",
+            "attributes": {
+                "type": "otherTerm",
+                "label": "Globale Erwärmung",
+                "labelAlternative": [],
+                "abstract": "Mit globaler Erwärmung – umgangssprachlich auch „der Klimawandel“, „Erderwärmung“ oder auch „Erderhitzung“ – wird der gegenwärtige Anstieg der Durchschnittstemperatur der erdnahen Atmosphäre und der Meere bezeichnet. Es handelt sich um einen menschengemachten Klimawandel, der eine Folge von Netto-Treibhausgasemissionen ist, die seit Beginn der Industrialisierung durch Nutzung von fossilen Energieressourcen sowie nicht-nachhaltiger Forst- und Landwirtschaft entstanden sind. Die Treibhausgasemissionen erhöhen das Rückhaltevermögen für infrarote Wärmestrahlung in der Troposphäre, wodurch der natürliche Treibhauseffekt verstärkt wird. Wichtigstes Treibhausgas bei der derzeitigen globalen Erwärmung ist Kohlenstoffdioxid (CO2), dazu kommen weitere wie z. B. Methan und Distickstoffmonoxid. Die von der Messstation Mauna Loa gemessene mittlere CO2-Konzentration in der Erdatmosphäre stieg von ursprünglich etwa 280 ppm vor Beginn der Industrialisierung auf inzwischen über 420 ppm.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q7942&v=ed71c8be",
+                "thumbnailCreator": "NASA’s Scientific Visualization Studio, Key and Title by uploader (Eric Fisk)",
+                "thumbnailLicense": "CC-BY-SA-4.0",
+                "websiteURI": "",
+                "embedURI": "",
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Globale Erwärmung",
+                        "url": "https://de.wikipedia.org/wiki/Globale_Erw%C3%A4rmung"
+                    }
+                },
+                "lastChanged": "2025-06-10 07:58:07"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/term/Q7942"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?termID=Q7942"
+                    }
+                }
+            }
+        },
+        {
+            "type": "term",
+            "id": "Q10820",
+            "attributes": {
+                "type": "otherTerm",
+                "label": "A 49",
+                "labelAlternative": [
+                    "Bundesautobahn 49"
+                ],
+                "abstract": "Die Bundesautobahn 49 – Kurzform: Autobahn 49  – ist eine durch Nord- und Mittelhessen verlaufende Bundesautobahn. Sie verbindet Kassel über Fritzlar, Schwalmstadt, Stadtallendorf und Homberg (Ohm) mit der A 5 und stellt somit eine etwas kürzere Alternativroute zur viel befahrenen Strecke der A 7 über das Hattenbacher Dreieck dar. Während der nördliche Abschnitt von Kassel bis Borken ab Ende der 1960er Jahre Schritt für Schritt erbaut wurde, wurde die südliche Fortsetzung von Neuental bis an die A 5 Gegenstand harter politischer Debatten, die in etlichen Protestaktionen, Klagen und einer Besetzung des für die Trasse zu rodenden Dannenröder Forsts mündeten, und konnte erst in den 2020er Jahren vollständig realisiert werden. Bis heute gilt der Lückenschluss als einer der umkämpftesten Autobahnabschnitte Deutschlands und wurde zum Symbol des Kampfs für den Natur- und Klimaschutz.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q10820&v=d040b941",
+                "thumbnailCreator": "<a href=\"http://commons.wikimedia.org/wiki/User:Presse03\" title=\"User:Presse03\">Presse03</a>",
+                "thumbnailLicense": "CC-BY-SA",
+                "websiteURI": "",
+                "embedURI": "",
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Bundesautobahn 49",
+                        "url": "https://de.wikipedia.org/wiki/Bundesautobahn_49"
+                    }
+                },
+                "lastChanged": "2025-06-10 07:44:47"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/term/Q10820"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?termID=Q10820"
+                    }
+                }
+            }
+        },
+        {
+            "type": "term",
+            "id": "Q110027193",
+            "attributes": {
+                "type": "otherTerm",
+                "label": "Ausschuss für Klimaschutz und Energie",
+                "labelAlternative": [],
+                "abstract": "Der Ausschuss für Klimaschutz und Energie war ein vom Deutschen Bundestag am 9. Dezember 2021 eingesetzter Bundestagsausschuss für Fragen der Klima- und Energiepolitik. Er berät Gesetzesentwürfe in seinem Zuständigkeitsbereich, vorrangig vom Bundesministerium für Wirtschaft und Klimaschutz, bereitet Beschlüsse des Deutschen Bundestages vor und gibt Empfehlungen ab. Der Ausschuss für Klimaschutz und Energie war der einzige ständige Ausschuss im 20. Deutscher Bundestag, der keinen unmittelbaren Vorgänger hatte. Im 19. Deutschen Bundestag wurden entsprechende Sachverhalte vom Ausschuss für Umwelt, Naturschutz und nukleare Sicherheit bzw. vom Ausschuss für Wirtschaft und Energie behandelt. Im 21. Deutschen Bundestag wird kein Ausschuss für Klimaschutz und Energie gebildet.",
+                "thumbnailURI": null,
+                "thumbnailCreator": null,
+                "thumbnailLicense": null,
+                "websiteURI": "",
+                "embedURI": "",
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Ausschuss für Klimaschutz und Energie",
+                        "url": "https://de.wikipedia.org/wiki/Ausschuss_f%C3%BCr_Klimaschutz_und_Energie"
+                    }
+                },
+                "lastChanged": "2025-06-10 07:44:48"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/term/Q110027193"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?termID=Q110027193"
+                    }
+                }
+            }
+        },
+        {
+            "type": "term",
+            "id": "Q20681009",
+            "attributes": {
+                "type": "otherTerm",
+                "label": "CO2-Preis",
+                "labelAlternative": [],
+                "abstract": "Ein CO2-Preis, auch Kohlenstoffpreis, ist ein marktbasiertes Instrument der Umweltpolitik zur Senkung von CO2-Emissionen. Jede Tonne emittiertes CO2 erhält einen Preis – sei es durch die Pflicht zur Abgabe eines Zertifikates aus einem Emissionshandel oder durch eine Steuer. Emissionen verursachen somit Kosten; klimaschädliche Produkte werden teurer, klimafreundliche Alternativen im Vergleich preislich attraktiver. Dadurch haben die Marktteilnehmer einen Anreiz, die klimafreundlichen Alternativen zu wählen und so den durch sie verursachten CO2-Ausstoß zu reduzieren.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q20681009&v=9301af7f",
+                "thumbnailCreator": "The World Bank",
+                "thumbnailLicense": "CC-BY-3.0",
+                "websiteURI": "",
+                "embedURI": "",
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "CO2-Preis",
+                        "url": "https://de.wikipedia.org/wiki/CO2-Preis"
+                    }
+                },
+                "lastChanged": "2025-06-10 07:51:29"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/term/Q20681009"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?termID=Q20681009"
+                    }
+                }
+            }
+        },
+        {
+            "type": "term",
+            "id": "Q288401",
+            "attributes": {
+                "type": "otherTerm",
+                "label": "CO₂-Steuer",
+                "labelAlternative": [],
+                "abstract": "Die CO2-Steuer, auch Kohlenstoffsteuer (englisch: carbon tax, Oberbegriff: CO2-Abgabe), ist eine Umweltsteuer auf die Emission von Treibhausgasen wie Kohlenstoffdioxid (CO2). Hauptzweck einer CO2-Steuer ist ihre Lenkungswirkung: Emissionen erhalten einen Preis; dadurch werden klimaschädliche Produkte gegenüber klimafreundlichen teurer und es entsteht einen Anreiz zur Emissionsreduktion. Ziel ist es, die aus den Treibhausgasemissionen resultierenden Schäden (negativen Externalitäten) – insbesondere die Folgen der globalen Erwärmung und die Versauerung der Meere – zu begrenzen.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q288401&v=28ec0ab7",
+                "thumbnailCreator": "luchegorsk.ru",
+                "thumbnailLicense": "CC-BY-SA-3.0",
+                "websiteURI": "",
+                "embedURI": "",
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "CO2-Steuer",
+                        "url": "https://de.wikipedia.org/wiki/CO2-Steuer"
+                    }
+                },
+                "lastChanged": "2025-06-10 07:53:18"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/term/Q288401"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?termID=Q288401"
+                    }
+                }
+            }
+        }
+    ],
+    "links": {
+        "self": "https://optv.local/api/v1/search/terms?label=klima&limit=5&page=1",
+        "first": "https://optv.local/api/v1/search/terms?label=klima&limit=5&page=1",
+        "prev": null,
+        "next": "https://optv.local/api/v1/search/terms?label=klima&limit=5&page=2",
+        "last": "https://optv.local/api/v1/search/terms?label=klima&limit=5&page=3"
+    }
+}

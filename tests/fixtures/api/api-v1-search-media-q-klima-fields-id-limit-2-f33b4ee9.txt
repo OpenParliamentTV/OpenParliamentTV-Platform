@@ -1,0 +1,38 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success",
+        "results": {
+            "count": 2,
+            "total": 2583
+        }
+    },
+    "data": [
+        {
+            "type": "media",
+            "id": "DE-0200172058"
+        },
+        {
+            "type": "media",
+            "id": "DE-0200101063"
+        }
+    ],
+    "links": {
+        "self": "https://optv.local/api/v1/search/media?q=klima&fields=id&limit=2&page=1",
+        "first": "https://optv.local/api/v1/search/media?q=klima&fields=id&limit=2&page=1",
+        "prev": null,
+        "next": "https://optv.local/api/v1/search/media?q=klima&fields=id&limit=2&page=2",
+        "last": "https://optv.local/api/v1/search/media?q=klima&fields=id&limit=2&page=1292"
+    }
+}

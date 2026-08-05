@@ -43,14 +43,33 @@ function organisationGetByID($id = false) {
 function organisationSearch($parameter, $noLimit = false) {
     global $config;
 
-    $outputLimit = ($noLimit ? 10000 : 25);
-    
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
         return apiErrorDatabaseConnection();
     }
 
     $filteredParameters = filterAllowedSearchParams($parameter, 'organisation');
+
+    $outputLimit = 25;
+    if ($noLimit) {
+        $outputLimit = 10000;
+    } else if (isset($filteredParameters["limit"]) && is_numeric($filteredParameters["limit"]) && (int)$filteredParameters["limit"] > 0) {
+        $outputLimit = min(100, (int)$filteredParameters["limit"]);
+    }
+
+    // Validate page parameter. A non-positive page would become a negative
+    // LIMIT offset, so it is rejected rather than passed to the database.
+    $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
+    if ($page < 1) {
+        return apiErrorResponse(
+            422,
+            4,
+            "messageErrorInvalidValueTitle",
+            "messageErrorPageNumberMustBePositiveDetail",
+            ["field" => "page"],
+            "[name='page']"
+        );
+    }
 
     // Validate name parameter
     if (isset($filteredParameters["name"])) {
@@ -118,9 +137,9 @@ function organisationSearch($parameter, $noLimit = false) {
         $totalCount = count($db->getAll($query));
         
         // Add pagination
-        $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
         $offset = ($page - 1) * $outputLimit;
-        $query .= $db->parse(" ORDER BY OrganisationFilterable DESC, OrganisationOrder ASC LIMIT ?i, ?i", $offset, $outputLimit);
+        // OrganisationOrder is not unique, so the ID tiebreak is what keeps paging stable.
+        $query .= $db->parse(" ORDER BY OrganisationFilterable DESC, OrganisationOrder ASC, OrganisationID ASC LIMIT ?i, ?i", $offset, $outputLimit);
 
         // Execute search
         $findings = $db->getAll($query);
@@ -130,9 +149,12 @@ function organisationSearch($parameter, $noLimit = false) {
             return organisationBuildNode($finding, $db);
         }, $findings);
 
-        $links = [
-            "self" => $config["dir"]["api"]."/search/organisations?".getURLParameterFromArray($filteredParameters)
-        ];
+        $links = apiPaginationLinks(
+            $config["dir"]["api"]."/search/organisations",
+            $filteredParameters,
+            $page,
+            ceil($totalCount / $outputLimit)
+        );
 
         return apiSuccessResponse(
             $data,

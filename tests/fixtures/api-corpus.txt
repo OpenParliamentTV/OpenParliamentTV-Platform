@@ -43,6 +43,30 @@
 /api/v1/search/media?q=klima&limit=2&page=2
 /api/v1/search/media?dateFrom=2020-01-01&dateTo=2020-12-31&limit=2
 
+# --- pagination links: every boundary, on a paginated set of each search type -
+# The entries above all land on page 1 or return an error, so they never exercise
+# prev/next. These walk real multi-page sets. Result sizes are small and the
+# queries are ordered, so the page boundaries are stable.
+# people name=schmidt: 14 hits, limit 5 -> 3 pages
+/api/v1/search/people?name=schmidt&limit=5
+/api/v1/search/people?name=schmidt&limit=5&page=2
+/api/v1/search/people?name=schmidt&limit=5&page=3
+# 0 hits: still a valid single empty page, prev and next both null
+/api/v1/search/people?name=zzzznotfound
+# organisations type=faction: 8 hits, limit 3 -> 3 pages
+/api/v1/search/organisations?type=faction&limit=3&page=2
+# terms label=klima: 11 hits, limit 5 -> 3 pages
+/api/v1/search/terms?label=klima&limit=5
+# documents: array-valued label must round-trip identically in all five links
+/api/v1/search/documents?label[]=gesetz&label[]=antrag&limit=5&page=2
+# electoralPeriods: single page, and pins the rebuilt self link
+/api/v1/search/electoralPeriods?parliament=DE
+# media fields=id path carries links; getAllResults keeps self only
+/api/v1/search/media?q=klima&fields=id&limit=2
+/api/v1/search/media?q=klima&sessionID=DE-0200172&fields=id&getAllResults=1
+# last is clamped to the largest page the search backend can serve
+/api/v1/search/media?q=der&limit=2
+
 # --- autocomplete ------------------------------------------------------------
 /api/v1/autocomplete/text?q=klim
 /api/v1/autocomplete/entities?q=klim

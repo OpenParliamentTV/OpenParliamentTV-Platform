@@ -34,14 +34,31 @@ function personGetByID($id = false, $db = false) {
 function personSearch($parameter, $db = false) {
     global $config;
 
-    $outputLimit = 25;
-
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
         return apiErrorDatabaseConnection();
     }
 
     $filteredParameters = filterAllowedSearchParams($parameter, 'person');
+
+    $outputLimit = 25;
+    if (isset($filteredParameters["limit"]) && is_numeric($filteredParameters["limit"]) && (int)$filteredParameters["limit"] > 0) {
+        $outputLimit = min(100, (int)$filteredParameters["limit"]);
+    }
+
+    // Validate page parameter. A non-positive page would become a negative
+    // LIMIT offset, so it is rejected rather than passed to the database.
+    $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
+    if ($page < 1) {
+        return apiErrorResponse(
+            422,
+            4,
+            "messageErrorInvalidValueTitle",
+            "messageErrorPageNumberMustBePositiveDetail",
+            ["field" => "page"],
+            "[name='page']"
+        );
+    }
 
     // Validate name length
     if (array_key_exists("name", $filteredParameters)) {
@@ -168,10 +185,15 @@ function personSearch($parameter, $db = false) {
                                 ON ofr.OrganisationID = p.PersonFactionOrganisationID";
 
         $conditions = array();
+        // Fulltext relevance expression, reused as the primary sort so paging is
+        // best-match-first. MySQL only scores MATCH in the WHERE clause, it does
+        // not order by it implicitly.
+        $relevance = null;
 
         foreach ($filteredParameters as $k=>$para) {
             if ($k == "name") {
-                $conditions[] = $db->parse("MATCH(p.PersonLabel, p.PersonFirstName, p.PersonLastName) AGAINST (?s IN BOOLEAN MODE)", "*".str_replace("-", " ",$para)."*");
+                $relevance = $db->parse("MATCH(p.PersonLabel, p.PersonFirstName, p.PersonLastName) AGAINST (?s IN BOOLEAN MODE)", "*".str_replace("-", " ",$para)."*");
+                $conditions[] = $relevance;
             }
             if ($k == "type") {
                 $conditions[] = $db->parse("PersonType = ?s", $para);
@@ -270,7 +292,10 @@ function personSearch($parameter, $db = false) {
                 $config["platform"]["sql"]["tbl"]["Organisation"]
             );
 
-            $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
+            // Ordering is appended after the count query so counting stays unordered.
+            // Without it LIMIT/OFFSET would page through an unordered result set.
+            $query .= " ORDER BY ".($relevance !== null ? $relevance." DESC, " : "")."p.PersonLabel ASC, p.PersonID ASC";
+
             $query .= $db->parse(" LIMIT ?i, ?i", ($page-1)*$outputLimit, $outputLimit);
 
             $findings = $db->getAll($query,
@@ -287,9 +312,12 @@ function personSearch($parameter, $db = false) {
                     "page" => $page,
                     "pageTotal" => ceil(count($totalCount)/$outputLimit)
                 ],
-                [
-                    "self" => $config["dir"]["api"]."/search/people?".getURLParameterFromArray($filteredParameters)
-                ]
+                apiPaginationLinks(
+                    $config["dir"]["api"]."/search/people",
+                    $filteredParameters,
+                    $page,
+                    ceil(count($totalCount)/$outputLimit)
+                )
             );
 
         } else {

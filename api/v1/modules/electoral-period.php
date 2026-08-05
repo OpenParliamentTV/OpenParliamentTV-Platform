@@ -175,7 +175,26 @@ function electoralPeriodGetItemsFromDB($id = "all", $limit = 0, $offset = 0, $se
 function electoralPeriodSearch($parameter) {
     global $config;
 
+    $filteredParameters = filterAllowedSearchParams($parameter, 'electoralPeriod');
+
     $outputLimit = 25;
+    if (isset($filteredParameters["limit"]) && is_numeric($filteredParameters["limit"]) && (int)$filteredParameters["limit"] > 0) {
+        $outputLimit = min(100, (int)$filteredParameters["limit"]);
+    }
+
+    // Validate page parameter. A non-positive page would become a negative
+    // LIMIT offset, so it is rejected rather than passed to the database.
+    $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
+    if ($page < 1) {
+        return apiErrorResponse(
+            422,
+            4,
+            "messageErrorInvalidValueTitle",
+            "messageErrorPageNumberMustBePositiveDetail",
+            ["field" => "page"],
+            "[name='page']"
+        );
+    }
 
     // Validate parliament parameter
     if (!isset($parameter["parliament"])) {
@@ -225,7 +244,6 @@ function electoralPeriodSearch($parameter) {
         $totalCount = $db->getOne($countQuery, $config["parliament"][$parliament]["sql"]["tbl"]["ElectoralPeriod"]);
 
         // Add pagination
-        $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
         $query .= $db->parse(" LIMIT ?i, ?i", ($page-1)*$outputLimit, $outputLimit);
 
         // Execute query
@@ -256,9 +274,12 @@ function electoralPeriodSearch($parameter) {
                 "page" => $page,
                 "pageTotal" => ceil($totalCount/$outputLimit)
             ],
-            [
-                "self" => $config["dir"]["api"]."/search/electoralPeriods?parliament=".$parliament
-            ]
+            apiPaginationLinks(
+                $config["dir"]["api"]."/search/electoralPeriods",
+                $filteredParameters,
+                $page,
+                ceil($totalCount/$outputLimit)
+            )
         );
 
     } catch (exception $e) {

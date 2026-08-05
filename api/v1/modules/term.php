@@ -39,7 +39,6 @@ function termGetByID($id = false) {
 }
 function termSearch($parameter, $db = false) {
     global $config;
-    $outputLimit = 25;
 
     if (!$db) {
         $db = getApiDatabaseConnection();
@@ -50,7 +49,12 @@ function termSearch($parameter, $db = false) {
 
     // Validate and sanitize parameters
     $filteredParameters = filterAllowedSearchParams($parameter, 'term');
-    
+
+    $outputLimit = 25;
+    if (isset($filteredParameters["limit"]) && is_numeric($filteredParameters["limit"]) && (int)$filteredParameters["limit"] > 0) {
+        $outputLimit = min(100, (int)$filteredParameters["limit"]);
+    }
+
     // Validate label parameter
     if (isset($filteredParameters["label"])) {
         if (is_array($filteredParameters["label"])) {
@@ -114,6 +118,12 @@ function termSearch($parameter, $db = false) {
         $params = [$config["platform"]["sql"]["tbl"]["Term"]];
 
         // Build search conditions
+        // Fulltext scores, reused as the primary sort so paging is best-match-first.
+        // MySQL only scores MATCH in the WHERE clause, it does not order by it
+        // implicitly. Pre-bound with parse() so the ORDER BY adds no placeholders
+        // and cannot desync the positional $params used for the LIMIT.
+        $relevanceParts = [];
+
         if (isset($filteredParameters["label"])) {
             if (is_array($filteredParameters["label"])) {
                 $labelConditions = [];
@@ -121,12 +131,14 @@ function termSearch($parameter, $db = false) {
                     $labelConditions[] = "(MATCH(TermLabel, TermLabelAlternative, TermAbstract) AGAINST (?s IN BOOLEAN MODE) OR TermLabel LIKE ?s)";
                     $params[] = "*" . $label . "*";
                     $params[] = "%" . $label . "%";
+                    $relevanceParts[] = $db->parse("MATCH(TermLabel, TermLabelAlternative, TermAbstract) AGAINST (?s IN BOOLEAN MODE)", "*" . $label . "*");
                 }
                 $conditions[] = "(" . implode(" OR ", $labelConditions) . ")";
             } else {
                 $conditions[] = "(MATCH(TermLabel, TermLabelAlternative, TermAbstract) AGAINST (?s IN BOOLEAN MODE) OR TermLabel LIKE ?s)";
                 $params[] = "*" . $filteredParameters["label"] . "*";
                 $params[] = "%" . $filteredParameters["label"] . "%";
+                $relevanceParts[] = $db->parse("MATCH(TermLabel, TermLabelAlternative, TermAbstract) AGAINST (?s IN BOOLEAN MODE)", "*" . $filteredParameters["label"] . "*");
             }
         }
 
@@ -151,6 +163,10 @@ function termSearch($parameter, $db = false) {
         $totalCount = count($db->getAll($query, ...$params));
         $totalPages = ceil($totalCount / $outputLimit);
 
+        // Ordering is appended after the count query so counting stays unordered.
+        // Without it LIMIT/OFFSET would page through an unordered result set.
+        $query .= " ORDER BY ".(!empty($relevanceParts) ? "(".implode(" + ", $relevanceParts).") DESC, " : "")."TermLabel ASC, TermID ASC";
+
         // Add pagination
         $query .= " LIMIT ?i, ?i";
         $params[] = ($page - 1) * $outputLimit;
@@ -166,11 +182,14 @@ function termSearch($parameter, $db = false) {
             }, $findings),
             [
                 "page" => $page,
-                "pageTotal" => ceil($totalCount / $outputLimit)
+                "pageTotal" => $totalPages
             ],
-            [
-                "self" => $config["dir"]["api"]."/search/terms?".getURLParameterFromArray($filteredParameters)
-            ]
+            apiPaginationLinks(
+                $config["dir"]["api"]."/search/terms",
+                $filteredParameters,
+                $page,
+                $totalPages
+            )
         );
 
     } catch (exception $e) {

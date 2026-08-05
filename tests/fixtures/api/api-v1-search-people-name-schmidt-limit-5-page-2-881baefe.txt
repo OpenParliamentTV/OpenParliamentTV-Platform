@@ -1,0 +1,362 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success",
+        "page": 2,
+        "pageTotal": 3
+    },
+    "data": [
+        {
+            "type": "person",
+            "id": "Q15434556",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Gabriele Schmidt",
+                "labelAlternative": [],
+                "firstName": "Gabriele",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1956-07-02",
+                "gender": null,
+                "abstract": "Gabriele Schmidt ist eine deutsche Politikerin (CDU).",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q15434556&v=a97c5ead",
+                "thumbnailCreator": "&lt;a href=&quot;http://commons.wikimedia.org/wiki/User:Ralf_Roletschek&quot; title=&quot;User:Ralf Roletschek&quot;&gt;Ralf Roletschek&lt;/a&gt;",
+                "thumbnailLicense": "CC-BY-SA",
+                "embedURI": null,
+                "websiteURI": "http://www.gabriele-schmidt.eu",
+                "originID": null,
+                "socialMediaIDs": [],
+                "additionalInformation": null,
+                "lastChanged": "2023-03-28 21:20:13"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q15434556"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q49762",
+                        "attributes": {
+                            "label": "CDU",
+                            "labelAlternative": [
+                                "Christlich Demokratische Union Deutschlands"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q49762&v=2cced7fb",
+                            "thumbnailCreator": "Unknown authorUnknown author",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.cdu.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q49762"
+                    }
+                },
+                "faction": [],
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q15434556"
+                    }
+                }
+            }
+        },
+        {
+            "type": "person",
+            "id": "Q2516",
+            "attributes": {
+                "type": "person",
+                "label": "Helmut Schmidt",
+                "labelAlternative": [
+                    "Schmidt Schnauze",
+                    "H. Schmidt",
+                    "Schmidt, Helmut Heinrich Waldemar",
+                    "Helmut Heinrich Waldemar Schmidt"
+                ],
+                "firstName": "Helmut",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1918-12-23",
+                "gender": "male",
+                "abstract": "Helmut Heinrich Waldemar Schmidt war ein deutscher Politiker der SPD. Von 1974 bis 1982 war er als Regierungschef einer sozialliberalen Koalition nach dem Rücktritt Willy Brandts der fünfte Bundeskanzler der Bundesrepublik Deutschland, bis seine Kanzlerschaft Ende 1982 durch ein konstruktives Misstrauensvotum endete.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q2516&v=2f894015",
+                "thumbnailCreator": "Hans Schafgans",
+                "thumbnailLicense": "CC BY-SA 2.0",
+                "embedURI": "",
+                "websiteURI": "",
+                "originID": "",
+                "socialMediaIDs": [],
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Helmut Schmidt",
+                        "url": "https://de.wikipedia.org/wiki/Helmut_Schmidt"
+                    }
+                },
+                "lastChanged": "2026-06-22 18:15:03"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q2516"
+            },
+            "relationships": {
+                "party": [],
+                "faction": [],
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q2516"
+                    }
+                }
+            }
+        },
+        {
+            "type": "person",
+            "id": "Q23565778",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Jan Wenzel Schmidt",
+                "labelAlternative": [],
+                "firstName": "Jan",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1991-10-08",
+                "gender": "male",
+                "abstract": "Jan Wenzel Schmidt ist ein deutscher Politiker (AfD). Er war von 2016 bis 2021 Abgeordneter im Landtag von Sachsen-Anhalt und ist seit Oktober 2021 Mitglied des Deutschen Bundestages.",
+                "thumbnailURI": null,
+                "thumbnailCreator": null,
+                "thumbnailLicense": null,
+                "embedURI": null,
+                "websiteURI": "",
+                "originID": null,
+                "socialMediaIDs": [
+                    {
+                        "label": "Twitter",
+                        "id": "jws_afd"
+                    }
+                ],
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Jan Wenzel Schmidt",
+                        "url": "https://de.wikipedia.org/wiki/Jan_Wenzel_Schmidt"
+                    },
+                    "abgeordnetenwatchID": "152755"
+                },
+                "lastChanged": "2023-03-11 04:33:31"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q23565778"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q6721203",
+                        "attributes": {
+                            "label": "AfD",
+                            "labelAlternative": [
+                                "Alternative für Deutschland"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q6721203&v=34ab6829",
+                            "thumbnailCreator": "<a href=\"https://en.wikipedia.org/wiki/en:Alternative_for_Germany\" class=\"extiw\" title=\"w:en:Alternative for Germany\">Alternative for Germany</a>",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.afd.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q6721203"
+                    }
+                },
+                "faction": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q42575708",
+                        "attributes": {
+                            "label": "AfD",
+                            "labelAlternative": [
+                                "AfD-Bundestagsfraktion",
+                                "AfD-Fraktion"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q42575708&v=592f6f4c",
+                            "thumbnailCreator": "AfD-Bundestagsfraktion",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.afdbundestag.de/"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q42575708"
+                    }
+                },
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q23565778"
+                    }
+                }
+            }
+        },
+        {
+            "type": "person",
+            "id": "Q132776220",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Julian Schmidt",
+                "labelAlternative": [],
+                "firstName": "Julian",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1989-12-10",
+                "gender": "male",
+                "abstract": "Julian Schmidt ist ein deutscher Politiker (AfD). Er zog über Listenplatz 4 der AfD Hessen in den 21. Deutschen Bundestag ein.",
+                "thumbnailURI": "",
+                "thumbnailCreator": null,
+                "thumbnailLicense": "",
+                "embedURI": "",
+                "websiteURI": "https://julian-schmidt-mdb.de/",
+                "originID": "",
+                "socialMediaIDs": [],
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Julian Schmidt (Politiker)",
+                        "url": "https://de.wikipedia.org/wiki/Julian_Schmidt_(Politiker)"
+                    },
+                    "abgeordnetenwatchID": "145768"
+                },
+                "lastChanged": "2025-05-22 11:46:33"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q132776220"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q6721203",
+                        "attributes": {
+                            "label": "AfD",
+                            "labelAlternative": [
+                                "Alternative für Deutschland"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q6721203&v=34ab6829",
+                            "thumbnailCreator": "<a href=\"https://en.wikipedia.org/wiki/en:Alternative_for_Germany\" class=\"extiw\" title=\"w:en:Alternative for Germany\">Alternative for Germany</a>",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.afd.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q6721203"
+                    }
+                },
+                "faction": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q42575708",
+                        "attributes": {
+                            "label": "AfD",
+                            "labelAlternative": [
+                                "AfD-Bundestagsfraktion",
+                                "AfD-Fraktion"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q42575708&v=592f6f4c",
+                            "thumbnailCreator": "AfD-Bundestagsfraktion",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.afdbundestag.de/"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q42575708"
+                    }
+                },
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q132776220"
+                    }
+                }
+            }
+        },
+        {
+            "type": "person",
+            "id": "Q15813132",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Matthias Schmidt",
+                "labelAlternative": [],
+                "firstName": "Matthias",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1963-02-08",
+                "gender": null,
+                "abstract": "Matthias Schmidt ist ein deutscher Politiker und war für die SPD Abgeordneter im Deutschen Bundestag.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q15813132&v=80ea4185",
+                "thumbnailCreator": "Foto-AG Gymnasium Melle",
+                "thumbnailLicense": "CC-BY-SA",
+                "embedURI": null,
+                "websiteURI": "http://www.schmidt-tk.de/",
+                "originID": null,
+                "socialMediaIDs": [
+                    {
+                        "label": "Instagram",
+                        "id": "mdb.schmidt"
+                    },
+                    {
+                        "label": "Facebook",
+                        "id": "Matthias.Schmidt.Berlin"
+                    },
+                    {
+                        "label": "Twitter",
+                        "id": "mdb_schmidt"
+                    },
+                    {
+                        "label": "Youtube",
+                        "id": "UChSJYoMeuzhTeQiRBx8zCjQ"
+                    }
+                ],
+                "additionalInformation": null,
+                "lastChanged": "2023-03-28 21:20:15"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q15813132"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q49768",
+                        "attributes": {
+                            "label": "SPD",
+                            "labelAlternative": [
+                                "Sozialdemokratische Partei Deutschlands"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q49768&v=9b01d328",
+                            "thumbnailCreator": "Sozialdemokratische Partei Deutschlands (SPD)",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.spd.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q49768"
+                    }
+                },
+                "faction": [],
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q15813132"
+                    }
+                }
+            }
+        }
+    ],
+    "links": {
+        "self": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=2",
+        "first": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=1",
+        "prev": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=1",
+        "next": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=3",
+        "last": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=3"
+    }
+}

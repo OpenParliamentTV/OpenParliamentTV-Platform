@@ -1,0 +1,211 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success",
+        "page": 2,
+        "pageTotal": 3
+    },
+    "data": [
+        {
+            "type": "organisation",
+            "id": "Q1387991",
+            "attributes": {
+                "type": "faction",
+                "label": "FDP",
+                "labelAlternative": [
+                    "FDP-Bundestagsfraktion",
+                    "FDP-Fraktion",
+                    "Fraktion der Freien Demokraten"
+                ],
+                "abstract": "Die Fraktion der Freien Demokraten war die Fraktion der Freien Demokratischen Partei (FDP) im Deutschen Bundestag. Sie befindet sich aktuell in der Liquidation, nachdem die Partei nach der Bundestagswahl 2025 aus dem Bundestag ausschied. Die FDP war von 1949 bis 2013 und von 2017 bis 2025 in Fraktionsstärke im Bundestag vertreten.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1387991&v=a542bea7",
+                "thumbnailCreator": "Fraktion der Freien Demokraten im Deutschen Bundestag",
+                "thumbnailLicense": "PD textlogo",
+                "embedURI": null,
+                "websiteURI": "https://www.fdpbt.de/",
+                "socialMediaIDs": [
+                    {
+                        "label": "Instagram",
+                        "id": "fdpbt"
+                    },
+                    {
+                        "label": "Facebook",
+                        "id": "fdpbt"
+                    },
+                    {
+                        "label": "Twitter",
+                        "id": "fdpbt"
+                    }
+                ],
+                "color": "#feeb34",
+                "order": "3",
+                "filterable": "1",
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Fraktion der Freien Demokraten",
+                        "url": "https://de.wikipedia.org/wiki/Fraktion_der_Freien_Demokraten"
+                    }
+                },
+                "lastChanged": "2026-05-01 11:01:45"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/organisation/Q1387991"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?organisationID=Q1387991"
+                    }
+                },
+                "people": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/people?organisationID=Q1387991"
+                    }
+                }
+            }
+        },
+        {
+            "type": "organisation",
+            "id": "Q42575708",
+            "attributes": {
+                "type": "faction",
+                "label": "AfD",
+                "labelAlternative": [
+                    "AfD-Bundestagsfraktion",
+                    "AfD-Fraktion"
+                ],
+                "abstract": "Die AfD-Fraktion im Deutschen Bundestag ist die Fraktion der rechtspopulistischen und rechtsextremen Partei Alternative für Deutschland (AfD) im Deutschen Bundestag, die erstmals bei der Bundestagswahl 2017 ins Parlament einzog. Im 21. Deutschen Bundestag ist die Fraktion mit insgesamt 151 Abgeordneten vertreten.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q42575708&v=592f6f4c",
+                "thumbnailCreator": "AfD-Bundestagsfraktion",
+                "thumbnailLicense": "PD textlogo",
+                "embedURI": null,
+                "websiteURI": "https://www.afdbundestag.de/",
+                "socialMediaIDs": [
+                    {
+                        "label": "Instagram",
+                        "id": "afdimbundestag"
+                    },
+                    {
+                        "label": "Facebook",
+                        "id": "afdimbundestag"
+                    },
+                    {
+                        "label": "Twitter",
+                        "id": "AfDimBundestag"
+                    },
+                    {
+                        "label": "Youtube",
+                        "id": "UC_dZp8bZipnjntBGLVHm6rw"
+                    }
+                ],
+                "color": "#1a9fdd",
+                "order": "4",
+                "filterable": "1",
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "AfD-Fraktion im Deutschen Bundestag",
+                        "url": "https://de.wikipedia.org/wiki/AfD-Fraktion_im_Deutschen_Bundestag"
+                    }
+                },
+                "lastChanged": "2026-05-01 11:02:25"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/organisation/Q42575708"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?organisationID=Q42575708"
+                    }
+                },
+                "people": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/people?organisationID=Q42575708"
+                    }
+                }
+            }
+        },
+        {
+            "type": "organisation",
+            "id": "Q1826856",
+            "attributes": {
+                "type": "faction",
+                "label": "DIE LINKE",
+                "labelAlternative": [
+                    "Bundestagsfraktion Die Linke"
+                ],
+                "abstract": "Die Fraktion Die Linke im Bundestag war von 2005 bis 2023 und ist erneut ab 2025 die Fraktion der Partei Die Linke im Deutschen Bundestag. Dazwischen war die Partei als Gruppe Die Linke im Bundestag vertreten, nachdem Abgeordnete um das neu gegründete Bündnis Sahra Wagenknecht (BSW) aus der Fraktion austraten und diese damit die notwendige Mitgliederzahl für eine Zusammensetzung als Fraktion verlor. Bei der Bundestagswahl 2025 gelang ein Wiedereinzug in Fraktionsstärke.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1826856&v=e5a9c45f",
+                "thumbnailCreator": "Fraktion DIE LINKE. im Bundestag",
+                "thumbnailLicense": "PD textlogo",
+                "embedURI": null,
+                "websiteURI": "https://www.linksfraktion.de/",
+                "socialMediaIDs": [
+                    {
+                        "label": "Instagram",
+                        "id": "linksfraktion"
+                    },
+                    {
+                        "label": "Facebook",
+                        "id": "linksfraktion"
+                    },
+                    {
+                        "label": "Twitter",
+                        "id": "linksfraktion"
+                    },
+                    {
+                        "label": "Mastodon",
+                        "id": "linksfraktion@social.linksfraktion.de"
+                    },
+                    {
+                        "label": "Youtube",
+                        "id": "UCF2SPLBq18sL88yZw9m-GZQ"
+                    }
+                ],
+                "color": "#bc3475",
+                "order": "5",
+                "filterable": "1",
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Fraktion Die Linke im Bundestag",
+                        "url": "https://de.wikipedia.org/wiki/Fraktion_Die_Linke_im_Bundestag"
+                    }
+                },
+                "lastChanged": "2026-05-01 11:02:03"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/organisation/Q1826856"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?organisationID=Q1826856"
+                    }
+                },
+                "people": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/people?organisationID=Q1826856"
+                    }
+                }
+            }
+        }
+    ],
+    "links": {
+        "self": "https://optv.local/api/v1/search/organisations?type=faction&limit=3&page=2",
+        "first": "https://optv.local/api/v1/search/organisations?type=faction&limit=3&page=1",
+        "prev": "https://optv.local/api/v1/search/organisations?type=faction&limit=3&page=1",
+        "next": "https://optv.local/api/v1/search/organisations?type=faction&limit=3&page=3",
+        "last": "https://optv.local/api/v1/search/organisations?type=faction&limit=3&page=3"
+    }
+}

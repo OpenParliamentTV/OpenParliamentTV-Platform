@@ -394,7 +394,11 @@ paths:
                           - type: "person"
                             id: "Q567"
                 links:
-                  self: "https://de.openparliament.tv/api/v1/search/media?q=Rente&factionID[]=Q2207512&dateFrom=2018-04-11"
+                  self: "https://de.openparliament.tv/api/v1/search/media?q=Rente&factionID[]=Q2207512&dateFrom=2018-04-11&page=3"
+                  first: "https://de.openparliament.tv/api/v1/search/media?q=Rente&factionID[]=Q2207512&dateFrom=2018-04-11&page=1"
+                  prev: "https://de.openparliament.tv/api/v1/search/media?q=Rente&factionID[]=Q2207512&dateFrom=2018-04-11&page=2"
+                  next: "https://de.openparliament.tv/api/v1/search/media?q=Rente&factionID[]=Q2207512&dateFrom=2018-04-11&page=4"
+                  last: "https://de.openparliament.tv/api/v1/search/media?q=Rente&factionID[]=Q2207512&dateFrom=2018-04-11&page=12"
         '422':
           description: Validation error
           content:
@@ -531,6 +535,22 @@ paths:
           schema:
             type: string
             minLength: 1
+        - name: limit
+          in: query
+          description: Maximum number of results per page. Values above 100 are capped at 100.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+        - name: page
+          in: query
+          description: Page number for pagination (1-based)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
       responses:
         '200':
           description: Successful response
@@ -561,7 +581,11 @@ paths:
                         label: "CDU"
                         id: "Q49764"
                 links:
-                  self: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD"
+                  self: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD&page=1"
+                  first: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD&page=1"
+                  prev: null
+                  next: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD&page=2"
+                  last: "https://de.openparliament.tv/api/v1/search/people?name=Michael&party=SPD&page=2"
         '422':
           description: Validation error
           content:
@@ -606,6 +630,22 @@ paths:
           schema:
             type: integer
             enum: [0, 1]
+        - name: limit
+          in: query
+          description: Maximum number of results per page. Values above 100 are capped at 100.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+        - name: page
+          in: query
+          description: Page number for pagination (1-based)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
       responses:
         '200':
           description: Successful response
@@ -632,7 +672,11 @@ paths:
                       labelAlternative: "Die Grünen"
                       type: "faction"
                 links:
-                  self: "https://de.openparliament.tv/api/v1/search/organisations?name=Linke"
+                  self: "https://de.openparliament.tv/api/v1/search/organisations?name=Linke&page=1"
+                  first: "https://de.openparliament.tv/api/v1/search/organisations?name=Linke&page=1"
+                  prev: null
+                  next: null
+                  last: "https://de.openparliament.tv/api/v1/search/organisations?name=Linke&page=1"
         '422':
           description: Validation error
           content:
@@ -689,6 +733,22 @@ paths:
                 items:
                   type: string
                   minLength: 1
+        - name: limit
+          in: query
+          description: Maximum number of results per page. Values above 100 are capped at 100.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+        - name: page
+          in: query
+          description: Page number for pagination (1-based)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
       responses:
         '200':
           description: Successful response
@@ -714,7 +774,11 @@ paths:
                       label: "Drucksache 19/5412"
                       type: "officialDocument"
                 links:
-                  self: "https://de.openparliament.tv/api/v1/search/documents?label=19/5412"
+                  self: "https://de.openparliament.tv/api/v1/search/documents?label=19/5412&page=1"
+                  first: "https://de.openparliament.tv/api/v1/search/documents?label=19/5412&page=1"
+                  prev: null
+                  next: null
+                  last: "https://de.openparliament.tv/api/v1/search/documents?label=19/5412&page=1"
         '422':
           description: Validation error
           content:
@@ -757,6 +821,22 @@ paths:
           schema:
             type: string
             pattern: '^(Q|P)[0-9]+$'
+        - name: limit
+          in: query
+          description: Maximum number of results per page. Values above 100 are capped at 100.
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+        - name: page
+          in: query
+          description: Page number for pagination (1-based)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
       responses:
         '200':
           description: Successful response
@@ -781,7 +861,11 @@ paths:
                     attributes:
                       label: "Rentenreform"
                 links:
-                  self: "https://de.openparliament.tv/api/v1/search/terms?label=digital"
+                  self: "https://de.openparliament.tv/api/v1/search/terms?label=digital&page=1"
+                  first: "https://de.openparliament.tv/api/v1/search/terms?label=digital&page=1"
+                  prev: null
+                  next: "https://de.openparliament.tv/api/v1/search/terms?label=digital&page=2"
+                  last: "https://de.openparliament.tv/api/v1/search/terms?label=digital&page=3"
         '422':
           description: Validation error
           content:
@@ -1671,8 +1755,12 @@ components:
       description: |
         Media (speech) search response. Note the media search meta differs from the entity
         search meta: it carries a `results` object and date-range `attributes` instead of
-        `page`/`pageTotal`. Pagination is driven by the `page`/`limit` request parameters;
-        the only link returned is `self`.
+        `page`/`pageTotal`. Pagination is driven by the `page`/`limit` request parameters,
+        and `links` carries the full set (`self`, `first`, `prev`, `next`, `last`) built from
+        those same parameters. `prev` is `null` on the first page and `next` is `null` on the
+        last one. `last` is capped at the largest page the search backend can serve, so it
+        may describe fewer pages than `results.total` implies. When `getAllResults` is set the
+        response is a single complete set and only `self` is returned.
       properties:
         meta:
           type: object
@@ -1721,16 +1809,16 @@ components:
           items:
             type: object
         links:
-          type: object
-          properties:
-            self:
-              type: string
+          $ref: '#/components/schemas/PaginationLinks'
 
     EntitySearchResponse:
       type: object
       description: |
-        Entity search response (people, organisations, documents, terms). The meta carries the
-        current `page` and total `pageTotal` count; the only link returned is `self`.
+        Entity search response (people, organisations, documents, terms, electoral periods).
+        The meta carries the current `page` and total `pageTotal` count, and `links` carries
+        the full set (`self`, `first`, `prev`, `next`, `last`) built from the `page`/`limit`
+        request parameters. `prev` is `null` on the first page and `next` is `null` on the
+        last one.
       properties:
         meta:
           type: object
@@ -1749,10 +1837,31 @@ components:
           items:
             type: object
         links:
-          type: object
-          properties:
-            self:
-              type: string
+          $ref: '#/components/schemas/PaginationLinks'
+
+    PaginationLinks:
+      type: object
+      description: |
+        JSON:API pagination links for a collection response. Every link repeats the request's
+        own filter parameters and differs only in `page`, so a client can walk a result set by
+        following them. Links that do not exist are present as `null` rather than omitted, so
+        the object has the same shape on every page.
+      properties:
+        self:
+          type: string
+          description: The page that was requested
+        first:
+          type: string
+        prev:
+          type: string
+          nullable: true
+          description: '`null` on the first page'
+        next:
+          type: string
+          nullable: true
+          description: '`null` on the last page'
+        last:
+          type: string
 
     AutocompleteResponse:
       type: object

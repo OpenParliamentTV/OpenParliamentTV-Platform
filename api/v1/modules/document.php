@@ -35,14 +35,31 @@ function documentGetByID($id = false) {
 function documentSearch($parameter, $db = false) {
     global $config;
 
-    $outputLimit = 25;
-
     $db = getApiDatabaseConnection('platform');
     if (!is_object($db)) {
         return apiErrorDatabaseConnection();
     }
 
     $filteredParameters = filterAllowedSearchParams($parameter, 'document');
+
+    $outputLimit = 25;
+    if (isset($filteredParameters["limit"]) && is_numeric($filteredParameters["limit"]) && (int)$filteredParameters["limit"] > 0) {
+        $outputLimit = min(100, (int)$filteredParameters["limit"]);
+    }
+
+    // Validate page parameter. A non-positive page would become a negative
+    // LIMIT offset, so it is rejected rather than passed to the database.
+    $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
+    if ($page < 1) {
+        return apiErrorResponse(
+            422,
+            4,
+            "messageErrorInvalidValueTitle",
+            "messageErrorPageNumberMustBePositiveDetail",
+            ["field" => "page"],
+            "[name='page']"
+        );
+    }
 
     // Validate label parameter
     if (isset($filteredParameters["label"])) {
@@ -100,20 +117,26 @@ function documentSearch($parameter, $db = false) {
     try {
         $query = "SELECT * FROM " . $config["platform"]["sql"]["tbl"]["Document"];
         $conditions = [];
+        // Fulltext scores, reused as the primary sort so paging is best-match-first.
+        // MySQL only scores MATCH in the WHERE clause, it does not order by it
+        // implicitly; LIKE-only hits score 0 and fall to the label tiebreak.
+        $relevanceParts = [];
 
         foreach ($filteredParameters as $k => $para) {
             if ($k == "label") {
                 if (is_array($para)) {
-                    $tmpStringArray = array_map(function($tmppara) use ($db) {
-                        return $db->parse("((MATCH(DocumentLabel, DocumentLabelAlternative, DocumentAbstract) AGAINST (?s IN BOOLEAN MODE)) OR (DocumentLabel LIKE ?s))", 
-                            "*".$tmppara."*", 
+                    $tmpStringArray = array_map(function($tmppara) use ($db, &$relevanceParts) {
+                        $relevanceParts[] = $db->parse("MATCH(DocumentLabel, DocumentLabelAlternative, DocumentAbstract) AGAINST (?s IN BOOLEAN MODE)", "*".$tmppara."*");
+                        return $db->parse("((MATCH(DocumentLabel, DocumentLabelAlternative, DocumentAbstract) AGAINST (?s IN BOOLEAN MODE)) OR (DocumentLabel LIKE ?s))",
+                            "*".$tmppara."*",
                             "%".$tmppara."%"
                         );
                     }, $para);
                     $conditions[] = "(" . implode(" OR ", $tmpStringArray) . ")";
                 } else {
-                    $conditions[] = $db->parse("(MATCH(DocumentLabel, DocumentLabelAlternative, DocumentAbstract) AGAINST (?s IN BOOLEAN MODE) OR (DocumentLabel LIKE ?s))", 
-                        "*".$para."*", 
+                    $relevanceParts[] = $db->parse("MATCH(DocumentLabel, DocumentLabelAlternative, DocumentAbstract) AGAINST (?s IN BOOLEAN MODE)", "*".$para."*");
+                    $conditions[] = $db->parse("(MATCH(DocumentLabel, DocumentLabelAlternative, DocumentAbstract) AGAINST (?s IN BOOLEAN MODE) OR (DocumentLabel LIKE ?s))",
+                        "*".$para."*",
                         "%".$para."%"
                     );
                 }
@@ -151,9 +174,12 @@ function documentSearch($parameter, $db = false) {
         $query .= " WHERE " . implode(" AND ", $conditions);
         $totalCount = count($db->getAll($query));
 
-        $page = isset($parameter["page"]) ? (int)$parameter["page"] : 1;
+        // Ordering is appended after the count query so counting stays unordered.
+        // Without it LIMIT/OFFSET would page through an unordered result set.
+        $query .= " ORDER BY ".(!empty($relevanceParts) ? "(".implode(" + ", $relevanceParts).") DESC, " : "")."DocumentLabel ASC, DocumentID ASC";
+
         $query .= $db->parse(" LIMIT ?i, ?i", ($page-1)*$outputLimit, $outputLimit);
-        
+
         $findings = $db->getAll($query);
 
         $data = array_map(function($finding) use ($db) {
@@ -169,9 +195,12 @@ function documentSearch($parameter, $db = false) {
                 "page" => $page,
                 "pageTotal" => ceil($totalCount/$outputLimit)
             ],
-            [
-                "self" => $config["dir"]["api"]."/search/documents?".getURLParameterFromArray($filteredParameters)
-            ]
+            apiPaginationLinks(
+                $config["dir"]["api"]."/search/documents",
+                $filteredParameters,
+                $page,
+                ceil($totalCount/$outputLimit)
+            )
         );
 
     } catch (exception $e) {

@@ -272,6 +272,30 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
             );
         }
 
+        // Page geometry for the pagination links, mirroring calculatePagination()
+        // in modules/search/opensearch.php.
+        $pageSize = $config["display"]["speechesPerPage"];
+        if (isset($filteredParameters["limit"]) && is_numeric($filteredParameters["limit"]) && intval($filteredParameters["limit"]) > 0) {
+            $pageSize = intval($filteredParameters["limit"]);
+        }
+        $currentPage = isset($filteredParameters["page"]) ? max(1, (int)$filteredParameters["page"]) : 1;
+
+        if (isset($filteredParameters["id"]) && strlen($filteredParameters["id"]) > 3) {
+            // calculatePagination() pins from=0 for an id lookup, so this is one page.
+            $currentPage = 1;
+            $totalPages = 1;
+        } else {
+            // OpenSearch rejects from+size past the result window, so never advertise
+            // a page that would fail.
+            $maxReachablePage = max(1, (int)floor(OPTV_SEARCH_MAX_RESULT_WINDOW / $pageSize));
+            $totalPages = min((int)ceil(($search["hits"]["total"]["value"] ?? 0) / $pageSize), $maxReachablePage);
+        }
+
+        // getAllResults returns one complete set, so pagination links are meaningless there.
+        $links = $getAllResults
+            ? ["self" => $config["dir"]["api"]."/search/media?".getURLParameterFromArray($filteredParameters)]
+            : apiPaginationLinks($config["dir"]["api"]."/search/media", $filteredParameters, $currentPage, $totalPages);
+
         // Handle fields=id for returning only IDs
         if (isset($filteredParameters['fields']) && $filteredParameters['fields'] === 'id') {
             $idList = [];
@@ -290,14 +314,10 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
                     "total" => $search["hits"]["total"]["value"] ?? 0,
                 ]
             ];
-            // Prepare links for ID list response
-            $linksForIds = [
-                "self" => $config["dir"]["api"]."/search/media?".getURLParameterFromArray($filteredParameters)
-            ];
             return apiSuccessResponse(
                 $idList,
                 $metaForIds,
-                $linksForIds
+                $links
             );
         }
 
@@ -320,9 +340,7 @@ function mediaSearch($parameter, $db = false, $dbp = false) {
                     "totalHits" => $search["hits"]["totalHits"] ?? 0
                 ]
             ],
-            "links" => [
-                "self" => $config["dir"]["api"]."/search/media?".getURLParameterFromArray($filteredParameters)
-            ]
+            "links" => $links
         ];
 
         // Process search hits into $return["data"]

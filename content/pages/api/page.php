@@ -388,6 +388,18 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 											<td>FragDenStaat ID</td>
 											<td>String</td>
 										</tr>
+										<tr>
+											<td>limit</td>
+											<td>1&ndash;100</td>
+											<td>Maximum number of results per page (default 25, values above 100 are capped)</td>
+											<td>Integer</td>
+										</tr>
+										<tr>
+											<td>page</td>
+											<td>integer</td>
+											<td>Page number for pagination (1-based)</td>
+											<td>Integer</td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
@@ -431,6 +443,18 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 										<td>min 2 chars</td>
 										<td>type</td>
 										<td>String</td>
+									</tr>
+									<tr>
+										<td>limit</td>
+										<td>1&ndash;100</td>
+										<td>Maximum number of results per page (default 25, values above 100 are capped)</td>
+										<td>Integer</td>
+									</tr>
+									<tr>
+										<td>page</td>
+										<td>integer</td>
+										<td>Page number for pagination (1-based)</td>
+										<td>Integer</td>
 									</tr>
 								</tbody>
 							</table>
@@ -482,6 +506,18 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 										<td>wikidataID</td>
 										<td>String</td>
 									</tr>
+									<tr>
+										<td>limit</td>
+										<td>1&ndash;100</td>
+										<td>Maximum number of results per page (default 25, values above 100 are capped)</td>
+										<td>Integer</td>
+									</tr>
+									<tr>
+										<td>page</td>
+										<td>integer</td>
+										<td>Page number for pagination (1-based)</td>
+										<td>Integer</td>
+									</tr>
 								</tbody>
 							</table>
 							<hr>
@@ -529,6 +565,18 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 										<td>Wikidata ID RegEx</td>
 										<td>wikidataID</td>
 										<td>String</td>
+									</tr>
+									<tr>
+										<td>limit</td>
+										<td>1&ndash;100</td>
+										<td>Maximum number of results per page (default 25, values above 100 are capped)</td>
+										<td>Integer</td>
+									</tr>
+									<tr>
+										<td>page</td>
+										<td>integer</td>
+										<td>Page number for pagination (1-based)</td>
+										<td>Integer</td>
 									</tr>
 								</tbody>
 							</table>
@@ -1095,7 +1143,7 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 					</ul>
 					<p>Additionally Data Objects <strong>CAN</strong> include the properties:</p>
 					<ul>
-						<li><strong>links</strong> (&quot;self&quot; = link to the respective API request URL)</li>
+						<li><strong>links</strong> (&quot;self&quot; = link to the respective API request URL; search responses additionally carry &quot;first&quot;, &quot;prev&quot;, &quot;next&quot; and &quot;last&quot;)</li>
 						<li><strong>relationships</strong> (properties derived from other data items)</li>
 					</ul>
 					<p>Depending on the context, the <strong>attributes</strong> object can only include a subset of all properties. The full set can then be retrieved via an API request to <strong>links</strong> &gt; <strong>self</strong>.</p>
@@ -1154,23 +1202,20 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 	  }
 	},
 	"requestStatus": "success",
-	"results": {
-	  "count": 25,
-	  "total": 128,
-	  "rangeStart": 51,
-	  "rangeEnd": 75,
-	  "maxScore": 4.7654785 /* float or null */
-	}
+	"page": 3,
+	"pageTotal": 13
   },
   "data": [],
   "links": {
-	"self": "https://de.openparliament.tv/api/v1/search/people?party=CDU&page[number]=3&page[size]=25",
-	"first": "https://de.openparliament.tv/api/v1/search/people?party=CDU&page[number]=1&page[size]=25",
-	"prev": "https://de.openparliament.tv/api/v1/search/people?party=CDU&page[number]=2&page[size]=25",
-	"next": "https://de.openparliament.tv/api/v1/search/people?party=CDU&page[number]=4&page[size]=25",
-	"last": "https://de.openparliament.tv/api/v1/search/people?party=CDU&page[number]=13&page[size]=25"
+	"self": "https://de.openparliament.tv/api/v1/search/people?party=CDU&limit=25&page=3",
+	"first": "https://de.openparliament.tv/api/v1/search/people?party=CDU&limit=25&page=1",
+	"prev": "https://de.openparliament.tv/api/v1/search/people?party=CDU&limit=25&page=2",
+	"next": "https://de.openparliament.tv/api/v1/search/people?party=CDU&limit=25&page=4",
+	"last": "https://de.openparliament.tv/api/v1/search/people?party=CDU&limit=25&page=13"
   }
 }</code></pre>
+					<p>Every pagination link repeats the request&#39;s own filter parameters and differs only in <strong>page</strong>, so a result set can be walked by following them. Links that do not exist are returned as <strong>null</strong> rather than omitted: <strong>prev</strong> is null on the first page and <strong>next</strong> is null on the last one.</p>
+					<p>Media search responses carry the same five links, but their <strong>meta</strong> holds a <strong>results</strong> object (count, total, totalHits) and date-range <strong>attributes</strong> instead of <strong>page</strong>/<strong>pageTotal</strong>.</p>
 				</div>
 			</div>
 		</div>

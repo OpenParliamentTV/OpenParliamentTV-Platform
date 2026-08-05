@@ -1095,10 +1095,17 @@ function determineSorting($request) {
 }
 
 /**
+ * Largest from+size OpenSearch will serve (the index max_result_window default).
+ * Requests beyond it fail, so it caps both the getAllResults page size and the
+ * last page mediaSearch() is willing to advertise in its pagination links.
+ */
+const OPTV_SEARCH_MAX_RESULT_WINDOW = 10000;
+
+/**
  * Calculate pagination parameters
- * 
+ *
  * This function calculates pagination based on the request parameters.
- * 
+ *
  * @param array $request The request array
  * @param bool $getAllResults Whether to get all results
  * @param array $config The configuration array
@@ -1110,8 +1117,8 @@ function calculatePagination($request, $getAllResults, $config) {
     if (isset($request["limit"]) && is_numeric($request["limit"]) && intval($request["limit"]) > 0) {
         $pageSize = intval($request["limit"]);
     }
-    
-    $maxFullResults = ($getAllResults === true) ? 10000 : $pageSize;
+
+    $maxFullResults = ($getAllResults === true) ? OPTV_SEARCH_MAX_RESULT_WINDOW : $pageSize;
     $from = 0;
     
     // Bypass pagination when searching for a specific ID to ensure we find the item

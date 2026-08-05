@@ -1,0 +1,371 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success",
+        "page": 2,
+        "pageTotal": 657
+    },
+    "data": [
+        {
+            "type": "document",
+            "id": "2497",
+            "attributes": {
+                "type": "officialDocument",
+                "wikidataID": null,
+                "label": "Drucksache 19/15238",
+                "labelAlternative": [
+                    "a) zu dem Antrag der FDP\r\n- Drucksache 19/14787 -\r\nUN-Behindertenrechtskonvention erlebbar machen - Der Staat als Vorbild bei vollumfassender Barrierefreiheit\r\nb) zu dem Antrag der Fraktion DIE LINKE.\r\n- Drucksache 19/14760 -\r\nMenschenrecht auf Barrierefreiheit garantieren - Allgemeines Gleichbehandlungsgesetz und Behindertengleichstellungsgesetz umfassend überarbeiten\r\nc) zu dem Antrag  DIE LINKE.\r\n- Drucksache 19/14759 -\r\nMenschenrecht auf Barrierefreiheit garantieren - Europäischen Rechtsakt zur Barrierefreiheit umsetzen\r\nd) zu dem Antrag DIE LINKE.\r\n- Drucksache 19/14758 -\r\nMenschenrecht auf barrierefreie Schutzräume und Notrufsysteme garantieren - UN-Behindertenrechtskonvention umsetzen\r\ne) zu dem Antrag der Fraktion DIE LINKE.\r\n- Drucksache 19/14757 -\r\nMenschenrecht auf Barrierefreiheit in der Gesundheits- und Pflegeversorgung garantieren - UN-Behindertenrechtskonvention umsetzen\r\nf) zu dem Antrag DIE LINKE.\r\n- Drucksache 19/14756 -\r\nMenschenrecht auf Barrierefreiheit in Kultur, Sport und Tourismus garantieren - UN-Behindertenrechtskonvention umsetzen\r\ng) zu dem Antrag DIE LINKE.\r\n- Drucksache 19/14754 -\r\nMenschenrecht auf barrierefreie politische Teilhabe garantieren - UN-Behindertenrechtskonvention umsetzen\r\nh) zu dem Antrag  DIE LINKE.\r\n-Drucksache 19/14752 -\r\nMenschenrecht auf barrierefreie Mobilität garantieren - UN-Behindertenrechtskonvention umsetzen"
+                ],
+                "abstract": "",
+                "thumbnailURI": null,
+                "thumbnailCreator": null,
+                "thumbnailLicense": null,
+                "sourceURI": "https://dserver.bundestag.de/btd/19/152/1915238.pdf",
+                "embedURI": null,
+                "additionalInformation": {
+                    "originID": "236249",
+                    "subType": "Beschlussempfehlung und Bericht",
+                    "date": "2019-11-14",
+                    "electoralPeriod": 19,
+                    "creator": [
+                        "Ausschuss für Arbeit und Soziales"
+                    ],
+                    "author": [
+                        {
+                            "id": "2039",
+                            "titel": "Sören Pellmann, MdB, DIE LINKE",
+                            "autor_titel": "Sören Pellmann, Berichterstattung"
+                        }
+                    ],
+                    "procedureIDs": [
+                        {
+                            "id": "255008",
+                            "titel": "Menschenrecht auf Barrierefreiheit garantieren - Allgemeines Gleichbehandlungsgesetz und Behindertengleichstellungsgesetz umfassend überarbeiten",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "255007",
+                            "titel": "Menschenrecht auf Barrierefreiheit garantieren - Europäischen Rechtsakt zur Barrierefreiheit umsetzen",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "255004",
+                            "titel": "Menschenrecht auf Barrierefreiheit in der Gesundheits- und Pflegeversorgung garantieren - UN-Behindertenrechtskonvention umsetzen",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "255003",
+                            "titel": "Menschenrecht auf Barrierefreiheit in Kultur, Sport und Tourismus garantieren - UN-Behindertenrechtskonvention umsetzen",
+                            "vorgangstyp": "Antrag"
+                        }
+                    ]
+                },
+                "lastChanged": "2023-03-11 05:06:49"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/document/2497"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?documentID=2497"
+                    }
+                }
+            }
+        },
+        {
+            "type": "document",
+            "id": "3693",
+            "attributes": {
+                "type": "officialDocument",
+                "wikidataID": null,
+                "label": "Drucksache 19/23792",
+                "labelAlternative": [
+                    "a) zu dem Antrag der Fraktion der AfD\r\n- Drucksache 19/20568 -\r\nQualitätspakt Schule - Humane und humanistische Bildung durch Schüler-Lehrer-Kontakt gewährleisten\r\nb) zu dem Antrag der Fraktion der AfD\r\n- Drucksache 19/20683 -\r\nCorona digital bekämpfen - Deutsches Bildungs- und Forschungssystem digital fit machen für Lernen zu Hause sowie Fernlehre und -forschung\r\nc) zu dem Antrag der Fraktion der AfD\r\n- Drucksache 19/22456 -\r\nAuf den Lehrer kommt es an - Nachhaltige Aufwertung des Schulwesens statt Ökonomisierung\r\nd) zu dem Antrag der Fraktion der FDP\r\n- Drucksache 19/20554 -\r\nLehren aus der Corona-Krise - Impulse für die Schule der Zukunft\r\ne) zu dem Antrag der Fraktion der FDP\r\n- Drucksache 19/20582 -\r\nWeniger Bürokratie wagen - DigitalPakt Schule beschleunigen\r\nf) zu dem Antrag der Fraktion DIE LINKE.\r\n- Drucksache 19/19483 -\r\nLehrkräftemangel beheben - Gute Bildung sichern\r\ng) zu dem Antrag der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 19/18729 -\r\nBundeszentrale für digitale und Medienbildung - Medien- und digitalpädagogische Kompetenzen bündeln, vermitteln und fördern\r\nh) zu dem Antrag der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 19/20385 -\r\nLernen aus der Krise - Ein Update für die Schulen"
+                ],
+                "abstract": "",
+                "thumbnailURI": null,
+                "thumbnailCreator": null,
+                "thumbnailLicense": null,
+                "sourceURI": "https://dserver.bundestag.de/btd/19/237/1923792.pdf",
+                "embedURI": null,
+                "additionalInformation": {
+                    "originID": "246686",
+                    "subType": "Beschlussempfehlung und Bericht",
+                    "date": "2020-10-28",
+                    "electoralPeriod": 19,
+                    "creator": [
+                        "Ausschuss für Bildung, Forschung und Technikfolgenabschätzung"
+                    ],
+                    "author": [
+                        {
+                            "id": "7114",
+                            "titel": "Birke Bull-Bischoff, MdB, DIE LINKE",
+                            "autor_titel": "Birke Bull-Bischoff, Berichterstattung"
+                        },
+                        {
+                            "id": "2223",
+                            "titel": "Nicole Höchst, MdB, AfD",
+                            "autor_titel": "Nicole Höchst, Berichterstattung"
+                        },
+                        {
+                            "id": "1924",
+                            "titel": "Ronja Kemmer, MdB, CDU/CSU",
+                            "autor_titel": "Ronja Kemmer, Berichterstattung"
+                        },
+                        {
+                            "id": "2155",
+                            "titel": "Margit Stumpp, MdB, BÜNDNIS 90/DIE GRÜNEN",
+                            "autor_titel": "Margit Stumpp, Berichterstattung"
+                        }
+                    ],
+                    "procedureIDs": [
+                        {
+                            "id": "262743",
+                            "titel": "Lehrkräftemangel beheben - Gute Bildung sichern",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "264544",
+                            "titel": "Lehren aus der Corona-Krise - Impulse für die Schule der Zukunft",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "261397",
+                            "titel": "Bundeszentrale für digitale und Medienbildung - Medien- und digitalpädagogische Kompetenzen bündeln, vermitteln und fördern",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "264178",
+                            "titel": "Lernen aus der Krise - Ein Update für die Schulen",
+                            "vorgangstyp": "Antrag"
+                        }
+                    ]
+                },
+                "lastChanged": "2023-03-11 05:10:25"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/document/3693"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?documentID=3693"
+                    }
+                }
+            }
+        },
+        {
+            "type": "document",
+            "id": "2947",
+            "attributes": {
+                "type": "officialDocument",
+                "wikidataID": null,
+                "label": "Drucksache 19/19204",
+                "labelAlternative": [
+                    "a) zu dem Gesetzentwurf der Fraktionen der CDU/CSU und SPD\r\n- Drucksache 19/18966 -\r\nEntwurf eines Gesetzes zu sozialen Maßnahmen zur Bekämpfung der Corona-Pandemie  (Sozialschutz-Paket II)\r\nb) zu dem Antrag der Abgeordneten Udo Theodor Hemmelgarn, Marc Bernhard, Frank Magnitz, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 19/19017 -\r\nStärkung des Sozialstaates und Soforthilfen für Mieter und Wohnungswirtschaft\r\nc) zu dem Antrag der Abgeordneten Jens Beeck, Michael Theurer, Johannes Vogel, weiterer Abgeordneter und der Fraktion der FDP\r\n- Drucksache 19/18672 -\r\nHilfestrukturen für Menschen mit Behinderungen in der Corona-Pandemie sichern\r\nd) zu dem Antrag  der Abgeordneten Susanne Ferschl, Fabio De Masi, Sabine Zimmermann (Zwickau), weiterer Abgeordneter und der Fraktion DIE LINKE.\r\n- Drucksache 19/18686 -\r\nKurzarbeitergeld erhöhen - Kosten der Krise nicht einseitig Beschäftigten zumuten\r\ne) zu dem Antrag der Abgeordneten Katja Kipping, Susanne Ferschl, Gökay Akbulut, weiterer Abgeordneter und der Fraktion DIE LINKE.\r\n- Drucksache 19/18945 -\r\nSozialen Schutz auch während der COVID-19-Pandemie umfassend gewährleisten\r\nf) zu dem Antrag der Abgeordneten Dr. Wolfgang Strengmann-Kuhn, Beate Müller-Gemmeke, Anja Hajduk, weiterer Abgeordneter und der Fraktion DIE LINKE.\r\n- Drucksache 19/18704 -\r\nKurzarbeitergeld Plus einführen\r\ng) zu dem Antrag der Abgeordneten Sven Lehmann, Anja Hajduk, Markus Kurth, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 19/18705 -\r\nMit einem Corona-Aufschlag in der Grundsicherung das Existenzminimum sichern\r\nh) zu dem Antrag der Abgeordneten Dr. Wolfgang Strengmann-Kuhn, Anja Hajduk, Filiz Polat, weiterer Abgeordneter und der der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 19/18939 -\r\nAllen wohnungslosen Menschen schnell und unbürokratisch helfen"
+                ],
+                "abstract": "",
+                "thumbnailURI": null,
+                "thumbnailCreator": null,
+                "thumbnailLicense": null,
+                "sourceURI": "https://dserver.bundestag.de/btd/19/192/1919204.pdf",
+                "embedURI": null,
+                "additionalInformation": {
+                    "originID": "241078",
+                    "subType": "Beschlussempfehlung und Bericht",
+                    "date": "2020-05-13",
+                    "electoralPeriod": 19,
+                    "creator": [
+                        "Ausschuss für Arbeit und Soziales"
+                    ],
+                    "author": [
+                        {
+                            "id": "7078",
+                            "titel": "Albert H. Weiler, MdB, CDU/CSU",
+                            "autor_titel": "Albert H. Weiler, Berichterstattung"
+                        }
+                    ],
+                    "procedureIDs": [
+                        {
+                            "id": "261327",
+                            "titel": "Kurzarbeitergeld erhöhen - Kosten der Krise nicht einseitig Beschäftigten zumuten",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "261336",
+                            "titel": "Hilfestrukturen für Menschen mit Behinderungen in der Corona-Pandemie sichern",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "261325",
+                            "titel": "Mit einem Corona-Aufschlag in der Grundsicherung das Existenzminimum sichern",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "261363",
+                            "titel": "Kurzarbeitergeld Plus einführen",
+                            "vorgangstyp": "Antrag"
+                        }
+                    ]
+                },
+                "lastChanged": "2023-03-11 05:08:12"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/document/2947"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?documentID=2947"
+                    }
+                }
+            }
+        },
+        {
+            "type": "document",
+            "id": "3785",
+            "attributes": {
+                "type": "officialDocument",
+                "wikidataID": null,
+                "label": "Drucksache 19/24334",
+                "labelAlternative": [
+                    "a) zu dem Gesetzentwurf der CDU/CSU und SPD\r\n- Drucksache 19/23944 -\r\nEntwurf eines Dritten Gesetzes zum Schutz der Bevölkerung bei einer epidemischen Lage von nationaler Tragweite\r\nb) zu dem Antrag  der Abgeordneten Detlev Spangenberg, Dr. Robby Schlund, Paul Viktor Podolay, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 19/22547 -\r\nEindimensionale Beratung vermeiden, multiprofessionalen Sachverstand sicherstellen - Einberufung einer parlamentarisch bestätigten Epidemiekommission zur Erarbeitung klarer wissenschaftlich fundierter Kriterien bezüglich der Feststellung einer epidemischen Lage von nationaler Tragweite und deren Aufhebung\r\nc) zu dem Antrag der Abgeordneten Detlev Spangenberg, Dr. Robby Schlund, Paul Viktor Podolay, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 19/22551(neu) -\r\nErneute Forderung der Aufhebung der epidemischen Lage von nationaler Tragweite und Sicherstellung der parlamentarischen Kontrolle\r\nd) zu dem Antrag  der Abgeordneten Dr. Gottfried Curio, Martin Hess, Dr. Bernd Baumann, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 19/23949 -\r\nUmgehung des Parlaments bei Corona-Maßnahmen beenden - Beschlüsse des Corona-Gipfels vom 28. Oktober 2020 rückgängig machen\r\ne) zu dem Antrag der Abgeordneten Detlev Spangenberg, Dr. Robby Schlund, Paul Viktor Podolay, weiterer Abgeordneter und der Fraktion der AfD\r\n- Drucksache 19/23950 -\r\nCOVID-19 - Eigenverantwortung statt Verbote und Zwänge - Gesundheitlichen und wirtschaftlichen Kollaps verhindern, Kollateralschäden vermeiden\r\nf) zu dem Antrag der Abgeordneten Konstantin Kuhle, Christine Aschenberg-Dugnus, Stephan Thomae, weiterer Abgeordneter und der Fraktion der FDP\r\n- Drucksache 19/23689 -\r\nInfektionsschutzmaßnahmen auf eine klare gesetzliche Grundlage stellen - Demokratie und Parlamentarismus stärken\r\ng) zu dem Antrag der Abgeordneten Dr. Achim Kessler, Susanne Ferschl, Gökay Akbulut, weiterer Abgeordneter und der Fraktion DIE LINKE.\r\n- Drucksache 19/23942 -\r\nDemokratische Kontrolle auch in der Pandemie\r\nh) zu dem Antrag  der Abgeordneten Dr. Manuela Rottmann, Britta Haßelmann, Kordula Schulz-Asche, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 19/23980 -\r\nRechtsstaat und Demokratie in der Corona-Pandemie\r\n"
+                ],
+                "abstract": "",
+                "thumbnailURI": null,
+                "thumbnailCreator": null,
+                "thumbnailLicense": null,
+                "sourceURI": "https://dserver.bundestag.de/btd/19/243/1924334.pdf",
+                "embedURI": null,
+                "additionalInformation": {
+                    "originID": "247427",
+                    "subType": "Beschlussempfehlung und Bericht",
+                    "date": "2020-11-16",
+                    "electoralPeriod": 19,
+                    "creator": [
+                        "Ausschuss für Gesundheit"
+                    ],
+                    "procedureIDs": [
+                        {
+                            "id": "267170",
+                            "titel": "Erneute Forderung der Aufhebung der epidemischen Lage von nationaler Tragweite und Sicherstellung der parlamentarischen Kontrolle",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "268946",
+                            "titel": "Infektionsschutzmaßnahmen auf eine klare gesetzliche Grundlage stellen - Demokratie und Parlamentarismus stärken",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "269410",
+                            "titel": "COVID-19 - Eigenverantwortung statt Verbote und Zwänge - gesundheitlichen und wirtschaftlichen Kollaps verhindern, Kollateralschäden vermeiden",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "267168",
+                            "titel": "Eindimensionale Beratung vermeiden, multiprofessionalen Sachverstand sicherstellen - Einberufung einer parlamentarisch bestätigten Epidemiekommission zur Erarbeitung klarer wissenschaftlich fundierter Kriterien bezüglich der Feststellung einer epidemischen Lage von nationaler Tragweite und deren Aufhebung",
+                            "vorgangstyp": "Antrag"
+                        }
+                    ]
+                },
+                "lastChanged": "2023-03-11 05:10:42"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/document/3785"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?documentID=3785"
+                    }
+                }
+            }
+        },
+        {
+            "type": "document",
+            "id": "5022",
+            "attributes": {
+                "type": "officialDocument",
+                "wikidataID": null,
+                "label": "Drucksache 19/29863",
+                "labelAlternative": [
+                    "a) zu dem Antrag der Fraktion der AfD\r\n- Drucksache 19/14073 -\r\nOstdeutsche Arbeitnehmer würdigen - Fondslösung mit Einmalzahlungen\r\nb) zu dem Antrag der Fraktion der AfD\r\n- Drucksache 19/9971 -\r\nRentenrechtliche Gleichstellung von Einmalzahlungen Ost und West\r\nc) zu dem Antrag der Fraktion der AfD\r\n- Drucksache 19/22928 -\r\nGesetzliche Rentenversicherung stabilisieren - Klarheit zu den nicht beitragsgedeckten Leistungen\r\nd) zu dem Antrag der Fraktion der AfD\r\n- Drucksache 19/28463 -\r\nEigenverantwortliche Altersvorsorge erleichtern - Selbstbestimmte freiwillige Zahlungen in die gesetzliche Rentenversicherung ermöglichen\r\ne) zu dem Antrag der Fraktion DIE LINKE.\r\n- Drucksache 19/28432 -\r\n30 Jahre DDR-Rentenüberleitung - Ansprüche anerkennen\r\nf) zu dem Antrag der Abgeordneten Markus Kurth, Anja Hajduk, Beate Müller-Gemmeke, weiterer Abgeordneter und der Fraktion BÜNDNIS 90/DIE GRÜNEN\r\n- Drucksache 19/27213 -\r\nGesetzliche Rentenversicherung stärken, verlässliche Alterssicherung für alle sicherstellen\r\ng) zu dem Antrag der Fraktion BÜNDNIS 90/ DIE GRÜNEN\r\n- Drucksache 19/9949 -\r\nAlterssicherung für Bergleute in der Braunkohleveredlung verbessern - Gerechtigkeitslücke schließen"
+                ],
+                "abstract": "",
+                "thumbnailURI": null,
+                "thumbnailCreator": null,
+                "thumbnailLicense": null,
+                "sourceURI": "https://dserver.bundestag.de/btd/19/298/1929863.pdf",
+                "embedURI": null,
+                "additionalInformation": {
+                    "originID": "254352",
+                    "subType": "Beschlussempfehlung und Bericht",
+                    "date": "2021-05-19",
+                    "electoralPeriod": 19,
+                    "creator": [
+                        "Ausschuss für Arbeit und Soziales"
+                    ],
+                    "author": [
+                        {
+                            "id": "205",
+                            "titel": "Markus Kurth, MdB, BÜNDNIS 90/DIE GRÜNEN",
+                            "autor_titel": "Markus Kurth, Berichterstattung"
+                        }
+                    ],
+                    "procedureIDs": [
+                        {
+                            "id": "247788",
+                            "titel": "Alterssicherung für Bergleute in der Braunkohleveredlung verbessern - Gerechtigkeitslücke schließen",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "247836",
+                            "titel": "Rentenrechtliche Gleichstellung von Einmalzahlungen Ost und West",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "267781",
+                            "titel": "Gesetzliche Rentenversicherung stabilisieren - Klarheit zu den nicht beitragsgedeckten Leistungen",
+                            "vorgangstyp": "Antrag"
+                        },
+                        {
+                            "id": "254144",
+                            "titel": "Ostdeutsche Arbeitnehmer würdigen - Fondslösung mit Einmalzahlungen",
+                            "vorgangstyp": "Antrag"
+                        }
+                    ]
+                },
+                "lastChanged": "2023-03-11 05:14:22"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/document/5022"
+            },
+            "relationships": {
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?documentID=5022"
+                    }
+                }
+            }
+        }
+    ],
+    "links": {
+        "self": "https://optv.local/api/v1/search/documents?label[]=gesetz&label[]=antrag&limit=5&page=2",
+        "first": "https://optv.local/api/v1/search/documents?label[]=gesetz&label[]=antrag&limit=5&page=1",
+        "prev": "https://optv.local/api/v1/search/documents?label[]=gesetz&label[]=antrag&limit=5&page=1",
+        "next": "https://optv.local/api/v1/search/documents?label[]=gesetz&label[]=antrag&limit=5&page=3",
+        "last": "https://optv.local/api/v1/search/documents?label[]=gesetz&label[]=antrag&limit=5&page=657"
+    }
+}

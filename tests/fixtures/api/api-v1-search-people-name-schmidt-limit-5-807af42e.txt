@@ -1,0 +1,400 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success",
+        "page": 1,
+        "pageTotal": 3
+    },
+    "data": [
+        {
+            "type": "person",
+            "id": "Q107018",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Christian Schmidt",
+                "labelAlternative": [],
+                "firstName": "Hans",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1957-08-26",
+                "gender": null,
+                "abstract": "Hans Christian Friedrich Schmidt ist ein deutscher Politiker (CSU). Dem Deutschen Bundestag gehörte er von 1990 bis 2021 an. Von 2005 bis 2013 war er Parlamentarischer Staatssekretär im Bundesministerium der Verteidigung und von 2013 bis 2014 in gleicher Funktion beim Bundesministerium für wirtschaftliche Zusammenarbeit und Entwicklung. Von 2014 bis 2018 war er Bundesminister für Ernährung und Landwirtschaft und ab Oktober 2017 zudem kommissarischer Bundesminister für Verkehr und digitale Infrastruktur. 2017 stimmte er entgegen der Weisungslage der Bundesregierung einer Verlängerung der EU-Zulassung des umstrittenen Pflanzenschutzmittels Glyphosat zu. Seit 1. August 2021 ist er Hoher Repräsentant für Bosnien und Herzegowina.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q107018&v=5f625314",
+                "thumbnailCreator": "&lt;a rel=&quot;nofollow&quot; class=&quot;external text&quot; href=&quot;https://www.flickr.com/people/45198836@N04&quot;&gt;European People&#039;s Party&lt;/a&gt;",
+                "thumbnailLicense": "CC-BY-2.0",
+                "embedURI": null,
+                "websiteURI": "http://www.christian-schmidt.de/",
+                "originID": null,
+                "socialMediaIDs": [],
+                "additionalInformation": null,
+                "lastChanged": "2023-03-28 21:20:02"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q107018"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q49763",
+                        "attributes": {
+                            "label": "CSU",
+                            "labelAlternative": [
+                                "Christlich-Soziale Union in Bayern",
+                                "Christlich-Soziale Union in Bayern e. V.",
+                                "Christlich-Soziale Union in Bayern e.V."
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q49763&v=a4eccf65",
+                            "thumbnailCreator": "Christlich-Soziale Union in Bayern e. V.",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.csu.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q49763"
+                    }
+                },
+                "faction": [],
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q107018"
+                    }
+                }
+            }
+        },
+        {
+            "type": "person",
+            "id": "Q1081754",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Christian Schmidt",
+                "labelAlternative": [],
+                "firstName": "Christian",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1943-02-23",
+                "gender": "male",
+                "abstract": "Christian Schmidt war ein deutscher Politiker der Grünen.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q1081754&v=71945a3d",
+                "thumbnailCreator": "&lt;a href=&quot;http://commons.wikimedia.org/wiki/User:MoSchle&quot; title=&quot;User:MoSchle&quot;&gt;MoSchle&lt;/a&gt;",
+                "thumbnailLicense": "CC-BY-SA",
+                "embedURI": null,
+                "websiteURI": "",
+                "originID": null,
+                "socialMediaIDs": [],
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Christian Schmidt (Politiker, 1943)",
+                        "url": "https://de.wikipedia.org/wiki/Christian_Schmidt_(Politiker,_1943)"
+                    }
+                },
+                "lastChanged": "2023-03-11 04:12:48"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q1081754"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q49768",
+                        "attributes": {
+                            "label": "SPD",
+                            "labelAlternative": [
+                                "Sozialdemokratische Partei Deutschlands"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q49768&v=9b01d328",
+                            "thumbnailCreator": "Sozialdemokratische Partei Deutschlands (SPD)",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.spd.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q49768"
+                    }
+                },
+                "faction": [],
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q1081754"
+                    }
+                }
+            }
+        },
+        {
+            "type": "person",
+            "id": "Q15433815",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Dagmar Schmidt",
+                "labelAlternative": [
+                    "Dagmar Schmidt (Wetzlar)"
+                ],
+                "firstName": "Dagmar",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1973-03-13",
+                "gender": "female",
+                "abstract": "Dagmar Schmidt ist eine deutsche Politikerin (SPD) und Historikerin. Sie ist seit 2013 Mitglied des Deutschen Bundestages und seit 2021 stellvertretende Fraktionsvorsitzende der SPD-Bundestagsfraktion.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q15433815&v=14f00a60",
+                "thumbnailCreator": "Foto-AG Gymnasium Melle",
+                "thumbnailLicense": "CC-BY-SA",
+                "embedURI": null,
+                "websiteURI": "https://www.dagmarschmidt.de/",
+                "originID": null,
+                "socialMediaIDs": [
+                    {
+                        "label": "Facebook",
+                        "id": "dagmar.schmidt.355"
+                    },
+                    {
+                        "label": "Twitter",
+                        "id": "dieschmidt"
+                    }
+                ],
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Dagmar Schmidt (Politikerin, 1973)",
+                        "url": "https://de.wikipedia.org/wiki/Dagmar_Schmidt_(Politikerin,_1973)"
+                    },
+                    "abgeordnetenwatchID": "79036"
+                },
+                "lastChanged": "2023-03-11 04:23:42"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q15433815"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q49768",
+                        "attributes": {
+                            "label": "SPD",
+                            "labelAlternative": [
+                                "Sozialdemokratische Partei Deutschlands"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q49768&v=9b01d328",
+                            "thumbnailCreator": "Sozialdemokratische Partei Deutschlands (SPD)",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.spd.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q49768"
+                    }
+                },
+                "faction": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q2207512",
+                        "attributes": {
+                            "label": "SPD",
+                            "labelAlternative": [
+                                "SPD-Bundestagsfraktion",
+                                "SPD-Fraktion"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q2207512&v=4e041713",
+                            "thumbnailCreator": "SPD-Bundestagsfraktion",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.spdfraktion.de/"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q2207512"
+                    }
+                },
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q15433815"
+                    }
+                }
+            }
+        },
+        {
+            "type": "person",
+            "id": "Q108758075",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Eugen Schmidt",
+                "labelAlternative": [],
+                "firstName": "Eugen",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1975-10-23",
+                "gender": "male",
+                "abstract": "Eugen Schmidt ist ein russlanddeutscher Politiker (AfD) aus Kasachstan. Er ist seit 2021 Mitglied des Deutschen Bundestages. Im Zusammenhang mit dem russischen Überfall auf die Ukraine erlangte Schmidt wiederholt Aufsehen durch die Wiedergabe russischer Staatspropaganda.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q108758075&v=515657a9",
+                "thumbnailCreator": "&lt;a rel=&quot;nofollow&quot; class=&quot;external text&quot; href=&quot;https://www.youtube.com/user/rufusmovie&quot;&gt;rufusmovie&lt;/a&gt;",
+                "thumbnailLicense": "CC-BY-3.0",
+                "embedURI": null,
+                "websiteURI": "",
+                "originID": null,
+                "socialMediaIDs": [
+                    {
+                        "label": "Instagram",
+                        "id": "afdrus"
+                    },
+                    {
+                        "label": "Facebook",
+                        "id": "eugen.schmidt.afd"
+                    },
+                    {
+                        "label": "Twitter",
+                        "id": "AfDrus"
+                    },
+                    {
+                        "label": "Youtube",
+                        "id": "UCI8cwWG8IbIFdUBPF3L0FuA"
+                    }
+                ],
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Eugen Schmidt (Politiker)",
+                        "url": "https://de.wikipedia.org/wiki/Eugen_Schmidt_(Politiker)"
+                    },
+                    "abgeordnetenwatchID": "175918"
+                },
+                "lastChanged": "2023-03-11 04:17:22"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q108758075"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q6721203",
+                        "attributes": {
+                            "label": "AfD",
+                            "labelAlternative": [
+                                "Alternative für Deutschland"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q6721203&v=34ab6829",
+                            "thumbnailCreator": "<a href=\"https://en.wikipedia.org/wiki/en:Alternative_for_Germany\" class=\"extiw\" title=\"w:en:Alternative for Germany\">Alternative for Germany</a>",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.afd.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q6721203"
+                    }
+                },
+                "faction": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q42575708",
+                        "attributes": {
+                            "label": "AfD",
+                            "labelAlternative": [
+                                "AfD-Bundestagsfraktion",
+                                "AfD-Fraktion"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q42575708&v=592f6f4c",
+                            "thumbnailCreator": "AfD-Bundestagsfraktion",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.afdbundestag.de/"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q42575708"
+                    }
+                },
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q108758075"
+                    }
+                }
+            }
+        },
+        {
+            "type": "person",
+            "id": "Q71670",
+            "attributes": {
+                "type": "memberOfParliament",
+                "label": "Frithjof Schmidt",
+                "labelAlternative": [],
+                "firstName": "Frithjof",
+                "lastName": "Schmidt",
+                "degree": "",
+                "birthDate": "1953-04-17",
+                "gender": "male",
+                "abstract": "Frithjof Schmidt ist ein deutscher Politiker und Sozialwissenschaftler. Er ist seit Oktober 2009 Mitglied des Deutschen Bundestages. Er war von 2004 bis 2009 Europaabgeordneter in der Fraktion Die Grünen/Europäische Freie Allianz.",
+                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q71670&v=2b39c2fe",
+                "thumbnailCreator": "Foto-AG Gymnasium Melle",
+                "thumbnailLicense": "CC-BY-SA",
+                "embedURI": null,
+                "websiteURI": "http://frithjof-schmidt.de",
+                "originID": null,
+                "socialMediaIDs": [
+                    {
+                        "label": "Youtube",
+                        "id": "UCICoBKRcuVfdxTI9FoAZfmg"
+                    }
+                ],
+                "additionalInformation": {
+                    "wikipedia": {
+                        "title": "Frithjof Schmidt",
+                        "url": "https://de.wikipedia.org/wiki/Frithjof_Schmidt"
+                    },
+                    "abgeordnetenwatchID": "78835"
+                },
+                "lastChanged": "2023-03-14 17:58:02"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/person/Q71670"
+            },
+            "relationships": {
+                "party": {
+                    "data": {
+                        "type": "organisation",
+                        "id": "Q49766",
+                        "attributes": {
+                            "label": "GRÜNE",
+                            "labelAlternative": [
+                                "Bündnis 90/Die Grünen",
+                                "Bündnisgrüne",
+                                "B'90/Grüne",
+                                "Die Grünen",
+                                "Bündnis 90/Die Grünen, GRÜNE",
+                                "Die Gruenen",
+                                "B90/GR"
+                            ],
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q49766&v=087fb71b",
+                            "thumbnailCreator": "Bündnis 90/Die Grünen",
+                            "thumbnailLicense": "PD textlogo",
+                            "websiteURI": "https://www.gruene.de"
+                        }
+                    },
+                    "links": {
+                        "self": "https://optv.local/api/v1/organisation/Q49766"
+                    }
+                },
+                "faction": [],
+                "media": {
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/media?personID=Q71670"
+                    }
+                }
+            }
+        }
+    ],
+    "links": {
+        "self": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=1",
+        "first": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=1",
+        "prev": null,
+        "next": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=2",
+        "last": "https://optv.local/api/v1/search/people?name=schmidt&limit=5&page=3"
+    }
+}

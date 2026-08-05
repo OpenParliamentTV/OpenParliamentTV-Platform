@@ -104,6 +104,37 @@ function apiSuccessResponse($data = null, $meta = [], $links = null, $relationsh
 }
 
 /**
+ * Builds the JSON:API pagination link set for a collection response.
+ *
+ * Unavailable links are emitted as null (prev on page 1, next on the last page)
+ * so the response shape stays stable across pages. "self" reflects the page the
+ * request actually asked for, even when that page is past the end.
+ *
+ * @param string $basePath Absolute API path, e.g. $config["dir"]["api"]."/search/media"
+ * @param array $parameters Parameters to round-trip; "page" is overridden per link
+ * @param int $currentPage 1-based page the request asked for
+ * @param int $totalPages Total reachable pages (0 behaves as a single empty page)
+ * @return array self/first/prev/next/last
+ */
+function apiPaginationLinks($basePath, $parameters, $currentPage, $totalPages) {
+    $totalPages = max(1, (int)$totalPages);
+    $currentPage = max(1, (int)$currentPage);
+
+    $link = function ($page) use ($basePath, $parameters) {
+        $parameters["page"] = $page;
+        return $basePath."?".getURLParameterFromArray($parameters);
+    };
+
+    return [
+        "self" => $link($currentPage),
+        "first" => $link(1),
+        "prev" => ($currentPage > 1) ? $link($currentPage - 1) : null,
+        "next" => ($currentPage < $totalPages) ? $link($currentPage + 1) : null,
+        "last" => $link($totalPages)
+    ];
+}
+
+/**
  * Common error responses
  */
 function apiErrorMissingParameter($field = null) {
