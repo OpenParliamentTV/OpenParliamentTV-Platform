@@ -17,9 +17,9 @@ require_once(__DIR__ . "/../utilities/safemysql.class.php");
 
 /**
  * @param string $scope 'platform', or anything else together with $parliament
- *                      for a parliament database. (The loose second branch is
- *                      the pre-extraction behaviour and is kept deliberately —
- *                      callers pass 'parliament', but nothing enforced it.)
+ *                      for a parliament database. Callers pass 'parliament',
+ *                      but the second branch keys off $parliament being set,
+ *                      not off the scope string.
  * @param string|null $parliament Parliament key, e.g. "DE".
  * @return SafeMySQL
  * @throws OptvDbException

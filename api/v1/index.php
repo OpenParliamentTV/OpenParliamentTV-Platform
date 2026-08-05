@@ -67,9 +67,8 @@ function apiResolveRoutePath(): array
 
 $routeParams = apiResolveRoutePath();
 
-// Path parameters sit at the lowest precedence: the old rules used [QSA], which
-// appended the original query string after the generated one, so an explicit
-// ?itemType= overrode the path. php://input carries JSON request bodies, which
+// Path parameters sit at the lowest precedence, so an explicit ?itemType=
+// overrides the path segment. php://input carries JSON request bodies, which
 // $_REQUEST does not see.
 $api_request = array_merge(
     $routeParams,

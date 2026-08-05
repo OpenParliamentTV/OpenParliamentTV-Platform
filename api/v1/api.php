@@ -26,16 +26,11 @@ function apiV1($request_param = false, $db = false, $dbp = false) {
             json_decode(file_get_contents('php://input'), true) ?: []  // Overwrites POST if keys clash
         );
     } else {
-        // Internal call: exactly what the caller asked for, nothing else.
-        //
-        // These calls run inside an ordinary page or API request, so merging the
-        // superglobals in used to hand the target action every query parameter
-        // the visitor happened to send. Explicit params won on a key clash, but
-        // any parameter the caller did NOT set leaked through — and a search is
-        // steered by dozens of optional filters. Two live consequences, both
-        // fixed by this: ?q=/&dateTo= on /api/v1/status silently filtered the
-        // internal searches behind lastUpdated/lastSpeechDate, and /search?page=3
-        // asked for page 3 of the 8-row faction list, emptying the filter bar.
+        // Internal call: exactly what the caller asked for, nothing else. The
+        // superglobals are deliberately not merged in — these calls run inside
+        // an ordinary page request, and a search is steered by dozens of
+        // optional filters, so a parameter the caller did not set must never
+        // arrive from the surrounding request.
         $api_request = $request_param;
     }
 
@@ -91,11 +86,8 @@ function apiV1Handle(array $api_request, $db = false, $dbp = false)
 }
 
 /**
- * Registry lookup, replacing the switch that used to live in apiV1().
- *
- * Shared with the HTTP routes (routes/api.php), which is the point: the action
- * table and its public/admin metadata now have one home instead of being split
- * between this switch and a whitelist in auth.php.
+ * Registry lookup, shared with the HTTP routes (routes/api.php): the action
+ * table and its public/admin metadata have one home.
  *
  * @param array $api_request Fully resolved request (action + itemType present).
  * @return array|null The envelope, or null for the handlers that exit.

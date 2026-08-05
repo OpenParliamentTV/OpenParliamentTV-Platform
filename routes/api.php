@@ -4,28 +4,25 @@
  *
  * Mirrors routes/web.php, but for /api/v1. Each route maps a path onto the
  * `action` / `itemType` (plus any extracted parameters) that the shared registry
- * in api/v1/registry.php dispatches on — exactly what api/v1/.htaccess used to
- * do with mod_rewrite.
+ * in api/v1/registry.php dispatches on.
  *
- * Two properties of the old rewrite rules are load-bearing and reproduced here:
+ * Two properties of this table are load-bearing:
  *
- * 1. **Query-string parameters win.** The rules used [QSA], which appends the
- *    original query string *after* the generated one, so `?itemType=x` overrode
- *    the path-derived value. api/v1/index.php therefore merges path params at
- *    the lowest precedence.
+ * 1. **Query-string parameters win.** `?itemType=x` overrides the path-derived
+ *    value, because api/v1/index.php merges path params at the lowest
+ *    precedence. This is what lets `?type=` select the entityDump slice.
  *
- * 2. **Most rules are unanchored.** `^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)?` has no
- *    `$`, so `/person/Q77195/junk` served the person rather than 404ing. The
- *    `[/{rest:.+}]` suffixes below keep that. The IIIF, entityDump and
- *    transcript rules *were* anchored, and stay strict.
+ * 2. **The generic routes are lenient about trailing segments.** The
+ *    `[/{rest:.+}]` suffixes mean `/person/Q77195/junk` serves the person
+ *    rather than 404ing. The IIIF, entityDump and transcript routes are strict.
  *
- * Method is not part of the routing decision: mod_rewrite ignored the verb and
- * the API dispatches on parameters, so index.php dispatches every request as GET.
+ * Method is not part of the routing decision — the API dispatches on
+ * parameters — so index.php dispatches every request as GET.
  */
 
 use FastRoute\RouteCollector;
 
-/** Actions that took the `^(action)/(itemType)` rule rather than `getItem`. */
+/** Actions addressed as `/{action}/{itemType}`; everything else is a getItem. */
 const API_ROUTE_ACTIONS = 'search|autocomplete|statistics|user|index|status|lang|import|externalData|alert|notification|systemMessage|migration';
 
 return function (RouteCollector $r) {

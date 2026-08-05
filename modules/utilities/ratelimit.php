@@ -11,8 +11,7 @@
  * Fails open: if the limiter or its DB has any problem, traffic is allowed.
  * The namespace keeps each surface's counters separate for the same client IP.
  *
- * Opens its own platform connection through optvDbConnection(), so it no longer
- * depends on api/v1/api.php having been loaded first.
+ * Opens its own platform connection through optvDbConnection().
  */
 
 require_once(__DIR__ . "/../database/connections.php");

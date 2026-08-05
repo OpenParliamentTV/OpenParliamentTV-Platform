@@ -3,14 +3,13 @@
  * Shared dispatch registry for the v1 API.
  *
  * One table, two consumers: the internal apiV1() facade (api/v1/api.php) and
- * the HTTP routes (routes/api.php). Before this existed the mapping lived only
- * inside apiV1()'s switch, so the HTTP layer could not know which actions are
- * public without a second, hand-maintained whitelist in modules/utilities/auth.php.
+ * the HTTP routes (routes/api.php). auth() reads the same `access` metadata, so
+ * an action's handler and its public/admin status cannot drift apart.
  *
  * Shape:
  *
  *   '<action>' => [
- *       'access'    => 'public' | 'admin',   // 'public' == the old auth.php whitelist
+ *       'access'    => 'public' | 'admin',   // 'public' = reachable without a session
  *       'file'      => 'modules/x.php',      // required before dispatch (optional)
  *       'before'    => callable(array $r): array,          // request rewrite (optional)
  *       'itemTypes' => ['<itemType>' => ['file' => …, 'fn' => callable]],
@@ -104,7 +103,7 @@ function apiRegistry()
     $registry = [
 
         // =====================================================================
-        // Public actions — these are exactly the old auth.php "apiV1" whitelist
+        // Public actions — reachable without a session
         // =====================================================================
 
         'getItem' => ['access' => 'public', 'itemTypes' => [
@@ -236,8 +235,8 @@ function apiRegistry()
         ]],
 
         // =====================================================================
-        // Admin actions — absent from the old whitelist, so auth() only let
-        // them through for a user whose UserRole is "admin".
+        // Admin actions — auth() lets these through only for a user whose
+        // UserRole is "admin".
         // =====================================================================
 
         'addItem' => ['access' => 'admin', 'itemTypes' => [
