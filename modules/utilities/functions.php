@@ -408,9 +408,11 @@ function filterAllowedSearchParams($data, $type, $caseSensitive = true) {
 
     $allowedParams = $config["allowedSearchParams"];
 
-    // Only allow includeAll and public for admin users
-    // TODO: check if this is the correct way to do this
-    if (isset($_SESSION["userdata"]["role"]) && $_SESSION["userdata"]["role"] != "admin") {
+    // `includeAll` and `public` switch off the non-public-media filter in
+    // applyDefaultFilters(), so they are admin-only. Only /manage/media sends
+    // them.
+    $isAdmin = isset($_SESSION["userdata"]["role"]) && $_SESSION["userdata"]["role"] === "admin";
+    if (!$isAdmin) {
         $allowedParams[$type] = array_diff($allowedParams[$type], ["includeAll", "public"]);
     }
 
