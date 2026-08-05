@@ -132,6 +132,36 @@
                                             <div class="card-body" id="sysStorageBody"></div>
                                         </div>
                                     </div>
+
+                                    <!-- Schema migrations -->
+                                    <div class="col-12">
+                                        <div class="card h-100">
+                                            <div class="card-header d-flex align-items-center">
+                                                <span class="icon-database"></span>&nbsp;<?= L::schemaMigrations() ?>
+                                                <span id="migBadge" class="badge bg-secondary ms-2"></span>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm ms-auto" id="migRefreshBtn"><span class="icon-arrows-cw"></span> <?= L::refresh() ?></button>
+                                            </div>
+                                            <div class="card-body">
+                                                <p class="alert alert-info"><?= L::schemaMigrationsHint() ?></p>
+                                                <div class="table-responsive">
+                                                    <table class="table table-sm mb-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th><?= L::database() ?></th>
+                                                                <th class="text-end"><?= L::applied() ?></th>
+                                                                <th><?= L::pending() ?></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="migTable"></tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="mt-3">
+                                                    <button type="button" class="btn btn-sm" id="migRunBtn" disabled><span class="icon-play"></span> <?= L::schemaMigrationsApply() ?></button>
+                                                    <span id="migResult" class="text-muted ms-2 small"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1260,5 +1290,86 @@
             }
 
             $(function () { loadSystemStatus(); startPolling(); });
+        })();
+
+        // ---- Schema migrations ---------------------------------------------
+        // Reports what modules/database/migrations.php reports to bin/migrate.php
+        // and applies the same thing, so an upgrade's migrations can be run from
+        // here instead of over SSH.
+        (function () {
+            const api    = (config.dir.root || "") + "/api/v1";
+            const tbody  = document.getElementById("migTable");
+            const badge  = document.getElementById("migBadge");
+            const runBtn = document.getElementById("migRunBtn");
+            const refBtn = document.getElementById("migRefreshBtn");
+            const out    = document.getElementById("migResult");
+            if (!tbody) { return; }
+
+            function render(res) {
+                tbody.innerHTML = "";
+                const pending = (res && res.meta) ? (res.meta.pendingTotal || 0) : 0;
+                const dbs = (res && res.data && res.data.databases) ? res.data.databases : [];
+
+                dbs.forEach(function (db) {
+                    const tr = document.createElement("tr");
+
+                    const tdName = document.createElement("td");
+                    tdName.textContent = db.label + " (" + db.db + ")";
+                    tr.appendChild(tdName);
+
+                    const tdApplied = document.createElement("td");
+                    tdApplied.className = "text-end";
+                    tdApplied.textContent = db.applied.length;
+                    tr.appendChild(tdApplied);
+
+                    const tdPending = document.createElement("td");
+                    if (db.error) {
+                        tdPending.className = "text-danger";
+                        tdPending.textContent = db.error;
+                    } else if (db.pending.length) {
+                        tdPending.className = "text-warning";
+                        tdPending.textContent = db.pending.join(", ");
+                    } else {
+                        tdPending.className = "text-muted";
+                        tdPending.textContent = "\u2014";
+                    }
+                    tr.appendChild(tdPending);
+
+                    tbody.appendChild(tr);
+                });
+
+                badge.textContent = pending ? pending : "";
+                badge.className = "badge ms-2 " + (pending ? "bg-warning" : "bg-secondary");
+                runBtn.disabled = !pending;
+            }
+
+            function load() {
+                out.textContent = "";
+                fetch(api + "/migration/status", { credentials: "same-origin" })
+                    .then(function (r) { return r.json(); })
+                    .then(render)
+                    .catch(function () { out.textContent = "error"; });
+            }
+
+            refBtn.addEventListener("click", load);
+
+            runBtn.addEventListener("click", function () {
+                runBtn.disabled = true;
+                out.textContent = "\u2026";
+                fetch(api + "/migration/run", { method: "POST", credentials: "same-origin" })
+                    .then(function (r) { return r.json(); })
+                    .then(function (res) {
+                        if (res && res.meta && res.meta.requestStatus === "success") {
+                            out.textContent = res.meta.appliedTotal + " applied"
+                                + (res.meta.failed ? ", " + res.meta.failed + " failed" : "");
+                        } else {
+                            out.textContent = (res && res.errors && res.errors[0]) ? res.errors[0].detail : "error";
+                        }
+                        load();
+                    })
+                    .catch(function () { runBtn.disabled = false; out.textContent = "error"; });
+            });
+
+            $(function () { load(); });
         })();
     </script>

@@ -342,6 +342,11 @@ function apiRegistry()
             }],
         ]],
 
+        'migration' => ['access' => 'admin', 'file' => 'modules/migration.php', 'itemTypes' => [
+            'status' => $req(null, 'migrationGetStatus'),
+            'run'    => $req(null, 'migrationRun'),
+        ]],
+
         'system' => ['access' => 'admin', 'file' => 'modules/system-status.php', 'itemTypes' => [
             'status'       => $req(null, 'systemStatusGet'),
             'clear-caches' => $req(null, 'systemClearCaches'),
