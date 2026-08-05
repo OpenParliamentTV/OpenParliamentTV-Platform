@@ -10,7 +10,7 @@ require_once(__DIR__ . "/../bootstrap-cli.php");
  * existed the files were applied by hand, which is why every one of them still
  * has to be safe to re-run.
  *
- * Default is a dry run — same convention as bin/migrate-customizations.php.
+ * Default is a dry run; --apply executes.
  *
  *   php bin/migrate.php                          # report what is pending
  *   php bin/migrate.php --apply                  # apply it

@@ -2,7 +2,7 @@
 
 ## Naming convention
 
-One rule set governs every new file, function and variable. It is also being applied retroactively across the codebase; see `docs/rename-manifest.json` for the record of what moved.
+One rule set governs every new file, function and variable. It has also been applied retroactively across the codebase.
 
 ### Directories and files
 
@@ -84,16 +84,15 @@ Never mix a rename with a logic change. A rename commit's diff must be reviewabl
 
 ```bash
 php bin/api-diff.php --session=$SID          # must be green — renames change no output
-php bin/migrate-customizations.php --check   # no old name left in an instance custom/ tree
 ```
 
 See `tests/README.md` for the API harness and how to mint an admin session.
 
-`--check --core` runs the same grep over the core tree, but is **not** usable as a gate today: the manifest records partial/split moves whose old path legitimately still exists, and its `STALE FILE` rule matches on basename rather than path, so everything it reports is a false positive.
-
 ### Instance customizations
 
-Instances keep their overrides in a separate `custom/` tree that is synced into the platform. Renaming a core file breaks any override of it, so every rename lands in `docs/rename-manifest.json`, and `bin/migrate-customizations.php` replays those renames against an instance's `custom/` tree. This is a **required upgrade step** — there is no runtime fallback to old names.
+Instances keep their overrides in a separate `custom/` tree that is synced into the platform. An override is resolved by **path match**, so renaming a core file silently detaches every override of it — no error, the instance just starts serving core content. There is deliberately no runtime fallback to old names.
+
+So a rename that touches an overridable file under `content/` must ship with a note in the release instructions telling operators which override to move. The trees are small (a handful of partials and static pages), so this is a `mv` per instance, not tooling.
 
 ## Schema changes
 
