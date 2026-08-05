@@ -6,17 +6,8 @@
     $alertsResp = alertList([]);
     $alerts = ($alertsResp["meta"]["requestStatus"] === "success") ? $alertsResp["data"] : [];
 
-    // Build a /search URL from criteria (same param names as the search API). Drop
-    // the presentation-only `_labels` snapshot so it doesn't leak into the URL.
-    $searchUrlFromCriteria = function ($criteria) use ($config) {
-        unset($criteria["_labels"]);
-        if (empty($criteria)) { return $config["dir"]["root"] . "/search"; }
-        $qs = preg_replace('/%5B\d+%5D=/i', '%5B%5D=', http_build_query($criteria));
-        return $config["dir"]["root"] . "/search?" . $qs;
-    };
-
     // Flatten alerts into bootstrap-table rows (client-side data source).
-    $alertRows = array_map(function ($a) use ($searchUrlFromCriteria) {
+    $alertRows = array_map(function ($a) {
         $at = $a["attributes"];
         return [
             "id" => $a["id"],
@@ -26,7 +17,10 @@
             "channelInApp" => $at["channelInApp"],
             "active" => $at["active"],
             "created" => $at["created"],
-            "searchUrl" => $searchUrlFromCriteria($at["criteria"]),
+            "searchUrl" => alertCriteriaSearchUrl($at["criteria"]),
+            // Same query, but landing straight in the player with the whole
+            // result set queued up.
+            "playUrl" => alertCriteriaSearchUrl($at["criteria"], ["playresults" => 1]),
             "alert" => $a, // full object, used by the edit modal
         ];
     }, $alerts);
@@ -91,6 +85,7 @@ $(function () {
         operateFormatter: function (value, row) {
             return '<div class="list-group list-group-horizontal">' +
                 '<a class="list-group-item list-group-item-action view-alert" title="' + t("alertViewMatching", "View matching speeches") + '" href="' + row.searchUrl + '"><span class="icon-search"></span></a>' +
+                '<a class="list-group-item list-group-item-action play-alert" title="' + t("autoplayResults", "Autoplay Results") + '" href="' + row.playUrl + '"><span class="icon-play-1"></span></a>' +
                 '<a class="list-group-item list-group-item-action edit-alert" title="' + t("edit", "Edit") + '" href="javascript:void(0)"><span class="icon-pencil"></span></a>' +
                 '<a class="list-group-item list-group-item-action delete-alert" title="' + t("delete", "Delete") + '" href="javascript:void(0)"><span class="icon-trash"></span></a>' +
                 '</div>';

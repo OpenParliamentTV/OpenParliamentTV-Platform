@@ -57,8 +57,11 @@ if (!isset($page)) {
 			?>
 				<div class="navbarCenterOptions">
 					<a href='<?= $config["dir"]["root"]."/search".$backParamStr ?>' class="btn btn-sm border-end-0 rounded-0 rounded-start"><span class="icon-left-open-big"></span><span class="icon-search"></span><span class="visually-hidden"><?= L::backToResults(); ?></span></a>
-					<div id="prevResultSnippetButton" class="btn btn-sm border-end-0 rounded-0" disabled="true"><span class="icon-left-open-big"></span><span class="visually-hidden"><?= L::previousSpeech(); ?></span></div>
-					<div id="nextResultSnippetButton" class="btn btn-sm rounded-0 rounded-end" disabled="true"><span class="icon-right-open-big"></span><span class="visually-hidden"><?= L::nextSpeech(); ?></span></div>
+					<div id="prevResultVideoButton" class="btn btn-sm border-end-0 rounded-0" disabled="true" title="<?= hAttr(L::previousResult()) ?>"><span class="icon-fast-bw"></span><span class="visually-hidden"><?= L::previousResult(); ?></span></div>
+					<div id="prevResultSnippetButton" class="btn btn-sm border-end-0 rounded-0" disabled="true" title="<?= hAttr(L::previousSpeech()) ?>"><span class="icon-left-open-big"></span><span class="visually-hidden"><?= L::previousSpeech(); ?></span></div>
+					<div id="nextResultSnippetButton" class="btn btn-sm border-end-0 rounded-0" disabled="true" title="<?= hAttr(L::nextSpeech()) ?>"><span class="icon-right-open-big"></span><span class="visually-hidden"><?= L::nextSpeech(); ?></span></div>
+					<div id="nextResultVideoButton" class="btn btn-sm border-end-0 rounded-0" disabled="true" title="<?= hAttr(L::nextResult()) ?>"><span class="icon-fast-fw"></span><span class="visually-hidden"><?= L::nextResult(); ?></span></div>
+					<div id="toggleQueuePanel" class="btn btn-sm rounded-0 rounded-end" role="button" aria-expanded="false" title="<?= hAttr(L::queueShow()) ?>"><span class="icon-list-numbered"></span><span id="queuePosition" class="queuePositionIndicator ms-1" hidden></span><span class="visually-hidden"><?= L::queuePanelTitle(); ?></span></div>
 					<div id="toggleAutoplayResults" class="navbar-text switch-container <?=$autoplayResultsClass?>">
 						<span class="switch">
 							<span class="slider round"></span>

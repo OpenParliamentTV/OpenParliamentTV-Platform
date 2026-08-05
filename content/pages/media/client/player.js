@@ -1,7 +1,16 @@
+// The queue is whatever the player is currently playing through: the current
+// search's results today, a stored playlist later. resultList holds the ordered
+// items ({ id } at minimum; the queue panel fills in display attributes as it
+// scrolls), and everything downstream — prev/next, autoplay, the panel — reads
+// only this shape, so swapping the data source swaps nothing else.
 var playerData,
 	currentMediaID,
 	resultListAjax = null,
 	resultList = null,
+	queueSource = 'virtual',
+	queuePlaylist = null,
+	queueTotal = 0,
+	currentQueueIndex = null,
 	prevResultURL = null,
 	nextResultURL = null,
 	prevResultID = null,
@@ -22,23 +31,16 @@ $(document).ready( function() {
 	updatePlayer();
 	$('#quoteDisplayModal, #nerModal').appendTo('body');
 
-	getResultList(function(data) {
-		resultList = data.results;
-		//console.log(resultList);
+	getQueue(function(queue) {
+		resultList = queue.items;
+		queueSource = queue.source;
+		queuePlaylist = queue.playlist;
+		queueTotal = queue.total;
 
 		updatePrevNext();
-		
-		// Update button states now that we have the result list
-		if (prevResultURL) {
-			$('#prevResultSnippetButton').attr("disabled", false);
-		} else {
-			$('#prevResultSnippetButton').attr("disabled", true);
-		}
-		if (nextResultURL) {
-			$('#nextResultSnippetButton').attr("disabled", false);
-		} else {
-			$('#nextResultSnippetButton').attr("disabled", true);
-		}
+		updateQueueButtons();
+
+		document.dispatchEvent(new CustomEvent('optvQueueReady', { detail: queue }));
 	});
 
 	$('#toggleAutoplayResults').click(function() {
@@ -59,9 +61,26 @@ $(document).ready( function() {
 	$('#prevResultSnippetButton').click(goToPrevResultSnippet);
 	$('#nextResultSnippetButton').click(goToNextResultSnippet);
 
+	// Skip a whole video, bypassing the snippet-by-snippet walk the single
+	// arrows do.
+	$('#prevResultVideoButton').click(function() {
+		if (prevResultID) { updateQuery(prevResultID); }
+	});
+	$('#nextResultVideoButton').click(function() {
+		if (nextResultID) { updateQuery(nextResultID); }
+	});
+
 });
 
-function getResultList(resultListCallback) {
+/**
+ * Fetch the queue the player is playing through.
+ *
+ * Today that is always the current search's result set, carried over from
+ * location.search exactly as the search page built it. fields=id keeps the
+ * response to an ordered id list — the queue panel fetches display metadata for
+ * the rows it actually shows.
+ */
+function getQueue(queueCallback) {
 	if(resultListAjax && resultListAjax.readyState != 4){
 		resultListAjax.abort();
 	}
@@ -73,22 +92,41 @@ function getResultList(resultListCallback) {
 
 	var apiUrl = config.dir.root + "/api/v1/search/media?fields=id&getAllResults=1" + ajaxURLParams;
 
+	function emptyQueue() {
+		return { source: 'virtual', playlist: null, items: [], total: 0 };
+	}
+
 	resultListAjax = $.ajax({
 		method: "GET",
 		url: apiUrl
 	}).done(function(apiResponse) {
-		// The callback expects an object like { results: [ {id:"val1"}, ... ] }
-		// The API response has the array of items in apiResponse.data
 		if (apiResponse && apiResponse.data) {
-			resultListCallback({ results: apiResponse.data });
+			queueCallback({
+				source: 'virtual',
+				playlist: null,
+				items: apiResponse.data,
+				total: (apiResponse.meta && apiResponse.meta.results) ? apiResponse.meta.results.total : apiResponse.data.length
+			});
 		} else {
 			console.error("Error fetching or parsing media ID list from API:", apiResponse);
-			resultListCallback({ results: [] }); // Provide empty list to prevent further errors
+			queueCallback(emptyQueue());
 		}
 	}).fail(function(err) {
 		console.error("Failed to get media ID list:", err);
-		resultListCallback({ results: [] }); // Provide empty list on failure
+		queueCallback(emptyQueue());
 	});
+}
+
+/**
+ * Enable/disable the queue navigation buttons for the current position.
+ *
+ * The snippet arrows stay enabled whenever an adjacent result exists, because
+ * they fall through to it once they run out of snippets; the video arrows are
+ * purely positional.
+ */
+function updateQueueButtons() {
+	$('#prevResultSnippetButton, #prevResultVideoButton').attr("disabled", prevResultID ? false : true);
+	$('#nextResultSnippetButton, #nextResultVideoButton').attr("disabled", nextResultID ? false : true);
 }
 
 function updateContents(resultURL) {
@@ -136,10 +174,19 @@ function updatePrevNext() {
 	prevResultID = (prevResultItem) ? prevResultItem.id : null;
 	nextResultID = (nextResultItem) ? nextResultItem.id : null;
 
+	// undefined when the current speech isn't part of the queue at all (e.g. a
+	// media page opened without a search) — the panel reads this to decide
+	// whether it has a position to show.
+	currentQueueIndex = (currentMediaIndex === undefined) ? null : currentMediaIndex;
+
 	var searchParams = removeQuoteParamsFromURL(window.location.search.toString());
 
 	prevResultURL = (prevResultID) ? 'media/'+ prevResultID + searchParams : null;
 	nextResultURL = (nextResultID) ? 'media/'+ nextResultID + searchParams : null;
+
+	document.dispatchEvent(new CustomEvent('optvQueueItemChanged', {
+		detail: { id: currentMediaID, index: currentQueueIndex }
+	}));
 }
 
 function updatePlayer() {
@@ -154,16 +201,7 @@ function updatePlayer() {
 
 	if (resultList) {
 		updatePrevNext();
-		if (prevResultURL) {
-			$('#prevResultSnippetButton').attr("disabled", false);
-		} else {
-			$('#prevResultSnippetButton').attr("disabled", true);
-		}
-		if (nextResultURL) {
-			$('#nextResultSnippetButton').attr("disabled", false);
-		} else {
-			$('#nextResultSnippetButton').attr("disabled", true);
-		}
+		updateQueueButtons();
 	}
 
 	var speechCodeSnippets = [];

@@ -1,0 +1,82 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success",
+        "results": {
+            "count": 2,
+            "total": 2583
+        }
+    },
+    "data": [
+        {
+            "type": "media",
+            "id": "DE-0180003042",
+            "attributes": {
+                "parliament": "DE",
+                "dateStart": "2013-11-28T13:19:48+01:00",
+                "duration": "<<NORMALIZED>>",
+                "title": "Klimakonferenz in Warschau",
+                "speaker": "Eva Bulling-Schröter",
+                "speakerID": "Q104774",
+                "speakerRole": null,
+                "faction": "DIE LINKE",
+                "factionID": "Q1826856",
+                "findCount": 1
+            },
+            "segments": [
+                {
+                    "start": 149.979999999999989768184605054557323455810546875,
+                    "end": 156.57999999999998408384271897375583648681640625
+                }
+            ]
+        },
+        {
+            "type": "media",
+            "id": "DE-0180003045",
+            "attributes": {
+                "parliament": "DE",
+                "dateStart": "2013-11-28T13:44:45+01:00",
+                "duration": "<<NORMALIZED>>",
+                "title": "Klimakonferenz in Warschau",
+                "speaker": "Matthias Miersch",
+                "speakerID": "Q1910150",
+                "speakerRole": null,
+                "faction": "SPD",
+                "factionID": "Q2207512",
+                "findCount": 3
+            },
+            "segments": [
+                {
+                    "start": 196.219999999999998863131622783839702606201171875,
+                    "end": 209.95999999999997953636921010911464691162109375
+                },
+                {
+                    "start": 257.51999999999998181010596454143524169921875,
+                    "end": 266.97999999999996134647517465054988861083984375
+                },
+                {
+                    "start": 304.43999999999999772626324556767940521240234375,
+                    "end": 312.8600000000000136424205265939235687255859375
+                }
+            ]
+        }
+    ],
+    "links": {
+        "self": "https://optv.local/api/v1/search/media?q=klima&limit=2&fields=queue&sort=date-asc&page=1",
+        "first": "https://optv.local/api/v1/search/media?q=klima&limit=2&fields=queue&sort=date-asc&page=1",
+        "prev": null,
+        "next": "https://optv.local/api/v1/search/media?q=klima&limit=2&fields=queue&sort=date-asc&page=2",
+        "last": "https://optv.local/api/v1/search/media?q=klima&limit=2&fields=queue&sort=date-asc&page=1292"
+    }
+}

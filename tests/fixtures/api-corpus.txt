@@ -64,6 +64,10 @@
 # media fields=id path carries links; getAllResults keeps self only
 /api/v1/search/media?q=klima&fields=id&limit=2
 /api/v1/search/media?q=klima&sessionID=DE-0200172&fields=id&getAllResults=1
+# fields=queue: the player's compact node. Sorted by date so the order does not
+# ride on BM25 scores. With q it carries segments; a pure entity filter has none.
+/api/v1/search/media?q=klima&limit=2&fields=queue&sort=date-asc
+/api/v1/search/media?personID=Q77195&limit=2&fields=queue&sort=date-asc
 # last is clamped to the largest page the search backend can serve
 /api/v1/search/media?q=der&limit=2
 

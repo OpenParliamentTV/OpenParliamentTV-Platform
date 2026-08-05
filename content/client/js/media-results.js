@@ -65,6 +65,7 @@ class MediaResultsManager {
             this.setupPagination();
             this.setupSorting();
             this.setupPlayButton();
+            this.autoPlayIfRequested();
             
             // Update URL for URL-driven mode
             if (this.mode === 'url-driven' && updateHistory) {
@@ -155,6 +156,42 @@ class MediaResultsManager {
         });
     }
     
+    /**
+     * Start playback straight away when the URL asks for it.
+     *
+     * This is what makes `/search?<criteria>&playresults=1` a shareable "play
+     * this query" link: the alerts list builds one per alert, and anything else
+     * holding a set of search criteria can do the same without first having to
+     * resolve which speech comes first.
+     *
+     * The parameter is dropped from the address bar before leaving, so coming
+     * back from the player lands on the result list instead of bouncing
+     * forwards again.
+     */
+    autoPlayIfRequested() {
+        if (this.autoPlayHandled || this.mode !== 'url-driven') {
+            return;
+        }
+        if (!/(^|[?&])playresults=1(&|$)/.test(window.location.search)) {
+            return;
+        }
+
+        this.autoPlayHandled = true;
+
+        const firstResult = $(this.container + ' .resultList').find('.resultItem').first();
+        const href = firstResult.length ? firstResult.find('.resultContent a').eq(0).attr('href') : null;
+        if (!href) {
+            return;
+        }
+
+        const cleaned = window.location.search
+            .replace(/([?&])playresults=1(&|$)/, '$1')
+            .replace(/[?&]$/, '');
+        history.replaceState(null, '', window.location.pathname + cleaned);
+
+        location.href = href + '&playresults=1';
+    }
+
     /**
      * Navigate to specific page
      */

@@ -168,16 +168,27 @@ function searchSpeeches($request, $getAllResults = false) {
         error_log("Full search body: " . json_encode($data, JSON_PRETTY_PRINT));
     }
 
-    // Add fragment settings to get all matches
-    if (!isset($data["highlight"])) {
-        $data["highlight"] = [];
+    // Add fragment settings to get all matches. This runs even when
+    // buildFinalQueryBody() left highlighting off for getAllResults, which is why
+    // an all-results query still comes back with finds.
+    //
+    // The one exception is fields=id: that response is a bare id list, so every
+    // highlighted transcript fragment OpenSearch would return is built, shipped
+    // and thrown away — and at 10.000 results that is what exhausts memory.
+    $skipHighlight = isset($request["fields"]) && $request["fields"] === "id";
+    if (!$skipHighlight) {
+        if (!isset($data["highlight"])) {
+            $data["highlight"] = [];
+        }
+        $data["highlight"]["number_of_fragments"] = 0;
+        $data["highlight"]["fields"]["attributes.textContents.textHTML"] = [
+            "number_of_fragments" => 0,
+            "pre_tags" => ["<em>"],
+            "post_tags" => ["</em>"]
+        ];
+    } else {
+        unset($data["highlight"]);
     }
-    $data["highlight"]["number_of_fragments"] = 0;
-    $data["highlight"]["fields"]["attributes.textContents.textHTML"] = [
-        "number_of_fragments" => 0,
-        "pre_tags" => ["<em>"],
-        "post_tags" => ["</em>"]
-    ];
 
     $searchParams = array("index" => getSearchIndexPattern($request["parliament"] ?? null), "body" => $data);
     
@@ -258,11 +269,68 @@ function searchSpeeches($request, $getAllResults = false) {
 }
 
 /**
+ * Look up a set of media documents by id, projected to OPTV_QUEUE_SOURCE_FIELDS.
+ *
+ * Stored playlists hold bare media ids, so resolving one needs a batch lookup —
+ * the regular `id` request parameter is a single-value match_phrase and cannot
+ * take a list. applyDefaultFilters() is applied here as well, so a speech that
+ * has since been set non-public silently drops out of a playlist instead of
+ * leaking through it.
+ *
+ * @param array       $ids        Media ids (e.g. ["DE-0200090027", …])
+ * @param string|null $parliament Parliament key, or null to search every index
+ * @return array|null Map of id => projected _source, or null when the search
+ *                    service is unavailable (distinct from "nothing matched")
+ */
+function searchMediaByIds($ids, $parliament = null) {
+
+    $ids = array_values(array_unique(array_filter(array_map('strval', (array)$ids), 'strlen')));
+    if (empty($ids)) {
+        return [];
+    }
+
+    $ESClient = getApiOpenSearchClient();
+    if (is_array($ESClient) && isset($ESClient["errors"])) {
+        return null;
+    }
+
+    $filter = ["must" => [], "should" => [], "must_not" => []];
+    applyDefaultFilters($filter);
+    $filter["must"][] = ["ids" => ["values" => $ids]];
+
+    $searchParams = [
+        "index" => getSearchIndexPattern($parliament),
+        "body" => [
+            "from" => 0,
+            "size" => min(count($ids), OPTV_SEARCH_MAX_RESULT_WINDOW),
+            "_source" => OPTV_QUEUE_SOURCE_FIELDS,
+            "query" => ["bool" => $filter],
+        ],
+    ];
+
+    try {
+        $results = $ESClient->search($searchParams);
+    } catch (Exception $e) {
+        error_log("searchMediaByIds failed: " . $e->getMessage());
+        return null;
+    }
+
+    $return = [];
+    foreach ($results["hits"]["hits"] ?? [] as $hit) {
+        if (isset($hit["_source"]["id"])) {
+            $return[$hit["_source"]["id"]] = $hit["_source"];
+        }
+    }
+
+    return $return;
+}
+
+/**
  * Get a list of media IDs from search results
- * 
+ *
  * This function performs a search and extracts only the media IDs from the results.
  * It's useful when you only need the IDs without the full search results.
- * 
+ *
  * @param array $request The request parameters containing search criteria
  * @return array An array containing the media IDs from the search results
  */
@@ -371,7 +439,7 @@ function getSearchBody($request, $getAllResults) {
     $pagination = calculatePagination($request, $getAllResults, $config);
     
     // Build the final query body
-    $data = buildFinalQueryBody($query, $sort, $pagination, $getAllResults);
+    $data = buildFinalQueryBody($query, $sort, $pagination, $getAllResults, searchQueueFieldsRequested($request));
     
     // Add aggregations
     addAggregations($data);
@@ -1102,6 +1170,51 @@ function determineSorting($request) {
 const OPTV_SEARCH_MAX_RESULT_WINDOW = 10000;
 
 /**
+ * _source projection behind `fields=queue`.
+ *
+ * The queue panel needs a speaker, a faction, a title, a duration and a date per
+ * item — not the transcript. Pulling the full document for 50 speeches ships
+ * megabytes of textContents nobody looks at, so the compact node is projected
+ * from these fields instead.
+ *
+ * annotations.data is in the list on purpose: it is what mediaMainSpeaker() /
+ * mediaMainFaction() / mediaMainSpeakerRole() read to decide who the speaker is,
+ * and reusing them beats inventing a second convention. It never leaves the
+ * server — mediaSearch() folds it into scalar attributes before responding.
+ */
+const OPTV_QUEUE_SOURCE_FIELDS = [
+    "id",
+    "attributes.dateStart",
+    "attributes.duration",
+    "attributes.parliament",
+    "relationships.agendaItem.data.attributes.title",
+    "relationships.people.data",
+    "relationships.organisations.data",
+    "annotations.data",
+];
+
+/**
+ * Whether a request asked for the compact queue projection (`fields=queue`).
+ *
+ * @param array $request The request parameters
+ * @return bool
+ */
+function searchQueueFieldsRequested($request) {
+    return isset($request["fields"]) && $request["fields"] === "queue";
+}
+
+/**
+ * Ceiling on a `fields=queue` result set.
+ *
+ * A queue node is small, but it is not free: it carries the people, organisation
+ * and annotation arrays out of the index so the main-speaker helpers can run.
+ * Ten thousand of those exhaust PHP's memory limit, so the queue projection caps
+ * out well below OPTV_SEARCH_MAX_RESULT_WINDOW. The panel pages through it 50 at
+ * a time and never needs more; a resolved live playlist is capped here too.
+ */
+const OPTV_QUEUE_MAX_RESULTS = 500;
+
+/**
  * Calculate pagination parameters
  *
  * This function calculates pagination based on the request parameters.
@@ -1119,6 +1232,13 @@ function calculatePagination($request, $getAllResults, $config) {
     }
 
     $maxFullResults = ($getAllResults === true) ? OPTV_SEARCH_MAX_RESULT_WINDOW : $pageSize;
+
+    // The queue projection is far heavier per document than a bare id, so an
+    // all-results queue query is capped rather than allowed to run to 10.000.
+    if ($getAllResults === true && searchQueueFieldsRequested($request)) {
+        $maxFullResults = OPTV_QUEUE_MAX_RESULTS;
+    }
+
     $from = 0;
     
     // Bypass pagination when searching for a specific ID to ensure we find the item
@@ -1143,16 +1263,17 @@ function calculatePagination($request, $getAllResults, $config) {
  * @param array $sort The sort array
  * @param array $pagination The pagination parameters
  * @param bool $getAllResults Whether to get all results
+ * @param bool $queueFields Whether to project the compact queue node (fields=queue)
  * @return array The final query body
  */
-function buildFinalQueryBody($query, $sort, $pagination, $getAllResults) {
+function buildFinalQueryBody($query, $sort, $pagination, $getAllResults, $queueFields = false) {
     $data = [
         "from" => $pagination["from"],
         "size" => $pagination["size"],
         "sort" => $sort,
         "query" => $query
     ];
-    
+
     if ($getAllResults === false) {
         $data["highlight"] = [
             "number_of_fragments" => 0,
@@ -1163,7 +1284,16 @@ function buildFinalQueryBody($query, $sort, $pagination, $getAllResults) {
     } else {
         $data["_source"] = ["id"];
     }
-    
+
+    // fields=queue overrides both branches: it needs more than the bare id that
+    // getAllResults leaves, and far less than the full document the paged path
+    // returns. Highlighting is untouched either way — searchSpeeches() re-adds it
+    // unconditionally below, which is why segments come back even with
+    // getAllResults=1.
+    if ($queueFields) {
+        $data["_source"] = OPTV_QUEUE_SOURCE_FIELDS;
+    }
+
     return $data;
 }
 

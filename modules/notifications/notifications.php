@@ -181,6 +181,35 @@ function alertCriteriaStorageJson($raw) {
 }
 
 /**
+ * The /search URL a set of criteria stands for.
+ *
+ * Criteria use the search API's own parameter names, so this is a straight
+ * re-encoding — the round trip criteria → search URL → same result set is what
+ * makes an alert, its RSS feed and its result page one and the same query. The
+ * presentation-only `_labels` snapshot is dropped so it never leaks into a URL.
+ *
+ * @param array $criteria Alert criteria (raw or normalized)
+ * @param array $extra    Additional query params to append (e.g. playresults)
+ * @return string Absolute path under the site root
+ */
+function alertCriteriaSearchUrl($criteria, $extra = []) {
+    global $config;
+
+    unset($criteria["_labels"]);
+    $params = array_merge(is_array($criteria) ? $criteria : [], $extra);
+
+    if (empty($params)) {
+        return $config["dir"]["root"] . "/search";
+    }
+
+    // Collapse person[0]=…&person[1]=… back to person[]=…, the form the search
+    // page and the API both emit.
+    $qs = preg_replace('/%5B\d+%5D=/i', '%5B%5D=', http_build_query($params));
+
+    return $config["dir"]["root"] . "/search?" . $qs;
+}
+
+/**
  * Human-readable one-line summary of criteria for default alert labels, emails and
  * any non-JS context. Uses the `_labels` snapshot for friendly names when present.
  */
