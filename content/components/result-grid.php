@@ -258,20 +258,17 @@ if ($totalResults != 0) {
 		}
 		
 		foreach($result_items as $result_item) {
-			
-			$duration = $result_item["attributes"]['duration'];
-			$formattedDuration = $duration >= 3600 ? 
-				gmdate("H:i:s", $duration) : 
-				gmdate("i:s", $duration);
 
-			$formattedDate = date("d.m.Y", strtotime($result_item["attributes"]["dateStart"]));
-			
-			$mainSpeaker = mediaMainSpeaker($result_item["annotations"]['data'], $result_item["relationships"]["people"]['data']);
-			$mainFaction = mediaMainFaction($result_item["annotations"]['data'], $result_item["relationships"]["organisations"]['data']);
+			// The flat view-model the card renders from — the same one the
+			// playlist page and the player's queue are built out of, so all
+			// three display a speech identically.
+			$mediaItem = mediaQueueNode($result_item);
 
-			if ($sortFactor == 'topic' && $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"] != $currentAgendaItem) {
-				echo '<div class="sortDivider"><b>'.h($formattedDate).' - '.h($result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"]).'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
-				$currentAgendaItem = $result_item["relationships"]["agendaItem"]["data"]["attributes"]["title"];
+			$formattedDate = date("d.m.Y", strtotime($mediaItem["attributes"]["dateStart"]));
+
+			if ($sortFactor == 'topic' && $mediaItem["attributes"]["title"] != $currentAgendaItem) {
+				echo '<div class="sortDivider"><b>'.h($formattedDate).' - '.h($mediaItem["attributes"]["title"]).'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
+				$currentAgendaItem = $mediaItem["attributes"]["title"];
 			} elseif ($sortFactor == 'date' && $formattedDate != $currentDate) {
 				//echo '<div class="sortDivider"><b>'.$formattedDate.'</b><span class="icon-down" style="font-size: 0.9em;"></span></div>';
 				$currentDate = $formattedDate;
@@ -279,7 +276,7 @@ if ($totalResults != 0) {
 				// No divider needed for duration sorting as items are already sorted by duration
 			}
 
-			$highlightedName = $mainSpeaker ? $mainSpeaker['attributes']['label'] : '';
+			$highlightedName = $mediaItem["attributes"]["speaker"] ?? '';
 			if (isset($_REQUEST['person']) && strlen($_REQUEST['person']) > 1) {
 				// Escape user input before using in HTML, then apply highlighting safely
 				$searchTerm = h($_REQUEST['person']);

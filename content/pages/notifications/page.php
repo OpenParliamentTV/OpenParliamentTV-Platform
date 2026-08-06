@@ -85,59 +85,31 @@ $(function () {
     }
     function post(path) { return fetch(api + path, { method: "POST", credentials: "same-origin" }).then(function (r) { return r.json(); }); }
 
-    function pad2(n) { return (n < 10 ? "0" : "") + n; }
     // Messages "Date" column: locale datetime (like the manage tables).
     function fmtDateTime(v) { return v ? new Date(v).toLocaleString(LANG) : "-"; }
-    // Speech date in the media card: matches the result grid's date("d.m.Y").
-    function fmtSpeechDate(v) {
-        if (!v) { return ""; }
-        var d = new Date(v);
-        return pad2(d.getDate()) + "." + pad2(d.getMonth() + 1) + "." + d.getFullYear();
-    }
-    // Duration: matches the result grid's gmdate (i:s, or H:i:s for >= 1h).
-    function fmtDuration(sec) {
-        sec = parseInt(sec || 0, 10);
-        if (!sec) { return ""; }
-        var h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
-        return h ? (h + ":" + pad2(m) + ":" + pad2(s)) : (pad2(m) + ":" + pad2(s));
-    }
 
-    // ---- Alerts: rich "Redebeitrag" cell resembling a search result item ----
-    // Lazily fetched per row from the search API so we get the matched-sentence
-    // snippet (_finds) with a direct timecoded link to the sentence.
+    // ---- Alerts: the "Redebeitrag" cell ----
+    // Rendered as the platform's shared speech card, so the speech reads here
+    // exactly as it does in the search results. The hit is lazily fetched per
+    // row from the search API for the matched sentences (_finds), which carry
+    // the timecoded links into the speech.
     function buildMediaCard(it, row) {
         var mid = row.mediaID;
-        var href = mid ? (root + "/media/" + encodeURIComponent(mid)) : safeHref(row.link);
-        var speaker = escapeHtml(row.title || "");
-        var agenda = "", date = row.created, duration = "", finds = [];
-        if (it) {
-            var ai = it.relationships && it.relationships.agendaItem && it.relationships.agendaItem.data;
-            agenda = (ai && ai.attributes) ? (ai.attributes.title || ai.attributes.officialTitle || "") : "";
-            date = (it.attributes && it.attributes.dateStart) ? it.attributes.dateStart : date;
-            duration = it.attributes ? it.attributes.duration : "";
-            finds = it._finds || [];
-        }
-        var meta = fmtSpeechDate(date);
-        // Reuse the result-grid markup so .resultItem / .resultSnippets CSS applies.
-        var html = '<div class="notifMediaCard resultItem' + (finds.length ? ' snippets' : '') + '">';
-        html += '<a class="notifMediaHead" href="' + escapeHtml(href || "#") + '">';
-        if (meta) { html += '<span class="notifMediaMeta me-2">' + escapeHtml(meta) + '</span>'; }
-        if (speaker) { html += '<span class="notifMediaSpeaker">' + speaker + ': </span>'; }
-        if (agenda) { html += '<span class="notifMediaAgenda">' + escapeHtml(agenda) + '</span>'; }
-        html += '</a>';
-        if (finds.length) {
-            var q = (row.alertCriteria && row.alertCriteria.q) ? ("q=" + encodeURIComponent(row.alertCriteria.q) + "&") : "";
-            html += '<div class="resultSnippets">';
-            finds.slice(0, 3).forEach(function (f) {
-                var start = f["data-start"] || "";
-                var sl = root + "/media/" + encodeURIComponent(mid) + "?" + q + "t=" + encodeURIComponent(start);
-                // context is server-side search highlight HTML (safe <em> markup).
-                html += '<a class="resultSnippet" href="' + escapeHtml(sl) + '" title="▶">' + (f.context || "") + '</a>';
-            });
-            html += '</div>';
-        }
-        html += '</div>';
-        return html;
+        var node = it
+            ? OptvMediaItem.fromSearchHit(it)
+            // No hit to show — the alert's own title is all we have of the speech.
+            : { type: "media", id: mid || "", attributes: { dateStart: row.created, speaker: row.title || "" }, segments: null };
+
+        var q = (row.alertCriteria && row.alertCriteria.q) ? ("q=" + encodeURIComponent(row.alertCriteria.q)) : "";
+        var href = mid ? (root + "/media/" + encodeURIComponent(mid) + "?" + q) : (safeHref(row.link) || "#");
+
+        return OptvMediaItem.build(node, {
+            href: href,
+            snippetHrefBase: href,
+            // A table cell, not a grid column.
+            classes: "",
+            snippets: (it && it._finds) ? it._finds.slice(0, 3) : null
+        }).outerHTML;
     }
 
     // Cache rendered media-card HTML per row so re-renders (e.g. after mark-read,

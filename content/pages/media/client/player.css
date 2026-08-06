@@ -876,8 +876,10 @@ body:not(.darkmode) .playerContainer .playerProgress {
    Queue panel
 
    Lives below the player and outside #content, so an AJAX result switch leaves
-   it standing. Faction colours come from the generated .partyIndicator rules in
-   head.php, keyed on data-faction — the same mechanism the result grid uses.
+   it standing. Only the panel's own chrome is styled here — the rows are the
+   platform's shared `.resultItem` speech card (content/client/css/style.css),
+   which is what makes a queued speech look like the same speech in the search
+   results, faction colour and all.
    --------------------------------------------------------------------------- */
 
 .queuePanel {
@@ -886,7 +888,7 @@ body:not(.darkmode) .playerContainer .playerProgress {
     padding: 0 1rem;
 }
 
-.queuePanel.collapsed .queueList {
+.queuePanel.collapsed .resultList {
     display: none;
 }
 
@@ -906,89 +908,12 @@ body:not(.darkmode) .playerContainer .playerProgress {
     font-size: 87.5%;
 }
 
-.queueList {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+/* The list scrolls inside the panel rather than growing it — and being the
+   scroll container is also what lets queue-panel.js observe rows against it. */
+.queuePanel .resultList {
     max-height: 60vh;
     overflow-y: auto;
     border-top: 1px solid rgba(128, 128, 128, .25);
-}
-
-.queueItem {
-    border-bottom: 1px solid rgba(128, 128, 128, .25);
-}
-
-.queueItemLink {
-    display: flex;
-    align-items: stretch;
-    gap: .75rem;
-    padding: .5rem .25rem;
-    text-decoration: none;
-    color: inherit;
-}
-
-/* The generated .partyIndicator rules in head.php set border-color (the
-   background shorthand resets the fill), so a zero-width element with only a
-   left border picks up the faction colour and nothing else. */
-.queueItemFactionBar {
-    flex: 0 0 auto;
-    width: 0;
-    border-left-width: 4px;
-    border-left-style: solid;
-    border-radius: 0;
-}
-
-.queueItemLink:hover,
-.queueItemLink:focus {
-    background-color: rgba(128, 128, 128, .12);
-}
-
-.queueItem.active > .queueItemLink {
-    background-color: rgba(128, 128, 128, .2);
-    font-weight: 600;
-}
-
-.queueItemPosition {
-    min-width: 2.5rem;
-    text-align: right;
-    opacity: .5;
-    font-variant-numeric: tabular-nums;
-}
-
-.queueItemBody {
-    display: flex;
-    flex-direction: column;
-    gap: .1rem;
-    min-width: 0;
-}
-
-.queueItemMeta,
-.queueItemFooter {
-    display: flex;
-    align-items: baseline;
-    gap: .5rem;
-    font-size: 87.5%;
-}
-
-.queueItemFooter {
-    opacity: .6;
-}
-
-.queueItemTitle {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.queueItemHits > .icon-search {
-    margin-right: .2rem;
-}
-
-/* Rows exist before their metadata arrives; keep them from collapsing to
-   nothing while the chunk they belong to is still in flight. */
-.queueItem:not(.loaded) .queueItemBody {
-    min-height: 2.75rem;
 }
 
 .queuePositionIndicator {
@@ -996,11 +921,7 @@ body:not(.darkmode) .playerContainer .playerProgress {
 }
 
 @media (max-width: 767.98px) {
-    .queueList {
+    .queuePanel .resultList {
         max-height: 50vh;
-    }
-
-    .queueItemPosition {
-        min-width: 1.75rem;
     }
 }

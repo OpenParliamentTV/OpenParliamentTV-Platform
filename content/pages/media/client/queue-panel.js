@@ -2,8 +2,12 @@
  * Queue panel for the media player.
  *
  * Renders the queue player.js assembled (the current search's results today, a
- * stored playlist later) as a list below the player, and keeps the "{n} of {m}"
- * position indicator in the header in sync.
+ * stored playlist later) as a grid of speech cards below the player, and keeps
+ * the "{n} of {m}" position indicator in the header in sync.
+ *
+ * The cards themselves are the platform's shared `.resultItem`, built through
+ * OptvMediaItem (content/client/js/media-item.js), so a queued speech looks
+ * exactly like the same speech in the search results.
  *
  * The queue arrives as an ordered id list — up to ten thousand of them — so rows
  * are created empty and their display metadata is fetched a page at a time, only
@@ -34,25 +38,6 @@
 		rowsById = {};
 
 	// ---- helpers --------------------------------------------------------------
-
-	/** Seconds → "m:ss", matching how durations read in the result grid. */
-	function formatDuration(seconds) {
-		if (seconds === null || seconds === undefined || isNaN(seconds)) { return ""; }
-		var total = Math.round(seconds),
-			minutes = Math.floor(total / 60),
-			rest = total % 60;
-		return minutes + ":" + (rest < 10 ? "0" : "") + rest;
-	}
-
-	/** ISO date → the locale's short date, falling back to the raw string. */
-	function formatDate(iso) {
-		if (!iso) { return ""; }
-		var d = new Date(iso);
-		if (isNaN(d.getTime())) { return iso; }
-		return d.toLocaleDateString(document.documentElement.lang || undefined, {
-			year: "numeric", month: "2-digit", day: "2-digit"
-		});
-	}
 
 	/** The current search params, which the queue rows must keep carrying. */
 	function searchParams() {
@@ -90,105 +75,40 @@
 
 		panel.appendChild(header);
 
-		listEl = document.createElement("ol");
-		listEl.className = "queueList";
+		listEl = document.createElement("div");
+		listEl.className = "resultList row row-cols-1 row-cols-md-2 row-cols-xl-3";
 		panel.appendChild(listEl);
 	}
 
+	/**
+	 * What the shared speech card needs on top of the node itself. Rebuilt for
+	 * fill() too, since that replaces the card's contents — and with them the
+	 * link the click handler was attached to.
+	 */
+	function itemOptions(item, index) {
+		return {
+			href: config.dir.root + "/media/" + item.id + searchParams(),
+			position: index + 1,
+			dataAttrs: { index: String(index) },
+			onLinkClick: function (event) {
+				// Left-click navigates in place through the player's own AJAX
+				// path; modified clicks keep working as ordinary links.
+				if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) { return; }
+				event.preventDefault();
+				if (typeof updateQuery === "function") { updateQuery(item.id); }
+			}
+		};
+	}
+
 	function buildRow(item, index) {
-		var li = document.createElement("li");
-		li.className = "queueItem";
-		li.setAttribute("data-speech-id", item.id);
-		li.setAttribute("data-index", String(index));
-
-		var link = document.createElement("a");
-		link.className = "queueItemLink";
-		link.href = config.dir.root + "/media/" + item.id + searchParams();
-		link.addEventListener("click", function (event) {
-			// Left-click navigates in place through the player's own AJAX path;
-			// modified clicks keep working as ordinary links.
-			if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) { return; }
-			event.preventDefault();
-			if (typeof updateQuery === "function") { updateQuery(item.id); }
-		});
-
-		var bar = document.createElement("span");
-		bar.className = "queueItemFactionBar partyIndicator";
-		link.appendChild(bar);
-
-		var pos = document.createElement("span");
-		pos.className = "queueItemPosition";
-		pos.textContent = String(index + 1);
-		link.appendChild(pos);
-
-		var body = document.createElement("span");
-		body.className = "queueItemBody";
-		link.appendChild(body);
-
-		li.appendChild(link);
-		rowsById[item.id] = li;
-		return li;
+		var row = OptvMediaItem.build(item, itemOptions(item, index));
+		rowsById[item.id] = row;
+		return row;
 	}
 
 	/** Fill a row once its metadata has arrived. */
-	function fillRow(li, node) {
-		var attributes = node.attributes || {},
-			body = li.querySelector(".queueItemBody"),
-			bar = li.querySelector(".queueItemFactionBar");
-
-		if (!body) { return; }
-		body.innerHTML = "";
-
-		if (bar && attributes.factionID) {
-			bar.setAttribute("data-faction", attributes.factionID);
-		}
-
-		var meta = document.createElement("span");
-		meta.className = "queueItemMeta";
-
-		var speaker = document.createElement("span");
-		speaker.className = "queueItemSpeaker";
-		speaker.textContent = attributes.speaker || "";
-		meta.appendChild(speaker);
-
-		if (attributes.faction) {
-			var faction = document.createElement("span");
-			faction.className = "partyIndicator partyIndicatorInline queueItemFaction";
-			faction.setAttribute("data-faction", attributes.factionID || "");
-			faction.textContent = attributes.faction;
-			meta.appendChild(faction);
-		}
-
-		body.appendChild(meta);
-
-		var title = document.createElement("span");
-		title.className = "queueItemTitle";
-		title.textContent = attributes.title || "";
-		body.appendChild(title);
-
-		var footer = document.createElement("span");
-		footer.className = "queueItemFooter";
-
-		var date = document.createElement("span");
-		date.className = "queueItemDate";
-		date.textContent = formatDate(attributes.dateStart);
-		footer.appendChild(date);
-
-		var duration = document.createElement("span");
-		duration.className = "queueItemDuration";
-		duration.textContent = formatDuration(attributes.duration);
-		footer.appendChild(duration);
-
-		if (attributes.findCount) {
-			var hits = document.createElement("span");
-			hits.className = "queueItemHits";
-			hits.appendChild(document.createElement("span")).className = "icon-search";
-			hits.appendChild(document.createTextNode(attributes.findCount));
-			footer.appendChild(hits);
-		}
-
-		body.appendChild(footer);
-		li.classList.add("loaded");
+	function fillRow(row, node) {
+		OptvMediaItem.fill(row, node, itemOptions(node, parseInt(row.getAttribute("data-index"), 10)));
 	}
 
 	// ---- chunked metadata loading ---------------------------------------------
@@ -239,11 +159,9 @@
 
 		var fragment = document.createDocumentFragment();
 		for (var i = renderedCount; i < target; i++) {
-			var row = buildRow(resultList[i], i);
-			if (metadataIncluded) {
-				fillRow(row, resultList[i]);
-			}
-			fragment.appendChild(row);
+			// A node that already carries its attributes renders complete; one
+			// that does not comes out as a placeholder for fillRow() to finish.
+			fragment.appendChild(buildRow(resultList[i], i));
 		}
 		listEl.appendChild(fragment);
 		renderedCount = target;
@@ -316,7 +234,7 @@
 			ensureRendered(currentQueueIndex);
 		}
 
-		var previous = listEl.querySelector(".queueItem.active");
+		var previous = listEl.querySelector(".resultItem.active");
 		if (previous) {
 			previous.classList.remove("active");
 			previous.removeAttribute("aria-current");

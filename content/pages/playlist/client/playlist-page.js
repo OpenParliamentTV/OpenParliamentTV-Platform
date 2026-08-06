@@ -53,7 +53,7 @@
 	function renumber() {
 		if (!list) { return; }
 		Array.prototype.forEach.call(list.children, function (li, index) {
-			var pos = li.querySelector(".playlistItemPosition");
+			var pos = li.querySelector(".resultPosition");
 			if (pos) { pos.textContent = String(index + 1); }
 		});
 	}
@@ -176,10 +176,10 @@
 		list.addEventListener("click", function (event) {
 			var button = event.target.closest ? event.target.closest("button") : null;
 			if (!button) { return; }
-			var li = button.closest(".playlistItem");
+			var li = button.closest(".resultItem");
 			if (!li) { return; }
 
-			if (button.classList.contains("playlistItemUp")) {
+			if (button.classList.contains("playlistActionUp")) {
 				if (li.previousElementSibling) {
 					list.insertBefore(li, li.previousElementSibling);
 					renumber();
@@ -188,7 +188,7 @@
 				return;
 			}
 
-			if (button.classList.contains("playlistItemDown")) {
+			if (button.classList.contains("playlistActionDown")) {
 				if (li.nextElementSibling) {
 					list.insertBefore(li.nextElementSibling, li);
 					renumber();
@@ -197,7 +197,7 @@
 				return;
 			}
 
-			if (button.classList.contains("playlistItemRemove")) {
+			if (button.classList.contains("playlistActionRemove")) {
 				var itemId = li.getAttribute("data-item-id");
 				if (!itemId) { return; }
 				post("/playlist/itemRemove", { itemID: itemId }).then(function (response) {

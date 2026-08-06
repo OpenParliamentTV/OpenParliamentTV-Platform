@@ -82,41 +82,27 @@
     <?php if (empty($items)): ?>
         <p class="playlistEmpty mt-4"><?= L::playlistEmpty(); ?></p>
     <?php else: ?>
-        <ol class="playlistItems mt-4" id="playlistItems">
+        <?php
+        // The items are already mediaQueueNode()s, so they go straight into the
+        // shared speech card the search grid and the player's queue also use.
+        $itemActions = $canEditItems
+            ? '<button type="button" class="btn btn-sm playlistActionUp" title="'.hAttr(L::playlistMoveUp()).'"><span class="icon-up-open-big"></span></button>'
+                .'<button type="button" class="btn btn-sm playlistActionDown" title="'.hAttr(L::playlistMoveDown()).'"><span class="icon-down-open-big"></span></button>'
+                .'<button type="button" class="btn btn-sm playlistActionRemove" title="'.hAttr(L::delete()).'"><span class="icon-trash"></span></button>'
+            : '';
+        ?>
+        <div class="resultList row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 mt-4" id="playlistItems">
             <?php foreach ($items as $index => $item):
-                $attributes = $item["attributes"];
-                $itemUrl = $config["dir"]["root"] . '/media/' . rawurlencode($item["id"]) . '?playlist=' . rawurlencode($playlist["token"]);
-            ?>
-                <li class="playlistItem" data-item-id="<?= hAttr($item["playlistItemID"] ?? '') ?>" data-speech-id="<?= hAttr($item["id"]) ?>">
-                    <span class="playlistItemFactionBar partyIndicator" data-faction="<?= hAttr($attributes["factionID"] ?? '') ?>"></span>
-                    <span class="playlistItemPosition"><?= h($index + 1) ?></span>
-                    <a class="playlistItemLink" href="<?= hAttr($itemUrl) ?>">
-                        <span class="playlistItemMeta">
-                            <span class="playlistItemSpeaker"><?= h($attributes["speaker"] ?? '') ?></span>
-                            <?php if (!empty($attributes["faction"])): ?>
-                                <span class="partyIndicator partyIndicatorInline" data-faction="<?= hAttr($attributes["factionID"]) ?>"><?= h($attributes["faction"]) ?></span>
-                            <?php endif; ?>
-                        </span>
-                        <span class="playlistItemTitle"><?= h($attributes["title"] ?? '') ?></span>
-                        <span class="playlistItemFooter text-muted">
-                            <?= h(!empty($attributes["dateStart"]) ? date("d.m.Y", strtotime($attributes["dateStart"])) : '') ?>
-                            <?php if (!empty($item["segments"])): ?>
-                                <span class="playlistItemSegments"><?= h(count($item["segments"])) ?> <?= L::playlistSegment(); ?></span>
-                            <?php else: ?>
-                                <span class="playlistItemSegments"><?= L::playlistWholeSpeech(); ?></span>
-                            <?php endif; ?>
-                        </span>
-                    </a>
-                    <?php if ($canEditItems): ?>
-                        <span class="playlistItemActions">
-                            <button type="button" class="btn btn-sm playlistItemUp" title="<?= hAttr(L::playlistMoveUp()) ?>"><span class="icon-up-open-big"></span></button>
-                            <button type="button" class="btn btn-sm playlistItemDown" title="<?= hAttr(L::playlistMoveDown()) ?>"><span class="icon-down-open-big"></span></button>
-                            <button type="button" class="btn btn-sm playlistItemRemove" title="<?= hAttr(L::delete()) ?>"><span class="icon-trash"></span></button>
-                        </span>
-                    <?php endif; ?>
-                </li>
-            <?php endforeach; ?>
-        </ol>
+                $mediaItem = $item;
+                $mediaItemOptions = [
+                    "href" => $config["dir"]["root"] . '/media/' . rawurlencode($item["id"]) . '?playlist=' . rawurlencode($playlist["token"]),
+                    "position" => $index + 1,
+                    "actionsHtml" => $itemActions,
+                    "dataAttrs" => ["item-id" => $item["playlistItemID"] ?? ''],
+                ];
+                include(__DIR__ . '/../../components/media-item.php');
+            endforeach; ?>
+        </div>
     <?php endif; ?>
 
 </main>

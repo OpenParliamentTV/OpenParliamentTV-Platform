@@ -3,6 +3,7 @@
          (not the footer) so per-instance custom footers can override branding without
          dropping platform JS. */ ?>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/generic.js?v=<?= $config["version"] ?>"></script>
+<script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/media-item.js?v=<?= $config["version"] ?>"></script>
 <script type="text/javascript" src="<?= $config["dir"]["root"] ?>/content/client/js/criteria-chips.js?v=<?= $config["version"] ?>"></script>
 <?php if (!empty($_SESSION["login"]) && !empty($config["allow"]["notifications"])): ?>
 <?php include(__DIR__ . '/alert-create-modal.php'); ?>

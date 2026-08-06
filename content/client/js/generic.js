@@ -223,8 +223,9 @@ function updateLinkTransitions() {
 	.not('a[target="_blank"]')
 	.not('.langswitch')
 	// Queue rows navigate through the player's own AJAX path; the full page
-	// transition here would override it and reload instead.
-	.not('.queueItemLink')
+	// transition here would override it and reload instead. Scoped to the panel
+	// rather than to the card, whose links elsewhere do want the transition.
+	.not('#queuePanel a')
 	.click(function(evt) {
 		if (evt.shiftKey || evt.ctrlKey || evt.altKey || evt.metaKey) {
 			// click with meta key down

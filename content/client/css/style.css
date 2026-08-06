@@ -1637,28 +1637,6 @@ body.fixed .searchContainer {
     text-decoration: none;
 }
 
-/* ---- Notifications: "Redebeitrag" cell. Reuses the result-grid .resultItem /
-   .resultSnippets styling (incl. `td em` highlight); only the compact head needs
-   a few tweaks. ---- */
-.notifMediaCard.resultItem {
-    padding: 0;
-}
-.notifMediaCard .notifMediaHead {
-    display: block;
-    color: inherit;
-    text-decoration: none;
-}
-.notifMediaCard .notifMediaHead:hover .notifMediaSpeaker {
-    text-decoration: underline;
-}
-/* Weight is inherited from the row (fw-bolder when unread, normal when read). */
-.notifMediaCard .notifMediaMeta {
-    opacity: .7;
-}
-.notifMediaCard .resultSnippets {
-    margin-top: .35rem;
-}
-
 /* ---- Shared criteria chips (alert modal, /manage/alerts, /notifications) ---- */
 .criteriaChips {
     display: flex;
@@ -2284,6 +2262,18 @@ table td.thumbnailColumn-organisation .rounded-circle img {
     margin: 10px 16px 0px 16px;
 }
 
+/* ---- The speech card ------------------------------------------------------
+   One representation of a media item, wherever speeches are displayed: search
+   results and entity detail tabs (content/components/media-item.php), the
+   playlist page, the player's queue panel and the notifications list
+   (content/client/js/media-item.js). Everything below is generic — a surface
+   opts into an element by emitting it, never by restyling the card.
+
+   Faction colour arrives through .partyIndicator[data-faction], whose rules are
+   generated per faction in content/head.php: the card's border *is* the faction
+   indicator.
+   --------------------------------------------------------------------------- */
+
 .resultItem {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -2298,26 +2288,45 @@ table td.thumbnailColumn-organisation .rounded-circle img {
     position: relative;
     background: var(--primary-bg-color);
     height: 100%;
-    padding: 10px 10px 30px 10px;
+    padding: 10px;
     border-width: 1px;
     border-style: solid;
-    /*border: 1px solid var(--border-color);*/
     border-radius: 4px;
 }
 
-.resultItem:not(.snippets) .resultContent {
-    padding-bottom: 10px;
+/* .hitTimeline is pinned to the bottom edge, so a card carrying one reserves
+   the band it sits in. Keyed on the timeline, not on .resultSnippets: playlist
+   and queue cards have segments to plot but no snippet text to show. */
+.resultItem.hits .resultContent {
+    padding-bottom: 30px;
 }
 
-.resultItem .resultContent:hover {
-    
+/* A position number turns the top-left corner into a gutter. */
+.resultItem.numbered .resultContent {
+    padding-left: 34px;
 }
 
+/* The item currently playing. Drawn as a ring rather than a border so the
+   faction colour on .resultContent stays readable underneath. */
+.resultItem.active .resultContent {
+    box-shadow: 0 0 0 2px var(--primary-fg-color);
+}
+
+/* Cards can exist before their metadata does — the queue pages it in as rows
+   scroll into view. Keeps the empty ones from collapsing to nothing. */
+.resultItem.placeholder .resultContent {
+    min-height: 120px;
+}
+
+.resultItem .resultLink {
+    display: block;
+}
+
+/* The card carries its own link styling. Dropped into a .subpage or a
+   .tab-content — both of which underline their links — it has to keep reading
+   as the card it is, so a speech looks the same on every page. */
 .resultItem .resultContent a {
     color: inherit;
-}
-
-.resultItem .resultContent a:hover {
     text-decoration: none;
 }
 
@@ -2358,6 +2367,30 @@ table td.thumbnailColumn-organisation .rounded-circle img {
     position: absolute;
     top: 10px;
     right: 10px;
+}
+
+.resultItem .resultPosition {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    opacity: .5;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Clears the absolutely positioned .resultDuration sharing this line. */
+.resultItem .resultDate {
+    padding-right: 56px;
+}
+
+/* How many passages matched — for cards that have the segments but not the
+   snippet text that would otherwise show them off. */
+.resultItem .resultHitCount {
+    float: right;
+    opacity: .7;
+}
+
+.resultItem .resultHitCount .icon-search {
+    margin-right: .2rem;
 }
 
 .resultItem .resultTitle {
@@ -2405,11 +2438,19 @@ body.darkmode .resultItem .resultSnippets .resultSnippet:hover {
     opacity: .6;
 }
 
-.resultItem .rounded-pill {
-    position: absolute;
-    right: 0px;
-    top: -23px;
-    display: none;
+/* Footer row for whatever the surface lets you do with the speech: add it to a
+   playlist, reorder it, remove it. Sits above the pinned .hitTimeline. */
+.resultItem .resultActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color);
+}
+
+.resultItem .resultActions .btn {
+    padding: 1px 7px;
 }
 
 .resultItem .hitTimeline {
