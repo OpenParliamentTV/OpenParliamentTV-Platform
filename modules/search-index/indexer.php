@@ -16,6 +16,12 @@ require_once(__DIR__ . "/index-config.php");
 require_once(__DIR__ . "/../../api/v1/utilities.php"); // getApiOpenSearchClient()
 require_once(__DIR__ . "/../statistics-index/segments.php"); // statsIndexGetCleanText()
 
+// Media items per bulk request. Keeps peak memory bounded by the chunk rather
+// than by how many speeches a session happens to contain.
+if (!defined("SEARCH_INDEX_BULK_CHUNK")) {
+    define("SEARCH_INDEX_BULK_CHUNK", 50);
+}
+
 /**
  * @throws SearchIndexInvalidInputException when the parliament is unknown.
  */
@@ -51,15 +57,28 @@ function searchIndexStatisticsName($parliament)
  */
 function searchIndexClient($parliament = null)
 {
-    $client = getApiOpenSearchClient();
+    // One client for the whole process. Each Connection keeps its last request
+    // and response — bodies included — so building a client per call strands a
+    // copy of the last bulk payload on every session file a long import walks.
+    // The client is not parliament-specific; the index name is.
+    static $client = null;
 
-    if (!$client || (is_array($client) && isset($client["errors"]))) {
+    if ($client !== null) {
+        return $client;
+    }
+
+    $built = getApiOpenSearchClient();
+
+    if (!$built || (is_array($built) && isset($built["errors"]))) {
+        // Not cached: a later call should be free to retry the connection.
         throw new SearchIndexException(
             "Could not connect to OpenSearch.",
             "OPENSEARCH_CONNECTION_ERROR",
             $parliament === null ? [] : ["parliament" => $parliament]
         );
     }
+
+    $client = $built;
 
     return $client;
 }
@@ -92,6 +111,43 @@ function searchIndexEnsureIndex($client, $indexName)
 }
 
 /**
+ * Send one bulk chunk and fold its outcome into the running counters.
+ *
+ * @throws SearchIndexException when the bulk call itself fails.
+ */
+function searchIndexFlushBulk($client, array $body, &$updatedCount, &$failedCount, array &$errorsEncountered)
+{
+    if (empty($body)) {
+        return;
+    }
+
+    try {
+        $responses = $client->bulk(["body" => $body]);
+    } catch (Exception $e) {
+        throw new SearchIndexException($e->getMessage(), "BULK_API_EXCEPTION", ["error" => $e->getMessage()], $e);
+    }
+
+    // A bulk call succeeds as a whole while individual documents fail, so the
+    // per-item errors are counted rather than thrown.
+    if (isset($responses["errors"]) && $responses["errors"] === true) {
+        foreach ($responses["items"] as $responseItem) {
+            if (isset($responseItem["index"]["error"])) {
+                $errorsEncountered[] = [
+                    "type" => "indexing_item",
+                    "id" => $responseItem["index"]["_id"],
+                    "message" => $responseItem["index"]["error"]["type"] . ": " . $responseItem["index"]["error"]["reason"]
+                ];
+                $failedCount++;
+            } else {
+                $updatedCount++;
+            }
+        }
+    } else {
+        $updatedCount += count($responses["items"] ?? []);
+    }
+}
+
+/**
  * Bulk-write media items into the main index.
  *
  * @param string $parliament Parliament code.
@@ -116,15 +172,22 @@ function searchIndexWriteItems($parliament, array $items, $initIndex = false)
         searchIndexEnsureIndex($client, $indexName);
     }
 
-    $params = ["body" => []];
     $errorsEncountered = [];
     $updatedCount = 0;
     $failedCount = 0;
 
+    // Flush every SEARCH_INDEX_BULK_CHUNK items instead of once per call. A
+    // session carries hundreds of speeches with their full transcript text, and
+    // the OpenSearch client builds a string copy of the whole request body for
+    // its trace log on every request — so one flush per session allocates
+    // several times the payload at once.
+    $body = [];
+    $pendingItems = 0;
+
     for ($i = 0; $i < count($items); $i++) {
         $tmpItem = $items[$i];
         if (isset($tmpItem["data"]["id"])) {
-            $params["body"][] = [
+            $body[] = [
                 "index" => [
                     "_index" => $indexName,
                     "_id"    => $tmpItem["data"]["id"]
@@ -140,39 +203,21 @@ function searchIndexWriteItems($parliament, array $items, $initIndex = false)
                 $document["cleanText"] = $cleanText;
             }
 
-            $params["body"][] = $document;
+            $body[] = $document;
+            $pendingItems++;
+
+            if ($pendingItems >= SEARCH_INDEX_BULK_CHUNK) {
+                searchIndexFlushBulk($client, $body, $updatedCount, $failedCount, $errorsEncountered);
+                $body = [];
+                $pendingItems = 0;
+            }
         } else {
             $failedCount++;
             $errorsEncountered[] = ["type" => "item_missing_id", "message" => "Item at index " . $i . " is missing a data.id field."];
         }
     }
 
-    if (empty($params["body"])) {
-        return ["updated" => 0, "failed" => $failedCount, "errors" => $errorsEncountered];
-    }
-
-    try {
-        $responses = $client->bulk($params);
-    } catch (Exception $e) {
-        throw new SearchIndexException($e->getMessage(), "BULK_API_EXCEPTION", ["error" => $e->getMessage()], $e);
-    }
-
-    // A bulk call succeeds as a whole while individual documents fail, so the
-    // per-item errors are counted rather than thrown.
-    if (isset($responses["errors"]) && $responses["errors"] === true) {
-        foreach ($responses["items"] as $idx => $responseItem) {
-            if (isset($responseItem["index"]["error"])) {
-                $failedId = $responseItem["index"]["_id"];
-                $errorDetail = $responseItem["index"]["error"]["type"] . ": " . $responseItem["index"]["error"]["reason"];
-                $errorsEncountered[] = ["type" => "indexing_item", "id" => $failedId, "message" => $errorDetail];
-                $failedCount++;
-            } else {
-                $updatedCount++;
-            }
-        }
-    } else {
-        $updatedCount = count($responses["items"] ?? []);
-    }
+    searchIndexFlushBulk($client, $body, $updatedCount, $failedCount, $errorsEncountered);
 
     return ["updated" => $updatedCount, "failed" => $failedCount, "errors" => $errorsEncountered];
 }

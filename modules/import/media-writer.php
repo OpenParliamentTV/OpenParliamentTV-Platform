@@ -954,7 +954,7 @@ function importWritePeople($itemPeople, $mediaID, $parliament, $db, $dbp, $confi
     }
 }
 
-function importMediaWrite($item, $db, $dbp, $entityDump = false) {
+function importMediaWrite($item, $db, $dbp, $entityDump = false, $entityRemap = null) {
     global $config;
 
     // Connections are the caller's responsibility: the API wrapper opens them
@@ -1032,8 +1032,13 @@ function importMediaWrite($item, $db, $dbp, $entityDump = false) {
 
         // NER regularly returns a party id where the speech means the faction —
         // the entity_remap table corrects those before annotations are written.
-        require_once (__DIR__."/../../api/v1/modules/entity-remap.php");
-        $entityRemap = entityRemapGetMap($item["parliament"], $db);
+        // An importer walking a whole session passes the map in; the null check
+        // is deliberate, because an empty map is the normal case and testing for
+        // falsiness would re-query the table for every speech.
+        if ($entityRemap === null) {
+            require_once (__DIR__."/../../api/v1/modules/entity-remap.php");
+            $entityRemap = entityRemapGetMap($item["parliament"], $db);
+        }
 
         if (!$entityDump) {
             require_once (__DIR__."/../../api/v1/modules/entity-dump.php");

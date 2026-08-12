@@ -8,6 +8,9 @@ function importGitSyncSessionFiles ($dir,$pattern = "~[0-9]{5}-session\.json~") 
         return array();
     }
 
+    // The caller scans the same paths before and after the pull, so drop PHP's stat cache or filemtime() reports pre-pull values.
+    clearstatcache();
+
     $files = scandir($dir);
     $return = array();
 
@@ -77,9 +80,10 @@ function importGitSync($parliament = "DE") {
 
     if (!is_dir($realpath . "/.git")) {
         importGitSyncLog('info', 'Cloning ' . $repoUrl . ' into ' . $realpath);
+        // Only the working tree at HEAD is ever read, so clone shallow. Later pulls fast-forward fine on a shallow clone.
         $cloneOutput = importGitSyncCommand(
             $gitBin,
-            '-C ' . escapeshellarg($realpath) . ' clone ' . escapeshellarg($repoUrl) . ' .'
+            '-C ' . escapeshellarg($realpath) . ' clone --depth 1 ' . escapeshellarg($repoUrl) . ' .'
         );
         if ($cloneOutput !== '') {
             importGitSyncLog('info', 'clone output: ' . $cloneOutput);
@@ -95,7 +99,11 @@ function importGitSync($parliament = "DE") {
         $wasFreshClone = true;
     }
 
-    importGitSyncCommand($gitBin, 'config --global --add safe.directory ' . escapeshellarg($realpath));
+    // --add appends unconditionally, so only register the path when it is not already listed.
+    $safeDirectories = explode("\n", importGitSyncCommand($gitBin, 'config --global --get-all safe.directory'));
+    if (!in_array($realpath, $safeDirectories, true)) {
+        importGitSyncCommand($gitBin, 'config --global --add safe.directory ' . escapeshellarg($realpath));
+    }
 
     if (!is_dir($realpath . "/processed")) {
         throw new Exception('Git repository cloned but processed/ directory is missing for parliament ' . $parliament);

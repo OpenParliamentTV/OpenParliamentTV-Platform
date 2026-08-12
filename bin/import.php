@@ -467,6 +467,12 @@ if (optvIsCli()) {
 
             $processedFileCount = 0;
             $entityDump = entityDumpGet(array("type" => "all", "wiki" => true, "wikikeys" => "true"), $db);
+
+            // Read once for the whole run, like the entity dump above: the map is
+            // the same for every speech, and a mapping added mid-run should not
+            // change the corrections applied halfway through a session.
+            require_once(__DIR__ . "/../api/v1/modules/entity-remap.php");
+            $entityRemap = entityRemapGetMap($parliament, $db);
             
             foreach ($inputFiles as $file) {
                 cliLog("start processing file: " . $file);
@@ -489,7 +495,7 @@ if (optvIsCli()) {
                     // abandon the rest of the file — the writer has already
                     // recorded it as a conflict, so log and move on.
                     try {
-                        $newMediaID = importMediaWrite($media, $db, $dbp, $entityDump);
+                        $newMediaID = importMediaWrite($media, $db, $dbp, $entityDump, $entityRemap);
                     } catch (Exception $e) {
                         logger("ERROR", "Could not add media from file " . $file . " | error: " . $e->getMessage() . " | Item: " . json_encode($media));
                         continue;
@@ -525,7 +531,7 @@ if (optvIsCli()) {
                     }
                 }
                 
-                cliLog("media database part for session finished. Updating " . count($mediaItemsForSearchIndex) . " Media Items at OpenSearch now.");
+                cliLog("media database part for session finished. Updating " . count($mediaItemsForSearchIndex) . " Media Items at OpenSearch now. [mem " . round(memory_get_usage(true) / 1048576) . "M, peak " . round(memory_get_peak_usage(true) / 1048576) . "M]");
                 if ($meta["preserveFiles"] == true) { rename($meta["inputDir"] . $file, $meta["doneDir"] . $file); } 
                 else { unlink($meta["inputDir"] . $file); }
                 
