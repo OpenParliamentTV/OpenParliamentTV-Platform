@@ -1,160 +1,129 @@
 <?php
 
+/**
+ * Metadata extraction from a media node for the statistics index.
+ *
+ * Everything here reads the flat `annotations.data` array rather than the
+ * `relationships.*` copies: the relationships are for display and carry a null
+ * context in the indexed document, while annotations carry the real one.
+ */
 
 /**
- * Extract main speaker ID from speech annotations (context: main-speaker)
+ * The credited main speaker's Wikidata id.
+ *
+ * @param array $speechData A media node.
+ * @return string|null
  */
-function extractMainSpeakerId($speechData) {
-    if (!isset($speechData['annotations']['data'])) {
-        return null;
-    }
-    
-    $annotations = $speechData['annotations']['data'];
-    
-    foreach ($annotations as $annotation) {
-        if ($annotation['type'] === 'person' && 
-            isset($annotation['attributes']['context']) && 
-            $annotation['attributes']['context'] === 'main-speaker') {
-            return $annotation['id'];
+function statsIndexExtractSpeakerId($speechData)
+{
+    foreach (($speechData['annotations']['data'] ?? []) as $annotation) {
+        if (($annotation['type'] ?? null) === 'person'
+            && ($annotation['attributes']['context'] ?? null) === 'main-speaker') {
+            return $annotation['id'] ?? null;
         }
     }
-    
+
     return null;
 }
 
 /**
- * Extract main speaker faction from speech annotations (context: main-speaker-faction)
+ * The credited main speaker's faction id.
+ *
+ * @param array $speechData A media node.
+ * @return string|null
  */
-function extractMainSpeakerFaction($speechData) {
-    if (!isset($speechData['annotations']['data'])) {
-        return null;
-    }
-    
-    $annotations = $speechData['annotations']['data'];
-    
-    foreach ($annotations as $annotation) {
-        if ($annotation['type'] === 'organisation' && 
-            isset($annotation['attributes']['context']) && 
-            $annotation['attributes']['context'] === 'main-speaker-faction') {
-            
-            return [
-                'id' => $annotation['id'],
-                'label' => null // Labels not needed - use ID only for performance
-            ];
+function statsIndexExtractFactionId($speechData)
+{
+    foreach (($speechData['annotations']['data'] ?? []) as $annotation) {
+        if (($annotation['type'] ?? null) === 'organisation'
+            && ($annotation['attributes']['context'] ?? null) === 'main-speaker-faction') {
+            return $annotation['id'] ?? null;
         }
     }
-    
+
     return null;
 }
 
-// Legacy functions extractPartyInfo() and extractSpeakerId() removed - use extractMainSpeakerFaction() and extractMainSpeakerId() directly
-
 /**
- * Extract session ID from speech data
+ * Platform session id, e.g. "DE-0210010".
+ *
+ * @param array $speechData A media node.
+ * @return string|null
  */
-function extractSessionId($speechData) {
+function statsIndexExtractSessionId($speechData)
+{
     return $speechData['relationships']['session']['data']['id'] ?? null;
 }
 
 /**
- * Extract date from speech data - returns timestamp for better OpenSearch performance
+ * Platform agenda item id, e.g. "DE-3305".
+ *
+ * @param array $speechData A media node.
+ * @return string|null
  */
-function extractSpeechDate($speechData) {
-    // Try timestamp first (best for OpenSearch operations)
-    if (isset($speechData['attributes']['dateStartTimestamp'])) {
-        return $speechData['attributes']['dateStartTimestamp'];
+function statsIndexExtractAgendaItemId($speechData)
+{
+    return $speechData['relationships']['agendaItem']['data']['id'] ?? null;
+}
+/**
+ * Platform electoral period id, e.g. "DE-021".
+ *
+ * Stored on every word document so per-EP scoping is a plain filter rather than
+ * a date-range approximation.
+ *
+ * @param array $speechData A media node.
+ * @return string|null
+ */
+function statsIndexExtractElectoralPeriodId($speechData)
+{
+    return $speechData['relationships']['electoralPeriod']['data']['id'] ?? null;
+}
+
+/**
+ * Speech start as a Unix timestamp.
+ *
+ * @param array $speechData A media node.
+ * @return int|null
+ */
+function statsIndexExtractDate($speechData)
+{
+    if (isset($speechData['attributes']['dateStartTimestamp'])
+        && is_numeric($speechData['attributes']['dateStartTimestamp'])) {
+        return (int) $speechData['attributes']['dateStartTimestamp'];
     }
-    
-    // Try multiple date field locations in order of preference
-    $dateFields = [
-        'attributes.dateStart',     // Primary field found in real documents
-        'attributes.date',          // Fallback
-        'attributes.dateCreated',   // Alternative
-        'relationships.session.data.attributes.date' // Session date fallback
+
+    $candidates = [
+        $speechData['attributes']['dateStart'] ?? null,
+        $speechData['attributes']['date'] ?? null,
+        $speechData['attributes']['dateCreated'] ?? null,
+        $speechData['relationships']['session']['data']['attributes']['date'] ?? null,
     ];
-    
-    foreach ($dateFields as $field) {
-        $parts = explode('.', $field);
-        $value = $speechData;
-        
-        foreach ($parts as $part) {
-            if (isset($value[$part])) {
-                $value = $value[$part];
-            } else {
-                $value = null;
-                break;
-            }
+
+    foreach ($candidates as $value) {
+        if (empty($value)) {
+            continue;
         }
-        
-        if ($value) {
-            // Convert to timestamp if it's a date string
-            if (is_string($value)) {
-                $timestamp = strtotime($value);
-                if ($timestamp !== false) {
-                    return $timestamp;
-                }
-            }
-            return $value;
+        if (is_numeric($value)) {
+            return (int) $value;
+        }
+        $timestamp = strtotime($value);
+        if ($timestamp !== false) {
+            return $timestamp;
         }
     }
-    
+
     return null;
 }
 
 /**
- * Extract date as string (YYYY-MM-DD) for display purposes
+ * Speech start as YYYY-MM-DD.
+ *
+ * @param array $speechData A media node.
+ * @return string|null
  */
-function extractSpeechDateString($speechData) {
-    $timestamp = extractSpeechDate($speechData);
-    if ($timestamp) {
-        return date('Y-m-d', is_numeric($timestamp) ? $timestamp : strtotime($timestamp));
-    }
-    return null;
-}
+function statsIndexExtractDateString($speechData)
+{
+    $timestamp = statsIndexExtractDate($speechData);
 
-/**
- * Extract date as daily string (YYYY-MM-DD) for aggregation purposes
- * Daily aggregation for optimal performance during indexing
- */
-function extractSpeechDailyString($speechData) {
-    $timestamp = extractSpeechDate($speechData);
-    if ($timestamp) {
-        $ts = is_numeric($timestamp) ? $timestamp : strtotime($timestamp);
-        return date('Y-m-d', $ts);
-    }
-    return null;
-}
-
-/**
- * Extract clean text from speech data (from existing sentences)
- */
-function extractCleanText($speechData) {
-    $cleanText = '';
-    
-    // Check if speech has any text content
-    if (!isset($speechData['attributes']['textContents']) || 
-        !is_array($speechData['attributes']['textContents']) ||
-        empty($speechData['attributes']['textContents'])) {
-        return $cleanText;
-    }
-    
-    // Check textContentsCount if available
-    if (isset($speechData['attributes']['textContentsCount']) && $speechData['attributes']['textContentsCount'] == 0) {
-        return $cleanText;
-    }
-    
-    foreach ($speechData['attributes']['textContents'] as $textContent) {
-        if (!isset($textContent['textBody']) || !is_array($textContent['textBody'])) continue;
-        
-        foreach ($textContent['textBody'] as $textBodyItem) {
-            if (!isset($textBodyItem['sentences']) || !is_array($textBodyItem['sentences'])) continue;
-            
-            foreach ($textBodyItem['sentences'] as $sentence) {
-                if (!isset($sentence['text']) || empty($sentence['text'])) continue;
-                $cleanText .= $sentence['text'] . ' ';
-            }
-        }
-    }
-    
-    return trim($cleanText);
+    return $timestamp === null ? null : date('Y-m-d', $timestamp);
 }

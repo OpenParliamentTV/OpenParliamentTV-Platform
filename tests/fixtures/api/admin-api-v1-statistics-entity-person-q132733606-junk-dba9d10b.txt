@@ -520,360 +520,363 @@ x-robots-tag: noindex
                 ]
             },
             "speakerVocabulary": {
-                "totalWords": 364,
-                "uniqueWords": 301,
+                "totalWords": 502,
+                "uniqueWords": 391,
                 "topWords": [
+                    {
+                        "word": "wer",
+                        "frequency": 11,
+                        "speechCount": 3,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-09-12"
+                    },
                     {
                         "word": "menschen",
                         "frequency": 6,
                         "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-07-10"
                     },
                     {
-                        "word": "brandner",
+                        "word": "verfahren",
+                        "frequency": 6,
+                        "speechCount": 3,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-09-12"
+                    },
+                    {
+                        "word": "regierung",
+                        "frequency": 5,
+                        "speechCount": 3,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-09-12"
+                    },
+                    {
+                        "word": "danke",
                         "frequency": 4,
-                        "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "speechCount": 3,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-09-12"
                     },
                     {
                         "word": "demokratie",
                         "frequency": 4,
                         "speechCount": 2,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1752141653
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-07-10"
                     },
                     {
-                        "word": "politische",
+                        "word": "digitalisierung",
                         "frequency": 4,
                         "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2025-09-12"
                     },
                     {
-                        "word": "stephan",
+                        "word": "entwurf",
                         "frequency": 4,
-                        "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "speechCount": 1,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2025-09-12"
                     },
                     {
                         "word": "verantwortung",
                         "frequency": 4,
                         "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-06-05"
                     },
                     {
-                        "word": "angst",
-                        "frequency": 3,
-                        "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "word": "vertrauen",
+                        "frequency": 4,
+                        "speechCount": 3,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-09-12"
+                    },
+                    {
+                        "word": "zehn",
+                        "frequency": 4,
+                        "speechCount": 1,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2025-09-12"
                     },
                     {
                         "word": "egal",
                         "frequency": 3,
                         "speechCount": 1,
-                        "firstUsed": 1752141653,
-                        "lastUsed": 1752141653
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2025-07-10"
+                    },
+                    {
+                        "word": "gut",
+                        "frequency": 3,
+                        "speechCount": 2,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-07-10"
+                    },
+                    {
+                        "word": "justiz",
+                        "frequency": 3,
+                        "speechCount": 1,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2025-09-12"
+                    },
+                    {
+                        "word": "leisten",
+                        "frequency": 3,
+                        "speechCount": 2,
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2025-09-12"
+                    },
+                    {
+                        "word": "linke",
+                        "frequency": 3,
+                        "speechCount": 3,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-09-12"
+                    },
+                    {
+                        "word": "mündliche",
+                        "frequency": 3,
+                        "speechCount": 1,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2025-09-12"
+                    },
+                    {
+                        "word": "nein",
+                        "frequency": 3,
+                        "speechCount": 2,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-09-12"
                     },
                     {
                         "word": "politik",
                         "frequency": 3,
                         "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-06-05"
+                    },
+                    {
+                        "word": "politische",
+                        "frequency": 3,
+                        "speechCount": 1,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-06-05"
                     },
                     {
                         "word": "rechtspolitik",
                         "frequency": 3,
                         "speechCount": 1,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-05-16"
                     },
                     {
-                        "word": "regierung",
+                        "word": "schwächt",
+                        "frequency": 3,
+                        "speechCount": 1,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2025-09-12"
+                    },
+                    {
+                        "word": "sozial",
                         "frequency": 3,
                         "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2025-09-12"
                     },
                     {
                         "word": "staat",
                         "frequency": 3,
                         "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-06-05"
+                    },
+                    {
+                        "word": "technik",
+                        "frequency": 3,
+                        "speechCount": 2,
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2025-09-12"
                     },
                     {
                         "word": "abschaffung",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-05-16"
                     },
                     {
                         "word": "absolut",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1752141653,
-                        "lastUsed": 1752141653
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2025-07-10"
                     },
                     {
-                        "word": "danke",
+                        "word": "afd",
+                        "frequency": 2,
+                        "speechCount": 1,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-06-05"
+                    },
+                    {
+                        "word": "angst",
+                        "frequency": 2,
+                        "speechCount": 1,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-06-05"
+                    },
+                    {
+                        "word": "beschuss",
                         "frequency": 2,
                         "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2025-09-12"
                     },
                     {
                         "word": "digitale",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1752141653,
-                        "lastUsed": 1752141653
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2025-07-10"
+                    },
+                    {
+                        "word": "digitalen",
+                        "frequency": 2,
+                        "speechCount": 2,
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2025-09-12"
                     },
                     {
                         "word": "digitalisierungsinitiative",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1752141653,
-                        "lastUsed": 1752141653
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2025-07-10"
                     },
                     {
                         "word": "eindeutig",
                         "frequency": 2,
                         "speechCount": 2,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1752141653
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-07-10"
                     },
                     {
                         "word": "eins",
                         "frequency": 2,
                         "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-06-05"
                     },
                     {
                         "word": "einschüchterung",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-06-05"
                     },
                     {
                         "word": "ernst",
                         "frequency": 2,
                         "speechCount": 2,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1752141653
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-07-10"
+                    },
+                    {
+                        "word": "fehlentscheidungen",
+                        "frequency": 2,
+                        "speechCount": 2,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-09-12"
                     },
                     {
                         "word": "fehler",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-06-05"
                     },
                     {
                         "word": "haften",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-06-05"
                     },
                     {
                         "word": "handeln",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-06-05"
                     },
                     {
                         "word": "haushalt",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1752141653,
-                        "lastUsed": 1752141653
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2025-07-10"
+                    },
+                    {
+                        "word": "jahre",
+                        "frequency": 2,
+                        "speechCount": 1,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2025-09-12"
                     },
                     {
                         "word": "kontrolle",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
-                    },
-                    {
-                        "word": "leisten",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": 1752141653,
-                        "lastUsed": 1752141653
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-06-05"
                     },
                     {
                         "word": "meint",
                         "frequency": 2,
                         "speechCount": 2,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1752141653
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-07-10"
                     },
                     {
                         "word": "menschenrechte",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
-                    },
-                    {
-                        "word": "nein",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-05-16"
                     },
                     {
                         "word": "organisierte",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-05-16"
                     },
                     {
                         "word": "parlament",
                         "frequency": 2,
                         "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2025-06-05"
                     },
                     {
-                        "word": "rechtsstaates",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
-                    },
-                    {
-                        "word": "rechtssystem",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": 1752141653,
-                        "lastUsed": 1752141653
-                    },
-                    {
-                        "word": "schauws",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
-                    },
-                    {
-                        "word": "schutz",
+                        "word": "rechte",
                         "frequency": 2,
                         "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-09-12"
                     },
                     {
-                        "word": "stärkung",
+                        "word": "rechtsstaat",
                         "frequency": 2,
                         "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
-                    },
-                    {
-                        "word": "teilhabe",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": 1752141653,
-                        "lastUsed": 1752141653
-                    },
-                    {
-                        "word": "trick",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
-                    },
-                    {
-                        "word": "ulle",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
-                    },
-                    {
-                        "word": "verfahren",
-                        "frequency": 2,
-                        "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
-                    },
-                    {
-                        "word": "verfolgt",
-                        "frequency": 2,
-                        "speechCount": 2,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
-                    },
-                    {
-                        "word": "vertrauen",
-                        "frequency": 2,
-                        "speechCount": 2,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1752141653
-                    },
-                    {
-                        "word": "abgeordnete",
-                        "frequency": 1,
-                        "speechCount": 1,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
-                    },
-                    {
-                        "word": "abgeschafft",
-                        "frequency": 1,
-                        "speechCount": 1,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
-                    },
-                    {
-                        "word": "abschrecken",
-                        "frequency": 1,
-                        "speechCount": 1,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
-                    },
-                    {
-                        "word": "abzuschaffen",
-                        "frequency": 1,
-                        "speechCount": 1,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
-                    },
-                    {
-                        "word": "afd-strategie",
-                        "frequency": 1,
-                        "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
-                    },
-                    {
-                        "word": "ahnung",
-                        "frequency": 1,
-                        "speechCount": 1,
-                        "firstUsed": 1749146663,
-                        "lastUsed": 1749146663
-                    },
-                    {
-                        "word": "amtsermittlungsgrundsatz",
-                        "frequency": 1,
-                        "speechCount": 1,
-                        "firstUsed": 1747385610,
-                        "lastUsed": 1747385610
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2025-09-12"
                     }
                 ]
+            },
+            "mentionsOverTime": {
+                "mentioned": []
             }
         }
     },

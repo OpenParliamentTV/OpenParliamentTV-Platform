@@ -1,0 +1,411 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "statistics",
+        "id": "word-trends",
+        "attributes": {
+            "words": [
+                "flüchtlinge"
+            ],
+            "startDate": "2015-01-01",
+            "endDate": "2020-12-31",
+            "match": "exact",
+            "normalize": "absolute",
+            "trends": [
+                {
+                    "word": "flüchtlinge",
+                    "timeline": [
+                        {
+                            "date": "2015-01",
+                            "totalCount": 72,
+                            "speechCount": 35
+                        },
+                        {
+                            "date": "2015-02",
+                            "totalCount": 23,
+                            "speechCount": 15
+                        },
+                        {
+                            "date": "2015-03",
+                            "totalCount": 30,
+                            "speechCount": 15
+                        },
+                        {
+                            "date": "2015-04",
+                            "totalCount": 100,
+                            "speechCount": 27
+                        },
+                        {
+                            "date": "2015-05",
+                            "totalCount": 99,
+                            "speechCount": 33
+                        },
+                        {
+                            "date": "2015-06",
+                            "totalCount": 163,
+                            "speechCount": 56
+                        },
+                        {
+                            "date": "2015-07",
+                            "totalCount": 47,
+                            "speechCount": 23
+                        },
+                        {
+                            "date": "2015-08",
+                            "totalCount": 11,
+                            "speechCount": 5
+                        },
+                        {
+                            "date": "2015-09",
+                            "totalCount": 524,
+                            "speechCount": 159
+                        },
+                        {
+                            "date": "2015-10",
+                            "totalCount": 249,
+                            "speechCount": 83
+                        },
+                        {
+                            "date": "2015-11",
+                            "totalCount": 537,
+                            "speechCount": 168
+                        },
+                        {
+                            "date": "2015-12",
+                            "totalCount": 79,
+                            "speechCount": 42
+                        },
+                        {
+                            "date": "2016-01",
+                            "totalCount": 136,
+                            "speechCount": 59
+                        },
+                        {
+                            "date": "2016-02",
+                            "totalCount": 153,
+                            "speechCount": 62
+                        },
+                        {
+                            "date": "2016-03",
+                            "totalCount": 82,
+                            "speechCount": 26
+                        },
+                        {
+                            "date": "2016-04",
+                            "totalCount": 86,
+                            "speechCount": 34
+                        },
+                        {
+                            "date": "2016-05",
+                            "totalCount": 88,
+                            "speechCount": 30
+                        },
+                        {
+                            "date": "2016-06",
+                            "totalCount": 143,
+                            "speechCount": 58
+                        },
+                        {
+                            "date": "2016-07",
+                            "totalCount": 39,
+                            "speechCount": 12
+                        },
+                        {
+                            "date": "2016-08",
+                            "totalCount": 0,
+                            "speechCount": 0
+                        },
+                        {
+                            "date": "2016-09",
+                            "totalCount": 153,
+                            "speechCount": 71
+                        },
+                        {
+                            "date": "2016-10",
+                            "totalCount": 52,
+                            "speechCount": 22
+                        },
+                        {
+                            "date": "2016-11",
+                            "totalCount": 126,
+                            "speechCount": 63
+                        },
+                        {
+                            "date": "2016-12",
+                            "totalCount": 35,
+                            "speechCount": 20
+                        },
+                        {
+                            "date": "2017-01",
+                            "totalCount": 19,
+                            "speechCount": 15
+                        },
+                        {
+                            "date": "2017-02",
+                            "totalCount": 24,
+                            "speechCount": 13
+                        },
+                        {
+                            "date": "2017-03",
+                            "totalCount": 21,
+                            "speechCount": 16
+                        },
+                        {
+                            "date": "2017-04",
+                            "totalCount": 16,
+                            "speechCount": 8
+                        },
+                        {
+                            "date": "2017-05",
+                            "totalCount": 33,
+                            "speechCount": 23
+                        },
+                        {
+                            "date": "2017-06",
+                            "totalCount": 62,
+                            "speechCount": 33
+                        },
+                        {
+                            "date": "2017-07",
+                            "totalCount": 0,
+                            "speechCount": 0
+                        },
+                        {
+                            "date": "2017-08",
+                            "totalCount": 0,
+                            "speechCount": 0
+                        },
+                        {
+                            "date": "2017-09",
+                            "totalCount": 2,
+                            "speechCount": 1
+                        },
+                        {
+                            "date": "2017-10",
+                            "totalCount": 0,
+                            "speechCount": 0
+                        },
+                        {
+                            "date": "2017-11",
+                            "totalCount": 34,
+                            "speechCount": 24
+                        },
+                        {
+                            "date": "2017-12",
+                            "totalCount": 19,
+                            "speechCount": 15
+                        },
+                        {
+                            "date": "2018-01",
+                            "totalCount": 36,
+                            "speechCount": 22
+                        },
+                        {
+                            "date": "2018-02",
+                            "totalCount": 34,
+                            "speechCount": 23
+                        },
+                        {
+                            "date": "2018-03",
+                            "totalCount": 46,
+                            "speechCount": 28
+                        },
+                        {
+                            "date": "2018-04",
+                            "totalCount": 66,
+                            "speechCount": 40
+                        },
+                        {
+                            "date": "2018-05",
+                            "totalCount": 42,
+                            "speechCount": 27
+                        },
+                        {
+                            "date": "2018-06",
+                            "totalCount": 109,
+                            "speechCount": 70
+                        },
+                        {
+                            "date": "2018-07",
+                            "totalCount": 69,
+                            "speechCount": 39
+                        },
+                        {
+                            "date": "2018-08",
+                            "totalCount": 0,
+                            "speechCount": 0
+                        },
+                        {
+                            "date": "2018-09",
+                            "totalCount": 49,
+                            "speechCount": 29
+                        },
+                        {
+                            "date": "2018-10",
+                            "totalCount": 48,
+                            "speechCount": 35
+                        },
+                        {
+                            "date": "2018-11",
+                            "totalCount": 111,
+                            "speechCount": 60
+                        },
+                        {
+                            "date": "2018-12",
+                            "totalCount": 2,
+                            "speechCount": 2
+                        },
+                        {
+                            "date": "2019-01",
+                            "totalCount": 17,
+                            "speechCount": 13
+                        },
+                        {
+                            "date": "2019-02",
+                            "totalCount": 38,
+                            "speechCount": 26
+                        },
+                        {
+                            "date": "2019-03",
+                            "totalCount": 16,
+                            "speechCount": 11
+                        },
+                        {
+                            "date": "2019-04",
+                            "totalCount": 14,
+                            "speechCount": 12
+                        },
+                        {
+                            "date": "2019-05",
+                            "totalCount": 41,
+                            "speechCount": 22
+                        },
+                        {
+                            "date": "2019-06",
+                            "totalCount": 32,
+                            "speechCount": 17
+                        },
+                        {
+                            "date": "2019-07",
+                            "totalCount": 0,
+                            "speechCount": 0
+                        },
+                        {
+                            "date": "2019-08",
+                            "totalCount": 0,
+                            "speechCount": 0
+                        },
+                        {
+                            "date": "2019-09",
+                            "totalCount": 10,
+                            "speechCount": 10
+                        },
+                        {
+                            "date": "2019-10",
+                            "totalCount": 37,
+                            "speechCount": 23
+                        },
+                        {
+                            "date": "2019-11",
+                            "totalCount": 34,
+                            "speechCount": 20
+                        },
+                        {
+                            "date": "2019-12",
+                            "totalCount": 45,
+                            "speechCount": 24
+                        },
+                        {
+                            "date": "2020-01",
+                            "totalCount": 26,
+                            "speechCount": 16
+                        },
+                        {
+                            "date": "2020-02",
+                            "totalCount": 1,
+                            "speechCount": 1
+                        },
+                        {
+                            "date": "2020-03",
+                            "totalCount": 51,
+                            "speechCount": 31
+                        },
+                        {
+                            "date": "2020-04",
+                            "totalCount": 5,
+                            "speechCount": 5
+                        },
+                        {
+                            "date": "2020-05",
+                            "totalCount": 13,
+                            "speechCount": 12
+                        },
+                        {
+                            "date": "2020-06",
+                            "totalCount": 9,
+                            "speechCount": 9
+                        },
+                        {
+                            "date": "2020-07",
+                            "totalCount": 3,
+                            "speechCount": 3
+                        },
+                        {
+                            "date": "2020-08",
+                            "totalCount": 0,
+                            "speechCount": 0
+                        },
+                        {
+                            "date": "2020-09",
+                            "totalCount": 32,
+                            "speechCount": 21
+                        },
+                        {
+                            "date": "2020-10",
+                            "totalCount": 10,
+                            "speechCount": 10
+                        },
+                        {
+                            "date": "2020-11",
+                            "totalCount": 20,
+                            "speechCount": 12
+                        },
+                        {
+                            "date": "2020-12",
+                            "totalCount": 20,
+                            "speechCount": 9
+                        }
+                    ],
+                    "total": 4343,
+                    "forms": [
+                        {
+                            "word": "flüchtlinge",
+                            "count": 4343
+                        }
+                    ],
+                    "firstUse": {
+                        "date": "2015-01-14",
+                        "surfaceForm": "flüchtlinge"
+                    }
+                }
+            ]
+        }
+    },
+    "links": {
+        "self": "https://optv.local/api/v1/statistics/word-trends"
+    }
+}

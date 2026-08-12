@@ -55,6 +55,9 @@ const API_DIFF_VOLATILE_KEYS = [
     'lastBuildDate', 'generatedAt', 'timestamp', 'startTime', 'endTime',
     'lastActivityTime', 'took', 'elapsed', 'duration', 'durationMs',
     'cacheAge', 'cachedAt', 'requestTime', 'serverTime',
+    // Indexer run telemetry in action=index&itemType=status: these move with
+    // every rebuild and describe the machine, not the API.
+    'start_time', 'avg_docs_per_second',
     // Live gauges in action=system&itemType=status: disk, heap and CPU move
     // between any two requests. The structural shape around them (which
     // sections exist, the reported paths) stays pinned, which is what a

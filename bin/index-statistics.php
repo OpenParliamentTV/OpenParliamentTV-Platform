@@ -9,10 +9,11 @@ ini_set('memory_limit', '512M');
 
 require_once(__DIR__ . '/../api/v1/utilities.php');
 require_once(__DIR__ . '/../modules/statistics-index/indexer.php');
+require_once(__DIR__ . '/../modules/statistics/cache.php');
 
 // Command line arguments
 $argv = $_SERVER['argv'] ?? [];
-$parliamentCode = 'DE';
+$parliamentCode = null; // Resolved below; defaults to the first configured parliament
 $batchSize = 200; // Optimal batch size for performance
 $startFrom = 0;
 $totalLimit = null;
@@ -36,6 +37,10 @@ foreach ($argv as $arg) {
         $isIncremental = true;
     }
 }
+
+// Resolve to a real configured parliament key ("de" and "DE" both land on "DE"),
+// so index names, progress files and lock files all agree on one spelling.
+$parliamentCode = resolveParliamentKey($parliamentCode);
 
 // Progress and lock file paths
 define("STATISTICSINDEXER_PROGRESS_FILE", optvVarPath("data/progress") . "/statisticsIndexer_" . $parliamentCode . ".json");
@@ -231,6 +236,17 @@ try {
         performFullRebuild($client, $parliamentCode, $batchSize, $startFrom, $totalLimit);
     }
 
+    // The index just changed, so every cached statistics response describes the
+    // old one. Recompute the corpus-wide ones here rather than letting the first
+    // visitor after an import pay for them: unscoped general statistics alone
+    // takes ~16 seconds cold on a full corpus.
+    updateProgress(['statusDetails' => 'Warming statistics caches...']);
+    statsCacheInvalidate($parliamentCode);
+    $warm = statsCacheWarm($parliamentCode, function ($message) {
+        logger('info', $message);
+    });
+    logger('info', "Warmed " . implode(', ', $warm['warmed']) . " in {$warm['seconds']}s");
+
     optvProgressFinalize(STATISTICSINDEXER_PROGRESS_FILE, 'completed_successfully', 'Statistics indexing completed successfully');
     logger('info', "Statistics indexing completed successfully");
 
@@ -415,8 +431,16 @@ function processSpecificMediaIds($client, $parliamentCode, $mediaIds) {
                 logger('warn', "Encountered $errorCount errors while fetching documents from index: $mainIndexName");
             }
             
+            // Clear every id we were asked to refresh, not just the ones we are
+            // about to rewrite: a speech whose text was removed, or that was made
+            // non-public, must lose its old documents too.
+            $deleteResult = statsIndexDeleteSpeeches($idChunk, $parliamentCode);
+            if (empty($deleteResult['success'])) {
+                logger('warn', "Could not clear previous statistics for chunk: " . ($deleteResult['error'] ?? 'unknown'));
+            }
+
             if (!empty($docs)) {
-                $batchResults = processBatchWithProperStatistics($client, $parliamentCode, $docs);
+                $batchResults = processBatchWithProperStatistics($client, $parliamentCode, $docs, false);
                 $wordsIndexed += $batchResults['words'];
                 $statisticsUpdated += $batchResults['stats'];
             }
@@ -444,8 +468,7 @@ function processSpecificMediaIds($client, $parliamentCode, $mediaIds) {
 }
 
 function getStatisticsMainIndexName($parliamentCode) {
-    global $config;
-    return "openparliamenttv_" . ($config['parliament'][$parliamentCode]['OpenSearch']['index'] ?? strtolower($parliamentCode));
+    return getParliamentIndexName($parliamentCode);
 }
 
 function speechSourceHasTextContent($source) {
@@ -487,127 +510,72 @@ function processIncrementalUpdates($client, $parliamentCode, $batchSize) {
 /**
  * Process a batch of documents using proper statistics functions
  */
-function processBatchWithProperStatistics($client, $parliamentCode, $hits) {
-    $wordsIndexed = 0;
-    $statisticsUpdated = 0;
-    
+function processBatchWithProperStatistics($client, $parliamentCode, $hits, $deleteFirst = false) {
+    $speechNodes = [];
+
     foreach ($hits as $hit) {
         $speechData = $hit['_source'];
         $speechData['id'] = $hit['_id'];
-        
-        try {
-            $result = indexSpeechStatistics($speechData, strtolower($parliamentCode));
-            
-            if ($result['success']) {
-                if (isset($result['results']['statistics']['aggregations_updated'])) {
-                    $statisticsUpdated += $result['results']['statistics']['aggregations_updated'];
-                }
-                if (isset($result['results']['statistics']['unique_words'])) {
-                    $wordsIndexed += $result['results']['statistics']['unique_words'];
-                }
-            } else {
-                logger('error', "Statistics processing failed for speech {$speechData['id']}: " . ($result['error'] ?? 'Unknown error'));
-            }
-        } catch (Exception $e) {
-            logger('error', "Exception processing speech {$speechData['id']}: " . $e->getMessage());
-        }
-        
-        unset($speechData, $result);
+        $speechNodes[] = $speechData;
     }
-    
+
     unset($hits);
-    
-    return ['words' => $wordsIndexed, 'stats' => $statisticsUpdated];
+
+    if (empty($speechNodes)) {
+        return ['words' => 0, 'stats' => 0];
+    }
+
+    // One bulk request and one stem lookup for the whole batch. This used to be
+    // one bulk request per speech, plus an index-exists round-trip per speech.
+    try {
+        $result = indexSpeechStatisticsBatch($speechNodes, $parliamentCode, ['deleteFirst' => $deleteFirst]);
+    } catch (Exception $e) {
+        logger('error', "Exception processing batch of " . count($speechNodes) . " speeches: " . $e->getMessage());
+        return ['words' => 0, 'stats' => 0];
+    }
+
+    if (empty($result['success'])) {
+        logger('error', "Statistics processing failed for batch: " . ($result['error'] ?? 'Unknown error'));
+        return ['words' => 0, 'stats' => 0];
+    }
+
+    return ['words' => $result['documents'] ?? 0, 'stats' => $result['documents'] ?? 0];
 }
 
 
 
 /**
- * Setup statistics indices with optimal bulk indexing settings
+ * Create the statistics index, tuned for bulk indexing.
+ *
+ * The mapping itself lives in modules/statistics-index/index-admin.php -- this
+ * used to carry a second, divergent copy of it.
  */
 function setupStatisticsIndices($client, $parliamentCode, $isFullRebuild = false) {
-    $indices = [
-        "optv_statistics_" . strtolower($parliamentCode)
-    ];
-    
-    foreach ($indices as $indexName) {
-        if ($isFullRebuild) {
-            // Delete existing index for clean rebuild
-            try {
-                $client->indices()->delete(['index' => $indexName]);
-                logger('info', "Deleted existing index: $indexName");
-            } catch (Exception $e) {
-                // Index might not exist, which is fine
-            }
-        }
-        
-        // Create index with optimal settings for bulk operations
-        if (!$client->indices()->exists(['index' => $indexName])) {
-            $client->indices()->create([
-                'index' => $indexName,
-                'body' => [
-                    'settings' => [
-                        'number_of_shards' => 1,
-                        'number_of_replicas' => 0, // No replicas during bulk indexing
-                        'refresh_interval' => -1, // Disable refresh during indexing
-                        'index.translog.sync_interval' => '30s',
-                        'index.translog.durability' => 'async'
-                    ],
-                    'mappings' => getStatisticsIndexMapping($indexName)
-                ]
-            ]);
-            logger('info', "Created index with bulk settings: $indexName");
-        }
+    $result = createStatisticsIndexing($parliamentCode, $isFullRebuild, true);
+
+    if (empty($result['success'])) {
+        throw new Exception('Could not create statistics index: ' . ($result['error'] ?? 'unknown error'));
     }
+
+    logger('info', "Statistics index ready: " . getStatisticsIndexName($parliamentCode));
 }
 
 /**
- * Restore optimal index settings after bulk operations
+ * Restore serving settings after a bulk rebuild.
  */
 function restoreOptimalIndexSettings($client, $parliamentCode) {
-    $indices = [
-        "optv_statistics_" . strtolower($parliamentCode)
-    ];
-    
-    foreach ($indices as $indexName) {
-        try {
-            $client->indices()->putSettings([
-                'index' => $indexName,
-                'body' => [
-                    'settings' => [
-                        'number_of_replicas' => 1, // Restore replicas
-                        'refresh_interval' => '1s', // Restore normal refresh
-                        'index.translog.sync_interval' => '5s',
-                        'index.translog.durability' => 'request'
-                    ]
-                ]
-            ]);
-            
-            // Force refresh
-            $client->indices()->refresh(['index' => $indexName]);
-            
-            logger('info', "Restored optimal settings for: $indexName");
-        } catch (Exception $e) {
-            logger('warn', "Could not restore settings for $indexName: " . $e->getMessage());
-        }
-    }
-}
+    $result = statsIndexRestoreSettings($parliamentCode);
 
-/**
- * Get index mapping based on index name
- */
-function getStatisticsIndexMapping($indexName) {
-    // Only statistics index mapping needed - word_events index eliminated
-    return [
-        'properties' => [
-            'aggregation_type' => ['type' => 'keyword'],
-            'speaker_id' => ['type' => 'keyword'],
-            'party_id' => ['type' => 'keyword'],
-            'word' => ['type' => 'keyword'],
-            'count' => ['type' => 'integer'],
-            'speech_count' => ['type' => 'integer'],
-            'date' => ['type' => 'long'],
-            'date_string' => ['type' => 'date']
-        ]
-    ];
+    if (empty($result['success'])) {
+        logger('warn', "Could not restore settings: " . ($result['error'] ?? 'unknown error'));
+        return;
+    }
+
+    try {
+        $client->indices()->refresh(['index' => getStatisticsIndexName($parliamentCode)]);
+    } catch (Exception $e) {
+        logger('warn', "Could not refresh index: " . $e->getMessage());
+    }
+
+    logger('info', "Restored serving settings for: " . getStatisticsIndexName($parliamentCode));
 }

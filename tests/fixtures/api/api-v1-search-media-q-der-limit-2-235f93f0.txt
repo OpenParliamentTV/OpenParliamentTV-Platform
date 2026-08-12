@@ -4325,9 +4325,9 @@ x-robots-tag: noindex
                         "sourceURI": "https://www.bundestag.de/resource/blob/1033100/ac829bd96b303f9977aa3f3370f1b196/20203.xml",
                         "creator": "Deutscher Bundestag",
                         "license": "Public Domain",
-                        "language": "DE-de",
+                        "language": "de",
                         "originTextID": "ID2020306300-outro-post-intro",
-                        "lastChanged": "2025-05-20 16:29:53"
+                        "lastChanged": "2026-06-25 19:59:49"
                     }
                 ],
                 "textContentsCount": 1
@@ -4342,8 +4342,8 @@ x-robots-tag: noindex
                         "id": "DE-020",
                         "attributes": {
                             "number": 20,
-                            "dateStart": null,
-                            "dateEnd": null
+                            "dateStart": "2021-10-26",
+                            "dateEnd": "2025-03-25"
                         },
                         "links": {
                             "self": "https://optv.local/api/v1/electoralPeriod/DE-020"
@@ -4848,16 +4848,16 @@ x-robots-tag: noindex
                                 "labelAlternative": [
                                     "Markus-Cornel Frohnmaier"
                                 ],
-                                "degree": "",
-                                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q24540200&v=2e476552",
-                                "thumbnailCreator": "Markus Frohnmaier",
-                                "thumbnailLicense": "CC-Zero",
+                                "degree": "Abiturprüfung",
+                                "thumbnailURI": "",
+                                "thumbnailCreator": "",
+                                "thumbnailLicense": "",
                                 "additionalInformation": {
+                                    "abgeordnetenwatchID": "108761",
                                     "wikipedia": {
                                         "title": "Markus Frohnmaier",
                                         "url": "https://de.wikipedia.org/wiki/Markus_Frohnmaier"
-                                    },
-                                    "abgeordnetenwatchID": "108761"
+                                    }
                                 },
                                 "party": {
                                     "id": "Q6721203",
@@ -5642,7 +5642,7 @@ x-robots-tag: noindex
                                         "url": "https://de.wikipedia.org/wiki/AfD-Fraktion_im_Deutschen_Bundestag"
                                     }
                                 },
-                                "color": null
+                                "color": "#1a9fdd"
                             },
                             "links": {
                                 "self": "https://optv.local/api/v1/organisation/Q42575708"
@@ -8691,9 +8691,9 @@ x-robots-tag: noindex
                         "sourceURI": "https://www.bundestag.de/resource/blob/1035090/69bc763df787a918465f345cfe21e13e/20207.xml",
                         "creator": "Deutscher Bundestag",
                         "license": "Public Domain",
-                        "language": "DE-de",
+                        "language": "de",
                         "originTextID": "ID2020707400-outro-post-intro",
-                        "lastChanged": "2025-05-20 16:29:58"
+                        "lastChanged": "2026-06-25 19:59:49"
                     }
                 ],
                 "textContentsCount": 1
@@ -8708,8 +8708,8 @@ x-robots-tag: noindex
                         "id": "DE-020",
                         "attributes": {
                             "number": 20,
-                            "dateStart": null,
-                            "dateEnd": null
+                            "dateStart": "2021-10-26",
+                            "dateEnd": "2025-03-25"
                         },
                         "links": {
                             "self": "https://optv.local/api/v1/electoralPeriod/DE-020"

@@ -1,0 +1,195 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "statistics",
+        "id": "word-trends",
+        "attributes": {
+            "words": [
+                "klima"
+            ],
+            "startDate": "2019-01-01",
+            "endDate": "2020-12-31",
+            "match": "stem",
+            "normalize": "relative",
+            "trends": [
+                {
+                    "word": "klima",
+                    "timeline": [
+                        {
+                            "date": "2019-01",
+                            "totalCount": 27,
+                            "speechCount": 17,
+                            "tokenCount": 227382
+                        },
+                        {
+                            "date": "2019-02",
+                            "totalCount": 13,
+                            "speechCount": 13,
+                            "tokenCount": 331693
+                        },
+                        {
+                            "date": "2019-03",
+                            "totalCount": 18,
+                            "speechCount": 14,
+                            "tokenCount": 311926
+                        },
+                        {
+                            "date": "2019-04",
+                            "totalCount": 30,
+                            "speechCount": 20,
+                            "tokenCount": 296657
+                        },
+                        {
+                            "date": "2019-05",
+                            "totalCount": 27,
+                            "speechCount": 23,
+                            "tokenCount": 323261
+                        },
+                        {
+                            "date": "2019-06",
+                            "totalCount": 51,
+                            "speechCount": 40,
+                            "tokenCount": 339759
+                        },
+                        {
+                            "date": "2019-07",
+                            "totalCount": 1,
+                            "speechCount": 1,
+                            "tokenCount": 8743
+                        },
+                        {
+                            "date": "2019-08",
+                            "totalCount": 0,
+                            "speechCount": 0,
+                            "tokenCount": 0
+                        },
+                        {
+                            "date": "2019-09",
+                            "totalCount": 90,
+                            "speechCount": 65,
+                            "tokenCount": 361114
+                        },
+                        {
+                            "date": "2019-10",
+                            "totalCount": 50,
+                            "speechCount": 37,
+                            "tokenCount": 318380
+                        },
+                        {
+                            "date": "2019-11",
+                            "totalCount": 75,
+                            "speechCount": 52,
+                            "tokenCount": 529943
+                        },
+                        {
+                            "date": "2019-12",
+                            "totalCount": 45,
+                            "speechCount": 32,
+                            "tokenCount": 316848
+                        },
+                        {
+                            "date": "2020-01",
+                            "totalCount": 34,
+                            "speechCount": 32,
+                            "tokenCount": 281378
+                        },
+                        {
+                            "date": "2020-02",
+                            "totalCount": 16,
+                            "speechCount": 12,
+                            "tokenCount": 142578
+                        },
+                        {
+                            "date": "2020-03",
+                            "totalCount": 23,
+                            "speechCount": 18,
+                            "tokenCount": 315029
+                        },
+                        {
+                            "date": "2020-04",
+                            "totalCount": 3,
+                            "speechCount": 1,
+                            "tokenCount": 96292
+                        },
+                        {
+                            "date": "2020-05",
+                            "totalCount": 17,
+                            "speechCount": 10,
+                            "tokenCount": 458851
+                        },
+                        {
+                            "date": "2020-06",
+                            "totalCount": 16,
+                            "speechCount": 15,
+                            "tokenCount": 189912
+                        },
+                        {
+                            "date": "2020-07",
+                            "totalCount": 11,
+                            "speechCount": 10,
+                            "tokenCount": 179547
+                        },
+                        {
+                            "date": "2020-08",
+                            "totalCount": 0,
+                            "speechCount": 0,
+                            "tokenCount": 0
+                        },
+                        {
+                            "date": "2020-09",
+                            "totalCount": 76,
+                            "speechCount": 55,
+                            "tokenCount": 472112
+                        },
+                        {
+                            "date": "2020-10",
+                            "totalCount": 34,
+                            "speechCount": 28,
+                            "tokenCount": 460346
+                        },
+                        {
+                            "date": "2020-11",
+                            "totalCount": 32,
+                            "speechCount": 23,
+                            "tokenCount": 492308
+                        },
+                        {
+                            "date": "2020-12",
+                            "totalCount": 21,
+                            "speechCount": 17,
+                            "tokenCount": 313563
+                        }
+                    ],
+                    "total": 710,
+                    "forms": [
+                        {
+                            "word": "klima",
+                            "count": 710
+                        }
+                    ],
+                    "firstUse": {
+                        "date": "2019-01-16",
+                        "surfaceForm": "klima"
+                    }
+                }
+            ]
+        }
+    },
+    "links": {
+        "self": "https://optv.local/api/v1/statistics/word-trends"
+    }
+}

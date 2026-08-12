@@ -23,51 +23,21 @@ content-type: text/html; charset=UTF-8
 		</div>
 	</div>
 	<div class="resultList row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-		<article class="resultItem col hits" data-speech-id="DE-0190158018" data-faction="Q1387991">
-	<div class="resultContent partyIndicator" data-faction="Q1387991">
-		<a class="resultLink" href="https://optv.local/media/DE-0190158018?q=klima&amp;page=3">
+		<article class="resultItem col hits" data-speech-id="DE-0180090023" data-faction="Q1826856">
+	<div class="resultContent partyIndicator" data-faction="Q1826856">
+		<a class="resultLink" href="https://optv.local/media/DE-0180090023?q=klima&amp;page=3">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">04:34</div>
-			<div class="resultDate">07.05.2020</div>
+						<div class="resultDuration">04:37</div>
+			<div class="resultDate">04.03.2015</div>
 			<div class="resultMeta">
-				Grigorios Aggelidis <span class="partyIndicator partyIndicatorInline" data-faction="Q1387991">FDP</span>			</div>
+				Stefan Liebich <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
 			<hr>
-						<div class="resultTitle">Elterngeld und Hilfe für Familien</div>
+						<div class="resultTitle">Aktuelle Stunde zur Auswirkung der Ermordung des russischen Politikers Nemzow</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190158018?q=klima&amp;page=3&amp;t=192.560" title="Ausgewählter Ausschnitt">Sie haben das gesellschaftliche <em>Klima</em> mitverursacht, in dem Schilder mit der Aufschrift „Kein Zutritt für Kinder“ auftauchen. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0190158018?q=klima&amp;page=3&amp;t=214.800" title="Ausgewählter Ausschnitt">Sie sind für genau dieses familienfeindliche <em>Klima</em> mitverantwortlich. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0190158018?q=klima&amp;page=3&amp;t=249.040" title="Ausgewählter Ausschnitt">Und schaffen Sie endlich ein kinder- und familienfreundliches <em>Klima</em>. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 70.277372262774%; width: 2.7080291970803%;"></div><div class="hit" style="left: 78.394160583942%; width: 1.7080291970803%;"></div><div class="hit" style="left: 90.890510948905%; width: 1.2189781021898%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0200132055" data-faction="Q42575708">
-	<div class="resultContent partyIndicator" data-faction="Q42575708">
-		<a class="resultLink" href="https://optv.local/media/DE-0200132055?q=klima&amp;page=3">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">04:14</div>
-			<div class="resultDate">20.10.2023</div>
-			<div class="resultMeta">
-				Jürgen Braun <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
-			<hr>
-						<div class="resultTitle">Auswirkungen der EU-Verpackungsverordnung</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200132055?q=klima&amp;page=3&amp;t=82.040" title="Ausgewählter Ausschnitt">Der irreale, durchgeknallte Green Deal der EU wird begrüßt, der nur ein primitives Mantra kennt: <em>Klima</em>, <em>Klima</em>, <em>Klima</em>. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 32.299212598425%; width: 4.4173228346457%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0200041135" data-faction="Q1007353">
-	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0200041135?q=klima&amp;page=3">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">04:32</div>
-			<div class="resultDate">02.06.2022</div>
-			<div class="resultMeta">
-				Laura Kraft <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
-			<hr>
-						<div class="resultTitle">Bildung und Forschung</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200041135?q=klima&amp;page=3&amp;t=132.120" title="Ausgewählter Ausschnitt">Das ist zum Beispiel die <em>Klima</em>- und Nachhaltigkeitsforschung zur Bekämpfung der Klimakrise. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0200041135?q=klima&amp;page=3&amp;t=185.800" title="Ausgewählter Ausschnitt">Deutschland kann bedeutsame Spitzenforschung vorantreiben und gleichzeitig die Voraussetzung für evidenzbasierte <em>Klima</em>- und Energiepolitik schaffen. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0200041135?q=klima&amp;page=3&amp;t=195.560" title="Ausgewählter Ausschnitt"><em>Klima</em>- und Nachhaltigkeitsforschung ist die Zukunftsforschung. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 48.573529411765%; width: 1.5955882352941%;"></div><div class="hit" style="left: 68.308823529412%; width: 3.4779411764706%;"></div><div class="hit" style="left: 71.897058823529%; width: 1.8455882352941%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180090023?q=klima&amp;page=3&amp;t=49.640" title="Ausgewählter Ausschnitt">Auch ich möchte, wie Herr Erler es am Beginn seiner Rede gemacht hat, darüber sprechen, wie sich das <em>Klima</em> in Russland entwickelt hat. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0180090023?q=klima&amp;page=3&amp;t=56.280" title="Ausgewählter Ausschnitt">Ich denke, das gehört zu diesem Thema; denn das raue <em>Klima</em> in Russland in diesen Tagen ist der Nährboden, auf dem diese Gewalt entsteht. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0180090023?q=klima&amp;page=3&amp;t=127.000" title="Ausgewählter Ausschnitt">Ja, es ist schrecklich, dass so ein <em>Klima</em> in Russland entstanden ist, und das hat Konsequenzen. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 17.920577617329%; width: 2.2888086642599%;"></div><div class="hit" style="left: 20.317689530686%; width: 3.0252707581227%;"></div><div class="hit" style="left: 45.848375451264%; width: 1.971119133574%;"></div></div>	</div>
 </article>
 <article class="resultItem col hits" data-speech-id="DE-0190178065" data-faction="Q1023134">
 	<div class="resultContent partyIndicator" data-faction="Q1023134">
@@ -85,19 +55,51 @@ content-type: text/html; charset=UTF-8
 								<a class="resultSnippet" href="https://optv.local/media/DE-0190178065?q=klima&amp;page=3&amp;t=295.060" title="Ausgewählter Ausschnitt">Neben den Bereichen Umwelt-, <em>Klima</em>- und Naturschutz haben wir aber noch ein etwas ungeliebtes Stiefkind, um das wir uns gerade mit Blick auf die Haushaltsauswirkungen intensiv kümmern müssen. </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 54.832183908046%; width: 1.5816091954023%;"></div><div class="hit" style="left: 56.48275862069%; width: 3.2919540229885%;"></div><div class="hit" style="left: 67.829885057471%; width: 3.5862068965517%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0200125109" data-faction="Q42575708">
-	<div class="resultContent partyIndicator" data-faction="Q42575708">
-		<a class="resultLink" href="https://optv.local/media/DE-0200125109?q=klima&amp;page=3">
+<article class="resultItem col hits" data-speech-id="DE-0200041135" data-faction="Q1007353">
+	<div class="resultContent partyIndicator" data-faction="Q1007353">
+		<a class="resultLink" href="https://optv.local/media/DE-0200041135?q=klima&amp;page=3">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">04:37</div>
-			<div class="resultDate">28.09.2023</div>
+						<div class="resultDuration">04:32</div>
+			<div class="resultDate">02.06.2022</div>
+			<div class="resultMeta">
+				Laura Kraft <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+			<hr>
+						<div class="resultTitle">Bildung und Forschung</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200041135?q=klima&amp;page=3&amp;t=132.120" title="Ausgewählter Ausschnitt">Das ist zum Beispiel die <em>Klima</em>- und Nachhaltigkeitsforschung zur Bekämpfung der Klimakrise. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0200041135?q=klima&amp;page=3&amp;t=185.800" title="Ausgewählter Ausschnitt">Deutschland kann bedeutsame Spitzenforschung vorantreiben und gleichzeitig die Voraussetzung für evidenzbasierte <em>Klima</em>- und Energiepolitik schaffen. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0200041135?q=klima&amp;page=3&amp;t=195.560" title="Ausgewählter Ausschnitt"><em>Klima</em>- und Nachhaltigkeitsforschung ist die Zukunftsforschung. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 48.573529411765%; width: 1.5955882352941%;"></div><div class="hit" style="left: 68.308823529412%; width: 3.4779411764706%;"></div><div class="hit" style="left: 71.897058823529%; width: 1.8455882352941%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0200132055" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a class="resultLink" href="https://optv.local/media/DE-0200132055?q=klima&amp;page=3">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">04:14</div>
+			<div class="resultDate">20.10.2023</div>
 			<div class="resultMeta">
 				Jürgen Braun <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
 			<hr>
-						<div class="resultTitle">50 Jahre Deutschland in den Vereinten Nationen</div>
+						<div class="resultTitle">Auswirkungen der EU-Verpackungsverordnung</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200125109?q=klima&amp;page=3&amp;t=231.420" title="Ausgewählter Ausschnitt">Thema: <em>Klima</em>, <em>Klima</em>, <em>Klima</em>. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 83.545126353791%; width: 1.1696750902527%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200132055?q=klima&amp;page=3&amp;t=82.040" title="Ausgewählter Ausschnitt">Der irreale, durchgeknallte Green Deal der EU wird begrüßt, der nur ein primitives Mantra kennt: <em>Klima</em>, <em>Klima</em>, <em>Klima</em>. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 32.299212598425%; width: 4.4173228346457%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0190193006" data-faction="Q1387991">
+	<div class="resultContent partyIndicator" data-faction="Q1387991">
+		<a class="resultLink" href="https://optv.local/media/DE-0190193006?q=klima&amp;page=3">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">05:24</div>
+			<div class="resultDate">20.11.2020</div>
+			<div class="resultMeta">
+				Marco Buschmann <span class="partyIndicator partyIndicatorInline" data-faction="Q1387991">FDP</span>			</div>
+			<hr>
+						<div class="resultTitle">Aktuelle Stunde - Bedrängung von Abgeordneten verurteilen</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190193006?q=klima&amp;page=3&amp;t=34.640" title="Ausgewählter Ausschnitt">Schon während der AfD-Fraktionsvorsitzende, Alexander Gauland, das mit großer Vehemenz von sich gewiesen hat, waren sie schon hier im Hause unterwegs: die Unruhestifter, die Ihre Abgeordneten hier ins Haus gelassen haben, die Unruhestifter, die Mitglieder der Bundesregierung und Mitglieder dieses Hauses und unsere Mitarbeiter bedrängt haben, die sich Zutritt in Räume verschafft haben, wo sie nicht hingehören, und die hier ein <em>Klima</em> der Bedrängung und der Bedrohung erzeugen wollten. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0190193006?q=klima&amp;page=3&amp;t=69.440" title="Ausgewählter Ausschnitt">Sie wollten ein <em>Klima</em> der Bedrohung in dieses Haus tragen. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0190193006?q=klima&amp;page=3&amp;t=172.620" title="Ausgewählter Ausschnitt">Die physische Obstruktion soll durch Lärm, durch Gewalt und durch ein <em>Klima</em> der Bedrohung die Parlamentarier selbst von ihrer Arbeit abhalten. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 10.691358024691%; width: 10.648148148148%;"></div><div class="hit" style="left: 21.432098765432%; width: 1.0925925925926%;"></div><div class="hit" style="left: 53.277777777778%; width: 3.3827160493827%;"></div></div>	</div>
 </article>
 <article class="resultItem col hits" data-speech-id="DE-0190176097" data-faction="Q1387991">
 	<div class="resultContent partyIndicator" data-faction="Q1387991">
@@ -115,21 +117,19 @@ content-type: text/html; charset=UTF-8
 								<a class="resultSnippet" href="https://optv.local/media/DE-0190176097?q=klima&amp;page=3&amp;t=183.240" title="Ausgewählter Ausschnitt">Ressourcen sind uns wichtig, <em>Klima</em> und Umwelt. </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 8.904214559387%; width: 7.3793103448276%;"></div><div class="hit" style="left: 22.252873563218%; width: 3.7164750957854%;"></div><div class="hit" style="left: 70.206896551724%; width: 0.89655172413792%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0190193006" data-faction="Q1387991">
-	<div class="resultContent partyIndicator" data-faction="Q1387991">
-		<a class="resultLink" href="https://optv.local/media/DE-0190193006?q=klima&amp;page=3">
+<article class="resultItem col hits" data-speech-id="DE-0200125109" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a class="resultLink" href="https://optv.local/media/DE-0200125109?q=klima&amp;page=3">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:24</div>
-			<div class="resultDate">20.11.2020</div>
+						<div class="resultDuration">04:37</div>
+			<div class="resultDate">28.09.2023</div>
 			<div class="resultMeta">
-				Marco Buschmann <span class="partyIndicator partyIndicatorInline" data-faction="Q1387991">FDP</span>			</div>
+				Jürgen Braun <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
 			<hr>
-						<div class="resultTitle">Aktuelle Stunde - Bedrängung von Abgeordneten verurteilen</div>
+						<div class="resultTitle">50 Jahre Deutschland in den Vereinten Nationen</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190193006?q=klima&amp;page=3&amp;t=34.640" title="Ausgewählter Ausschnitt">Schon während der AfD-Fraktionsvorsitzende, Alexander Gauland, das mit großer Vehemenz von sich gewiesen hat, waren sie schon hier im Hause unterwegs: die Unruhestifter, die Ihre Abgeordneten hier ins Haus gelassen haben, die Unruhestifter, die Mitglieder der Bundesregierung und Mitglieder dieses Hauses und unsere Mitarbeiter bedrängt haben, die sich Zutritt in Räume verschafft haben, wo sie nicht hingehören, und die hier ein <em>Klima</em> der Bedrängung und der Bedrohung erzeugen wollten. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0190193006?q=klima&amp;page=3&amp;t=69.440" title="Ausgewählter Ausschnitt">Sie wollten ein <em>Klima</em> der Bedrohung in dieses Haus tragen. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0190193006?q=klima&amp;page=3&amp;t=172.620" title="Ausgewählter Ausschnitt">Die physische Obstruktion soll durch Lärm, durch Gewalt und durch ein <em>Klima</em> der Bedrohung die Parlamentarier selbst von ihrer Arbeit abhalten. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 10.691358024691%; width: 10.648148148148%;"></div><div class="hit" style="left: 21.432098765432%; width: 1.0925925925926%;"></div><div class="hit" style="left: 53.277777777778%; width: 3.3827160493827%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200125109?q=klima&amp;page=3&amp;t=231.420" title="Ausgewählter Ausschnitt">Thema: <em>Klima</em>, <em>Klima</em>, <em>Klima</em>. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 83.545126353791%; width: 1.1696750902527%;"></div></div>	</div>
 </article>
 <article class="resultItem col hits" data-speech-id="DE-0200027074" data-faction="Q1007353">
 	<div class="resultContent partyIndicator" data-faction="Q1007353">
@@ -242,20 +242,6 @@ content-type: text/html; charset=UTF-8
 								<a class="resultSnippet" href="https://optv.local/media/DE-0180057030?q=klima&amp;page=3&amp;t=614.520" title="Ausgewählter Ausschnitt">Dem <em>Klima</em> ist damit unter dem Strich nicht geholfen. </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 13.889400921659%; width: 4.2611367127496%;"></div><div class="hit" style="left: 30.371735791091%; width: 0.89400921658986%;"></div><div class="hit" style="left: 59.483870967742%; width: 2.294930875576%;"></div><div class="hit" style="left: 67.557603686636%; width: 2.8172043010753%;"></div><div class="hit" style="left: 94.396313364055%; width: 0.62672811059908%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0190118034" data-faction="">
-	<div class="resultContent partyIndicator" data-faction="">
-		<a class="resultLink" href="https://optv.local/media/DE-0190118034?q=klima&amp;page=3">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">00:39</div>
-			<div class="resultDate">17.10.2019</div>
-			<div class="resultMeta">
-				Petra Pau			</div>
-			<hr>
-						<div class="resultTitle">Klima- und Energiepolitik</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190118034?q=klima&amp;page=3&amp;t=12.720" title="Ausgewählter Ausschnitt">Echten Umweltschutz betreiben – Aufgabe aller Klimaschutz- und Energiewendeziele, für eine faktenbasierte <em>Klima</em>- und Energiepolitik </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 32.615384615385%; width: 13.179487179487%;"></div></div>	</div>
-</article>
 <article class="resultItem col hits" data-speech-id="DE-0210021152" data-faction="">
 	<div class="resultContent partyIndicator" data-faction="">
 		<a class="resultLink" href="https://optv.local/media/DE-0210021152?q=klima&amp;page=3">
@@ -270,35 +256,19 @@ content-type: text/html; charset=UTF-8
 		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0210021152?q=klima&amp;page=3&amp;t=15.800" title="Ausgewählter Ausschnitt">Zukunft sichern, <em>Klima</em> schützen – Naturverträgliche Lösungen vor Verfahren zur CO2-Abscheidung und -Speicherung </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 39.5%; width: 14.95%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0200117022" data-faction="Q42575708">
-	<div class="resultContent partyIndicator" data-faction="Q42575708">
-		<a class="resultLink" href="https://optv.local/media/DE-0200117022?q=klima&amp;page=3">
+<article class="resultItem col hits" data-speech-id="DE-0190118034" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0190118034?q=klima&amp;page=3">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">03:27</div>
-			<div class="resultDate">05.09.2023</div>
+						<div class="resultDuration">00:39</div>
+			<div class="resultDate">17.10.2019</div>
 			<div class="resultMeta">
-				Karsten Hilse <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+				Petra Pau			</div>
 			<hr>
-						<div class="resultTitle">Allgemeine Finanzdebatte</div>
+						<div class="resultTitle">Klima- und Energiepolitik</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200117022?q=klima&amp;page=3&amp;t=117.880" title="Ausgewählter Ausschnitt">Behauptet doch das Finanzministerium unverfroren, das Sondervermögen „<em>Klima</em>- und Transformationsfonds“ ermöglicht zusätzliche Programmausgaben zur „Förderung einer umweltschonenden, zuverlässigen und bezahlbaren Energieversorgung“ und zum „Klimaschutz“. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0200117022?q=klima&amp;page=3&amp;t=173.640" title="Ausgewählter Ausschnitt">Wir fordern, den <em>Klima</em>- und Transformationsfonds mit immerhin circa 70 Milliarden Euro aufzulösen, alle CO </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 56.946859903382%; width: 5.8260869565217%;"></div><div class="hit" style="left: 83.884057971014%; width: 4.3188405797101%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0200045094" data-faction="Q1007353">
-	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0200045094?q=klima&amp;page=3">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">03:44</div>
-			<div class="resultDate">24.06.2022</div>
-			<div class="resultMeta">
-				Harald Ebner <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
-			<hr>
-						<div class="resultTitle">Ausbau von Windenergieanlagen</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200045094?q=klima&amp;page=3&amp;t=42.180" title="Ausgewählter Ausschnitt">Wir müssen deshalb beides tun: <em>Klima</em> schützen und Artenvielfalt retten. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0200045094?q=klima&amp;page=3&amp;t=192.200" title="Ausgewählter Ausschnitt"><em>Klima</em>- und Artenkrise müssen gemeinsam gelöst werden. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 18.830357142857%; width: 2.6964285714286%;"></div><div class="hit" style="left: 85.803571428571%; width: 2.3125%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190118034?q=klima&amp;page=3&amp;t=12.720" title="Ausgewählter Ausschnitt">Echten Umweltschutz betreiben – Aufgabe aller Klimaschutz- und Energiewendeziele, für eine faktenbasierte <em>Klima</em>- und Energiepolitik </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 32.615384615385%; width: 13.179487179487%;"></div></div>	</div>
 </article>
 <article class="resultItem col hits" data-speech-id="DE-0190176093" data-faction="Q1007353">
 	<div class="resultContent partyIndicator" data-faction="Q1007353">
@@ -315,20 +285,49 @@ content-type: text/html; charset=UTF-8
 								<a class="resultSnippet" href="https://optv.local/media/DE-0190176093?q=klima&amp;page=3&amp;t=35.480" title="Ausgewählter Ausschnitt">In Kommunen gibt es willige Akteure über fast alle Fraktionen hinweg, die wissen, was für <em>Klima</em>, Nachhaltigkeit und Resilienz zu tun ist. </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 3.508064516129%; width: 6.9677419354839%;"></div><div class="hit" style="left: 14.306451612903%; width: 3.1693548387097%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0200156040" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0200156040?q=klima&amp;page=3">
+<article class="resultItem col hits" data-speech-id="DE-0200045094" data-faction="Q1007353">
+	<div class="resultContent partyIndicator" data-faction="Q1007353">
+		<a class="resultLink" href="https://optv.local/media/DE-0200045094?q=klima&amp;page=3">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">03:07</div>
-			<div class="resultDate">13.03.2024</div>
+						<div class="resultDuration">03:44</div>
+			<div class="resultDate">24.06.2022</div>
 			<div class="resultMeta">
-				Gitta Connemann <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+				Harald Ebner <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
 			<hr>
-						<div class="resultTitle">Wissenschaftskommunikation</div>
+						<div class="resultTitle">Ausbau von Windenergieanlagen</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200156040?q=klima&amp;page=3&amp;t=85.640" title="Ausgewählter Ausschnitt">Es geht um das <em>Klima</em>; Herr Kollege Dr. Seiter hat es angesprochen. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0200156040?q=klima&amp;page=3&amp;t=90.480" title="Ausgewählter Ausschnitt">Forschende Unternehmen beklagen die überbordende Regulatorik, das innovationsfeindliche <em>Klima</em>. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 45.79679144385%; width: 2.427807486631%;"></div><div class="hit" style="left: 48.385026737968%; width: 3.1978609625668%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200045094?q=klima&amp;page=3&amp;t=42.180" title="Ausgewählter Ausschnitt">Wir müssen deshalb beides tun: <em>Klima</em> schützen und Artenvielfalt retten. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0200045094?q=klima&amp;page=3&amp;t=192.200" title="Ausgewählter Ausschnitt"><em>Klima</em>- und Artenkrise müssen gemeinsam gelöst werden. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 18.830357142857%; width: 2.6964285714286%;"></div><div class="hit" style="left: 85.803571428571%; width: 2.3125%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0200117022" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a class="resultLink" href="https://optv.local/media/DE-0200117022?q=klima&amp;page=3">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">03:27</div>
+			<div class="resultDate">05.09.2023</div>
+			<div class="resultMeta">
+				Karsten Hilse <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+			<hr>
+						<div class="resultTitle">Allgemeine Finanzdebatte</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200117022?q=klima&amp;page=3&amp;t=117.880" title="Ausgewählter Ausschnitt">Behauptet doch das Finanzministerium unverfroren, das Sondervermögen „<em>Klima</em>- und Transformationsfonds“ ermöglicht zusätzliche Programmausgaben zur „Förderung einer umweltschonenden, zuverlässigen und bezahlbaren Energieversorgung“ und zum „Klimaschutz“. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0200117022?q=klima&amp;page=3&amp;t=173.640" title="Ausgewählter Ausschnitt">Wir fordern, den <em>Klima</em>- und Transformationsfonds mit immerhin circa 70 Milliarden Euro aufzulösen, alle CO </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 56.946859903382%; width: 5.8260869565217%;"></div><div class="hit" style="left: 83.884057971014%; width: 4.3188405797101%;"></div></div>	</div>
+</article>
+<article class="resultItem col" data-speech-id="DE-0190206084" data-faction="Q2207512">
+	<div class="resultContent partyIndicator" data-faction="Q2207512">
+		<a class="resultLink" href="https://optv.local/media/DE-0190206084?q=klima&amp;page=3">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">04:27</div>
+			<div class="resultDate">28.01.2021</div>
+			<div class="resultMeta">
+				Florian Post <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
+			<hr>
+						<div class="resultTitle">Aktuelle Stunde: Big Tech und die Meinungsfreiheit im Internet</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190206084?q=klima&amp;page=3&amp;t=" title="Ausgewählter Ausschnitt">Es ist nämlich auch so, dass gerade diejenigen von einem gesellschaftlichen <em>Klima</em> profitieren, die dieses gesellschaftliche <em>Klima</em> der Angst durch ihren Hass und ihre im Internet verbreitete Hetze erst erzeugen und sich danach auf die Meinungsfreiheit berufen. </a>
+				</div>	</div>
 </article>
 <article class="resultItem col hits" data-speech-id="DE-0200063073" data-faction="Q1007353">
 	<div class="resultContent partyIndicator" data-faction="Q1007353">
@@ -345,19 +344,20 @@ content-type: text/html; charset=UTF-8
 								<a class="resultSnippet" href="https://optv.local/media/DE-0200063073?q=klima&amp;page=3&amp;t=173.960" title="Ausgewählter Ausschnitt">Denn wenn wir die Versorgungssicherheit langfristig gewährleisten wollen, wenn wir unser <em>Klima</em> und unsere Gesundheit schützen wollen, wenn wir die Sicherheit Europas stärken wollen, wenn wir uns von fossilen Importen unabhängig machen wollen, wenn wir den Industriestandort erhalten und zukunftsfähige Arbeitsplätze schaffen wollen, wenn wir bezahlbare Energiepreise haben wollen, dann brauchen wir keine Enquete-Kommission, dann müssen wir einfach die erneuerbaren Energien schneller ausbauen. </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 49.553398058252%; width: 10.52427184466%;"></div><div class="hit" style="left: 84.446601941748%; width: 14.126213592233%;"></div></div>	</div>
 </article>
-<article class="resultItem col" data-speech-id="DE-0190206084" data-faction="Q2207512">
-	<div class="resultContent partyIndicator" data-faction="Q2207512">
-		<a class="resultLink" href="https://optv.local/media/DE-0190206084?q=klima&amp;page=3">
+<article class="resultItem col hits" data-speech-id="DE-0200156040" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a class="resultLink" href="https://optv.local/media/DE-0200156040?q=klima&amp;page=3">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">04:27</div>
-			<div class="resultDate">28.01.2021</div>
+						<div class="resultDuration">03:07</div>
+			<div class="resultDate">13.03.2024</div>
 			<div class="resultMeta">
-				Florian Post <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
+				Gitta Connemann <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
 			<hr>
-						<div class="resultTitle">Aktuelle Stunde: Big Tech und die Meinungsfreiheit im Internet</div>
+						<div class="resultTitle">Wissenschaftskommunikation</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190206084?q=klima&amp;page=3&amp;t=" title="Ausgewählter Ausschnitt">Es ist nämlich auch so, dass gerade diejenigen von einem gesellschaftlichen <em>Klima</em> profitieren, die dieses gesellschaftliche <em>Klima</em> der Angst durch ihren Hass und ihre im Internet verbreitete Hetze erst erzeugen und sich danach auf die Meinungsfreiheit berufen. </a>
-				</div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200156040?q=klima&amp;page=3&amp;t=85.640" title="Ausgewählter Ausschnitt">Es geht um das <em>Klima</em>; Herr Kollege Dr. Seiter hat es angesprochen. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0200156040?q=klima&amp;page=3&amp;t=90.480" title="Ausgewählter Ausschnitt">Forschende Unternehmen beklagen die überbordende Regulatorik, das innovationsfeindliche <em>Klima</em>. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 45.79679144385%; width: 2.427807486631%;"></div><div class="hit" style="left: 48.385026737968%; width: 3.1978609625668%;"></div></div>	</div>
 </article>
 <article class="resultItem col hits" data-speech-id="DE-0180152090" data-faction="">
 	<div class="resultContent partyIndicator" data-faction="">
@@ -421,37 +421,21 @@ content-type: text/html; charset=UTF-8
 								<a class="resultSnippet" href="https://optv.local/media/DE-0200172091?q=klima&amp;page=3&amp;t=133.760" title="Ausgewählter Ausschnitt">Zeitgleich sagt der zuvor bereits erwähnte Lindner, dass im <em>Klima</em>- und Transformationsfonds nunmehr ein Loch von knapp 10 Milliarden Euro entstehe, also Geld, das vom Bund geliehen wird, um damit irgendwelche Brandlöcher zuzuschütten. </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 27.283018867925%; width: 0.82389937106918%;"></div><div class="hit" style="left: 28.201257861635%; width: 5.6918238993711%;"></div><div class="hit" style="left: 42.062893081761%; width: 4.1446540880503%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0210008091" data-faction="Q42575708">
-	<div class="resultContent partyIndicator" data-faction="Q42575708">
-		<a class="resultLink" href="https://optv.local/media/DE-0210008091?q=klima&amp;page=3">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:21</div>
-			<div class="resultDate">23.05.2025</div>
-			<div class="resultMeta">
-				Bernd Schattner <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
-			<hr>
-						<div class="resultTitle">Aktuelle Stunde zur Dürre in Deutschland</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0210008091?q=klima&amp;page=3&amp;t=18.000" title="Ausgewählter Ausschnitt">Dabei ist doch eines wissenschaftlich längst unstrittig: Das <em>Klima</em> hat sich seit Anbeginn der Erdgeschichte gewandelt, lange bevor irgendein Mensch in die Natur eingreifen konnte. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0210008091?q=klima&amp;page=3&amp;t=29.000" title="Ausgewählter Ausschnitt">Die absurde Idee, wir könnten mit planwirtschaftlichen Maßnahmen das <em>Klima</em> retten, ist genauso vermessen wie realitätsfern. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0210008091?q=klima&amp;page=3&amp;t=259.160" title="Ausgewählter Ausschnitt">Ihre Politik rettet nicht das <em>Klima</em>, sondern zerstört die Zukunft unseres Landes. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 5.607476635514%; width: 3.3333333333333%;"></div><div class="hit" style="left: 9.0342679127726%; width: 2.1619937694704%;"></div><div class="hit" style="left: 80.735202492212%; width: 1.6760124610592%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0210011075" data-faction="Q1023134">
+<article class="resultItem col hits" data-speech-id="DE-0190092080" data-faction="Q1023134">
 	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0210011075?q=klima&amp;page=3">
+		<a class="resultLink" href="https://optv.local/media/DE-0190092080?q=klima&amp;page=3">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:00</div>
-			<div class="resultDate">06.06.2025</div>
+						<div class="resultDuration">05:31</div>
+			<div class="resultDate">04.04.2019</div>
 			<div class="resultMeta">
-				Thomas Gebhart <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+				Carsten Müller <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
 			<hr>
-						<div class="resultTitle">Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik</div>
+						<div class="resultTitle">Aktuelle Stunde zu steigenden Strompreisen</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0210011075?q=klima&amp;page=3&amp;t=113.660" title="Ausgewählter Ausschnitt">Wenn wir auf dem Weg hin zur Klimaneutralität die Wettbewerbsfähigkeit unserer heimischen Unternehmen verlieren würden, dann hätten wir mit Blick auf das <em>Klima</em> überhaupt nichts gewonnen. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0210011075?q=klima&amp;page=3&amp;t=124.200" title="Ausgewählter Ausschnitt">Wenn am Ende Produktionsverlagerungen stattfinden und die Fertigprodukte zu uns geliefert werden, dann ist das ein Rückschritt mit Blick auf das <em>Klima</em>; das ist wirtschaftlich gesehen ein Rückschritt und sorgt für soziale Verwerfungen bei uns im Land. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0210011075?q=klima&amp;page=3&amp;t=233.200" title="Ausgewählter Ausschnitt">Das ist gut für das <em>Klima</em>, das ist gut für faire Wettbewerbsbedingungen, und es hilft, dass einseitige Kostenbelastungen für Bürger und Unternehmen in Deutschland reduziert und beseitigt werden. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 37.886666666667%; width: 3.4133333333333%;"></div><div class="hit" style="left: 41.4%; width: 4.5533333333333%;"></div><div class="hit" style="left: 77.733333333333%; width: 4%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190092080?q=klima&amp;page=3&amp;t=58.080" title="Ausgewählter Ausschnitt">Im Jahr 2002 haben 61 Prozent der bundesdeutschen Bevölkerung gesagt, sie seien bereit, Strompreisaufschläge für eine <em>Klima</em>- und Umweltschutzpolitik, für einen Ausbau der Erneuerbaren zu akzeptieren. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0190092080?q=klima&amp;page=3&amp;t=78.600" title="Ausgewählter Ausschnitt">Interessant hierbei ist, dass eine überdurchschnittliche Bereitschaft, so etwas zu akzeptieren, bei Anhängern der FDP vorhanden war, und – meine Damen und Herren, man glaubt es kaum; die Kolleginnen und Kollegen von der AfD können es jetzt nicht verfolgen – selbst bei 50 Prozent der Anhänger der sogenannten AfD – Sie wissen ja selbst, dass 50 Prozent eine magische Größenordnung sind – besteht die Bereitschaft, solche Investitionen in <em>Klima</em>- und Umweltschutz zu akzeptieren. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0190092080?q=klima&amp;page=3&amp;t=254.640" title="Ausgewählter Ausschnitt">Das ist Politik für die Menschen, und das ist <em>Klima</em>- und Umweltschutzpolitik, und das ist auch Wirtschaftspolitik. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 17.546827794562%; width: 3.6676737160121%;"></div><div class="hit" style="left: 23.746223564955%; width: 7.9335347432024%;"></div><div class="hit" style="left: 76.930513595166%; width: 1.97583081571%;"></div></div>	</div>
 </article>
 <article class="resultItem col hits" data-speech-id="DE-0210016119" data-faction="Q1023134">
 	<div class="resultContent partyIndicator" data-faction="Q1023134">
@@ -469,21 +453,37 @@ content-type: text/html; charset=UTF-8
 								<a class="resultSnippet" href="https://optv.local/media/DE-0210016119?q=klima&amp;page=3&amp;t=80.840" title="Ausgewählter Ausschnitt">Was den <em>Klima</em>- und Transformationsfonds betrifft, so unterscheiden wir uns grundlegend von unserer Vorgängerregierung. </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 10.907936507937%; width: 2.5079365079365%;"></div><div class="hit" style="left: 17.225396825397%; width: 4.3936507936508%;"></div><div class="hit" style="left: 25.663492063492%; width: 2.4063492063492%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0190092080" data-faction="Q1023134">
+<article class="resultItem col hits" data-speech-id="DE-0210011075" data-faction="Q1023134">
 	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0190092080?q=klima&amp;page=3">
+		<a class="resultLink" href="https://optv.local/media/DE-0210011075?q=klima&amp;page=3">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:31</div>
-			<div class="resultDate">04.04.2019</div>
+						<div class="resultDuration">05:00</div>
+			<div class="resultDate">06.06.2025</div>
 			<div class="resultMeta">
-				Carsten Müller <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+				Thomas Gebhart <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
 			<hr>
-						<div class="resultTitle">Aktuelle Stunde zu steigenden Strompreisen</div>
+						<div class="resultTitle">Aktuelle Stunde zur Klimakrise, Klimaschutzpolitik</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190092080?q=klima&amp;page=3&amp;t=58.080" title="Ausgewählter Ausschnitt">Im Jahr 2002 haben 61 Prozent der bundesdeutschen Bevölkerung gesagt, sie seien bereit, Strompreisaufschläge für eine <em>Klima</em>- und Umweltschutzpolitik, für einen Ausbau der Erneuerbaren zu akzeptieren. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0190092080?q=klima&amp;page=3&amp;t=78.600" title="Ausgewählter Ausschnitt">Interessant hierbei ist, dass eine überdurchschnittliche Bereitschaft, so etwas zu akzeptieren, bei Anhängern der FDP vorhanden war, und – meine Damen und Herren, man glaubt es kaum; die Kolleginnen und Kollegen von der AfD können es jetzt nicht verfolgen – selbst bei 50 Prozent der Anhänger der sogenannten AfD – Sie wissen ja selbst, dass 50 Prozent eine magische Größenordnung sind – besteht die Bereitschaft, solche Investitionen in <em>Klima</em>- und Umweltschutz zu akzeptieren. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0190092080?q=klima&amp;page=3&amp;t=254.640" title="Ausgewählter Ausschnitt">Das ist Politik für die Menschen, und das ist <em>Klima</em>- und Umweltschutzpolitik, und das ist auch Wirtschaftspolitik. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 17.546827794562%; width: 3.6676737160121%;"></div><div class="hit" style="left: 23.746223564955%; width: 7.9335347432024%;"></div><div class="hit" style="left: 76.930513595166%; width: 1.97583081571%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0210011075?q=klima&amp;page=3&amp;t=113.660" title="Ausgewählter Ausschnitt">Wenn wir auf dem Weg hin zur Klimaneutralität die Wettbewerbsfähigkeit unserer heimischen Unternehmen verlieren würden, dann hätten wir mit Blick auf das <em>Klima</em> überhaupt nichts gewonnen. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0210011075?q=klima&amp;page=3&amp;t=124.200" title="Ausgewählter Ausschnitt">Wenn am Ende Produktionsverlagerungen stattfinden und die Fertigprodukte zu uns geliefert werden, dann ist das ein Rückschritt mit Blick auf das <em>Klima</em>; das ist wirtschaftlich gesehen ein Rückschritt und sorgt für soziale Verwerfungen bei uns im Land. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0210011075?q=klima&amp;page=3&amp;t=233.200" title="Ausgewählter Ausschnitt">Das ist gut für das <em>Klima</em>, das ist gut für faire Wettbewerbsbedingungen, und es hilft, dass einseitige Kostenbelastungen für Bürger und Unternehmen in Deutschland reduziert und beseitigt werden. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 37.886666666667%; width: 3.4133333333333%;"></div><div class="hit" style="left: 41.4%; width: 4.5533333333333%;"></div><div class="hit" style="left: 77.733333333333%; width: 4%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0210008091" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a class="resultLink" href="https://optv.local/media/DE-0210008091?q=klima&amp;page=3">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">05:21</div>
+			<div class="resultDate">23.05.2025</div>
+			<div class="resultMeta">
+				Bernd Schattner <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+			<hr>
+						<div class="resultTitle">Aktuelle Stunde zur Dürre in Deutschland</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0210008091?q=klima&amp;page=3&amp;t=18.000" title="Ausgewählter Ausschnitt">Dabei ist doch eines wissenschaftlich längst unstrittig: Das <em>Klima</em> hat sich seit Anbeginn der Erdgeschichte gewandelt, lange bevor irgendein Mensch in die Natur eingreifen konnte. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0210008091?q=klima&amp;page=3&amp;t=29.000" title="Ausgewählter Ausschnitt">Die absurde Idee, wir könnten mit planwirtschaftlichen Maßnahmen das <em>Klima</em> retten, ist genauso vermessen wie realitätsfern. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0210008091?q=klima&amp;page=3&amp;t=259.160" title="Ausgewählter Ausschnitt">Ihre Politik rettet nicht das <em>Klima</em>, sondern zerstört die Zukunft unseres Landes. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 5.607476635514%; width: 3.3333333333333%;"></div><div class="hit" style="left: 9.0342679127726%; width: 2.1619937694704%;"></div><div class="hit" style="left: 80.735202492212%; width: 1.6760124610592%;"></div></div>	</div>
 </article>
 <article class="resultItem col hits" data-speech-id="DE-0200128077" data-faction="">
 	<div class="resultContent partyIndicator" data-faction="">
@@ -498,6 +498,22 @@ content-type: text/html; charset=UTF-8
 					</a>
 		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0200128077?q=klima&amp;page=3&amp;t=8.640" title="Ausgewählter Ausschnitt">CO2-Abscheidung und -Speicherung, CO2-Nutzung sowie Negativemissionen – Chancen für <em>Klima</em>, Industrie und Wohlstand </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 33.230769230769%; width: 20.846153846154%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0190071079" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0190071079?q=klima&amp;page=3">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">09:17</div>
+			<div class="resultDate">13.12.2018</div>
+			<div class="resultMeta">
+				Heiko Maas			</div>
+			<hr>
+						<div class="resultTitle">70 Jahre Allgemeine Erklärung der Menschenrechte</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190071079?q=klima&amp;page=3&amp;t=317.820" title="Ausgewählter Ausschnitt">Das <em>Klima</em> der Welt verändert sich rasant, auch wenn mancher noch immer <em>Klima</em> und Wetter verwechselt. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0190071079?q=klima&amp;page=3&amp;t=367.640" title="Ausgewählter Ausschnitt">Die Verbindung von <em>Klima</em> und Sicherheit ist darunter eines, das wir zu einem Schwerpunktthema unserer Mitgliedschaft im Sicherheitsrat der Vereinten Nationen erklärt haben. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0190071079?q=klima&amp;page=3&amp;t=375.880" title="Ausgewählter Ausschnitt">Liebe Kolleginnen und Kollegen, diese Entwicklung, der Zusammenhang zwischen <em>Klima</em> und Sicherheit, führt unweigerlich dazu, dass es mehr Migration geben wird. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 57.059245960503%; width: 1.6122082585278%;"></div><div class="hit" style="left: 66.003590664273%; width: 1.4254937163375%;"></div><div class="hit" style="left: 67.482944344704%; width: 2.9084380610413%;"></div></div>	</div>
 </article>
 <article class="resultItem col hits" data-speech-id="DE-0180057020" data-faction="Q1826856">
 	<div class="resultContent partyIndicator" data-faction="Q1826856">
@@ -515,22 +531,6 @@ content-type: text/html; charset=UTF-8
 								<a class="resultSnippet" href="https://optv.local/media/DE-0180057020?q=klima&amp;page=3&amp;t=369.420" title="Ausgewählter Ausschnitt">Auch mit dem neuen EU-Kommissar für Energie und <em>Klima</em>, Miguel Cañete, der nicht nur im spanischen Ölgeschäft mitmischt, sondern auch noch frauenfeindliche Sprüche klopft, hat das Regierungslager kein Problem. </a>
 								<a class="resultSnippet" href="https://optv.local/media/DE-0180057020?q=klima&amp;page=3&amp;t=396.780" title="Ausgewählter Ausschnitt">Endlich seien Energie und <em>Klima</em> in einer Hand. </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 7.1649694501018%; width: 1.2830957230143%;"></div><div class="hit" style="left: 52.680244399185%; width: 2.1140529531568%;"></div><div class="hit" style="left: 75.238289205703%; width: 3.4052953156823%;"></div><div class="hit" style="left: 80.810590631365%; width: 0.4969450101833%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0190071079" data-faction="">
-	<div class="resultContent partyIndicator" data-faction="">
-		<a class="resultLink" href="https://optv.local/media/DE-0190071079?q=klima&amp;page=3">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">09:17</div>
-			<div class="resultDate">13.12.2018</div>
-			<div class="resultMeta">
-				Heiko Maas			</div>
-			<hr>
-						<div class="resultTitle">70 Jahre Allgemeine Erklärung der Menschenrechte</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190071079?q=klima&amp;page=3&amp;t=317.820" title="Ausgewählter Ausschnitt">Das <em>Klima</em> der Welt verändert sich rasant, auch wenn mancher noch immer <em>Klima</em> und Wetter verwechselt. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0190071079?q=klima&amp;page=3&amp;t=367.640" title="Ausgewählter Ausschnitt">Die Verbindung von <em>Klima</em> und Sicherheit ist darunter eines, das wir zu einem Schwerpunktthema unserer Mitgliedschaft im Sicherheitsrat der Vereinten Nationen erklärt haben. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0190071079?q=klima&amp;page=3&amp;t=375.880" title="Ausgewählter Ausschnitt">Liebe Kolleginnen und Kollegen, diese Entwicklung, der Zusammenhang zwischen <em>Klima</em> und Sicherheit, führt unweigerlich dazu, dass es mehr Migration geben wird. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 57.059245960503%; width: 1.6122082585278%;"></div><div class="hit" style="left: 66.003590664273%; width: 1.4254937163375%;"></div><div class="hit" style="left: 67.482944344704%; width: 2.9084380610413%;"></div></div>	</div>
 </article>
 <article class="resultItem col hits" data-speech-id="DE-0200141199" data-faction="Q2207512">
 	<div class="resultContent partyIndicator" data-faction="Q2207512">
@@ -580,21 +580,6 @@ content-type: text/html; charset=UTF-8
 								<a class="resultSnippet" href="https://optv.local/media/DE-0190226048?q=klima&amp;page=3&amp;t=61.000" title="Ausgewählter Ausschnitt">Wir müssen bei unseren Worten genau deshalb achtgeben, nicht ein <em>Klima</em> zu schaffen, das es den Beamtinnen und Beamten, die für unsere freiheitlich-demokratische Grundordnung einstehen und die für uns die Knochen hinhalten, schwer macht, gegen jeden Extremismus vorzugehen. </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 17.009900990099%; width: 5.950495049505%;"></div><div class="hit" style="left: 30.19801980198%; width: 8.1584158415842%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0190239030" data-faction="Q42575708">
-	<div class="resultContent partyIndicator" data-faction="Q42575708">
-		<a class="resultLink" href="https://optv.local/media/DE-0190239030?q=klima&amp;page=3">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">04:54</div>
-			<div class="resultDate">07.09.2021</div>
-			<div class="resultMeta">
-				Rüdiger Lucassen <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
-			<hr>
-						<div class="resultTitle">Sondervermögen &quot;Aufbauhilfe 2021&quot;</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190239030?q=klima&amp;page=3&amp;t=168.500" title="Ausgewählter Ausschnitt">Ja, <em>Klima</em> wandelt sich, schon immer. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0190239030?q=klima&amp;page=3&amp;t=180.060" title="Ausgewählter Ausschnitt">Aber für den Hochwasserschutz, für Rückhaltebecken, für Aufforstungen, für Sirenen, für digitale Warnsysteme sind die Regierungen in Bund und Ländern zuständig und nicht das <em>Klima</em>. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 57.312925170068%; width: 1.4353741496599%;"></div><div class="hit" style="left: 61.244897959184%; width: 6.8707482993197%;"></div></div>	</div>
-</article>
 <article class="resultItem col hits" data-speech-id="DE-0190224072" data-faction="Q4316268">
 	<div class="resultContent partyIndicator" data-faction="Q4316268">
 		<a class="resultLink" href="https://optv.local/media/DE-0190224072?q=klima&amp;page=3">
@@ -609,6 +594,21 @@ content-type: text/html; charset=UTF-8
 		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190224072?q=klima&amp;page=3&amp;t=8.500" title="Ausgewählter Ausschnitt">Wir diskutieren ja heute über mehr als 25 Vorlagen, Anträge usw., die alle irgendwie mit Umwelt und <em>Klima</em> zu tun haben. </a>
 								<a class="resultSnippet" href="https://optv.local/media/DE-0190224072?q=klima&amp;page=3&amp;t=85.520" title="Ausgewählter Ausschnitt">Gucken wir uns doch die Fakten gerade auch in Deutschland beim <em>Klima</em>- und Umweltschutz mal an – beides gehört ja in vielen Bereichen zusammen; dabei wird jedoch meist das Thema Biodiversität und Artenvielfalt nicht behandelt –: Es sterben jeden Tag 150 Arten aus. </a>
 				</div><div class="hitTimeline"><div class="hit" style="left: 3.9170506912442%; width: 8.073732718894%;"></div><div class="hit" style="left: 39.410138248848%; width: 7.7695852534562%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0190239030" data-faction="Q42575708">
+	<div class="resultContent partyIndicator" data-faction="Q42575708">
+		<a class="resultLink" href="https://optv.local/media/DE-0190239030?q=klima&amp;page=3">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">04:54</div>
+			<div class="resultDate">07.09.2021</div>
+			<div class="resultMeta">
+				Rüdiger Lucassen <span class="partyIndicator partyIndicatorInline" data-faction="Q42575708">AfD</span>			</div>
+			<hr>
+						<div class="resultTitle">Sondervermögen &quot;Aufbauhilfe 2021&quot;</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0190239030?q=klima&amp;page=3&amp;t=168.500" title="Ausgewählter Ausschnitt">Ja, <em>Klima</em> wandelt sich, schon immer. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0190239030?q=klima&amp;page=3&amp;t=180.060" title="Ausgewählter Ausschnitt">Aber für den Hochwasserschutz, für Rückhaltebecken, für Aufforstungen, für Sirenen, für digitale Warnsysteme sind die Regierungen in Bund und Ländern zuständig und nicht das <em>Klima</em>. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 57.312925170068%; width: 1.4353741496599%;"></div><div class="hit" style="left: 61.244897959184%; width: 6.8707482993197%;"></div></div>	</div>
 </article>
 <article class="resultItem col hits" data-speech-id="DE-0190230105" data-faction="Q42575708">
 	<div class="resultContent partyIndicator" data-faction="Q42575708">

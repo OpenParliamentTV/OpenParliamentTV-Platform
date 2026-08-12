@@ -16,10 +16,10 @@ x-robots-tag: noindex
     },
     "errors": [
         {
-            "status": 404,
+            "status": 401,
             "code": 1,
-            "title": "Playlist mit der angegebenen ID wurde nicht gefunden",
-            "detail": "Playlist mit der angegebenen ID wurde nicht gefunden"
+            "title": "Anmeldung erfolderlich",
+            "detail": "<b>Dies ist ein Prototyp</b>. Er enthält fehlerhafte Daten, Beispieltexte und Bedienelemente die noch nicht funktionieren. <br><br>Melde dich bitte an um den Prototypen auszuprobieren:"
         }
     ]
 }

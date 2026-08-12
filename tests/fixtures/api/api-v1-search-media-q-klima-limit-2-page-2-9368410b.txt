@@ -3359,9 +3359,9 @@ x-robots-tag: noindex
                         "sourceURI": "https://www.bundestag.de/resource/blob/1067464/8532b8fc98ef08b752cce31ef8505a10/21004.xml",
                         "creator": "Deutscher Bundestag",
                         "license": "Public Domain",
-                        "language": "DE-de",
+                        "language": "de",
                         "originTextID": "ID21407100",
-                        "lastChanged": "2025-05-20 16:30:09"
+                        "lastChanged": "2026-06-25 19:59:49"
                     }
                 ],
                 "textContentsCount": 1
@@ -3376,7 +3376,7 @@ x-robots-tag: noindex
                         "id": "DE-021",
                         "attributes": {
                             "number": 21,
-                            "dateStart": null,
+                            "dateStart": "2025-03-25",
                             "dateEnd": null
                         },
                         "links": {
@@ -3513,7 +3513,7 @@ x-robots-tag: noindex
                                         "url": "https://de.wikipedia.org/wiki/AfD-Fraktion_im_Deutschen_Bundestag"
                                     }
                                 },
-                                "color": null
+                                "color": "#1a9fdd"
                             },
                             "links": {
                                 "self": "https://optv.local/api/v1/organisation/Q42575708"
@@ -3575,7 +3575,7 @@ x-robots-tag: noindex
                     }
                 ]
             },
-            "_score": 6.02740000000000009094947017729282379150390625,
+            "_score": 6.027300000000000324007487506605684757232666015625,
             "_highlight": {
                 "attributes.textContents.textHTML": [
                     "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"8.400\">Herr Präsident! </span><span class=\"timebased\" data-start=\"8.400\" data-end=\"10.000\">Meine Damen und Herren! </span><span class=\"timebased\" data-start=\"10.000\" data-end=\"11.600\">Liebe Landsleute! </span><span class=\"timebased\" data-start=\"11.600\" data-end=\"15.600\">Und natürlich werte Leugner des natürlichen Klimawandels! </span><span class=\"timebased\" data-start=\"15.600\" data-end=\"36.600\">Nach dem desaströsen Abschneiden des bisherigen grünen Ministers Habeck, der in seinem Amt die <em>Klima</em>- und Energiepolitik versammelte und damit den freien Fall der deutschen Wirtschaft massiv beschleunigte, ja, fast bis zur Unumkehrbarkeit vorantrieb, soll es nun zwei Ministerien geben, die sich mit <em>Klima</em>, genauer gesagt, mit dem sogenannten Klimaschutz beschäftigen. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"36.600\" data-end=\"44.120\">Jeder gut informierte Bürger weiß allerdings, dass sich das <em>Klima</em> seit Hunderten Millionen Jahren wandelt, und zwar ohne Zutun des Menschen. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"36.600\" data-end=\"54.160\">(Zuruf der Abg. Lisa Badum [BÜNDNIS 90/DIE GRÜNEN]) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"44.120\" data-end=\"54.160\">Außerdem kann man das <em>Klima</em> nicht schützen, da es sich um einen rein statistischen Mittelwert lokaler Wetterdaten, über mindestens 30 Jahre gemittelt, handelt. </span><span class=\"timebased\" data-start=\"54.160\" data-end=\"62.360\">Zudem gibt es bisher keinen einzigen wissenschaftlichen Beweis, dass die menschengemachten CO2-Emissionen das <em>Klima</em> überhaupt beeinflussen. </span><span class=\"timebased\" data-start=\"62.360\" data-end=\"65.480\">Keinen wissenschaftlichen Beweis! </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"62.360\" data-end=\"73.920\">(Beifall bei der AfD – Zuruf des Abg. Harald Ebner [BÜNDNIS 90/DIE GRÜNEN]) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"65.480\" data-end=\"73.920\">Wurde die Zerschlagung der deutschen Wirtschaft in der letzten Legislatur noch durch ein Ministerium vorangetrieben, gibt es jetzt eine Aufgabenteilung. </span><span class=\"timebased\" data-start=\"73.920\" data-end=\"94.160\">Das Ministerium für Umwelt, Klimaschutz, Naturschutz und nukleare Sicherheit wird in den nächsten vier Jahren die pseudowissenschaftliche ideologische Unterfütterung in Sachen Klimaschutz liefern, und das Ministerium für Wirtschaft und Energie wird diesen Murks dann dazu benutzen, um die Menschen im Lande weiter auszuplündern und die Wirtschaft ein für alle Mal aus dem Land zu treiben. </span><span class=\"timebased\" data-start=\"94.160\" data-end=\"100.760\">Deutschland wird zum Dritte-Welt-Land mutieren, und Sie auf der Regierungsbank werden dafür verantwortlich sein. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"94.160\" data-end=\"113.480\">(Beifall bei der AfD) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"100.760\" data-end=\"113.480\">Herr Minister, schaut man sich Ihren Lebenslauf an, zeigt sich: Ihre Vorbildung im Bereich <em>Klima</em> und sogenannter Klimaschutz ist – um es gewählt auszudrücken – eher suboptimal bis quasi nicht vorhanden. </span><span class=\"timebased\" data-start=\"113.480\" data-end=\"115.120\">Das kann gut oder schlecht sein. </span><span class=\"timebased\" data-start=\"115.120\" data-end=\"116.880\">Ich fürchte, nein, ich weiß: Das ist schlecht. </span><span class=\"timebased\" data-start=\"116.880\" data-end=\"117.760\">Warum? </span><span class=\"timebased\" data-start=\"117.760\" data-end=\"132.280\">Weil Sie damit ständig, wie einst der Kinderbuchautor, der auch nicht die Spur einer Ahnung hatte, den Profiteuren einer teuren sogenannten Klimaschutzpolitik ausgesetzt sind, die Ihnen vom drohenden Weltuntergang erzählen – wenn auch erst in 100 oder mehr Jahren –, </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"117.760\" data-end=\"143.480\">(Zuruf von der Linken) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"132.280\" data-end=\"143.480\">wenn Sie nicht genau das machen, was Ihnen diese falschen Propheten einflüstern, nämlich Hunderte Milliarden Euro in sogenannte Erneuerbare zu investieren – ohne Nutzen, aber mit fatalen Folgen für Mensch und Natur. </span><span class=\"timebased\" data-start=\"143.480\" data-end=\"145.720\">Sobald wir in Regierungsverantwortung sind, </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"143.480\" data-end=\"148.760\">(Lisa Badum [BÜNDNIS 90/DIE GRÜNEN]: Aber das wird nicht passieren!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"145.720\" data-end=\"148.760\">werden wir diesen Irrsinn beenden. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"145.720\" data-end=\"187.560\">(Beifall bei der AfD) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"148.760\" data-end=\"187.560\">Schaut man sich beispielsweise den Green Deal von Frau von der Leyen genauer an, dann erkennt man: Er verlangt im Programm „Fit for 55“ eine Absenkung der CO2-Emissionen um 55 Prozent bis 2030, bezogen auf das Jahr 2000. Nimmt man das Modell „Middle of the Road“ des sogenannten Weltklimarates und berechnet die Auswirkungen auf die Temperatur bis zum Jahre 2100, dann erfährt man, dass sich diese unter Aufwendung von mindestens 1 000 Milliarden Euro – bis 2030 wohlgemerkt – um satte vier Tausendstel Grad verringert, vorausgesetzt natürlich, die Hypothese vom menschengemachten Klimawandel stimmt, </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"148.760\" data-end=\"190.480\">(Lisa Badum [BÜNDNIS 90/DIE GRÜNEN]: Ihre Rechnung ist immer noch falsch, Herr Hilse! – Zuruf des Abg. Marcel Bauer [Die Linke]) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"187.560\" data-end=\"190.480\">was Tausende Wissenschaftler weltweit bestreiten. </span><span class=\"timebased\" data-start=\"190.480\" data-end=\"192.320\">Vier Tausendstel Grad! </span><span class=\"timebased\" data-start=\"192.320\" data-end=\"199.520\">1 Billion Euro für praktisch nichts – wobei: nicht „nichts“, sondern Supergewinne für die Wind- und Solarbranche. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"199.520\" data-end=\"209.880\">Der jüngste Blackout in Spanien und Portugal zeigt sehr deutlich, dass der unkontrollierte Ausbau sogenannter erneuerbarer Energien nicht nur gigantische Summen verschlingt und damit die Strompreise in die Höhe treibt. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"199.520\" data-end=\"213.600\">(Daniel Rinkert [SPD]: Faktencheck! So was von faktenfrei kann man doch nicht vortragen!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"209.880\" data-end=\"213.600\">Er kann im schlimmsten Fall dazu führen, dass das ganze Stromnetz zusammenbricht. </span><span class=\"timebased\" data-start=\"213.600\" data-end=\"223.880\">In Deutschland sind schon jetzt fast 180 Gigawatt Nennleistung von Wind und Sonne installiert, obwohl wir nur maximal 80 Gigawatt benötigen. </span><span class=\"timebased\" data-start=\"223.880\" data-end=\"233.120\">Und trotzdem wollen Sie unsere Kulturlandschaften mit noch mehr Vogelschreddern und großflächigen Solaranlagen verschandeln, ohne Rücksicht auf Mensch und Natur. </span><span class=\"timebased\" data-start=\"233.120\" data-end=\"240.240\">Der Blackout wird daher auch bei uns kommen, so sicher wie das Amen in der Kirche, wie in Spanien, Portugal und Teilen Südfrankreichs, </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"233.120\" data-end=\"243.120\">(Lisa Badum [BÜNDNIS 90/DIE GRÜNEN]: Lüge! – Dr. Jan-Niclas Gesenhues [BÜNDNIS 90/DIE GRÜNEN]: Alles Lüge!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"240.240\" data-end=\"243.120\">mit katastrophalen Folgen für uns alle. </span><span class=\"timebased\" data-start=\"243.120\" data-end=\"245.920\">Und Sie tun alles, damit das wirklich passiert. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"245.920\" data-end=\"253.600\">Vielen Dank für Ihre Aufmerksamkeit. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"245.920\" data-end=\"258.960\">(Beifall bei der AfD) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"253.600\" data-end=\"258.960\">Ich darf für die CDU/CSU Herrn Andreas Jung aufrufen. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"253.600\" data-end=\"258.960\">(Beifall bei der CDU/CSU sowie bei Abgeordneten der SPD) </span></p>"
@@ -3858,9 +3858,9 @@ x-robots-tag: noindex
                         "sourceURI": "https://www.bundestag.de/resource/blob/692780/3cc40f2b5c202defad6c557fe25d8ca6/19156-data.xml",
                         "creator": "Deutscher Bundestag",
                         "license": "Public Domain",
-                        "language": "DE-de",
+                        "language": "de",
                         "originTextID": "ID1915605000",
-                        "lastChanged": "2023-02-24 04:51:23"
+                        "lastChanged": "2026-06-25 19:59:49"
                     }
                 ],
                 "textContentsCount": 1
@@ -3875,8 +3875,8 @@ x-robots-tag: noindex
                         "id": "DE-019",
                         "attributes": {
                             "number": 19,
-                            "dateStart": "2025-07-08",
-                            "dateEnd": "2025-08-12"
+                            "dateStart": "2017-10-24",
+                            "dateEnd": "2021-10-26"
                         },
                         "links": {
                             "self": "https://optv.local/api/v1/electoralPeriod/DE-019"
@@ -4062,7 +4062,7 @@ x-robots-tag: noindex
                                         "url": "https://de.wikipedia.org/wiki/CDU/CSU-Fraktion_im_Deutschen_Bundestag"
                                     }
                                 },
-                                "color": null
+                                "color": "#000000"
                             },
                             "links": {
                                 "self": "https://optv.local/api/v1/organisation/Q1023134"
@@ -4088,7 +4088,7 @@ x-robots-tag: noindex
                                         "url": "https://de.wikipedia.org/wiki/SPD-Bundestagsfraktion"
                                     }
                                 },
-                                "color": null
+                                "color": "#df0b25"
                             },
                             "links": {
                                 "self": "https://optv.local/api/v1/organisation/Q2207512"
@@ -4114,7 +4114,7 @@ x-robots-tag: noindex
                                         "url": "https://de.wikipedia.org/wiki/AfD-Fraktion_im_Deutschen_Bundestag"
                                     }
                                 },
-                                "color": null
+                                "color": "#1a9fdd"
                             },
                             "links": {
                                 "self": "https://optv.local/api/v1/organisation/Q42575708"
@@ -4399,7 +4399,7 @@ x-robots-tag: noindex
                     }
                 ]
             },
-            "_score": 5.98200000000000020605739337042905390262603759765625,
+            "_score": 5.98190000000000043911541069974191486835479736328125,
             "_highlight": {
                 "attributes.textContents.textHTML": [
                     "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"10.320\">Vielen Dank, Frau Präsidentin, dass Sie die Kurzintervention zulassen. </span><span class=\"timebased\" data-start=\"10.320\" data-end=\"15.560\">– Das eigentliche Dilemma, das wir hier immer wieder sehen, ist, dass Sie <em>Klima</em> und Wetter verwechseln. </span><span class=\"timebased\" data-start=\"15.560\" data-end=\"16.560\">Sie haben das <em>Klima</em> erwähnt. </span><span class=\"timebased\" data-start=\"16.560\" data-end=\"18.960\">Deswegen will ich es einfach noch mal richtigstellen. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"16.560\" data-end=\"24.200\">(Ulli Nissen [SPD]: Oh!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"18.960\" data-end=\"24.200\">– Es ist eine Kurzintervention, und die Präsidentin hat sie mir erlaubt. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"24.200\" data-end=\"31.020\"><em>Klima</em> – das sind lokale Wetterdaten, über 30 Jahre erhoben und gemittelt. </span><span class=\"timebased\" data-start=\"31.020\" data-end=\"40.120\">Wenn Sie einen oder zwei oder drei Dürresommer haben – wir wissen ja noch gar nicht, ob wieder einer kommt –, können Sie damit nicht den Klimawandel erklären. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"31.020\" data-end=\"59.160\">(Beifall bei der AfD – Ulli Nissen [SPD]: Und die Erde ist eine Scheibe!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"40.120\" data-end=\"59.160\">Wir haben schon im Jahr 2018 gefordert, einen sogenannten Klimawandelfolgen-Anpassungsfonds zu bilden, um negative Auswirkungen des derzeit stattfindenden, vollkommen natürlichen Klimawandels abzufedern. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"40.120\" data-end=\"65.800\">(Christian Kühn [Tübingen] [BÜNDNIS 90/DIE GRÜNEN]: Das ist absurd!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"59.160\" data-end=\"65.800\">Es wäre schön, wenn sich die CDU oder die gesamte Koalition diesem Vorschlag vielleicht einmal nähern würde, </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"59.160\" data-end=\"70.080\">(Ulli Nissen [SPD]: Bestimmt nicht!) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"65.800\" data-end=\"70.080\">damit wir uns an den Klimawandel anpassen können. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"70.080\" data-end=\"71.480\">Vielen Dank. </span></p><p data-type=\"comment\"><span class=\"timebased\" data-start=\"70.080\" data-end=\"72.920\">(Beifall bei der AfD) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"71.480\" data-end=\"72.920\">Danke, Herr Hilse. </span><span class=\"timebased\" data-start=\"72.920\" data-end=\"76.960\">– Frau Dr. Weisgerber, wenn Sie mögen. </span></p>"

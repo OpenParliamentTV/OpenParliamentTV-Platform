@@ -30,6 +30,7 @@ return function (RouteCollector $r) {
     // ---- Search / home (public) ----
     $get('/', 'pageSearch', 'main');
     $get('/search', 'pageSearch', 'search');
+    $get('/statistics', 'pageStatistics', 'statistics');
 
     // ---- Static / simple public pages ----
     $get('/about', 'pageStatic', 'about');
@@ -65,7 +66,6 @@ return function (RouteCollector $r) {
     $get('/manage/media', 'pageAdmin', 'manage-media', 'admin');
     $get('/manage/structure', 'pageAdmin', 'manage-structure', 'admin');
     $get('/manage/users', 'pageAdmin', 'manage-users', 'admin');
-    $get('/statistics', 'pageAdmin', 'statistics', 'admin');
 
     // Entity-typed manage pages: public at the auth gate, but the module enforces
     // login on the data itself (notifications additionally needs a session here).

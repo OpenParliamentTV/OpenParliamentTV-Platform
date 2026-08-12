@@ -1,0 +1,1485 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success",
+        "attributes": {
+            "speechFirstDateStr": "2020-01-15T14:11:56.000Z",
+            "speechFirstDateTimestamp": 1579097516000,
+            "speechLastDateStr": "2020-12-17T20:42:21.000Z",
+            "speechLastDateTimestamp": 1608237741000,
+            "resultsPerFaction": {
+                "Q1023134": 1771,
+                "Q2207512": 1217,
+                "Q42575708": 914,
+                "Q1387991": 840,
+                "Q1826856": 791,
+                "Q1007353": 780,
+                "Q4316268": 31
+            },
+            "days": {
+                "2020-01-15": {
+                    "key_as_string": "2020-01-15",
+                    "key": 1579046400000,
+                    "doc_count": 66
+                },
+                "2020-01-16": {
+                    "key_as_string": "2020-01-16",
+                    "key": 1579132800000,
+                    "doc_count": 151
+                },
+                "2020-01-17": {
+                    "key_as_string": "2020-01-17",
+                    "key": 1579219200000,
+                    "doc_count": 105
+                },
+                "2020-01-29": {
+                    "key_as_string": "2020-01-29",
+                    "key": 1580256000000,
+                    "doc_count": 70
+                },
+                "2020-01-30": {
+                    "key_as_string": "2020-01-30",
+                    "key": 1580342400000,
+                    "doc_count": 135
+                },
+                "2020-01-31": {
+                    "key_as_string": "2020-01-31",
+                    "key": 1580428800000,
+                    "doc_count": 87
+                },
+                "2020-02-12": {
+                    "key_as_string": "2020-02-12",
+                    "key": 1581465600000,
+                    "doc_count": 65
+                },
+                "2020-02-13": {
+                    "key_as_string": "2020-02-13",
+                    "key": 1581552000000,
+                    "doc_count": 155
+                },
+                "2020-02-14": {
+                    "key_as_string": "2020-02-14",
+                    "key": 1581638400000,
+                    "doc_count": 90
+                },
+                "2020-03-04": {
+                    "key_as_string": "2020-03-04",
+                    "key": 1583280000000,
+                    "doc_count": 66
+                },
+                "2020-03-05": {
+                    "key_as_string": "2020-03-05",
+                    "key": 1583366400000,
+                    "doc_count": 166
+                },
+                "2020-03-06": {
+                    "key_as_string": "2020-03-06",
+                    "key": 1583452800000,
+                    "doc_count": 128
+                },
+                "2020-03-11": {
+                    "key_as_string": "2020-03-11",
+                    "key": 1583884800000,
+                    "doc_count": 56
+                },
+                "2020-03-12": {
+                    "key_as_string": "2020-03-12",
+                    "key": 1583971200000,
+                    "doc_count": 120
+                },
+                "2020-03-13": {
+                    "key_as_string": "2020-03-13",
+                    "key": 1584057600000,
+                    "doc_count": 99
+                },
+                "2020-03-25": {
+                    "key_as_string": "2020-03-25",
+                    "key": 1585094400000,
+                    "doc_count": 69
+                },
+                "2020-04-22": {
+                    "key_as_string": "2020-04-22",
+                    "key": 1587513600000,
+                    "doc_count": 57
+                },
+                "2020-04-23": {
+                    "key_as_string": "2020-04-23",
+                    "key": 1587600000000,
+                    "doc_count": 133
+                },
+                "2020-05-06": {
+                    "key_as_string": "2020-05-06",
+                    "key": 1588723200000,
+                    "doc_count": 74
+                },
+                "2020-05-07": {
+                    "key_as_string": "2020-05-07",
+                    "key": 1588809600000,
+                    "doc_count": 168
+                },
+                "2020-05-13": {
+                    "key_as_string": "2020-05-13",
+                    "key": 1589328000000,
+                    "doc_count": 70
+                },
+                "2020-05-14": {
+                    "key_as_string": "2020-05-14",
+                    "key": 1589414400000,
+                    "doc_count": 214
+                },
+                "2020-05-15": {
+                    "key_as_string": "2020-05-15",
+                    "key": 1589500800000,
+                    "doc_count": 131
+                },
+                "2020-05-27": {
+                    "key_as_string": "2020-05-27",
+                    "key": 1590537600000,
+                    "doc_count": 75
+                },
+                "2020-05-28": {
+                    "key_as_string": "2020-05-28",
+                    "key": 1590624000000,
+                    "doc_count": 172
+                },
+                "2020-05-29": {
+                    "key_as_string": "2020-05-29",
+                    "key": 1590710400000,
+                    "doc_count": 122
+                },
+                "2020-06-17": {
+                    "key_as_string": "2020-06-17",
+                    "key": 1592352000000,
+                    "doc_count": 88
+                },
+                "2020-06-18": {
+                    "key_as_string": "2020-06-18",
+                    "key": 1592438400000,
+                    "doc_count": 199
+                },
+                "2020-06-19": {
+                    "key_as_string": "2020-06-19",
+                    "key": 1592524800000,
+                    "doc_count": 126
+                },
+                "2020-06-29": {
+                    "key_as_string": "2020-06-29",
+                    "key": 1593388800000,
+                    "doc_count": 22
+                },
+                "2020-07-01": {
+                    "key_as_string": "2020-07-01",
+                    "key": 1593561600000,
+                    "doc_count": 66
+                },
+                "2020-07-02": {
+                    "key_as_string": "2020-07-02",
+                    "key": 1593648000000,
+                    "doc_count": 204
+                },
+                "2020-07-03": {
+                    "key_as_string": "2020-07-03",
+                    "key": 1593734400000,
+                    "doc_count": 126
+                },
+                "2020-09-09": {
+                    "key_as_string": "2020-09-09",
+                    "key": 1599609600000,
+                    "doc_count": 67
+                },
+                "2020-09-10": {
+                    "key_as_string": "2020-09-10",
+                    "key": 1599696000000,
+                    "doc_count": 199
+                },
+                "2020-09-11": {
+                    "key_as_string": "2020-09-11",
+                    "key": 1599782400000,
+                    "doc_count": 130
+                },
+                "2020-09-16": {
+                    "key_as_string": "2020-09-16",
+                    "key": 1600214400000,
+                    "doc_count": 66
+                },
+                "2020-09-17": {
+                    "key_as_string": "2020-09-17",
+                    "key": 1600300800000,
+                    "doc_count": 195
+                },
+                "2020-09-18": {
+                    "key_as_string": "2020-09-18",
+                    "key": 1600387200000,
+                    "doc_count": 139
+                },
+                "2020-09-29": {
+                    "key_as_string": "2020-09-29",
+                    "key": 1601337600000,
+                    "doc_count": 82
+                },
+                "2020-09-30": {
+                    "key_as_string": "2020-09-30",
+                    "key": 1601424000000,
+                    "doc_count": 80
+                },
+                "2020-10-01": {
+                    "key_as_string": "2020-10-01",
+                    "key": 1601510400000,
+                    "doc_count": 125
+                },
+                "2020-10-02": {
+                    "key_as_string": "2020-10-02",
+                    "key": 1601596800000,
+                    "doc_count": 59
+                },
+                "2020-10-07": {
+                    "key_as_string": "2020-10-07",
+                    "key": 1602028800000,
+                    "doc_count": 66
+                },
+                "2020-10-08": {
+                    "key_as_string": "2020-10-08",
+                    "key": 1602115200000,
+                    "doc_count": 203
+                },
+                "2020-10-09": {
+                    "key_as_string": "2020-10-09",
+                    "key": 1602201600000,
+                    "doc_count": 122
+                },
+                "2020-10-28": {
+                    "key_as_string": "2020-10-28",
+                    "key": 1603843200000,
+                    "doc_count": 71
+                },
+                "2020-10-29": {
+                    "key_as_string": "2020-10-29",
+                    "key": 1603929600000,
+                    "doc_count": 190
+                },
+                "2020-10-30": {
+                    "key_as_string": "2020-10-30",
+                    "key": 1604016000000,
+                    "doc_count": 118
+                },
+                "2020-11-04": {
+                    "key_as_string": "2020-11-04",
+                    "key": 1604448000000,
+                    "doc_count": 55
+                },
+                "2020-11-05": {
+                    "key_as_string": "2020-11-05",
+                    "key": 1604534400000,
+                    "doc_count": 203
+                },
+                "2020-11-06": {
+                    "key_as_string": "2020-11-06",
+                    "key": 1604620800000,
+                    "doc_count": 99
+                },
+                "2020-11-18": {
+                    "key_as_string": "2020-11-18",
+                    "key": 1605657600000,
+                    "doc_count": 67
+                },
+                "2020-11-19": {
+                    "key_as_string": "2020-11-19",
+                    "key": 1605744000000,
+                    "doc_count": 185
+                },
+                "2020-11-20": {
+                    "key_as_string": "2020-11-20",
+                    "key": 1605830400000,
+                    "doc_count": 106
+                },
+                "2020-11-25": {
+                    "key_as_string": "2020-11-25",
+                    "key": 1606262400000,
+                    "doc_count": 60
+                },
+                "2020-11-26": {
+                    "key_as_string": "2020-11-26",
+                    "key": 1606348800000,
+                    "doc_count": 169
+                },
+                "2020-11-27": {
+                    "key_as_string": "2020-11-27",
+                    "key": 1606435200000,
+                    "doc_count": 98
+                },
+                "2020-12-08": {
+                    "key_as_string": "2020-12-08",
+                    "key": 1607385600000,
+                    "doc_count": 100
+                },
+                "2020-12-09": {
+                    "key_as_string": "2020-12-09",
+                    "key": 1607472000000,
+                    "doc_count": 88
+                },
+                "2020-12-10": {
+                    "key_as_string": "2020-12-10",
+                    "key": 1607558400000,
+                    "doc_count": 109
+                },
+                "2020-12-11": {
+                    "key_as_string": "2020-12-11",
+                    "key": 1607644800000,
+                    "doc_count": 44
+                },
+                "2020-12-16": {
+                    "key_as_string": "2020-12-16",
+                    "key": 1608076800000,
+                    "doc_count": 70
+                },
+                "2020-12-17": {
+                    "key_as_string": "2020-12-17",
+                    "key": 1608163200000,
+                    "doc_count": 186
+                }
+            },
+            "electoralPeriods": [
+                {
+                    "type": "electoralPeriod",
+                    "id": "DE-018",
+                    "attributes": {
+                        "number": 18,
+                        "dateStart": "2013-10-22",
+                        "dateEnd": "2017-10-24",
+                        "parliament": "DE",
+                        "parliamentLabel": "Deutscher Bundestag"
+                    }
+                },
+                {
+                    "type": "electoralPeriod",
+                    "id": "DE-019",
+                    "attributes": {
+                        "number": 19,
+                        "dateStart": "2017-10-24",
+                        "dateEnd": "2021-10-26",
+                        "parliament": "DE",
+                        "parliamentLabel": "Deutscher Bundestag"
+                    }
+                },
+                {
+                    "type": "electoralPeriod",
+                    "id": "DE-020",
+                    "attributes": {
+                        "number": 20,
+                        "dateStart": "2021-10-26",
+                        "dateEnd": "2025-03-25",
+                        "parliament": "DE",
+                        "parliamentLabel": "Deutscher Bundestag"
+                    }
+                },
+                {
+                    "type": "electoralPeriod",
+                    "id": "DE-021",
+                    "attributes": {
+                        "number": 21,
+                        "dateStart": "2025-03-25",
+                        "dateEnd": null,
+                        "parliament": "DE",
+                        "parliamentLabel": "Deutscher Bundestag"
+                    }
+                }
+            ]
+        },
+        "results": {
+            "count": 2,
+            "total": 7226,
+            "totalHits": 0
+        }
+    },
+    "data": [
+        {
+            "type": "media",
+            "id": "DE-0190139014",
+            "attributes": {
+                "originID": null,
+                "originMediaID": "7413502",
+                "creator": "Deutscher Bundestag",
+                "license": "<a href=\"https://www.bundestag.de/nutzungsbedingungen\" target=\"_blank\">Nutzungsbedingungen</a>",
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag",
+                "order": 0,
+                "public": true,
+                "aligned": true,
+                "dateStartTimestamp": 1579093916,
+                "dateStart": "2020-01-15T14:11:56",
+                "dateEnd": "2020-01-15T14:12:13",
+                "duration": "<<NORMALIZED>>",
+                "videoFileURI": "https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7413502/7413502_h264_720_400_2000kb_baseline_de_2192.mp4",
+                "audioFileURI": "https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/7413502/7413502_mp3_128kb_stereo_de_128.mp3",
+                "sourcePage": "http://dbtg.tv/fvid/7413502",
+                "thumbnailURI": null,
+                "thumbnailCreator": null,
+                "thumbnailLicense": null,
+                "additionalInformation": null,
+                "lastChanged": "2025-06-05 21:46:14",
+                "lastChangedTimestamp": 1749152774,
+                "textContents": [
+                    {
+                        "id": "12134",
+                        "type": "proceedings",
+                        "textBody": [
+                            {
+                                "type": "speech",
+                                "speaker": "Wolfgang Kubicki",
+                                "speakerstatus": "vice-president",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"1.600\">Ich rufe den Zusatzpunkt 1 auf: </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Ich rufe den Zusatzpunkt 1 auf:",
+                                        "timeStart": "1.000",
+                                        "timeEnd": "1.600"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Wolfgang Kubicki",
+                                "speakerstatus": "vice-president",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.600\" data-end=\"2.160\">Vereinbarte Debatte </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Vereinbarte Debatte",
+                                        "timeStart": "1.600",
+                                        "timeEnd": "2.160"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Wolfgang Kubicki",
+                                "speakerstatus": "vice-president",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"2.160\" data-end=\"4.240\">zur aktuellen Lage im Nahen und Mittleren Osten </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "zur aktuellen Lage im Nahen und Mittleren Osten",
+                                        "timeStart": "2.160",
+                                        "timeEnd": "4.240"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Wolfgang Kubicki",
+                                "speakerstatus": "vice-president",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"4.240\" data-end=\"7.440\">Für die Aussprache wurde eine Dauer von 75 Minuten beschlossen. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Für die Aussprache wurde eine Dauer von 75 Minuten beschlossen.",
+                                        "timeStart": "4.240",
+                                        "timeEnd": "7.440"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Wolfgang Kubicki",
+                                "speakerstatus": "vice-president",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"7.440\" data-end=\"17.000\">Ich eröffne die Aussprache und erteile als erstem Redner – er erscheint gerade – Herrn Bundesminister des Auswärtigen, Heiko Maas, das Wort. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Ich eröffne die Aussprache und erteile als erstem Redner – er erscheint gerade – Herrn Bundesminister des Auswärtigen, Heiko Maas, das Wort.",
+                                        "timeStart": "7.440",
+                                        "timeEnd": "17.000"
+                                    }
+                                ]
+                            }
+                        ],
+                        "textHTML": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"1.600\">Ich rufe den Zusatzpunkt 1 auf: </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.600\" data-end=\"2.160\">Vereinbarte Debatte </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"2.160\" data-end=\"4.240\">zur aktuellen Lage im Nahen und Mittleren Osten </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"4.240\" data-end=\"7.440\">Für die Aussprache wurde eine Dauer von 75 Minuten beschlossen. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"7.440\" data-end=\"17.000\">Ich eröffne die Aussprache und erteile als erstem Redner – er erscheint gerade – Herrn Bundesminister des Auswärtigen, Heiko Maas, das Wort. </span></p>",
+                        "sourceURI": "-",
+                        "creator": "Deutscher Bundestag",
+                        "license": "Public Domain",
+                        "language": "de",
+                        "originTextID": "",
+                        "lastChanged": "2026-06-25 19:59:49"
+                    }
+                ],
+                "textContentsCount": 1
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/media/DE-0190139014"
+            },
+            "relationships": {
+                "electoralPeriod": {
+                    "data": {
+                        "type": "electoralPeriod",
+                        "id": "DE-019",
+                        "attributes": {
+                            "number": 19,
+                            "dateStart": "2017-10-24",
+                            "dateEnd": "2021-10-26"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/electoralPeriod/DE-019"
+                        }
+                    }
+                },
+                "session": {
+                    "data": {
+                        "type": "session",
+                        "id": "DE-0190139",
+                        "attributes": {
+                            "number": 139
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/session/DE-0190139"
+                        }
+                    }
+                },
+                "agendaItem": {
+                    "data": {
+                        "type": "agendaItem",
+                        "id": "1818",
+                        "attributes": {
+                            "officialTitle": "Zusatzpunkt 1",
+                            "title": "Aktuelle Lage im Nahen und Mittleren Osten"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-1818"
+                        }
+                    }
+                },
+                "people": {
+                    "data": [
+                        {
+                            "type": "person",
+                            "id": "Q2590313",
+                            "attributes": {
+                                "type": "memberOfParliament",
+                                "label": "Wolfgang Kubicki",
+                                "labelAlternative": [],
+                                "degree": "",
+                                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q2590313&v=05e7a5b6",
+                                "thumbnailCreator": "<a href=\"http://commons.wikimedia.org/wiki/Creator:Sven_Teschke\" title=\"Creator:Sven Teschke\"></a>",
+                                "thumbnailLicense": "CC-BY-SA-3.0-DE",
+                                "additionalInformation": {
+                                    "wikipedia": {
+                                        "title": "Wolfgang Kubicki",
+                                        "url": "https://de.wikipedia.org/wiki/Wolfgang_Kubicki"
+                                    },
+                                    "abgeordnetenwatchID": "122157"
+                                },
+                                "party": {
+                                    "id": "Q13124",
+                                    "label": "FDP",
+                                    "labelAlternative": [
+                                        "Freie Demokratische Partei",
+                                        "F.D.P.",
+                                        "Freie Demokraten",
+                                        "Die Liberalen"
+                                    ]
+                                },
+                                "faction": {
+                                    "id": "Q1387991",
+                                    "label": "FDP",
+                                    "labelAlternative": [
+                                        "FDP-Bundestagsfraktion",
+                                        "FDP-Fraktion",
+                                        "Fraktion der Freien Demokraten"
+                                    ]
+                                }
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q2590313"
+                            }
+                        }
+                    ],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0190139014&type=person"
+                    }
+                },
+                "organisations": {
+                    "data": [],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0190139014&type=organisation"
+                    }
+                },
+                "documents": {
+                    "data": [],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0190139014&type=document"
+                    }
+                },
+                "terms": {
+                    "data": [],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0190139014&type=term"
+                    }
+                }
+            },
+            "annotations": {
+                "data": [
+                    {
+                        "type": "person",
+                        "id": "Q2590313",
+                        "attributes": {
+                            "timeStart": null,
+                            "timeEnd": null,
+                            "context": "main-speaker",
+                            "additionalInformation": {
+                                "role": "Bundestagsvizepräsident"
+                            }
+                        }
+                    }
+                ]
+            },
+            "_score": 0,
+            "_highlight": [],
+            "_finds": [],
+            "highlight_count": 0
+        },
+        {
+            "type": "media",
+            "id": "DE-0190139015",
+            "attributes": {
+                "originID": null,
+                "originMediaID": "7413509",
+                "creator": "Deutscher Bundestag",
+                "license": "<a href=\"https://www.bundestag.de/nutzungsbedingungen\" target=\"_blank\">Nutzungsbedingungen</a>",
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag",
+                "order": 0,
+                "public": true,
+                "aligned": true,
+                "dateStartTimestamp": 1579093933,
+                "dateStart": "2020-01-15T14:12:13",
+                "dateEnd": "2020-01-15T14:23:00",
+                "duration": "<<NORMALIZED>>",
+                "videoFileURI": "https://cldf-od.r53.cdn.tv1.eu/1000153copo/ondemand/app144277506/145293313/7413509/7413509_h264_720_400_2000kb_baseline_de_2192.mp4",
+                "audioFileURI": "https://static.p.core.cdn.streamfarm.net/1000153copo/ondemand/145293313/7413509/7413509_mp3_128kb_stereo_de_128.mp3",
+                "sourcePage": "http://dbtg.tv/fvid/7413509",
+                "thumbnailURI": null,
+                "thumbnailCreator": null,
+                "thumbnailLicense": null,
+                "additionalInformation": null,
+                "lastChanged": "2025-06-05 21:46:14",
+                "lastChangedTimestamp": 1749152774,
+                "textContents": [
+                    {
+                        "id": "12135",
+                        "type": "proceedings",
+                        "textBody": [
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"3.440\">Vielen Dank, Herr Präsident. </span><span class=\"timebased\" data-start=\"3.440\" data-end=\"9.880\">– Liebe Kolleginnen und Kollegen! </span><span class=\"timebased\" data-start=\"9.880\" data-end=\"14.120\">Ich glaube, man kann sich bei diesem Thema lange Vorreden sparen. </span><span class=\"timebased\" data-start=\"14.120\" data-end=\"19.360\">Das neue Jahr hat im Krisenmodus begonnen, und zwar in einer Art und Weise, wie wir das selten erlebt haben. </span><span class=\"timebased\" data-start=\"19.360\" data-end=\"31.640\">Nach mehreren iranischen Provokationen und der Tötung von General Soleimani durch die USA befand sich die Region vor wenigen Tagen am Rand eines Krieges – nicht mehr und nicht weniger. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Vielen Dank, Herr Präsident.",
+                                        "timeStart": "1.000",
+                                        "timeEnd": "3.440"
+                                    },
+                                    {
+                                        "text": "– Liebe Kolleginnen und Kollegen!",
+                                        "timeStart": "3.440",
+                                        "timeEnd": "9.880"
+                                    },
+                                    {
+                                        "text": "Ich glaube, man kann sich bei diesem Thema lange Vorreden sparen.",
+                                        "timeStart": "9.880",
+                                        "timeEnd": "14.120"
+                                    },
+                                    {
+                                        "text": "Das neue Jahr hat im Krisenmodus begonnen, und zwar in einer Art und Weise, wie wir das selten erlebt haben.",
+                                        "timeStart": "14.120",
+                                        "timeEnd": "19.360"
+                                    },
+                                    {
+                                        "text": "Nach mehreren iranischen Provokationen und der Tötung von General Soleimani durch die USA befand sich die Region vor wenigen Tagen am Rand eines Krieges – nicht mehr und nicht weniger.",
+                                        "timeStart": "19.360",
+                                        "timeEnd": "31.640"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"31.640\" data-end=\"53.680\">In dieser Lage standen und stehen für uns nach wie vor drei Dinge im Vordergrund: erstens die akute Krise – denn wir befinden uns nach wie vor in einer Krise – diplomatisch zu entschärfen, zweitens die Nuklearvereinbarung mit dem Iran zu erhalten und drittens die Stabilität und die Einheit des Iraks zu sichern. </span><span class=\"timebased\" data-start=\"53.680\" data-end=\"61.040\">Sie ist eng mit der Fortsetzung des Kampfes gegen den IS verbunden, und dabei geht es um ureigene europäische Sicherheitsinteressen. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "In dieser Lage standen und stehen für uns nach wie vor drei Dinge im Vordergrund: erstens die akute Krise – denn wir befinden uns nach wie vor in einer Krise – diplomatisch zu entschärfen, zweitens die Nuklearvereinbarung mit dem Iran zu erhalten und drittens die Stabilität und die Einheit des Iraks zu sichern.",
+                                        "timeStart": "31.640",
+                                        "timeEnd": "53.680"
+                                    },
+                                    {
+                                        "text": "Sie ist eng mit der Fortsetzung des Kampfes gegen den IS verbunden, und dabei geht es um ureigene europäische Sicherheitsinteressen.",
+                                        "timeStart": "53.680",
+                                        "timeEnd": "61.040"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span>(Beifall bei der SPD sowie bei Abgeordneten der CDU/CSU) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der SPD sowie bei Abgeordneten der CDU/CSU)"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"61.040\" data-end=\"63.240\">Zur Deeskalation. </span><span class=\"timebased\" data-start=\"63.240\" data-end=\"77.960\">Auch wenn, meine sehr verehrten Damen und Herren, die akute Gefahr eines militärischen Konfliktes für den Moment gebannt zu sein scheint, bleibt die Lage nach wie vor ernst. </span><span class=\"timebased\" data-start=\"77.960\" data-end=\"92.280\">Das ist mir vorgestern bei einem Besuch in Jordanien noch einmal deutlich geworden, und zwar sowohl in den Gesprächen mit unseren Soldatinnen und Soldaten als auch mit dem jordanischen Kollegen, dem Außenminister Ayman Safadi. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Zur Deeskalation.",
+                                        "timeStart": "61.040",
+                                        "timeEnd": "63.240"
+                                    },
+                                    {
+                                        "text": "Auch wenn, meine sehr verehrten Damen und Herren, die akute Gefahr eines militärischen Konfliktes für den Moment gebannt zu sein scheint, bleibt die Lage nach wie vor ernst.",
+                                        "timeStart": "63.240",
+                                        "timeEnd": "77.960"
+                                    },
+                                    {
+                                        "text": "Das ist mir vorgestern bei einem Besuch in Jordanien noch einmal deutlich geworden, und zwar sowohl in den Gesprächen mit unseren Soldatinnen und Soldaten als auch mit dem jordanischen Kollegen, dem Außenminister Ayman Safadi.",
+                                        "timeStart": "77.960",
+                                        "timeEnd": "92.280"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"92.280\" data-end=\"111.360\">Dass alle Beteiligten nach dem Blick in den Abgrund – nichts anderes war das in den letzten Tagen – inzwischen einen Schritt zurückgegangen sind, verdanken wir – da bin ich mir sicher – auch denjenigen, die sich in den letzten Tagen gemeinsam mit uns für die Deeskalation in diesem Konflikt eingesetzt haben. </span><span class=\"timebased\" data-start=\"111.360\" data-end=\"132.240\">Seit Tagen sind wir nahezu ununterbrochen in Kontakt mit den europäischen Kollegen, mit Mike Pompeo, mit dem NATO-Generalsekretär, mit Josep Borrell, dem Außenbeauftragten der Europäischen Union, mit dem Generalsekretär der Vereinten Nationen und mit vielen Amtskollegen aus der Region, im Übrigen auch mit dem iranischen Außenminister Javad Zarif. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Dass alle Beteiligten nach dem Blick in den Abgrund – nichts anderes war das in den letzten Tagen – inzwischen einen Schritt zurückgegangen sind, verdanken wir – da bin ich mir sicher – auch denjenigen, die sich in den letzten Tagen gemeinsam mit uns für die Deeskalation in diesem Konflikt eingesetzt haben.",
+                                        "timeStart": "92.280",
+                                        "timeEnd": "111.360"
+                                    },
+                                    {
+                                        "text": "Seit Tagen sind wir nahezu ununterbrochen in Kontakt mit den europäischen Kollegen, mit Mike Pompeo, mit dem NATO-Generalsekretär, mit Josep Borrell, dem Außenbeauftragten der Europäischen Union, mit dem Generalsekretär der Vereinten Nationen und mit vielen Amtskollegen aus der Region, im Übrigen auch mit dem iranischen Außenminister Javad Zarif.",
+                                        "timeStart": "111.360",
+                                        "timeEnd": "132.240"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"132.240\" data-end=\"142.240\">Zugute kommt uns Europäern dabei – das ist in den letzten Tagen auch sehr deutlich geworden –, dass wir belastbare Gesprächskanäle zu allen Seiten haben. </span><span class=\"timebased\" data-start=\"142.240\" data-end=\"145.960\">Die haben wir genutzt, und die werden wir auch in den kommenden Tagen und Wochen weiter nutzen. </span><span class=\"timebased\" data-start=\"145.960\" data-end=\"153.920\">Zugute kommt uns auch, dass Europa in diesem Konflikt von Anfang an mit einer Stimme gesprochen hat. </span><span class=\"timebased\" data-start=\"153.920\" data-end=\"163.480\">Wichtig war dafür der Sonderrat der EU-Außenminister am Freitag, den der EU-Außenbeauftragte Borrell auf unsere Bitte hin einberufen hat. </span><span class=\"timebased\" data-start=\"163.480\" data-end=\"177.560\">Wir haben ihm ein klares Mandat gegeben, in den nächsten Tagen in der Region, insbesondere in Bagdad, weiter auf Deeskalation hinzuwirken, und zwar im Namen der Europäischen Union insgesamt. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Zugute kommt uns Europäern dabei – das ist in den letzten Tagen auch sehr deutlich geworden –, dass wir belastbare Gesprächskanäle zu allen Seiten haben.",
+                                        "timeStart": "132.240",
+                                        "timeEnd": "142.240"
+                                    },
+                                    {
+                                        "text": "Die haben wir genutzt, und die werden wir auch in den kommenden Tagen und Wochen weiter nutzen.",
+                                        "timeStart": "142.240",
+                                        "timeEnd": "145.960"
+                                    },
+                                    {
+                                        "text": "Zugute kommt uns auch, dass Europa in diesem Konflikt von Anfang an mit einer Stimme gesprochen hat.",
+                                        "timeStart": "145.960",
+                                        "timeEnd": "153.920"
+                                    },
+                                    {
+                                        "text": "Wichtig war dafür der Sonderrat der EU-Außenminister am Freitag, den der EU-Außenbeauftragte Borrell auf unsere Bitte hin einberufen hat.",
+                                        "timeStart": "153.920",
+                                        "timeEnd": "163.480"
+                                    },
+                                    {
+                                        "text": "Wir haben ihm ein klares Mandat gegeben, in den nächsten Tagen in der Region, insbesondere in Bagdad, weiter auf Deeskalation hinzuwirken, und zwar im Namen der Europäischen Union insgesamt.",
+                                        "timeStart": "163.480",
+                                        "timeEnd": "177.560"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"177.560\" data-end=\"185.680\">Bereits am nächsten Montag werden wir uns erneut im Kreis der EU-Außenminister treffen, um die weiteren Schritte miteinander abzustimmen. </span><span class=\"timebased\" data-start=\"185.680\" data-end=\"206.120\">Ich kann Ihnen sagen: Auch die am Sonntag geplante Berliner Libyen-Konferenz werden wir nutzen, um am Rande mit allen wichtigen Akteuren aus der Region die Lage am Golf zu besprechen und nach weiteren Schritten und Möglichkeiten der Deeskalation zu suchen. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Bereits am nächsten Montag werden wir uns erneut im Kreis der EU-Außenminister treffen, um die weiteren Schritte miteinander abzustimmen.",
+                                        "timeStart": "177.560",
+                                        "timeEnd": "185.680"
+                                    },
+                                    {
+                                        "text": "Ich kann Ihnen sagen: Auch die am Sonntag geplante Berliner Libyen-Konferenz werden wir nutzen, um am Rande mit allen wichtigen Akteuren aus der Region die Lage am Golf zu besprechen und nach weiteren Schritten und Möglichkeiten der Deeskalation zu suchen.",
+                                        "timeStart": "185.680",
+                                        "timeEnd": "206.120"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der SPD und der CDU/CSU)"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"206.120\" data-end=\"211.100\">Meine Damen und Herren, der zweite Handlungsstrang betrifft die Nuklearvereinbarung mit dem Iran. </span><span class=\"timebased\" data-start=\"211.100\" data-end=\"219.400\">Unser oberstes Ziel ist und wird bleiben, dass der Iran keinen Zugang zu Nuklearwaffen erhalten darf. </span><span class=\"timebased\" data-start=\"219.400\" data-end=\"229.960\">Deshalb mussten wir handeln, als der Iran am 5. Januar angekündigt hat, auch noch die letzten Beschränkungen für die Urananreicherung aufgeben zu wollen. </span><span class=\"timebased\" data-start=\"229.960\" data-end=\"251.880\">Deshalb haben wir gemeinsam mit Frankreich und Großbritannien den im Nuklearabkommen vorgesehenen Streitschlichtungsmechanismus aktiviert, wohlgemerkt, nicht um aus der Vereinbarung auszusteigen, sondern um innerhalb der vorgegebenen Verfahren den Iran dazu zu bringen, vollständig zu seinen Verpflichtungen zurückzukehren. </span><span class=\"timebased\" data-start=\"251.880\" data-end=\"259.280\">Der Streitschlichtungsmechanismus ist genau für diese Fälle geschaffen worden. </span><span class=\"timebased\" data-start=\"259.280\" data-end=\"262.320\">Er gibt uns jetzt den nötigen Verhandlungsspielraum. </span><span class=\"timebased\" data-start=\"262.320\" data-end=\"271.040\">Es gibt keinen Automatismus hin zur Befassung des Sicherheitsrates der Vereinten Nationen oder zum Wiedereinsetzen der Sanktionen. </span><span class=\"timebased\" data-start=\"271.040\" data-end=\"277.320\">Klar ist aber ganz genauso: Wir werden uns nicht ewig von Teheran hinhalten lassen. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Meine Damen und Herren, der zweite Handlungsstrang betrifft die Nuklearvereinbarung mit dem Iran.",
+                                        "timeStart": "206.120",
+                                        "timeEnd": "211.100"
+                                    },
+                                    {
+                                        "text": "Unser oberstes Ziel ist und wird bleiben, dass der Iran keinen Zugang zu Nuklearwaffen erhalten darf.",
+                                        "timeStart": "211.100",
+                                        "timeEnd": "219.400"
+                                    },
+                                    {
+                                        "text": "Deshalb mussten wir handeln, als der Iran am 5. Januar angekündigt hat, auch noch die letzten Beschränkungen für die Urananreicherung aufgeben zu wollen.",
+                                        "timeStart": "219.400",
+                                        "timeEnd": "229.960"
+                                    },
+                                    {
+                                        "text": "Deshalb haben wir gemeinsam mit Frankreich und Großbritannien den im Nuklearabkommen vorgesehenen Streitschlichtungsmechanismus aktiviert, wohlgemerkt, nicht um aus der Vereinbarung auszusteigen, sondern um innerhalb der vorgegebenen Verfahren den Iran dazu zu bringen, vollständig zu seinen Verpflichtungen zurückzukehren.",
+                                        "timeStart": "229.960",
+                                        "timeEnd": "251.880"
+                                    },
+                                    {
+                                        "text": "Der Streitschlichtungsmechanismus ist genau für diese Fälle geschaffen worden.",
+                                        "timeStart": "251.880",
+                                        "timeEnd": "259.280"
+                                    },
+                                    {
+                                        "text": "Er gibt uns jetzt den nötigen Verhandlungsspielraum.",
+                                        "timeStart": "259.280",
+                                        "timeEnd": "262.320"
+                                    },
+                                    {
+                                        "text": "Es gibt keinen Automatismus hin zur Befassung des Sicherheitsrates der Vereinten Nationen oder zum Wiedereinsetzen der Sanktionen.",
+                                        "timeStart": "262.320",
+                                        "timeEnd": "271.040"
+                                    },
+                                    {
+                                        "text": "Klar ist aber ganz genauso: Wir werden uns nicht ewig von Teheran hinhalten lassen.",
+                                        "timeStart": "271.040",
+                                        "timeEnd": "277.320"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"277.320\" data-end=\"287.420\">Diejenigen, die jetzt unseren endgültigen Ausstieg aus der Nuklearvereinbarung fordern – die gibt es auch –, muss man ganz offen fragen: Was wäre dadurch gewonnen? </span><span class=\"timebased\" data-start=\"287.420\" data-end=\"294.120\">In keinem Land der Welt werden mehr Kontrollen der Internationalen Atomenergiebehörde durchgeführt als im Iran. </span><span class=\"timebased\" data-start=\"294.120\" data-end=\"307.120\">Die Zeit, die der Iran zur Entwicklung von Nuklearwaffen bräuchte, ist heute trotz der Verletzungen des Iran immer noch deutlich länger als vor Inkrafttreten der Nuklearvereinbarung. </span><span class=\"timebased\" data-start=\"307.120\" data-end=\"323.120\">Auch die Gespräche über die destabilisierende Rolle des Iran in der Region oder über sein ballistisches Raketenprogramm werden keinen Deut leichter, wenn wir durch den Wegfall der Nuklearvereinbarung ein zusätzliches Problem schaffen. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Diejenigen, die jetzt unseren endgültigen Ausstieg aus der Nuklearvereinbarung fordern – die gibt es auch –, muss man ganz offen fragen: Was wäre dadurch gewonnen?",
+                                        "timeStart": "277.320",
+                                        "timeEnd": "287.420"
+                                    },
+                                    {
+                                        "text": "In keinem Land der Welt werden mehr Kontrollen der Internationalen Atomenergiebehörde durchgeführt als im Iran.",
+                                        "timeStart": "287.420",
+                                        "timeEnd": "294.120"
+                                    },
+                                    {
+                                        "text": "Die Zeit, die der Iran zur Entwicklung von Nuklearwaffen bräuchte, ist heute trotz der Verletzungen des Iran immer noch deutlich länger als vor Inkrafttreten der Nuklearvereinbarung.",
+                                        "timeStart": "294.120",
+                                        "timeEnd": "307.120"
+                                    },
+                                    {
+                                        "text": "Auch die Gespräche über die destabilisierende Rolle des Iran in der Region oder über sein ballistisches Raketenprogramm werden keinen Deut leichter, wenn wir durch den Wegfall der Nuklearvereinbarung ein zusätzliches Problem schaffen.",
+                                        "timeStart": "307.120",
+                                        "timeEnd": "323.120"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span>(Beifall bei der SPD) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der SPD)"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"323.120\" data-end=\"335.720\">Letztlich wird sich der Iran entscheiden müssen, ob er kooperiert oder ob er sich immer weiter in die Isolation begibt. </span><span class=\"timebased\" data-start=\"335.720\" data-end=\"344.920\">Das gilt übrigens auch mit Blick auf den schrecklichen Abschuss der ukrainischen Passagiermaschine durch die iranische Flugabwehr. </span><span class=\"timebased\" data-start=\"344.920\" data-end=\"361.160\">Der Iran schuldet den Opfern und den betroffenen Ländern nicht nur eine Entschuldigung, die er auch ausgesprochen hat, sondern er schuldet vor allen Dingen Transparenz und volle Kooperation, damit alles bis zum letzten Deut aufgeklärt wird. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Letztlich wird sich der Iran entscheiden müssen, ob er kooperiert oder ob er sich immer weiter in die Isolation begibt.",
+                                        "timeStart": "323.120",
+                                        "timeEnd": "335.720"
+                                    },
+                                    {
+                                        "text": "Das gilt übrigens auch mit Blick auf den schrecklichen Abschuss der ukrainischen Passagiermaschine durch die iranische Flugabwehr.",
+                                        "timeStart": "335.720",
+                                        "timeEnd": "344.920"
+                                    },
+                                    {
+                                        "text": "Der Iran schuldet den Opfern und den betroffenen Ländern nicht nur eine Entschuldigung, die er auch ausgesprochen hat, sondern er schuldet vor allen Dingen Transparenz und volle Kooperation, damit alles bis zum letzten Deut aufgeklärt wird.",
+                                        "timeStart": "344.920",
+                                        "timeEnd": "361.160"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN)"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"361.160\" data-end=\"372.920\">Den Menschen, die nun im Iran auf die Straße gehen, schuldet die iranische Führung, dass sie ihr Recht auf friedliche Demonstration und Meinungsfreiheit achtet. </span><span class=\"timebased\" data-start=\"372.920\" data-end=\"382.440\">Niemand, der dort auf die Straße geht, nur um seine Meinung zu sagen, hat es verdient, von den dortigen Sicherheitskräften diskriminiert oder angegriffen zu werden. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Den Menschen, die nun im Iran auf die Straße gehen, schuldet die iranische Führung, dass sie ihr Recht auf friedliche Demonstration und Meinungsfreiheit achtet.",
+                                        "timeStart": "361.160",
+                                        "timeEnd": "372.920"
+                                    },
+                                    {
+                                        "text": "Niemand, der dort auf die Straße geht, nur um seine Meinung zu sagen, hat es verdient, von den dortigen Sicherheitskräften diskriminiert oder angegriffen zu werden.",
+                                        "timeStart": "372.920",
+                                        "timeEnd": "382.440"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten der FDP, der LINKEN und des BÜNDNISSES 90/DIE GRÜNEN) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten der FDP, der LINKEN und des BÜNDNISSES 90/DIE GRÜNEN)"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"382.440\" data-end=\"389.440\">Liebe Kolleginnen und Kollegen, der dritte Punkt betrifft den Irak. </span><span class=\"timebased\" data-start=\"389.440\" data-end=\"401.040\">Wenn wir in Europa ein Interesse haben, dann vor allen Dingen ein erhebliches Sicherheitsinteresse daran, dass das Land durch den jüngsten Konflikt nicht wieder in Krieg und Chaos zurückgeworfen wird. </span><span class=\"timebased\" data-start=\"401.040\" data-end=\"402.500\">Das droht aber gerade. </span><span class=\"timebased\" data-start=\"402.500\" data-end=\"406.800\">Schließlich sind die Folgen der IS-Terrorherrschaft noch lange nicht überwunden. </span><span class=\"timebased\" data-start=\"406.800\" data-end=\"414.200\">Nach wie vor können über 1,5 Millionen Binnenvertriebene nicht in ihre Heimatorte im Irak zurückkehren. </span><span class=\"timebased\" data-start=\"414.200\" data-end=\"420.760\">Der IS stellt weiterhin eine reale Gefahr für die Sicherheit des Irak und der ganzen Region dar. </span><span class=\"timebased\" data-start=\"420.760\" data-end=\"428.960\">Das haben die Anschläge, die es in den letzten Wochen gegeben hat, durchgeführt vom IS im Irak, noch einmal eindrücklich unter Beweis gestellt. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Liebe Kolleginnen und Kollegen, der dritte Punkt betrifft den Irak.",
+                                        "timeStart": "382.440",
+                                        "timeEnd": "389.440"
+                                    },
+                                    {
+                                        "text": "Wenn wir in Europa ein Interesse haben, dann vor allen Dingen ein erhebliches Sicherheitsinteresse daran, dass das Land durch den jüngsten Konflikt nicht wieder in Krieg und Chaos zurückgeworfen wird.",
+                                        "timeStart": "389.440",
+                                        "timeEnd": "401.040"
+                                    },
+                                    {
+                                        "text": "Das droht aber gerade.",
+                                        "timeStart": "401.040",
+                                        "timeEnd": "402.500"
+                                    },
+                                    {
+                                        "text": "Schließlich sind die Folgen der IS-Terrorherrschaft noch lange nicht überwunden.",
+                                        "timeStart": "402.500",
+                                        "timeEnd": "406.800"
+                                    },
+                                    {
+                                        "text": "Nach wie vor können über 1,5 Millionen Binnenvertriebene nicht in ihre Heimatorte im Irak zurückkehren.",
+                                        "timeStart": "406.800",
+                                        "timeEnd": "414.200"
+                                    },
+                                    {
+                                        "text": "Der IS stellt weiterhin eine reale Gefahr für die Sicherheit des Irak und der ganzen Region dar.",
+                                        "timeStart": "414.200",
+                                        "timeEnd": "420.760"
+                                    },
+                                    {
+                                        "text": "Das haben die Anschläge, die es in den letzten Wochen gegeben hat, durchgeführt vom IS im Irak, noch einmal eindrücklich unter Beweis gestellt.",
+                                        "timeStart": "420.760",
+                                        "timeEnd": "428.960"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"428.960\" data-end=\"445.540\">Wir haben in den letzten Jahren im Irak viel erreicht: beim Kampf gegen den IS und bei der Ausbildung irakischer Sicherheitskräfte, aber vor allen Dingen auch im zivilen Bereich durch ein wirklich hohes Maß an humanitärer Hilfe, an Stabilisierung und an Wiederaufbau. </span><span class=\"timebased\" data-start=\"445.540\" data-end=\"448.920\">Jetzt gilt es, diese Erfolge zu sichern. </span><span class=\"timebased\" data-start=\"448.920\" data-end=\"458.560\">Bei allen Überlegungen, wie das gelingen kann, hat – das will ich noch einmal für die Bundesregierung festhalten – die Sicherheit unserer Soldatinnen und Soldaten höchste Priorität. </span><span class=\"timebased\" data-start=\"458.560\" data-end=\"467.080\">Deshalb war es richtig, die Kontingente vorübergehend aus den besonders gefährdeten Gebieten im Irak zu verlegen. </span><span class=\"timebased\" data-start=\"467.080\" data-end=\"477.640\">Deshalb habe ich auch den deutschen Soldatinnen und Soldaten, die ich vorgestern in al-Asrak, in Jordanien besucht habe, unsere Wertschätzung überbracht. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Wir haben in den letzten Jahren im Irak viel erreicht: beim Kampf gegen den IS und bei der Ausbildung irakischer Sicherheitskräfte, aber vor allen Dingen auch im zivilen Bereich durch ein wirklich hohes Maß an humanitärer Hilfe, an Stabilisierung und an Wiederaufbau.",
+                                        "timeStart": "428.960",
+                                        "timeEnd": "445.540"
+                                    },
+                                    {
+                                        "text": "Jetzt gilt es, diese Erfolge zu sichern.",
+                                        "timeStart": "445.540",
+                                        "timeEnd": "448.920"
+                                    },
+                                    {
+                                        "text": "Bei allen Überlegungen, wie das gelingen kann, hat – das will ich noch einmal für die Bundesregierung festhalten – die Sicherheit unserer Soldatinnen und Soldaten höchste Priorität.",
+                                        "timeStart": "448.920",
+                                        "timeEnd": "458.560"
+                                    },
+                                    {
+                                        "text": "Deshalb war es richtig, die Kontingente vorübergehend aus den besonders gefährdeten Gebieten im Irak zu verlegen.",
+                                        "timeStart": "458.560",
+                                        "timeEnd": "467.080"
+                                    },
+                                    {
+                                        "text": "Deshalb habe ich auch den deutschen Soldatinnen und Soldaten, die ich vorgestern in al-Asrak, in Jordanien besucht habe, unsere Wertschätzung überbracht.",
+                                        "timeStart": "467.080",
+                                        "timeEnd": "477.640"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten der FDP) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten der FDP)"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"477.640\" data-end=\"489.280\">Liebe Kolleginnen und Kollegen, wie sehr dieser Einsatz geschätzt wird, das haben uns gerade unsere jordanischen Gesprächspartner erneut bestätigt. </span><span class=\"timebased\" data-start=\"489.280\" data-end=\"493.560\">Er wird nicht nur geschätzt, sondern auch in Zukunft für notwendig erachtet. </span><span class=\"timebased\" data-start=\"493.560\" data-end=\"507.920\">Nach allem, was unsere Soldatinnen und Soldaten in den letzten Tagen erlebt haben – und das ist alles andere als einfach gewesen –, aber auch im Kampf gegen den IS zuvor schon geleistet haben, sollten wir ihnen auch heute von dieser Stelle aus ein herzliches Dankeschön sagen. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Liebe Kolleginnen und Kollegen, wie sehr dieser Einsatz geschätzt wird, das haben uns gerade unsere jordanischen Gesprächspartner erneut bestätigt.",
+                                        "timeStart": "477.640",
+                                        "timeEnd": "489.280"
+                                    },
+                                    {
+                                        "text": "Er wird nicht nur geschätzt, sondern auch in Zukunft für notwendig erachtet.",
+                                        "timeStart": "489.280",
+                                        "timeEnd": "493.560"
+                                    },
+                                    {
+                                        "text": "Nach allem, was unsere Soldatinnen und Soldaten in den letzten Tagen erlebt haben – und das ist alles andere als einfach gewesen –, aber auch im Kampf gegen den IS zuvor schon geleistet haben, sollten wir ihnen auch heute von dieser Stelle aus ein herzliches Dankeschön sagen.",
+                                        "timeStart": "493.560",
+                                        "timeEnd": "507.920"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten der FDP) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten der FDP)"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"507.920\" data-end=\"522.720\">Liebe Kolleginnen und Kollegen, unser Ziel bleibt, unsere Unterstützung und die Ausbildung fortzuführen, damit der IS nicht wieder Fuß fassen kann im Irak oder auch in der Region. </span><span class=\"timebased\" data-start=\"522.720\" data-end=\"535.920\">Wenn der IS im Irak neue Spielräume bekommt, um sich in dieser Region wieder auszubreiten und sie zu destabilisieren, dann ist im nächsten Schritt die Sicherheit in Europa gefährdet. </span><span class=\"timebased\" data-start=\"535.920\" data-end=\"541.740\">Deshalb liegt das in unserem ureigenen Sicherheitsinteresse. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Liebe Kolleginnen und Kollegen, unser Ziel bleibt, unsere Unterstützung und die Ausbildung fortzuführen, damit der IS nicht wieder Fuß fassen kann im Irak oder auch in der Region.",
+                                        "timeStart": "507.920",
+                                        "timeEnd": "522.720"
+                                    },
+                                    {
+                                        "text": "Wenn der IS im Irak neue Spielräume bekommt, um sich in dieser Region wieder auszubreiten und sie zu destabilisieren, dann ist im nächsten Schritt die Sicherheit in Europa gefährdet.",
+                                        "timeStart": "522.720",
+                                        "timeEnd": "535.920"
+                                    },
+                                    {
+                                        "text": "Deshalb liegt das in unserem ureigenen Sicherheitsinteresse.",
+                                        "timeStart": "535.920",
+                                        "timeEnd": "541.740"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span>(Zuruf der Abg. Agnieszka Brugger [BÜNDNIS 90/DIE GRÜNEN]) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Zuruf der Abg. Agnieszka Brugger [BÜNDNIS 90/DIE GRÜNEN])"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"541.740\" data-end=\"560.520\">Die Vertreter des Auswärtigen Amtes und der gesamten Bundesregierung, die in den letzten Tagen im Irak waren, um mit der dortigen Regierung, aber auch mit den Vertretern des Parlaments zu sprechen, haben gestern den irakischen Premierminister Abdul Mahdi getroffen, um über das internationale Engagement gegen den IS zu sprechen. </span><span class=\"timebased\" data-start=\"560.520\" data-end=\"577.640\">Der Premierminister – das kann ich Ihnen berichten – hat bestätigt, dass Bagdad an der Fortsetzung dieses internationalen Engagements großes Interesse hat, und hat sich in den Gesprächen mit uns für einen Verbleib der Bundeswehr im Irak ausgesprochen. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Die Vertreter des Auswärtigen Amtes und der gesamten Bundesregierung, die in den letzten Tagen im Irak waren, um mit der dortigen Regierung, aber auch mit den Vertretern des Parlaments zu sprechen, haben gestern den irakischen Premierminister Abdul Mahdi getroffen, um über das internationale Engagement gegen den IS zu sprechen.",
+                                        "timeStart": "541.740",
+                                        "timeEnd": "560.520"
+                                    },
+                                    {
+                                        "text": "Der Premierminister – das kann ich Ihnen berichten – hat bestätigt, dass Bagdad an der Fortsetzung dieses internationalen Engagements großes Interesse hat, und hat sich in den Gesprächen mit uns für einen Verbleib der Bundeswehr im Irak ausgesprochen.",
+                                        "timeStart": "560.520",
+                                        "timeEnd": "577.640"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"577.640\" data-end=\"583.000\">Meine Damen und Herren, es gibt eine Resolution des Parlamentes, und an der wird man nicht vorbeikommen. </span><span class=\"timebased\" data-start=\"583.000\" data-end=\"591.000\">Deshalb ist es richtig, dass die Verantwortlichen in Bagdad nicht nur mit der Regierung sprechen, sondern die Regierung auch mit dem Parlament. </span><span class=\"timebased\" data-start=\"591.000\" data-end=\"597.720\">Wir haben den Verantwortlichen deutlich gesagt: Wir werden die Souveränität des Irak immer respektieren. </span><span class=\"timebased\" data-start=\"597.720\" data-end=\"601.880\">Das heißt, wir werden jede Entscheidung, die dort getroffen wird, akzeptieren. </span><span class=\"timebased\" data-start=\"601.880\" data-end=\"613.280\">Aber wir werben dafür, dass wir die Unterstützung, die wir bisher geleistet haben, fortsetzen können, weil wir alles andere für einen Beitrag zur Instabilität im Irak halten. </span><span class=\"timebased\" data-start=\"613.280\" data-end=\"617.280\">Daran kann im Irak niemand ein Interesse haben, und wir haben daran auch kein Interesse. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Meine Damen und Herren, es gibt eine Resolution des Parlamentes, und an der wird man nicht vorbeikommen.",
+                                        "timeStart": "577.640",
+                                        "timeEnd": "583.000"
+                                    },
+                                    {
+                                        "text": "Deshalb ist es richtig, dass die Verantwortlichen in Bagdad nicht nur mit der Regierung sprechen, sondern die Regierung auch mit dem Parlament.",
+                                        "timeStart": "583.000",
+                                        "timeEnd": "591.000"
+                                    },
+                                    {
+                                        "text": "Wir haben den Verantwortlichen deutlich gesagt: Wir werden die Souveränität des Irak immer respektieren.",
+                                        "timeStart": "591.000",
+                                        "timeEnd": "597.720"
+                                    },
+                                    {
+                                        "text": "Das heißt, wir werden jede Entscheidung, die dort getroffen wird, akzeptieren.",
+                                        "timeStart": "597.720",
+                                        "timeEnd": "601.880"
+                                    },
+                                    {
+                                        "text": "Aber wir werben dafür, dass wir die Unterstützung, die wir bisher geleistet haben, fortsetzen können, weil wir alles andere für einen Beitrag zur Instabilität im Irak halten.",
+                                        "timeStart": "601.880",
+                                        "timeEnd": "613.280"
+                                    },
+                                    {
+                                        "text": "Daran kann im Irak niemand ein Interesse haben, und wir haben daran auch kein Interesse.",
+                                        "timeStart": "613.280",
+                                        "timeEnd": "617.280"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"617.280\" data-end=\"624.000\">Liebe Kolleginnen und Kollegen, deshalb sollten wir Europäer insgesamt weiter Kurs halten. </span><span class=\"timebased\" data-start=\"624.000\" data-end=\"632.000\">Dieser Kurs lautet: Wir wollen keine weiteren Eskalationen – wir werden diplomatisch alles aufbieten, um dem entgegenzuwirken. </span><span class=\"timebased\" data-start=\"632.000\" data-end=\"635.400\">Wir wollen konsequent den Kampf gegen den IS fortführen. </span><span class=\"timebased\" data-start=\"635.400\" data-end=\"639.600\">Und wir setzen auf vernünftige Diplomatie statt maximalen Druck. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Liebe Kolleginnen und Kollegen, deshalb sollten wir Europäer insgesamt weiter Kurs halten.",
+                                        "timeStart": "617.280",
+                                        "timeEnd": "624.000"
+                                    },
+                                    {
+                                        "text": "Dieser Kurs lautet: Wir wollen keine weiteren Eskalationen – wir werden diplomatisch alles aufbieten, um dem entgegenzuwirken.",
+                                        "timeStart": "624.000",
+                                        "timeEnd": "632.000"
+                                    },
+                                    {
+                                        "text": "Wir wollen konsequent den Kampf gegen den IS fortführen.",
+                                        "timeStart": "632.000",
+                                        "timeEnd": "635.400"
+                                    },
+                                    {
+                                        "text": "Und wir setzen auf vernünftige Diplomatie statt maximalen Druck.",
+                                        "timeStart": "635.400",
+                                        "timeEnd": "639.600"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Heiko Maas",
+                                "speakerstatus": "main-speaker",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"639.600\" data-end=\"640.520\">Herzlichen Dank. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Herzlichen Dank.",
+                                        "timeStart": "639.600",
+                                        "timeEnd": "640.520"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der SPD und der CDU/CSU)"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "speech",
+                                "speaker": "Wolfgang Kubicki",
+                                "speakerstatus": "vice-president",
+                                "text": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"640.520\" data-end=\"642.760\">Vielen Dank, Herr Minister. </span><span class=\"timebased\" data-start=\"642.760\" data-end=\"646.960\">– Nächster Redner ist der Kollege Armin-Paulus Hampel, AfD-Fraktion. </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "Vielen Dank, Herr Minister.",
+                                        "timeStart": "640.520",
+                                        "timeEnd": "642.760"
+                                    },
+                                    {
+                                        "text": "– Nächster Redner ist der Kollege Armin-Paulus Hampel, AfD-Fraktion.",
+                                        "timeStart": "642.760",
+                                        "timeEnd": "646.960"
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "comment",
+                                "speaker": null,
+                                "speakerstatus": null,
+                                "text": "<p data-type=\"comment\"><span>(Beifall bei der AfD) </span></p>",
+                                "sentences": [
+                                    {
+                                        "text": "(Beifall bei der AfD)"
+                                    }
+                                ]
+                            }
+                        ],
+                        "textHTML": "<p data-type=\"speech\"><span class=\"timebased\" data-start=\"1.000\" data-end=\"3.440\">Vielen Dank, Herr Präsident. </span><span class=\"timebased\" data-start=\"3.440\" data-end=\"9.880\">– Liebe Kolleginnen und Kollegen! </span><span class=\"timebased\" data-start=\"9.880\" data-end=\"14.120\">Ich glaube, man kann sich bei diesem Thema lange Vorreden sparen. </span><span class=\"timebased\" data-start=\"14.120\" data-end=\"19.360\">Das neue Jahr hat im Krisenmodus begonnen, und zwar in einer Art und Weise, wie wir das selten erlebt haben. </span><span class=\"timebased\" data-start=\"19.360\" data-end=\"31.640\">Nach mehreren iranischen Provokationen und der Tötung von General Soleimani durch die USA befand sich die Region vor wenigen Tagen am Rand eines Krieges – nicht mehr und nicht weniger. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"31.640\" data-end=\"53.680\">In dieser Lage standen und stehen für uns nach wie vor drei Dinge im Vordergrund: erstens die akute Krise – denn wir befinden uns nach wie vor in einer Krise – diplomatisch zu entschärfen, zweitens die Nuklearvereinbarung mit dem Iran zu erhalten und drittens die Stabilität und die Einheit des Iraks zu sichern. </span><span class=\"timebased\" data-start=\"53.680\" data-end=\"61.040\">Sie ist eng mit der Fortsetzung des Kampfes gegen den IS verbunden, und dabei geht es um ureigene europäische Sicherheitsinteressen. </span></p><p data-type=\"comment\"><span>(Beifall bei der SPD sowie bei Abgeordneten der CDU/CSU) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"61.040\" data-end=\"63.240\">Zur Deeskalation. </span><span class=\"timebased\" data-start=\"63.240\" data-end=\"77.960\">Auch wenn, meine sehr verehrten Damen und Herren, die akute Gefahr eines militärischen Konfliktes für den Moment gebannt zu sein scheint, bleibt die Lage nach wie vor ernst. </span><span class=\"timebased\" data-start=\"77.960\" data-end=\"92.280\">Das ist mir vorgestern bei einem Besuch in Jordanien noch einmal deutlich geworden, und zwar sowohl in den Gesprächen mit unseren Soldatinnen und Soldaten als auch mit dem jordanischen Kollegen, dem Außenminister Ayman Safadi. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"92.280\" data-end=\"111.360\">Dass alle Beteiligten nach dem Blick in den Abgrund – nichts anderes war das in den letzten Tagen – inzwischen einen Schritt zurückgegangen sind, verdanken wir – da bin ich mir sicher – auch denjenigen, die sich in den letzten Tagen gemeinsam mit uns für die Deeskalation in diesem Konflikt eingesetzt haben. </span><span class=\"timebased\" data-start=\"111.360\" data-end=\"132.240\">Seit Tagen sind wir nahezu ununterbrochen in Kontakt mit den europäischen Kollegen, mit Mike Pompeo, mit dem NATO-Generalsekretär, mit Josep Borrell, dem Außenbeauftragten der Europäischen Union, mit dem Generalsekretär der Vereinten Nationen und mit vielen Amtskollegen aus der Region, im Übrigen auch mit dem iranischen Außenminister Javad Zarif. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"132.240\" data-end=\"142.240\">Zugute kommt uns Europäern dabei – das ist in den letzten Tagen auch sehr deutlich geworden –, dass wir belastbare Gesprächskanäle zu allen Seiten haben. </span><span class=\"timebased\" data-start=\"142.240\" data-end=\"145.960\">Die haben wir genutzt, und die werden wir auch in den kommenden Tagen und Wochen weiter nutzen. </span><span class=\"timebased\" data-start=\"145.960\" data-end=\"153.920\">Zugute kommt uns auch, dass Europa in diesem Konflikt von Anfang an mit einer Stimme gesprochen hat. </span><span class=\"timebased\" data-start=\"153.920\" data-end=\"163.480\">Wichtig war dafür der Sonderrat der EU-Außenminister am Freitag, den der EU-Außenbeauftragte Borrell auf unsere Bitte hin einberufen hat. </span><span class=\"timebased\" data-start=\"163.480\" data-end=\"177.560\">Wir haben ihm ein klares Mandat gegeben, in den nächsten Tagen in der Region, insbesondere in Bagdad, weiter auf Deeskalation hinzuwirken, und zwar im Namen der Europäischen Union insgesamt. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"177.560\" data-end=\"185.680\">Bereits am nächsten Montag werden wir uns erneut im Kreis der EU-Außenminister treffen, um die weiteren Schritte miteinander abzustimmen. </span><span class=\"timebased\" data-start=\"185.680\" data-end=\"206.120\">Ich kann Ihnen sagen: Auch die am Sonntag geplante Berliner Libyen-Konferenz werden wir nutzen, um am Rande mit allen wichtigen Akteuren aus der Region die Lage am Golf zu besprechen und nach weiteren Schritten und Möglichkeiten der Deeskalation zu suchen. </span></p><p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"206.120\" data-end=\"211.100\">Meine Damen und Herren, der zweite Handlungsstrang betrifft die Nuklearvereinbarung mit dem Iran. </span><span class=\"timebased\" data-start=\"211.100\" data-end=\"219.400\">Unser oberstes Ziel ist und wird bleiben, dass der Iran keinen Zugang zu Nuklearwaffen erhalten darf. </span><span class=\"timebased\" data-start=\"219.400\" data-end=\"229.960\">Deshalb mussten wir handeln, als der Iran am 5. Januar angekündigt hat, auch noch die letzten Beschränkungen für die Urananreicherung aufgeben zu wollen. </span><span class=\"timebased\" data-start=\"229.960\" data-end=\"251.880\">Deshalb haben wir gemeinsam mit Frankreich und Großbritannien den im Nuklearabkommen vorgesehenen Streitschlichtungsmechanismus aktiviert, wohlgemerkt, nicht um aus der Vereinbarung auszusteigen, sondern um innerhalb der vorgegebenen Verfahren den Iran dazu zu bringen, vollständig zu seinen Verpflichtungen zurückzukehren. </span><span class=\"timebased\" data-start=\"251.880\" data-end=\"259.280\">Der Streitschlichtungsmechanismus ist genau für diese Fälle geschaffen worden. </span><span class=\"timebased\" data-start=\"259.280\" data-end=\"262.320\">Er gibt uns jetzt den nötigen Verhandlungsspielraum. </span><span class=\"timebased\" data-start=\"262.320\" data-end=\"271.040\">Es gibt keinen Automatismus hin zur Befassung des Sicherheitsrates der Vereinten Nationen oder zum Wiedereinsetzen der Sanktionen. </span><span class=\"timebased\" data-start=\"271.040\" data-end=\"277.320\">Klar ist aber ganz genauso: Wir werden uns nicht ewig von Teheran hinhalten lassen. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"277.320\" data-end=\"287.420\">Diejenigen, die jetzt unseren endgültigen Ausstieg aus der Nuklearvereinbarung fordern – die gibt es auch –, muss man ganz offen fragen: Was wäre dadurch gewonnen? </span><span class=\"timebased\" data-start=\"287.420\" data-end=\"294.120\">In keinem Land der Welt werden mehr Kontrollen der Internationalen Atomenergiebehörde durchgeführt als im Iran. </span><span class=\"timebased\" data-start=\"294.120\" data-end=\"307.120\">Die Zeit, die der Iran zur Entwicklung von Nuklearwaffen bräuchte, ist heute trotz der Verletzungen des Iran immer noch deutlich länger als vor Inkrafttreten der Nuklearvereinbarung. </span><span class=\"timebased\" data-start=\"307.120\" data-end=\"323.120\">Auch die Gespräche über die destabilisierende Rolle des Iran in der Region oder über sein ballistisches Raketenprogramm werden keinen Deut leichter, wenn wir durch den Wegfall der Nuklearvereinbarung ein zusätzliches Problem schaffen. </span></p><p data-type=\"comment\"><span>(Beifall bei der SPD) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"323.120\" data-end=\"335.720\">Letztlich wird sich der Iran entscheiden müssen, ob er kooperiert oder ob er sich immer weiter in die Isolation begibt. </span><span class=\"timebased\" data-start=\"335.720\" data-end=\"344.920\">Das gilt übrigens auch mit Blick auf den schrecklichen Abschuss der ukrainischen Passagiermaschine durch die iranische Flugabwehr. </span><span class=\"timebased\" data-start=\"344.920\" data-end=\"361.160\">Der Iran schuldet den Opfern und den betroffenen Ländern nicht nur eine Entschuldigung, die er auch ausgesprochen hat, sondern er schuldet vor allen Dingen Transparenz und volle Kooperation, damit alles bis zum letzten Deut aufgeklärt wird. </span></p><p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten des BÜNDNISSES 90/DIE GRÜNEN) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"361.160\" data-end=\"372.920\">Den Menschen, die nun im Iran auf die Straße gehen, schuldet die iranische Führung, dass sie ihr Recht auf friedliche Demonstration und Meinungsfreiheit achtet. </span><span class=\"timebased\" data-start=\"372.920\" data-end=\"382.440\">Niemand, der dort auf die Straße geht, nur um seine Meinung zu sagen, hat es verdient, von den dortigen Sicherheitskräften diskriminiert oder angegriffen zu werden. </span></p><p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten der FDP, der LINKEN und des BÜNDNISSES 90/DIE GRÜNEN) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"382.440\" data-end=\"389.440\">Liebe Kolleginnen und Kollegen, der dritte Punkt betrifft den Irak. </span><span class=\"timebased\" data-start=\"389.440\" data-end=\"401.040\">Wenn wir in Europa ein Interesse haben, dann vor allen Dingen ein erhebliches Sicherheitsinteresse daran, dass das Land durch den jüngsten Konflikt nicht wieder in Krieg und Chaos zurückgeworfen wird. </span><span class=\"timebased\" data-start=\"401.040\" data-end=\"402.500\">Das droht aber gerade. </span><span class=\"timebased\" data-start=\"402.500\" data-end=\"406.800\">Schließlich sind die Folgen der IS-Terrorherrschaft noch lange nicht überwunden. </span><span class=\"timebased\" data-start=\"406.800\" data-end=\"414.200\">Nach wie vor können über 1,5 Millionen Binnenvertriebene nicht in ihre Heimatorte im Irak zurückkehren. </span><span class=\"timebased\" data-start=\"414.200\" data-end=\"420.760\">Der IS stellt weiterhin eine reale Gefahr für die Sicherheit des Irak und der ganzen Region dar. </span><span class=\"timebased\" data-start=\"420.760\" data-end=\"428.960\">Das haben die Anschläge, die es in den letzten Wochen gegeben hat, durchgeführt vom IS im Irak, noch einmal eindrücklich unter Beweis gestellt. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"428.960\" data-end=\"445.540\">Wir haben in den letzten Jahren im Irak viel erreicht: beim Kampf gegen den IS und bei der Ausbildung irakischer Sicherheitskräfte, aber vor allen Dingen auch im zivilen Bereich durch ein wirklich hohes Maß an humanitärer Hilfe, an Stabilisierung und an Wiederaufbau. </span><span class=\"timebased\" data-start=\"445.540\" data-end=\"448.920\">Jetzt gilt es, diese Erfolge zu sichern. </span><span class=\"timebased\" data-start=\"448.920\" data-end=\"458.560\">Bei allen Überlegungen, wie das gelingen kann, hat – das will ich noch einmal für die Bundesregierung festhalten – die Sicherheit unserer Soldatinnen und Soldaten höchste Priorität. </span><span class=\"timebased\" data-start=\"458.560\" data-end=\"467.080\">Deshalb war es richtig, die Kontingente vorübergehend aus den besonders gefährdeten Gebieten im Irak zu verlegen. </span><span class=\"timebased\" data-start=\"467.080\" data-end=\"477.640\">Deshalb habe ich auch den deutschen Soldatinnen und Soldaten, die ich vorgestern in al-Asrak, in Jordanien besucht habe, unsere Wertschätzung überbracht. </span></p><p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten der FDP) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"477.640\" data-end=\"489.280\">Liebe Kolleginnen und Kollegen, wie sehr dieser Einsatz geschätzt wird, das haben uns gerade unsere jordanischen Gesprächspartner erneut bestätigt. </span><span class=\"timebased\" data-start=\"489.280\" data-end=\"493.560\">Er wird nicht nur geschätzt, sondern auch in Zukunft für notwendig erachtet. </span><span class=\"timebased\" data-start=\"493.560\" data-end=\"507.920\">Nach allem, was unsere Soldatinnen und Soldaten in den letzten Tagen erlebt haben – und das ist alles andere als einfach gewesen –, aber auch im Kampf gegen den IS zuvor schon geleistet haben, sollten wir ihnen auch heute von dieser Stelle aus ein herzliches Dankeschön sagen. </span></p><p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU sowie bei Abgeordneten der FDP) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"507.920\" data-end=\"522.720\">Liebe Kolleginnen und Kollegen, unser Ziel bleibt, unsere Unterstützung und die Ausbildung fortzuführen, damit der IS nicht wieder Fuß fassen kann im Irak oder auch in der Region. </span><span class=\"timebased\" data-start=\"522.720\" data-end=\"535.920\">Wenn der IS im Irak neue Spielräume bekommt, um sich in dieser Region wieder auszubreiten und sie zu destabilisieren, dann ist im nächsten Schritt die Sicherheit in Europa gefährdet. </span><span class=\"timebased\" data-start=\"535.920\" data-end=\"541.740\">Deshalb liegt das in unserem ureigenen Sicherheitsinteresse. </span></p><p data-type=\"comment\"><span>(Zuruf der Abg. Agnieszka Brugger [BÜNDNIS 90/DIE GRÜNEN]) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"541.740\" data-end=\"560.520\">Die Vertreter des Auswärtigen Amtes und der gesamten Bundesregierung, die in den letzten Tagen im Irak waren, um mit der dortigen Regierung, aber auch mit den Vertretern des Parlaments zu sprechen, haben gestern den irakischen Premierminister Abdul Mahdi getroffen, um über das internationale Engagement gegen den IS zu sprechen. </span><span class=\"timebased\" data-start=\"560.520\" data-end=\"577.640\">Der Premierminister – das kann ich Ihnen berichten – hat bestätigt, dass Bagdad an der Fortsetzung dieses internationalen Engagements großes Interesse hat, und hat sich in den Gesprächen mit uns für einen Verbleib der Bundeswehr im Irak ausgesprochen. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"577.640\" data-end=\"583.000\">Meine Damen und Herren, es gibt eine Resolution des Parlamentes, und an der wird man nicht vorbeikommen. </span><span class=\"timebased\" data-start=\"583.000\" data-end=\"591.000\">Deshalb ist es richtig, dass die Verantwortlichen in Bagdad nicht nur mit der Regierung sprechen, sondern die Regierung auch mit dem Parlament. </span><span class=\"timebased\" data-start=\"591.000\" data-end=\"597.720\">Wir haben den Verantwortlichen deutlich gesagt: Wir werden die Souveränität des Irak immer respektieren. </span><span class=\"timebased\" data-start=\"597.720\" data-end=\"601.880\">Das heißt, wir werden jede Entscheidung, die dort getroffen wird, akzeptieren. </span><span class=\"timebased\" data-start=\"601.880\" data-end=\"613.280\">Aber wir werben dafür, dass wir die Unterstützung, die wir bisher geleistet haben, fortsetzen können, weil wir alles andere für einen Beitrag zur Instabilität im Irak halten. </span><span class=\"timebased\" data-start=\"613.280\" data-end=\"617.280\">Daran kann im Irak niemand ein Interesse haben, und wir haben daran auch kein Interesse. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"617.280\" data-end=\"624.000\">Liebe Kolleginnen und Kollegen, deshalb sollten wir Europäer insgesamt weiter Kurs halten. </span><span class=\"timebased\" data-start=\"624.000\" data-end=\"632.000\">Dieser Kurs lautet: Wir wollen keine weiteren Eskalationen – wir werden diplomatisch alles aufbieten, um dem entgegenzuwirken. </span><span class=\"timebased\" data-start=\"632.000\" data-end=\"635.400\">Wir wollen konsequent den Kampf gegen den IS fortführen. </span><span class=\"timebased\" data-start=\"635.400\" data-end=\"639.600\">Und wir setzen auf vernünftige Diplomatie statt maximalen Druck. </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"639.600\" data-end=\"640.520\">Herzlichen Dank. </span></p><p data-type=\"comment\"><span>(Beifall bei der SPD und der CDU/CSU) </span></p><p data-type=\"speech\"><span class=\"timebased\" data-start=\"640.520\" data-end=\"642.760\">Vielen Dank, Herr Minister. </span><span class=\"timebased\" data-start=\"642.760\" data-end=\"646.960\">– Nächster Redner ist der Kollege Armin-Paulus Hampel, AfD-Fraktion. </span></p><p data-type=\"comment\"><span>(Beifall bei der AfD) </span></p>",
+                        "sourceURI": "-",
+                        "creator": "Deutscher Bundestag",
+                        "license": "Public Domain",
+                        "language": "de",
+                        "originTextID": "",
+                        "lastChanged": "2026-06-25 19:59:49"
+                    }
+                ],
+                "textContentsCount": 1
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/media/DE-0190139015"
+            },
+            "relationships": {
+                "electoralPeriod": {
+                    "data": {
+                        "type": "electoralPeriod",
+                        "id": "DE-019",
+                        "attributes": {
+                            "number": 19,
+                            "dateStart": "2017-10-24",
+                            "dateEnd": "2021-10-26"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/electoralPeriod/DE-019"
+                        }
+                    }
+                },
+                "session": {
+                    "data": {
+                        "type": "session",
+                        "id": "DE-0190139",
+                        "attributes": {
+                            "number": 139
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/session/DE-0190139"
+                        }
+                    }
+                },
+                "agendaItem": {
+                    "data": {
+                        "type": "agendaItem",
+                        "id": "1818",
+                        "attributes": {
+                            "officialTitle": "Zusatzpunkt 1",
+                            "title": "Aktuelle Lage im Nahen und Mittleren Osten"
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/agendaItem/DE-1818"
+                        }
+                    }
+                },
+                "people": {
+                    "data": [
+                        {
+                            "type": "person",
+                            "id": "Q108447",
+                            "attributes": {
+                                "type": "memberOfParliament",
+                                "label": "Heiko Maas",
+                                "labelAlternative": [
+                                    "Heiko Josef Maas"
+                                ],
+                                "degree": "",
+                                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q108447&v=5a3057af",
+                                "thumbnailCreator": "<a href=\"http://commons.wikimedia.org/wiki/User:Stepro\" title=\"User:Stepro\">Steffen Prößdorf</a>",
+                                "thumbnailLicense": "CC-BY-SA-4.0",
+                                "additionalInformation": {
+                                    "wikipedia": {
+                                        "title": "Heiko Maas",
+                                        "url": "https://de.wikipedia.org/wiki/Heiko_Maas"
+                                    },
+                                    "abgeordnetenwatchID": "138233"
+                                },
+                                "party": {
+                                    "id": "Q49768",
+                                    "label": "SPD",
+                                    "labelAlternative": [
+                                        "Sozialdemokratische Partei Deutschlands"
+                                    ]
+                                },
+                                "faction": {
+                                    "id": null,
+                                    "label": null,
+                                    "labelAlternative": null
+                                }
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q108447"
+                            }
+                        },
+                        {
+                            "type": "person",
+                            "id": "Q2590313",
+                            "attributes": {
+                                "type": "memberOfParliament",
+                                "label": "Wolfgang Kubicki",
+                                "labelAlternative": [],
+                                "degree": "",
+                                "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q2590313&v=05e7a5b6",
+                                "thumbnailCreator": "<a href=\"http://commons.wikimedia.org/wiki/Creator:Sven_Teschke\" title=\"Creator:Sven Teschke\"></a>",
+                                "thumbnailLicense": "CC-BY-SA-3.0-DE",
+                                "additionalInformation": {
+                                    "wikipedia": {
+                                        "title": "Wolfgang Kubicki",
+                                        "url": "https://de.wikipedia.org/wiki/Wolfgang_Kubicki"
+                                    },
+                                    "abgeordnetenwatchID": "122157"
+                                },
+                                "party": {
+                                    "id": "Q13124",
+                                    "label": "FDP",
+                                    "labelAlternative": [
+                                        "Freie Demokratische Partei",
+                                        "F.D.P.",
+                                        "Freie Demokraten",
+                                        "Die Liberalen"
+                                    ]
+                                },
+                                "faction": {
+                                    "id": "Q1387991",
+                                    "label": "FDP",
+                                    "labelAlternative": [
+                                        "FDP-Bundestagsfraktion",
+                                        "FDP-Fraktion",
+                                        "Fraktion der Freien Demokraten"
+                                    ]
+                                }
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q2590313"
+                            }
+                        }
+                    ],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0190139015&type=person"
+                    }
+                },
+                "organisations": {
+                    "data": [],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0190139015&type=organisation"
+                    }
+                },
+                "documents": {
+                    "data": [],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0190139015&type=document"
+                    }
+                },
+                "terms": {
+                    "data": [],
+                    "links": {
+                        "self": "https://optv.local/api/v1/search/annotations?mediaID=DE-0190139015&type=term"
+                    }
+                }
+            },
+            "annotations": {
+                "data": [
+                    {
+                        "type": "person",
+                        "id": "Q108447",
+                        "attributes": {
+                            "timeStart": null,
+                            "timeEnd": null,
+                            "context": "main-speaker",
+                            "additionalInformation": {
+                                "role": "Bundesminister des Auswärtigen"
+                            }
+                        }
+                    },
+                    {
+                        "type": "person",
+                        "id": "Q2590313",
+                        "attributes": {
+                            "timeStart": null,
+                            "timeEnd": null,
+                            "context": "vice-president",
+                            "additionalInformation": {
+                                "role": null
+                            }
+                        }
+                    }
+                ]
+            },
+            "_score": 0,
+            "_highlight": [],
+            "_finds": [],
+            "highlight_count": 0
+        }
+    ],
+    "links": {
+        "self": "https://optv.local/api/v1/search/media?dateFrom=2020-01-01&dateTo=2020-12-31&limit=2&sort=date-asc&page=1",
+        "first": "https://optv.local/api/v1/search/media?dateFrom=2020-01-01&dateTo=2020-12-31&limit=2&sort=date-asc&page=1",
+        "prev": null,
+        "next": "https://optv.local/api/v1/search/media?dateFrom=2020-01-01&dateTo=2020-12-31&limit=2&sort=date-asc&page=2",
+        "last": "https://optv.local/api/v1/search/media?dateFrom=2020-01-01&dateTo=2020-12-31&limit=2&sort=date-asc&page=3613"
+    }
+}

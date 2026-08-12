@@ -370,11 +370,17 @@ function apiRegistry()
             'storage-scan' => $req(null, 'systemStorageScan'),
         ]],
 
-        'statistics' => ['access' => 'admin', 'file' => 'modules/statistics.php', 'itemTypes' => [
-            'general'       => $req(null, 'statisticsGetGeneral'),
-            'entity'        => $req(null, 'statisticsGetEntity'),
-            'word-trends'   => $req(null, 'statisticsGetWordTrends'),
-            'entity-counts' => $req(null, 'statisticsGetEntityCounts'),
+        // Public: /statistics is a public page, and content/pages/api/page.php has
+        // always documented these as open endpoints. Corpus-wide responses are
+        // served from the warmed cache (modules/statistics/cache.php), so opening
+        // them up does not expose a way to make the cluster do expensive work on
+        // demand; the standard per-IP rate limit applies as to any public action.
+        'statistics' => ['access' => 'public', 'file' => 'modules/statistics.php', 'itemTypes' => [
+            'general'           => $req(null, 'statisticsGetGeneral'),
+            'entity'            => $req(null, 'statisticsGetEntity'),
+            'word-trends'       => $req(null, 'statisticsGetWordTrends'),
+            'entity-counts'     => $req(null, 'statisticsGetEntityCounts'),
+            'significant-words' => $req(null, 'statisticsGetSignificantWords'),
         ]],
     ];
 

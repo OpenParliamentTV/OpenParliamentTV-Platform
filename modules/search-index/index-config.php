@@ -13,6 +13,14 @@ function searchIndexMappingBody() {
     $data = array();
 
     $data["mappings"] = array("properties" => array(
+        // Speech text with interjections and chair segments stripped out, added
+        // at write time by searchIndexWriteItems() rather than by mediaGetNode(),
+        // so the public media API response is unchanged. significant_text reads
+        // this field: run over textHTML it would rank applause formulas and
+        // agenda announcements as a scope's most distinctive vocabulary.
+        "cleanText" => array(
+            "type" => "text"
+        ),
         "attributes" => array("properties" => array(
             "textContents" => array("properties" => array(
                 "textHTML" => array(

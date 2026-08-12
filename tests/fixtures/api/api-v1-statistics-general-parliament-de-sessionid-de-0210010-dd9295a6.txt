@@ -1,0 +1,1840 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "statistics",
+        "id": "general",
+        "attributes": {
+            "speeches": {
+                "total": 191,
+                "byFaction": [
+                    {
+                        "id": "Q1023134",
+                        "total": 35,
+                        "label": "CDU/CSU",
+                        "links": {
+                            "self": "https://optv.local/api/v1/organisation/Q1023134"
+                        }
+                    },
+                    {
+                        "id": "Q2207512",
+                        "total": 26,
+                        "label": "SPD",
+                        "links": {
+                            "self": "https://optv.local/api/v1/organisation/Q2207512"
+                        }
+                    },
+                    {
+                        "id": "Q1007353",
+                        "total": 23,
+                        "label": "DIE GRÜNEN",
+                        "links": {
+                            "self": "https://optv.local/api/v1/organisation/Q1007353"
+                        }
+                    },
+                    {
+                        "id": "Q42575708",
+                        "total": 22,
+                        "label": "AfD",
+                        "links": {
+                            "self": "https://optv.local/api/v1/organisation/Q42575708"
+                        }
+                    },
+                    {
+                        "id": "Q1826856",
+                        "total": 16,
+                        "label": "DIE LINKE",
+                        "links": {
+                            "self": "https://optv.local/api/v1/organisation/Q1826856"
+                        }
+                    },
+                    {
+                        "id": "Q4316268",
+                        "total": 2,
+                        "label": "fraktionslos",
+                        "links": {
+                            "self": "https://optv.local/api/v1/organisation/Q4316268"
+                        }
+                    }
+                ]
+            },
+            "speakers": {
+                "total": 115,
+                "topSpeakers": [
+                    {
+                        "id": "Q104678",
+                        "speechCount": 17,
+                        "label": "Bodo Ramelow",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q104678"
+                        }
+                    },
+                    {
+                        "id": "Q71635",
+                        "speechCount": 11,
+                        "label": "Omid Nouripour",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q71635"
+                        }
+                    },
+                    {
+                        "id": "Q40919890",
+                        "speechCount": 7,
+                        "label": "Josephine Ortleb",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q40919890"
+                        }
+                    },
+                    {
+                        "id": "Q88158",
+                        "speechCount": 6,
+                        "label": "Julia Klöckner",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q88158"
+                        }
+                    },
+                    {
+                        "id": "Q14429713",
+                        "speechCount": 3,
+                        "label": "Christos Pantazis",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q14429713"
+                        }
+                    },
+                    {
+                        "id": "Q108704318",
+                        "speechCount": 2,
+                        "label": "Stefan Seidler",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q108704318"
+                        }
+                    },
+                    {
+                        "id": "Q108733098",
+                        "speechCount": 2,
+                        "label": "Lukas Benner",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q108733098"
+                        }
+                    },
+                    {
+                        "id": "Q108752900",
+                        "speechCount": 2,
+                        "label": "Simone Borchardt",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q108752900"
+                        }
+                    },
+                    {
+                        "id": "Q132733549",
+                        "speechCount": 2,
+                        "label": "Jan Köstering",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q132733549"
+                        }
+                    },
+                    {
+                        "id": "Q1451942",
+                        "speechCount": 2,
+                        "label": "Frauke Heiligenstadt",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q1451942"
+                        }
+                    },
+                    {
+                        "id": "Q18176740",
+                        "speechCount": 2,
+                        "label": "Stephan Brandner",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q18176740"
+                        }
+                    },
+                    {
+                        "id": "Q23565778",
+                        "speechCount": 2,
+                        "label": "Jan Wenzel Schmidt",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q23565778"
+                        }
+                    },
+                    {
+                        "id": "Q54821874",
+                        "speechCount": 2,
+                        "label": "Ates Gürpinar",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q54821874"
+                        }
+                    },
+                    {
+                        "id": "Q88311083",
+                        "speechCount": 2,
+                        "label": "Sebastian Fiedler",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q88311083"
+                        }
+                    },
+                    {
+                        "id": "Q101481413",
+                        "speechCount": 1,
+                        "label": "Janosch Dahmen",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q101481413"
+                        }
+                    },
+                    {
+                        "id": "Q1035894",
+                        "speechCount": 1,
+                        "label": "Caren Lay",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q1035894"
+                        }
+                    },
+                    {
+                        "id": "Q106807099",
+                        "speechCount": 1,
+                        "label": "Marcel Emmerich",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q106807099"
+                        }
+                    },
+                    {
+                        "id": "Q106901329",
+                        "speechCount": 1,
+                        "label": "Karsten Wildberger",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q106901329"
+                        }
+                    },
+                    {
+                        "id": "Q107176",
+                        "speechCount": 1,
+                        "label": "Jan van Aken",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q107176"
+                        }
+                    },
+                    {
+                        "id": "Q107285317",
+                        "speechCount": 1,
+                        "label": "Esra Limbacher",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q107285317"
+                        }
+                    }
+                ],
+                "byFaction": [
+                    {
+                        "id": "Q1023134",
+                        "label": "CDU/CSU",
+                        "total": 32,
+                        "topSpeakers": [
+                            {
+                                "id": "Q108752900",
+                                "speechCount": 2,
+                                "label": "Simone Borchardt",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108752900"
+                                }
+                            },
+                            {
+                                "id": "Q15834662",
+                                "speechCount": 2,
+                                "label": "Mechthilde Wittmann",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q15834662"
+                                }
+                            },
+                            {
+                                "id": "Q2427303",
+                                "speechCount": 2,
+                                "label": "Thomas Silberhorn",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q2427303"
+                                }
+                            },
+                            {
+                                "id": "Q107989",
+                                "speechCount": 1,
+                                "label": "Roderich Kiesewetter",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q107989"
+                                }
+                            },
+                            {
+                                "id": "Q108662794",
+                                "speechCount": 1,
+                                "label": "Tobias Winkler",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108662794"
+                                }
+                            },
+                            {
+                                "id": "Q108706345",
+                                "speechCount": 1,
+                                "label": "Klaus Wiener",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108706345"
+                                }
+                            },
+                            {
+                                "id": "Q108709302",
+                                "speechCount": 1,
+                                "label": "Markus Reichel",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108709302"
+                                }
+                            },
+                            {
+                                "id": "Q108754086",
+                                "speechCount": 1,
+                                "label": "Catarina dos Santos Firnhaber",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108754086"
+                                }
+                            },
+                            {
+                                "id": "Q108756657",
+                                "speechCount": 1,
+                                "label": "Susanne Hierl",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108756657"
+                                }
+                            },
+                            {
+                                "id": "Q108757194",
+                                "speechCount": 1,
+                                "label": "Volker Mayer-Lay",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108757194"
+                                }
+                            },
+                            {
+                                "id": "Q111489",
+                                "speechCount": 1,
+                                "label": "Jürgen Hardt",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q111489"
+                                }
+                            },
+                            {
+                                "id": "Q111620",
+                                "speechCount": 1,
+                                "label": "Carsten Müller",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q111620"
+                                }
+                            },
+                            {
+                                "id": "Q1201365",
+                                "speechCount": 1,
+                                "label": "Detlef Seif",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1201365"
+                                }
+                            },
+                            {
+                                "id": "Q132733430",
+                                "speechCount": 1,
+                                "label": "Konrad Körner",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q132733430"
+                                }
+                            },
+                            {
+                                "id": "Q1466480",
+                                "speechCount": 1,
+                                "label": "Fritz Güntzler",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1466480"
+                                }
+                            },
+                            {
+                                "id": "Q1494418",
+                                "speechCount": 1,
+                                "label": "Olav Gutting",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1494418"
+                                }
+                            },
+                            {
+                                "id": "Q15782057",
+                                "speechCount": 1,
+                                "label": "Albert Stegemann",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q15782057"
+                                }
+                            },
+                            {
+                                "id": "Q15813241",
+                                "speechCount": 1,
+                                "label": "Michael Donth",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q15813241"
+                                }
+                            },
+                            {
+                                "id": "Q15813798",
+                                "speechCount": 1,
+                                "label": "Hansjörg Durz",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q15813798"
+                                }
+                            },
+                            {
+                                "id": "Q1605046",
+                                "speechCount": 1,
+                                "label": "Hendrik Hoppenstedt",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1605046"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Q2207512",
+                        "label": "SPD",
+                        "total": 20,
+                        "topSpeakers": [
+                            {
+                                "id": "Q14429713",
+                                "speechCount": 3,
+                                "label": "Christos Pantazis",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q14429713"
+                                }
+                            },
+                            {
+                                "id": "Q1451942",
+                                "speechCount": 2,
+                                "label": "Frauke Heiligenstadt",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1451942"
+                                }
+                            },
+                            {
+                                "id": "Q19834635",
+                                "speechCount": 2,
+                                "label": "Angelika Glöckner",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q19834635"
+                                }
+                            },
+                            {
+                                "id": "Q42586423",
+                                "speechCount": 2,
+                                "label": "Dunja Kreiser",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q42586423"
+                                }
+                            },
+                            {
+                                "id": "Q88311083",
+                                "speechCount": 2,
+                                "label": "Sebastian Fiedler",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q88311083"
+                                }
+                            },
+                            {
+                                "id": "Q107285317",
+                                "speechCount": 1,
+                                "label": "Esra Limbacher",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q107285317"
+                                }
+                            },
+                            {
+                                "id": "Q108708881",
+                                "speechCount": 1,
+                                "label": "Hakan Demir",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108708881"
+                                }
+                            },
+                            {
+                                "id": "Q108733090",
+                                "speechCount": 1,
+                                "label": "Sanae Abdi",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108733090"
+                                }
+                            },
+                            {
+                                "id": "Q108757698",
+                                "speechCount": 1,
+                                "label": "Rasha Nasr",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108757698"
+                                }
+                            },
+                            {
+                                "id": "Q108757939",
+                                "speechCount": 1,
+                                "label": "Sebastian Roloff",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108757939"
+                                }
+                            },
+                            {
+                                "id": "Q108758038",
+                                "speechCount": 1,
+                                "label": "Johannes Schätzl",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108758038"
+                                }
+                            },
+                            {
+                                "id": "Q108760347",
+                                "speechCount": 1,
+                                "label": "Anja Troff-Schaffarzyk",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108760347"
+                                }
+                            },
+                            {
+                                "id": "Q108760467",
+                                "speechCount": 1,
+                                "label": "Carolin Wagner",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108760467"
+                                }
+                            },
+                            {
+                                "id": "Q14943007",
+                                "speechCount": 1,
+                                "label": "Dirk Wiese",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q14943007"
+                                }
+                            },
+                            {
+                                "id": "Q15434300",
+                                "speechCount": 1,
+                                "label": "Johannes Fechner",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q15434300"
+                                }
+                            },
+                            {
+                                "id": "Q15792620",
+                                "speechCount": 1,
+                                "label": "Bernd Rützel",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q15792620"
+                                }
+                            },
+                            {
+                                "id": "Q40998992",
+                                "speechCount": 1,
+                                "label": "Helge Lindh",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40998992"
+                                }
+                            },
+                            {
+                                "id": "Q40999031",
+                                "speechCount": 1,
+                                "label": "Wiebke Esdar",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40999031"
+                                }
+                            },
+                            {
+                                "id": "Q58335148",
+                                "speechCount": 1,
+                                "label": "Christoph Schmid",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q58335148"
+                                }
+                            },
+                            {
+                                "id": "Q96096131",
+                                "speechCount": 1,
+                                "label": "Adis Ahmetovic",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q96096131"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Q1007353",
+                        "label": "DIE GRÜNEN",
+                        "total": 22,
+                        "topSpeakers": [
+                            {
+                                "id": "Q108733098",
+                                "speechCount": 2,
+                                "label": "Lukas Benner",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108733098"
+                                }
+                            },
+                            {
+                                "id": "Q101481413",
+                                "speechCount": 1,
+                                "label": "Janosch Dahmen",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q101481413"
+                                }
+                            },
+                            {
+                                "id": "Q106807099",
+                                "speechCount": 1,
+                                "label": "Marcel Emmerich",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q106807099"
+                                }
+                            },
+                            {
+                                "id": "Q108705697",
+                                "speechCount": 1,
+                                "label": "Hanna Steinmüller",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108705697"
+                                }
+                            },
+                            {
+                                "id": "Q108705838",
+                                "speechCount": 1,
+                                "label": "Katharina Beck",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108705838"
+                                }
+                            },
+                            {
+                                "id": "Q108718714",
+                                "speechCount": 1,
+                                "label": "Deborah Düring",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108718714"
+                                }
+                            },
+                            {
+                                "id": "Q108734306",
+                                "speechCount": 1,
+                                "label": "Paula Piechotta",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108734306"
+                                }
+                            },
+                            {
+                                "id": "Q108736132",
+                                "speechCount": 1,
+                                "label": "Andreas Audretsch",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108736132"
+                                }
+                            },
+                            {
+                                "id": "Q108736990",
+                                "speechCount": 1,
+                                "label": "Marlene Schönberger",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108736990"
+                                }
+                            },
+                            {
+                                "id": "Q108737820",
+                                "speechCount": 1,
+                                "label": "Boris Mijatović",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108737820"
+                                }
+                            },
+                            {
+                                "id": "Q108757113",
+                                "speechCount": 1,
+                                "label": "Sascha Müller",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108757113"
+                                }
+                            },
+                            {
+                                "id": "Q132733625",
+                                "speechCount": 1,
+                                "label": "Rebecca Lenhard",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q132733625"
+                                }
+                            },
+                            {
+                                "id": "Q1502854",
+                                "speechCount": 1,
+                                "label": "Steffi Lemke",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1502854"
+                                }
+                            },
+                            {
+                                "id": "Q15795921",
+                                "speechCount": 1,
+                                "label": "Matthias Gastel",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q15795921"
+                                }
+                            },
+                            {
+                                "id": "Q1800570",
+                                "speechCount": 1,
+                                "label": "Linda Heitmann",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1800570"
+                                }
+                            },
+                            {
+                                "id": "Q2433467",
+                                "speechCount": 1,
+                                "label": "Till Steffen",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q2433467"
+                                }
+                            },
+                            {
+                                "id": "Q27888351",
+                                "speechCount": 1,
+                                "label": "Sandra Detzer",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q27888351"
+                                }
+                            },
+                            {
+                                "id": "Q42428977",
+                                "speechCount": 1,
+                                "label": "Max Lucks",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q42428977"
+                                }
+                            },
+                            {
+                                "id": "Q71635",
+                                "speechCount": 1,
+                                "label": "Omid Nouripour",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q71635"
+                                }
+                            },
+                            {
+                                "id": "Q75077",
+                                "speechCount": 1,
+                                "label": "Helge Limburg",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q75077"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Q42575708",
+                        "label": "AfD",
+                        "total": 20,
+                        "topSpeakers": [
+                            {
+                                "id": "Q18176740",
+                                "speechCount": 2,
+                                "label": "Stephan Brandner",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q18176740"
+                                }
+                            },
+                            {
+                                "id": "Q23565778",
+                                "speechCount": 2,
+                                "label": "Jan Wenzel Schmidt",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q23565778"
+                                }
+                            },
+                            {
+                                "id": "Q108756724",
+                                "speechCount": 1,
+                                "label": "Gerrit Huy",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108756724"
+                                }
+                            },
+                            {
+                                "id": "Q108756781",
+                                "speechCount": 1,
+                                "label": "Steffen Janich",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108756781"
+                                }
+                            },
+                            {
+                                "id": "Q132732361",
+                                "speechCount": 1,
+                                "label": "Rainer Galla",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q132732361"
+                                }
+                            },
+                            {
+                                "id": "Q132733556",
+                                "speechCount": 1,
+                                "label": "Sascha Lensing",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q132733556"
+                                }
+                            },
+                            {
+                                "id": "Q14924803",
+                                "speechCount": 1,
+                                "label": "Beatrix von Storch",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q14924803"
+                                }
+                            },
+                            {
+                                "id": "Q19362177",
+                                "speechCount": 1,
+                                "label": "Bernd Baumann",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q19362177"
+                                }
+                            },
+                            {
+                                "id": "Q23559850",
+                                "speechCount": 1,
+                                "label": "Christina Baum",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q23559850"
+                                }
+                            },
+                            {
+                                "id": "Q24540200",
+                                "speechCount": 1,
+                                "label": "Markus Frohnmaier",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q24540200"
+                                }
+                            },
+                            {
+                                "id": "Q26792883",
+                                "speechCount": 1,
+                                "label": "Christoph Grimm",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q26792883"
+                                }
+                            },
+                            {
+                                "id": "Q40473868",
+                                "speechCount": 1,
+                                "label": "Christian Wirth",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40473868"
+                                }
+                            },
+                            {
+                                "id": "Q40475799",
+                                "speechCount": 1,
+                                "label": "Jochen Haug",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40475799"
+                                }
+                            },
+                            {
+                                "id": "Q40476219",
+                                "speechCount": 1,
+                                "label": "Kay Gottschalk",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40476219"
+                                }
+                            },
+                            {
+                                "id": "Q40571929",
+                                "speechCount": 1,
+                                "label": "Götz Frömming",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40571929"
+                                }
+                            },
+                            {
+                                "id": "Q40589032",
+                                "speechCount": 1,
+                                "label": "Karsten Hilse",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40589032"
+                                }
+                            },
+                            {
+                                "id": "Q40879307",
+                                "speechCount": 1,
+                                "label": "Martin Sichert",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40879307"
+                                }
+                            },
+                            {
+                                "id": "Q40880800",
+                                "speechCount": 1,
+                                "label": "Gerold Otten",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40880800"
+                                }
+                            },
+                            {
+                                "id": "Q40895536",
+                                "speechCount": 1,
+                                "label": "Martin Hess",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40895536"
+                                }
+                            },
+                            {
+                                "id": "Q40980201",
+                                "speechCount": 1,
+                                "label": "Wolfgang Wiehle",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40980201"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Q1826856",
+                        "label": "DIE LINKE",
+                        "total": 14,
+                        "topSpeakers": [
+                            {
+                                "id": "Q132733549",
+                                "speechCount": 2,
+                                "label": "Jan Köstering",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q132733549"
+                                }
+                            },
+                            {
+                                "id": "Q54821874",
+                                "speechCount": 2,
+                                "label": "Ates Gürpinar",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q54821874"
+                                }
+                            },
+                            {
+                                "id": "Q1035894",
+                                "speechCount": 1,
+                                "label": "Caren Lay",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1035894"
+                                }
+                            },
+                            {
+                                "id": "Q107176",
+                                "speechCount": 1,
+                                "label": "Jan van Aken",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q107176"
+                                }
+                            },
+                            {
+                                "id": "Q1080069",
+                                "speechCount": 1,
+                                "label": "Christian Görke",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1080069"
+                                }
+                            },
+                            {
+                                "id": "Q110421439",
+                                "speechCount": 1,
+                                "label": "Clara Bünger",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q110421439"
+                                }
+                            },
+                            {
+                                "id": "Q112428905",
+                                "speechCount": 1,
+                                "label": "Ines Schwerdtner",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q112428905"
+                                }
+                            },
+                            {
+                                "id": "Q123511050",
+                                "speechCount": 1,
+                                "label": "Desiree Becker",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q123511050"
+                                }
+                            },
+                            {
+                                "id": "Q132733497",
+                                "speechCount": 1,
+                                "label": "Anne-Mieke Bremer",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q132733497"
+                                }
+                            },
+                            {
+                                "id": "Q132733506",
+                                "speechCount": 1,
+                                "label": "Agnes Conrad",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q132733506"
+                                }
+                            },
+                            {
+                                "id": "Q132733606",
+                                "speechCount": 1,
+                                "label": "Aaron Valent",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q132733606"
+                                }
+                            },
+                            {
+                                "id": "Q40097453",
+                                "speechCount": 1,
+                                "label": "Doris Maria Achelwilm",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40097453"
+                                }
+                            },
+                            {
+                                "id": "Q40997638",
+                                "speechCount": 1,
+                                "label": "Gökay Akbulut",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40997638"
+                                }
+                            },
+                            {
+                                "id": "Q65126",
+                                "speechCount": 1,
+                                "label": "Gregor Gysi",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q65126"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Q4316268",
+                        "label": "fraktionslos",
+                        "total": 1,
+                        "topSpeakers": [
+                            {
+                                "id": "Q108704318",
+                                "speechCount": 2,
+                                "label": "Stefan Seidler",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q108704318"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "speakingTime": {
+                "total": 41823,
+                "average": 217.828125,
+                "unit": "seconds",
+                "byFaction": [
+                    {
+                        "id": "Q1023134",
+                        "label": "CDU/CSU",
+                        "total": 9669,
+                        "average": 276.2571428571428668874432332813739776611328125,
+                        "unit": "seconds"
+                    },
+                    {
+                        "id": "Q2207512",
+                        "label": "SPD",
+                        "total": 6391,
+                        "average": 245.80769230769232081001973710954189300537109375,
+                        "unit": "seconds"
+                    },
+                    {
+                        "id": "Q1007353",
+                        "label": "DIE GRÜNEN",
+                        "total": 5662,
+                        "average": 246.173913043478250983753241598606109619140625,
+                        "unit": "seconds"
+                    },
+                    {
+                        "id": "Q42575708",
+                        "label": "AfD",
+                        "total": 6550,
+                        "average": 297.727272727272747943061403930187225341796875,
+                        "unit": "seconds"
+                    },
+                    {
+                        "id": "Q1826856",
+                        "label": "DIE LINKE",
+                        "total": 3896,
+                        "average": 243.5,
+                        "unit": "seconds"
+                    },
+                    {
+                        "id": "Q4316268",
+                        "label": "fraktionslos",
+                        "total": 237,
+                        "average": 118.5,
+                        "unit": "seconds"
+                    }
+                ]
+            },
+            "vocabulary": {
+                "totalUniqueWords": 10241,
+                "topWords": [
+                    {
+                        "word": "menschen",
+                        "speechCount": 70,
+                        "frequency": 190
+                    },
+                    {
+                        "word": "land",
+                        "speechCount": 67,
+                        "frequency": 119
+                    },
+                    {
+                        "word": "unternehmen",
+                        "speechCount": 40,
+                        "frequency": 119
+                    },
+                    {
+                        "word": "wer",
+                        "speechCount": 63,
+                        "frequency": 117
+                    },
+                    {
+                        "word": "afd",
+                        "speechCount": 53,
+                        "frequency": 115
+                    },
+                    {
+                        "word": "euro",
+                        "speechCount": 42,
+                        "frequency": 100
+                    },
+                    {
+                        "word": "gesetz",
+                        "speechCount": 44,
+                        "frequency": 99
+                    },
+                    {
+                        "word": "mietpreisbremse",
+                        "speechCount": 13,
+                        "frequency": 88
+                    },
+                    {
+                        "word": "verantwortung",
+                        "speechCount": 40,
+                        "frequency": 71
+                    },
+                    {
+                        "word": "tun",
+                        "speechCount": 49,
+                        "frequency": 70
+                    },
+                    {
+                        "word": "gut",
+                        "speechCount": 45,
+                        "frequency": 68
+                    },
+                    {
+                        "word": "israel",
+                        "speechCount": 13,
+                        "frequency": 62
+                    },
+                    {
+                        "word": "koalition",
+                        "speechCount": 37,
+                        "frequency": 62
+                    },
+                    {
+                        "word": "kommunen",
+                        "speechCount": 23,
+                        "frequency": 62
+                    },
+                    {
+                        "word": "bürger",
+                        "speechCount": 36,
+                        "frequency": 58
+                    },
+                    {
+                        "word": "sicherheit",
+                        "speechCount": 32,
+                        "frequency": 58
+                    },
+                    {
+                        "word": "wirtschaft",
+                        "speechCount": 33,
+                        "frequency": 58
+                    },
+                    {
+                        "word": "gar",
+                        "speechCount": 38,
+                        "frequency": 57
+                    },
+                    {
+                        "word": "regierung",
+                        "speechCount": 35,
+                        "frequency": 56
+                    },
+                    {
+                        "word": "milliarden",
+                        "speechCount": 29,
+                        "frequency": 54
+                    }
+                ],
+                "byFaction": [
+                    {
+                        "id": "Q1023134",
+                        "label": "CDU/CSU",
+                        "topWords": [
+                            {
+                                "word": "menschen",
+                                "speechCount": 16,
+                                "frequency": 43
+                            },
+                            {
+                                "word": "land",
+                                "speechCount": 16,
+                                "frequency": 30
+                            },
+                            {
+                                "word": "gesetz",
+                                "speechCount": 10,
+                                "frequency": 27
+                            },
+                            {
+                                "word": "mietpreisbremse",
+                                "speechCount": 3,
+                                "frequency": 24
+                            },
+                            {
+                                "word": "tun",
+                                "speechCount": 17,
+                                "frequency": 22
+                            },
+                            {
+                                "word": "unseren",
+                                "speechCount": 17,
+                                "frequency": 22
+                            },
+                            {
+                                "word": "gut",
+                                "speechCount": 13,
+                                "frequency": 21
+                            },
+                            {
+                                "word": "kommunen",
+                                "speechCount": 8,
+                                "frequency": 21
+                            },
+                            {
+                                "word": "israel",
+                                "speechCount": 4,
+                                "frequency": 20
+                            },
+                            {
+                                "word": "euro",
+                                "speechCount": 7,
+                                "frequency": 19
+                            },
+                            {
+                                "word": "hamas",
+                                "speechCount": 4,
+                                "frequency": 19
+                            },
+                            {
+                                "word": "koalition",
+                                "speechCount": 10,
+                                "frequency": 18
+                            },
+                            {
+                                "word": "schnell",
+                                "speechCount": 8,
+                                "frequency": 18
+                            },
+                            {
+                                "word": "unternehmen",
+                                "speechCount": 7,
+                                "frequency": 18
+                            },
+                            {
+                                "word": "nehmen",
+                                "speechCount": 11,
+                                "frequency": 17
+                            },
+                            {
+                                "word": "sicherheit",
+                                "speechCount": 11,
+                                "frequency": 17
+                            },
+                            {
+                                "word": "verantwortung",
+                                "speechCount": 9,
+                                "frequency": 16
+                            },
+                            {
+                                "word": "wirtschaft",
+                                "speechCount": 7,
+                                "frequency": 16
+                            },
+                            {
+                                "word": "länder",
+                                "speechCount": 8,
+                                "frequency": 15
+                            },
+                            {
+                                "word": "regierung",
+                                "speechCount": 9,
+                                "frequency": 15
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Q42575708",
+                        "label": "AfD",
+                        "topWords": [
+                            {
+                                "word": "wer",
+                                "speechCount": 14,
+                                "frequency": 31
+                            },
+                            {
+                                "word": "afd",
+                                "speechCount": 15,
+                                "frequency": 23
+                            },
+                            {
+                                "word": "menschen",
+                                "speechCount": 9,
+                                "frequency": 23
+                            },
+                            {
+                                "word": "bürger",
+                                "speechCount": 9,
+                                "frequency": 19
+                            },
+                            {
+                                "word": "euro",
+                                "speechCount": 7,
+                                "frequency": 19
+                            },
+                            {
+                                "word": "land",
+                                "speechCount": 12,
+                                "frequency": 19
+                            },
+                            {
+                                "word": "grünen",
+                                "speechCount": 8,
+                                "frequency": 18
+                            },
+                            {
+                                "word": "hamas",
+                                "speechCount": 3,
+                                "frequency": 17
+                            },
+                            {
+                                "word": "jahre",
+                                "speechCount": 7,
+                                "frequency": 17
+                            },
+                            {
+                                "word": "nationalen",
+                                "speechCount": 2,
+                                "frequency": 17
+                            },
+                            {
+                                "word": "spd",
+                                "speechCount": 9,
+                                "frequency": 17
+                            },
+                            {
+                                "word": "gesetz",
+                                "speechCount": 7,
+                                "frequency": 16
+                            },
+                            {
+                                "word": "welt",
+                                "speechCount": 11,
+                                "frequency": 16
+                            },
+                            {
+                                "word": "israel",
+                                "speechCount": 3,
+                                "frequency": 13
+                            },
+                            {
+                                "word": "millionen",
+                                "speechCount": 9,
+                                "frequency": 13
+                            },
+                            {
+                                "word": "cdu",
+                                "speechCount": 6,
+                                "frequency": 12
+                            },
+                            {
+                                "word": "gaza",
+                                "speechCount": 3,
+                                "frequency": 12
+                            },
+                            {
+                                "word": "sicherheitsrat",
+                                "speechCount": 1,
+                                "frequency": 12
+                            },
+                            {
+                                "word": "zeit",
+                                "speechCount": 8,
+                                "frequency": 12
+                            },
+                            {
+                                "word": "daran",
+                                "speechCount": 5,
+                                "frequency": 11
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Q2207512",
+                        "label": "SPD",
+                        "topWords": [
+                            {
+                                "word": "unternehmen",
+                                "speechCount": 7,
+                                "frequency": 30
+                            },
+                            {
+                                "word": "land",
+                                "speechCount": 13,
+                                "frequency": 23
+                            },
+                            {
+                                "word": "menschen",
+                                "speechCount": 9,
+                                "frequency": 20
+                            },
+                            {
+                                "word": "wer",
+                                "speechCount": 9,
+                                "frequency": 18
+                            },
+                            {
+                                "word": "afd",
+                                "speechCount": 8,
+                                "frequency": 17
+                            },
+                            {
+                                "word": "gesetz",
+                                "speechCount": 7,
+                                "frequency": 16
+                            },
+                            {
+                                "word": "gut",
+                                "speechCount": 10,
+                                "frequency": 16
+                            },
+                            {
+                                "word": "europa",
+                                "speechCount": 6,
+                                "frequency": 15
+                            },
+                            {
+                                "word": "gemeinsam",
+                                "speechCount": 11,
+                                "frequency": 15
+                            },
+                            {
+                                "word": "schaffen",
+                                "speechCount": 8,
+                                "frequency": 15
+                            },
+                            {
+                                "word": "verantwortung",
+                                "speechCount": 9,
+                                "frequency": 15
+                            },
+                            {
+                                "word": "gar",
+                                "speechCount": 8,
+                                "frequency": 14
+                            },
+                            {
+                                "word": "investitionen",
+                                "speechCount": 7,
+                                "frequency": 14
+                            },
+                            {
+                                "word": "koalition",
+                                "speechCount": 7,
+                                "frequency": 13
+                            },
+                            {
+                                "word": "setzen",
+                                "speechCount": 11,
+                                "frequency": 13
+                            },
+                            {
+                                "word": "tun",
+                                "speechCount": 5,
+                                "frequency": 13
+                            },
+                            {
+                                "word": "weniger",
+                                "speechCount": 6,
+                                "frequency": 12
+                            },
+                            {
+                                "word": "herzlichen",
+                                "speechCount": 8,
+                                "frequency": 11
+                            },
+                            {
+                                "word": "kommunen",
+                                "speechCount": 4,
+                                "frequency": 11
+                            },
+                            {
+                                "word": "regierung",
+                                "speechCount": 5,
+                                "frequency": 11
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Q1007353",
+                        "label": "DIE GRÜNEN",
+                        "topWords": [
+                            {
+                                "word": "menschen",
+                                "speechCount": 13,
+                                "frequency": 33
+                            },
+                            {
+                                "word": "euro",
+                                "speechCount": 7,
+                                "frequency": 22
+                            },
+                            {
+                                "word": "unternehmen",
+                                "speechCount": 5,
+                                "frequency": 22
+                            },
+                            {
+                                "word": "afd",
+                                "speechCount": 6,
+                                "frequency": 16
+                            },
+                            {
+                                "word": "gaza",
+                                "speechCount": 2,
+                                "frequency": 16
+                            },
+                            {
+                                "word": "land",
+                                "speechCount": 9,
+                                "frequency": 15
+                            },
+                            {
+                                "word": "gesetz",
+                                "speechCount": 7,
+                                "frequency": 14
+                            },
+                            {
+                                "word": "mietpreisbremse",
+                                "speechCount": 1,
+                                "frequency": 14
+                            },
+                            {
+                                "word": "milliarden",
+                                "speechCount": 6,
+                                "frequency": 14
+                            },
+                            {
+                                "word": "nehmen",
+                                "speechCount": 7,
+                                "frequency": 13
+                            },
+                            {
+                                "word": "wer",
+                                "speechCount": 8,
+                                "frequency": 13
+                            },
+                            {
+                                "word": "geld",
+                                "speechCount": 6,
+                                "frequency": 12
+                            },
+                            {
+                                "word": "politik",
+                                "speechCount": 6,
+                                "frequency": 12
+                            },
+                            {
+                                "word": "spd",
+                                "speechCount": 6,
+                                "frequency": 12
+                            },
+                            {
+                                "word": "bahn",
+                                "speechCount": 1,
+                                "frequency": 11
+                            },
+                            {
+                                "word": "tatsächlich",
+                                "speechCount": 5,
+                                "frequency": 11
+                            },
+                            {
+                                "word": "verantwortung",
+                                "speechCount": 5,
+                                "frequency": 11
+                            },
+                            {
+                                "word": "vorgelegt",
+                                "speechCount": 5,
+                                "frequency": 11
+                            },
+                            {
+                                "word": "berlin",
+                                "speechCount": 4,
+                                "frequency": 10
+                            },
+                            {
+                                "word": "entwurf",
+                                "speechCount": 6,
+                                "frequency": 10
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Q1826856",
+                        "label": "DIE LINKE",
+                        "topWords": [
+                            {
+                                "word": "menschen",
+                                "speechCount": 9,
+                                "frequency": 32
+                            },
+                            {
+                                "word": "wer",
+                                "speechCount": 9,
+                                "frequency": 23
+                            },
+                            {
+                                "word": "afd",
+                                "speechCount": 5,
+                                "frequency": 15
+                            },
+                            {
+                                "word": "gesetz",
+                                "speechCount": 6,
+                                "frequency": 15
+                            },
+                            {
+                                "word": "israel",
+                                "speechCount": 1,
+                                "frequency": 13
+                            },
+                            {
+                                "word": "kommunen",
+                                "speechCount": 3,
+                                "frequency": 13
+                            },
+                            {
+                                "word": "linke",
+                                "speechCount": 11,
+                                "frequency": 13
+                            },
+                            {
+                                "word": "unternehmen",
+                                "speechCount": 5,
+                                "frequency": 13
+                            },
+                            {
+                                "word": "euro",
+                                "speechCount": 6,
+                                "frequency": 12
+                            },
+                            {
+                                "word": "mietpreisbremse",
+                                "speechCount": 1,
+                                "frequency": 12
+                            },
+                            {
+                                "word": "regierung",
+                                "speechCount": 8,
+                                "frequency": 12
+                            },
+                            {
+                                "word": "verantwortung",
+                                "speechCount": 5,
+                                "frequency": 11
+                            },
+                            {
+                                "word": "dobrindt",
+                                "speechCount": 2,
+                                "frequency": 10
+                            },
+                            {
+                                "word": "länder",
+                                "speechCount": 4,
+                                "frequency": 10
+                            },
+                            {
+                                "word": "braucht",
+                                "speechCount": 5,
+                                "frequency": 8
+                            },
+                            {
+                                "word": "hamas",
+                                "speechCount": 1,
+                                "frequency": 8
+                            },
+                            {
+                                "word": "leben",
+                                "speechCount": 4,
+                                "frequency": 8
+                            },
+                            {
+                                "word": "politik",
+                                "speechCount": 7,
+                                "frequency": 8
+                            },
+                            {
+                                "word": "sicherheit",
+                                "speechCount": 3,
+                                "frequency": 8
+                            },
+                            {
+                                "word": "bund",
+                                "speechCount": 2,
+                                "frequency": 7
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Q4316268",
+                        "label": "fraktionslos",
+                        "topWords": [
+                            {
+                                "word": "kommunen",
+                                "speechCount": 2,
+                                "frequency": 6
+                            },
+                            {
+                                "word": "wer",
+                                "speechCount": 2,
+                                "frequency": 3
+                            },
+                            {
+                                "word": "aeg",
+                                "speechCount": 1,
+                                "frequency": 2
+                            },
+                            {
+                                "word": "belastung",
+                                "speechCount": 1,
+                                "frequency": 2
+                            },
+                            {
+                                "word": "braucht",
+                                "speechCount": 2,
+                                "frequency": 2
+                            },
+                            {
+                                "word": "entscheidung",
+                                "speechCount": 1,
+                                "frequency": 2
+                            },
+                            {
+                                "word": "europäisches",
+                                "speechCount": 1,
+                                "frequency": 2
+                            },
+                            {
+                                "word": "flächen",
+                                "speechCount": 1,
+                                "frequency": 2
+                            },
+                            {
+                                "word": "hohe",
+                                "speechCount": 2,
+                                "frequency": 2
+                            },
+                            {
+                                "word": "kontrollpraxis",
+                                "speechCount": 1,
+                                "frequency": 2
+                            },
+                            {
+                                "word": "lange",
+                                "speechCount": 1,
+                                "frequency": 2
+                            },
+                            {
+                                "word": "moin",
+                                "speechCount": 2,
+                                "frequency": 2
+                            },
+                            {
+                                "word": "aktuelle",
+                                "speechCount": 1,
+                                "frequency": 1
+                            },
+                            {
+                                "word": "alleingängen",
+                                "speechCount": 1,
+                                "frequency": 1
+                            },
+                            {
+                                "word": "angesprochen",
+                                "speechCount": 1,
+                                "frequency": 1
+                            },
+                            {
+                                "word": "anpassen",
+                                "speechCount": 1,
+                                "frequency": 1
+                            },
+                            {
+                                "word": "appell",
+                                "speechCount": 1,
+                                "frequency": 1
+                            },
+                            {
+                                "word": "arbeiten",
+                                "speechCount": 1,
+                                "frequency": 1
+                            },
+                            {
+                                "word": "asyl",
+                                "speechCount": 1,
+                                "frequency": 1
+                            },
+                            {
+                                "word": "asylrechts",
+                                "speechCount": 1,
+                                "frequency": 1
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "links": {
+        "self": "https://optv.local/api/v1/statistics/general"
+    }
+}

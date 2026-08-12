@@ -4,6 +4,16 @@ require_once(__DIR__.'/../../vendor/autoload.php');
 require_once(__DIR__.'/../../config.php');
 require_once(__DIR__.'/../../modules/search/opensearch.php');
 require_once(__DIR__.'/../../api/v1/utilities.php');
+require_once(__DIR__.'/queries.php');
+
+/**
+ * Floor for weighted co-occurrence. The entities that make this ranking useful
+ * (a named body, a specific policy term) appear a handful of times, not dozens.
+ */
+const STATS_COOCCURRENCE_MIN_DOCS = 3;
+
+/** Below this many weighted results, fall back to raw co-occurrence. */
+const STATS_COOCCURRENCE_MIN_RESULTS = 5;
 
 // Debug flag - set to 1 to enable debug logging
 $DEBUG_MODE = 0;
@@ -21,146 +31,61 @@ if (is_array($ESClient) && isset($ESClient["errors"])) {
  * 
  * @return array Statistics about the dataset
  */
-function getGeneralStatistics($parliamentKey = null) {
+function getGeneralStatistics($parliamentKey = null, array $scope = []) {
     global $ESClient, $DEBUG_MODE, $config;
-    
+
     $parliamentKey = resolveParliamentKey($parliamentKey);
     $statisticsIndex = getStatisticsIndexName($parliamentKey);
     $speechIndexPattern = getSearchIndexPattern($parliamentKey);
-    
-    // Get total word count and top 20 words by frequency from enhanced statistics
-    $totalUniqueWords = 0;
+
+    // Word-level statistics come from the statistics index, via its read module.
+    // This used to be an inline query here, aggregating the pre-aggregated
+    // documents the old model wrote; queries.php owns that shape now.
+    $vocabulary = statsQueryTopWords(array_merge($scope, [
+        "parliament" => $parliamentKey,
+        "size"       => 20,
+        "byFaction"  => true,
+    ]));
+
+    $totalUniqueWords = $vocabulary["totalUniqueWords"] ?? 0;
     $topWords = [];
     $contextBasedStats = [];
-    
-    try {
-        // Enhanced query to leverage speaker context groupings from planning docs
-        $enhancedWordsQuery = [
-            'size' => 0,
-            'query' => [
-                'term' => ['aggregation_type' => 'word_frequency_daily_faction']
-            ],
-            'aggs' => [
-                // Top words overall
-                'top_words' => [
-                    'terms' => [
-                        'field' => 'word',
-                        'size' => 20,
-                        'order' => ['total_frequency' => 'desc']
-                    ],
-                    'aggs' => [
-                        'total_frequency' => ['sum' => ['field' => 'count']]
-                    ]
-                ],
-                // Enhanced: Aggregation type groupings (actual field from real data)
-                'by_aggregation_type' => [
-                    'terms' => ['field' => 'aggregation_type'],
-                    'aggs' => [
-                        'top_words' => [
-                            'terms' => [
-                                'field' => 'word',
-                                'size' => 10,
-                                'order' => ['total_frequency' => 'desc']
-                            ],
-                            'aggs' => [
-                                'total_frequency' => ['sum' => ['field' => 'count']],
-                                'speech_count' => ['sum' => ['field' => 'speech_count']]
-                            ]
-                        ]
-                    ]
-                ],
-                // Enhanced: Faction-specific analysis as recommended  
-                'by_faction' => [
-                    'terms' => ['field' => 'faction_id.keyword', 'size' => 10],
-                    'aggs' => [
-                        'top_words' => [
-                            'terms' => [
-                                'field' => 'word',
-                                'size' => 20,
-                                'order' => ['total_frequency' => 'desc']
-                            ],
-                            'aggs' => [
-                                'total_frequency' => ['sum' => ['field' => 'count']],
-                                'speech_count' => ['sum' => ['field' => 'speech_count']]
-                            ]
-                        ]
-                    ]
-                ],
-                'total_unique_words' => [
-                    'cardinality' => ['field' => 'word']
-                ]
-            ]
-        ];
-        
-        $wordsResults = $ESClient->search(['index' => $statisticsIndex, 'body' => $enhancedWordsQuery]);
-        
-        // Process overall top words
-        if (isset($wordsResults['aggregations']['top_words']['buckets'])) {
-            foreach ($wordsResults['aggregations']['top_words']['buckets'] as $bucket) {
-                $topWords[] = [
-                    'key' => $bucket['key'],
-                    'doc_count' => $bucket['doc_count'], // Number of speeches containing the word
-                    'frequency' => $bucket['total_frequency']['value'] // Total word occurrences
-                ];
-            }
-        }
-        
-        // Process enhanced aggregation-type-based statistics from real data  
-        if (isset($wordsResults['aggregations']['by_aggregation_type']['buckets'])) {
-            foreach ($wordsResults['aggregations']['by_aggregation_type']['buckets'] as $aggBucket) {
-                $aggregationType = $aggBucket['key'];
-                $aggStats = ['aggregationType' => $aggregationType, 'topWords' => []];
-                
-                if (isset($aggBucket['top_words']['buckets'])) {
-                    foreach ($aggBucket['top_words']['buckets'] as $wordBucket) {
-                        $aggStats['topWords'][] = [
-                            'word' => $wordBucket['key'],
-                            'speechCount' => $wordBucket['speech_count']['value'],
-                            'frequency' => $wordBucket['total_frequency']['value']
-                        ];
-                    }
-                }
-                $contextBasedStats[] = $aggStats;
-            }
-        }
-        
-        // Process faction-based statistics from real data
-        if (isset($wordsResults['aggregations']['by_faction']['buckets'])) {
-            $factionStats = ['type' => 'by_faction', 'factions' => []];
-            foreach ($wordsResults['aggregations']['by_faction']['buckets'] as $factionBucket) {
-                $factionID = $factionBucket['key'];
-                $factionInfo = ['factionID' => $factionID, 'topWords' => []];
-                
-                if (isset($factionBucket['top_words']['buckets'])) {
-                    foreach ($factionBucket['top_words']['buckets'] as $wordBucket) {
-                        $factionInfo['topWords'][] = [
-                            'word' => $wordBucket['key'],
-                            'speechCount' => $wordBucket['speech_count']['value'],
-                            'frequency' => $wordBucket['total_frequency']['value']
-                        ];
-                    }
-                }
-                $factionStats['factions'][] = $factionInfo;
-            }
-            $contextBasedStats[] = $factionStats;
-        }
-        
-        if (isset($wordsResults['aggregations']['total_unique_words']['value'])) {
-            $totalUniqueWords = $wordsResults['aggregations']['total_unique_words']['value'];
-        }
-        
-    } catch (Exception $e) {
-        error_log('Error fetching words from enhanced statistics index: ' . $e->getMessage());
-        
-        // No fallback available - enhanced indexing is required
-        error_log('Enhanced statistics index is required for word frequency data');
-    }
-    // --- End enhanced statistics index ---
 
-    // Main aggregation query for all statistics
+    foreach ($vocabulary["topWords"] ?? [] as $word) {
+        $topWords[] = [
+            "key"       => $word["word"],
+            "doc_count" => $word["speechCount"],
+            "frequency" => $word["frequency"],
+        ];
+    }
+
+    if (!empty($vocabulary["byFaction"])) {
+        $factionStats = ["type" => "by_faction", "factions" => []];
+        foreach ($vocabulary["byFaction"] as $faction) {
+            $factionStats["factions"][] = [
+                "factionID" => $faction["id"],
+                "topWords"  => array_map(function ($word) {
+                    return [
+                        "word"        => $word["word"],
+                        "speechCount" => $word["speechCount"],
+                        "frequency"   => $word["frequency"],
+                    ];
+                }, $faction["topWords"]),
+            ];
+        }
+        $contextBasedStats[] = $factionStats;
+    }
+
+    // Main aggregation query for all statistics. Scoping narrows the set of
+    // speeches every aggregation below runs over, which is what lets one
+    // endpoint serve both the platform dashboard and the per-session,
+    // per-agendaItem and per-entity modules.
+    $speechScopeFilters = statsQuerySpeechScopeFilters($scope);
     $query = [
         'size' => 0,
-        'query' => ['match_all' => (object)[]],
+        'query' => empty($speechScopeFilters)
+            ? ['match_all' => (object)[]]
+            : ['bool' => ['filter' => $speechScopeFilters]],
         'aggs' => [
             'speakers' => [
                 'nested' => [ 'path' => 'annotations.data' ],
@@ -366,10 +291,39 @@ function getEntityStatistics($entityType, $entityID, $parliamentKey = null) {
                             ]
                         ],
                         "aggs" => [
+                            // Two rankings of the same buckets, both cheap, with the
+                            // caller choosing. Raw co-occurrence answers "who appears
+                            // here most", which for any entity with a broad footprint
+                            // is the same handful of globally frequent names. Weighted
+                            // co-occurrence answers "who appears here MORE than
+                            // elsewhere", which is the question worth asking — but it
+                            // only has an answer when the entity's profile actually
+                            // differs from the corpus, so a very frequent entity can
+                            // legitimately produce nothing and needs the raw list to
+                            // fall back on.
                             "ner_entities" => [
                                 "terms" => [
                                     "field" => "annotations.data.id",
                                     "size" => 50
+                                ],
+                                "aggs" => [
+                                    "entity_type" => [
+                                        "terms" => [
+                                            "field" => "annotations.data.type.keyword",
+                                            "size" => 1
+                                        ]
+                                    ]
+                                ]
+                            ],
+                            "ner_entities_significant" => [
+                                "significant_terms" => [
+                                    "field" => "annotations.data.id",
+                                    "size" => 50,
+                                    // Low on purpose: the entities worth surfacing here
+                                    // are specific and therefore rare. Raising this to
+                                    // 20 drops IPCC and Klimaneutralität from "Globale
+                                    // Erwärmung" and hands back the generic list.
+                                    "min_doc_count" => STATS_COOCCURRENCE_MIN_DOCS
                                 ],
                                 "aggs" => [
                                     "entity_type" => [

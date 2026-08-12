@@ -3306,9 +3306,9 @@ x-robots-tag: noindex
                         "sourceURI": "https://www.bundestag.de/resource/blob/1006872/865980e1a3830893fcb983c51c084343/20172.xml",
                         "creator": "Deutscher Bundestag",
                         "license": "Public Domain",
-                        "language": "DE-de",
+                        "language": "de",
                         "originTextID": "ID2017204800",
-                        "lastChanged": "2025-05-20 16:29:21"
+                        "lastChanged": "2026-06-25 19:59:49"
                     }
                 ],
                 "textContentsCount": 1
@@ -3323,8 +3323,8 @@ x-robots-tag: noindex
                         "id": "DE-020",
                         "attributes": {
                             "number": 20,
-                            "dateStart": null,
-                            "dateEnd": null
+                            "dateStart": "2021-10-26",
+                            "dateEnd": "2025-03-25"
                         },
                         "links": {
                             "self": "https://optv.local/api/v1/electoralPeriod/DE-020"
@@ -3549,7 +3549,7 @@ x-robots-tag: noindex
                                         "url": "https://de.wikipedia.org/wiki/Bundestagsfraktion_B%C3%BCndnis_90/Die_Gr%C3%BCnen"
                                     }
                                 },
-                                "color": null
+                                "color": "#4a932b"
                             },
                             "links": {
                                 "self": "https://optv.local/api/v1/organisation/Q1007353"
@@ -3577,7 +3577,7 @@ x-robots-tag: noindex
                                         "url": "https://de.wikipedia.org/wiki/CDU/CSU-Fraktion_im_Deutschen_Bundestag"
                                     }
                                 },
-                                "color": null
+                                "color": "#000000"
                             },
                             "links": {
                                 "self": "https://optv.local/api/v1/organisation/Q1023134"
@@ -3603,7 +3603,7 @@ x-robots-tag: noindex
                                         "url": "https://de.wikipedia.org/wiki/SPD-Bundestagsfraktion"
                                     }
                                 },
-                                "color": null
+                                "color": "#df0b25"
                             },
                             "links": {
                                 "self": "https://optv.local/api/v1/organisation/Q2207512"
@@ -3629,7 +3629,7 @@ x-robots-tag: noindex
                                         "url": "https://de.wikipedia.org/wiki/AfD-Fraktion_im_Deutschen_Bundestag"
                                     }
                                 },
-                                "color": null
+                                "color": "#1a9fdd"
                             },
                             "links": {
                                 "self": "https://optv.local/api/v1/organisation/Q42575708"

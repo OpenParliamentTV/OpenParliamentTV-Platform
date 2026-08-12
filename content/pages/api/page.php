@@ -875,6 +875,9 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 							<a class="nav-link" id="word-trends-tab" data-bs-toggle="tab" data-bs-target="#word-trends" role="tab" aria-controls="word-trends" aria-selected="true"><span class="nav-item-label"><span class="icon-chart-line me-1"></span> Word Trends</span></a>
 						</li>
 						<li class="nav-item">
+							<a class="nav-link" id="significant-words-tab" data-bs-toggle="tab" data-bs-target="#significant-words" role="tab" aria-controls="significant-words" aria-selected="true"><span class="nav-item-label"><span class="icon-tag me-1"></span> Distinctive Words</span></a>
+						</li>
+						<li class="nav-item">
 							<a class="nav-link" id="entity-counts-tab" data-bs-toggle="tab" data-bs-target="#entity-counts" role="tab" aria-controls="entity-counts" aria-selected="true"><span class="nav-item-label"><span class="icon-database me-1"></span> Entity Counts</span></a>
 						</li>
 					</ul>
@@ -908,8 +911,44 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 									<tbody>
 										<tr>
 											<td>parliament</td>
-											<td>Optional, defaults to "de"</td>
-											<td>Parliament code for multi-parliament support</td>
+											<td>Optional</td>
+											<td>Parliament code. Defaults to the first configured parliament.</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>sessionID</td>
+											<td>Optional</td>
+											<td>Narrow every figure to one sitting, e.g. <code>DE-0210010</code></td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>agendaItemID</td>
+											<td>Optional</td>
+											<td>Narrow every figure to one agenda item</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>electoralPeriodID</td>
+											<td>Optional</td>
+											<td>Narrow every figure to one electoral period, e.g. <code>DE-021</code></td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>factionID</td>
+											<td>Optional</td>
+											<td>Only speeches whose main speaker belonged to this faction</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>personID</td>
+											<td>Optional</td>
+											<td>Only speeches by this person as main speaker</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>dateFrom / dateTo</td>
+											<td>Optional, YYYY-MM-DD</td>
+											<td>Restrict to a date range</td>
 											<td>String</td>
 										</tr>
 									</tbody>
@@ -995,8 +1034,20 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 										</tr>
 										<tr>
 											<td>startDate</td>
-											<td>Optional, defaults to '2020-01-01'</td>
-											<td>Start date in YYYY-MM-DD format</td>
+											<td>Optional</td>
+											<td>Start date in YYYY-MM-DD format. Defaults to the beginning of the earliest electoral period on record.</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>match</td>
+											<td>Optional: <code>stem</code> (default) or <code>exact</code></td>
+											<td>With <code>stem</code>, inflected forms are counted together and the <code>forms</code> array lists which surface forms a line covers. With <code>exact</code>, only the form given is counted.</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>normalize</td>
+											<td>Optional: <code>absolute</code> (default) or <code>relative</code></td>
+											<td>With <code>relative</code>, every bucket also carries <code>tokenCount</code> — the total words spoken in that scope and month. Rate per million = <code>totalCount / tokenCount * 1000000</code>.</td>
 											<td>String</td>
 										</tr>
 										<tr>
@@ -1027,7 +1078,86 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 								</table>
 							</div>
 						</div>
+						<div class="tab-pane fade bg-white" id="significant-words" role="tabpanel" aria-labelledby="significant-words-tab">
+							<div class="alert alert-info">This reports what is <b>distinctive</b> about a scope, not what it says most. A plain top-words list returns much the same common nouns whatever the scope is; this compares the scope against the rest of the corpus. Interjections and chair procedural text are excluded from the comparison.</div>
+							<h3>Endpoint</h3>
+							<code>/api/v1/statistics/significant-words</code>
+							<hr>
+							<h3><?= L::example(); ?> Request</h3>
+							<div>(Words that characterise one faction during one electoral period)</div>
+							<div class="apiExampleContainer">
+								<div class="input-group">
+									<span class="input-group-text">URI</span>
+									<input type="text" class="apiURI form-control" value="<?= $config["dir"]["root"]; ?>/api/v1/statistics/significant-words?factionID=Q1023134&electoralPeriodID=DE-021&size=10" readonly>
+									<button class="apiRequestButton btn btn-sm input-group-text"><span class="icon-right-open-big"></span><span class="d-none d-md-inline"><?= L::showResult(); ?></span></button>
+								</div>
+								<div class="apiResultContainer"></div>
+							</div>
+							<hr>
+							<h3>Parameters</h3>
+							<p>At least one scope parameter is required &mdash; &ldquo;what characterises everything&rdquo; has no answer, and a request without one returns <code>422</code>.</p>
+							<div class="table-responsive-lg">
+								<table class="table table-sm table-striped">
+									<thead>
+										<tr>
+											<th>Parameter</th>
+											<th>Validation</th>
+											<th>Description</th>
+											<th>Type</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>sessionID</td>
+											<td>One scope parameter required</td>
+											<td>Words characterising one sitting</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>agendaItemID</td>
+											<td>One scope parameter required</td>
+											<td>Words characterising one agenda item</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>electoralPeriodID</td>
+											<td>One scope parameter required</td>
+											<td>Words characterising one electoral period</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>factionID</td>
+											<td>One scope parameter required</td>
+											<td>Words characterising a faction. Combine with <code>electoralPeriodID</code> to compare factions within one period.</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>personID</td>
+											<td>One scope parameter required</td>
+											<td>Words characterising one speaker</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>dateFrom / dateTo</td>
+											<td>Optional, YYYY-MM-DD</td>
+											<td>Restrict to a date range</td>
+											<td>String</td>
+										</tr>
+										<tr>
+											<td>size</td>
+											<td>Optional, 1&ndash;50, defaults to 20</td>
+											<td>How many words to return</td>
+											<td>Integer</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<hr>
+							<h3>Response</h3>
+							<p>Each word carries <code>word</code> (the most frequent written form), <code>stem</code> (the token the comparison ran on), <code>score</code> (a distinctiveness measure, not a count) and <code>speechCount</code> (how many speeches in the scope contain it).</p>
+						</div>
 						<div class="tab-pane fade bg-white" id="entity-counts" role="tabpanel" aria-labelledby="entity-counts-tab">
+							<div class="alert alert-info">These counts are <b>platform-wide</b>. Entities are shared across every parliament an instance serves, so unlike the other statistics endpoints this one takes no <code>parliament</code> parameter and is unaffected by one.</div>
 							<h3>Endpoint</h3>
 							<code>/api/v1/statistics/entity-counts</code>
 							<hr>

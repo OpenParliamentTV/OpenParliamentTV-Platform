@@ -55,6 +55,22 @@ tags:
     description: Type-ahead suggestion endpoints
   - name: System
     description: Service status
+  - name: Statistics
+    description: |
+      Aggregate figures over the corpus. Two lanes sit behind these endpoints: counts
+      and durations of speeches come from the speech index, while word-level figures
+      come from a separate word-frequency index.
+
+      **What counts as a speaker's words.** Word statistics cover only what the credited
+      speaker actually said. Interjections ("(Beifall bei der SPD)"), questions from other
+      members, and session-chair procedural text are excluded — together roughly 28% of
+      the words in a transcript, and previously all credited to the speaker being
+      interrupted. Speech counts and speaking time are unaffected by this and cover the
+      whole media item.
+
+      **Speaking time** is the total duration of the speech items involved, including
+      pauses and interruptions. It is not net time at the microphone; no per-segment
+      durations exist for unaligned speeches.
   - name: Bulk
     description: Full-dataset exports
 
@@ -1668,6 +1684,348 @@ paths:
       responses:
         '200':
           description: Entity dump
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /statistics/general:
+    get:
+      tags:
+        - Statistics
+      summary: Aggregate statistics for a parliament, optionally scoped
+      description: |
+        Speech counts, speaker counts, speaking time and top vocabulary, each broken down
+        by faction.
+
+        Without a scope this describes the whole corpus and is served from a cache that is
+        recomputed after every import. Adding any scope parameter narrows every figure in
+        the response to that subset — this is the same endpoint the per-session,
+        per-agendaItem and per-entity statistics modules call.
+
+        Scope parameter names match those of `/search/media`, so filters applied to a
+        result list can be passed here unchanged.
+      parameters:
+        - name: parliament
+          in: query
+          description: Parliament key. Defaults to the instance's first configured parliament.
+          required: false
+          schema:
+            type: string
+        - name: sessionID
+          in: query
+          description: Restrict to one sitting, e.g. `DE-0210010`.
+          required: false
+          schema:
+            type: string
+        - name: agendaItemID
+          in: query
+          description: Restrict to one agenda item.
+          required: false
+          schema:
+            type: string
+        - name: electoralPeriodID
+          in: query
+          description: Restrict to one electoral period, e.g. `DE-021`.
+          required: false
+          schema:
+            type: string
+        - name: factionID
+          in: query
+          description: Restrict to speeches whose main speaker belonged to this faction.
+          required: false
+          schema:
+            type: string
+        - name: personID
+          in: query
+          description: Restrict to speeches by this person as main speaker.
+          required: false
+          schema:
+            type: string
+        - name: dateFrom
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Statistics
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /statistics/word-trends:
+    get:
+      tags:
+        - Statistics
+      summary: Word frequency over time
+      description: |
+        Monthly frequency of one or more words, optionally split by faction.
+
+        **Grouping.** By default each word is matched by its stem, so `flüchtlinge` also
+        counts `flüchtling` and `flüchtlingen` and the three appear as one line. The
+        `forms` array of each result lists the surface forms actually covered, so a chart
+        can label the line honestly. Pass `match=exact` to count only the form given.
+
+        **Normalisation.** `normalize=relative` adds `tokenCount` to every bucket: the
+        total number of words spoken in the same scope and month. A rate per million words
+        is `totalCount / tokenCount * 1000000`. The denominator is returned rather than the
+        rate so that a client can switch between absolute and relative display without
+        another request.
+
+        **First use** is reported per word as `firstUse`, and means first recorded on this
+        platform — not the first time the word was ever spoken in this parliament. The
+        corpus begins at the start of the earliest electoral period on record, which is
+        also the default `startDate`.
+      parameters:
+        - name: words
+          in: query
+          description: One or more words. Repeat as `words[]=a&words[]=b`.
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+        - name: parliament
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          description: Defaults to the start of the earliest electoral period.
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: Defaults to today.
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: match
+          in: query
+          description: Group inflected forms by stem, or count the exact form only.
+          required: false
+          schema:
+            type: string
+            enum: [stem, exact]
+            default: stem
+        - name: normalize
+          in: query
+          description: With `relative`, each bucket also carries `tokenCount`.
+          required: false
+          schema:
+            type: string
+            enum: [absolute, relative]
+            default: absolute
+        - name: factions
+          in: query
+          description: Restrict to speeches by these factions.
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: separateByFaction
+          in: query
+          description: Return one timeline per faction instead of a combined one.
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Word trends
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /statistics/significant-words:
+    get:
+      tags:
+        - Statistics
+      summary: Words that characterise a scope
+      description: |
+        The vocabulary that distinguishes a scope from the rest of the corpus, rather than
+        the words it uses most — a top-words list for any large scope returns much the same
+        common nouns whatever the scope is.
+
+        At least one scope parameter is required; "what characterises everything" has no
+        answer, and a request without one returns 422.
+
+        Words are reported in their most frequent written form. Internally the comparison
+        runs over stemmed text, so `word` is the surface form and `stem` the token behind
+        it. `score` is a distinctiveness measure, not a count; `speechCount` is how many
+        speeches in the scope contain the word.
+      parameters:
+        - name: sessionID
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: agendaItemID
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: electoralPeriodID
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: factionID
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: personID
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: dateFrom
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: size
+          in: query
+          description: Number of words to return.
+          required: false
+          schema:
+            type: integer
+            default: 20
+            minimum: 1
+            maximum: 50
+        - name: parliament
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Distinctive words
+          content:
+            application/json:
+              schema:
+                type: object
+        '422':
+          description: No scope parameter was given
+
+  /statistics/entity:
+    get:
+      tags:
+        - Statistics
+      summary: Statistics for one entity
+      description: |
+        How often an entity appears, who it appears alongside, and — for people — the words
+        they use most.
+
+        `mentionsOverTime` counts speeches that mention the entity, excluding the contexts
+        in which it is structurally present: a person's own speeches are not mentions of
+        them, and a faction is not mentioned merely by one of its members speaking.
+
+        Documents can carry two series, because being formally on the agenda (`linked`)
+        and being named mid-speech (`mentioned`) are different events. In practice a given
+        document tends to have only one of them — in the German corpus the two populations
+        do not overlap at all — so expect one series to be empty.
+      parameters:
+        - name: entityType
+          in: query
+          required: true
+          schema:
+            type: string
+            enum: [person, organisation, document, term]
+        - name: entityID
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: parliament
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: dateFrom
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: dateTo
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Entity statistics
+          content:
+            application/json:
+              schema:
+                type: object
+        '422':
+          description: entityType or entityID missing
+
+  /statistics/entity/{entityType}/{entityID}:
+    get:
+      tags:
+        - Statistics
+      summary: Statistics for one entity (path form)
+      description: Path-segment form of `/statistics/entity?entityType=…&entityID=…`.
+      parameters:
+        - name: entityType
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [person, organisation, document, term]
+        - name: entityID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Entity statistics
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /statistics/entity-counts:
+    get:
+      tags:
+        - Statistics
+      summary: How many entities the platform holds
+      description: |
+        Counts of people, organisations, documents and terms, with a per-subtype breakdown.
+
+        These counts are **platform-wide**: entities are shared across all parliaments an
+        instance serves, so unlike the other statistics endpoints this one takes no
+        `parliament` parameter and is unaffected by one.
+      responses:
+        '200':
+          description: Entity counts
           content:
             application/json:
               schema:

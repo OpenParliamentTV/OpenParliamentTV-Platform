@@ -41,7 +41,10 @@
 # --- search with filters + paging (the handler most at risk in 5a) -----------
 /api/v1/search/media?q=der&personID=Q132733606&limit=2
 /api/v1/search/media?q=klima&limit=2&page=2
-/api/v1/search/media?dateFrom=2020-01-01&dateTo=2020-12-31&limit=2
+# No q, so nothing scores this set and its order is segment-dependent — an index
+# rebuild reshuffles which two rows come back. Sort pinned, per the convention in
+# tests/README.md.
+/api/v1/search/media?dateFrom=2020-01-01&dateTo=2020-12-31&limit=2&sort=date-asc
 
 # --- pagination links: every boundary, on a paginated set of each search type -
 # The entries above all land on page 1 or return an error, so they never exercise
@@ -101,12 +104,33 @@
 /api/v1/iiif/search?q=klima&limit=2
 /api/v1/?action=iiif&itemType=collection&parliament=DE
 
-# --- session-gated actions: anonymous (403) and with an admin session --------
+# --- statistics: public, so the anonymous and admin responses must be identical
 /api/v1/statistics/general?parliament=DE
 @admin /api/v1/statistics/general?parliament=DE
 @admin /api/v1/statistics/entity?entityType=person&entityID=Q132733606
 @admin /api/v1/statistics/word-trends?parliament=DE&word=klima
 @admin /api/v1/statistics/entity-counts?parliament=DE
+
+# Scoped general statistics: the same endpoint the per-session and per-entity
+# modules call, narrowed by each of the scope dimensions.
+/api/v1/statistics/general?parliament=DE&sessionID=DE-0210010
+/api/v1/statistics/general?parliament=DE&electoralPeriodID=DE-021
+/api/v1/statistics/general?parliament=DE&factionID=Q1023134
+
+# Word trends: stem grouping (default) vs exact surface form, and the relative
+# mode that adds the token denominator per bucket.
+/api/v1/statistics/word-trends?parliament=DE&words[]=fl%C3%BCchtlinge&startDate=2015-01-01&endDate=2020-12-31
+/api/v1/statistics/word-trends?parliament=DE&words[]=fl%C3%BCchtlinge&match=exact&startDate=2015-01-01&endDate=2020-12-31
+/api/v1/statistics/word-trends?parliament=DE&words[]=klima&normalize=relative&startDate=2019-01-01&endDate=2020-12-31
+
+# Distinctive vocabulary, and the 422 when no scope is given.
+/api/v1/statistics/significant-words?parliament=DE&sessionID=DE-0210010&size=6
+/api/v1/statistics/significant-words?parliament=DE
+
+# Mention timelines: a person (own speeches must not count) and a document
+# (agenda linkage and in-text mention reported separately).
+/api/v1/statistics/entity?entityType=person&entityID=Q77195&dateFrom=2020-01-01&dateTo=2020-12-31
+/api/v1/statistics/entity?entityType=term&entityID=Q7942
 /api/v1/?action=getItemsFromDB&itemType=conflict
 @admin /api/v1/?action=getItemsFromDB&itemType=conflict&getStats=true
 @admin /api/v1/import/status?parliament=DE
@@ -157,7 +181,10 @@
 # The faction lookups behind the filter bar and the factionColors JS map pass no
 # paging params. Under the merge, ?page=3 asked for page 3 of the 8-row faction
 # list and emptied both. Pins resultsPerFaction on a non-first page.
-/content/components/result-grid.php?a=search&queryOnly=1&q=klima&page=3
+# Page 3 of a relevance search lands in a band of tied scores, whose order is
+# segment-dependent and reshuffles on every index rebuild. Sort pinned so the
+# entry keeps testing the fragment and its pagination, per tests/README.md.
+/content/components/result-grid.php?a=search&queryOnly=1&q=klima&page=3&sort=date-asc
 
 # --- admin-only itemTypes stay admin-only ----------------------------------
 # Only the anonymous 403 is pinned, not an admin row dump: entity_remap rows are

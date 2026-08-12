@@ -14,6 +14,7 @@
 require_once(__DIR__ . "/errors.php");
 require_once(__DIR__ . "/index-config.php");
 require_once(__DIR__ . "/../../api/v1/utilities.php"); // getApiOpenSearchClient()
+require_once(__DIR__ . "/../statistics-index/segments.php"); // statsIndexGetCleanText()
 
 /**
  * @throws SearchIndexInvalidInputException when the parliament is unknown.
@@ -129,7 +130,17 @@ function searchIndexWriteItems($parliament, array $items, $initIndex = false)
                     "_id"    => $tmpItem["data"]["id"]
                 ]
             ];
-            $params["body"][] = $tmpItem["data"];
+
+            // Derived field, added to the indexed document only. Deliberately not
+            // part of the media node: mediaGetNode() feeds the public API, and
+            // adding a field there would change every media response.
+            $document = $tmpItem["data"];
+            $cleanText = statsIndexGetCleanText($document);
+            if ($cleanText !== "") {
+                $document["cleanText"] = $cleanText;
+            }
+
+            $params["body"][] = $document;
         } else {
             $failedCount++;
             $errorsEncountered[] = ["type" => "item_missing_id", "message" => "Item at index " . $i . " is missing a data.id field."];

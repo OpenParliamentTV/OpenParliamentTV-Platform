@@ -113,9 +113,9 @@ function searchIndexUpdateItems($parliament, array $items, array $options = [])
         $message .= " (Statistics indices will be updated separately)";
     }
 
-    // The general-statistics cache is derived from the index and is now stale.
-    require_once(__DIR__ . "/../../api/v1/modules/statistics.php");
-    invalidateGeneralStatisticsCache($parliament);
+    // Statistics responses are derived from this index and are now stale.
+    require_once(__DIR__ . "/../statistics/cache.php");
+    statsCacheInvalidate($parliament);
 
     $result["message"] = $message;
     return $result;
@@ -243,8 +243,8 @@ function searchIndexTriggerRebuild($parliament)
         throw new SearchIndexException($e->getMessage(), "ASYNC_EXEC_FAIL", ["error" => $e->getMessage()], $e);
     }
 
-    require_once(__DIR__ . "/../../api/v1/modules/statistics.php");
-    invalidateGeneralStatisticsCache($parliament);
+    require_once(__DIR__ . "/../statistics/cache.php");
+    statsCacheInvalidate($parliament);
 
     return "Full rebuild initiated: main index followed by statistics indices for parliament: {$parliament}.";
 }

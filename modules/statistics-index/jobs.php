@@ -14,15 +14,21 @@
 
 require_once(__DIR__ . "/../search-index/errors.php");
 require_once(__DIR__ . "/../utilities/functions.php"); // optvVarPath()
+require_once(__DIR__ . "/../search/opensearch.php");   // resolveParliamentKey()
 
+/**
+ * Progress, lock and log paths are all keyed on the CANONICAL parliament key, so
+ * a caller passing "de" and one passing "DE" address the same run. The indexer
+ * resolves its --parliament argument the same way.
+ */
 function statsIndexProgressFilePath($parliament)
 {
-    return optvVarPath("data/progress") . "/statisticsIndexer_" . $parliament . ".json";
+    return optvVarPath("data/progress") . "/statisticsIndexer_" . resolveParliamentKey($parliament) . ".json";
 }
 
 function statsIndexLockFilePath($parliament)
 {
-    return optvVarPath("data/progress") . "/statisticsIndexer_" . $parliament . ".lock";
+    return optvVarPath("data/progress") . "/statisticsIndexer_" . resolveParliamentKey($parliament) . ".lock";
 }
 
 /**
@@ -42,7 +48,7 @@ function statsIndexTriggerRun($parliament, $isIncremental = false, array $mediaI
 
     $phpPath = $config["bin"]["php"] ?? PHP_BINARY;
     $scriptPath = realpath(__DIR__ . "/../../bin/index-statistics.php");
-    $logFile = optvVarPath("log") . "/statisticsIndexer_" . $parliament . ".log";
+    $logFile = optvVarPath("log") . "/statisticsIndexer_" . resolveParliamentKey($parliament) . ".log";
 
     if (!$scriptPath) {
         throw new SearchIndexException("Statistics indexer script not found", "SCRIPT_NOT_FOUND");
@@ -128,9 +134,9 @@ function statsIndexTriggerRebuild($parliament)
 
     $result = statsIndexTriggerRun($parliament, false);
 
-    // The general-statistics cache is derived from this index and is now stale.
-    require_once(__DIR__ . "/../../api/v1/modules/statistics.php");
-    invalidateGeneralStatisticsCache($parliament);
+    // Statistics responses are derived from this index and are now stale.
+    require_once(__DIR__ . "/../statistics/cache.php");
+    statsCacheInvalidate($parliament);
 
     return $result;
 }

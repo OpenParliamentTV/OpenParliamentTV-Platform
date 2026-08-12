@@ -1,0 +1,600 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "statistics",
+        "id": "general",
+        "attributes": {
+            "speeches": {
+                "total": 16423,
+                "byFaction": [
+                    {
+                        "id": "Q1023134",
+                        "total": 16423,
+                        "label": "CDU/CSU",
+                        "links": {
+                            "self": "https://optv.local/api/v1/organisation/Q1023134"
+                        }
+                    }
+                ]
+            },
+            "speakers": {
+                "total": 408,
+                "topSpeakers": [
+                    {
+                        "id": "Q14943609",
+                        "speechCount": 351,
+                        "label": "Volker Ullrich",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q14943609"
+                        }
+                    },
+                    {
+                        "id": "Q2429104",
+                        "speechCount": 189,
+                        "label": "Thorsten Frei",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q2429104"
+                        }
+                    },
+                    {
+                        "id": "Q111489",
+                        "speechCount": 182,
+                        "label": "Jürgen Hardt",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q111489"
+                        }
+                    },
+                    {
+                        "id": "Q15782242",
+                        "speechCount": 174,
+                        "label": "Alexander Hoffmann",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q15782242"
+                        }
+                    },
+                    {
+                        "id": "Q40998256",
+                        "speechCount": 172,
+                        "label": "Sebastian Brehm",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q40998256"
+                        }
+                    },
+                    {
+                        "id": "Q15644594",
+                        "speechCount": 157,
+                        "label": "Andrea Lindholz",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q15644594"
+                        }
+                    },
+                    {
+                        "id": "Q1429695",
+                        "speechCount": 146,
+                        "label": "Florian Hahn",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q1429695"
+                        }
+                    },
+                    {
+                        "id": "Q15783327",
+                        "speechCount": 139,
+                        "label": "Andreas Lenz",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q15783327"
+                        }
+                    },
+                    {
+                        "id": "Q40998607",
+                        "speechCount": 138,
+                        "label": "Philipp Amthor",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q40998607"
+                        }
+                    },
+                    {
+                        "id": "Q1648387",
+                        "speechCount": 137,
+                        "label": "Stephan Mayer",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q1648387"
+                        }
+                    },
+                    {
+                        "id": "Q1696501",
+                        "speechCount": 135,
+                        "label": "Johann Wadephul",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q1696501"
+                        }
+                    },
+                    {
+                        "id": "Q107989",
+                        "speechCount": 129,
+                        "label": "Roderich Kiesewetter",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q107989"
+                        }
+                    },
+                    {
+                        "id": "Q105331",
+                        "speechCount": 120,
+                        "label": "Nadine Schön",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q105331"
+                        }
+                    },
+                    {
+                        "id": "Q111160",
+                        "speechCount": 123,
+                        "label": "Reinhard Brandl",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q111160"
+                        }
+                    },
+                    {
+                        "id": "Q96427",
+                        "speechCount": 118,
+                        "label": "Jan-Marco Luczak",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q96427"
+                        }
+                    },
+                    {
+                        "id": "Q2343892",
+                        "speechCount": 117,
+                        "label": "Stephan Stracke",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q2343892"
+                        }
+                    },
+                    {
+                        "id": "Q85773",
+                        "speechCount": 118,
+                        "label": "Anja Weisgerber",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q85773"
+                        }
+                    },
+                    {
+                        "id": "Q98768",
+                        "speechCount": 116,
+                        "label": "Andreas Jung",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q98768"
+                        }
+                    },
+                    {
+                        "id": "Q1466480",
+                        "speechCount": 107,
+                        "label": "Fritz Güntzler",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q1466480"
+                        }
+                    },
+                    {
+                        "id": "Q2476246",
+                        "speechCount": 107,
+                        "label": "Ulrich Lange",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q2476246"
+                        }
+                    }
+                ],
+                "byFaction": [
+                    {
+                        "id": "Q1023134",
+                        "label": "CDU/CSU",
+                        "total": 408,
+                        "topSpeakers": [
+                            {
+                                "id": "Q14943609",
+                                "speechCount": 351,
+                                "label": "Volker Ullrich",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q14943609"
+                                }
+                            },
+                            {
+                                "id": "Q2429104",
+                                "speechCount": 189,
+                                "label": "Thorsten Frei",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q2429104"
+                                }
+                            },
+                            {
+                                "id": "Q111489",
+                                "speechCount": 182,
+                                "label": "Jürgen Hardt",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q111489"
+                                }
+                            },
+                            {
+                                "id": "Q15782242",
+                                "speechCount": 174,
+                                "label": "Alexander Hoffmann",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q15782242"
+                                }
+                            },
+                            {
+                                "id": "Q40998256",
+                                "speechCount": 172,
+                                "label": "Sebastian Brehm",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40998256"
+                                }
+                            },
+                            {
+                                "id": "Q15644594",
+                                "speechCount": 157,
+                                "label": "Andrea Lindholz",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q15644594"
+                                }
+                            },
+                            {
+                                "id": "Q1429695",
+                                "speechCount": 146,
+                                "label": "Florian Hahn",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1429695"
+                                }
+                            },
+                            {
+                                "id": "Q15783327",
+                                "speechCount": 139,
+                                "label": "Andreas Lenz",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q15783327"
+                                }
+                            },
+                            {
+                                "id": "Q40998607",
+                                "speechCount": 138,
+                                "label": "Philipp Amthor",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q40998607"
+                                }
+                            },
+                            {
+                                "id": "Q1648387",
+                                "speechCount": 137,
+                                "label": "Stephan Mayer",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1648387"
+                                }
+                            },
+                            {
+                                "id": "Q1696501",
+                                "speechCount": 135,
+                                "label": "Johann Wadephul",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1696501"
+                                }
+                            },
+                            {
+                                "id": "Q107989",
+                                "speechCount": 129,
+                                "label": "Roderich Kiesewetter",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q107989"
+                                }
+                            },
+                            {
+                                "id": "Q105331",
+                                "speechCount": 120,
+                                "label": "Nadine Schön",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q105331"
+                                }
+                            },
+                            {
+                                "id": "Q111160",
+                                "speechCount": 123,
+                                "label": "Reinhard Brandl",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q111160"
+                                }
+                            },
+                            {
+                                "id": "Q96427",
+                                "speechCount": 118,
+                                "label": "Jan-Marco Luczak",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q96427"
+                                }
+                            },
+                            {
+                                "id": "Q2343892",
+                                "speechCount": 117,
+                                "label": "Stephan Stracke",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q2343892"
+                                }
+                            },
+                            {
+                                "id": "Q85773",
+                                "speechCount": 118,
+                                "label": "Anja Weisgerber",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q85773"
+                                }
+                            },
+                            {
+                                "id": "Q98768",
+                                "speechCount": 116,
+                                "label": "Andreas Jung",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q98768"
+                                }
+                            },
+                            {
+                                "id": "Q1466480",
+                                "speechCount": 107,
+                                "label": "Fritz Güntzler",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1466480"
+                                }
+                            },
+                            {
+                                "id": "Q2476246",
+                                "speechCount": 107,
+                                "label": "Ulrich Lange",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q2476246"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "speakingTime": {
+                "total": 5959312,
+                "average": 368.49567153104129602070315741002559661865234375,
+                "unit": "seconds",
+                "byFaction": [
+                    {
+                        "id": "Q1023134",
+                        "label": "CDU/CSU",
+                        "total": 5959312,
+                        "average": 368.49567153104129602070315741002559661865234375,
+                        "unit": "seconds"
+                    }
+                ]
+            },
+            "vocabulary": {
+                "totalUniqueWords": 183980,
+                "topWords": [
+                    {
+                        "word": "menschen",
+                        "speechCount": 7690,
+                        "frequency": 22157
+                    },
+                    {
+                        "word": "euro",
+                        "speechCount": 5029,
+                        "frequency": 16702
+                    },
+                    {
+                        "word": "land",
+                        "speechCount": 6440,
+                        "frequency": 13523
+                    },
+                    {
+                        "word": "gut",
+                        "speechCount": 6558,
+                        "frequency": 11404
+                    },
+                    {
+                        "word": "tun",
+                        "speechCount": 5786,
+                        "frequency": 9777
+                    },
+                    {
+                        "word": "millionen",
+                        "speechCount": 3848,
+                        "frequency": 8517
+                    },
+                    {
+                        "word": "europa",
+                        "speechCount": 3100,
+                        "frequency": 8142
+                    },
+                    {
+                        "word": "milliarden",
+                        "speechCount": 3057,
+                        "frequency": 7780
+                    },
+                    {
+                        "word": "zeit",
+                        "speechCount": 4896,
+                        "frequency": 7366
+                    },
+                    {
+                        "word": "gesetz",
+                        "speechCount": 3123,
+                        "frequency": 6947
+                    },
+                    {
+                        "word": "länder",
+                        "speechCount": 3413,
+                        "frequency": 6843
+                    },
+                    {
+                        "word": "unternehmen",
+                        "speechCount": 2872,
+                        "frequency": 6807
+                    },
+                    {
+                        "word": "zukunft",
+                        "speechCount": 4058,
+                        "frequency": 6599
+                    },
+                    {
+                        "word": "gar",
+                        "speechCount": 4520,
+                        "frequency": 6422
+                    },
+                    {
+                        "word": "europäischen",
+                        "speechCount": 2893,
+                        "frequency": 6296
+                    },
+                    {
+                        "word": "jahre",
+                        "speechCount": 4149,
+                        "frequency": 6277
+                    },
+                    {
+                        "word": "arbeit",
+                        "speechCount": 3426,
+                        "frequency": 6033
+                    },
+                    {
+                        "word": "geld",
+                        "speechCount": 3226,
+                        "frequency": 5972
+                    },
+                    {
+                        "word": "neue",
+                        "speechCount": 3901,
+                        "frequency": 5938
+                    },
+                    {
+                        "word": "gemeinsam",
+                        "speechCount": 3843,
+                        "frequency": 5840
+                    }
+                ],
+                "byFaction": [
+                    {
+                        "id": "Q1023134",
+                        "label": "CDU/CSU",
+                        "topWords": [
+                            {
+                                "word": "menschen",
+                                "speechCount": 7690,
+                                "frequency": 22157
+                            },
+                            {
+                                "word": "euro",
+                                "speechCount": 5029,
+                                "frequency": 16702
+                            },
+                            {
+                                "word": "land",
+                                "speechCount": 6440,
+                                "frequency": 13523
+                            },
+                            {
+                                "word": "gut",
+                                "speechCount": 6558,
+                                "frequency": 11404
+                            },
+                            {
+                                "word": "tun",
+                                "speechCount": 5786,
+                                "frequency": 9777
+                            },
+                            {
+                                "word": "millionen",
+                                "speechCount": 3848,
+                                "frequency": 8517
+                            },
+                            {
+                                "word": "europa",
+                                "speechCount": 3100,
+                                "frequency": 8142
+                            },
+                            {
+                                "word": "milliarden",
+                                "speechCount": 3057,
+                                "frequency": 7780
+                            },
+                            {
+                                "word": "zeit",
+                                "speechCount": 4896,
+                                "frequency": 7366
+                            },
+                            {
+                                "word": "gesetz",
+                                "speechCount": 3123,
+                                "frequency": 6947
+                            },
+                            {
+                                "word": "länder",
+                                "speechCount": 3413,
+                                "frequency": 6843
+                            },
+                            {
+                                "word": "unternehmen",
+                                "speechCount": 2872,
+                                "frequency": 6807
+                            },
+                            {
+                                "word": "zukunft",
+                                "speechCount": 4058,
+                                "frequency": 6599
+                            },
+                            {
+                                "word": "gar",
+                                "speechCount": 4520,
+                                "frequency": 6422
+                            },
+                            {
+                                "word": "europäischen",
+                                "speechCount": 2893,
+                                "frequency": 6296
+                            },
+                            {
+                                "word": "jahre",
+                                "speechCount": 4149,
+                                "frequency": 6277
+                            },
+                            {
+                                "word": "arbeit",
+                                "speechCount": 3426,
+                                "frequency": 6033
+                            },
+                            {
+                                "word": "geld",
+                                "speechCount": 3226,
+                                "frequency": 5972
+                            },
+                            {
+                                "word": "neue",
+                                "speechCount": 3901,
+                                "frequency": 5938
+                            },
+                            {
+                                "word": "gemeinsam",
+                                "speechCount": 3843,
+                                "frequency": 5840
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "links": {
+        "self": "https://optv.local/api/v1/statistics/general"
+    }
+}

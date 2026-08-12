@@ -233,6 +233,29 @@ $config["parliament"]["DE"]["sql"]["tbl"]["Text"] = "text";
 $config["parliament"]["DE"]["git"]["repository"] = ""; //e.g. https://github.com/OpenParliamentTV/OpenParliamentTV-Data-DE.git
 $config["parliament"]["DE"]["OpenSearch"]["index"] = "de"; // openparliamenttv_THIS
 
+// Language of this parliament's transcripts. Selects the stopword list in
+// $config["statistics"]["stopwords"] when a transcript does not declare its own.
+$config["parliament"]["DE"]["statistics"]["language"] = "de";
+// OpenSearch stemmer used to group word forms in the statistics index, so that
+// "Flüchtling" and "Flüchtlinge" are one trend line. Leave unset for no stemming:
+// grouping then falls back to exact matching and everything keeps working.
+$config["parliament"]["DE"]["statistics"]["stemFilter"] = "light_german";
+
+
+/**
+ * Statistics
+ * Minimum word length for word-frequency statistics, in CHARACTERS. This is the
+ * single length rule the word filter applies; anything shorter is dropped, and
+ * anything longer is only dropped if it is on the stopword list for its language
+ * (those live in api/v1/config-api.php). Three suits German; a language that
+ * writes shorter words meaningfully would want less.
+ *
+ * Whether statistics work at all is not configured — it is observed. The
+ * statistics index existing means it is set up, and the search index carrying
+ * the cleanText field means distinctive-word features can run.
+ */
+$config["statistics"]["minWordLength"] = 3;
+
 
 /**
  * Configuration for the OpenSearch server

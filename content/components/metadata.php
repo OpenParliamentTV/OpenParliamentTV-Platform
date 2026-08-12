@@ -20,7 +20,7 @@ if (!empty($_REQUEST['lang'])) {
 // Robots directive: keep search-result permutations and non-content pages out of the index.
 $robotsMeta = null;
 $noIndexPages = ['login', 'register', 'registerConfirm', 'password-reset', 'logout', 'embed-entity', 'notifications', 'playlist'];
-$isAdminPage = (strpos($page, 'manage') === 0) || $page === 'statistics';
+$isAdminPage = (strpos($page, 'manage') === 0);
 if ($page === 'search') {
     $robotsMeta = 'noindex, follow'; // discover links, don't index the query page
 } elseif ($isAdminPage || in_array($page, $noIndexPages, true)) {

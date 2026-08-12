@@ -1566,107 +1566,107 @@ x-robots-tag: noindex
                 ]
             },
             "vocabulary": {
-                "totalUniqueWords": 386292,
+                "totalUniqueWords": 376414,
                 "topWords": [
                     {
                         "word": "menschen",
-                        "speechCount": 4431,
-                        "frequency": 87894
+                        "speechCount": 29506,
+                        "frequency": 85906
                     },
                     {
                         "word": "euro",
-                        "speechCount": 3963,
-                        "frequency": 56493
+                        "speechCount": 18531,
+                        "frequency": 55968
                     },
                     {
                         "word": "land",
-                        "speechCount": 4300,
-                        "frequency": 45377
+                        "speechCount": 21652,
+                        "frequency": 44869
+                    },
+                    {
+                        "word": "gut",
+                        "speechCount": 23143,
+                        "frequency": 38947
+                    },
+                    {
+                        "word": "tun",
+                        "speechCount": 20211,
+                        "frequency": 33216
                     },
                     {
                         "word": "millionen",
-                        "speechCount": 3734,
-                        "frequency": 28527
-                    },
-                    {
-                        "word": "zeit",
-                        "speechCount": 4107,
-                        "frequency": 27475
+                        "speechCount": 13791,
+                        "frequency": 27922
                     },
                     {
                         "word": "milliarden",
-                        "speechCount": 3483,
-                        "frequency": 26416
+                        "speechCount": 11362,
+                        "frequency": 26234
                     },
                     {
                         "word": "europa",
-                        "speechCount": 3453,
-                        "frequency": 25292
+                        "speechCount": 9854,
+                        "frequency": 24674
                     },
                     {
-                        "word": "gesetz",
-                        "speechCount": 3203,
-                        "frequency": 23921
+                        "word": "zeit",
+                        "speechCount": 16775,
+                        "frequency": 24655
+                    },
+                    {
+                        "word": "gar",
+                        "speechCount": 16630,
+                        "frequency": 23337
                     },
                     {
                         "word": "geld",
-                        "speechCount": 3664,
-                        "frequency": 23775
-                    },
-                    {
-                        "word": "jahre",
-                        "speechCount": 3994,
-                        "frequency": 23626
-                    },
-                    {
-                        "word": "reden",
-                        "speechCount": 3952,
-                        "frequency": 23536
+                        "speechCount": 12575,
+                        "frequency": 22962
                     },
                     {
                         "word": "unternehmen",
-                        "speechCount": 3458,
-                        "frequency": 23501
+                        "speechCount": 10217,
+                        "frequency": 22682
+                    },
+                    {
+                        "word": "gesetz",
+                        "speechCount": 10602,
+                        "frequency": 22445
                     },
                     {
                         "word": "zukunft",
-                        "speechCount": 3811,
-                        "frequency": 22497
+                        "speechCount": 13543,
+                        "frequency": 21881
+                    },
+                    {
+                        "word": "wer",
+                        "speechCount": 14314,
+                        "frequency": 21755
+                    },
+                    {
+                        "word": "jahre",
+                        "speechCount": 14556,
+                        "frequency": 21525
                     },
                     {
                         "word": "leben",
-                        "speechCount": 3885,
-                        "frequency": 22274
+                        "speechCount": 13526,
+                        "frequency": 21453
                     },
                     {
                         "word": "politik",
-                        "speechCount": 3852,
-                        "frequency": 21418
-                    },
-                    {
-                        "word": "arbeit",
-                        "speechCount": 3627,
-                        "frequency": 21181
-                    },
-                    {
-                        "word": "europäischen",
-                        "speechCount": 3380,
-                        "frequency": 21058
-                    },
-                    {
-                        "word": "nehmen",
-                        "speechCount": 3992,
-                        "frequency": 20593
+                        "speechCount": 12968,
+                        "frequency": 20705
                     },
                     {
                         "word": "gemeinsam",
-                        "speechCount": 3606,
-                        "frequency": 20404
+                        "speechCount": 13045,
+                        "frequency": 19977
                     },
                     {
-                        "word": "beschlussempfehlung",
-                        "speechCount": 800,
-                        "frequency": 20193
+                        "word": "arbeit",
+                        "speechCount": 11605,
+                        "frequency": 19515
                     }
                 ],
                 "byFaction": [
@@ -1676,103 +1676,103 @@ x-robots-tag: noindex
                         "topWords": [
                             {
                                 "word": "menschen",
-                                "speechCount": 7717,
-                                "frequency": 22754
+                                "speechCount": 7690,
+                                "frequency": 22157
                             },
                             {
                                 "word": "euro",
-                                "speechCount": 5034,
-                                "frequency": 17015
+                                "speechCount": 5029,
+                                "frequency": 16702
                             },
                             {
                                 "word": "land",
-                                "speechCount": 6450,
-                                "frequency": 13590
+                                "speechCount": 6440,
+                                "frequency": 13523
+                            },
+                            {
+                                "word": "gut",
+                                "speechCount": 6558,
+                                "frequency": 11404
+                            },
+                            {
+                                "word": "tun",
+                                "speechCount": 5786,
+                                "frequency": 9777
                             },
                             {
                                 "word": "millionen",
-                                "speechCount": 3903,
-                                "frequency": 8721
+                                "speechCount": 3848,
+                                "frequency": 8517
                             },
                             {
                                 "word": "europa",
-                                "speechCount": 3114,
-                                "frequency": 8251
-                            },
-                            {
-                                "word": "zeit",
-                                "speechCount": 5181,
-                                "frequency": 7996
+                                "speechCount": 3100,
+                                "frequency": 8142
                             },
                             {
                                 "word": "milliarden",
-                                "speechCount": 3099,
-                                "frequency": 7975
+                                "speechCount": 3057,
+                                "frequency": 7780
+                            },
+                            {
+                                "word": "zeit",
+                                "speechCount": 4896,
+                                "frequency": 7366
                             },
                             {
                                 "word": "gesetz",
-                                "speechCount": 3238,
-                                "frequency": 7395
-                            },
-                            {
-                                "word": "jahre",
-                                "speechCount": 4518,
-                                "frequency": 7046
+                                "speechCount": 3123,
+                                "frequency": 6947
                             },
                             {
                                 "word": "länder",
-                                "speechCount": 3460,
-                                "frequency": 7034
+                                "speechCount": 3413,
+                                "frequency": 6843
                             },
                             {
                                 "word": "unternehmen",
-                                "speechCount": 2884,
-                                "frequency": 6939
+                                "speechCount": 2872,
+                                "frequency": 6807
                             },
                             {
                                 "word": "zukunft",
-                                "speechCount": 4079,
-                                "frequency": 6680
+                                "speechCount": 4058,
+                                "frequency": 6599
                             },
                             {
-                                "word": "reden",
-                                "speechCount": 4067,
-                                "frequency": 6462
-                            },
-                            {
-                                "word": "europäischen",
-                                "speechCount": 2925,
+                                "word": "gar",
+                                "speechCount": 4520,
                                 "frequency": 6422
                             },
                             {
-                                "word": "geld",
-                                "speechCount": 3332,
-                                "frequency": 6290
+                                "word": "europäischen",
+                                "speechCount": 2893,
+                                "frequency": 6296
+                            },
+                            {
+                                "word": "jahre",
+                                "speechCount": 4149,
+                                "frequency": 6277
                             },
                             {
                                 "word": "arbeit",
-                                "speechCount": 3486,
-                                "frequency": 6229
+                                "speechCount": 3426,
+                                "frequency": 6033
                             },
                             {
-                                "word": "sehen",
-                                "speechCount": 4404,
-                                "frequency": 6082
-                            },
-                            {
-                                "word": "politik",
-                                "speechCount": 3700,
-                                "frequency": 6049
+                                "word": "geld",
+                                "speechCount": 3226,
+                                "frequency": 5972
                             },
                             {
                                 "word": "neue",
-                                "speechCount": 3944,
-                                "frequency": 6024
+                                "speechCount": 3901,
+                                "frequency": 5938
                             },
                             {
-                                "word": "herzlichen",
-                                "speechCount": 5324,
-                                "frequency": 6018
+                                "word": "gemeinsam",
+                                "speechCount": 3843,
+                                "frequency": 5840
                             }
                         ]
                     },
@@ -1782,103 +1782,103 @@ x-robots-tag: noindex
                         "topWords": [
                             {
                                 "word": "menschen",
-                                "speechCount": 6766,
-                                "frequency": 20770
+                                "speechCount": 6784,
+                                "frequency": 20600
                             },
                             {
                                 "word": "euro",
-                                "speechCount": 3894,
-                                "frequency": 11810
+                                "speechCount": 3905,
+                                "frequency": 11696
+                            },
+                            {
+                                "word": "gut",
+                                "speechCount": 6055,
+                                "frequency": 10879
                             },
                             {
                                 "word": "land",
                                 "speechCount": 4556,
-                                "frequency": 9742
+                                "frequency": 9637
+                            },
+                            {
+                                "word": "tun",
+                                "speechCount": 4777,
+                                "frequency": 7996
                             },
                             {
                                 "word": "millionen",
-                                "speechCount": 2937,
-                                "frequency": 6304
-                            },
-                            {
-                                "word": "zeit",
-                                "speechCount": 3943,
-                                "frequency": 5883
+                                "speechCount": 2911,
+                                "frequency": 6179
                             },
                             {
                                 "word": "gemeinsam",
-                                "speechCount": 3615,
-                                "frequency": 5594
+                                "speechCount": 3623,
+                                "frequency": 5545
                             },
                             {
                                 "word": "arbeit",
-                                "speechCount": 3224,
-                                "frequency": 5582
+                                "speechCount": 3186,
+                                "frequency": 5467
                             },
                             {
-                                "word": "gesetz",
-                                "speechCount": 2480,
-                                "frequency": 5349
+                                "word": "zeit",
+                                "speechCount": 3707,
+                                "frequency": 5413
                             },
                             {
                                 "word": "europa",
-                                "speechCount": 2056,
-                                "frequency": 5269
+                                "speechCount": 2034,
+                                "frequency": 5201
                             },
                             {
                                 "word": "leben",
-                                "speechCount": 3273,
-                                "frequency": 5218
-                            },
-                            {
-                                "word": "reden",
-                                "speechCount": 3236,
+                                "speechCount": 3240,
                                 "frequency": 5145
                             },
                             {
-                                "word": "geld",
-                                "speechCount": 2699,
-                                "frequency": 5048
+                                "word": "gesetz",
+                                "speechCount": 2396,
+                                "frequency": 5062
                             },
                             {
                                 "word": "zukunft",
-                                "speechCount": 3143,
-                                "frequency": 4954
+                                "speechCount": 3138,
+                                "frequency": 4939
                             },
                             {
                                 "word": "milliarden",
-                                "speechCount": 2282,
-                                "frequency": 4948
+                                "speechCount": 2280,
+                                "frequency": 4874
                             },
                             {
                                 "word": "unternehmen",
-                                "speechCount": 2219,
-                                "frequency": 4904
+                                "speechCount": 2224,
+                                "frequency": 4847
+                            },
+                            {
+                                "word": "geld",
+                                "speechCount": 2620,
+                                "frequency": 4832
+                            },
+                            {
+                                "word": "gar",
+                                "speechCount": 3408,
+                                "frequency": 4716
                             },
                             {
                                 "word": "schaffen",
-                                "speechCount": 3182,
-                                "frequency": 4648
-                            },
-                            {
-                                "word": "jahre",
-                                "speechCount": 3192,
-                                "frequency": 4640
+                                "speechCount": 3157,
+                                "frequency": 4583
                             },
                             {
                                 "word": "sorgen",
-                                "speechCount": 3071,
-                                "frequency": 4602
+                                "speechCount": 3056,
+                                "frequency": 4566
                             },
                             {
-                                "word": "denen",
-                                "speechCount": 3342,
-                                "frequency": 4528
-                            },
-                            {
-                                "word": "sehen",
-                                "speechCount": 3242,
-                                "frequency": 4339
+                                "word": "reden",
+                                "speechCount": 2901,
+                                "frequency": 4483
                             }
                         ]
                     },
@@ -1888,103 +1888,103 @@ x-robots-tag: noindex
                         "topWords": [
                             {
                                 "word": "menschen",
-                                "speechCount": 4263,
-                                "frequency": 13236
+                                "speechCount": 4285,
+                                "frequency": 13194
                             },
                             {
                                 "word": "euro",
-                                "speechCount": 2247,
-                                "frequency": 5917
+                                "speechCount": 2263,
+                                "frequency": 5868
                             },
                             {
                                 "word": "land",
-                                "speechCount": 2791,
-                                "frequency": 5613
+                                "speechCount": 2773,
+                                "frequency": 5569
+                            },
+                            {
+                                "word": "gut",
+                                "speechCount": 3197,
+                                "frequency": 5215
+                            },
+                            {
+                                "word": "tun",
+                                "speechCount": 2996,
+                                "frequency": 4906
                             },
                             {
                                 "word": "reden",
-                                "speechCount": 2341,
-                                "frequency": 3870
+                                "speechCount": 2080,
+                                "frequency": 3395
+                            },
+                            {
+                                "word": "gar",
+                                "speechCount": 2361,
+                                "frequency": 3350
                             },
                             {
                                 "word": "zeit",
-                                "speechCount": 2425,
-                                "frequency": 3599
-                            },
-                            {
-                                "word": "geld",
-                                "speechCount": 1750,
-                                "frequency": 3228
+                                "speechCount": 2283,
+                                "frequency": 3329
                             },
                             {
                                 "word": "europa",
-                                "speechCount": 1292,
-                                "frequency": 3217
+                                "speechCount": 1285,
+                                "frequency": 3180
+                            },
+                            {
+                                "word": "geld",
+                                "speechCount": 1720,
+                                "frequency": 3137
                             },
                             {
                                 "word": "zukunft",
-                                "speechCount": 1919,
-                                "frequency": 3123
+                                "speechCount": 1912,
+                                "frequency": 3100
                             },
                             {
                                 "word": "leider",
-                                "speechCount": 2186,
-                                "frequency": 3068
-                            },
-                            {
-                                "word": "gesetz",
-                                "speechCount": 1436,
-                                "frequency": 3063
-                            },
-                            {
-                                "word": "jahre",
-                                "speechCount": 2089,
-                                "frequency": 3045
+                                "speechCount": 2115,
+                                "frequency": 2962
                             },
                             {
                                 "word": "koalition",
-                                "speechCount": 1849,
-                                "frequency": 2966
+                                "speechCount": 1831,
+                                "frequency": 2929
+                            },
+                            {
+                                "word": "gesetz",
+                                "speechCount": 1389,
+                                "frequency": 2916
                             },
                             {
                                 "word": "milliarden",
-                                "speechCount": 1401,
-                                "frequency": 2930
+                                "speechCount": 1388,
+                                "frequency": 2883
                             },
                             {
-                                "word": "unternehmen",
-                                "speechCount": 1318,
+                                "word": "wer",
+                                "speechCount": 1920,
                                 "frequency": 2872
                             },
                             {
-                                "word": "millionen",
-                                "speechCount": 1576,
-                                "frequency": 2858
+                                "word": "jahre",
+                                "speechCount": 2004,
+                                "frequency": 2860
                             },
                             {
                                 "word": "gemeinsam",
-                                "speechCount": 1903,
-                                "frequency": 2855
+                                "speechCount": 1904,
+                                "frequency": 2844
                             },
                             {
-                                "word": "politik",
-                                "speechCount": 1693,
-                                "frequency": 2722
+                                "word": "millionen",
+                                "speechCount": 1574,
+                                "frequency": 2819
                             },
                             {
-                                "word": "nehmen",
-                                "speechCount": 2026,
-                                "frequency": 2685
-                            },
-                            {
-                                "word": "leben",
-                                "speechCount": 1701,
-                                "frequency": 2667
-                            },
-                            {
-                                "word": "zwar",
-                                "speechCount": 2056,
-                                "frequency": 2650
+                                "word": "unternehmen",
+                                "speechCount": 1315,
+                                "frequency": 2797
                             }
                         ]
                     },
@@ -1994,103 +1994,103 @@ x-robots-tag: noindex
                         "topWords": [
                             {
                                 "word": "menschen",
-                                "speechCount": 3460,
-                                "frequency": 9818
+                                "speechCount": 3463,
+                                "frequency": 9764
                             },
                             {
                                 "word": "euro",
-                                "speechCount": 2357,
-                                "frequency": 7304
+                                "speechCount": 2378,
+                                "frequency": 7318
                             },
                             {
-                                "word": "land",
-                                "speechCount": 1825,
-                                "frequency": 3307
-                            },
-                            {
-                                "word": "millionen",
-                                "speechCount": 1708,
-                                "frequency": 3247
+                                "word": "linke",
+                                "speechCount": 3083,
+                                "frequency": 5390
                             },
                             {
                                 "word": "milliarden",
-                                "speechCount": 1404,
+                                "speechCount": 1415,
+                                "frequency": 3273
+                            },
+                            {
+                                "word": "land",
+                                "speechCount": 1815,
+                                "frequency": 3271
+                            },
+                            {
+                                "word": "millionen",
+                                "speechCount": 1719,
                                 "frequency": 3227
                             },
                             {
                                 "word": "geld",
-                                "speechCount": 1721,
-                                "frequency": 3160
+                                "speechCount": 1713,
+                                "frequency": 3113
                             },
                             {
-                                "word": "jahre",
-                                "speechCount": 1614,
-                                "frequency": 2468
+                                "word": "gut",
+                                "speechCount": 2054,
+                                "frequency": 3045
+                            },
+                            {
+                                "word": "wer",
+                                "speechCount": 1806,
+                                "frequency": 2767
+                            },
+                            {
+                                "word": "tun",
+                                "speechCount": 1816,
+                                "frequency": 2643
+                            },
+                            {
+                                "word": "gar",
+                                "speechCount": 1842,
+                                "frequency": 2541
                             },
                             {
                                 "word": "politik",
-                                "speechCount": 1470,
-                                "frequency": 2468
+                                "speechCount": 1459,
+                                "frequency": 2442
+                            },
+                            {
+                                "word": "jahre",
+                                "speechCount": 1584,
+                                "frequency": 2387
                             },
                             {
                                 "word": "leben",
-                                "speechCount": 1478,
-                                "frequency": 2353
-                            },
-                            {
-                                "word": "zeit",
-                                "speechCount": 1704,
-                                "frequency": 2348
+                                "speechCount": 1461,
+                                "frequency": 2306
                             },
                             {
                                 "word": "unternehmen",
-                                "speechCount": 1090,
-                                "frequency": 2296
+                                "speechCount": 1089,
+                                "frequency": 2236
+                            },
+                            {
+                                "word": "zeit",
+                                "speechCount": 1612,
+                                "frequency": 2161
                             },
                             {
                                 "word": "problem",
-                                "speechCount": 1454,
-                                "frequency": 2239
-                            },
-                            {
-                                "word": "reden",
-                                "speechCount": 1521,
-                                "frequency": 2239
+                                "speechCount": 1420,
+                                "frequency": 2152
                             },
                             {
                                 "word": "leider",
-                                "speechCount": 1599,
-                                "frequency": 2190
+                                "speechCount": 1555,
+                                "frequency": 2122
                             },
                             {
-                                "word": "kinder",
-                                "speechCount": 857,
-                                "frequency": 2041
+                                "word": "spd",
+                                "speechCount": 1345,
+                                "frequency": 2092
                             },
                             {
                                 "word": "regierung",
-                                "speechCount": 1257,
-                                "frequency": 2031
-                            },
-                            {
-                                "word": "gesetz",
-                                "speechCount": 1056,
-                                "frequency": 2027
-                            },
-                            {
-                                "word": "zwar",
-                                "speechCount": 1561,
-                                "frequency": 2007
-                            },
-                            {
-                                "word": "europa",
-                                "speechCount": 826,
-                                "frequency": 1928
-                            },
-                            {
-                                "word": "koalition",
-                                "speechCount": 1253,
-                                "frequency": 1899
+                                "speechCount": 1248,
+                                "frequency": 2000
                             }
                         ]
                     },
@@ -2100,103 +2100,103 @@ x-robots-tag: noindex
                         "topWords": [
                             {
                                 "word": "euro",
-                                "speechCount": 2034,
-                                "frequency": 5972
+                                "speechCount": 2084,
+                                "frequency": 6208
                             },
                             {
                                 "word": "menschen",
-                                "speechCount": 2411,
-                                "frequency": 5506
+                                "speechCount": 2393,
+                                "frequency": 5365
                             },
                             {
                                 "word": "land",
-                                "speechCount": 2166,
-                                "frequency": 4123
+                                "speechCount": 2188,
+                                "frequency": 4149
+                            },
+                            {
+                                "word": "afd",
+                                "speechCount": 2290,
+                                "frequency": 3962
                             },
                             {
                                 "word": "bürger",
-                                "speechCount": 1896,
-                                "frequency": 3736
+                                "speechCount": 1932,
+                                "frequency": 3806
                             },
                             {
                                 "word": "regierung",
-                                "speechCount": 1881,
-                                "frequency": 3441
+                                "speechCount": 1910,
+                                "frequency": 3487
                             },
                             {
                                 "word": "politik",
-                                "speechCount": 1840,
-                                "frequency": 3113
-                            },
-                            {
-                                "word": "millionen",
-                                "speechCount": 1586,
-                                "frequency": 2987
+                                "speechCount": 1856,
+                                "frequency": 3143
                             },
                             {
                                 "word": "milliarden",
-                                "speechCount": 1310,
-                                "frequency": 2887
+                                "speechCount": 1352,
+                                "frequency": 3045
+                            },
+                            {
+                                "word": "millionen",
+                                "speechCount": 1610,
+                                "frequency": 3038
+                            },
+                            {
+                                "word": "gar",
+                                "speechCount": 2038,
+                                "frequency": 2896
+                            },
+                            {
+                                "word": "wer",
+                                "speechCount": 1636,
+                                "frequency": 2510
+                            },
+                            {
+                                "word": "grünen",
+                                "speechCount": 1319,
+                                "frequency": 2434
                             },
                             {
                                 "word": "geld",
-                                "speechCount": 1294,
-                                "frequency": 2273
+                                "speechCount": 1312,
+                                "frequency": 2283
+                            },
+                            {
+                                "word": "gut",
+                                "speechCount": 1672,
+                                "frequency": 2260
+                            },
+                            {
+                                "word": "tun",
+                                "speechCount": 1457,
+                                "frequency": 1937
                             },
                             {
                                 "word": "jahre",
-                                "speechCount": 1360,
-                                "frequency": 1936
+                                "speechCount": 1343,
+                                "frequency": 1904
                             },
                             {
                                 "word": "leben",
-                                "speechCount": 1293,
-                                "frequency": 1935
-                            },
-                            {
-                                "word": "reden",
-                                "speechCount": 1358,
-                                "frequency": 1928
-                            },
-                            {
-                                "word": "zeit",
-                                "speechCount": 1417,
-                                "frequency": 1908
-                            },
-                            {
-                                "word": "lachen",
-                                "speechCount": 1263,
-                                "frequency": 1887
+                                "speechCount": 1238,
+                                "frequency": 1824
                             },
                             {
                                 "word": "welt",
-                                "speechCount": 1204,
-                                "frequency": 1806
+                                "speechCount": 1197,
+                                "frequency": 1774
                             },
                             {
-                                "word": "gesetz",
-                                "speechCount": 903,
-                                "frequency": 1745
-                            },
-                            {
-                                "word": "nein",
-                                "speechCount": 1267,
-                                "frequency": 1722
-                            },
-                            {
-                                "word": "rede",
-                                "speechCount": 1281,
-                                "frequency": 1700
+                                "word": "zeit",
+                                "speechCount": 1336,
+                                "frequency": 1757
                             },
                             {
                                 "word": "unternehmen",
-                                "speechCount": 871,
-                                "frequency": 1690
-                            },
-                            {
-                                "word": "danke",
-                                "speechCount": 1494,
-                                "frequency": 1686
+                                "speechCount": 883,
+                                "frequency": 1701
                             }
                         ]
                     },
@@ -2206,103 +2206,103 @@ x-robots-tag: noindex
                         "topWords": [
                             {
                                 "word": "menschen",
-                                "speechCount": 2482,
-                                "frequency": 6699
+                                "speechCount": 2447,
+                                "frequency": 6573
                             },
                             {
                                 "word": "land",
-                                "speechCount": 1813,
-                                "frequency": 3602
+                                "speechCount": 1798,
+                                "frequency": 3564
                             },
                             {
                                 "word": "euro",
-                                "speechCount": 1245,
-                                "frequency": 3155
+                                "speechCount": 1219,
+                                "frequency": 3078
                             },
                             {
-                                "word": "zeit",
-                                "speechCount": 1538,
-                                "frequency": 2231
+                                "word": "gut",
+                                "speechCount": 1777,
+                                "frequency": 2713
+                            },
+                            {
+                                "word": "tun",
+                                "speechCount": 1620,
+                                "frequency": 2458
                             },
                             {
                                 "word": "demokraten",
-                                "speechCount": 1455,
-                                "frequency": 2177
+                                "speechCount": 1447,
+                                "frequency": 2158
+                            },
+                            {
+                                "word": "zeit",
+                                "speechCount": 1460,
+                                "frequency": 2087
                             },
                             {
                                 "word": "koalition",
-                                "speechCount": 1179,
-                                "frequency": 2015
+                                "speechCount": 1151,
+                                "frequency": 1957
                             },
                             {
                                 "word": "zukunft",
-                                "speechCount": 1229,
-                                "frequency": 1968
-                            },
-                            {
-                                "word": "gesetz",
-                                "speechCount": 893,
-                                "frequency": 1937
+                                "speechCount": 1217,
+                                "frequency": 1945
                             },
                             {
                                 "word": "unternehmen",
-                                "speechCount": 925,
-                                "frequency": 1934
+                                "speechCount": 915,
+                                "frequency": 1905
+                            },
+                            {
+                                "word": "gar",
+                                "speechCount": 1379,
+                                "frequency": 1893
+                            },
+                            {
+                                "word": "gesetz",
+                                "speechCount": 865,
+                                "frequency": 1843
                             },
                             {
                                 "word": "europa",
-                                "speechCount": 891,
-                                "frequency": 1802
+                                "speechCount": 880,
+                                "frequency": 1773
                             },
                             {
-                                "word": "jahre",
-                                "speechCount": 1203,
-                                "frequency": 1771
+                                "word": "wer",
+                                "speechCount": 1167,
+                                "frequency": 1724
                             },
                             {
                                 "word": "milliarden",
-                                "speechCount": 806,
-                                "frequency": 1767
+                                "speechCount": 788,
+                                "frequency": 1695
                             },
                             {
                                 "word": "geld",
-                                "speechCount": 995,
-                                "frequency": 1757
+                                "speechCount": 966,
+                                "frequency": 1679
                             },
                             {
-                                "word": "leider",
-                                "speechCount": 1216,
-                                "frequency": 1656
+                                "word": "jahre",
+                                "speechCount": 1139,
+                                "frequency": 1643
                             },
                             {
                                 "word": "politik",
-                                "speechCount": 1057,
-                                "frequency": 1641
+                                "speechCount": 1033,
+                                "frequency": 1601
                             },
                             {
                                 "word": "neue",
-                                "speechCount": 1154,
-                                "frequency": 1625
+                                "speechCount": 1130,
+                                "frequency": 1589
                             },
                             {
-                                "word": "besser",
-                                "speechCount": 1181,
-                                "frequency": 1609
-                            },
-                            {
-                                "word": "sorgen",
-                                "speechCount": 1042,
-                                "frequency": 1602
-                            },
-                            {
-                                "word": "reden",
-                                "speechCount": 1078,
-                                "frequency": 1571
-                            },
-                            {
-                                "word": "schaffen",
-                                "speechCount": 1153,
-                                "frequency": 1557
+                                "word": "leider",
+                                "speechCount": 1158,
+                                "frequency": 1575
                             }
                         ]
                     },
@@ -2312,93 +2312,93 @@ x-robots-tag: noindex
                         "topWords": [
                             {
                                 "word": "land",
-                                "speechCount": 246,
-                                "frequency": 413
+                                "speechCount": 249,
+                                "frequency": 418
                             },
                             {
                                 "word": "euro",
-                                "speechCount": 154,
-                                "frequency": 397
+                                "speechCount": 155,
+                                "frequency": 395
                             },
                             {
                                 "word": "menschen",
                                 "speechCount": 217,
-                                "frequency": 378
+                                "frequency": 380
                             },
                             {
                                 "word": "bürger",
-                                "speechCount": 150,
-                                "frequency": 247
-                            },
-                            {
-                                "word": "farle",
-                                "speechCount": 108,
-                                "frequency": 237
-                            },
-                            {
-                                "word": "geld",
-                                "speechCount": 125,
-                                "frequency": 202
+                                "speechCount": 149,
+                                "frequency": 246
                             },
                             {
                                 "word": "milliarden",
-                                "speechCount": 96,
-                                "frequency": 201
+                                "speechCount": 97,
+                                "frequency": 203
+                            },
+                            {
+                                "word": "geld",
+                                "speechCount": 126,
+                                "frequency": 200
                             },
                             {
                                 "word": "millionen",
-                                "speechCount": 107,
-                                "frequency": 188
+                                "speechCount": 106,
+                                "frequency": 185
+                            },
+                            {
+                                "word": "wer",
+                                "speechCount": 138,
+                                "frequency": 185
                             },
                             {
                                 "word": "politik",
-                                "speechCount": 112,
-                                "frequency": 170
+                                "speechCount": 114,
+                                "frequency": 174
                             },
                             {
-                                "word": "russland",
-                                "speechCount": 93,
-                                "frequency": 168
+                                "word": "gar",
+                                "speechCount": 138,
+                                "frequency": 173
                             },
                             {
                                 "word": "ukraine",
-                                "speechCount": 68,
-                                "frequency": 160
+                                "speechCount": 67,
+                                "frequency": 151
                             },
                             {
-                                "word": "demokratie",
-                                "speechCount": 82,
+                                "word": "grünen",
+                                "speechCount": 107,
                                 "frequency": 145
                             },
                             {
-                                "word": "krieg",
-                                "speechCount": 78,
-                                "frequency": 143
+                                "word": "demokratie",
+                                "speechCount": 83,
+                                "frequency": 144
                             },
                             {
-                                "word": "leben",
-                                "speechCount": 116,
-                                "frequency": 143
+                                "word": "russland",
+                                "speechCount": 84,
+                                "frequency": 144
                             },
                             {
-                                "word": "reden",
-                                "speechCount": 107,
+                                "word": "tun",
+                                "speechCount": 113,
+                                "frequency": 142
+                            },
+                            {
+                                "word": "usa",
+                                "speechCount": 79,
                                 "frequency": 141
                             },
                             {
-                                "word": "zeit",
-                                "speechCount": 110,
-                                "frequency": 140
+                                "word": "gut",
+                                "speechCount": 124,
+                                "frequency": 138
                             },
                             {
-                                "word": "nein",
-                                "speechCount": 104,
-                                "frequency": 136
-                            },
-                            {
-                                "word": "europa",
-                                "speechCount": 79,
-                                "frequency": 135
+                                "word": "leben",
+                                "speechCount": 112,
+                                "frequency": 138
                             },
                             {
                                 "word": "regierung",
@@ -2406,9 +2406,9 @@ x-robots-tag: noindex
                                 "frequency": 134
                             },
                             {
-                                "word": "ampel",
-                                "speechCount": 82,
-                                "frequency": 130
+                                "word": "europa",
+                                "speechCount": 78,
+                                "frequency": 131
                             }
                         ]
                     },
@@ -2419,7 +2419,7 @@ x-robots-tag: noindex
                             {
                                 "word": "menschen",
                                 "speechCount": 63,
-                                "frequency": 119
+                                "frequency": 118
                             },
                             {
                                 "word": "land",
@@ -2427,34 +2427,19 @@ x-robots-tag: noindex
                                 "frequency": 106
                             },
                             {
-                                "word": "matthias",
-                                "speechCount": 44,
-                                "frequency": 89
-                            },
-                            {
-                                "word": "birkwald",
-                                "speechCount": 42,
-                                "frequency": 82
-                            },
-                            {
                                 "word": "euro",
                                 "speechCount": 43,
-                                "frequency": 81
+                                "frequency": 79
+                            },
+                            {
+                                "word": "afd",
+                                "speechCount": 23,
+                                "frequency": 69
                             },
                             {
                                 "word": "politik",
-                                "speechCount": 45,
-                                "frequency": 65
-                            },
-                            {
-                                "word": "russland",
-                                "speechCount": 28,
-                                "frequency": 54
-                            },
-                            {
-                                "word": "wagenknecht",
-                                "speechCount": 36,
-                                "frequency": 54
+                                "speechCount": 43,
+                                "frequency": 63
                             },
                             {
                                 "word": "milliarden",
@@ -2462,14 +2447,19 @@ x-robots-tag: noindex
                                 "frequency": 52
                             },
                             {
-                                "word": "krieg",
-                                "speechCount": 24,
-                                "frequency": 51
-                            },
-                            {
                                 "word": "ampel",
                                 "speechCount": 31,
                                 "frequency": 50
+                            },
+                            {
+                                "word": "krieg",
+                                "speechCount": 23,
+                                "frequency": 50
+                            },
+                            {
+                                "word": "wer",
+                                "speechCount": 32,
+                                "frequency": 49
                             },
                             {
                                 "word": "regierung",
@@ -2477,43 +2467,53 @@ x-robots-tag: noindex
                                 "frequency": 43
                             },
                             {
-                                "word": "nein",
-                                "speechCount": 31,
-                                "frequency": 39
+                                "word": "russland",
+                                "speechCount": 23,
+                                "frequency": 40
                             },
                             {
-                                "word": "reden",
+                                "word": "fdp",
                                 "speechCount": 24,
+                                "frequency": 38
+                            },
+                            {
+                                "word": "spd",
+                                "speechCount": 22,
+                                "frequency": 38
+                            },
+                            {
+                                "word": "gar",
+                                "speechCount": 25,
+                                "frequency": 37
+                            },
+                            {
+                                "word": "tun",
+                                "speechCount": 26,
                                 "frequency": 37
                             },
                             {
                                 "word": "ukraine",
                                 "speechCount": 18,
-                                "frequency": 37
-                            },
-                            {
-                                "word": "sahra",
-                                "speechCount": 26,
-                                "frequency": 36
-                            },
-                            {
-                                "word": "bevölkerung",
-                                "speechCount": 22,
                                 "frequency": 35
+                            },
+                            {
+                                "word": "bsw",
+                                "speechCount": 28,
+                                "frequency": 34
                             },
                             {
                                 "word": "problem",
                                 "speechCount": 23,
-                                "frequency": 35
-                            },
-                            {
-                                "word": "nächste",
-                                "speechCount": 33,
                                 "frequency": 34
                             },
                             {
-                                "word": "ernst",
-                                "speechCount": 20,
+                                "word": "nein",
+                                "speechCount": 27,
+                                "frequency": 33
+                            },
+                            {
+                                "word": "wirtschaft",
+                                "speechCount": 22,
                                 "frequency": 33
                             }
                         ]

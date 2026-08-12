@@ -58,6 +58,9 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				<?php 
 				}
 				?>
+				<li class="nav-item">
+					<a class="nav-link" id="statistics-tab" data-bs-toggle="tab" data-bs-target="#statistics" role="tab" aria-controls="statistics" aria-selected="true"><span class="nav-item-label"><?= L::statistics() ?></span></a>
+				</li>
 				<li class="nav-item ms-auto">
 					<a class="nav-link" id="data-tab" data-bs-toggle="tab" data-bs-target="#data" role="tab" aria-controls="data" aria-selected="true"><span class="icon-download"></span><span class="nav-item-label d-none d-sm-inline"><?= L::data() ?></span></a>
 				</li>
@@ -77,6 +80,9 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				<?php 
 				}
 				?>
+				<div class="tab-pane fade bg-white" id="statistics" role="tabpanel" aria-labelledby="statistics-tab">
+					<?php include_once(__DIR__ . '/../../components/entity-statistics.php'); ?>
+				</div>
 				<div class="tab-pane fade bg-white" id="data" role="tabpanel" aria-labelledby="data-tab">
 					<div class="bg-white border p-3">
 						<?php include_once(__DIR__ . '/../../components/entity-data.php'); ?>

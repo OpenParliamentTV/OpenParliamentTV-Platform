@@ -482,9 +482,9 @@ x-robots-tag: noindex
                         "sourceURI": "https://www.bundestag.de/resource/blob/1067754/21005.xml",
                         "creator": "Deutscher Bundestag",
                         "license": "Public Domain",
-                        "language": "DE-de",
+                        "language": "de",
                         "originTextID": "ID21502100",
-                        "lastChanged": "2025-06-16 08:47:09"
+                        "lastChanged": "2026-06-25 19:59:49"
                     }
                 ],
                 "textContentsCount": 1
@@ -499,7 +499,7 @@ x-robots-tag: noindex
                         "id": "DE-021",
                         "attributes": {
                             "number": 21,
-                            "dateStart": null,
+                            "dateStart": "2025-03-25",
                             "dateEnd": null
                         },
                         "links": {
@@ -639,7 +639,7 @@ x-robots-tag: noindex
                                         "url": "https://de.wikipedia.org/wiki/Fraktion_Die_Linke_im_Bundestag"
                                     }
                                 },
-                                "color": null
+                                "color": "#bc3475"
                             },
                             "links": {
                                 "self": "https://optv.local/api/v1/organisation/Q1826856"
@@ -1261,9 +1261,9 @@ x-robots-tag: noindex
                         "sourceURI": "https://www.bundestag.de/resource/blob/1108798/21022.xml",
                         "creator": "Deutscher Bundestag",
                         "license": "Public Domain",
-                        "language": "DE-de",
+                        "language": "de",
                         "originTextID": "ID212206800",
-                        "lastChanged": "2025-09-30 12:37:51"
+                        "lastChanged": "2026-06-25 19:59:49"
                     }
                 ],
                 "textContentsCount": 1
@@ -1420,7 +1420,7 @@ x-robots-tag: noindex
                                         "url": "https://de.wikipedia.org/wiki/Fraktion_Die_Linke_im_Bundestag"
                                     }
                                 },
-                                "color": null
+                                "color": "#bc3475"
                             },
                             "links": {
                                 "self": "https://optv.local/api/v1/organisation/Q1826856"

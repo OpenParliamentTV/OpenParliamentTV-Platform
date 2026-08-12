@@ -4,31 +4,14 @@ x-robots-tag: noindex
 
 {
     "meta": {
-        "api": {
-            "version": 1,
-            "documentation": "https://optv.local/api",
-            "license": {
-                "label": "ODC Open Database License (ODbL) v1.0",
-                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
-            }
-        },
-        "requestStatus": "success"
+        "requestStatus": "error"
     },
-    "data": {
-        "processName": "statisticsIndexing",
-        "statusDetails": "Statistics indexing completed successfully",
-        "totalDbMediaItems": 1198,
-        "processedMediaItems": 1198,
-        "words_indexed": 0,
-        "statistics_updated": 0,
-        "performance": {
-            "start_time": 1759228675,
-            "avg_docs_per_second": 0
-        },
-        "status": "completed_successfully",
-        "startTime": "<<NORMALIZED>>",
-        "endTime": "<<NORMALIZED>>",
-        "errors": [],
-        "lastActivityTime": "<<NORMALIZED>>"
-    }
+    "errors": [
+        {
+            "status": "403",
+            "code": "1",
+            "title": "Nicht erlaubt",
+            "detail": "Du hast keine Berechtigung diese Seite aufzurufen oder diese Aktion durchzuführen."
+        }
+    ]
 }

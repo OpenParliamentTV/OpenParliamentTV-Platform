@@ -428,6 +428,46 @@ function pageSearch(array $routeData, array $params, Engine $plates): void
     ], $renderVars));
 }
 
+/**
+ * The public statistics page.
+ *
+ * Deliberately not part of pageAdmin()'s map: that map fixes pageType to 'admin'
+ * (which pulls in bootstrap-table and the manage chrome) and carried the only
+ * untranslated title in it. This page is an ordinary public page.
+ *
+ * The page needs three things from the server that JS cannot work out for
+ * itself: which parliament to show, where that parliament's data starts, and the
+ * unscoped overview to render without a round trip.
+ */
+function pageStatistics(array $routeData, array $params, Engine $plates): void
+{
+    global $config;
+
+    require_once(__DIR__ . '/../../api/v1/modules/statistics.php');
+
+    $parliament = resolveParliamentKey($_REQUEST['parliament'] ?? null);
+
+    // Served from the cache the post-indexing warm step fills; only ever cold
+    // when someone reaches the page between an import finishing and the warm
+    // completing.
+    $generalStats = apiV1([
+        'action' => 'statistics',
+        'itemType' => 'general',
+        'parliament' => $parliament,
+    ]);
+
+    optvRenderPage($plates, 'pages/statistics/page', [
+        'page' => 'statistics',
+        'pageType' => 'default',
+        'pageTitle' => L::statistics(),
+        'pageDescription' => L::statisticsClaim(),
+        'pageBreadcrumbs' => [],
+        'statisticsParliament' => $parliament,
+        'statisticsDataStart' => statisticsParliamentDataStart($parliament),
+        'generalStats' => $generalStats,
+    ]);
+}
+
 // =====================================================================
 // ADMIN LIST / SIMPLE MANAGE PAGES
 // =====================================================================
@@ -452,7 +492,6 @@ function pageAdmin(array $routeData, array $params, Engine $plates): void
         'manage-media' => ['pages/manage/media/page', L::manageMedia(), 'admin', 'home'],
         'manage-structure' => ['pages/manage/structure/page', L::manageStructure(), 'admin', 'home'],
         'manage-users' => ['pages/manage/users/page', L::manageUsers(), 'admin', 'home'],
-        'statistics' => ['pages/statistics/page', 'Statistics', 'admin', null],
         'manage-alerts' => ['pages/manage/alerts/page', L::alertManageTitle(), 'entity', 'home'],
         'manage-playlists' => ['pages/manage/playlists/page', L::playlistManageTitle(), 'entity', 'home'],
         'notifications' => ['pages/notifications/page', L::notifications(), 'entity', null],

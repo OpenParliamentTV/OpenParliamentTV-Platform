@@ -224,10 +224,21 @@ function searchSpeeches($request, $getAllResults = false) {
         ];
     }
 
+    // cleanText is index machinery, not part of the media document: it exists so
+    // significant_text has interjection-free text to rank over. It is written
+    // LAST into the indexed document, so dropping it here leaves the remaining
+    // keys in their original order — which matters, because asking OpenSearch to
+    // exclude it instead makes it re-serialise _source and reorder every key.
+    if (isset($results["hits"]["hits"])) {
+        foreach ($results["hits"]["hits"] as $i => $hit) {
+            unset($results["hits"]["hits"][$i]["_source"][OPTV_INDEX_ONLY_FIELD]);
+        }
+    }
+
     $resultCnt = 0;
     $findCnt = 0;
     $highlightCount = 0;
-    
+
     if (isset($request["q"]) && strlen($request["q"]) >= 1) {
         if (isset($results["hits"]["hits"])) {
             foreach ($results["hits"]["hits"] as $hit) {
@@ -376,11 +387,11 @@ function searchAutocomplete($textQuery) {
         return array();
     }
     
-    require_once(__DIR__.'/query-builder.php');
+    require_once(__DIR__.'/../statistics/queries.php');
 
     try {
-        $parliamentCode = getParliamentOpenSearchSuffix();
-        $enhancedResults = searchAutocompleteEnhanced($textQuery, 9, null, $parliamentCode);
+        $parliamentCode = resolveParliamentKey();
+        $enhancedResults = statsQueryAutocomplete($textQuery, 9, null, $parliamentCode);
         
         // Transform enhanced results to match old format for backward compatibility
         $results = array();
@@ -1192,6 +1203,18 @@ const OPTV_QUEUE_SOURCE_FIELDS = [
     "relationships.organisations.data",
     "annotations.data",
 ];
+
+/**
+ * Field that exists in the index but is not part of the media document.
+ *
+ * `cleanText` is the speech with interjections and chair segments removed,
+ * derived at write time (modules/search-index/indexer.php) so that
+ * significant_text has something to rank distinctive vocabulary over. It has to
+ * live in _source for significant_text to re-analyse it, so any read path that
+ * would otherwise hand the whole document back has to exclude it explicitly —
+ * it is index machinery, not part of the media API.
+ */
+const OPTV_INDEX_ONLY_FIELD = "cleanText";
 
 /**
  * Whether a request asked for the compact queue projection (`fields=queue`).

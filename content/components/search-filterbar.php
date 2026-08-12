@@ -77,21 +77,8 @@ $homeIntroInitiallyHidden = isset($homeIntroInitiallyHidden) ? $homeIntroInitial
                         <div class="checkboxList flex-grow-1">
                             <label style="display: block;" for="edit-party"><b><?= L::faction(); ?></b></label>
                             <?php
-
-                            require_once (__DIR__."/../../api/v1/api.php");
-
-                            $factions = apiV1(array("action"=>"search", "itemType"=>"organisations", "type"=>"faction", "filterable"=>1 ));
-
-                            $filterableFactions = [];
-                            foreach ($factions["data"] as $faction) {
-                                $filterableFactions[] = $faction["id"];
-                                echo '
-                                <div class="formCheckbox form-check partyIndicator mb-2 mb-lg-1" data-faction="'.$faction["id"].'">
-                                    <input id="edit-party-'.$faction["id"].'" name="factionID[]" value="'.$faction["id"].'" type="checkbox" class="form-check-input"> <label class="form-check-label" for="edit-party-'.$faction["id"].'">'.$faction["attributes"]["label"].'</label>
-                                </div>
-                                ';
-
-                            }
+                            // Shared with the statistics page; sets $filterableFactions.
+                            include(__DIR__ . "/faction-checkboxes.php");
                             ?>
                         </div>
                     </div>

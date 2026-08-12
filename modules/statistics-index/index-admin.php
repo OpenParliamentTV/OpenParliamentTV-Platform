@@ -1,305 +1,229 @@
 <?php
 
-require_once(__DIR__.'/../../api/v1/utilities.php');
-require_once(__DIR__.'/../search/opensearch.php');
+/**
+ * Statistics index lifecycle: the mapping, and creating/deleting the index.
+ *
+ * This file holds the ONE mapping definition. There used to be two -- a rich one
+ * here that nothing reachable ever called, and a thinner one inside
+ * bin/index-statistics.php that the live index was actually built from. The
+ * consequence was that fields the writer emitted (faction_id) were never mapped
+ * and arrived as dynamically-mapped text, forcing the read side to query
+ * `faction_id.keyword`, while a field that was mapped (party_id) was never
+ * written at all.
+ */
 
+require_once(__DIR__ . '/../../api/v1/utilities.php');
+require_once(__DIR__ . '/../search/opensearch.php');
 
 /**
- * Create statistics index mapping
+ * Mapping and settings for the statistics index.
+ *
+ * @param bool $bulkSettings Tune for a bulk rebuild (no replicas, no refresh).
+ *                           Call statsIndexRestoreSettings() afterwards.
+ * @return array Body for indices()->create().
  */
-function createStatisticsIndex($parliamentCode = 'de') {
-    $ESClient = getApiOpenSearchClient();
-    if (is_array($ESClient) && isset($ESClient["errors"])) {
-        return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
+function statsIndexMappingBody($bulkSettings = false)
+{
+    $settings = [
+        'number_of_shards'   => 1,
+        'number_of_replicas' => $bulkSettings ? 0 : 1,
+        'refresh_interval'   => $bulkSettings ? -1 : '30s',
+        'analysis' => [
+            'analyzer' => [
+                'autocomplete_analyzer' => [
+                    'tokenizer' => 'keyword',
+                    'filter'    => ['lowercase', 'autocomplete_filter'],
+                ],
+            ],
+            'filter' => [
+                'autocomplete_filter' => [
+                    'type'     => 'edge_ngram',
+                    'min_gram' => 1,
+                    'max_gram' => 20,
+                ],
+            ],
+        ],
+    ];
+
+    if ($bulkSettings) {
+        $settings['index.translog.sync_interval'] = '30s';
+        $settings['index.translog.durability']    = 'async';
     }
-    
-    $indexName = 'optv_statistics_' . strtolower($parliamentCode);
-    
-    $mapping = [
+
+    return [
         'mappings' => [
             'properties' => [
                 'aggregation_type' => ['type' => 'keyword'],
-                'date' => ['type' => 'date', 'format' => 'epoch_second'],
+
+                // Scope. Present on both document types, so one filter clause
+                // covers word documents and their totals alike.
+                'speech_id'           => ['type' => 'keyword'],
+                'session_id'          => ['type' => 'keyword'],
+                'agenda_item_id'      => ['type' => 'keyword'],
+                'electoral_period_id' => ['type' => 'keyword'],
+                'faction_id'          => ['type' => 'keyword'],
+                'speaker_id'          => ['type' => 'keyword'],
+
+                // true = session-chair text. Excluded from every default query.
+                'procedural' => ['type' => 'boolean'],
+
+                // `date` is a plain epoch-SECOND long, not a date type: min/max
+                // aggregations on a date field come back in milliseconds while
+                // range queries take seconds, and mixing the two silently yields
+                // first-use dates in the year 46398. Date histograms run on
+                // `date_string`, which is a real date field.
+                'date'        => ['type' => 'long'],
                 'date_string' => ['type' => 'date', 'format' => 'yyyy-MM-dd'],
+
+                // Surface form for display and word suggestions; stem for grouping.
                 'word' => [
-                    'type' => 'keyword',
+                    'type'   => 'keyword',
                     'fields' => [
-                        'text' => [
-                            'type' => 'text',
-                            'analyzer' => 'autocomplete_analyzer'
-                        ]
-                    ]
+                        'text' => ['type' => 'text', 'analyzer' => 'autocomplete_analyzer'],
+                    ],
                 ],
-                'faction_id' => ['type' => 'keyword'],
-                'speaker_id' => ['type' => 'keyword'],
+                'stem'  => ['type' => 'keyword'],
                 'count' => ['type' => 'long'],
-                'speech_count' => ['type' => 'long'],
-                'first_used' => ['type' => 'date', 'format' => 'epoch_second'],
-                'last_used' => ['type' => 'date', 'format' => 'epoch_second'],
-                'first_used_string' => ['type' => 'date', 'format' => 'yyyy-MM-dd'],
-                'last_used_string' => ['type' => 'date', 'format' => 'yyyy-MM-dd'],
-                'last_updated' => ['type' => 'date', 'format' => 'yyyy-MM-dd']
-            ]
+
+                // speech_totals only: normalization denominators.
+                'token_count'        => ['type' => 'long'],
+                'counted_word_count' => ['type' => 'long'],
+            ],
         ],
-        'settings' => [
-            'number_of_shards' => 1,
-            'number_of_replicas' => 0,
-            'refresh_interval' => '30s', // Reduce refresh frequency during indexing
-            'index.merge.policy.max_merged_segment' => '2gb', // Larger segments
-            'index.translog.flush_threshold_size' => '1gb', // Less frequent flushing
-            'analysis' => [
-                'analyzer' => [
-                    'autocomplete_analyzer' => [
-                        'tokenizer' => 'keyword',
-                        'filter' => ['lowercase', 'autocomplete_filter']
-                    ]
-                ],
-                'filter' => [
-                    'autocomplete_filter' => [
-                        'type' => 'edge_ngram',
-                        'min_gram' => 1,
-                        'max_gram' => 20
-                    ]
-                ]
-            ]
-        ]
+        'settings' => $settings,
     ];
-    
-    try {
-        if ($ESClient->indices()->exists(['index' => $indexName])) {
-            return ['success' => true, 'message' => 'Index already exists'];
-        }
-        
-        $response = $ESClient->indices()->create([
-            'index' => $indexName,
-            'body' => $mapping
-        ]);
-        
-        return ['success' => true, 'response' => $response];
-    } catch (Exception $e) {
-        error_log("Error creating statistics index: " . $e->getMessage());
-        return ['success' => false, 'error' => $e->getMessage()];
-    }
 }
 
 /**
- * Delete statistics index for clean rebuild
+ * Create the statistics index if it does not exist.
+ *
+ * @param string|null $parliament   Parliament config key.
+ * @param bool        $bulkSettings Tune for a bulk rebuild.
+ * @return array ['success' => bool, ...]
  */
-function deleteStatisticsIndex($parliamentCode = 'de') {
-    $ESClient = getApiOpenSearchClient();
-    if (is_array($ESClient) && isset($ESClient["errors"])) {
+function createStatisticsIndex($parliament = null, $bulkSettings = false)
+{
+    $client = getApiOpenSearchClient();
+    if (is_array($client) && isset($client['errors'])) {
         return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
     }
-    
-    $statisticsIndex = 'optv_statistics_' . strtolower($parliamentCode);
-    
+
+    $indexName = getStatisticsIndexName($parliament);
+
     try {
-        if ($ESClient->indices()->exists(['index' => $statisticsIndex])) {
-            $response = $ESClient->indices()->delete(['index' => $statisticsIndex]);
-            return ['success' => true, 'message' => 'Statistics index deleted', 'response' => $response];
-        } else {
-            return ['success' => true, 'message' => 'Statistics index did not exist'];
+        if ($client->indices()->exists(['index' => $indexName])) {
+            return ['success' => true, 'message' => 'Index already exists', 'index' => $indexName];
         }
+
+        $response = $client->indices()->create([
+            'index' => $indexName,
+            'body'  => statsIndexMappingBody($bulkSettings),
+        ]);
+
+        return ['success' => true, 'response' => $response, 'index' => $indexName];
     } catch (Exception $e) {
-        error_log("Error deleting statistics index: " . $e->getMessage());
+        error_log('Error creating statistics index: ' . $e->getMessage());
         return ['success' => false, 'error' => $e->getMessage()];
     }
 }
 
 /**
- * Create statistics index with clean rebuild option
+ * Drop the statistics index.
+ *
+ * @param string|null $parliament Parliament config key.
+ * @return array ['success' => bool, ...]
  */
-function createStatisticsIndexing($parliamentCode = 'de', $cleanRebuild = false) {
+function deleteStatisticsIndex($parliament = null)
+{
+    $client = getApiOpenSearchClient();
+    if (is_array($client) && isset($client['errors'])) {
+        return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
+    }
+
+    $indexName = getStatisticsIndexName($parliament);
+
+    try {
+        if (!$client->indices()->exists(['index' => $indexName])) {
+            return ['success' => true, 'message' => 'Statistics index did not exist'];
+        }
+
+        $response = $client->indices()->delete(['index' => $indexName]);
+
+        return ['success' => true, 'message' => 'Statistics index deleted', 'response' => $response];
+    } catch (Exception $e) {
+        error_log('Error deleting statistics index: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+/**
+ * Restore serving settings after a bulk rebuild.
+ *
+ * @param string|null $parliament Parliament config key.
+ * @return array ['success' => bool, ...]
+ */
+function statsIndexRestoreSettings($parliament = null)
+{
+    $client = getApiOpenSearchClient();
+    if (is_array($client) && isset($client['errors'])) {
+        return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
+    }
+
+    $indexName = getStatisticsIndexName($parliament);
+
+    try {
+        $client->indices()->putSettings([
+            'index' => $indexName,
+            'body'  => [
+                'index' => [
+                    'number_of_replicas'        => 1,
+                    'refresh_interval'          => '30s',
+                    'translog.sync_interval'    => '5s',
+                    'translog.durability'       => 'request',
+                ],
+            ],
+        ]);
+
+        return ['success' => true, 'index' => $indexName];
+    } catch (Exception $e) {
+        error_log('Error restoring statistics index settings: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+/**
+ * Create the statistics index, optionally dropping it first.
+ *
+ * @param string|null $parliament   Parliament config key.
+ * @param bool        $cleanRebuild Drop the index before creating it.
+ * @param bool        $bulkSettings Tune for a bulk rebuild.
+ * @return array ['success' => bool, ...]
+ */
+function createStatisticsIndexing($parliament = null, $cleanRebuild = false, $bulkSettings = false)
+{
     $results = [];
-    
-    // Clean rebuild: delete existing index first
+
     if ($cleanRebuild) {
-        $deleteResult = deleteStatisticsIndex($parliamentCode);
+        $deleteResult = deleteStatisticsIndex($parliament);
         $results['cleanup'] = $deleteResult;
-        
+
         if (!$deleteResult['success']) {
             return [
                 'success' => false,
-                'error' => 'Failed to clean existing statistics index for rebuild',
-                'details' => $deleteResult
+                'error'   => 'Failed to clean existing statistics index for rebuild',
+                'details' => $deleteResult,
             ];
         }
     }
-    
-    // Create statistics index
-    $statisticsResult = createStatisticsIndex($parliamentCode);
-    $results['statistics'] = $statisticsResult;
-    
+
+    $createResult = createStatisticsIndex($parliament, $bulkSettings);
+    $results['statistics'] = $createResult;
+
     return [
-        'success' => $statisticsResult['success'],
+        'success' => $createResult['success'],
         'results' => $results,
-        'message' => $statisticsResult['success'] ? 'Statistics index created successfully' : 'Statistics index creation failed'
+        'message' => $createResult['success']
+            ? 'Statistics index created successfully'
+            : 'Statistics index creation failed',
     ];
 }
-
-/**
- * Test statistics index creation
- */
-function testStatisticsIndexCreation($parliamentCode = 'de') {
-    return createStatisticsIndexing($parliamentCode, false);
-}
-
-
-/**
- * Update statistics index for a specific speech (incremental)
- */
-function updateStatisticsForSpeech($parliamentCode, $speechId, $speechData) {
-    try {
-        require_once(__DIR__ . '/../../api/v1/utilities.php');
-        require_once(__DIR__ . '/aggregation.php');
-        
-        // Use the existing statistics update function
-        $result = updateSpeechStatistics($speechData, $parliamentCode);
-        
-        if ($result['success']) {
-            return [
-                'success' => true, 
-                'message' => 'Statistics updated for speech ' . $speechId,
-                'aggregations_updated' => $result['aggregations_updated'] ?? 0
-            ];
-        } else {
-            return ['success' => false, 'error' => $result['error'] ?? 'Unknown error'];
-        }
-        
-    } catch (Exception $e) {
-        return ['success' => false, 'error' => $e->getMessage()];
-    }
-}
-
-
-/**
- * Optimize statistics index by cleaning up deleted documents and merging segments
- */
-function optimizeStatisticsIndex($parliamentCode = 'de') {
-    $ESClient = getApiOpenSearchClient();
-    if (is_array($ESClient) && isset($ESClient["errors"])) {
-        return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
-    }
-    
-    $statisticsIndex = 'optv_statistics_' . strtolower($parliamentCode);
-    
-    try {
-        // Get stats before optimization
-        $statsBefore = $ESClient->indices()->stats(['index' => $statisticsIndex]);
-        $docsBefore = $statsBefore['indices'][$statisticsIndex]['total']['docs'];
-        
-        // Force merge to clean up deleted documents and optimize segments
-        $mergeParams = [
-            'index' => $statisticsIndex,
-            'max_num_segments' => 1, // Merge to single segment for maximum optimization
-            'only_expunge_deletes' => false // Full optimization, not just deletes
-        ];
-        
-        $startTime = microtime(true);
-        $mergeResponse = $ESClient->indices()->forcemerge($mergeParams);
-        $endTime = microtime(true);
-        
-        // Get stats after optimization
-        sleep(2); // Give OpenSearch time to update stats
-        $statsAfter = $ESClient->indices()->stats(['index' => $statisticsIndex]);
-        $docsAfter = $statsAfter['indices'][$statisticsIndex]['total']['docs'];
-        
-        $deletedCleaned = $docsBefore['deleted'] - $docsAfter['deleted'];
-        $sizeBefore = $statsBefore['indices'][$statisticsIndex]['total']['store']['size_in_bytes'];
-        $sizeAfter = $statsAfter['indices'][$statisticsIndex]['total']['store']['size_in_bytes'];
-        $spaceReclaimed = $sizeBefore - $sizeAfter;
-        
-        return [
-            'success' => true,
-            'duration' => round($endTime - $startTime, 2),
-            'deleted_cleaned' => $deletedCleaned,
-            'space_reclaimed' => $spaceReclaimed,
-            'space_savings_percent' => $sizeBefore > 0 ? round(($spaceReclaimed / $sizeBefore) * 100, 2) : 0,
-            'before' => $docsBefore,
-            'after' => $docsAfter,
-            'message' => "Optimization complete: {$deletedCleaned} deleted documents cleaned, " . 
-                        round($spaceReclaimed / 1024 / 1024, 2) . " MB reclaimed"
-        ];
-        
-    } catch (Exception $e) {
-        error_log("Error optimizing statistics index: " . $e->getMessage());
-        return ['success' => false, 'error' => $e->getMessage()];
-    }
-}
-
-/**
- * Extract statistics updates from speech data for incremental indexing
- */
-function extractStatisticsFromSpeech($speechId, $speechData) {
-    try {
-        require_once(__DIR__ . '/extraction.php');
-        require_once(__DIR__ . '/text-processing.php');
-        
-        global $config;
-        
-        // Extract speech metadata
-        $dateTimestamp = extractSpeechDate($speechData);
-        $dateString = extractSpeechDateString($speechData);
-        $speakerId = extractMainSpeakerId($speechData);
-        $faction = extractMainSpeakerFaction($speechData);
-        
-        if (empty($dateTimestamp)) {
-            return [];
-        }
-        
-        // Get word frequencies from speech
-        $wordFreqs = getWordFrequenciesFromSpeech($speechData, $config);
-        
-        if (empty($wordFreqs)) {
-            return [];
-        }
-        
-        $statisticsUpdates = [];
-        $today = date('Y-m-d');
-        
-        foreach ($wordFreqs as $word => $count) {
-            // Daily faction aggregation (optimal performance)
-            $dailyFactionId = generateAggregationId('daily_faction', $dateString, $word, $faction['id'] ?? null);
-            $statisticsUpdates[] = [
-                'id' => $dailyFactionId,
-                'data' => [
-                    'aggregation_type' => 'word_frequency_daily_faction',
-                    'date' => $dateTimestamp,
-                    'date_string' => $dateString,
-                    'word' => $word,
-                    'faction_id' => $faction['id'] ?? null,
-                    'count' => $count,
-                    'speech_count' => 1,
-                    'last_updated' => $today
-                ]
-            ];
-            
-            // Speaker aggregation
-            if ($speakerId) {
-                $speakerAggId = generateAggregationId('speaker', null, $word, $speakerId);
-                $statisticsUpdates[] = [
-                    'id' => $speakerAggId,
-                    'data' => [
-                        'aggregation_type' => 'speaker_word_frequency',
-                        'speaker_id' => $speakerId,
-                        'word' => $word,
-                        'count' => $count,
-                        'speech_count' => 1,
-                        'first_used' => $dateTimestamp,
-                        'last_used' => $dateTimestamp,
-                        'first_used_string' => $dateString,
-                        'last_used_string' => $dateString,
-                        'last_updated' => $today
-                    ]
-                ];
-            }
-        }
-        
-        return $statisticsUpdates;
-        
-    } catch (Exception $e) {
-        error_log("Error extracting statistics from speech {$speechId}: " . $e->getMessage());
-        return [];
-    }
-}
-
