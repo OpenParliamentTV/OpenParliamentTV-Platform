@@ -25,7 +25,7 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 						<?php 
 						if (isset($apiResult["data"]["relationships"]["faction"]["data"]["id"])) {
 						?>
-							<h2><?= h($apiResult["data"]["attributes"]["label"]) ?><a href="../organisation/<?= hAttr($apiResult["data"]["relationships"]["faction"]["data"]["id"]) ?>" class="partyIndicator ms-2" data-faction="<?= hAttr($apiResult["data"]["relationships"]["faction"]["data"]["id"]) ?>" style="font-size: 14px;"><?= h($apiResult["data"]["relationships"]["faction"]["data"]["attributes"]["label"]) ?></a></h2>
+							<h2><?= h($apiResult["data"]["attributes"]["label"]) ?><a href="../organisation/<?= hAttr($apiResult["data"]["relationships"]["faction"]["data"]["id"]) ?>" class="partyIndicator partyIndicatorInline ms-2" data-faction="<?= hAttr($apiResult["data"]["relationships"]["faction"]["data"]["id"]) ?>" style="font-size: 14px;"><?= h($apiResult["data"]["relationships"]["faction"]["data"]["attributes"]["label"]) ?></a></h2>
 							
 						<?php 
 						} else {

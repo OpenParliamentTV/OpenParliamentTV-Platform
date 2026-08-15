@@ -217,11 +217,50 @@ function entityStatisticsRenderNetwork(containerId, entity, associations) {
 
 /** Plain list fallback for the co-occurrence data. */
 function entityStatisticsRenderList(containerId, related) {
-	const rows = related.map(function (r) {
-		const link = '<a href="/' + r.type + '/' + r.id + '">' + $('<div>').text(r.label).html() + '</a>';
-		return '<li class="mb-1">' + link + ' <span class="text-muted small">' + r.coOccurrenceCount + '</span></li>';
-	}).join('');
-	document.getElementById(containerId).innerHTML = '<ul class="list-unstyled mb-0">' + rows + '</ul>';
+	entityStatisticsRenderEntityList(containerId, related, function (row) {
+		return {
+			count: row.coOccurrenceCount,
+			countLabel: statisticsLabel('speeches')
+		};
+	});
+}
+
+/**
+ * A ranked list of entity cards.
+ *
+ * Shared by every entity list on the page — co-occurrence, mentioned-by, most
+ * mentioned, distinctively mentioned — so all of them get the avatar and the
+ * faction colour that the plain <li><a> versions lacked.
+ *
+ * @param {string}   containerId Element to fill.
+ * @param {Array}    rows        Statistics API rows.
+ * @param {Function} optionsFor  Row -> entity-item options (count, score, href).
+ */
+function entityStatisticsRenderEntityList(containerId, rows, optionsFor) {
+	const container = document.getElementById(containerId);
+	if (!container) return;
+
+	container.textContent = '';
+
+	if (!rows || !rows.length) {
+		const empty = document.createElement('div');
+		empty.className = 'text-muted small py-2';
+		empty.textContent = statisticsLabel('statisticsNoData');
+		container.appendChild(empty);
+		return;
+	}
+
+	const list = document.createElement('div');
+	list.className = 'entityList';
+
+	rows.forEach(function (row) {
+		const node = OptvEntityItem.fromStatsRow(row);
+		if (!node) return;
+		const options = optionsFor ? optionsFor(row) : {};
+		list.appendChild(OptvEntityItem.build(node, options));
+	});
+
+	container.appendChild(list);
 }
 
 /** The media-search filter parameter for an entity type. */

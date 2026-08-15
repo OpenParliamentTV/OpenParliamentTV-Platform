@@ -565,5 +565,8 @@
     "pending": "Ausstehend",
     "schemaMigrations": "Schema-Migrationen",
     "schemaMigrationsApply": "Ausstehende Migrationen anwenden",
-    "schemaMigrationsHint": "Nach einem Software-Update muss manchmal das Datenbankschema angepasst werden. Ausstehende Migrationen können hier angewendet werden."
+    "schemaMigrationsHint": "Nach einem Software-Update muss manchmal das Datenbankschema angepasst werden. Ausstehende Migrationen können hier angewendet werden.",
+    "statisticsMostMentioned": "Am häufigsten genannt",
+    "statisticsDistinctiveEntities": "Charakteristisch genannt",
+    "statisticsDistinctiveEntitiesNote": "Personen, Organisationen und Begriffe, die hier im Vergleich zum übrigen Korpus auffallen — nicht einfach die am häufigsten genannten."
 }

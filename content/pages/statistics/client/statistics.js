@@ -1574,14 +1574,119 @@ async function initializeDistinctiveWords() {
 	select.on('change', function () {
 		loadDistinctiveWords();
 		loadMostUsedWords();
+		loadScopeEntities();
 	});
+	$('#statisticsEntityTypeSelect').on('change', renderScopeEntities);
+
 	loadDistinctiveWords();
 	loadMostUsedWords();
+	loadScopeEntities();
 }
 
 $(document).ready(function () {
 	initializeDistinctiveWords();
 });
+
+/**
+ * The scope's entities: who and what was named, most and most distinctively.
+ *
+ * The entity counterpart of the two word clouds above, sharing their scope
+ * selector. Both halves are fetched once per scope and re-rendered locally when
+ * the reader switches type, because all three types come back in one response.
+ */
+let statisticsScopeEntities = { most: null, distinctive: null, scope: null };
+
+async function loadScopeEntities() {
+	const container = $('#statisticsMostMentioned');
+	if (!container.length) return;
+
+	const scope = $('#statisticsDistinctiveScope').val();
+	if (!scope) return;
+
+	const [key, value] = scope.split('=');
+	const params = { parliament: OPTV_STATISTICS.parliament, [key]: value };
+
+	container.html('<span class="text-muted small">…</span>');
+	$('#statisticsDistinctiveEntities').html('<span class="text-muted small">…</span>');
+
+	const [general, significant] = await Promise.all([
+		makeApiRequest('general', params),
+		makeApiRequest('significant-entities', Object.assign({ size: 12 }, params))
+	]);
+
+	statisticsScopeEntities = {
+		most: (((general || {}).data || {}).attributes || {}).entities || null,
+		distinctive: (((significant || {}).data || {}).attributes || {}).entities || null,
+		scope: { [key]: value }
+	};
+
+	renderScopeEntities();
+}
+
+/** Draw both entity panels for the type currently selected. */
+function renderScopeEntities() {
+	const type = $('#statisticsEntityTypeSelect').val() || 'person';
+	const state = statisticsScopeEntities;
+
+	const searchHref = function (row) {
+		const filters = Object.assign({}, state.scope || {});
+		filters[statisticsEntityFilterName(row.type)] = row.id + '~NER';
+		return statisticsSearchUrl(filters);
+	};
+
+	const mostRows = ((state.most || {}).byType || {})[type] || [];
+	statisticsRenderEntityPanel('statisticsMostMentioned', mostRows.slice(0, 12), function (row) {
+		return {
+			href: searchHref(row),
+			count: row.mentionCount,
+			countLabel: row.speechCount + ' ' + statisticsLabel('speeches')
+		};
+	});
+
+	// Significance scores span orders of magnitude and mean nothing to a reader
+	// as a number, so they are drawn relative to the strongest in the same list.
+	const distinctiveRows = ((state.distinctive || {}).byType || {})[type] || [];
+	const maxScore = distinctiveRows.length ? distinctiveRows[0].score : 0;
+	statisticsRenderEntityPanel('statisticsDistinctiveEntities', distinctiveRows, function (row) {
+		return {
+			href: searchHref(row),
+			score: row.score,
+			scoreMax: maxScore,
+			countLabel: row.speechCount + ' ' + statisticsLabel('speeches')
+		};
+	});
+}
+
+/** Fill one entity panel with a ranked list of entity cards. */
+function statisticsRenderEntityPanel(containerId, rows, optionsFor) {
+	const container = $('#' + containerId);
+	if (!container.length) return;
+
+	if (!rows.length) {
+		container.html('<span class="text-muted small">' + statisticsLabel('statisticsNoData') + '</span>');
+		return;
+	}
+
+	const list = document.createElement('div');
+	list.className = 'entityList';
+	rows.forEach(function (row) {
+		const node = OptvEntityItem.fromStatsRow(row);
+		if (!node) return;
+		list.appendChild(OptvEntityItem.build(node, optionsFor(row)));
+	});
+
+	container.empty().append(list);
+}
+
+/** The media-search filter parameter for an entity type. */
+function statisticsEntityFilterName(entityType) {
+	return {
+		person: 'personID',
+		organisation: 'organisationID',
+		document: 'documentID',
+		term: 'termID'
+	}[entityType] || 'personID';
+}
 
 
 /**

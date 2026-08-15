@@ -967,13 +967,32 @@ body.darkmode .modal-content .btn-close {
     margin-right: -5px;
 }
 
-.relationshipsList .entityPreview {
+table .thumbnailContainer {
+    width: 40px;
+    height: 40px;
+    margin: 0px;
+}
+
+/* ---- The entity card ------------------------------------------------------
+   One representation of an entity in its reduced form, wherever entities are
+   listed: the media page's relationships list, the statistics panels, the
+   session and electoral-period lists (content/components/entity-item.php), the
+   search suggestions and the entity-page statistics cards
+   (content/client/js/entity-item.js). Everything below is generic — a surface
+   opts into an element by emitting it, never by restyling the card.
+
+   Faction colour arrives through .partyIndicator[data-faction], whose rules are
+   generated per faction in content/head.php: the card's border *is* the faction
+   indicator, exactly as it is on the speech card.
+   --------------------------------------------------------------------------- */
+
+.entityItem {
     padding-left: 5px;
     padding-right: 5px;
 }
 
-.relationshipsList .entityPreview .entityContainer {
-    background: var(--secondary-bg-color);
+.entityItem .entityContainer {
+    background: var(--primary-bg-color);
     padding: 0px;
     display: block;
     margin-bottom: 10px;
@@ -982,55 +1001,61 @@ body.darkmode .modal-content .btn-close {
     position: relative;
 }
 
-.relationshipsList .entityPreview .entityContainer:not(.partyIndicator) {
-    border: 1px solid var(--border-color);
+.entityItem .entityContainer:not(.partyIndicator) {
+    border: 1px solid #aaaaaa;
 }
 
-.relationshipsList .entityPreview .entityContainer:not(.partyIndicator):hover {
+.entityItem .entityContainer:not(.partyIndicator):hover {
     border-color: var(--primary-fg-color);
 }
 
-.relationshipsList .entityPreview .entityContainer .thumbnailContainer {
+/* A faction card is the same 1px frame in the faction's colour, which arrives
+   from the per-faction rules content/head.php generates. Only the width and
+   style are set here, so that colour stays uncontested.
+
+   This used to come from player.css (`.customhtmlContainer .partyIndicator`),
+   which meant the frame existed on the media page and nowhere else -- every
+   other surface drew faction cards with no border at all. */
+.entityItem .entityContainer.partyIndicator {
+    border-width: 1px;
+    border-style: solid;
+}
+
+.entityItem .entityContainer .thumbnailContainer {
     width: 60px;
     height: 60px;
     margin: 0 10px 0px 0;
+    flex: none;
 }
 
-table .thumbnailContainer {
-    width: 40px;
-    height: 40px;
-    margin: 0px;
-}
-
-.relationshipsList .entityPreview .entityContainer a, 
-.relationshipsList .entityPreview .entityContainer .linkWrapper {
+/* The :not() is carrying specificity, not excluding anything: `.tab-content
+   a:not(.btn, …)` and `.subpage a:not(.btn)` both underline links at (0,2,1),
+   and the card appears inside both. The markup it replaces outran them by
+   sitting three classes deep under .relationshipsList. */
+.entityItem .entityContainer > a:not(.btn) {
     padding: 8px 10px;
     text-decoration: none;
     display: flex;
-    flex-direction: column;
-}
-
-.relationshipsList .entityPreview[data-type="person"] .entityContainer a, 
-.relationshipsList .entityPreview[data-type="person"] .entityContainer .linkWrapper,
-.relationshipsList .entityPreview[data-type="organisation"] .entityContainer a, 
-.relationshipsList .entityPreview[data-type="organisation"] .entityContainer .linkWrapper,
-.relationshipsList .entityPreview[data-type="document"] .entityContainer a, 
-.relationshipsList .entityPreview[data-type="document"] .entityContainer .linkWrapper,
-.relationshipsList .entityPreview[data-type="term"] .entityContainer a, 
-.relationshipsList .entityPreview[data-type="term"] .entityContainer .linkWrapper {
+    /* Row whenever there is an avatar to sit beside. This used to be enumerated
+       per data-type, so any type not on the list — an agenda item, a session —
+       silently fell back to a stacked card. */
     flex-direction: row;
+    align-items: flex-start;
 }
 
-.relationshipsList .entityPreview .entityContainer a > div:not(.thumbnailContainer), 
-.relationshipsList .entityPreview .entityContainer .linkWrapper > div:not(.thumbnailContainer) {
-    max-width: calc(100% - 70px);
+.entityItem .entityContainer > a:not(.btn) > .entityBody {
+    /* Not a hardcoded max-width against the 60px avatar the markup it replaces
+       used: the text column follows whatever the avatar is, or fills the card
+       when there is none. */
+    flex: 1;
+    min-width: 0;
 }
 
-.relationshipsList .entityPreview .entityContainer .entityButton {
+.entityItem .entityContainer .entityButton {
     padding: 0;
 }
 
-.relationshipsList .entityPreview[data-type="document"] .entityContainer .btn {
+.entityItem .entityContainer .entityButton .btn {
     padding: 2px 1px;
     position: absolute;
     top: 5px;
@@ -1038,20 +1063,66 @@ table .thumbnailContainer {
     margin-right: 0px;
 }
 
-.relationshipsList .entityPreview[data-type="document"] .entityContainer .btn span {
+.entityItem .entityContainer .entityButton .btn span {
     margin: 0px;
 }
 
-.relationshipsList .entityPreview .entityContainer .entityType {
+.entityItem .entityContainer .entityType {
     padding: 0 33px 4px 0;
 }
 
-.relationshipsList .entityPreview .entityContainer .entityTitle {
+.entityItem .entityContainer .entityTitle {
     font-weight: bolder;
     max-height: 167px;
     overflow: auto;
     hyphens: auto;
     white-space: normal;
+}
+
+.entityItem .entityContainer .entityCount {
+    margin-top: 3px;
+}
+
+/* The title is bold; the indicator trailing it is not, exactly as on the speech
+   card. .partyIndicatorInline already carries the left margin that separates it
+   from the name. */
+.entityItem .entityContainer .entityTitle > .partyIndicatorInline {
+    display: inline-block;
+    font-weight: normal;
+}
+
+/* The distinctiveness bar. Significance scores span orders of magnitude and mean
+   nothing to a reader as a number, so the panels plot them relative to the
+   strongest result in the same list and put the speech count in the title. */
+.entityItem .entityContainer .entityBar {
+    margin-top: 5px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--border-color);
+    overflow: hidden;
+}
+
+.entityItem .entityContainer .entityBar span {
+    display: block;
+    height: 100%;
+    background: var(--primary-fg-color);
+    opacity: .55;
+}
+
+/* A grid of entity cards: the statistics panels, and the entity page's
+   "mentioned by" / co-occurrence blocks.
+
+   Sized against the space it is given rather than the viewport, because these
+   panels are half-width on a desktop and full-width on a phone — so the same
+   rule yields one column in a narrow card, two in a half-width panel and three
+   or more across a full-width one. The gutters reproduce the relationships
+   list's Bootstrap row: 5px of padding either side of each card, pulled back
+   here, plus the card's own 10px bottom margin. */
+.entityList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    margin-left: -5px;
+    margin-right: -5px;
 }
 
 .entityLinksContainer {
@@ -1379,7 +1450,7 @@ body.ready > main {
 .partyIndicatorInline {
     font-size: 75%;
     padding: 0px 3px;
-    border: 1px solid transparent;
+    border: 1px solid #aaaaaa;
     border-radius: 3px;
     background-color: transparent !important;
     top: -1px;
@@ -2083,6 +2154,7 @@ body.darkmode .searchSuggestionContainer .suggestionItem em {
 }
 
 .detailsHeader .rounded-circle,
+.entityItem .rounded-circle,
 .entityPreview .rounded-circle,
 table .rounded-circle {
     position: relative;
@@ -2093,18 +2165,34 @@ table .rounded-circle {
 }
 
 body.darkmode .detailsHeader .rounded-circle,
+body.darkmode .entityItem .rounded-circle,
 body.darkmode .entityPreview .rounded-circle,
 body.darkmode table .rounded-circle {
     /*background-color: #303139;*/
 }
 
 .detailsHeader .rounded-circle > [class^="icon-"],
+.entityItem .rounded-circle > [class^="icon-"],
 .entityPreview .rounded-circle > [class^="icon-"],
 table .rounded-circle > [class^="icon-"] {
     color: #535263;
 }
 
+/* The entity card centres its fallback icon from here rather than from an inline
+   style on every emitter, which is what the markup it replaces did — and the two
+   copies of that inline style had already drifted apart (48% vs 50%, 28px vs
+   18px). Scoped to .entityItem: the other three ancestors above still position
+   their icons themselves, at sizes tuned per page. */
+.entityItem .rounded-circle > [class^="icon-"] {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    font-size: 28px;
+}
+
 .detailsHeader .rounded-circle img,
+.entityItem .rounded-circle img,
 .entityPreview .rounded-circle img,
 table .rounded-circle img {
     position: absolute;
@@ -2114,6 +2202,7 @@ table .rounded-circle img {
     object-position: top;
 }
 
+.entityItem[data-type="organisation"] .rounded-circle img,
 .entityPreview[data-type="organisation"] .rounded-circle img,
 table td.thumbnailColumn-organisation .rounded-circle img {
     object-fit: contain;

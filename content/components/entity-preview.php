@@ -32,7 +32,7 @@ if ($entity["data"]["type"] == "organisation") {
 						<?php 
 						if (isset($entity["data"]["relationships"]["faction"]["data"]["id"])) {
 						?>
-							<h3 class="mb-0" style="white-space: normal;"><a href="<?= $config["dir"]["root"] ?>/<?= hAttr($entity["data"]["type"]) ?>/<?= hAttr($entity["data"]["id"]) ?>"><?= h($entity["data"]["attributes"]["label"]) ?></a><a href="../organisation/<?= hAttr($entity["data"]["relationships"]["faction"]["data"]["id"]) ?>" class="partyIndicator ms-2" data-faction="<?= hAttr($entity["data"]["relationships"]["faction"]["data"]["id"]) ?>" style="font-size: 14px;"><?= h($entity["data"]["relationships"]["faction"]["data"]["attributes"]["label"]) ?></a></h3>
+							<h3 class="mb-0" style="white-space: normal;"><a href="<?= $config["dir"]["root"] ?>/<?= hAttr($entity["data"]["type"]) ?>/<?= hAttr($entity["data"]["id"]) ?>"><?= h($entity["data"]["attributes"]["label"]) ?></a><a href="../organisation/<?= hAttr($entity["data"]["relationships"]["faction"]["data"]["id"]) ?>" class="partyIndicator partyIndicatorInline ms-2" data-faction="<?= hAttr($entity["data"]["relationships"]["faction"]["data"]["id"]) ?>"><?= h($entity["data"]["relationships"]["faction"]["data"]["attributes"]["label"]) ?></a></h3>
 						<?php 
 						} else {
 						?>

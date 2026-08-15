@@ -36,6 +36,26 @@ if (!$scopeStats || empty($scopeStats['speeches']['total'])) {
 }
 
 $scopeStatsCompact = ($scopeStatsParam === 'agendaItemID');
+
+/**
+ * The media-search filter parameter for an entity type.
+ *
+ * Guarded because this is a template, not a module: a page that included the
+ * dashboard twice would otherwise fatal on the redeclaration.
+ */
+if (!function_exists('scopeStatisticsFilterName')) {
+    function scopeStatisticsFilterName($entityType)
+    {
+        $names = [
+            'person' => 'personID',
+            'organisation' => 'organisationID',
+            'document' => 'documentID',
+            'term' => 'termID',
+        ];
+
+        return $names[$entityType] ?? 'personID';
+    }
+}
 ?>
 
 <div class="row" id="scopeStatisticsModule"
@@ -175,6 +195,77 @@ $scopeStatsCompact = ($scopeStatsParam === 'agendaItemID');
 			</div>
 		</div>
 	</div>
+
+	<?php if (!empty($scopeStats['entities']['byType'])): ?>
+	<?php
+	/*
+	 * The same pair again, about who and what was named rather than which words
+	 * were used -- which for a sitting or an agenda item is often the more direct
+	 * answer to "what was this about". Most-mentioned is already in hand from the
+	 * scoped call above; distinctive loads client-side beside the words, for the
+	 * same reason.
+	 */
+	$scopeEntityTypes = [
+		'person' => L::personPlural(),
+		'organisation' => L::organisations(),
+		'term' => L::terms(),
+	];
+	?>
+	<div class="col-lg-6 mb-4">
+		<div class="card h-100">
+			<div class="card-header">
+				<h5 class="card-title mb-0"><?= h(L::statisticsMostMentioned()) ?></h5>
+			</div>
+			<div class="card-body">
+				<p class="small text-muted"><?= h(L::statisticsWordsNote()) ?></p>
+				<?php foreach ($scopeEntityTypes as $scopeEntityType => $scopeEntityLabel): ?>
+				<?php $scopeEntityRows = array_slice($scopeStats['entities']['byType'][$scopeEntityType] ?? [], 0, $scopeStatsCompact ? 5 : 8); ?>
+				<?php if (!empty($scopeEntityRows)): ?>
+				<h6 class="small text-muted mt-2"><?= h($scopeEntityLabel) ?></h6>
+				<div class="entityList">
+					<?php foreach ($scopeEntityRows as $scopeEntityRow): ?>
+					<?php
+					$entityItem = [
+						'type' => $scopeEntityRow['type'],
+						'id' => $scopeEntityRow['id'],
+						'subtype' => $scopeEntityRow['subtype'] ?? null,
+						'label' => $scopeEntityRow['label'],
+						'secondaryLabel' => ($scopeEntityRow['type'] === 'person' && !empty($scopeEntityRow['faction']))
+							? $scopeEntityRow['faction']['label'] : '',
+						'thumbnailURI' => $scopeEntityRow['thumbnailURI'] ?? null,
+						'faction' => $scopeEntityRow['faction'] ?? null,
+						'href' => $config['dir']['root'].'/'.$scopeEntityRow['type'].'/'.rawurlencode($scopeEntityRow['id']),
+					];
+					$entityItemOptions = [
+						'href' => $config['dir']['root'].'/search?'.http_build_query([
+							scopeStatisticsFilterName($scopeEntityRow['type']) => $scopeEntityRow['id'].'~NER',
+							$scopeStatsParam => $scopeStatsValue,
+						]),
+						'count' => $scopeEntityRow['mentionCount'],
+						'countLabel' => $scopeEntityRow['speechCount'].' '.L::speeches(),
+					];
+					include(__DIR__.'/entity-item.php');
+					?>
+					<?php endforeach; ?>
+				</div>
+				<?php endif; ?>
+				<?php endforeach; ?>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-lg-6 mb-4">
+		<div class="card h-100">
+			<div class="card-header">
+				<h5 class="card-title mb-0"><?= h(L::statisticsDistinctiveEntities()) ?></h5>
+			</div>
+			<div class="card-body">
+				<p class="small text-muted"><?= h(L::statisticsDistinctiveEntitiesNote()) ?></p>
+				<div id="scopeStatisticsEntities"></div>
+			</div>
+		</div>
+	</div>
+	<?php endif; ?>
 </div>
 
 <!-- statistics-charts.js supplies statisticsSearchUrl() and statisticsLabel(). -->

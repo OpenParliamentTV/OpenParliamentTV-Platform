@@ -3,10 +3,11 @@
 /**
  * Statistics index writer.
  *
- * One document per (speech x segment class x word), plus one totals document per
- * (speech x segment class):
+ * One document per (speech x segment class x word) and per (speech x segment
+ * class x entity), plus one totals document per (speech x segment class):
  *
  *   speech_word    _id = md5("w|<speechId>|<procedural>|<word>")
+ *   speech_entity  _id = md5("e|<speechId>|<procedural>|<type>|<entityId>")
  *   speech_totals  _id = md5("t|<speechId>|<procedural>")
  *
  * The point of the deterministic _id is idempotency. The previous model wrote
@@ -20,11 +21,20 @@
  *   speaker vocabulary term(speaker_id) -> terms(word) ordered by sum(count)
  *   first mention      term(stem) -> min(date)
  *   normalization      sum(token_count) over speech_totals
+ *   top entities       terms(entity_id) ordered by sum(count)
+ *   distinctive ones   significant_terms(entity_id), background = outside scope
  *
- * @see segments.php for the main/procedural split, stemming.php for `stem`.
+ * Entity documents carry the same scope fields as word documents, which is what
+ * makes every scope that works for words work for entities too. One document per
+ * (speech, entity) also means an aggregation's `doc_count` IS the speech count,
+ * so significant_terms compares speeches directly -- no sampler, no stemming.
+ *
+ * @see segments.php for the main/procedural split, stemming.php for `stem`,
+ *      entity-mentions.php for which annotations count as a mention.
  */
 
 require_once(__DIR__ . '/text-processing.php');
+require_once(__DIR__ . '/entity-mentions.php');
 require_once(__DIR__ . '/extraction.php');
 require_once(__DIR__ . '/stemming.php');
 require_once(__DIR__ . '/../search/opensearch.php');
@@ -51,7 +61,8 @@ function statsIndexBuildBatchDocs(array $speechNodes, $parliament = null, $confi
         $config = $GLOBALS['config'] ?? [];
     }
 
-    // Pass 1: word frequencies and metadata, collecting the batch's vocabulary.
+    // Pass 1: word frequencies, entity mentions and metadata, collecting the
+    // batch's vocabulary.
     $prepared = [];
     $vocabulary = [];
 
@@ -64,7 +75,11 @@ function statsIndexBuildBatchDocs(array $speechNodes, $parliament = null, $confi
         }
 
         $frequencies = statsIndexGetWordFrequencies($speechData, $config, $parliament);
-        if (empty($frequencies)) {
+        $mentions    = statsIndexGetEntityMentions($speechData);
+
+        // Either half is enough to keep the speech: a transcript can be too
+        // short to survive stopword removal and still name someone.
+        if (empty($frequencies) && empty($mentions)) {
             continue;
         }
 
@@ -78,6 +93,7 @@ function statsIndexBuildBatchDocs(array $speechNodes, $parliament = null, $confi
             'agendaItemId' => statsIndexExtractAgendaItemId($speechData),
             'periodId'    => statsIndexExtractElectoralPeriodId($speechData),
             'frequencies' => $frequencies,
+            'mentions'    => $mentions,
         ];
 
         foreach ($frequencies as $classData) {
@@ -96,7 +112,12 @@ function statsIndexBuildBatchDocs(array $speechNodes, $parliament = null, $confi
     $docs = [];
 
     foreach ($prepared as $speech) {
-        foreach ($speech['frequencies'] as $class => $classData) {
+        $classes = array_unique(array_merge(
+            array_keys($speech['frequencies']),
+            array_keys($speech['mentions'])
+        ));
+
+        foreach ($classes as $class) {
             $procedural = ($class === STATS_SEGMENT_PROCEDURAL);
 
             $scope = [
@@ -111,26 +132,50 @@ function statsIndexBuildBatchDocs(array $speechNodes, $parliament = null, $confi
                 'electoral_period_id' => $speech['periodId'],
             ];
 
-            foreach ($classData['words'] as $word => $count) {
+            // The totals document belongs to the words: it is the per-million
+            // denominator, and a class with mentions but no counted text has no
+            // token count to contribute.
+            if (isset($speech['frequencies'][$class])) {
+                $classData = $speech['frequencies'][$class];
+
+                foreach ($classData['words'] as $word => $count) {
+                    $docs[] = [
+                        '_id' => statsIndexWordDocId($speech['speechId'], $procedural, $word),
+                        'doc' => $scope + [
+                            'aggregation_type' => 'speech_word',
+                            'word'             => $word,
+                            'stem'             => $stems[$word] ?? $word,
+                            'count'            => $count,
+                        ],
+                    ];
+                }
+
                 $docs[] = [
-                    '_id' => statsIndexWordDocId($speech['speechId'], $procedural, $word),
+                    '_id' => statsIndexTotalsDocId($speech['speechId'], $procedural),
                     'doc' => $scope + [
-                        'aggregation_type' => 'speech_word',
-                        'word'             => $word,
-                        'stem'             => $stems[$word] ?? $word,
-                        'count'            => $count,
+                        'aggregation_type'   => 'speech_totals',
+                        'token_count'        => $classData['tokenCount'],
+                        'counted_word_count' => $classData['countedWordCount'],
                     ],
                 ];
             }
 
-            $docs[] = [
-                '_id' => statsIndexTotalsDocId($speech['speechId'], $procedural),
-                'doc' => $scope + [
-                    'aggregation_type'   => 'speech_totals',
-                    'token_count'        => $classData['tokenCount'],
-                    'counted_word_count' => $classData['countedWordCount'],
-                ],
-            ];
+            foreach (($speech['mentions'][$class] ?? []) as $mention) {
+                $docs[] = [
+                    '_id' => statsIndexEntityDocId(
+                        $speech['speechId'],
+                        $procedural,
+                        $mention['type'],
+                        $mention['id']
+                    ),
+                    'doc' => $scope + [
+                        'aggregation_type' => 'speech_entity',
+                        'entity_id'        => $mention['id'],
+                        'entity_type'      => $mention['type'],
+                        'count'            => $mention['count'],
+                    ],
+                ];
+            }
         }
     }
 
@@ -154,6 +199,12 @@ function statsIndexBuildSpeechDocs($speechData, $parliament = null, $config = nu
 function statsIndexWordDocId($speechId, $procedural, $word)
 {
     return md5('w|' . $speechId . '|' . ($procedural ? '1' : '0') . '|' . $word);
+}
+
+/** Deterministic id of one entity document. */
+function statsIndexEntityDocId($speechId, $procedural, $entityType, $entityId)
+{
+    return md5('e|' . $speechId . '|' . ($procedural ? '1' : '0') . '|' . $entityType . '|' . $entityId);
 }
 
 /** Deterministic id of one totals document. */

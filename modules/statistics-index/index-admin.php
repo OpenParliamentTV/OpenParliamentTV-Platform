@@ -55,8 +55,8 @@ function statsIndexMappingBody($bulkSettings = false)
             'properties' => [
                 'aggregation_type' => ['type' => 'keyword'],
 
-                // Scope. Present on both document types, so one filter clause
-                // covers word documents and their totals alike.
+                // Scope. Present on every document type, so one filter clause
+                // covers word documents, entity documents and totals alike.
                 'speech_id'           => ['type' => 'keyword'],
                 'session_id'          => ['type' => 'keyword'],
                 'agenda_item_id'      => ['type' => 'keyword'],
@@ -83,7 +83,16 @@ function statsIndexMappingBody($bulkSettings = false)
                     ],
                 ],
                 'stem'  => ['type' => 'keyword'],
+
+                // Occurrences within the speech. Shared by speech_word and
+                // speech_entity: both rank on sum(count), and both get their
+                // speech count from the bucket's doc_count instead.
                 'count' => ['type' => 'long'],
+
+                // speech_entity only: which entity was named. `entity_type` is
+                // the API itemType (person|organisation|document|term).
+                'entity_id'   => ['type' => 'keyword'],
+                'entity_type' => ['type' => 'keyword'],
 
                 // speech_totals only: normalization denominators.
                 'token_count'        => ['type' => 'long'],
@@ -96,6 +105,13 @@ function statsIndexMappingBody($bulkSettings = false)
 
 /**
  * Create the statistics index if it does not exist.
+ *
+ * An index that already exists has its mapping topped up rather than left alone.
+ * Adding a field to the mapping is the one schema change OpenSearch accepts in
+ * place, and skipping it would let the writer emit a field the index has never
+ * seen -- which dynamic mapping then types as text, so the terms aggregation the
+ * read side runs on it fails outright. The rebuild that follows a deploy fixes
+ * this too, but the incremental path runs from cron in between.
  *
  * @param string|null $parliament   Parliament config key.
  * @param bool        $bulkSettings Tune for a bulk rebuild.
@@ -112,7 +128,14 @@ function createStatisticsIndex($parliament = null, $bulkSettings = false)
 
     try {
         if ($client->indices()->exists(['index' => $indexName])) {
-            return ['success' => true, 'message' => 'Index already exists', 'index' => $indexName];
+            $mappingResult = statsIndexSyncMapping($parliament);
+
+            return [
+                'success' => $mappingResult['success'],
+                'message' => 'Index already exists',
+                'index'   => $indexName,
+                'mapping' => $mappingResult,
+            ];
         }
 
         $response = $client->indices()->create([
@@ -123,6 +146,43 @@ function createStatisticsIndex($parliament = null, $bulkSettings = false)
         return ['success' => true, 'response' => $response, 'index' => $indexName];
     } catch (Exception $e) {
         error_log('Error creating statistics index: ' . $e->getMessage());
+        return ['success' => false, 'error' => $e->getMessage()];
+    }
+}
+
+/**
+ * Push the field definitions onto an existing index.
+ *
+ * Only ever ADDS fields -- OpenSearch rejects a put_mapping that redefines an
+ * existing one, and every property below is already what the live index carries,
+ * so the call is a no-op until statsIndexMappingBody() grows a field.
+ *
+ * @param string|null $parliament Parliament config key.
+ * @return array ['success' => bool, ...]
+ */
+function statsIndexSyncMapping($parliament = null)
+{
+    $client = getApiOpenSearchClient();
+    if (is_array($client) && isset($client['errors'])) {
+        return ['success' => false, 'error' => 'Failed to initialize OpenSearch client'];
+    }
+
+    $indexName = getStatisticsIndexName($parliament);
+    $properties = statsIndexMappingBody()['mappings']['properties'] ?? [];
+
+    if (empty($properties)) {
+        return ['success' => true, 'message' => 'Nothing to sync'];
+    }
+
+    try {
+        $response = $client->indices()->putMapping([
+            'index' => $indexName,
+            'body'  => ['properties' => $properties],
+        ]);
+
+        return ['success' => true, 'response' => $response, 'index' => $indexName];
+    } catch (Exception $e) {
+        error_log('statsIndexSyncMapping: put_mapping failed: ' . $e->getMessage());
         return ['success' => false, 'error' => $e->getMessage()];
     }
 }

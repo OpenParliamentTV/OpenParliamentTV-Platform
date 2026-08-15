@@ -189,7 +189,6 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
 	border-radius: 4px;
 	background: transparent;
 	white-space: nowrap;
-	font-size: 14px;
 	vertical-align: 1px;
 }
 
@@ -283,8 +282,8 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
 	}
 }
 
-.customhtmlContainer .partyIndicator {
-	margin-left: 2px;
+.customhtmlContainer .entityContainer {
+	background: var(--secondary-bg-color) !important;
 }
 
 .titlebar {

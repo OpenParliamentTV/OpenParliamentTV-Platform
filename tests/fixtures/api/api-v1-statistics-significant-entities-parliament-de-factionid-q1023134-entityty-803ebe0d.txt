@@ -1,0 +1,113 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "statistics",
+        "id": "significant-entities",
+        "attributes": {
+            "scope": {
+                "factionID": "Q1023134"
+            },
+            "entities": {
+                "byType": {
+                    "term": [
+                        {
+                            "id": "Q980",
+                            "type": "term",
+                            "score": 0.0299999999999999988897769753748434595763683319091796875,
+                            "speechCount": 1010,
+                            "label": "Bayern",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q980"
+                            }
+                        },
+                        {
+                            "id": "Q562307",
+                            "type": "term",
+                            "score": 0.024699999999999999733546474089962430298328399658203125,
+                            "speechCount": 616,
+                            "label": "Rot-grüne Koalition",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q562307"
+                            }
+                        },
+                        {
+                            "id": "Q56039",
+                            "type": "term",
+                            "score": 0.0193000000000000011823875212257917155511677265167236328125,
+                            "speechCount": 346,
+                            "label": "Deutsche Wiedervereinigung",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q56039"
+                            }
+                        },
+                        {
+                            "id": "Q8268",
+                            "type": "term",
+                            "score": 0.01469999999999999952537965697274557896889746189117431640625,
+                            "speechCount": 298,
+                            "label": "Eurozone",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q8268"
+                            }
+                        },
+                        {
+                            "id": "Q1471921",
+                            "type": "term",
+                            "score": 0.00919999999999999984456877655247808434069156646728515625,
+                            "speechCount": 66,
+                            "label": "Sprach-Kitas",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q1471921"
+                            }
+                        },
+                        {
+                            "id": "Q19771",
+                            "type": "term",
+                            "score": 0.00839999999999999948097073598773931735195219516754150390625,
+                            "speechCount": 112,
+                            "label": "G20",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q19771"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "links": {
+        "self": "https://optv.local/api/v1/statistics/significant-entities?factionID=Q1023134"
+    }
+}

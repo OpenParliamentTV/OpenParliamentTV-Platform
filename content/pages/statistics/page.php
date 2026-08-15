@@ -369,7 +369,89 @@ $statisticsParliaments = $config["parliament"] ?? [];
 					</div>
 				</div>
 			</div>
-			
+
+			<?php if (!empty($generalStats["entities"]["byType"])): ?>
+			<?php
+			/*
+			 * Who and what the corpus names, the same way the vocabulary block
+			 * above reports which words it uses. Tabbed by faction for the same
+			 * reason: the corpus-wide list is very nearly everyone's list, and
+			 * the differences only show up side by side.
+			 *
+			 * Counts cover the speakers' own words -- interjections, which carry
+			 * most of the recognised entity mentions, are excluded upstream.
+			 */
+			$entityTypeLabels = [
+				'person' => L::personPlural(),
+				'organisation' => L::organisations(),
+				'term' => L::terms(),
+			];
+
+			// One tab per faction, plus the corpus-wide list, reusing the shape
+			// the vocabulary tabs above already established.
+			$entityScopes = [['id' => 'total', 'label' => L::total(), 'byType' => $generalStats["entities"]["byType"]]];
+			foreach (($generalStats["entities"]["byFaction"] ?? []) as $faction) {
+				$entityScopes[] = [
+					'id' => $faction['id'],
+					'label' => $faction['label'],
+					'byType' => $faction['byType'],
+				];
+			}
+			?>
+			<div class="row mb-3">
+				<div class="col-12">
+					<div class="card flex-fill">
+						<div class="card-header">
+							<h5 class="card-title mb-0"><?= h(L::statisticsMostMentioned()) ?></h5>
+						</div>
+						<div class="card-body">
+							<p class="small text-muted"><?= h(L::statisticsWordsNote()) ?></p>
+							<ul class="nav nav-tabs modern-tabs mb-3" id="entitiesTab" role="tablist">
+								<?php foreach ($entityScopes as $scopeIndex => $entityScope): ?>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link<?= $scopeIndex === 0 ? ' active' : '' ?>" data-bs-toggle="pill" data-bs-target="#entities-<?= hAttr($entityScope['id']) ?>" type="button" role="tab"><?= h($entityScope['label']) ?></button>
+								</li>
+								<?php endforeach; ?>
+							</ul>
+							<div class="tab-content modern-tabs" id="entitiesTabContent">
+								<?php foreach ($entityScopes as $scopeIndex => $entityScope): ?>
+								<div class="tab-pane fade<?= $scopeIndex === 0 ? ' show active' : '' ?>" id="entities-<?= hAttr($entityScope['id']) ?>" role="tabpanel">
+									<div class="row">
+										<?php foreach ($entityTypeLabels as $entityTypeKey => $entityTypeLabel): ?>
+										<div class="col-lg-4">
+											<h6><?= h($entityTypeLabel) ?></h6>
+											<div class="table-responsive">
+												<table class="table table-striped table-sm">
+													<thead>
+														<tr>
+															<th><?= h(L::entity()) ?></th>
+															<th><?= h(L::statisticsSpeechCount()) ?></th>
+															<th><?= h(L::statisticsFrequency()) ?></th>
+														</tr>
+													</thead>
+													<tbody>
+														<?php foreach (($entityScope['byType'][$entityTypeKey] ?? []) as $entityRow): ?>
+														<tr>
+															<td><a href="<?= hAttr($config["dir"]["root"].'/'.$entityRow["type"].'/'.$entityRow["id"]) ?>"><?= h($entityRow["label"]) ?></a></td>
+															<td><?= number_format($entityRow["speechCount"]) ?></td>
+															<td><?= number_format($entityRow["mentionCount"]) ?></td>
+														</tr>
+														<?php endforeach; ?>
+													</tbody>
+												</table>
+											</div>
+										</div>
+										<?php endforeach; ?>
+									</div>
+								</div>
+								<?php endforeach; ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<?php endif; ?>
+
 			<?php
 			} // End if generalStats
 			?>
@@ -455,6 +537,45 @@ $statisticsParliaments = $config["parliament"] ?? [];
 									<h6><?= h(L::statisticsDistinctiveWords()) ?></h6>
 									<p class="small text-muted"><?= h(L::statisticsDistinctiveWordsNote()) ?></p>
 									<div id="statisticsDistinctiveWords" class="d-flex flex-wrap gap-2 align-items-baseline"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<?php
+			/*
+			 * The same pair, asked of who and what was NAMED rather than of the
+			 * words used, and driven by the same scope selector above. Counts
+			 * cover the speakers' own words only: the interjections the protocol
+			 * records carry 71% of all recognised entity mentions, and crediting
+			 * those would turn "most mentioned people" into a list of hecklers.
+			 */
+			?>
+			<div class="row mb-3">
+				<div class="col-12">
+					<div class="card flex-fill">
+						<div class="card-header d-flex flex-wrap gap-2 align-items-center">
+							<h5 class="card-title mb-0 me-auto"><?= h(L::statisticsEntities()) ?></h5>
+							<label class="form-label mb-0 align-self-center small text-muted" for="statisticsEntityTypeSelect"><?= h(L::statisticsEntityType()) ?></label>
+							<select class="form-select form-select-sm w-auto" id="statisticsEntityTypeSelect">
+								<option value="person"><?= h(L::personPlural()) ?></option>
+								<option value="organisation"><?= h(L::organisations()) ?></option>
+								<option value="term"><?= h(L::terms()) ?></option>
+							</select>
+						</div>
+						<div class="card-body">
+							<div class="row">
+								<div class="col-lg-6 mb-3 mb-lg-0">
+									<h6><?= h(L::statisticsMostMentioned()) ?></h6>
+									<p class="small text-muted"><?= h(L::statisticsWordsNote()) ?></p>
+									<div id="statisticsMostMentioned"></div>
+								</div>
+								<div class="col-lg-6">
+									<h6><?= h(L::statisticsDistinctiveEntities()) ?></h6>
+									<p class="small text-muted"><?= h(L::statisticsDistinctiveEntitiesNote()) ?></p>
+									<div id="statisticsDistinctiveEntities"></div>
 								</div>
 							</div>
 						</div>

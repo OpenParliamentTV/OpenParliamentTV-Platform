@@ -59,19 +59,23 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				</div>
 				<div class="tab-pane fade" id="agendaItems" role="tabpanel" aria-labelledby="agendaItems-tab">
 					<div class="relationshipsList row row-cols-1 row-cols-md-2 row-cols-lg-3">
-					<?php 
+					<?php
+					// Agenda items are not platform entities, so they carry no preview node
+					// of their own -- the card is assembled here and drawn by the same
+					// partial everything else uses, with the avatar suppressed.
 					foreach ($apiResult["data"]["relationships"]["agendaItems"]["data"] as $relationshipItem) {
-					?>
-						<div class="entityPreview col" data-type="<?= hAttr($relationshipItem["type"]) ?>">
-							<div class="entityContainer">
-								<a href="<?= $config["dir"]["root"]."/".hAttr($relationshipItem["type"])."/".hAttr($apiResult["data"]["attributes"]["parliament"])."-".hAttr($relationshipItem["id"]) ?>">
-									<div><?= h($relationshipItem["attributes"]["officialTitle"]) ?></div>
-									<div class="entityTitle"><?= h($relationshipItem["attributes"]["title"]) ?></div>
-								</a>
-							</div>
-						</div>
-					<?php 
-					} 
+						$entityItem = [
+							"type" => $relationshipItem["type"],
+							"id" => $relationshipItem["id"],
+							"label" => $relationshipItem["attributes"]["title"],
+							"href" => $config["dir"]["root"]."/".$relationshipItem["type"]."/".$apiResult["data"]["attributes"]["parliament"]."-".$relationshipItem["id"],
+						];
+						$entityItemOptions = [
+							"showThumbnail" => false,
+							"typeLabel" => $relationshipItem["attributes"]["officialTitle"],
+						];
+						include(__DIR__."/../../components/entity-item.php");
+					}
 					?>
 					</div>
 				</div>

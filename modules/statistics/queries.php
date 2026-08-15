@@ -9,10 +9,10 @@
  *
  * Two things are worth knowing about the document model these read:
  *
- *  - One document per (speech x word), so a term bucket's `doc_count` IS the
- *    number of speeches containing that word. The old model stored a running
- *    `speech_count` that had to be summed, and that inflated whenever a speech
- *    was re-indexed.
+ *  - One document per (speech x word) and per (speech x entity), so a term
+ *    bucket's `doc_count` IS the number of speeches containing that word or
+ *    naming that entity. The old model stored a running `speech_count` that had
+ *    to be summed, and that inflated whenever a speech was re-indexed.
  *  - `stem` groups word forms, `word` keeps the surface form. Trend queries
  *    filter on one and report the other, which is what lets a chart say
  *    "flüchtlinge — includes flüchtling, flüchtlingen".
@@ -40,7 +40,7 @@ const STATS_MAX_WORD_FORMS = 5;
 /**
  * Filter clauses shared by every statistics-index query.
  *
- * @param string $aggregationType 'speech_word' or 'speech_totals'.
+ * @param string $aggregationType 'speech_word', 'speech_entity' or 'speech_totals'.
  * @param array  $options         scope filters; see statsQueryScopeFilters().
  * @return array OpenSearch filter clauses.
  */
@@ -127,7 +127,7 @@ const STATS_QUERY_KNOWN_OPTIONS = [
     'factions', 'dateFrom', 'dateTo',
     // Not scope filters, but legitimately present in the same options array.
     'parliament', 'procedural', 'interval', 'size', 'byFaction', 'match',
-    'separateByFaction',
+    'separateByFaction', 'entityTypes', 'excludeIDs',
 ];
 
 /**
@@ -591,6 +591,244 @@ function statsQueryWordBuckets(array $buckets)
     }
 
     return $words;
+}
+
+/**
+ * Entity types the mention statistics cover.
+ *
+ * Documents are deliberately absent. Only ten thousand NER document mentions
+ * exist corpus-wide, and the two hundred thousand `proceedingsReference` links
+ * are each speech's own Drucksache, attached to every speech under an agenda
+ * item — so a "most mentioned documents" list would reproduce the agenda rather
+ * than say anything about what was talked about.
+ */
+const STATS_ENTITY_TYPES = ['person', 'organisation', 'term'];
+
+/**
+ * Speeches an entity needs before it can be called distinctive.
+ *
+ * significant_terms will happily hand back an entity named in two speeches with
+ * a spectacular score, because two out of two is a perfect rate. This is the
+ * same guard STATS_COOCCURRENCE_MIN_DOCS applies to the co-occurrence graph.
+ */
+const STATS_ENTITY_MIN_SPEECHES = 3;
+
+/**
+ * Most-mentioned entities in a scope, per type and optionally per faction.
+ *
+ * The entity counterpart of statsQueryTopWords(), reading the `speech_entity`
+ * documents. One document per (speech, entity) means a bucket's `doc_count` is
+ * the exact number of speeches naming that entity, while `sum(count)` is how
+ * often it was named — the list ranks on the latter and reports both.
+ *
+ * @param array $options Scope filters plus size, byFaction, entityTypes,
+ *                       excludeIDs, parliament.
+ * @return array|null ['byType' => [...], 'byFaction' => [...]] or null.
+ */
+function statsQueryTopEntities(array $options = [])
+{
+    $size        = min(max((int) ($options['size'] ?? 20), 1), 50);
+    $withFaction = $options['byFaction'] ?? false;
+    $types       = statsQueryEntityTypes($options);
+    $exclude     = array_values($options['excludeIDs'] ?? []);
+
+    $entityAgg = [
+        'terms' => [
+            'field' => 'entity_id',
+            'size'  => $size,
+            'order' => ['mentions' => 'desc'],
+        ],
+        'aggs' => ['mentions' => ['sum' => ['field' => 'count']]],
+    ];
+    if (!empty($exclude)) {
+        $entityAgg['terms']['exclude'] = $exclude;
+    }
+
+    $typeAggs = [];
+    foreach ($types as $type) {
+        $typeAggs['type_' . $type] = [
+            'filter' => ['term' => ['entity_type' => $type]],
+            'aggs'   => ['top' => $entityAgg],
+        ];
+    }
+
+    if (empty($typeAggs)) {
+        return null;
+    }
+
+    $aggs = $typeAggs;
+    if ($withFaction) {
+        $aggs['by_faction'] = [
+            'terms' => ['field' => 'faction_id', 'size' => STATS_MAX_FACTIONS],
+            'aggs'  => $typeAggs,
+        ];
+    }
+
+    $body = [
+        'size'  => 0,
+        'query' => ['bool' => ['filter' => statsQueryBaseFilters('speech_entity', $options)]],
+        'aggs'  => $aggs,
+    ];
+
+    $aggregations = statsQueryRun($body, $options['parliament'] ?? null);
+    if ($aggregations === null) {
+        return null;
+    }
+
+    $result = ['byType' => statsQueryEntityTypeBuckets($aggregations, $types)];
+
+    if ($withFaction) {
+        $byFaction = [];
+        foreach ($aggregations['by_faction']['buckets'] ?? [] as $bucket) {
+            $byFaction[] = [
+                'id'     => $bucket['key'],
+                // A faction naming itself is not news — it does so in four
+                // speeches out of five, purely as self-reference. The exclusion
+                // has to happen here rather than on the aggregation, which is
+                // shared by every faction bucket and can only exclude one set.
+                'byType' => statsQueryEntityTypeBuckets($bucket, $types, [$bucket['key']]),
+            ];
+        }
+        $result['byFaction'] = $byFaction;
+    }
+
+    return $result;
+}
+
+/**
+ * Entities that characterise a scope, against the rest of the corpus.
+ *
+ * The entity counterpart of statsQuerySignificantWords(), and a simpler thing
+ * than that one: because a `speech_entity` document IS a (speech, entity) pair,
+ * significant_terms compares speech counts directly. No sampler is needed, and
+ * nothing has to be mapped back from a stem to a surface form.
+ *
+ * What it shares with the word version is the background: the scope is measured
+ * against everything OUTSIDE it. Left at the default, the background is the whole
+ * index — foreground included — so a faction covering a fifth of the corpus is
+ * largely measured against itself and almost nothing comes out as distinctive.
+ *
+ * @param array $options Scope filters plus size, entityTypes, excludeIDs,
+ *                       parliament. At least one scope filter is required.
+ * @return array|null ['byType' => [type => rows]] or null.
+ */
+function statsQuerySignificantEntities(array $options = [])
+{
+    $size    = min(max((int) ($options['size'] ?? 20), 1), 50);
+    $types   = statsQueryEntityTypes($options);
+    $exclude = array_values($options['excludeIDs'] ?? []);
+
+    $scopeFilters = statsQueryScopeFilters($options);
+    if (empty($scopeFilters) || empty($types)) {
+        return null;
+    }
+
+    // The document population both sides of the comparison are drawn from —
+    // everything statsQueryBaseFilters() adds beyond the scope itself.
+    $population = [
+        ['term' => ['aggregation_type' => 'speech_entity']],
+        ['term' => ['procedural' => !empty($options['procedural'])]],
+    ];
+
+    $aggs = [];
+    foreach ($types as $type) {
+        $significant = [
+            'field'         => 'entity_id',
+            'size'          => $size,
+            'min_doc_count' => STATS_ENTITY_MIN_SPEECHES,
+            'background_filter' => ['bool' => [
+                'filter'   => array_merge($population, [['term' => ['entity_type' => $type]]]),
+                'must_not' => $scopeFilters,
+            ]],
+        ];
+        if (!empty($exclude)) {
+            $significant['exclude'] = $exclude;
+        }
+
+        $aggs['type_' . $type] = [
+            'filter' => ['term' => ['entity_type' => $type]],
+            'aggs'   => ['sig' => ['significant_terms' => $significant]],
+        ];
+    }
+
+    $body = [
+        'size'  => 0,
+        'query' => ['bool' => ['filter' => array_merge($population, $scopeFilters)]],
+        'aggs'  => $aggs,
+    ];
+
+    $aggregations = statsQueryRun($body, $options['parliament'] ?? null);
+    if ($aggregations === null) {
+        return null;
+    }
+
+    $byType = [];
+    foreach ($types as $type) {
+        $rows = [];
+        foreach ($aggregations['type_' . $type]['sig']['buckets'] ?? [] as $bucket) {
+            $rows[] = [
+                'id'          => $bucket['key'],
+                'type'        => $type,
+                'score'       => round($bucket['score'], 4),
+                'speechCount' => (int) ($bucket['doc_count'] ?? 0),
+            ];
+        }
+        $byType[$type] = $rows;
+    }
+
+    return ['byType' => $byType];
+}
+
+/**
+ * The requested entity types, restricted to the ones that carry statistics.
+ *
+ * @param array $options May carry `entityTypes` as an array or comma list.
+ * @return array Subset of STATS_ENTITY_TYPES, in canonical order.
+ */
+function statsQueryEntityTypes(array $options)
+{
+    $requested = $options['entityTypes'] ?? null;
+
+    if (empty($requested)) {
+        return STATS_ENTITY_TYPES;
+    }
+
+    if (is_string($requested)) {
+        $requested = array_map('trim', explode(',', $requested));
+    }
+
+    return array_values(array_intersect(STATS_ENTITY_TYPES, $requested));
+}
+
+/**
+ * Shape the per-type sub-aggregations of one bucket into rows.
+ *
+ * @param array $container An aggregations array or a single terms bucket.
+ * @param array $types     Types to read, as returned by statsQueryEntityTypes().
+ * @param array $exclude   Entity ids to drop from the rows.
+ * @return array type => rows of ['id','type','speechCount','mentionCount'].
+ */
+function statsQueryEntityTypeBuckets(array $container, array $types, array $exclude = [])
+{
+    $byType = [];
+
+    foreach ($types as $type) {
+        $rows = [];
+        foreach ($container['type_' . $type]['top']['buckets'] ?? [] as $bucket) {
+            if (in_array($bucket['key'], $exclude, true)) {
+                continue;
+            }
+            $rows[] = [
+                'id'           => $bucket['key'],
+                'type'         => $type,
+                'speechCount'  => (int) ($bucket['doc_count'] ?? 0),
+                'mentionCount' => (int) ($bucket['mentions']['value'] ?? 0),
+            ];
+        }
+        $byType[$type] = $rows;
+    }
+
+    return $byType;
 }
 
 /**

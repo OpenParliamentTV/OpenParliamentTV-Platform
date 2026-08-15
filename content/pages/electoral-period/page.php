@@ -60,20 +60,23 @@ $flatDataArray = flattenEntityJSON($apiResult["data"]);
 				</div>
 				<div class="tab-pane fade" id="sessions" role="tabpanel" aria-labelledby="sessions-tab">
 					<div class="relationshipsList row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6">
-					<?php 
+					<?php
+					// Sessions are not platform entities, so they carry no preview node of
+					// their own -- the card is assembled here and drawn by the same partial
+					// everything else uses, with the avatar suppressed.
 					foreach ($apiResult["data"]["relationships"]["sessions"]["data"] as $relationshipItem) {
-						$formattedDateStart = date("d.m.Y", strtotime($relationshipItem["data"]["attributes"]["dateStart"]));
-					?>
-						<div class="entityPreview col" data-type="<?= hAttr($relationshipItem["data"]["type"] ?? $relationshipItem["type"] ?? '') ?>">
-							<div class="entityContainer">
-								<a href="<?= hAttr($config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$relationshipItem["data"]["id"]) ?>">
-									<div><?= h($formattedDateStart) ?></div>
-									<div class="entityTitle"><?= L::session() ?> <?= h($relationshipItem["data"]["attributes"]["number"]) ?></div>
-								</a>
-							</div>
-						</div>
-					<?php 
-					} 
+						$entityItem = [
+							"type" => $relationshipItem["data"]["type"] ?? "session",
+							"id" => $relationshipItem["data"]["id"],
+							"label" => L::session()." ".($relationshipItem["data"]["attributes"]["number"] ?? ""),
+							"href" => $config["dir"]["root"]."/".$relationshipItem["data"]["type"]."/".$relationshipItem["data"]["id"],
+						];
+						$entityItemOptions = [
+							"showThumbnail" => false,
+							"typeLabel" => date("d.m.Y", strtotime($relationshipItem["data"]["attributes"]["dateStart"])),
+						];
+						include(__DIR__."/../../components/entity-item.php");
+					}
 					?>
 					</div>
 				</div>

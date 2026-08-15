@@ -565,5 +565,8 @@
     "pending": "Bekliyor",
     "schemaMigrations": "Şema geçişleri",
     "schemaMigrationsApply": "Bekleyen geçişleri uygula",
-    "schemaMigrationsHint": "Bir yazılım güncellemesi veritabanı şemasında değişiklik gerektirebilir. Bekleyen geçişler buradan uygulanabilir."
+    "schemaMigrationsHint": "Bir yazılım güncellemesi veritabanı şemasında değişiklik gerektirebilir. Bekleyen geçişler buradan uygulanabilir.",
+    "statisticsMostMentioned": "En çok anılanlar",
+    "statisticsDistinctiveEntities": "Ayırt edici anılanlar",
+    "statisticsDistinctiveEntitiesNote": "Derlemin geri kalanına kıyasla burada öne çıkan kişiler, kuruluşlar ve terimler — yalnızca en sık anılanlar değil."
 }

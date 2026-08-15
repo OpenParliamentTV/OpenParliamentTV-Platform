@@ -219,6 +219,21 @@ if ($config["display"]["ner"]) {
         <hr>
         <div class="relationshipsCategoryHeader"><?= L::documents() ?></div>
         <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2"><?= $relatedDocumentsHTML ?></div>
+        <?php
+        // Organisations and terms outside the NER panel: these were built above
+        // and then never emitted, so a speech that referenced a committee or a
+        // procedural term showed nothing for it. Shown only when there is
+        // something to show, since most speeches have neither.
+        if (!empty(trim($relatedOrganisationsHTML))) { ?>
+        <hr>
+        <div class="relationshipsCategoryHeader"><?= L::organisations() ?></div>
+        <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2"><?= $relatedOrganisationsHTML ?></div>
+        <?php }
+        if (!empty(trim($relatedTermsHTML))) { ?>
+        <hr>
+        <div class="relationshipsCategoryHeader"><?= L::terms() ?></div>
+        <div class="relationshipsList row row-cols-1 row-cols-sm-2 row-cols-md-1 row-cols-lg-2"><?= $relatedTermsHTML ?></div>
+        <?php } ?>
         <?= $nerPanel ?>
     </div>
     <div class="tab-pane fade" id="data" role="tabpanel">

@@ -7,6 +7,7 @@ require_once (__DIR__."/../../../modules/statistics/statistics.php");
 require_once (__DIR__."/../../../modules/statistics/queries.php");
 require_once (__DIR__."/../../../modules/statistics/cache.php");
 require_once (__DIR__."/../../../modules/database/connections.php");
+require_once (__DIR__."/../../../modules/entities/preview.php");
 require_once (__DIR__."/../../../api/v1/utilities.php");
 
 /**
@@ -46,6 +47,82 @@ function enrichEntityWithSelfLink($entity, $entityType) {
     return $entity;
 }
 
+
+/**
+ * Add label, thumbnail and faction to a batch of entity rows.
+ *
+ * Every row keeps whatever measure it arrived with (speechCount, mentionCount,
+ * score) and gains what it takes to draw the entity card. Resolution happens in
+ * one pass for the whole batch — the per-id getEntityLabel() path costs a full
+ * entity fetch each, which for three types of twenty rows is a hundred round
+ * trips before anything is rendered.
+ *
+ * Rows whose entity no longer exists are dropped rather than shown as a bare id:
+ * an annotation can outlive the entity it names, and a card linking to a 404 is
+ * worse than a shorter list.
+ *
+ * @param array $rows Rows carrying at least `id` and `type`.
+ * @return array The resolvable rows, in their original order.
+ */
+function statisticsEnrichEntityRows(array $rows) {
+    if (empty($rows)) {
+        return [];
+    }
+
+    $refs = [];
+    foreach ($rows as $row) {
+        if (isset($row['type'], $row['id'])) {
+            $refs[] = ['type' => $row['type'], 'id' => $row['id']];
+        }
+    }
+
+    $nodes = entityBuildPreviewNodes($refs);
+    $enriched = [];
+
+    foreach ($rows as $row) {
+        $node = $nodes[($row['type'] ?? '') . '|' . ($row['id'] ?? '')] ?? null;
+        if ($node === null) {
+            continue;
+        }
+
+        $enriched[] = $row + [
+            'label'        => $node['label'],
+            'subtype'      => $node['subtype'],
+            'thumbnailURI' => $node['thumbnailURI'],
+            'faction'      => $node['faction'],
+            'links'        => ['self' => createEntitySelfLink($row['type'], $row['id'])],
+        ];
+    }
+
+    return $enriched;
+}
+
+/**
+ * Enrich every type's rows in a byType map, in one batch across all types.
+ *
+ * @param array $byType type => rows, as the query module returns it.
+ * @return array Same shape, enriched.
+ */
+function statisticsEnrichEntitiesByType(array $byType) {
+    $flat = [];
+    foreach ($byType as $rows) {
+        foreach ($rows as $row) {
+            $flat[] = $row;
+        }
+    }
+
+    $enriched = statisticsEnrichEntityRows($flat);
+
+    $result = [];
+    foreach (array_keys($byType) as $type) {
+        $result[$type] = [];
+    }
+    foreach ($enriched as $row) {
+        $result[$row['type']][] = $row;
+    }
+
+    return $result;
+}
 
 /**
  * Detect entity type from context or annotations
@@ -293,6 +370,27 @@ function statisticsGetGeneral($request) {
             ];
         }
 
+        // 5. Entity mentions — the same question as vocabulary, asked of the
+        // people, organisations and terms the speakers named rather than of the
+        // words they used.
+        if (!empty($stats["entityMentions"]["byType"])) {
+            $entities = [
+                "byType" => statisticsEnrichEntitiesByType($stats["entityMentions"]["byType"]),
+            ];
+
+            if (isset($stats["entityMentions"]["byFaction"])) {
+                $entities["byFaction"] = array_map(function ($faction) {
+                    return [
+                        "id" => $faction["id"],
+                        "label" => getEntityLabel('organisation', $faction["id"]),
+                        "byType" => statisticsEnrichEntitiesByType($faction["byType"]),
+                    ];
+                }, $stats["entityMentions"]["byFaction"]);
+            }
+
+            $attributes["entities"] = $entities;
+        }
+
         // Assemble final data structure with enforced order
         $data = [
             "type" => "statistics",
@@ -453,13 +551,17 @@ function statisticsGetEntity($request) {
                     "speechesInPrimaryContext" => $stats["speeches_as_main_speaker"]["filter_this_person_as_main_speaker"]["unique_speeches_as_speaker"]["doc_count"] ?? 0 // speeches where entity appears in primary context (main-speaker for person, main-speaker-faction for organisation)
                 ],
                 "entityAssociations" => [ // SEMANTIC CLARIFICATION: other entities appearing in same speeches as this entity
-                    "topDetectedEntities" => statisticsPickCoOccurrences($stats),
-                    "topMentionedBy" => array_map(function($bucket) {
-                        return enrichEntityWithSelfLink([
+                    // Both lists are drawn as entity cards, so both carry what a
+                    // card needs — label, thumbnail, faction — resolved in one
+                    // batch rather than one entity fetch per row.
+                    "topDetectedEntities" => statisticsEnrichEntityRows(statisticsPickCoOccurrences($stats)),
+                    "topMentionedBy" => statisticsEnrichEntityRows(array_map(function($bucket) {
+                        return [
                             "id" => $bucket["key"],
+                            "type" => "person",
                             "coOccurrenceCount" => $bucket["doc_count"]
-                        ], 'person');
-                    }, $stats["associations"]["mentioned_by_speakers"]["top_mentioned_by"]["buckets"] ?? [])
+                        ];
+                    }, $stats["associations"]["mentioned_by_speakers"]["top_mentioned_by"]["buckets"] ?? []))
                 ],
                 "trends" => [
                     "total" => $stats["trends"]["buckets"][count($stats["trends"]["buckets"])-1]["doc_count"],
@@ -804,6 +906,114 @@ function statisticsGetSignificantWords($request) {
             $e->getMessage()
         );
     }
+}
+
+
+/**
+ * Entities that characterise a scope, against the rest of the corpus.
+ *
+ * The entity companion to significant-words, and it answers the question the
+ * most-mentioned list raises: every faction's most-mentioned people are largely
+ * the same handful of nationally prominent names, because those are the names
+ * everybody says. This reports who and what THIS scope names more than the rest
+ * of parliament does. At least one scope filter is required — "what
+ * characterises everything" has no answer.
+ *
+ * @param array $request
+ * @return array The API response
+ */
+function statisticsGetSignificantEntities($request) {
+    global $config;
+
+    try {
+        $parliament = resolveParliamentKey($request["parliament"] ?? null);
+        $scope = statisticsScopeFromRequest($request);
+
+        if (empty($scope)) {
+            return apiErrorResponse(
+                422,
+                1,
+                "messageErrorParameterMissingTitle",
+                "messageErrorMissingParametersDetail",
+                ["parameters" => implode(", ", STATS_SCOPE_PARAMS)]
+            );
+        }
+
+        $size = isset($request["size"]) ? (int) $request["size"] : 20;
+        $types = statsQueryEntityTypes(["entityTypes" => $request["entityTypes"] ?? null]);
+
+        $cacheParams = $scope + ["size" => $size, "entityTypes" => implode(",", $types)];
+
+        $cached = statsCacheGet("significant-entities", $cacheParams, $parliament);
+        if ($cached !== null) {
+            return $cached;
+        }
+
+        $result = statsQuerySignificantEntities(array_merge($scope, [
+            "parliament"  => $parliament,
+            "size"        => $size,
+            "entityTypes" => $types,
+            // An entity is never distinctive of itself. A person's page must not
+            // report that they name themselves, and a faction's must not report
+            // that it names itself — which it does, in four speeches out of five.
+            "excludeIDs"  => statisticsScopeEntityIDs($scope),
+        ]));
+
+        if ($result === null) {
+            return apiErrorResponse(
+                500,
+                1,
+                "messageErrorStatisticsTitle",
+                "messageErrorOpenSearchQueryFailed"
+            );
+        }
+
+        $data = [
+            "type" => "statistics",
+            "id" => "significant-entities",
+            "attributes" => [
+                "scope" => $scope,
+                "entities" => ["byType" => statisticsEnrichEntitiesByType($result["byType"])]
+            ]
+        ];
+
+        $response = apiSuccessResponse($data, [], [
+            "self" => $config["dir"]["api"] . "/statistics/significant-entities?" . http_build_query($scope)
+        ]);
+
+        statsCachePut("significant-entities", $cacheParams, $parliament, $response);
+
+        return $response;
+
+    } catch (Exception $e) {
+        return apiErrorResponse(
+            500,
+            1,
+            "messageErrorStatisticsTitle",
+            $e->getMessage()
+        );
+    }
+}
+
+/**
+ * The entity ids a scope is itself built from.
+ *
+ * Only personID and factionID name an entity; the rest scope by time or by where
+ * in the proceedings something was said.
+ *
+ * @param array $scope As returned by statisticsScopeFromRequest().
+ * @return array Entity ids, possibly empty.
+ */
+function statisticsScopeEntityIDs(array $scope) {
+    $ids = [];
+
+    foreach (['personID', 'factionID'] as $param) {
+        if (!empty($scope[$param])) {
+            $ids[] = $scope[$param];
+        }
+    }
+
+    return $ids;
 }
 
 

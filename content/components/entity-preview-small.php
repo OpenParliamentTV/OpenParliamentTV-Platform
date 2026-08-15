@@ -1,61 +1,79 @@
 <?php defined('OPTV') or die(); ?>
 <?php
+/**
+ * Adapter: one media-annotation node onto the shared entity card.
+ *
+ * The media page's relationships list is the one surface that comes at the card
+ * from an annotation rather than from a database row or an API response, so it
+ * needs the translation this file does — which context line to show, which count
+ * the "found" badge means, and the source-document button. Everything below the
+ * translation is content/components/entity-item.php.
+ *
+ * Kept at this path rather than folded into the caller: an instance override of
+ * content/components/entity-preview-small.php resolves by path, and a rename
+ * would silently detach it.
+ *
+ * @var array $relationshipItem A media annotation node (modules/entities/media.php).
+ * @var int   $tmpCount         Optional occurrence count for the "found" badge.
+ * @var array $annotation       Optional annotation the count came from.
+ */
+
 require_once(__DIR__ . '/../../modules/utilities/security.php');
 require_once(__DIR__ . '/../../modules/utilities/entities.php');
-//Entity-specific values
+require_once(__DIR__ . '/../../modules/entities/preview.php');
 
-$entity = $relationshipItem;
-$countFound = ((isset($tmpCount)) ? $tmpCount : 0);
+$entityItem = entityPreviewNodeFromEntity($relationshipItem);
 
-$contextLabel = null;
-if (isset($entity["attributes"]["context"]) 
-    && $entity["attributes"]["context"] != "NER"
-    && $entity["attributes"]["context"] != "main-speaker-faction"
-    && $entity["attributes"]["context"] != "vice-president-faction"
-    && $entity["attributes"]["context"] != "speaker-faction" 
-    && $entity["attributes"]["context"] != "proceedingsReference") {
-    $contextLabel = translateContextValue($entity["attributes"]["context"]);
+if ($entityItem !== null) {
+    $entityItemOptions = [];
+
+    // The role this entity played in the speech, when it is one worth naming.
+    // The structural contexts are excluded: they either describe who was
+    // speaking, or say "recognised in the text", which the panel already groups
+    // by and would otherwise repeat on every card.
+    $previewContext = $relationshipItem["attributes"]["context"] ?? null;
+    if ($previewContext !== null
+        && !in_array($previewContext, [
+            "NER",
+            "main-speaker-faction",
+            "vice-president-faction",
+            "speaker-faction",
+            "proceedingsReference",
+        ], true)) {
+        $entityItemOptions["contextLabel"] = translateContextValue($previewContext);
+    }
+
+    // How often NER found this entity in the transcript. Only meaningful on the
+    // NER panel, where every card in the list was counted the same way.
+    if (!empty($tmpCount)
+        && ($annotation["attributes"]["context"] ?? null) === "NER") {
+        $entityItemOptions["count"] = $tmpCount;
+        $entityItemOptions["countLabel"] = L::found();
+    }
+
+    // Official documents show their subtype instead of an avatar, and carry a
+    // button straight to the PDF at the source.
+    if ($entityItem["type"] === "document") {
+        $subType = $relationshipItem["attributes"]["additionalInformation"]["subType"] ?? null;
+        if (!empty($subType)) {
+            $entityItemOptions["typeLabel"] = $subType;
+        }
+
+        $creator = $relationshipItem["attributes"]["additionalInformation"]["creator"][0] ?? null;
+        if (!empty($creator)) {
+            $entityItem["secondaryLabel"] = L::by() . ': ' . $creator;
+        }
+
+        if (($relationshipItem["attributes"]["type"] ?? null) === "officialDocument") {
+            $entityItemOptions["showThumbnail"] = false;
+
+            if (!empty($relationshipItem["attributes"]["sourceURI"])) {
+                $entityItemOptions["buttonHtml"] = '<a class="entityButton" href="'
+                    . hAttr($relationshipItem["attributes"]["sourceURI"])
+                    . '" target="_blank"><span class="btn btn-sm icon-file-pdf"></span></a>';
+            }
+        }
+    }
+
+    include(__DIR__ . '/entity-item.php');
 }
-
-$secondaryLabel = isset($entity["attributes"]["labelAlternative"][0]) ? $entity["attributes"]["labelAlternative"][0] : '';
-if ($entity["type"] == "person" && isset($entity["attributes"]["faction"]["label"])) {
-    $secondaryLabel = $entity["attributes"]["faction"]["label"];
-}
-
-?>
-<div class="entityPreview col" data-type="<?= hAttr($entity["type"]) ?>">
-    <div class="entityContainer partyIndicator" data-faction="<?= hAttr(isset($entity["attributes"]["faction"]["id"]) ? $entity["attributes"]["faction"]["id"] : '') ?>">
-        <a href="<?= $config["dir"]["root"].'/'.hAttr($entity["type"]).'/'.hAttr($entity["id"]) ?>">
-            <?php if (isset($entity["attributes"]["type"]) && $entity["attributes"]["type"] != "officialDocument") { ?>
-                <div class="thumbnailContainer">
-                    <div class="rounded-circle">
-                        <?php if ($entity["attributes"]["thumbnailURI"]) { ?>
-                            <img src="<?= hAttr($entity["attributes"]["thumbnailURI"]) ?>" alt="..."/>
-                        <?php } else { ?>
-                            <span class="icon-type-<?= hAttr($entity["type"]) ?>" style="position: absolute;top: 48%;left: 50%;font-size: 28px;transform: translateX(-50%) translateY(-50%);"></span>
-                        <?php } ?>
-                    </div>
-                </div>
-            <?php } ?>
-            <div>
-                <?php if ($entity["type"] == "document" && isset($relationshipItem["attributes"]["additionalInformation"]["subType"])) { ?>
-                    <div class="entityType"><?= h($relationshipItem["attributes"]["additionalInformation"]["subType"]) ?></div>
-                <?php } ?>
-                <div class="entityTitle"><?= h($entity["attributes"]["label"]) ?></div>
-                <div class="break-lines truncate-lines"><?= h($secondaryLabel) ?></div>
-                <?php if ($entity["type"] == "document" && isset($relationshipItem["attributes"]["additionalInformation"]["creator"][0])) { ?>
-                    <div class="text-truncate"><?= L::by() ?>: <?= h($relationshipItem["attributes"]["additionalInformation"]["creator"][0]) ?></div>
-                <?php } ?>
-                <?php if ($contextLabel) { ?>
-                    <div><span class="icon-megaphone"></span><?= h($contextLabel) ?></div>
-                <?php } ?>
-                <?php if ($countFound > 0 && isset($annotation) && isset($annotation["attributes"]["context"]) && $annotation["attributes"]["context"] == "NER") { ?>
-                    <div><?= L::found() ?>: <span class="badge rounded-pill"><?= h($countFound) ?></span></div>
-                <?php } ?>
-            </div>
-        </a>
-        <?php if ($entity["type"] == "document" && isset($entity["attributes"]["type"]) && $entity["attributes"]["type"] == "officialDocument") { ?>
-            <a class="entityButton" href="<?= hAttr($relationshipItem["attributes"]["sourceURI"]) ?>" target="_blank"><span class="btn btn-sm icon-file-pdf"></span></a>
-        <?php } ?>
-    </div>
-</div>

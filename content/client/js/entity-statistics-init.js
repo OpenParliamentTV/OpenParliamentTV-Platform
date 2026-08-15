@@ -42,9 +42,98 @@ $(document).ready(function () {
 		if (speaks) {
 			entityStatisticsRenderWords('entityStatisticsWords', attrs.speakerVocabulary, context);
 			entityStatisticsLoadDistinctive('entityStatisticsDistinctive', entityType, entityID, context);
+			entityStatisticsLoadEntities(entityType, entityID, context);
 		}
 	});
 });
+
+/** Entity types the mention panels offer, in the order their tabs appear. */
+const ENTITY_STATISTICS_TYPES = ['person', 'organisation', 'term'];
+
+/**
+ * Who and what this speaker talks about, most and most distinctively.
+ *
+ * The pair mirrors the word pair above it: most-mentioned is largely the same
+ * nationally prominent handful for everyone, so on its own it says little about
+ * this speaker; distinctive answers the question it raises.
+ *
+ * Both panels share one type selector, because the reader is asking one question
+ * ("about whom?") and picking which kind of answer to see, not two.
+ */
+function entityStatisticsLoadEntities(entityType, entityID, context) {
+	const module = $('#entityStatisticsEntitiesModule');
+	if (!module.length) return;
+
+	// The two scopes the statistics index understands as "who was speaking".
+	const scopeKey = entityType === 'person' ? 'personID'
+		: (entityType === 'organisation' ? 'factionID' : null);
+	if (!scopeKey) {
+		module.remove();
+		return;
+	}
+
+	const scope = {};
+	scope[scopeKey] = entityID;
+
+	const mostParams = new URLSearchParams(scope);
+	const distinctiveParams = new URLSearchParams(scope);
+	distinctiveParams.set('size', 12);
+
+	Promise.all([
+		fetch(config.dir.root + '/api/v1/statistics/general?' + mostParams.toString())
+			.then(r => r.json()).catch(() => null),
+		fetch(config.dir.root + '/api/v1/statistics/significant-entities?' + distinctiveParams.toString())
+			.then(r => r.json()).catch(() => null)
+	]).then(function (results) {
+		const most = (((results[0] || {}).data || {}).attributes || {}).entities || null;
+		const distinctive = (((results[1] || {}).data || {}).attributes || {}).entities || null;
+
+		if (!most && !distinctive) {
+			module.remove();
+			return;
+		}
+
+		const state = { most: most, distinctive: distinctive, scope: scope, context: context };
+
+		module.find('.entityStatisticsTypeSelect').on('change', function () {
+			entityStatisticsRenderEntityPanels(state, $(this).val());
+		});
+
+		entityStatisticsRenderEntityPanels(state, ENTITY_STATISTICS_TYPES[0]);
+	});
+}
+
+/** Fill both entity panels for one entity type. */
+function entityStatisticsRenderEntityPanels(state, type) {
+	const mostRows = ((state.most || {}).byType || {})[type] || [];
+	const distinctiveRows = ((state.distinctive || {}).byType || {})[type] || [];
+
+	const searchHref = function (row) {
+		const filters = Object.assign({}, state.scope);
+		filters[entityStatisticsFilterName(row.type)] = row.id + '~NER';
+		return statisticsSearchUrl(filters);
+	};
+
+	entityStatisticsRenderEntityList('entityStatisticsMostMentioned', mostRows.slice(0, 12), function (row) {
+		return {
+			href: searchHref(row),
+			count: row.mentionCount,
+			countLabel: row.speechCount + ' ' + statisticsLabel('speeches')
+		};
+	});
+
+	// Significance scores span orders of magnitude and mean nothing as a number,
+	// so they are drawn relative to the strongest result in the same list.
+	const maxScore = distinctiveRows.length ? distinctiveRows[0].score : 0;
+	entityStatisticsRenderEntityList('entityStatisticsDistinctiveEntities', distinctiveRows, function (row) {
+		return {
+			href: searchHref(row),
+			score: row.score,
+			scoreMax: maxScore,
+			countLabel: row.speechCount + ' ' + statisticsLabel('speeches')
+		};
+	});
+}
 
 /**
  * Who talks about this entity most.
@@ -53,26 +142,16 @@ $(document).ready(function () {
  * the question the list raises and would otherwise leave unanswered.
  */
 function entityStatisticsRenderMentionedBy(containerId, mentionedBy, context) {
-	const container = $('#' + containerId);
-	if (!container.length) return;
-
-	const rows = (mentionedBy || []).slice(0, 10);
-	if (!rows.length) {
-		container.html('<div class="text-muted small py-2">' + statisticsLabel('statisticsNoData') + '</div>');
-		return;
-	}
-
-	const list = $('<ul class="list-unstyled mb-0"></ul>');
-	rows.forEach(function (row) {
+	entityStatisticsRenderEntityList(containerId, (mentionedBy || []).slice(0, 10), function (row) {
 		const filters = { personID: row.id };
 		filters[context.filterName] = context.entityID + '~NER';
 
-		$('<li class="mb-1"></li>')
-			.append($('<a></a>').attr('href', statisticsSearchUrl(filters)).text(row.label || row.id))
-			.append($('<span class="text-muted small ms-2"></span>').text(row.coOccurrenceCount))
-			.appendTo(list);
+		return {
+			href: statisticsSearchUrl(filters),
+			count: row.coOccurrenceCount,
+			countLabel: statisticsLabel('speeches')
+		};
 	});
-	container.empty().append(list);
 }
 
 /**

@@ -15,6 +15,14 @@ const STATS_COOCCURRENCE_MIN_DOCS = 3;
 /** Below this many weighted results, fall back to raw co-occurrence. */
 const STATS_COOCCURRENCE_MIN_RESULTS = 5;
 
+/**
+ * Most-mentioned entities reported per type by the general endpoint.
+ *
+ * Higher than the twenty words beside it, because the list is split three ways
+ * once the reader picks a type, and because entity cards are cheap to skim.
+ */
+const STATS_TOP_ENTITIES_SIZE = 24;
+
 // Debug flag - set to 1 to enable debug logging
 $DEBUG_MODE = 0;
 
@@ -45,6 +53,21 @@ function getGeneralStatistics($parliamentKey = null, array $scope = []) {
         "parliament" => $parliamentKey,
         "size"       => 20,
         "byFaction"  => true,
+    ]));
+
+    // Which entities were named, from the same index and the same scope. Words
+    // and entities are two readings of one question -- what was this scope
+    // about -- so they travel together rather than costing a second request.
+    $entityMentions = statsQueryTopEntities(array_merge($scope, [
+        "parliament" => $parliamentKey,
+        "size"       => STATS_TOP_ENTITIES_SIZE,
+        "byFaction"  => true,
+        // An entity scoped to itself names itself constantly, and saying so
+        // tells the reader nothing.
+        "excludeIDs" => array_values(array_filter([
+            $scope["personID"] ?? null,
+            $scope["factionID"] ?? null,
+        ])),
     ]));
 
     $totalUniqueWords = $vocabulary["totalUniqueWords"] ?? 0;
@@ -233,6 +256,9 @@ function getGeneralStatistics($parliamentKey = null, array $scope = []) {
             // Enhanced: Context-based word analysis as recommended in planning docs
             'contextBasedStats' => $contextBasedStats
         ];
+        // Entity mentions travel as the query module shaped them; resolving ids
+        // to labels and thumbnails is the API module's job.
+        $aggregations['entityMentions'] = $entityMentions;
         return $aggregations;
     } catch (Exception $e) {
         error_log('General statistics error: ' . $e->getMessage());

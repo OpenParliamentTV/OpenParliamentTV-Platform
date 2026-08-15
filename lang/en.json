@@ -565,5 +565,8 @@
     "pending": "Pending",
     "schemaMigrations": "Schema migrations",
     "schemaMigrationsApply": "Apply pending migrations",
-    "schemaMigrationsHint": "An update may require changes to the database schema. Pending migrations can be applied here."
+    "schemaMigrationsHint": "An update may require changes to the database schema. Pending migrations can be applied here.",
+    "statisticsMostMentioned": "Most mentioned",
+    "statisticsDistinctiveEntities": "Distinctively mentioned",
+    "statisticsDistinctiveEntitiesNote": "People, organisations and terms that stand out here compared with the rest of the corpus — not simply the most frequently named ones."
 }

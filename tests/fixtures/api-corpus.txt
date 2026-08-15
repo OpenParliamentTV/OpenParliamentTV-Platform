@@ -127,6 +127,12 @@
 /api/v1/statistics/significant-words?parliament=DE&sessionID=DE-0210010&size=6
 /api/v1/statistics/significant-words?parliament=DE
 
+# The same question asked of entities: an electoral period across all three
+# types, one faction narrowed to a single type, and the 422 when unscoped.
+/api/v1/statistics/significant-entities?parliament=DE&electoralPeriodID=DE-020&size=6
+/api/v1/statistics/significant-entities?parliament=DE&factionID=Q1023134&entityTypes=term&size=6
+/api/v1/statistics/significant-entities?parliament=DE
+
 # Mention timelines: a person (own speeches must not count) and a document
 # (agenda linkage and in-text mention reported separately).
 /api/v1/statistics/entity?entityType=person&entityID=Q77195&dateFrom=2020-01-01&dateTo=2020-12-31

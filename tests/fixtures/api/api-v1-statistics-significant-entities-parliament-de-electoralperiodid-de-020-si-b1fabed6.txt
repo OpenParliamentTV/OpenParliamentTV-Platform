@@ -1,0 +1,294 @@
+HTTP 200
+content-type: application/json
+x-robots-tag: noindex
+
+{
+    "meta": {
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success"
+    },
+    "data": {
+        "type": "statistics",
+        "id": "significant-entities",
+        "attributes": {
+            "scope": {
+                "electoralPeriodID": "DE-020"
+            },
+            "entities": {
+                "byType": {
+                    "person": [
+                        {
+                            "id": "Q1288810",
+                            "type": "person",
+                            "score": 0.556400000000000005684341886080801486968994140625,
+                            "speechCount": 348,
+                            "label": "Nancy Faeser",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q1288810&v=0516927d",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q1288810"
+                            }
+                        },
+                        {
+                            "id": "Q7747",
+                            "type": "person",
+                            "score": 0.338100000000000011635137298071640543639659881591796875,
+                            "speechCount": 1260,
+                            "label": "Wladimir Wladimirowitsch Putin",
+                            "subtype": "person",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q7747&v=a4ee4984",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q7747"
+                            }
+                        },
+                        {
+                            "id": "Q109943",
+                            "type": "person",
+                            "score": 0.2124000000000000054622972811557701788842678070068359375,
+                            "speechCount": 436,
+                            "label": "Robert Habeck",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q109943&v=fe5e1795",
+                            "faction": {
+                                "id": "Q1007353",
+                                "label": "DIE GRÜNEN"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q109943"
+                            }
+                        },
+                        {
+                            "id": "Q564328",
+                            "type": "person",
+                            "score": 0.11600000000000000588418203051332966424524784088134765625,
+                            "speechCount": 258,
+                            "label": "Annalena Baerbock",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q564328&v=94bb5926",
+                            "faction": {
+                                "id": "Q1007353",
+                                "label": "DIE GRÜNEN"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q564328"
+                            }
+                        },
+                        {
+                            "id": "Q85806",
+                            "type": "person",
+                            "score": 0.096299999999999996713739847109536640346050262451171875,
+                            "speechCount": 267,
+                            "label": "Christian Lindner",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q85806&v=85049c42",
+                            "faction": {
+                                "id": "Q1387991",
+                                "label": "FDP"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q85806"
+                            }
+                        },
+                        {
+                            "id": "Q1893672",
+                            "type": "person",
+                            "score": 0.08409999999999999420463581145668285898864269256591796875,
+                            "speechCount": 69,
+                            "label": "Marco Buschmann",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q1893672&v=59c96cf7",
+                            "faction": {
+                                "id": "Q1387991",
+                                "label": "FDP"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q1893672"
+                            }
+                        }
+                    ],
+                    "organisation": [
+                        {
+                            "id": "Q42575708",
+                            "type": "organisation",
+                            "score": 0.067000000000000003996802888650563545525074005126953125,
+                            "speechCount": 3036,
+                            "label": "AfD",
+                            "subtype": "faction",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q42575708&v=592f6f4c",
+                            "faction": {
+                                "id": "Q42575708",
+                                "label": "AfD"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q42575708"
+                            }
+                        },
+                        {
+                            "id": "Q19839259",
+                            "type": "organisation",
+                            "score": 0.048099999999999996924682221788316383026540279388427734375,
+                            "speechCount": 43,
+                            "label": "Uniper SE",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q19839259&v=f7332e1a",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q19839259"
+                            }
+                        },
+                        {
+                            "id": "Q38799",
+                            "type": "organisation",
+                            "score": 0.04549999999999999877875467291232780553400516510009765625,
+                            "speechCount": 293,
+                            "label": "Hamas",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q38799&v=590f95f3",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q38799"
+                            }
+                        },
+                        {
+                            "id": "Q1023134",
+                            "type": "organisation",
+                            "score": 0.02759999999999999953370632965743425302207469940185546875,
+                            "speechCount": 2682,
+                            "label": "CDU/CSU",
+                            "subtype": "faction",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1023134&v=ac7ab215",
+                            "faction": {
+                                "id": "Q1023134",
+                                "label": "CDU/CSU"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q1023134"
+                            }
+                        },
+                        {
+                            "id": "Q56010",
+                            "type": "organisation",
+                            "score": 0.0167999999999999989619414719754786347039043903350830078125,
+                            "speechCount": 1269,
+                            "label": "Bundeswehr",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q56010&v=3e6918fc",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q56010"
+                            }
+                        },
+                        {
+                            "id": "Q1387991",
+                            "type": "organisation",
+                            "score": 0.01469999999999999952537965697274557896889746189117431640625,
+                            "speechCount": 1317,
+                            "label": "FDP",
+                            "subtype": "faction",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1387991&v=a542bea7",
+                            "faction": {
+                                "id": "Q1387991",
+                                "label": "FDP"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q1387991"
+                            }
+                        }
+                    ],
+                    "term": [
+                        {
+                            "id": "Q1341376",
+                            "type": "term",
+                            "score": 5.5281000000000002359001882723532617092132568359375,
+                            "speechCount": 131,
+                            "label": "Energiekrise",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q1341376"
+                            }
+                        },
+                        {
+                            "id": "Q115042232",
+                            "type": "term",
+                            "score": 4.18499999999999960920149533194489777088165283203125,
+                            "speechCount": 114,
+                            "label": "Gaspreisbremse",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q115042232"
+                            }
+                        },
+                        {
+                            "id": "Q110999040",
+                            "type": "term",
+                            "score": 1.016799999999999926103555480949580669403076171875,
+                            "speechCount": 540,
+                            "label": "Ukraine-Krieg",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q110999040&v=571dfd23",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q110999040"
+                            }
+                        },
+                        {
+                            "id": "Q115042233",
+                            "type": "term",
+                            "score": 0.22289999999999998703259507237817160785198211669921875,
+                            "speechCount": 138,
+                            "label": "Strompreisbremse",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q115042233"
+                            }
+                        },
+                        {
+                            "id": "Q1471921",
+                            "type": "term",
+                            "score": 0.17849999999999999200639422269887290894985198974609375,
+                            "speechCount": 111,
+                            "label": "Sprach-Kitas",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q1471921"
+                            }
+                        },
+                        {
+                            "id": "Q15860072",
+                            "type": "term",
+                            "score": 0.1499000000000000054622972811557701788842678070068359375,
+                            "speechCount": 309,
+                            "label": "Russisch-Ukrainischer Krieg",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q15860072&v=ba2e0342",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q15860072"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "links": {
+        "self": "https://optv.local/api/v1/statistics/significant-entities?electoralPeriodID=DE-020"
+    }
+}

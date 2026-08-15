@@ -75,6 +75,55 @@ $entityStatsSpeaks = ($entityStatsType === 'person')
 	<?php if ($entityStatsSpeaks): ?>
 	<?php
 	/*
+	 * The same pair again, asked of who and what was NAMED rather than of the
+	 * words used. Counts cover the speaker's own words only -- the interjections
+	 * the protocol records ("(Beifall bei der SPD)", "(Zuruf des Abg. X)") carry
+	 * 71% of all recognised entity mentions, and crediting those to the speaker
+	 * would make this a list of who heckles them.
+	 *
+	 * One type selector for both panels: the reader is asking one question and
+	 * choosing which kind of answer to see.
+	 */
+	?>
+	<div class="col-12" id="entityStatisticsEntitiesModule">
+		<div class="row">
+			<div class="col-12 mb-2 d-flex justify-content-end">
+				<label class="form-label mb-0 me-2 align-self-center small text-muted" for="entityStatisticsTypeSelect"><?= h(L::statisticsEntityType()) ?></label>
+				<select class="form-select form-select-sm w-auto entityStatisticsTypeSelect" id="entityStatisticsTypeSelect">
+					<option value="person"><?= h(L::personPlural()) ?></option>
+					<option value="organisation"><?= h(L::organisations()) ?></option>
+					<option value="term"><?= h(L::terms()) ?></option>
+				</select>
+			</div>
+			<div class="col-lg-6 mb-4">
+				<div class="card h-100">
+					<div class="card-header">
+						<h5 class="card-title mb-0"><?= h(L::statisticsMostMentioned()) ?></h5>
+					</div>
+					<div class="card-body">
+						<p class="small text-muted"><?= h(L::statisticsWordsNote()) ?></p>
+						<div id="entityStatisticsMostMentioned"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 mb-4">
+				<div class="card h-100">
+					<div class="card-header">
+						<h5 class="card-title mb-0"><?= h(L::statisticsDistinctiveEntities()) ?></h5>
+					</div>
+					<div class="card-body">
+						<p class="small text-muted"><?= h(L::statisticsDistinctiveEntitiesNote()) ?></p>
+						<div id="entityStatisticsDistinctiveEntities"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php endif; ?>
+
+	<?php if ($entityStatsSpeaks): ?>
+	<?php
+	/*
 	 * Only for entities that speak. For everything else the timeline in the page
 	 * header already IS the mention timeline -- `/search/media?termID=…` carries no
 	 * default context, so it counts exactly the NER mentions this chart would, and

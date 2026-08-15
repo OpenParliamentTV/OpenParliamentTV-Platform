@@ -565,5 +565,8 @@
     "pending": "En attente",
     "schemaMigrations": "Migrations de schéma",
     "schemaMigrationsApply": "Appliquer les migrations en attente",
-    "schemaMigrationsHint": "Après une mise à jour logicielle, le schéma de la base de données peut nécessiter des modifications. Les migrations en attente peuvent être appliquées ici."
+    "schemaMigrationsHint": "Après une mise à jour logicielle, le schéma de la base de données peut nécessiter des modifications. Les migrations en attente peuvent être appliquées ici.",
+    "statisticsMostMentioned": "Les plus mentionnés",
+    "statisticsDistinctiveEntities": "Mentions distinctives",
+    "statisticsDistinctiveEntitiesNote": "Personnes, organisations et termes qui se démarquent ici par rapport au reste du corpus — et non simplement les plus souvent cités."
 }
