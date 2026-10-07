@@ -250,31 +250,33 @@ if ($config["display"]["ner"]) {
         <div class="input-group mt-2">
             <span class="input-group-text fixed-width me-0">IIIF Manifest</span>
             <input id="iiifLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= hAttr($speech["links"]["self"]) ?>?format=iiif">
-            <a href="<?= hAttr($speech["links"]["self"]) ?>?format=iiif" target="_blank" class="btn btn-sm input-group-text">
+            <a href="<?= hAttr($speech["links"]["self"]) ?>?format=iiif" target="_blank" rel="nofollow" class="btn btn-sm input-group-text">
                 <span class="icon-right-open-big me-0"></span>
             </a>
         </div>
         <div class="input-group mt-2">
             <span class="input-group-text fixed-width me-0">Akoma Ntoso</span>
             <input id="aknLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= hAttr($speech["links"]["self"]) ?>?format=akn">
-            <a href="<?= hAttr($speech["links"]["self"]) ?>?format=akn" target="_blank" class="btn btn-sm input-group-text">
+            <a href="<?= hAttr($speech["links"]["self"]) ?>?format=akn" target="_blank" rel="nofollow" class="btn btn-sm input-group-text">
                 <span class="icon-right-open-big me-0"></span>
             </a>
         </div>
         <div class="input-group mt-2">
             <span class="input-group-text fixed-width me-0">ParlaMint</span>
             <input id="parlamintLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= hAttr($speech["links"]["self"]) ?>?format=parlamint">
-            <a href="<?= hAttr($speech["links"]["self"]) ?>?format=parlamint" target="_blank" class="btn btn-sm input-group-text">
+            <a href="<?= hAttr($speech["links"]["self"]) ?>?format=parlamint" target="_blank" rel="nofollow" class="btn btn-sm input-group-text">
                 <span class="icon-right-open-big me-0"></span>
             </a>
         </div>
+        <?php if (!empty($speech["attributes"]["textContents"])) { ?>
         <div class="input-group mt-2">
             <span class="input-group-text fixed-width me-0">WebVTT</span>
             <input id="vttLink" class="form-control m-0" style="border-width: 1px;" type="text" value="<?= hAttr($speech["links"]["self"]) ?>/transcript.vtt">
-            <a href="<?= hAttr($speech["links"]["self"]) ?>/transcript.vtt" target="_blank" class="btn btn-sm input-group-text">
+            <a href="<?= hAttr($speech["links"]["self"]) ?>/transcript.vtt" target="_blank" rel="nofollow" class="btn btn-sm input-group-text">
                 <span class="icon-right-open-big me-0"></span>
             </a>
         </div>
+        <?php } ?>
         <hr>
         <div class="relationshipsCategoryHeader"><?= L::data() ?></div>
         <table class="table table-striped table-bordered">
