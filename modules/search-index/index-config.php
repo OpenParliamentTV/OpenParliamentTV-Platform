@@ -8,6 +8,15 @@
  * (?action=index&itemType=full-update), not on an incremental update.
  */
 
+/**
+ * Shortest and longest word beginning / ending stored in textHTML.prefix and
+ * textHTML.suffix. A search word with a stem inside this range ("Klima*",
+ * "*gesetz") is answered from those subfields; anything outside it falls back to
+ * a wildcard query on the main field (see processFuzzyMatch()).
+ */
+const SEARCH_INDEX_AFFIX_MIN_CHARS = 2;
+const SEARCH_INDEX_AFFIX_MAX_CHARS = 19;
+
 /** @return array The `body` for an OpenSearch index-creation call. */
 function searchIndexMappingBody() {
     $data = array();
@@ -32,6 +41,26 @@ function searchIndexMappingBody() {
                         "keyword" => array(
                             "type" => "keyword",
                             "ignore_above" => 256
+                        ),
+                        // Every word's beginnings (prefix) and endings (suffix),
+                        // so "Klima*" and "*gesetz" are a single term lookup
+                        // instead of one clause per matching word, which runs
+                        // into indices.query.bool.max_clause_count. Counts only
+                        // (no positions, no norms): the score then grows with
+                        // the number of hits in a speech, regardless of its length.
+                        "prefix" => array(
+                            "type" => "text",
+                            "analyzer" => "html_prefix_analyzer",
+                            "search_analyzer" => "affix_search_analyzer",
+                            "index_options" => "freqs",
+                            "norms" => false
+                        ),
+                        "suffix" => array(
+                            "type" => "text",
+                            "analyzer" => "html_suffix_analyzer",
+                            "search_analyzer" => "affix_search_analyzer",
+                            "index_options" => "freqs",
+                            "norms" => false
                         )
                     )
                 )
@@ -165,6 +194,27 @@ function searchIndexMappingBody() {
                     "filter" => ["lowercase", "custom_synonyms"]
                 ),
 
+                // html_analyzer's tokens, expanded into their beginnings / endings
+                // (reverse + edge n-grams + reverse yields the endings).
+                "html_prefix_analyzer" => array(
+                    "type" => "custom",
+                    "tokenizer" => "standard",
+                    "char_filter" => ["custom_html_strip"],
+                    "filter" => ["lowercase", "custom_synonyms", "affix_grams"]
+                ),
+                "html_suffix_analyzer" => array(
+                    "type" => "custom",
+                    "tokenizer" => "standard",
+                    "char_filter" => ["custom_html_strip"],
+                    "filter" => ["lowercase", "custom_synonyms", "reverse", "affix_grams", "reverse"]
+                ),
+                // The searched stem is looked up as typed, only lowercased.
+                "affix_search_analyzer" => array(
+                    "type" => "custom",
+                    "tokenizer" => "keyword",
+                    "filter" => ["lowercase"]
+                ),
+
                 "agenda_item_analyzer" => array(
                     "type" => "custom",
                     "tokenizer" => "standard",
@@ -189,6 +239,11 @@ function searchIndexMappingBody() {
                 "custom_stemmer" => array(
                     "type" => "stemmer",
                     "name" => "light_german"
+                ),
+                "affix_grams" => array(
+                    "type" => "edge_ngram",
+                    "min_gram" => SEARCH_INDEX_AFFIX_MIN_CHARS,
+                    "max_gram" => SEARCH_INDEX_AFFIX_MAX_CHARS
                 ),
                 "custom_synonyms" => array(
                     "type" => "synonym_graph",

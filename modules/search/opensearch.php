@@ -4,6 +4,7 @@ require_once(__DIR__.'/../../vendor/autoload.php');
 require_once(__DIR__.'/../../config.php');
 require_once(__DIR__ .'/../../modules/utilities/entities.php');
 require_once(__DIR__ .'/../../api/v1/utilities.php');
+require_once(__DIR__ .'/../search-index/index-config.php');   // SEARCH_INDEX_AFFIX_* for the prefix/suffix subfields
 
 // Debug flag - set to 1 to enable debug logging
 $DEBUG_MODE = 0;
@@ -176,6 +177,8 @@ function searchSpeeches($request, $getAllResults = false) {
     // highlighted transcript fragment OpenSearch would return is built, shipped
     // and thrown away — and at 10.000 results that is what exhausts memory.
     $skipHighlight = isset($request["fields"]) && $request["fields"] === "id";
+    // Non-null when a word is answered from the prefix/suffix subfields.
+    $highlightQuery = searchBuildHighlightQuery($request);
     if (!$skipHighlight) {
         if (!isset($data["highlight"])) {
             $data["highlight"] = [];
@@ -186,11 +189,25 @@ function searchSpeeches($request, $getAllResults = false) {
             "pre_tags" => ["<em>"],
             "post_tags" => ["</em>"]
         ];
+        // Word beginnings / endings match on the prefix/suffix subfields, not on
+        // the highlighted field: give the highlighter the equivalent wildcards.
+        if ($highlightQuery !== null) {
+            $data["highlight"]["fields"]["attributes.textContents.textHTML"]["highlight_query"] = $highlightQuery;
+        }
     } else {
         unset($data["highlight"]);
     }
 
     $searchParams = array("index" => getSearchIndexPattern($request["parliament"] ?? null), "body" => $data);
+    // Words from the prefix/suffix subfields are scored by how often they occur,
+    // and BM25 flattens that out at high counts (79 and 91 hits differ by well
+    // under 1%). With the default query_then_fetch each shard weighs the term by
+    // its own statistics, a larger difference than that, so the shards' results
+    // come back in blocks instead of by hit count. dfs_query_then_fetch scores all
+    // shards with the same statistics, at the cost of one extra round trip.
+    if ($highlightQuery !== null) {
+        $searchParams["search_type"] = "dfs_query_then_fetch";
+    }
     
     try {
         $results = $ESClient->search($searchParams);
@@ -1042,8 +1059,10 @@ function buildQueryStructure($filter, $request, $shouldCount) {
  * 
  * @param array $request The request array
  * @param array &$query The query array to modify
+ * @param bool $forHighlight Build the highlight variant (see searchBuildHighlightQuery())
+ * @return bool Whether a word was answered from the textHTML.prefix / .suffix subfields
  */
-function processTextQuery($request, &$query) {
+function processTextQuery($request, &$query, $forHighlight = false) {
     // Normalize quotation marks
     $request["q"] = str_replace(['„','"','\'','«','«'], '"', $request["q"]);
     
@@ -1058,14 +1077,58 @@ function processTextQuery($request, &$query) {
     $query["bool"][$boolCondition] = [];
     
     // Process fuzzy match
+    $usedAffix = false;
     if (strlen($fuzzy_match) > 0) {
-        processFuzzyMatch($fuzzy_match, $query, $boolCondition);
+        $usedAffix = processFuzzyMatch($fuzzy_match, $query, $boolCondition, $forHighlight);
     }
     
     // Process exact matches
     if (!empty($exact_query_matches[0])) {
         processExactMatches($exact_query_matches[0], $query);
     }
+
+    return $usedAffix;
+}
+
+/**
+ * Classify a search word as a word beginning or a word ending.
+ *
+ * "Klima*" (one trailing *) and "*gesetz" (one leading *) are answered from the
+ * textHTML.prefix / textHTML.suffix subfields, provided the stem is within the
+ * lengths those subfields store. Every other shape ("*schutz*", "Klima*gesetz",
+ * "a*", "?") is not, and stays a wildcard query on the main field.
+ *
+ * @param string $queryItem One search word
+ * @return array|null ['field' => 'prefix'|'suffix', 'value' => stem], or null
+ */
+function searchParseWildcardAffix($queryItem) {
+    $stem = '([^*?\\\\]{' . SEARCH_INDEX_AFFIX_MIN_CHARS . ',' . SEARCH_INDEX_AFFIX_MAX_CHARS . '})';
+    if (preg_match('/^' . $stem . '\*\z/u', $queryItem, $matches)) {
+        return ["field" => "prefix", "value" => $matches[1]];
+    }
+    if (preg_match('/^\*' . $stem . '\z/u', $queryItem, $matches)) {
+        return ["field" => "suffix", "value" => $matches[1]];
+    }
+    return null;
+}
+
+/**
+ * Highlight query for the transcript field, when the text query needs one.
+ *
+ * A word answered from textHTML.prefix / textHTML.suffix matches on a different
+ * field than the highlighted one, so the highlighter would mark nothing. This
+ * rebuilds the text query with those words as the equivalent wildcard on
+ * textHTML; every other clause is the same as in the search query.
+ *
+ * @param array $request The request parameters
+ * @return array|null The highlight query, or null when the search query is highlighted as is
+ */
+function searchBuildHighlightQuery($request) {
+    if (!isset($request["q"]) || strlen($request["q"]) < 1) {
+        return null;
+    }
+    $highlightQuery = [];
+    return processTextQuery($request, $highlightQuery, true) ? $highlightQuery : null;
 }
 
 /**
@@ -1076,17 +1139,47 @@ function processTextQuery($request, &$query) {
  * @param string $fuzzy_match The fuzzy match text
  * @param array &$query The query array to modify
  * @param string $boolCondition The bool condition
+ * @param bool $forHighlight Emit word beginnings / endings as wildcards on textHTML
+ * @return bool Whether a word was answered from the textHTML.prefix / .suffix subfields
  */
-function processFuzzyMatch($fuzzy_match, &$query, $boolCondition) {
+function processFuzzyMatch($fuzzy_match, &$query, $boolCondition, $forHighlight = false) {
     $query_array = preg_split("/(\s)/", $fuzzy_match);
+    $usedAffix = false;
     
     foreach ($query_array as $query_item) {
         if (empty($query_item)) {
             continue;
         }
         
-        if (strpos($query_item, '*') !== false) {
-            // Wildcard query
+        $affix = searchParseWildcardAffix($query_item);
+        if ($affix !== null) {
+            $usedAffix = true;
+        }
+
+        if ($affix !== null && !$forHighlight) {
+            // Word beginning / ending: a single term in the subfield, scored by
+            // how often words with that beginning / ending occur in the speech.
+            $query["bool"][$boolCondition][] = [
+                "match" => [
+                    "attributes.textContents.textHTML." . $affix["field"] => [
+                        "query" => $affix["value"]
+                    ]
+                ]
+            ];
+        } else if ($affix !== null) {
+            // Highlight variant: the same words as a wildcard on the highlighted
+            // field. No scoring rewrite, so it is never expanded into clauses.
+            $query["bool"][$boolCondition][] = [
+                "wildcard" => [
+                    "attributes.textContents.textHTML" => [
+                        "value" => $query_item,
+                        "case_insensitive" => true
+                    ]
+                ]
+            ];
+        } else if (strpos($query_item, '*') !== false) {
+            // Any other wildcard shape: expanded into one clause per matching
+            // word, so it is bounded by indices.query.bool.max_clause_count.
             $query["bool"][$boolCondition][] = [
                 "wildcard" => [
                     "attributes.textContents.textHTML" => [
@@ -1109,6 +1202,8 @@ function processFuzzyMatch($fuzzy_match, &$query, $boolCondition) {
             ];
         }
     }
+
+    return $usedAffix;
 }
 
 /**

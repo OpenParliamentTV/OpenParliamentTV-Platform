@@ -18,7 +18,7 @@ require_once(__DIR__ . '/../search/opensearch.php');
 /**
  * Mapping and settings for the statistics index.
  *
- * @param bool $bulkSettings Tune for a bulk rebuild (no replicas, no refresh).
+ * @param bool $bulkSettings Tune for a bulk rebuild (no refresh).
  *                           Call statsIndexRestoreSettings() afterwards.
  * @return array Body for indices()->create().
  */
@@ -26,7 +26,9 @@ function statsIndexMappingBody($bulkSettings = false)
 {
     $settings = [
         'number_of_shards'   => 1,
-        'number_of_replicas' => $bulkSettings ? 0 : 1,
+        // No replicas, like the main index: the platform runs on a single node,
+        // where a replica can never be allocated and only turns the cluster yellow.
+        'number_of_replicas' => 0,
         'refresh_interval'   => $bulkSettings ? -1 : '30s',
         'analysis' => [
             'analyzer' => [
@@ -236,7 +238,9 @@ function statsIndexRestoreSettings($parliament = null)
             'index' => $indexName,
             'body'  => [
                 'index' => [
-                    'number_of_replicas'        => 1,
+                    // Also clears a replica an earlier rebuild left behind
+                    // (see statsIndexMappingBody()).
+                    'number_of_replicas'        => 0,
                     'refresh_interval'          => '30s',
                     'translog.sync_interval'    => '5s',
                     'translog.durability'       => 'request',

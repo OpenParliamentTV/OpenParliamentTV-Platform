@@ -38,6 +38,12 @@
 /api/v1/search/electoralPeriods?limit=2
 /api/v1/?action=search&itemType=media&q=klima&limit=2
 
+# --- wildcard words: a word beginning / ending is answered from the textHTML
+# prefix / suffix subfields and ranked by hit count. The two results on each page
+# have different hit counts, so the order does not depend on the segment layout.
+/api/v1/search/media?q=Klima*&limit=2
+/api/v1/search/media?q=*pflege&limit=2
+
 # --- search with filters + paging (the handler most at risk in 5a) -----------
 /api/v1/search/media?q=der&personID=Q132733606&limit=2
 /api/v1/search/media?q=klima&limit=2&page=2
