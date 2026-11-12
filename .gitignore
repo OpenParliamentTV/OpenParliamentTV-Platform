@@ -44,6 +44,8 @@ CLAUDE.md
 # Config
 config.php
 config-*.php
+# ...but the API config is code-level configuration (entity types, allowed search parameters, stopwords) — keep it tracked.
+!api/v1/config-api.php
 # ...but the meta-image module's config.php is layout config, not bootstrap config — keep it tracked.
 !modules/meta-image/config.php
 
