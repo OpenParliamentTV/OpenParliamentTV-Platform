@@ -42,6 +42,10 @@ $metaImageVersion = function(array $parts) {
 // the static fallback thumbnail below.
 $imageW = 1200; $imageH = 630;
 
+// API URL of the item this page shows (media / entity / structural pages), emitted
+// as <link rel="alternate" type="application/json"> so agents find the data there.
+$apiAlternate = null;
+
 switch ($page) {
   case 'main':
     $title = L::brand().' | '.$claimShortClean;
@@ -89,6 +93,9 @@ switch ($page) {
     }
     $ogType = 'video.other';
     $canonicalUrl = $urlWithoutParams . $canonicalLangSuffix;
+    if (!empty($_REQUEST['id'])) {
+      $apiAlternate = $root.'/api/v1/media/'.rawurlencode($_REQUEST['id']);
+    }
     break;
   case 'person':
   case 'organisation':
@@ -103,6 +110,9 @@ switch ($page) {
     $image = $metaImageBase.'?type='.$page.'&id='.urlencode($entityId).'&v='.$v;
     $ogType = 'article';
     $canonicalUrl = $urlWithoutParams . $canonicalLangSuffix;
+    if ($entityId !== '') {
+      $apiAlternate = $root.'/api/v1/'.$page.'/'.rawurlencode($entityId);
+    }
     break;
   case 'session':
   case 'electoralPeriod':
@@ -114,6 +124,9 @@ switch ($page) {
     $image = $metaImageBase.'?type='.$page.'&id='.urlencode($entityId).'&v='.$v;
     $ogType = 'article';
     $canonicalUrl = $urlWithoutParams . $canonicalLangSuffix;
+    if ($entityId !== '') {
+      $apiAlternate = $root.'/api/v1/'.$page.'/'.rawurlencode($entityId);
+    }
     break;
   default:
     $title = strip_tags($pageTitle).' | '.L::brand();
@@ -157,6 +170,13 @@ switch ($page) {
 <meta name="twitter:image:alt" content="<?= hAttr($title) ?>">
 
 <link rel="canonical" href="<?= hAttr($canonicalUrl) ?>">
+
+<!-- Looking for this data? It is open data: use the API at <?= h($root) ?>/api (OpenAPI spec: <?= h($root) ?>/api/openapi.yaml, overview: <?= h($root) ?>/llms.txt) instead of scraping these pages. -->
+<link rel="service-doc" href="<?= hAttr($root) ?>/api">
+<link rel="service-desc" type="application/vnd.oai.openapi" href="<?= hAttr($root) ?>/api/openapi.yaml">
+<?php if ($apiAlternate): ?>
+<link rel="alternate" type="application/json" href="<?= hAttr($apiAlternate) ?>">
+<?php endif; ?>
 <?php
 global $acceptLang;
 $queryString = parse_url($url, PHP_URL_QUERY);

@@ -7,14 +7,17 @@
 	RewriteEngine On
 
 	########################################
-	# Block AI / scraper bots that ignore robots.txt (return 403).
-	# Search engines (Googlebot, Bingbot, Applebot, …) are unaffected.
-	# Scope is the web root only — /api/ has its own .htaccess and stays
-	# reachable by these bots on purpose (structured machine path).
+	# Block AI / scraper crawlers that ignore robots.txt (return 403) from the
+	# HTML pages. Search engines (Googlebot, Bingbot, Applebot, …) and agents
+	# fetching on a user's behalf (ChatGPT-User, Claude-User, …) are unaffected.
+	# Exempt, so these crawlers can find and use the machine path:
+	# robots.txt, llms.txt (and the .php generators the rewrites below hand
+	# them to, since the rewritten request passes this rule again) and
+	# everything under /api — the docs page, the OpenAPI spec and /api/v1/.
 	# Keep this list in sync with $blockedBots in robots.php.
 	########################################
-	RewriteCond %{HTTP_USER_AGENT} (GPTBot|OAI-SearchBot|ChatGPT-User|ClaudeBot|anthropic-ai|Claude-Web|Google-Extended|Applebot-Extended|PerplexityBot|CCBot|cohere-ai|Bytespider|Amazonbot|Meta-ExternalAgent|FacebookBot|Diffbot|ImagesiftBot|Omgilibot|YouBot|DataForSeoBot|PetalBot) [NC]
-	RewriteRule ^ - [F,L]
+	RewriteCond %{HTTP_USER_AGENT} (GPTBot|OAI-SearchBot|ClaudeBot|anthropic-ai|Claude-Web|Google-Extended|Applebot-Extended|PerplexityBot|CCBot|cohere-ai|Bytespider|Amazonbot|Meta-ExternalAgent|FacebookBot|Diffbot|ImagesiftBot|Omgilibot|YouBot|DataForSeoBot|PetalBot) [NC]
+	RewriteRule !^(robots\.(txt|php)|llms\.(txt|php)|api(/.*)?)$ - [F,L]
 
 	########################################
 	# The entity dump moved into the API. Permanent redirect because external
@@ -36,10 +39,11 @@
 	RewriteRule ^ %1 [L,R=301]
 
 	########################################
-	# Sitemap & Robots (pretty URLs → PHP generators)
+	# Sitemap, Robots & llms.txt (pretty URLs → PHP generators)
 	########################################
 	RewriteRule ^sitemap\.xml$ sitemap.php [L]
 	RewriteRule ^robots\.txt$ robots.php [L]
+	RewriteRule ^llms\.txt$ llms.php [L]
 
 	########################################
 	# Send all non-file, non-directory requests to index.php.
