@@ -12,7 +12,7 @@
     // entire inner HTML on every result switch, and FrameTrail uses it as its
     // fullscreenTarget. Out here the panel survives navigation (it only
     // re-highlights) and stays out of the way in fullscreen.
-    if ($isResult): ?>
+    if ($isResult && !empty($config["allow"]["playlists"])): ?>
     <section id="queuePanel" class="queuePanel collapsed" hidden></section>
     <?php endif; ?>
     <script src="https://cdn.jsdelivr.net/npm/@frametrail/frametrail@v1.2.7/frametrail.min.js"></script>

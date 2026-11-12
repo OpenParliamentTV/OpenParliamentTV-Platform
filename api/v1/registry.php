@@ -66,6 +66,8 @@ function apiRegistryItemsFromDbResponse(array $r, $result)
 /** The action table. Built once per request and memoised. */
 function apiRegistry()
 {
+    global $config;
+
     static $registry = null;
     if ($registry !== null) {
         return $registry;
@@ -370,12 +372,8 @@ function apiRegistry()
             'storage-scan' => $req(null, 'systemStorageScan'),
         ]],
 
-        // Public: /statistics is a public page, and content/pages/api/page.php has
-        // always documented these as open endpoints. Corpus-wide responses are
-        // served from the warmed cache (modules/statistics/cache.php), so opening
-        // them up does not expose a way to make the cluster do expensive work on
-        // demand; the standard per-IP rate limit applies as to any public action.
-        'statistics' => ['access' => 'public', 'file' => 'modules/statistics.php', 'itemTypes' => [
+        // Public while $config["allow"]["statistics"] is on, admin-only otherwise (the Import page reads entity-counts as admin either way). Corpus-wide responses are served from the warmed cache (modules/statistics/cache.php), so opening them up does not expose a way to make the cluster do expensive work on demand; the standard per-IP rate limit applies as to any public action.
+        'statistics' => ['access' => !empty($config['allow']['statistics']) ? 'public' : 'admin', 'file' => 'modules/statistics.php', 'itemTypes' => [
             'general'              => $req(null, 'statisticsGetGeneral'),
             'entity'               => $req(null, 'statisticsGetEntity'),
             'word-trends'          => $req(null, 'statisticsGetWordTrends'),

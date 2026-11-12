@@ -443,6 +443,11 @@ function pageStatistics(array $routeData, array $params, Engine $plates): void
 {
     global $config;
 
+    if (empty($config['allow']['statistics'])) {
+        pageRender404($plates);
+        return;
+    }
+
     require_once(__DIR__ . '/../../api/v1/modules/statistics.php');
 
     $parliament = resolveParliamentKey($_REQUEST['parliament'] ?? null);

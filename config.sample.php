@@ -77,12 +77,18 @@ $config["allow"]["notifications"] = true;
 
 /**
  * Enable playlists
- * Controls the playlist API, the /playlist and /manage/playlists pages and
- * every "add to playlist" affordance. The player's queue panel is unaffected —
- * it works for search results with or without this flag.
+ * Controls the playlist API, the /playlist and /manage/playlists pages, every "add to playlist" affordance, and the media player's queue panel with its header controls (skip-video buttons, queue toggle).
  * true or false
  */
 $config["allow"]["playlists"] = true;
+
+
+/**
+ * Enable statistics
+ * Controls the /statistics page, the Statistics tab on entity, session, electoral period and agenda item pages, and public access to the statistics API. Switched off, the statistics API stays available to admins and the statistics index keeps being written.
+ * true or false
+ */
+$config["allow"]["statistics"] = true;
 
 
 /**
@@ -250,9 +256,7 @@ $config["parliament"]["DE"]["statistics"]["stemFilter"] = "light_german";
  * (those live in api/v1/config-api.php). Three suits German; a language that
  * writes shorter words meaningfully would want less.
  *
- * Whether statistics work at all is not configured — it is observed. The
- * statistics index existing means it is set up, and the search index carrying
- * the cleanText field means distinctive-word features can run.
+ * Whether statistics are shown is $config["allow"]["statistics"]; whether they have data is observed. The statistics index existing means it is set up, and the search index carrying the cleanText field means distinctive-word features can run.
  */
 $config["statistics"]["minWordLength"] = 3;
 

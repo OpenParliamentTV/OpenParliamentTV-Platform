@@ -59,18 +59,25 @@ if (!isset($page)) {
 					<?php
 					// Playing through a playlist? Then "back" belongs to the
 					// playlist, not to a search that was never run.
-					$queuePlaylistToken = $_REQUEST["playlist"] ?? null;
+					$queueEnabled = !empty($config["allow"]["playlists"]);
+					$queuePlaylistToken = $queueEnabled ? ($_REQUEST["playlist"] ?? null) : null;
 					if ($queuePlaylistToken):
 					?>
 					<a href='<?= $config["dir"]["root"]."/playlist/".hAttr($queuePlaylistToken) ?>' class="btn btn-sm border-end-0 rounded-0 rounded-start"><span class="icon-left-open-big"></span><span class="icon-list-numbered"></span><span class="visually-hidden"><?= L::playlists(); ?></span></a>
 					<?php else: ?>
 					<a href='<?= $config["dir"]["root"]."/search".$backParamStr ?>' class="btn btn-sm border-end-0 rounded-0 rounded-start"><span class="icon-left-open-big"></span><span class="icon-search"></span><span class="visually-hidden"><?= L::backToResults(); ?></span></a>
 					<?php endif; ?>
+					<?php if ($queueEnabled): ?>
 					<div id="prevResultVideoButton" class="btn btn-sm border-end-0 rounded-0" disabled="true" title="<?= hAttr(L::previousResult()) ?>"><span class="icon-fast-bw"></span><span class="visually-hidden"><?= L::previousResult(); ?></span></div>
+					<?php endif; ?>
 					<div id="prevResultSnippetButton" class="btn btn-sm border-end-0 rounded-0" disabled="true" title="<?= hAttr(L::previousSpeech()) ?>"><span class="icon-left-open-big"></span><span class="visually-hidden"><?= L::previousSpeech(); ?></span></div>
+					<?php if ($queueEnabled): ?>
 					<div id="nextResultSnippetButton" class="btn btn-sm border-end-0 rounded-0" disabled="true" title="<?= hAttr(L::nextSpeech()) ?>"><span class="icon-right-open-big"></span><span class="visually-hidden"><?= L::nextSpeech(); ?></span></div>
 					<div id="nextResultVideoButton" class="btn btn-sm border-end-0 rounded-0" disabled="true" title="<?= hAttr(L::nextResult()) ?>"><span class="icon-fast-fw"></span><span class="visually-hidden"><?= L::nextResult(); ?></span></div>
 					<div id="toggleQueuePanel" class="btn btn-sm rounded-0 rounded-end" role="button" aria-expanded="false" title="<?= hAttr(L::queueShow()) ?>"><span class="icon-list-numbered"></span><span id="queuePosition" class="queuePositionIndicator ms-1" hidden></span><span class="visually-hidden"><?= L::queuePanelTitle(); ?></span></div>
+					<?php else: ?>
+					<div id="nextResultSnippetButton" class="btn btn-sm rounded-0 rounded-end" disabled="true" title="<?= hAttr(L::nextSpeech()) ?>"><span class="icon-right-open-big"></span><span class="visually-hidden"><?= L::nextSpeech(); ?></span></div>
+					<?php endif; ?>
 					<div id="toggleAutoplayResults" class="navbar-text switch-container <?=$autoplayResultsClass?>">
 						<span class="switch">
 							<span class="slider round"></span>

@@ -181,7 +181,7 @@ body.darkmode .frametrail-body[data-frametrail-theme="openparliamenttv"] {
 	margin-bottom: 15px;
 }
 
-.playerTitle .partyIndicator, .customhtmlContainer .partyIndicator {
+.playerTitle .partyIndicator, .customhtmlContainer .partyIndicator:not(.entityContainer) {
 	margin: 2px 2px 2px 6px;
 	padding: 0px 6px;
 	border-width: 1px;
