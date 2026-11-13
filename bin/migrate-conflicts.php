@@ -335,7 +335,9 @@ $typeStats = [];   // type => ["rows" => n, "groups" => set]
 $totals = ["created" => 0, "updated" => 0, "mediaRows" => 0];
 $dryRunGroups = []; // dry-run only: groupKey => media count
 
-while (true) {
+// Skipped entirely when nothing is left: a database created from the current
+// dump has no legacy columns, so the SELECT below would fail.
+while ($totalLegacy > 0) {
     $rows = $db->getAll(
         "SELECT ConflictID, ConflictSubject, ConflictDescription, ConflictIdentifier, ConflictTimestamp FROM ?n
          WHERE ConflictGroupKey IS NULL AND ConflictID > ?i ORDER BY ConflictID ASC LIMIT ?i",
