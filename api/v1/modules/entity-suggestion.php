@@ -317,33 +317,26 @@ function entitySuggestionCleanup($db = false) {
 }
 
 /**
- * The three apiV1() calls below stay as they are: their targets
- * (entitySuggestionGetItemsFromDB, reimportSessions, entitySuggestionDelete)
- * are all still envelope-returning API functions, not extracted plain-data
- * modules, so calling them directly would mean reimplementing api.php's
- * envelope handling here for no gain.
+ * The apiV1() calls below stay as they are: their targets (entitySuggestionGetItemsFromDB, reimportSessions, entitySuggestionDelete) are all still envelope-returning API functions, not extracted plain-data modules, so calling them directly would mean reimplementing api.php's envelope handling here for no gain.
  */
 /**
- * Handles post-processing for entity suggestions after an entity has been added.
- * This includes re-importing affected sessions and deleting the original suggestion.
+ * Settles the entity suggestion after an entity has been added: re-imports the sessions it was suggested in (when the request asks for it) and deletes it.
  *
- * @param bool $reimportAffectedSessionsFlag Indicates if re-import should be attempted.
- * @param string|int|null $sourceEntitySuggestionID The internal ID of the entity suggestion.
+ * The suggestion is the one passed as sourceEntitySuggestionID, otherwise the one whose external ID is the added entity's Wikidata ID. Finding none is the normal case for an entity added directly, not an error. Once the entity exists the suggestion is obsolete, so it is deleted whether or not a re-import was requested — unless the re-import failed, in which case it is kept so the sessions can still be found.
+ *
+ * @param array $api_request The addItem request; reads reimportAffectedSessions and sourceEntitySuggestionID.
+ * @param string|null $externalId The added entity's Wikidata ID.
  * @param object $db The platform database connection.
- * @return array An array containing post-processing status and data:
- *               [
- *                 'reimportStatus' => string ("success", "error", "not_attempted", "no_sessions_to_reimport"),
+ * @return array [
+ *                 'reimportStatus' => string ("success", "error", "not_attempted"),
  *                 'reimportSummary' => string|null,
- *                 'affectedSessions' => array|null (list of successfully re-imported session files),
- *                 'affectedSpeeches' => array|null (list of speech IDs from EntitysuggestionContext),
+ *                 'affectedSessions' => array|null (session files scheduled for re-import),
+ *                 'affectedSpeeches' => array|null (speech IDs from EntitysuggestionContext),
  *                 'suggestionDeleteStatus' => string ("success", "error", "not_attempted")
  *               ]
  */
-function entitySuggestionPostProcess($reimportAffectedSessionsFlag, $sourceEntitySuggestionID, $db) {
-    global $config; // Required for apiV1 and optvParseStringId
-
-    // Ensure the main API file is loaded for apiV1 calls
-    // and functions.php for optvParseStringId
+function entitySuggestionPostProcess(array $api_request, $externalId, $db) {
+    // apiV1() for the calls below, functions.php for optvParseStringId()
     require_once (__DIR__."/../api.php");
 
     $postProcessingResult = [
@@ -354,13 +347,29 @@ function entitySuggestionPostProcess($reimportAffectedSessionsFlag, $sourceEntit
         'suggestionDeleteStatus' => 'not_attempted'
     ];
 
-    if (!$reimportAffectedSessionsFlag || empty($sourceEntitySuggestionID)) {
-        // If no re-import is flagged or no suggestion ID, reimportStatus remains 'not_attempted'
-        // and suggestionDeleteStatus also remains 'not_attempted'
+    // The form posts the checkbox state as the string "true"/"false"; a plain (bool) cast would read "false" as true.
+    $reimportRequested = filter_var($api_request['reimportAffectedSessions'] ?? false, FILTER_VALIDATE_BOOLEAN);
+    $sourceEntitySuggestionID = $api_request['sourceEntitySuggestionID'] ?? null;
+
+    // 1. Resolve the suggestion
+    if (empty($sourceEntitySuggestionID) && !empty($externalId)) {
+        $lookupResponse = apiV1([
+            "action" => "getItemsFromDB",
+            "itemType" => "entitySuggestion",
+            "id" => $externalId,
+            "idType" => "external",
+            "limit" => 1
+        ], $db);
+
+        if (($lookupResponse["meta"]["requestStatus"] ?? null) === "success" && !empty($lookupResponse["data"]["EntitysuggestionID"])) {
+            $sourceEntitySuggestionID = $lookupResponse["data"]["EntitysuggestionID"];
+        }
+    }
+
+    if (empty($sourceEntitySuggestionID)) {
         return $postProcessingResult;
     }
 
-    // 1. Fetch Entity Suggestion Details
     $suggestionApiResponse = apiV1([
         "action" => "getItemsFromDB",
         "itemType" => "entitySuggestion",
@@ -368,93 +377,70 @@ function entitySuggestionPostProcess($reimportAffectedSessionsFlag, $sourceEntit
         "idType" => "internal"
     ], $db);
 
-    if (!isset($suggestionApiResponse["meta"]["requestStatus"]) || $suggestionApiResponse["meta"]["requestStatus"] !== "success" || empty($suggestionApiResponse["data"])) {
+    if (($suggestionApiResponse["meta"]["requestStatus"] ?? null) !== "success" || empty($suggestionApiResponse["data"])) {
         error_log("entitySuggestionPostProcess: Failed to fetch entity suggestion ID: " . $sourceEntitySuggestionID);
-        $postProcessingResult['reimportStatus'] = 'error'; // Cannot proceed with re-import
-        $postProcessingResult['suggestionDeleteStatus'] = 'error'; // Cannot proceed with delete if suggestion not fetched
+        $postProcessingResult['reimportStatus'] = $reimportRequested ? 'error' : 'not_attempted';
+        $postProcessingResult['suggestionDeleteStatus'] = 'error';
         return $postProcessingResult;
     }
 
-    $entitySuggestionItem = is_array($suggestionApiResponse["data"]) && isset($suggestionApiResponse["data"][0]) ? $suggestionApiResponse["data"][0] : $suggestionApiResponse["data"];
+    $entitySuggestionItem = $suggestionApiResponse["data"];
+    $context = (isset($entitySuggestionItem["EntitysuggestionContext"]) && is_array($entitySuggestionItem["EntitysuggestionContext"])) ? $entitySuggestionItem["EntitysuggestionContext"] : [];
+    $postProcessingResult['affectedSpeeches'] = array_keys($context);
 
-    if (isset($entitySuggestionItem["EntitysuggestionContext"]) && is_array($entitySuggestionItem["EntitysuggestionContext"])) {
-        $postProcessingResult['affectedSpeeches'] = array_keys($entitySuggestionItem["EntitysuggestionContext"]);
-    } else {
-        // No context found, so no sessions to reimport for this suggestion.
-        $postProcessingResult['reimportStatus'] = 'success'; // No sessions to reimport is a success state for reimport
-        $postProcessingResult['affectedSpeeches'] = []; // Ensure it's an empty array
-        // Proceed to attempt deletion as the suggestion might still exist and needs cleanup.
-    }
-
-    // 2. Prepare filesToReimport array
-    $filesToReimport = [];
-    if (!empty($postProcessingResult['affectedSpeeches'])) {
-        foreach ($entitySuggestionItem["EntitysuggestionContext"] as $contextKey => $contextValue) {
+    // 2. Re-import the sessions the suggestion was found in
+    if ($reimportRequested) {
+        $filesToReimport = [];
+        foreach ($context as $contextKey => $contextValue) {
             $itemInfos = optvParseStringId($contextKey);
             if ($itemInfos && isset($itemInfos["parliament"]) && isset($itemInfos["electoralPeriodNumber"]) && isset($itemInfos["sessionNumber"])) {
                 $parliament = trim($itemInfos["parliament"]);
                 $electoralPeriod = trim(substr($itemInfos["electoralPeriodNumber"], 1));
                 $sessionNum = trim(substr($itemInfos["sessionNumber"], 1));
                 $tmpFileName = $electoralPeriod . $sessionNum . "-session.json";
-                if (!isset($filesToReimport[$parliament])) {
-                    $filesToReimport[$parliament] = [];
-                }
-                $filesToReimport[$parliament][] = $tmpFileName;
+                // Keyed by file name: several speeches of one session need one copy
+                $filesToReimport[$parliament][$tmpFileName] = $tmpFileName;
             }
         }
-    }
+        $filesToReimport = array_map('array_values', $filesToReimport);
 
-    // 3. Trigger Re-import
-    if (!empty($filesToReimport)) {
-        $reimportResponse = apiV1([
-            "action" => "import",
-            "itemType" => "reimport-sessions",
-            "files" => $filesToReimport
-        ], $db);
+        if (!empty($filesToReimport)) {
+            $reimportResponse = apiV1([
+                "action" => "import",
+                "itemType" => "reimport-sessions",
+                "files" => $filesToReimport
+            ], $db);
 
-        if (isset($reimportResponse["meta"]["requestStatus"]) && $reimportResponse["meta"]["requestStatus"] === "success") {
+            if (($reimportResponse["meta"]["requestStatus"] ?? null) !== "success") {
+                error_log("entitySuggestionPostProcess: Re-import failed for suggestion ID: " . $sourceEntitySuggestionID . " - Response: " . json_encode($reimportResponse));
+                $postProcessingResult['reimportStatus'] = 'error';
+                // Keep the suggestion: its context is the only record of which sessions still need the re-import
+                return $postProcessingResult;
+            }
+
             $postProcessingResult['reimportStatus'] = 'success';
-            if (isset($reimportResponse["meta"]["summary"])) {
-                $postProcessingResult['reimportSummary'] = $reimportResponse["meta"]["summary"];
-            }
-            if (isset($reimportResponse["data"]["copied"])) {
-                $postProcessingResult['affectedSessions'] = $reimportResponse["data"]["copied"];
-            }
+            $postProcessingResult['reimportSummary'] = $reimportResponse["meta"]["summary"] ?? null;
+            $postProcessingResult['affectedSessions'] = $reimportResponse["data"]["copied"] ?? null;
         } else {
-            error_log("entitySuggestionPostProcess: Re-import failed for suggestion ID: " . $sourceEntitySuggestionID . " - Response: " . json_encode($reimportResponse));
-            $postProcessingResult['reimportStatus'] = 'error';
-            // Do not attempt to delete the suggestion if re-import failed, to allow for manual retry/investigation
-            return $postProcessingResult; // Exit early
+            $postProcessingResult['reimportStatus'] = 'success';
+            if (!empty($context)) {
+                $postProcessingResult['reimportSummary'] = 'No valid session files derived from context to re-import.';
+            }
         }
-    } else if (empty($postProcessingResult['affectedSpeeches'])) {
-        // This means EntitysuggestionContext was empty or null, so reimport is successful as there was nothing to do.
-        $postProcessingResult['reimportStatus'] = 'success';
-    } else {
-        // Context was present but resulted in no valid files (e.g., optvParseStringId failed for all)
-        // This is also considered a success for re-import as there were no valid sessions to process.
-        $postProcessingResult['reimportStatus'] = 'success';
-        $postProcessingResult['reimportSummary'] = 'No valid session files derived from context to re-import.';
     }
 
-    // 4. (Attempt to) Delete Entity Suggestion if re-import was successful
-    if ($postProcessingResult['reimportStatus'] === 'success') {
-        $deleteSuggestionResponse = apiV1([
-            "action" => "deleteItem", // This action needs to be added to api.php
-            "itemType" => "entitySuggestion",
-            "EntitysuggestionID" => $sourceEntitySuggestionID
-        ], $db);
+    // 3. Delete the suggestion
+    $deleteSuggestionResponse = apiV1([
+        "action" => "deleteItem",
+        "itemType" => "entitySuggestion",
+        "EntitysuggestionID" => $sourceEntitySuggestionID
+    ], $db);
 
-        if (isset($deleteSuggestionResponse["meta"]["requestStatus"]) && $deleteSuggestionResponse["meta"]["requestStatus"] === "success") {
-            $postProcessingResult['suggestionDeleteStatus'] = 'success';
-        } else {
-            error_log("entitySuggestionPostProcess: Failed to delete entity suggestion ID: " . $sourceEntitySuggestionID . " - Response: " . json_encode($deleteSuggestionResponse));
-            $postProcessingResult['suggestionDeleteStatus'] = 'error';
-            // Note: The overall process might still be considered a success for the user if entity add + reimport worked,
-            // but an error for suggestion deletion should be logged for admin attention.
-        }
+    if (($deleteSuggestionResponse["meta"]["requestStatus"] ?? null) === "success") {
+        $postProcessingResult['suggestionDeleteStatus'] = 'success';
     } else {
-        // If re-import was not successful, don't attempt to delete the suggestion.
-        $postProcessingResult['suggestionDeleteStatus'] = 'not_attempted';
+        error_log("entitySuggestionPostProcess: Failed to delete entity suggestion ID: " . $sourceEntitySuggestionID . " - Response: " . json_encode($deleteSuggestionResponse));
+        $postProcessingResult['suggestionDeleteStatus'] = 'error';
     }
 
     return $postProcessingResult;

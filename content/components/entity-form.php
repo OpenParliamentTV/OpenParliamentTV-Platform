@@ -283,7 +283,23 @@ require_once(__DIR__ . '/../../api/v1/api.php');
         const $loadingIndicator = $previewContainer.find(".loadingIndicator");
 
         // --- Functions scoped to this form instance ---
-        function fetchAdditionalInfo() {
+
+        // Dynamic list rows, built as elements so that a quote in a Wikidata label cannot break out of the value attribute
+        function labelAlternativeRow(value) {
+            return $('<span style="position: relative"></span>')
+                .append($('<input type="text" class="form-control" name="labelAlternative[]">').val(value || ''))
+                .append('<button class="labelAlternativeRemove btn" style="position: absolute;top:0px;right:0px;" type="button"><span class="icon-cancel-circled"></span></button>');
+        }
+
+        function socialMediaRow(label, id) {
+            return $('<div style="position: relative" class="form-row"></div>')
+                .append($('<div class="col"></div>').append($('<input type="text" class="form-control" name="socialMediaIDsLabel[]" placeholder="Label (e.g. facebook)">').val(label || '')))
+                .append($('<div class="col"></div>').append($('<input type="text" class="form-control" name="socialMediaIDsValue[]" placeholder="Value (name)">').val(id || '')))
+                .append('<button class="socialMediaIDsRemove btn" style="position: absolute;top:0px;right:0px;" type="button"><span class="icon-cancel-circled"></span></button>');
+        }
+
+        // The inputs the preview depends on. Their key changes exactly when a new preview is needed.
+        function readPreviewInputs() {
             const wikidataID = $form.find('input[name="id"]').val().trim();
             const entityType = $form.find("input[name='itemType']:checked").val();
             let subType = "";
@@ -304,7 +320,40 @@ require_once(__DIR__ . '/../../api/v1/api.php');
                         break;
                 }
             }
-            
+
+            return {
+                wikidataID: wikidataID,
+                entityType: entityType,
+                subType: subType,
+                key: [wikidataID, entityType || "", subType || ""].join("|")
+            };
+        }
+
+        let lastPreviewKey = null;
+        let previewTimer = null;
+
+        // Debounced: typing an ID fires once per character, and every prefix of a Wikidata ID is itself a valid ID.
+        function fetchAdditionalInfo() {
+            clearTimeout(previewTimer);
+            previewTimer = setTimeout(runFetchAdditionalInfo, 300);
+        }
+
+        function runFetchAdditionalInfo() {
+            const inputs = readPreviewInputs();
+            if (inputs.key === lastPreviewKey) {
+                return;
+            }
+            lastPreviewKey = inputs.key;
+
+            // A response for inputs that have changed since its request was sent is dropped
+            const isCurrent = function() {
+                return readPreviewInputs().key === inputs.key;
+            };
+
+            const wikidataID = inputs.wikidataID;
+            const entityType = inputs.entityType;
+            const subType = inputs.subType;
+
             if (wikidataID && entityType && subType) {
                 $getAdditionalInfoError.addClass('d-none').empty();
                 $previewContainer.removeClass('d-none');
@@ -326,9 +375,14 @@ require_once(__DIR__ . '/../../api/v1/api.php');
                     },
                     dataType: "json",
                     complete: function() {
-                        $loadingIndicator.addClass('d-none');
+                        if (isCurrent()) {
+                            $loadingIndicator.addClass('d-none');
+                        }
                     },
                     success: function(response) {
+                        if (!isCurrent()) {
+                            return;
+                        }
                         if (response && response.meta && response.meta.requestStatus === 'success' && response.data) { 
                             $('#modalAddEntitySubmitBtn').prop('disabled', false);
 
@@ -348,15 +402,20 @@ require_once(__DIR__ . '/../../api/v1/api.php');
                                 method: 'POST',
                                 data: { entity: JSON.stringify(entityData) },
                                 success: function(html) {
+                                    if (!isCurrent()) {
+                                        return;
+                                    }
                                     $previewContainer.html(html);
                                     $previewContainer.append($loadingIndicator);
                                 },
                                 complete: function() {
-                                    $loadingIndicator.addClass('d-none');
+                                    if (isCurrent()) {
+                                        $loadingIndicator.addClass('d-none');
+                                    }
                                 }
                             });
 
-                            // Populate form fields
+                            // Populate form fields. Every field is overwritten, so nothing from a previous preview survives.
                             const fieldMappings = {
                                 'label': 'label',
                                 'firstName': 'firstName',
@@ -374,19 +433,21 @@ require_once(__DIR__ . '/../../api/v1/api.php');
                             };
 
                             Object.entries(fieldMappings).forEach(([formField, dataField]) => {
-                                if (response.data[dataField]) {
-                                    if (formField === 'additionalinformation') {
-                                        $form.find(`textarea[name="${formField}"]`).val(JSON.stringify(response.data[dataField]));
-                                    } else {
-                                        $form.find(`input[name="${formField}"], textarea[name="${formField}"]`).val(response.data[dataField]);
-                                    }
+                                let value = response.data[dataField];
+                                if (formField === 'additionalinformation') {
+                                    value = value ? JSON.stringify(value) : '';
                                 }
+                                // Keep a prefilled label (conflicts page) when the response has none
+                                if (formField === 'label' && !value) {
+                                    return;
+                                }
+                                $form.find(`input[name="${formField}"], textarea[name="${formField}"]`).val(value || '');
                             });
 
                             // Handle select fields
-                            if (response.data.gender) $form.find('select[name="gender"]').val(response.data.gender);
-                            if (response.data.partyID) $form.find('select[name="party"]').val(response.data.partyID);
-                            if (response.data.factionID) $form.find('select[name="faction"]').val(response.data.factionID);
+                            $form.find('select[name="gender"]').val(response.data.gender || '');
+                            $form.find('select[name="party"]').val(response.data.partyID || '');
+                            $form.find('select[name="faction"]').val(response.data.factionID || '');
 
                             // Show/hide party and faction selects based on preview data
                             if (response.data.type === "person" || response.data.type === "memberOfParliament") {
@@ -410,6 +471,9 @@ require_once(__DIR__ . '/../../api/v1/api.php');
                                 },
                                 dataType: "json",
                                 success: function(sessionsResult) {
+                                    if (!isCurrent()) {
+                                        return;
+                                    }
                                     const $container = $("#affectedSessionsContainer");
                                     $container.empty(); // Clear previous content
 
@@ -439,56 +503,46 @@ require_once(__DIR__ . '/../../api/v1/api.php');
                                     }
                                 },
                                 error: function() {
+                                    if (!isCurrent()) {
+                                        return;
+                                    }
                                     $("#affectedSessionsContainer").html('<div class="mt-3 text-danger">Error checking affected sessions.</div>');
                                 }
                             });
 
                             // Handle alternative labels
-                            $form.find('button.labelAlternativeAdd').parent().find("div:first").empty();
-                            if (response.data.labelAlternative && Array.isArray(response.data.labelAlternative)) {
+                            const $labelAlternativeList = $form.find('button.labelAlternativeAdd').parent().find("div:first").empty();
+                            if (Array.isArray(response.data.labelAlternative)) {
                                 response.data.labelAlternative.forEach(label => {
-                                    $form.find('button.labelAlternativeAdd').parent().find("div:first").append(
-                                        '<span style="position: relative">' +
-                                        '<input type="text" class="form-control" name="labelAlternative[]" value="'+ label +'"/>' +
-                                        '<button class="labelAlternativeRemove btn" style="position: absolute;top:0px;right:0px;" type="button">' +
-                                        '<span class="icon-cancel-circled"></span>' +
-                                        '</button></span>'
-                                    );
+                                    $labelAlternativeList.append(labelAlternativeRow(label));
                                 });
                             }
                             
                             // Handle social media IDs
-                            $form.find('button.socialMediaIDsAdd').parent().find("div:first").empty();
-                            if (response.data.socialMediaIDs && Array.isArray(response.data.socialMediaIDs)) {
+                            const $socialMediaList = $form.find('button.socialMediaIDsAdd').parent().find("div:first").empty();
+                            if (Array.isArray(response.data.socialMediaIDs)) {
                                 response.data.socialMediaIDs.forEach(socialMedia => {
-                                    $form.find('button.socialMediaIDsAdd').parent().find("div:first").append(
-                                        '<div style="position: relative" class="form-row">' +
-                                        '<div class="col">' +
-                                        '<input type="text" class="form-control" name="socialMediaIDsLabel[]" placeholder="Label (e.g. facebook)" value="'+ socialMedia.label +'"/>' +
-                                        '</div>' +
-                                        '<div class="col">' +
-                                        '<input type="text" class="form-control" name="socialMediaIDsValue[]" placeholder="Value (name)" value="'+ socialMedia.id +'"/>' +
-                                        '</div>' +
-                                        '<button class="socialMediaIDsRemove btn" style="position: absolute;top:0px;right:0px;" type="button">' +
-                                        '<span class="icon-cancel-circled"></span>' +
-                                        '</button>' +
-                                        '</div>'
-                                    );
+                                    $socialMediaList.append(socialMediaRow(socialMedia.label, socialMedia.id));
                                 });
                             }
-                        } else if (response && response.meta && response.meta.message) { 
-                            $getAdditionalInfoError.text("Could not fetch additional data: " + response.meta.message).removeClass('d-none');
-                            $('#modalAddEntitySubmitBtn').prop('disabled', true);
-                        } else if (response && response.errors && response.errors.length > 0) {
-                            let errorDetail = response.errors[0].detail || response.errors[0].title || "Unknown error.";
-                            $getAdditionalInfoError.text("Could not fetch additional data: " + errorDetail).removeClass('d-none');
-                            $('#modalAddEntitySubmitBtn').prop('disabled', true);
                         } else {
-                            $getAdditionalInfoError.text("Could not fetch additional data. Response was unexpected.").removeClass('d-none');
+                            // Not a usable preview: allow the same inputs to be fetched again
+                            lastPreviewKey = null;
+                            let message = "Could not fetch additional data. Response was unexpected.";
+                            if (response && response.meta && response.meta.message) {
+                                message = "Could not fetch additional data: " + response.meta.message;
+                            } else if (response && response.errors && response.errors.length > 0) {
+                                message = "Could not fetch additional data: " + (response.errors[0].detail || response.errors[0].title || "Unknown error.");
+                            }
+                            $getAdditionalInfoError.text(message).removeClass('d-none');
                             $('#modalAddEntitySubmitBtn').prop('disabled', true);
                         }
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
+                        if (!isCurrent()) {
+                            return;
+                        }
+                        lastPreviewKey = null;
                         $getAdditionalInfoError.text("Error fetching additional data: " + textStatus + " - " + errorThrown).removeClass('d-none');
                         $('#modalAddEntitySubmitBtn').prop('disabled', true);
                     }
@@ -558,8 +612,18 @@ require_once(__DIR__ . '/../../api/v1/api.php');
             initializeFormDisplay(); 
         });
 
+        // Reduce the ID field to the bare ID (also from a pasted Wikidata URL), so the preview and the submit use the same value
+        $form.find('input[name="id"]').on("input change", function() {
+            const value = $(this).val();
+            const match = value.match(/[QP]\d+/i);
+            const normalized = match ? match[0].toUpperCase() : value.trim();
+            if (normalized !== value) {
+                $(this).val(normalized);
+            }
+        });
+
         // Listen for changes on relevant fields to update preview
-        $form.find('input[name="id"], #typePerson, #typeOrganisation, #typeDocument, #typeTerm').on("change keyup", function() {
+        $form.find('input[name="id"], #typePerson, #typeOrganisation, #typeDocument, #typeTerm').on("input change", function() {
             fetchAdditionalInfo();
         });
 
@@ -622,13 +686,54 @@ require_once(__DIR__ . '/../../api/v1/api.php');
                 }
                 formData.push({ name: "reimportAffectedSessions", value: reimportAffectedSessions });
                 // sourceEntitySuggestionID is already part of the form as a hidden input
+
+                // The rows post two parallel arrays; the server stores socialMediaIDs as [{label, id}].
+                // Spliced in place: the form plugin submits this very array.
+                const socialLabels = [];
+                const socialValues = [];
+                for (let i = formData.length - 1; i >= 0; i--) {
+                    const name = formData[i].name;
+                    if (name === "socialMediaIDsLabel[]" || name === "socialMediaIDsValue[]") {
+                        (name === "socialMediaIDsLabel[]" ? socialLabels : socialValues).unshift(String(formData[i].value).trim());
+                        formData.splice(i, 1);
+                    }
+                }
+                let socialIndex = 0;
+                socialLabels.forEach(function(label, i) {
+                    const id = socialValues[i] || "";
+                    if (label || id) {
+                        formData.push({ name: "socialMediaIDs[" + socialIndex + "][label]", value: label });
+                        formData.push({ name: "socialMediaIDs[" + socialIndex + "][id]", value: id });
+                        socialIndex++;
+                    }
+                });
+
+                // No second submit while this one is in flight
+                $('#modalAddEntitySubmitBtn').prop('disabled', true);
             },
 			success: function (ret) {
 				// console.log('[Form AJAX Success Callback] Raw response (ret):', JSON.parse(JSON.stringify(ret))); // DEBUG REMOVED
-                $("#entityAddReturn").empty().addClass('d-none alert-success alert-danger');
-				$("#entityAddForm input, #entityAddForm select, #entityAddForm textarea").css("border", ""); 
+                $("#entityAddReturn").empty().removeClass('alert-success alert-danger alert-warning').addClass('d-none');
+				$("#entityAddForm input, #entityAddForm select, #entityAddForm textarea").css("border", "");
 
 				if (ret && ret.meta && ret.meta.requestStatus === "success") {
+                    // The entity is added. A failed re-import or suggestion removal is reported, but the dialog is not offered for a retry: that would only hit the duplicate check.
+                    const warnings = [];
+                    if (ret.meta.reimportStatus === 'error') {
+                        warnings.push("<div>Error re-importing affected sessions: " + (ret.meta.reimportSummary || "Please check logs.") + "</div>");
+                    }
+                    if (ret.meta.suggestionDeleteStatus === 'error') {
+                        warnings.push("<div>Note: Entity was added, but failed to automatically remove the original suggestion.</div>");
+                    }
+                    if (warnings.length > 0) {
+                        $("#entityAddReturn").html(warnings.join("")).removeClass('d-none').addClass('alert-warning');
+                        $('#modalAddEntitySubmitBtn').prop('disabled', true);
+                        if (typeof $ !== 'undefined' && $.fn.bootstrapTable) {
+                            $('.bootstrap-table .table').bootstrapTable('refresh');
+                        }
+                        return;
+                    }
+
                     const submittedSourceSuggestionID = $form.find('input[name="sourceEntitySuggestionID"]').val();
                     // Check if sourceEntitySuggestionIDUsed is present in meta and true, otherwise fallback to checking the form field
                     const wasFromSuggestion = (ret.meta.sourceEntitySuggestionIDUsed === true || ret.meta.sourceEntitySuggestionIDUsed === 'true') 
@@ -725,65 +830,45 @@ require_once(__DIR__ . '/../../api/v1/api.php');
                         }
                     }
 				} else {
-                    // Handle errors (partial or full)
+                    // Nothing was written: the inputs can be corrected and submitted again
+                    $('#modalAddEntitySubmitBtn').prop('disabled', false);
                     $("#entityAddReturn").removeClass('d-none alert-success').addClass('alert-danger');
-                    let errorMessages = [];
+                    const errorMessages = [];
 
                     if (ret && ret.errors && Array.isArray(ret.errors)) {
                         ret.errors.forEach(function(error) {
-                            let message = error.title;
-                            /*
-                            if (error.detail) {
-                                message += ": " + error.detail;
+                            errorMessages.push($('<div>').text(error.title));
+                            // The detail is what names the field (e.g. "Das Feld 'sourceuri' ist erforderlich.")
+                            if (error.detail && error.detail !== error.title) {
+                                errorMessages.push($('<div class="small">').text(error.detail));
                             }
-                            */
-                            errorMessages.push('<div>' + message + '</div>');
                             if (error.meta && error.meta.domSelector) {
                                 $(error.meta.domSelector).css("border", "1px solid red");
-                            } else if (error.label) { 
+                            } else if (error.label) {
                                 $("[name='" + error.label + "']").css("border", "1px solid red");
                             }
                         });
                     } else {
                         // Generic error if the structure is not as expected
-                        errorMessages.push('<div>' + localizedLabels.messageErrorGeneric + '</div>');
+                        errorMessages.push($('<div>').text(localizedLabels.messageErrorGeneric));
                     }
 
-                    // Add messages from meta if they provide more context
-                    if (ret && ret.meta) {
-                        if (ret.meta.entityAddStatus === 'error') {
-                             errorMessages.push("<div>Error adding the entity.</div>");
-                        }
-                        if (ret.meta.reimportStatus === 'error') {
-                            errorMessages.push("<div>Error re-importing affected sessions: " + (ret.meta.reimportSummary || "Please check logs.") + "</div>");
-                        }
-                        if (ret.meta.suggestionDeleteStatus === 'error') {
-                            errorMessages.push("<div>Note: Entity was added, but failed to automatically remove the original suggestion.</div>");
-                        }
+                    if (errorMessages.length === 0) {
+                        errorMessages.push($('<div>').text("An unknown error occurred."));
                     }
-                    
-                    if (errorMessages.length > 0) {
-                        $("#entityAddReturn").html(errorMessages.join("")).removeClass("d-none");
-                    } else {
-                        // Fallback if no specific messages were generated but it's an error
-                        $("#entityAddReturn").html("<div>An unknown error occurred.</div>").removeClass("d-none");
-                    }
+                    $("#entityAddReturn").empty().append(errorMessages).removeClass("d-none");
                 }
 			},
             error: function(jqXHR, textStatus, errorThrown) {
                 // Handle AJAX call failure
-                $("#entityAddReturn").empty().addClass('d-none alert-success alert-danger'); // Reset classes
-                $("#entityAddReturn").removeClass('d-none alert-success').addClass('alert-danger');
+                $('#modalAddEntitySubmitBtn').prop('disabled', false);
+                $("#entityAddReturn").empty().removeClass('d-none alert-success alert-warning').addClass('alert-danger');
                 $("#entityAddReturn").html("<div>Communication error with the server: " + textStatus + " - " + errorThrown + "</div>").removeClass("d-none");
             }
 		});
 
 		$(".labelAlternativeAdd").on("click", function() {
-			$(this).parent().find("div:first").append('<span style="position: relative">' +
-				'<input type="text" class="form-control" name="labelAlternative[]">' +
-				'<button class="labelAlternativeRemove btn" style="position: absolute;top:0px;right:0px;" type="button">' +
-				'<span class="icon-cancel-circled"></span>' +
-				'</button></span>');
+			$(this).parent().find("div:first").append(labelAlternativeRow(''));
 		});
 
 
@@ -792,17 +877,7 @@ require_once(__DIR__ . '/../../api/v1/api.php');
 		});
 
 		$(".socialMediaIDsAdd").on("click", function() {
-			$(this).parent().find("div:first").append('<div style="position: relative" class="form-row">\n' +
-				'                                        <div class="col">' +
-				'                                           <input type="text" class="form-control" name="socialMediaIDsLabel[]" placeholder="Label (e.g. facebook)">' +
-				'                                        </div>\n' +
-				'                                        <div class="col">' +
-				'                                           <input type="text" class="form-control" name="socialMediaIDsValue[]" placeholder="Value (name)">' +
-				'                                        </div>\n' +
-				'                                        <button class="socialMediaIDsRemove btn" style="position: absolute;top:0px;right:0px;" type="button">\n' +
-				'                                            <span class="icon-cancel-circled"></span>\n' +
-				'                                        </button>\n' +
-				'                                    </div>');
+			$(this).parent().find("div:first").append(socialMediaRow('', ''));
 		});
 
 		$("body").on("click", ".socialMediaIDsRemove", function() {

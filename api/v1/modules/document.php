@@ -217,10 +217,6 @@ function documentSearch($parameter, $db = false) {
 function documentAdd($api_request, $db = false, $dbp = false) {
     global $config;
 
-    // Extract reimportAffectedSessions and sourceEntitySuggestionID from $api_request
-    $reimportAffectedSessions = isset($api_request['reimportAffectedSessions']) ? (bool)$api_request['reimportAffectedSessions'] : false;
-    $sourceEntitySuggestionID = $api_request['sourceEntitySuggestionID'] ?? null;
-
     // Parameter validation
     if (empty($api_request["id"])) {
         // DocumentID is auto-increment, but we need a wikidata ID for entity linking if provided
@@ -247,9 +243,13 @@ function documentAdd($api_request, $db = false, $dbp = false) {
         return $db; // Return error from getApiDatabaseConnection
     }
 
-    // Unlike person/org, DocumentID is auto-increment. WikidataID is optional.
-    // We don't check for duplicates based on wikidataID for documents in the same way.
-    // Duplicates might be based on label or sourceuri, but that logic is not present here yet.
+    // DocumentID is auto-increment, so a document is identified by its Wikidata ID where it has one, and an official document by its source URI — the key the importer matches official documents on.
+    if (!empty($api_request["id"]) && $db->getOne("SELECT DocumentID FROM ?n WHERE DocumentWikidataID = ?s", $config["platform"]["sql"]["tbl"]["Document"], $api_request["id"])) {
+        return apiErrorDuplicate("Document", "id");
+    }
+    if ($api_request["type"] === "officialDocument" && $db->getOne("SELECT DocumentID FROM ?n WHERE DocumentSourceURI = ?s", $config["platform"]["sql"]["tbl"]["Document"], $api_request["sourceuri"])) {
+        return apiErrorDuplicate("Document", "sourceuri");
+    }
 
     $labelAlternative = !empty($api_request["labelAlternative"]) && is_array($api_request["labelAlternative"]) ? json_encode($api_request["labelAlternative"]) : json_encode([]);
     $additionalInformation = !empty($api_request["additionalinformation"]) ? json_encode(json_decode($api_request["additionalinformation"],true)) : json_encode([]);
@@ -263,7 +263,7 @@ function documentAdd($api_request, $db = false, $dbp = false) {
             $api_request["type"],
             $api_request["label"],
             $labelAlternative,
-            $api_request["abstract"] ?? null,
+            $api_request["abstract"] ?? "", // NOT NULL column
             $api_request["thumbnailuri"] ?? null,
             $api_request["thumbnailcreator"] ?? null,
             $api_request["thumbnaillicense"] ?? null,
@@ -272,80 +272,17 @@ function documentAdd($api_request, $db = false, $dbp = false) {
             $additionalInformation
         );
 
-        $documentID = $db->insertId(); // Get the auto-incremented DocumentID
-        $documentDataResponse = documentGetByID($documentID, $db);
-
-        $finalMeta = [];
-        $finalData = null;
-
-        if (isset($documentDataResponse["meta"]["requestStatus"]) && $documentDataResponse["meta"]["requestStatus"] == "success") {
-            $finalMeta['entityAddStatus'] = 'success';
-            $finalData = $documentDataResponse["data"];
-
-            $actualSuggestionInternalIDToProcess = $sourceEntitySuggestionID;
-            
-            // For documents, the $api_request['id'] is the DocumentWikidataID (optional), which acts as the external ID for suggestions.
-            $lookupExternalId = $api_request['id'] ?? null; 
-
-            if (empty($actualSuggestionInternalIDToProcess) && $reimportAffectedSessions && !empty($lookupExternalId)) {
-                $lookupResponse = apiV1([
-                    "action" => "getItemsFromDB",
-                    "itemType" => "entitySuggestion",
-                    "id" => $lookupExternalId, // Use DocumentWikidataID for lookup
-                    "idType" => "external",
-                    "limit" => 1
-                ], $db);
-
-                if (isset($lookupResponse["meta"]["requestStatus"]) && $lookupResponse["meta"]["requestStatus"] == "success" && !empty($lookupResponse["data"])) {
-                    $foundSuggestion = $lookupResponse["data"];
-                    if (isset($foundSuggestion['EntitysuggestionID'])) {
-                        $actualSuggestionInternalIDToProcess = $foundSuggestion['EntitysuggestionID'];
-                    }
-                }
-            }
-            
-            require_once(__DIR__ . "/entity-suggestion.php");
-            $postProcessingDetails = entitySuggestionPostProcess($reimportAffectedSessions, $actualSuggestionInternalIDToProcess, $db);
-            
-            $finalMeta['reimportStatus'] = $postProcessingDetails['reimportStatus'];
-            $finalMeta['reimportSummary'] = $postProcessingDetails['reimportSummary'];
-            $finalMeta['affectedSessions'] = $postProcessingDetails['affectedSessions'];
-            $finalMeta['affectedSpeeches'] = $postProcessingDetails['affectedSpeeches'];
-            $finalMeta['suggestionDeleteStatus'] = $postProcessingDetails['suggestionDeleteStatus'];
-
-            if ($finalMeta['entityAddStatus'] === 'success' && 
-                $postProcessingDetails['reimportStatus'] === 'success' && 
-                $postProcessingDetails['suggestionDeleteStatus'] !== 'error') {
-                $finalMeta['requestStatus'] = 'success';
-            } else {
-                $finalMeta['requestStatus'] = 'error';
-                if ($postProcessingDetails['reimportStatus'] === 'error') {
-                    return apiErrorResponse(500, 1, "messageErrorItemCreationReimportFailedTitle", "messageErrorItemCreationReimportFailedDetail", ["itemType" => "Document"]);
-                }
-            }
-
-        } else {
-            $finalMeta['entityAddStatus'] = 'error';
-            $finalMeta['reimportStatus'] = 'not_attempted';
-            $finalMeta['suggestionDeleteStatus'] = 'not_attempted';
-            $finalMeta['requestStatus'] = 'error';
-            if (isset($documentDataResponse["errors"])) {
-                return $documentDataResponse;
-            }
-            return apiErrorResponse(500, 1, "messageErrorItemCreationRetrievalFailedTitle", "messageErrorItemCreationRetrievalFailedDetail", ["itemType" => "Document"]);
-        }
-        
-        if ($finalMeta['requestStatus'] === 'error') {
-            $errorTitle = "messageErrorPartialSuccessTitle";
-            $errorDetail = "messageErrorPartialSuccessDetail";
-            if($finalMeta['entityAddStatus'] === 'error'){
-                 $errorTitle = "messageErrorItemCreationRetrievalFailedTitle";
-                 $errorDetail = "messageErrorItemCreationRetrievalFailedDetail";
-            }
-            return apiErrorResponse(500, 1, $errorTitle, $errorDetail, ["itemType" => "Document"], null, $finalMeta);
+        $itemResponse = documentGetByID($db->insertId(), $db);
+        if (($itemResponse["meta"]["requestStatus"] ?? null) !== "success") {
+            return isset($itemResponse["errors"]) ? $itemResponse : apiErrorDatabaseError();
         }
 
-        return apiSuccessResponse($finalData, $finalMeta);
+        // The entity is written: the request succeeded. What happened to its suggestion travels in meta.
+        require_once(__DIR__ . "/entity-suggestion.php");
+        return apiSuccessResponse(
+            $itemResponse["data"],
+            array_merge(["entityAddStatus" => "success"], entitySuggestionPostProcess($api_request, $api_request["id"] ?? null, $db))
+        );
 
     } catch (Exception $e) {
         error_log("Error in documentAdd: " . $e->getMessage());

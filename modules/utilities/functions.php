@@ -481,6 +481,34 @@ function optvValidateWikidataId($id) {
     return (bool) preg_match('/^(Q|P)\d+$/i', $id);
 }
 
+/**
+ * Normalizes a date as Wikidata delivers it (or as typed into a form) to 'Y-m-d'.
+ *
+ * Wikidata times look like "+1965-03-12T00:00:00Z". Below day precision the unknown parts are "00" ("+1984-00-00T00:00:00Z"); such a value names no single day, and PHP's date parsing would roll it back into the previous month (1983-11-30), so it normalizes to null. So do a bare year or year-month, BC dates, and years beyond four digits, which a DATE column cannot hold meaningfully. Besides the ISO form, "d.m.Y" is accepted for hand-typed input; anything else is rejected rather than guessed at.
+ *
+ * @param mixed $value
+ * @return string|null|false 'Y-m-d' for a full date, null for no date (empty or less than day precision), false when the value cannot be parsed.
+ */
+function optvNormalizeWikidataDate($value) {
+    if (!is_string($value) || trim($value) === '') {
+        return null;
+    }
+    $value = trim($value);
+    if (preg_match('/^[+-]?\d+(?:-\d{2})?$/', $value)) {
+        return null;
+    }
+    if (preg_match('/^([+-]?)(\d+)-(\d{2})-(\d{2})(?:[T ]|$)/', $value, $m)) {
+        if ($m[1] === '-' || strlen($m[2]) !== 4 || $m[3] === '00' || $m[4] === '00') {
+            return null;
+        }
+        return checkdate((int) $m[3], (int) $m[4], (int) $m[2]) ? $m[2]."-".$m[3]."-".$m[4] : false;
+    }
+    if (preg_match('/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/', $value, $m)) {
+        return checkdate((int) $m[2], (int) $m[1], (int) $m[3]) ? sprintf('%04d-%02d-%02d', $m[3], $m[2], $m[1]) : false;
+    }
+    return false;
+}
+
 // --- START: Generic Progress File Helper Functions ---
 
 /**

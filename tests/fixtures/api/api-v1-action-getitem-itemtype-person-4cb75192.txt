@@ -19,7 +19,7 @@ x-robots-tag: noindex
             "status": 422,
             "code": 1,
             "title": "Erforderlicher Parameter fehlt",
-            "detail": "Erforderlicher Parameter fehlt",
+            "detail": "Das Feld 'id' ist erforderlich.",
             "meta": {
                 "domSelector": "[name='id']"
             }

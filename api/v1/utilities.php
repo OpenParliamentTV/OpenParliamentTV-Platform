@@ -142,8 +142,9 @@ function apiErrorMissingParameter($field = null) {
         422,
         1,
         "messageErrorMissingParameter",
-        "messageErrorMissingParameter",
-        [],
+        // The detail names the field in every language; the title only does in English
+        $field ? "messageErrorFieldRequiredDetail" : "messageErrorMissingParameter",
+        $field ? ["parameter" => $field, "field" => $field] : [],
         $field ? "[name='".$field."']" : null
     );
 }
