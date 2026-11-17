@@ -197,14 +197,16 @@ function importWriteSession($sessionData, $electoralPeriodID, $meta, $parliament
             $sessionData["dateEnd"]
         );
     } else {
-        // Update existing session if needed
+        // The session file wins: a session imported mid-sitting holds provisional
+        // bounds (first/last speech so far), which later publications replace
+        // with the official ones from the proceedings.
         $updates = [];
-        
-        if (!$tmpSession["SessionDateStart"] && $sessionData["dateStart"]) {
+
+        if ($sessionData["dateStart"] && $tmpSession["SessionDateStart"] !== $sessionData["dateStart"]) {
             $updates[] = $dbp->parse("SessionDateStart=?s", $sessionData["dateStart"]);
         }
 
-        if (!$tmpSession["SessionDateEnd"] && $sessionData["dateEnd"]) {
+        if ($sessionData["dateEnd"] && $tmpSession["SessionDateEnd"] !== $sessionData["dateEnd"]) {
             $updates[] = $dbp->parse("SessionDateEnd=?s", $sessionData["dateEnd"]);
         }
 
