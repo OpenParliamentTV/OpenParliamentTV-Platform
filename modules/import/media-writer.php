@@ -388,14 +388,21 @@ function importWriteMediaItem($mediaData, $agendaItemID, $sessionID, $dateStart,
         $nextID = $tmpMediaItem["MediaID"];
         $updates = [];
 
-        // Build update array for non-empty new values
+        // The session file wins for the speech's start and end: rows written by
+        // earlier imports can hold outdated values (e.g. without UTC offset),
+        // which a re-import has to be able to correct.
+        foreach ([["MediaDateStart", $dateStart], ["MediaDateEnd", $dateEnd]] as [$field, $value]) {
+            if ($value && $tmpMediaItem[$field] !== $value) {
+                $updates[] = $dbp->parse("?n=?s", $field, $value);
+            }
+        }
+
+        // Every other field is only filled when still empty
         $updateFields = [
             ["MediaOriginID", $mediaData["originID"]],
             ["MediaOriginMediaID", $mediaData["originMediaID"]],
             ["MediaOrder", $mediaData["order"]],
             ["MediaAligned", $mediaData["aligned"]],
-            ["MediaDateStart", $dateStart],
-            ["MediaDateEnd", $dateEnd],
             ["MediaDuration", $mediaData["duration"]],
             ["MediaVideoFileURI", $mediaData["videoFileURI"]],
             ["MediaAudioFileURI", $mediaData["audioFileURI"]],
