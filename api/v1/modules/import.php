@@ -217,7 +217,17 @@ function reimportSessions($request_params, $db = false) {
             $results['failed'][] = ['parliament' => $parliament, 'file' => 'N/A', 'reason' => 'Invalid file list format for parliament.'];
             continue;
         }
+        // Both end up in a file path, so only configured parliaments and bare
+        // session file names are accepted.
+        if (!isset($config["parliament"][$parliament])) {
+            $results['failed'][] = ['parliament' => $parliament, 'file' => 'N/A', 'reason' => 'Unknown parliament.'];
+            continue;
+        }
         foreach ($sessionFiles as $file) {
+            if (!is_string($file) || !preg_match('/^[A-Za-z0-9_-]+-session\.json$/', $file)) {
+                $results['failed'][] = ['parliament' => $parliament, 'file' => is_string($file) ? $file : 'N/A', 'reason' => 'Invalid session file name.'];
+                continue;
+            }
             $sourcePath = optvVarPath("data/repos") . "/" . $parliament . "/processed/" . $file;
             $destinationPath = optvVarPath("data/input") . "/" . $file;
 

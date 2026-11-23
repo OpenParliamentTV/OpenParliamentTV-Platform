@@ -391,6 +391,8 @@
     "registerDate": "Registration Date",
     "registerNewAccount": "Sign Up",
     "reimportAffectedSessions": "Re-import affected sessions",
+    "reimportSessions": "Re-import sessions",
+    "reimportSessionsHelp": "Session IDs from the data repository, separated by commas or spaces; ranges like 19001-19239 are allowed. The sessions are imported again from the local repository with the next import run.",
     "relatedMedia": "Speeches",
     "relationships": "Relationships",
     "releaseNotes": "Release Notes",

@@ -391,6 +391,8 @@
     "registerDate": "Registrierungsdatum",
     "registerNewAccount": "Registrieren",
     "reimportAffectedSessions": "Betroffene Sitzungen neu importieren",
+    "reimportSessions": "Sitzungen neu importieren",
+    "reimportSessionsHelp": "Sitzungs-IDs aus dem Daten-Repository, getrennt durch Kommas oder Leerzeichen; Bereiche wie 19001-19239 sind möglich. Die Sitzungen werden beim nächsten Import erneut aus dem lokalen Repository importiert.",
     "relatedMedia": "Redebeiträge",
     "relationships": "Querverweise",
     "releaseNotes": "Versionshinweise",

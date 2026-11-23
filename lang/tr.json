@@ -391,6 +391,8 @@
     "registerDate": "Kayıt Tarihi",
     "registerNewAccount": "Kayıt Ol",
     "reimportAffectedSessions": "Etkilenen Oturumları Yeniden İçe Aktar",
+    "reimportSessions": "Oturumları yeniden içe aktar",
+    "reimportSessionsHelp": "Veri deposundaki oturum kimlikleri, virgül veya boşlukla ayrılmış; 19001-19239 gibi aralıklar kullanılabilir. Oturumlar bir sonraki içe aktarmada yerel depodan yeniden içe aktarılır.",
     "relatedMedia": "Konuşmalar",
     "relationships": "İlişkiler",
     "releaseNotes": "Sürüm Notları",

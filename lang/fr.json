@@ -391,6 +391,8 @@
     "registerDate": "Date d'inscription",
     "registerNewAccount": "S'inscrire",
     "reimportAffectedSessions": "Réimporter les sessions affectées",
+    "reimportSessions": "Réimporter des sessions",
+    "reimportSessionsHelp": "Identifiants de session du dépôt de données, séparés par des virgules ou des espaces ; des plages comme 19001-19239 sont possibles. Les sessions sont réimportées depuis le dépôt local lors de la prochaine importation.",
     "relatedMedia": "Discours",
     "relationships": "Relations",
     "releaseNotes": "Notes de version",

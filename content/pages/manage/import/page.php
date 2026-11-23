@@ -99,6 +99,19 @@
 								</div>
 							</div>
 							<hr>
+							<div class="row" id="reimport-sessions-section">
+								<div class="col-12">
+									<div class="fw-bolder"><?= L::reimportSessions(); ?> <span id="reimport-sessions-parliament-label">(<?= h($defaultParliamentCode) ?>)</span></div>
+									<div class="small text-muted mb-2"><?= L::reimportSessionsHelp(); ?></div>
+									<div class="input-group input-group-sm mb-2">
+										<input type="text" id="reimport-sessions-input" class="form-control" placeholder="19001-19239, 20015" aria-label="<?= hAttr(L::sessions()) ?>">
+										<button type="button" id="btn-reimport-sessions" class="btn btn-outline-primary"><span class="icon-cw"></span> <?= L::reimportSessions(); ?></button>
+									</div>
+									<div id="reimport-sessions-result" class="small text-muted"></div>
+									<div id="reimport-sessions-error-display" class="alert alert-danger mt-2 p-2 small d-none"></div>
+								</div>
+							</div>
+							<hr>
 							<!-- Dynamic Search Index Sections -->
 							<div id="search-index-sections-container">
 								<!-- Search index sections will be dynamically generated here -->
@@ -345,6 +358,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Update UI labels
         updateElementText('data-import-parliament-label', `(${parliamentCode})`);
+        updateElementText('reimport-sessions-parliament-label', `(${parliamentCode})`);
+        updateElementText('reimport-sessions-result', '');
+        clearError('reimport-sessions-error-display');
         
         // Clear current status displays
         clearAllStatusDisplays();
@@ -666,6 +682,64 @@ document.addEventListener('DOMContentLoaded', function() {
             failMessage: 'Failed to trigger data import.',
             onSuccess: fetchDataImportStatus
         });
+    }
+
+    // --- Re-import of existing sessions ---
+
+    // "19001-19239, 20015 20016" -> ["19001", ..., "19239", "20015", "20016"].
+    // Returns null if a token is neither a session ID nor a numeric range.
+    function parseSessionIDs(text) {
+        const ids = [];
+        for (const token of text.split(/[\s,;]+/).filter(Boolean)) {
+            const range = token.match(/^(\d+)-(\d+)$/);
+            if (range) {
+                const from = parseInt(range[1], 10);
+                const to = parseInt(range[2], 10);
+                if (range[1].length !== range[2].length || to < from || to - from > 5000) return null;
+                for (let n = from; n <= to; n++) ids.push(String(n).padStart(range[1].length, '0'));
+            } else if (/^[A-Za-z0-9_]+$/.test(token)) {
+                ids.push(token);
+            } else {
+                return null;
+            }
+        }
+        return [...new Set(ids)];
+    }
+
+    function triggerReimportSessions() {
+        const parliamentCode = appState.currentParliament;
+        if (!parliamentCode) return;
+        clearError('reimport-sessions-error-display');
+        updateElementText('reimport-sessions-result', '');
+        const ids = parseSessionIDs(document.getElementById('reimport-sessions-input').value);
+        if (!ids || ids.length === 0) {
+            showError('reimport-sessions-error-display', 'Enter session IDs like 19001, or ranges like 19001-19239.');
+            return;
+        }
+        showConfirmationModal('reimportSessions', { parliament: parliamentCode, sessions: ids });
+    }
+
+    // Copies the session files from the local repository into the import input;
+    // the next import run (cron, or "trigger manual update") imports them.
+    async function executeReimportSessions(parliamentCode, ids) {
+        const buttonText = `<span class="icon-cw"></span> <?= L::reimportSessions(); ?>`;
+        toggleButton('btn-reimport-sessions', true, 'Queueing...');
+        const result = await apiCall(getApiUrl('import', 'reimport-sessions'), 'POST', {
+            files: { [parliamentCode]: ids.map(id => `${id}-session.json`) }
+        });
+        toggleButton('btn-reimport-sessions', false, buttonText);
+        if (!apiTriggerSucceeded(result) || !result.data) {
+            handleApiResponseError('reimport-sessions-error-display', result, 'Failed to queue sessions for re-import.');
+            return;
+        }
+        const name = (entry) => entry.file.replace(/-session\.json$/, '');
+        const { copied = [], skipped = [], failed = [] } = result.data;
+        let text = `${copied.length} session(s) queued for the next import run.`;
+        if (skipped.length) text += ` Not in the local repository: ${skipped.map(name).join(', ')}.`;
+        updateElementText('reimport-sessions-result', text);
+        if (failed.length) {
+            showError('reimport-sessions-error-display', failed.map(f => ({ detail: `${name(f)}: ${f.reason}` })));
+        }
     }
 
     // --- Search Index Specific Functions (Refactored for Reusability) ---
@@ -1495,7 +1569,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const confirmActionButton = document.getElementById('confirmAction');
         if (confirmActionButton) {
             confirmActionButton.addEventListener('click', function() {
-                const { action, parliament: parliamentCode, entityType } = pendingConfirmation || {};
+                const { action, parliament: parliamentCode, entityType, sessions } = pendingConfirmation || {};
 
                 if (action) {
                     // Close modal
@@ -1509,6 +1583,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         executeSearchIndexRefresh(parliamentCode);
                     } else if (action === 'adsUpdate' && entityType) {
                         executeAdsUpdate(entityType);
+                    } else if (action === 'reimportSessions' && parliamentCode && sessions) {
+                        executeReimportSessions(parliamentCode, sessions);
                     }
 
                     // Clear pending action
@@ -1524,6 +1600,12 @@ document.addEventListener('DOMContentLoaded', function() {
             setButtonText(dataImportElems.triggerButton, dataImportElems.originalButtonText);
         }
         
+        // Re-import of existing sessions
+        const reimportSessionsBtn = document.getElementById('btn-reimport-sessions');
+        if (reimportSessionsBtn) {
+            reimportSessionsBtn.addEventListener('click', triggerReimportSessions);
+        }
+
         // Initialize search index sections for all parliaments
         initializeSearchIndexSections();
         
