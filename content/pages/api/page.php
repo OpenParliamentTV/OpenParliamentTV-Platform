@@ -226,6 +226,12 @@ $openapiURL = $config["dir"]["root"] . "/api/openapi.yaml";
 											<td>String</td>
 										</tr>
 										<tr>
+											<td>mediaID</td>
+											<td>min 1 char</td>
+											<td>id (partial, case-insensitive)</td>
+											<td>String</td>
+										</tr>
+										<tr>
 											<td>aligned</td>
 											<td>boolean</td>
 											<td>Filter by alignment status</td>

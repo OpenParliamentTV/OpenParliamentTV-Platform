@@ -39,8 +39,8 @@ class FilterController {
             this.triggerFilterUpdate();
         });
         
-        // Agenda item title search
-        $('[name="agendaItemTitle"]').off('keyup.filterController').on('keyup.filterController', this.debounce(() => {
+        // Agenda item title and media ID search
+        $('[name="agendaItemTitle"], [name="mediaID"]').off('keyup.filterController').on('keyup.filterController', this.debounce(() => {
             this.triggerFilterUpdate();
         }, 1000));
         
@@ -194,6 +194,7 @@ class FilterController {
         
         // Update other filter fields
         $('[name="agendaItemTitle"]').val(getQueryVariable('agendaItemTitle') || '');
+        $('[name="mediaID"]').val(getQueryVariable('mediaID') || '');
         
         // Update dropdown filters
         $('[name="aligned"]').val(getQueryVariable('aligned') || '');
@@ -284,7 +285,7 @@ class FilterController {
      */
     destroy() {
         $('[name="factionID[]"], [name="numberOfTexts"], [name="aligned"], [name="public"]').off('change.filterController');
-        $('[name="agendaItemTitle"]').off('keyup.filterController');
+        $('[name="agendaItemTitle"], [name="mediaID"]').off('keyup.filterController');
         $('main').off('change.filterController', '[name="sort"]');
         $('.parliamentFilterContainer').off('change.filterController', 'select');
         $('#filterForm .formCheckbox').off('mouseenter mouseleave');

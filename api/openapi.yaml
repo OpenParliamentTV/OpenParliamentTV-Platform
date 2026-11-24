@@ -295,6 +295,13 @@ paths:
           schema:
             type: string
             minLength: 3
+        - name: mediaID
+          in: query
+          description: Partial, case-insensitive match on the media ID (e.g. `0210089` matches `DE-0210089161`)
+          required: false
+          schema:
+            type: string
+            minLength: 1
         - name: documentID
           in: query
           description: Document ID or array of IDs (matches documents.data.id). Supports the `~context` suffix.

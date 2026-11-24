@@ -100,7 +100,11 @@ $homeIntroInitiallyHidden = isset($homeIntroInitiallyHidden) ? $homeIntroInitial
             <?php if ($showAdvancedFilters): ?>
             <hr>
             <div class="row">
-                <div class="col-12 col-lg-6 mb-3">
+                <div class="col-12 col-lg-2 mb-3">
+                    <label for="mediaID-filter" class="form-label">ID</label>
+                    <input type="text" class="form-control form-control-sm" id="mediaID-filter" name="mediaID" placeholder="<?= L::enterSearchTerm(); ?>">
+                </div>
+                <div class="col-12 col-lg-4 mb-3">
                     <label for="agendaItemTitle-filter" class="form-label"><?= L::agendaItem(); ?></label>
                     <input type="text" class="form-control form-control-sm" id="agendaItemTitle-filter" name="agendaItemTitle" placeholder="<?= L::enterSearchTerm(); ?>">
                 </div>

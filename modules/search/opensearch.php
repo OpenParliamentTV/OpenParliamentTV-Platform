@@ -616,7 +616,23 @@ function processRequestParameters($request, &$filter, $getAllResults = false) {
                     ];
                 }
                 break;
-                
+
+            case "mediaID":
+                // Partial, case-insensitive match on the media ID; wildcard
+                // metacharacters in the input are matched literally.
+                $mediaIDPart = is_string($requestValue) ? addcslashes(trim($requestValue), '\\*?') : '';
+                if (strlen($mediaIDPart) > 0) {
+                    $filter["must"][] = [
+                        "wildcard" => [
+                            "id.keyword" => [
+                                "value" => "*" . $mediaIDPart . "*",
+                                "case_insensitive" => true
+                            ]
+                        ]
+                    ];
+                }
+                break;
+
             case "party":
             case "faction":
                 processPartyOrFactionFilter($requestKey, $requestValue, $filter, $shouldCount);

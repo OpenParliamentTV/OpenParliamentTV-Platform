@@ -51,6 +51,7 @@ $config["allowedSearchParams"] = [
         "id", 
         "includeAll", 
         "limit",
+        "mediaID",
         "numberOfTexts", 
         "organisation", 
         "organisationID", 
