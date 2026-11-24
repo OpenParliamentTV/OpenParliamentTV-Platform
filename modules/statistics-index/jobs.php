@@ -118,6 +118,8 @@ function statsIndexTriggerRebuild($parliament)
         throw new SearchIndexInvalidInputException("Missing parliament.");
     }
 
+    // An older lock is not removed here: the indexer waits for its holder or
+    // clears it once stale, judged by the holder's own timeout.
     $lockFile = statsIndexLockFilePath($parliament);
     if (file_exists($lockFile)) {
         $lockData = json_decode(file_get_contents($lockFile), true);
@@ -129,7 +131,6 @@ function statsIndexTriggerRebuild($parliament)
                 "ALREADY_RUNNING"
             );
         }
-        unlink($lockFile);
     }
 
     $result = statsIndexTriggerRun($parliament, false);

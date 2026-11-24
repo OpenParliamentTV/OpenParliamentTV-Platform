@@ -47,7 +47,66 @@ define("STATISTICSINDEXER_PROGRESS_FILE", optvVarPath("data/progress") . "/stati
 $progressFile = STATISTICSINDEXER_PROGRESS_FILE;
 $lockFile = optvVarPath('data/progress') . '/statisticsIndexer_' . $parliamentCode . '.lock';
 
-// Initialize progress tracking with helper function
+// Handle reset command if requested
+if (optvIsCli() && isset($argv)) {
+    foreach ($argv as $arg) {
+        if (strpos($arg, '--reset') === 0) {
+            echo "Resetting statistics indexer progress for $parliamentCode...\n";
+            $result = resetProgressStatus($parliamentCode);
+            echo "Reset completed. Status: " . json_encode($result, JSON_PRETTY_PRINT) . "\n";
+            exit(0);
+        }
+    }
+}
+
+// Wait for a running statistics indexer instead of giving up: a run carries the
+// speeches an import or a public toggle just changed, and dropping it would leave
+// their statistics stale. fopen mode 'x' fails while the file exists, so of
+// several waiting runs exactly one gets the lock. A lock older than its holder's
+// timeout is left over from a killed run.
+$lockTimeouts = ['incremental' => 3600, 'full_rebuild' => 14400];
+$waitLogged = false;
+while (($lockHandle = @fopen($lockFile, 'x')) === false) {
+    clearstatcache(true, $lockFile); // the holder may have changed since the last look
+    $lockTime = @filemtime($lockFile);
+    if ($lockTime === false) {
+        continue; // released between the two calls
+    }
+    $holder = json_decode((string) @file_get_contents($lockFile), true);
+    if (time() - $lockTime >= ($lockTimeouts[$holder['mode'] ?? ''] ?? $lockTimeouts['full_rebuild'])) {
+        @unlink($lockFile);
+        logger('info', "Removed stale statistics indexer lock file for $parliamentCode (timeout exceeded)");
+        continue;
+    }
+    if (!$waitLogged) {
+        logger('info', "Statistics indexer already running for $parliamentCode - waiting for it to finish");
+        $waitLogged = true;
+    }
+    sleep(5);
+}
+fwrite($lockHandle, json_encode(['pid' => getmypid(), 'timestamp' => time(), 'mode' => $isIncremental ? 'incremental' : 'full_rebuild']));
+fclose($lockHandle);
+
+// Wait for a running import too. The importer starts its statistics run just
+// before it exits, while its own lock is still in place; no new import starts
+// meanwhile, because imports skip while the statistics lock exists.
+$cronUpdaterLockFile = optvVarPath("data/progress") . "/cronUpdater_" . $parliamentCode . ".lock";
+while (true) {
+    clearstatcache(true, $cronUpdaterLockFile);
+    $lockTime = @filemtime($cronUpdaterLockFile);
+    if ($lockTime === false) {
+        break;
+    }
+    if (time() - $lockTime >= 5400) { // 90 minutes timeout (same as cronUpdater)
+        @unlink($cronUpdaterLockFile);
+        logger('info', "Removed stale cronUpdater lock file for $parliamentCode.");
+        break;
+    }
+    sleep(5);
+}
+
+// Initialize progress tracking only now: the progress file belongs to whichever
+// run holds the lock.
 $initialData = [
     'processName' => 'statisticsIndexing',
     'statusDetails' => $isIncremental ? 'Starting incremental statistics update...' : 'Starting full statistics rebuild...',
@@ -61,67 +120,6 @@ $initialData = [
     ]
 ];
 optvProgressInit(STATISTICSINDEXER_PROGRESS_FILE, $initialData);
-
-// Handle reset command if requested
-if (optvIsCli() && isset($argv)) {
-    foreach ($argv as $arg) {
-        if (strpos($arg, '--reset') === 0) {
-            echo "Resetting statistics indexer progress for $parliamentCode...\n";
-            $result = resetProgressStatus($parliamentCode);
-            echo "Reset completed. Status: " . json_encode($result, JSON_PRETTY_PRINT) . "\n";
-            exit(0);
-        }
-    }
-}
-
-// Check for existing statistics indexer lock
-if (file_exists($lockFile)) {
-    $lockAge = time() - filemtime($lockFile);
-    
-    // Use longer timeout for full rebuilds (4 hours), shorter for incremental (1 hour)
-    $timeout = $isIncremental ? 3600 : 14400; // 1 hour for incremental, 4 hours for full rebuild
-    
-    if ($lockAge < $timeout) {
-        logger('error', "Statistics indexer already running for $parliamentCode");
-        
-        // Set error status in progress file before exiting
-        updateProgress([
-            'status' => 'error',
-            'statusDetails' => 'Statistics indexer already running',
-            'errors' => [['message' => 'Process already running', 'time' => time()]]
-        ]);
-        exit(1);
-    } else {
-        // Remove stale lock due to timeout
-        unlink($lockFile);
-        logger('info', "Removed stale statistics indexer lock file for $parliamentCode (timeout exceeded)");
-    }
-}
-
-// Check if cronUpdater is running for this parliament to prevent conflicts
-$cronUpdaterLockFile = optvVarPath("data/progress") . "/cronUpdater_" . $parliamentCode . ".lock";
-if (file_exists($cronUpdaterLockFile)) {
-    $lockAge = time() - filemtime($cronUpdaterLockFile);
-    
-    if ($lockAge < 5400) { // 90 minutes timeout (same as cronUpdater)
-        logger('error', "CronUpdater is running for $parliamentCode. Skipping statistics indexing to prevent conflicts.");
-        
-        // Set error status in progress file before exiting
-        updateProgress([
-            'status' => 'error',
-            'statusDetails' => 'CronUpdater is running. Skipping to prevent conflicts.',
-            'errors' => [['message' => 'CronUpdater conflict', 'time' => time()]]
-        ]);
-        exit(1);
-    } else {
-        // Remove stale cronUpdater lock if it's too old
-        unlink($cronUpdaterLockFile);
-        logger('info', "Removed stale cronUpdater lock file for $parliamentCode.");
-    }
-}
-
-// Create lock file
-touch($lockFile);
 
 function updateProgress($data) {
     optvProgressUpdate(STATISTICSINDEXER_PROGRESS_FILE, $data);
