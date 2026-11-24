@@ -19,11 +19,11 @@ x-robots-tag: noindex
         "id": "general",
         "attributes": {
             "speeches": {
-                "total": 16423,
+                "total": 23472,
                 "byFaction": [
                     {
                         "id": "Q1023134",
-                        "total": 16423,
+                        "total": 23472,
                         "label": "CDU/CSU",
                         "links": {
                             "self": "https://optv.local/api/v1/organisation/Q1023134"
@@ -32,14 +32,54 @@ x-robots-tag: noindex
                 ]
             },
             "speakers": {
-                "total": 408,
+                "total": 413,
                 "topSpeakers": [
+                    {
+                        "id": "Q57474",
+                        "speechCount": 810,
+                        "label": "Norbert Lammert",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q57474"
+                        }
+                    },
+                    {
+                        "id": "Q72873",
+                        "speechCount": 439,
+                        "label": "Gerda Hasselfeldt",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q72873"
+                        }
+                    },
                     {
                         "id": "Q14943609",
                         "speechCount": 351,
                         "label": "Volker Ullrich",
                         "links": {
                             "self": "https://optv.local/api/v1/person/Q14943609"
+                        }
+                    },
+                    {
+                        "id": "Q1648387",
+                        "speechCount": 223,
+                        "label": "Stephan Mayer",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q1648387"
+                        }
+                    },
+                    {
+                        "id": "Q111489",
+                        "speechCount": 221,
+                        "label": "Jürgen Hardt",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q111489"
+                        }
+                    },
+                    {
+                        "id": "Q1429695",
+                        "speechCount": 191,
+                        "label": "Florian Hahn",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q1429695"
                         }
                     },
                     {
@@ -51,19 +91,19 @@ x-robots-tag: noindex
                         }
                     },
                     {
-                        "id": "Q111489",
-                        "speechCount": 182,
-                        "label": "Jürgen Hardt",
-                        "links": {
-                            "self": "https://optv.local/api/v1/person/Q111489"
-                        }
-                    },
-                    {
                         "id": "Q15782242",
-                        "speechCount": 174,
+                        "speechCount": 183,
                         "label": "Alexander Hoffmann",
                         "links": {
                             "self": "https://optv.local/api/v1/person/Q15782242"
+                        }
+                    },
+                    {
+                        "id": "Q1696501",
+                        "speechCount": 172,
+                        "label": "Johann Wadephul",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q1696501"
                         }
                     },
                     {
@@ -75,123 +115,83 @@ x-robots-tag: noindex
                         }
                     },
                     {
-                        "id": "Q15644594",
-                        "speechCount": 157,
-                        "label": "Andrea Lindholz",
-                        "links": {
-                            "self": "https://optv.local/api/v1/person/Q15644594"
-                        }
-                    },
-                    {
-                        "id": "Q1429695",
-                        "speechCount": 146,
-                        "label": "Florian Hahn",
-                        "links": {
-                            "self": "https://optv.local/api/v1/person/Q1429695"
-                        }
-                    },
-                    {
-                        "id": "Q15783327",
-                        "speechCount": 139,
-                        "label": "Andreas Lenz",
-                        "links": {
-                            "self": "https://optv.local/api/v1/person/Q15783327"
-                        }
-                    },
-                    {
-                        "id": "Q40998607",
-                        "speechCount": 138,
-                        "label": "Philipp Amthor",
-                        "links": {
-                            "self": "https://optv.local/api/v1/person/Q40998607"
-                        }
-                    },
-                    {
-                        "id": "Q1648387",
-                        "speechCount": 137,
-                        "label": "Stephan Mayer",
-                        "links": {
-                            "self": "https://optv.local/api/v1/person/Q1648387"
-                        }
-                    },
-                    {
-                        "id": "Q1696501",
-                        "speechCount": 135,
-                        "label": "Johann Wadephul",
-                        "links": {
-                            "self": "https://optv.local/api/v1/person/Q1696501"
-                        }
-                    },
-                    {
-                        "id": "Q107989",
-                        "speechCount": 129,
-                        "label": "Roderich Kiesewetter",
-                        "links": {
-                            "self": "https://optv.local/api/v1/person/Q107989"
-                        }
-                    },
-                    {
-                        "id": "Q105331",
-                        "speechCount": 120,
-                        "label": "Nadine Schön",
-                        "links": {
-                            "self": "https://optv.local/api/v1/person/Q105331"
-                        }
-                    },
-                    {
                         "id": "Q111160",
-                        "speechCount": 123,
+                        "speechCount": 170,
                         "label": "Reinhard Brandl",
                         "links": {
                             "self": "https://optv.local/api/v1/person/Q111160"
                         }
                     },
                     {
-                        "id": "Q96427",
-                        "speechCount": 118,
-                        "label": "Jan-Marco Luczak",
+                        "id": "Q15644594",
+                        "speechCount": 162,
+                        "label": "Andrea Lindholz",
                         "links": {
-                            "self": "https://optv.local/api/v1/person/Q96427"
+                            "self": "https://optv.local/api/v1/person/Q15644594"
                         }
                     },
                     {
-                        "id": "Q2343892",
-                        "speechCount": 117,
-                        "label": "Stephan Stracke",
+                        "id": "Q107989",
+                        "speechCount": 160,
+                        "label": "Roderich Kiesewetter",
                         "links": {
-                            "self": "https://optv.local/api/v1/person/Q2343892"
+                            "self": "https://optv.local/api/v1/person/Q107989"
                         }
                     },
                     {
-                        "id": "Q85773",
-                        "speechCount": 118,
-                        "label": "Anja Weisgerber",
+                        "id": "Q15783327",
+                        "speechCount": 160,
+                        "label": "Andreas Lenz",
                         "links": {
-                            "self": "https://optv.local/api/v1/person/Q85773"
-                        }
-                    },
-                    {
-                        "id": "Q98768",
-                        "speechCount": 116,
-                        "label": "Andreas Jung",
-                        "links": {
-                            "self": "https://optv.local/api/v1/person/Q98768"
-                        }
-                    },
-                    {
-                        "id": "Q1466480",
-                        "speechCount": 107,
-                        "label": "Fritz Güntzler",
-                        "links": {
-                            "self": "https://optv.local/api/v1/person/Q1466480"
+                            "self": "https://optv.local/api/v1/person/Q15783327"
                         }
                     },
                     {
                         "id": "Q2476246",
-                        "speechCount": 107,
+                        "speechCount": 159,
                         "label": "Ulrich Lange",
                         "links": {
                             "self": "https://optv.local/api/v1/person/Q2476246"
+                        }
+                    },
+                    {
+                        "id": "Q2078951",
+                        "speechCount": 158,
+                        "label": "Peter Weiß",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q2078951"
+                        }
+                    },
+                    {
+                        "id": "Q2427303",
+                        "speechCount": 157,
+                        "label": "Thomas Silberhorn",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q2427303"
+                        }
+                    },
+                    {
+                        "id": "Q105331",
+                        "speechCount": 149,
+                        "label": "Nadine Schön",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q105331"
+                        }
+                    },
+                    {
+                        "id": "Q1366360",
+                        "speechCount": 146,
+                        "label": "Max Straubinger",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q1366360"
+                        }
+                    },
+                    {
+                        "id": "Q96427",
+                        "speechCount": 146,
+                        "label": "Jan-Marco Luczak",
+                        "links": {
+                            "self": "https://optv.local/api/v1/person/Q96427"
                         }
                     }
                 ],
@@ -199,14 +199,54 @@ x-robots-tag: noindex
                     {
                         "id": "Q1023134",
                         "label": "CDU/CSU",
-                        "total": 408,
+                        "total": 413,
                         "topSpeakers": [
+                            {
+                                "id": "Q57474",
+                                "speechCount": 810,
+                                "label": "Norbert Lammert",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q57474"
+                                }
+                            },
+                            {
+                                "id": "Q72873",
+                                "speechCount": 439,
+                                "label": "Gerda Hasselfeldt",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q72873"
+                                }
+                            },
                             {
                                 "id": "Q14943609",
                                 "speechCount": 351,
                                 "label": "Volker Ullrich",
                                 "links": {
                                     "self": "https://optv.local/api/v1/person/Q14943609"
+                                }
+                            },
+                            {
+                                "id": "Q1648387",
+                                "speechCount": 223,
+                                "label": "Stephan Mayer",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1648387"
+                                }
+                            },
+                            {
+                                "id": "Q111489",
+                                "speechCount": 221,
+                                "label": "Jürgen Hardt",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q111489"
+                                }
+                            },
+                            {
+                                "id": "Q1429695",
+                                "speechCount": 191,
+                                "label": "Florian Hahn",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1429695"
                                 }
                             },
                             {
@@ -218,19 +258,19 @@ x-robots-tag: noindex
                                 }
                             },
                             {
-                                "id": "Q111489",
-                                "speechCount": 182,
-                                "label": "Jürgen Hardt",
-                                "links": {
-                                    "self": "https://optv.local/api/v1/person/Q111489"
-                                }
-                            },
-                            {
                                 "id": "Q15782242",
-                                "speechCount": 174,
+                                "speechCount": 183,
                                 "label": "Alexander Hoffmann",
                                 "links": {
                                     "self": "https://optv.local/api/v1/person/Q15782242"
+                                }
+                            },
+                            {
+                                "id": "Q1696501",
+                                "speechCount": 172,
+                                "label": "Johann Wadephul",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1696501"
                                 }
                             },
                             {
@@ -242,123 +282,83 @@ x-robots-tag: noindex
                                 }
                             },
                             {
-                                "id": "Q15644594",
-                                "speechCount": 157,
-                                "label": "Andrea Lindholz",
-                                "links": {
-                                    "self": "https://optv.local/api/v1/person/Q15644594"
-                                }
-                            },
-                            {
-                                "id": "Q1429695",
-                                "speechCount": 146,
-                                "label": "Florian Hahn",
-                                "links": {
-                                    "self": "https://optv.local/api/v1/person/Q1429695"
-                                }
-                            },
-                            {
-                                "id": "Q15783327",
-                                "speechCount": 139,
-                                "label": "Andreas Lenz",
-                                "links": {
-                                    "self": "https://optv.local/api/v1/person/Q15783327"
-                                }
-                            },
-                            {
-                                "id": "Q40998607",
-                                "speechCount": 138,
-                                "label": "Philipp Amthor",
-                                "links": {
-                                    "self": "https://optv.local/api/v1/person/Q40998607"
-                                }
-                            },
-                            {
-                                "id": "Q1648387",
-                                "speechCount": 137,
-                                "label": "Stephan Mayer",
-                                "links": {
-                                    "self": "https://optv.local/api/v1/person/Q1648387"
-                                }
-                            },
-                            {
-                                "id": "Q1696501",
-                                "speechCount": 135,
-                                "label": "Johann Wadephul",
-                                "links": {
-                                    "self": "https://optv.local/api/v1/person/Q1696501"
-                                }
-                            },
-                            {
-                                "id": "Q107989",
-                                "speechCount": 129,
-                                "label": "Roderich Kiesewetter",
-                                "links": {
-                                    "self": "https://optv.local/api/v1/person/Q107989"
-                                }
-                            },
-                            {
-                                "id": "Q105331",
-                                "speechCount": 120,
-                                "label": "Nadine Schön",
-                                "links": {
-                                    "self": "https://optv.local/api/v1/person/Q105331"
-                                }
-                            },
-                            {
                                 "id": "Q111160",
-                                "speechCount": 123,
+                                "speechCount": 170,
                                 "label": "Reinhard Brandl",
                                 "links": {
                                     "self": "https://optv.local/api/v1/person/Q111160"
                                 }
                             },
                             {
-                                "id": "Q96427",
-                                "speechCount": 118,
-                                "label": "Jan-Marco Luczak",
+                                "id": "Q15644594",
+                                "speechCount": 162,
+                                "label": "Andrea Lindholz",
                                 "links": {
-                                    "self": "https://optv.local/api/v1/person/Q96427"
+                                    "self": "https://optv.local/api/v1/person/Q15644594"
                                 }
                             },
                             {
-                                "id": "Q2343892",
-                                "speechCount": 117,
-                                "label": "Stephan Stracke",
+                                "id": "Q107989",
+                                "speechCount": 160,
+                                "label": "Roderich Kiesewetter",
                                 "links": {
-                                    "self": "https://optv.local/api/v1/person/Q2343892"
+                                    "self": "https://optv.local/api/v1/person/Q107989"
                                 }
                             },
                             {
-                                "id": "Q85773",
-                                "speechCount": 118,
-                                "label": "Anja Weisgerber",
+                                "id": "Q15783327",
+                                "speechCount": 160,
+                                "label": "Andreas Lenz",
                                 "links": {
-                                    "self": "https://optv.local/api/v1/person/Q85773"
-                                }
-                            },
-                            {
-                                "id": "Q98768",
-                                "speechCount": 116,
-                                "label": "Andreas Jung",
-                                "links": {
-                                    "self": "https://optv.local/api/v1/person/Q98768"
-                                }
-                            },
-                            {
-                                "id": "Q1466480",
-                                "speechCount": 107,
-                                "label": "Fritz Güntzler",
-                                "links": {
-                                    "self": "https://optv.local/api/v1/person/Q1466480"
+                                    "self": "https://optv.local/api/v1/person/Q15783327"
                                 }
                             },
                             {
                                 "id": "Q2476246",
-                                "speechCount": 107,
+                                "speechCount": 159,
                                 "label": "Ulrich Lange",
                                 "links": {
                                     "self": "https://optv.local/api/v1/person/Q2476246"
+                                }
+                            },
+                            {
+                                "id": "Q2078951",
+                                "speechCount": 158,
+                                "label": "Peter Weiß",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q2078951"
+                                }
+                            },
+                            {
+                                "id": "Q2427303",
+                                "speechCount": 157,
+                                "label": "Thomas Silberhorn",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q2427303"
+                                }
+                            },
+                            {
+                                "id": "Q105331",
+                                "speechCount": 149,
+                                "label": "Nadine Schön",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q105331"
+                                }
+                            },
+                            {
+                                "id": "Q1366360",
+                                "speechCount": 146,
+                                "label": "Max Straubinger",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q1366360"
+                                }
+                            },
+                            {
+                                "id": "Q96427",
+                                "speechCount": 146,
+                                "label": "Jan-Marco Luczak",
+                                "links": {
+                                    "self": "https://optv.local/api/v1/person/Q96427"
                                 }
                             }
                         ]
@@ -366,121 +366,121 @@ x-robots-tag: noindex
                 ]
             },
             "speakingTime": {
-                "total": 5959312,
-                "average": 368.49567153104129602070315741002559661865234375,
+                "total": 8710650,
+                "average": 377.5584066577088151461794041097164154052734375,
                 "unit": "seconds",
                 "byFaction": [
                     {
                         "id": "Q1023134",
                         "label": "CDU/CSU",
-                        "total": 5959312,
-                        "average": 368.49567153104129602070315741002559661865234375,
+                        "total": 8710650,
+                        "average": 377.5584066577088151461794041097164154052734375,
                         "unit": "seconds"
                     }
                 ]
             },
             "vocabulary": {
-                "totalUniqueWords": 183980,
+                "totalUniqueWords": 220483,
                 "topWords": [
                     {
                         "word": "menschen",
-                        "speechCount": 7690,
-                        "frequency": 22157
+                        "speechCount": 10295,
+                        "frequency": 29895
                     },
                     {
                         "word": "euro",
-                        "speechCount": 5029,
-                        "frequency": 16702
+                        "speechCount": 6974,
+                        "frequency": 23817
                     },
                     {
                         "word": "land",
-                        "speechCount": 6440,
-                        "frequency": 13523
+                        "speechCount": 8529,
+                        "frequency": 18096
                     },
                     {
                         "word": "gut",
-                        "speechCount": 6558,
-                        "frequency": 11404
+                        "speechCount": 8814,
+                        "frequency": 15449
                     },
                     {
                         "word": "tun",
-                        "speechCount": 5786,
-                        "frequency": 9777
-                    },
-                    {
-                        "word": "millionen",
-                        "speechCount": 3848,
-                        "frequency": 8517
+                        "speechCount": 7998,
+                        "frequency": 13841
                     },
                     {
                         "word": "europa",
-                        "speechCount": 3100,
-                        "frequency": 8142
+                        "speechCount": 4218,
+                        "frequency": 11608
+                    },
+                    {
+                        "word": "millionen",
+                        "speechCount": 5192,
+                        "frequency": 11600
                     },
                     {
                         "word": "milliarden",
-                        "speechCount": 3057,
-                        "frequency": 7780
+                        "speechCount": 4253,
+                        "frequency": 11045
                     },
                     {
                         "word": "zeit",
-                        "speechCount": 4896,
-                        "frequency": 7366
-                    },
-                    {
-                        "word": "gesetz",
-                        "speechCount": 3123,
-                        "frequency": 6947
-                    },
-                    {
-                        "word": "länder",
-                        "speechCount": 3413,
-                        "frequency": 6843
-                    },
-                    {
-                        "word": "unternehmen",
-                        "speechCount": 2872,
-                        "frequency": 6807
+                        "speechCount": 6562,
+                        "frequency": 9954
                     },
                     {
                         "word": "zukunft",
-                        "speechCount": 4058,
-                        "frequency": 6599
-                    },
-                    {
-                        "word": "gar",
-                        "speechCount": 4520,
-                        "frequency": 6422
+                        "speechCount": 5626,
+                        "frequency": 9479
                     },
                     {
                         "word": "europäischen",
-                        "speechCount": 2893,
-                        "frequency": 6296
+                        "speechCount": 4016,
+                        "frequency": 9315
+                    },
+                    {
+                        "word": "unternehmen",
+                        "speechCount": 3970,
+                        "frequency": 9310
+                    },
+                    {
+                        "word": "gesetz",
+                        "speechCount": 4189,
+                        "frequency": 9235
+                    },
+                    {
+                        "word": "länder",
+                        "speechCount": 4613,
+                        "frequency": 9210
                     },
                     {
                         "word": "jahre",
-                        "speechCount": 4149,
-                        "frequency": 6277
+                        "speechCount": 5740,
+                        "frequency": 8874
+                    },
+                    {
+                        "word": "gar",
+                        "speechCount": 6022,
+                        "frequency": 8590
                     },
                     {
                         "word": "arbeit",
-                        "speechCount": 3426,
-                        "frequency": 6033
+                        "speechCount": 4724,
+                        "frequency": 8570
                     },
                     {
-                        "word": "geld",
-                        "speechCount": 3226,
-                        "frequency": 5972
+                        "word": "politik",
+                        "speechCount": 5068,
+                        "frequency": 8479
                     },
                     {
                         "word": "neue",
-                        "speechCount": 3901,
-                        "frequency": 5938
+                        "speechCount": 5360,
+                        "frequency": 8306
                     },
                     {
-                        "word": "gemeinsam",
-                        "speechCount": 3843,
-                        "frequency": 5840
+                        "word": "geld",
+                        "speechCount": 4474,
+                        "frequency": 8303
                     }
                 ],
                 "byFaction": [
@@ -490,105 +490,2085 @@ x-robots-tag: noindex
                         "topWords": [
                             {
                                 "word": "menschen",
-                                "speechCount": 7690,
-                                "frequency": 22157
+                                "speechCount": 10295,
+                                "frequency": 29895
                             },
                             {
                                 "word": "euro",
-                                "speechCount": 5029,
-                                "frequency": 16702
+                                "speechCount": 6974,
+                                "frequency": 23817
                             },
                             {
                                 "word": "land",
-                                "speechCount": 6440,
-                                "frequency": 13523
+                                "speechCount": 8529,
+                                "frequency": 18096
                             },
                             {
                                 "word": "gut",
-                                "speechCount": 6558,
-                                "frequency": 11404
+                                "speechCount": 8814,
+                                "frequency": 15449
                             },
                             {
                                 "word": "tun",
-                                "speechCount": 5786,
-                                "frequency": 9777
-                            },
-                            {
-                                "word": "millionen",
-                                "speechCount": 3848,
-                                "frequency": 8517
+                                "speechCount": 7998,
+                                "frequency": 13841
                             },
                             {
                                 "word": "europa",
-                                "speechCount": 3100,
-                                "frequency": 8142
+                                "speechCount": 4218,
+                                "frequency": 11608
+                            },
+                            {
+                                "word": "millionen",
+                                "speechCount": 5192,
+                                "frequency": 11600
                             },
                             {
                                 "word": "milliarden",
-                                "speechCount": 3057,
-                                "frequency": 7780
+                                "speechCount": 4253,
+                                "frequency": 11045
                             },
                             {
                                 "word": "zeit",
-                                "speechCount": 4896,
-                                "frequency": 7366
-                            },
-                            {
-                                "word": "gesetz",
-                                "speechCount": 3123,
-                                "frequency": 6947
-                            },
-                            {
-                                "word": "länder",
-                                "speechCount": 3413,
-                                "frequency": 6843
-                            },
-                            {
-                                "word": "unternehmen",
-                                "speechCount": 2872,
-                                "frequency": 6807
+                                "speechCount": 6562,
+                                "frequency": 9954
                             },
                             {
                                 "word": "zukunft",
-                                "speechCount": 4058,
-                                "frequency": 6599
-                            },
-                            {
-                                "word": "gar",
-                                "speechCount": 4520,
-                                "frequency": 6422
+                                "speechCount": 5626,
+                                "frequency": 9479
                             },
                             {
                                 "word": "europäischen",
-                                "speechCount": 2893,
-                                "frequency": 6296
+                                "speechCount": 4016,
+                                "frequency": 9315
+                            },
+                            {
+                                "word": "unternehmen",
+                                "speechCount": 3970,
+                                "frequency": 9310
+                            },
+                            {
+                                "word": "gesetz",
+                                "speechCount": 4189,
+                                "frequency": 9235
+                            },
+                            {
+                                "word": "länder",
+                                "speechCount": 4613,
+                                "frequency": 9210
                             },
                             {
                                 "word": "jahre",
-                                "speechCount": 4149,
-                                "frequency": 6277
+                                "speechCount": 5740,
+                                "frequency": 8874
+                            },
+                            {
+                                "word": "gar",
+                                "speechCount": 6022,
+                                "frequency": 8590
                             },
                             {
                                 "word": "arbeit",
-                                "speechCount": 3426,
-                                "frequency": 6033
+                                "speechCount": 4724,
+                                "frequency": 8570
                             },
                             {
-                                "word": "geld",
-                                "speechCount": 3226,
-                                "frequency": 5972
+                                "word": "politik",
+                                "speechCount": 5068,
+                                "frequency": 8479
                             },
                             {
                                 "word": "neue",
-                                "speechCount": 3901,
-                                "frequency": 5938
+                                "speechCount": 5360,
+                                "frequency": 8306
                             },
                             {
-                                "word": "gemeinsam",
-                                "speechCount": 3843,
-                                "frequency": 5840
+                                "word": "geld",
+                                "speechCount": 4474,
+                                "frequency": 8303
                             }
                         ]
+                    }
+                ]
+            },
+            "entities": {
+                "byType": {
+                    "person": [
+                        {
+                            "id": "Q7747",
+                            "type": "person",
+                            "speechCount": 484,
+                            "mentionCount": 895,
+                            "label": "Wladimir Wladimirowitsch Putin",
+                            "subtype": "person",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q7747&v=a4ee4984",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q7747"
+                            }
+                        },
+                        {
+                            "id": "Q567",
+                            "type": "person",
+                            "speechCount": 467,
+                            "mentionCount": 576,
+                            "label": "Angela Merkel",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q567&v=189dc488",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q567"
+                            }
+                        },
+                        {
+                            "id": "Q16019",
+                            "type": "person",
+                            "speechCount": 332,
+                            "mentionCount": 417,
+                            "label": "Wolfgang Schäuble",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q16019&v=475d2428",
+                            "faction": {
+                                "id": "Q1023134",
+                                "label": "CDU/CSU"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q16019"
+                            }
+                        },
+                        {
+                            "id": "Q61053",
+                            "type": "person",
+                            "speechCount": 259,
+                            "mentionCount": 397,
+                            "label": "Olaf Scholz",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q61053&v=42cc3ecb",
+                            "faction": {
+                                "id": "Q2207512",
+                                "label": "SPD"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q61053"
+                            }
+                        },
+                        {
+                            "id": "Q2518",
+                            "type": "person",
+                            "speechCount": 161,
+                            "mentionCount": 221,
+                            "label": "Helmut Kohl",
+                            "subtype": "person",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q2518&v=77af09c0",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q2518"
+                            }
+                        },
+                        {
+                            "id": "Q109943",
+                            "type": "person",
+                            "speechCount": 159,
+                            "mentionCount": 215,
+                            "label": "Robert Habeck",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q109943&v=fe5e1795",
+                            "faction": {
+                                "id": "Q1007353",
+                                "label": "DIE GRÜNEN"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q109943"
+                            }
+                        },
+                        {
+                            "id": "Q2530",
+                            "type": "person",
+                            "speechCount": 184,
+                            "mentionCount": 215,
+                            "label": "Gerhard Schröder",
+                            "subtype": "person",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q2530&v=80920cea",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q2530"
+                            }
+                        },
+                        {
+                            "id": "Q1288810",
+                            "type": "person",
+                            "speechCount": 117,
+                            "mentionCount": 162,
+                            "label": "Nancy Faeser",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q1288810&v=0516927d",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q1288810"
+                            }
+                        },
+                        {
+                            "id": "Q566257",
+                            "type": "person",
+                            "speechCount": 125,
+                            "mentionCount": 162,
+                            "label": "Friedrich Merz",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q566257&v=ac79b5d7",
+                            "faction": {
+                                "id": "Q1023134",
+                                "label": "CDU/CSU"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q566257"
+                            }
+                        },
+                        {
+                            "id": "Q2492",
+                            "type": "person",
+                            "speechCount": 123,
+                            "mentionCount": 161,
+                            "label": "Konrad Adenauer",
+                            "subtype": "person",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q2492&v=9a0f3e93",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q2492"
+                            }
+                        },
+                        {
+                            "id": "Q85783",
+                            "type": "person",
+                            "speechCount": 135,
+                            "mentionCount": 152,
+                            "label": "Alexander Dobrindt",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q85783&v=2a07ad50",
+                            "faction": {
+                                "id": "Q1023134",
+                                "label": "CDU/CSU"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q85783"
+                            }
+                        },
+                        {
+                            "id": "Q86294",
+                            "type": "person",
+                            "speechCount": 124,
+                            "mentionCount": 151,
+                            "label": "Jens Spahn",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q86294&v=69f20eec",
+                            "faction": {
+                                "id": "Q1023134",
+                                "label": "CDU/CSU"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q86294"
+                            }
+                        },
+                        {
+                            "id": "Q2496",
+                            "type": "person",
+                            "speechCount": 116,
+                            "mentionCount": 147,
+                            "label": "Ludwig Erhard",
+                            "subtype": "person",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q2496&v=b29c5214",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q2496"
+                            }
+                        },
+                        {
+                            "id": "Q65539",
+                            "type": "person",
+                            "speechCount": 104,
+                            "mentionCount": 144,
+                            "label": "Peter Altmaier",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q65539&v=c0e66fee",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q65539"
+                            }
+                        },
+                        {
+                            "id": "Q67164",
+                            "type": "person",
+                            "speechCount": 124,
+                            "mentionCount": 143,
+                            "label": "Volker Kauder",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q67164&v=b122ab07",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q67164"
+                            }
+                        },
+                        {
+                            "id": "Q920726",
+                            "type": "person",
+                            "speechCount": 113,
+                            "mentionCount": 140,
+                            "label": "Britta Haßelmann",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q920726&v=0b7cb0e1",
+                            "faction": {
+                                "id": "Q1007353",
+                                "label": "DIE GRÜNEN"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q920726"
+                            }
+                        },
+                        {
+                            "id": "Q48967",
+                            "type": "person",
+                            "speechCount": 102,
+                            "mentionCount": 137,
+                            "label": "Katrin Göring-Eckardt",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q48967&v=91f73b84",
+                            "faction": {
+                                "id": "Q1007353",
+                                "label": "DIE GRÜNEN"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q48967"
+                            }
+                        },
+                        {
+                            "id": "Q22686",
+                            "type": "person",
+                            "speechCount": 107,
+                            "mentionCount": 134,
+                            "label": "Donald Trump",
+                            "subtype": "person",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q22686&v=24a8c196",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q22686"
+                            }
+                        },
+                        {
+                            "id": "Q60772",
+                            "type": "person",
+                            "speechCount": 109,
+                            "mentionCount": 125,
+                            "label": "Ursula von der Leyen",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q60772&v=7b60320a",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q60772"
+                            }
+                        },
+                        {
+                            "id": "Q85806",
+                            "type": "person",
+                            "speechCount": 101,
+                            "mentionCount": 123,
+                            "label": "Christian Lindner",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q85806&v=85049c42",
+                            "faction": {
+                                "id": "Q1387991",
+                                "label": "FDP"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q85806"
+                            }
+                        },
+                        {
+                            "id": "Q76658",
+                            "type": "person",
+                            "speechCount": 103,
+                            "mentionCount": 119,
+                            "label": "Frank-Walter Steinmeier",
+                            "subtype": "person",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q76658&v=6ca34999",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q76658"
+                            }
+                        },
+                        {
+                            "id": "Q44612",
+                            "type": "person",
+                            "speechCount": 104,
+                            "mentionCount": 117,
+                            "label": "Horst Seehofer",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q44612&v=025ba157",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q44612"
+                            }
+                        },
+                        {
+                            "id": "Q44329",
+                            "type": "person",
+                            "speechCount": 80,
+                            "mentionCount": 115,
+                            "label": "Baschar al-Assad",
+                            "subtype": "person",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q44329&v=dc46e0ea",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q44329"
+                            }
+                        },
+                        {
+                            "id": "Q160902",
+                            "type": "person",
+                            "speechCount": 88,
+                            "mentionCount": 98,
+                            "label": "Sigmar Gabriel",
+                            "subtype": "memberOfParliament",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q160902&v=cb499680",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/person/Q160902"
+                            }
+                        }
+                    ],
+                    "organisation": [
+                        {
+                            "id": "Q458",
+                            "type": "organisation",
+                            "speechCount": 2967,
+                            "mentionCount": 6759,
+                            "label": "EU",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q458&v=f25ef872",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q458"
+                            }
+                        },
+                        {
+                            "id": "Q2207512",
+                            "type": "organisation",
+                            "speechCount": 3321,
+                            "mentionCount": 5362,
+                            "label": "SPD",
+                            "subtype": "faction",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q2207512&v=4e041713",
+                            "faction": {
+                                "id": "Q2207512",
+                                "label": "SPD"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q2207512"
+                            }
+                        },
+                        {
+                            "id": "Q56010",
+                            "type": "organisation",
+                            "speechCount": 1170,
+                            "mentionCount": 3761,
+                            "label": "Bundeswehr",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q56010&v=3e6918fc",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q56010"
+                            }
+                        },
+                        {
+                            "id": "Q42575708",
+                            "type": "organisation",
+                            "speechCount": 1920,
+                            "mentionCount": 3730,
+                            "label": "AfD",
+                            "subtype": "faction",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q42575708&v=592f6f4c",
+                            "faction": {
+                                "id": "Q42575708",
+                                "label": "AfD"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q42575708"
+                            }
+                        },
+                        {
+                            "id": "Q1007353",
+                            "type": "organisation",
+                            "speechCount": 1987,
+                            "mentionCount": 2586,
+                            "label": "DIE GRÜNEN",
+                            "subtype": "faction",
+                            "thumbnailURI": "",
+                            "faction": {
+                                "id": "Q1007353",
+                                "label": "DIE GRÜNEN"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q1007353"
+                            }
+                        },
+                        {
+                            "id": "Q7184",
+                            "type": "organisation",
+                            "speechCount": 726,
+                            "mentionCount": 1628,
+                            "label": "NATO",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q7184&v=4d41b173",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q7184"
+                            }
+                        },
+                        {
+                            "id": "Q56025",
+                            "type": "organisation",
+                            "speechCount": 819,
+                            "mentionCount": 1426,
+                            "label": "BVerfG",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q56025&v=b4bd2f7b",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q56025"
+                            }
+                        },
+                        {
+                            "id": "Q1826856",
+                            "type": "organisation",
+                            "speechCount": 904,
+                            "mentionCount": 1169,
+                            "label": "DIE LINKE",
+                            "subtype": "faction",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1826856&v=e5a9c45f",
+                            "faction": {
+                                "id": "Q1826856",
+                                "label": "DIE LINKE"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q1826856"
+                            }
+                        },
+                        {
+                            "id": "Q1065",
+                            "type": "organisation",
+                            "speechCount": 691,
+                            "mentionCount": 1145,
+                            "label": "UNO",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1065&v=2c67d4f9",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q1065"
+                            }
+                        },
+                        {
+                            "id": "Q8880",
+                            "type": "organisation",
+                            "speechCount": 745,
+                            "mentionCount": 1102,
+                            "label": "EU-Kommission",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q8880&v=b6aed0f2",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q8880"
+                            }
+                        },
+                        {
+                            "id": "Q1387991",
+                            "type": "organisation",
+                            "speechCount": 854,
+                            "mentionCount": 989,
+                            "label": "FDP",
+                            "subtype": "faction",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1387991&v=a542bea7",
+                            "faction": {
+                                "id": "Q1387991",
+                                "label": "FDP"
+                            },
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q1387991"
+                            }
+                        },
+                        {
+                            "id": "Q8889",
+                            "type": "organisation",
+                            "speechCount": 403,
+                            "mentionCount": 609,
+                            "label": "EU-Parlament",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q8889&v=b5787b69",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q8889"
+                            }
+                        },
+                        {
+                            "id": "Q56034",
+                            "type": "organisation",
+                            "speechCount": 361,
+                            "mentionCount": 542,
+                            "label": "AA",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q56034&v=7666e21d",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q56034"
+                            }
+                        },
+                        {
+                            "id": "Q8901",
+                            "type": "organisation",
+                            "speechCount": 252,
+                            "mentionCount": 542,
+                            "label": "EZB",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q8901&v=430faaa2",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q8901"
+                            }
+                        },
+                        {
+                            "id": "Q502698",
+                            "type": "organisation",
+                            "speechCount": 386,
+                            "mentionCount": 498,
+                            "label": "BMI",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q502698&v=ae6f4362",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q502698"
+                            }
+                        },
+                        {
+                            "id": "Q684357",
+                            "type": "organisation",
+                            "speechCount": 317,
+                            "mentionCount": 481,
+                            "label": "BMZ",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q684357&v=0bcbc306",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q684357"
+                            }
+                        },
+                        {
+                            "id": "Q2429253",
+                            "type": "organisation",
+                            "speechCount": 255,
+                            "mentionCount": 467,
+                            "label": "IS",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q2429253"
+                            }
+                        },
+                        {
+                            "id": "Q499118",
+                            "type": "organisation",
+                            "speechCount": 365,
+                            "mentionCount": 450,
+                            "label": "BMF",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q499118&v=810f3b79",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q499118"
+                            }
+                        },
+                        {
+                            "id": "Q488589",
+                            "type": "organisation",
+                            "speechCount": 333,
+                            "mentionCount": 439,
+                            "label": "BMWK",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q488589&v=473aed24",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q488589"
+                            }
+                        },
+                        {
+                            "id": "Q1478016",
+                            "type": "organisation",
+                            "speechCount": 300,
+                            "mentionCount": 411,
+                            "label": "BA",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1478016&v=b6c87e4f",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q1478016"
+                            }
+                        },
+                        {
+                            "id": "Q8886",
+                            "type": "organisation",
+                            "speechCount": 229,
+                            "mentionCount": 388,
+                            "label": "Europäischer Rat",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q8886&v=88a2499f",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q8886"
+                            }
+                        },
+                        {
+                            "id": "Q1518827",
+                            "type": "organisation",
+                            "speechCount": 232,
+                            "mentionCount": 366,
+                            "label": "EuGH",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1518827&v=a740db80",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q1518827"
+                            }
+                        },
+                        {
+                            "id": "Q492234",
+                            "type": "organisation",
+                            "speechCount": 256,
+                            "mentionCount": 353,
+                            "label": "BMBF",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q492234&v=aa26d431",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q492234"
+                            }
+                        },
+                        {
+                            "id": "Q697698",
+                            "type": "organisation",
+                            "speechCount": 172,
+                            "mentionCount": 349,
+                            "label": "THW",
+                            "subtype": "otherOrganisation",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q697698&v=1be2eea2",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/organisation/Q697698"
+                            }
+                        }
+                    ],
+                    "term": [
+                        {
+                            "id": "Q980",
+                            "type": "term",
+                            "speechCount": 1010,
+                            "mentionCount": 1682,
+                            "label": "Bayern",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q980"
+                            }
+                        },
+                        {
+                            "id": "Q16957",
+                            "type": "term",
+                            "speechCount": 433,
+                            "mentionCount": 929,
+                            "label": "DDR",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q16957"
+                            }
+                        },
+                        {
+                            "id": "Q562307",
+                            "type": "term",
+                            "speechCount": 616,
+                            "mentionCount": 887,
+                            "label": "Rot-grüne Koalition",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q562307"
+                            }
+                        },
+                        {
+                            "id": "Q8268",
+                            "type": "term",
+                            "speechCount": 298,
+                            "mentionCount": 652,
+                            "label": "Eurozone",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q8268"
+                            }
+                        },
+                        {
+                            "id": "Q2184704",
+                            "type": "term",
+                            "speechCount": 445,
+                            "mentionCount": 508,
+                            "label": "Große Koalition",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q2184704"
+                            }
+                        },
+                        {
+                            "id": "Q56039",
+                            "type": "term",
+                            "speechCount": 346,
+                            "mentionCount": 499,
+                            "label": "Deutsche Wiedervereinigung",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q56039"
+                            }
+                        },
+                        {
+                            "id": "Q628569",
+                            "type": "term",
+                            "speechCount": 285,
+                            "mentionCount": 492,
+                            "label": "ALG II",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q628569&v=383a00e3",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q628569"
+                            }
+                        },
+                        {
+                            "id": "Q1121969",
+                            "type": "term",
+                            "speechCount": 126,
+                            "mentionCount": 370,
+                            "label": "CETA",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q1121969&v=4ecf2f9a",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q1121969"
+                            }
+                        },
+                        {
+                            "id": "Q3550618",
+                            "type": "term",
+                            "speechCount": 131,
+                            "mentionCount": 291,
+                            "label": "TTIP",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q3550618"
+                            }
+                        },
+                        {
+                            "id": "Q1343626",
+                            "type": "term",
+                            "speechCount": 131,
+                            "mentionCount": 285,
+                            "label": "Enquete-Kommission",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q1343626"
+                            }
+                        },
+                        {
+                            "id": "Q178790",
+                            "type": "term",
+                            "speechCount": 178,
+                            "mentionCount": 253,
+                            "label": "Gewerkschaft",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q178790&v=1d0d58df",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q178790"
+                            }
+                        },
+                        {
+                            "id": "Q7888194",
+                            "type": "term",
+                            "speechCount": 145,
+                            "mentionCount": 240,
+                            "label": "Brexit",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q7888194&v=8e7d16ea",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q7888194"
+                            }
+                        },
+                        {
+                            "id": "Q186228",
+                            "type": "term",
+                            "speechCount": 131,
+                            "mentionCount": 236,
+                            "label": "Mindestlohn",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q186228&v=913728cc",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q186228"
+                            }
+                        },
+                        {
+                            "id": "Q159470",
+                            "type": "term",
+                            "speechCount": 76,
+                            "mentionCount": 218,
+                            "label": "KFOR",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q159470&v=64447afc",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q159470"
+                            }
+                        },
+                        {
+                            "id": "Q160805",
+                            "type": "term",
+                            "speechCount": 72,
+                            "mentionCount": 217,
+                            "label": "United Nations Interim Force in Lebanon",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q160805&v=7231eb15",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q160805"
+                            }
+                        },
+                        {
+                            "id": "Q81068910",
+                            "type": "term",
+                            "speechCount": 189,
+                            "mentionCount": 211,
+                            "label": "COVID-19-Pandemie",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q81068910&v=d77fb46d",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q81068910"
+                            }
+                        },
+                        {
+                            "id": "Q1310186",
+                            "type": "term",
+                            "speechCount": 167,
+                            "mentionCount": 192,
+                            "label": "Einzelplan",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q1310186"
+                            }
+                        },
+                        {
+                            "id": "Q355",
+                            "type": "term",
+                            "speechCount": 135,
+                            "mentionCount": 190,
+                            "label": "Facebook",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q355&v=84e6b554",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q355"
+                            }
+                        },
+                        {
+                            "id": "Q11660",
+                            "type": "term",
+                            "speechCount": 84,
+                            "mentionCount": 183,
+                            "label": "KI",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q11660&v=77f2d30e",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q11660"
+                            }
+                        },
+                        {
+                            "id": "Q110586381",
+                            "type": "term",
+                            "speechCount": 81,
+                            "mentionCount": 176,
+                            "label": "Nord Stream",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q110586381&v=ecde6cc0",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q110586381"
+                            }
+                        },
+                        {
+                            "id": "Q185441",
+                            "type": "term",
+                            "speechCount": 143,
+                            "mentionCount": 166,
+                            "label": "EU-Mitgliedstaat",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q185441&v=e0434a58",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q185441"
+                            }
+                        },
+                        {
+                            "id": "Q19771",
+                            "type": "term",
+                            "speechCount": 112,
+                            "mentionCount": 166,
+                            "label": "G20",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": null,
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q19771"
+                            }
+                        },
+                        {
+                            "id": "Q8683",
+                            "type": "term",
+                            "speechCount": 141,
+                            "mentionCount": 166,
+                            "label": "Kalter Krieg",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q8683&v=5a64c7d7",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q8683"
+                            }
+                        },
+                        {
+                            "id": "Q12223",
+                            "type": "term",
+                            "speechCount": 92,
+                            "mentionCount": 163,
+                            "label": "Kurden",
+                            "subtype": "otherTerm",
+                            "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q12223&v=760e19f4",
+                            "faction": null,
+                            "links": {
+                                "self": "https://optv.local/api/v1/term/Q12223"
+                            }
+                        }
+                    ]
+                },
+                "byFaction": [
+                    {
+                        "id": "Q1023134",
+                        "label": "CDU/CSU",
+                        "byType": {
+                            "person": [
+                                {
+                                    "id": "Q7747",
+                                    "type": "person",
+                                    "speechCount": 484,
+                                    "mentionCount": 895,
+                                    "label": "Wladimir Wladimirowitsch Putin",
+                                    "subtype": "person",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q7747&v=a4ee4984",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q7747"
+                                    }
+                                },
+                                {
+                                    "id": "Q567",
+                                    "type": "person",
+                                    "speechCount": 467,
+                                    "mentionCount": 576,
+                                    "label": "Angela Merkel",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q567&v=189dc488",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q567"
+                                    }
+                                },
+                                {
+                                    "id": "Q16019",
+                                    "type": "person",
+                                    "speechCount": 332,
+                                    "mentionCount": 417,
+                                    "label": "Wolfgang Schäuble",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q16019&v=475d2428",
+                                    "faction": {
+                                        "id": "Q1023134",
+                                        "label": "CDU/CSU"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q16019"
+                                    }
+                                },
+                                {
+                                    "id": "Q61053",
+                                    "type": "person",
+                                    "speechCount": 259,
+                                    "mentionCount": 397,
+                                    "label": "Olaf Scholz",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q61053&v=42cc3ecb",
+                                    "faction": {
+                                        "id": "Q2207512",
+                                        "label": "SPD"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q61053"
+                                    }
+                                },
+                                {
+                                    "id": "Q2518",
+                                    "type": "person",
+                                    "speechCount": 161,
+                                    "mentionCount": 221,
+                                    "label": "Helmut Kohl",
+                                    "subtype": "person",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q2518&v=77af09c0",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q2518"
+                                    }
+                                },
+                                {
+                                    "id": "Q109943",
+                                    "type": "person",
+                                    "speechCount": 159,
+                                    "mentionCount": 215,
+                                    "label": "Robert Habeck",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q109943&v=fe5e1795",
+                                    "faction": {
+                                        "id": "Q1007353",
+                                        "label": "DIE GRÜNEN"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q109943"
+                                    }
+                                },
+                                {
+                                    "id": "Q2530",
+                                    "type": "person",
+                                    "speechCount": 184,
+                                    "mentionCount": 215,
+                                    "label": "Gerhard Schröder",
+                                    "subtype": "person",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q2530&v=80920cea",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q2530"
+                                    }
+                                },
+                                {
+                                    "id": "Q1288810",
+                                    "type": "person",
+                                    "speechCount": 117,
+                                    "mentionCount": 162,
+                                    "label": "Nancy Faeser",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q1288810&v=0516927d",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q1288810"
+                                    }
+                                },
+                                {
+                                    "id": "Q566257",
+                                    "type": "person",
+                                    "speechCount": 125,
+                                    "mentionCount": 162,
+                                    "label": "Friedrich Merz",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q566257&v=ac79b5d7",
+                                    "faction": {
+                                        "id": "Q1023134",
+                                        "label": "CDU/CSU"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q566257"
+                                    }
+                                },
+                                {
+                                    "id": "Q2492",
+                                    "type": "person",
+                                    "speechCount": 123,
+                                    "mentionCount": 161,
+                                    "label": "Konrad Adenauer",
+                                    "subtype": "person",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q2492&v=9a0f3e93",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q2492"
+                                    }
+                                },
+                                {
+                                    "id": "Q85783",
+                                    "type": "person",
+                                    "speechCount": 135,
+                                    "mentionCount": 152,
+                                    "label": "Alexander Dobrindt",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q85783&v=2a07ad50",
+                                    "faction": {
+                                        "id": "Q1023134",
+                                        "label": "CDU/CSU"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q85783"
+                                    }
+                                },
+                                {
+                                    "id": "Q86294",
+                                    "type": "person",
+                                    "speechCount": 124,
+                                    "mentionCount": 151,
+                                    "label": "Jens Spahn",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q86294&v=69f20eec",
+                                    "faction": {
+                                        "id": "Q1023134",
+                                        "label": "CDU/CSU"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q86294"
+                                    }
+                                },
+                                {
+                                    "id": "Q2496",
+                                    "type": "person",
+                                    "speechCount": 116,
+                                    "mentionCount": 147,
+                                    "label": "Ludwig Erhard",
+                                    "subtype": "person",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q2496&v=b29c5214",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q2496"
+                                    }
+                                },
+                                {
+                                    "id": "Q65539",
+                                    "type": "person",
+                                    "speechCount": 104,
+                                    "mentionCount": 144,
+                                    "label": "Peter Altmaier",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q65539&v=c0e66fee",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q65539"
+                                    }
+                                },
+                                {
+                                    "id": "Q67164",
+                                    "type": "person",
+                                    "speechCount": 124,
+                                    "mentionCount": 143,
+                                    "label": "Volker Kauder",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q67164&v=b122ab07",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q67164"
+                                    }
+                                },
+                                {
+                                    "id": "Q920726",
+                                    "type": "person",
+                                    "speechCount": 113,
+                                    "mentionCount": 140,
+                                    "label": "Britta Haßelmann",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q920726&v=0b7cb0e1",
+                                    "faction": {
+                                        "id": "Q1007353",
+                                        "label": "DIE GRÜNEN"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q920726"
+                                    }
+                                },
+                                {
+                                    "id": "Q48967",
+                                    "type": "person",
+                                    "speechCount": 102,
+                                    "mentionCount": 137,
+                                    "label": "Katrin Göring-Eckardt",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q48967&v=91f73b84",
+                                    "faction": {
+                                        "id": "Q1007353",
+                                        "label": "DIE GRÜNEN"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q48967"
+                                    }
+                                },
+                                {
+                                    "id": "Q22686",
+                                    "type": "person",
+                                    "speechCount": 107,
+                                    "mentionCount": 134,
+                                    "label": "Donald Trump",
+                                    "subtype": "person",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q22686&v=24a8c196",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q22686"
+                                    }
+                                },
+                                {
+                                    "id": "Q60772",
+                                    "type": "person",
+                                    "speechCount": 109,
+                                    "mentionCount": 125,
+                                    "label": "Ursula von der Leyen",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q60772&v=7b60320a",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q60772"
+                                    }
+                                },
+                                {
+                                    "id": "Q85806",
+                                    "type": "person",
+                                    "speechCount": 101,
+                                    "mentionCount": 123,
+                                    "label": "Christian Lindner",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q85806&v=85049c42",
+                                    "faction": {
+                                        "id": "Q1387991",
+                                        "label": "FDP"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q85806"
+                                    }
+                                },
+                                {
+                                    "id": "Q76658",
+                                    "type": "person",
+                                    "speechCount": 103,
+                                    "mentionCount": 119,
+                                    "label": "Frank-Walter Steinmeier",
+                                    "subtype": "person",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q76658&v=6ca34999",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q76658"
+                                    }
+                                },
+                                {
+                                    "id": "Q44612",
+                                    "type": "person",
+                                    "speechCount": 104,
+                                    "mentionCount": 117,
+                                    "label": "Horst Seehofer",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q44612&v=025ba157",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q44612"
+                                    }
+                                },
+                                {
+                                    "id": "Q44329",
+                                    "type": "person",
+                                    "speechCount": 80,
+                                    "mentionCount": 115,
+                                    "label": "Baschar al-Assad",
+                                    "subtype": "person",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q44329&v=dc46e0ea",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q44329"
+                                    }
+                                },
+                                {
+                                    "id": "Q160902",
+                                    "type": "person",
+                                    "speechCount": 88,
+                                    "mentionCount": 98,
+                                    "label": "Sigmar Gabriel",
+                                    "subtype": "memberOfParliament",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=person&id=Q160902&v=cb499680",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/person/Q160902"
+                                    }
+                                }
+                            ],
+                            "organisation": [
+                                {
+                                    "id": "Q458",
+                                    "type": "organisation",
+                                    "speechCount": 2967,
+                                    "mentionCount": 6759,
+                                    "label": "EU",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q458&v=f25ef872",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q458"
+                                    }
+                                },
+                                {
+                                    "id": "Q2207512",
+                                    "type": "organisation",
+                                    "speechCount": 3321,
+                                    "mentionCount": 5362,
+                                    "label": "SPD",
+                                    "subtype": "faction",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q2207512&v=4e041713",
+                                    "faction": {
+                                        "id": "Q2207512",
+                                        "label": "SPD"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q2207512"
+                                    }
+                                },
+                                {
+                                    "id": "Q56010",
+                                    "type": "organisation",
+                                    "speechCount": 1170,
+                                    "mentionCount": 3761,
+                                    "label": "Bundeswehr",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q56010&v=3e6918fc",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q56010"
+                                    }
+                                },
+                                {
+                                    "id": "Q42575708",
+                                    "type": "organisation",
+                                    "speechCount": 1920,
+                                    "mentionCount": 3730,
+                                    "label": "AfD",
+                                    "subtype": "faction",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q42575708&v=592f6f4c",
+                                    "faction": {
+                                        "id": "Q42575708",
+                                        "label": "AfD"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q42575708"
+                                    }
+                                },
+                                {
+                                    "id": "Q1007353",
+                                    "type": "organisation",
+                                    "speechCount": 1987,
+                                    "mentionCount": 2586,
+                                    "label": "DIE GRÜNEN",
+                                    "subtype": "faction",
+                                    "thumbnailURI": "",
+                                    "faction": {
+                                        "id": "Q1007353",
+                                        "label": "DIE GRÜNEN"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q1007353"
+                                    }
+                                },
+                                {
+                                    "id": "Q7184",
+                                    "type": "organisation",
+                                    "speechCount": 726,
+                                    "mentionCount": 1628,
+                                    "label": "NATO",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q7184&v=4d41b173",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q7184"
+                                    }
+                                },
+                                {
+                                    "id": "Q56025",
+                                    "type": "organisation",
+                                    "speechCount": 819,
+                                    "mentionCount": 1426,
+                                    "label": "BVerfG",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q56025&v=b4bd2f7b",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q56025"
+                                    }
+                                },
+                                {
+                                    "id": "Q1826856",
+                                    "type": "organisation",
+                                    "speechCount": 904,
+                                    "mentionCount": 1169,
+                                    "label": "DIE LINKE",
+                                    "subtype": "faction",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1826856&v=e5a9c45f",
+                                    "faction": {
+                                        "id": "Q1826856",
+                                        "label": "DIE LINKE"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q1826856"
+                                    }
+                                },
+                                {
+                                    "id": "Q1065",
+                                    "type": "organisation",
+                                    "speechCount": 691,
+                                    "mentionCount": 1145,
+                                    "label": "UNO",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1065&v=2c67d4f9",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q1065"
+                                    }
+                                },
+                                {
+                                    "id": "Q8880",
+                                    "type": "organisation",
+                                    "speechCount": 745,
+                                    "mentionCount": 1102,
+                                    "label": "EU-Kommission",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q8880&v=b6aed0f2",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q8880"
+                                    }
+                                },
+                                {
+                                    "id": "Q1387991",
+                                    "type": "organisation",
+                                    "speechCount": 854,
+                                    "mentionCount": 989,
+                                    "label": "FDP",
+                                    "subtype": "faction",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1387991&v=a542bea7",
+                                    "faction": {
+                                        "id": "Q1387991",
+                                        "label": "FDP"
+                                    },
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q1387991"
+                                    }
+                                },
+                                {
+                                    "id": "Q8889",
+                                    "type": "organisation",
+                                    "speechCount": 403,
+                                    "mentionCount": 609,
+                                    "label": "EU-Parlament",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q8889&v=b5787b69",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q8889"
+                                    }
+                                },
+                                {
+                                    "id": "Q56034",
+                                    "type": "organisation",
+                                    "speechCount": 361,
+                                    "mentionCount": 542,
+                                    "label": "AA",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q56034&v=7666e21d",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q56034"
+                                    }
+                                },
+                                {
+                                    "id": "Q8901",
+                                    "type": "organisation",
+                                    "speechCount": 252,
+                                    "mentionCount": 542,
+                                    "label": "EZB",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q8901&v=430faaa2",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q8901"
+                                    }
+                                },
+                                {
+                                    "id": "Q502698",
+                                    "type": "organisation",
+                                    "speechCount": 386,
+                                    "mentionCount": 498,
+                                    "label": "BMI",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q502698&v=ae6f4362",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q502698"
+                                    }
+                                },
+                                {
+                                    "id": "Q684357",
+                                    "type": "organisation",
+                                    "speechCount": 317,
+                                    "mentionCount": 481,
+                                    "label": "BMZ",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q684357&v=0bcbc306",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q684357"
+                                    }
+                                },
+                                {
+                                    "id": "Q2429253",
+                                    "type": "organisation",
+                                    "speechCount": 255,
+                                    "mentionCount": 467,
+                                    "label": "IS",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q2429253"
+                                    }
+                                },
+                                {
+                                    "id": "Q499118",
+                                    "type": "organisation",
+                                    "speechCount": 365,
+                                    "mentionCount": 450,
+                                    "label": "BMF",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q499118&v=810f3b79",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q499118"
+                                    }
+                                },
+                                {
+                                    "id": "Q488589",
+                                    "type": "organisation",
+                                    "speechCount": 333,
+                                    "mentionCount": 439,
+                                    "label": "BMWK",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q488589&v=473aed24",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q488589"
+                                    }
+                                },
+                                {
+                                    "id": "Q1478016",
+                                    "type": "organisation",
+                                    "speechCount": 300,
+                                    "mentionCount": 411,
+                                    "label": "BA",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1478016&v=b6c87e4f",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q1478016"
+                                    }
+                                },
+                                {
+                                    "id": "Q8886",
+                                    "type": "organisation",
+                                    "speechCount": 229,
+                                    "mentionCount": 388,
+                                    "label": "Europäischer Rat",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q8886&v=88a2499f",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q8886"
+                                    }
+                                },
+                                {
+                                    "id": "Q1518827",
+                                    "type": "organisation",
+                                    "speechCount": 232,
+                                    "mentionCount": 366,
+                                    "label": "EuGH",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q1518827&v=a740db80",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q1518827"
+                                    }
+                                },
+                                {
+                                    "id": "Q492234",
+                                    "type": "organisation",
+                                    "speechCount": 256,
+                                    "mentionCount": 353,
+                                    "label": "BMBF",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q492234&v=aa26d431",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q492234"
+                                    }
+                                },
+                                {
+                                    "id": "Q697698",
+                                    "type": "organisation",
+                                    "speechCount": 172,
+                                    "mentionCount": 349,
+                                    "label": "THW",
+                                    "subtype": "otherOrganisation",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=organisation&id=Q697698&v=1be2eea2",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/organisation/Q697698"
+                                    }
+                                }
+                            ],
+                            "term": [
+                                {
+                                    "id": "Q980",
+                                    "type": "term",
+                                    "speechCount": 1010,
+                                    "mentionCount": 1682,
+                                    "label": "Bayern",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": null,
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q980"
+                                    }
+                                },
+                                {
+                                    "id": "Q16957",
+                                    "type": "term",
+                                    "speechCount": 433,
+                                    "mentionCount": 929,
+                                    "label": "DDR",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": null,
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q16957"
+                                    }
+                                },
+                                {
+                                    "id": "Q562307",
+                                    "type": "term",
+                                    "speechCount": 616,
+                                    "mentionCount": 887,
+                                    "label": "Rot-grüne Koalition",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": null,
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q562307"
+                                    }
+                                },
+                                {
+                                    "id": "Q8268",
+                                    "type": "term",
+                                    "speechCount": 298,
+                                    "mentionCount": 652,
+                                    "label": "Eurozone",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": null,
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q8268"
+                                    }
+                                },
+                                {
+                                    "id": "Q2184704",
+                                    "type": "term",
+                                    "speechCount": 445,
+                                    "mentionCount": 508,
+                                    "label": "Große Koalition",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": null,
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q2184704"
+                                    }
+                                },
+                                {
+                                    "id": "Q56039",
+                                    "type": "term",
+                                    "speechCount": 346,
+                                    "mentionCount": 499,
+                                    "label": "Deutsche Wiedervereinigung",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": null,
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q56039"
+                                    }
+                                },
+                                {
+                                    "id": "Q628569",
+                                    "type": "term",
+                                    "speechCount": 285,
+                                    "mentionCount": 492,
+                                    "label": "ALG II",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q628569&v=383a00e3",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q628569"
+                                    }
+                                },
+                                {
+                                    "id": "Q1121969",
+                                    "type": "term",
+                                    "speechCount": 126,
+                                    "mentionCount": 370,
+                                    "label": "CETA",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q1121969&v=4ecf2f9a",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q1121969"
+                                    }
+                                },
+                                {
+                                    "id": "Q3550618",
+                                    "type": "term",
+                                    "speechCount": 131,
+                                    "mentionCount": 291,
+                                    "label": "TTIP",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": null,
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q3550618"
+                                    }
+                                },
+                                {
+                                    "id": "Q1343626",
+                                    "type": "term",
+                                    "speechCount": 131,
+                                    "mentionCount": 285,
+                                    "label": "Enquete-Kommission",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": null,
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q1343626"
+                                    }
+                                },
+                                {
+                                    "id": "Q178790",
+                                    "type": "term",
+                                    "speechCount": 178,
+                                    "mentionCount": 253,
+                                    "label": "Gewerkschaft",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q178790&v=1d0d58df",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q178790"
+                                    }
+                                },
+                                {
+                                    "id": "Q7888194",
+                                    "type": "term",
+                                    "speechCount": 145,
+                                    "mentionCount": 240,
+                                    "label": "Brexit",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q7888194&v=8e7d16ea",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q7888194"
+                                    }
+                                },
+                                {
+                                    "id": "Q186228",
+                                    "type": "term",
+                                    "speechCount": 131,
+                                    "mentionCount": 236,
+                                    "label": "Mindestlohn",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q186228&v=913728cc",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q186228"
+                                    }
+                                },
+                                {
+                                    "id": "Q159470",
+                                    "type": "term",
+                                    "speechCount": 76,
+                                    "mentionCount": 218,
+                                    "label": "KFOR",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q159470&v=64447afc",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q159470"
+                                    }
+                                },
+                                {
+                                    "id": "Q160805",
+                                    "type": "term",
+                                    "speechCount": 72,
+                                    "mentionCount": 217,
+                                    "label": "United Nations Interim Force in Lebanon",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q160805&v=7231eb15",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q160805"
+                                    }
+                                },
+                                {
+                                    "id": "Q81068910",
+                                    "type": "term",
+                                    "speechCount": 189,
+                                    "mentionCount": 211,
+                                    "label": "COVID-19-Pandemie",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q81068910&v=d77fb46d",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q81068910"
+                                    }
+                                },
+                                {
+                                    "id": "Q1310186",
+                                    "type": "term",
+                                    "speechCount": 167,
+                                    "mentionCount": 192,
+                                    "label": "Einzelplan",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": null,
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q1310186"
+                                    }
+                                },
+                                {
+                                    "id": "Q355",
+                                    "type": "term",
+                                    "speechCount": 135,
+                                    "mentionCount": 190,
+                                    "label": "Facebook",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q355&v=84e6b554",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q355"
+                                    }
+                                },
+                                {
+                                    "id": "Q11660",
+                                    "type": "term",
+                                    "speechCount": 84,
+                                    "mentionCount": 183,
+                                    "label": "KI",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q11660&v=77f2d30e",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q11660"
+                                    }
+                                },
+                                {
+                                    "id": "Q110586381",
+                                    "type": "term",
+                                    "speechCount": 81,
+                                    "mentionCount": 176,
+                                    "label": "Nord Stream",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q110586381&v=ecde6cc0",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q110586381"
+                                    }
+                                },
+                                {
+                                    "id": "Q185441",
+                                    "type": "term",
+                                    "speechCount": 143,
+                                    "mentionCount": 166,
+                                    "label": "EU-Mitgliedstaat",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q185441&v=e0434a58",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q185441"
+                                    }
+                                },
+                                {
+                                    "id": "Q19771",
+                                    "type": "term",
+                                    "speechCount": 112,
+                                    "mentionCount": 166,
+                                    "label": "G20",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": null,
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q19771"
+                                    }
+                                },
+                                {
+                                    "id": "Q8683",
+                                    "type": "term",
+                                    "speechCount": 141,
+                                    "mentionCount": 166,
+                                    "label": "Kalter Krieg",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q8683&v=5a64c7d7",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q8683"
+                                    }
+                                },
+                                {
+                                    "id": "Q12223",
+                                    "type": "term",
+                                    "speechCount": 92,
+                                    "mentionCount": 163,
+                                    "label": "Kurden",
+                                    "subtype": "otherTerm",
+                                    "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q12223&v=760e19f4",
+                                    "faction": null,
+                                    "links": {
+                                        "self": "https://optv.local/api/v1/term/Q12223"
+                                    }
+                                }
+                            ]
+                        }
                     }
                 ]
             }

@@ -27,11 +27,72 @@ x-robots-tag: noindex
                 }
             },
             "speechCounts": {
-                "totalSpeeches": 4,
-                "speechesInPrimaryContext": 4
+                "totalSpeeches": 19,
+                "speechesInPrimaryContext": 19
             },
             "entityAssociations": {
-                "topDetectedEntities": [],
+                "topDetectedEntities": [
+                    {
+                        "id": "Q1697391",
+                        "type": "term",
+                        "coOccurrenceCount": 3,
+                        "label": "Istanbul-Konvention",
+                        "links": {
+                            "self": "https://optv.local/api/v1/term/Q1697391"
+                        },
+                        "subtype": "otherTerm",
+                        "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q1697391&v=00eaab60",
+                        "faction": null
+                    },
+                    {
+                        "id": "Q6223",
+                        "type": "term",
+                        "coOccurrenceCount": 2,
+                        "label": "Faschismus",
+                        "links": {
+                            "self": "https://optv.local/api/v1/term/Q6223"
+                        },
+                        "subtype": "otherTerm",
+                        "thumbnailURI": "https://optv.local/content/client/images/entity-image.php?type=term&id=Q6223&v=eeda259c",
+                        "faction": null
+                    },
+                    {
+                        "id": "Q5284043",
+                        "type": "term",
+                        "coOccurrenceCount": 1,
+                        "label": "Cum-Ex",
+                        "links": {
+                            "self": "https://optv.local/api/v1/term/Q5284043"
+                        },
+                        "subtype": "otherTerm",
+                        "thumbnailURI": null,
+                        "faction": null
+                    },
+                    {
+                        "id": "Q96279247",
+                        "type": "term",
+                        "coOccurrenceCount": 1,
+                        "label": "Lieferkettengesetz",
+                        "links": {
+                            "self": "https://optv.local/api/v1/term/Q96279247"
+                        },
+                        "subtype": "otherTerm",
+                        "thumbnailURI": null,
+                        "faction": null
+                    },
+                    {
+                        "id": "Q980",
+                        "type": "term",
+                        "coOccurrenceCount": 1,
+                        "label": "Bayern",
+                        "links": {
+                            "self": "https://optv.local/api/v1/term/Q980"
+                        },
+                        "subtype": "otherTerm",
+                        "thumbnailURI": null,
+                        "faction": null
+                    }
+                ],
                 "topMentionedBy": []
             },
             "trends": {
@@ -516,362 +577,2066 @@ x-robots-tag: noindex
                     {
                         "date": "2025-09-12T00:00:00.000Z",
                         "speechCount": 1
+                    },
+                    {
+                        "date": "2025-09-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-09-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-10-31T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-14T00:00:00.000Z",
+                        "speechCount": 1
+                    },
+                    {
+                        "date": "2025-11-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-11-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2025-12-31T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-01-31T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-26T00:00:00.000Z",
+                        "speechCount": 2
+                    },
+                    {
+                        "date": "2026-02-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-02-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-19T00:00:00.000Z",
+                        "speechCount": 1
+                    },
+                    {
+                        "date": "2026-03-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-25T00:00:00.000Z",
+                        "speechCount": 2
+                    },
+                    {
+                        "date": "2026-03-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-03-31T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-23T00:00:00.000Z",
+                        "speechCount": 1
+                    },
+                    {
+                        "date": "2026-04-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-04-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-07T00:00:00.000Z",
+                        "speechCount": 1
+                    },
+                    {
+                        "date": "2026-05-08T00:00:00.000Z",
+                        "speechCount": 2
+                    },
+                    {
+                        "date": "2026-05-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-20T00:00:00.000Z",
+                        "speechCount": 1
+                    },
+                    {
+                        "date": "2026-05-21T00:00:00.000Z",
+                        "speechCount": 1
+                    },
+                    {
+                        "date": "2026-05-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-05-31T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-25T00:00:00.000Z",
+                        "speechCount": 1
+                    },
+                    {
+                        "date": "2026-06-26T00:00:00.000Z",
+                        "speechCount": 1
+                    },
+                    {
+                        "date": "2026-06-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-06-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-07-31T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-08-31T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-09-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-12T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-13T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-14T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-15T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-16T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-17T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-18T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-19T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-20T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-21T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-22T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-23T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-24T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-25T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-26T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-27T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-28T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-29T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-30T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-10-31T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-01T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-02T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-03T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-04T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-05T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-06T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-07T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-08T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-09T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-10T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-11T00:00:00.000Z",
+                        "speechCount": 0
+                    },
+                    {
+                        "date": "2026-11-12T00:00:00.000Z",
+                        "speechCount": 1
                     }
                 ]
             },
             "speakerVocabulary": {
-                "totalWords": 502,
-                "uniqueWords": 391,
+                "totalWords": 2252,
+                "uniqueWords": 1416,
                 "topWords": [
                     {
-                        "word": "wer",
-                        "frequency": 11,
-                        "speechCount": 3,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
                         "word": "menschen",
-                        "frequency": 6,
-                        "speechCount": 2,
+                        "frequency": 34,
+                        "speechCount": 11,
                         "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-07-10"
+                        "lastUsed": "2026-06-26"
                     },
                     {
-                        "word": "verfahren",
-                        "frequency": 6,
-                        "speechCount": 3,
-                        "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-09-12"
+                        "word": "wer",
+                        "frequency": 23,
+                        "speechCount": 10,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-05-21"
                     },
                     {
                         "word": "regierung",
-                        "frequency": 5,
-                        "speechCount": 3,
+                        "frequency": 20,
+                        "speechCount": 11,
                         "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "danke",
-                        "frequency": 4,
-                        "speechCount": 3,
-                        "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "demokratie",
-                        "frequency": 4,
-                        "speechCount": 2,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-07-10"
-                    },
-                    {
-                        "word": "digitalisierung",
-                        "frequency": 4,
-                        "speechCount": 1,
-                        "firstUsed": "2025-09-12",
-                        "lastUsed": "2025-09-12"
+                        "lastUsed": "2026-06-26"
                     },
                     {
                         "word": "entwurf",
-                        "frequency": 4,
-                        "speechCount": 1,
+                        "frequency": 18,
+                        "speechCount": 8,
                         "firstUsed": "2025-09-12",
-                        "lastUsed": "2025-09-12"
+                        "lastUsed": "2026-05-21"
                     },
                     {
-                        "word": "verantwortung",
-                        "frequency": 4,
-                        "speechCount": 1,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "vertrauen",
-                        "frequency": 4,
-                        "speechCount": 3,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "zehn",
-                        "frequency": 4,
-                        "speechCount": 1,
-                        "firstUsed": "2025-09-12",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "egal",
-                        "frequency": 3,
-                        "speechCount": 1,
-                        "firstUsed": "2025-07-10",
-                        "lastUsed": "2025-07-10"
-                    },
-                    {
-                        "word": "gut",
-                        "frequency": 3,
-                        "speechCount": 2,
+                        "word": "verfahren",
+                        "frequency": 18,
+                        "speechCount": 9,
                         "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-07-10"
-                    },
-                    {
-                        "word": "justiz",
-                        "frequency": 3,
-                        "speechCount": 1,
-                        "firstUsed": "2025-09-12",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "leisten",
-                        "frequency": 3,
-                        "speechCount": 2,
-                        "firstUsed": "2025-07-10",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "linke",
-                        "frequency": 3,
-                        "speechCount": 3,
-                        "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "mündliche",
-                        "frequency": 3,
-                        "speechCount": 1,
-                        "firstUsed": "2025-09-12",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "nein",
-                        "frequency": 3,
-                        "speechCount": 2,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "politik",
-                        "frequency": 3,
-                        "speechCount": 2,
-                        "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "politische",
-                        "frequency": 3,
-                        "speechCount": 1,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "rechtspolitik",
-                        "frequency": 3,
-                        "speechCount": 1,
-                        "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-05-16"
-                    },
-                    {
-                        "word": "schwächt",
-                        "frequency": 3,
-                        "speechCount": 1,
-                        "firstUsed": "2025-09-12",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "sozial",
-                        "frequency": 3,
-                        "speechCount": 2,
-                        "firstUsed": "2025-07-10",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "staat",
-                        "frequency": 3,
-                        "speechCount": 2,
-                        "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "technik",
-                        "frequency": 3,
-                        "speechCount": 2,
-                        "firstUsed": "2025-07-10",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "abschaffung",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-05-16"
-                    },
-                    {
-                        "word": "absolut",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-07-10",
-                        "lastUsed": "2025-07-10"
-                    },
-                    {
-                        "word": "afd",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "angst",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "beschuss",
-                        "frequency": 2,
-                        "speechCount": 2,
-                        "firstUsed": "2025-07-10",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "digitale",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-07-10",
-                        "lastUsed": "2025-07-10"
-                    },
-                    {
-                        "word": "digitalen",
-                        "frequency": 2,
-                        "speechCount": 2,
-                        "firstUsed": "2025-07-10",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "digitalisierungsinitiative",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-07-10",
-                        "lastUsed": "2025-07-10"
-                    },
-                    {
-                        "word": "eindeutig",
-                        "frequency": 2,
-                        "speechCount": 2,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-07-10"
-                    },
-                    {
-                        "word": "eins",
-                        "frequency": 2,
-                        "speechCount": 2,
-                        "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "einschüchterung",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "ernst",
-                        "frequency": 2,
-                        "speechCount": 2,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-07-10"
-                    },
-                    {
-                        "word": "fehlentscheidungen",
-                        "frequency": 2,
-                        "speechCount": 2,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "fehler",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "haften",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "handeln",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "haushalt",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-07-10",
-                        "lastUsed": "2025-07-10"
-                    },
-                    {
-                        "word": "jahre",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-09-12",
-                        "lastUsed": "2025-09-12"
-                    },
-                    {
-                        "word": "kontrolle",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "meint",
-                        "frequency": 2,
-                        "speechCount": 2,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-07-10"
-                    },
-                    {
-                        "word": "menschenrechte",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-05-16"
-                    },
-                    {
-                        "word": "organisierte",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-05-16"
-                    },
-                    {
-                        "word": "parlament",
-                        "frequency": 2,
-                        "speechCount": 1,
-                        "firstUsed": "2025-06-05",
-                        "lastUsed": "2025-06-05"
-                    },
-                    {
-                        "word": "rechte",
-                        "frequency": 2,
-                        "speechCount": 2,
-                        "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-09-12"
+                        "lastUsed": "2026-05-08"
                     },
                     {
                         "word": "rechtsstaat",
-                        "frequency": 2,
+                        "frequency": 17,
+                        "speechCount": 8,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "digitalisierung",
+                        "frequency": 16,
+                        "speechCount": 4,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2026-05-07"
+                    },
+                    {
+                        "word": "afd",
+                        "frequency": 15,
+                        "speechCount": 3,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "bleibt",
+                        "frequency": 10,
+                        "speechCount": 6,
+                        "firstUsed": "2026-02-26",
+                        "lastUsed": "2026-05-21"
+                    },
+                    {
+                        "word": "druck",
+                        "frequency": 10,
+                        "speechCount": 3,
+                        "firstUsed": "2026-02-26",
+                        "lastUsed": "2026-05-20"
+                    },
+                    {
+                        "word": "frauen",
+                        "frequency": 10,
+                        "speechCount": 1,
+                        "firstUsed": "2026-05-08",
+                        "lastUsed": "2026-05-08"
+                    },
+                    {
+                        "word": "danke",
+                        "frequency": 9,
+                        "speechCount": 8,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2026-05-21"
+                    },
+                    {
+                        "word": "linke",
+                        "frequency": 9,
+                        "speechCount": 8,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2026-05-20"
+                    },
+                    {
+                        "word": "schutz",
+                        "frequency": 9,
+                        "speechCount": 7,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2026-05-08"
+                    },
+                    {
+                        "word": "demokratie",
+                        "frequency": 8,
+                        "speechCount": 3,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "gut",
+                        "frequency": 8,
+                        "speechCount": 4,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2026-05-07"
+                    },
+                    {
+                        "word": "zugang",
+                        "frequency": 8,
+                        "speechCount": 6,
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2026-05-21"
+                    },
+                    {
+                        "word": "gar",
+                        "frequency": 7,
+                        "speechCount": 7,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2026-05-20"
+                    },
+                    {
+                        "word": "handeln",
+                        "frequency": 7,
+                        "speechCount": 2,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "leben",
+                        "frequency": 7,
+                        "speechCount": 5,
+                        "firstUsed": "2025-11-14",
+                        "lastUsed": "2026-05-08"
+                    },
+                    {
+                        "word": "leisten",
+                        "frequency": 7,
+                        "speechCount": 5,
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2026-04-23"
+                    },
+                    {
+                        "word": "politik",
+                        "frequency": 7,
+                        "speechCount": 5,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "vertrauen",
+                        "frequency": 7,
+                        "speechCount": 5,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "weiterhin",
+                        "frequency": 7,
+                        "speechCount": 6,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2026-05-21"
+                    },
+                    {
+                        "word": "braucht",
+                        "frequency": 6,
+                        "speechCount": 5,
+                        "firstUsed": "2025-11-14",
+                        "lastUsed": "2026-05-07"
+                    },
+                    {
+                        "word": "daten",
+                        "frequency": 6,
+                        "speechCount": 2,
+                        "firstUsed": "2025-11-14",
+                        "lastUsed": "2026-05-07"
+                    },
+                    {
+                        "word": "eigenen",
+                        "frequency": 6,
+                        "speechCount": 5,
+                        "firstUsed": "2026-03-19",
+                        "lastUsed": "2026-05-20"
+                    },
+                    {
+                        "word": "fortbildungen",
+                        "frequency": 6,
+                        "speechCount": 2,
+                        "firstUsed": "2026-04-23",
+                        "lastUsed": "2026-05-21"
+                    },
+                    {
+                        "word": "fragen",
+                        "frequency": 6,
+                        "speechCount": 3,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2026-04-23"
+                    },
+                    {
+                        "word": "fußfessel",
+                        "frequency": 6,
+                        "speechCount": 2,
+                        "firstUsed": "2026-05-08",
+                        "lastUsed": "2026-05-08"
+                    },
+                    {
+                        "word": "leute",
+                        "frequency": 6,
+                        "speechCount": 3,
+                        "firstUsed": "2026-03-25",
+                        "lastUsed": "2026-05-20"
+                    },
+                    {
+                        "word": "neue",
+                        "frequency": 6,
+                        "speechCount": 5,
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2026-05-08"
+                    },
+                    {
+                        "word": "schützt",
+                        "frequency": 6,
+                        "speechCount": 5,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2026-05-08"
+                    },
+                    {
+                        "word": "spd",
+                        "frequency": 6,
+                        "speechCount": 5,
+                        "firstUsed": "2026-02-26",
+                        "lastUsed": "2026-05-21"
+                    },
+                    {
+                        "word": "verantwortung",
+                        "frequency": 6,
+                        "speechCount": 3,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-03-19"
+                    },
+                    {
+                        "word": "absolut",
+                        "frequency": 5,
+                        "speechCount": 3,
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2026-05-07"
+                    },
+                    {
+                        "word": "betroffene",
+                        "frequency": 5,
+                        "speechCount": 4,
+                        "firstUsed": "2026-02-26",
+                        "lastUsed": "2026-05-08"
+                    },
+                    {
+                        "word": "einschüchterung",
+                        "frequency": 5,
+                        "speechCount": 3,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-03-25"
+                    },
+                    {
+                        "word": "entscheiden",
+                        "frequency": 5,
+                        "speechCount": 4,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "entscheidungen",
+                        "frequency": 5,
+                        "speechCount": 4,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "euro",
+                        "frequency": 5,
+                        "speechCount": 3,
+                        "firstUsed": "2025-07-10",
+                        "lastUsed": "2026-05-20"
+                    },
+                    {
+                        "word": "gesetz",
+                        "frequency": 5,
+                        "speechCount": 3,
+                        "firstUsed": "2025-05-16",
+                        "lastUsed": "2026-05-08"
+                    },
+                    {
+                        "word": "hart",
+                        "frequency": 5,
                         "speechCount": 2,
                         "firstUsed": "2025-05-16",
-                        "lastUsed": "2025-09-12"
+                        "lastUsed": "2026-05-20"
+                    },
+                    {
+                        "word": "innen",
+                        "frequency": 5,
+                        "speechCount": 5,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "justiz",
+                        "frequency": 5,
+                        "speechCount": 3,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "klagen",
+                        "frequency": 5,
+                        "speechCount": 2,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-02-26"
+                    },
+                    {
+                        "word": "kosten",
+                        "frequency": 5,
+                        "speechCount": 4,
+                        "firstUsed": "2025-09-12",
+                        "lastUsed": "2026-05-21"
+                    },
+                    {
+                        "word": "nein",
+                        "frequency": 5,
+                        "speechCount": 4,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "parlament",
+                        "frequency": 5,
+                        "speechCount": 2,
+                        "firstUsed": "2025-06-05",
+                        "lastUsed": "2026-06-26"
+                    },
+                    {
+                        "word": "passiert",
+                        "frequency": 5,
+                        "speechCount": 3,
+                        "firstUsed": "2025-11-14",
+                        "lastUsed": "2026-05-07"
                     }
                 ]
             },

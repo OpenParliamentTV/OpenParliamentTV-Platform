@@ -25,38 +25,26 @@ x-robots-tag: noindex
                 {
                     "word": "aeg",
                     "stem": "aeg",
-                    "score": 1741.8101999999998952262103557586669921875,
+                    "score": 784.0883000000000038198777474462985992431640625,
                     "speechCount": 5
                 },
                 {
                     "word": "eisenbahngesetzes",
                     "stem": "eisenbahngesetz",
-                    "score": 358.2893000000000256477505899965763092041015625,
-                    "speechCount": 6
-                },
-                {
-                    "word": "informationsverbund",
-                    "stem": "informationsverbund",
-                    "score": 278.673000000000001818989403545856475830078125,
+                    "score": 215.05049999999999954525264911353588104248046875,
                     "speechCount": 4
-                },
-                {
-                    "word": "bahnflächen",
-                    "stem": "bahnflach",
-                    "score": 209.00470000000001391526893712580204010009765625,
-                    "speechCount": 3
-                },
-                {
-                    "word": "pantazis",
-                    "stem": "pantazis",
-                    "score": 156.7495999999999867213773541152477264404296875,
-                    "speechCount": 3
                 },
                 {
                     "word": "spv",
                     "stem": "spv",
-                    "score": 111.4566999999999978854248183779418468475341796875,
+                    "score": 136.8428000000000110958353616297245025634765625,
                     "speechCount": 4
+                },
+                {
+                    "word": "pantazis",
+                    "stem": "pantazis",
+                    "score": 105.839799999999996771293808706104755401611328125,
+                    "speechCount": 3
                 }
             ]
         }

@@ -176,8 +176,8 @@ x-robots-tag: noindex
                         },
                         {
                             "date": "2017-06",
-                            "totalCount": 62,
-                            "speechCount": 33
+                            "totalCount": 63,
+                            "speechCount": 34
                         },
                         {
                             "date": "2017-07",
@@ -341,8 +341,8 @@ x-robots-tag: noindex
                         },
                         {
                             "date": "2020-03",
-                            "totalCount": 51,
-                            "speechCount": 31
+                            "totalCount": 52,
+                            "speechCount": 32
                         },
                         {
                             "date": "2020-04",
@@ -390,11 +390,11 @@ x-robots-tag: noindex
                             "speechCount": 9
                         }
                     ],
-                    "total": 4343,
+                    "total": 4345,
                     "forms": [
                         {
                             "word": "flüchtlinge",
-                            "count": 4343
+                            "count": 4345
                         }
                     ],
                     "firstUse": {

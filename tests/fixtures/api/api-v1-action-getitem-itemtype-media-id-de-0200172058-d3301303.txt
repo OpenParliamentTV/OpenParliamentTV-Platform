@@ -46,7 +46,6 @@ x-robots-tag: noindex
                     "type": "proceedings",
                     "textBody": [
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Anja Karliczek",
                             "speakerstatus": "main-speaker",
@@ -80,7 +79,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "comment",
                             "speaker": null,
                             "speakerstatus": null,
@@ -94,7 +92,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Anja Karliczek",
                             "speakerstatus": "main-speaker",
@@ -108,7 +105,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "comment",
                             "speaker": null,
                             "speakerstatus": null,
@@ -122,7 +118,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Anja Karliczek",
                             "speakerstatus": "main-speaker",
@@ -146,7 +141,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Anja Karliczek",
                             "speakerstatus": "main-speaker",
@@ -170,7 +164,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "comment",
                             "speaker": null,
                             "speakerstatus": null,
@@ -184,7 +177,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Anja Karliczek",
                             "speakerstatus": "main-speaker",
@@ -198,7 +190,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Anja Karliczek",
                             "speakerstatus": "main-speaker",
@@ -227,7 +218,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Anja Karliczek",
                             "speakerstatus": "main-speaker",
@@ -261,7 +251,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Anja Karliczek",
                             "speakerstatus": "main-speaker",
@@ -275,7 +264,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Anja Karliczek",
                             "speakerstatus": "main-speaker",
@@ -309,7 +297,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "comment",
                             "speaker": null,
                             "speakerstatus": null,
@@ -323,7 +310,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Anja Karliczek",
                             "speakerstatus": "main-speaker",
@@ -347,7 +333,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Anja Karliczek",
                             "speakerstatus": "main-speaker",
@@ -396,7 +381,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "comment",
                             "speaker": null,
                             "speakerstatus": null,
@@ -410,7 +394,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "speech",
                             "speaker": "Katrin Göring-Eckardt",
                             "speakerstatus": "vice-president",
@@ -424,7 +407,6 @@ x-robots-tag: noindex
                             ]
                         },
                         {
-                            "speech_id": "ID2017204800",
                             "type": "comment",
                             "speaker": null,
                             "speakerstatus": null,
@@ -444,7 +426,7 @@ x-robots-tag: noindex
                     "license": "Public Domain",
                     "language": "de",
                     "originTextID": "ID2017204800",
-                    "lastChanged": "2026-06-25 19:59:49"
+                    "lastChanged": "2026-08-12 11:00:32"
                 }
             ],
             "textContentsCount": 1
@@ -780,6 +762,44 @@ x-robots-tag: noindex
                 "data": [
                     {
                         "type": "document",
+                        "id": "12376",
+                        "attributes": {
+                            "context": "proceedingsReference",
+                            "type": "officialDocument",
+                            "label": "Drucksache 20/7502",
+                            "labelAlternative": [],
+                            "thumbnailURI": null,
+                            "thumbnailCreator": null,
+                            "thumbnailLicense": null,
+                            "additionalInformation": [],
+                            "sourceURI": "https://dserver.bundestag.de/btd/20/075/2007502.pdf",
+                            "embedURI": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/document/12376"
+                        }
+                    },
+                    {
+                        "type": "document",
+                        "id": "13451",
+                        "attributes": {
+                            "context": "proceedingsReference",
+                            "type": "officialDocument",
+                            "label": "Drucksache 20/11657",
+                            "labelAlternative": [],
+                            "thumbnailURI": null,
+                            "thumbnailCreator": null,
+                            "thumbnailLicense": null,
+                            "additionalInformation": [],
+                            "sourceURI": "https://dserver.bundestag.de/btd/20/116/2011657.pdf",
+                            "embedURI": null
+                        },
+                        "links": {
+                            "self": "https://optv.local/api/v1/document/13451"
+                        }
+                    },
+                    {
+                        "type": "document",
                         "id": "7674",
                         "attributes": {
                             "context": "NER",
@@ -910,6 +930,26 @@ x-robots-tag: noindex
                         "additionalInformation": {
                             "confidence": 0.99109999999999998099298181841732002794742584228515625
                         }
+                    }
+                },
+                {
+                    "type": "document",
+                    "id": "12376",
+                    "attributes": {
+                        "timeStart": null,
+                        "timeEnd": null,
+                        "context": "proceedingsReference",
+                        "additionalInformation": null
+                    }
+                },
+                {
+                    "type": "document",
+                    "id": "13451",
+                    "attributes": {
+                        "timeStart": null,
+                        "timeEnd": null,
+                        "context": "proceedingsReference",
+                        "additionalInformation": null
                     }
                 },
                 {

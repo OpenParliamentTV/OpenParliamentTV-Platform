@@ -47,524 +47,524 @@ content-type: text/html; charset=UTF-8
 						</tr>
 					</thead>
 					<tbody>
-					<tr class="resultItem" data-speech-id="DE-0180001005" data-faction="Q1023134">
-	<td>18 / 1</td>
-	<td>22.10.2013</td>
-	<td>Beschlussfassung über Geschäftsordnungen</td>
+					<tr class="resultItem" data-speech-id="DE-0170001001" data-faction="Q1023134">
+	<td>17 / 1</td>
+	<td>27.10.2009</td>
+	<td>Eröffnung der Sitzung</td>
+	<td>Heinz Riesenhuber (CDU/CSU)</td>
+	<td>29:34</td>
+	<td>2026-08-12 09:04:12</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170001001" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170001001" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170001005" data-faction="Q1023134">
+	<td>17 / 1</td>
+	<td>27.10.2009</td>
+	<td>Amtsübernahme</td>
 	<td>Norbert Lammert (CDU/CSU)</td>
-	<td>00:43</td>
-	<td>2025-06-05 21:46:14</td>
+	<td>26:26</td>
+	<td>2026-08-12 09:04:12</td>
 		<td>
 		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001005" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001005" target="_blank"><span class="icon-code"></span></a>
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170001005" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170001005" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180001006" data-faction="Q1023134">
-	<td>18 / 1</td>
-	<td>22.10.2013</td>
-	<td>Festlegung der Zahl der Vizepräsidenten</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170001006" data-faction="Q1023134">
+	<td>17 / 1</td>
+	<td>27.10.2009</td>
+	<td>Geschäftsordnungen</td>
 	<td>Norbert Lammert (CDU/CSU)</td>
-	<td>00:50</td>
-	<td>2025-06-05 21:46:14</td>
+	<td>00:38</td>
+	<td>2026-08-12 09:04:12</td>
 		<td>
 		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001006" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001006" target="_blank"><span class="icon-code"></span></a>
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170001006" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170001006" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180001007" data-faction="Q1023134">
-	<td>18 / 1</td>
-	<td>22.10.2013</td>
-	<td>Festlegung der Zahl der Vizepräsidenten</td>
-	<td>Michael Grosse-Brömer (CDU/CSU)</td>
-	<td>04:12</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001007" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001007" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180001008" data-faction="Q1826856">
-	<td>18 / 1</td>
-	<td>22.10.2013</td>
-	<td>Festlegung der Zahl der Vizepräsidenten</td>
-	<td>Petra Sitte (DIE LINKE)</td>
-	<td>06:06</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001008" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001008" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180001009" data-faction="Q2207512">
-	<td>18 / 1</td>
-	<td>22.10.2013</td>
-	<td>Festlegung der Zahl der Vizepräsidenten</td>
-	<td>Thomas Oppermann (SPD)</td>
-	<td>03:59</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001009" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001009" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180001010" data-faction="Q1007353">
-	<td>18 / 1</td>
-	<td>22.10.2013</td>
-	<td>Festlegung der Zahl der Vizepräsidenten</td>
-	<td>Britta Haßelmann (DIE GRÜNEN)</td>
-	<td>05:24</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001010" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001010" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180001011" data-faction="Q1023134">
-	<td>18 / 1</td>
-	<td>22.10.2013</td>
-	<td>Festlegung der Zahl der Vizepräsidenten</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170001007" data-faction="Q1023134">
+	<td>17 / 1</td>
+	<td>27.10.2009</td>
+	<td>Festlegung der Zahl der Stellvertreter</td>
 	<td>Norbert Lammert (CDU/CSU)</td>
-	<td>00:33</td>
-	<td>2025-06-05 21:46:14</td>
+	<td>00:40</td>
+	<td>2026-08-12 09:04:12</td>
 		<td>
 		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001011" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001011" target="_blank"><span class="icon-code"></span></a>
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170001007" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170001007" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180001013" data-faction="Q1023134">
-	<td>18 / 1</td>
-	<td>22.10.2013</td>
-	<td>Nationalhymne</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170002003" data-faction="Q1023134">
+	<td>17 / 2</td>
+	<td>28.10.2009</td>
+	<td>Eidesleistung der Bundeskanzlerin</td>
 	<td>Norbert Lammert (CDU/CSU)</td>
-	<td>01:07</td>
-	<td>2025-06-05 21:46:14</td>
+	<td>01:58:50</td>
+	<td>2026-08-12 09:04:12</td>
 		<td>
 		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180001013" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180001013" target="_blank"><span class="icon-code"></span></a>
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170002003" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170002003" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002004" data-faction="">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td>Norbert Lammert (Bundestagspräsident)</td>
-	<td>00:33</td>
-	<td>2025-06-05 21:46:14</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170002004" data-faction="Q1023134">
+	<td>17 / 2</td>
+	<td>28.10.2009</td>
+	<td>Bildung der Bundesregierung</td>
+	<td>Norbert Lammert (CDU/CSU)</td>
+	<td>10:36</td>
+	<td>2026-08-12 09:04:12</td>
 		<td>
 		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002004" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002004" target="_blank"><span class="icon-code"></span></a>
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170002004" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170002004" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002005" data-faction="Q1826856">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td>Dietmar Bartsch (DIE LINKE)</td>
-	<td>11:34</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002005" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002005" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002006" data-faction="">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td></td>
-	<td>10:51</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002006" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002006" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002007" data-faction="Q1007353">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td>Anton Hofreiter (DIE GRÜNEN)</td>
-	<td>08:21</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002007" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002007" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002008" data-faction="Q1023134">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td>Volker Kauder (CDU/CSU)</td>
-	<td>11:39</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002008" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002008" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002009" data-faction="Q2207512">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td>Michael Roth (SPD)</td>
-	<td>08:22</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002009" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002009" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002010" data-faction="Q1007353">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td>Marieluise Beck (DIE GRÜNEN)</td>
-	<td>05:23</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002010" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002010" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002011" data-faction="">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td></td>
-	<td>10:00</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002011" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002011" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002012" data-faction="Q2207512">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td>Katarina Barley (SPD)</td>
-	<td>07:20</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002012" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002012" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002013" data-faction="Q1023134">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td>Thomas Silberhorn (CDU/CSU)</td>
-	<td>13:33</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002013" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002013" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002014" data-faction="">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td></td>
-	<td>08:59</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002014" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002014" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002015" data-faction="">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Regierungserklärung zum EU-Gipfel &apos;Östliche Partnerschaft&apos;</td>
-	<td>Norbert Lammert (Bundestagspräsident)</td>
-	<td>01:14</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002015" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002015" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002016" data-faction="">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Norbert Lammert (Bundestagspräsident)</td>
-	<td>00:29</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002016" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002016" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002017" data-faction="Q1023134">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Hans-Peter Friedrich (CDU/CSU)</td>
-	<td>13:57</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002017" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002017" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002018" data-faction="">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td></td>
-	<td>12:49</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002018" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002018" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002019" data-faction="Q1826856">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Gregor Gysi (DIE LINKE)</td>
-	<td>13:05</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002019" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002019" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002020" data-faction="Q1007353">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Hans-Christian Ströbele (DIE GRÜNEN)</td>
-	<td>09:44</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002020" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002020" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002021" data-faction="Q1023134">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Michael Grosse-Brömer (CDU/CSU)</td>
-	<td>13:32</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002021" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002021" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002022" data-faction="Q2207512">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Thomas Oppermann (SPD)</td>
-	<td>10:57</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002022" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002022" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002023" data-faction="Q1007353">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Konstantin von Notz (DIE GRÜNEN)</td>
-	<td>05:00</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002023" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002023" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002024" data-faction="Q1023134">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Günter Krings (CDU/CSU)</td>
-	<td>13:31</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002024" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002024" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002025" data-faction="Q2207512">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Eva Högl (SPD)</td>
-	<td>05:54</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002025" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002025" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002026" data-faction="Q1023134">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Hans-Peter Uhl (CDU/CSU)</td>
-	<td>08:12</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002026" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002026" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002027" data-faction="Q2207512">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Lars Klingbeil (SPD)</td>
-	<td>05:33</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002027" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002027" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002028" data-faction="Q1023134">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Peter Beyer (CDU/CSU)</td>
-	<td>08:19</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002028" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002028" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002029" data-faction="">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Edelgard Bulmahn (Bundestagsvizepräsidentin)</td>
-	<td>01:25</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002029" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002029" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002030" data-faction="Q1007353">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Britta Haßelmann (DIE GRÜNEN)</td>
-	<td>05:05</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002030" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002030" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002031" data-faction="Q1826856">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Jan Korte (DIE LINKE)</td>
-	<td>05:11</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002031" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002031" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002032" data-faction="Q2207512">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Thomas Oppermann (SPD)</td>
-	<td>02:26</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002032" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002032" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002033" data-faction="">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Vereinbarte Debatte zu den Abhöraktivitäten der NSA</td>
-	<td>Edelgard Bulmahn (Bundestagsvizepräsidentin)</td>
-	<td>00:37</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002033" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002033" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002034" data-faction="">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
-	<td>Einsetzung von Ausschüssen</td>
-	<td>Edelgard Bulmahn (Bundestagsvizepräsidentin)</td>
-	<td>00:45</td>
-	<td>2025-06-05 21:46:14</td>
-		<td>
-		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002034" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002034" target="_blank"><span class="icon-code"></span></a>
-		</div>
-	</td>
-</tr><tr class="resultItem" data-speech-id="DE-0180002035" data-faction="">
-	<td>18 / 2</td>
-	<td>18.11.2013</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170002005" data-faction="Q1023134">
+	<td>17 / 2</td>
+	<td>28.10.2009</td>
 	<td>Stellenanteile der Fraktionen</td>
-	<td>Edelgard Bulmahn (Bundestagsvizepräsidentin)</td>
-	<td>00:27</td>
-	<td>2025-06-05 21:46:14</td>
+	<td>Norbert Lammert (CDU/CSU)</td>
+	<td>00:23</td>
+	<td>2026-08-12 09:04:12</td>
 		<td>
 		<div class="list-group list-group-horizontal">
-			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0180002035" target="_blank"><span class="icon-eye"></span></a>
-			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0180002035" target="_blank"><span class="icon-code"></span></a>
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170002005" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170002005" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003002" data-faction="Q1023134">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td>Norbert Lammert (CDU/CSU)</td>
+	<td>00:34</td>
+	<td>2026-08-12 09:04:12</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003002" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003002" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003003" data-faction="Q1023134">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td>Angela Merkel (CDU/CSU)</td>
+	<td>59:52</td>
+	<td>2026-08-12 09:04:12</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003003" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003003" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003004" data-faction="Q2207512">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td>Frank-Walter Steinmeier (SPD)</td>
+	<td>32:05</td>
+	<td>2026-08-12 09:04:12</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003004" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003004" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003005" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td></td>
+	<td>28:46</td>
+	<td>2026-08-12 09:04:12</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003005" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003005" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003006" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td></td>
+	<td>19:14</td>
+	<td>2026-08-12 09:04:12</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003006" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003006" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003007" data-faction="Q1007353">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td>Jürgen Trittin (DIE GRÜNEN)</td>
+	<td>16:31</td>
+	<td>2026-08-12 09:04:12</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003007" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003007" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003008" data-faction="Q1023134">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td>Volker Kauder (CDU/CSU)</td>
+	<td>29:25</td>
+	<td>2026-08-12 09:04:12</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003008" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003008" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003009" data-faction="Q2207512">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td>Joachim Poß (SPD)</td>
+	<td>13:08</td>
+	<td>2026-08-12 09:04:12</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003009" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003009" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003010" data-faction="Q1023134">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td>Hans-Peter Friedrich (CDU/CSU)</td>
+	<td>20:30</td>
+	<td>2026-08-12 09:04:12</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003010" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003010" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003011" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td></td>
+	<td>06:18</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003011" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003011" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003012" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td></td>
+	<td>00:21</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003012" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003012" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003013" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td></td>
+	<td>08:26</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003013" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003013" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003014" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td></td>
+	<td>05:16</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003014" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003014" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003016" data-faction="Q1023134">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Regierungserklärung/ Generalaussprache</td>
+	<td>Gerda Hasselfeldt (CDU/CSU)</td>
+	<td>00:08</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003016" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003016" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003017" data-faction="Q1023134">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td>Gerda Hasselfeldt (CDU/CSU)</td>
+	<td>00:10</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003017" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003017" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003018" data-faction="Q1387991">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td>Guido Westerwelle (FDP)</td>
+	<td>12:29</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003018" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003018" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003019" data-faction="Q2207512">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td>Gernot Erler (SPD)</td>
+	<td>08:34</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003019" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003019" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003020" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td></td>
+	<td>21:09</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003020" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003020" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003021" data-faction="Q1826856">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td>Jan van Aken (DIE LINKE)</td>
+	<td>07:12</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003021" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003021" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003022" data-faction="Q1023134">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td>Gerda Hasselfeldt (CDU/CSU)</td>
+	<td>00:14</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003022" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003022" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003023" data-faction="Q1007353">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td>Frithjof Schmidt (DIE GRÜNEN)</td>
+	<td>08:19</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003023" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003023" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003024" data-faction="Q1023134">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td>Gerda Hasselfeldt (CDU/CSU)</td>
+	<td>00:18</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003024" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003024" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003025" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td></td>
+	<td>09:35</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003025" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003025" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003026" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td></td>
+	<td>09:53</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003026" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003026" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003027" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td></td>
+	<td>21:06</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003027" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003027" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003028" data-faction="Q1826856">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td>Wolfgang Gehrcke (DIE LINKE)</td>
+	<td>07:53</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003028" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003028" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003029" data-faction="Q1007353">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td>Omid Nouripour (DIE GRÜNEN)</td>
+	<td>05:52</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003029" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003029" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003030" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td></td>
+	<td>12:09</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003030" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003030" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003031" data-faction="Q2207512">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Europa, Außen- und Sicherheitspolitik</td>
+	<td>Rainer Arnold (SPD)</td>
+	<td>07:23</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003031" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003031" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003032" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Einsetzung von Ausschüssen</td>
+	<td></td>
+	<td>01:00</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003032" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003032" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003033" data-faction="Q1826856">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Einsetzung von Ausschüssen</td>
+	<td>Heike Hänsel (DIE LINKE)</td>
+	<td>08:31</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003033" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003033" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003034" data-faction="">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Einsetzung von Ausschüssen</td>
+	<td></td>
+	<td>05:05</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003034" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003034" target="_blank"><span class="icon-code"></span></a>
+		</div>
+	</td>
+</tr><tr class="resultItem" data-speech-id="DE-0170003035" data-faction="Q2207512">
+	<td>17 / 3</td>
+	<td>10.11.2009</td>
+	<td>Einsetzung von Ausschüssen</td>
+	<td>Axel Schäfer (SPD)</td>
+	<td>05:35</td>
+	<td>2026-08-12 09:04:13</td>
+		<td>
+		<div class="list-group list-group-horizontal">
+			<a class="list-group-item list-group-item-action" title="Ansehen" href="https://optv.local/media/DE-0170003035" target="_blank"><span class="icon-eye"></span></a>
+			<a class="list-group-item list-group-item-action" title="API" href="https://optv.local/api/v1/media/DE-0170003035" target="_blank"><span class="icon-code"></span></a>
 		</div>
 	</td>
 </tr>					</tbody>
@@ -575,21 +575,1276 @@ content-type: text/html; charset=UTF-8
         <script type="text/javascript">
         
         resultsAttributes = {
-    "speechFirstDateStr": "2013-10-22T10:52:31.000Z",
-    "speechFirstDateTimestamp": 1382439151000,
-    "speechLastDateStr": "2025-09-26T09:04:09.000Z",
-    "speechLastDateTimestamp": 1758877449000,
+    "speechFirstDateStr": "2009-10-27T10:00:05.000Z",
+    "speechFirstDateTimestamp": 1256637605000,
+    "speechLastDateStr": "2026-11-13T13:23:08.000Z",
+    "speechLastDateTimestamp": 1794576188000,
     "resultsPerFaction": {
-        "Q1023134": 15886,
-        "Q2207512": 12984,
-        "Q1007353": 8430,
-        "Q1826856": 6826,
-        "Q42575708": 6125,
-        "Q1387991": 5329,
-        "Q4316268": 648,
-        "Q127785176": 145
+        "Q1023134": 22044,
+        "Q2207512": 16518,
+        "Q1007353": 11266,
+        "Q1826856": 9486,
+        "Q42575708": 6765,
+        "Q1387991": 6716,
+        "Q4316268": 657,
+        "Q127785176": 150
     },
     "days": {
+        "2009-10-27": {
+            "key_as_string": "2009-10-27",
+            "key": 1256601600000,
+            "doc_count": 4
+        },
+        "2009-10-28": {
+            "key_as_string": "2009-10-28",
+            "key": 1256688000000,
+            "doc_count": 3
+        },
+        "2009-11-10": {
+            "key_as_string": "2009-11-10",
+            "key": 1257811200000,
+            "doc_count": 55
+        },
+        "2009-11-11": {
+            "key_as_string": "2009-11-11",
+            "key": 1257897600000,
+            "doc_count": 105
+        },
+        "2009-11-12": {
+            "key_as_string": "2009-11-12",
+            "key": 1257984000000,
+            "doc_count": 32
+        },
+        "2009-11-25": {
+            "key_as_string": "2009-11-25",
+            "key": 1259107200000,
+            "doc_count": 40
+        },
+        "2009-11-26": {
+            "key_as_string": "2009-11-26",
+            "key": 1259193600000,
+            "doc_count": 137
+        },
+        "2009-12-02": {
+            "key_as_string": "2009-12-02",
+            "key": 1259712000000,
+            "doc_count": 33
+        },
+        "2009-12-03": {
+            "key_as_string": "2009-12-03",
+            "key": 1259798400000,
+            "doc_count": 132
+        },
+        "2009-12-04": {
+            "key_as_string": "2009-12-04",
+            "key": 1259884800000,
+            "doc_count": 49
+        },
+        "2009-12-16": {
+            "key_as_string": "2009-12-16",
+            "key": 1260921600000,
+            "doc_count": 37
+        },
+        "2009-12-17": {
+            "key_as_string": "2009-12-17",
+            "key": 1261008000000,
+            "doc_count": 136
+        },
+        "2009-12-18": {
+            "key_as_string": "2009-12-18",
+            "key": 1261094400000,
+            "doc_count": 47
+        },
+        "2010-01-19": {
+            "key_as_string": "2010-01-19",
+            "key": 1263859200000,
+            "doc_count": 87
+        },
+        "2010-01-20": {
+            "key_as_string": "2010-01-20",
+            "key": 1263945600000,
+            "doc_count": 54
+        },
+        "2010-01-21": {
+            "key_as_string": "2010-01-21",
+            "key": 1264032000000,
+            "doc_count": 75
+        },
+        "2010-01-22": {
+            "key_as_string": "2010-01-22",
+            "key": 1264118400000,
+            "doc_count": 29
+        },
+        "2010-01-27": {
+            "key_as_string": "2010-01-27",
+            "key": 1264550400000,
+            "doc_count": 29
+        },
+        "2010-01-28": {
+            "key_as_string": "2010-01-28",
+            "key": 1264636800000,
+            "doc_count": 131
+        },
+        "2010-01-29": {
+            "key_as_string": "2010-01-29",
+            "key": 1264723200000,
+            "doc_count": 63
+        },
+        "2010-02-09": {
+            "key_as_string": "2010-02-09",
+            "key": 1265673600000,
+            "doc_count": 50
+        },
+        "2010-02-10": {
+            "key_as_string": "2010-02-10",
+            "key": 1265760000000,
+            "doc_count": 49
+        },
+        "2010-02-24": {
+            "key_as_string": "2010-02-24",
+            "key": 1266969600000,
+            "doc_count": 32
+        },
+        "2010-02-25": {
+            "key_as_string": "2010-02-25",
+            "key": 1267056000000,
+            "doc_count": 144
+        },
+        "2010-02-26": {
+            "key_as_string": "2010-02-26",
+            "key": 1267142400000,
+            "doc_count": 52
+        },
+        "2010-03-03": {
+            "key_as_string": "2010-03-03",
+            "key": 1267574400000,
+            "doc_count": 33
+        },
+        "2010-03-04": {
+            "key_as_string": "2010-03-04",
+            "key": 1267660800000,
+            "doc_count": 147
+        },
+        "2010-03-05": {
+            "key_as_string": "2010-03-05",
+            "key": 1267747200000,
+            "doc_count": 61
+        },
+        "2010-03-16": {
+            "key_as_string": "2010-03-16",
+            "key": 1268697600000,
+            "doc_count": 73
+        },
+        "2010-03-17": {
+            "key_as_string": "2010-03-17",
+            "key": 1268784000000,
+            "doc_count": 83
+        },
+        "2010-03-18": {
+            "key_as_string": "2010-03-18",
+            "key": 1268870400000,
+            "doc_count": 85
+        },
+        "2010-03-19": {
+            "key_as_string": "2010-03-19",
+            "key": 1268956800000,
+            "doc_count": 38
+        },
+        "2010-03-24": {
+            "key_as_string": "2010-03-24",
+            "key": 1269388800000,
+            "doc_count": 40
+        },
+        "2010-03-25": {
+            "key_as_string": "2010-03-25",
+            "key": 1269475200000,
+            "doc_count": 133
+        },
+        "2010-03-26": {
+            "key_as_string": "2010-03-26",
+            "key": 1269561600000,
+            "doc_count": 60
+        },
+        "2010-04-21": {
+            "key_as_string": "2010-04-21",
+            "key": 1271808000000,
+            "doc_count": 44
+        },
+        "2010-04-22": {
+            "key_as_string": "2010-04-22",
+            "key": 1271894400000,
+            "doc_count": 119
+        },
+        "2010-04-23": {
+            "key_as_string": "2010-04-23",
+            "key": 1271980800000,
+            "doc_count": 40
+        },
+        "2010-05-05": {
+            "key_as_string": "2010-05-05",
+            "key": 1273017600000,
+            "doc_count": 28
+        },
+        "2010-05-06": {
+            "key_as_string": "2010-05-06",
+            "key": 1273104000000,
+            "doc_count": 112
+        },
+        "2010-05-07": {
+            "key_as_string": "2010-05-07",
+            "key": 1273190400000,
+            "doc_count": 65
+        },
+        "2010-05-19": {
+            "key_as_string": "2010-05-19",
+            "key": 1274227200000,
+            "doc_count": 56
+        },
+        "2010-05-20": {
+            "key_as_string": "2010-05-20",
+            "key": 1274313600000,
+            "doc_count": 133
+        },
+        "2010-05-21": {
+            "key_as_string": "2010-05-21",
+            "key": 1274400000000,
+            "doc_count": 56
+        },
+        "2010-06-09": {
+            "key_as_string": "2010-06-09",
+            "key": 1276041600000,
+            "doc_count": 29
+        },
+        "2010-06-10": {
+            "key_as_string": "2010-06-10",
+            "key": 1276128000000,
+            "doc_count": 172
+        },
+        "2010-06-11": {
+            "key_as_string": "2010-06-11",
+            "key": 1276214400000,
+            "doc_count": 71
+        },
+        "2010-06-16": {
+            "key_as_string": "2010-06-16",
+            "key": 1276646400000,
+            "doc_count": 30
+        },
+        "2010-06-17": {
+            "key_as_string": "2010-06-17",
+            "key": 1276732800000,
+            "doc_count": 136
+        },
+        "2010-06-18": {
+            "key_as_string": "2010-06-18",
+            "key": 1276819200000,
+            "doc_count": 44
+        },
+        "2010-07-01": {
+            "key_as_string": "2010-07-01",
+            "key": 1277942400000,
+            "doc_count": 123
+        },
+        "2010-07-02": {
+            "key_as_string": "2010-07-02",
+            "key": 1278028800000,
+            "doc_count": 41
+        },
+        "2010-07-07": {
+            "key_as_string": "2010-07-07",
+            "key": 1278460800000,
+            "doc_count": 31
+        },
+        "2010-07-08": {
+            "key_as_string": "2010-07-08",
+            "key": 1278547200000,
+            "doc_count": 163
+        },
+        "2010-07-09": {
+            "key_as_string": "2010-07-09",
+            "key": 1278633600000,
+            "doc_count": 51
+        },
+        "2010-09-14": {
+            "key_as_string": "2010-09-14",
+            "key": 1284422400000,
+            "doc_count": 77
+        },
+        "2010-09-15": {
+            "key_as_string": "2010-09-15",
+            "key": 1284508800000,
+            "doc_count": 69
+        },
+        "2010-09-16": {
+            "key_as_string": "2010-09-16",
+            "key": 1284595200000,
+            "doc_count": 77
+        },
+        "2010-09-17": {
+            "key_as_string": "2010-09-17",
+            "key": 1284681600000,
+            "doc_count": 33
+        },
+        "2010-09-29": {
+            "key_as_string": "2010-09-29",
+            "key": 1285718400000,
+            "doc_count": 34
+        },
+        "2010-09-30": {
+            "key_as_string": "2010-09-30",
+            "key": 1285804800000,
+            "doc_count": 146
+        },
+        "2010-10-01": {
+            "key_as_string": "2010-10-01",
+            "key": 1285891200000,
+            "doc_count": 72
+        },
+        "2010-10-06": {
+            "key_as_string": "2010-10-06",
+            "key": 1286323200000,
+            "doc_count": 44
+        },
+        "2010-10-07": {
+            "key_as_string": "2010-10-07",
+            "key": 1286409600000,
+            "doc_count": 139
+        },
+        "2010-10-08": {
+            "key_as_string": "2010-10-08",
+            "key": 1286496000000,
+            "doc_count": 63
+        },
+        "2010-10-27": {
+            "key_as_string": "2010-10-27",
+            "key": 1288137600000,
+            "doc_count": 43
+        },
+        "2010-10-28": {
+            "key_as_string": "2010-10-28",
+            "key": 1288224000000,
+            "doc_count": 134
+        },
+        "2010-10-29": {
+            "key_as_string": "2010-10-29",
+            "key": 1288310400000,
+            "doc_count": 62
+        },
+        "2010-11-10": {
+            "key_as_string": "2010-11-10",
+            "key": 1289347200000,
+            "doc_count": 36
+        },
+        "2010-11-11": {
+            "key_as_string": "2010-11-11",
+            "key": 1289433600000,
+            "doc_count": 149
+        },
+        "2010-11-12": {
+            "key_as_string": "2010-11-12",
+            "key": 1289520000000,
+            "doc_count": 62
+        },
+        "2010-11-23": {
+            "key_as_string": "2010-11-23",
+            "key": 1290470400000,
+            "doc_count": 77
+        },
+        "2010-11-24": {
+            "key_as_string": "2010-11-24",
+            "key": 1290556800000,
+            "doc_count": 113
+        },
+        "2010-11-25": {
+            "key_as_string": "2010-11-25",
+            "key": 1290643200000,
+            "doc_count": 109
+        },
+        "2010-11-26": {
+            "key_as_string": "2010-11-26",
+            "key": 1290729600000,
+            "doc_count": 44
+        },
+        "2010-12-01": {
+            "key_as_string": "2010-12-01",
+            "key": 1291161600000,
+            "doc_count": 53
+        },
+        "2010-12-02": {
+            "key_as_string": "2010-12-02",
+            "key": 1291248000000,
+            "doc_count": 157
+        },
+        "2010-12-03": {
+            "key_as_string": "2010-12-03",
+            "key": 1291334400000,
+            "doc_count": 44
+        },
+        "2010-12-15": {
+            "key_as_string": "2010-12-15",
+            "key": 1292371200000,
+            "doc_count": 57
+        },
+        "2010-12-16": {
+            "key_as_string": "2010-12-16",
+            "key": 1292457600000,
+            "doc_count": 150
+        },
+        "2010-12-17": {
+            "key_as_string": "2010-12-17",
+            "key": 1292544000000,
+            "doc_count": 79
+        },
+        "2011-01-19": {
+            "key_as_string": "2011-01-19",
+            "key": 1295395200000,
+            "doc_count": 50
+        },
+        "2011-01-20": {
+            "key_as_string": "2011-01-20",
+            "key": 1295481600000,
+            "doc_count": 132
+        },
+        "2011-01-21": {
+            "key_as_string": "2011-01-21",
+            "key": 1295568000000,
+            "doc_count": 64
+        },
+        "2011-01-26": {
+            "key_as_string": "2011-01-26",
+            "key": 1296000000000,
+            "doc_count": 34
+        },
+        "2011-01-27": {
+            "key_as_string": "2011-01-27",
+            "key": 1296086400000,
+            "doc_count": 130
+        },
+        "2011-01-28": {
+            "key_as_string": "2011-01-28",
+            "key": 1296172800000,
+            "doc_count": 50
+        },
+        "2011-02-09": {
+            "key_as_string": "2011-02-09",
+            "key": 1297209600000,
+            "doc_count": 47
+        },
+        "2011-02-10": {
+            "key_as_string": "2011-02-10",
+            "key": 1297296000000,
+            "doc_count": 131
+        },
+        "2011-02-11": {
+            "key_as_string": "2011-02-11",
+            "key": 1297382400000,
+            "doc_count": 66
+        },
+        "2011-02-23": {
+            "key_as_string": "2011-02-23",
+            "key": 1298419200000,
+            "doc_count": 24
+        },
+        "2011-02-24": {
+            "key_as_string": "2011-02-24",
+            "key": 1298505600000,
+            "doc_count": 150
+        },
+        "2011-02-25": {
+            "key_as_string": "2011-02-25",
+            "key": 1298592000000,
+            "doc_count": 63
+        },
+        "2011-03-16": {
+            "key_as_string": "2011-03-16",
+            "key": 1300233600000,
+            "doc_count": 32
+        },
+        "2011-03-17": {
+            "key_as_string": "2011-03-17",
+            "key": 1300320000000,
+            "doc_count": 124
+        },
+        "2011-03-18": {
+            "key_as_string": "2011-03-18",
+            "key": 1300406400000,
+            "doc_count": 51
+        },
+        "2011-03-23": {
+            "key_as_string": "2011-03-23",
+            "key": 1300838400000,
+            "doc_count": 30
+        },
+        "2011-03-24": {
+            "key_as_string": "2011-03-24",
+            "key": 1300924800000,
+            "doc_count": 148
+        },
+        "2011-03-25": {
+            "key_as_string": "2011-03-25",
+            "key": 1301011200000,
+            "doc_count": 52
+        },
+        "2011-04-06": {
+            "key_as_string": "2011-04-06",
+            "key": 1302048000000,
+            "doc_count": 31
+        },
+        "2011-04-07": {
+            "key_as_string": "2011-04-07",
+            "key": 1302134400000,
+            "doc_count": 146
+        },
+        "2011-04-08": {
+            "key_as_string": "2011-04-08",
+            "key": 1302220800000,
+            "doc_count": 57
+        },
+        "2011-04-13": {
+            "key_as_string": "2011-04-13",
+            "key": 1302652800000,
+            "doc_count": 31
+        },
+        "2011-04-14": {
+            "key_as_string": "2011-04-14",
+            "key": 1302739200000,
+            "doc_count": 148
+        },
+        "2011-04-15": {
+            "key_as_string": "2011-04-15",
+            "key": 1302825600000,
+            "doc_count": 58
+        },
+        "2011-05-11": {
+            "key_as_string": "2011-05-11",
+            "key": 1305072000000,
+            "doc_count": 24
+        },
+        "2011-05-12": {
+            "key_as_string": "2011-05-12",
+            "key": 1305158400000,
+            "doc_count": 130
+        },
+        "2011-05-13": {
+            "key_as_string": "2011-05-13",
+            "key": 1305244800000,
+            "doc_count": 42
+        },
+        "2011-05-25": {
+            "key_as_string": "2011-05-25",
+            "key": 1306281600000,
+            "doc_count": 27
+        },
+        "2011-05-26": {
+            "key_as_string": "2011-05-26",
+            "key": 1306368000000,
+            "doc_count": 155
+        },
+        "2011-05-27": {
+            "key_as_string": "2011-05-27",
+            "key": 1306454400000,
+            "doc_count": 58
+        },
+        "2011-06-08": {
+            "key_as_string": "2011-06-08",
+            "key": 1307491200000,
+            "doc_count": 23
+        },
+        "2011-06-09": {
+            "key_as_string": "2011-06-09",
+            "key": 1307577600000,
+            "doc_count": 132
+        },
+        "2011-06-10": {
+            "key_as_string": "2011-06-10",
+            "key": 1307664000000,
+            "doc_count": 53
+        },
+        "2011-06-29": {
+            "key_as_string": "2011-06-29",
+            "key": 1309305600000,
+            "doc_count": 32
+        },
+        "2011-06-30": {
+            "key_as_string": "2011-06-30",
+            "key": 1309392000000,
+            "doc_count": 154
+        },
+        "2011-07-01": {
+            "key_as_string": "2011-07-01",
+            "key": 1309478400000,
+            "doc_count": 84
+        },
+        "2011-07-06": {
+            "key_as_string": "2011-07-06",
+            "key": 1309910400000,
+            "doc_count": 47
+        },
+        "2011-07-07": {
+            "key_as_string": "2011-07-07",
+            "key": 1309996800000,
+            "doc_count": 170
+        },
+        "2011-07-08": {
+            "key_as_string": "2011-07-08",
+            "key": 1310083200000,
+            "doc_count": 75
+        },
+        "2011-09-06": {
+            "key_as_string": "2011-09-06",
+            "key": 1315267200000,
+            "doc_count": 57
+        },
+        "2011-09-07": {
+            "key_as_string": "2011-09-07",
+            "key": 1315353600000,
+            "doc_count": 67
+        },
+        "2011-09-08": {
+            "key_as_string": "2011-09-08",
+            "key": 1315440000000,
+            "doc_count": 119
+        },
+        "2011-09-09": {
+            "key_as_string": "2011-09-09",
+            "key": 1315526400000,
+            "doc_count": 45
+        },
+        "2011-09-21": {
+            "key_as_string": "2011-09-21",
+            "key": 1316563200000,
+            "doc_count": 121
+        },
+        "2011-09-22": {
+            "key_as_string": "2011-09-22",
+            "key": 1316649600000,
+            "doc_count": 45
+        },
+        "2011-09-23": {
+            "key_as_string": "2011-09-23",
+            "key": 1316736000000,
+            "doc_count": 53
+        },
+        "2011-09-28": {
+            "key_as_string": "2011-09-28",
+            "key": 1317168000000,
+            "doc_count": 34
+        },
+        "2011-09-29": {
+            "key_as_string": "2011-09-29",
+            "key": 1317254400000,
+            "doc_count": 137
+        },
+        "2011-09-30": {
+            "key_as_string": "2011-09-30",
+            "key": 1317340800000,
+            "doc_count": 56
+        },
+        "2011-10-19": {
+            "key_as_string": "2011-10-19",
+            "key": 1318982400000,
+            "doc_count": 31
+        },
+        "2011-10-20": {
+            "key_as_string": "2011-10-20",
+            "key": 1319068800000,
+            "doc_count": 131
+        },
+        "2011-10-21": {
+            "key_as_string": "2011-10-21",
+            "key": 1319155200000,
+            "doc_count": 50
+        },
+        "2011-10-26": {
+            "key_as_string": "2011-10-26",
+            "key": 1319587200000,
+            "doc_count": 57
+        },
+        "2011-10-27": {
+            "key_as_string": "2011-10-27",
+            "key": 1319673600000,
+            "doc_count": 142
+        },
+        "2011-10-28": {
+            "key_as_string": "2011-10-28",
+            "key": 1319760000000,
+            "doc_count": 60
+        },
+        "2011-11-09": {
+            "key_as_string": "2011-11-09",
+            "key": 1320796800000,
+            "doc_count": 42
+        },
+        "2011-11-10": {
+            "key_as_string": "2011-11-10",
+            "key": 1320883200000,
+            "doc_count": 179
+        },
+        "2011-11-11": {
+            "key_as_string": "2011-11-11",
+            "key": 1320969600000,
+            "doc_count": 60
+        },
+        "2011-11-22": {
+            "key_as_string": "2011-11-22",
+            "key": 1321920000000,
+            "doc_count": 111
+        },
+        "2011-11-23": {
+            "key_as_string": "2011-11-23",
+            "key": 1322006400000,
+            "doc_count": 86
+        },
+        "2011-11-24": {
+            "key_as_string": "2011-11-24",
+            "key": 1322092800000,
+            "doc_count": 120
+        },
+        "2011-11-25": {
+            "key_as_string": "2011-11-25",
+            "key": 1322179200000,
+            "doc_count": 34
+        },
+        "2011-11-30": {
+            "key_as_string": "2011-11-30",
+            "key": 1322611200000,
+            "doc_count": 51
+        },
+        "2011-12-01": {
+            "key_as_string": "2011-12-01",
+            "key": 1322697600000,
+            "doc_count": 164
+        },
+        "2011-12-02": {
+            "key_as_string": "2011-12-02",
+            "key": 1322784000000,
+            "doc_count": 72
+        },
+        "2011-12-14": {
+            "key_as_string": "2011-12-14",
+            "key": 1323820800000,
+            "doc_count": 54
+        },
+        "2011-12-15": {
+            "key_as_string": "2011-12-15",
+            "key": 1323907200000,
+            "doc_count": 146
+        },
+        "2011-12-16": {
+            "key_as_string": "2011-12-16",
+            "key": 1323993600000,
+            "doc_count": 61
+        },
+        "2012-01-18": {
+            "key_as_string": "2012-01-18",
+            "key": 1326844800000,
+            "doc_count": 19
+        },
+        "2012-01-19": {
+            "key_as_string": "2012-01-19",
+            "key": 1326931200000,
+            "doc_count": 133
+        },
+        "2012-01-20": {
+            "key_as_string": "2012-01-20",
+            "key": 1327017600000,
+            "doc_count": 63
+        },
+        "2012-01-25": {
+            "key_as_string": "2012-01-25",
+            "key": 1327449600000,
+            "doc_count": 25
+        },
+        "2012-01-26": {
+            "key_as_string": "2012-01-26",
+            "key": 1327536000000,
+            "doc_count": 148
+        },
+        "2012-01-27": {
+            "key_as_string": "2012-01-27",
+            "key": 1327622400000,
+            "doc_count": 50
+        },
+        "2012-02-08": {
+            "key_as_string": "2012-02-08",
+            "key": 1328659200000,
+            "doc_count": 27
+        },
+        "2012-02-09": {
+            "key_as_string": "2012-02-09",
+            "key": 1328745600000,
+            "doc_count": 137
+        },
+        "2012-02-10": {
+            "key_as_string": "2012-02-10",
+            "key": 1328832000000,
+            "doc_count": 45
+        },
+        "2012-02-27": {
+            "key_as_string": "2012-02-27",
+            "key": 1330300800000,
+            "doc_count": 24
+        },
+        "2012-02-29": {
+            "key_as_string": "2012-02-29",
+            "key": 1330473600000,
+            "doc_count": 37
+        },
+        "2012-03-01": {
+            "key_as_string": "2012-03-01",
+            "key": 1330560000000,
+            "doc_count": 129
+        },
+        "2012-03-02": {
+            "key_as_string": "2012-03-02",
+            "key": 1330646400000,
+            "doc_count": 50
+        },
+        "2012-03-07": {
+            "key_as_string": "2012-03-07",
+            "key": 1331078400000,
+            "doc_count": 29
+        },
+        "2012-03-08": {
+            "key_as_string": "2012-03-08",
+            "key": 1331164800000,
+            "doc_count": 143
+        },
+        "2012-03-09": {
+            "key_as_string": "2012-03-09",
+            "key": 1331251200000,
+            "doc_count": 57
+        },
+        "2012-03-21": {
+            "key_as_string": "2012-03-21",
+            "key": 1332288000000,
+            "doc_count": 32
+        },
+        "2012-03-22": {
+            "key_as_string": "2012-03-22",
+            "key": 1332374400000,
+            "doc_count": 149
+        },
+        "2012-03-23": {
+            "key_as_string": "2012-03-23",
+            "key": 1332460800000,
+            "doc_count": 49
+        },
+        "2012-03-28": {
+            "key_as_string": "2012-03-28",
+            "key": 1332892800000,
+            "doc_count": 29
+        },
+        "2012-03-29": {
+            "key_as_string": "2012-03-29",
+            "key": 1332979200000,
+            "doc_count": 131
+        },
+        "2012-03-30": {
+            "key_as_string": "2012-03-30",
+            "key": 1333065600000,
+            "doc_count": 47
+        },
+        "2012-04-25": {
+            "key_as_string": "2012-04-25",
+            "key": 1335312000000,
+            "doc_count": 37
+        },
+        "2012-04-26": {
+            "key_as_string": "2012-04-26",
+            "key": 1335398400000,
+            "doc_count": 160
+        },
+        "2012-04-27": {
+            "key_as_string": "2012-04-27",
+            "key": 1335484800000,
+            "doc_count": 79
+        },
+        "2012-05-09": {
+            "key_as_string": "2012-05-09",
+            "key": 1336521600000,
+            "doc_count": 37
+        },
+        "2012-05-10": {
+            "key_as_string": "2012-05-10",
+            "key": 1336608000000,
+            "doc_count": 151
+        },
+        "2012-05-11": {
+            "key_as_string": "2012-05-11",
+            "key": 1336694400000,
+            "doc_count": 55
+        },
+        "2012-05-23": {
+            "key_as_string": "2012-05-23",
+            "key": 1337731200000,
+            "doc_count": 35
+        },
+        "2012-05-24": {
+            "key_as_string": "2012-05-24",
+            "key": 1337817600000,
+            "doc_count": 143
+        },
+        "2012-05-25": {
+            "key_as_string": "2012-05-25",
+            "key": 1337904000000,
+            "doc_count": 86
+        },
+        "2012-06-13": {
+            "key_as_string": "2012-06-13",
+            "key": 1339545600000,
+            "doc_count": 36
+        },
+        "2012-06-14": {
+            "key_as_string": "2012-06-14",
+            "key": 1339632000000,
+            "doc_count": 154
+        },
+        "2012-06-15": {
+            "key_as_string": "2012-06-15",
+            "key": 1339718400000,
+            "doc_count": 15
+        },
+        "2012-06-27": {
+            "key_as_string": "2012-06-27",
+            "key": 1340755200000,
+            "doc_count": 48
+        },
+        "2012-06-28": {
+            "key_as_string": "2012-06-28",
+            "key": 1340841600000,
+            "doc_count": 156
+        },
+        "2012-06-29": {
+            "key_as_string": "2012-06-29",
+            "key": 1340928000000,
+            "doc_count": 100
+        },
+        "2012-07-19": {
+            "key_as_string": "2012-07-19",
+            "key": 1342656000000,
+            "doc_count": 31
+        },
+        "2012-09-11": {
+            "key_as_string": "2012-09-11",
+            "key": 1347321600000,
+            "doc_count": 57
+        },
+        "2012-09-12": {
+            "key_as_string": "2012-09-12",
+            "key": 1347408000000,
+            "doc_count": 59
+        },
+        "2012-09-13": {
+            "key_as_string": "2012-09-13",
+            "key": 1347494400000,
+            "doc_count": 105
+        },
+        "2012-09-14": {
+            "key_as_string": "2012-09-14",
+            "key": 1347580800000,
+            "doc_count": 29
+        },
+        "2012-09-26": {
+            "key_as_string": "2012-09-26",
+            "key": 1348617600000,
+            "doc_count": 38
+        },
+        "2012-09-27": {
+            "key_as_string": "2012-09-27",
+            "key": 1348704000000,
+            "doc_count": 180
+        },
+        "2012-09-28": {
+            "key_as_string": "2012-09-28",
+            "key": 1348790400000,
+            "doc_count": 69
+        },
+        "2012-10-17": {
+            "key_as_string": "2012-10-17",
+            "key": 1350432000000,
+            "doc_count": 54
+        },
+        "2012-10-18": {
+            "key_as_string": "2012-10-18",
+            "key": 1350518400000,
+            "doc_count": 144
+        },
+        "2012-10-19": {
+            "key_as_string": "2012-10-19",
+            "key": 1350604800000,
+            "doc_count": 62
+        },
+        "2012-10-24": {
+            "key_as_string": "2012-10-24",
+            "key": 1351036800000,
+            "doc_count": 24
+        },
+        "2012-10-25": {
+            "key_as_string": "2012-10-25",
+            "key": 1351123200000,
+            "doc_count": 178
+        },
+        "2012-10-26": {
+            "key_as_string": "2012-10-26",
+            "key": 1351209600000,
+            "doc_count": 56
+        },
+        "2012-11-07": {
+            "key_as_string": "2012-11-07",
+            "key": 1352246400000,
+            "doc_count": 28
+        },
+        "2012-11-08": {
+            "key_as_string": "2012-11-08",
+            "key": 1352332800000,
+            "doc_count": 174
+        },
+        "2012-11-09": {
+            "key_as_string": "2012-11-09",
+            "key": 1352419200000,
+            "doc_count": 81
+        },
+        "2012-11-20": {
+            "key_as_string": "2012-11-20",
+            "key": 1353369600000,
+            "doc_count": 91
+        },
+        "2012-11-21": {
+            "key_as_string": "2012-11-21",
+            "key": 1353456000000,
+            "doc_count": 84
+        },
+        "2012-11-22": {
+            "key_as_string": "2012-11-22",
+            "key": 1353542400000,
+            "doc_count": 86
+        },
+        "2012-11-23": {
+            "key_as_string": "2012-11-23",
+            "key": 1353628800000,
+            "doc_count": 44
+        },
+        "2012-11-28": {
+            "key_as_string": "2012-11-28",
+            "key": 1354060800000,
+            "doc_count": 33
+        },
+        "2012-11-29": {
+            "key_as_string": "2012-11-29",
+            "key": 1354147200000,
+            "doc_count": 172
+        },
+        "2012-11-30": {
+            "key_as_string": "2012-11-30",
+            "key": 1354233600000,
+            "doc_count": 68
+        },
+        "2012-12-12": {
+            "key_as_string": "2012-12-12",
+            "key": 1355270400000,
+            "doc_count": 61
+        },
+        "2012-12-13": {
+            "key_as_string": "2012-12-13",
+            "key": 1355356800000,
+            "doc_count": 158
+        },
+        "2012-12-14": {
+            "key_as_string": "2012-12-14",
+            "key": 1355443200000,
+            "doc_count": 69
+        },
+        "2013-01-16": {
+            "key_as_string": "2013-01-16",
+            "key": 1358294400000,
+            "doc_count": 78
+        },
+        "2013-01-17": {
+            "key_as_string": "2013-01-17",
+            "key": 1358380800000,
+            "doc_count": 158
+        },
+        "2013-01-30": {
+            "key_as_string": "2013-01-30",
+            "key": 1359504000000,
+            "doc_count": 28
+        },
+        "2013-01-31": {
+            "key_as_string": "2013-01-31",
+            "key": 1359590400000,
+            "doc_count": 160
+        },
+        "2013-02-01": {
+            "key_as_string": "2013-02-01",
+            "key": 1359676800000,
+            "doc_count": 63
+        },
+        "2013-02-20": {
+            "key_as_string": "2013-02-20",
+            "key": 1361318400000,
+            "doc_count": 37
+        },
+        "2013-02-21": {
+            "key_as_string": "2013-02-21",
+            "key": 1361404800000,
+            "doc_count": 144
+        },
+        "2013-02-22": {
+            "key_as_string": "2013-02-22",
+            "key": 1361491200000,
+            "doc_count": 57
+        },
+        "2013-02-27": {
+            "key_as_string": "2013-02-27",
+            "key": 1361923200000,
+            "doc_count": 30
+        },
+        "2013-02-28": {
+            "key_as_string": "2013-02-28",
+            "key": 1362009600000,
+            "doc_count": 161
+        },
+        "2013-03-01": {
+            "key_as_string": "2013-03-01",
+            "key": 1362096000000,
+            "doc_count": 75
+        },
+        "2013-03-13": {
+            "key_as_string": "2013-03-13",
+            "key": 1363132800000,
+            "doc_count": 26
+        },
+        "2013-03-14": {
+            "key_as_string": "2013-03-14",
+            "key": 1363219200000,
+            "doc_count": 140
+        },
+        "2013-03-15": {
+            "key_as_string": "2013-03-15",
+            "key": 1363305600000,
+            "doc_count": 65
+        },
+        "2013-03-20": {
+            "key_as_string": "2013-03-20",
+            "key": 1363737600000,
+            "doc_count": 36
+        },
+        "2013-03-21": {
+            "key_as_string": "2013-03-21",
+            "key": 1363824000000,
+            "doc_count": 164
+        },
+        "2013-03-22": {
+            "key_as_string": "2013-03-22",
+            "key": 1363910400000,
+            "doc_count": 66
+        },
+        "2013-04-17": {
+            "key_as_string": "2013-04-17",
+            "key": 1366156800000,
+            "doc_count": 32
+        },
+        "2013-04-18": {
+            "key_as_string": "2013-04-18",
+            "key": 1366243200000,
+            "doc_count": 156
+        },
+        "2013-04-19": {
+            "key_as_string": "2013-04-19",
+            "key": 1366329600000,
+            "doc_count": 85
+        },
+        "2013-04-24": {
+            "key_as_string": "2013-04-24",
+            "key": 1366761600000,
+            "doc_count": 32
+        },
+        "2013-04-25": {
+            "key_as_string": "2013-04-25",
+            "key": 1366848000000,
+            "doc_count": 180
+        },
+        "2013-04-26": {
+            "key_as_string": "2013-04-26",
+            "key": 1366934400000,
+            "doc_count": 72
+        },
+        "2013-05-15": {
+            "key_as_string": "2013-05-15",
+            "key": 1368576000000,
+            "doc_count": 28
+        },
+        "2013-05-16": {
+            "key_as_string": "2013-05-16",
+            "key": 1368662400000,
+            "doc_count": 196
+        },
+        "2013-05-17": {
+            "key_as_string": "2013-05-17",
+            "key": 1368748800000,
+            "doc_count": 53
+        },
+        "2013-06-05": {
+            "key_as_string": "2013-06-05",
+            "key": 1370390400000,
+            "doc_count": 42
+        },
+        "2013-06-06": {
+            "key_as_string": "2013-06-06",
+            "key": 1370476800000,
+            "doc_count": 112
+        },
+        "2013-06-07": {
+            "key_as_string": "2013-06-07",
+            "key": 1370563200000,
+            "doc_count": 106
+        },
+        "2013-06-12": {
+            "key_as_string": "2013-06-12",
+            "key": 1370995200000,
+            "doc_count": 60
+        },
+        "2013-06-13": {
+            "key_as_string": "2013-06-13",
+            "key": 1371081600000,
+            "doc_count": 190
+        },
+        "2013-06-14": {
+            "key_as_string": "2013-06-14",
+            "key": 1371168000000,
+            "doc_count": 89
+        },
+        "2013-06-25": {
+            "key_as_string": "2013-06-25",
+            "key": 1372118400000,
+            "doc_count": 17
+        },
+        "2013-06-26": {
+            "key_as_string": "2013-06-26",
+            "key": 1372204800000,
+            "doc_count": 33
+        },
+        "2013-06-27": {
+            "key_as_string": "2013-06-27",
+            "key": 1372291200000,
+            "doc_count": 191
+        },
+        "2013-06-28": {
+            "key_as_string": "2013-06-28",
+            "key": 1372377600000,
+            "doc_count": 71
+        },
+        "2013-09-02": {
+            "key_as_string": "2013-09-02",
+            "key": 1378080000000,
+            "doc_count": 26
+        },
+        "2013-09-03": {
+            "key_as_string": "2013-09-03",
+            "key": 1378166400000,
+            "doc_count": 22
+        },
         "2013-10-22": {
             "key_as_string": "2013-10-22",
             "key": 1382400000000,
@@ -4208,10 +5463,356 @@ content-type: text/html; charset=UTF-8
         "2025-09-26": {
             "key_as_string": "2025-09-26",
             "key": 1758844800000,
-            "doc_count": 30
+            "doc_count": 69
+        },
+        "2025-10-08": {
+            "key_as_string": "2025-10-08",
+            "key": 1759881600000,
+            "doc_count": 59
+        },
+        "2025-10-09": {
+            "key_as_string": "2025-10-09",
+            "key": 1759968000000,
+            "doc_count": 258
+        },
+        "2025-10-10": {
+            "key_as_string": "2025-10-10",
+            "key": 1760054400000,
+            "doc_count": 99
+        },
+        "2025-10-15": {
+            "key_as_string": "2025-10-15",
+            "key": 1760486400000,
+            "doc_count": 68
+        },
+        "2025-10-16": {
+            "key_as_string": "2025-10-16",
+            "key": 1760572800000,
+            "doc_count": 227
+        },
+        "2025-10-17": {
+            "key_as_string": "2025-10-17",
+            "key": 1760659200000,
+            "doc_count": 98
+        },
+        "2025-11-05": {
+            "key_as_string": "2025-11-05",
+            "key": 1762300800000,
+            "doc_count": 74
+        },
+        "2025-11-06": {
+            "key_as_string": "2025-11-06",
+            "key": 1762387200000,
+            "doc_count": 245
+        },
+        "2025-11-07": {
+            "key_as_string": "2025-11-07",
+            "key": 1762473600000,
+            "doc_count": 100
+        },
+        "2025-11-12": {
+            "key_as_string": "2025-11-12",
+            "key": 1762905600000,
+            "doc_count": 59
+        },
+        "2025-11-13": {
+            "key_as_string": "2025-11-13",
+            "key": 1762992000000,
+            "doc_count": 271
+        },
+        "2025-11-14": {
+            "key_as_string": "2025-11-14",
+            "key": 1763078400000,
+            "doc_count": 124
+        },
+        "2025-11-25": {
+            "key_as_string": "2025-11-25",
+            "key": 1764028800000,
+            "doc_count": 117
+        },
+        "2025-11-26": {
+            "key_as_string": "2025-11-26",
+            "key": 1764115200000,
+            "doc_count": 114
+        },
+        "2025-11-27": {
+            "key_as_string": "2025-11-27",
+            "key": 1764201600000,
+            "doc_count": 132
+        },
+        "2025-11-28": {
+            "key_as_string": "2025-11-28",
+            "key": 1764288000000,
+            "doc_count": 75
+        },
+        "2025-12-03": {
+            "key_as_string": "2025-12-03",
+            "key": 1764720000000,
+            "doc_count": 66
+        },
+        "2025-12-04": {
+            "key_as_string": "2025-12-04",
+            "key": 1764806400000,
+            "doc_count": 237
+        },
+        "2025-12-05": {
+            "key_as_string": "2025-12-05",
+            "key": 1764892800000,
+            "doc_count": 107
+        },
+        "2025-12-17": {
+            "key_as_string": "2025-12-17",
+            "key": 1765929600000,
+            "doc_count": 67
+        },
+        "2025-12-18": {
+            "key_as_string": "2025-12-18",
+            "key": 1766016000000,
+            "doc_count": 233
+        },
+        "2025-12-19": {
+            "key_as_string": "2025-12-19",
+            "key": 1766102400000,
+            "doc_count": 118
+        },
+        "2026-01-14": {
+            "key_as_string": "2026-01-14",
+            "key": 1768348800000,
+            "doc_count": 51
+        },
+        "2026-01-15": {
+            "key_as_string": "2026-01-15",
+            "key": 1768435200000,
+            "doc_count": 228
+        },
+        "2026-01-16": {
+            "key_as_string": "2026-01-16",
+            "key": 1768521600000,
+            "doc_count": 109
+        },
+        "2026-01-28": {
+            "key_as_string": "2026-01-28",
+            "key": 1769558400000,
+            "doc_count": 61
+        },
+        "2026-01-29": {
+            "key_as_string": "2026-01-29",
+            "key": 1769644800000,
+            "doc_count": 201
+        },
+        "2026-01-30": {
+            "key_as_string": "2026-01-30",
+            "key": 1769731200000,
+            "doc_count": 92
+        },
+        "2026-02-23": {
+            "key_as_string": "2026-02-23",
+            "key": 1771804800000,
+            "doc_count": 1
+        },
+        "2026-02-24": {
+            "key_as_string": "2026-02-24",
+            "key": 1771891200000,
+            "doc_count": 7
+        },
+        "2026-02-25": {
+            "key_as_string": "2026-02-25",
+            "key": 1771977600000,
+            "doc_count": 57
+        },
+        "2026-02-26": {
+            "key_as_string": "2026-02-26",
+            "key": 1772064000000,
+            "doc_count": 244
+        },
+        "2026-02-27": {
+            "key_as_string": "2026-02-27",
+            "key": 1772150400000,
+            "doc_count": 104
+        },
+        "2026-03-04": {
+            "key_as_string": "2026-03-04",
+            "key": 1772582400000,
+            "doc_count": 48
+        },
+        "2026-03-05": {
+            "key_as_string": "2026-03-05",
+            "key": 1772668800000,
+            "doc_count": 195
+        },
+        "2026-03-06": {
+            "key_as_string": "2026-03-06",
+            "key": 1772755200000,
+            "doc_count": 84
+        },
+        "2026-03-18": {
+            "key_as_string": "2026-03-18",
+            "key": 1773792000000,
+            "doc_count": 52
+        },
+        "2026-03-19": {
+            "key_as_string": "2026-03-19",
+            "key": 1773878400000,
+            "doc_count": 217
+        },
+        "2026-03-20": {
+            "key_as_string": "2026-03-20",
+            "key": 1773964800000,
+            "doc_count": 97
+        },
+        "2026-03-25": {
+            "key_as_string": "2026-03-25",
+            "key": 1774396800000,
+            "doc_count": 57
+        },
+        "2026-03-26": {
+            "key_as_string": "2026-03-26",
+            "key": 1774483200000,
+            "doc_count": 231
+        },
+        "2026-03-27": {
+            "key_as_string": "2026-03-27",
+            "key": 1774569600000,
+            "doc_count": 98
+        },
+        "2026-04-15": {
+            "key_as_string": "2026-04-15",
+            "key": 1776211200000,
+            "doc_count": 51
+        },
+        "2026-04-16": {
+            "key_as_string": "2026-04-16",
+            "key": 1776297600000,
+            "doc_count": 53
+        },
+        "2026-04-17": {
+            "key_as_string": "2026-04-17",
+            "key": 1776384000000,
+            "doc_count": 73
+        },
+        "2026-04-22": {
+            "key_as_string": "2026-04-22",
+            "key": 1776816000000,
+            "doc_count": 45
+        },
+        "2026-04-23": {
+            "key_as_string": "2026-04-23",
+            "key": 1776902400000,
+            "doc_count": 183
+        },
+        "2026-04-24": {
+            "key_as_string": "2026-04-24",
+            "key": 1776988800000,
+            "doc_count": 97
+        },
+        "2026-05-06": {
+            "key_as_string": "2026-05-06",
+            "key": 1778025600000,
+            "doc_count": 54
+        },
+        "2026-05-07": {
+            "key_as_string": "2026-05-07",
+            "key": 1778112000000,
+            "doc_count": 207
+        },
+        "2026-05-08": {
+            "key_as_string": "2026-05-08",
+            "key": 1778198400000,
+            "doc_count": 96
+        },
+        "2026-05-20": {
+            "key_as_string": "2026-05-20",
+            "key": 1779235200000,
+            "doc_count": 61
+        },
+        "2026-05-21": {
+            "key_as_string": "2026-05-21",
+            "key": 1779321600000,
+            "doc_count": 221
+        },
+        "2026-05-22": {
+            "key_as_string": "2026-05-22",
+            "key": 1779408000000,
+            "doc_count": 102
+        },
+        "2026-06-10": {
+            "key_as_string": "2026-06-10",
+            "key": 1781049600000,
+            "doc_count": 62
+        },
+        "2026-06-11": {
+            "key_as_string": "2026-06-11",
+            "key": 1781136000000,
+            "doc_count": 286
+        },
+        "2026-06-12": {
+            "key_as_string": "2026-06-12",
+            "key": 1781222400000,
+            "doc_count": 116
+        },
+        "2026-06-24": {
+            "key_as_string": "2026-06-24",
+            "key": 1782259200000,
+            "doc_count": 65
+        },
+        "2026-06-25": {
+            "key_as_string": "2026-06-25",
+            "key": 1782345600000,
+            "doc_count": 236
+        },
+        "2026-06-26": {
+            "key_as_string": "2026-06-26",
+            "key": 1782432000000,
+            "doc_count": 97
+        },
+        "2026-07-08": {
+            "key_as_string": "2026-07-08",
+            "key": 1783468800000,
+            "doc_count": 77
+        },
+        "2026-07-09": {
+            "key_as_string": "2026-07-09",
+            "key": 1783555200000,
+            "doc_count": 227
+        },
+        "2026-07-10": {
+            "key_as_string": "2026-07-10",
+            "key": 1783641600000,
+            "doc_count": 128
+        },
+        "2026-11-06": {
+            "key_as_string": "2026-11-06",
+            "key": 1793923200000,
+            "doc_count": 112
+        },
+        "2026-11-11": {
+            "key_as_string": "2026-11-11",
+            "key": 1794355200000,
+            "doc_count": 67
+        },
+        "2026-11-12": {
+            "key_as_string": "2026-11-12",
+            "key": 1794441600000,
+            "doc_count": 245
+        },
+        "2026-11-13": {
+            "key_as_string": "2026-11-13",
+            "key": 1794528000000,
+            "doc_count": 90
         }
     },
     "electoralPeriods": [
+        {
+            "type": "electoralPeriod",
+            "id": "DE-017",
+            "attributes": {
+                "number": 17,
+                "dateStart": null,
+                "dateEnd": null,
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag"
+            }
+        },
         {
             "type": "electoralPeriod",
             "id": "DE-018",

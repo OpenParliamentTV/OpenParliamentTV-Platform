@@ -77,6 +77,15 @@ x-robots-tag: noindex
                     "Wahlperiode 18"
                 ]
             }
+        },
+        {
+            "id": "https://optv.local/api/v1/iiif/collection/DE/DE-017",
+            "type": "Collection",
+            "label": {
+                "de": [
+                    "Wahlperiode 17"
+                ]
+            }
         }
     ]
 }

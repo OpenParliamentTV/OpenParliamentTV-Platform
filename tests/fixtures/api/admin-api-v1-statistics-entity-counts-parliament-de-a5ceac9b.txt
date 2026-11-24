@@ -38,10 +38,10 @@ x-robots-tag: noindex
                     }
                 },
                 "document": {
-                    "total": 12388,
+                    "total": 16388,
                     "subtypes": {
-                        "officialDocument": 12354,
-                        "legalDocument": 34,
+                        "officialDocument": 16353,
+                        "legalDocument": 35,
                         "otherDocument": 0
                     }
                 },

@@ -634,6 +634,32 @@ x-robots-tag: noindex
                             "body": [
                                 {
                                     "type": "TextualBody",
+                                    "value": "Rita Süssmuth",
+                                    "format": "text/plain"
+                                },
+                                {
+                                    "id": "http://www.wikidata.org/entity/Q66286",
+                                    "type": "Text",
+                                    "format": "text/html"
+                                }
+                            ],
+                            "target": {
+                                "type": "SpecificResource",
+                                "source": "https://optv.local/api/v1/session/DE-0180001/canvas/DE-0180001001",
+                                "selector": {
+                                    "type": "FragmentSelector",
+                                    "conformsTo": "http://www.w3.org/TR/media-frags/",
+                                    "value": "t=132.4,140.46"
+                                }
+                            }
+                        },
+                        {
+                            "id": "https://optv.local/api/v1/session/DE-0180001/canvas/DE-0180001001/annotations/entity/20",
+                            "type": "Annotation",
+                            "motivation": "tagging",
+                            "body": [
+                                {
+                                    "type": "TextualBody",
                                     "value": "Maria Michalk",
                                     "format": "text/plain"
                                 },
@@ -654,7 +680,7 @@ x-robots-tag: noindex
                             }
                         },
                         {
-                            "id": "https://optv.local/api/v1/session/DE-0180001/canvas/DE-0180001001/annotations/entity/20",
+                            "id": "https://optv.local/api/v1/session/DE-0180001/canvas/DE-0180001001/annotations/entity/21",
                             "type": "Annotation",
                             "motivation": "tagging",
                             "body": [
@@ -680,7 +706,7 @@ x-robots-tag: noindex
                             }
                         },
                         {
-                            "id": "https://optv.local/api/v1/session/DE-0180001/canvas/DE-0180001001/annotations/entity/21",
+                            "id": "https://optv.local/api/v1/session/DE-0180001/canvas/DE-0180001001/annotations/entity/22",
                             "type": "Annotation",
                             "motivation": "tagging",
                             "body": [
@@ -706,7 +732,7 @@ x-robots-tag: noindex
                             }
                         },
                         {
-                            "id": "https://optv.local/api/v1/session/DE-0180001/canvas/DE-0180001001/annotations/entity/22",
+                            "id": "https://optv.local/api/v1/session/DE-0180001/canvas/DE-0180001001/annotations/entity/23",
                             "type": "Annotation",
                             "motivation": "tagging",
                             "body": [

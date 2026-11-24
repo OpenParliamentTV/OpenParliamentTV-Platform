@@ -14,7 +14,7 @@ x-robots-tag: noindex
         },
         "requestStatus": "success",
         "page": 2,
-        "pageTotal": 657
+        "pageTotal": 658
     },
     "data": [
         {
@@ -366,6 +366,6 @@ x-robots-tag: noindex
         "first": "https://optv.local/api/v1/search/documents?label[]=gesetz&label[]=antrag&limit=5&page=1",
         "prev": "https://optv.local/api/v1/search/documents?label[]=gesetz&label[]=antrag&limit=5&page=1",
         "next": "https://optv.local/api/v1/search/documents?label[]=gesetz&label[]=antrag&limit=5&page=3",
-        "last": "https://optv.local/api/v1/search/documents?label[]=gesetz&label[]=antrag&limit=5&page=657"
+        "last": "https://optv.local/api/v1/search/documents?label[]=gesetz&label[]=antrag&limit=5&page=658"
     }
 }

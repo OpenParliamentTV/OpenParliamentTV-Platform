@@ -2,7 +2,7 @@ HTTP 200
 content-type: text/html; charset=UTF-8
 
 	<div class="filterSummary row">
-		<div class="col-12 col-sm-6 mb-3 mb-sm-0 px-0 px-sm-2"><label class="col-form-label px-0 me-0 me-sm-1 col-12 col-sm-auto text-center text-sm-left"><strong>2583</strong> Redebeiträge gefunden</label>
+		<div class="col-12 col-sm-6 mb-3 mb-sm-0 px-0 px-sm-2"><label class="col-form-label px-0 me-0 me-sm-1 col-12 col-sm-auto text-center text-sm-left"><strong>3309</strong> Redebeiträge gefunden</label>
 			<button type="button" id="play-submit" class="btn btn-sm btn-outline-primary rounded-pill col-12 col-sm-auto">Alle automatisch abspielen<span class="icon-play-1"></span></button>
 		</div>
 		<div class="col-12 col-sm-6 pr-0 pr-sm-2" style="text-align: right;">
@@ -23,608 +23,1324 @@ content-type: text/html; charset=UTF-8
 		</div>
 	</div>
 	<div class="resultList row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-		<article class="resultItem col hits" data-speech-id="DE-0180054126" data-faction="Q1007353">
+		<article class="resultItem col hits" data-speech-id="DE-0170047016" data-faction="Q1007353">
 	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0180054126?q=klima&amp;page=3&amp;sort=date-asc">
+		<a class="resultLink" href="https://optv.local/media/DE-0170047016?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">04:42</div>
-			<div class="resultDate">25.09.2014</div>
-			<div class="resultMeta">
-				Matthias Gastel <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
-			<hr>
-						<div class="resultTitle">Abbau bei Nacht- und Autoreisezugverkehr</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180054126?q=klima&amp;page=3&amp;sort=date-asc&amp;t=271.240" title="Ausgewählter Ausschnitt">Das <em>Klima</em> braucht es. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 96.184397163121%; width: 1.9787234042553%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180055059" data-faction="Q1007353">
-	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0180055059?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">06:37</div>
-			<div class="resultDate">26.09.2014</div>
-			<div class="resultMeta">
-				Uwe Kekeritz <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
-			<hr>
-						<div class="resultTitle">Entwicklungspolitik</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180055059?q=klima&amp;page=3&amp;sort=date-asc&amp;t=72.380" title="Ausgewählter Ausschnitt">Wenn sich die ökonomisch starken Nationen nicht endlich wesentlich engagierter für eine nachhaltige, sozial gerechte und friedenspolitisch ausgleichende Entwicklung einsetzen, werden wir weiter dazu beitragen, Armut in der Welt zu verbreiten, Länder zu destabilisieren, das <em>Klima</em> zu schädigen und Kriege zu fördern. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 18.231738035264%; width: 4.9420654911839%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180055060" data-faction="Q2207512">
-	<div class="resultContent partyIndicator" data-faction="Q2207512">
-		<a class="resultLink" href="https://optv.local/media/DE-0180055060?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">08:24</div>
-			<div class="resultDate">26.09.2014</div>
-			<div class="resultMeta">
-				Bärbel Kofler <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
-			<hr>
-						<div class="resultTitle">Entwicklungspolitik</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180055060?q=klima&amp;page=3&amp;sort=date-asc&amp;t=285.920" title="Ausgewählter Ausschnitt">Das Stichwort „<em>Klima</em>“ ist an der Stelle sicher ein ganz entscheidender Punkt. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 56.730158730159%; width: 0.88492063492063%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180057018" data-faction="Q1007353">
-	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0180057018?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">09:04</div>
-			<div class="resultDate">09.10.2014</div>
+						<div class="resultDuration">09:09</div>
+			<div class="resultDate">11.06.2010</div>
 			<div class="resultMeta">
 				Anton Hofreiter <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
 			<hr>
-						<div class="resultTitle">Klimapolitik</div>
+						<div class="resultTitle">Verkehrsinvestitionspolitik</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180057018?q=klima&amp;page=3&amp;sort=date-asc&amp;t=290.700" title="Ausgewählter Ausschnitt">Das wäre gut fürs <em>Klima</em>, gut fürs Handwerk und gut für die Investitionen. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057018?q=klima&amp;page=3&amp;sort=date-asc&amp;t=458.960" title="Ausgewählter Ausschnitt">Zusammen mit der Personalpolitik der Europäischen Union wird klar: Es besteht die Gefahr, dass sich die Europäische Union komplett aus der <em>Klima</em>- und Umweltpolitik zurückzieht. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057018?q=klima&amp;page=3&amp;sort=date-asc&amp;t=515.280" title="Ausgewählter Ausschnitt">Das schadet nicht nur dem <em>Klima</em>, sondern es gefährdet Arbeitsplätze auch hier bei uns, und es schadet nachhaltiger Wohlstandsentwicklung. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 53.4375%; width: 0.93014705882353%;"></div><div class="hit" style="left: 84.367647058824%; width: 1.9669117647059%;"></div><div class="hit" style="left: 94.720588235294%; width: 1.1875%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170047016?q=klima&amp;page=3&amp;sort=date-asc&amp;t=26.680" title="Ausgewählter Ausschnitt">Die Bahn ist gleichzeitig das <em>klima</em>- und umweltfreundlichste Verkehrsmittel. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 4.8597449908925%; width: 0.97632058287796%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0180057020" data-faction="Q1826856">
-	<div class="resultContent partyIndicator" data-faction="Q1826856">
-		<a class="resultLink" href="https://optv.local/media/DE-0180057020?q=klima&amp;page=3&amp;sort=date-asc">
+<article class="resultItem col hits" data-speech-id="DE-0170047030" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a class="resultLink" href="https://optv.local/media/DE-0170047030?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">08:11</div>
-			<div class="resultDate">09.10.2014</div>
+						<div class="resultDuration">08:16</div>
+			<div class="resultDate">11.06.2010</div>
 			<div class="resultMeta">
-				Eva Bulling-Schröter <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
+				Matthias Lietz <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
 			<hr>
-						<div class="resultTitle">Klimapolitik</div>
+						<div class="resultTitle">Verkehrsinvestitionspolitik</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180057020?q=klima&amp;page=3&amp;sort=date-asc&amp;t=35.180" title="Ausgewählter Ausschnitt">Die Bilanz für das <em>Klima</em> ist heute weder nachhaltig noch wirtschaftlich vernünftig. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057020?q=klima&amp;page=3&amp;sort=date-asc&amp;t=258.660" title="Ausgewählter Ausschnitt">Dass diese CO 2 - Schleudern in Form von Kraftwerken großen Schaden anrichten, nicht nur beim <em>Klima</em>, auch am Menschen, ist bekannt. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057020?q=klima&amp;page=3&amp;sort=date-asc&amp;t=369.420" title="Ausgewählter Ausschnitt">Auch mit dem neuen EU-Kommissar für Energie und <em>Klima</em>, Miguel Cañete, der nicht nur im spanischen Ölgeschäft mitmischt, sondern auch noch frauenfeindliche Sprüche klopft, hat das Regierungslager kein Problem. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057020?q=klima&amp;page=3&amp;sort=date-asc&amp;t=396.780" title="Ausgewählter Ausschnitt">Endlich seien Energie und <em>Klima</em> in einer Hand. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 7.1649694501018%; width: 1.2830957230143%;"></div><div class="hit" style="left: 52.680244399185%; width: 2.1140529531568%;"></div><div class="hit" style="left: 75.238289205703%; width: 3.4052953156823%;"></div><div class="hit" style="left: 80.810590631365%; width: 0.4969450101833%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170047030?q=klima&amp;page=3&amp;sort=date-asc&amp;t=18.740" title="Ausgewählter Ausschnitt">Grundlegende Neuausrichtung der Verkehrsinvestitionspolitik für <em>Klima</em>- und Umweltschutz, Barrierefreiheit, soziale Gerechtigkeit und neue Arbeitsplätze" lautet der Titel des Antrags der Fraktion Die Linke. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0170047030?q=klima&amp;page=3&amp;sort=date-asc&amp;t=279.800" title="Ausgewählter Ausschnitt">Ich erinnere an die Umorganisation der Grundsatzabteilung, die Errichtung einer Unterabteilung "<em>Klima</em>- und Umweltschutzpolitik" sowie die Schaffung einer EU-Direktion. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 3.7782258064516%; width: 3.0887096774194%;"></div><div class="hit" style="left: 56.411290322581%; width: 2.0967741935484%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0180057021" data-faction="Q2207512">
-	<div class="resultContent partyIndicator" data-faction="Q2207512">
-		<a class="resultLink" href="https://optv.local/media/DE-0180057021?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">12:27</div>
-			<div class="resultDate">09.10.2014</div>
-			<div class="resultMeta">
-				Barbara Hendricks <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
-			<hr>
-						<div class="resultTitle">Klimapolitik</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180057021?q=klima&amp;page=3&amp;sort=date-asc&amp;t=443.280" title="Ausgewählter Ausschnitt">Wir haben im Übrigen beschlossen, jeden Neubau von Kohlekraftwerken kritisch zu überprüfen und in der <em>klima</em>- und entwicklungspolitischen Zusammenarbeit keine finanziellen Mittel mehr für den Neubau von Kohlekraftwerken zur Verfügung zu stellen. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057021?q=klima&amp;page=3&amp;sort=date-asc&amp;t=619.480" title="Ausgewählter Ausschnitt">Daneben arbeiten wir an einer <em>Klima</em>- und Energiestrategie 2030 auf europäischer Ebene; auch der Treibhausgasausstoß muss natürlich auf europäischer Ebene gesenkt werden. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 59.341365461847%; width: 1.7751004016064%;"></div><div class="hit" style="left: 82.929049531459%; width: 1.384203480589%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180057022" data-faction="Q1007353">
+<article class="resultItem col hits" data-speech-id="DE-0170047037" data-faction="Q1007353">
 	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0180057022?q=klima&amp;page=3&amp;sort=date-asc">
+		<a class="resultLink" href="https://optv.local/media/DE-0170047037?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">07:56</div>
-			<div class="resultDate">09.10.2014</div>
+						<div class="resultDuration">06:16</div>
+			<div class="resultDate">11.06.2010</div>
 			<div class="resultMeta">
-				Annalena Baerbock <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+				Claudia Roth <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
 			<hr>
-						<div class="resultTitle">Klimapolitik</div>
+						<div class="resultTitle">Filmförderungsgesetz</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180057022?q=klima&amp;page=3&amp;sort=date-asc&amp;t=371.400" title="Ausgewählter Ausschnitt">Diejenigen, denen <em>Klima</em>- und Umweltpolitik wirklich wichtig ist – der Rest braucht ja nicht zuhören –, sollten sich überlegen, was Sie mit der KfW-Auslandsfinanzierung im Bereich Kohle eigentlich machen wollen. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057022?q=klima&amp;page=3&amp;sort=date-asc&amp;t=384.400" title="Ausgewählter Ausschnitt">Das Problem ist: Wenn wir zwei Drittel der Vorhaben über IPEX nicht erfassen, dann werden <em>klima</em>- und umweltpolitisch grandiose Vorhaben wie der Bau eines Kohlehafens im Great Barrier Reef weiter mit deutscher Unterstützung finanziert. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 78.025210084034%; width: 2.6680672268908%;"></div><div class="hit" style="left: 80.756302521008%; width: 3.1386554621849%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170047037?q=klima&amp;page=3&amp;sort=date-asc&amp;t=13.120" title="Ausgewählter Ausschnitt">Zuallererst möchte ich sagen: Wir freuen uns, dass die Beratungen zur vorliegenden Novelle zum Filmförderungsgesetz in einem, wie ich finde, vertrauensvollen <em>Klima</em> zwischen den Fraktionen und auch mit dem BKM, Herrn Neumann, stattgefunden haben. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 3.4893617021277%; width: 4.3776595744681%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0180057025" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180057025?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">14:59</div>
-			<div class="resultDate">09.10.2014</div>
-			<div class="resultMeta">
-				Andreas Jung <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">Klimapolitik</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180057025?q=klima&amp;page=3&amp;sort=date-asc&amp;t=89.280" title="Ausgewählter Ausschnitt">Das gehört genauso zur Nachhaltigkeit wie <em>Klima</em>-, Umwelt- und Naturschutz. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057025?q=klima&amp;page=3&amp;sort=date-asc&amp;t=678.160" title="Ausgewählter Ausschnitt">Gemeinsam mit einer Beratungsoffensive, auch gemeinsam mit regionalen Sanierungsnetzwerken können wir hier etwas in Gang bringen, was am Ende nicht nur der Umwelt und dem <em>Klima</em>, sondern auch dem Handwerk und dem Mittelstand nutzt. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 9.9310344827586%; width: 0.46941045606229%;"></div><div class="hit" style="left: 75.434927697442%; width: 2.0889877641824%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180057029" data-faction="Q2207512">
-	<div class="resultContent partyIndicator" data-faction="Q2207512">
-		<a class="resultLink" href="https://optv.local/media/DE-0180057029?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">07:53</div>
-			<div class="resultDate">09.10.2014</div>
-			<div class="resultMeta">
-				Ute Vogt <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
-			<hr>
-						<div class="resultTitle">Klimapolitik</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180057029?q=klima&amp;page=3&amp;sort=date-asc&amp;t=127.380" title="Ausgewählter Ausschnitt">Machen wir so weiter wie bisher, ohne eine qualitative Wende vorzunehmen, dann wird sich das <em>Klima</em> am Ende dieses Jahrhunderts um 4 Grad erwärmt haben. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057029?q=klima&amp;page=3&amp;sort=date-asc&amp;t=256.320" title="Ausgewählter Ausschnitt">Wir alle in diesem Haus sollten uns noch einmal bewusst werden: Wenn es um Spielräume geht, energetisch etwas fürs <em>Klima</em> zu tun, dann betrifft das nicht allein die Energiewende bzw. die erneuerbaren Energien, sondern vor allem die effiziente Nutzung von Energie. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 26.93023255814%; width: 2.093023255814%;"></div><div class="hit" style="left: 54.190274841438%; width: 4.2579281183932%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180057030" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180057030?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">10:51</div>
-			<div class="resultDate">09.10.2014</div>
-			<div class="resultMeta">
-				Anja Weisgerber <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">Klimapolitik</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180057030?q=klima&amp;page=3&amp;sort=date-asc&amp;t=90.420" title="Ausgewählter Ausschnitt">Der bereits viel zitierte Bericht der „Globalen Kommission für Wirtschaft und <em>Klima</em>“ unter Mitwirkung des ehemaligen Chefökonoms der Weltbank Nicholas Stern hat uns jetzt aktuell vor Augen geführt: Entscheidend ist, wie stark wir in den nächsten 10 bis 15 Jahren in mehr Energieeffizienz und den Umbau zu klimaschonenderen Technologien investieren, und zwar bei uns und in anderen Ländern der Welt. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057030?q=klima&amp;page=3&amp;sort=date-asc&amp;t=197.720" title="Ausgewählter Ausschnitt">Es gilt nach wie vor: Alleine in Deutschland können wir das <em>Klima</em> nicht retten. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057030?q=klima&amp;page=3&amp;sort=date-asc&amp;t=387.240" title="Ausgewählter Ausschnitt">Wenn wir die Forderungen bezüglich der europäischen <em>Klima</em>- und Energieziele zu niedrig ansetzen, ist Europa nicht ambitioniert genug, und wir brauchen ein gutes Ergebnis auf europäischer Ebene, damit wir in Lima und Paris mit dem entsprechenden Rückenwind verhandeln können. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057030?q=klima&amp;page=3&amp;sort=date-asc&amp;t=439.800" title="Ausgewählter Ausschnitt">Im Übrigen muss ich auch sagen: Die Umsetzung des Vorschlags der Grünen, dem <em>Klima</em>- und Energiepaket 2030 nicht zuzustimmen, sollten die Ziele nicht ambitioniert genug sein, kommt letztendlich einem Genickbruch gleich. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057030?q=klima&amp;page=3&amp;sort=date-asc&amp;t=614.520" title="Ausgewählter Ausschnitt">Dem <em>Klima</em> ist damit unter dem Strich nicht geholfen. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 13.889400921659%; width: 4.2611367127496%;"></div><div class="hit" style="left: 30.371735791091%; width: 0.89400921658986%;"></div><div class="hit" style="left: 59.483870967742%; width: 2.294930875576%;"></div><div class="hit" style="left: 67.557603686636%; width: 2.8172043010753%;"></div><div class="hit" style="left: 94.396313364055%; width: 0.62672811059908%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180057032" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180057032?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">08:11</div>
-			<div class="resultDate">09.10.2014</div>
-			<div class="resultMeta">
-				Oliver Grundmann <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">Klimapolitik</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180057032?q=klima&amp;page=3&amp;sort=date-asc&amp;t=208.540" title="Ausgewählter Ausschnitt">Nationale Alleingänge sind kein Vorteil für das <em>Klima</em>, weil sich Emissionen dadurch nur in andere Länder verlagern. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057032?q=klima&amp;page=3&amp;sort=date-asc&amp;t=417.600" title="Ausgewählter Ausschnitt">Das sind hochmoderne Technologien, das schützt das <em>Klima</em>, schafft Arbeitsplätze, sichert Industrien in Deutschland und wäre zudem auch noch ein echter Exportschlager. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 42.47250509165%; width: 1.3156822810591%;"></div><div class="hit" style="left: 85.050916496945%; width: 1.6904276985743%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180057115" data-faction="Q2207512">
-	<div class="resultContent partyIndicator" data-faction="Q2207512">
-		<a class="resultLink" href="https://optv.local/media/DE-0180057115?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">04:18</div>
-			<div class="resultDate">09.10.2014</div>
-			<div class="resultMeta">
-				Rita Schwarzelühr-Sutter <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
-			<hr>
-						<div class="resultTitle">Änderung des Bundes-Immissionsschutzgesetzes</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180057115?q=klima&amp;page=3&amp;sort=date-asc&amp;t=222.840" title="Ausgewählter Ausschnitt">Lassen Sie mich schließen mit dem wichtigen Hinweis, dass die Umstellung der Quote neben der Förderung von Biokraftstoffen mit besonders guter CO 2 -Bilanz den Weg für weitere Maßnahmen zum <em>Klima</em>- und Ressourcenschutz im Verkehrssektor freimacht. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 86.372093023256%; width: 5.7131782945736%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180057116" data-faction="Q1826856">
-	<div class="resultContent partyIndicator" data-faction="Q1826856">
-		<a class="resultLink" href="https://optv.local/media/DE-0180057116?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">04:54</div>
-			<div class="resultDate">09.10.2014</div>
-			<div class="resultMeta">
-				Ralph Lenkert <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
-			<hr>
-						<div class="resultTitle">Änderung des Bundes-Immissionsschutzgesetzes</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180057116?q=klima&amp;page=3&amp;sort=date-asc&amp;t=250.320" title="Ausgewählter Ausschnitt">Ihr Zwölftes Gesetz zur Änderung des Bundes-Immissionsschutzgesetzes und Ihr Änderungsantrag schaden dem <em>Klima</em>, zementieren Hunger in der Dritten Welt und vernichten Urwälder. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180057116?q=klima&amp;page=3&amp;sort=date-asc&amp;t=277.080" title="Ausgewählter Ausschnitt">Damit helfen Sie dem <em>Klima</em>. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 85.142857142857%; width: 3.3061224489796%;"></div><div class="hit" style="left: 94.244897959184%; width: 0.36054421768708%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180057119" data-faction="Q2207512">
-	<div class="resultContent partyIndicator" data-faction="Q2207512">
-		<a class="resultLink" href="https://optv.local/media/DE-0180057119?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">03:49</div>
-			<div class="resultDate">09.10.2014</div>
-			<div class="resultMeta">
-				Ulli Nissen <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
-			<hr>
-						<div class="resultTitle">Änderung des Bundes-Immissionsschutzgesetzes</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180057119?q=klima&amp;page=3&amp;sort=date-asc&amp;t=51.080" title="Ausgewählter Ausschnitt">Deshalb komme ich wieder zu den Biokraftstoffen, die einen wichtigen Beitrag für das <em>Klima</em> leisten und ein Gegengewicht zu den fossilen Kraftstoffen sind. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 22.305676855895%; width: 3.3187772925764%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180060003" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180060003?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">21:15</div>
-			<div class="resultDate">16.10.2014</div>
-			<div class="resultMeta">
-				Angela Merkel <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">Regierungserklärung zum ASEM- und Euro-Gipfel und zum Europäischen Rat</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180060003?q=klima&amp;page=3&amp;sort=date-asc&amp;t=828.780" title="Ausgewählter Ausschnitt">Hinsichtlich der <em>klima</em>- und energiepolitischen Diskussion bedeutet der Europäische Rat in der nächsten Woche eine weitere wichtige Etappe, und zwar nicht nur innerhalb der Europäischen Union, sondern auch mit Blick auf die internationalen Klimaverhandlungen, die nächstes Jahr in die entscheidende Konferenz in Paris münden. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180060003?q=klima&amp;page=3&amp;sort=date-asc&amp;t=855.700" title="Ausgewählter Ausschnitt">Beim Europäischen Rat werden wir konkrete Ziele und wichtige Eckpunkte für den <em>Klima</em>- und Energierahmen der EU bis zum Jahr 2030 beraten. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180060003?q=klima&amp;page=3&amp;sort=date-asc&amp;t=889.980" title="Ausgewählter Ausschnitt">Den Beratungen in der nächsten Woche liegen die Vorschläge der Kommission für einen <em>Klima</em>- und Energierahmen 2030 zugrunde. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180060003?q=klima&amp;page=3&amp;sort=date-asc&amp;t=1060.300" title="Ausgewählter Ausschnitt">Es ist auch noch offen, ob es schon nächste Woche gelingen wird, einen <em>Klima</em>- und Energierahmen 2030 zu beschließen, oder erst später. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180060003?q=klima&amp;page=3&amp;sort=date-asc&amp;t=1082.340" title="Ausgewählter Ausschnitt">Denn unser künftiger <em>Klima</em>- und Energierahmen muss von allen Mitgliedstaaten – wir müssen das einstimmig entscheiden – getragen werden. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 65.002352941176%; width: 1.3443137254902%;"></div><div class="hit" style="left: 67.113725490196%; width: 0.82039215686275%;"></div><div class="hit" style="left: 69.802352941176%; width: 1.0054901960784%;"></div><div class="hit" style="left: 83.160784313725%; width: 0.66666666666667%;"></div><div class="hit" style="left: 84.889411764706%; width: 0.53803921568628%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180060006" data-faction="Q1007353">
+<article class="resultItem col hits" data-speech-id="DE-0170047047" data-faction="Q1007353">
 	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0180060006?q=klima&amp;page=3&amp;sort=date-asc">
+		<a class="resultLink" href="https://optv.local/media/DE-0170047047?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">09:50</div>
-			<div class="resultDate">16.10.2014</div>
+						<div class="resultDuration">06:08</div>
+			<div class="resultDate">11.06.2010</div>
 			<div class="resultMeta">
-				Katrin Göring-Eckardt <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+				Sylvia Kotting-Uhl <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
 			<hr>
-						<div class="resultTitle">Regierungserklärung zum ASEM- und Euro-Gipfel und zum Europäischen Rat</div>
+						<div class="resultTitle">Laufzeitverlängerung von Atomkraftwerken</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180060006?q=klima&amp;page=3&amp;sort=date-asc&amp;t=84.560" title="Ausgewählter Ausschnitt">Sie verschulden sich bei der Infrastruktur; Sie verschulden sich bei der Rentenkasse und bei den Krankenkassen; Sie verschulden sich bei den künftigen Generationen, egal ob es um das <em>Klima</em> geht oder um die Rente. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180060006?q=klima&amp;page=3&amp;sort=date-asc&amp;t=196.680" title="Ausgewählter Ausschnitt">Die Menschen erwarten von Europa eine Handelspolitik, die gut ist für die Wirtschaft und für die Verbraucher, die gut ist für die Kulturlandschaft und für das <em>Klima</em>. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180060006?q=klima&amp;page=3&amp;sort=date-asc&amp;t=235.840" title="Ausgewählter Ausschnitt">Die Umweltministerin musste hier letzte Woche eingestehen, dass sie in puncto <em>Klima</em> quasi nichts vorzuweisen hat. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 14.332203389831%; width: 1.9559322033898%;"></div><div class="hit" style="left: 33.335593220339%; width: 2.4305084745763%;"></div><div class="hit" style="left: 39.972881355932%; width: 1.4983050847458%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170047047?q=klima&amp;page=3&amp;sort=date-asc&amp;t=40.060" title="Ausgewählter Ausschnitt">Vielleicht sind sie auch gut für das <em>Klima</em> innerhalb der Koalition oder zumindest der Union. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0170047047?q=klima&amp;page=3&amp;sort=date-asc&amp;t=45.100" title="Ausgewählter Ausschnitt">Schlecht sind sie für das <em>Klima</em> im eigentlichen Wortsinn, weil sie den Umbau zu einer nachhaltigen, effizienten Energieversorgung aufhalten. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 10.885869565217%; width: 1.2880434782609%;"></div><div class="hit" style="left: 12.255434782609%; width: 1.5652173913043%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0180060007" data-faction="Q1023134">
+<article class="resultItem col hits" data-speech-id="DE-0170049018" data-faction="Q1023134">
 	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180060007?q=klima&amp;page=3&amp;sort=date-asc">
+		<a class="resultLink" href="https://optv.local/media/DE-0170049018?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">14:59</div>
-			<div class="resultDate">16.10.2014</div>
+						<div class="resultDuration">11:19</div>
+			<div class="resultDate">17.06.2010</div>
 			<div class="resultMeta">
-				Hans-Peter Friedrich <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+				Paul Lehrieder <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
 			<hr>
-						<div class="resultTitle">Regierungserklärung zum ASEM- und Euro-Gipfel und zum Europäischen Rat</div>
+						<div class="resultTitle">Arbeits- und beschäftigungsbedingungen</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180060007?q=klima&amp;page=3&amp;sort=date-asc&amp;t=324.240" title="Ausgewählter Ausschnitt">Auch wir sind in der Verantwortung, die Rahmenbedingungen für ein investitionsfreundliches <em>Klima</em> privater Investoren in Deutschland zu schaffen. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 36.066740823137%; width: 1.0901001112347%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170049018?q=klima&amp;page=3&amp;sort=date-asc&amp;t=118.740" title="Ausgewählter Ausschnitt">Das in dem Antrag der Linken gezeichnete Horrorszenario - auf Seite 1 ist von einem "<em>Klima</em> der Angst" die Rede - ist insofern nicht angebracht. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0170049018?q=klima&amp;page=3&amp;sort=date-asc&amp;t=138.160" title="Ausgewählter Ausschnitt">Es fragt sich, wer hier tatsächlich ein <em>Klima</em> der Angst schürt. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 17.487481590574%; width: 1.5905743740795%;"></div><div class="hit" style="left: 20.347569955817%; width: 0.65684830633284%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0180060008" data-faction="Q2207512">
-	<div class="resultContent partyIndicator" data-faction="Q2207512">
-		<a class="resultLink" href="https://optv.local/media/DE-0180060008?q=klima&amp;page=3&amp;sort=date-asc">
+<article class="resultItem col hits" data-speech-id="DE-0170049059" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a class="resultLink" href="https://optv.local/media/DE-0170049059?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">08:23</div>
-			<div class="resultDate">16.10.2014</div>
+						<div class="resultDuration">10:26</div>
+			<div class="resultDate">17.06.2010</div>
 			<div class="resultMeta">
-				Bernd Westphal <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
+				Arnold Vaatz <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
 			<hr>
-						<div class="resultTitle">Regierungserklärung zum ASEM- und Euro-Gipfel und zum Europäischen Rat</div>
+						<div class="resultTitle">Strafrechtliche Rehabilitierung</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180060008?q=klima&amp;page=3&amp;sort=date-asc&amp;t=355.440" title="Ausgewählter Ausschnitt">Ein erhöhter Globalisierungsdruck, Rohstoffknappheit, die demografische Entwicklung oder dringend zu lösende Fragestellungen im <em>Klima</em>- und Energiebereich machen nicht vor den Landesgrenzen der EU-Mitgliedstaaten halt. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180060008?q=klima&amp;page=3&amp;sort=date-asc&amp;t=388.660" title="Ausgewählter Ausschnitt">So ist es wichtig und richtig, dass sich die Bundesregierung bei den Verhandlungen im Zuge des EU-<em>Klima</em>- und Energierahmens 2030 für drei verbindliche Ziele eingesetzt hat; die Bundeskanzlerin hat auf diese Zieltrias hingewiesen. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 70.664015904573%; width: 2.8747514910537%;"></div><div class="hit" style="left: 77.268389662028%; width: 3.1411530815109%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170049059?q=klima&amp;page=3&amp;sort=date-asc&amp;t=372.420" title="Ausgewählter Ausschnitt">Viele - auch ich - leiden unter dem allgemeinen <em>Klima</em> der Rehabilitation der DDR, das sich großer Teile unserer Gesellschaft bemächtigt hat. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 59.492012779553%; width: 1.8977635782748%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0180060011" data-faction="Q1007353">
+<article class="resultItem col hits" data-speech-id="DE-0170051008" data-faction="Q1007353">
 	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0180060011?q=klima&amp;page=3&amp;sort=date-asc">
+		<a class="resultLink" href="https://optv.local/media/DE-0170051008?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:20</div>
-			<div class="resultDate">16.10.2014</div>
+						<div class="resultDuration">11:04</div>
+			<div class="resultDate">01.07.2010</div>
 			<div class="resultMeta">
-				Annalena Baerbock <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+				Kerstin Andreae <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
 			<hr>
-						<div class="resultTitle">Regierungserklärung zum ASEM- und Euro-Gipfel und zum Europäischen Rat</div>
+						<div class="resultTitle">Regierungserklärung: Aufschwung für Deutschland</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180060011?q=klima&amp;page=3&amp;sort=date-asc&amp;t=165.480" title="Ausgewählter Ausschnitt">Was Sie gebraucht hätten, wäre eine Strategie, wie sie jüngst im New Climate Economy Report formuliert wurde, der unter dem Titel „Besseres Wachstum, besseres <em>Klima</em>“ betont, dass ökonomisches Wachstum und die Eindämmung der Risiken des Klimawandels Hand in Hand gehen können, wenn es – das betont der Bericht sehr deutlich – „eine starke politische Führung und eine glaubhafte, in sich stimmige Politik“ gibt. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 51.7125%; width: 9.2375%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170051008?q=klima&amp;page=3&amp;sort=date-asc&amp;t=167.740" title="Ausgewählter Ausschnitt">Sie müssen die Einnahmen verbessern, und vor allem müssen Sie in die Zukunft investieren - in <em>Klima</em>, in Effizienz bei Ressourcen und in Bildung. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0170051008?q=klima&amp;page=3&amp;sort=date-asc&amp;t=283.840" title="Ausgewählter Ausschnitt">Notwendig ist also eine Investitionsoffensive im Inland im Bereich Bildung und im Bereich <em>Klima</em>. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0170051008?q=klima&amp;page=3&amp;sort=date-asc&amp;t=376.120" title="Ausgewählter Ausschnitt">Wenn Sie anfangen, klimaschädliche Subventionen zu streichen, machen Sie dreierlei: Erstens helfen Sie der Wirtschaft, umzusteuern - das ist notwendig -, zweitens machen Sie etwas für das <em>Klima</em>, drittens machen Sie etwas für die Haushalte. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0170051008?q=klima&amp;page=3&amp;sort=date-asc&amp;t=525.260" title="Ausgewählter Ausschnitt">Das ist dringend notwendig, für das <em>Klima</em>, aber auch für die Arbeitsplätze im Handwerk. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 25.262048192771%; width: 1.4909638554217%;"></div><div class="hit" style="left: 42.746987951807%; width: 0.73795180722892%;"></div><div class="hit" style="left: 56.644578313253%; width: 2.1777108433735%;"></div><div class="hit" style="left: 79.105421686747%; width: 0.87349397590362%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0180060013" data-faction="Q1023134">
+<article class="resultItem col hits" data-speech-id="DE-0170051089" data-faction="Q1023134">
 	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180060013?q=klima&amp;page=3&amp;sort=date-asc">
+		<a class="resultLink" href="https://optv.local/media/DE-0170051089?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">11:34</div>
-			<div class="resultDate">16.10.2014</div>
+						<div class="resultDuration">06:43</div>
+			<div class="resultDate">01.07.2010</div>
 			<div class="resultMeta">
-				Maik Beermann <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+				Daniela Ludwig <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
 			<hr>
-						<div class="resultTitle">Regierungserklärung zum ASEM- und Euro-Gipfel und zum Europäischen Rat</div>
+						<div class="resultTitle">Nachhaltigkeitspolitik</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180060013?q=klima&amp;page=3&amp;sort=date-asc&amp;t=55.920" title="Ausgewählter Ausschnitt">Liebe Kolleginnen und Kollegen, gerne möchte ich die Ausführungen unserer Kanzlerin im Bereich der europäischen <em>Klima</em>- und Energiepolitik untermauern. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180060013?q=klima&amp;page=3&amp;sort=date-asc&amp;t=67.200" title="Ausgewählter Ausschnitt">Basierend auf der chinesischen Weisheit „Der Mann, der den Wind der Veränderung spürt, sollte keinen Windschutz, sondern eine Windmühle bauen“, betreiben wir als Union gemeinsam mit unserem Koalitionspartner eine solide <em>Klima</em>- und Energiepolitik. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180060013?q=klima&amp;page=3&amp;sort=date-asc&amp;t=237.080" title="Ausgewählter Ausschnitt">Die europäische <em>Klima</em>- und Energiepolitik ist und bleibt ein Gemeinschaftsprojekt. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 8.0576368876081%; width: 1.5821325648415%;"></div><div class="hit" style="left: 9.6829971181556%; width: 2.1902017291066%;"></div><div class="hit" style="left: 34.161383285303%; width: 0.69740634005763%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170051089?q=klima&amp;page=3&amp;sort=date-asc&amp;t=67.520" title="Ausgewählter Ausschnitt">Dabei verkennt dieses Gutachten, um es auf Deutsch zu formulieren, leider - ich bedaure das sehr und erhoffe mir, dass sich das in der zukünftigen Entwicklung anders darstellen wird -, dass nachhaltige Politik nicht nur <em>Klima</em>- und Umweltschutz bedeutet, sondern sehr, sehr viel mehr. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 16.754342431762%; width: 5.3052109181141%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0180060022" data-faction="Q1023134">
+<article class="resultItem col hits" data-speech-id="DE-0170051112" data-faction="Q1023134">
 	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180060022?q=klima&amp;page=3&amp;sort=date-asc">
+		<a class="resultLink" href="https://optv.local/media/DE-0170051112?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">09:09</div>
-			<div class="resultDate">16.10.2014</div>
+						<div class="resultDuration">06:34</div>
+			<div class="resultDate">01.07.2010</div>
 			<div class="resultMeta">
-				Thomas Jarzombek <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+				Axel Knoerig <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
 			<hr>
-						<div class="resultTitle">Digitale Agenda 2014 bis 2017</div>
+						<div class="resultTitle">Wirtschaftlicher Nutzen von Forschung</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180060022?q=klima&amp;page=3&amp;sort=date-asc&amp;t=404.740" title="Ausgewählter Ausschnitt">Mit der Diskussion, die wir über Datenschutz führen, schüren wir ein <em>Klima</em> der Angst. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 73.723132969035%; width: 0.96903460837887%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170051112?q=klima&amp;page=3&amp;sort=date-asc&amp;t=73.240" title="Ausgewählter Ausschnitt">Die zukunftsfähige Hightech-Strategie der Bundesregierung will neue Akzente setzen und richtet sich an den fünf Bedarfsfeldern <em>Klima</em> und Energie, Gesundheit, Mobilität, Sicherheit sowie Kommunikation aus. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 18.58883248731%; width: 3.1370558375635%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0180060058" data-faction="Q1826856">
-	<div class="resultContent partyIndicator" data-faction="Q1826856">
-		<a class="resultLink" href="https://optv.local/media/DE-0180060058?q=klima&amp;page=3&amp;sort=date-asc">
+<article class="resultItem col hits" data-speech-id="DE-0170052013" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170052013?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:34</div>
-			<div class="resultDate">16.10.2014</div>
+						<div class="resultDuration">08:12</div>
+			<div class="resultDate">02.07.2010</div>
 			<div class="resultMeta">
-				Kirsten Tackmann <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
+							</div>
 			<hr>
-						<div class="resultTitle">EU-Verordnung über ökologische/biologische Produktion</div>
+						<div class="resultTitle">Ergebnisse des G-8- und G-20-Gipfels</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180060058?q=klima&amp;page=3&amp;sort=date-asc&amp;t=253.020" title="Ausgewählter Ausschnitt">Ökolandbau ist nicht nur schonender für Boden, Gewässer, <em>Klima</em> und biologische Vielfalt, sondern auch sozial vernünftig, weil er mehr Menschen beschäftigt, und zwar mit guter Arbeit. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 75.754491017964%; width: 2.9700598802395%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170052013?q=klima&amp;page=3&amp;sort=date-asc&amp;t=338.380" title="Ausgewählter Ausschnitt">Wenn wir uns Kopenhagen in Erinnerung rufen - dort ging es um den <em>Klima</em>-schutz -, sehen wir, dass diese Bundesregierung auch dort nichts auf die Reihe bekommen hat. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 68.776422764228%; width: 1.8983739837398%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0180060060" data-faction="Q1007353">
-	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0180060060?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:59</div>
-			<div class="resultDate">16.10.2014</div>
-			<div class="resultMeta">
-				Harald Ebner <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
-			<hr>
-						<div class="resultTitle">EU-Verordnung über ökologische/biologische Produktion</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180060060?q=klima&amp;page=3&amp;sort=date-asc&amp;t=58.240" title="Ausgewählter Ausschnitt">Deshalb ist der Beitrag der Ökolandwirtschaft für den Schutz von <em>Klima</em>, Böden, Artenvielfalt und Wasser wissenschaftlich und gesellschaftlich anerkannt. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 16.222841225627%; width: 3.2590529247911%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180060099" data-faction="Q1023134">
+<article class="resultItem col hits" data-speech-id="DE-0170056050" data-faction="Q1023134">
 	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180060099?q=klima&amp;page=3&amp;sort=date-asc">
+		<a class="resultLink" href="https://optv.local/media/DE-0170056050?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">09:13</div>
-			<div class="resultDate">16.10.2014</div>
-			<div class="resultMeta">
-				Andreas Lenz <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">ERP-Wirtschaftsplangesetz 2015</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180060099?q=klima&amp;page=3&amp;sort=date-asc&amp;t=294.380" title="Ausgewählter Ausschnitt">Dafür brauchen wir ein <em>Klima</em> für Investitionen und Innovationen, das es Gründern ermöglicht, ihre Ideen in Form von Produkten auch durch privates Kapital zu verwirklichen. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 53.233273056058%; width: 2.1952983725136%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180061019" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180061019?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">09:04</div>
-			<div class="resultDate">17.10.2014</div>
-			<div class="resultMeta">
-				Sylvia Jörrißen <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">Wohnungsnot in Hochschulstädten</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180061019?q=klima&amp;page=3&amp;sort=date-asc&amp;t=246.960" title="Ausgewählter Ausschnitt">Meine Damen und Herren, wir müssen ein <em>Klima</em> schaffen, in dem Investitionen in den Neubau getätigt werden, und das zu bezahlbaren Preisen. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 45.397058823529%; width: 1.9338235294118%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180063047" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180063047?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">06:00</div>
-			<div class="resultDate">06.11.2014</div>
-			<div class="resultMeta">
-				Anja Weisgerber <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">Aktuelle Stunde zu den Ergebnissen des Weltklimaberichts</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180063047?q=klima&amp;page=3&amp;sort=date-asc&amp;t=234.780" title="Ausgewählter Ausschnitt">Wir müssen mit diesem Ergebnis im Rücken jetzt den Druck auf internationaler Ebene erhöhen, die anderen Staaten mitreißen und auch von anderen Ländern, egal ob es Industrieländer oder Entwicklungs- und Schwellenländer sind, einen Beitrag einfordern – wir alleine können das <em>Klima</em> nicht retten –; sonst können wir das 2-Grad-Ziel nicht erreichen. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 65.216666666667%; width: 5.8777777777778%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180063048" data-faction="Q1826856">
-	<div class="resultContent partyIndicator" data-faction="Q1826856">
-		<a class="resultLink" href="https://optv.local/media/DE-0180063048?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:45</div>
-			<div class="resultDate">06.11.2014</div>
-			<div class="resultMeta">
-				Eva Bulling-Schröter <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
-			<hr>
-						<div class="resultTitle">Aktuelle Stunde zu den Ergebnissen des Weltklimaberichts</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180063048?q=klima&amp;page=3&amp;sort=date-asc&amp;t=305.100" title="Ausgewählter Ausschnitt">Allein 2012 sind durch die Nutzung fossiler Energien 42 Milliarden Euro Folgekosten für Mensch, Umwelt und <em>Klima</em> entstanden. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 88.434782608696%; width: 2.8289855072464%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180063051" data-faction="Q1826856">
-	<div class="resultContent partyIndicator" data-faction="Q1826856">
-		<a class="resultLink" href="https://optv.local/media/DE-0180063051?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:12</div>
-			<div class="resultDate">06.11.2014</div>
-			<div class="resultMeta">
-				Ralph Lenkert <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
-			<hr>
-						<div class="resultTitle">Aktuelle Stunde zu den Ergebnissen des Weltklimaberichts</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180063051?q=klima&amp;page=3&amp;sort=date-asc&amp;t=105.580" title="Ausgewählter Ausschnitt">Das <em>Klima</em> in Deutschland verändert sich. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 33.839743589744%; width: 0.77564102564103%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180063056" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180063056?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:09</div>
-			<div class="resultDate">06.11.2014</div>
-			<div class="resultMeta">
-				Matern von Marschall <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">Aktuelle Stunde zu den Ergebnissen des Weltklimaberichts</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180063056?q=klima&amp;page=3&amp;sort=date-asc&amp;t=298.180" title="Ausgewählter Ausschnitt">Gehen wir nach Peru mit folgender Einstellung: Prima <em>Klima</em> in Lima. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 96.498381877023%; width: 2.5242718446602%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180064035" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180064035?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">11:30</div>
-			<div class="resultDate">07.11.2014</div>
-			<div class="resultMeta">
-				Heinz Riesenhuber <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">Strategische Ziele für die Raumfahrt</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180064035?q=klima&amp;page=3&amp;sort=date-asc&amp;t=402.740" title="Ausgewählter Ausschnitt">Aber wir haben jetzt, an dieser Stelle, die Chance, die Weichen so zu stellen, dass die Fähigkeit Europas, Weltraumtechnik in die Gesamtstrategie seiner Industrie- und Wirtschaftspolitik, seiner <em>Klima</em>- und Umweltpolitik einzubeziehen, kombiniert wird mit dem unabhängigen und bewährten System der ESA und ihrer Partner. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 58.368115942029%; width: 4.0898550724638%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180066038" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180066038?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">07:09</div>
-			<div class="resultDate">13.11.2014</div>
-			<div class="resultMeta">
-				Patrick Schnieder <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">Vereinbarte Debatte zum Thema: Sterbebegleitung</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180066038?q=klima&amp;page=3&amp;sort=date-asc&amp;t=222.820" title="Ausgewählter Ausschnitt">Daraus kann ein <em>Klima</em> entstehen, das ältere, kranke und schwache Menschen unter Druck setzen könnte, anderen nicht zur Last zu fallen, sondern diese akzeptierte, vielleicht normale Option zu wählen. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 51.939393939394%; width: 3.5011655011655%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180066052" data-faction="Q1826856">
-	<div class="resultContent partyIndicator" data-faction="Q1826856">
-		<a class="resultLink" href="https://optv.local/media/DE-0180066052?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">09:23</div>
-			<div class="resultDate">13.11.2014</div>
-			<div class="resultMeta">
-				Sabine Zimmermann <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
-			<hr>
-						<div class="resultTitle">Langzeitarbeitslosigkeit</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180066052?q=klima&amp;page=3&amp;sort=date-asc&amp;t=431.600" title="Ausgewählter Ausschnitt">Weiter schreibt sie: Drohungen, Schikanen, Willkür und ein <em>Klima</em> der Angst vertiefen die Probleme, anstatt sie zu beseitigen. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 76.660746003552%; width: 2.1776198934281%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180066084" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180066084?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">06:07</div>
-			<div class="resultDate">13.11.2014</div>
-			<div class="resultMeta">
-				Anja Weisgerber <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">Aktuelle Stunde zur Abschaltung von Kohlekraftwerken und zu Klimazielen</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180066084?q=klima&amp;page=3&amp;sort=date-asc&amp;t=293.340" title="Ausgewählter Ausschnitt">Deshalb ist mehr Energieeffizienz ein Gewinnerthema für alle, für das <em>Klima</em> genauso wie für die Handwerker, die dämmen und Fenster einbauen, meine Damen und Herren. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 79.929155313352%; width: 2.6757493188011%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180066087" data-faction="Q1007353">
-	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0180066087?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">06:22</div>
-			<div class="resultDate">13.11.2014</div>
-			<div class="resultMeta">
-				Annalena Baerbock <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
-			<hr>
-						<div class="resultTitle">Aktuelle Stunde zur Abschaltung von Kohlekraftwerken und zu Klimazielen</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180066087?q=klima&amp;page=3&amp;sort=date-asc&amp;t=314.560" title="Ausgewählter Ausschnitt">Dann kommt noch Ihr letztes, wirklich allerschönstes Argument: Und wenn wir in Deutschland aus der Kohle aussteigen, dann hat das für das <em>Klima</em> gar nichts gebracht, denn dann geht es ja in andere Länder. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 82.34554973822%; width: 2.6335078534031%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180066088" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180066088?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:27</div>
-			<div class="resultDate">13.11.2014</div>
-			<div class="resultMeta">
-				Thomas Bareiß <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
-			<hr>
-						<div class="resultTitle">Aktuelle Stunde zur Abschaltung von Kohlekraftwerken und zu Klimazielen</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180066088?q=klima&amp;page=3&amp;sort=date-asc&amp;t=20.880" title="Ausgewählter Ausschnitt">Sie haben immer noch nicht anerkannt, dass wir in Deutschland die höchsten <em>klima</em>- und energiepolitischen Ziele der Welt haben </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 6.3853211009174%; width: 1.8532110091743%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180066089" data-faction="Q2207512">
-	<div class="resultContent partyIndicator" data-faction="Q2207512">
-		<a class="resultLink" href="https://optv.local/media/DE-0180066089?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">05:12</div>
-			<div class="resultDate">13.11.2014</div>
-			<div class="resultMeta">
-				Matthias Miersch <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
-			<hr>
-						<div class="resultTitle">Aktuelle Stunde zur Abschaltung von Kohlekraftwerken und zu Klimazielen</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180066089?q=klima&amp;page=3&amp;sort=date-asc&amp;t=173.560" title="Ausgewählter Ausschnitt">Ich sage Ihnen auch: Am 3. Dezember 2014 wird das <em>Klima</em> weder gerettet noch wird es verloren sein. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 55.628205128205%; width: 2.551282051282%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180066091" data-faction="Q1023134">
-	<div class="resultContent partyIndicator" data-faction="Q1023134">
-		<a class="resultLink" href="https://optv.local/media/DE-0180066091?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">06:11</div>
-			<div class="resultDate">13.11.2014</div>
+						<div class="resultDuration">05:58</div>
+			<div class="resultDate">09.07.2010</div>
 			<div class="resultMeta">
 				Volkmar Vogel <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
 			<hr>
-						<div class="resultTitle">Aktuelle Stunde zur Abschaltung von Kohlekraftwerken und zu Klimazielen</div>
+						<div class="resultTitle">CO2-Gebäudesanierungsprogramm</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180066091?q=klima&amp;page=3&amp;sort=date-asc&amp;t=310.360" title="Ausgewählter Ausschnitt">Das hilft weder dem <em>Klima</em> noch der Wirtschaft, etwa dem Handwerk und der Industrie, die natürlich auch darauf warten, dass etwas geschieht. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 83.654986522911%; width: 1.9407008086253%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170056050?q=klima&amp;page=3&amp;sort=date-asc&amp;t=19.600" title="Ausgewählter Ausschnitt">Die Herausforderungen der nächsten Jahre sind der demografische Wandel und die Energieeinsparung, damit Nebenkosten bezahlbar bleiben sowie Umwelt und <em>Klima</em> geschützt werden. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 5.4748603351955%; width: 3.1843575418994%;"></div></div>	</div>
 </article>
-<article class="resultItem col hits" data-speech-id="DE-0180066120" data-faction="Q1826856">
-	<div class="resultContent partyIndicator" data-faction="Q1826856">
-		<a class="resultLink" href="https://optv.local/media/DE-0180066120?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">12:39</div>
-			<div class="resultDate">13.11.2014</div>
-			<div class="resultMeta">
-				Wolfgang Gehrcke <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
-			<hr>
-						<div class="resultTitle">Sanktionen gegen Russland</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180066120?q=klima&amp;page=3&amp;sort=date-asc&amp;t=249.600" title="Ausgewählter Ausschnitt">Die erste Antwort ist: Bei den Wahlen herrschte ein unglaublich schlechtes <em>Klima</em>. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 32.885375494071%; width: 0.60869565217391%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180067040" data-faction="Q1007353">
+<article class="resultItem col hits" data-speech-id="DE-0170057050" data-faction="Q1007353">
 	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0180067040?q=klima&amp;page=3&amp;sort=date-asc">
+		<a class="resultLink" href="https://optv.local/media/DE-0170057050?q=klima&amp;page=3&amp;sort=date-asc">
 			<div class="icon-play-1"></div>
-						<div class="resultDuration">06:19</div>
-			<div class="resultDate">14.11.2014</div>
-			<div class="resultMeta">
-				Monika Lazar <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
-			<hr>
-						<div class="resultTitle">Empfehlungen des NSU-Untersuchungsausschusses</div>
-					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180067040?q=klima&amp;page=3&amp;sort=date-asc&amp;t=69.480" title="Ausgewählter Ausschnitt">Im Fokus steht das Fehlverhalten einzelner Bediensteter, aber nicht der strukturelle Rassismus, der das <em>Klima</em> für solche Ermittlungsfehler schafft und verstärkt. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 18.332453825858%; width: 2.5382585751979%;"></div></div>	</div>
-</article>
-<article class="resultItem col hits" data-speech-id="DE-0180068009" data-faction="Q1007353">
-	<div class="resultContent partyIndicator" data-faction="Q1007353">
-		<a class="resultLink" href="https://optv.local/media/DE-0180068009?q=klima&amp;page=3&amp;sort=date-asc">
-			<div class="icon-play-1"></div>
-						<div class="resultDuration">08:58</div>
-			<div class="resultDate">25.11.2014</div>
+						<div class="resultDuration">05:00</div>
+			<div class="resultDate">14.09.2010</div>
 			<div class="resultMeta">
 				Sven-Christian Kindler <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
 			<hr>
-						<div class="resultTitle">Bundesministerium der Finanzen Epl 08; Bundesrechnungshof Epl 20</div>
+						<div class="resultTitle">Einzelplan 16 (Umwelt)</div>
 					</a>
-		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0180068009?q=klima&amp;page=3&amp;sort=date-asc&amp;t=426.600" title="Ausgewählter Ausschnitt">Wir wollen mit einem Energiesparfonds im Umfang von 3 Milliarden Euro dafür sorgen, dass Wohnungen und Gebäude saniert werden, und so das <em>Klima</em> schützen. </a>
-								<a class="resultSnippet" href="https://optv.local/media/DE-0180068009?q=klima&amp;page=3&amp;sort=date-asc&amp;t=500.320" title="Ausgewählter Ausschnitt">Es gibt in diesem Haushalt viele Verlierer: das <em>Klima</em> und die Energiewende; die Flüchtlinge; Kinder und Jugendliche, denen es an Bildung fehlt; Arbeitnehmerinnen und Arbeitnehmer, denen Sie in die Tasche greifen und die die Zeche für Ihren Haushalt zahlen. </a>
-				</div><div class="hitTimeline"><div class="hit" style="left: 79.293680297398%; width: 1.3122676579926%;"></div><div class="hit" style="left: 92.996282527881%; width: 2.8066914498141%;"></div></div>	</div>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170057050?q=klima&amp;page=3&amp;sort=date-asc&amp;t=166.120" title="Ausgewählter Ausschnitt">Das ist ein besonders gutes Programm, mit dem nicht nur das <em>Klima</em> geschützt wird, sondern das auch für Kleinunternehmen und Handwerksbetriebe besonders wichtig ist und konjunkturelle Entwicklungen fördert, weil jeder Förder-Euro 7 bis 8 Euro privates Kapital mobilisiert. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0170057050?q=klima&amp;page=3&amp;sort=date-asc&amp;t=178.400" title="Ausgewählter Ausschnitt">Das bedeutet vielfache Gewinne für das <em>Klima</em>, für die Gesellschaft und für die Ökonomie. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 55.373333333333%; width: 3.9933333333333%;"></div><div class="hit" style="left: 59.466666666667%; width: 1.54%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170057051" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a class="resultLink" href="https://optv.local/media/DE-0170057051?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">11:08</div>
+			<div class="resultDate">14.09.2010</div>
+			<div class="resultMeta">
+				Marie-Luise Dött <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+						<div class="resultTitle">Einzelplan 16 (Umwelt)</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170057051?q=klima&amp;page=3&amp;sort=date-asc&amp;t=81.960" title="Ausgewählter Ausschnitt">Wir haben im Koalitionsvertrag eindeutige und sehr konkrete Aussagen zur <em>Klima</em>- und Energiepolitik gemacht. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0170057051?q=klima&amp;page=3&amp;sort=date-asc&amp;t=178.720" title="Ausgewählter Ausschnitt">dass diese Bundesregierung ein <em>klima</em>-, wirtschafts- und sozialverträgliches Energiekonzept vorlegt. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0170057051?q=klima&amp;page=3&amp;sort=date-asc&amp;t=390.320" title="Ausgewählter Ausschnitt">Ich finde es absolut unakzeptabel, dass Ihr Frust über Ihr eigenes politisches Versagen jetzt darin mündet, dass Sie die Bürger gegen das Energiekonzept der Bundesregierung und gegen eine rationale <em>Klima</em>- und Energiepolitik förmlich aufhetzen. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0170057051?q=klima&amp;page=3&amp;sort=date-asc&amp;t=577.560" title="Ausgewählter Ausschnitt">Eine undifferenzierte Kürzung der Steuernachlässe ist nicht nur angesichts der Bedeutung energieintensiver Unternehmen für Wachstum und Beschäftigung in Deutschland sehr genau zu prüfen, sondern auch hinsichtlich der Wirkungen für <em>Klima</em> und Umwelt. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 12.269461077844%; width: 1.0389221556886%;"></div><div class="hit" style="left: 26.754491017964%; width: 1.0269461077844%;"></div><div class="hit" style="left: 58.431137724551%; width: 2.4820359281437%;"></div><div class="hit" style="left: 86.461077844311%; width: 2.4520958083833%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170057053" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170057053?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">10:25</div>
+			<div class="resultDate">14.09.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Einzelplan 16 (Umwelt)</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170057053?q=klima&amp;page=3&amp;sort=date-asc&amp;t=129.400" title="Ausgewählter Ausschnitt">Wir machen eine klare Politik für das <em>Klima</em>, planbar für alle Beteiligten. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 20.704%; width: 0.6048%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170057056" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170057056?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">05:16</div>
+			<div class="resultDate">14.09.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Einzelplan 16 (Umwelt)</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170057056?q=klima&amp;page=3&amp;sort=date-asc&amp;t=68.500" title="Ausgewählter Ausschnitt">Der Wortstamm "Markt" kommt 80-mal vor, der Wortstamm "<em>Klima</em>" noch 30-mal und der Wortstamm "Umwelt" nur noch 20-mal. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 21.677215189873%; width: 2.8607594936709%;"></div></div>	</div>
+</article>
+<article class="resultItem col" data-speech-id="DE-0170058021" data-faction="Q1826856">
+	<div class="resultContent partyIndicator" data-faction="Q1826856">
+		<a class="resultLink" href="https://optv.local/media/DE-0170058021?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">05:06</div>
+			<div class="resultDate">15.09.2010</div>
+			<div class="resultMeta">
+				Jan van Aken <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
+			<hr>
+						<div class="resultTitle">Einzelplan 05 (Auswärtiges Amt)</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170058021?q=klima&amp;page=3&amp;sort=date-asc&amp;t=" title="Ausgewählter Ausschnitt">Ihnen müsste eigentlich die Schamesröte ins Gesicht steigen, wenn Sie sich, wie gerade geschehen, hier hinstellen und sagen - ich zitiere Sie -: Abrüstung hat für uns eine ebenso große Bedeutung wie der <em>Klima</em>-schutz. - </a>
+				</div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170058027" data-faction="Q1007353">
+	<div class="resultContent partyIndicator" data-faction="Q1007353">
+		<a class="resultLink" href="https://optv.local/media/DE-0170058027?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">07:58</div>
+			<div class="resultDate">15.09.2010</div>
+			<div class="resultMeta">
+				Sven-Christian Kindler <span class="partyIndicator partyIndicatorInline" data-faction="Q1007353">DIE GRÜNEN</span>			</div>
+			<hr>
+						<div class="resultTitle">Einzelplan 05 (Auswärtiges Amt)</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170058027?q=klima&amp;page=3&amp;sort=date-asc&amp;t=221.500" title="Ausgewählter Ausschnitt">In den letzten 30 Jahren hat sich die Anzahl der Menschen, die von <em>klima</em>- und wetterbedingten Naturkatastrophen betroffen sind, versechsfacht, nämlich von 250 Millionen auf heute 1,5 Milliarden Menschen. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 46.338912133891%; width: 2.9372384937238%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170058032" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a class="resultLink" href="https://optv.local/media/DE-0170058032?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">05:52</div>
+			<div class="resultDate">15.09.2010</div>
+			<div class="resultMeta">
+				Erika Steinbach <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+						<div class="resultTitle">Einzelplan 05 (Auswärtiges Amt)</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170058032?q=klima&amp;page=3&amp;sort=date-asc&amp;t=74.800" title="Ausgewählter Ausschnitt">Ich begrüße es, dass die Türkei als Mitschuldige für die Ermordung des türkisch-armenischen Journalisten Hrant Dink verurteilt wurde, den sie vor seiner Ermordung ja wegen Beleidigung des Türkentums verurteilt hatte, wodurch sie zu einem <em>Klima</em> des Hasses gegen diesen armenischstämmigen Mann mit beigetragen hat. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 21.25%; width: 6.0056818181818%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170058051" data-faction="Q2207512">
+	<div class="resultContent partyIndicator" data-faction="Q2207512">
+		<a class="resultLink" href="https://optv.local/media/DE-0170058051?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">09:18</div>
+			<div class="resultDate">15.09.2010</div>
+			<div class="resultMeta">
+				Bärbel Kofler <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
+			<hr>
+						<div class="resultTitle">Einzelplan 23 (Wirtschaftliche Zusammenarbeit)</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170058051?q=klima&amp;page=3&amp;sort=date-asc&amp;t=450.320" title="Ausgewählter Ausschnitt">Der angehobene Ausgabenansatz wird benötigt, um die inhaltlichen Schwerpunkte in internationalen Verpflichtungen der Bundesregierung in den Bereichen <em>Klima</em>- und Umweltschutz einschließlich Biodiversität, Grundbildung, Gesundheit, inklusive HIV-/Aidsbekämpfung, Mütter- und Kindergesundheit umzusetzen. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 80.702508960573%; width: 3.1720430107527%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170058052" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170058052?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">15:21</div>
+			<div class="resultDate">15.09.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Einzelplan 23 (Wirtschaftliche Zusammenarbeit)</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170058052?q=klima&amp;page=3&amp;sort=date-asc&amp;t=331.080" title="Ausgewählter Ausschnitt">Das ist aus meiner Sicht auch für die <em>klima</em>- und umweltpolitische Finanzierung in der Entwicklungspolitik ein ganz großer Durchbruch. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 35.947882736156%; width: 0.98805646036917%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170059078" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170059078?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">08:59</div>
+			<div class="resultDate">16.09.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Einzelplan 06 (Innen)</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170059078?q=klima&amp;page=3&amp;sort=date-asc&amp;t=14.580" title="Ausgewählter Ausschnitt">Die ersten Berichterstattergespräche zum Haushalt des Jahres 2011 und zum Einzelplan 06 sind bereits gelaufen, und ich darf an dieser Stelle noch einmal feststellen - das ist mir auch im letzten Haushaltsjahr aufgefallen -, dass unter den Berichterstattern ein sehr gutes <em>Klima</em> herrscht. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 2.7050092764378%; width: 3.2207792207792%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170060024" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170060024?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">13:32</div>
+			<div class="resultDate">17.09.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Schlussrunde Haushaltsgesetz 2011</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170060024?q=klima&amp;page=3&amp;sort=date-asc&amp;t=479.360" title="Ausgewählter Ausschnitt">Sie schaden aber nicht nur dem <em>Klima</em>. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 59.034482758621%; width: 0.29310344827586%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170062078" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170062078?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">10:32</div>
+			<div class="resultDate">30.09.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Haushaltsbegleitgesetz 2011</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170062078?q=klima&amp;page=3&amp;sort=date-asc&amp;t=326.000" title="Ausgewählter Ausschnitt">Schon diese Ankündigung der Kanzlerin halte ich nicht für wirklich weitgehend, da wir über jährlich 48 Milliarden Euro an umweltschädlichen Subventionen im Bundeshaushalt reden, während es gleichzeitig eine <em>Klima</em>- und Haushaltskrise gibt. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 51.582278481013%; width: 2.2310126582278%;"></div></div>	</div>
+</article>
+<article class="resultItem col" data-speech-id="DE-0170062125" data-faction="Q2207512">
+	<div class="resultContent partyIndicator" data-faction="Q2207512">
+		<a class="resultLink" href="https://optv.local/media/DE-0170062125?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">09:19</div>
+			<div class="resultDate">30.09.2010</div>
+			<div class="resultMeta">
+				René Röspel <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
+			<hr>
+						<div class="resultTitle">Vereinbarte Debatte &apos;Technikfolgenabschätzung&apos;</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170062125?q=klima&amp;page=3&amp;sort=date-asc&amp;t=" title="Ausgewählter Ausschnitt">Wir erwarten in einem Bereich, der sehr neu ist, Antworten auf die Frage, welche Auswirkungen auf <em>Klima</em> und Welt kann es haben, wenn die Menschen großflächig Eisenoxid in die Weltmeere kippen, Algen damit düngen und so hoffen, dass Kohlendioxid gebunden wird, oder Sulfat in die Stratosphäre schießen, in der Hoffnung, dass großflächig Sonnenstrahlen reflektiert werden und die Erderwärmung nicht zunimmt. </a>
+				</div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170063025" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170063025?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">10:14</div>
+			<div class="resultDate">01.10.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Energiepolitik und Änderung des Atomgesetzes</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170063025?q=klima&amp;page=3&amp;sort=date-asc&amp;t=554.080" title="Ausgewählter Ausschnitt">Meine Damen und Herren, unsere Fraktion hat in dieser Woche den Kongress "<em>Klima</em> und Energie - Technologien für eine nachhaltige Zukunft" veranstaltet. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 90.241042345277%; width: 1.8794788273616%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170065003" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a class="resultLink" href="https://optv.local/media/DE-0170065003?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">15:21</div>
+			<div class="resultDate">07.10.2010</div>
+			<div class="resultMeta">
+				Maria Böhmer <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+						<div class="resultTitle">Lage der Ausländer in Deutschland</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170065003?q=klima&amp;page=3&amp;sort=date-asc&amp;t=296.240" title="Ausgewählter Ausschnitt">Rechtspopulisten vergiften dort das <em>Klima</em> und belasten das Zusammenleben. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 32.165038002172%; width: 0.39739413680781%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170065007" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170065007?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">07:34</div>
+			<div class="resultDate">07.10.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Lage der Ausländer in Deutschland</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170065007?q=klima&amp;page=3&amp;sort=date-asc&amp;t=213.740" title="Ausgewählter Ausschnitt">Das ist der beste Beweis dafür, dass entsprechende Phantomdebatten nur unserem Zusammenhalt schaden und das <em>Klima</em> vergiften können. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 47.079295154185%; width: 2.3348017621145%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170065008" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170065008?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">10:32</div>
+			<div class="resultDate">07.10.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Lage der Ausländer in Deutschland</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170065008?q=klima&amp;page=3&amp;sort=date-asc&amp;t=248.060" title="Ausgewählter Ausschnitt">Ein <em>Klima</em> des Misstrauens kann weder für die angestammte Bevölkerung noch für die Zuwanderer jene Grundlage schaffen, die wir für gelungene Integration brauchen. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 39.25%; width: 2.2025316455696%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170065046" data-faction="Q2207512">
+	<div class="resultContent partyIndicator" data-faction="Q2207512">
+		<a class="resultLink" href="https://optv.local/media/DE-0170065046?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">10:49</div>
+			<div class="resultDate">07.10.2010</div>
+			<div class="resultMeta">
+				Frank Schwabe <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
+			<hr>
+						<div class="resultTitle">Klimaschutz</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170065046?q=klima&amp;page=3&amp;sort=date-asc&amp;t=76.100" title="Ausgewählter Ausschnitt">97 Prozent der Wissenschaftler, die sich damit beschäftigen, sagen, dass es der Mensch ist, also wir, der das <em>Klima</em> massiv verändert. </a>
+								<a class="resultSnippet" href="https://optv.local/media/DE-0170065046?q=klima&amp;page=3&amp;sort=date-asc&amp;t=327.300" title="Ausgewählter Ausschnitt">Die Leute, die Gesetze machen, um das <em>Klima</em> zu schützen, sind unser größtes Problem. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 11.725731895223%; width: 1.2573189522342%;"></div><div class="hit" style="left: 50.431432973806%; width: 0.61633281972265%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170065048" data-faction="Q1826856">
+	<div class="resultContent partyIndicator" data-faction="Q1826856">
+		<a class="resultLink" href="https://optv.local/media/DE-0170065048?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">08:00</div>
+			<div class="resultDate">07.10.2010</div>
+			<div class="resultMeta">
+				Eva Bulling-Schröter <span class="partyIndicator partyIndicatorInline" data-faction="Q1826856">DIE LINKE</span>			</div>
+			<hr>
+						<div class="resultTitle">Klimaschutz</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170065048?q=klima&amp;page=3&amp;sort=date-asc&amp;t=193.480" title="Ausgewählter Ausschnitt">Übersetzt heißt das: Der Norden bezahlt ein armes lateinamerikanisches Land für einen Teil der Exportverluste und zugleich für den Schutz von <em>Klima</em> und Biodiversität, also Artenschutz. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 40.308333333333%; width: 2.9208333333333%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170065052" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a class="resultLink" href="https://optv.local/media/DE-0170065052?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">07:07</div>
+			<div class="resultDate">07.10.2010</div>
+			<div class="resultMeta">
+				Christian Hirte <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+						<div class="resultTitle">Klimaschutz</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170065052?q=klima&amp;page=3&amp;sort=date-asc&amp;t=298.900" title="Ausgewählter Ausschnitt">Deutschland muss zeigen, dass es möglich ist, den Wohlstand zu mehren und das <em>Klima</em> zu schützen. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 70%; width: 1.7049180327869%;"></div></div>	</div>
+</article>
+<article class="resultItem col" data-speech-id="DE-0170066003" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170066003?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">10:19</div>
+			<div class="resultDate">08.10.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Hightech-Strategie 2020</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170066003?q=klima&amp;page=3&amp;sort=date-asc&amp;t=" title="Ausgewählter Ausschnitt">Deshalb konzentrieren wir uns auf fünf Schwerpunkte: <em>Klima</em> und Energie, Gesundheit, Kommunikation, Mobilität und Sicherheit. </a>
+				</div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170066005" data-faction="Q1387991">
+	<div class="resultContent partyIndicator" data-faction="Q1387991">
+		<a class="resultLink" href="https://optv.local/media/DE-0170066005?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">06:15</div>
+			<div class="resultDate">08.10.2010</div>
+			<div class="resultMeta">
+				Martin Neumann <span class="partyIndicator partyIndicatorInline" data-faction="Q1387991">FDP</span>			</div>
+			<hr>
+						<div class="resultTitle">Hightech-Strategie 2020</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170066005?q=klima&amp;page=3&amp;sort=date-asc&amp;t=219.000" title="Ausgewählter Ausschnitt">Das Bedarfsfeld <em>Klima</em> und Energie hat deshalb aus forschungspolitischer Sicht einen besonders hohen Stellenwert; </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 58.4%; width: 1.648%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170066012" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a class="resultLink" href="https://optv.local/media/DE-0170066012?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">06:07</div>
+			<div class="resultDate">08.10.2010</div>
+			<div class="resultMeta">
+				Albert Rupprecht <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+						<div class="resultTitle">Hightech-Strategie 2020</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170066012?q=klima&amp;page=3&amp;sort=date-asc&amp;t=270.920" title="Ausgewählter Ausschnitt">Die großen Fragen der Menschheitsgeschichte erfordern Visionen: <em>Klima</em>, Energie, Gesundheit und Ernährung, Mobilität, Sicherheit und Kommunikation. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 73.820163487738%; width: 2.1634877384196%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170066018" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170066018?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">06:37</div>
+			<div class="resultDate">08.10.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Ökonomische Wirkung der Konjunkturpakete</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170066018?q=klima&amp;page=3&amp;sort=date-asc&amp;t=229.560" title="Ausgewählter Ausschnitt">Ich sage in allem Ernst: Wenn wir bei diesem Programm kürzen - es hilft auch nicht, es jetzt zwangsweise ein bisschen aufzustocken - und es nicht verstetigen, werden wir nicht nur die negativen Entwicklungen beim <em>Klima</em> haben, werden wir nicht nur die erneuerbaren Energien nicht vorantreiben, sondern vor allem dem Mittelstand schaden. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 57.823677581864%; width: 4.5390428211587%;"></div></div>	</div>
+</article>
+<article class="resultItem col" data-speech-id="DE-0170066025" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a class="resultLink" href="https://optv.local/media/DE-0170066025?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">07:29</div>
+			<div class="resultDate">08.10.2010</div>
+			<div class="resultMeta">
+				Matthias Heider <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+						<div class="resultTitle">Ökonomische Wirkung der Konjunkturpakete</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170066025?q=klima&amp;page=3&amp;sort=date-asc&amp;t=" title="Ausgewählter Ausschnitt">Wir, die Regierungskoalition, werden dafür sorgen, dass ein innovations- und investitionsfreundliches <em>Klima</em> geschaffen wird, das über den Tag hinaus seine Wirkung zeigen wird. </a>
+				</div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170066055" data-faction="Q1023134">
+	<div class="resultContent partyIndicator" data-faction="Q1023134">
+		<a class="resultLink" href="https://optv.local/media/DE-0170066055?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">06:12</div>
+			<div class="resultDate">08.10.2010</div>
+			<div class="resultMeta">
+				Florian Hahn <span class="partyIndicator partyIndicatorInline" data-faction="Q1023134">CDU/CSU</span>			</div>
+			<hr>
+						<div class="resultTitle">Beitrittsantrag der Republik Serbien zur EU</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170066055?q=klima&amp;page=3&amp;sort=date-asc&amp;t=319.020" title="Ausgewählter Ausschnitt">Wir müssen uns bewusst sein, dass in dem teilweise politisch noch vergifteten <em>Klima</em> in der Region genau beobachtet wird, ob wir gleiche Maßstäbe an die Länder anlegen. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 85.758064516129%; width: 2.9408602150538%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170068013" data-faction="Q2207512">
+	<div class="resultContent partyIndicator" data-faction="Q2207512">
+		<a class="resultLink" href="https://optv.local/media/DE-0170068013?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">19:55</div>
+			<div class="resultDate">28.10.2010</div>
+			<div class="resultMeta">
+				Sigmar Gabriel <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
+			<hr>
+						<div class="resultTitle">Energie- und Klimapolitik</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170068013?q=klima&amp;page=3&amp;sort=date-asc&amp;t=1136.080" title="Ausgewählter Ausschnitt">Herr Röttgen und Frau Merkel, für unsere Zukunft mit erneuerbaren Energien, für zukunftsfähige Jobs und bezahlbare Energie, für unsere eigenen Kinder und Enkel, für die Umwelt und das <em>Klima</em>, für all das brauchen wir die Atomenergie nicht - weder ihr Geld noch den Strom. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 95.069456066946%; width: 4.4602510460251%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170068024" data-faction="">
+	<div class="resultContent partyIndicator" data-faction="">
+		<a class="resultLink" href="https://optv.local/media/DE-0170068024?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">07:38</div>
+			<div class="resultDate">28.10.2010</div>
+			<div class="resultMeta">
+							</div>
+			<hr>
+						<div class="resultTitle">Energie- und Klimapolitik</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170068024?q=klima&amp;page=3&amp;sort=date-asc&amp;t=267.040" title="Ausgewählter Ausschnitt">Im Gegenteil: Mit dem <em>Klima</em>- und Energiefonds legen wir das größte Förderprogramm für erneuerbare Energien auf, das dieses Land je erlebt hat. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 58.305676855895%; width: 2.8078602620087%;"></div></div>	</div>
+</article>
+<article class="resultItem col hits" data-speech-id="DE-0170068050" data-faction="Q2207512">
+	<div class="resultContent partyIndicator" data-faction="Q2207512">
+		<a class="resultLink" href="https://optv.local/media/DE-0170068050?q=klima&amp;page=3&amp;sort=date-asc">
+			<div class="icon-play-1"></div>
+						<div class="resultDuration">05:28</div>
+			<div class="resultDate">28.10.2010</div>
+			<div class="resultMeta">
+				Frank Schwabe <span class="partyIndicator partyIndicatorInline" data-faction="Q2207512">SPD</span>			</div>
+			<hr>
+						<div class="resultTitle">Energie- und Klimapolitik</div>
+					</a>
+		<div class="resultSnippets">				<a class="resultSnippet" href="https://optv.local/media/DE-0170068050?q=klima&amp;page=3&amp;sort=date-asc&amp;t=244.080" title="Ausgewählter Ausschnitt">Es gibt keine Klarheit über die Höhe der Mittel für den <em>Klima</em>- und Energiefonds. </a>
+				</div><div class="hitTimeline"><div class="hit" style="left: 74.414634146341%; width: 0.68902439024389%;"></div></div>	</div>
 </article>
 	</div>
         <script type="text/javascript">
                 resultsAttributes = {
-    "speechFirstDateStr": "2013-11-28T12:19:48.000Z",
-    "speechFirstDateTimestamp": 1385641188000,
-    "speechLastDateStr": "2025-09-24T15:50:12.000Z",
-    "speechLastDateTimestamp": 1758729012000,
+    "speechFirstDateStr": "2009-11-10T12:22:01.000Z",
+    "speechFirstDateTimestamp": 1257855721000,
+    "speechLastDateStr": "2026-11-12T19:23:28.000Z",
+    "speechLastDateTimestamp": 1794511408000,
     "resultsPerFaction": {
-        "Q1023134": 585,
-        "Q1007353": 522,
-        "Q2207512": 473,
-        "Q42575708": 321,
-        "Q1826856": 255,
-        "Q1387991": 181,
-        "Q4316268": 26
+        "Q1023134": 732,
+        "Q1007353": 617,
+        "Q2207512": 556,
+        "Q42575708": 365,
+        "Q1826856": 324,
+        "Q1387991": 186,
+        "Q4316268": 25
     },
     "days": {
+        "2009-11-10": {
+            "key_as_string": "2009-11-10",
+            "key": 1257811200000,
+            "doc_count": 4
+        },
+        "2009-11-11": {
+            "key_as_string": "2009-11-11",
+            "key": 1257897600000,
+            "doc_count": 5
+        },
+        "2009-11-12": {
+            "key_as_string": "2009-11-12",
+            "key": 1257984000000,
+            "doc_count": 1
+        },
+        "2009-12-03": {
+            "key_as_string": "2009-12-03",
+            "key": 1259798400000,
+            "doc_count": 5
+        },
+        "2009-12-17": {
+            "key_as_string": "2009-12-17",
+            "key": 1261008000000,
+            "doc_count": 4
+        },
+        "2009-12-18": {
+            "key_as_string": "2009-12-18",
+            "key": 1261094400000,
+            "doc_count": 5
+        },
+        "2010-01-19": {
+            "key_as_string": "2010-01-19",
+            "key": 1263859200000,
+            "doc_count": 4
+        },
+        "2010-01-20": {
+            "key_as_string": "2010-01-20",
+            "key": 1263945600000,
+            "doc_count": 4
+        },
+        "2010-01-21": {
+            "key_as_string": "2010-01-21",
+            "key": 1264032000000,
+            "doc_count": 2
+        },
+        "2010-01-22": {
+            "key_as_string": "2010-01-22",
+            "key": 1264118400000,
+            "doc_count": 4
+        },
+        "2010-01-28": {
+            "key_as_string": "2010-01-28",
+            "key": 1264636800000,
+            "doc_count": 4
+        },
+        "2010-02-09": {
+            "key_as_string": "2010-02-09",
+            "key": 1265673600000,
+            "doc_count": 1
+        },
+        "2010-02-25": {
+            "key_as_string": "2010-02-25",
+            "key": 1267056000000,
+            "doc_count": 4
+        },
+        "2010-03-04": {
+            "key_as_string": "2010-03-04",
+            "key": 1267660800000,
+            "doc_count": 2
+        },
+        "2010-03-16": {
+            "key_as_string": "2010-03-16",
+            "key": 1268697600000,
+            "doc_count": 6
+        },
+        "2010-03-17": {
+            "key_as_string": "2010-03-17",
+            "key": 1268784000000,
+            "doc_count": 4
+        },
+        "2010-03-18": {
+            "key_as_string": "2010-03-18",
+            "key": 1268870400000,
+            "doc_count": 3
+        },
+        "2010-03-19": {
+            "key_as_string": "2010-03-19",
+            "key": 1268956800000,
+            "doc_count": 1
+        },
+        "2010-03-25": {
+            "key_as_string": "2010-03-25",
+            "key": 1269475200000,
+            "doc_count": 4
+        },
+        "2010-04-21": {
+            "key_as_string": "2010-04-21",
+            "key": 1271808000000,
+            "doc_count": 1
+        },
+        "2010-04-22": {
+            "key_as_string": "2010-04-22",
+            "key": 1271894400000,
+            "doc_count": 4
+        },
+        "2010-05-05": {
+            "key_as_string": "2010-05-05",
+            "key": 1273017600000,
+            "doc_count": 1
+        },
+        "2010-05-06": {
+            "key_as_string": "2010-05-06",
+            "key": 1273104000000,
+            "doc_count": 5
+        },
+        "2010-05-20": {
+            "key_as_string": "2010-05-20",
+            "key": 1274313600000,
+            "doc_count": 1
+        },
+        "2010-06-10": {
+            "key_as_string": "2010-06-10",
+            "key": 1276128000000,
+            "doc_count": 1
+        },
+        "2010-06-11": {
+            "key_as_string": "2010-06-11",
+            "key": 1276214400000,
+            "doc_count": 4
+        },
+        "2010-06-17": {
+            "key_as_string": "2010-06-17",
+            "key": 1276732800000,
+            "doc_count": 2
+        },
+        "2010-07-01": {
+            "key_as_string": "2010-07-01",
+            "key": 1277942400000,
+            "doc_count": 3
+        },
+        "2010-07-02": {
+            "key_as_string": "2010-07-02",
+            "key": 1278028800000,
+            "doc_count": 1
+        },
+        "2010-07-09": {
+            "key_as_string": "2010-07-09",
+            "key": 1278633600000,
+            "doc_count": 1
+        },
+        "2010-09-14": {
+            "key_as_string": "2010-09-14",
+            "key": 1284422400000,
+            "doc_count": 4
+        },
+        "2010-09-15": {
+            "key_as_string": "2010-09-15",
+            "key": 1284508800000,
+            "doc_count": 5
+        },
+        "2010-09-16": {
+            "key_as_string": "2010-09-16",
+            "key": 1284595200000,
+            "doc_count": 1
+        },
+        "2010-09-17": {
+            "key_as_string": "2010-09-17",
+            "key": 1284681600000,
+            "doc_count": 1
+        },
+        "2010-09-30": {
+            "key_as_string": "2010-09-30",
+            "key": 1285804800000,
+            "doc_count": 2
+        },
+        "2010-10-01": {
+            "key_as_string": "2010-10-01",
+            "key": 1285891200000,
+            "doc_count": 1
+        },
+        "2010-10-07": {
+            "key_as_string": "2010-10-07",
+            "key": 1286409600000,
+            "doc_count": 6
+        },
+        "2010-10-08": {
+            "key_as_string": "2010-10-08",
+            "key": 1286496000000,
+            "doc_count": 6
+        },
+        "2010-10-28": {
+            "key_as_string": "2010-10-28",
+            "key": 1288224000000,
+            "doc_count": 5
+        },
+        "2010-10-29": {
+            "key_as_string": "2010-10-29",
+            "key": 1288310400000,
+            "doc_count": 2
+        },
+        "2010-11-11": {
+            "key_as_string": "2010-11-11",
+            "key": 1289433600000,
+            "doc_count": 7
+        },
+        "2010-11-23": {
+            "key_as_string": "2010-11-23",
+            "key": 1290470400000,
+            "doc_count": 2
+        },
+        "2010-11-24": {
+            "key_as_string": "2010-11-24",
+            "key": 1290556800000,
+            "doc_count": 2
+        },
+        "2010-11-25": {
+            "key_as_string": "2010-11-25",
+            "key": 1290643200000,
+            "doc_count": 9
+        },
+        "2010-11-26": {
+            "key_as_string": "2010-11-26",
+            "key": 1290729600000,
+            "doc_count": 1
+        },
+        "2010-12-01": {
+            "key_as_string": "2010-12-01",
+            "key": 1291161600000,
+            "doc_count": 1
+        },
+        "2010-12-02": {
+            "key_as_string": "2010-12-02",
+            "key": 1291248000000,
+            "doc_count": 2
+        },
+        "2010-12-03": {
+            "key_as_string": "2010-12-03",
+            "key": 1291334400000,
+            "doc_count": 1
+        },
+        "2010-12-15": {
+            "key_as_string": "2010-12-15",
+            "key": 1292371200000,
+            "doc_count": 1
+        },
+        "2010-12-16": {
+            "key_as_string": "2010-12-16",
+            "key": 1292457600000,
+            "doc_count": 2
+        },
+        "2011-01-20": {
+            "key_as_string": "2011-01-20",
+            "key": 1295481600000,
+            "doc_count": 3
+        },
+        "2011-01-21": {
+            "key_as_string": "2011-01-21",
+            "key": 1295568000000,
+            "doc_count": 1
+        },
+        "2011-01-27": {
+            "key_as_string": "2011-01-27",
+            "key": 1296086400000,
+            "doc_count": 2
+        },
+        "2011-01-28": {
+            "key_as_string": "2011-01-28",
+            "key": 1296172800000,
+            "doc_count": 1
+        },
+        "2011-02-10": {
+            "key_as_string": "2011-02-10",
+            "key": 1297296000000,
+            "doc_count": 4
+        },
+        "2011-02-11": {
+            "key_as_string": "2011-02-11",
+            "key": 1297382400000,
+            "doc_count": 4
+        },
+        "2011-02-24": {
+            "key_as_string": "2011-02-24",
+            "key": 1298505600000,
+            "doc_count": 1
+        },
+        "2011-03-17": {
+            "key_as_string": "2011-03-17",
+            "key": 1300320000000,
+            "doc_count": 2
+        },
+        "2011-03-24": {
+            "key_as_string": "2011-03-24",
+            "key": 1300924800000,
+            "doc_count": 2
+        },
+        "2011-04-07": {
+            "key_as_string": "2011-04-07",
+            "key": 1302134400000,
+            "doc_count": 5
+        },
+        "2011-04-08": {
+            "key_as_string": "2011-04-08",
+            "key": 1302220800000,
+            "doc_count": 2
+        },
+        "2011-04-14": {
+            "key_as_string": "2011-04-14",
+            "key": 1302739200000,
+            "doc_count": 2
+        },
+        "2011-05-12": {
+            "key_as_string": "2011-05-12",
+            "key": 1305158400000,
+            "doc_count": 3
+        },
+        "2011-05-13": {
+            "key_as_string": "2011-05-13",
+            "key": 1305244800000,
+            "doc_count": 1
+        },
+        "2011-05-25": {
+            "key_as_string": "2011-05-25",
+            "key": 1306281600000,
+            "doc_count": 2
+        },
+        "2011-05-27": {
+            "key_as_string": "2011-05-27",
+            "key": 1306454400000,
+            "doc_count": 1
+        },
+        "2011-06-10": {
+            "key_as_string": "2011-06-10",
+            "key": 1307664000000,
+            "doc_count": 2
+        },
+        "2011-06-30": {
+            "key_as_string": "2011-06-30",
+            "key": 1309392000000,
+            "doc_count": 2
+        },
+        "2011-07-01": {
+            "key_as_string": "2011-07-01",
+            "key": 1309478400000,
+            "doc_count": 2
+        },
+        "2011-07-07": {
+            "key_as_string": "2011-07-07",
+            "key": 1309996800000,
+            "doc_count": 1
+        },
+        "2011-09-06": {
+            "key_as_string": "2011-09-06",
+            "key": 1315267200000,
+            "doc_count": 2
+        },
+        "2011-09-07": {
+            "key_as_string": "2011-09-07",
+            "key": 1315353600000,
+            "doc_count": 5
+        },
+        "2011-09-08": {
+            "key_as_string": "2011-09-08",
+            "key": 1315440000000,
+            "doc_count": 5
+        },
+        "2011-09-09": {
+            "key_as_string": "2011-09-09",
+            "key": 1315526400000,
+            "doc_count": 1
+        },
+        "2011-09-21": {
+            "key_as_string": "2011-09-21",
+            "key": 1316563200000,
+            "doc_count": 1
+        },
+        "2011-09-28": {
+            "key_as_string": "2011-09-28",
+            "key": 1317168000000,
+            "doc_count": 1
+        },
+        "2011-09-30": {
+            "key_as_string": "2011-09-30",
+            "key": 1317340800000,
+            "doc_count": 1
+        },
+        "2011-10-20": {
+            "key_as_string": "2011-10-20",
+            "key": 1319068800000,
+            "doc_count": 2
+        },
+        "2011-10-26": {
+            "key_as_string": "2011-10-26",
+            "key": 1319587200000,
+            "doc_count": 2
+        },
+        "2011-10-27": {
+            "key_as_string": "2011-10-27",
+            "key": 1319673600000,
+            "doc_count": 4
+        },
+        "2011-10-28": {
+            "key_as_string": "2011-10-28",
+            "key": 1319760000000,
+            "doc_count": 1
+        },
+        "2011-11-10": {
+            "key_as_string": "2011-11-10",
+            "key": 1320883200000,
+            "doc_count": 1
+        },
+        "2011-11-11": {
+            "key_as_string": "2011-11-11",
+            "key": 1320969600000,
+            "doc_count": 3
+        },
+        "2011-11-22": {
+            "key_as_string": "2011-11-22",
+            "key": 1321920000000,
+            "doc_count": 7
+        },
+        "2011-11-23": {
+            "key_as_string": "2011-11-23",
+            "key": 1322006400000,
+            "doc_count": 4
+        },
+        "2011-11-24": {
+            "key_as_string": "2011-11-24",
+            "key": 1322092800000,
+            "doc_count": 2
+        },
+        "2011-11-25": {
+            "key_as_string": "2011-11-25",
+            "key": 1322179200000,
+            "doc_count": 2
+        },
+        "2011-12-01": {
+            "key_as_string": "2011-12-01",
+            "key": 1322697600000,
+            "doc_count": 4
+        },
+        "2011-12-02": {
+            "key_as_string": "2011-12-02",
+            "key": 1322784000000,
+            "doc_count": 1
+        },
+        "2011-12-16": {
+            "key_as_string": "2011-12-16",
+            "key": 1323993600000,
+            "doc_count": 7
+        },
+        "2012-01-19": {
+            "key_as_string": "2012-01-19",
+            "key": 1326931200000,
+            "doc_count": 1
+        },
+        "2012-01-20": {
+            "key_as_string": "2012-01-20",
+            "key": 1327017600000,
+            "doc_count": 4
+        },
+        "2012-01-26": {
+            "key_as_string": "2012-01-26",
+            "key": 1327536000000,
+            "doc_count": 1
+        },
+        "2012-01-27": {
+            "key_as_string": "2012-01-27",
+            "key": 1327622400000,
+            "doc_count": 1
+        },
+        "2012-02-08": {
+            "key_as_string": "2012-02-08",
+            "key": 1328659200000,
+            "doc_count": 1
+        },
+        "2012-02-10": {
+            "key_as_string": "2012-02-10",
+            "key": 1328832000000,
+            "doc_count": 2
+        },
+        "2012-02-29": {
+            "key_as_string": "2012-02-29",
+            "key": 1330473600000,
+            "doc_count": 1
+        },
+        "2012-03-01": {
+            "key_as_string": "2012-03-01",
+            "key": 1330560000000,
+            "doc_count": 3
+        },
+        "2012-03-08": {
+            "key_as_string": "2012-03-08",
+            "key": 1331164800000,
+            "doc_count": 2
+        },
+        "2012-03-09": {
+            "key_as_string": "2012-03-09",
+            "key": 1331251200000,
+            "doc_count": 1
+        },
+        "2012-03-22": {
+            "key_as_string": "2012-03-22",
+            "key": 1332374400000,
+            "doc_count": 4
+        },
+        "2012-03-23": {
+            "key_as_string": "2012-03-23",
+            "key": 1332460800000,
+            "doc_count": 3
+        },
+        "2012-03-30": {
+            "key_as_string": "2012-03-30",
+            "key": 1333065600000,
+            "doc_count": 2
+        },
+        "2012-04-26": {
+            "key_as_string": "2012-04-26",
+            "key": 1335398400000,
+            "doc_count": 2
+        },
+        "2012-04-27": {
+            "key_as_string": "2012-04-27",
+            "key": 1335484800000,
+            "doc_count": 2
+        },
+        "2012-05-10": {
+            "key_as_string": "2012-05-10",
+            "key": 1336608000000,
+            "doc_count": 2
+        },
+        "2012-05-11": {
+            "key_as_string": "2012-05-11",
+            "key": 1336694400000,
+            "doc_count": 2
+        },
+        "2012-05-24": {
+            "key_as_string": "2012-05-24",
+            "key": 1337817600000,
+            "doc_count": 3
+        },
+        "2012-05-25": {
+            "key_as_string": "2012-05-25",
+            "key": 1337904000000,
+            "doc_count": 2
+        },
+        "2012-06-14": {
+            "key_as_string": "2012-06-14",
+            "key": 1339632000000,
+            "doc_count": 2
+        },
+        "2012-09-11": {
+            "key_as_string": "2012-09-11",
+            "key": 1347321600000,
+            "doc_count": 2
+        },
+        "2012-09-12": {
+            "key_as_string": "2012-09-12",
+            "key": 1347408000000,
+            "doc_count": 3
+        },
+        "2012-09-13": {
+            "key_as_string": "2012-09-13",
+            "key": 1347494400000,
+            "doc_count": 1
+        },
+        "2012-09-27": {
+            "key_as_string": "2012-09-27",
+            "key": 1348704000000,
+            "doc_count": 5
+        },
+        "2012-09-28": {
+            "key_as_string": "2012-09-28",
+            "key": 1348790400000,
+            "doc_count": 1
+        },
+        "2012-10-17": {
+            "key_as_string": "2012-10-17",
+            "key": 1350432000000,
+            "doc_count": 1
+        },
+        "2012-10-25": {
+            "key_as_string": "2012-10-25",
+            "key": 1351123200000,
+            "doc_count": 3
+        },
+        "2012-10-26": {
+            "key_as_string": "2012-10-26",
+            "key": 1351209600000,
+            "doc_count": 1
+        },
+        "2012-11-07": {
+            "key_as_string": "2012-11-07",
+            "key": 1352246400000,
+            "doc_count": 2
+        },
+        "2012-11-08": {
+            "key_as_string": "2012-11-08",
+            "key": 1352332800000,
+            "doc_count": 3
+        },
+        "2012-11-20": {
+            "key_as_string": "2012-11-20",
+            "key": 1353369600000,
+            "doc_count": 3
+        },
+        "2012-11-21": {
+            "key_as_string": "2012-11-21",
+            "key": 1353456000000,
+            "doc_count": 1
+        },
+        "2012-11-23": {
+            "key_as_string": "2012-11-23",
+            "key": 1353628800000,
+            "doc_count": 1
+        },
+        "2012-11-29": {
+            "key_as_string": "2012-11-29",
+            "key": 1354147200000,
+            "doc_count": 2
+        },
+        "2012-12-13": {
+            "key_as_string": "2012-12-13",
+            "key": 1355356800000,
+            "doc_count": 1
+        },
+        "2013-01-17": {
+            "key_as_string": "2013-01-17",
+            "key": 1358380800000,
+            "doc_count": 2
+        },
+        "2013-02-01": {
+            "key_as_string": "2013-02-01",
+            "key": 1359676800000,
+            "doc_count": 1
+        },
+        "2013-02-21": {
+            "key_as_string": "2013-02-21",
+            "key": 1361404800000,
+            "doc_count": 2
+        },
+        "2013-02-22": {
+            "key_as_string": "2013-02-22",
+            "key": 1361491200000,
+            "doc_count": 1
+        },
+        "2013-02-27": {
+            "key_as_string": "2013-02-27",
+            "key": 1361923200000,
+            "doc_count": 1
+        },
+        "2013-02-28": {
+            "key_as_string": "2013-02-28",
+            "key": 1362009600000,
+            "doc_count": 3
+        },
+        "2013-03-01": {
+            "key_as_string": "2013-03-01",
+            "key": 1362096000000,
+            "doc_count": 2
+        },
+        "2013-03-14": {
+            "key_as_string": "2013-03-14",
+            "key": 1363219200000,
+            "doc_count": 7
+        },
+        "2013-03-21": {
+            "key_as_string": "2013-03-21",
+            "key": 1363824000000,
+            "doc_count": 8
+        },
+        "2013-03-22": {
+            "key_as_string": "2013-03-22",
+            "key": 1363910400000,
+            "doc_count": 1
+        },
+        "2013-04-18": {
+            "key_as_string": "2013-04-18",
+            "key": 1366243200000,
+            "doc_count": 2
+        },
+        "2013-04-19": {
+            "key_as_string": "2013-04-19",
+            "key": 1366329600000,
+            "doc_count": 2
+        },
+        "2013-04-25": {
+            "key_as_string": "2013-04-25",
+            "key": 1366848000000,
+            "doc_count": 2
+        },
+        "2013-04-26": {
+            "key_as_string": "2013-04-26",
+            "key": 1366934400000,
+            "doc_count": 2
+        },
+        "2013-05-16": {
+            "key_as_string": "2013-05-16",
+            "key": 1368662400000,
+            "doc_count": 2
+        },
+        "2013-05-17": {
+            "key_as_string": "2013-05-17",
+            "key": 1368748800000,
+            "doc_count": 1
+        },
+        "2013-06-06": {
+            "key_as_string": "2013-06-06",
+            "key": 1370476800000,
+            "doc_count": 1
+        },
+        "2013-06-13": {
+            "key_as_string": "2013-06-13",
+            "key": 1371081600000,
+            "doc_count": 4
+        },
+        "2013-06-14": {
+            "key_as_string": "2013-06-14",
+            "key": 1371168000000,
+            "doc_count": 2
+        },
+        "2013-06-26": {
+            "key_as_string": "2013-06-26",
+            "key": 1372204800000,
+            "doc_count": 1
+        },
+        "2013-06-27": {
+            "key_as_string": "2013-06-27",
+            "key": 1372291200000,
+            "doc_count": 1
+        },
         "2013-11-28": {
             "key_as_string": "2013-11-28",
             "key": 1385596800000,
@@ -1493,7 +2209,7 @@ content-type: text/html; charset=UTF-8
         "2018-06-15": {
             "key_as_string": "2018-06-15",
             "key": 1529020800000,
-            "doc_count": 4
+            "doc_count": 5
         },
         "2018-06-28": {
             "key_as_string": "2018-06-28",
@@ -1793,7 +2509,7 @@ content-type: text/html; charset=UTF-8
         "2019-09-12": {
             "key_as_string": "2019-09-12",
             "key": 1568246400000,
-            "doc_count": 10
+            "doc_count": 11
         },
         "2019-09-13": {
             "key_as_string": "2019-09-13",
@@ -3385,6 +4101,11 @@ content-type: text/html; charset=UTF-8
             "key": 1752192000000,
             "doc_count": 1
         },
+        "2025-09-10": {
+            "key_as_string": "2025-09-10",
+            "key": 1757462400000,
+            "doc_count": 6
+        },
         "2025-09-11": {
             "key_as_string": "2025-09-11",
             "key": 1757548800000,
@@ -3419,9 +4140,310 @@ content-type: text/html; charset=UTF-8
             "key_as_string": "2025-09-24",
             "key": 1758672000000,
             "doc_count": 7
+        },
+        "2025-09-25": {
+            "key_as_string": "2025-09-25",
+            "key": 1758758400000,
+            "doc_count": 15
+        },
+        "2025-09-26": {
+            "key_as_string": "2025-09-26",
+            "key": 1758844800000,
+            "doc_count": 5
+        },
+        "2025-10-09": {
+            "key_as_string": "2025-10-09",
+            "key": 1759968000000,
+            "doc_count": 5
+        },
+        "2025-10-10": {
+            "key_as_string": "2025-10-10",
+            "key": 1760054400000,
+            "doc_count": 8
+        },
+        "2025-10-15": {
+            "key_as_string": "2025-10-15",
+            "key": 1760486400000,
+            "doc_count": 1
+        },
+        "2025-10-16": {
+            "key_as_string": "2025-10-16",
+            "key": 1760572800000,
+            "doc_count": 7
+        },
+        "2025-10-17": {
+            "key_as_string": "2025-10-17",
+            "key": 1760659200000,
+            "doc_count": 10
+        },
+        "2025-11-05": {
+            "key_as_string": "2025-11-05",
+            "key": 1762300800000,
+            "doc_count": 6
+        },
+        "2025-11-06": {
+            "key_as_string": "2025-11-06",
+            "key": 1762387200000,
+            "doc_count": 8
+        },
+        "2025-11-07": {
+            "key_as_string": "2025-11-07",
+            "key": 1762473600000,
+            "doc_count": 6
+        },
+        "2025-11-13": {
+            "key_as_string": "2025-11-13",
+            "key": 1762992000000,
+            "doc_count": 10
+        },
+        "2025-11-14": {
+            "key_as_string": "2025-11-14",
+            "key": 1763078400000,
+            "doc_count": 9
+        },
+        "2025-11-25": {
+            "key_as_string": "2025-11-25",
+            "key": 1764028800000,
+            "doc_count": 16
+        },
+        "2025-11-26": {
+            "key_as_string": "2025-11-26",
+            "key": 1764115200000,
+            "doc_count": 6
+        },
+        "2025-11-27": {
+            "key_as_string": "2025-11-27",
+            "key": 1764201600000,
+            "doc_count": 10
+        },
+        "2025-11-28": {
+            "key_as_string": "2025-11-28",
+            "key": 1764288000000,
+            "doc_count": 5
+        },
+        "2025-12-03": {
+            "key_as_string": "2025-12-03",
+            "key": 1764720000000,
+            "doc_count": 1
+        },
+        "2025-12-04": {
+            "key_as_string": "2025-12-04",
+            "key": 1764806400000,
+            "doc_count": 11
+        },
+        "2025-12-17": {
+            "key_as_string": "2025-12-17",
+            "key": 1765929600000,
+            "doc_count": 1
+        },
+        "2025-12-18": {
+            "key_as_string": "2025-12-18",
+            "key": 1766016000000,
+            "doc_count": 4
+        },
+        "2025-12-19": {
+            "key_as_string": "2025-12-19",
+            "key": 1766102400000,
+            "doc_count": 1
+        },
+        "2026-01-14": {
+            "key_as_string": "2026-01-14",
+            "key": 1768348800000,
+            "doc_count": 6
+        },
+        "2026-01-15": {
+            "key_as_string": "2026-01-15",
+            "key": 1768435200000,
+            "doc_count": 11
+        },
+        "2026-01-16": {
+            "key_as_string": "2026-01-16",
+            "key": 1768521600000,
+            "doc_count": 4
+        },
+        "2026-01-29": {
+            "key_as_string": "2026-01-29",
+            "key": 1769644800000,
+            "doc_count": 3
+        },
+        "2026-01-30": {
+            "key_as_string": "2026-01-30",
+            "key": 1769731200000,
+            "doc_count": 7
+        },
+        "2026-02-25": {
+            "key_as_string": "2026-02-25",
+            "key": 1771977600000,
+            "doc_count": 2
+        },
+        "2026-02-26": {
+            "key_as_string": "2026-02-26",
+            "key": 1772064000000,
+            "doc_count": 9
+        },
+        "2026-02-27": {
+            "key_as_string": "2026-02-27",
+            "key": 1772150400000,
+            "doc_count": 4
+        },
+        "2026-03-04": {
+            "key_as_string": "2026-03-04",
+            "key": 1772582400000,
+            "doc_count": 1
+        },
+        "2026-03-05": {
+            "key_as_string": "2026-03-05",
+            "key": 1772668800000,
+            "doc_count": 7
+        },
+        "2026-03-19": {
+            "key_as_string": "2026-03-19",
+            "key": 1773878400000,
+            "doc_count": 4
+        },
+        "2026-03-20": {
+            "key_as_string": "2026-03-20",
+            "key": 1773964800000,
+            "doc_count": 11
+        },
+        "2026-03-25": {
+            "key_as_string": "2026-03-25",
+            "key": 1774396800000,
+            "doc_count": 1
+        },
+        "2026-03-26": {
+            "key_as_string": "2026-03-26",
+            "key": 1774483200000,
+            "doc_count": 12
+        },
+        "2026-03-27": {
+            "key_as_string": "2026-03-27",
+            "key": 1774569600000,
+            "doc_count": 8
+        },
+        "2026-04-15": {
+            "key_as_string": "2026-04-15",
+            "key": 1776211200000,
+            "doc_count": 5
+        },
+        "2026-04-16": {
+            "key_as_string": "2026-04-16",
+            "key": 1776297600000,
+            "doc_count": 4
+        },
+        "2026-04-17": {
+            "key_as_string": "2026-04-17",
+            "key": 1776384000000,
+            "doc_count": 4
+        },
+        "2026-04-22": {
+            "key_as_string": "2026-04-22",
+            "key": 1776816000000,
+            "doc_count": 3
+        },
+        "2026-04-23": {
+            "key_as_string": "2026-04-23",
+            "key": 1776902400000,
+            "doc_count": 10
+        },
+        "2026-04-24": {
+            "key_as_string": "2026-04-24",
+            "key": 1776988800000,
+            "doc_count": 1
+        },
+        "2026-05-07": {
+            "key_as_string": "2026-05-07",
+            "key": 1778112000000,
+            "doc_count": 9
+        },
+        "2026-05-08": {
+            "key_as_string": "2026-05-08",
+            "key": 1778198400000,
+            "doc_count": 11
+        },
+        "2026-05-20": {
+            "key_as_string": "2026-05-20",
+            "key": 1779235200000,
+            "doc_count": 7
+        },
+        "2026-05-21": {
+            "key_as_string": "2026-05-21",
+            "key": 1779321600000,
+            "doc_count": 9
+        },
+        "2026-05-22": {
+            "key_as_string": "2026-05-22",
+            "key": 1779408000000,
+            "doc_count": 2
+        },
+        "2026-06-10": {
+            "key_as_string": "2026-06-10",
+            "key": 1781049600000,
+            "doc_count": 1
+        },
+        "2026-06-11": {
+            "key_as_string": "2026-06-11",
+            "key": 1781136000000,
+            "doc_count": 5
+        },
+        "2026-06-12": {
+            "key_as_string": "2026-06-12",
+            "key": 1781222400000,
+            "doc_count": 3
+        },
+        "2026-06-24": {
+            "key_as_string": "2026-06-24",
+            "key": 1782259200000,
+            "doc_count": 3
+        },
+        "2026-06-25": {
+            "key_as_string": "2026-06-25",
+            "key": 1782345600000,
+            "doc_count": 5
+        },
+        "2026-06-26": {
+            "key_as_string": "2026-06-26",
+            "key": 1782432000000,
+            "doc_count": 2
+        },
+        "2026-07-08": {
+            "key_as_string": "2026-07-08",
+            "key": 1783468800000,
+            "doc_count": 5
+        },
+        "2026-07-09": {
+            "key_as_string": "2026-07-09",
+            "key": 1783555200000,
+            "doc_count": 6
+        },
+        "2026-07-10": {
+            "key_as_string": "2026-07-10",
+            "key": 1783641600000,
+            "doc_count": 3
+        },
+        "2026-11-06": {
+            "key_as_string": "2026-11-06",
+            "key": 1793923200000,
+            "doc_count": 11
+        },
+        "2026-11-12": {
+            "key_as_string": "2026-11-12",
+            "key": 1794441600000,
+            "doc_count": 4
         }
     },
     "electoralPeriods": [
+        {
+            "type": "electoralPeriod",
+            "id": "DE-017",
+            "attributes": {
+                "number": 17,
+                "dateStart": null,
+                "dateEnd": null,
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag"
+            }
+        },
         {
             "type": "electoralPeriod",
             "id": "DE-018",
@@ -3493,11 +4515,11 @@ content-type: text/html; charset=UTF-8
 											<a class="page-link" href='search?q=klima&amp;page=5&amp;sort=date-asc'>5</a>
 									</li>
 										<li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-																																																																																																																																																																																					<li class="page-item ">
-											<a class="page-link" href='search?q=klima&amp;page=64&amp;sort=date-asc'>64</a>
+																																																																																																																																																																																																																																											<li class="page-item ">
+											<a class="page-link" href='search?q=klima&amp;page=82&amp;sort=date-asc'>82</a>
 									</li>
 										<li class="page-item ">
-											<a class="page-link" href='search?q=klima&amp;page=65&amp;sort=date-asc'>65</a>
+											<a class="page-link" href='search?q=klima&amp;page=83&amp;sort=date-asc'>83</a>
 									</li>
 								<li class="page-item ">
 							<a class="page-link" href='search?q=klima&amp;page=4&amp;sort=date-asc' aria-label="Nächste">

@@ -4,14 +4,38 @@ x-robots-tag: noindex
 
 {
     "meta": {
-        "requestStatus": "error"
+        "api": {
+            "version": 1,
+            "documentation": "https://optv.local/api",
+            "license": {
+                "label": "ODC Open Database License (ODbL) v1.0",
+                "link": "https://opendatacommons.org/licenses/odbl/1-0/"
+            }
+        },
+        "requestStatus": "success",
+        "message": "CronUpdater status retrieved successfully from progress file for parliament DE."
     },
-    "errors": [
-        {
-            "status": "403",
-            "code": "1",
-            "title": "Nicht erlaubt",
-            "detail": "Du hast keine Berechtigung diese Seite aufzurufen oder diese Aktion durchzuführen."
+    "data": {
+        "processName": "dataImport",
+        "status": "completed_successfully",
+        "statusDetails": "Data import finished. Processed 33/33 files.",
+        "startTime": "<<NORMALIZED>>",
+        "endTime": "<<NORMALIZED>>",
+        "totalFiles": 33,
+        "processedFiles": 33,
+        "currentFile": null,
+        "errors": [],
+        "lastActivityTime": "<<NORMALIZED>>",
+        "totalDataObjects": 0,
+        "processedDataObjects": 0,
+        "totalMediaObjects": 0,
+        "processedMediaObjects": 0,
+        "lastSuccessfullyProcessedFile": "21109-session.json",
+        "currentFileProgress": {
+            "totalDataObjectsInFile": 0,
+            "processedDataObjectsInFile": 0,
+            "totalMediaObjectsInFile": 0,
+            "processedMediaObjectsInFile": 0
         }
-    ]
+    }
 }

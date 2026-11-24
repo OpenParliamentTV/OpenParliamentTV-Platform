@@ -26,20 +26,20 @@ x-robots-tag: noindex
                         "numberOfSessions": "<<NORMALIZED>>"
                     },
                     "local": {
-                        "lastUpdated": "2026-07-14T23:41:22+02:00",
-                        "numberOfSessions": 1055
+                        "lastUpdated": "2026-11-23T19:40:52+01:00",
+                        "numberOfSessions": 1074
                     }
                 },
                 "database": {
-                    "lastUpdated": "2025-09-30T12:37:55+02:00",
-                    "lastSpeechDate": "2025-09-26T11:03:34+02:00",
-                    "numberOfSessions": 739,
-                    "numberOfSpeeches": 76072
+                    "lastUpdated": "2026-11-23T14:37:45+01:00",
+                    "lastSpeechDate": "2026-11-13T14:23:08+01:00",
+                    "numberOfSessions": 1059,
+                    "numberOfSpeeches": 105568
                 },
                 "index": {
-                    "lastUpdated": "2025-09-30T12:37:55+02:00",
-                    "lastSpeechDate": "2025-09-26T11:03:34+02:00",
-                    "numberOfSpeeches": 76072
+                    "lastUpdated": "2026-11-14T13:46:43+01:00",
+                    "lastSpeechDate": "2026-11-13T14:22:19+01:00",
+                    "numberOfSpeeches": 105568
                 }
             }
         ]

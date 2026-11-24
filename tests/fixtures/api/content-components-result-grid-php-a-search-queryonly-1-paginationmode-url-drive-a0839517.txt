@@ -7,7 +7,7 @@ content-type: text/html; charset=UTF-8
 			<div class="card-body p-0" style="background: rgba(135, 152, 220, .1)">
 				<h4 class="p-3 mb-0 fw-bolder" style="color: #8798dc;"><span class="icon-search me-2"></span>Debatten durchsuchen</h4>
 				<div class="px-3">
-					<div><b><span class="countup">76072</span> Redebeiträge</b> im Deutschen Bundestag</div>
+					<div><b><span class="countup">105568</span> Redebeiträge</b> im Deutschen Bundestag</div>
 					<ul>
 						<li><b>synchronisiert</b> mit den Plenarprotokollen</li>
 						<li>Wort für Wort <b>durchsuchbar</b></li>

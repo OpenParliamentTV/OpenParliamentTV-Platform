@@ -51,19 +51,19 @@ x-robots-tag: noindex
                             "date": "2019-04",
                             "totalCount": 30,
                             "speechCount": 20,
-                            "tokenCount": 296657
+                            "tokenCount": 297206
                         },
                         {
                             "date": "2019-05",
                             "totalCount": 27,
                             "speechCount": 23,
-                            "tokenCount": 323261
+                            "tokenCount": 324000
                         },
                         {
                             "date": "2019-06",
                             "totalCount": 51,
                             "speechCount": 40,
-                            "tokenCount": 339759
+                            "tokenCount": 340276
                         },
                         {
                             "date": "2019-07",
@@ -79,57 +79,57 @@ x-robots-tag: noindex
                         },
                         {
                             "date": "2019-09",
-                            "totalCount": 90,
-                            "speechCount": 65,
-                            "tokenCount": 361114
+                            "totalCount": 91,
+                            "speechCount": 66,
+                            "tokenCount": 362861
                         },
                         {
                             "date": "2019-10",
                             "totalCount": 50,
                             "speechCount": 37,
-                            "tokenCount": 318380
+                            "tokenCount": 318932
                         },
                         {
                             "date": "2019-11",
                             "totalCount": 75,
                             "speechCount": 52,
-                            "tokenCount": 529943
+                            "tokenCount": 530534
                         },
                         {
                             "date": "2019-12",
                             "totalCount": 45,
                             "speechCount": 32,
-                            "tokenCount": 316848
+                            "tokenCount": 317585
                         },
                         {
                             "date": "2020-01",
                             "totalCount": 34,
                             "speechCount": 32,
-                            "tokenCount": 281378
+                            "tokenCount": 282665
                         },
                         {
                             "date": "2020-02",
                             "totalCount": 16,
                             "speechCount": 12,
-                            "tokenCount": 142578
+                            "tokenCount": 143252
                         },
                         {
                             "date": "2020-03",
                             "totalCount": 23,
                             "speechCount": 18,
-                            "tokenCount": 315029
+                            "tokenCount": 316177
                         },
                         {
                             "date": "2020-04",
                             "totalCount": 3,
                             "speechCount": 1,
-                            "tokenCount": 96292
+                            "tokenCount": 96770
                         },
                         {
                             "date": "2020-05",
                             "totalCount": 17,
                             "speechCount": 10,
-                            "tokenCount": 458851
+                            "tokenCount": 459506
                         },
                         {
                             "date": "2020-06",
@@ -159,13 +159,13 @@ x-robots-tag: noindex
                             "date": "2020-10",
                             "totalCount": 34,
                             "speechCount": 28,
-                            "tokenCount": 460346
+                            "tokenCount": 461002
                         },
                         {
                             "date": "2020-11",
                             "totalCount": 32,
                             "speechCount": 23,
-                            "tokenCount": 492308
+                            "tokenCount": 493019
                         },
                         {
                             "date": "2020-12",
@@ -174,11 +174,11 @@ x-robots-tag: noindex
                             "tokenCount": 313563
                         }
                     ],
-                    "total": 710,
+                    "total": 711,
                     "forms": [
                         {
                             "word": "klima",
-                            "count": 710
+                            "count": 711
                         }
                     ],
                     "firstUse": {

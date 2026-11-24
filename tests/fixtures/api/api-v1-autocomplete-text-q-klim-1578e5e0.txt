@@ -17,56 +17,56 @@ x-robots-tag: noindex
     "data": [
         {
             "text": "<em>klim</em>aschutz",
-            "score": 7244,
-            "freq": 7244,
+            "score": 9120,
+            "freq": 9120,
             "type": "prefix"
         },
         {
             "text": "<em>klim</em>a",
-            "score": 3224,
-            "freq": 3224,
+            "score": 4053,
+            "freq": 4053,
             "type": "prefix"
         },
         {
             "text": "<em>klim</em>awandel",
-            "score": 2256,
-            "freq": 2256,
+            "score": 2782,
+            "freq": 2782,
             "type": "prefix"
         },
         {
             "text": "<em>klim</em>akrise",
-            "score": 1394,
-            "freq": 1394,
+            "score": 1516,
+            "freq": 1516,
             "type": "prefix"
         },
         {
             "text": "<em>klim</em>apolitik",
-            "score": 994,
-            "freq": 994,
+            "score": 1306,
+            "freq": 1306,
             "type": "prefix"
         },
         {
             "text": "<em>klim</em>aziele",
-            "score": 951,
-            "freq": 951,
+            "score": 1128,
+            "freq": 1128,
             "type": "prefix"
         },
         {
             "text": "<em>klim</em>awandels",
-            "score": 682,
-            "freq": 682,
-            "type": "prefix"
-        },
-        {
-            "text": "<em>klim</em>aschutzgesetz",
-            "score": 567,
-            "freq": 567,
+            "score": 868,
+            "freq": 868,
             "type": "prefix"
         },
         {
             "text": "<em>klim</em>aneutralität",
-            "score": 554,
-            "freq": 554,
+            "score": 683,
+            "freq": 683,
+            "type": "prefix"
+        },
+        {
+            "text": "<em>klim</em>aschutzgesetz",
+            "score": 650,
+            "freq": 650,
             "type": "prefix"
         }
     ]

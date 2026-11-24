@@ -19,13 +19,13 @@ x-robots-tag: noindex
             "speechLastDateStr": "2020-12-17T20:42:21.000Z",
             "speechLastDateTimestamp": 1608237741000,
             "resultsPerFaction": {
-                "Q1023134": 1771,
-                "Q2207512": 1217,
-                "Q42575708": 914,
-                "Q1387991": 840,
-                "Q1826856": 791,
-                "Q1007353": 780,
-                "Q4316268": 31
+                "Q1023134": 1610,
+                "Q2207512": 1088,
+                "Q42575708": 811,
+                "Q1387991": 746,
+                "Q1826856": 698,
+                "Q1007353": 691,
+                "Q4316268": 28
             },
             "days": {
                 "2020-01-15": {
@@ -352,6 +352,17 @@ x-robots-tag: noindex
             "electoralPeriods": [
                 {
                     "type": "electoralPeriod",
+                    "id": "DE-017",
+                    "attributes": {
+                        "number": 17,
+                        "dateStart": null,
+                        "dateEnd": null,
+                        "parliament": "DE",
+                        "parliamentLabel": "Deutscher Bundestag"
+                    }
+                },
+                {
+                    "type": "electoralPeriod",
                     "id": "DE-018",
                     "attributes": {
                         "number": 18,
@@ -426,9 +437,9 @@ x-robots-tag: noindex
                 "thumbnailURI": null,
                 "thumbnailCreator": null,
                 "thumbnailLicense": null,
-                "additionalInformation": null,
-                "lastChanged": "2025-06-05 21:46:14",
-                "lastChangedTimestamp": 1749152774,
+                "additionalInformation": [],
+                "lastChanged": "2026-08-12 10:10:57",
+                "lastChangedTimestamp": 1786522257,
                 "textContents": [
                     {
                         "id": "12134",
@@ -666,9 +677,9 @@ x-robots-tag: noindex
                 "thumbnailURI": null,
                 "thumbnailCreator": null,
                 "thumbnailLicense": null,
-                "additionalInformation": null,
-                "lastChanged": "2025-06-05 21:46:14",
-                "lastChangedTimestamp": 1749152774,
+                "additionalInformation": [],
+                "lastChanged": "2026-08-12 10:10:57",
+                "lastChangedTimestamp": 1786522257,
                 "textContents": [
                     {
                         "id": "12135",

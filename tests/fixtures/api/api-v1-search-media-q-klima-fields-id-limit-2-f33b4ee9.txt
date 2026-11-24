@@ -15,7 +15,7 @@ x-robots-tag: noindex
         "requestStatus": "success",
         "results": {
             "count": 2,
-            "total": 2583
+            "total": 3309
         }
     },
     "data": [
@@ -33,6 +33,6 @@ x-robots-tag: noindex
         "first": "https://optv.local/api/v1/search/media?q=klima&fields=id&limit=2&page=1",
         "prev": null,
         "next": "https://optv.local/api/v1/search/media?q=klima&fields=id&limit=2&page=2",
-        "last": "https://optv.local/api/v1/search/media?q=klima&fields=id&limit=2&page=1292"
+        "last": "https://optv.local/api/v1/search/media?q=klima&fields=id&limit=2&page=1655"
     }
 }

@@ -15,59 +15,55 @@ x-robots-tag: noindex
         "requestStatus": "success",
         "results": {
             "count": 2,
-            "total": 2583
+            "total": 3309
         }
     },
     "data": [
         {
             "type": "media",
-            "id": "DE-0180003042",
+            "id": "DE-0170003007",
             "attributes": {
                 "parliament": "DE",
-                "dateStart": "2013-11-28T13:19:48+01:00",
+                "dateStart": "2009-11-10T13:22:01+01:00",
                 "duration": "<<NORMALIZED>>",
-                "title": "Klimakonferenz in Warschau",
-                "speaker": "Eva Bulling-Schröter",
-                "speakerID": "Q104774",
+                "title": "Regierungserklärung/ Generalaussprache",
+                "speaker": "Jürgen Trittin",
+                "speakerID": "Q11762",
                 "speakerRole": null,
-                "faction": "DIE LINKE",
-                "factionID": "Q1826856",
-                "findCount": 1
+                "faction": "DIE GRÜNEN",
+                "factionID": "Q1007353",
+                "findCount": 2
             },
             "segments": [
                 {
-                    "start": 149.979999999999989768184605054557323455810546875,
-                    "end": 156.57999999999998408384271897375583648681640625
+                    "start": 816.1599999999999681676854379475116729736328125,
+                    "end": 824.8200000000000500222085975110530853271484375
+                },
+                {
+                    "start": 868.8400000000000318323145620524883270263671875,
+                    "end": 878.40000000000009094947017729282379150390625
                 }
             ]
         },
         {
             "type": "media",
-            "id": "DE-0180003045",
+            "id": "DE-0170003026",
             "attributes": {
                 "parliament": "DE",
-                "dateStart": "2013-11-28T13:44:45+01:00",
+                "dateStart": "2009-11-10T16:21:37+01:00",
                 "duration": "<<NORMALIZED>>",
-                "title": "Klimakonferenz in Warschau",
-                "speaker": "Matthias Miersch",
-                "speakerID": "Q1910150",
+                "title": "Europa, Außen- und Sicherheitspolitik",
+                "speaker": null,
+                "speakerID": null,
                 "speakerRole": null,
-                "faction": "SPD",
-                "factionID": "Q2207512",
-                "findCount": 3
+                "faction": null,
+                "factionID": null,
+                "findCount": 1
             },
             "segments": [
                 {
-                    "start": 196.219999999999998863131622783839702606201171875,
-                    "end": 209.95999999999997953636921010911464691162109375
-                },
-                {
-                    "start": 257.51999999999998181010596454143524169921875,
-                    "end": 266.97999999999996134647517465054988861083984375
-                },
-                {
-                    "start": 304.43999999999999772626324556767940521240234375,
-                    "end": 312.8600000000000136424205265939235687255859375
+                    "start": 513.1200000000000045474735088646411895751953125,
+                    "end": 518.94000000000005456968210637569427490234375
                 }
             ]
         }
@@ -77,6 +73,6 @@ x-robots-tag: noindex
         "first": "https://optv.local/api/v1/search/media?q=klima&limit=2&fields=queue&sort=date-asc&page=1",
         "prev": null,
         "next": "https://optv.local/api/v1/search/media?q=klima&limit=2&fields=queue&sort=date-asc&page=2",
-        "last": "https://optv.local/api/v1/search/media?q=klima&limit=2&fields=queue&sort=date-asc&page=1292"
+        "last": "https://optv.local/api/v1/search/media?q=klima&limit=2&fields=queue&sort=date-asc&page=1655"
     }
 }

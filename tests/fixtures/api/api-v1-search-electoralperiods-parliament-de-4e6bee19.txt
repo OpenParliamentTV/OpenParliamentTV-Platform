@@ -19,6 +19,20 @@ x-robots-tag: noindex
     "data": [
         {
             "type": "electoralPeriod",
+            "id": "DE-017",
+            "attributes": {
+                "number": 17,
+                "dateStart": null,
+                "dateEnd": null,
+                "parliament": "DE",
+                "parliamentLabel": "Deutscher Bundestag"
+            },
+            "links": {
+                "self": "https://optv.local/api/v1/electoralPeriod/DE-017"
+            }
+        },
+        {
+            "type": "electoralPeriod",
             "id": "DE-018",
             "attributes": {
                 "number": 18,
